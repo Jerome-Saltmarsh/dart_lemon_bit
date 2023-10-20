@@ -726,7 +726,13 @@ class IsometricEditor with IsometricComponent {
   }
 
   void cameraCenterOnNodeSelectedIndex() {
-    camera.cameraSetPositionGrid(row, column, z);
+    // camera.cameraSetPositionGrid(row, column, z);
+    final index = nodeSelectedIndex.value;
+    final cameraEdit = options.cameraEdit;
+    cameraEdit.x = scene.getIndexPositionX(index);
+    cameraEdit.y = scene.getIndexPositionY(index);
+    cameraEdit.z = scene.getIndexPositionZ(index);
+
   }
 
   void deleteSelectedKeyEntry(){

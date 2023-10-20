@@ -82,10 +82,9 @@ class IsometricActions with IsometricComponent {
     }
   }
 
-  void cameraTargetPlayer(){
-    camera.target = player.position;
+  void cameraPlayerTargetPlayer(){
+    options.cameraPlay = player.position;
   }
-
 
   void spawnPurpleFireExplosion(double x, double y, double z, {int amount = 5}){
 

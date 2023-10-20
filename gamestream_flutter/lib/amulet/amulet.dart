@@ -373,6 +373,11 @@ class Amulet extends IsometricGame {
   }
 
   void onChangedCameraTargetSet(bool cameraTargetSet) {
+
+    if (options.editMode){
+      return;
+    }
+
     if (cameraTargetSet){
       camera.target = player.position;
     } else {

@@ -18,7 +18,7 @@ class AmuletGameTutorial extends AmuletGame {
   late final talkOptionSkipTutorial = TalkOption('Skip Tutorial', amulet.movePlayerToTown);
   late final talkOptionsGoodbye = TalkOption('Goodbye', endPlayerInteraction);
 
-  late final Character ox;
+  late final Character guide;
   Character? fiend01;
 
   AmuletGameTutorial({
@@ -29,8 +29,8 @@ class AmuletGameTutorial extends AmuletGame {
     required super.name,
     required super.fiendTypes,
   }) {
-    ox = buildAmuletNpcOx();
-    add(ox);
+    guide = buildAmuletNpcOx();
+    add(guide);
   }
 
   AmuletNpc buildAmuletNpcOx() => AmuletNpc(
@@ -74,42 +74,27 @@ class AmuletGameTutorial extends AmuletGame {
       objectiveApplySpeakToOx(player);
       return;
     }
-
-    if (!player.hasKey('weapon_accepted')){
-      player.talk('Did you change your mind?', options: [
-        talkOptionAcceptSword,
-        talkOptionSkipTutorial,
-        talkOptionsGoodbye,
-      ]);
-      return;
-    }
-
-    player.talk('Kill those creatures for me please',
-      options: [
-        talkOptionSkipTutorial,
-        talkOptionsGoodbye,
-      ]);
   }
 
   bool objectiveActiveSpeakToOz(AmuletPlayer player) => player.readFlag('ox_met');
 
   void objectiveApplySpeakToOx(AmuletPlayer player) {
-    player.talk('one will need this for the trial ahead');
+    player.talk('in the path ahead lies danger');
     player.onInteractionOver = actionOxSpawnWeapon;
   }
 
   void actionOxSpawnWeapon() {
     spawnAmuletItem(
         item: AmuletItem.Weapon_Rusty_Old_Sword,
-        x: ox.x,
-        y: ox.y,
-        z: ox.z,
+        x: guide.x,
+        y: guide.y,
+        z: guide.z,
     );
-    actionDeactivateOx();
+    actionDeactivateGuide();
   }
 
-  void actionDeactivateOx() {
-    deactivate(ox);
+  void actionDeactivateGuide() {
+    deactivate(guide);
   }
 
   void onObjectiveAccomplishedAcceptSword(AmuletPlayer player) {
@@ -139,18 +124,6 @@ class AmuletGameTutorial extends AmuletGame {
 
     if (target == fiend01) {
       onCharacterKilledFiend01(target);
-    }
-
-    if (src is AmuletPlayer){
-       if (src.readFlag('enemy_killed')){
-         src.writeMessage(
-             'You defeated the enemy.'
-             'Experience is gained for each enemy defeated.'
-             'Experience is indicated by the white bar at the top left side of the screen.'
-             'When the bar is full a level is gained.'
-             'Try to kill a few more creates to reach the next level.'
-         );
-       }
     }
   }
 
@@ -191,10 +164,10 @@ class AmuletGameTutorial extends AmuletGame {
       actionPlayerControlsDisabled(player);
       actionMovePlayerToSpawn01(player);
       actionMoveGuideToGuideSpawn0();
-      actionFaceOneAnother(player, ox);
+      actionFaceOneAnother(player, guide);
 
       addJob(seconds: 2, action: () {
-        actionSetCameraTarget(player, ox);
+        actionCameraTargetGuide(player);
         player.talk(
           'greetings other one.'
           'one is here to guide another.'
@@ -222,7 +195,7 @@ class AmuletGameTutorial extends AmuletGame {
   }
 
   void actionMoveOxToSceneKey(String sceneKey){
-    actionMovePositionToSceneKey(ox, sceneKey);
+    actionMovePositionToSceneKey(guide, sceneKey);
   }
 
   void actionMovePositionToSceneKey(Position position, String sceneKey){
@@ -322,11 +295,49 @@ class AmuletGameTutorial extends AmuletGame {
   }
 
   @override
-  void onAmuletItemAcquired(AmuletPlayer amuletPlayer, AmuletItem amuletItem) {
+  void onAmuletItemAcquired(AmuletPlayer player, AmuletItem amuletItem) {
     if (amuletItem == AmuletItem.Weapon_Rusty_Old_Sword){
-      if (amuletPlayer.readFlag('weapon_acquired')){
+      if (player.readFlag('acquired_weapon_sword')){
         actionSetDoorDisabled();
       }
+      return;
     }
+
+    if (amuletItem == AmuletItem.Spell_Heal){
+      if (player.readFlag('acquired_spell_heal')){
+        actionSetDoorDisabled();
+        actionPlayerControlsDisabled(player);
+        actionMoveGuideToFiend01();
+        actionCameraTargetGuide(player);
+
+        addJob(seconds: 2, action: (){
+          actionActivateGuide();
+          player.talk(
+              'one has acquired a healing spell.'
+              'press the "Spell Heal" icon at the bottom of the screen.'
+              'each item has a limited number of charges.'
+              'charges replenish over time.'
+          );
+          player.onInteractionOver = () {
+            actionDeactivateGuide();
+            actionClearCameraTarget(player);
+            actionPlayerControlsEnabled(player);
+          };
+        });
+      }
+      return;
+    }
+  }
+
+  void actionActivateGuide() {
+    activateCollider(guide);
+  }
+
+  void actionCameraTargetGuide(AmuletPlayer player) {
+    actionSetCameraTarget(player, guide);
+  }
+
+  void actionMoveGuideToFiend01() {
+    actionMoveOxToSceneKey(keysFiend01);
   }
 }

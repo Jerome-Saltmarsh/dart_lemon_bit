@@ -1102,17 +1102,13 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeByte(NetworkResponse.Isometric);
     writeByte(NetworkResponseIsometric.Player_Aim_Target);
 
+    final aimTarget = this.aimTarget;
     writeBool(aimTarget != null);
     if (aimTarget == null) {
       return;
     }
-    writeString(aimTarget!.name);
+    writeString(aimTarget.name);
   }
-
-  // void writePlayerInitialized() {
-  //   writeByte(NetworkResponse.Isometric);
-  //   writeByte(NetworkResponseIsometric.Player_Initialized);
-  // }
 
   void performPrimaryAction() {
     if (deadOrBusy)

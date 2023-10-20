@@ -35,6 +35,12 @@ class Position implements Comparable<Position>{
     y = value * Node_Size;
   }
 
+  void copy(Position position){
+    this.x = position.x;
+    this.y = position.y;
+    this.z = position.z;
+  }
+
   @override
   String toString()=> '{x: ${x.toInt()}, y: ${y.toInt()}, z: ${z.toInt()}}';
 

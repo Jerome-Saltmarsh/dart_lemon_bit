@@ -335,9 +335,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     Collider? closestCollider;
 
     const Min_Radius = IsometricSettings.Pickup_Range;
+    final characters = this.characters;
 
     for (final character in characters) {
       if (character.dead) continue;
+      if (!character.active) continue;
       final radius = max(Min_Radius, character.radius);
       if ((mouseX - character.x).abs() > radius) continue;
       if ((mouseY - character.y).abs() > radius) continue;
@@ -352,6 +354,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       closestCollider = character;
     }
 
+    final gameObjects = this.gameObjects;
     for (final gameObject in gameObjects) {
       if (!gameObject.active) continue;
       if (!gameObject.collectable &&
