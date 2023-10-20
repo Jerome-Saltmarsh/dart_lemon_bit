@@ -357,6 +357,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
       if (availableWeaponSlot != null) {
         availableWeaponSlot.amuletItem = amuletItem;
         refillItemSlot(itemSlot: availableWeaponSlot);
+        amuletGame.onAmuletItemAcquired(this, amuletItem);
         if (equippedWeaponIndex == -1){
           equippedWeaponIndex = weapons.indexOf(availableWeaponSlot);
         }
@@ -373,6 +374,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
 
     emptyItemSlot.amuletItem = amuletItem;
     emptyItemSlot.cooldown = 0;
+    amuletGame.onAmuletItemAcquired(this, amuletItem);
     notifyEquipmentDirty();
     return true;
   }
@@ -1416,6 +1418,8 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     writePlayerPositionAbsolute();
     writePlayerEvent(PlayerEvent.Player_Moved);
   }
+
+  bool flagSet(String name)=> data.containsKey(name);
 
   /// to run a piece of code only a single time
   /// the first time a flag name is entered it will return true

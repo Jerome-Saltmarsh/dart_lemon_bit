@@ -12,7 +12,7 @@ class AmuletGameTutorial extends AmuletGame {
   static const keysGuideSpawn1 = 'guide_spawn_1';
   static const keysPlayerSpawn = 'player_spawn_00';
   static const keysDoor = 'door';
-  static const keysCreep01 = 'creep01';
+  static const keysFiend01 = 'fiend01';
 
   late final talkOptionAcceptSword = TalkOption('Accept Sword', onObjectiveAccomplishedAcceptSword);
   late final talkOptionSkipTutorial = TalkOption('Skip Tutorial', amulet.movePlayerToTown);
@@ -94,7 +94,7 @@ class AmuletGameTutorial extends AmuletGame {
   bool objectiveActiveSpeakToOz(AmuletPlayer player) => player.readFlag('ox_met');
 
   void objectiveApplySpeakToOx(AmuletPlayer player) {
-    player.talk('one will need this for what lies what ahead');
+    player.talk('one will need this for the trial ahead');
     player.onInteractionOver = actionOxSpawnWeapon;
   }
 
@@ -105,6 +105,11 @@ class AmuletGameTutorial extends AmuletGame {
         y: ox.y,
         z: ox.z,
     );
+    actionDeactivateOx();
+  }
+
+  void actionDeactivateOx() {
+    deactivate(ox);
   }
 
   void onObjectiveAccomplishedAcceptSword(AmuletPlayer player) {
@@ -133,13 +138,7 @@ class AmuletGameTutorial extends AmuletGame {
     super.customOnCharacterKilled(target, src);
 
     if (target == fiend01) {
-      spawnAmuletItem(
-          item: AmuletItem.Spell_Heal,
-          x: target.x,
-          y: target.y,
-          z: target.z,
-          deactivationTimer: -1,
-      );
+      onCharacterKilledFiend01(target);
     }
 
     if (src is AmuletPlayer){
@@ -155,12 +154,34 @@ class AmuletGameTutorial extends AmuletGame {
     }
   }
 
+  void onCharacterKilledFiend01(Character target) {
+    actionSpawnAmuletItemSpellHeal(target);
+  }
+
+  void actionSpawnAmuletItemSpellHeal(Character target) {
+    spawnAmuletItem(
+        item: AmuletItem.Spell_Heal,
+        x: target.x,
+        y: target.y,
+        z: target.z,
+        deactivationTimer: -1,
+    );
+  }
+
   @override
   void onPlayerJoined(AmuletPlayer player) {
     refreshPlayerGameState(player);
   }
 
   void refreshPlayerGameState(AmuletPlayer player) {
+
+    if (!player.flagSet('fiend01_defeated')){
+      actionInstantiateFiend01();
+    }
+
+    if (player.readFlag('initialized')) {
+      actionInitializeNewPlayer(player);
+    }
 
     if (player.readFlag('initialized')) {
       actionInitializeNewPlayer(player);
@@ -177,7 +198,7 @@ class AmuletGameTutorial extends AmuletGame {
         player.talk(
           'greetings other one.'
           'one is here to guide another.'
-          'one does press the left mouse button to move.'
+          'left click the mouse to move.'
         );
 
         player.onInteractionOver = () {
@@ -190,20 +211,6 @@ class AmuletGameTutorial extends AmuletGame {
       });
       return;
     }
-
-    // if (player.readFlag('show_welcome_message')) {
-    //   actionWriteWelcomeMessage(player);
-    // }
-
-    // actionMovePlayerToSpawn01(player);
-
-    // if (player.hasNotKey('weapon_accepted')){
-    //   actionSetDoorEnabled();
-    // } else {
-    //   actionSetDoorDisabled();
-    // }
-
-    // actionInstantiateFiend01();
   }
 
   void actionMoveGuideToGuideSpawn0() {
@@ -226,14 +233,10 @@ class AmuletGameTutorial extends AmuletGame {
     player.writePlayerPositionAbsolute();
   }
 
-  // void actionWriteWelcomeMessage(AmuletPlayer player) {
-  //   player.writeMessage('Hello and welcome to Amulet. Left click the mouse to move. Scroll the mouse wheel to zoom the camera in and out');
-  // }
-
   void actionInstantiateFiend01() {
     fiend01 = spawnFiendTypeAtIndex(
         fiendType: FiendType.Fallen_01,
-        index: getSceneKey(keysCreep01),
+        index: getSceneKey(keysFiend01),
     )
       ..spawnLootOnDeath = false
       ..respawnDurationTotal = -1;
@@ -252,7 +255,6 @@ class AmuletGameTutorial extends AmuletGame {
     actionMovePositionToIndex(player, playerSpawn01);
     actionWritePlayerPositionAbsolute(player);
   }
-
 
   void actionInitializeNewPlayer(AmuletPlayer player) {
     for (final weapon in player.weapons){
@@ -317,5 +319,14 @@ class AmuletGameTutorial extends AmuletGame {
 
   void actionSetCameraTarget(AmuletPlayer player, Position? target) {
       player.cameraTarget = target;
+  }
+
+  @override
+  void onAmuletItemAcquired(AmuletPlayer amuletPlayer, AmuletItem amuletItem) {
+    if (amuletItem == AmuletItem.Weapon_Rusty_Old_Sword){
+      if (amuletPlayer.readFlag('weapon_acquired')){
+        actionSetDoorDisabled();
+      }
+    }
   }
 }
