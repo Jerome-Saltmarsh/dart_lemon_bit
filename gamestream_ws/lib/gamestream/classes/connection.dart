@@ -178,6 +178,9 @@ class Connection with ByteReader {
           case EditorRequest.Delete_Key:
             handleEditorRequestDeleteKey(arguments);
             break;
+          case EditorRequest.Move_Key:
+            handleEditorRequestMoveKey(arguments);
+            break;
           case EditorRequest.New_Scene:
             handleEditorRequestNewScene(arguments);
             break;
@@ -1102,17 +1105,57 @@ class Connection with ByteReader {
   }
 
   void handleEditorRequestDeleteKey(List<String> arguments) {
-     final name = arguments[2];
-     final player = _player;
 
-     if (player is! AmuletPlayer){
-       return;
-     }
+    final player = _player;
+    if (player is! AmuletPlayer){
+      return;
+    }
+
+    if (arguments.length < 3){
+      errorInvalidClientRequest();
+      return;
+    }
+
+    final name = arguments[2];
+
 
      final game = player.game;
      final scene = game.scene;
      scene.keys.remove(name);
      game.notifyPlayersSceneKeysChanged();
+  }
+
+  void handleEditorRequestMoveKey(List<String> arguments) {
+    final player = _player;
+    if (player is! AmuletPlayer){
+      sendServerError('player is! AmuletPlayer');
+      return;
+    }
+
+    final name = arguments.getArg('--name');
+    final index = arguments.getArgInt('--index');
+
+    if (name == null){
+      sendServerError('--name required');
+      return;
+    }
+
+    if (index == null){
+      sendServerError('--index required');
+      return;
+    }
+
+    final game = player.game;
+    final scene = game.scene;
+    final key = scene.keys[name];
+
+    if (key == null){
+      sendServerError('key $name could not be found');
+      return;
+    }
+
+    scene.keys[name] = index;
+    game.notifyPlayersSceneKeysChanged();
   }
 }
 

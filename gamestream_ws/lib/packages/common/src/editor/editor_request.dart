@@ -19,4 +19,5 @@ enum EditorRequest {
    New_Scene,
    Add_Key,
    Delete_Key,
+   Move_Key,
 }

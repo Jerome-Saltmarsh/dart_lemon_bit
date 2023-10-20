@@ -160,6 +160,19 @@ class IsometricEditor with IsometricComponent {
         paint();
         break;
       case KeyCode.G:
+
+        switch (editorTab.value){
+          case EditorTab.Keys:
+            final selectedKey = selectedKeyEntry.value;
+            if (selectedKey == null){
+              break;
+            }
+            moveSelectedKeyEntryToNodeSelected();
+            return;
+          default:
+            break;
+        }
+
         if (gameObjectSelected.value) {
           sendGameObjectRequestMoveToMouse();
         } else {
@@ -726,5 +739,24 @@ class IsometricEditor with IsometricComponent {
           EditorRequest.Delete_Key.index,
           name,
       );
+  }
+
+  void moveSelectedKeyEntryToNodeSelected() {
+    final selectedKey = selectedKeyEntry.value;
+    if (selectedKey == null){
+      return;
+    }
+    moveKeyToIndex(
+      name: selectedKey.key,
+      index: nodeSelectedIndex.value,
+    );
+  }
+
+  void moveKeyToIndex({required String name, required int index}) {
+    network.sendNetworkRequest(
+      NetworkRequest.Editor_Request,
+      EditorRequest.Move_Key.index,
+      '--name $name --index $index',
+    );
   }
 }
