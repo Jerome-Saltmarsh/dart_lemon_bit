@@ -35,24 +35,13 @@ class RendererEditor extends RenderGroup {
   int sortKeyEntries(MapEntry<String, int> a, MapEntry<String, int> b){
     final aOrder = getKeyEntryOrder(a);
     final bOrder = getKeyEntryOrder(b);
-
     if (aOrder > bOrder){
-      return -1;
-    }
-
-    if (aOrder < bOrder){
       return 1;
     }
-
+    if (aOrder < bOrder){
+      return -1;
+    }
     return 0;
-  }
-
-  double getKeyEntryOrder(MapEntry<String, int> keyEntry) {
-    final index = keyEntry.value;
-    final indexZ = scene.getIndexZ(index);
-    final indexRow = scene.getRow(index);
-    final indexColumn = scene.getColumn(index);
-    return (indexRow * Node_Size) + (indexColumn * Node_Size) + (indexZ * Node_Height) + Node_Size;
   }
 
   @override
@@ -76,12 +65,12 @@ class RendererEditor extends RenderGroup {
   @override
   void updateFunction() {
     if (marksTabEnabled){
-      updateFunctionEditTab();
+      updateTabMarks();
       return;
     }
 
     if (keysTabEnabled){
-      updateKeysTab();
+      updateTabKeys();
       return;
     }
   }
@@ -89,17 +78,17 @@ class RendererEditor extends RenderGroup {
   @override
   void renderFunction() {
     if (marksTabEnabled){
-      renderMarksTab();
+      renderTabMarks();
       return;
     }
 
     if (keysTabEnabled){
-      renderKeysTab();
+      renderTabKeys();
       return;
     }
   }
 
-  void renderMarksTab() {
+  void renderTabMarks() {
     render.textIndex(markType, markIndex);
     switch (markType){
       case MarkType.Spawn_Whisp:
@@ -121,23 +110,20 @@ class RendererEditor extends RenderGroup {
     }
   }
 
-  void updateFunctionEditTab() {
+  void updateTabMarks() {
     final scene = this.scene;
     final markValue = scene.marks[index];
     markIndex = MarkType.getIndex(markValue);
     markType = MarkType.getType(markValue);
-    final indexZ = scene.getIndexZ(markIndex);
-    final indexRow = scene.getRow(markIndex);
-    final indexColumn = scene.getColumn(markIndex);
-    order =  (indexRow * Node_Size) + (indexColumn * Node_Size) + (indexZ * Node_Height) + Node_Size;
+    order = getOrderAtIndex(markIndex);
   }
 
-  void updateKeysTab() {
+  void updateTabKeys() {
     final keyEntry = keys[index];
     order = getKeyEntryOrder(keyEntry);
   }
 
-  void renderKeysTab() {
+  void renderTabKeys() {
     final keyEntry = keys[index];
     final keyIndex = keyEntry.value;
     final keyName = keyEntry.key;
@@ -145,4 +131,20 @@ class RendererEditor extends RenderGroup {
     render.textIndex(keyName, keyIndex);
     render.wireFrameWhite(keyIndex);
   }
+
+  double getKeyEntryOrder(MapEntry<String, int> keyEntry) =>
+      getOrderAtIndex(keyEntry.value);
+
+  double getOrderAtIndex(int index){
+    final scene = this.scene;
+    final indexZ = scene.getIndexZ(index);
+    final indexRow = scene.getRow(index);
+    final indexColumn = scene.getColumn(index);
+    return
+      (indexRow * Node_Size) +
+      (indexColumn * Node_Size) +
+      (indexZ * Node_Height) +
+      (Node_Size);
+  }
+
 }
