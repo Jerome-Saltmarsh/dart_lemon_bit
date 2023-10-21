@@ -13,6 +13,7 @@ class AmuletGameTutorial extends AmuletGame {
   static const keysGuideSpawn1 = 'guide_spawn_1';
   static const keysPlayerSpawn = 'player_spawn_00';
   static const keysDoor01 = 'door01';
+  static const keysDoor02 = 'door02';
   static const keysFiend01 = 'fiend01';
   static const keysFiend02 = 'fiend02';
 
@@ -185,7 +186,7 @@ class AmuletGameTutorial extends AmuletGame {
     if (player.readFlag('introduction')){
 
       runScript(player)
-        .playerControlsDisabled()
+        .controlsDisabled()
         .movePlayerToSceneKey(keysPlayerSpawn)
         .movePositionToSceneKey(guide, keysGuideSpawn0)
         .wait(seconds: 2)
@@ -272,14 +273,7 @@ class AmuletGameTutorial extends AmuletGame {
       amuletItem == AmuletItem.Spell_Heal &&
       player.readFlag('use_spell_heal')
     ) {
-
-      actionPlayerControlsDisabled(player);
-      actionSpawnFiends02();
-
-      addJob(
-          seconds: 3,
-          action: clearDoor02,
-      );
+      onSpellHealUsedForTheFirstTime(player);
     }
   }
 
@@ -307,7 +301,7 @@ class AmuletGameTutorial extends AmuletGame {
   void onAcquiredWeaponSword(AmuletPlayer player) {
 
     runScript(player)
-      .playerControlsDisabled()
+      .controlsDisabled()
       .wait(seconds: 1)
       .cameraSetTargetSceneKey(keysDoor01)
       .wait(seconds: 2)
@@ -370,11 +364,13 @@ class AmuletGameTutorial extends AmuletGame {
         addJob(seconds: 2, action: (){
           actionActivateGuide();
           player.talk(
-              'one has acquired a healing spell.'
+              'one has acquired a spell of healing.'
               'press the "Spell Heal" icon at the bottom of the screen.'
-              'each item has a limited number of charges.'
-              'charges replenish over time.'
+              // 'or press the "W" key on the keyboard.'
+              // 'each item has a limited number of charges.'
+              // 'charges replenish over time.'
           );
+
           player.onInteractionOver = () {
             actionDeactivateGuide();
             actionClearCameraTarget(player);
@@ -403,5 +399,24 @@ class AmuletGameTutorial extends AmuletGame {
      scripts.add(instance);
      return instance;
   }
+
+  void deactivateGuide(){
+    deactivate(guide);
+  }
+
+  void onSpellHealUsedForTheFirstTime(AmuletPlayer player) => runScript(player)
+      .controlsDisabled()
+      .talk(
+        'one has done well.'
+        'each item has a limited number of charges.'
+        'charges replenish over time'
+      )
+      .cameraSetTargetSceneKey(keysDoor02)
+      .wait(seconds: 1)
+      .setNodeEmptyAtSceneKey(keysDoor02)
+      .wait(seconds: 1)
+      .add(deactivateGuide)
+      .add(actionSpawnFiends02)
+      .playerControlsEnabled();
 }
 

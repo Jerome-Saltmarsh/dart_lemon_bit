@@ -35,7 +35,7 @@ class AmuletPlayerScript {
     });
   }
 
-  AmuletPlayerScript playerControlsDisabled() => playerControls(false);
+  AmuletPlayerScript controlsDisabled() => playerControls(false);
 
   AmuletPlayerScript playerControlsEnabled() => playerControls(true);
 
