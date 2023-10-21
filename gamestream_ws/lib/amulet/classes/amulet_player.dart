@@ -353,6 +353,9 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     if (deadOrBusy)
       return false;
 
+    setDestinationToCurrentPosition();
+    clearPath();
+
     if (amuletItem.isWeapon || amuletItem.isSpell){
       final availableWeaponSlot = getEmptyWeaponSlot();
       if (availableWeaponSlot != null) {

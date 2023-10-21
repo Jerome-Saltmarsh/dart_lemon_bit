@@ -104,12 +104,15 @@ class AmuletGameTutorial extends AmuletGame {
 
   void objectiveApplySpeakToGuide(AmuletPlayer player) {
 
+    runScript(player)
+      .cameraSetTarget(guide)
+      .talk('danger doth lie ahead')
+      .add(actionSpawnWeaponAtGuide);
 
-
-    player.cameraTarget = guide;
-    actionSetCameraTargetGuide(player);
-    player.talk('danger does lie ahead');
-    player.onInteractionOver = actionSpawnWeaponAtGuide;
+    // player.cameraTarget = guide;
+    // actionSetCameraTargetGuide(player);
+    // player.talk('danger does lie ahead');
+    // player.onInteractionOver = actionSpawnWeaponAtGuide;
   }
 
   void actionSetCameraTargetGuide(AmuletPlayer player) {
