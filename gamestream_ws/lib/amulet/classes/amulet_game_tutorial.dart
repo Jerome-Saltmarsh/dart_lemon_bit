@@ -1,9 +1,9 @@
 
 import 'package:gamestream_ws/amulet/src.dart';
-import 'package:gamestream_ws/gamestream/amulet.dart';
 import 'package:gamestream_ws/isometric/src.dart';
 import 'package:gamestream_ws/packages.dart';
 
+import 'amulet_player_script.dart';
 import 'fiend_type.dart';
 
 
@@ -399,85 +399,3 @@ class AmuletGameTutorial extends AmuletGame {
   }
 }
 
-class AmuletPlayerScript {
-  final AmuletPlayer player;
-  final actions = <Function()>[];
-  var index = 0;
-  var available = false;
-
-  AmuletPlayerScript(this.player);
-
-  void update(){
-
-    if (available){
-      return;
-    }
-
-    if (index < 0 || index >= actions.length){
-      actions.clear();
-      index = -1;
-      available = true;
-      return;
-    }
-
-    final action = actions[index];
-    if (action.call() != false){
-      index++;
-    }
-  }
-
-  AmuletPlayerScript wait({int seconds = 0}) {
-    final frames = seconds * Amulet.Frames_Per_Second;
-    final endFrame = player.amuletGame.frame + frames;
-    return add(() => player.amuletGame.frame >= endFrame);
-  }
-
-  AmuletPlayerScript add(Function() action){
-    actions.add(action);
-    return this;
-  }
-
-  AmuletPlayerScript playerControlsDisabled() => playerControls(false);
-
-  AmuletPlayerScript playerControlsEnabled() => playerControls(true);
-
-  AmuletPlayerScript playerControls(bool enabled) =>
-      add(() {
-        player.controlsEnabled = enabled;
-      });
-
-  AmuletPlayerScript movePlayerToSceneKey(String sceneKey) =>
-      movePositionToSceneKey(player, sceneKey);
-
-  AmuletPlayerScript movePositionToSceneKey(Position position, String sceneKey) {
-    final scene = player.amuletGame.scene;
-    final index = scene.getKey(sceneKey);
-    return movePositionToIndex(position, index);
-  }
-
-  AmuletPlayerScript movePositionToIndex(Position position, int index) => add(() {
-      final scene = player.amuletGame.scene;
-      position.x = scene.getIndexX(index);
-      position.y = scene.getIndexY(index);
-      position.z = scene.getIndexZ(index);
-    });
-
-  AmuletPlayerScript cameraSetTarget(Position? position) =>
-      add(() {
-        player.cameraTarget = position;
-      });
-
-  AmuletPlayerScript talk(String text, {List<TalkOption>? options}) {
-    var initialized = false;
-    return add(() {
-      if (initialized) {
-        return !player.interacting;
-      }
-      player.talk(text, options: options);
-      initialized = true;
-      return false;
-    });
-  }
-
-  AmuletPlayerScript cameraClearTarget() => cameraSetTarget(null);
-}
