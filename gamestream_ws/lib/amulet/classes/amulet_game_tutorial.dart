@@ -1,5 +1,6 @@
 
 import 'package:gamestream_ws/amulet/src.dart';
+import 'package:gamestream_ws/gamestream/amulet.dart';
 import 'package:gamestream_ws/isometric/src.dart';
 import 'package:gamestream_ws/packages.dart';
 
@@ -13,8 +14,11 @@ class AmuletGameTutorial extends AmuletGame {
   static const keysPlayerSpawn = 'player_spawn_00';
   static const keysDoor01 = 'door01';
   static const keysFiend01 = 'fiend01';
+  static const keysFiend02 = 'fiend02';
 
   static const flagsDoor01Opened = 'door01_opened';
+
+  final scripts = <AmuletPlayerScript>[];
 
   late final Character guide;
   Character? fiend01;
@@ -65,6 +69,19 @@ class AmuletGameTutorial extends AmuletGame {
     }
   }
 
+  @override
+  void update() {
+    super.update();
+    updateScripts();
+  }
+
+  void updateScripts() {
+    final scripts = this.scripts;
+    for (var i = 0; i <scripts.length; i++){
+      scripts[i].update();
+    }
+  }
+
   void onInteractedWithGuide(AmuletPlayer player){
 
     if (objectiveActiveSpeakToGuide(player)) {
@@ -98,27 +115,6 @@ class AmuletGameTutorial extends AmuletGame {
 
   void actionDeactivateGuide() {
     deactivate(guide);
-  }
-
-  void onObjectiveAccomplishedAcceptSword(AmuletPlayer player) {
-    player.data['weapon_accepted'] = true;
-    final doorIndex = getSceneKey(keysDoor01);
-    scene.setNodeEmpty(doorIndex);
-    onNodeChanged(doorIndex);
-    player.acquireAmuletItem(AmuletItem.Weapon_Rusty_Old_Sword);
-    player.endInteraction();
-    player.writeMessage(''
-        'You have acquired a sword.'
-        'The boxes at the bottom of the screen represent your weapons.'
-        'The green box indicates what is currently equipped.'
-        'Left click and enemy to attack it.'
-        'Right click to attack the air.'
-        'Each item has a limited number of charges.'
-        'Each time an attack is performed the charges are reduced.'
-        'If the item runs out of charges it cannot be used again.'
-        'An item recharges automatically over time.'
-        'Hover the mouse over an item to see its statistics.'
-    );
   }
 
   @override
@@ -176,23 +172,44 @@ class AmuletGameTutorial extends AmuletGame {
     }
 
     if (player.readFlag('introduction')){
-      actionPlayerControlsDisabled(player);
-      actionMovePlayerToSpawn01(player);
-      actionMoveGuideToGuideSpawn0();
-      actionFaceOneAnother(player, guide);
 
-      addJob(seconds: 2, action: () {
-        actionCameraTargetGuide(player);
-        actionPlayerTalkIntroduction(player);
+      final script = AmuletPlayerScript(player);
 
-        player.onInteractionOver = () {
-          addJob(seconds: 1, action: () {
-            actionMoveGuideToGuideSpawn1();
-            actionPlayerControlsEnabled(player);
-            actionClearCameraTarget(player);
-          });
-        };
-      });
+      script
+        .playerControlsDisabled()
+        .movePlayerToSceneKey(keysPlayerSpawn)
+        .movePositionToSceneKey(guide, keysGuideSpawn0)
+        .wait(seconds: 2)
+        .cameraSetTarget(guide)
+        .talk(
+          'greetings other.'
+          'one is here to guide another.'
+          'left click the mouse to move.'
+        )
+        .movePositionToSceneKey(guide, keysGuideSpawn1)
+        .playerControlsEnabled()
+        .cameraClearTarget()
+      ;
+
+      scripts.add(script);
+
+      // actionPlayerControlsDisabled(player);
+      // actionMovePlayerToSpawn01(player);
+      // actionMoveGuideToGuideSpawn0();
+      // actionFaceOneAnother(player, guide);
+
+      // addJob(seconds: 2, action: () {
+      //   actionCameraTargetGuide(player);
+      //   actionPlayerTalkIntroduction(player);
+      //
+      //   player.onInteractionOver = () {
+      //     addJob(seconds: 1, action: () {
+      //       actionMoveGuideToGuideSpawn1();
+      //       actionPlayerControlsEnabled(player);
+      //       actionClearCameraTarget(player);
+      //     });
+      //   };
+      // });
       return;
     }
   }
@@ -259,27 +276,34 @@ class AmuletGameTutorial extends AmuletGame {
   }
 
   @override
-  void onAmuletItemUsed(AmuletPlayer amuletPlayer, AmuletItem amuletItem) {
+  void onAmuletItemUsed(AmuletPlayer player, AmuletItem amuletItem) {
     if (
       amuletItem == AmuletItem.Spell_Heal &&
-      amuletPlayer.readFlag('use_spell_heal')
+      player.readFlag('use_spell_heal')
     ) {
 
-      final fiend02Index = getSceneKey('fiend02');
-      for (var i = 0; i < 2; i++) {
-        const shiftRadius = 10;
-        spawnFiendTypeAtIndex(
-          fiendType: FiendType.Fallen_01,
-          index: fiend02Index,
-        )
-          ..x += giveOrTake(shiftRadius)
-          ..y += giveOrTake(shiftRadius);
-      }
+      actionPlayerControlsDisabled(player);
+      actionSpawnFiends02();
 
       addJob(
           seconds: 3,
           action: clearDoor02,
       );
+    }
+  }
+
+  void actionSpawnFiends02() {
+    final fiend02Index = getSceneKey(keysFiend02);
+    for (var i = 0; i < 2; i++) {
+      const shiftRadius = 10;
+      spawnFiendTypeAtIndex(
+        fiendType: FiendType.Fallen_01,
+        index: fiend02Index,
+      )
+        ..spawnLootOnDeath = false
+        ..respawnDurationTotal = -1
+        ..x += giveOrTake(shiftRadius)
+        ..y += giveOrTake(shiftRadius);
     }
   }
 
@@ -373,4 +397,87 @@ class AmuletGameTutorial extends AmuletGame {
   void actionMoveGuideToFiend01() {
     actionMoveOxToSceneKey(keysFiend01);
   }
+}
+
+class AmuletPlayerScript {
+  final AmuletPlayer player;
+  final actions = <Function()>[];
+  var index = 0;
+  var available = false;
+
+  AmuletPlayerScript(this.player);
+
+  void update(){
+
+    if (available){
+      return;
+    }
+
+    if (index < 0 || index >= actions.length){
+      actions.clear();
+      index = -1;
+      available = true;
+      return;
+    }
+
+    final action = actions[index];
+    if (action.call() != false){
+      index++;
+    }
+  }
+
+  AmuletPlayerScript wait({int seconds = 0}) {
+    final frames = seconds * Amulet.Frames_Per_Second;
+    final endFrame = player.amuletGame.frame + frames;
+    return add(() => player.amuletGame.frame >= endFrame);
+  }
+
+  AmuletPlayerScript add(Function() action){
+    actions.add(action);
+    return this;
+  }
+
+  AmuletPlayerScript playerControlsDisabled() => playerControls(false);
+
+  AmuletPlayerScript playerControlsEnabled() => playerControls(true);
+
+  AmuletPlayerScript playerControls(bool enabled) =>
+      add(() {
+        player.controlsEnabled = enabled;
+      });
+
+  AmuletPlayerScript movePlayerToSceneKey(String sceneKey) =>
+      movePositionToSceneKey(player, sceneKey);
+
+  AmuletPlayerScript movePositionToSceneKey(Position position, String sceneKey) {
+    final scene = player.amuletGame.scene;
+    final index = scene.getKey(sceneKey);
+    return movePositionToIndex(position, index);
+  }
+
+  AmuletPlayerScript movePositionToIndex(Position position, int index) => add(() {
+      final scene = player.amuletGame.scene;
+      position.x = scene.getIndexX(index);
+      position.y = scene.getIndexY(index);
+      position.z = scene.getIndexZ(index);
+    });
+
+  AmuletPlayerScript cameraSetTarget(Position? position) =>
+      add(() {
+        player.cameraTarget = position;
+      });
+
+  AmuletPlayerScript talk(String text, {List<TalkOption>? options}) {
+    var initialized = false;
+    return add(() {
+      if (initialized) {
+        return !player.interacting;
+      }
+      player.talk(text, options: options);
+      initialized = true;
+      return false;
+    });
+  }
+
+  AmuletPlayerScript cameraClearTarget() => cameraSetTarget(null);
 }
