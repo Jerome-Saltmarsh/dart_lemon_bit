@@ -78,7 +78,17 @@ class AmuletGameTutorial extends AmuletGame {
   void updateScripts() {
     final scripts = this.scripts;
     for (var i = 0; i <scripts.length; i++){
-      scripts[i].update();
+
+      final script = scripts[i];
+
+      if (script.finished){
+        scripts.removeAt(i);
+        i--;
+      } else {
+        script.update();
+      }
+
+
     }
   }
 
@@ -93,6 +103,9 @@ class AmuletGameTutorial extends AmuletGame {
   bool objectiveActiveSpeakToGuide(AmuletPlayer player) => player.readFlag('guide_met');
 
   void objectiveApplySpeakToGuide(AmuletPlayer player) {
+
+
+
     player.cameraTarget = guide;
     actionSetCameraTargetGuide(player);
     player.talk('danger does lie ahead');
@@ -173,9 +186,7 @@ class AmuletGameTutorial extends AmuletGame {
 
     if (player.readFlag('introduction')){
 
-      final script = AmuletPlayerScript(player);
-
-      script
+      runScript(player)
         .playerControlsDisabled()
         .movePlayerToSceneKey(keysPlayerSpawn)
         .movePositionToSceneKey(guide, keysGuideSpawn0)
@@ -190,8 +201,6 @@ class AmuletGameTutorial extends AmuletGame {
         .playerControlsEnabled()
         .cameraClearTarget()
       ;
-
-      scripts.add(script);
 
       // actionPlayerControlsDisabled(player);
       // actionMovePlayerToSpawn01(player);
@@ -396,6 +405,12 @@ class AmuletGameTutorial extends AmuletGame {
 
   void actionMoveGuideToFiend01() {
     actionMoveOxToSceneKey(keysFiend01);
+  }
+
+  AmuletPlayerScript runScript(AmuletPlayer player){
+     final instance = AmuletPlayerScript(player);
+     scripts.add(instance);
+     return instance;
   }
 }
 

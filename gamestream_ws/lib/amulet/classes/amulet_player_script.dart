@@ -6,26 +6,15 @@ import 'amulet_player.dart';
 import 'talk_option.dart';
 
 class AmuletPlayerScript {
-  final AmuletPlayer player;
   final actions = <Function()>[];
+  final AmuletPlayer player;
   var index = 0;
-  var running = true;
 
   AmuletPlayerScript(this.player);
 
+  bool get finished => index < 0 || index >= actions.length;
+
   void update(){
-
-    if (!running){
-      return;
-    }
-
-    if (index < 0 || index >= actions.length){
-      actions.clear();
-      index = -1;
-      running = false;
-      return;
-    }
-
     final action = actions[index];
     if (action.call() != false){
       index++;
