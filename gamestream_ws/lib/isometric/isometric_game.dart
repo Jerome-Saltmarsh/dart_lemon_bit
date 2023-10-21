@@ -670,7 +670,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     customOnNodeDestroyed(nodeType, nodeIndex, orientation);
   }
 
-  void activateCollider(Collider collider) {
+  void activate(Collider collider) {
     if (collider.active) return;
     collider.active = true;
     if (collider is GameObject) {
@@ -953,7 +953,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (player.aliveAndActive) return;
 
     player.setCharacterStateSpawning();
-    activateCollider(player);
+    activate(player);
     player.physical = true;
     player.hitable = true;
     player.health = player.maxHealth;

@@ -279,7 +279,7 @@ class AmuletGameTutorial extends AmuletGame {
 
   void actionSpawnFiends02() {
     final fiend02Index = getSceneKey(keysFiend02);
-    for (var i = 0; i < 2; i++) {
+    for (var i = 0; i < 3; i++) {
       const shiftRadius = 10;
       spawnFiendTypeAtIndex(
         fiendType: FiendType.Fallen_01,
@@ -383,7 +383,7 @@ class AmuletGameTutorial extends AmuletGame {
   }
 
   void actionActivateGuide() {
-    activateCollider(guide);
+    activate(guide);
   }
 
   void actionCameraTargetGuide(AmuletPlayer player) {
@@ -404,6 +404,10 @@ class AmuletGameTutorial extends AmuletGame {
     deactivate(guide);
   }
 
+  void activateGuide(){
+    activate(guide);
+  }
+
   void onSpellHealUsedForTheFirstTime(AmuletPlayer player) => runScript(player)
       .controlsDisabled()
       .talk(
@@ -418,5 +422,35 @@ class AmuletGameTutorial extends AmuletGame {
       .add(deactivateGuide)
       .add(actionSpawnFiends02)
       .playerControlsEnabled();
+
+
+  @override
+  void onPlayerLevelGained(AmuletPlayer player) {
+    if (player.level == 2){
+      runScript(player)
+          .controlsDisabled()
+          .wait(seconds: 1)
+          .movePositionToSceneKey(guide, keysFiend02)
+          .add(activateGuide)
+          .talk(
+            'one has gained a level.'
+            'one must learn of the elements.'
+            'five types there are.'
+            'fire.'
+            'water.'
+            'wind.'
+            'earth.'
+            'electricity.'
+            'the effectiveness of each item is determined by these elements.'
+            'the sword one doth possess is at level 1.'
+            'level two demands one have at least 1 element of fire.'
+            'hover the mouse over an item to see this information.'
+            'to improve an element press on the element icon at the top left of the screen.'
+            'a final challenge doth await one.'
+          )
+          .playerControlsEnabled()
+      ;
+    }
+  }
 }
 
