@@ -221,22 +221,6 @@ class AmuletGameTutorial extends AmuletGame {
     }
   }
 
-  void actionPlayerTalkIntroduction(AmuletPlayer player) {
-    player.talk(
-      'greetings other.'
-      'one is here to guide another.'
-      'left click the mouse to move.'
-    );
-  }
-
-  void actionMoveGuideToGuideSpawn0() {
-    actionMoveOxToSceneKey(keysGuideSpawn0);
-  }
-
-  void actionMoveGuideToGuideSpawn1() {
-    actionMoveOxToSceneKey(keysGuideSpawn1);
-  }
-
   void actionMoveOxToSceneKey(String sceneKey){
     actionMovePositionToSceneKey(guide, sceneKey);
   }
@@ -320,10 +304,11 @@ class AmuletGameTutorial extends AmuletGame {
 
   }
 
-  void actionOpenDoor01(AmuletPlayer player) {
+  void onAcquiredWeaponSword(AmuletPlayer player) {
 
     runScript(player)
       .playerControlsDisabled()
+      .wait(seconds: 1)
       .cameraSetTargetSceneKey(keysDoor01)
       .wait(seconds: 2)
       .setNodeEmptyAtSceneKey(keysDoor01)
@@ -371,7 +356,7 @@ class AmuletGameTutorial extends AmuletGame {
   void onAmuletItemAcquired(AmuletPlayer player, AmuletItem amuletItem) {
     if (amuletItem == AmuletItem.Weapon_Rusty_Old_Sword){
       if (player.readFlag('acquired_weapon_sword')){
-        actionOpenDoor01(player);
+        onAcquiredWeaponSword(player);
       }
       return;
     }

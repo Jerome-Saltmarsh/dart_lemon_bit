@@ -6,13 +6,13 @@ import 'amulet_player.dart';
 import 'talk_option.dart';
 
 class AmuletPlayerScript {
-  final actions = <Function()>[];
+  final actions = <Function>[];
   final AmuletPlayer player;
   var index = 0;
 
   AmuletPlayerScript(this.player);
 
-  bool get finished => index < 0 || index >= actions.length;
+  bool get finished => index >= actions.length;
 
   void update(){
     final action = actions[index];
@@ -26,16 +26,13 @@ class AmuletPlayerScript {
     var endFrame = -1;
 
     return add(() {
+      final currentFrame = getAmuletGame().frame;
       if (endFrame == -1){
-        endFrame = player.amuletGame.frame + frames;
+        log('wait(seconds: $seconds)');
+        endFrame = currentFrame + frames;
       }
-      return player.amuletGame.frame >= endFrame;
+      return currentFrame >= endFrame;
     });
-  }
-
-  AmuletPlayerScript add(Function() action){
-    actions.add(action);
-    return this;
   }
 
   AmuletPlayerScript playerControlsDisabled() => playerControls(false);
@@ -44,7 +41,10 @@ class AmuletPlayerScript {
 
   AmuletPlayerScript playerControls(bool enabled) =>
       add(() {
-        if (!enabled) {
+        log('playerControls(enabled: $enabled)');
+        if (enabled){
+          player.cameraTarget = player;
+        } else {
           setCharacterStateIdle(player);
           player.clearPath();
           player.setDestinationToCurrentPosition();
@@ -72,8 +72,10 @@ class AmuletPlayerScript {
       add(() => player.cameraTarget = position);
 
   AmuletPlayerScript cameraSetTargetSceneKey(String sceneKey) =>
-      add(() =>
-        player.cameraTarget = getSceneKeyPosition(sceneKey));
+      add(() {
+        log('cameraSetTargetSceneKey("$sceneKey")');
+        return player.cameraTarget = getSceneKeyPosition(sceneKey);
+      });
 
   AmuletPlayerScript talk(String text, {List<TalkOption>? options}) {
     var initialized = false;
@@ -83,6 +85,7 @@ class AmuletPlayerScript {
       }
       player.talk(text, options: options);
       initialized = true;
+      log('talk(text: "$text")');
       return false;
     });
   }
@@ -104,12 +107,24 @@ class AmuletPlayerScript {
 
   AmuletGame getAmuletGame() => player.amuletGame;
 
-  AmuletPlayerScript setNodeEmptyAtSceneKey(String sceneKey) =>
-      setNodeEmptyAtIndex(getSceneKeyIndex(sceneKey));
+  AmuletPlayerScript setNodeEmptyAtSceneKey(String sceneKey) {
+    return setNodeEmptyAtIndex(getSceneKeyIndex(sceneKey));
+  }
 
   AmuletPlayerScript setNodeEmptyAtIndex(int index) =>
       add(() {
-        getScene().setNodeEmpty(index);
+        log('setNodeEmptyAtIndex($index)');
+        getAmuletGame().setNodeEmpty(index);
       });
+
+  AmuletPlayerScript add(Function() action){
+    actions.add(action);
+    return this;
+  }
+
+  void log(String text){
+    print('script.log: $text');
+  }
 }
+
 
