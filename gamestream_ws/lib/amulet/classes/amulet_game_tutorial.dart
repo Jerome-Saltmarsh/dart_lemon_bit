@@ -108,11 +108,6 @@ class AmuletGameTutorial extends AmuletGame {
       .cameraSetTarget(guide)
       .talk('danger doth lie ahead')
       .add(actionSpawnWeaponAtGuide);
-
-    // player.cameraTarget = guide;
-    // actionSetCameraTargetGuide(player);
-    // player.talk('danger does lie ahead');
-    // player.onInteractionOver = actionSpawnWeaponAtGuide;
   }
 
   void actionSetCameraTargetGuide(AmuletPlayer player) {
@@ -169,11 +164,11 @@ class AmuletGameTutorial extends AmuletGame {
 
   void refreshPlayerGameState(AmuletPlayer player) {
 
-    if (player.flagSet(flagsDoor01Opened)){
-      actionOpenDoor01(player);
-    } else {
-      actionCloseDoor01();
-    }
+    // if (player.flagSet(flagsDoor01Opened)){
+    //   actionOpenDoor01(player);
+    // } else {
+    //   actionCloseDoor01();
+    // }
 
     if (!player.flagSet('fiend01_defeated')){
       actionInstantiateFiend01();
@@ -326,20 +321,29 @@ class AmuletGameTutorial extends AmuletGame {
   }
 
   void actionOpenDoor01(AmuletPlayer player) {
-    actionPlayerControlsDisabled(player);
-    final door01Index = scene.getKey(keysDoor01);
-    final door01Position = Position();
-    scene.movePositionToIndex(door01Position, door01Index);
-    player.cameraTarget = door01Position;
 
-    addJob(seconds: 2, action: (){
-      player.readFlag(flagsDoor01Opened);
-      setNodeEmpty(getSceneKey(keysDoor01));
-      addJob(seconds: 2, action: (){
-        actionClearCameraTarget(player);
-        actionPlayerControlsEnabled(player);
-      });
-    });
+    runScript(player)
+      .playerControlsDisabled()
+      .cameraSetTargetSceneKey(keysDoor01)
+      .wait(seconds: 2)
+      .setNodeEmptyAtSceneKey(keysDoor01)
+      .wait(seconds: 1)
+      .playerControlsEnabled();
+
+    // actionPlayerControlsDisabled(player);
+    // final door01Index = scene.getKey(keysDoor01);
+    // final door01Position = Position();
+    // scene.movePositionToIndex(door01Position, door01Index);
+    // player.cameraTarget = door01Position;
+
+    // addJob(seconds: 2, action: (){
+    //   player.readFlag(flagsDoor01Opened);
+    //   setNodeEmpty(getSceneKey(keysDoor01));
+    //   addJob(seconds: 2, action: (){
+    //     actionClearCameraTarget(player);
+    //     actionPlayerControlsEnabled(player);
+    //   });
+    // });
   }
 
   void actionFaceOneAnother(Character a, Character b) {
@@ -374,7 +378,6 @@ class AmuletGameTutorial extends AmuletGame {
 
     if (amuletItem == AmuletItem.Spell_Heal){
       if (player.readFlag('acquired_spell_heal')){
-        actionOpenDoor01(player);
         actionPlayerControlsDisabled(player);
         actionMoveGuideToFiend01();
         actionCameraTargetGuide(player);

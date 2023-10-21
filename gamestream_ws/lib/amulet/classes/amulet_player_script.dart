@@ -23,8 +23,14 @@ class AmuletPlayerScript {
 
   AmuletPlayerScript wait({int seconds = 0}) {
     final frames = seconds * Amulet.Frames_Per_Second;
-    final endFrame = player.amuletGame.frame + frames;
-    return add(() => player.amuletGame.frame >= endFrame);
+    var endFrame = -1;
+
+    return add(() {
+      if (endFrame == -1){
+        endFrame = player.amuletGame.frame + frames;
+      }
+      return player.amuletGame.frame >= endFrame;
+    });
   }
 
   AmuletPlayerScript add(Function() action){
@@ -38,6 +44,11 @@ class AmuletPlayerScript {
 
   AmuletPlayerScript playerControls(bool enabled) =>
       add(() {
+        if (!enabled) {
+          setCharacterStateIdle(player);
+          player.clearPath();
+          player.setDestinationToCurrentPosition();
+        }
         player.controlsEnabled = enabled;
       });
 
@@ -48,7 +59,7 @@ class AmuletPlayerScript {
       Position position,
       String sceneKey,
   ) =>
-      movePositionToIndex(position, getSceneKey(sceneKey));
+      movePositionToIndex(position, getSceneKeyIndex(sceneKey));
 
   AmuletPlayerScript movePositionToIndex(Position position, int index) => add(() {
     final scene = getScene();
@@ -59,6 +70,10 @@ class AmuletPlayerScript {
 
   AmuletPlayerScript cameraSetTarget(Position? position) =>
       add(() => player.cameraTarget = position);
+
+  AmuletPlayerScript cameraSetTargetSceneKey(String sceneKey) =>
+      add(() =>
+        player.cameraTarget = getSceneKeyPosition(sceneKey));
 
   AmuletPlayerScript talk(String text, {List<TalkOption>? options}) {
     var initialized = false;
@@ -74,11 +89,27 @@ class AmuletPlayerScript {
 
   AmuletPlayerScript cameraClearTarget() => cameraSetTarget(null);
 
-  int getSceneKey(String sceneKey) =>
+  Position getSceneKeyPosition(String sceneKey){
+    final position = Position();
+    getScene().movePositionToIndex(
+        position, getSceneKeyIndex(sceneKey)
+    );
+    return position;
+  }
+
+  int getSceneKeyIndex(String sceneKey) =>
       getScene().getKey(sceneKey);
 
   Scene getScene() => getAmuletGame().scene;
 
   AmuletGame getAmuletGame() => player.amuletGame;
+
+  AmuletPlayerScript setNodeEmptyAtSceneKey(String sceneKey) =>
+      setNodeEmptyAtIndex(getSceneKeyIndex(sceneKey));
+
+  AmuletPlayerScript setNodeEmptyAtIndex(int index) =>
+      add(() {
+        getScene().setNodeEmpty(index);
+      });
 }
 
