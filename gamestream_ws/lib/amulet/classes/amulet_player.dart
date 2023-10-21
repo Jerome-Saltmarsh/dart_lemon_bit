@@ -265,6 +265,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     if (!value){
       onInteractionOver?.call();
       onInteractionOver = null;
+      cameraTarget = null;
     }
 
     writeInteracting();

@@ -8,9 +8,9 @@ class Position implements Comparable<Position> {
   double z;
 
   Position({
-    required this.x,
-    required this.y,
-    required this.z,
+    this.x = 0,
+    this.y = 0,
+    this.z = 0,
   });
 
   int get indexRow => x ~/ Node_Size;

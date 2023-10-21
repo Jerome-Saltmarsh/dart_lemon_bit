@@ -11,12 +11,10 @@ class AmuletGameTutorial extends AmuletGame {
   static const keysGuideSpawn0 = 'guide_spawn_0';
   static const keysGuideSpawn1 = 'guide_spawn_1';
   static const keysPlayerSpawn = 'player_spawn_00';
-  static const keysDoor = 'door';
+  static const keysDoor01 = 'door01';
   static const keysFiend01 = 'fiend01';
 
-  late final talkOptionAcceptSword = TalkOption('Accept Sword', onObjectiveAccomplishedAcceptSword);
-  late final talkOptionSkipTutorial = TalkOption('Skip Tutorial', amulet.movePlayerToTown);
-  late final talkOptionsGoodbye = TalkOption('Goodbye', endPlayerInteraction);
+  static const flagsDoor01Opened = 'door01_opened';
 
   late final Character guide;
   Character? fiend01;
@@ -29,13 +27,13 @@ class AmuletGameTutorial extends AmuletGame {
     required super.name,
     required super.fiendTypes,
   }) {
-    guide = buildAmuletNpcOx();
+    guide = buildAmuletNpcGuide();
     add(guide);
   }
 
-  AmuletNpc buildAmuletNpcOx() => AmuletNpc(
-    name: 'Ox',
-    interact: onInteractedWithOx,
+  AmuletNpc buildAmuletNpcGuide() => AmuletNpc(
+    name: 'Guide',
+    interact: onInteractedWithGuide,
     x: 1000,
     y: 1400,
     z: 25,
@@ -48,7 +46,6 @@ class AmuletGameTutorial extends AmuletGame {
     weaponCooldown: 50,
     invincible: true,
   )
-
     ..complexion = 20
     ..legsType = LegType.Leather
     ..bodyType = BodyType.Leather_Armour;
@@ -68,22 +65,28 @@ class AmuletGameTutorial extends AmuletGame {
     }
   }
 
-  void onInteractedWithOx(AmuletPlayer player){
+  void onInteractedWithGuide(AmuletPlayer player){
 
-    if (objectiveActiveSpeakToOz(player)) {
-      objectiveApplySpeakToOx(player);
+    if (objectiveActiveSpeakToGuide(player)) {
+      objectiveApplySpeakToGuide(player);
       return;
     }
   }
 
-  bool objectiveActiveSpeakToOz(AmuletPlayer player) => player.readFlag('ox_met');
+  bool objectiveActiveSpeakToGuide(AmuletPlayer player) => player.readFlag('guide_met');
 
-  void objectiveApplySpeakToOx(AmuletPlayer player) {
-    player.talk('in the path ahead lies danger');
-    player.onInteractionOver = actionOxSpawnWeapon;
+  void objectiveApplySpeakToGuide(AmuletPlayer player) {
+    player.cameraTarget = guide;
+    actionSetCameraTargetGuide(player);
+    player.talk('danger does lie ahead');
+    player.onInteractionOver = actionSpawnWeaponAtGuide;
   }
 
-  void actionOxSpawnWeapon() {
+  void actionSetCameraTargetGuide(AmuletPlayer player) {
+    actionSetCameraTarget(player, guide);
+  }
+
+  void actionSpawnWeaponAtGuide() {
     spawnAmuletItem(
         item: AmuletItem.Weapon_Rusty_Old_Sword,
         x: guide.x,
@@ -99,7 +102,7 @@ class AmuletGameTutorial extends AmuletGame {
 
   void onObjectiveAccomplishedAcceptSword(AmuletPlayer player) {
     player.data['weapon_accepted'] = true;
-    final doorIndex = getSceneKey(keysDoor);
+    final doorIndex = getSceneKey(keysDoor01);
     scene.setNodeEmpty(doorIndex);
     onNodeChanged(doorIndex);
     player.acquireAmuletItem(AmuletItem.Weapon_Rusty_Old_Sword);
@@ -146,7 +149,19 @@ class AmuletGameTutorial extends AmuletGame {
     refreshPlayerGameState(player);
   }
 
+  @override
+  void customOnPlayerRevived(AmuletPlayer player) {
+    super.customOnPlayerRevived(player);
+    refreshPlayerGameState(player);
+  }
+
   void refreshPlayerGameState(AmuletPlayer player) {
+
+    if (player.flagSet(flagsDoor01Opened)){
+      actionOpenDoor01(player);
+    } else {
+      actionCloseDoor01();
+    }
 
     if (!player.flagSet('fiend01_defeated')){
       actionInstantiateFiend01();
@@ -219,9 +234,9 @@ class AmuletGameTutorial extends AmuletGame {
       ..respawnDurationTotal = -1;
   }
 
-  void actionSetDoorEnabled() {
+  void actionCloseDoor01() {
      setNode(
-      nodeIndex: getSceneKey(keysDoor),
+      nodeIndex: getSceneKey(keysDoor01),
       nodeType: NodeType.Wood,
       nodeOrientation: NodeOrientation.Half_West,
     );
@@ -274,8 +289,22 @@ class AmuletGameTutorial extends AmuletGame {
 
   }
 
-  void actionSetDoorDisabled() =>
-      setNodeEmpty(getSceneKey('door'));
+  void actionOpenDoor01(AmuletPlayer player) {
+    actionPlayerControlsDisabled(player);
+    final door01Index = scene.getKey(keysDoor01);
+    final door01Position = Position();
+    scene.movePositionToIndex(door01Position, door01Index);
+    player.cameraTarget = door01Position;
+
+    addJob(seconds: 2, action: (){
+      player.readFlag(flagsDoor01Opened);
+      setNodeEmpty(getSceneKey(keysDoor01));
+      addJob(seconds: 2, action: (){
+        actionClearCameraTarget(player);
+        actionPlayerControlsEnabled(player);
+      });
+    });
+  }
 
   void actionFaceOneAnother(Character a, Character b) {
      a.face(b);
@@ -302,14 +331,14 @@ class AmuletGameTutorial extends AmuletGame {
   void onAmuletItemAcquired(AmuletPlayer player, AmuletItem amuletItem) {
     if (amuletItem == AmuletItem.Weapon_Rusty_Old_Sword){
       if (player.readFlag('acquired_weapon_sword')){
-        actionSetDoorDisabled();
+        actionOpenDoor01(player);
       }
       return;
     }
 
     if (amuletItem == AmuletItem.Spell_Heal){
       if (player.readFlag('acquired_spell_heal')){
-        actionSetDoorDisabled();
+        actionOpenDoor01(player);
         actionPlayerControlsDisabled(player);
         actionMoveGuideToFiend01();
         actionCameraTargetGuide(player);
@@ -338,7 +367,7 @@ class AmuletGameTutorial extends AmuletGame {
   }
 
   void actionCameraTargetGuide(AmuletPlayer player) {
-    actionSetCameraTarget(player, guide);
+    actionSetCameraTargetGuide(player);
   }
 
   void actionMoveGuideToFiend01() {

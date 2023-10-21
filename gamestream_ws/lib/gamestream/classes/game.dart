@@ -62,19 +62,20 @@ abstract class Game <T extends Player> {
     bool repeat = false,
   }) {
     final frames = (fps * seconds).toInt();
-     for (final job in jobs){
-         if (job.repeat) continue;
-         if (job.remaining > 0) continue;
-         job.remaining = frames;
-         job.duration = frames;
-         job.action = action;
-         job.repeat = repeat;
-         return;
-     }
-     jobs.add(GameJob(frames, action, repeat: repeat));
+    for (final job in jobs) {
+      if (!job.available) continue;
+      job.remaining = frames;
+      job.duration = frames;
+      job.action = action;
+      job.repeat = repeat;
+      job.available = false;
+      return;
+    }
+    jobs.add(GameJob(frames, action, repeat: repeat));
   }
 
   void updateJobs() {
+    final jobs = this.jobs;
     for (var i = 0; i < jobs.length; i++) {
       final job = jobs[i];
       if (job.remaining <= 0) continue;
@@ -85,6 +86,9 @@ abstract class Game <T extends Player> {
         job.remaining = job.duration;
       } else {
         job.action = _clearJob;
+        job.duration = 0;
+        job.remaining = 0;
+        job.available = true;
       }
     }
   }
