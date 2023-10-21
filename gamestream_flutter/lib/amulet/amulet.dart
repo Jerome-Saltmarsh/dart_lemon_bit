@@ -1,6 +1,7 @@
 
 import 'package:gamestream_flutter/amulet/amulet_ui.dart';
 import 'package:gamestream_flutter/packages/common.dart';
+import 'package:gamestream_flutter/packages/lemon_websocket_client/connection_status.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
@@ -113,14 +114,13 @@ class Amulet extends IsometricGame {
       }
     }
 
-    // double zoomTarget;
-    // if (player.characterState == CharacterState.Running){
-    //   zoomTarget = 1.0;
-    // } else {
-    //   zoomTarget = 2.0;
-    //
-    // }
-    // engine.zoom += (zoomTarget - engine.zoom) * 0.025;
+    if (options.playMode) {
+      if (cameraTargetSet.value){
+        camera.target = cameraTarget;
+      } else {
+        camera.target = player.position;
+      }
+    }
   }
 
   void clearError() {
@@ -373,15 +373,20 @@ class Amulet extends IsometricGame {
   }
 
   void onChangedCameraTargetSet(bool cameraTargetSet) {
+    print('amulet.onChangedCameraTargetSet("$cameraTargetSet")');
+    options.setCameraPlay(cameraTargetSet ? cameraTarget : player.position);
+  }
 
-    if (options.editMode){
-      return;
-    }
+  void onChangedNetworkConnectionStatus(ConnectionStatus connection) {
 
-    if (cameraTargetSet){
-      options.cameraPlay = player.position;
-    } else {
-      options.cameraPlay = cameraTarget;
-    }
+     switch (connection){
+       case ConnectionStatus.Connected:
+         options.edit.value = false;
+         cameraTargetSet.value = false;
+
+         break;
+       default:
+         break;
+     }
   }
 }

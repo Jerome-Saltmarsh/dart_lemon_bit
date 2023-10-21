@@ -138,7 +138,7 @@ class IsometricPlayer with IsometricComponent {
 
   void onChangedDebugging(bool debugging) {
     if (!debugging) {
-      action.cameraPlayerTargetPlayer();
+      actions.cameraPlayerTargetPlayer();
     }
   }
 

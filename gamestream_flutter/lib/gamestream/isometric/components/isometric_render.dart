@@ -124,10 +124,34 @@ class IsometricRender with IsometricComponent {
     renderEditMode();
     renderMouseTargetName();
 
+    if (options.renderCameraTargets){
+      renderCameraTargets();
+    }
 
     debug.drawCanvas();
     options.game.value.drawCanvas(canvas, size);
     options.rendersSinceUpdate.value++;
+  }
+
+  void renderCameraTargets() {
+    final cameraTarget = camera.target;
+    if (cameraTarget != null){
+      engine.color = Colors.blue;
+      render.circleOutlineAtPosition(
+        position: cameraTarget,
+        radius: 16,
+      );
+    }
+
+    if (options.playMode){
+      if (amulet.cameraTargetSet.value){
+        engine.color = Colors.red;
+          render.circleOutlineAtPosition(
+             position: amulet.cameraTarget,
+             radius: 16,
+          );
+      }
+    }
   }
 
   void renderPlayerHeightMap() {

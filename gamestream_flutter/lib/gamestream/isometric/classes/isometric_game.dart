@@ -40,7 +40,7 @@ class IsometricGame extends Game {
   @override
   void onActivated() {
     options.windowOpenMenu.setFalse();
-    action.cameraPlayerTargetPlayer();
+    actions.cameraPlayerTargetPlayer();
 
     audio.musicStop();
     // engine.onMouseMoved = io.touchController.onMouseMoved;
@@ -153,7 +153,7 @@ class IsometricGame extends Game {
     // play mode
 
     if (key == KeyCode.Z) {
-      action.toggleZoom();
+      actions.toggleZoom();
       return;
     }
 

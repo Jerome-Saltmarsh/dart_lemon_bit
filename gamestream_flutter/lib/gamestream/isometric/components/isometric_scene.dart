@@ -1918,7 +1918,7 @@ class IsometricScene with IsometricComponent implements Updatable {
         continue;
       }
       if (projectile.type == ProjectileType.Fireball) {
-        action.spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
+        actions.spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
         continue;
       }
       if (projectile.type == ProjectileType.Orb) {

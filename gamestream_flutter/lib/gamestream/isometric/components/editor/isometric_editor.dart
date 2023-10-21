@@ -646,12 +646,12 @@ class IsometricEditor with IsometricComponent {
       allowedExtensions: ['scene'],
     );
     if (result == null) {
-      action.showMessage('result == null');
+      actions.showMessage('result == null');
       return;
     }
     final sceneBytes = result.files[0].bytes;
     if (sceneBytes == null) {
-      action.showMessage('contents == null');
+      actions.showMessage('contents == null');
       return;
     }
     loadScene(sceneBytes);
@@ -727,7 +727,6 @@ class IsometricEditor with IsometricComponent {
   }
 
   void cameraCenterOnNodeSelectedIndex() {
-    // camera.cameraSetPositionGrid(row, column, z);
     final index = nodeSelectedIndex.value;
     final cameraEdit = options.cameraEdit;
     cameraEdit.x = scene.getIndexPositionX(index);

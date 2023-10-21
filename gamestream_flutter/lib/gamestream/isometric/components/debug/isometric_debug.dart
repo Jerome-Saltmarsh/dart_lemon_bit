@@ -250,7 +250,7 @@ class IsometricDebug with IsometricComponent {
       if (enabled){
         camera.target = null;
       } else {
-        action.cameraPlayerTargetPlayer();
+        actions.cameraPlayerTargetPlayer();
       }
   }
 

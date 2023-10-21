@@ -18,7 +18,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
   var cameraPlay = Position();
   var cameraEdit = Position();
 
-
+  var renderCameraTargets = true;
   var emitLightsUsingRecursion = false;
   var renderRunLine = false;
   var renderVisibilityBeams = false;
@@ -95,7 +95,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
   void _onChangedGameType(GameType value) {
     print('onChangedGameType(${value.name})');
     io.reset();
-    action.startGameByType(value);
+    actions.startGameByType(value);
   }
 
   void _onChangedGameError(GameError? gameError){
@@ -130,17 +130,15 @@ class IsometricOptions with IsometricComponent implements Updatable {
 
   void _onChangedEdit(bool value) {
     if (value) {
-
-      camera.target = options.cameraEdit;
       editor.cameraCenterOnNodeSelectedIndex();
       io.enabledMouseClick = editor.editorTab.value != EditorTab.Marks;
-      // camera.target = null;
       editor.cursorSetToPlayer();
+      camera.target = options.cameraEdit;
     } else {
-      camera.target = options.cameraPlay;
       io.enabledMouseClick = true;
-      action.cameraPlayerTargetPlayer();
+      actions.cameraPlayerTargetPlayer();
       editor.deselectGameObject();
+      camera.target = options.cameraPlay;
     }
   }
 
@@ -206,6 +204,14 @@ class IsometricOptions with IsometricComponent implements Updatable {
 
   void startOperation(OperationStatus status){
     operationStatus.value = status;
+  }
+
+  void setCameraPlay(Position value){
+    if (cameraPlay == value) {
+      return;
+    }
+    cameraPlay = value;
+    print('options.setCameraPlay($value)');
   }
 
 }

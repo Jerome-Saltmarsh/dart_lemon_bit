@@ -33,7 +33,7 @@ class IsometricActions with IsometricComponent {
       final angle = piQuarter * i;
       final speed = randomBetween(0.5, 3.5);
 
-      action.spawnParticleFire(
+      actions.spawnParticleFire(
           x: x,
           y: y,
           z: z,
@@ -83,7 +83,7 @@ class IsometricActions with IsometricComponent {
   }
 
   void cameraPlayerTargetPlayer(){
-    options.cameraPlay = player.position;
+    options.setCameraPlay(player.position);
   }
 
   void spawnPurpleFireExplosion(double x, double y, double z, {int amount = 5}){

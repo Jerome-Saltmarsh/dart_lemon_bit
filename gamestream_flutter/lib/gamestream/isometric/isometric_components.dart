@@ -160,7 +160,7 @@ class IsometricComponents extends ComponentContainer {
       component.ui = ui;
       component.io = io;
       component.render = render;
-      component.action = action;
+      component.actions = action;
       component.events = events;
       component.parser = responseReader;
       component.website = website;

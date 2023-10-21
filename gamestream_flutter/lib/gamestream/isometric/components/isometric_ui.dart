@@ -271,10 +271,10 @@ class IsometricUI with IsometricComponent {
     if (message.isEmpty) return nothing;
     return MouseRegion(
       onEnter: (_){
-        action.messageClear();
+        actions.messageClear();
       },
       child: onPressed(
-        action: action.messageClear,
+        action: actions.messageClear,
         child: Container(
             padding: const EdgeInsets.all(10),
             color: Colors.black12,
@@ -359,7 +359,7 @@ class IsometricUI with IsometricComponent {
               child: buildAtlasIconType(IconType.Fullscreen, scale: Icon_Scale))));
 
   Widget buildIconZoom() => onPressed(
-      action: action.toggleZoom, child: buildAtlasIconType(IconType.Zoom, scale: Icon_Scale));
+      action: actions.toggleZoom, child: buildAtlasIconType(IconType.Zoom, scale: Icon_Scale));
 
   Widget buildIconMenu() => onPressed(
       action: options.windowOpenMenu.toggle,

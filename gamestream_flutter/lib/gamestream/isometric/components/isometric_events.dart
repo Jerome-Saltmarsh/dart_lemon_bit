@@ -180,7 +180,7 @@ class IsometricEvents with IsometricComponent {
         break;
 
       case GameEventType.Blue_Orb_Deactivated:
-        action.spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
+        actions.spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
         for (var i = 0; i < 8; i++) {
           particles.spawnParticleOrbShard(
               x: x, y: y, z: z, duration: 30, speed: randomBetween(1, 2), angle: randomAngle());
@@ -252,7 +252,7 @@ class IsometricEvents with IsometricComponent {
   }
 
   void onGameEventExplosion(double x, double y, double z) {
-    action.createExplosion(x, y, z);
+    actions.createExplosion(x, y, z);
   }
 
   void onNodeSet(double x, double y, double z) {
@@ -374,7 +374,7 @@ class IsometricEvents with IsometricComponent {
         break;
       case PlayerEvent.Level_Increased:
         audio.buff_1();
-        action.writeMessage('Level Gained');
+        actions.writeMessage('Level Gained');
         break;
       case PlayerEvent.Item_Consumed:
         final consumableType = parser.readByte();
@@ -420,13 +420,13 @@ class IsometricEvents with IsometricComponent {
         io.recenterCursor();
         break;
       case PlayerEvent.Insufficient_Gold:
-        action.writeMessage('Not Enough Gold');
+        actions.writeMessage('Not Enough Gold');
         break;
       case PlayerEvent.Inventory_Full:
-        action.writeMessage('Inventory Full');
+        actions.writeMessage('Inventory Full');
         break;
       case PlayerEvent.Invalid_Request:
-        action.writeMessage('Invalid Request');
+        actions.writeMessage('Invalid Request');
         break;
       case PlayerEvent.Character_State_Changing:
         audio.change_cloths();
@@ -590,6 +590,9 @@ class IsometricEvents with IsometricComponent {
     print('isometric.onChangedNetworkConnectionStatus($connection)');
     network.parser.bufferSize.value = 0;
 
+
+    amulet.onChangedNetworkConnectionStatus(connection);
+
     switch (connection) {
       case ConnectionStatus.Connected:
         engine.zoomOnScroll = true;
@@ -597,7 +600,7 @@ class IsometricEvents with IsometricComponent {
         engine.targetZoom = 1.0;
         audio.enabledSound.value = true;
         options.edit.value = false;
-        options.cameraPlay = player.position;
+        actions.cameraPlayerTargetPlayer();
         camera.target = options.cameraPlay;
         if (!engine.isLocalHost) {
           engine.fullScreenEnter();
@@ -612,8 +615,8 @@ class IsometricEvents with IsometricComponent {
         engine.cursorType.value = CursorType.Basic;
         engine.fullScreenExit();
         player.active.value = false;
-        action.clear();
-        action.clean();
+        actions.clear();
+        actions.clean();
         scene.gameObjects.clear();
         scene.editEnabled.value = false;
         options.gameType.value = GameType.Website;

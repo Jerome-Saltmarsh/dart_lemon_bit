@@ -168,11 +168,7 @@ class AmuletGameTutorial extends AmuletGame {
 
       addJob(seconds: 2, action: () {
         actionCameraTargetGuide(player);
-        player.talk(
-          'greetings other one.'
-          'one is here to guide another.'
-          'left click the mouse to move.'
-        );
+        actionPlayerTalkIntroduction(player);
 
         player.onInteractionOver = () {
           addJob(seconds: 1, action: () {
@@ -184,6 +180,14 @@ class AmuletGameTutorial extends AmuletGame {
       });
       return;
     }
+  }
+
+  void actionPlayerTalkIntroduction(AmuletPlayer player) {
+    player.talk(
+      'greetings other.'
+      'one is here to guide another.'
+      'left click the mouse to move.'
+    );
   }
 
   void actionMoveGuideToGuideSpawn0() {

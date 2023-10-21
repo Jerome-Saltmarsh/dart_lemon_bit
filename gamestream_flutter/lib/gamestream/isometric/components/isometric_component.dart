@@ -42,7 +42,7 @@ mixin IsometricComponent implements Component {
   late final IsometricMouse mouse;
   late final IsometricUI ui;
   late final IsometricRender render;
-  late final IsometricActions action;
+  late final IsometricActions actions;
   late final IsometricEvents events;
   late final IsometricOptions options;
   late final IsometricParser parser;
