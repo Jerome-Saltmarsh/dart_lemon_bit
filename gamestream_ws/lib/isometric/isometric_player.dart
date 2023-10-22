@@ -1344,4 +1344,10 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   void initialize() {
 
   }
+
+  void writeZoom(double value){
+    writeByte(NetworkResponse.Isometric);
+    writeByte(NetworkResponseIsometric.Zoom);
+    writeDouble(value * 10);
+  }
 }

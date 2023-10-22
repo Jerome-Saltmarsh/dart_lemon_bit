@@ -99,6 +99,7 @@ class AmuletGameTutorial extends AmuletGame {
   void runScriptIntroduction(AmuletPlayer player) {
     runScript(player)
       .controlsDisabled()
+      .zoom(1.5)
       .movePlayerToSceneKey(keysPlayerSpawn)
       .snapCameraToPlayer()
       .movePositionToSceneKey(guide, keysGuideSpawn0)

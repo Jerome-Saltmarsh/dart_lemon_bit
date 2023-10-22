@@ -173,6 +173,8 @@ class AmuletPlayerScript {
   AmuletPlayerScript completeObjective() =>
       add(player.completeObjective);
 
+  AmuletPlayerScript zoom(double value) => add(() => player.writeZoom(value));
+
   AmuletPlayerScript add(Function() action){
     actions.add(action);
     return this;

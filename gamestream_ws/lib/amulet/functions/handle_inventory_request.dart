@@ -25,34 +25,12 @@ void handleInventoryRequest(AmuletPlayer player, List<int> arguments) {
       final srcSlotType = slotTypes[srcSlotTypeIndex];
       final targetSlotType = slotTypes[targetSlotTypeIndex];
 
-
       final srcAmuletItemSlot =
           player.getItemObjectAtSlotType(srcSlotType, srcIndex);
       final targetAmuletItemSlot =
           player.getItemObjectAtSlotType(targetSlotType, targetIndex);
 
-      // final srcAmuletItem = srcAmuletItemSlot.amuletItem;
-      //
-      // if (srcAmuletItem == null) {
-      //   return;
-      // }
       player.swapAmuletItemSlots(srcAmuletItemSlot, targetAmuletItemSlot);
-      // if (targetAmuletItem != null && !srcSlotType.supportsItemType(targetAmuletItem.type)){
-      //   return;
-      // }
-      //
-      // if (!targetSlotType.supportsItemType(srcAmuletItem.type)) {
-      //   return;
-      // }
-      //
-      // targetAmuletItemSlot.amuletItem = srcAmuletItem;
-      // srcAmuletItemSlot.amuletItem = targetAmuletItem;
-      // player.notifyEquipmentDirty();
-      // player.amuletGame.onPlayerInventoryMoved(
-      //     player,
-      //     srcAmuletItemSlot,
-      //     targetAmuletItemSlot,
-      // );
       break;
 
     case NetworkRequestInventory.Use:

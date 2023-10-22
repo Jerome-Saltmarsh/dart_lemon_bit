@@ -153,6 +153,10 @@ class IsometricParser with ByteReader, IsometricComponent {
   void readNetworkResponseIsometric() {
     switch (readByte()) {
 
+      case NetworkResponseIsometric.Zoom:
+        readZoom();
+        break;
+
       case NetworkResponseIsometric.Edit_Enabled:
         readEditEnabled();
         break;
@@ -712,5 +716,10 @@ class IsometricParser with ByteReader, IsometricComponent {
     if (cameraTargetSet) {
       readIsometricPosition(amulet.cameraTarget);
     }
+  }
+
+  void readZoom() {
+    final value = readDouble();
+    engine.targetZoom = value / 10.0;
   }
 }

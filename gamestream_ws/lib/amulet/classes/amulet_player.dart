@@ -500,10 +500,10 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     }
 
     clearTreasure(index);
-    spawnItem(item);
+    spawnAmuletItem(item);
   }
 
-  void spawnItem(AmuletItem item){
+  void spawnAmuletItem(AmuletItem item){
     const spawnDistance = 40.0;
     final spawnAngle = randomAngle();
     amuletGame.spawnAmuletItem(
@@ -1326,15 +1326,14 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   }
 
   void dropItemSlotItem(AmuletItemSlot itemSlot){
-    final item = itemSlot.amuletItem;
+    final amuletItem = itemSlot.amuletItem;
 
-    if (item == null){
+    if (amuletItem == null){
       return;
     }
 
-    spawnItem(item);
-    itemSlot.amuletItem = null;
-    itemSlot.cooldown = 0;
+    spawnAmuletItem(amuletItem);
+    itemSlot.clear();
     notifyEquipmentDirty();
   }
 
@@ -1620,5 +1619,6 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     objectivesCompleted.add(objective);
     this.objective = null;
   }
+
 
 }

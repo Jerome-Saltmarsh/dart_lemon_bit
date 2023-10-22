@@ -26,9 +26,7 @@ class AmuletItemSlot {
     charges++;
     cooldown = 0;
   }
-}
 
-extension ItemSlotExtension on AmuletItemSlot {
   void clear(){
     amuletItem = null;
     cooldown = 0;
