@@ -4,10 +4,9 @@ import 'package:gamestream_ws/amulet/functions/item_slot/item_slot_reduce_charge
 import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages.dart';
 
-import '../functions/player_swap_item_slots.dart';
 import '../getters/get_player_level_for_amulet_item.dart';
-import 'amulet_item_slot.dart';
 import 'amulet_game.dart';
+import 'amulet_item_slot.dart';
 import 'amulet_npc.dart';
 import 'talk_option.dart';
 
@@ -678,19 +677,19 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
         }
         break;
       case ItemType.Helm:
-        playerSwapItemSlots(this, equippedHelm, selected);
+        swapAmuletItemSlots(equippedHelm, selected);
         break;
       case ItemType.Body:
-        playerSwapItemSlots(this, equippedBody, selected);
+        swapAmuletItemSlots(equippedBody, selected);
         break;
       case ItemType.Legs:
-        playerSwapItemSlots(this, equippedLegs, selected);
+        swapAmuletItemSlots(equippedLegs, selected);
         break;
       case ItemType.Hand:
         if (equippedHandLeft.amuletItem == null){
-          playerSwapItemSlots(this, equippedHandLeft, selected);
+          swapAmuletItemSlots(equippedHandLeft, selected);
         } else {
-          playerSwapItemSlots(this, equippedHandRight, selected);
+          swapAmuletItemSlots(equippedHandRight, selected);
         }
         break;
     }
@@ -1225,7 +1224,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
       writeAmuletError("Treasure slots full");
       return;
     }
-    playerSwapItemSlots(this, slot, emptyTreasureSlot);
+    swapAmuletItemSlots(slot, emptyTreasureSlot);
   }
 
   void swapWithAvailableItemSlot(AmuletItemSlot slot){
@@ -1237,7 +1236,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
       reportInventoryFull();
       return;
     }
-    playerSwapItemSlots(this, availableItemSlot, slot);
+    swapAmuletItemSlots(availableItemSlot, slot);
   }
 
   AmuletItemSlot getEmptyItemSlot() => getEmptySlot(items);
@@ -1576,8 +1575,28 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
       return;
     }
 
+
+    final aCooldown = amuletItemSlotA.cooldown;
+    final bCooldown = amuletItemSlotB.cooldown;
+
+    final aCooldownDuration = amuletItemSlotA.cooldownDuration;
+    final bCooldownDuration = amuletItemSlotB.cooldownDuration;
+
+    final aCharges = amuletItemSlotA.charges;
+    final bCharges = amuletItemSlotB.charges;
+
     amuletItemSlotA.amuletItem = bAmuletItem;
     amuletItemSlotB.amuletItem = aAmuletItem;
+
+    amuletItemSlotA.cooldown = bCooldown;
+    amuletItemSlotB.cooldown = aCooldown;
+
+    amuletItemSlotA.cooldownDuration = bCooldownDuration;
+    amuletItemSlotB.cooldownDuration = aCooldownDuration;
+
+    amuletItemSlotA.charges = bCharges;
+    amuletItemSlotB.charges = aCharges;
+
     notifyEquipmentDirty();
     amuletGame.onPlayerInventoryMoved(
       this,

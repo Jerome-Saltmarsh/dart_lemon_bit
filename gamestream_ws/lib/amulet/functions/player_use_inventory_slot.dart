@@ -2,8 +2,6 @@ import 'package:gamestream_ws/amulet.dart';
 import 'package:gamestream_ws/packages/common/src/game_error.dart';
 import 'package:gamestream_ws/packages/common/src/isometric/slot_type.dart';
 
-import 'player_swap_item_slots.dart';
-
 void playerUseInventorySlot(
     AmuletPlayer player,
     SlotType slotType,
@@ -32,7 +30,9 @@ void playerUseInventorySlot(
       if (item.isWeapon) {
         final emptyWeaponSlot = player.getEmptyWeaponSlot();
         if (emptyWeaponSlot != null){
-          playerSwapItemSlots(player, inventorySlot, emptyWeaponSlot);
+
+          player.swapAmuletItemSlots(inventorySlot, emptyWeaponSlot);
+          // playerSwapItemSlots(player, inventorySlot, emptyWeaponSlot);
           if (player.equippedWeaponIndex == -1){
             player.equippedWeaponIndex = player.weapons.indexOf(emptyWeaponSlot);
           }
@@ -43,26 +43,26 @@ void playerUseInventorySlot(
       if (item.isTreasure) {
         final emptyTreasureSlot = player.getEmptyTreasureSlot();
         if (emptyTreasureSlot != null){
-          playerSwapItemSlots(player, inventorySlot, emptyTreasureSlot);
+          player.swapAmuletItemSlots(inventorySlot, emptyTreasureSlot);
         }
       } else
       if (item.isHelm){
-        playerSwapItemSlots(player, inventorySlot, player.equippedHelm);
+        player.swapAmuletItemSlots(inventorySlot, player.equippedHelm);
       } else
       if (item.isLegs){
-        playerSwapItemSlots(player, inventorySlot, player.equippedLegs);
+        player.swapAmuletItemSlots(inventorySlot, player.equippedLegs);
       } else
       if (item.isBody){
-        playerSwapItemSlots(player, inventorySlot, player.equippedBody);
+        player.swapAmuletItemSlots(inventorySlot, player.equippedBody);
       } else
       if (item.isShoes){
-        playerSwapItemSlots(player, inventorySlot, player.equippedShoe);
+        player.swapAmuletItemSlots(inventorySlot, player.equippedShoe);
       }
       if (item.isHand){
         if (player.equippedHandLeft.amuletItem == null){
-          playerSwapItemSlots(player, inventorySlot, player.equippedHandLeft);
+          player.swapAmuletItemSlots(inventorySlot, player.equippedHandLeft);
         } else {
-          playerSwapItemSlots(player, inventorySlot, player.equippedHandRight);
+          player.swapAmuletItemSlots(inventorySlot, player.equippedHandRight);
         }
       }
 

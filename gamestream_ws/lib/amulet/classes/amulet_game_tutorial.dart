@@ -24,7 +24,7 @@ class AmuletGameTutorial extends AmuletGame {
   static const flagsDoor03Opened = 'door03_opened';
   static const flagsFiend01Defeated = 'fiend01_defeated';
   static const flagsUseSpellHeal = 'use_spell_heal';
-  static const flagsBowEquipped = 'equip_bow';
+  static const flagsBowAddedToWeapons = 'add_bow_to_weapons';
 
   static const objectiveTalkToGuide01 = 'talk_to_guide_01';
   static const objectiveUseHeal = 'use_heal';
@@ -499,16 +499,17 @@ class AmuletGameTutorial extends AmuletGame {
     if (
       player.weapons.contains(targetAmuletItemSlot) &&
       targetAmuletItemSlot.amuletItem == AmuletItem.Weapon_Old_Bow &&
-      player.readFlag(flagsBowEquipped)
+      player.readFlag(flagsBowAddedToWeapons)
     ) {
-      onBowDrawnForTheFirstTime(player);
+      onBowAddedToWeapons(player);
     }
   }
 
-  void onBowDrawnForTheFirstTime(AmuletPlayer player) => runScript(player)
+  void onBowAddedToWeapons(AmuletPlayer player) => runScript(player)
       .controlsDisabled()
       .cameraSetTarget(guide)
-      .talk('good one has added the bow to the ')
+      .talk('excellent')
+      .talk('one has added the bow to the weapons rack')
       .talk('equip the bow by clicking the bow icon at the bottom of the screen')
       .dataSet('objective', objectiveEquipBow)
       .deactivate(guide)
