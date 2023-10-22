@@ -5,6 +5,7 @@ class GameObject extends Collider {
   /// Prevents gameobject from being recycled in the object pool until the next frame
   var available = false;
   var id = 0;
+  /// ItemType.dart
   var type = 0;
   var subType = -1;
   var quantity = 0;

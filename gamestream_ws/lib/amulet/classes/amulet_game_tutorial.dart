@@ -18,6 +18,7 @@ class AmuletGameTutorial extends AmuletGame {
   static const keysFiend01 = 'fiend01';
   static const keysFiend02 = 'fiend02';
   static const keysSpawnBow = 'spawn_bow';
+  static const keysExit = 'exit';
 
   static const flagsDoor01Opened = 'door01_opened';
   static const flagsDoor02Opened = 'door02_opened';
@@ -33,12 +34,14 @@ class AmuletGameTutorial extends AmuletGame {
   static const objectiveOpenInventory = 'open_inventory';
   static const objectiveKillFiends02 = 'kill_fiends02';
   static const objectiveOpenBridge = 'open_bridge';
+  static const objectiveShootCrystal = 'shoot_crystal';
 
   final scripts = <AmuletPlayerScript>[];
 
   late final Character guide;
   Character? fiend01;
   final fiends02 = <Character>[];
+  GameObject? crystal;
 
 
   AmuletGameTutorial({
@@ -85,6 +88,15 @@ class AmuletGameTutorial extends AmuletGame {
 
     if (player.readFlag('introduction')){
       runScriptIntroduction(player);
+    }
+    
+    if (!player.objectiveCompleted('destroy_crystal')){
+      crystal = spawnGameObjectAtIndex(
+          index: getSceneKey('bow_target'),
+          type: ItemType.Object,
+          subType: ObjectType.Crystal,
+          team: AmuletTeam.Monsters,
+      );
     }
 
     if (!player.objectivesCompleted.contains(objectiveBowObtained)){
@@ -554,6 +566,39 @@ class AmuletGameTutorial extends AmuletGame {
     scripts.clear();
     scripts.add(instance);
     return instance;
+  }
+
+  @override
+  void customOnCharacterDamageApplied(Character target, src, int amount) {
+    // TODO: implement customOnCharacterDamageApplied
+    super.customOnCharacterDamageApplied(target, src, amount);
+  }
+
+  @override
+  void applyHit({required Character srcCharacter, required Collider target, required int damage, double? angle, bool friendlyFire = false}) {
+    super.applyHit(
+        srcCharacter: srcCharacter,
+        target: target,
+        damage: damage,
+        angle: angle,
+        friendlyFire: friendlyFire,
+    );
+
+    if (target == crystal){
+      if (srcCharacter is AmuletPlayer){
+        if (!srcCharacter.objectiveCompleted(objectiveShootCrystal)) {
+          srcCharacter.objectivesCompleted.add(objectiveShootCrystal);
+          runScript(srcCharacter)
+            .controlsDisabled()
+            .wait(seconds: 1)
+            .cameraSetTargetSceneKey(keysExit)
+            .wait(seconds: 1)
+            .setNodeEmptyAtSceneKey(keysExit)
+            .wait(seconds: 1)
+            .end();
+        }
+      }
+    }
   }
 }
 

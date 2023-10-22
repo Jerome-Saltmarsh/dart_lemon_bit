@@ -1395,10 +1395,10 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (!target.hitable) return;
     if (!target.active) return;
 
-
     if (angle == null){
       angle = srcCharacter.getAngle(target);
     }
+
     target.applyForce(
       force: srcCharacter.weaponHitForce,
       angle: angle,
@@ -1426,11 +1426,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
           }
        }
     }
-
-    // // TODO Remove Hack
-    // if (srcCharacter.characterTypeZombie) {
-    //   dispatchGameEventPosition(GameEventType.Zombie_Strike, srcCharacter);
-    // }
 
     if (target is Character) {
       if (!friendlyFire && Collider.onSameTeam(srcCharacter, target)) return;

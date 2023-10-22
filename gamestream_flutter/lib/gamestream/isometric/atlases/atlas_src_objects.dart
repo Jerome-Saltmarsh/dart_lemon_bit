@@ -112,7 +112,7 @@ class AtlasSrcObjects {
     75,  // x
     0,    // y
     22,   // width
-    13453,   // height
+    45,   // height
     1.0,  // scale
     0.75, // anchorY
   ];
