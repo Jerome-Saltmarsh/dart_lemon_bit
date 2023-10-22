@@ -1509,12 +1509,13 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     return objectives.contains(name);
   }
 
-  List<String> get objectives {
-    var objectives = data['objectives'];
+  List<String> get objectivesCompleted {
+    const fieldName = 'objectivesCompleted';
+    var objectives = data[fieldName];
 
     if (objectives == null) {
       objectives = <String>[];
-      data['objectives'] = objectives;
+      data[fieldName] = objectives;
     }
 
     if (objectives is! List<String>){
@@ -1603,6 +1604,15 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
       amuletItemSlotA,
       amuletItemSlotB,
     );
+  }
+
+  void completeObjective(){
+    final objective = this.objective;
+    if (objective == null){
+      return;
+    }
+    objectivesCompleted.add(objective);
+    this.objective = null;
   }
 
 }

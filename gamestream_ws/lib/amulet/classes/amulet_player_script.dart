@@ -150,14 +150,19 @@ class AmuletPlayerScript {
       add(() => player.writePlayerEvent(PlayerEvent.Player_Moved));
 
   AmuletPlayerScript objective(String? objective) =>
-      add(() => player.objective = objective);
+      add(() {
+        log('objective($objective)');
+        return player.objective = objective;
+      });
 
   AmuletPlayerScript dataSet(String name, dynamic value) =>
       add(() => player.data[name] = value);
 
-
   AmuletPlayerScript dataRemove(String name) =>
       add(() => player.data.remove(name));
+
+  AmuletPlayerScript completeObjective() =>
+      add(player.completeObjective);
 
   AmuletPlayerScript add(Function() action){
     actions.add(action);
