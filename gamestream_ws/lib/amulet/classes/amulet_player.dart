@@ -370,7 +370,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
       }
     }
 
-    final emptyItemSlot = getEmptyItemSlot();
+    final emptyItemSlot = tryGetEmptyItemSlot();
     if (emptyItemSlot == null) {
       reportInventoryFull();
       return false;
@@ -1052,7 +1052,11 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     talentDialogOpen = !talentDialogOpen;
   }
 
-  static AmuletItemSlot? getEmptySlot(List<AmuletItemSlot> items){
+  static AmuletItemSlot getEmptySlot(List<AmuletItemSlot> items) =>
+      tryGetEmptySlot(items) ??
+          (throw Exception('AmuletPlayer.getEmptySlot($items)'));
+
+  static AmuletItemSlot? tryGetEmptySlot(List<AmuletItemSlot> items){
     for (final item in items) {
       if (item.amuletItem == null)
         return item;
@@ -1216,7 +1220,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     if (item == null || !item.isTreasure)
       throw Exception();
 
-    final emptyTreasureSlot = getEmptySlot(treasures);
+    final emptyTreasureSlot = tryGetEmptySlot(treasures);
     if (emptyTreasureSlot == null){
       writeAmuletError("Treasure slots full");
       return;
@@ -1228,7 +1232,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     if (slot.amuletItem == null)
       return;
 
-    final availableItemSlot = getEmptyItemSlot();
+    final availableItemSlot = tryGetEmptyItemSlot();
     if (availableItemSlot == null){
       reportInventoryFull();
       return;
@@ -1236,12 +1240,13 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     playerSwapItemSlots(this, availableItemSlot, slot);
   }
 
-  AmuletItemSlot? getEmptyItemSlot() => getEmptySlot(items);
+  AmuletItemSlot getEmptyItemSlot() => getEmptySlot(items);
 
-  AmuletItemSlot? getEmptyTreasureSlot() => getEmptySlot(treasures);
+  AmuletItemSlot? tryGetEmptyItemSlot() => tryGetEmptySlot(items);
 
-  AmuletItemSlot? getEmptyWeaponSlot() => getEmptySlot(weapons);
+  AmuletItemSlot? getEmptyTreasureSlot() => tryGetEmptySlot(treasures);
 
+  AmuletItemSlot? getEmptyWeaponSlot() => tryGetEmptySlot(weapons);
 
   void clearSlot(AmuletItemSlot slot){
     slot.clear();

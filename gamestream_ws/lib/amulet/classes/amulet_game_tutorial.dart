@@ -29,6 +29,8 @@ class AmuletGameTutorial extends AmuletGame {
   static const objectiveTalkToGuide01 = 'talk_to_guide_01';
   static const objectiveUseHeal = 'use_heal';
   static const objectiveBowObtained = 'bow_obtained';
+  static const objectiveEquipBow = 'equip_bow';
+  static const objectiveDrawBow = 'draw_bow';
 
   final scripts = <AmuletPlayerScript>[];
 
@@ -182,10 +184,21 @@ class AmuletGameTutorial extends AmuletGame {
         runScript(player)
             .controlsDisabled()
             .cameraSetTarget(guide)
-            .talk('press the "Spell Heal" icon at the bottom of the screen.')
+            .talk('caste heal by pressing the heal icon at the bottom of the screen.')
             .end();
         break;
-
+      case objectiveEquipBow:
+        runScript(player)
+            .cameraSetTarget(guide)
+            .talk('equip the bow by pressing on the bow icon at the bottom of the screen.')
+            .end();
+        break;
+      case objectiveDrawBow:
+        runScript(player)
+            .cameraSetTarget(guide)
+            .talk('draw the bow by pressing the bow icon at the bottom of the screen.')
+            .end();
+        break;
       default:
         break;
     }
@@ -373,8 +386,8 @@ class AmuletGameTutorial extends AmuletGame {
       .wait(seconds: 1)
       .cameraSetTarget(guide)
       .talk(
-        'one hath acquired a spell of healing.'
-        'one doth press the "Spell Heal" icon at the bottom of the screen.'
+        'one has acquired the spell of healing.'
+        'caste heal by pressing the heal icon at the bottom of the screen'
       )
       .dataSet('objective', objectiveUseHeal)
       .end();
@@ -456,11 +469,10 @@ class AmuletGameTutorial extends AmuletGame {
         .add(() {
           for (final weapon in player.weapons){
             if (weapon.amuletItem == AmuletItem.Weapon_Old_Bow){
-              final emptyItemSlot = player.getEmptyItemSlot();
-              if (emptyItemSlot == null){
-                throw Exception('emptyItemSlot == null');
-              }
-              player.swapAmuletItemSlots(weapon, emptyItemSlot);
+              player.swapAmuletItemSlots(
+                  weapon,
+                  player.getEmptyItemSlot(),
+              );
             }
           }
         })
@@ -486,12 +498,20 @@ class AmuletGameTutorial extends AmuletGame {
 
     if (
       player.weapons.contains(targetAmuletItemSlot) &&
-      targetAmuletItemSlot.amuletItem == AmuletItem.Weapon_Old_Bow
+      targetAmuletItemSlot.amuletItem == AmuletItem.Weapon_Old_Bow &&
+      player.readFlag(flagsBowEquipped)
     ) {
-      if (player.readFlag(flagsBowEquipped)){
-
-      }
+      onBowDrawnForTheFirstTime(player);
     }
   }
+
+  void onBowDrawnForTheFirstTime(AmuletPlayer player) => runScript(player)
+      .controlsDisabled()
+      .cameraSetTarget(guide)
+      .talk('good one has added the bow to the ')
+      .talk('equip the bow by clicking the bow icon at the bottom of the screen')
+      .dataSet('objective', objectiveEquipBow)
+      .deactivate(guide)
+      .end();
 }
 
