@@ -596,6 +596,4 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   ) {}
 
   void onPlayerInventoryOpenChanged(AmuletPlayer player, bool value) { }
-
-
 }

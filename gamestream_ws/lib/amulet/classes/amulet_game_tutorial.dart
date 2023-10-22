@@ -32,6 +32,7 @@ class AmuletGameTutorial extends AmuletGame {
   static const objectiveDrawBow = 'draw_bow';
   static const objectiveOpenInventory = 'open_inventory';
   static const objectiveKillFiends02 = 'kill_fiends02';
+  static const objectiveOpenBridge = 'open_bridge';
 
   final scripts = <AmuletPlayerScript>[];
 
@@ -154,6 +155,31 @@ class AmuletGameTutorial extends AmuletGame {
   void update() {
     super.update();
     updateScripts();
+    updatePlayersObjectiveConditions();
+  }
+
+  void updatePlayersObjectiveConditions() {
+    for (final player in players){
+       updatePlayerObjectiveConditions(player);
+    }
+  }
+
+  void updatePlayerObjectiveConditions(AmuletPlayer player) {
+    switch (player.objective) {
+      case objectiveDrawBow:
+        if (player.equippedWeapon?.amuletItem != AmuletItem.Weapon_Old_Bow){
+          return;
+        }
+        runScript(player)
+            .objective(objectiveOpenBridge)
+            .cameraSetTarget(guide)
+            .talk(
+            'good. fire at any time by pressing the right mouse button.'
+            )
+            .deactivate(guide)
+            .end();
+        break;
+    }
   }
 
   void updateScripts() {
