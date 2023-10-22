@@ -62,6 +62,15 @@ class AmuletPlayerScript {
   ) =>
       movePositionToIndex(position, getSceneKeyIndex(sceneKey));
 
+  AmuletPlayerScript faceEachOther(
+      Character a,
+      Character b,
+  ) =>
+      add(() {
+        a.face(b);
+        b.face(a);
+      });
+
   AmuletPlayerScript movePositionToIndex(Position position, int index) => add(() {
     final scene = getScene();
     position.x = scene.getIndexX(index);

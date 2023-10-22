@@ -103,6 +103,7 @@ class AmuletGameTutorial extends AmuletGame {
       .movePositionToSceneKey(guide, keysGuideSpawn0)
       .wait(seconds: 1)
       .cameraSetTarget(guide)
+      .faceEachOther(player, guide)
       .talk(
         'greetings other.'
         'one is here to to guide another.'
@@ -177,6 +178,7 @@ class AmuletGameTutorial extends AmuletGame {
             .controlsDisabled()
             .activate(guide)
             .cameraSetTarget(guide)
+            .faceEachOther(player, guide)
             .talk('danger doth lieth ahead')
             .add(actionSpawnWeaponSwordAtGuide)
             .deactivate(guide)
@@ -186,6 +188,7 @@ class AmuletGameTutorial extends AmuletGame {
         runScript(player)
             .controlsDisabled()
             .cameraSetTarget(guide)
+            .faceEachOther(player, guide)
             .talk('caste heal by pressing the heal icon at the bottom of the screen.')
             .end();
         break;
@@ -193,6 +196,7 @@ class AmuletGameTutorial extends AmuletGame {
       case objectiveOpenInventory:
         runScript(player)
             .cameraSetTarget(guide)
+            .faceEachOther(player, guide)
             .talk('open the inventory by hovering the mouse over the inventory icon at the bottom left corner of the screen')
             .end();
         break;
@@ -200,12 +204,14 @@ class AmuletGameTutorial extends AmuletGame {
       case objectiveEquipBow:
         runScript(player)
             .cameraSetTarget(guide)
+            .faceEachOther(player, guide)
             .talk('add the bow to the weapons rack by clicking the bow icon in the inventory')
             .end();
         break;
       case objectiveDrawBow:
         runScript(player)
             .cameraSetTarget(guide)
+            .faceEachOther(player, guide)
             .talk('draw the bow by pressing the bow icon at the bottom of the screen.')
             .end();
         break;
@@ -344,23 +350,6 @@ class AmuletGameTutorial extends AmuletGame {
       .controlsEnabled();
   }
 
-  void actionFaceOneAnother(Character a, Character b) {
-     a.face(b);
-     b.face(a);
-  }
-
-  void actionPlayerControlsDisabled(AmuletPlayer player) {
-     player.controlsEnabled = false;
-  }
-
-  void actionPlayerControlsEnabled(AmuletPlayer player) {
-     player.controlsEnabled = true;
-  }
-
-  void actionClearCameraTarget(AmuletPlayer player){
-    actionSetCameraTarget(player, null);
-  }
-
   void actionSetCameraTarget(AmuletPlayer player, Position? target) {
       player.cameraTarget = target;
   }
@@ -396,24 +385,13 @@ class AmuletGameTutorial extends AmuletGame {
       .activate(guide)
       .wait(seconds: 1)
       .cameraSetTarget(guide)
+      .faceEachOther(player, guide)
       .talk(
         'one has acquired the spell of healing.'
         'caste heal by pressing the heal icon at the bottom of the screen'
       )
       .dataSet('objective', objectiveUseHeal)
       .end();
-
-  void actionActivateGuide() {
-    activate(guide);
-  }
-
-  void actionCameraTargetGuide(AmuletPlayer player) {
-    actionSetCameraTargetGuide(player);
-  }
-
-  void actionMoveGuideToFiend01() {
-    actionMoveOxToSceneKey(keysFiend01);
-  }
 
   AmuletPlayerScript runScript(AmuletPlayer player){
      final instance = AmuletPlayerScript(player);
@@ -425,6 +403,7 @@ class AmuletGameTutorial extends AmuletGame {
   void onSpellHealUsedForTheFirstTime(AmuletPlayer player) => runScript(player)
       .controlsDisabled()
       .wait(seconds: 1)
+      .faceEachOther(player, guide)
       .talk(
         'one has done well.'
         'each item has a limited number of charges.'
@@ -446,6 +425,7 @@ class AmuletGameTutorial extends AmuletGame {
           .wait(seconds: 1)
           .movePositionToSceneKey(guide, keysFiend02)
           .activate(guide)
+          .faceEachOther(player, guide)
           .talk(
             'congratulations.'
             'one has gained a level.'
@@ -494,6 +474,7 @@ class AmuletGameTutorial extends AmuletGame {
         .activate(guide)
         .wait(seconds: 1)
         .objective(objectiveOpenInventory)
+        .faceEachOther(player, guide)
         .talk(
           'one hath acquired a new weapon.'
           'one must now learn of the inventory.'
@@ -510,6 +491,7 @@ class AmuletGameTutorial extends AmuletGame {
 
         runScript(player)
             .objective(objectiveEquipBow)
+            .faceEachOther(player, guide)
             .talk(
               'add the bow to the weapons rack by clicking the bow icon in the inventory',
               target: guide
@@ -537,6 +519,7 @@ class AmuletGameTutorial extends AmuletGame {
   void onBowAddedToWeapons(AmuletPlayer player) => runScript(player)
       .controlsDisabled()
       .cameraSetTarget(guide)
+      .faceEachOther(player, guide)
       .talk(
         'excellent.'
         'draw the bow by clicking the bow icon at the bottom of the screen'
