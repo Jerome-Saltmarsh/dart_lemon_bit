@@ -170,9 +170,9 @@ abstract class Collider extends Position {
   bool isEnemy(dynamic that) {
     if (identical(this, that))
       return false;
-    if (that is! Character)
+    if (that is! Collider)
       return false;
-    if (!that.aliveAndActive)
+    if (that is Character && !that.aliveAndActive)
       return false;
     final thatTeam = that.team;
     if (thatTeam == TeamType.Neutral)

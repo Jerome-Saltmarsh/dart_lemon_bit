@@ -1325,8 +1325,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.setCharacterStateSpawning();
   }
 
-
-
   void checkProjectileCollision(List<Collider> colliders) {
     final projectiles = this.projectiles;
     for (var i = 0; i < projectiles.length; i++) {
@@ -1341,16 +1339,20 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         continue;
       }
 
+      final projectileX = projectile.x;
+      final projectileY = projectile.y;
+      final projectileRadius = projectile.radius;
+
       assert (target == null);
       for (var j = 0; j < colliders.length; j++) {
         final collider = colliders[j];
         if (!collider.active) continue;
         if (!collider.hitable) continue;
-        final radius = collider.radius + projectile.radius;
-        if ((collider.x - projectile.x).abs() > radius) continue;
-        if ((collider.y - projectile.y).abs() > radius) continue;
-        if (projectile.z + projectile.radius < collider.z) continue;
-        if (projectile.z - projectile.radius > collider.z + Character_Height)
+        final radius = collider.radius + projectileRadius;
+        if ((collider.x - projectileX).abs() > radius) continue;
+        if ((collider.y - projectileY).abs() > radius) continue;
+        if (projectile.z + projectileRadius < collider.z) continue;
+        if (projectile.z - projectileRadius > collider.z + Character_Height)
           continue;
         if (projectile.owner == collider) continue;
         if (!projectile.isEnemy(collider) && !projectile.friendlyFire) continue;
