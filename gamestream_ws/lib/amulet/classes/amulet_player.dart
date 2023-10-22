@@ -243,6 +243,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   set inventoryOpen(bool value){
     _inventoryOpen = value;
     writePlayerInventoryOpen();
+    amuletGame.onPlayerInventoryOpenChanged(this, value);
   }
 
   @override
@@ -1574,7 +1575,6 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
       writeAmuletError('cannot perform move');
       return;
     }
-
 
     final aCooldown = amuletItemSlotA.cooldown;
     final bCooldown = amuletItemSlotB.cooldown;

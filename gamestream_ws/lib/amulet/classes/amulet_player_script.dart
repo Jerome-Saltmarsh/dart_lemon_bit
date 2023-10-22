@@ -149,8 +149,12 @@ class AmuletPlayerScript {
   AmuletPlayerScript snapCameraToPlayer() =>
       add(() => player.writePlayerEvent(PlayerEvent.Player_Moved));
 
+  AmuletPlayerScript objective(String? objective) =>
+      add(() => player.objective = objective);
+
   AmuletPlayerScript dataSet(String name, dynamic value) =>
       add(() => player.data[name] = value);
+
 
   AmuletPlayerScript dataRemove(String name) =>
       add(() => player.data.remove(name));
@@ -163,6 +167,7 @@ class AmuletPlayerScript {
   void log(String text){
     print('script.log: $text');
   }
+
 }
 
 

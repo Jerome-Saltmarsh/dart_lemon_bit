@@ -30,9 +30,7 @@ void playerUseInventorySlot(
       if (item.isWeapon) {
         final emptyWeaponSlot = player.getEmptyWeaponSlot();
         if (emptyWeaponSlot != null){
-
           player.swapAmuletItemSlots(inventorySlot, emptyWeaponSlot);
-          // playerSwapItemSlots(player, inventorySlot, emptyWeaponSlot);
           if (player.equippedWeaponIndex == -1){
             player.equippedWeaponIndex = player.weapons.indexOf(emptyWeaponSlot);
           }

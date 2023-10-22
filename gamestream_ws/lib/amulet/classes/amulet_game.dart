@@ -594,4 +594,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       AmuletItemSlot srcAmuletItemSlot,
       AmuletItemSlot targetAmuletItemSlot,
   ) {}
+
+  void onPlayerInventoryOpenChanged(AmuletPlayer player, bool value) { }
 }

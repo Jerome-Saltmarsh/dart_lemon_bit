@@ -31,6 +31,7 @@ class AmuletGameTutorial extends AmuletGame {
   static const objectiveBowObtained = 'bow_obtained';
   static const objectiveEquipBow = 'equip_bow';
   static const objectiveDrawBow = 'draw_bow';
+  static const objectiveOpenInventory = 'open_inventory';
 
   final scripts = <AmuletPlayerScript>[];
 
@@ -104,8 +105,8 @@ class AmuletGameTutorial extends AmuletGame {
       .cameraSetTarget(guide)
       .talk(
         'greetings other.'
-        'one ist here to to guide another.'
-        'left click the mouse to move.'
+        'one is here to to guide another.'
+        'move by left clicking the mouse'
       )
       .movePositionToSceneKey(guide, keysGuideSpawn1)
       .dataSet('objective', objectiveTalkToGuide01)
@@ -187,6 +188,14 @@ class AmuletGameTutorial extends AmuletGame {
             .talk('caste heal by pressing the heal icon at the bottom of the screen.')
             .end();
         break;
+
+      case objectiveOpenInventory:
+        runScript(player)
+            .cameraSetTarget(guide)
+            .talk('open the inventory by hovering the mouse over the inventory icon at the bottom left corner of the screen')
+            .end();
+        break;
+
       case objectiveEquipBow:
         runScript(player)
             .cameraSetTarget(guide)
@@ -476,17 +485,19 @@ class AmuletGameTutorial extends AmuletGame {
             }
           }
         })
+        .movePositionToSceneKey(guide, keysSpawnBow)
         .cameraSetTarget(guide)
         .wait(seconds: 1)
-        .movePositionToSceneKey(guide, keysSpawnBow)
         .activate(guide)
         .wait(seconds: 1)
+        .dataSet('objective', objectiveOpenInventory)
         .talk(
           'one hath acquired a new weapon.'
           'one must now learn of the inventory.'
-          'hover the mouse over the inventory icon at the bottom left corner of the screen.'
-          'find the bow icon in the items window and click it.'
-        );
+          'open the inventory by hovering the mouse over the inventory icon at the bottom left corner of the screen'
+        )
+        .end();
+
   }
 
   @override
@@ -495,7 +506,6 @@ class AmuletGameTutorial extends AmuletGame {
       AmuletItemSlot srcAmuletItemSlot,
       AmuletItemSlot targetAmuletItemSlot,
   ) {
-
     if (
       player.weapons.contains(targetAmuletItemSlot) &&
       targetAmuletItemSlot.amuletItem == AmuletItem.Weapon_Old_Bow &&
@@ -505,14 +515,28 @@ class AmuletGameTutorial extends AmuletGame {
     }
   }
 
+  @override
+  void onPlayerInventoryOpenChanged(AmuletPlayer player, bool value) {
+    if (value){
+      if (player.objective == objectiveOpenInventory) {
+
+        runScript(player)
+            .talk(
+              'add the bow to the weapons rack by clicking on the bow icon.',
+              target: guide
+            )
+            .objective(objectiveEquipBow)
+        ;
+      }
+    }
+  }
+
   void onBowAddedToWeapons(AmuletPlayer player) => runScript(player)
       .controlsDisabled()
       .cameraSetTarget(guide)
       .talk('excellent')
-      .talk('one has added the bow to the weapons rack')
       .talk('equip the bow by clicking the bow icon at the bottom of the screen')
-      .dataSet('objective', objectiveEquipBow)
-      .deactivate(guide)
+      .objective(objectiveEquipBow)
       .end();
 }
 

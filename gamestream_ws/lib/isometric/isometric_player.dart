@@ -1330,4 +1330,14 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeByte(NetworkResponsePlayer.Character_State);
     writeByte(characterState);
   }
+
+  String? get objective => data['objective'];
+
+  set objective(String? value) {
+     if (value == null){
+       data.remove('objective');
+     } else {
+       data['objective'] = value;
+     }
+  }
 }
