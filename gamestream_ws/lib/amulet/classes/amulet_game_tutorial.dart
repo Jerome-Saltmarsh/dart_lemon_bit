@@ -89,7 +89,15 @@ class AmuletGameTutorial extends AmuletGame {
     if (player.readFlag('introduction')){
       runScriptIntroduction(player);
     }
-    
+
+    if (!player.flagSet(flagsDoor03Opened)){
+      setNode(
+        nodeIndex: getSceneKey(keysDoor03),
+        nodeType: NodeType.Brick,
+        nodeOrientation: NodeOrientation.Solid,
+      );
+    }
+
     if (!player.objectiveCompleted('destroy_crystal')){
       crystal = spawnGameObjectAtIndex(
           index: getSceneKey('bow_target'),
@@ -492,6 +500,7 @@ class AmuletGameTutorial extends AmuletGame {
           .cameraSetTargetSceneKey(keysDoor03)
           .wait(seconds: 1)
           .setNodeEmptyAtSceneKey(keysDoor03)
+          .flag(flagsDoor03Opened)
           .wait(seconds: 1)
           .end();
   }
