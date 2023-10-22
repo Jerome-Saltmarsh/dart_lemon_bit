@@ -16,6 +16,7 @@ extension AmuletParser on IsometricParser {
          final texts = readString().split(_regex).map((e) => e.trim()).toList(growable: true);
          texts.removeWhere((element) => element.isEmpty);
          amulet.npcText.addAll(texts);
+         amulet.npcTextIndex.value = -1;
          amulet.npcTextIndex.value = 0;
          final length = readByte();
          final options = amulet.npcOptions;
