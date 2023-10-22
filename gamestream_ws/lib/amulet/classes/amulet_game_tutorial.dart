@@ -158,6 +158,7 @@ class AmuletGameTutorial extends AmuletGame {
     weaponCooldown: 50,
     invincible: true,
   )
+    ..autoTarget = false
     ..complexion = 20
     ..invincible = true
     ..legsType = LegType.Leather
