@@ -81,6 +81,12 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     writePlayerComplexion();
   }
 
+  @override
+  void initialize() {
+    super.initialize();
+    writeEquippedWeaponIndex();
+  }
+
   int get elementPoints => _elementPoints;
 
   set elementPoints(int value){
@@ -293,7 +299,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     if (value == -1){
       _equippedWeaponIndex = value;
       weaponType = equippedWeaponType;
-      writeEquippedWeaponIndex(value);
+      writeEquippedWeaponIndex();
       return;
     }
     if (!isValidWeaponIndex(value)){
@@ -319,7 +325,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
         weaponType * degreesToRadians,
     );
 
-    writeEquippedWeaponIndex(value);
+    writeEquippedWeaponIndex();
   }
 
   @override
@@ -951,10 +957,10 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     writeBool(interacting);
   }
 
-  void writeEquippedWeaponIndex(int value) {
+  void writeEquippedWeaponIndex() {
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Equipped_Weapon_Index);
-    writeInt16(value);
+    writeInt16(equippedWeaponIndex);
   }
 
   void writePlayerWeapon(int index) {

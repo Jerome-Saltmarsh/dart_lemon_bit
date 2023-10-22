@@ -353,7 +353,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
     if (!initialized) {
       initialized = true;
-      // writePlayerInitialized();
       game.customInitPlayer(this);
       writeIsometricPlayer();
       writePlayerHealth();
@@ -361,6 +360,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       writePlayerEvent(PlayerEvent.Spawned);
       writeDebugging();
       writePlayerControls();
+      initialize();
     }
 
     if (!sceneDownloaded){
@@ -1339,5 +1339,9 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
      } else {
        data['objective'] = value;
      }
+  }
+
+  void initialize() {
+
   }
 }
