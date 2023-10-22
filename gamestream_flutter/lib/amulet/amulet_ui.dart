@@ -242,6 +242,7 @@ class AmuletUI {
       alignment: Alignment.centerLeft,
       height: height,
       color: amulet.colors.brownDark,
+      padding: const EdgeInsets.all(4),
       width: width,
       child: Stack(
         children: [

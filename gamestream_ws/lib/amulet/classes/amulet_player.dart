@@ -1423,6 +1423,8 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     writePlayerEvent(PlayerEvent.Player_Moved);
   }
 
+  bool flagNotSet(String name) => !flagSet(name);
+
   bool flagSet(String name)=> data.containsKey(name);
 
   /// to run a piece of code only a single time

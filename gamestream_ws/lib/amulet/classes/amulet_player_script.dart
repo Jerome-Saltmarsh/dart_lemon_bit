@@ -1,5 +1,6 @@
 import 'package:gamestream_ws/gamestream/amulet.dart';
 import 'package:gamestream_ws/isometric.dart';
+import 'package:gamestream_ws/packages/common/src/player_event.dart';
 
 import 'amulet_game.dart';
 import 'amulet_player.dart';
@@ -35,13 +36,13 @@ class AmuletPlayerScript {
     });
   }
 
-  AmuletPlayerScript controlsDisabled() => playerControls(false);
+  AmuletPlayerScript controlsDisabled() => controls(false);
 
-  AmuletPlayerScript playerControlsEnabled() => playerControls(true);
+  AmuletPlayerScript controlsEnabled() => controls(true);
 
-  AmuletPlayerScript playerControls(bool enabled) =>
+  AmuletPlayerScript controls(bool enabled) =>
       add(() {
-        log('playerControls(enabled: $enabled)');
+        log('controls(enabled: $enabled)');
         if (enabled){
           player.cameraTarget = player;
         } else {
@@ -68,21 +69,25 @@ class AmuletPlayerScript {
     position.z = scene.getIndexZ(index);
   });
 
-  AmuletPlayerScript cameraSetTarget(Position? position) =>
-      add(() => player.cameraTarget = position);
-
   AmuletPlayerScript cameraSetTargetSceneKey(String sceneKey) =>
       add(() {
         log('cameraSetTargetSceneKey("$sceneKey")');
         return player.cameraTarget = getSceneKeyPosition(sceneKey);
       });
 
-  AmuletPlayerScript talk(String text, {List<TalkOption>? options}) {
+  AmuletPlayerScript cameraSetTarget(Position? position) =>
+      add(() => player.cameraTarget = position);
+
+  AmuletPlayerScript talk(String text, {List<TalkOption>? options, Position? target}) {
     var initialized = false;
     return add(() {
       if (initialized) {
         return !player.interacting;
       }
+      if (target != null){
+        player.cameraTarget = target;
+      }
+
       player.talk(text, options: options);
       initialized = true;
       log('talk(text: "$text")');
@@ -116,6 +121,39 @@ class AmuletPlayerScript {
         log('setNodeEmptyAtIndex($index)');
         getAmuletGame().setNodeEmpty(index);
       });
+
+  AmuletPlayerScript activate(Collider collider) =>
+      add(() {
+        log('activate($collider)');
+        getAmuletGame().activate(collider);
+      });
+
+  AmuletPlayerScript deactivate(Collider collider) =>
+      add(() {
+        log('deactivate($collider)');
+        getAmuletGame().deactivate(collider);
+      });
+
+  AmuletPlayerScript flag(String flagName) =>
+      add(() {
+        log('flag($flagName)');
+        player.readFlag(flagName);
+      });
+
+  AmuletPlayerScript end() {
+    controlsEnabled();
+    cameraClearTarget();
+    return this;
+  }
+
+  AmuletPlayerScript snapCameraToPlayer() =>
+      add(() => player.writePlayerEvent(PlayerEvent.Player_Moved));
+
+  AmuletPlayerScript dataSet(String name, dynamic value) =>
+      add(() => player.data[name] = value);
+
+  AmuletPlayerScript dataRemove(String name) =>
+      add(() => player.data.remove(name));
 
   AmuletPlayerScript add(Function() action){
     actions.add(action);

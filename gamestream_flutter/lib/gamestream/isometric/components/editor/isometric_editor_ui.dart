@@ -1582,7 +1582,7 @@ extension IsometricEditorUI on IsometricEditor {
     top: 100,
     left: 0,
     child: GSContainer(
-      height: 300,
+      // height: 300,
       child: Column(
         children: [
           Row(
@@ -1597,13 +1597,16 @@ extension IsometricEditorUI on IsometricEditor {
               buildWatch(
                   scene.keysChangedNotifier,
                   (t) => SingleChildScrollView(
-                    child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: scene.keys.entries
-                              .map(buildKeyEntry)
-                              .toList(growable: false),
-                        ),
+                    child: Container(
+                      constraints: BoxConstraints(maxHeight: engine.screen.height - 150),
+                      child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: scene.keys.entries
+                                .map(buildKeyEntry)
+                                .toList(growable: false),
+                          ),
+                    ),
                   ))
             ],
           ),

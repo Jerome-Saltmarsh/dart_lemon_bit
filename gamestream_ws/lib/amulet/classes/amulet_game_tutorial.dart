@@ -14,15 +14,24 @@ class AmuletGameTutorial extends AmuletGame {
   static const keysPlayerSpawn = 'player_spawn_00';
   static const keysDoor01 = 'door01';
   static const keysDoor02 = 'door02';
+  static const keysDoor03 = 'door03';
   static const keysFiend01 = 'fiend01';
   static const keysFiend02 = 'fiend02';
 
   static const flagsDoor01Opened = 'door01_opened';
+  static const flagsDoor02Opened = 'door02_opened';
+  static const flagsDoor03Opened = 'door03_opened';
+  static const flagsFiend01Defeated = 'fiend01_defeated';
+  static const flagsUseSpellHeal = 'use_spell_heal';
+
+  static const objectiveTalkToGuide01 = 'talk_to_guide_01';
+  static const objectiveUseHeal = 'use_heal';
 
   final scripts = <AmuletPlayerScript>[];
 
   late final Character guide;
   Character? fiend01;
+  final fiends02 = <Character>[];
 
   AmuletGameTutorial({
     required super.amulet,
@@ -34,6 +43,62 @@ class AmuletGameTutorial extends AmuletGame {
   }) {
     guide = buildAmuletNpcGuide();
     add(guide);
+  }
+
+  void refreshPlayerGameState(AmuletPlayer player) {
+
+    if (player.flagSet(flagsDoor01Opened)){
+      setNodeEmpty(getSceneKey(keysDoor01));
+    } else {
+      setNode(
+        nodeIndex: getSceneKey(keysDoor01),
+        nodeType: NodeType.Wood,
+        nodeOrientation: NodeOrientation.Half_West,
+      );
+    }
+
+    if (player.flagSet(flagsDoor02Opened)){
+      setNodeEmpty(getSceneKey(flagsDoor02Opened));
+    } else {
+      setNode(
+          nodeIndex: getSceneKey(keysDoor02),
+          nodeType: NodeType.Brick,
+          nodeOrientation: NodeOrientation.Solid,
+      );
+    }
+
+    if (player.flagNotSet(flagsFiend01Defeated)){
+      actionInstantiateFiend01();
+    }
+
+    if (player.readFlag('initialized')) {
+      actionInitializeNewPlayer(player);
+    }
+
+    if (player.readFlag('introduction')){
+      runScriptIntroduction(player);
+      return;
+    }
+  }
+
+  void runScriptIntroduction(AmuletPlayer player) {
+    runScript(player)
+      .controlsDisabled()
+      .movePlayerToSceneKey(keysPlayerSpawn)
+      .snapCameraToPlayer()
+      .movePositionToSceneKey(guide, keysGuideSpawn0)
+      .wait(seconds: 2)
+      .cameraSetTarget(guide)
+      .talk(
+        'greetings other.'
+        'one ist here to to guide another.'
+        'left click the mouse to move.'
+      )
+      .movePositionToSceneKey(guide, keysGuideSpawn1)
+      .dataSet('objective', objectiveTalkToGuide01)
+      .controlsEnabled()
+      .cameraClearTarget()
+    ;
   }
 
   AmuletNpc buildAmuletNpcGuide() => AmuletNpc(
@@ -58,7 +123,7 @@ class AmuletGameTutorial extends AmuletGame {
   int getSceneKey(String name) =>
       scene.keys[name] ?? (throw Exception('amuletGameTutorial.getKey("$name") is null'));
 
-  void onNodeChanged(int index){
+  void onNodeChanged(int index) {
     final players = this.players;
     final scene = this.scene;
     for (final player in players) {
@@ -78,52 +143,58 @@ class AmuletGameTutorial extends AmuletGame {
 
   void updateScripts() {
     final scripts = this.scripts;
-    for (var i = 0; i <scripts.length; i++){
-
+    for (var i = 0; i < scripts.length; i++){
       final script = scripts[i];
-
       if (script.finished){
         scripts.removeAt(i);
         i--;
       } else {
         script.update();
       }
-
-
     }
   }
 
   void onInteractedWithGuide(AmuletPlayer player){
 
-    if (objectiveActiveSpeakToGuide(player)) {
-      objectiveApplySpeakToGuide(player);
-      return;
+    switch (player.data['objective']) {
+      case objectiveTalkToGuide01:
+        runScript(player)
+            .controlsDisabled()
+            .activate(guide)
+            .cameraSetTarget(guide)
+            .talk('danger doth lieth ahead')
+            .add(actionSpawnWeaponSwordAtGuide)
+            .deactivate(guide)
+            .end();
+        break;
+      case objectiveUseHeal:
+        runScript(player)
+            .controlsDisabled()
+            .cameraSetTarget(guide)
+            .talk('press the "Spell Heal" icon at the bottom of the screen.')
+            .end();
+        break;
+
+      default:
+        break;
     }
+
   }
 
   bool objectiveActiveSpeakToGuide(AmuletPlayer player) => player.readFlag('guide_met');
-
-  void objectiveApplySpeakToGuide(AmuletPlayer player) {
-
-    runScript(player)
-      .cameraSetTarget(guide)
-      .talk('danger doth lie ahead')
-      .add(actionSpawnWeaponAtGuide);
-  }
 
   void actionSetCameraTargetGuide(AmuletPlayer player) {
     actionSetCameraTarget(player, guide);
   }
 
-  void actionSpawnWeaponAtGuide() {
+  void actionSpawnWeaponSwordAtGuide() =>
     spawnAmuletItem(
-        item: AmuletItem.Weapon_Rusty_Old_Sword,
-        x: guide.x,
-        y: guide.y,
-        z: guide.z,
+      item: AmuletItem.Weapon_Rusty_Old_Sword,
+      x: guide.x,
+      y: guide.y,
+      z: guide.z,
+      deactivationTimer: -1
     );
-    actionDeactivateGuide();
-  }
 
   void actionDeactivateGuide() {
     deactivate(guide);
@@ -135,6 +206,11 @@ class AmuletGameTutorial extends AmuletGame {
 
     if (target == fiend01) {
       onCharacterKilledFiend01(target);
+      return;
+    }
+
+    if (fiends02.contains(target) && !fiends02.any((element) => element.alive)){
+      runScriptExplainElements(players.first);
     }
   }
 
@@ -163,65 +239,6 @@ class AmuletGameTutorial extends AmuletGame {
     refreshPlayerGameState(player);
   }
 
-  void refreshPlayerGameState(AmuletPlayer player) {
-
-    // if (player.flagSet(flagsDoor01Opened)){
-    //   actionOpenDoor01(player);
-    // } else {
-    //   actionCloseDoor01();
-    // }
-
-    if (!player.flagSet('fiend01_defeated')){
-      actionInstantiateFiend01();
-    }
-
-    if (player.readFlag('initialized')) {
-      actionInitializeNewPlayer(player);
-    }
-
-    if (player.readFlag('initialized')) {
-      actionInitializeNewPlayer(player);
-    }
-
-    if (player.readFlag('introduction')){
-
-      runScript(player)
-        .controlsDisabled()
-        .movePlayerToSceneKey(keysPlayerSpawn)
-        .movePositionToSceneKey(guide, keysGuideSpawn0)
-        .wait(seconds: 2)
-        .cameraSetTarget(guide)
-        .talk(
-          'greetings other.'
-          'one is here to guide another.'
-          'left click the mouse to move.'
-        )
-        .movePositionToSceneKey(guide, keysGuideSpawn1)
-        .playerControlsEnabled()
-        .cameraClearTarget()
-      ;
-
-      // actionPlayerControlsDisabled(player);
-      // actionMovePlayerToSpawn01(player);
-      // actionMoveGuideToGuideSpawn0();
-      // actionFaceOneAnother(player, guide);
-
-      // addJob(seconds: 2, action: () {
-      //   actionCameraTargetGuide(player);
-      //   actionPlayerTalkIntroduction(player);
-      //
-      //   player.onInteractionOver = () {
-      //     addJob(seconds: 1, action: () {
-      //       actionMoveGuideToGuideSpawn1();
-      //       actionPlayerControlsEnabled(player);
-      //       actionClearCameraTarget(player);
-      //     });
-      //   };
-      // });
-      return;
-    }
-  }
-
   void actionMoveOxToSceneKey(String sceneKey){
     actionMovePositionToSceneKey(guide, sceneKey);
   }
@@ -243,20 +260,6 @@ class AmuletGameTutorial extends AmuletGame {
       ..respawnDurationTotal = -1;
   }
 
-  void actionCloseDoor01() {
-     setNode(
-      nodeIndex: getSceneKey(keysDoor01),
-      nodeType: NodeType.Wood,
-      nodeOrientation: NodeOrientation.Half_West,
-    );
-  }
-
-  void actionMovePlayerToSpawn01(AmuletPlayer player) {
-    final playerSpawn01 = scene.getKey(keysPlayerSpawn);
-    actionMovePositionToIndex(player, playerSpawn01);
-    actionWritePlayerPositionAbsolute(player);
-  }
-
   void actionInitializeNewPlayer(AmuletPlayer player) {
     for (final weapon in player.weapons){
       weapon.amuletItem = null;
@@ -271,7 +274,7 @@ class AmuletGameTutorial extends AmuletGame {
   void onAmuletItemUsed(AmuletPlayer player, AmuletItem amuletItem) {
     if (
       amuletItem == AmuletItem.Spell_Heal &&
-      player.readFlag('use_spell_heal')
+      player.readFlag(flagsUseSpellHeal)
     ) {
       onSpellHealUsedForTheFirstTime(player);
     }
@@ -281,6 +284,7 @@ class AmuletGameTutorial extends AmuletGame {
     final fiend02Index = getSceneKey(keysFiend02);
     for (var i = 0; i < 3; i++) {
       const shiftRadius = 10;
+      fiends02.add(
       spawnFiendTypeAtIndex(
         fiendType: FiendType.Fallen_01,
         index: fiend02Index,
@@ -288,41 +292,21 @@ class AmuletGameTutorial extends AmuletGame {
         ..spawnLootOnDeath = false
         ..respawnDurationTotal = -1
         ..x += giveOrTake(shiftRadius)
-        ..y += giveOrTake(shiftRadius);
+        ..y += giveOrTake(shiftRadius)
+      );
     }
   }
 
-  void clearDoor02() => setNodeEmpty(getSceneKey('door02'));
-
-  void refreshSceneState(){
-
-  }
-
   void onAcquiredWeaponSword(AmuletPlayer player) {
-
     runScript(player)
       .controlsDisabled()
       .wait(seconds: 1)
       .cameraSetTargetSceneKey(keysDoor01)
       .wait(seconds: 2)
       .setNodeEmptyAtSceneKey(keysDoor01)
+      .flag(flagsDoor01Opened)
       .wait(seconds: 1)
-      .playerControlsEnabled();
-
-    // actionPlayerControlsDisabled(player);
-    // final door01Index = scene.getKey(keysDoor01);
-    // final door01Position = Position();
-    // scene.movePositionToIndex(door01Position, door01Index);
-    // player.cameraTarget = door01Position;
-
-    // addJob(seconds: 2, action: (){
-    //   player.readFlag(flagsDoor01Opened);
-    //   setNodeEmpty(getSceneKey(keysDoor01));
-    //   addJob(seconds: 2, action: (){
-    //     actionClearCameraTarget(player);
-    //     actionPlayerControlsEnabled(player);
-    //   });
-    // });
+      .controlsEnabled();
   }
 
   void actionFaceOneAnother(Character a, Character b) {
@@ -357,30 +341,25 @@ class AmuletGameTutorial extends AmuletGame {
 
     if (amuletItem == AmuletItem.Spell_Heal){
       if (player.readFlag('acquired_spell_heal')){
-        actionPlayerControlsDisabled(player);
-        actionMoveGuideToFiend01();
-        actionCameraTargetGuide(player);
-
-        addJob(seconds: 2, action: (){
-          actionActivateGuide();
-          player.talk(
-              'one has acquired a spell of healing.'
-              'press the "Spell Heal" icon at the bottom of the screen.'
-              // 'or press the "W" key on the keyboard.'
-              // 'each item has a limited number of charges.'
-              // 'charges replenish over time.'
-          );
-
-          player.onInteractionOver = () {
-            actionDeactivateGuide();
-            actionClearCameraTarget(player);
-            actionPlayerControlsEnabled(player);
-          };
-        });
+        onAmuletItemAcquiredSpellHeal(player);
       }
       return;
     }
   }
+
+  void onAmuletItemAcquiredSpellHeal(AmuletPlayer player) =>
+      runScript(player)
+      .controlsDisabled()
+      .movePositionToSceneKey(guide, keysFiend01)
+      .activate(guide)
+      .wait(seconds: 1)
+      .cameraSetTarget(guide)
+      .talk(
+        'one hath acquired a spell of healing.'
+        'one doth press the "Spell Heal" icon at the bottom of the screen.'
+      )
+      .dataSet('objective', objectiveUseHeal)
+      .end();
 
   void actionActivateGuide() {
     activate(guide);
@@ -400,39 +379,32 @@ class AmuletGameTutorial extends AmuletGame {
      return instance;
   }
 
-  void deactivateGuide(){
-    deactivate(guide);
-  }
-
-  void activateGuide(){
-    activate(guide);
-  }
-
   void onSpellHealUsedForTheFirstTime(AmuletPlayer player) => runScript(player)
       .controlsDisabled()
+      .wait(seconds: 1)
       .talk(
         'one has done well.'
         'each item has a limited number of charges.'
-        'charges replenish over time'
+        'charges replenish over time.',
+        target: guide,
       )
       .cameraSetTargetSceneKey(keysDoor02)
       .wait(seconds: 1)
       .setNodeEmptyAtSceneKey(keysDoor02)
+      .flag(flagsDoor02Opened)
       .wait(seconds: 1)
-      .add(deactivateGuide)
+      .deactivate(guide)
       .add(actionSpawnFiends02)
-      .playerControlsEnabled();
+      .controlsEnabled();
 
-
-  @override
-  void onPlayerLevelGained(AmuletPlayer player) {
-    if (player.level == 2){
+  void runScriptExplainElements(AmuletPlayer player) {
       runScript(player)
           .controlsDisabled()
           .wait(seconds: 1)
           .movePositionToSceneKey(guide, keysFiend02)
-          .add(activateGuide)
+          .activate(guide)
           .talk(
+            'congratulations.'
             'one has gained a level.'
             'one must learn of the elements.'
             'five types there are.'
@@ -441,16 +413,23 @@ class AmuletGameTutorial extends AmuletGame {
             'wind.'
             'earth.'
             'electricity.'
-            'the effectiveness of each item is determined by these elements.'
+            'the power of every item is determined by these elements.'
+            'for example.'
             'the sword one doth possess is at level 1.'
-            'level two demands one have at least 1 element of fire.'
+            'level two demands one hath at least 1 element of fire.'
             'hover the mouse over an item to see this information.'
-            'to improve an element press on the element icon at the top left of the screen.'
-            'a final challenge doth await one.'
+            'one can see ones elements at the top left corner of the screen.'
+            'each level gained allows one to improve one element.'
+            'one may select an element to improve it.'
+            'another challenge doth await one.'
           )
-          .playerControlsEnabled()
-      ;
-    }
+          .deactivate(guide)
+          .wait(seconds: 1)
+          .cameraSetTargetSceneKey(keysDoor03)
+          .wait(seconds: 1)
+          .setNodeEmptyAtSceneKey(keysDoor03)
+          .wait(seconds: 1)
+          .end();
   }
 }
 
