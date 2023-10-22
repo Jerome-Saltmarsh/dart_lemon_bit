@@ -2310,8 +2310,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   Collider? findNearestEnemy(Collider src, {double radius = 1000}){
     Collider? nearestEnemy;
     var nearestEnemyDistanceSquared = radius * radius;
+    final characters = this.characters;
     for (final character in characters){
-      if (!src.isEnemy(character)) continue;
+      if (!src.isEnemy(character) || character.invincible) continue;
       final distanceSquared = src.getDistanceSquared(character);
       if (distanceSquared > nearestEnemyDistanceSquared) continue;
       nearestEnemyDistanceSquared = distanceSquared;

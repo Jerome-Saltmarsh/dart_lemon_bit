@@ -133,6 +133,7 @@ class AmuletGameTutorial extends AmuletGame {
     invincible: true,
   )
     ..complexion = 20
+    ..invincible = true
     ..legsType = LegType.Leather
     ..bodyType = BodyType.Leather_Armour;
 
@@ -171,13 +172,15 @@ class AmuletGameTutorial extends AmuletGame {
           return;
         }
         runScript(player)
-            .objective(objectiveOpenBridge)
-            .cameraSetTarget(guide)
-            .talk(
-            'good. fire at any time by pressing the right mouse button.'
-            )
-            .deactivate(guide)
-            .end();
+          .objective(objectiveOpenBridge)
+          .cameraSetTarget(guide)
+          .talk(
+            'good.'
+            'fire at any time by pressing the right mouse button.'
+          )
+          .deactivate(guide)
+          .end()
+        ;
         break;
     }
   }
