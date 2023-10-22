@@ -23,7 +23,6 @@ class AmuletGameTutorial extends AmuletGame {
   static const flagsDoor02Opened = 'door02_opened';
   static const flagsDoor03Opened = 'door03_opened';
   static const flagsFiend01Defeated = 'fiend01_defeated';
-  static const flagsUseSpellHeal = 'use_spell_heal';
   static const flagsBowAddedToWeapons = 'add_bow_to_weapons';
 
   static const objectiveTalkToGuide01 = 'talk_to_guide_01';
@@ -32,6 +31,7 @@ class AmuletGameTutorial extends AmuletGame {
   static const objectiveEquipBow = 'equip_bow';
   static const objectiveDrawBow = 'draw_bow';
   static const objectiveOpenInventory = 'open_inventory';
+  static const objectiveKillFiends02 = 'kill_fiends02';
 
   final scripts = <AmuletPlayerScript>[];
 
@@ -315,7 +315,7 @@ class AmuletGameTutorial extends AmuletGame {
   void onAmuletItemUsed(AmuletPlayer player, AmuletItem amuletItem) {
     if (
       amuletItem == AmuletItem.Spell_Heal &&
-      player.readFlag(flagsUseSpellHeal)
+      player.objective == objectiveUseHeal
     ) {
       onSpellHealUsedForTheFirstTime(player);
     }
@@ -365,20 +365,20 @@ class AmuletGameTutorial extends AmuletGame {
 
     if (amuletItem == AmuletItem.Spell_Heal){
       if (player.readFlag('acquired_spell_heal')){
-        onAmuletItemAcquiredSpellHeal(player);
+        startObjectiveUseHeal(player);
       }
       return;
     }
 
     if (amuletItem == AmuletItem.Weapon_Old_Bow){
       if (player.readFlag('acquired_weapon_old_bow')){
-        onAmuletItemAcquiredWeaponOldBow(player);
+        startObjectiveOpenInventory(player);
       }
       return;
     }
   }
 
-  void onAmuletItemAcquiredSpellHeal(AmuletPlayer player) =>
+  void startObjectiveUseHeal(AmuletPlayer player) =>
       runScript(player)
       .controlsDisabled()
       .movePositionToSceneKey(guide, keysFiend01)
@@ -390,15 +390,8 @@ class AmuletGameTutorial extends AmuletGame {
         'one has acquired the spell of healing.'
         'caste heal by pressing the heal icon at the bottom of the screen'
       )
-      .dataSet('objective', objectiveUseHeal)
+      .objective(objectiveUseHeal)
       .end();
-
-  AmuletPlayerScript runScript(AmuletPlayer player){
-     final instance = AmuletPlayerScript(player);
-     scripts.clear();
-     scripts.add(instance);
-     return instance;
-  }
 
   void onSpellHealUsedForTheFirstTime(AmuletPlayer player) => runScript(player)
       .controlsDisabled()
@@ -413,6 +406,7 @@ class AmuletGameTutorial extends AmuletGame {
       .cameraSetTargetSceneKey(keysDoor02)
       .wait(seconds: 1)
       .setNodeEmptyAtSceneKey(keysDoor02)
+      .objective(objectiveKillFiends02)
       .flag(flagsDoor02Opened)
       .wait(seconds: 1)
       .deactivate(guide)
@@ -455,7 +449,7 @@ class AmuletGameTutorial extends AmuletGame {
           .end();
   }
 
-  void onAmuletItemAcquiredWeaponOldBow(AmuletPlayer player) {
+  void startObjectiveOpenInventory(AmuletPlayer player) {
     runScript(player)
         .controlsDisabled()
         .add(() {
@@ -486,20 +480,18 @@ class AmuletGameTutorial extends AmuletGame {
 
   @override
   void onPlayerInventoryOpenChanged(AmuletPlayer player, bool value) {
-    if (value){
-      if (player.objective == objectiveOpenInventory) {
-
-        runScript(player)
-            .objective(objectiveEquipBow)
-            .faceEachOther(player, guide)
-            .talk(
-              'add the bow to the weapons rack by clicking the bow icon in the inventory',
-              target: guide
-            )
-        ;
-      }
+    if (value && player.objective == objectiveOpenInventory){
+      startObjectiveEquipBow(player);
     }
   }
+
+  void startObjectiveEquipBow(AmuletPlayer player) => runScript(player)
+        .objective(objectiveEquipBow)
+        .faceEachOther(player, guide)
+        .talk(
+          'add the bow to the weapons rack by clicking the bow icon in the inventory',
+          target: guide
+        );
 
   @override
   void onPlayerInventoryMoved(
@@ -512,19 +504,26 @@ class AmuletGameTutorial extends AmuletGame {
       targetAmuletItemSlot.amuletItem == AmuletItem.Weapon_Old_Bow &&
       player.objective == objectiveEquipBow
     ) {
-      onBowAddedToWeapons(player);
+      startObjectiveDrawBow(player);
     }
   }
 
-  void onBowAddedToWeapons(AmuletPlayer player) => runScript(player)
+  void startObjectiveDrawBow(AmuletPlayer player) => runScript(player)
       .controlsDisabled()
       .cameraSetTarget(guide)
       .faceEachOther(player, guide)
+      .objective(objectiveDrawBow)
       .talk(
         'excellent.'
         'draw the bow by clicking the bow icon at the bottom of the screen'
       )
-      .objective(objectiveDrawBow)
       .end();
+
+  AmuletPlayerScript runScript(AmuletPlayer player){
+    final instance = AmuletPlayerScript(player);
+    scripts.clear();
+    scripts.add(instance);
+    return instance;
+  }
 }
 
