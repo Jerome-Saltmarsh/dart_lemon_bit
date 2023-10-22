@@ -95,8 +95,13 @@ class AmuletGameTutorial extends AmuletGame {
           index: getSceneKey('bow_target'),
           type: ItemType.Object,
           subType: ObjectType.Crystal,
-          team: AmuletTeam.Monsters,
-      );
+          team: TeamType.Alone,
+      )
+        ..hitable = true
+        ..fixed = true
+        ..radius = 12
+        ..healthMax = 1
+        ..health = 1;
     }
 
     if (!player.objectivesCompleted.contains(objectiveBowObtained)){

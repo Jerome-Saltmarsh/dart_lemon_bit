@@ -1242,6 +1242,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void updateProjectiles() {
+    final projectiles = this.projectiles;
     for (var i = 0; i < projectiles.length; i++) {
       final projectile = projectiles[i];
       if (!projectile.active) continue;
@@ -1266,6 +1267,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
           projectile.x, projectile.y, projectile.z);
 
       if (!NodeType.isRainOrEmpty(nodeType)) {
+        final players = this.players;
         for (final player in players) {
           if (!player.onScreen(projectile.x, projectile.y)) continue;
           player.writeGameEvent(
@@ -1326,6 +1328,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
 
   void checkProjectileCollision(List<Collider> colliders) {
+    final projectiles = this.projectiles;
     for (var i = 0; i < projectiles.length; i++) {
       final projectile = projectiles[i];
       if (!projectile.active) continue;
