@@ -1489,4 +1489,96 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     writeBool(true);
     writePosition(cameraTarget);
   }
+
+  bool objectiveCompleted(String name){
+    var objectives = data['objectives'];
+
+    if (objectives == null){
+       return false;
+    }
+
+    if (objectives is! List<String>){
+      throw Exception('objectives is! List<String>');
+    }
+
+    return objectives.contains(name);
+  }
+
+  List<String> get objectives {
+    var objectives = data['objectives'];
+
+    if (objectives == null) {
+      objectives = <String>[];
+      data['objectives'] = objectives;
+    }
+
+    if (objectives is! List<String>){
+      throw Exception('objectives is! List<String>');
+    }
+
+    return objectives;
+  }
+
+  SlotType getAmuletItemSlotType(AmuletItemSlot amuletItemSlot){
+    if (amuletItemSlot == equippedHandLeft){
+      return SlotType.Equipped_Hand_Left;
+    }
+    if (amuletItemSlot == equippedHandRight){
+      return SlotType.Equipped_Hand_Right;
+    }
+    if (amuletItemSlot == equippedHelm){
+      return SlotType.Equipped_Helm;
+    }
+    if (amuletItemSlot == equippedBody){
+      return SlotType.Equipped_Body;
+    }
+    if (amuletItemSlot == equippedLegs){
+      return SlotType.Equipped_Legs;
+    }
+    if (amuletItemSlot == equippedShoe){
+      return SlotType.Equipped_Shoes;
+    }
+    if (weapons.contains(amuletItemSlot)){
+      return SlotType.Weapons;
+    }
+    if (items.contains(amuletItemSlot)){
+      return SlotType.Items;
+    }
+    if (treasures.contains(amuletItemSlot)){
+      return SlotType.Treasures;
+    }
+    throw Exception('amuletPlayer.getAmuletItemSlotType($amuletItemSlot)');
+  }
+
+  void swapAmuletItemSlots(
+      AmuletItemSlot amuletItemSlotA,
+      AmuletItemSlot amuletItemSlotB,
+  ) {
+
+    final aSlotType = getAmuletItemSlotType(amuletItemSlotA);
+    final bSlotType = getAmuletItemSlotType(amuletItemSlotB);
+
+    final aAmuletItem = amuletItemSlotA.amuletItem;
+    final bAmuletItem = amuletItemSlotB.amuletItem;
+
+    if (!aSlotType.supportsItemType(bAmuletItem?.type)){
+      writeAmuletError('cannot perform move');
+      return;
+    }
+
+    if (!bSlotType.supportsItemType(aAmuletItem?.type)){
+      writeAmuletError('cannot perform move');
+      return;
+    }
+
+    amuletItemSlotA.amuletItem = bAmuletItem;
+    amuletItemSlotB.amuletItem = aAmuletItem;
+    notifyEquipmentDirty();
+    amuletGame.onPlayerInventoryMoved(
+      this,
+      amuletItemSlotA,
+      amuletItemSlotB,
+    );
+  }
+
 }

@@ -26,30 +26,33 @@ void handleInventoryRequest(AmuletPlayer player, List<int> arguments) {
       final targetSlotType = slotTypes[targetSlotTypeIndex];
 
 
-      final srcItemObject =
+      final srcAmuletItemSlot =
           player.getItemObjectAtSlotType(srcSlotType, srcIndex);
-      final targetItemObject =
+      final targetAmuletItemSlot =
           player.getItemObjectAtSlotType(targetSlotType, targetIndex);
 
-
-      final srcItem = srcItemObject.amuletItem;
-      final targetItem = targetItemObject.amuletItem;
-
-      if (srcItem == null) {
-        return;
-      }
-
-      if (targetItem != null && !srcSlotType.supportsItemType(targetItem.type)){
-        return;
-      }
-
-      if (!targetSlotType.supportsItemType(srcItem.type)) {
-        return;
-      }
-
-      targetItemObject.amuletItem = srcItem;
-      srcItemObject.amuletItem = targetItem;
-      player.notifyEquipmentDirty();
+      // final srcAmuletItem = srcAmuletItemSlot.amuletItem;
+      //
+      // if (srcAmuletItem == null) {
+      //   return;
+      // }
+      player.swapAmuletItemSlots(srcAmuletItemSlot, targetAmuletItemSlot);
+      // if (targetAmuletItem != null && !srcSlotType.supportsItemType(targetAmuletItem.type)){
+      //   return;
+      // }
+      //
+      // if (!targetSlotType.supportsItemType(srcAmuletItem.type)) {
+      //   return;
+      // }
+      //
+      // targetAmuletItemSlot.amuletItem = srcAmuletItem;
+      // srcAmuletItemSlot.amuletItem = targetAmuletItem;
+      // player.notifyEquipmentDirty();
+      // player.amuletGame.onPlayerInventoryMoved(
+      //     player,
+      //     srcAmuletItemSlot,
+      //     targetAmuletItemSlot,
+      // );
       break;
 
     case NetworkRequestInventory.Use:

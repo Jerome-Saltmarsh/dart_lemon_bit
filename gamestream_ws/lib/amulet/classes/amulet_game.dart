@@ -426,12 +426,18 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       item: randomItem(AmuletItem.findByQuality(quality)),
   );
 
-  void spawnLootAtIndex({required int index, required AmuletItem item}) => spawnAmuletItem(
-    x: scene.getIndexX(index),
-    y: scene.getIndexY(index),
-    z: scene.getIndexZ(index),
-    item: item,
-  );
+  AmuletGameObject spawnAmuletItemAtIndex({
+    required int index,
+    required AmuletItem item,
+    int? deactivationTimer
+  }) =>
+      spawnAmuletItem(
+        x: scene.getIndexX(index),
+        y: scene.getIndexY(index),
+        z: scene.getIndexZ(index),
+        item: item,
+        deactivationTimer: deactivationTimer
+      );
 
   AmuletGameObject spawnAmuletItem({
     required AmuletItem item,
@@ -482,7 +488,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     switch (nodeType){
       case NodeType.Grass_Long:
         if (randomChance(chanceOfDropItemOnGrassCut)){
-          spawnLootAtIndex(index: nodeIndex, item: AmuletItem.Meat_Drumstick);
+          spawnAmuletItemAtIndex(index: nodeIndex, item: AmuletItem.Meat_Drumstick);
         }
         break;
     }
@@ -582,4 +588,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   void onAmuletItemAcquired(AmuletPlayer amuletPlayer, AmuletItem amuletItem) {}
 
   void onPlayerLevelGained(AmuletPlayer player) {}
+
+  void onPlayerInventoryMoved(
+      AmuletPlayer player,
+      AmuletItemSlot srcAmuletItemSlot,
+      AmuletItemSlot targetAmuletItemSlot,
+  ) {}
 }

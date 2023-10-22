@@ -17,21 +17,25 @@ class AmuletGameTutorial extends AmuletGame {
   static const keysDoor03 = 'door03';
   static const keysFiend01 = 'fiend01';
   static const keysFiend02 = 'fiend02';
+  static const keysSpawnBow = 'spawn_bow';
 
   static const flagsDoor01Opened = 'door01_opened';
   static const flagsDoor02Opened = 'door02_opened';
   static const flagsDoor03Opened = 'door03_opened';
   static const flagsFiend01Defeated = 'fiend01_defeated';
   static const flagsUseSpellHeal = 'use_spell_heal';
+  static const flagsBowEquipped = 'equip_bow';
 
   static const objectiveTalkToGuide01 = 'talk_to_guide_01';
   static const objectiveUseHeal = 'use_heal';
+  static const objectiveBowObtained = 'bow_obtained';
 
   final scripts = <AmuletPlayerScript>[];
 
   late final Character guide;
   Character? fiend01;
   final fiends02 = <Character>[];
+
 
   AmuletGameTutorial({
     required super.amulet,
@@ -77,7 +81,14 @@ class AmuletGameTutorial extends AmuletGame {
 
     if (player.readFlag('introduction')){
       runScriptIntroduction(player);
-      return;
+    }
+
+    if (!player.objectives.contains(objectiveBowObtained)){
+      spawnAmuletItemAtIndex(
+        item: AmuletItem.Weapon_Old_Bow,
+        index: getSceneKey(keysSpawnBow),
+        deactivationTimer: -1,
+      );
     }
   }
 
@@ -345,6 +356,13 @@ class AmuletGameTutorial extends AmuletGame {
       }
       return;
     }
+
+    if (amuletItem == AmuletItem.Weapon_Old_Bow){
+      if (player.readFlag('acquired_weapon_old_bow')){
+        onAmuletItemAcquiredWeaponOldBow(player);
+      }
+      return;
+    }
   }
 
   void onAmuletItemAcquiredSpellHeal(AmuletPlayer player) =>
@@ -430,6 +448,50 @@ class AmuletGameTutorial extends AmuletGame {
           .setNodeEmptyAtSceneKey(keysDoor03)
           .wait(seconds: 1)
           .end();
+  }
+
+  void onAmuletItemAcquiredWeaponOldBow(AmuletPlayer player) {
+    runScript(player)
+        .controlsDisabled()
+        .add(() {
+          for (final weapon in player.weapons){
+            if (weapon.amuletItem == AmuletItem.Weapon_Old_Bow){
+              final emptyItemSlot = player.getEmptyItemSlot();
+              if (emptyItemSlot == null){
+                throw Exception('emptyItemSlot == null');
+              }
+              player.swapAmuletItemSlots(weapon, emptyItemSlot);
+            }
+          }
+        })
+        .cameraSetTarget(guide)
+        .wait(seconds: 1)
+        .movePositionToSceneKey(guide, keysSpawnBow)
+        .activate(guide)
+        .wait(seconds: 1)
+        .talk(
+          'one hath acquired a new weapon.'
+          'one must now learn of the inventory.'
+          'hover the mouse over the inventory icon at the bottom left corner of the screen.'
+          'find the bow icon in the items window and click it.'
+        );
+  }
+
+  @override
+  void onPlayerInventoryMoved(
+      AmuletPlayer player,
+      AmuletItemSlot srcAmuletItemSlot,
+      AmuletItemSlot targetAmuletItemSlot,
+  ) {
+
+    if (
+      player.weapons.contains(targetAmuletItemSlot) &&
+      targetAmuletItemSlot.amuletItem == AmuletItem.Weapon_Old_Bow
+    ) {
+      if (player.readFlag(flagsBowEquipped)){
+
+      }
+    }
   }
 }
 

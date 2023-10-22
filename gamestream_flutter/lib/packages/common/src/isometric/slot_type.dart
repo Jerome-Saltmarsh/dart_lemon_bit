@@ -12,8 +12,13 @@ enum SlotType {
   Equipped_Legs,
   Equipped_Shoes;
 
-  bool supportsItemType(int itemType) =>
-      switch (this){
+  bool supportsItemType(int? itemType) {
+
+    if (itemType == null){
+      return true;
+    }
+
+    return switch (this){
         Equipped_Helm => itemType == ItemType.Helm,
         Equipped_Legs => itemType == ItemType.Legs,
         Equipped_Body => itemType == ItemType.Body,
@@ -24,6 +29,7 @@ enum SlotType {
         Equipped_Shoes => itemType == ItemType.Shoes,
         Items => true
       };
+  }
 
 
 
