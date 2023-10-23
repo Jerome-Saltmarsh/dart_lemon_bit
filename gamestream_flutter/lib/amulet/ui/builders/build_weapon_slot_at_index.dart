@@ -45,7 +45,7 @@ Widget buildWeaponSlotAtIndex(int index, {
     return Column(
       children: [
         Container(
-          margin: const EdgeInsets.symmetric(horizontal: 4),
+          margin: const EdgeInsets.symmetric(horizontal: 2),
           child: Stack(
             alignment: Alignment.center,
             children: [
