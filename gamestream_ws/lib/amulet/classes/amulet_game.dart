@@ -1,9 +1,8 @@
 import 'package:gamestream_ws/amulet.dart';
 import 'package:gamestream_ws/amulet/setters/amulet_player/clear_activated_power_index.dart';
-import 'package:gamestream_ws/gamestream/amulet.dart';
+import 'package:gamestream_ws/gamestream.dart';
 import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages.dart';
-import 'package:gamestream_ws/packages/common/src/amulet/amulet_scene.dart';
 
 import '../functions/item_slot/item_slot_reduce_charge.dart';
 import 'fiend_type.dart';

@@ -12,6 +12,7 @@ import 'talk_option.dart';
 
 class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
 
+  var previousCameraTarget = false;
   Position? cameraTarget;
 
   AmuletGame amuletGame;
@@ -1486,16 +1487,22 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   }
 
   void writeCameraTarget() {
+    final cameraTarget = this.cameraTarget;
+
+    if (cameraTarget == null && !previousCameraTarget){
+      return;
+    }
+
     writeByte(NetworkResponse.Amulet_Player);
     writeByte(NetworkResponseAmuletPlayer.Camera_Target);
 
-    final cameraTarget = this.cameraTarget;
-
     if (cameraTarget == null){
+      previousCameraTarget = false;
       writeBool(false);
       return;
     }
 
+    previousCameraTarget = true;
     writeBool(true);
     writePosition(cameraTarget);
   }
