@@ -37,12 +37,14 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   var mouseRightDownDuration = 0;
   var mouseRightDownIgnore = false;
   var _mouseLeftDown = false;
+  var _aimTargetActionPrevious = -1;
   var _aimTargetAction = TargetAction.Run;
   Collider? _aimTarget;
 
   var weaponDurationPercentagePrevious = 0.0;
   var accuracyPrevious = 0.0;
   var totalProjectiles = 0;
+  var _previousNoProjectiles = false;
   var inputMode = InputMode.Keyboard;
   var screenLeft = 0.0;
   var screenTop = 0.0;
@@ -590,9 +592,13 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   }
 
   void writePlayerAimTargetAction() {
+    if (_aimTargetActionPrevious == _aimTargetAction){
+      return;
+    }
     writeByte(NetworkResponse.Player);
     writeByte(NetworkResponsePlayer.Aim_Target_Action);
     writeByte(_aimTargetAction);
+    _aimTargetActionPrevious = _aimTargetAction;
   }
 
   void writePlayerAimTargetType() {
