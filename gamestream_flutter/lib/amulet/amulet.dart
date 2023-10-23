@@ -14,6 +14,7 @@ import 'amulet_render.dart';
 
 class Amulet extends IsometricGame {
 
+  final amuletScene = Watch<AmuletScene?>(null);
   final cameraTargetSet = Watch(false);
   final cameraTarget = Position();
 

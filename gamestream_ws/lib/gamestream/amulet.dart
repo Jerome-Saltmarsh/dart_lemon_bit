@@ -39,12 +39,17 @@ class Amulet {
   late final AmuletGame amuletRoad01;
   late final AmuletGame amuletRoad02;
 
-  AmuletGame getAmuletSceneGame(AmuletScene scene) => switch (scene) {
-    AmuletScene.Town => amuletGameTown,
-    AmuletScene.Tutorial => buildAmuletGameTutorial(),
-    AmuletScene.Road_01 => amuletRoad01,
-    AmuletScene.Road_02 => amuletRoad02,
-  };
+  AmuletGame getAmuletSceneGame(AmuletScene scene) {
+    if (scene == AmuletScene.Tutorial){
+     return buildAmuletGameTutorial();
+    }
+    for (final game in games){
+      if (game is AmuletGame && game.amuletScene == scene){
+         return game;
+      }
+    }
+    throw Exception('amulet.getAmuletSceneGame("$scene")');
+  }
 
   void validate() async {
 
@@ -86,6 +91,7 @@ class Amulet {
       fiendTypes: [
         FiendType.Fallen_01,
       ],
+      amuletScene: AmuletScene.Road_01,
     );
 
     amuletRoad02 = AmuletGame(
@@ -98,6 +104,7 @@ class Amulet {
         FiendType.Fallen_01,
         FiendType.Skeleton_01,
       ],
+      amuletScene: AmuletScene.Road_02,
     );
 
     games.add(amuletGameTown);

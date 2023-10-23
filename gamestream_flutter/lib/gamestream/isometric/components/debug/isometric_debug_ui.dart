@@ -769,20 +769,20 @@ extension isometricDebugUI on IsometricDebug {
       child: Column(
         children: [
           buildText('CHANGE GAME'),
-          Column(
-            children: AmuletScene.values.map((amuletScene) => onPressed(
+          buildWatch(amulet.amuletScene, (activeAmuletScene) => Column(
+              children: AmuletScene.values.map((amuletScene) => onPressed(
                 action: () =>
-                  network.sendNetworkRequest(
-                    NetworkRequest.Amulet,
-                    NetworkRequestAmulet.Player_Change_Game.index,
-                    amuletScene.index,
-                  ),
+                    network.sendNetworkRequest(
+                      NetworkRequest.Amulet,
+                      NetworkRequestAmulet.Player_Change_Game.index,
+                      amuletScene.index,
+                    ),
                 child: GSContainer(
-                    color: Colors.black12,
-                    child: buildText(amuletScene.name),
+                  color: activeAmuletScene == amuletScene ? Colors.white12 : Colors.black12,
+                  child: buildText(amuletScene.name),
                 ),
               )).toList(growable: false),
-          ),
+            )),
         ],
       ),
     );

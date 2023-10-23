@@ -3,6 +3,7 @@ import 'package:gamestream_ws/amulet/setters/amulet_player/clear_activated_power
 import 'package:gamestream_ws/gamestream/amulet.dart';
 import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages.dart';
+import 'package:gamestream_ws/packages/common/src/amulet/amulet_scene.dart';
 
 import '../functions/item_slot/item_slot_reduce_charge.dart';
 import 'fiend_type.dart';
@@ -21,6 +22,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   final String name;
   final chanceOfDropItemOnGrassCut = 0.25;
   final gameObjectDeactivationTimer = 5000;
+  final AmuletScene amuletScene;
   var cooldownTimer = 0;
 
   AmuletGame({
@@ -30,6 +32,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required super.environment,
     required this.name,
     required this.fiendTypes,
+    required this.amuletScene,
   }) : super(gameType: GameType.Amulet) {
     spawnFiendsAtSpawnNodes();
   }
@@ -596,5 +599,13 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   ) {}
 
   void onPlayerInventoryOpenChanged(AmuletPlayer player, bool value) { }
+
+  @override
+  void customDownloadScene(IsometricPlayer player) {
+    super.customDownloadScene(player);
+    player.writeByte(NetworkResponse.Amulet);
+    player.writeByte(NetworkResponseAmulet.Amulet_Scene);
+    player.writeByte(amuletScene.index);
+  }
 
 }

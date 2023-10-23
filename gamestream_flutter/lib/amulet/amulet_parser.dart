@@ -91,6 +91,11 @@ extension AmuletParser on IsometricParser {
          amulet.clearError();
          amulet.error.value = readString();
          break;
+       case NetworkResponseAmulet.Amulet_Scene:
+         final index = readByte();
+         final amuletScene = AmuletScene.values[index];
+         amulet.amuletScene.value = amuletScene;
+         break;
      }
   }
 

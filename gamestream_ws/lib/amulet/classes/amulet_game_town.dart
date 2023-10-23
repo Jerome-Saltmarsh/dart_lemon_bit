@@ -1,5 +1,6 @@
 import 'package:gamestream_ws/amulet.dart';
 import 'package:gamestream_ws/packages.dart';
+import 'package:gamestream_ws/packages/common/src/amulet/amulet_scene.dart';
 
 class AmuletGameTown extends AmuletGame {
 
@@ -22,7 +23,7 @@ class AmuletGameTown extends AmuletGame {
     required super.environment,
     required super.name,
     required super.fiendTypes,
-  }) {
+  }) : super(amuletScene: AmuletScene.Town){
 
     spawnFiendsAtSpawnNodes();
     characters.add(AmuletNpc(

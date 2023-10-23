@@ -18,4 +18,5 @@ class NetworkResponseAmulet {
    static const Activated_Power_Index = 15;
    static const Active_Power_Position = 16;
    static const Error = 17;
+   static const Amulet_Scene = 18;
 }

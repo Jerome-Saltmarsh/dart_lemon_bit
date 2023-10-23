@@ -2,6 +2,7 @@
 import 'package:gamestream_ws/amulet/src.dart';
 import 'package:gamestream_ws/isometric/src.dart';
 import 'package:gamestream_ws/packages.dart';
+import 'package:gamestream_ws/packages/common/src/amulet/amulet_scene.dart';
 
 import 'amulet_player_script.dart';
 import 'fiend_type.dart';
@@ -54,7 +55,7 @@ class AmuletGameTutorial extends AmuletGame {
     required super.environment,
     required super.name,
     required super.fiendTypes,
-  }) {
+  }) : super (amuletScene: AmuletScene.Tutorial){
     instantiateGuide();
     scene.movePositionToKey(finish, keysFinish);
   }
@@ -219,7 +220,7 @@ class AmuletGameTutorial extends AmuletGame {
         break;
       case objectiveFinish:
         if (player.withinRadiusPosition(finish, 10)) {
-          player.changeGame(amulet.amuletGameTown);
+          player.changeGame(amulet.amuletRoad02);
         }
         break;
     }
