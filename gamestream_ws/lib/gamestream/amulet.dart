@@ -11,6 +11,7 @@ import 'package:gamestream_ws/gamestream.dart';
 import 'package:gamestream_ws/isometric/isometric_environment.dart';
 import 'package:gamestream_ws/isometric/isometric_time.dart';
 import 'package:gamestream_ws/packages/common/src/amulet/amulet_item.dart';
+import 'package:gamestream_ws/packages/common/src/amulet/amulet_scene.dart';
 import 'package:gamestream_ws/packages/common/src/duration_auto_save.dart';
 
 import '../isometric/scenes.dart';
@@ -37,6 +38,13 @@ class Amulet {
   late final AmuletGame amuletGameTown;
   late final AmuletGame amuletRoad01;
   late final AmuletGame amuletRoad02;
+
+  AmuletGame getAmuletSceneGame(AmuletScene scene) => switch (scene) {
+    AmuletScene.Town => amuletGameTown,
+    AmuletScene.Tutorial => buildAmuletGameTutorial(),
+    AmuletScene.Road_01 => amuletRoad01,
+    AmuletScene.Road_02 => amuletRoad02,
+  };
 
   void validate() async {
 
@@ -178,37 +186,32 @@ class Amulet {
     }
   }
 
-  void playerStartTutorial(AmuletPlayer player) {
+  void playerStartTutorial(AmuletPlayer player) =>
     playerChangeGame(
       player: player,
-      src: player.amuletGame,
       target: buildAmuletGameTutorial(),
     );
-  }
-
-  void movePlayerToTown(AmuletPlayer player) {
-    playerChangeGame(
-      player: player,
-      src: player.amuletGame,
-      target: amuletGameTown,
-    );
-  }
 
   void playerChangeGame({
     required AmuletPlayer player,
-    required AmuletGame src,
     required AmuletGame target,
+    String? sceneKey,
   }){
-    if (player.amuletGame == target){
+    final currentGame = player.amuletGame;
+    if (currentGame == target){
       throw Exception();
     }
+    currentGame.remove(player);
     player.endInteraction();
     player.clearPath();
     player.clearTarget();
-    src.remove(player);
-    target.add(player);
     player.clearCache();
     player.setDestinationToCurrentPosition();
+    target.add(player);
     player.amuletGame = target;
+
+    if (sceneKey != null){
+      target.scene.movePositionToKey(player, sceneKey);
+    }
   }
 }

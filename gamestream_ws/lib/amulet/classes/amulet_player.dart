@@ -1441,7 +1441,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   /// the first time a flag name is entered it will return true
   /// however any time after that if the same flag name is entered
   /// the return will be false
-  bool readFlag(String name){
+  bool readOnce(String name){
     if (!data.containsKey(name)){
       data[name] = true;
       return true;
@@ -1620,5 +1620,10 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     this.objective = null;
   }
 
+  void changeGame(AmuletGame targetAmuletGame) =>
+    amuletGame.amulet.playerChangeGame(
+      player: this,
+      target: targetAmuletGame,
+    );
 
 }

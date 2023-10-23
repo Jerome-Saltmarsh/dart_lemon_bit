@@ -12,4 +12,5 @@ enum NetworkRequestAmulet {
   Upgrade_Element,
   Acquire_Amulet_Item,
   Set_Inventory_Open,
+  Player_Change_Game,
 }

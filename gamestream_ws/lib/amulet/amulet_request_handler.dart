@@ -1,5 +1,6 @@
 import 'package:gamestream_ws/gamestream/classes/connection.dart';
 import 'package:gamestream_ws/packages.dart';
+import 'package:gamestream_ws/packages/common/src/amulet/amulet_scene.dart';
 
 import 'classes/amulet_player.dart';
 
@@ -13,7 +14,7 @@ extension AmuletRequestHandler on Connection {
       return;
     }
 
-    final amulet = player.amuletGame;
+    final amuletGame = player.amuletGame;
 
     final inventoryOpen = arguments.getArgBool('--inventory');
     if (inventoryOpen != null) {
@@ -31,7 +32,7 @@ extension AmuletRequestHandler on Connection {
 
     switch (mmoRequest){
       case NetworkRequestAmulet.Spawn_Random_Enemy:
-        amulet.spawnRandomEnemy();
+        amuletGame.spawnRandomEnemy();
         break;
       case NetworkRequestAmulet.Acquire_Amulet_Item:
         final amuletItemIndex = arguments.getArgInt('--index');
@@ -92,8 +93,19 @@ extension AmuletRequestHandler on Connection {
         player.upgradeAmuletElement(amuletElement);
         break;
       case NetworkRequestAmulet.Set_Inventory_Open:
-        // TODO: Handle this case.
+        throw Exception('not implemented');
+      case NetworkRequestAmulet.Player_Change_Game:
+        final index = getArg(arguments, 2);
+        final amuletScene = AmuletScene.values[index];
+        final amulet = amuletGame.amulet;
+        final targetGame = amulet.getAmuletSceneGame(amuletScene);
+        amulet.playerChangeGame(
+            player: player,
+            target: targetGame,
+        );
+        break;
     }
+
   }
 }
 

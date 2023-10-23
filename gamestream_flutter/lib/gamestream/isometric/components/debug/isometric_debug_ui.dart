@@ -52,6 +52,7 @@ extension isometricDebugUI on IsometricDebug {
                   DebugTab.Particles => buildTabParticles(),
                   DebugTab.Environment => buildTabEnvironment(),
                   DebugTab.Scene => buildTabScene(),
+                  DebugTab.Amulet => buildTabAmulet(),
                 },
               ),
             ),
@@ -763,9 +764,32 @@ extension isometricDebugUI on IsometricDebug {
           index,
         )
     );
+
+  Widget buildTabAmulet() => GSContainer(
+      child: Column(
+        children: [
+          buildText('CHANGE GAME'),
+          Column(
+            children: AmuletScene.values.map((amuletScene) => onPressed(
+                action: () =>
+                  network.sendNetworkRequest(
+                    NetworkRequest.Amulet,
+                    NetworkRequestAmulet.Player_Change_Game.index,
+                    amuletScene.index,
+                  ),
+                child: GSContainer(
+                    color: Colors.black12,
+                    child: buildText(amuletScene.name),
+                ),
+              )).toList(growable: false),
+          ),
+        ],
+      ),
+    );
 }
 
 
 Widget buildWatchMapText<T>(Watch<T> watch, dynamic mapper(T t))
   => buildWatch(watch, (t) => buildText(mapper(t)));
+
 

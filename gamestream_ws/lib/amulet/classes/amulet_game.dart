@@ -59,7 +59,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       if (x < padding && gameNorth != null) {
         amulet.playerChangeGame(
           player: player,
-          src: this,
           target: gameNorth,
         );
         player.x = gameNorth.scene.rowLength - 50;
@@ -74,7 +73,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       if (x > maxX && gameSouth != null){
         amulet.playerChangeGame(
           player: player,
-          src: this,
           target: gameSouth,
         );
         player.x = padding + 25;
@@ -123,12 +121,14 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     switch (fiendType){
       case FiendType.Fallen_01:
         return spawnCharacterAtIndex(index)
+          ..maxHealth = 2
           ..health = 2
           ..name = 'Fallen'
           ..characterType = CharacterType.Fallen;
       case FiendType.Skeleton_01:
         return spawnCharacterAtIndex(index)
-          ..health = 5
+          ..maxHealth = 4
+          ..health = 4
           ..name = 'Skeleton'
           ..characterType = CharacterType.Skeleton;
     }
@@ -596,4 +596,5 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   ) {}
 
   void onPlayerInventoryOpenChanged(AmuletPlayer player, bool value) { }
+
 }

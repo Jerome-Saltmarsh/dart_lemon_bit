@@ -801,6 +801,14 @@ class Connection with ByteReader {
   int? parseArg5(List<String> arguments,) => parseArg(arguments, 5);
   int? parseArg6(List<String> arguments,) => parseArg(arguments, 6);
 
+  int getArg(List<String> arguments, int index){
+    if (index < 0 || index >= arguments.length){
+      throw Exception('invalid index');
+    }
+    return int.parse(arguments[index]);
+
+  }
+
   int? parseArg(List<String> arguments, int index, {bool error = true}){
 
      if (index >= arguments.length) {

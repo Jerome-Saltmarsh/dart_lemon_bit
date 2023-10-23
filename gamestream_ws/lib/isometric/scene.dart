@@ -560,6 +560,9 @@ class Scene {
     return value;
   }
 
+  void movePositionToKey(Position position, String key) =>
+      movePositionToIndex(position, getKey(key));
+
   void movePositionToIndex(Position position, int nodeIndex) {
     position.x = getIndexX(nodeIndex);
     position.y = getIndexY(nodeIndex);

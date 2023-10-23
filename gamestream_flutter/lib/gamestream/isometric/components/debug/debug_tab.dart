@@ -12,4 +12,5 @@ enum DebugTab {
   Particles,
   Environment,
   Scene,
+  Amulet,
 }

@@ -146,7 +146,7 @@ class AmuletPlayerScript {
   AmuletPlayerScript flag(String flagName) =>
       add(() {
         log('flag($flagName)');
-        player.readFlag(flagName);
+        player.readOnce(flagName);
       });
 
   AmuletPlayerScript end() {

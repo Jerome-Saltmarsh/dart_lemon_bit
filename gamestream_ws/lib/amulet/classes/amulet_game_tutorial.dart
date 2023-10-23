@@ -19,6 +19,7 @@ class AmuletGameTutorial extends AmuletGame {
   static const keysFiend02 = 'fiend02';
   static const keysSpawnBow = 'spawn_bow';
   static const keysExit = 'exit';
+  static const keysFinish = 'finish';
 
   static const flagsDoor01Opened = 'door01_opened';
   static const flagsDoor02Opened = 'door02_opened';
@@ -35,6 +36,7 @@ class AmuletGameTutorial extends AmuletGame {
   static const objectiveKillFiends02 = 'kill_fiends02';
   static const objectiveOpenBridge = 'open_bridge';
   static const objectiveShootCrystal = 'shoot_crystal';
+  static const objectiveFinish = 'finish';
 
   final scripts = <AmuletPlayerScript>[];
 
@@ -43,6 +45,7 @@ class AmuletGameTutorial extends AmuletGame {
   final fiends02 = <Character>[];
   GameObject? crystal;
 
+  final finish = Position(x: -100);
 
   AmuletGameTutorial({
     required super.amulet,
@@ -52,8 +55,8 @@ class AmuletGameTutorial extends AmuletGame {
     required super.name,
     required super.fiendTypes,
   }) {
-    guide = buildAmuletNpcGuide();
-    add(guide);
+    instantiateGuide();
+    scene.movePositionToKey(finish, keysFinish);
   }
 
   void refreshPlayerGameState(AmuletPlayer player) {
@@ -82,11 +85,11 @@ class AmuletGameTutorial extends AmuletGame {
       actionInstantiateFiend01();
     }
 
-    if (player.readFlag('initialized')) {
+    if (player.readOnce('initialized')) {
       actionInitializeNewPlayer(player);
     }
 
-    if (player.readFlag('introduction')){
+    if (player.readOnce('introduction')){
       runScriptIntroduction(player);
     }
 
@@ -119,6 +122,8 @@ class AmuletGameTutorial extends AmuletGame {
         deactivationTimer: -1,
       );
     }
+
+    // if (player.with)
   }
 
   void runScriptIntroduction(AmuletPlayer player) {
@@ -143,26 +148,30 @@ class AmuletGameTutorial extends AmuletGame {
     ;
   }
 
-  AmuletNpc buildAmuletNpcGuide() => AmuletNpc(
-    name: 'Guide',
-    interact: onInteractedWithGuide,
-    x: 1000,
-    y: 1400,
-    z: 25,
-    team: AmuletTeam.Human,
-    characterType: CharacterType.Kid,
-    health: 50,
-    weaponType: WeaponType.Unarmed,
-    weaponDamage: 1,
-    weaponRange: 50,
-    weaponCooldown: 50,
-    invincible: true,
-  )
-    ..autoTarget = false
-    ..complexion = 20
-    ..invincible = true
-    ..legsType = LegType.Leather
-    ..bodyType = BodyType.Leather_Armour;
+  void instantiateGuide() {
+    guide = AmuletNpc(
+      name: 'Guide',
+      interact: onInteractedWithGuide,
+      x: 1000,
+      y: 1400,
+      z: 25,
+      team: AmuletTeam.Human,
+      characterType: CharacterType.Kid,
+      health: 50,
+      weaponType: WeaponType.Unarmed,
+      weaponDamage: 1,
+      weaponRange: 50,
+      weaponCooldown: 50,
+      invincible: true,
+    )
+      ..autoTarget = false
+      ..complexion = 20
+      ..invincible = true
+      ..legsType = LegType.Leather
+      ..bodyType = BodyType.Leather_Armour;
+
+    add(guide);
+  }
 
   int getSceneKey(String name) =>
       scene.keys[name] ?? (throw Exception('amuletGameTutorial.getKey("$name") is null'));
@@ -206,8 +215,12 @@ class AmuletGameTutorial extends AmuletGame {
             'fire at any time by pressing the right mouse button.'
           )
           .deactivate(guide)
-          .end()
-        ;
+          .end();
+        break;
+      case objectiveFinish:
+        if (player.withinRadiusPosition(finish, 10)) {
+          player.changeGame(amulet.amuletGameTown);
+        }
         break;
     }
   }
@@ -277,7 +290,7 @@ class AmuletGameTutorial extends AmuletGame {
 
   }
 
-  bool objectiveActiveSpeakToGuide(AmuletPlayer player) => player.readFlag('guide_met');
+  bool objectiveActiveSpeakToGuide(AmuletPlayer player) => player.readOnce('guide_met');
 
   void actionSetCameraTargetGuide(AmuletPlayer player) {
     actionSetCameraTarget(player, guide);
@@ -352,6 +365,8 @@ class AmuletGameTutorial extends AmuletGame {
         fiendType: FiendType.Fallen_01,
         index: getSceneKey(keysFiend01),
     )
+      ..maxHealth = 3
+      ..health = 3
       ..spawnLootOnDeath = false
       ..respawnDurationTotal = -1;
   }
@@ -413,21 +428,21 @@ class AmuletGameTutorial extends AmuletGame {
   @override
   void onAmuletItemAcquired(AmuletPlayer player, AmuletItem amuletItem) {
     if (amuletItem == AmuletItem.Weapon_Rusty_Old_Sword){
-      if (player.readFlag('acquired_weapon_sword')){
+      if (player.readOnce('acquired_weapon_sword')){
         onAcquiredWeaponSword(player);
       }
       return;
     }
 
     if (amuletItem == AmuletItem.Spell_Heal){
-      if (player.readFlag('acquired_spell_heal')){
+      if (player.readOnce('acquired_spell_heal')){
         startObjectiveUseHeal(player);
       }
       return;
     }
 
     if (amuletItem == AmuletItem.Weapon_Old_Bow){
-      if (player.readFlag('acquired_weapon_old_bow')){
+      if (player.readOnce('acquired_weapon_old_bow')){
         startObjectiveOpenInventory(player);
       }
       return;
@@ -584,13 +599,13 @@ class AmuletGameTutorial extends AmuletGame {
   }
 
   @override
-  void customOnCharacterDamageApplied(Character target, src, int amount) {
-    // TODO: implement customOnCharacterDamageApplied
-    super.customOnCharacterDamageApplied(target, src, amount);
-  }
-
-  @override
-  void applyHit({required Character srcCharacter, required Collider target, required int damage, double? angle, bool friendlyFire = false}) {
+  void applyHit({
+    required Character srcCharacter,
+    required Collider target,
+    required int damage,
+    double? angle,
+    bool friendlyFire = false,
+  }) {
     super.applyHit(
         srcCharacter: srcCharacter,
         target: target,
@@ -599,21 +614,24 @@ class AmuletGameTutorial extends AmuletGame {
         friendlyFire: friendlyFire,
     );
 
-    if (target == crystal){
-      if (srcCharacter is AmuletPlayer){
-        if (!srcCharacter.objectiveCompleted(objectiveShootCrystal)) {
-          srcCharacter.objectivesCompleted.add(objectiveShootCrystal);
-          runScript(srcCharacter)
-            .controlsDisabled()
-            .wait(seconds: 1)
-            .cameraSetTargetSceneKey(keysExit)
-            .wait(seconds: 1)
-            .setNodeEmptyAtSceneKey(keysExit)
-            .wait(seconds: 1)
-            .end();
-        }
-      }
+    if (
+      target == crystal &&
+      srcCharacter is AmuletPlayer &&
+      !srcCharacter.objectiveCompleted(objectiveShootCrystal)
+    ){
+      srcCharacter.objectivesCompleted.add(objectiveShootCrystal);
+      startObjectiveFinish(srcCharacter);
     }
   }
+
+  void startObjectiveFinish(AmuletPlayer srcCharacter) => runScript(srcCharacter)
+      .objective(objectiveFinish)
+      .controlsDisabled()
+      .wait(seconds: 1)
+      .cameraSetTargetSceneKey(keysExit)
+      .wait(seconds: 1)
+      .setNodeEmptyAtSceneKey(keysExit)
+      .wait(seconds: 1)
+      .end();
 }
 
