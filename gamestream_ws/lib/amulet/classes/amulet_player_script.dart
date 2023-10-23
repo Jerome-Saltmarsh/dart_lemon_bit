@@ -44,7 +44,7 @@ class AmuletPlayerScript {
       add(() {
         log('controls(enabled: $enabled)');
         if (enabled){
-          player.cameraTarget = player;
+          player.clearCameraTarget();
         } else {
           setCharacterStateIdle(player);
           player.clearPath();

@@ -1642,4 +1642,12 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
       target: targetAmuletGame,
     );
 
+  void clearCameraTarget() {
+    setCameraTarget(null);
+  }
+
+  void setCameraTarget(Position? target) {
+    this.cameraTarget = target;
+  }
+
 }
