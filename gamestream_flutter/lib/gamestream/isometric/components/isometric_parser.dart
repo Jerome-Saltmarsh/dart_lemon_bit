@@ -286,6 +286,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     final scenePart = readByte(); /// DO NOT DELETE
 
     final scene = this.scene;
+    scene.clearVisited();
     scene.totalZ = readUInt16();
     scene.totalRows = readUInt16();
     scene.totalColumns = readUInt16();

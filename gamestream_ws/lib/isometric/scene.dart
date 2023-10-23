@@ -103,8 +103,13 @@ class Scene {
     }
     types[index] = type;
     shapes[index] = orientation;
+    clearCompiled();
+  }
+
+  void clearCompiled() {
     compiled = null;
   }
+
 
   int getTypeXYZ(double x, double y, double z) =>
       inboundsXYZ(x, y, z)
@@ -550,6 +555,7 @@ class Scene {
 
   void addKey(String name, int value){
     keys[name] = value;
+    clearCompiled();
   }
 
   int getKey(String name) {
@@ -567,5 +573,15 @@ class Scene {
     position.x = getIndexX(nodeIndex);
     position.y = getIndexY(nodeIndex);
     position.z = getIndexZ(nodeIndex);
+  }
+
+  void removeKey(String keyName){
+    keys.remove(name);
+    clearCompiled();
+  }
+
+  void setKey(String name, int value){
+    keys[name] = value;
+    clearCompiled();
   }
 }

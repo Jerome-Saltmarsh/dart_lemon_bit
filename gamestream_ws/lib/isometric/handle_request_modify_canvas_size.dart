@@ -6,7 +6,7 @@ import 'package:gamestream_ws/isometric/isometric_player.dart';
 void handleRequestModifyCanvasSize(NetworkRequestModifyCanvasSize request, IsometricPlayer player){
   final game = player.game;
   final scene = game.scene;
-  scene.compiled = null;
+  scene.clearCompiled();
   switch (request) {
     case NetworkRequestModifyCanvasSize.Add_Row_Start:
       final newGridVolume = scene.volume + (scene.columns * scene.height);

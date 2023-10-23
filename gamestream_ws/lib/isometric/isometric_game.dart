@@ -2096,7 +2096,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     scene.shapes[nodeIndex] = nodeOrientation;
     scene.types[nodeIndex] = nodeType;
-    scene.compiled = null;
+    scene.clearCompiled();
 
     for (final player in players) {
       player.writeNode(

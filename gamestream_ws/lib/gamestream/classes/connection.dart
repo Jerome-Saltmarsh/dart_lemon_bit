@@ -1128,12 +1128,10 @@ class Connection with ByteReader {
     }
 
     final name = arguments[2];
-
-
-     final game = player.game;
-     final scene = game.scene;
-     scene.keys.remove(name);
-     game.notifyPlayersSceneKeysChanged();
+    final game = player.game;
+    final scene = game.scene;
+    scene.removeKey(name);
+    game.notifyPlayersSceneKeysChanged();
   }
 
   void handleEditorRequestMoveKey(List<String> arguments) {
@@ -1204,8 +1202,8 @@ class Connection with ByteReader {
       return;
     }
 
-    scene.keys[to] = index;
-    scene.keys.remove(from);
+    scene.setKey(to, index);
+    scene.removeKey(from);
     game.notifyPlayersSceneKeysChanged();
   }
 }

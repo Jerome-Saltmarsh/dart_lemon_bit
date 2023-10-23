@@ -99,10 +99,25 @@ extension AmuletRequestHandler on Connection {
         final amuletScene = AmuletScene.values[index];
         final amulet = amuletGame.amulet;
         final targetGame = amulet.getAmuletSceneGame(amuletScene);
+
+
         amulet.playerChangeGame(
             player: player,
             target: targetGame,
         );
+
+        final portal = targetGame.scene.keys['portal'];
+
+        if (portal != null){
+            player.scene.movePositionToIndex(player, portal);
+        } else {
+          if (player.scene.outOfBoundsPosition(player)){
+            player.x = player.scene.rowLength * 0.5;
+            player.y = player.scene.columnLength * 0.5;
+            player.z = player.scene.heightLength * 0.5;
+          }
+        }
+
         break;
     }
 

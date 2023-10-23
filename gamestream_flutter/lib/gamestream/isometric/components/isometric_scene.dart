@@ -2243,6 +2243,11 @@ class IsometricScene with IsometricComponent implements Updatable {
   var visited2DStackIndex = 0;
   var visited3DStackIndex = 0;
 
+  void clearVisited(){
+    visited2DStackIndex = 0;
+    visited3DStackIndex = 0;
+  }
+
   void emitHeightMapIsland(int index) {
 
     final visited2DStack = this.visited2DStack;
