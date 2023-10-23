@@ -115,7 +115,7 @@ class AmuletGameTutorial extends AmuletGame {
         ..health = 1;
     }
 
-    if (!player.objectivesCompleted.contains(objectiveBowObtained)){
+    if (!player.objectiveCompleted(objectiveBowObtained)){
       spawnAmuletItemAtIndex(
         item: AmuletItem.Weapon_Old_Bow,
         index: getSceneKey(keysSpawnBow),
@@ -619,7 +619,7 @@ class AmuletGameTutorial extends AmuletGame {
       srcCharacter is AmuletPlayer &&
       !srcCharacter.objectiveCompleted(objectiveShootCrystal)
     ){
-      srcCharacter.objectivesCompleted.add(objectiveShootCrystal);
+      srcCharacter.completeObjective(objectiveShootCrystal);
       startObjectiveFinish(srcCharacter);
     }
   }

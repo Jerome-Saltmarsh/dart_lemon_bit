@@ -1514,21 +1514,21 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     return objectives.contains(name);
   }
 
-  List<String> get objectivesCompleted {
-    const fieldName = 'objectivesCompleted';
-    var objectives = data[fieldName];
-
-    if (objectives == null) {
-      objectives = <String>[];
-      data[fieldName] = objectives;
-    }
-
-    if (objectives is! List<String>){
-      throw Exception('objectives is! List<String>');
-    }
-
-    return objectives;
-  }
+  // List<String> get objectivesCompleted {
+  //   const fieldName = 'objectivesCompleted';
+  //   var objectives = data[fieldName];
+  //
+  //   if (objectives == null) {
+  //     objectives = <String>[];
+  //     data[fieldName] = objectives;
+  //   }
+  //
+  //   if (objectives is! List<String>){
+  //     throw Exception('objectives is! List<String>');
+  //   }
+  //
+  //   return objectives;
+  // }
 
   SlotType getAmuletItemSlotType(AmuletItemSlot amuletItemSlot){
     if (amuletItemSlot == equippedHandLeft){
@@ -1611,13 +1611,22 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     );
   }
 
-  void completeObjective(){
+  void completeCurrentObjective(){
     final objective = this.objective;
     if (objective == null){
       return;
     }
-    objectivesCompleted.add(objective);
+    completeObjective(objective);
     this.objective = null;
+  }
+
+  void completeObjective(String value){
+    var objectives = data['objectives'];
+    if (objectives == null){
+      objectives = [];
+      data['objectives'] = objectives;
+    }
+    objectives.add(value);
   }
 
   void changeGame(AmuletGame targetAmuletGame) =>
