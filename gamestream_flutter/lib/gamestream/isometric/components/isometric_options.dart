@@ -18,7 +18,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
   var cameraPlay = Position();
   var cameraEdit = Position();
 
-  var renderCameraTargets = true;
+  var renderCameraTargets = false;
   var emitLightsUsingRecursion = false;
   var renderRunLine = false;
   var renderVisibilityBeams = false;
@@ -213,5 +213,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
     cameraPlay = value;
     print('options.setCameraPlay($value)');
   }
+
+  void toggleRenderCameraTargets() => renderCameraTargets = !renderCameraTargets;
 
 }

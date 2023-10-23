@@ -650,6 +650,11 @@ extension isometricDebugUI on IsometricDebug {
         children: [
           buildRowRefresh('total_skipped', () => rendererNodes.totalSkipped),
           buildRowToggle(
+             text: 'renderCameraTargets',
+             action: options.toggleRenderCameraTargets,
+             value: () => options.renderCameraTargets,
+          ),
+          buildRowToggle(
              text: 'emitLightsUsingRecursion',
              action: () => options.emitLightsUsingRecursion = !options.emitLightsUsingRecursion,
              value: () => options.emitLightsUsingRecursion,

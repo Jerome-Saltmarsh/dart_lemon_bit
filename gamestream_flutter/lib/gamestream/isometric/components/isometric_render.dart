@@ -134,6 +134,7 @@ class IsometricRender with IsometricComponent {
   }
 
   void renderCameraTargets() {
+
     final cameraTarget = camera.target;
     if (cameraTarget != null){
       engine.color = Colors.blue;
