@@ -100,7 +100,6 @@ extension AmuletRequestHandler on Connection {
         final amulet = amuletGame.amulet;
         final targetGame = amulet.getAmuletSceneGame(amuletScene);
 
-
         amulet.playerChangeGame(
             player: player,
             target: targetGame,

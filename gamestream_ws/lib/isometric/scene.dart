@@ -575,8 +575,8 @@ class Scene {
     position.z = getIndexZ(nodeIndex);
   }
 
-  void removeKey(String keyName){
-    keys.remove(name);
+  void deleteKey(String keyName){
+    keys.remove(keyName);
     clearCompiled();
   }
 

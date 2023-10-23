@@ -48,6 +48,7 @@ class Scenes {
   }
 
   void saveSceneToFile(Scene scene) {
+    scene.clearCompiled();
     writeBytesToFile(
       fileName: '${scene.name}.scene',
       directory: sceneDirectoryPath,

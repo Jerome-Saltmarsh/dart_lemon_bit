@@ -1130,7 +1130,7 @@ class Connection with ByteReader {
     final name = arguments[2];
     final game = player.game;
     final scene = game.scene;
-    scene.removeKey(name);
+    scene.deleteKey(name);
     game.notifyPlayersSceneKeysChanged();
   }
 
@@ -1203,7 +1203,7 @@ class Connection with ByteReader {
     }
 
     scene.setKey(to, index);
-    scene.removeKey(from);
+    scene.deleteKey(from);
     game.notifyPlayersSceneKeysChanged();
   }
 }

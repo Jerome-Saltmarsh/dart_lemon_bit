@@ -128,7 +128,7 @@ class SceneReader extends ByteReader {
 
   void readKeys(){
     final length = readUInt16();
-    keys.clear();
+    keys = {};
     for (var i = 0; i < length; i++){
       final name = readString();
       final index = readUInt16();
