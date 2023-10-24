@@ -31,6 +31,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   var gameObjectId = 0;
   var _running = true;
 
+  final gameObjects = <GameObject>[];
   final characters = <Character>[];
   final projectiles = <Projectile>[];
 
@@ -40,16 +41,21 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required this.environment,
     required super.gameType,
   }) {
+
+    for (final gameObject in scene.gameObjects){
+      gameObjects.add(
+        gameObject.copy()
+      );
+    }
+
     gameObjects.sort();
-    gameObjectId = scene.gameObjects.length;
+    gameObjectId = gameObjects.length;
     customInit();
 
     for (final gameObject in gameObjects) {
       customOnGameObjectSpawned(gameObject);
     }
   }
-
-  List<GameObject> get gameObjects => scene.gameObjects;
 
   double get minAimTargetCursorDistance => 35;
 

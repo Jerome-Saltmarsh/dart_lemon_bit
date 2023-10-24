@@ -59,6 +59,32 @@ class GameObject extends Collider {
 
   @override
   String get name => ItemType.getNameSubType(type, subType);
+
+  GameObject copy() =>
+      GameObject(
+          x: x,
+          y: y,
+          z: z,
+          team: team,
+          type: type,
+          subType: subType,
+          id: id,
+      )
+        ..interactable = interactable
+        ..collectable = collectable
+        ..persistable = persistable
+        ..destroyable = destroyable
+        ..recyclable = recyclable
+        ..dirty = dirty
+        ..previousX = previousX
+        ..previousY = previousY
+        ..previousZ = previousZ
+        ..health = health
+        ..healthMax = healthMax
+        ..deactivationTimer = deactivationTimer
+        ..startX = startX
+        ..startY = startY
+        ..startZ = startZ;
 }
 
 

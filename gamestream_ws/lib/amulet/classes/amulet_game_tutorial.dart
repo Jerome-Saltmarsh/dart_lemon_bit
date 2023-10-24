@@ -251,6 +251,15 @@ class AmuletGameTutorial extends AmuletGame {
       case TutorialObjective.Acquire_Sword:
         break;
       case TutorialObjective.Acquire_Heal:
+        runScript(player)
+            .controlsDisabled()
+            .wait(seconds: 1)
+            .cameraSetTargetSceneKey(keysDoor01)
+            .wait(seconds: 2)
+            .setNodeEmptyAtSceneKey(keysDoor01)
+            .flag(flagsDoor01Opened)
+            .wait(seconds: 1)
+            .controlsEnabled();
         break;
       case TutorialObjective.Use_Heal:
         break;
@@ -457,18 +466,6 @@ class AmuletGameTutorial extends AmuletGame {
         ..y += giveOrTake(shiftRadius)
       );
     }
-  }
-
-  void onAcquiredWeaponSword(AmuletPlayer player) {
-    runScript(player)
-      .controlsDisabled()
-      .wait(seconds: 1)
-      .cameraSetTargetSceneKey(keysDoor01)
-      .wait(seconds: 2)
-      .setNodeEmptyAtSceneKey(keysDoor01)
-      .flag(flagsDoor01Opened)
-      .wait(seconds: 1)
-      .controlsEnabled();
   }
 
   @override
