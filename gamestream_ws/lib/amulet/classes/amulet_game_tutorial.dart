@@ -262,6 +262,19 @@ class AmuletGameTutorial extends AmuletGame {
             .controlsEnabled();
         break;
       case TutorialObjective.Use_Heal:
+        runScript(player)
+            .spawnPoint(keysFiend01)
+            .controlsDisabled()
+            .movePositionToSceneKey(guide, keysFiend01)
+            .activate(guide)
+            .wait(seconds: 1)
+            .cameraSetTarget(guide)
+            .faceEachOther(player, guide)
+            .talk(
+              'one has acquired the spell of healing.'
+              'caste heal by pressing the heal icon at the bottom of the screen'
+            )
+            .end();
         break;
       case TutorialObjective.Acquire_Bow:
       // TODO: Handle this case.
@@ -490,20 +503,6 @@ class AmuletGameTutorial extends AmuletGame {
         break;
     }
   }
-
-  void startObjectiveUseHeal(AmuletPlayer player) => runScript(player)
-      .spawnPoint(keysFiend01)
-      .controlsDisabled()
-      .movePositionToSceneKey(guide, keysFiend01)
-      .activate(guide)
-      .wait(seconds: 1)
-      .cameraSetTarget(guide)
-      .faceEachOther(player, guide)
-      .talk(
-        'one has acquired the spell of healing.'
-        'caste heal by pressing the heal icon at the bottom of the screen'
-      )
-      .end();
 
   void onSpellHealUsedForTheFirstTime(AmuletPlayer player) => runScript(player)
       .controlsDisabled()
