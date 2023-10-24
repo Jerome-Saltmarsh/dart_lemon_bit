@@ -9,5 +9,6 @@ enum TutorialObjective {
   Draw_Bow,
   Open_Bridge,
   Shoot_Crystal,
-  Finish,
+  Leave,
+  Finished
 }

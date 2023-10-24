@@ -61,7 +61,8 @@ class AmuletGameTutorial extends AmuletGame {
        TutorialObjective.Open_Inventory => keysRoom4,
        TutorialObjective.Open_Bridge => keysRoom4,
        TutorialObjective.Shoot_Crystal => keysRoom4,
-       TutorialObjective.Finish => keysRoom4,
+       TutorialObjective.Leave => keysRoom4,
+       TutorialObjective.Finished => keysRoom4,
     };
 
   void refreshPlayerGameState(AmuletPlayer player) {
@@ -204,36 +205,24 @@ class AmuletGameTutorial extends AmuletGame {
 
   void updatePlayersObjectiveConditions() {
     for (final player in players){
-       updatePlayerObjectiveConditions(player);
-    }
-  }
-
-  void updatePlayerObjectiveConditions(AmuletPlayer player) {
-    switch (getObjective(player)) {
-      case TutorialObjective.Draw_Bow:
-        if (player.equippedWeapon?.amuletItem == AmuletItem.Weapon_Old_Bow){
+       if (isObjectiveCompleted(player)){
           startNextTutorialObjective(player);
-        }
-        // runScript(player)
-        //   .objective(objectiveOpenBridge)
-        //   .cameraSetTarget(guide)
-        //   .talk(
-        //     'good.'
-        //     'fire at any time by pressing the right mouse button.'
-        //   )
-        //   .deactivate(guide)
-        //   .end();
-        break;
-      case TutorialObjective.Finish:
-        if (player.withinRadiusPosition(finish, 10)) {
-          player.changeGame(amulet.amuletRoad02);
-        }
-        break;
-
-      default:
-        break;
+       }
     }
   }
+
+  bool isObjectiveCompleted(AmuletPlayer player) =>
+    switch (getObjective(player)) {
+      TutorialObjective.Open_Inventory =>
+        player.inventoryOpen,
+       TutorialObjective.Equip_Bow =>
+          player.weapons.any((element) => element.amuletItem == AmuletItem.Weapon_Old_Bow),
+       TutorialObjective.Draw_Bow =>
+        player.equippedWeapon?.amuletItem == AmuletItem.Weapon_Old_Bow,
+       TutorialObjective.Leave =>
+           player.withinRadiusPosition(finish, 10),
+        _ => false
+    };
 
   void updateScripts() {
     final scripts = this.scripts;
@@ -290,8 +279,10 @@ class AmuletGameTutorial extends AmuletGame {
       // TODO: Handle this case.
       case TutorialObjective.Shoot_Crystal:
       // TODO: Handle this case.
-      case TutorialObjective.Finish:
-      // TODO: Handle this case.
+      case TutorialObjective.Leave:
+      case TutorialObjective.Finished:
+        onObjectiveSetFinished(player);
+        break;
     }
   }
 
@@ -615,20 +606,13 @@ class AmuletGameTutorial extends AmuletGame {
         )
         .end();
 
-  @override
-  void onPlayerInventoryOpenChanged(AmuletPlayer player, bool value) {
-    if (value && getObjective(player) == TutorialObjective.Open_Inventory){
-      startNextTutorialObjective(player);
-    }
-  }
-
-  void onObjectiveSetEquipBow(AmuletPlayer player) => runScript(player)
-        .add(() => setObjective(player, TutorialObjective.Equip_Bow))
-        .faceEachOther(player, guide)
-        .talk(
-          'one adds the bow to the weapons rack by clicking the bow icon in the inventory.',
-          target: guide
-        );
+  void onObjectiveSetEquipBow(AmuletPlayer player) =>
+    runScript(player)
+      .faceEachOther(player, guide)
+      .talk(
+        'one adds the bow to the weapons rack by clicking the bow icon in the inventory.',
+        target: guide
+      );
 
   @override
   void onPlayerInventoryMoved(
@@ -725,6 +709,10 @@ class AmuletGameTutorial extends AmuletGame {
         .controlsEnabled()
         .cameraClearTarget()
     ;
+  }
+
+  void onObjectiveSetFinished(AmuletPlayer player) {
+
   }
 }
 
