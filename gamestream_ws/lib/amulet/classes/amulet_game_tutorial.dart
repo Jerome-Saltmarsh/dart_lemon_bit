@@ -23,7 +23,6 @@ class AmuletGameTutorial extends AmuletGame {
   static const keysFinish = 'finish';
   static const keysTriggerSpawnFiends02 = 'trigger_spawn_fiends_02';
 
-  static const flagsDoor03Opened = 'door03_opened';
   static const flagsBowAddedToWeapons = 'add_bow_to_weapons';
 
   static const objectives = TutorialObjective.values;
@@ -94,9 +93,9 @@ class AmuletGameTutorial extends AmuletGame {
       );
     }
 
-    // if (!player.objectiveCompleted(objectiveTalkToGuide)){
-    //   startObjectiveTalkToGuide(player);
-    // }
+    if (!objectiveCompleted(player, TutorialObjective.Vanquish_Fiends_02)){
+      spawnFiends02();
+    }
 
     // if (!player.flagSet(flagsDoor03Opened)){
     //   setNode(
@@ -285,7 +284,7 @@ class AmuletGameTutorial extends AmuletGame {
       // TODO: Handle this case.
       case TutorialObjective.Open_Inventory:
       // TODO: Handle this case.
-      case TutorialObjective.Kill_Fiends_02:
+      case TutorialObjective.Vanquish_Fiends_02:
       // TODO: Handle this case.
       case TutorialObjective.Open_Bridge:
       // TODO: Handle this case.
@@ -391,8 +390,13 @@ class AmuletGameTutorial extends AmuletGame {
       return;
     }
 
-    if (fiends02.contains(target) && !fiends02.any((element) => element.alive)){
-      runScriptExplainElements(players.first);
+    if (
+      src is AmuletPlayer &&
+      fiends02.contains(target) &&
+      !fiends02.any((element) => element.alive) &&
+      getObjective(src) == TutorialObjective.Vanquish_Fiends_02
+    ){
+      onFiends02Vanquished(players.first);
     }
   }
 
@@ -465,7 +469,7 @@ class AmuletGameTutorial extends AmuletGame {
     }
   }
 
-  void actionSpawnFiends02() {
+  void spawnFiends02() {
     final fiend02Index = getSceneKey(keysFiend02);
     for (var i = 0; i < 3; i++) {
       const shiftRadius = 10;
@@ -520,14 +524,12 @@ class AmuletGameTutorial extends AmuletGame {
       .setNodeEmptyAtSceneKey(keysDoor02)
       .wait(seconds: 1)
       .deactivate(guide)
-      .add(actionSpawnFiends02)
       .controlsEnabled()
       .add(() => startNextTutorialObjective(player));
 
 
-  void runScriptExplainElements(AmuletPlayer player) {
+  void onFiends02Vanquished(AmuletPlayer player) =>
       runScript(player)
-          .spawnPoint(keysTriggerSpawnFiends02)
           .controlsDisabled()
           .wait(seconds: 1)
           .movePositionToSceneKey(guide, keysFiend02)
@@ -558,10 +560,9 @@ class AmuletGameTutorial extends AmuletGame {
           .cameraSetTargetSceneKey(keysDoor03)
           .wait(seconds: 1)
           .setNodeEmptyAtSceneKey(keysDoor03)
-          .flag(flagsDoor03Opened)
           .wait(seconds: 1)
-          .end();
-  }
+          .end()
+          .add(() => startNextTutorialObjective(player));
 
   void startObjectiveOpenInventory(AmuletPlayer player) {
     runScript(player)
