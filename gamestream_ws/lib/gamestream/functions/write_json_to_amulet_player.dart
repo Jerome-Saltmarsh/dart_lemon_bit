@@ -80,7 +80,7 @@ void writeJsonToAmuletPlayer(Json json, AmuletPlayer player){
   player.experience = json['experience'] ?? 0;
   player.level = json['level'] ?? 0;
   player.initialized = json['initialized'] ?? false;
-  player.healthBase = 100;
+  // player.healthBase = json['healthBase'];
   player.active = true;
   player.writePlayerHealth();
   player.notifyEquipmentDirty();

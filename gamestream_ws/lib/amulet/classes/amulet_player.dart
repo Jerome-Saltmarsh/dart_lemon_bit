@@ -21,7 +21,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   var activePowerY = 0.0;
   var activePowerZ = 0.0;
 
-  var healthBase = 10;
+  static const healthBase = 10;
   var npcText = '';
   var npcOptions = <TalkOption>[];
   Function? onInteractionOver;

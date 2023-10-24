@@ -476,7 +476,7 @@ class AmuletGameTutorial extends AmuletGame {
       weapon.amuletItem = null;
     }
     player.equippedWeaponIndex = -1;
-    player.healthBase = 15;
+    // player.healthBase = 15;
     player.equipBody(AmuletItem.Armor_Leather_Basic, force: true);
     player.equipLegs(AmuletItem.Pants_Travellers, force: true);
     player.health = player.maxHealth;
