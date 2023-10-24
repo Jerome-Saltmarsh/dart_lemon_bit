@@ -53,6 +53,7 @@ extension isometricDebugUI on IsometricDebug {
                   DebugTab.Environment => buildTabEnvironment(),
                   DebugTab.Scene => buildTabScene(),
                   DebugTab.Amulet => buildTabAmulet(),
+                  DebugTab.Server => buildTabServer(),
                 },
               ),
             ),
@@ -791,6 +792,14 @@ extension isometricDebugUI on IsometricDebug {
         ],
       ),
     );
+
+  Widget buildTabServer() {
+    return Column(
+      children: [
+
+      ],
+    );
+  }
 }
 
 

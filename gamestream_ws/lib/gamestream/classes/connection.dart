@@ -1043,10 +1043,9 @@ class Connection with ByteReader {
     if (player == null){
       return;
     }
+
     final game = player.game;
-    if (game.players.remove(player)){
-      game.onPlayerRemoved(player);
-    }
+    game.removePlayer(player);
     _player = null;
   }
 

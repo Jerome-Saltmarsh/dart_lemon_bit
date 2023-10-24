@@ -176,9 +176,6 @@ class AmuletPlayerScript {
   AmuletPlayerScript dataRemove(String name) =>
       add(() => player.data.remove(name));
 
-  AmuletPlayerScript completeObjective() =>
-      add(player.completeCurrentObjective);
-
   AmuletPlayerScript zoom(double value) => add(() => player.writeZoom(value));
 
   AmuletPlayerScript add(Function() action){

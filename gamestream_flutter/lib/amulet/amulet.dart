@@ -12,8 +12,14 @@ import 'package:lemon_widgets/lemon_widgets.dart';
 
 import 'amulet_render.dart';
 
+
+class Game {
+
+}
+
 class Amulet extends IsometricGame {
 
+  final games = Watch(<Game>[]);
   final amuletScene = Watch<AmuletScene?>(null);
   final cameraTargetSet = Watch(false);
   final cameraTarget = Position();

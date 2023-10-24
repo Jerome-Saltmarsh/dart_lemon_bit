@@ -54,8 +54,6 @@ abstract class Game <T extends Player> {
     }
   }
 
-  void onPlayerRemoved(T player);
-
   void addJob({
     required num seconds,
     required Function action,
@@ -95,5 +93,12 @@ abstract class Game <T extends Player> {
 
   void _clearJob(){}
 
+  void removePlayer(T player){
+    if (players.remove(player)) {
+      onPlayerRemoved(player);
+    }
+  }
+
+  void onPlayerRemoved(T player);
 }
 

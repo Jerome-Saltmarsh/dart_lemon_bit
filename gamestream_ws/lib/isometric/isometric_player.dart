@@ -290,22 +290,22 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
      writeGameError(GameError.Invalid_Inventory_Index);
   }
 
-  void writeIsometricPlayer(){
+  void writeAccuracy(){
+    if (weaponAccuracy == accuracyPrevious) return;
 
-    if (weaponAccuracy != accuracyPrevious){
-      accuracyPrevious = weaponAccuracy;
-      writeByte(NetworkResponse.Isometric);
-      writeByte(NetworkResponseIsometric.Player_Accuracy);
-      writePercentage(weaponAccuracy);
-    }
+    accuracyPrevious = weaponAccuracy;
+    writeByte(NetworkResponse.Isometric);
+    writeByte(NetworkResponseIsometric.Player_Accuracy);
+    writePercentage(weaponAccuracy);
+  }
+
+  void writePlayerPosition(){
 
     final diffX = -(positionCacheX - x.toInt()).toInt();
     final diffY = -(positionCacheY - y.toInt()).toInt();
     final diffZ = -(positionCacheZ - z.toInt()).toInt();
 
-    if (diffX == 0 && diffY == 0 && diffZ == 0) {
-      return;
-    }
+    if (diffX == 0 && diffY == 0 && diffZ == 0) return;
 
     if (diffX.abs() < 126 && diffY.abs() < 126 && diffZ.abs() < 126){
       writePlayerPositionDelta(diffX, diffY, diffZ);
@@ -355,7 +355,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     if (!initialized) {
       initialized = true;
       game.customInitPlayer(this);
-      writeIsometricPlayer();
+      writePlayerPosition();
       writePlayerHealth();
       writePlayerAlive();
       writePlayerEvent(PlayerEvent.Spawned);
@@ -368,7 +368,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       downloadScene();
     }
 
-    writeIsometricPlayer();
+    writePlayerPosition();
     writePlayerTargetPosition();
     writePlayerAimTargetPosition();
     writePlayerAimTargetAction();
@@ -594,10 +594,10 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     if (_aimTargetActionPrevious == _aimTargetAction){
       return;
     }
+    _aimTargetActionPrevious = _aimTargetAction;
     writeByte(NetworkResponse.Player);
     writeByte(NetworkResponsePlayer.Aim_Target_Action);
     writeByte(_aimTargetAction);
-    _aimTargetActionPrevious = _aimTargetAction;
   }
 
   void writePlayerAimTargetType() {
@@ -711,7 +711,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   }
 
   void writePlayerMoved(){
-    writeIsometricPlayer();
+    writePlayerPosition();
     writePlayerEvent(PlayerEvent.Player_Moved);
   }
 

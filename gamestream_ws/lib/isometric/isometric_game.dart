@@ -1294,16 +1294,18 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
     }
 
-    if (instance is IsometricPlayer) {
+    if (instance is T) {
       instance.aimTarget = null;
       instance.target = null;
-      players.remove(instance);
+      removePlayer(instance);
     }
+
     if (instance is Character) {
       instance.target = null;
       characters.remove(instance);
       return;
     }
+
     if (instance is GameObject) {
       instance.active = false;
       gameObjects.remove(instance);
@@ -1314,10 +1316,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
       return;
     }
+
     if (instance is Projectile) {
       projectiles.remove(instance);
       return;
     }
+
     throw Exception();
   }
 

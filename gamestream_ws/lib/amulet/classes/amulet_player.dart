@@ -1602,24 +1602,6 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     );
   }
 
-  void completeCurrentObjective(){
-    final objective = this.objective;
-    if (objective == null){
-      return;
-    }
-    completeObjective(objective);
-    this.objective = null;
-  }
-
-  void completeObjective(String value){
-    var objectives = data['objectives'];
-    if (objectives == null){
-      objectives = [];
-      data['objectives'] = objectives;
-    }
-    objectives.add(value);
-  }
-
   void changeGame(AmuletGame targetAmuletGame) =>
     amuletGame.amulet.playerChangeGame(
       player: this,

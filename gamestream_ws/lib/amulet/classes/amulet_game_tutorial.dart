@@ -1,4 +1,5 @@
 
+import 'package:gamestream_ws/amulet/classes/enums/tutorial_objective.dart';
 import 'package:gamestream_ws/amulet/src.dart';
 import 'package:gamestream_ws/isometric/src.dart';
 import 'package:gamestream_ws/packages.dart';
@@ -28,16 +29,7 @@ class AmuletGameTutorial extends AmuletGame {
   static const flagsFiend01Defeated = 'fiend01_defeated';
   static const flagsBowAddedToWeapons = 'add_bow_to_weapons';
 
-  static const objectiveTalkToGuide01 = 'talk_to_guide_01';
-  static const objectiveUseHeal = 'use_heal';
-  static const objectiveBowObtained = 'bow_obtained';
-  static const objectiveEquipBow = 'equip_bow';
-  static const objectiveDrawBow = 'draw_bow';
-  static const objectiveOpenInventory = 'open_inventory';
-  static const objectiveKillFiends02 = 'kill_fiends02';
-  static const objectiveOpenBridge = 'open_bridge';
-  static const objectiveShootCrystal = 'shoot_crystal';
-  static const objectiveFinish = 'finish';
+  static const objectives = TutorialObjective.values;
 
   final scripts = <AmuletPlayerScript>[];
 
@@ -53,19 +45,28 @@ class AmuletGameTutorial extends AmuletGame {
     required super.scene,
     required super.time,
     required super.environment,
-    required super.name,
-    required super.fiendTypes,
-  }) : super (amuletScene: AmuletScene.Tutorial){
+  }) : super (
+      amuletScene: AmuletScene.Tutorial,
+      fiendTypes: const[],
+      name: 'tutorial'
+  ){
     instantiateGuide();
     scene.movePositionToKey(finish, keysFinish);
   }
 
   void refreshPlayerGameState(AmuletPlayer player) {
 
-    scene.movePositionToKey(
-        player,
-        player.spawnPoint ?? keysPlayerSpawn,
-    );
+    movePlayerToSpawnPoint(player);
+
+    switch (getObjective(player)){
+      case TutorialObjective.Acquire_Sword:
+        startObjectiveAcquireSword(player);
+        break;
+      default:
+        break;
+    }
+
+    player.writePlayerMoved();
 
     if (player.flagSet(flagsDoor01Opened)){
       setNodeEmpty(getSceneKey(keysDoor01));
@@ -95,9 +96,9 @@ class AmuletGameTutorial extends AmuletGame {
       actionInitializeNewPlayer(player);
     }
 
-    if (player.readOnce('introduction')){
-      runScriptIntroduction(player);
-    }
+    // if (!player.objectiveCompleted(objectiveTalkToGuide)){
+    //   startObjectiveTalkToGuide(player);
+    // }
 
     if (!player.flagSet(flagsDoor03Opened)){
       setNode(
@@ -121,37 +122,20 @@ class AmuletGameTutorial extends AmuletGame {
         ..health = 1;
     }
 
-    if (!player.objectiveCompleted(objectiveBowObtained)){
+    if (!objectiveCompleted(player, TutorialObjective.Acquire_Bow)){
       spawnAmuletItemAtIndex(
         item: AmuletItem.Weapon_Old_Bow,
         index: getSceneKey(keysSpawnBow),
         deactivationTimer: -1,
       );
     }
-
-    // if (player.with)
   }
 
-  void runScriptIntroduction(AmuletPlayer player) {
-    runScript(player)
-      .controlsDisabled()
-      .zoom(1.5)
-      .snapCameraToPlayer()
-      .movePositionToSceneKey(guide, keysGuideSpawn0)
-      .wait(seconds: 1)
-      .cameraSetTarget(guide)
-      .faceEachOther(player, guide)
-      .talk(
-        'greetings other.'
-        'one is here to to guide another.'
-        'move by left clicking the mouse'
-      )
-      .movePositionToSceneKey(guide, keysGuideSpawn1)
-      .dataSet('objective', objectiveTalkToGuide01)
-      .controlsEnabled()
-      .cameraClearTarget()
-    ;
-  }
+  void movePlayerToSpawnPoint(AmuletPlayer player) =>
+    scene.movePositionToKey(
+      player,
+      player.spawnPoint ?? keysPlayerSpawn,
+    );
 
   void instantiateGuide() {
     guide = AmuletNpc(
@@ -207,25 +191,28 @@ class AmuletGameTutorial extends AmuletGame {
   }
 
   void updatePlayerObjectiveConditions(AmuletPlayer player) {
-    switch (player.objective) {
-      case objectiveDrawBow:
-        if (player.equippedWeapon?.amuletItem != AmuletItem.Weapon_Old_Bow){
-          return;
+    switch (getObjective(player)) {
+      case TutorialObjective.Draw_Bow:
+        if (player.equippedWeapon?.amuletItem == AmuletItem.Weapon_Old_Bow){
+          startNextTutorialObjective(player);
         }
-        runScript(player)
-          .objective(objectiveOpenBridge)
-          .cameraSetTarget(guide)
-          .talk(
-            'good.'
-            'fire at any time by pressing the right mouse button.'
-          )
-          .deactivate(guide)
-          .end();
+        // runScript(player)
+        //   .objective(objectiveOpenBridge)
+        //   .cameraSetTarget(guide)
+        //   .talk(
+        //     'good.'
+        //     'fire at any time by pressing the right mouse button.'
+        //   )
+        //   .deactivate(guide)
+        //   .end();
         break;
-      case objectiveFinish:
+      case TutorialObjective.Finish:
         if (player.withinRadiusPosition(finish, 10)) {
           player.changeGame(amulet.amuletRoad02);
         }
+        break;
+
+      default:
         break;
     }
   }
@@ -243,12 +230,80 @@ class AmuletGameTutorial extends AmuletGame {
     }
   }
 
-  void onInteractedWithGuide(AmuletPlayer player){
+  void startNextTutorialObjective(AmuletPlayer player){
+     final current = getObjective(player);
+     if (current == objectives.last) {
+       print("startNextTutorialObjective() - current == tutorialObjectives.last");
+       return;
+     }
 
-    switch (player.objective) {
-      case objectiveTalkToGuide01:
+     final index = objectives.indexOf(current);
+     final next = objectives[index + 1];
+     setObjective(player, next);
+  }
+
+  void setObjective(
+      AmuletPlayer player,
+      TutorialObjective tutorialObjective,
+  ){
+    player.data['tutorial_objective'] = tutorialObjective.name;
+    switch (tutorialObjective) {
+      case TutorialObjective.Acquire_Sword:
+        break;
+      case TutorialObjective.Acquire_Heal:
+        break;
+      case TutorialObjective.Use_Heal:
+        break;
+      case TutorialObjective.Acquire_Bow:
+      // TODO: Handle this case.
+      case TutorialObjective.Equip_Bow:
+      // TODO: Handle this case.
+      case TutorialObjective.Draw_Bow:
+      // TODO: Handle this case.
+      case TutorialObjective.Open_Inventory:
+      // TODO: Handle this case.
+      case TutorialObjective.Kill_Fiends_02:
+      // TODO: Handle this case.
+      case TutorialObjective.Open_Bridge:
+      // TODO: Handle this case.
+      case TutorialObjective.Shoot_Crystal:
+      // TODO: Handle this case.
+      case TutorialObjective.Finish:
+      // TODO: Handle this case.
+    }
+  }
+
+  bool objectiveCompleted(AmuletPlayer player, TutorialObjective objective) =>
+      getObjective(player).index > objective.index;
+
+  TutorialObjective getObjective(AmuletPlayer player){
+     final data = player.data['tutorial_objective'];
+
+     if (data == null){
+       return objectives.first;
+     }
+
+     if (data is int){
+       return objectives[data];
+     }
+
+     if (data is String){
+       for (final objective in objectives){
+         if (objective.name == data){
+           return objective;
+         }
+       }
+       throw Exception('could not find objective $name');
+     }
+
+     throw Exception();
+  }
+
+  void onInteractedWithGuide(AmuletPlayer player){
+    final objective = getObjective(player);
+    switch (objective) {
+      case TutorialObjective.Acquire_Sword:
         runScript(player)
-            .completeObjective()
             .controlsDisabled()
             .activate(guide)
             .cameraSetTarget(guide)
@@ -258,7 +313,7 @@ class AmuletGameTutorial extends AmuletGame {
             .deactivate(guide)
             .end();
         break;
-      case objectiveUseHeal:
+      case TutorialObjective.Use_Heal:
         runScript(player)
             .controlsDisabled()
             .cameraSetTarget(guide)
@@ -267,7 +322,7 @@ class AmuletGameTutorial extends AmuletGame {
             .end();
         break;
 
-      case objectiveOpenInventory:
+      case TutorialObjective.Open_Inventory:
         runScript(player)
             .cameraSetTarget(guide)
             .faceEachOther(player, guide)
@@ -275,14 +330,14 @@ class AmuletGameTutorial extends AmuletGame {
             .end();
         break;
 
-      case objectiveEquipBow:
+      case TutorialObjective.Equip_Bow:
         runScript(player)
             .cameraSetTarget(guide)
             .faceEachOther(player, guide)
             .talk('add the bow to the weapons rack by clicking the bow icon in the inventory')
             .end();
         break;
-      case objectiveDrawBow:
+      case TutorialObjective.Draw_Bow:
         runScript(player)
             .cameraSetTarget(guide)
             .faceEachOther(player, guide)
@@ -344,10 +399,10 @@ class AmuletGameTutorial extends AmuletGame {
   }
 
   void actionMoveOxToSceneKey(String sceneKey){
-    actionMovePositionToSceneKey(guide, sceneKey);
+    movePositionToKey(guide, sceneKey);
   }
 
-  void actionMovePositionToSceneKey(Position position, String sceneKey){
+  void movePositionToKey(Position position, String sceneKey){
     movePositionToIndex(position, getSceneKey(sceneKey));
   }
 
@@ -381,9 +436,9 @@ class AmuletGameTutorial extends AmuletGame {
   void onAmuletItemUsed(AmuletPlayer player, AmuletItem amuletItem) {
     if (
       amuletItem == AmuletItem.Spell_Heal &&
-      player.objective == objectiveUseHeal
+      getObjective(player) == TutorialObjective.Use_Heal
     ) {
-      onSpellHealUsedForTheFirstTime(player);
+      startNextTutorialObjective(player);
     }
   }
 
@@ -418,25 +473,24 @@ class AmuletGameTutorial extends AmuletGame {
 
   @override
   void onAmuletItemAcquired(AmuletPlayer player, AmuletItem amuletItem) {
-    if (amuletItem == AmuletItem.Weapon_Rusty_Old_Sword){
-      if (player.readOnce('acquired_weapon_sword')){
-        onAcquiredWeaponSword(player);
-      }
-      return;
-    }
-
-    if (amuletItem == AmuletItem.Spell_Heal){
-      if (player.readOnce('acquired_spell_heal')){
-        startObjectiveUseHeal(player);
-      }
-      return;
-    }
-
-    if (amuletItem == AmuletItem.Weapon_Old_Bow){
-      if (player.readOnce('acquired_weapon_old_bow')){
-        startObjectiveOpenInventory(player);
-      }
-      return;
+    switch (amuletItem){
+      case AmuletItem.Weapon_Rusty_Old_Sword:
+        if (getObjective(player) == TutorialObjective.Acquire_Sword){
+          startNextTutorialObjective(player);
+        }
+        break;
+      case AmuletItem.Spell_Heal:
+        if (getObjective(player) == TutorialObjective.Acquire_Heal){
+          startNextTutorialObjective(player);
+        }
+        break;
+      case AmuletItem.Weapon_Old_Bow:
+        if (getObjective(player) == TutorialObjective.Acquire_Bow){
+          startNextTutorialObjective(player);
+        }
+        break;
+      default:
+        break;
     }
   }
 
@@ -452,7 +506,6 @@ class AmuletGameTutorial extends AmuletGame {
         'one has acquired the spell of healing.'
         'caste heal by pressing the heal icon at the bottom of the screen'
       )
-      .objective(objectiveUseHeal)
       .end();
 
   void onSpellHealUsedForTheFirstTime(AmuletPlayer player) => runScript(player)
@@ -468,7 +521,6 @@ class AmuletGameTutorial extends AmuletGame {
       .cameraSetTargetSceneKey(keysDoor02)
       .wait(seconds: 1)
       .setNodeEmptyAtSceneKey(keysDoor02)
-      .objective(objectiveKillFiends02)
       .flag(flagsDoor02Opened)
       .wait(seconds: 1)
       .deactivate(guide)
@@ -531,7 +583,6 @@ class AmuletGameTutorial extends AmuletGame {
         .wait(seconds: 1)
         .activate(guide)
         .wait(seconds: 1)
-        .objective(objectiveOpenInventory)
         .faceEachOther(player, guide)
         .talk(
           'one hath acquired a new weapon.'
@@ -544,13 +595,13 @@ class AmuletGameTutorial extends AmuletGame {
 
   @override
   void onPlayerInventoryOpenChanged(AmuletPlayer player, bool value) {
-    if (value && player.objective == objectiveOpenInventory){
-      startObjectiveEquipBow(player);
+    if (value && getObjective(player) == TutorialObjective.Open_Inventory){
+      startNextTutorialObjective(player);
     }
   }
 
   void startObjectiveEquipBow(AmuletPlayer player) => runScript(player)
-        .objective(objectiveEquipBow)
+        .add(() => setObjective(player, TutorialObjective.Equip_Bow))
         .faceEachOther(player, guide)
         .talk(
           'add the bow to the weapons rack by clicking the bow icon in the inventory',
@@ -566,9 +617,9 @@ class AmuletGameTutorial extends AmuletGame {
     if (
       player.weapons.contains(targetAmuletItemSlot) &&
       targetAmuletItemSlot.amuletItem == AmuletItem.Weapon_Old_Bow &&
-      player.objective == objectiveEquipBow
+      getObjective(player) == TutorialObjective.Equip_Bow
     ) {
-      startObjectiveDrawBow(player);
+      startNextTutorialObjective(player);
     }
   }
 
@@ -576,7 +627,6 @@ class AmuletGameTutorial extends AmuletGame {
       .controlsDisabled()
       .cameraSetTarget(guide)
       .faceEachOther(player, guide)
-      .objective(objectiveDrawBow)
       .talk(
         'excellent.'
         'draw the bow by clicking the bow icon at the bottom of the screen'
@@ -606,18 +656,21 @@ class AmuletGameTutorial extends AmuletGame {
         friendlyFire: friendlyFire,
     );
 
+    if (srcCharacter is! AmuletPlayer){
+      return;
+    }
+
+    final player = srcCharacter;
+
     if (
       target == crystal &&
-      srcCharacter is AmuletPlayer &&
-      !srcCharacter.objectiveCompleted(objectiveShootCrystal)
+      getObjective(srcCharacter) == TutorialObjective.Shoot_Crystal
     ){
-      srcCharacter.completeObjective(objectiveShootCrystal);
-      startObjectiveFinish(srcCharacter);
+      startNextTutorialObjective(player);
     }
   }
 
   void startObjectiveFinish(AmuletPlayer srcCharacter) => runScript(srcCharacter)
-      .objective(objectiveFinish)
       .controlsDisabled()
       .wait(seconds: 1)
       .cameraSetTargetSceneKey(keysExit)
@@ -625,5 +678,30 @@ class AmuletGameTutorial extends AmuletGame {
       .setNodeEmptyAtSceneKey(keysExit)
       .wait(seconds: 1)
       .end();
+
+  @override
+  void customOnPlayerDisconnected(IsometricPlayer player) {
+    amulet.removeGame(this);
+  }
+
+  void startObjectiveAcquireSword(AmuletPlayer player) {
+    runScript(player)
+        .controlsDisabled()
+        .zoom(1.5)
+        .snapCameraToPlayer()
+        .movePositionToSceneKey(guide, keysGuideSpawn0)
+        .wait(seconds: 1)
+        .cameraSetTarget(guide)
+        .faceEachOther(player, guide)
+        .talk(
+          'greetings other.'
+          'one is here to to guide another.'
+          'one moves by left clicking the mouse'
+        )
+        .movePositionToSceneKey(guide, keysGuideSpawn1)
+        .controlsEnabled()
+        .cameraClearTarget()
+    ;
+  }
 }
 

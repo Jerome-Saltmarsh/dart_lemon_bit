@@ -35,6 +35,9 @@ class Amulet {
   late final Timer updateTimer;
   late final Timer timerRefreshUserCharacterLocks;
 
+  final tutorialTime = IsometricTime(hour: 24, enabled: false);
+  final tutorialEnvironment = IsometricEnvironment(enabled: false);
+
   late final AmuletGame amuletGameTown;
   late final AmuletGame amuletRoad01;
   late final AmuletGame amuletRoad02;
@@ -161,12 +164,10 @@ class Amulet {
     final game = AmuletGameTutorial(
       amulet: this,
       scene: scenes.tutorial,
-      time: IsometricTime(hour: 24, enabled: false),
-      environment: IsometricEnvironment(enabled: false),
-      name: 'tutorial',
-      fiendTypes: [],
+      time: tutorialTime,
+      environment: tutorialEnvironment,
     );
-    games.add(game);
+    addGame(game);
     return game;
   }
 
@@ -181,16 +182,18 @@ class Amulet {
 
   Player joinGame(Game game) {
     final player = game.createPlayer();
-    if (!game.players.contains(player)){
-      game.players.add(player);
+    final players = game.players;
+    if (!players.contains(player)){
+      players.add(player);
     }
     return player;
   }
 
-  void addGame(Game game) {
+  Game addGame(Game game) {
     if (!games.contains(game)){
       games.add(game);
     }
+    return game;
   }
 
   void playerStartTutorial(AmuletPlayer player) =>
@@ -221,5 +224,9 @@ class Amulet {
     if (sceneKey != null){
       target.scene.movePositionToKey(player, sceneKey);
     }
+  }
+
+  void removeGame(Game game){
+    games.remove(game);
   }
 }

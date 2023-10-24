@@ -13,4 +13,5 @@ enum DebugTab {
   Environment,
   Scene,
   Amulet,
+  Server,
 }
