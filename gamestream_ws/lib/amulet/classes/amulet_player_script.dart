@@ -53,12 +53,6 @@ class AmuletPlayerScript {
         player.controlsEnabled = enabled;
       });
 
-  AmuletPlayerScript spawnPoint(String? value) =>
-      add(() {
-        log('spawnPoint($value)');
-        player.spawnPoint = value;
-      });
-
   AmuletPlayerScript movePlayerToSceneKey(String sceneKey) =>
       movePositionToSceneKey(player, sceneKey);
 

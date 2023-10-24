@@ -428,6 +428,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       item: randomItem(AmuletItem.findByQuality(quality)),
   );
 
+  /// @deactivationTimer set to -1 to prevent amulet item from deactivating over time
   AmuletGameObject spawnAmuletItemAtIndex({
     required int index,
     required AmuletItem item,

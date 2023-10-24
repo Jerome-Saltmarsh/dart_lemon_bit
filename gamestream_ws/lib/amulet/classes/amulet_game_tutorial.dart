@@ -12,7 +12,7 @@ class AmuletGameTutorial extends AmuletGame {
 
   static const keysGuideSpawn0 = 'guide_spawn_0';
   static const keysGuideSpawn1 = 'guide_spawn_1';
-  static const keysPlayerSpawn = 'player_spawn_00';
+  static const keysPlayerSpawn0 = 'player_spawn_00';
   static const keysDoor01 = 'door01';
   static const keysDoor02 = 'door02';
   static const keysDoor03 = 'door03';
@@ -22,8 +22,8 @@ class AmuletGameTutorial extends AmuletGame {
   static const keysExit = 'exit';
   static const keysFinish = 'finish';
   static const keysTriggerSpawnFiends02 = 'trigger_spawn_fiends_02';
-
   static const flagsBowAddedToWeapons = 'add_bow_to_weapons';
+  static const keysRoom4 = 'room4';
 
   static const objectives = TutorialObjective.values;
 
@@ -50,6 +50,20 @@ class AmuletGameTutorial extends AmuletGame {
     scene.movePositionToKey(finish, keysFinish);
   }
 
+  String getSpawnKey(TutorialObjective objective) => switch (objective){
+       TutorialObjective.Acquire_Sword => keysPlayerSpawn0,
+       TutorialObjective.Acquire_Heal => keysPlayerSpawn0,
+       TutorialObjective.Use_Heal => keysFiend01,
+       TutorialObjective.Vanquish_Fiends_02 => keysFiend01,
+       TutorialObjective.Acquire_Bow => keysFiend01,
+       TutorialObjective.Equip_Bow => keysRoom4,
+       TutorialObjective.Draw_Bow => keysRoom4,
+       TutorialObjective.Open_Inventory => keysRoom4,
+       TutorialObjective.Open_Bridge => keysRoom4,
+       TutorialObjective.Shoot_Crystal => keysRoom4,
+       TutorialObjective.Finish => keysRoom4,
+    };
+
   void refreshPlayerGameState(AmuletPlayer player) {
 
     if (player.readOnce('tutorial_initialized')) {
@@ -58,8 +72,6 @@ class AmuletGameTutorial extends AmuletGame {
 
     movePlayerToSpawnPoint(player);
 
-
-
     switch (getObjective(player)){
       case TutorialObjective.Acquire_Sword:
         startObjectiveAcquireSword(player);
@@ -67,7 +79,6 @@ class AmuletGameTutorial extends AmuletGame {
       default:
         break;
     }
-
 
     if (objectiveCompleted(player, TutorialObjective.Acquire_Sword)){
       setNodeEmpty(getSceneKey(keysDoor01));
@@ -97,42 +108,41 @@ class AmuletGameTutorial extends AmuletGame {
       spawnFiends02();
     }
 
-    // if (!player.flagSet(flagsDoor03Opened)){
-    //   setNode(
-    //     nodeIndex: getSceneKey(keysDoor03),
-    //     nodeType: NodeType.Brick,
-    //     nodeOrientation: NodeOrientation.Solid,
-    //   );
-    // }
+    if (objectiveCompleted(player, TutorialObjective.Vanquish_Fiends_02)){
+      setNodeEmpty(getSceneKey(keysDoor03));
+    } else {
+      setNode(
+        nodeIndex: getSceneKey(keysDoor03),
+        nodeType: NodeType.Brick,
+        nodeOrientation: NodeOrientation.Solid,
+      );
+    }
 
-    // if (!player.objectiveCompleted('destroy_crystal')){
-    //   crystal = spawnGameObjectAtIndex(
-    //       index: getSceneKey('bow_target'),
-    //       type: ItemType.Object,
-    //       subType: ObjectType.Crystal,
-    //       team: TeamType.Alone,
-    //   )
-    //     ..hitable = true
-    //     ..fixed = true
-    //     ..radius = 12
-    //     ..healthMax = 1
-    //     ..health = 1;
-    // }
+    if (!objectiveCompleted(player, TutorialObjective.Acquire_Bow)){
+      spawnAmuletItemAtIndex(
+        item: AmuletItem.Weapon_Old_Bow,
+        index: getSceneKey(keysSpawnBow),
+        deactivationTimer: -1,
+      );
+    }
 
-    // if (!objectiveCompleted(player, TutorialObjective.Acquire_Bow)){
-    //   spawnAmuletItemAtIndex(
-    //     item: AmuletItem.Weapon_Old_Bow,
-    //     index: getSceneKey(keysSpawnBow),
-    //     deactivationTimer: -1,
-    //   );
-    // }
+    if (!objectiveCompleted(player, TutorialObjective.Shoot_Crystal)){
+      crystal = spawnGameObjectAtIndex(
+          index: getSceneKey('bow_target'),
+          type: ItemType.Object,
+          subType: ObjectType.Crystal,
+          team: TeamType.Alone,
+      )
+        ..hitable = true
+        ..fixed = true
+        ..radius = 12
+        ..healthMax = 1
+        ..health = 1;
+    }
   }
 
   void movePlayerToSpawnPoint(AmuletPlayer player) {
-    scene.movePositionToKey(
-      player,
-      player.spawnPoint ?? keysPlayerSpawn,
-    );
+    scene.movePositionToKey(player, getSpawnKey(getObjective(player)));
     player.writePlayerMoved();
   }
 
@@ -263,7 +273,6 @@ class AmuletGameTutorial extends AmuletGame {
         break;
       case TutorialObjective.Use_Heal:
         runScript(player)
-            .spawnPoint(keysFiend01)
             .controlsDisabled()
             .movePositionToSceneKey(guide, keysFiend01)
             .activate(guide)

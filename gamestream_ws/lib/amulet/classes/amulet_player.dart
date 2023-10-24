@@ -1615,23 +1615,4 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   void setCameraTarget(Position? target) {
     this.cameraTarget = target;
   }
-
-  String? get spawnPoint {
-    final value = data['spawn_point'];
-    if (value == null){
-      return value;
-    }
-    if (value is String){
-      return value;
-    }
-    throw Exception('invalid spawn_point type: $value');
-  }
-
-  set spawnPoint(String? value) {
-    if (value == null){
-      data.remove('spawn_point');
-      return;
-    }
-    data['spawn_point'] = value;
-  }
 }
