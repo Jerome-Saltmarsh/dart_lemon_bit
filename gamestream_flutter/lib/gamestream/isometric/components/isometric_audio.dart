@@ -318,6 +318,10 @@ class IsometricAudio with IsometricComponent implements Updatable {
     final index = randomInt(0, scene.totalCharacters);
     final character = scene.characters[index];
 
+    if (character.dead){
+      return;
+    }
+
     switch (character.characterType) {
       case CharacterType.Fallen:
         playAudioSingleV3(
