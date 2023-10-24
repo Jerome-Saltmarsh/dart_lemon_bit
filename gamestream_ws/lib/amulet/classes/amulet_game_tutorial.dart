@@ -23,7 +23,6 @@ class AmuletGameTutorial extends AmuletGame {
   static const keysFinish = 'finish';
   static const keysTriggerSpawnFiends02 = 'trigger_spawn_fiends_02';
 
-  static const flagsDoor02Opened = 'door02_opened';
   static const flagsDoor03Opened = 'door03_opened';
   static const flagsBowAddedToWeapons = 'add_bow_to_weapons';
 
@@ -85,15 +84,15 @@ class AmuletGameTutorial extends AmuletGame {
       actionInstantiateFiend01();
     }
 
-    // if (player.flagSet(flagsDoor02Opened)){
-    //   setNodeEmpty(getSceneKey(flagsDoor02Opened));
-    // } else {
-    //   setNode(
-    //       nodeIndex: getSceneKey(keysDoor02),
-    //       nodeType: NodeType.Brick,
-    //       nodeOrientation: NodeOrientation.Solid,
-    //   );
-    // }
+    if (objectiveCompleted(player, TutorialObjective.Use_Heal)){
+      setNodeEmpty(getSceneKey(keysDoor02));
+    } else {
+      setNode(
+          nodeIndex: getSceneKey(keysDoor02),
+          nodeType: NodeType.Brick,
+          nodeOrientation: NodeOrientation.Solid,
+      );
+    }
 
     // if (!player.objectiveCompleted(objectiveTalkToGuide)){
     //   startObjectiveTalkToGuide(player);
@@ -519,7 +518,6 @@ class AmuletGameTutorial extends AmuletGame {
       .cameraSetTargetSceneKey(keysDoor02)
       .wait(seconds: 1)
       .setNodeEmptyAtSceneKey(keysDoor02)
-      .flag(flagsDoor02Opened)
       .wait(seconds: 1)
       .deactivate(guide)
       .add(actionSpawnFiends02)
