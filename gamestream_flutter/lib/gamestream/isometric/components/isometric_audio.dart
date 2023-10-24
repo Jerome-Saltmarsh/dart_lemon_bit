@@ -162,6 +162,7 @@ class IsometricAudio with IsometricComponent implements Updatable {
   final change_cloths = AudioSingle(name: 'change-cloths', volume: 0.5);
   final draw_sword = AudioSingle(name: 'draw-sword', volume: 0.5);
   final click_sound_8 = AudioSingle(name: 'click-sound-8', volume: 0.5);
+  final click_sounds_35 = AudioSingle(name: 'ui/click_sounds_35', volume: 0.5);
   final swing_arm_11 = AudioSingle(name: 'swing-arm-11', volume: 0.4);
   final swing_sword = AudioSingle(name: 'swing-sword', volume: 0.4);
   final arm_swing_whoosh_11 = AudioSingle(name: 'arm-swing-whoosh-11', volume: 0.4);

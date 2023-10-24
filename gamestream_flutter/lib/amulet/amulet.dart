@@ -370,6 +370,8 @@ class Amulet extends IsometricGame {
   void onChangedNpcTextIndex(int value) {
     if (value >= npcText.length) {
       endInteraction();
+    } else {
+      audio.click_sounds_35.play();
     }
   }
 

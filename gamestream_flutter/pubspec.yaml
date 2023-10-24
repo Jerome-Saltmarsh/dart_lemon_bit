@@ -155,6 +155,7 @@ flutter:
     - sprites/isometric/butterfly/
     - sprites/isometric/bat/
     - audio/
+    - audio/ui/
     - audio/music/
     - audio/sounds/
     - audio/voices/

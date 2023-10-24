@@ -2,7 +2,6 @@
 import 'package:gamestream_ws/amulet/src.dart';
 import 'package:gamestream_ws/isometric/src.dart';
 import 'package:gamestream_ws/packages.dart';
-import 'package:gamestream_ws/packages/common/src/amulet/amulet_scene.dart';
 
 import 'amulet_player_script.dart';
 import 'fiend_type.dart';
@@ -291,12 +290,6 @@ class AmuletGameTutorial extends AmuletGame {
 
   }
 
-  bool objectiveActiveSpeakToGuide(AmuletPlayer player) => player.readOnce('guide_met');
-
-  void actionSetCameraTargetGuide(AmuletPlayer player) {
-    actionSetCameraTarget(player, guide);
-  }
-
   void actionSpawnWeaponSwordAtGuide() =>
     spawnAmuletItem(
       item: AmuletItem.Weapon_Rusty_Old_Sword,
@@ -305,10 +298,6 @@ class AmuletGameTutorial extends AmuletGame {
       z: guide.z,
       deactivationTimer: -1
     );
-
-  void actionDeactivateGuide() {
-    deactivate(guide);
-  }
 
   @override
   void customOnCharacterKilled(Character target, src) {
@@ -420,10 +409,6 @@ class AmuletGameTutorial extends AmuletGame {
       .flag(flagsDoor01Opened)
       .wait(seconds: 1)
       .controlsEnabled();
-  }
-
-  void actionSetCameraTarget(AmuletPlayer player, Position? target) {
-      player.cameraTarget = target;
   }
 
   @override
