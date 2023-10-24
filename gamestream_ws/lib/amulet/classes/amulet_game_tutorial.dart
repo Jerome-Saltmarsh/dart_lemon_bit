@@ -460,7 +460,7 @@ class AmuletGameTutorial extends AmuletGame {
       amuletItem == AmuletItem.Spell_Heal &&
       getObjective(player) == TutorialObjective.Use_Heal
     ) {
-      startNextTutorialObjective(player);
+      onSpellHealUsedForTheFirstTime(player);
     }
   }
 
@@ -521,7 +521,9 @@ class AmuletGameTutorial extends AmuletGame {
       .wait(seconds: 1)
       .deactivate(guide)
       .add(actionSpawnFiends02)
-      .controlsEnabled();
+      .controlsEnabled()
+      .add(() => startNextTutorialObjective(player));
+
 
   void runScriptExplainElements(AmuletPlayer player) {
       runScript(player)
