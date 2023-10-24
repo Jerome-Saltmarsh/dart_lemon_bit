@@ -264,22 +264,25 @@ class AmuletGameTutorial extends AmuletGame {
       case TutorialObjective.Use_Heal:
         onObjectiveSetUseHeal(player);
         break;
+      case TutorialObjective.Vanquish_Fiends_02:
+        break;
       case TutorialObjective.Acquire_Bow:
         break;
       case TutorialObjective.Open_Inventory:
         onObjectiveSetOpenInventory(player);
+        break;
       case TutorialObjective.Equip_Bow:
         onObjectiveSetEquipBow(player);
         break;
       case TutorialObjective.Draw_Bow:
-      // TODO: Handle this case.
-      case TutorialObjective.Vanquish_Fiends_02:
-      // TODO: Handle this case.
+        onObjectiveSetDrawBow(player);
+        break;
       case TutorialObjective.Open_Bridge:
-      // TODO: Handle this case.
+        break;
       case TutorialObjective.Shoot_Crystal:
-      // TODO: Handle this case.
+        break;
       case TutorialObjective.Leave:
+        break;
       case TutorialObjective.Finished:
         onObjectiveSetFinished(player);
         break;
@@ -629,16 +632,6 @@ class AmuletGameTutorial extends AmuletGame {
     }
   }
 
-  void startObjectiveDrawBow(AmuletPlayer player) => runScript(player)
-      .controlsDisabled()
-      .cameraSetTarget(guide)
-      .faceEachOther(player, guide)
-      .talk(
-        'excellent.'
-        'draw the bow by clicking the bow icon at the bottom of the screen'
-      )
-      .end();
-
   AmuletPlayerScript runScript(AmuletPlayer player){
     final instance = AmuletPlayerScript(player);
     scripts.clear();
@@ -714,5 +707,17 @@ class AmuletGameTutorial extends AmuletGame {
   void onObjectiveSetFinished(AmuletPlayer player) {
 
   }
+
+  void onObjectiveSetDrawBow(AmuletPlayer player) =>
+    runScript(player)
+      .controlsDisabled()
+      .cameraSetTarget(guide)
+      .faceEachOther(player, guide)
+      .talk(
+        'excellent.'
+        'draw the bow by clicking the bow icon at the bottom of the screen'
+      )
+      .end();
+
 }
 
