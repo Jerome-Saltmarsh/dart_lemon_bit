@@ -197,8 +197,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   @override
   void customOnPlayerDead(AmuletPlayer player) {
-    addJob(seconds: 3, action: () {
-      setCharacterStateSpawning(player);
+    addJob(seconds: 5, action: () {
+      // setCharacterStateSpawning(player);
+      revive(player);
     });
   }
 

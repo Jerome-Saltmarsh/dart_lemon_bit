@@ -7,7 +7,6 @@ enum TutorialObjective {
   Open_Inventory,
   Equip_Bow,
   Draw_Bow,
-  Open_Bridge,
   Shoot_Crystal,
   Leave,
   Finished

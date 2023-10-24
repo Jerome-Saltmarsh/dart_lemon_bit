@@ -964,9 +964,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     player.hitable = true;
     player.health = player.maxHealth;
     clearCharacterTarget(player);
-
     customOnPlayerRevived(player);
-
     player.writePlayerMoved();
     player.writePlayerAlive();
     player.writePlayerEvent(PlayerEvent.Spawned);

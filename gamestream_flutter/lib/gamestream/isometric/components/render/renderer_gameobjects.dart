@@ -55,13 +55,13 @@ class RendererGameObjects extends RenderGroup {
       }
     );
 
-    if (gameObject.maxHealth > 0) {
-      render.healthBarPosition(
-          position: gameObject,
-          percentage: gameObject.healthPercentage,
-        );
-      render.textPosition(gameObject, formatPercentage(gameObject.healthPercentage));
-    }
+    // if (gameObject.maxHealth > 0) {
+    //   render.healthBarPosition(
+    //       position: gameObject,
+    //       percentage: gameObject.healthPercentage,
+    //     );
+    //   render.textPosition(gameObject, formatPercentage(gameObject.healthPercentage));
+    // }
   }
 
   @override

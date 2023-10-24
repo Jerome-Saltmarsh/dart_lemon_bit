@@ -59,13 +59,14 @@ class AmuletGameTutorial extends AmuletGame {
        TutorialObjective.Equip_Bow => keysRoom4,
        TutorialObjective.Draw_Bow => keysRoom4,
        TutorialObjective.Open_Inventory => keysRoom4,
-       TutorialObjective.Open_Bridge => keysRoom4,
        TutorialObjective.Shoot_Crystal => keysRoom4,
        TutorialObjective.Leave => keysRoom4,
        TutorialObjective.Finished => keysRoom4,
     };
 
   void refreshPlayerGameState(AmuletPlayer player) {
+
+    removeFiends();
 
     if (player.readOnce('tutorial_initialized')) {
       actionInitializeNewPlayer(player);
@@ -148,6 +149,10 @@ class AmuletGameTutorial extends AmuletGame {
         nodeOrientation: NodeOrientation.Half_South,
       );
     }
+  }
+
+  void removeFiends() {
+    characters.removeWhere((element) => element.characterType == CharacterType.Fallen);
   }
 
   void movePlayerToSpawnPoint(AmuletPlayer player) {
@@ -276,8 +281,6 @@ class AmuletGameTutorial extends AmuletGame {
         break;
       case TutorialObjective.Draw_Bow:
         onObjectiveSetDrawBow(player);
-        break;
-      case TutorialObjective.Open_Bridge:
         break;
       case TutorialObjective.Shoot_Crystal:
         break;
