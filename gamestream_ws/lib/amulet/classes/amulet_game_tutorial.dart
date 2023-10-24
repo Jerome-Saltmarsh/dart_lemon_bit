@@ -23,7 +23,7 @@ class AmuletGameTutorial extends AmuletGame {
   static const keysFinish = 'finish';
   static const keysTriggerSpawnFiends02 = 'trigger_spawn_fiends_02';
   static const flagsBowAddedToWeapons = 'add_bow_to_weapons';
-  static const keysRoom4 = 'room4';
+  static const keysRoom4 = 'room_4';
 
   static const objectives = TutorialObjective.values;
 
@@ -74,7 +74,7 @@ class AmuletGameTutorial extends AmuletGame {
 
     switch (getObjective(player)){
       case TutorialObjective.Acquire_Sword:
-        startObjectiveAcquireSword(player);
+        onObjectiveSetAcquireSword(player);
         break;
       default:
         break;
@@ -138,6 +138,14 @@ class AmuletGameTutorial extends AmuletGame {
         ..radius = 12
         ..healthMax = 1
         ..health = 1;
+    }
+
+    if (!objectiveCompleted(player, TutorialObjective.Shoot_Crystal)){
+      setNode(
+        nodeIndex: getSceneKey(keysExit),
+        nodeType: NodeType.Wood,
+        nodeOrientation: NodeOrientation.Half_South,
+      );
     }
   }
 
@@ -259,39 +267,22 @@ class AmuletGameTutorial extends AmuletGame {
     player.data['tutorial_objective'] = tutorialObjective.name;
     switch (tutorialObjective) {
       case TutorialObjective.Acquire_Sword:
-        startObjectiveAcquireSword(player);
+        onObjectiveSetAcquireSword(player);
         break;
       case TutorialObjective.Acquire_Heal:
-        runScript(player)
-            .controlsDisabled()
-            .wait(seconds: 1)
-            .cameraSetTargetSceneKey(keysDoor01)
-            .wait(seconds: 2)
-            .setNodeEmptyAtSceneKey(keysDoor01)
-            .wait(seconds: 1)
-            .controlsEnabled();
+        onObjectiveSetAcquireHeal(player);
         break;
       case TutorialObjective.Use_Heal:
-        runScript(player)
-            .controlsDisabled()
-            .movePositionToSceneKey(guide, keysFiend01)
-            .activate(guide)
-            .wait(seconds: 1)
-            .cameraSetTarget(guide)
-            .faceEachOther(player, guide)
-            .talk(
-              'one has acquired the spell of healing.'
-              'caste heal by pressing the heal icon at the bottom of the screen'
-            )
-            .end();
+        onObjectiveSetUseHeal(player);
         break;
       case TutorialObjective.Acquire_Bow:
-      // TODO: Handle this case.
-      case TutorialObjective.Equip_Bow:
-      // TODO: Handle this case.
-      case TutorialObjective.Draw_Bow:
-      // TODO: Handle this case.
+        break;
       case TutorialObjective.Open_Inventory:
+        onObjectiveSetOpenInventory(player);
+      case TutorialObjective.Equip_Bow:
+        onObjectiveSetEquipBow(player);
+        break;
+      case TutorialObjective.Draw_Bow:
       // TODO: Handle this case.
       case TutorialObjective.Vanquish_Fiends_02:
       // TODO: Handle this case.
@@ -302,6 +293,32 @@ class AmuletGameTutorial extends AmuletGame {
       case TutorialObjective.Finish:
       // TODO: Handle this case.
     }
+  }
+
+  void onObjectiveSetAcquireHeal(AmuletPlayer player) {
+    runScript(player)
+        .controlsDisabled()
+        .wait(seconds: 1)
+        .cameraSetTargetSceneKey(keysDoor01)
+        .wait(seconds: 2)
+        .setNodeEmptyAtSceneKey(keysDoor01)
+        .wait(seconds: 1)
+        .controlsEnabled();
+  }
+
+  void onObjectiveSetUseHeal(AmuletPlayer player) {
+    runScript(player)
+        .controlsDisabled()
+        .movePositionToSceneKey(guide, keysFiend01)
+        .activate(guide)
+        .wait(seconds: 1)
+        .cameraSetTarget(guide)
+        .faceEachOther(player, guide)
+        .talk(
+          'one has acquired the spell of healing.'
+          'caste heal by pressing the heal icon at the bottom of the screen'
+        )
+        .end();
   }
 
   bool objectiveCompleted(AmuletPlayer player, TutorialObjective objective) =>
@@ -573,8 +590,7 @@ class AmuletGameTutorial extends AmuletGame {
           .end()
           .add(() => startNextTutorialObjective(player));
 
-  void startObjectiveOpenInventory(AmuletPlayer player) {
-    runScript(player)
+  void onObjectiveSetOpenInventory(AmuletPlayer player) => runScript(player)
         .controlsDisabled()
         .add(() {
           for (final weapon in player.weapons){
@@ -595,11 +611,9 @@ class AmuletGameTutorial extends AmuletGame {
         .talk(
           'one hath acquired a new weapon.'
           'one must now learn of the inventory.'
-          'open the inventory by hovering the mouse over the inventory icon at the bottom left corner of the screen'
+          'one opens the inventory by hovering the mouse over the inventory icon at the bottom left corner of the screen'
         )
         .end();
-
-  }
 
   @override
   void onPlayerInventoryOpenChanged(AmuletPlayer player, bool value) {
@@ -608,11 +622,11 @@ class AmuletGameTutorial extends AmuletGame {
     }
   }
 
-  void startObjectiveEquipBow(AmuletPlayer player) => runScript(player)
+  void onObjectiveSetEquipBow(AmuletPlayer player) => runScript(player)
         .add(() => setObjective(player, TutorialObjective.Equip_Bow))
         .faceEachOther(player, guide)
         .talk(
-          'add the bow to the weapons rack by clicking the bow icon in the inventory',
+          'one adds the bow to the weapons rack by clicking the bow icon in the inventory.',
           target: guide
         );
 
@@ -692,7 +706,7 @@ class AmuletGameTutorial extends AmuletGame {
     amulet.removeGame(this);
   }
 
-  void startObjectiveAcquireSword(AmuletPlayer player) {
+  void onObjectiveSetAcquireSword(AmuletPlayer player) {
     runScript(player)
         .controlsDisabled()
         .zoom(1.5)
