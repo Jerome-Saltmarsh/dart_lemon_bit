@@ -23,10 +23,8 @@ class AmuletGameTutorial extends AmuletGame {
   static const keysFinish = 'finish';
   static const keysTriggerSpawnFiends02 = 'trigger_spawn_fiends_02';
 
-  static const flagsDoor01Opened = 'door01_opened';
   static const flagsDoor02Opened = 'door02_opened';
   static const flagsDoor03Opened = 'door03_opened';
-  static const flagsFiend01Defeated = 'fiend01_defeated';
   static const flagsBowAddedToWeapons = 'add_bow_to_weapons';
 
   static const objectives = TutorialObjective.values;
@@ -56,7 +54,13 @@ class AmuletGameTutorial extends AmuletGame {
 
   void refreshPlayerGameState(AmuletPlayer player) {
 
+    if (player.readOnce('tutorial_initialized')) {
+      actionInitializeNewPlayer(player);
+    }
+
     movePlayerToSpawnPoint(player);
+
+
 
     switch (getObjective(player)){
       case TutorialObjective.Acquire_Sword:
@@ -66,9 +70,8 @@ class AmuletGameTutorial extends AmuletGame {
         break;
     }
 
-    player.writePlayerMoved();
 
-    if (player.flagSet(flagsDoor01Opened)){
+    if (objectiveCompleted(player, TutorialObjective.Acquire_Sword)){
       setNodeEmpty(getSceneKey(keysDoor01));
     } else {
       setNode(
@@ -78,64 +81,62 @@ class AmuletGameTutorial extends AmuletGame {
       );
     }
 
-    if (player.flagSet(flagsDoor02Opened)){
-      setNodeEmpty(getSceneKey(flagsDoor02Opened));
-    } else {
-      setNode(
-          nodeIndex: getSceneKey(keysDoor02),
-          nodeType: NodeType.Brick,
-          nodeOrientation: NodeOrientation.Solid,
-      );
-    }
-
-    if (player.flagNotSet(flagsFiend01Defeated)){
+    if (!objectiveCompleted(player, TutorialObjective.Acquire_Heal)){
       actionInstantiateFiend01();
     }
 
-    if (player.readOnce('initialized')) {
-      actionInitializeNewPlayer(player);
-    }
+    // if (player.flagSet(flagsDoor02Opened)){
+    //   setNodeEmpty(getSceneKey(flagsDoor02Opened));
+    // } else {
+    //   setNode(
+    //       nodeIndex: getSceneKey(keysDoor02),
+    //       nodeType: NodeType.Brick,
+    //       nodeOrientation: NodeOrientation.Solid,
+    //   );
+    // }
 
     // if (!player.objectiveCompleted(objectiveTalkToGuide)){
     //   startObjectiveTalkToGuide(player);
     // }
 
-    if (!player.flagSet(flagsDoor03Opened)){
-      setNode(
-        nodeIndex: getSceneKey(keysDoor03),
-        nodeType: NodeType.Brick,
-        nodeOrientation: NodeOrientation.Solid,
-      );
-    }
+    // if (!player.flagSet(flagsDoor03Opened)){
+    //   setNode(
+    //     nodeIndex: getSceneKey(keysDoor03),
+    //     nodeType: NodeType.Brick,
+    //     nodeOrientation: NodeOrientation.Solid,
+    //   );
+    // }
 
-    if (!player.objectiveCompleted('destroy_crystal')){
-      crystal = spawnGameObjectAtIndex(
-          index: getSceneKey('bow_target'),
-          type: ItemType.Object,
-          subType: ObjectType.Crystal,
-          team: TeamType.Alone,
-      )
-        ..hitable = true
-        ..fixed = true
-        ..radius = 12
-        ..healthMax = 1
-        ..health = 1;
-    }
+    // if (!player.objectiveCompleted('destroy_crystal')){
+    //   crystal = spawnGameObjectAtIndex(
+    //       index: getSceneKey('bow_target'),
+    //       type: ItemType.Object,
+    //       subType: ObjectType.Crystal,
+    //       team: TeamType.Alone,
+    //   )
+    //     ..hitable = true
+    //     ..fixed = true
+    //     ..radius = 12
+    //     ..healthMax = 1
+    //     ..health = 1;
+    // }
 
-    if (!objectiveCompleted(player, TutorialObjective.Acquire_Bow)){
-      spawnAmuletItemAtIndex(
-        item: AmuletItem.Weapon_Old_Bow,
-        index: getSceneKey(keysSpawnBow),
-        deactivationTimer: -1,
-      );
-    }
+    // if (!objectiveCompleted(player, TutorialObjective.Acquire_Bow)){
+    //   spawnAmuletItemAtIndex(
+    //     item: AmuletItem.Weapon_Old_Bow,
+    //     index: getSceneKey(keysSpawnBow),
+    //     deactivationTimer: -1,
+    //   );
+    // }
   }
 
-  void movePlayerToSpawnPoint(AmuletPlayer player) =>
+  void movePlayerToSpawnPoint(AmuletPlayer player) {
     scene.movePositionToKey(
       player,
       player.spawnPoint ?? keysPlayerSpawn,
     );
+    player.writePlayerMoved();
+  }
 
   void instantiateGuide() {
     guide = AmuletNpc(
@@ -160,6 +161,7 @@ class AmuletGameTutorial extends AmuletGame {
       ..bodyType = BodyType.Leather_Armour;
 
     add(guide);
+    deactivate(guide);
   }
 
   int getSceneKey(String name) =>
@@ -249,6 +251,7 @@ class AmuletGameTutorial extends AmuletGame {
     player.data['tutorial_objective'] = tutorialObjective.name;
     switch (tutorialObjective) {
       case TutorialObjective.Acquire_Sword:
+        startObjectiveAcquireSword(player);
         break;
       case TutorialObjective.Acquire_Heal:
         runScript(player)
@@ -257,7 +260,6 @@ class AmuletGameTutorial extends AmuletGame {
             .cameraSetTargetSceneKey(keysDoor01)
             .wait(seconds: 2)
             .setNodeEmptyAtSceneKey(keysDoor01)
-            .flag(flagsDoor01Opened)
             .wait(seconds: 1)
             .controlsEnabled();
         break;
@@ -689,6 +691,7 @@ class AmuletGameTutorial extends AmuletGame {
         .snapCameraToPlayer()
         .movePositionToSceneKey(guide, keysGuideSpawn0)
         .wait(seconds: 1)
+        .activate(guide)
         .cameraSetTarget(guide)
         .faceEachOther(player, guide)
         .talk(
