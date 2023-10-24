@@ -323,7 +323,7 @@ class IsometricAudio with IsometricComponent implements Updatable {
         playAudioSingleV3(
             audioSingle: randomItem(audio.audioSingleZombieTalking),
             position: character,
-            maxDistance: 500,
+            maxDistance: 300,
         );
         break;
       // case CharacterType.Dog:

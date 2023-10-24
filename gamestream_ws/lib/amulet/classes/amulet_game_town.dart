@@ -1,6 +1,5 @@
 import 'package:gamestream_ws/amulet.dart';
 import 'package:gamestream_ws/packages.dart';
-import 'package:gamestream_ws/packages/common/src/amulet/amulet_scene.dart';
 
 class AmuletGameTown extends AmuletGame {
 

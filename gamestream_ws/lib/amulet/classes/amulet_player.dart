@@ -1514,28 +1514,12 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
        return false;
     }
 
-    if (objectives is! List<String>){
-      throw Exception('objectives is! List<String>');
+    if (objectives is! List){
+      throw Exception('objectives is! List');
     }
 
     return objectives.contains(name);
   }
-
-  // List<String> get objectivesCompleted {
-  //   const fieldName = 'objectivesCompleted';
-  //   var objectives = data[fieldName];
-  //
-  //   if (objectives == null) {
-  //     objectives = <String>[];
-  //     data[fieldName] = objectives;
-  //   }
-  //
-  //   if (objectives is! List<String>){
-  //     throw Exception('objectives is! List<String>');
-  //   }
-  //
-  //   return objectives;
-  // }
 
   SlotType getAmuletItemSlotType(AmuletItemSlot amuletItemSlot){
     if (amuletItemSlot == equippedHandLeft){
@@ -1650,4 +1634,22 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     this.cameraTarget = target;
   }
 
+  String? get spawnPoint {
+    final value = data['spawn_point'];
+    if (value == null){
+      return value;
+    }
+    if (value is String){
+      return value;
+    }
+    throw Exception('invalid spawn_point type: $value');
+  }
+
+  set spawnPoint(String? value) {
+    if (value == null){
+      data.remove('spawn_point');
+      return;
+    }
+    data['spawn_point'] = value;
+  }
 }

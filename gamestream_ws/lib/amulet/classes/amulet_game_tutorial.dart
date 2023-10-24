@@ -20,6 +20,7 @@ class AmuletGameTutorial extends AmuletGame {
   static const keysSpawnBow = 'spawn_bow';
   static const keysExit = 'exit';
   static const keysFinish = 'finish';
+  static const keysTriggerSpawnFiends02 = 'trigger_spawn_fiends_02';
 
   static const flagsDoor01Opened = 'door01_opened';
   static const flagsDoor02Opened = 'door02_opened';
@@ -60,6 +61,11 @@ class AmuletGameTutorial extends AmuletGame {
   }
 
   void refreshPlayerGameState(AmuletPlayer player) {
+
+    scene.movePositionToKey(
+        player,
+        player.spawnPoint ?? keysPlayerSpawn,
+    );
 
     if (player.flagSet(flagsDoor01Opened)){
       setNodeEmpty(getSceneKey(keysDoor01));
@@ -130,7 +136,6 @@ class AmuletGameTutorial extends AmuletGame {
     runScript(player)
       .controlsDisabled()
       .zoom(1.5)
-      .movePlayerToSceneKey(keysPlayerSpawn)
       .snapCameraToPlayer()
       .movePositionToSceneKey(guide, keysGuideSpawn0)
       .wait(seconds: 1)
@@ -435,8 +440,8 @@ class AmuletGameTutorial extends AmuletGame {
     }
   }
 
-  void startObjectiveUseHeal(AmuletPlayer player) =>
-      runScript(player)
+  void startObjectiveUseHeal(AmuletPlayer player) => runScript(player)
+      .spawnPoint(keysFiend01)
       .controlsDisabled()
       .movePositionToSceneKey(guide, keysFiend01)
       .activate(guide)
@@ -472,6 +477,7 @@ class AmuletGameTutorial extends AmuletGame {
 
   void runScriptExplainElements(AmuletPlayer player) {
       runScript(player)
+          .spawnPoint(keysTriggerSpawnFiends02)
           .controlsDisabled()
           .wait(seconds: 1)
           .movePositionToSceneKey(guide, keysFiend02)
