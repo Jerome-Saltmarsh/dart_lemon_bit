@@ -1183,6 +1183,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void setCharacterStateDead(Character character) {
     if (character.characterState == CharacterState.Dead) return;
 
+    final characters = this.characters;
     for (final otherCharacter in characters){
       if (otherCharacter.target == character)
         otherCharacter.onTargetDead();
@@ -1196,6 +1197,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.physical = false;
     character.hitable = false;
     character.clearPath();
+    character.setDestinationToCurrentPosition();
     clearCharacterTarget(character);
     customOnCharacterDead(character);
 

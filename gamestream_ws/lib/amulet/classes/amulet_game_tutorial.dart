@@ -67,6 +67,19 @@ class AmuletGameTutorial extends AmuletGame {
   void refreshPlayerGameState(AmuletPlayer player) {
 
     removeFiends();
+    gameObjects.removeWhere((element) => !element.persistable);
+
+    player.equipBody(AmuletItem.Armor_Leather_Basic, force: true);
+    player.equipLegs(AmuletItem.Pants_Travellers, force: true);
+    player.equippedWeaponIndex = -1;
+
+    for (final weapon in player.weapons){
+      weapon.amuletItem = null;
+    }
+
+    for (final item in player.items){
+      item.amuletItem = null;
+    }
 
     if (player.readOnce('tutorial_initialized')) {
       actionInitializeNewPlayer(player);
@@ -83,6 +96,7 @@ class AmuletGameTutorial extends AmuletGame {
     }
 
     if (objectiveCompleted(player, TutorialObjective.Acquire_Sword)){
+      player.setWeapon(index: 0, amuletItem: AmuletItem.Weapon_Rusty_Old_Sword);
       setNodeEmpty(getSceneKey(keysDoor01));
     } else {
       setNode(
@@ -94,6 +108,8 @@ class AmuletGameTutorial extends AmuletGame {
 
     if (!objectiveCompleted(player, TutorialObjective.Acquire_Heal)){
       actionInstantiateFiend01();
+    } else {
+      player.setWeapon(index: 1, amuletItem: AmuletItem.Spell_Heal);
     }
 
     if (objectiveCompleted(player, TutorialObjective.Use_Heal)){
@@ -126,6 +142,8 @@ class AmuletGameTutorial extends AmuletGame {
         index: getSceneKey(keysSpawnBow),
         deactivationTimer: -1,
       );
+    } else {
+      player.setWeapon(index: 2, amuletItem: AmuletItem.Weapon_Old_Bow);
     }
 
     if (!objectiveCompleted(player, TutorialObjective.Shoot_Crystal)){
@@ -475,10 +493,8 @@ class AmuletGameTutorial extends AmuletGame {
     for (final weapon in player.weapons){
       weapon.amuletItem = null;
     }
-    player.equippedWeaponIndex = -1;
+    // player.equippedWeaponIndex = -1;
     // player.healthBase = 15;
-    player.equipBody(AmuletItem.Armor_Leather_Basic, force: true);
-    player.equipLegs(AmuletItem.Pants_Travellers, force: true);
     player.health = player.maxHealth;
   }
 
@@ -608,7 +624,7 @@ class AmuletGameTutorial extends AmuletGame {
         .talk(
           'one hath acquired a new weapon.'
           'one must now learn of the inventory.'
-          'one opens the inventory by hovering the mouse over the inventory icon at the bottom left corner of the screen'
+          'open the inventory by hovering the mouse over the bag icon at the bottom left corner of the screen'
         )
         .end();
 
