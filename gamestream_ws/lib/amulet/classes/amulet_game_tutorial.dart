@@ -98,6 +98,7 @@ class AmuletGameTutorial extends AmuletGame {
     if (objectiveCompleted(player, TutorialObjective.Acquire_Sword)){
       player.setWeapon(index: 0, amuletItem: AmuletItem.Weapon_Rusty_Old_Sword);
       setNodeEmpty(getSceneKey(keysDoor01));
+      player.equippedWeaponIndex = 0;
     } else {
       setNode(
         nodeIndex: getSceneKey(keysDoor01),
@@ -106,10 +107,10 @@ class AmuletGameTutorial extends AmuletGame {
       );
     }
 
-    if (!objectiveCompleted(player, TutorialObjective.Acquire_Heal)){
-      actionInstantiateFiend01();
-    } else {
+    if (objectiveCompleted(player, TutorialObjective.Acquire_Heal)){
       player.setWeapon(index: 1, amuletItem: AmuletItem.Spell_Heal);
+    } else {
+      actionInstantiateFiend01();
     }
 
     if (objectiveCompleted(player, TutorialObjective.Use_Heal)){
@@ -167,6 +168,9 @@ class AmuletGameTutorial extends AmuletGame {
         nodeOrientation: NodeOrientation.Half_South,
       );
     }
+
+    player.refillItemSlotsWeapons();
+    player.writeGameObjects();
   }
 
   void removeFiends() {
