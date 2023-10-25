@@ -22,6 +22,7 @@ class AmuletGameTutorial extends AmuletGame {
   static const keysExit = 'exit';
   static const keysFinish = 'finish';
   static const keysTriggerSpawnFiends02 = 'trigger_spawn_fiends_02';
+  static const keysCrystal1 = 'crystal_1';
   static const flagsBowAddedToWeapons = 'add_bow_to_weapons';
   static const keysRoom4 = 'room_4';
 
@@ -32,7 +33,9 @@ class AmuletGameTutorial extends AmuletGame {
   late final Character guide;
   Character? fiend01;
   final fiends02 = <Character>[];
-  GameObject? crystal;
+
+  GameObject? crystal1;
+  GameObject? crystal2;
 
   final finish = Position(x: -100);
 
@@ -52,6 +55,7 @@ class AmuletGameTutorial extends AmuletGame {
 
   String getSpawnKey(TutorialObjective objective) => switch (objective){
        TutorialObjective.Acquire_Sword => keysPlayerSpawn0,
+       TutorialObjective.Strike_Crystal_1 => keysPlayerSpawn0,
        TutorialObjective.Acquire_Heal => keysPlayerSpawn0,
        TutorialObjective.Use_Heal => keysFiend01,
        TutorialObjective.Vanquish_Fiends_02 => keysFiend01,
@@ -97,9 +101,13 @@ class AmuletGameTutorial extends AmuletGame {
 
     if (objectiveCompleted(player, TutorialObjective.Acquire_Sword)){
       player.setWeapon(index: 0, amuletItem: AmuletItem.Weapon_Rusty_Old_Sword);
-      setNodeEmpty(getSceneKey(keysDoor01));
       player.equippedWeaponIndex = 0;
+    }
+
+    if (objectiveCompleted(player, TutorialObjective.Strike_Crystal_1)){
+      setNodeEmpty(getSceneKey(keysDoor01));
     } else {
+      crystal1 = spawnCrystalAtKey(keysCrystal1);
       setNode(
         nodeIndex: getSceneKey(keysDoor01),
         nodeType: NodeType.Wood,
@@ -148,17 +156,7 @@ class AmuletGameTutorial extends AmuletGame {
     }
 
     if (!objectiveCompleted(player, TutorialObjective.Shoot_Crystal)){
-      crystal = spawnGameObjectAtIndex(
-          index: getSceneKey('bow_target'),
-          type: ItemType.Object,
-          subType: ObjectType.Crystal,
-          team: TeamType.Alone,
-      )
-        ..hitable = true
-        ..fixed = true
-        ..radius = 12
-        ..healthMax = 1
-        ..health = 1;
+      crystal2 = spawnCrystalAtKey('bow_target');
     }
 
     if (!objectiveCompleted(player, TutorialObjective.Shoot_Crystal)){
@@ -285,6 +283,9 @@ class AmuletGameTutorial extends AmuletGame {
       case TutorialObjective.Acquire_Sword:
         onObjectiveSetAcquireSword(player);
         break;
+      case TutorialObjective.Strike_Crystal_1:
+        onObjectiveSetStrikeCrystal1(player);
+        break;
       case TutorialObjective.Acquire_Heal:
         onObjectiveSetAcquireHeal(player);
         break;
@@ -388,7 +389,6 @@ class AmuletGameTutorial extends AmuletGame {
             .talk('caste heal by pressing the heal icon at the bottom of the screen.')
             .end();
         break;
-
       case TutorialObjective.Open_Inventory:
         runScript(player)
             .cameraSetTarget(guide)
@@ -396,7 +396,6 @@ class AmuletGameTutorial extends AmuletGame {
             .talk('open the inventory by hovering the mouse over the inventory icon at the bottom left corner of the screen')
             .end();
         break;
-
       case TutorialObjective.Equip_Bow:
         runScript(player)
             .cameraSetTarget(guide)
@@ -685,10 +684,19 @@ class AmuletGameTutorial extends AmuletGame {
     final player = srcCharacter;
 
     if (
-      target == crystal &&
+      target == crystal1 &&
+      getObjective(srcCharacter) == TutorialObjective.Strike_Crystal_1
+    ){
+      startNextTutorialObjective(player);
+      return;
+    }
+
+    if (
+      target == crystal2 &&
       getObjective(srcCharacter) == TutorialObjective.Shoot_Crystal
     ){
       startNextTutorialObjective(player);
+      return;
     }
   }
 
@@ -741,6 +749,22 @@ class AmuletGameTutorial extends AmuletGame {
         'draw the bow by clicking the bow icon at the bottom of the screen'
       )
       .end();
+
+  void onObjectiveSetStrikeCrystal1(AmuletPlayer player) {
+
+  }
+
+  GameObject spawnCrystalAtKey(String sceneKey) => spawnGameObjectAtIndex(
+        index: getSceneKey(sceneKey),
+        type: ItemType.Object,
+        subType: ObjectType.Crystal,
+        team: TeamType.Alone,
+      )
+        ..hitable = true
+        ..fixed = true
+        ..radius = 12
+        ..healthMax = 1
+        ..health = 1;
 
 }
 

@@ -1,5 +1,6 @@
 enum TutorialObjective {
   Acquire_Sword,
+  Strike_Crystal_1,
   Acquire_Heal,
   Use_Heal,
   Vanquish_Fiends_02,
