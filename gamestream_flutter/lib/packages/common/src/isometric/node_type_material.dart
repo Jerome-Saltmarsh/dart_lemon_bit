@@ -14,7 +14,7 @@ const nodeTypeMaterial = {
   NodeType.Concrete: MaterialType.Stone,
   NodeType.Chimney: MaterialType.Stone,
   NodeType.Table: MaterialType.Wood,
-  NodeType.Grass: MaterialType.Dirt,
+  NodeType.Grass: MaterialType.Grass,
   NodeType.Wood: MaterialType.Wood,
   NodeType.Bau_Haus: MaterialType.Wood,
   NodeType.Wooden_Plank: MaterialType.Wood,
