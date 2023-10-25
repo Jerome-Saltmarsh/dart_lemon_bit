@@ -45,18 +45,18 @@ class NodeType {
   static const Torch_Blue = 88;
   static const Torch_Red = 89;
 
-  static bool isMaterialWood(int value) => const [
-    Torch,
-    Tree_Bottom,
-    Table,
-    Wood,
-    Wooden_Plank
-  ].contains(value);
+  // static bool isMaterialWood(int value) => const [
+  //   Torch,
+  //   Tree_Bottom,
+  //   Table,
+  //   Wood,
+  //   Wooden_Plank
+  // ].contains(value);
 
-  static bool isMaterialGrass(int value) => const [
-    Grass_Long,
-    Grass
-  ].contains(value);
+  // static bool isMaterialGrass(int value) => const [
+  //   Grass_Long,
+  //   Grass
+  // ].contains(value);
 
   static bool isMaterialStone(int value) => const [
         Concrete,

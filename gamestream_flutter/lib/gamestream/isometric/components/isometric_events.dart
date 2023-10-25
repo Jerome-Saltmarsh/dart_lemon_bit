@@ -2,6 +2,7 @@
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/packages/common/src/isometric/material_type.dart';
+import 'package:gamestream_flutter/packages/common/src/isometric/node_type_material.dart';
 import 'package:gamestream_flutter/packages/lemon_websocket_client.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
@@ -37,9 +38,7 @@ class IsometricEvents with IsometricComponent {
         scene.getTypeXYZSafe(x, y, z + 24) == NodeType.Rain_Landing
     )
     ){
-
       audio.play(audio.footstep_mud_6, x, y, z);
-
       final amount = environment.rainType.value == RainType.Heavy ? 3 : 2;
       for (var i = 0; i < amount; i++){
         particles.spawnParticleWaterDrop(x: x, y: y, z: z, zv: 1.5);
@@ -47,19 +46,28 @@ class IsometricEvents with IsometricComponent {
     }
 
     final nodeType = scene.getTypeXYZSafe(x, y, z - 2);
-    if (NodeType.isMaterialStone(nodeType)) {
-      audio.play(audio.footstep_stone, x, y, z);
-      return;
+    final nodeMaterial = nodeTypeMaterial[nodeType];
+
+    if (nodeMaterial == null){
+       return;
     }
-    if (NodeType.isMaterialWood(nodeType)) {
-      audio.play(audio.footstep_wood_4, x, y, z);
-      return;
+
+    switch (nodeMaterial){
+      case MaterialType.Grass:
+        audio.play(
+            randomBool() ? audio.footstep_grass_7 : audio.footstep_grass_8,
+            x,
+            y,
+            z,
+        );
+        break;
+      case MaterialType.Stone:
+        audio.play(audio.footstep_stone, x, y, z);
+        break;
+      case MaterialType.Wood:
+        audio.play(audio.footstep_wood_4, x, y, z);
+        break;
     }
-    if (randomBool()){
-      audio.play(audio.footstep_grass_8, x, y, z);
-      return;
-    }
-    audio.play(audio.footstep_grass_7, x, y, z);
   }
 
   void onGameEvent(int type, double x, double y, double z, double angle) {
@@ -270,9 +278,19 @@ class IsometricEvents with IsometricComponent {
         break;
       case MaterialType.Stone:
         audio.play(audio.material_struck_stone, x, y, z);
+        particles.spawnParticleBlockBrick(x, y, z);
         break;
       case MaterialType.Dirt:
         audio.play(audio.material_struck_dirt, x, y, z);
+        particles.spawnParticleBlockSand(x, y, z);
+        break;
+      case MaterialType.Wood:
+        audio.play(audio.material_struck_wood, x, y, z);
+        particles.spawnParticleBlockWood(x, y, z);
+        break;
+      case MaterialType.Grass:
+        audio.play(audio.grass_cut, x, y, z);
+        particles.spawnParticleBlockGrass(x, y, z);
         break;
     }
   }
@@ -290,25 +308,10 @@ class IsometricEvents with IsometricComponent {
 
     final nodeIndex = scene.getIndexXYZ(x, y, z);
     final nodeType = scene.nodeTypes[nodeIndex];
+    final materialType = nodeTypeMaterial[nodeType];
 
-    if (NodeType.isMaterialWood(nodeType)){
-      audio.play(audio.material_struck_wood, x, y, z);
-      particles.spawnParticleBlockWood(x, y, z);
-    }
-
-    if (NodeType.isMaterialGrass(nodeType)){
-      audio.play(audio.grass_cut, x, y, z);
-      particles.spawnParticleBlockGrass(x, y, z);
-    }
-
-    if (NodeType.isMaterialStone(nodeType)){
-      audio.play(audio.material_struck_stone, x, y, z);
-      particles.spawnParticleBlockBrick(x, y, z);
-    }
-
-    if (NodeType.isMaterialDirt(nodeType)){
-      audio.play(audio.material_struck_dirt, x, y, z);
-      particles.spawnParticleBlockSand(x, y, z);
+    if (materialType != null){
+      onMaterialStruck(x, y, z, materialType);
     }
   }
 

@@ -7,4 +7,5 @@ class MaterialType {
   static const Metal = 4;
   static const Glass = 5;
   static const Dirt = 6;
+  static const Grass = 7;
 }
