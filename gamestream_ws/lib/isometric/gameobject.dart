@@ -22,6 +22,22 @@ class GameObject extends Collider {
   var healthMax = 0;
   var deactivationTimer = -1;
 
+  @override
+  int get materialType => getMaterialType(type, subType);
+
+  static int getMaterialType(int type, int subType){
+     switch (type){
+       case ItemType.Object:
+         switch (subType){
+           case ObjectType.Crystal:
+             return MaterialType.Glass;
+           case ObjectType.Crystal_Glowing:
+             return MaterialType.Glass;
+         }
+     }
+     return MaterialType.None;
+  }
+
   GameObject({
     required super.x,
     required super.y,
@@ -32,7 +48,7 @@ class GameObject extends Collider {
     required this.id,
     super.radius = 15.0,
     this.health = 0,
-  }) {
+  }) : super(materialType: getMaterialType(type, subType)) {
     startX = x;
     startY = y;
     startZ = z;

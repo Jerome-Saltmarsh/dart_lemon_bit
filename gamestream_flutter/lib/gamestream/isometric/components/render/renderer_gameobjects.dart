@@ -47,10 +47,11 @@ class RendererGameObjects extends RenderGroup {
       srcWidth: src[Atlas.SrcWidth],
       srcHeight: src[Atlas.SrcHeight],
       scale: src[Atlas.SrcScale],
-      color: switch (gameObject.colorType){
-         EmissionType.Ambient => scene.getRenderColorPosition(gameObject),
+      color: switch (gameObject.emissionType){
          EmissionType.None => scene.getRenderColorPosition(gameObject),
+         EmissionType.Ambient => scene.getRenderColorPosition(gameObject),
          EmissionType.Color => gameObject.emissionColor,
+         EmissionType.Zero => 0,
          _ => throw Exception()
       }
     );

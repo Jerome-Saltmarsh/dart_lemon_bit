@@ -14,7 +14,11 @@ class AmuletGameObject extends GameObject {
     required this.item,
     required this.frameSpawned,
     required int deactivationTimer
-  }) : super(type: item.type, subType: item.subType, team: TeamType.Neutral) {
+  }) : super(
+      type: item.type,
+      subType: item.subType,
+      team: TeamType.Neutral,
+  ) {
     this.deactivationTimer = deactivationTimer;
     fixed = false;
     gravity = true;

@@ -17,6 +17,7 @@ class Projectile extends Collider {
     required super.x,
     required super.y,
     required super.z,
+    required super.materialType,
   }) : super(radius: Physics.Projectile_Radius);
 
   bool get overRange => distanceTravelled > range;

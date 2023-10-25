@@ -111,6 +111,7 @@ class Character extends Collider {
     this.invincible = false,
   }) : super(
     radius: CharacterType.getRadius(characterType),
+    materialType: MaterialType.Flesh,
   ) {
     maxHealth = health;
     this.weaponType = weaponType;

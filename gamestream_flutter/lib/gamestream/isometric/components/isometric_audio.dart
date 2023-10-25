@@ -1,6 +1,7 @@
 
 import 'dart:math';
 
+import 'package:gamestream_flutter/packages/common/src/isometric/material_type.dart';
 import 'package:just_audio/just_audio.dart';
 
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
@@ -108,7 +109,7 @@ class IsometricAudio with IsometricComponent implements Updatable {
   final fire_bolt_14 = AudioSingle(name: 'fire-bolt-14', volume: 0.5);
   final dagger_woosh_9 = AudioSingle(name: 'dagger_woosh_9', volume: 0.5);
   final metal_light_3 = AudioSingle(name: 'metal-light-3', volume: 0.5);
-  final metal_struck = AudioSingle(name: 'metal-struck', volume: 0.5);
+
   final footstep_grass_8 = AudioSingle(name: 'footstep-grass-8', volume: 0.05);
   final footstep_grass_7 = AudioSingle(name: 'footstep-grass-7', volume: 0.05);
   final footstep_mud_6 = AudioSingle(name: 'mud-footstep-6', volume: 0.05);
@@ -146,9 +147,12 @@ class IsometricAudio with IsometricComponent implements Updatable {
   final zombie_hurt_1 = AudioSingle(name: 'zombie-hurt-1', volume: 0.5);
   final zombie_hurt_4 = AudioSingle(name: 'zombie-hit-04', volume: 0.5);
   final splash = AudioSingle(name: 'splash', volume: 0.5);
-  final material_struck_wood = AudioSingle(name: 'material-struck-wood', volume: 0.5);
-  final material_struck_stone = AudioSingle(name: 'material-struck-stone', volume: 0.5);
-  final material_struck_dirt = AudioSingle(name: 'material-struck-dirt', volume: 0.5);
+  final material_struck_metal = AudioSingle(name: 'sounds/material_struck_glass', volume: 0.5);
+  final material_struck_flesh = AudioSingle(name: 'sounds/material_struck_flesh', volume: 0.5);
+  final material_struck_wood = AudioSingle(name: 'sounds/material_struck_wood', volume: 0.5);
+  final material_struck_glass = AudioSingle(name: 'sounds/material_struck_glass', volume: 0.5);
+  final material_struck_stone = AudioSingle(name: 'sounds/material_struck_stone', volume: 0.5);
+  final material_struck_dirt = AudioSingle(name: 'sounds/material_struck_dirt', volume: 0.5);
   final rat_squeak = AudioSingle(name: 'rat-squeak', volume: 0.5);
   final collect_star_3 = AudioSingle(name: 'collect-star-3', volume: 0.5);
   final magical_impact_16 = AudioSingle(name: 'magical-impact-16', volume: 0.5);
@@ -412,4 +416,5 @@ class IsometricAudio with IsometricComponent implements Updatable {
   void musicStop(){
     audioTracks.stop();
   }
+
 }

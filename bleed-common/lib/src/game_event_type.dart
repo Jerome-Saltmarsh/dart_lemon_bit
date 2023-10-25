@@ -33,7 +33,7 @@ class GameEventType {
   static const Thunder                  = 74;
   static const Explosion                = 75;
   static const Bullet_Deactivated       = 76;
-  static const Material_Struck_Metal    = 77;
+  static const Material_Struck          = 77;
   static const Item_Bounce              = 78;
   static const Melee_Attack_Performed   = 79;
   static const Teleport_Start           = 80;

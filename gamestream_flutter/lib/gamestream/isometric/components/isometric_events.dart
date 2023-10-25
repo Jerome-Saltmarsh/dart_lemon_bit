@@ -1,6 +1,7 @@
 
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/packages/common.dart';
+import 'package:gamestream_flutter/packages/common/src/isometric/material_type.dart';
 import 'package:gamestream_flutter/packages/lemon_websocket_client.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
@@ -75,8 +76,8 @@ class IsometricEvents with IsometricComponent {
       case GameEventType.Bullet_Deactivated:
         audio.play(audio.metal_light_3, x, y, z);
         return;
-      case GameEventType.Material_Struck_Metal:
-        audio.play(audio.metal_struck, x, y, z);
+      case GameEventType.Material_Struck:
+        onMaterialStruck(x, y, z, parser.readByte());
         return;
       case GameEventType.Player_Spawn_Started:
         camera.centerOnChaseTarget();
@@ -252,6 +253,26 @@ class IsometricEvents with IsometricComponent {
             particles.spawnParticleConfetti(x, y, z);
             break;
         }
+        break;
+    }
+  }
+
+  void onMaterialStruck(double x, double y, double z, int materialType) {
+    switch (materialType){
+      case MaterialType.Glass:
+        audio.play(audio.material_struck_glass, x, y, z);
+        break;
+      case MaterialType.Metal:
+        audio.play(audio.material_struck_metal, x, y, z);
+        break;
+      case MaterialType.Flesh:
+        audio.play(audio.material_struck_flesh, x, y, z);
+        break;
+      case MaterialType.Stone:
+        audio.play(audio.material_struck_stone, x, y, z);
+        break;
+      case MaterialType.Dirt:
+        audio.play(audio.material_struck_dirt, x, y, z);
         break;
     }
   }

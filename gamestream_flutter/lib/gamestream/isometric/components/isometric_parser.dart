@@ -1,6 +1,7 @@
 
 
 import 'dart:typed_data';
+import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:archive/archive.dart';
@@ -374,6 +375,11 @@ class IsometricParser with ByteReader, IsometricComponent {
     gameObject.health = readUInt16();
     gameObject.maxHealth = readUInt16();
     readIsometricPosition(gameObject);
+
+    if (gameObject.type == ItemType.Object && gameObject.subType == ObjectType.Crystal_Glowing){
+      gameObject.emissionType = EmissionType.Zero;
+    }
+
   }
 
   void readMap(Map<int, int> map){
@@ -411,7 +417,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     editor.gameObjectSelected.value              = true;
     editor.cameraCenterSelectedObject();
 
-    editor.gameObjectSelectedEmission.value = gameObject.colorType;
+    editor.gameObjectSelectedEmission.value = gameObject.emissionType;
     editor.gameObjectSelectedEmissionIntensity.value = gameObject.emissionIntensity;
   }
 

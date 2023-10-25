@@ -27,6 +27,8 @@ abstract class Collider extends Position {
   var startY = 0.0;
   var startZ = 0.0;
 
+  int materialType;
+
   String get name;
 
   var team = 0;
@@ -41,6 +43,7 @@ abstract class Collider extends Position {
     required super.z,
     required double radius,
     required this.team,
+    required this.materialType,
   }) {
     this.x = x;
     this.y = y;

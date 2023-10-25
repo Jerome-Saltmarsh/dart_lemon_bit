@@ -816,8 +816,8 @@ class AmuletGameTutorial extends AmuletGame {
         ..fixed = true
         ..destroyable = false
         ..radius = 12
-        ..healthMax = 1
-        ..health = 1;
+        ..healthMax = 0
+        ..health = 0;
 
 }
 

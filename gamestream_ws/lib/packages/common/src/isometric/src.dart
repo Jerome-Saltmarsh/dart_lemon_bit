@@ -1,5 +1,6 @@
 library src;
 
+export 'material_type.dart';
 export 'gender.dart';
 export 'shadow_type.dart';
 export 'complexion_type.dart';

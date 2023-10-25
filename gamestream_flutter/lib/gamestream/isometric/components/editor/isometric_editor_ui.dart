@@ -1513,8 +1513,8 @@ extension IsometricEditorUI on IsometricEditor {
         gameObjectSelectedEmission,
             (int emissionType) => onPressed(
           action: () => gameObject
-              .value!.colorType =
-          ((gameObject.value!.colorType +
+              .value!.emissionType =
+          ((gameObject.value!.emissionType +
               1) %
               3),
           child: Column(

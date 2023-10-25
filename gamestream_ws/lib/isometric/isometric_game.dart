@@ -1412,20 +1412,23 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     target.clampVelocity(Physics.Max_Velocity);
 
-    if (target is GameObject) {
-      if (ObjectType.isMaterialMetal(target.type)) {
-        dispatchGameEvent(
-            GameEventType.Material_Struck_Metal, target.x, target.y, target.z,
-            angle);
-      }
-    }
+    dispatchGameEventPosition(
+        GameEventType.Material_Struck,
+        target,
+        angle: angle,
+    );
 
-    if (target is GameObject && target.healthMax > 0){
-      target.health = clamp(target.health - damage, 0, target.healthMax);
-      target.dirty = true;
-      if (target.health <= 0) {
-        destroyGameObject(target);
+    dispatchByte(target.materialType);
+
+    if (target is GameObject){
+      if (target.healthMax > 0){
+        target.health = clamp(target.health - damage, 0, target.healthMax);
+        target.dirty = true;
+        if (target.health <= 0) {
+          destroyGameObject(target);
+        }
       }
+      return;
     }
 
     if (target is Character) {
@@ -1717,6 +1720,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       y: 0,
       z: 0,
       team: 0,
+      materialType: MaterialType.None,
     );
     projectiles.add(projectile);
     return projectile;
