@@ -22,4 +22,5 @@ class PlayerEvent {
   static const Talent_Upgraded          = 21;
   static const Game_Joined              = 22;
   static const Spawned              = 23;
+  static const Puzzle_Solved              = 24;
 }

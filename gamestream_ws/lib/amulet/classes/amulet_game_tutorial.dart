@@ -374,6 +374,7 @@ class AmuletGameTutorial extends AmuletGame {
       case TutorialObjective.Acquire_Sword:
         runScript(player)
             .controlsDisabled()
+            .puzzleSolved()
             .activate(guide)
             .cameraSetTarget(guide)
             .faceEachOther(player, guide)
@@ -690,6 +691,7 @@ class AmuletGameTutorial extends AmuletGame {
     ){
       runScript(player)
           .deactivate(guide)
+          .puzzleSolved()
           .controlsDisabled()
           .wait(seconds: 1)
           .cameraSetTargetSceneKey(keysDoor01)

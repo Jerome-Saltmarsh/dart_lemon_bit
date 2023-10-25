@@ -368,6 +368,9 @@ class IsometricEvents with IsometricComponent {
         camera.centerOnChaseTarget();
         io.recenterCursor();
         break;
+      case PlayerEvent.Puzzle_Solved:
+        audio.notification_sound_10.play();
+        break;
       case PlayerEvent.Reloading:
         switch (player.weaponType.value){
           default:

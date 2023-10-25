@@ -71,6 +71,12 @@ class AmuletPlayerScript {
         b.face(a);
       });
 
+  AmuletPlayerScript puzzleSolved() =>
+      playerEvent(PlayerEvent.Puzzle_Solved);
+
+  AmuletPlayerScript playerEvent(int playerEvent) =>
+      add(() => player.writePlayerEvent(playerEvent));
+
   AmuletPlayerScript movePositionToIndex(Position position, int index) => add(() {
     final scene = getScene();
     position.x = scene.getIndexX(index);
