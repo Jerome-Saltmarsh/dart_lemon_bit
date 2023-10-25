@@ -316,14 +316,15 @@ class AmuletGameTutorial extends AmuletGame {
   }
 
   void onObjectiveSetAcquireHeal(AmuletPlayer player) {
-    runScript(player)
-        .controlsDisabled()
-        .wait(seconds: 1)
-        .cameraSetTargetSceneKey(keysDoor01)
-        .wait(seconds: 2)
-        .setNodeEmptyAtSceneKey(keysDoor01)
-        .wait(seconds: 1)
-        .controlsEnabled();
+    // runScript(player)
+    //     .deactivate(guide)
+    //     .controlsDisabled()
+    //     .wait(seconds: 1)
+    //     .cameraSetTargetSceneKey(keysDoor01)
+    //     .wait(seconds: 2)
+    //     .setNodeEmptyAtSceneKey(keysDoor01)
+    //     .wait(seconds: 1)
+    //     .controlsEnabled();
   }
 
   void onObjectiveSetUseHeal(AmuletPlayer player) {
@@ -687,7 +688,16 @@ class AmuletGameTutorial extends AmuletGame {
       target == crystal1 &&
       getObjective(srcCharacter) == TutorialObjective.Strike_Crystal_1
     ){
-      startNextTutorialObjective(player);
+      runScript(player)
+          .deactivate(guide)
+          .controlsDisabled()
+          .wait(seconds: 1)
+          .cameraSetTargetSceneKey(keysDoor01)
+          .wait(seconds: 2)
+          .setNodeEmptyAtSceneKey(keysDoor01)
+          .wait(seconds: 1)
+          .add(() => startNextTutorialObjective(player))
+          .end();
       return;
     }
 
@@ -727,7 +737,7 @@ class AmuletGameTutorial extends AmuletGame {
         .talk(
           'greetings other.'
           'one is here to to guide another.'
-          'one moves by left clicking the mouse'
+          'one moves by left clicking the mouse.'
         )
         .movePositionToSceneKey(guide, keysGuideSpawn1)
         .controlsEnabled()
@@ -750,9 +760,27 @@ class AmuletGameTutorial extends AmuletGame {
       )
       .end();
 
-  void onObjectiveSetStrikeCrystal1(AmuletPlayer player) {
-
-  }
+  void onObjectiveSetStrikeCrystal1(AmuletPlayer player) =>
+      runScript(player)
+        .controlsDisabled()
+        .activate(guide)
+        .cameraSetTarget(guide)
+        .faceEachOther(player, guide)
+        .talk(
+          'strike by hovering the mouse over a target and left clicking.'
+          'one can also attack at any time using right click.'
+        )
+        .add(() {
+          player.writeGameEvent(
+              type: GameEventType.Blink_Depart,
+              x: guide.x,
+              y: guide.y,
+              z: guide.z,
+              angle: 0,
+          );
+        })
+        .deactivate(guide)
+        .end();
 
   GameObject spawnCrystalAtKey(String sceneKey) => spawnGameObjectAtIndex(
         index: getSceneKey(sceneKey),

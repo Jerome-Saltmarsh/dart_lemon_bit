@@ -45,6 +45,7 @@ class Atlas {
     ObjectType.Credits: AtlasSrcObjects.Credits,
     ObjectType.Car: AtlasSrcObjects.Car,
     ObjectType.Crystal: AtlasSrcObjects.Crystal,
+    ObjectType.Crystal_Glowing: AtlasSrcObjects.Crystal,
     ObjectType.Candle: AtlasSrcObjects.Candle,
     ObjectType.Barrel_Purple: AtlasSrcObjects.Barrel_Purple,
     ObjectType.Cup: AtlasSrcObjects.Cup,

@@ -223,6 +223,7 @@ class IsometricEvents with IsometricComponent {
         break;
 
       case GameEventType.Blink_Depart:
+        audio.play(audio.dagger_woosh_9, x, y, z);
         particles.spawnParticleConfetti(x, y, z);
         break;
 
@@ -244,6 +245,10 @@ class IsometricEvents with IsometricComponent {
         switch (spellType){
           case SpellType.Heal:
             audio.buff_1.play();
+            particles.spawnParticleConfetti(x, y, z);
+            break;
+          case SpellType.Blink:
+            audio.dagger_woosh_9.play();
             particles.spawnParticleConfetti(x, y, z);
             break;
         }

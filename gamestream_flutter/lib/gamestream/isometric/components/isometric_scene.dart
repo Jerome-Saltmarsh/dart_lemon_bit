@@ -1867,8 +1867,22 @@ class IsometricScene with IsometricComponent implements Updatable {
   }
 
   void applyEmissionGameObjects() {
+    final gameObjects = this.gameObjects;
     for (final gameObject in gameObjects) {
       if (!gameObject.active) continue;
+
+      if (
+        gameObject.type == ItemType.Object &&
+        gameObject.subType == ObjectType.Crystal_Glowing
+      ){
+        emitLight(
+          index: getIndexPosition(gameObject),
+          value: colors.purple_0.value,
+          intensity: 1.0,
+          ambient: false,
+        );
+      }
+
       switch (gameObject.colorType) {
         case EmissionType.None:
           continue;
