@@ -3301,9 +3301,9 @@ class RendererNodes extends RenderGroup {
 
     engine.render(
       color: colorWest,
-      srcLeft: Src_X_Side_West,
+      srcLeft: srcX + Src_X_Side_West,
       srcTop: srcY,
-      srcRight: Src_X_Side_West + Src_Width_Side_West,
+      srcRight: srcX + Src_X_Side_West + Src_Width_Side_West,
       srcBottom: srcY + Src_Height_Side_West,
       scale: 1.0,
       rotation: 0,
@@ -3313,9 +3313,9 @@ class RendererNodes extends RenderGroup {
 
     engine.render(
       color: colorSouth,
-      srcLeft: Src_X_Side_South,
+      srcLeft: srcX + Src_X_Side_South,
       srcTop: srcY,
-      srcRight: Src_X_Side_South + Src_Width_Side_South,
+      srcRight: srcX + Src_X_Side_South + Src_Width_Side_South,
       srcBottom: srcY + Src_Height_Side_South,
       scale: 1.0,
       rotation: 0,
