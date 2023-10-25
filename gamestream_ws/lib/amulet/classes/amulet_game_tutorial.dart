@@ -34,8 +34,10 @@ class AmuletGameTutorial extends AmuletGame {
   Character? fiend01;
   final fiends02 = <Character>[];
 
-  GameObject? crystal1;
+  late GameObject crystal1;
+  late GameObject crystal1Glowing;
   GameObject? crystal2;
+  GameObject? crystal2Glowing;
 
   final finish = Position(x: -100);
 
@@ -50,6 +52,15 @@ class AmuletGameTutorial extends AmuletGame {
       name: 'tutorial'
   ){
     instantiateGuide();
+    crystal1 = spawnCrystalAtKey(keysCrystal1, glowing: false);
+    crystal1Glowing = spawnCrystalAtKey(keysCrystal1, glowing: true);
+    spawnGameObjectAtIndex(
+        type: ItemType.Object,
+        subType: ObjectType.Barrel,
+        index: getSceneKey(keysCrystal1),
+        team: 0,
+    )..fixed = true;
+
     scene.movePositionToKey(finish, keysFinish);
   }
 
@@ -71,11 +82,17 @@ class AmuletGameTutorial extends AmuletGame {
   void refreshPlayerGameState(AmuletPlayer player) {
 
     removeFiends();
-    gameObjects.removeWhere((element) => !element.persistable);
+    gameObjects.removeWhere((element) =>
+      !element.persistable &&
+      element != crystal1 &&
+      element != crystal1Glowing);
 
     player.equipBody(AmuletItem.Armor_Leather_Basic, force: true);
     player.equipLegs(AmuletItem.Pants_Travellers, force: true);
     player.equippedWeaponIndex = -1;
+
+    deactivate(crystal1);
+    deactivate(crystal1Glowing);
 
     for (final weapon in player.weapons){
       weapon.amuletItem = null;
@@ -106,8 +123,9 @@ class AmuletGameTutorial extends AmuletGame {
 
     if (objectiveCompleted(player, TutorialObjective.Strike_Crystal_1)){
       setNodeEmpty(getSceneKey(keysDoor01));
+      activate(crystal1Glowing);
     } else {
-      crystal1 = spawnCrystalAtKey(keysCrystal1);
+      activate(crystal1);
       setNode(
         nodeIndex: getSceneKey(keysDoor01),
         nodeType: NodeType.Wood,
@@ -374,7 +392,6 @@ class AmuletGameTutorial extends AmuletGame {
       case TutorialObjective.Acquire_Sword:
         runScript(player)
             .controlsDisabled()
-            .puzzleSolved()
             .activate(guide)
             .cameraSetTarget(guide)
             .faceEachOther(player, guide)
@@ -689,17 +706,7 @@ class AmuletGameTutorial extends AmuletGame {
       target == crystal1 &&
       getObjective(srcCharacter) == TutorialObjective.Strike_Crystal_1
     ){
-      runScript(player)
-          .deactivate(guide)
-          .puzzleSolved()
-          .controlsDisabled()
-          .wait(seconds: 1)
-          .cameraSetTargetSceneKey(keysDoor01)
-          .wait(seconds: 2)
-          .setNodeEmptyAtSceneKey(keysDoor01)
-          .wait(seconds: 1)
-          .add(() => startNextTutorialObjective(player))
-          .end();
+      onStruckCrystal1(player);
       return;
     }
 
@@ -711,6 +718,21 @@ class AmuletGameTutorial extends AmuletGame {
       return;
     }
   }
+
+  void onStruckCrystal1(AmuletPlayer player) =>
+      runScript(player)
+        .deactivate(crystal1)
+        .activate(crystal1Glowing)
+        .deactivate(guide)
+        .puzzleSolved()
+        .controlsDisabled()
+        .wait(seconds: 1)
+        .cameraSetTargetSceneKey(keysDoor01)
+        .wait(seconds: 2)
+        .setNodeEmptyAtSceneKey(keysDoor01)
+        .wait(seconds: 1)
+        .add(() => startNextTutorialObjective(player))
+        .end();
 
   void startObjectiveFinish(AmuletPlayer srcCharacter) => runScript(srcCharacter)
       .controlsDisabled()
@@ -784,14 +806,15 @@ class AmuletGameTutorial extends AmuletGame {
         .deactivate(guide)
         .end();
 
-  GameObject spawnCrystalAtKey(String sceneKey) => spawnGameObjectAtIndex(
+  GameObject spawnCrystalAtKey(String sceneKey, {bool glowing = false}) => spawnGameObjectAtIndex(
         index: getSceneKey(sceneKey),
         type: ItemType.Object,
-        subType: ObjectType.Crystal,
+        subType: glowing ? ObjectType.Crystal_Glowing : ObjectType.Crystal,
         team: TeamType.Alone,
       )
         ..hitable = true
         ..fixed = true
+        ..destroyable = false
         ..radius = 12
         ..healthMax = 1
         ..health = 1;

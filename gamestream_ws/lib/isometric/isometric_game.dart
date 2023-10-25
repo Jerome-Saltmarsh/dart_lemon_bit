@@ -105,10 +105,10 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void customOnPlayerDisconnected(IsometricPlayer player) {}
 
   /// @override
-  void customOnColliderDeactivated(Collider collider) {}
+  void onDeactivated(Collider collider) {}
 
   /// @override
-  void customOnColliderActivated(Collider collider) {}
+  void onActivated(Collider collider) {}
 
   /// @override
   void customOnCharacterKilled(Character target, dynamic src) {}
@@ -685,7 +685,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (collider is IsometricPlayer) {
       collider.writePlayerActive();
     }
-    customOnColliderActivated(collider);
+    onActivated(collider);
   }
 
   void onGridChanged() {
@@ -697,30 +697,21 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void deactivate(Collider collider) {
     if (!collider.active) return;
-    collider.active = false;
-    collider.velocityX = 0;
-    collider.velocityY = 0;
-    collider.velocityZ = 0;
+    collider.deactivate();
 
-    if (collider is GameObject) {
-      collider.dirty = true;
-      collider.available = false;
-    }
-    if (collider is IsometricPlayer) {
-      collider.writePlayerActive();
-    }
-
+    final characters = this.characters;
     for (final character in characters) {
       if (character.target == collider)
         clearCharacterTarget(character);
     }
 
+    final projectiles = this.projectiles;
     for (final projectile in projectiles) {
       if (projectile.target == collider) continue;
         projectile.target = null;
     }
 
-    customOnColliderDeactivated(collider);
+    onDeactivated(collider);
   }
 
   void dispatchGameEventCharacterDeath(Character character) {
@@ -1427,19 +1418,14 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
             GameEventType.Material_Struck_Metal, target.x, target.y, target.z,
             angle);
       }
-      if (target.destroyable) {
-        destroyGameObject(target);
-      }
     }
 
-    if (target is GameObject){
-       if (target.healthMax > 0) {
-          target.health = clamp(target.health - damage, 0, target.healthMax);
-          target.dirty = true;
-          if (target.health <= 0){
-            destroyGameObject(target);
-          }
-       }
+    if (target is GameObject && target.healthMax > 0){
+      target.health = clamp(target.health - damage, 0, target.healthMax);
+      target.dirty = true;
+      if (target.health <= 0) {
+        destroyGameObject(target);
+      }
     }
 
     if (target is Character) {
@@ -1748,8 +1734,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required int type,
     required int subType,
     required int team,
-  }) =>
-      spawnGameObject(
+  }) {
+    final scene = this.scene;
+    return spawnGameObject(
         x: scene.getIndexX(index),
         y: scene.getIndexY(index),
         z: scene.getIndexZ(index),
@@ -1757,6 +1744,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         subType: subType,
         team: team,
       );
+  }
 
   GameObject spawnGameObject({
     required double x,
@@ -1766,6 +1754,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required int subType,
     required int team,
   }) {
+    final gameObjects = this.gameObjects;
     for (final gameObject in gameObjects) {
       if (gameObject.active) continue;
       if (!gameObject.recyclable) continue;
@@ -1810,6 +1799,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       throw Exception('dispatchByte($byte)');
     }
 
+    final players = this.players;
     for (final player in players) {
       player.writeByte(byte);
     }
@@ -1819,6 +1809,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       dispatchGameEvent(gameEventType, position.x, position.y, position.z, angle);
 
   void dispatchGameEvent(int gameEventType, double x, double y, double z, [double angle = 0]) {
+    final players = this.players;
     for (final player in players) {
       if (!player.onScreen(x, y)) continue;
       player.writeGameEvent(type: gameEventType,
@@ -1845,6 +1836,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       double z,
       double angle,
   ) {
+    final players = this.players;
     for (final player in players) {
       if (!player.onScreen(x, y)) continue;
       player.writeGameEvent(
@@ -1865,6 +1857,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       double z,
       double angle,
   ) {
+    final players = this.players;
     for (final player in players) {
       if (!player.onScreen(x, y)) continue;
       player.writeGameEvent(
@@ -1880,6 +1873,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void dispatchAttackTypeEquipped(int attackType, double x, double y, double z,
       double angle) {
+    final players = this.players;
     for (final player in players) {
       if (!player.onScreen(x, y)) continue;
       player.writeGameEvent(
@@ -1894,7 +1888,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void onPlayerRemoved(IsometricPlayer player) {
-    if (!players.remove(player));
+    players.remove(player);
     characters.remove(player);
     customOnPlayerDisconnected(player);
   }

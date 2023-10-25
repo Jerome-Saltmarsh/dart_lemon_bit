@@ -85,6 +85,13 @@ class GameObject extends Collider {
         ..startX = startX
         ..startY = startY
         ..startZ = startZ;
+
+  @override
+  void deactivate() {
+    super.deactivate();
+    dirty = true;
+    available = false;
+  }
 }
 
 

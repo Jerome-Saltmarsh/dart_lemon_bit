@@ -186,4 +186,11 @@ abstract class Collider extends Position {
 
     return team != thatTeam;
   }
+
+  void deactivate(){
+    active = false;
+    velocityX = 0;
+    velocityY = 0;
+    velocityZ = 0;
+  }
 }

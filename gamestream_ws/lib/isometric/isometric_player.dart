@@ -290,6 +290,12 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
      writeGameError(GameError.Invalid_Inventory_Index);
   }
 
+  @override
+  void deactivate() {
+    super.deactivate();
+    writePlayerActive();
+  }
+
   void writeAccuracy(){
     if (weaponAccuracy == accuracyPrevious) return;
 
