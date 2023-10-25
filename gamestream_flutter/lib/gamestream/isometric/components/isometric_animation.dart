@@ -25,16 +25,16 @@ class IsometricAnimation {
   void update() {
     frameRate1++;
 
-    if (frameRate2 % 2 == 0){
+    if (frameRate1 % 2 == 0){
       frameRate2++;
     }
     if (frameRate1 % 3 == 0){
       frameRate3++;
     }
-    if (frameRate4 % 4 == 0){
+    if (frameRate1 % 4 == 0){
       frameRate4++;
     }
-    if (frameRate5 % 5 == 0){
+    if (frameRate1 % 5 == 0){
       frameRate5++;
     }
 

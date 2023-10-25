@@ -17,6 +17,7 @@ class RendererGameObjects extends RenderGroup {
 
   @override
   void renderFunction() {
+    final gameObject = this.gameObject;
     final type = gameObject.type;
     final image = getImageForGameObjectType(type);
     final src = Atlas.getSrc(type, gameObject.subType);
@@ -35,15 +36,17 @@ class RendererGameObjects extends RenderGroup {
     }
 
     if (gameObject.type == ItemType.Object && gameObject.subType == ObjectType.Crystal){
+      final crystalSouth =  images.crystalSouth;
+      final crystalWest =  images.crystalWest;
       final gameObjectIndex = scene.getIndexPosition(gameObject);
       final colorSouth = scene.colorSouth(gameObjectIndex);
       final colorWest = scene.colorWest(gameObjectIndex);
-      const scale = 0.2;
+      const scale = 0.25;
       final frame = animation.frameRate5;
 
       render.sprite(
-          sprite: images.crystalSouth,
-          frame: images.crystalSouth.getFrame(row: 0, column: frame),
+          sprite: crystalSouth,
+          frame: crystalSouth.getFrame(row: 0, column: frame),
           color: colorSouth,
           scale: scale,
           dstX: gameObject.renderX,
@@ -51,8 +54,8 @@ class RendererGameObjects extends RenderGroup {
       );
 
       render.sprite(
-        sprite: images.crystalWest,
-          frame: images.crystalWest.getFrame(row: 0, column: frame),
+        sprite: crystalWest,
+          frame: crystalWest.getFrame(row: 0, column: frame),
           color: colorWest,
           scale: scale,
           dstX: gameObject.renderX,
