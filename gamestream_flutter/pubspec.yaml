@@ -116,6 +116,7 @@ flutter:
     - sprites/isometric/kid/west/shoes_left/leather_boots/
     - sprites/isometric/kid/west/shoes_right/iron_plates/
     - sprites/isometric/kid/west/shoes_right/leather_boots/  
+    - sprites/isometric/crystal/
     - sprites/front/kid/arms_left/regular/
     - sprites/front/kid/arms_right/regular/
     - sprites/front/kid/body_male/shirt_blue/

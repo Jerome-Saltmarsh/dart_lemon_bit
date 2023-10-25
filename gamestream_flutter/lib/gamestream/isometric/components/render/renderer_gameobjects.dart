@@ -1,14 +1,11 @@
 import 'dart:ui';
 
-import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas.dart';
-import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
+import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
-import 'package:gamestream_flutter/packages/common/src/isometric/item_type.dart';
-
-import '../functions/format_percentage.dart';
+import 'package:gamestream_flutter/packages/common.dart';
 
 class RendererGameObjects extends RenderGroup {
 
@@ -35,6 +32,34 @@ class RendererGameObjects extends RenderGroup {
 
     if (isCollectable){
       renderBouncingGameObjectShadow(gameObject);
+    }
+
+    if (gameObject.type == ItemType.Object && gameObject.subType == ObjectType.Crystal){
+      final gameObjectIndex = scene.getIndexPosition(gameObject);
+      final colorSouth = scene.colorSouth(gameObjectIndex);
+      final colorWest = scene.colorWest(gameObjectIndex);
+      const scale = 0.2;
+      final frame = animation.frameRate5;
+
+      render.sprite(
+          sprite: images.crystalSouth,
+          frame: images.crystalSouth.getFrame(row: 0, column: frame),
+          color: colorSouth,
+          scale: scale,
+          dstX: gameObject.renderX,
+          dstY: gameObject.renderY,
+      );
+
+      render.sprite(
+        sprite: images.crystalWest,
+          frame: images.crystalWest.getFrame(row: 0, column: frame),
+          color: colorWest,
+          scale: scale,
+          dstX: gameObject.renderX,
+          dstY: gameObject.renderY,
+      );
+
+      return;
     }
 
     engine.renderSprite(

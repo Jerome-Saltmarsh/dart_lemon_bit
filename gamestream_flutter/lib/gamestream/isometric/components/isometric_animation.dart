@@ -15,9 +15,29 @@ class IsometricAnimation {
   var frameTreePosition = 0;
   var rainPosition = 0.0;
   var frame = 0;
+  var frameRate1 = 0;
+  var frameRate2 = 0;
+  var frameRate3 = 0;
+  var frameRate4 = 0;
+  var frameRate5 = 0;
   var rendersPerFrame = 3;
 
   void update() {
+    frameRate1++;
+
+    if (frameRate2 % 2 == 0){
+      frameRate2++;
+    }
+    if (frameRate1 % 3 == 0){
+      frameRate3++;
+    }
+    if (frameRate4 % 4 == 0){
+      frameRate4++;
+    }
+    if (frameRate5 % 5 == 0){
+      frameRate5++;
+    }
+
     if (frame++ < rendersPerFrame)
       return;
 

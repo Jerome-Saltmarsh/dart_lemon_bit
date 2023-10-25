@@ -1878,7 +1878,7 @@ class IsometricScene with IsometricComponent implements Updatable {
         emitLight(
           index: getIndexPosition(gameObject),
           value: colors.purple_1.value,
-          intensity: 0.5,
+          intensity: 0.2,
           ambient: false,
         );
       }
