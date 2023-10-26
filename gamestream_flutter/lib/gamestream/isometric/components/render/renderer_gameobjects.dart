@@ -105,7 +105,9 @@ class RendererGameObjects extends RenderGroup {
 
       engine.setBlendModeModulate();
 
-      final color = (type == ObjectType.Crystal ? colors.purple_3 : colors.aqua_2).value;
+      final color = (subType == ObjectType.Crystal ? colors.purple_3 : colors.aqua_2).value;
+
+      // render.textPosition(gameObject, ObjectType.getName(subType), offsetY: -50);
 
       render.sprite(
           sprite: sprite,
@@ -147,7 +149,7 @@ class RendererGameObjects extends RenderGroup {
         anchorY: anchorY,
       );
 
-      if (type == ObjectType.Crystal){
+      if (subType == ObjectType.Crystal){
         render.sprite(
           sprite: sprite,
           frame: sprite.getFrame(row: 0, column: 0),
