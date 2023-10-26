@@ -23,6 +23,7 @@ class AmuletGameTutorial extends AmuletGame {
   static const keysFinish = 'finish';
   static const keysTriggerSpawnFiends02 = 'trigger_spawn_fiends_02';
   static const keysCrystal1 = 'crystal_1';
+  static const keysCrystal2 = 'crystal_2';
   static const flagsBowAddedToWeapons = 'add_bow_to_weapons';
   static const keysRoom4 = 'room_4';
 
@@ -36,8 +37,8 @@ class AmuletGameTutorial extends AmuletGame {
 
   late GameObject crystal1;
   late GameObject crystal1Glowing;
-  GameObject? crystal2;
-  GameObject? crystal2Glowing;
+  late GameObject crystal2;
+  late GameObject crystal2Glowing;
 
   final finish = Position(x: -100);
 
@@ -54,12 +55,14 @@ class AmuletGameTutorial extends AmuletGame {
     instantiateGuide();
     crystal1 = spawnCrystalAtKey(keysCrystal1, glowing: false);
     crystal1Glowing = spawnCrystalAtKey(keysCrystal1, glowing: true);
-    spawnGameObjectAtIndex(
-        type: ItemType.Object,
-        subType: ObjectType.Barrel,
-        index: getSceneKey(keysCrystal1),
-        team: 0,
-    )..fixed = true;
+    crystal2 = spawnCrystalAtKey(keysCrystal2, glowing: false);
+    crystal2Glowing = spawnCrystalAtKey(keysCrystal2, glowing: true);
+    // spawnGameObjectAtIndex(
+    //     type: ItemType.Object,
+    //     subType: ObjectType.Barrel,
+    //     index: getSceneKey(keysCrystal1),
+    //     team: 0,
+    // )..fixed = true;
 
     scene.movePositionToKey(finish, keysFinish);
   }
@@ -74,7 +77,7 @@ class AmuletGameTutorial extends AmuletGame {
        TutorialObjective.Equip_Bow => keysRoom4,
        TutorialObjective.Draw_Bow => keysRoom4,
        TutorialObjective.Open_Inventory => keysRoom4,
-       TutorialObjective.Shoot_Crystal => keysRoom4,
+       TutorialObjective.Strike_Crystal_2 => keysRoom4,
        TutorialObjective.Leave => keysRoom4,
        TutorialObjective.Finished => keysRoom4,
     };
@@ -84,8 +87,8 @@ class AmuletGameTutorial extends AmuletGame {
     removeFiends();
     gameObjects.removeWhere((element) =>
       !element.persistable &&
-      element != crystal1 &&
-      element != crystal1Glowing);
+      !const[ObjectType.Crystal, ObjectType.Crystal_Glowing].contains(element.subType)
+    );
 
     player.equipBody(AmuletItem.Armor_Leather_Basic, force: true);
     player.equipLegs(AmuletItem.Pants_Travellers, force: true);
@@ -93,6 +96,9 @@ class AmuletGameTutorial extends AmuletGame {
 
     deactivate(crystal1);
     deactivate(crystal1Glowing);
+
+    deactivate(crystal2);
+    deactivate(crystal2Glowing);
 
     for (final weapon in player.weapons){
       weapon.amuletItem = null;
@@ -173,11 +179,10 @@ class AmuletGameTutorial extends AmuletGame {
       player.setWeapon(index: 2, amuletItem: AmuletItem.Weapon_Old_Bow);
     }
 
-    if (!objectiveCompleted(player, TutorialObjective.Shoot_Crystal)){
-      crystal2 = spawnCrystalAtKey('bow_target');
-    }
-
-    if (!objectiveCompleted(player, TutorialObjective.Shoot_Crystal)){
+    if (objectiveCompleted(player, TutorialObjective.Strike_Crystal_2)) {
+      activate(crystal2Glowing);
+    } else {
+      activate(crystal2);
       setNode(
         nodeIndex: getSceneKey(keysExit),
         nodeType: NodeType.Wood,
@@ -332,7 +337,7 @@ class AmuletGameTutorial extends AmuletGame {
       case TutorialObjective.Draw_Bow:
         onObjectiveSetDrawBow(player);
         break;
-      case TutorialObjective.Shoot_Crystal:
+      case TutorialObjective.Strike_Crystal_2:
         break;
       case TutorialObjective.Leave:
         break;
@@ -722,7 +727,7 @@ class AmuletGameTutorial extends AmuletGame {
 
     if (
       target == crystal2 &&
-      getObjective(srcCharacter) == TutorialObjective.Shoot_Crystal
+      getObjective(srcCharacter) == TutorialObjective.Strike_Crystal_2
     ){
       onStruckCrystal2(player);
       return;
@@ -823,6 +828,8 @@ class AmuletGameTutorial extends AmuletGame {
   void onStruckCrystal2(AmuletPlayer player) =>
       runScript(player)
         .puzzleSolved()
+        .deactivate(crystal2)
+        .activate(crystal2Glowing)
         .controlsDisabled()
         .wait(seconds: 1)
         .cameraSetTargetSceneKey(keysExit)
