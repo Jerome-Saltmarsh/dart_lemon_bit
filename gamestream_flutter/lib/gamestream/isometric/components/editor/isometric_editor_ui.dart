@@ -28,6 +28,7 @@ extension IsometricEditorUI on IsometricEditor {
     ObjectType.Barrel,
     ObjectType.Barrel_Explosive,
     ObjectType.Crate_Wooden,
+    ObjectType.Sphere,
   ];
 
   static const editorGridTypesColumn1 = [
@@ -452,7 +453,8 @@ extension IsometricEditorUI on IsometricEditor {
           padding: const EdgeInsets.all(4),
           color: style.containerColor,
           child: FittedBox(
-            child: amulet.ui.buildImageGameObject(objectType),
+            // child: amulet.ui.buildImageGameObject(objectType),
+            child: buildText(ObjectType.getName(objectType)),
           ),
         ),
       );

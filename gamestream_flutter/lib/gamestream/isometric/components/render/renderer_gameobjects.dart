@@ -19,23 +19,80 @@ class RendererGameObjects extends RenderGroup {
   void renderFunction() {
     final gameObject = this.gameObject;
     final type = gameObject.type;
-    final image = getImageForGameObjectType(type);
-    final src = Atlas.getSrc(type, gameObject.subType);
+    final subType = gameObject.subType;
 
-    final isCollectable = const [
-      ItemType.Weapon,
-      ItemType.Helm,
-      ItemType.Body,
-      ItemType.Legs,
-      ItemType.Consumable,
-      ItemType.Spell,
-    ].contains(type);
+    if (type == ItemType.Object && subType == ObjectType.Sphere){
 
-    if (isCollectable){
-      renderBouncingGameObjectShadow(gameObject);
+      final gameObjectIndex = scene.getIndexPosition(gameObject);
+      final dstX = gameObject.renderX;
+      final dstY = gameObject.renderY;
+
+      engine.renderSprite(
+          image: images.sphereTop,
+          srcX: 0,
+          srcY: 0,
+          srcWidth: 256,
+          srcHeight: 256,
+          dstX: dstX,
+          dstY: dstY,
+          color: scene.colorAbove(gameObjectIndex)
+      );
+
+      engine.renderSprite(
+          image: images.sphereNorth,
+          srcX: 0,
+          srcY: 0,
+          srcWidth: 256,
+          srcHeight: 256,
+          dstX: dstX,
+          dstY: dstY,
+          color: scene.colorNorth(gameObjectIndex)
+      );
+
+      engine.renderSprite(
+          image: images.sphereEast,
+          srcX: 0,
+          srcY: 0,
+          srcWidth: 256,
+          srcHeight: 256,
+          dstX: dstX,
+          dstY: dstY,
+          color: scene.colorEast(gameObjectIndex)
+      );
+
+      engine.renderSprite(
+          image: images.sphereSouth,
+          srcX: 0,
+          srcY: 0,
+          srcWidth: 256,
+          srcHeight: 256,
+          dstX: dstX,
+          dstY: dstY,
+          color: scene.colorSouth(gameObjectIndex)
+      );
+
+      engine.renderSprite(
+          image: images.sphereWest,
+          srcX: 0,
+          srcY: 0,
+          srcWidth: 256,
+          srcHeight: 256,
+          dstX: dstX,
+          dstY: dstY,
+          color: scene.colorWest(gameObjectIndex)
+      );
+
+      return;
     }
 
-    if (gameObject.type == ItemType.Object && gameObject.subType == ObjectType.Crystal){
+
+    if (
+      type == ItemType.Object &&
+      const [
+        ObjectType.Crystal,
+        ObjectType.Crystal_Glowing,
+      ].contains(subType)
+    ){
       final crystalSouth =  images.crystalSouth;
       final crystalWest =  images.crystalWest;
       final gameObjectIndex = scene.getIndexPosition(gameObject);
@@ -43,10 +100,6 @@ class RendererGameObjects extends RenderGroup {
       final colorWest = scene.colorWest(gameObjectIndex);
       const scale = 0.25;
       final frame = animation.frameRate5;
-
-      final frameSouth = crystalSouth.getFrame(row: 0, column: frame);
-      final frameWest = crystalWest.getFrame(row: 0, column: frame);
-      // render.textPosition(gameObject, 'f: $frame s: $frameSouth, w: $frameWest', offsetY: -50);
 
       render.sprite(
           sprite: crystalSouth,
@@ -68,6 +121,22 @@ class RendererGameObjects extends RenderGroup {
 
       return;
     }
+
+    final isCollectable = const [
+      ItemType.Weapon,
+      ItemType.Helm,
+      ItemType.Body,
+      ItemType.Legs,
+      ItemType.Consumable,
+      ItemType.Spell,
+    ].contains(type);
+
+    if (isCollectable){
+      renderBouncingGameObjectShadow(gameObject);
+    }
+
+    final image = getImageForGameObjectType(type);
+    final src = Atlas.getSrc(type, subType);
 
     engine.renderSprite(
       image: image,

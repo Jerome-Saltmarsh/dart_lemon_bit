@@ -52,6 +52,7 @@ flutter:
         - asset: fonts/REBUFFED.TTF
   assets:
     - images/
+    - images/sphere/
     - images/sprites/
     - images/website/
     - images/characters/
