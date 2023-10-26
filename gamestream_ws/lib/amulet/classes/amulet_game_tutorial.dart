@@ -288,6 +288,14 @@ class AmuletGameTutorial extends AmuletGame {
        return;
      }
 
+     switch (current) {
+       case TutorialObjective.Draw_Bow:
+         deactivate(guide);
+         break;
+       default:
+         break;
+     }
+
      final index = objectives.indexOf(current);
      final next = objectives[index + 1];
      setObjective(player, next);
@@ -592,6 +600,7 @@ class AmuletGameTutorial extends AmuletGame {
 
   void onFiends02Vanquished(AmuletPlayer player) =>
       runScript(player)
+          .puzzleSolved()
           .controlsDisabled()
           .wait(seconds: 1)
           .movePositionToSceneKey(guide, keysFiend02)
@@ -715,7 +724,7 @@ class AmuletGameTutorial extends AmuletGame {
       target == crystal2 &&
       getObjective(srcCharacter) == TutorialObjective.Shoot_Crystal
     ){
-      startNextTutorialObjective(player);
+      onStruckCrystal2(player);
       return;
     }
   }
@@ -734,15 +743,6 @@ class AmuletGameTutorial extends AmuletGame {
         .wait(seconds: 1)
         .add(() => startNextTutorialObjective(player))
         .end();
-
-  void startObjectiveFinish(AmuletPlayer srcCharacter) => runScript(srcCharacter)
-      .controlsDisabled()
-      .wait(seconds: 1)
-      .cameraSetTargetSceneKey(keysExit)
-      .wait(seconds: 1)
-      .setNodeEmptyAtSceneKey(keysExit)
-      .wait(seconds: 1)
-      .end();
 
   @override
   void customOnPlayerDisconnected(IsometricPlayer player) {
@@ -819,6 +819,17 @@ class AmuletGameTutorial extends AmuletGame {
         ..radius = 8
         ..healthMax = 0
         ..health = 0;
+
+  void onStruckCrystal2(AmuletPlayer player) =>
+      runScript(player)
+        .puzzleSolved()
+        .controlsDisabled()
+        .wait(seconds: 1)
+        .cameraSetTargetSceneKey(keysExit)
+        .wait(seconds: 1)
+        .setNodeEmptyAtSceneKey(keysExit)
+        .wait(seconds: 1)
+        .end();
 
 }
 
