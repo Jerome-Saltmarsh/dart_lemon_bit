@@ -813,10 +813,10 @@ class AmuletGameTutorial extends AmuletGame {
         subType: glowing ? ObjectType.Crystal_Glowing : ObjectType.Crystal,
         team: TeamType.Alone,
       )
-        ..hitable = true
+        ..hitable = !glowing
         ..fixed = true
         ..destroyable = false
-        ..radius = 12
+        ..radius = 8
         ..healthMax = 0
         ..health = 0;
 
