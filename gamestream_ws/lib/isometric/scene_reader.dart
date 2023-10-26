@@ -114,12 +114,12 @@ class SceneReader extends ByteReader {
             id: id++,
             team: team,
           )
-            ..collidable = collidable
+            ..enabledCollidable = collidable
             ..collectable = collectable
-            ..fixed = fixed
-            ..gravity = gravity
-            ..hitable = hitable
-            ..physical = physical
+            ..enabledFixed = fixed
+            ..enabledGravity = gravity
+            ..enabledHit = hitable
+            ..enabledPhysical = physical
             ..interactable = interactable
             ..destroyable = destroyable
             ..persistable = true

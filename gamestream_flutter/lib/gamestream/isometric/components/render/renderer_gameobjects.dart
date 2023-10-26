@@ -89,8 +89,8 @@ class RendererGameObjects extends RenderGroup {
     if (
       type == ItemType.Object &&
       const [
-        ObjectType.Crystal,
-        ObjectType.Crystal_Glowing,
+        ObjectType.Crystal_Glowing_False,
+        ObjectType.Crystal_Glowing_True,
       ].contains(subType)
     ){
       final scene = this.scene;
@@ -105,7 +105,7 @@ class RendererGameObjects extends RenderGroup {
 
       engine.setBlendModeModulate();
 
-      final color = (subType == ObjectType.Crystal ? colors.purple_3 : colors.aqua_2).value;
+      final color = (subType == ObjectType.Crystal_Glowing_False ? colors.purple_3 : colors.aqua_2).value;
 
       // render.textPosition(gameObject, ObjectType.getName(subType), offsetY: -50);
 
@@ -149,7 +149,7 @@ class RendererGameObjects extends RenderGroup {
         anchorY: anchorY,
       );
 
-      if (subType == ObjectType.Crystal){
+      if (subType == ObjectType.Crystal_Glowing_False){
         render.sprite(
           sprite: sprite,
           frame: sprite.getFrame(row: 0, column: 0),

@@ -29,9 +29,9 @@ class GameObject extends Collider {
      switch (type){
        case ItemType.Object:
          switch (subType){
-           case ObjectType.Crystal:
+           case ObjectType.Crystal_Glowing_False:
              return MaterialType.Glass;
-           case ObjectType.Crystal_Glowing:
+           case ObjectType.Crystal_Glowing_True:
              return MaterialType.Glass;
          }
      }
@@ -49,9 +49,9 @@ class GameObject extends Collider {
     super.radius = 15.0,
     this.health = 0,
   }) : super(materialType: getMaterialType(type, subType)) {
-    startX = x;
-    startY = y;
-    startZ = z;
+    startPositionX = x;
+    startPositionY = y;
+    startPositionZ = z;
     healthMax = health;
     synchronizePrevious();
   }
@@ -98,15 +98,21 @@ class GameObject extends Collider {
         ..health = health
         ..healthMax = healthMax
         ..deactivationTimer = deactivationTimer
-        ..startX = startX
-        ..startY = startY
-        ..startZ = startZ;
+        ..startPositionX = startPositionX
+        ..startPositionY = startPositionY
+        ..startPositionZ = startPositionZ;
 
   @override
   void deactivate() {
     super.deactivate();
     dirty = true;
     available = false;
+  }
+
+  @override
+  bool onSameTeam(a) {
+    // TODO: implement onSameTeamAs
+    throw UnimplementedError();
   }
 }
 

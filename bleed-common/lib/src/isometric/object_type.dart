@@ -11,7 +11,7 @@ class ObjectType {
   static const Barrel_Flaming = 9;
   static const Credits = 10;
   static const Car = 11;
-  static const Crystal = 12;
+
   static const Candle = 13;
   static const Barrel = 14;
   static const Barrel_Purple = 15;
@@ -35,7 +35,8 @@ class ObjectType {
   static const Flag_Spawn_Red = 38;
   static const Flag_Spawn_Blue = 39;
   static const Grenade = 40;
-  static const Crystal_Glowing = 41;
+  static const Crystal_Glowing_False = 12;
+  static const Crystal_Glowing_True = 41;
   static const Sphere = 42;
 
   static bool isMaterialMetal(int value) => const [
@@ -59,7 +60,7 @@ class ObjectType {
       Barrel_Flaming: 'Barrel_Flaming',
       Credits: 'Credits',
       Car: 'Car',
-      Crystal: 'Crystal',
+      Crystal_Glowing_False: 'Crystal',
       Candle: 'Candle',
       Barrel: 'Barrel',
       Barrel_Purple: 'Barrel_Purple',
@@ -83,7 +84,7 @@ class ObjectType {
       Flag_Spawn_Red: 'Flag Spawn Red',
       Flag_Spawn_Blue: 'Flag Spawn Blue',
       Grenade: 'Grenade',
-      Crystal_Glowing: 'Crystal Glowing',
+      Crystal_Glowing_True: 'Crystal Glowing',
       Sphere: 'Sphere',
     }[value] ?? 'object-type-unknown-$value';
   }
@@ -100,7 +101,7 @@ class ObjectType {
     Barrel_Flaming,
     Credits,
     Car,
-    Crystal,
+    Crystal_Glowing_False,
     Candle,
     Barrel,
     Barrel_Purple,
@@ -124,7 +125,7 @@ class ObjectType {
     Flag_Spawn_Red,
     Flag_Spawn_Blue,
     Grenade,
-    Crystal_Glowing,
+    Crystal_Glowing_True,
     Sphere
   ];
 

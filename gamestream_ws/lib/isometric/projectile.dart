@@ -1,6 +1,7 @@
 
 import 'package:gamestream_ws/packages/common.dart';
 
+import 'character.dart';
 import 'physics.dart';
 import 'collider.dart';
 import 'position.dart';
@@ -11,6 +12,7 @@ class Projectile extends Collider {
   var friendlyFire = false;
   var damage = 0;
   Position? target = null;
+  Character? parent;
 
   Projectile({
     required super.team,
@@ -22,7 +24,7 @@ class Projectile extends Collider {
 
   bool get overRange => distanceTravelled > range;
 
-  double get distanceTravelled => getDistanceXY(startX, startY);
+  double get distanceTravelled => getDistanceXY(startPositionX, startPositionY);
 
   void reduceDistanceZFrom(Position position){
     z += (position.z - z) * Physics.Projectile_Z_Velocity;
@@ -30,5 +32,10 @@ class Projectile extends Collider {
 
   @override
   String get name => ProjectileType.getName(type);
+
+  @override
+  bool onSameTeam(dynamic target) =>
+      parent?.onSameTeam(target) ?? false;
+
 }
 

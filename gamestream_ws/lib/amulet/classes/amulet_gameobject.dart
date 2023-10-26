@@ -20,15 +20,21 @@ class AmuletGameObject extends GameObject {
       team: TeamType.Neutral,
   ) {
     this.deactivationTimer = deactivationTimer;
-    fixed = false;
-    gravity = true;
-    collidable = true;
+    enabledFixed = false;
+    enabledGravity = true;
+    enabledCollidable = true;
     collectable = item.collectable;
     persistable = false;
-    hitable = false;
-    physical = false;
+    enabledHit = false;
+    enabledPhysical = false;
   }
 
   @override
   String get name => item.name;
+
+  @override
+  bool onSameTeam(a) {
+    // TODO: implement onSameTeamAs
+    throw UnimplementedError();
+  }
 }

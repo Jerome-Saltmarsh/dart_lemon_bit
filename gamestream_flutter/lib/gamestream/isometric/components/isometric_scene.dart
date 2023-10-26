@@ -1859,7 +1859,7 @@ class IsometricScene with IsometricComponent implements Updatable {
 
       if (
         gameObject.type == ItemType.Object &&
-        gameObject.subType == ObjectType.Crystal
+        gameObject.subType == ObjectType.Crystal_Glowing_False
       ){
         emitLight(
           index: getIndexPosition(gameObject),
@@ -1871,7 +1871,7 @@ class IsometricScene with IsometricComponent implements Updatable {
 
       if (
         gameObject.type == ItemType.Object &&
-        gameObject.subType == ObjectType.Crystal_Glowing
+        gameObject.subType == ObjectType.Crystal_Glowing_True
       ){
         emitLight(
           index: getIndexPosition(gameObject),

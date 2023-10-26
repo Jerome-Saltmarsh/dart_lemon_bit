@@ -1,9 +1,12 @@
 
+import 'dart:typed_data';
+
 import 'package:gamestream_flutter/gamestream/isometric/classes/particle_butterfly.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/particle_glow.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_scene.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_nodes.dart';
 import 'package:gamestream_flutter/packages/common.dart';
+import 'package:gamestream_flutter/packages/lemon_bits.dart';
 import 'dart:math';
 import 'package:gamestream_flutter/packages/lemon_components.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
@@ -14,6 +17,32 @@ import '../../../isometric/classes/particle.dart';
 import 'isometric_component.dart';
 
 class IsometricParticles with IsometricComponent implements Updatable {
+
+  var windNodes = Uint16List(0);
+
+  void updateWindNodes(){
+    if (this.windNodes.length != scene.nodeTypes.length){
+      this.windNodes = Uint16List(scene.nodeTypes.length);
+    }
+
+    final windNodes = this.windNodes;
+    final windNodesLength = windNodes.length;
+
+    if (windNodesLength == 0) {
+      return;
+    }
+
+    for (var i = 0; i < windNodesLength; i++){
+      final iWindNode = windNodes[i];
+      final iWindNodeStrength =  readByte1(iWindNode);
+      final iWindNodeDirection = readByte2(iWindNode);
+
+
+
+    }
+
+
+  }
 
   static const windStrengthMultiplier = 0.003;
 
@@ -1092,3 +1121,15 @@ class IsometricParticles with IsometricComponent implements Updatable {
     );
   }
 }
+
+class WindNode {
+  static int getDirection(int value){
+    return value & 0xFF;
+  }
+
+  static int getValue(int value){
+    return value & 0xFF;
+  }
+
+}
+

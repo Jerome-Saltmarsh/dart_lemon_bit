@@ -35,10 +35,10 @@ class AmuletGameTutorial extends AmuletGame {
   Character? fiend01;
   final fiends02 = <Character>[];
 
-  late GameObject crystal1;
-  late GameObject crystal1Glowing;
-  late GameObject crystal2;
-  late GameObject crystal2Glowing;
+  late GameObject crystal1GlowingFalse;
+  late GameObject crystal1GlowingTrue;
+  late GameObject crystal2GlowingFalse;
+  late GameObject crystal2GlowingTrue;
 
   final finish = Position(x: -100);
 
@@ -53,16 +53,12 @@ class AmuletGameTutorial extends AmuletGame {
       name: 'tutorial'
   ){
     instantiateGuide();
-    crystal1 = spawnCrystalAtKey(keysCrystal1, glowing: false);
-    crystal1Glowing = spawnCrystalAtKey(keysCrystal1, glowing: true);
-    crystal2 = spawnCrystalAtKey(keysCrystal2, glowing: false);
-    crystal2Glowing = spawnCrystalAtKey(keysCrystal2, glowing: true);
-    // spawnGameObjectAtIndex(
-    //     type: ItemType.Object,
-    //     subType: ObjectType.Barrel,
-    //     index: getSceneKey(keysCrystal1),
-    //     team: 0,
-    // )..fixed = true;
+
+    crystal1GlowingFalse = spawnAtKeyCrystalGlowingFalse(keysCrystal1);
+    crystal1GlowingTrue = spawnAtKeyCrystalGlowingTrue(keysCrystal1);
+
+    crystal2GlowingFalse = spawnAtKeyCrystalGlowingFalse(keysCrystal2);
+    crystal2GlowingTrue = spawnAtKeyCrystalGlowingTrue(keysCrystal2);
 
     scene.movePositionToKey(finish, keysFinish);
   }
@@ -87,18 +83,18 @@ class AmuletGameTutorial extends AmuletGame {
     removeFiends();
     gameObjects.removeWhere((element) =>
       !element.persistable &&
-      !const[ObjectType.Crystal, ObjectType.Crystal_Glowing].contains(element.subType)
+      !const[ObjectType.Crystal_Glowing_False, ObjectType.Crystal_Glowing_True].contains(element.subType)
     );
 
     player.equipBody(AmuletItem.Armor_Leather_Basic, force: true);
     player.equipLegs(AmuletItem.Pants_Travellers, force: true);
     player.equippedWeaponIndex = -1;
 
-    deactivate(crystal1);
-    deactivate(crystal1Glowing);
+    deactivate(crystal1GlowingFalse);
+    deactivate(crystal1GlowingTrue);
 
-    deactivate(crystal2);
-    deactivate(crystal2Glowing);
+    deactivate(crystal2GlowingFalse);
+    deactivate(crystal2GlowingTrue);
 
     for (final weapon in player.weapons){
       weapon.amuletItem = null;
@@ -129,9 +125,9 @@ class AmuletGameTutorial extends AmuletGame {
 
     if (objectiveCompleted(player, TutorialObjective.Strike_Crystal_1)){
       setNodeEmpty(getSceneKey(keysDoor01));
-      activate(crystal1Glowing);
+      activate(crystal1GlowingTrue);
     } else {
-      activate(crystal1);
+      activate(crystal1GlowingFalse);
       setNode(
         nodeIndex: getSceneKey(keysDoor01),
         nodeType: NodeType.Wood,
@@ -180,9 +176,9 @@ class AmuletGameTutorial extends AmuletGame {
     }
 
     if (objectiveCompleted(player, TutorialObjective.Strike_Crystal_2)) {
-      activate(crystal2Glowing);
+      activate(crystal2GlowingTrue);
     } else {
-      activate(crystal2);
+      activate(crystal2GlowingFalse);
       setNode(
         nodeIndex: getSceneKey(keysExit),
         nodeType: NodeType.Wood,
@@ -718,7 +714,7 @@ class AmuletGameTutorial extends AmuletGame {
     final player = srcCharacter;
 
     if (
-      target == crystal1 &&
+      target == crystal1GlowingFalse &&
       getObjective(srcCharacter) == TutorialObjective.Strike_Crystal_1
     ){
       onStruckCrystal1(player);
@@ -726,7 +722,7 @@ class AmuletGameTutorial extends AmuletGame {
     }
 
     if (
-      target == crystal2 &&
+      target == crystal2GlowingFalse &&
       getObjective(srcCharacter) == TutorialObjective.Strike_Crystal_2
     ){
       onStruckCrystal2(player);
@@ -734,20 +730,26 @@ class AmuletGameTutorial extends AmuletGame {
     }
   }
 
-  void onStruckCrystal1(AmuletPlayer player) =>
-      runScript(player)
-        .deactivate(crystal1)
-        .activate(crystal1Glowing)
+  /// todo
+  /// zoom the camera in
+  /// then return the camera zoom to the previous value
+  void onStruckCrystal1(AmuletPlayer player) {
+    // var zoomSaved = 0.0;
+    runScript(player)
+        .zoom(2)
+        .deactivate(crystal1GlowingFalse)
+        .activate(crystal1GlowingTrue)
         .deactivate(guide)
         .puzzleSolved()
         .controlsDisabled()
-        .wait(seconds: 1)
+        .wait(seconds: 3)
         .cameraSetTargetSceneKey(keysDoor01)
         .wait(seconds: 2)
         .setNodeEmptyAtSceneKey(keysDoor01)
         .wait(seconds: 1)
         .add(() => startNextTutorialObjective(player))
         .end();
+  }
 
   @override
   void customOnPlayerDisconnected(IsometricPlayer player) {
@@ -812,24 +814,52 @@ class AmuletGameTutorial extends AmuletGame {
         .deactivate(guide)
         .end();
 
-  GameObject spawnCrystalAtKey(String sceneKey, {bool glowing = false}) => spawnGameObjectAtIndex(
-        index: getSceneKey(sceneKey),
-        type: ItemType.Object,
-        subType: glowing ? ObjectType.Crystal_Glowing : ObjectType.Crystal,
+  GameObject spawnAtKeyCrystalGlowing(String key, bool value) =>
+      value
+          ? spawnAtKeyCrystalGlowingTrue(key)
+          : spawnAtKeyCrystalGlowingFalse(key)
+      ;
+
+  GameObject spawnAtKeyCrystalGlowingTrue(String key) => spawnGameObjectAtKey(
+        sceneKey: key,
+        subType: ObjectType.Crystal_Glowing_True,
         team: TeamType.Alone,
       )
-        ..hitable = !glowing
-        ..fixed = true
+        ..enabledHit = false
+        ..enabledFixed = true
         ..destroyable = false
-        ..radius = 8
+        ..physicsRadius = 8
         ..healthMax = 0
         ..health = 0;
+
+  GameObject spawnAtKeyCrystalGlowingFalse(String sceneKey) => spawnGameObjectAtKey(
+        sceneKey: sceneKey,
+        subType: ObjectType.Crystal_Glowing_False,
+        team: TeamType.Alone,
+      )
+      ..enabledHit = true
+      ..enabledFixed = true
+      ..destroyable = false
+      ..physicsRadius = 8
+      ..healthMax = 0
+      ..health = 0;
+
+  GameObject spawnGameObjectAtKey({
+    required String sceneKey,
+    required int subType,
+    required int team,
+  }) => spawnGameObjectAtIndex(
+        index: getSceneKey(sceneKey),
+        type: ItemType.Object,
+        subType: subType,
+        team: team,
+      );
 
   void onStruckCrystal2(AmuletPlayer player) =>
       runScript(player)
         .puzzleSolved()
-        .deactivate(crystal2)
-        .activate(crystal2Glowing)
+        .deactivate(crystal2GlowingFalse)
+        .activate(crystal2GlowingTrue)
         .controlsDisabled()
         .wait(seconds: 1)
         .cameraSetTargetSceneKey(keysExit)

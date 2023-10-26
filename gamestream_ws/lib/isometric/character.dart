@@ -122,10 +122,10 @@ class Character extends Collider {
     if (name != null){
       this.name = name;
     }
-    fixed = false;
-    physical = true;
-    hitable = true;
-    radius = CharacterType.getRadius(characterType);
+    enabledFixed = false;
+    enabledPhysical = true;
+    enabledHit = true;
+    physicsRadius = CharacterType.getRadius(characterType);
     setDestinationToCurrentPosition();
 
     if (doesWander) {
@@ -258,13 +258,13 @@ class Character extends Collider {
     if (characterState == CharacterState.Spawning)
       return;
 
-    x = startX;
-    y = startY;
-    z = startZ;
+    x = startPositionX;
+    y = startPositionY;
+    z = startPositionZ;
     active = true;
     health = maxHealth;
-    physical = true;
-    hitable = true;
+    enabledPhysical = true;
+    enabledHit = true;
     characterState = CharacterState.Spawning;
     frame = 0;
     actionDuration = duration;
@@ -294,7 +294,7 @@ class Character extends Collider {
     if ((target.z - z).abs() > Character_Height)
       return false;
     if (target is Collider) {
-      return withinRadiusPosition(target, Interact_Radius + target.radius);
+      return withinRadiusPosition(target, Interact_Radius + target.physicsRadius);
     }
     return withinRadiusPosition(target, Interact_Radius);
   }
@@ -312,7 +312,7 @@ class Character extends Collider {
     if ((target.z - z).abs() > Character_Height)
       return false;
     if (target is Collider) {
-      return withinRadiusPosition(target, weaponRange + target.radius);
+      return withinRadiusPosition(target, weaponRange + target.physicsRadius);
     }
     return withinRadiusPosition(target, weaponRange);
   }
@@ -490,4 +490,38 @@ class Character extends Collider {
     0,
     0,
   );
+
+  @override
+  bool onSameTeam(dynamic that, {bool neutralMeansTrue = true}) {
+
+      if (identical(this, that)) {
+        return true;
+      }
+
+      if (that is! Collider) {
+        return false;
+      }
+
+      final thisTeam = this.team;
+
+      if (thisTeam == TeamType.Alone) {
+        return false;
+      }
+
+      if (thisTeam == TeamType.Neutral) {
+        return neutralMeansTrue;
+      }
+
+      final thatTeam = that.team;
+
+      if (thatTeam == TeamType.Alone) {
+        return false;
+      }
+
+      if (thisTeam == TeamType.Neutral) {
+        return neutralMeansTrue;
+      }
+
+      return thisTeam == thatTeam;
+  }
 }

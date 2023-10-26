@@ -532,14 +532,14 @@ class Connection extends ByteReader {
 
       case IsometricEditorGameObjectRequest.Toggle_Strikable:
         if (selectedGameObject == null) return;
-        selectedGameObject.hitable = !selectedGameObject.hitable;
-        selectedGameObject.velocityZ = 0;
+        selectedGameObject.enabledHit = !selectedGameObject.enabledHit;
+        selectedGameObject.physicsVelocityZ = 0;
         player.writeEditorGameObjectSelected();
         break;
 
       case IsometricEditorGameObjectRequest.Toggle_Fixed:
         if (selectedGameObject == null) return;
-        selectedGameObject.fixed = !selectedGameObject.fixed;
+        selectedGameObject.enabledFixed = !selectedGameObject.enabledFixed;
         player.writeEditorGameObjectSelected();
         break;
 
@@ -551,7 +551,7 @@ class Connection extends ByteReader {
 
       case IsometricEditorGameObjectRequest.Toggle_Gravity:
         if (selectedGameObject == null) return;
-        selectedGameObject.gravity = !selectedGameObject.gravity;
+        selectedGameObject.enabledGravity = !selectedGameObject.enabledGravity;
         player.writeEditorGameObjectSelected();
         break;
 
@@ -570,7 +570,7 @@ class Connection extends ByteReader {
 
       case IsometricEditorGameObjectRequest.Toggle_Physical:
         if (selectedGameObject == null) return;
-        selectedGameObject.physical = !selectedGameObject.physical;
+        selectedGameObject.enabledPhysical = !selectedGameObject.enabledPhysical;
         player.writeEditorGameObjectSelected();
         break;
 

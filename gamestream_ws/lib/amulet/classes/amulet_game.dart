@@ -459,7 +459,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       frameSpawned: frame,
       deactivationTimer: deactivationTimer ?? gameObjectDeactivationTimer,
     )
-      ..velocityZ = 10
+      ..physicsVelocityZ = 10
       ..setVelocity(randomAngle(), 1.0);
 
     add(amuletGameObject);
