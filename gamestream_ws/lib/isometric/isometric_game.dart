@@ -365,6 +365,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       if (!gameObject.active) continue;
       if (!gameObject.collectable &&
           !gameObject.interactable &&
+          !gameObject.hitable &&
           !gameObject.physical &&
            gameObject.health <= 0
       ) continue;
