@@ -95,75 +95,101 @@ class RendererGameObjects extends RenderGroup {
     ){
       final scene = this.scene;
       final gameObjectIndex = scene.getIndexPosition(gameObject);
-      const scale = 0.5;
+      const scale = 0.35;
 
       final dstX = gameObject.renderX;
       final dstY = gameObject.renderY;
+      const anchorY = 0.66;
 
       final sprite = images.crystal;
+
+      engine.setBlendModeModulate();
+
+      final color = (type == ObjectType.Crystal ? colors.purple_3 : colors.aqua_2).value;
+
       render.sprite(
+          sprite: sprite,
+          frame: sprite.getFrame(row: 0, column: 0),
+          color: color,
+          scale: scale,
+          dstX: dstX,
+          dstY: dstY,
+          anchorY: anchorY,
+      );
+
+      render.sprite(
+          sprite: sprite,
+          frame: sprite.getFrame(row: 0, column: 1),
+          color: color,
+          scale: scale,
+          dstX: dstX,
+          dstY: dstY,
+          anchorY: anchorY,
+      );
+
+      render.sprite(
+          sprite: sprite,
+          frame: sprite.getFrame(row: 0, column: 2),
+          color: color,
+          scale: scale,
+          dstX: dstX,
+          dstY: dstY,
+        anchorY: anchorY,
+      );
+
+      render.sprite(
+          sprite: sprite,
+          frame: sprite.getFrame(row: 0, column: 3),
+          color: color,
+          scale: scale,
+          dstX: dstX,
+          dstY: dstY,
+        anchorY: anchorY,
+      );
+
+      if (type == ObjectType.Crystal){
+        render.sprite(
           sprite: sprite,
           frame: sprite.getFrame(row: 0, column: 0),
           color: scene.colorEast(gameObjectIndex),
           scale: scale,
           dstX: dstX,
           dstY: dstY,
-      );
+          anchorY: anchorY,
+        );
 
-      render.sprite(
+        render.sprite(
           sprite: sprite,
           frame: sprite.getFrame(row: 0, column: 1),
           color: scene.colorNorth(gameObjectIndex),
           scale: scale,
           dstX: dstX,
           dstY: dstY,
-      );
+          anchorY: anchorY,
+        );
 
-      render.sprite(
+        render.sprite(
           sprite: sprite,
           frame: sprite.getFrame(row: 0, column: 2),
           color: scene.colorSouth(gameObjectIndex),
           scale: scale,
           dstX: dstX,
           dstY: dstY,
-      );
+          anchorY: anchorY,
+        );
 
-      render.sprite(
+        render.sprite(
           sprite: sprite,
           frame: sprite.getFrame(row: 0, column: 3),
           color: scene.colorWest(gameObjectIndex),
           scale: scale,
           dstX: dstX,
           dstY: dstY,
-      );
+          anchorY: anchorY,
+        );
+      }
 
-      // render.sprite(
-      //     sprite: crystalSouth,
-      //     frame: crystalSouth.getFrame(row: 0, column: frame),
-      //     color: colorSouth,
-      //     scale: scale,
-      //     dstX: gameObject.renderX,
-      //     dstY: gameObject.renderY,
-      // );
-      //
-      // render.sprite(
-      //     sprite: crystalSouth,
-      //     frame: crystalSouth.getFrame(row: 0, column: frame),
-      //     color: colorSouth,
-      //     scale: scale,
-      //     dstX: gameObject.renderX,
-      //     dstY: gameObject.renderY,
-      // );
-      //
-      // render.sprite(
-      //   sprite: crystalWest,
-      //     frame: crystalWest.getFrame(row: 0, column: frame),
-      //     color: colorWest,
-      //     scale: scale,
-      //     dstX: gameObject.renderX,
-      //     dstY: gameObject.renderY,
-      // );
-
+      engine.setBlendModeDstATop();
       return;
     }
 
