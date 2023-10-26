@@ -93,31 +93,76 @@ class RendererGameObjects extends RenderGroup {
         ObjectType.Crystal_Glowing,
       ].contains(subType)
     ){
-      final crystalSouth =  images.crystalSouth;
-      final crystalWest =  images.crystalWest;
+      final scene = this.scene;
       final gameObjectIndex = scene.getIndexPosition(gameObject);
-      final colorSouth = scene.colorSouth(gameObjectIndex);
-      final colorWest = scene.colorWest(gameObjectIndex);
-      const scale = 0.25;
-      final frame = animation.frameRate5;
+      const scale = 0.5;
 
+      final dstX = gameObject.renderX;
+      final dstY = gameObject.renderY;
+
+      final sprite = images.crystal;
       render.sprite(
-          sprite: crystalSouth,
-          frame: crystalSouth.getFrame(row: 0, column: frame),
-          color: colorSouth,
+          sprite: sprite,
+          frame: sprite.getFrame(row: 0, column: 0),
+          color: scene.colorEast(gameObjectIndex),
           scale: scale,
-          dstX: gameObject.renderX,
-          dstY: gameObject.renderY,
+          dstX: dstX,
+          dstY: dstY,
       );
 
       render.sprite(
-        sprite: crystalWest,
-          frame: crystalWest.getFrame(row: 0, column: frame),
-          color: colorWest,
+          sprite: sprite,
+          frame: sprite.getFrame(row: 0, column: 1),
+          color: scene.colorNorth(gameObjectIndex),
           scale: scale,
-          dstX: gameObject.renderX,
-          dstY: gameObject.renderY,
+          dstX: dstX,
+          dstY: dstY,
       );
+
+      render.sprite(
+          sprite: sprite,
+          frame: sprite.getFrame(row: 0, column: 2),
+          color: scene.colorSouth(gameObjectIndex),
+          scale: scale,
+          dstX: dstX,
+          dstY: dstY,
+      );
+
+      render.sprite(
+          sprite: sprite,
+          frame: sprite.getFrame(row: 0, column: 3),
+          color: scene.colorWest(gameObjectIndex),
+          scale: scale,
+          dstX: dstX,
+          dstY: dstY,
+      );
+
+      // render.sprite(
+      //     sprite: crystalSouth,
+      //     frame: crystalSouth.getFrame(row: 0, column: frame),
+      //     color: colorSouth,
+      //     scale: scale,
+      //     dstX: gameObject.renderX,
+      //     dstY: gameObject.renderY,
+      // );
+      //
+      // render.sprite(
+      //     sprite: crystalSouth,
+      //     frame: crystalSouth.getFrame(row: 0, column: frame),
+      //     color: colorSouth,
+      //     scale: scale,
+      //     dstX: gameObject.renderX,
+      //     dstY: gameObject.renderY,
+      // );
+      //
+      // render.sprite(
+      //   sprite: crystalWest,
+      //     frame: crystalWest.getFrame(row: 0, column: frame),
+      //     color: colorWest,
+      //     scale: scale,
+      //     dstX: gameObject.renderX,
+      //     dstY: gameObject.renderY,
+      // );
 
       return;
     }

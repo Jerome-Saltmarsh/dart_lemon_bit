@@ -50,6 +50,7 @@ class IsometricImages with IsometricComponent {
   late final CharacterSpriteGroup spriteGroupSkeletonSouth;
   late final CharacterSpriteGroup spriteGroupSkeletonShadow;
 
+  late final Sprite crystal;
   late final Sprite flame0;
   late final Sprite flame1;
   late final Sprite flame2;
@@ -407,6 +408,11 @@ class IsometricImages with IsometricComponent {
         name: 'sprites/isometric/butterfly/butterfly',
         mode: AnimationMode.loop,
     ).then((value) => butterfly = value);
+
+    loadSprite(
+        name: 'sprites/isometric/crystal',
+        mode: AnimationMode.single,
+    ).then((value) => crystal = value);
 
     loadSprite(
         name: 'sprites/isometric/bat/bat',
