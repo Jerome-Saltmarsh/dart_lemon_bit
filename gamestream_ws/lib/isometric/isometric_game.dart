@@ -167,7 +167,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       setNode(
         nodeIndex: nodeIndex,
         nodeType: nodeType,
-        nodeOrientation: nodeOrientation,
+        orientation: nodeOrientation,
       );
     });
   }
@@ -671,7 +671,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     setNode(
       nodeIndex: nodeIndex,
       nodeType: NodeType.Empty,
-      nodeOrientation: NodeOrientation.None,
+      orientation: NodeOrientation.None,
     );
     customOnNodeDestroyed(nodeType, nodeIndex, orientation);
   }
@@ -2077,40 +2077,51 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     setNode(
       nodeIndex: index,
       nodeType: NodeType.Empty,
-      nodeOrientation: NodeOrientation.None,
+      orientation: NodeOrientation.None,
     );
 
   void setNode({
     required int nodeIndex,
-    required int nodeType,
-    required int nodeOrientation,
+    int? nodeType,
+    int? orientation,
+    int? variation,
   }) {
     assert (nodeIndex >= 0);
 
-    if (nodeIndex >= scene.volume) {
+    if (nodeIndex >= scene.types.length) {
       throw Exception(
           "game.setNode(nodeIndex: $nodeIndex) - node index out of bounds"
       );
     }
 
-    if (
-      nodeType == scene.types[nodeIndex] &&
-      nodeOrientation == scene.shapes[nodeIndex]
-    ) return;
-
-    if (!NodeType.supportsOrientation(nodeType, nodeOrientation)) {
-      nodeOrientation = NodeType.getDefaultOrientation(nodeType);
+    if (nodeType == null){
+      nodeType = scene.types[nodeIndex];
     }
 
-    scene.shapes[nodeIndex] = nodeOrientation;
+    if (orientation == null){
+      orientation = scene.shapes[nodeIndex];
+    }
+
+    if (variation == null){
+      variation = scene.variations[nodeIndex];
+    }
+
+    if (!NodeType.supportsOrientation(nodeType, orientation)) {
+      orientation = NodeType.getDefaultOrientation(nodeType);
+    }
+
+    scene.shapes[nodeIndex] = orientation;
     scene.types[nodeIndex] = nodeType;
+    scene.variations[nodeIndex] = variation;
     scene.clearCompiled();
 
+    final players = this.players;
     for (final player in players) {
       player.writeNode(
         index: nodeIndex,
         type: nodeType,
-        shape: nodeOrientation,
+        shape: orientation,
+        variation: variation,
       );
     }
   }

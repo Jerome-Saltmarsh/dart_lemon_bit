@@ -20,7 +20,7 @@ import 'package:typedef/json.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 
-class Connection with ByteReader {
+class Connection extends ByteReader {
 
   final Nerve nerve;
   final errorWriter = ByteWriter();
@@ -183,6 +183,9 @@ class Connection with ByteReader {
             break;
           case EditorRequest.Rename_Key:
             handleEditorRequestRenameKey(arguments);
+            break;
+          case EditorRequest.Set_Variation:
+            handleEditorRequestSetVariation(arguments);
             break;
           case EditorRequest.New_Scene:
             handleEditorRequestNewScene(arguments);
@@ -411,7 +414,7 @@ class Connection with ByteReader {
     game.setNode(
         nodeIndex: nodeIndex,
         nodeType: nodeType,
-        nodeOrientation: nodeOrientation,
+        orientation: nodeOrientation,
     );
     if (nodeType == NodeType.Tree_Bottom){
       final topIndex = nodeIndex + game.scene.area;
@@ -419,7 +422,7 @@ class Connection with ByteReader {
         game.setNode(
           nodeIndex: nodeIndex + game.scene.area,
           nodeType: NodeType.Tree_Top,
-          nodeOrientation: nodeOrientation,
+          orientation: nodeOrientation,
         );
       }
     }
@@ -701,7 +704,7 @@ class Connection with ByteReader {
       return;
     }
 
-    final gameTypeIndex =  arguments.getArgInt('--gameType');
+    final gameTypeIndex =  arguments.tryGetArgInt('--gameType');
     if (gameTypeIndex == null || !isValidIndex(gameTypeIndex, GameType.values)){
       errorInvalidClientRequest();
       return;
@@ -717,11 +720,11 @@ class Connection with ByteReader {
             throw Exception('player is! AmuletPlayer');
           }
           player.name = arguments.getArg('--name') ?? 'anon${randomInt(9999, 99999)}';
-          player.complexion = arguments.getArgInt('--complexion') ?? 0;
-          player.hairType = arguments.getArgInt('--hairType') ?? 0;
-          player.hairColor = arguments.getArgInt('--hairColor') ?? 0;
-          player.gender = arguments.getArgInt('--gender') ?? 0;
-          player.headType = arguments.getArgInt('--headType') ?? 0;
+          player.complexion = arguments.tryGetArgInt('--complexion') ?? 0;
+          player.hairType = arguments.tryGetArgInt('--hairType') ?? 0;
+          player.hairColor = arguments.tryGetArgInt('--hairColor') ?? 0;
+          player.gender = arguments.tryGetArgInt('--gender') ?? 0;
+          player.headType = arguments.tryGetArgInt('--headType') ?? 0;
           player.active = true;
           onPlayerLoaded(player);
           return;
@@ -1141,7 +1144,7 @@ class Connection with ByteReader {
     }
 
     final name = arguments.getArg('--name');
-    final index = arguments.getArgInt('--index');
+    final index = arguments.tryGetArgInt('--index');
 
     if (name == null){
       sendServerError('--name required');
@@ -1204,6 +1207,22 @@ class Connection with ByteReader {
     scene.setKey(to, index);
     scene.deleteKey(from);
     game.notifyPlayersSceneKeysChanged();
+  }
+
+  void handleEditorRequestSetVariation(List<String> arguments) {
+
+    final player = this.player;
+
+    if (player is! IsometricPlayer){
+      return;
+    }
+
+    player.game.setNode(
+      nodeIndex: arguments.getArgInt('--index'),
+      nodeType: arguments.tryGetArgInt('--type'),
+      orientation: arguments.tryGetArgInt('--orientation'),
+      variation: arguments.tryGetArgInt('--variation'),
+    );
   }
 }
 

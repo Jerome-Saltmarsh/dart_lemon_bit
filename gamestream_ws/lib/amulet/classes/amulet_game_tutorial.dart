@@ -129,7 +129,7 @@ class AmuletGameTutorial extends AmuletGame {
       setNode(
         nodeIndex: getSceneKey(keysDoor01),
         nodeType: NodeType.Wood,
-        nodeOrientation: NodeOrientation.Half_West,
+        orientation: NodeOrientation.Half_West,
       );
     }
 
@@ -145,7 +145,7 @@ class AmuletGameTutorial extends AmuletGame {
       setNode(
           nodeIndex: getSceneKey(keysDoor02),
           nodeType: NodeType.Brick,
-          nodeOrientation: NodeOrientation.Solid,
+          orientation: NodeOrientation.Solid,
       );
     }
 
@@ -159,7 +159,7 @@ class AmuletGameTutorial extends AmuletGame {
       setNode(
         nodeIndex: getSceneKey(keysDoor03),
         nodeType: NodeType.Brick,
-        nodeOrientation: NodeOrientation.Solid,
+        orientation: NodeOrientation.Solid,
       );
     }
 
@@ -181,7 +181,7 @@ class AmuletGameTutorial extends AmuletGame {
       setNode(
         nodeIndex: getSceneKey(keysExit),
         nodeType: NodeType.Wood,
-        nodeOrientation: NodeOrientation.Half_South,
+        orientation: NodeOrientation.Half_South,
       );
     }
 
@@ -235,6 +235,7 @@ class AmuletGameTutorial extends AmuletGame {
         index: index,
         type: scene.types[index],
         shape: scene.shapes[index],
+        variation: scene.variations[index],
       );
     }
   }

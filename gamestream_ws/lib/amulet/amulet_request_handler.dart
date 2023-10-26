@@ -34,7 +34,7 @@ extension AmuletRequestHandler on Connection {
         amuletGame.spawnRandomEnemy();
         break;
       case NetworkRequestAmulet.Acquire_Amulet_Item:
-        final amuletItemIndex = arguments.getArgInt('--index');
+        final amuletItemIndex = arguments.tryGetArgInt('--index');
         final amuletItem = AmuletItem.values.tryGet(amuletItemIndex);
         if (amuletItem == null){
           sendServerError('invalid amulet item index');

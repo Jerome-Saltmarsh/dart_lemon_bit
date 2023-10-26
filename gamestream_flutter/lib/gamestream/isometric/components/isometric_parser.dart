@@ -19,6 +19,7 @@ import 'isometric_component.dart';
 
 class IsometricParser with ByteReader, IsometricComponent {
   final bufferSize = Watch(0);
+  final decoder = ZLibDecoder();
 
   void parseString(String value){
 
@@ -283,6 +284,7 @@ class IsometricParser with ByteReader, IsometricComponent {
   }
 
   void readScene() {
+
     print('readScene()');
     final scenePart = readByte(); /// DO NOT DELETE
 
@@ -307,7 +309,11 @@ class IsometricParser with ByteReader, IsometricComponent {
     final scenePartKeys = readByte(); /// DO NOT DELETE
     readNetworkResponseSceneKeys();
 
-    final decoder = ZLibDecoder();
+    final scenePartVariations = readByte(); /// DO NOT DELETE
+    final compressedVariationsLength = readUInt24();
+    final compressedVariations = readUint8List(compressedVariationsLength);
+    scene.nodeVariations = Uint8List.fromList(decoder.decodeBytes(compressedVariations));
+
     scene.nodeTypes = Uint8List.fromList(decoder.decodeBytes(compressedNodeTypes));
     scene.nodeOrientations = Uint8List.fromList(decoder.decodeBytes(compressedNodeOrientations));
     scene.colorStack.fillRange(0, scene.colorStack.length, scene.ambientColor);
@@ -527,10 +533,12 @@ class IsometricParser with ByteReader, IsometricComponent {
     final nodeIndex = readUInt24();
     final nodeType = readByte();
     final nodeOrientation = readByte();
+    final nodeVariation = readByte();
     scene.setNode(
-        index: nodeIndex,
-        nodeType: nodeType,
-        nodeOrientation: nodeOrientation,
+      index: nodeIndex,
+      nodeType: nodeType,
+      nodeOrientation: nodeOrientation,
+      variation: nodeVariation,
     );
   }
 

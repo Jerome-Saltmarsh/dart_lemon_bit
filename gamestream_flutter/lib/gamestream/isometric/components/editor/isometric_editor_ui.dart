@@ -101,19 +101,19 @@ extension IsometricEditorUI on IsometricEditor {
               height: engine.screen.height - 100,
               child: buildEditorTabGameObjects()),
         ),
-      if (activeEditTab == EditorTab.Grid)
-        Positioned(
-          left: 0,
-          top: 80,
-          child: buildColumnSelectNodeType(),
-        ),
       if (activeEditTab == EditorTab.Marks)
         Positioned(
           left: 0,
           top: 80,
           child: buildEditorTabMarks(),
         ),
-      if (activeEditTab == EditorTab.Grid)
+      if (activeEditTab == EditorTab.Nodes)
+        Positioned(
+          left: 0,
+          top: 80,
+          child: buildEditorTabNodes(),
+        ),
+      if (activeEditTab == EditorTab.Nodes)
         Positioned(
           left: 160,
           top: 80,
@@ -1231,7 +1231,7 @@ extension IsometricEditorUI on IsometricEditor {
 
   void onButtonPressedAddMark() => markAdd(nodeSelectedIndex.value);
 
-  Widget buildColumnSelectNodeType() =>
+  Widget buildEditorTabNodes() =>
       Container(
         height: engine.screen.height - 70,
         child: SingleChildScrollView(
@@ -1296,6 +1296,26 @@ extension IsometricEditorUI on IsometricEditor {
                         buildText(NodeType.getName(nodeType), align: TextAlign.center)
                 )
             ),
+            buildWatch(nodeSelectedVariation, (variation) {
+              return Row(
+                children: List.generate(2, (index) {
+                  return onPressed(
+                    action: () {
+                      network.sendNetworkRequest(
+                          NetworkRequest.Editor_Request,
+                          EditorRequest.Set_Variation.index,
+                          '--index $selectedIndex --variation $index'
+                      );
+                    },
+                    child: Container(
+                        width: 50,
+                        height: 50,
+                        color: index == variation ? Colors.green : Colors.grey,
+                    ),
+                  );
+                }),
+              );
+            }),
             Container(
               width: 120,
               height: 120,

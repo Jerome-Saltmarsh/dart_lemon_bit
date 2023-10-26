@@ -15,11 +15,30 @@ class SceneWriter extends ByteWriter {
             level: ZLibOption.minLevel,
             memLevel: ZLibOption.minMemLevel,
             strategy: ZLibOption.strategyFixed,
-        );
+  );
 
   static Uint8List compileScene(Scene scene, {required bool gameObjects}){
     return _instance._compileScene(scene, gameObjects: gameObjects);
   }
+
+  Uint8List _compileScene(Scene scene, {required bool gameObjects}){
+    clear();
+    writeNodes(scene);
+    writeMarks(scene);
+    writeKeys(scene.keys);
+
+    if (scene.variations.length != scene.types.length){
+      scene.variations = Uint8List(scene.types.length);
+    }
+
+    writeVariations(scene);
+    if (gameObjects) {
+      writeGameObjects(scene.gameObjects);
+      writeByte(ScenePart.End);
+    }
+    return compile();
+  }
+
 
   void writeNodes(Scene scene){
     scene.removeUnusedNodes();
@@ -87,16 +106,15 @@ class SceneWriter extends ByteWriter {
     }
   }
 
-  Uint8List _compileScene(Scene scene, {required bool gameObjects}){
-    clear();
-    writeNodes(scene);
-    writeMarks(scene);
-    writeKeys(scene.keys);
-    if (gameObjects) {
-      writeGameObjects(scene.gameObjects);
-      writeByte(ScenePart.End);
-    }
-    return compile();
+  void writeVariations(Scene scene) {
+    writeByte(ScenePart.Variations);
+    compressAndWrite(scene.variations);
+  }
+
+  void compressAndWrite(Uint8List values){
+    final compressedValues = encoder.convert(values);
+    writeUInt24(compressedValues.length);
+    writeUint8List(compressedValues);
   }
 }
 

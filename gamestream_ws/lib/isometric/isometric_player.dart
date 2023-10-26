@@ -884,6 +884,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     required int index,
     required int type,
     required int shape,
+    required int variation,
   }){
     assert (index >= 0);
     assert (index < scene.volume);
@@ -892,6 +893,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeUInt24(index);
     writeByte(type);
     writeByte(shape);
+    writeByte(variation);
   }
 
   void writeDouble(double value){

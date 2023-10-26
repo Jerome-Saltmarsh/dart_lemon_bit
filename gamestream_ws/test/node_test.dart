@@ -18,6 +18,7 @@ void main() {
         name: ' ',
         types: Uint8List(volume),
         shapes: Uint8List(volume),
+        variations: Uint8List(volume),
         height: height,
         rows: rows,
         columns: columns,
@@ -28,8 +29,6 @@ void main() {
     final indexA = scene.getIndex(0, 2, 5);
     final indexB = scene.getIndex(0, 2, 6);
     expect(indexA + 1, indexB);
-
-
     expect(scene.getRow(indexA), 2);
     expect(scene.getColumn(indexA), 5);
     expect(scene.getZ(indexA), 0);

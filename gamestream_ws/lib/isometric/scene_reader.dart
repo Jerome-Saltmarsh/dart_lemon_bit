@@ -17,6 +17,7 @@ class SceneReader extends ByteReader {
   var totalRows = 0;
   var totalColumns = 0;
   var nodeTypes = Uint8List(0);
+  var variations = Uint8List(0);
   var nodeOrientations = Uint8List(0);
   var playerSpawnPoints = Uint16List(0);
   var spawnPoints = Uint16List(0);
@@ -32,6 +33,7 @@ class SceneReader extends ByteReader {
     this.totalColumns = 0;
     this.totalRows = 0;
     this.totalColumns = 0;
+    this.variations = Uint8List(0);
     this.nodeTypes = Uint8List(0);
     this.nodeOrientations = Uint8List(0);
     this.playerSpawnPoints = Uint16List(0);
@@ -48,6 +50,7 @@ class SceneReader extends ByteReader {
       rows: totalRows,
       columns: totalColumns,
       gameObjects: gameObjects,
+      variations: variations,
       marks: marks,
     )..keys = keys;
   }
@@ -67,6 +70,9 @@ class SceneReader extends ByteReader {
           break;
         case ScenePart.Keys:
           readKeys();
+          break;
+        case ScenePart.Variations:
+          readVariations();
           break;
         case ScenePart.End:
           return;
@@ -147,5 +153,11 @@ class SceneReader extends ByteReader {
         compressedNodeOrientationLength);
     nodeTypes = Uint8List.fromList(decoder.convert(compressedNodeTypes));
     nodeOrientations = Uint8List.fromList(decoder.convert(compressedNodeOrientations));
+  }
+
+  void readVariations(){
+    final length = readUInt24();
+    final compressedValues = readUint8List(length);
+    variations = Uint8List.fromList(decoder.convert(compressedValues));
   }
 }

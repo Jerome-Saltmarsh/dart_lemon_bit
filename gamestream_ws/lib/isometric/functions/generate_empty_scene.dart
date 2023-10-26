@@ -14,6 +14,7 @@ Scene generateEmptyScene({
   final total = height * area;
   final nodeTypes = Uint8List(total);
   final nodeOrientations = Uint8List(total);
+  final variations = Uint8List(total);
 
   for (var i = 0; i < area; i++) {
     nodeTypes[i] = NodeType.Grass;
@@ -29,5 +30,6 @@ Scene generateEmptyScene({
     types: nodeTypes,
     shapes: nodeOrientations,
     marks: [],
+    variations: variations,
   );
 }

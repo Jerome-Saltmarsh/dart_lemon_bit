@@ -4,7 +4,7 @@ import 'package:lemon_byte/byte_writer.dart';
 
 import 'game.dart';
 
-abstract class Player with ByteWriter {
+abstract class Player extends ByteWriter {
 
   var mouseX = 0.0;
   var mouseY = 0.0;

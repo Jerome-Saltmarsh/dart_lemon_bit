@@ -11,16 +11,20 @@ void main() {
     required int height,
     required int rows,
     required int columns,
-  }) => Scene(
+  }) {
+    final volume = height * rows * columns;
+    return Scene(
       name: ' ',
-      types: Uint8List(height * rows * columns),
-      shapes: Uint8List(height * rows * columns),
+      types: Uint8List(volume),
+      shapes: Uint8List(volume),
+      variations: Uint8List(volume),
       height: height,
       rows: rows,
       columns: columns,
       gameObjects: [],
       marks: [],
     );
+  }
 
   void testFindPath({
     required Scene scene,

@@ -14,9 +14,9 @@ class Scene {
 
   Uint8List types;
   Uint8List shapes;
+  Uint8List variations;
+
   Uint8List? compiled;
-
-
 
   /// used for pathfinding to contains the the index of a previous path
   Int32List path = Int32List(0);
@@ -45,6 +45,7 @@ class Scene {
     required this.name,
     required this.types,
     required this.shapes,
+    required this.variations,
     required this.height,
     required this.rows,
     required this.columns,

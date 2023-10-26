@@ -54,12 +54,15 @@ class IsometricEditor with IsometricComponent {
   late final editorDialog = Watch<EditorDialog?>(
       null, onChanged: onChangedEditorDialog);
   late final editorTab = Watch(
-      EditorTab.Grid, onChanged: onChangedEditTab);
+      EditorTab.Nodes, onChanged: onChangedEditTab);
   late final nodeSelectedType = Watch<int>(
       0, onChanged: onChangedSelectedNodeType);
   final nodeSelectedOrientation = Watch(NodeOrientation.None);
   final nodeOrientationVisible = Watch(true);
+  final nodeSelectedVariation = Watch(0);
   final isActiveEditTriggers = Watch(true);
+
+  int get selectedIndex => nodeSelectedIndex.value;
 
   late final nodeSelectedIndex = Watch(0, clamp: (int value) {
     if (value < 0) return 0;
@@ -453,52 +456,40 @@ class IsometricEditor with IsometricComponent {
   void onChangedSelectedNodeIndex(int index) {
     nodeSelectedOrientation.value = scene.nodeOrientations[index];
     nodeSelectedType.value = scene.nodeTypes[index];
+    nodeSelectedVariation.value = scene.nodeVariations[index];
     gameObjectSelected.value = false;
     refreshNodeSelectedIndex();
     deselectGameObject();
     cameraCenterOnNodeSelectedIndex();
   }
 
-  void onChangedSelectedNodeType(int nodeType) {
-    nodeOrientationVisible.value = true;
-  }
+  void onChangedSelectedNodeType(int nodeType) =>
+      nodeOrientationVisible.value = true;
 
-  void onChangedEditorDialog(EditorDialog? value) {
-    if (value == EditorDialog.Scene_Load) {
+  void onChangedEditorDialog(EditorDialog? value) { }
 
-    }
-  }
+  void actionGameDialogShowSceneSave() =>
+      editorDialog.value = EditorDialog.Scene_Save;
 
-  void actionGameDialogShowSceneSave() {
-    editorDialog.value = EditorDialog.Scene_Save;
-  }
+  void actionGameDialogClose() => editorDialog.value = null;
 
-  void actionGameDialogClose() {
-    editorDialog.value = null;
-  }
-
-  void setTabGrid() {
-    editorTab.value = EditorTab.Grid;
-  }
-
-  // EVENTS
+  void setTabNodes() => editorTab.value = EditorTab.Nodes;
 
   void onChangedEditTab(EditorTab editTab) {
     deselectGameObject();
     io.enabledMouseClick = editTab != EditorTab.Marks;
   }
 
-  void setSelectedObjectedIntensity(double value) {
-    gameObject.value?.emissionIntensity = value;
-  }
+  void setSelectedObjectedIntensity(double value) =>
+      gameObject.value?.emissionIntensity = value;
 
   void onMouseLeftClicked() {
     switch (editorTab.value) {
       case EditorTab.File:
-        setTabGrid();
+        setTabNodes();
         selectMouseBlock();
         break;
-      case EditorTab.Grid:
+      case EditorTab.Nodes:
         selectMouseBlock();
         actionRecenterCamera();
         break;

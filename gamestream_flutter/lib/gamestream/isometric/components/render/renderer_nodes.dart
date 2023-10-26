@@ -245,7 +245,7 @@ class RendererNodes extends RenderGroup {
                         dstX: dstX,
                         dstY: dstY,
                         srcY: srcY,
-                        srcX: nodeVariation < 126 ? 0.0 : 128.0,
+                        srcX: nodeVariation * 128.0,
                         colorAbove: colorAbove,
                         colorSouth: colorSouth,
                         colorWest: colorWest,

@@ -1,6 +1,6 @@
 enum EditorTab {
   File,
-  Grid,
+  Nodes,
   Objects,
   Marks,
   Keys,

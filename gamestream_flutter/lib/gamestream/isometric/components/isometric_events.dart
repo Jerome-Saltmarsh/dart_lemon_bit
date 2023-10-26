@@ -1,7 +1,6 @@
 
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/packages/common.dart';
-import 'package:gamestream_flutter/packages/common/src/isometric/material_type.dart';
 import 'package:gamestream_flutter/packages/common/src/isometric/node_type_material.dart';
 import 'package:gamestream_flutter/packages/lemon_websocket_client.dart';
 import 'package:lemon_engine/lemon_engine.dart';

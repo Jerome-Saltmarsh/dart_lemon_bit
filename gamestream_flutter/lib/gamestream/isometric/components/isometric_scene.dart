@@ -379,20 +379,6 @@ class IsometricScene with IsometricComponent implements Updatable {
     if (nodeVisibility.length != totalNodes){
       nodeVisibility = Uint8List(totalNodes);
     }
-
-    if (nodeVariations.length < totalNodes) {
-      nodeVariations = Uint8List(totalNodes);
-      refreshNodeVariations();
-    }
-  }
-
-  void refreshNodeVariations() {
-    final totalNodes = this.totalNodes;
-    final nodeVariations = this.nodeVariations;
-
-    for (var i = 0; i < totalNodes; i++){
-      nodeVariations[i] = randomInt(0, 255);
-    }
   }
 
   int getRow(int index) => (index % area) ~/ totalColumns;
@@ -2064,15 +2050,13 @@ class IsometricScene with IsometricComponent implements Updatable {
     required int index,
     required int nodeType,
     required int nodeOrientation,
+    required int variation,
   }) {
     final previousNodeType = nodeTypes[index];
     nodeTypes[index] = nodeType;
     nodeOrientations[index] = nodeOrientation;
+    nodeVariations[index] = variation;
     events.onChangedNodes();
-
-    if (NodeType.isLightSource(previousNodeType) != NodeType.isLightSource(nodeType)){
-
-    }
   }
 
   int findNearestMark({

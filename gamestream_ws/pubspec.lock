@@ -189,10 +189,10 @@ packages:
     dependency: "direct main"
     description:
       name: lemon_byte
-      sha256: "0634568284359d73b014a80ce008c924c82c23d327cb978501956237d6a764a1"
+      sha256: c96a6542b8a5343bcf83ee7075732ec37f48dd2206a0d6cbe3291f2e98f4eb47
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.44"
+    version: "1.0.47"
   logging:
     dependency: transitive
     description:

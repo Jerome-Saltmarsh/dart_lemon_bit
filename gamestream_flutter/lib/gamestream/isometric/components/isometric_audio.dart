@@ -1,7 +1,6 @@
 
 import 'dart:math';
 
-import 'package:gamestream_flutter/packages/common/src/isometric/material_type.dart';
 import 'package:just_audio/just_audio.dart';
 
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';

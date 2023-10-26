@@ -89,6 +89,8 @@ class SceneGenerator {
         columns: columns,
         gameObjects: [],
         marks: [],
+        variations: Uint8List(volume),
+
      );
   }
 
