@@ -19,7 +19,6 @@ class SyncUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // refreshSyncJobs();
     return MaterialApp(
       title: 'RENDERS SYNC',
       theme: ThemeData(

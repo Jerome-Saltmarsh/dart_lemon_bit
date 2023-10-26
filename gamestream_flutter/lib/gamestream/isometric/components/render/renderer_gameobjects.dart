@@ -44,6 +44,10 @@ class RendererGameObjects extends RenderGroup {
       const scale = 0.25;
       final frame = animation.frameRate5;
 
+      final frameSouth = crystalSouth.getFrame(row: 0, column: frame);
+      final frameWest = crystalWest.getFrame(row: 0, column: frame);
+      // render.textPosition(gameObject, 'f: $frame s: $frameSouth, w: $frameWest', offsetY: -50);
+
       render.sprite(
           sprite: crystalSouth,
           frame: crystalSouth.getFrame(row: 0, column: frame),
