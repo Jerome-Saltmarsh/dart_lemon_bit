@@ -372,7 +372,7 @@ class IsometricEditor with IsometricComponent {
   }
 
   void setNodeType(int type, int orientation) =>
-      sendClientRequestSetBlock(
+      setNode(
         index: nodeSelectedIndex.value,
         type: type,
         orientation: orientation,
@@ -382,10 +382,11 @@ class IsometricEditor with IsometricComponent {
     final nodeIndex = nodeSelectedIndex.value;
     if (nodeIndex <= scene.area) return;
     final nodeIndexBelow = nodeIndex - scene.area;
-    sendClientRequestSetBlock(
+    setNode(
       index: nodeSelectedIndex.value,
       type: scene.nodeTypes[nodeIndexBelow],
       orientation: scene.nodeOrientations[nodeIndexBelow],
+      variation: scene.nodeVariations[nodeIndexBelow]
     );
   }
 
@@ -411,7 +412,7 @@ class IsometricEditor with IsometricComponent {
       orientation = NodeType.getDefaultOrientation(nodeType);
     }
 
-    return sendClientRequestSetBlock(
+    return setNode(
       index: nodeSelectedIndex.value,
       type: nodeType,
       orientation: orientation,
@@ -571,14 +572,18 @@ class IsometricEditor with IsometricComponent {
     );
   }
 
-  void sendClientRequestSetBlock({
+  void setNode({
     required int index,
-    required int type,
-    required int orientation,
+    int? type,
+    int? orientation,
+    int? variation,
   }) =>
       sendEditorRequest(
         EditorRequest.Set_Node,
-        '$index $type $orientation',
+        '--index $index '
+        '${type != null ? '--type $type' : ''} '
+        '${orientation != null ? '--orientation $orientation' : ''} '
+        '${variation != null ? '--variation $variation' : ''} '
       );
 
   void downloadScene() =>

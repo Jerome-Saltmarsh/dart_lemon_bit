@@ -760,9 +760,9 @@ class AmuletGameTutorial extends AmuletGame {
         .cameraSetTarget(guide)
         .faceEachOther(player, guide)
         .talk(
-          'greetings other.'
+          'greetings.'
           'one is here to to guide another.'
-          'one moves by left clicking the mouse.'
+          'move by left clicking the mouse.'
         )
         .movePositionToSceneKey(guide, keysGuideSpawn1)
         .controlsEnabled()

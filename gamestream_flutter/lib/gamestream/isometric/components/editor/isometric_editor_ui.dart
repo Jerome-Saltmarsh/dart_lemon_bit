@@ -759,7 +759,7 @@ extension IsometricEditorUI on IsometricEditor {
       hint: NodeOrientation.getName(orientation),
       action: () {
         paintOrientation.value = orientation;
-        sendClientRequestSetBlock(
+        setNode(
           index: nodeSelectedIndex.value,
           type: nodeSelectedType.value,
           orientation: orientation,
@@ -974,7 +974,7 @@ extension IsometricEditorUI on IsometricEditor {
             indexX = row;
             indexY = column;
             if (row == 0 && column == 2){
-              sendClientRequestSetBlock(
+              setNode(
                 index: nodeSelectedIndex.value,
                 type: nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Top_Left,
@@ -982,7 +982,7 @@ extension IsometricEditorUI on IsometricEditor {
               return;
             }
             if (row == 0 && column == 1){
-              sendClientRequestSetBlock(
+              setNode(
                 index: nodeSelectedIndex.value,
                 type: nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Top_Center,
@@ -990,7 +990,7 @@ extension IsometricEditorUI on IsometricEditor {
               return;
             }
             if (row == 0 && column == 0){
-              sendClientRequestSetBlock(
+              setNode(
                 index: nodeSelectedIndex.value,
                 type: nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Top_Right,
@@ -999,7 +999,7 @@ extension IsometricEditorUI on IsometricEditor {
             }
 
             if (row == 1 && column == 2){
-              sendClientRequestSetBlock(
+              setNode(
                 index: nodeSelectedIndex.value,
                 type: nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Center_Left,
@@ -1007,7 +1007,7 @@ extension IsometricEditorUI on IsometricEditor {
               return;
             }
             if (row == 1 && column == 1){
-              sendClientRequestSetBlock(
+              setNode(
                 index: nodeSelectedIndex.value,
                 type: nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Center_Center,
@@ -1015,7 +1015,7 @@ extension IsometricEditorUI on IsometricEditor {
               return;
             }
             if (row == 1 && column == 0){
-              sendClientRequestSetBlock(
+              setNode(
                 index: nodeSelectedIndex.value,
                 type: nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Center_Right,
@@ -1024,7 +1024,7 @@ extension IsometricEditorUI on IsometricEditor {
             }
 
             if (row == 2 && column == 2){
-              sendClientRequestSetBlock(
+              setNode(
                 index: nodeSelectedIndex.value,
                 type: nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Bottom_Left,
@@ -1032,7 +1032,7 @@ extension IsometricEditorUI on IsometricEditor {
               return;
             }
             if (row == 2 && column == 1){
-              sendClientRequestSetBlock(
+              setNode(
                 index: nodeSelectedIndex.value,
                 type: nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Bottom_Center,
@@ -1040,7 +1040,7 @@ extension IsometricEditorUI on IsometricEditor {
               return;
             }
             if (row == 2 && column == 0){
-              sendClientRequestSetBlock(
+              setNode(
                 index: nodeSelectedIndex.value,
                 type: nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Bottom_Right,
@@ -1300,13 +1300,7 @@ extension IsometricEditorUI on IsometricEditor {
               return Row(
                 children: List.generate(2, (index) {
                   return onPressed(
-                    action: () {
-                      network.sendNetworkRequest(
-                          NetworkRequest.Editor_Request,
-                          EditorRequest.Set_Variation.index,
-                          '--index $selectedIndex --variation $index'
-                      );
-                    },
+                    action: () => setNode(index: selectedIndex, variation: index),
                     child: Container(
                         width: 50,
                         height: 50,

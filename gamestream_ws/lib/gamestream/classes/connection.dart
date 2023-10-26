@@ -184,8 +184,8 @@ class Connection extends ByteReader {
           case EditorRequest.Rename_Key:
             handleEditorRequestRenameKey(arguments);
             break;
-          case EditorRequest.Set_Variation:
-            handleEditorRequestSetVariation(arguments);
+          case EditorRequest.Set_Node:
+            handleEditorRequestSetNode(arguments);
             break;
           case EditorRequest.New_Scene:
             handleEditorRequestNewScene(arguments);
@@ -193,9 +193,9 @@ class Connection extends ByteReader {
           case EditorRequest.GameObject:
             handleIsometricEditorRequestGameObject(arguments);
             break;
-          case EditorRequest.Set_Node:
-            handleIsometricEditorRequestSetNode(arguments);
-            break;
+          // case EditorRequest.Set_Node:
+          //   handleIsometricEditorRequestSetNode(arguments);
+          //   break;
           case EditorRequest.Load_Scene:
             try {
               final args = arguments.map(int.parse).toList(growable: false);
@@ -387,46 +387,46 @@ class Connection extends ByteReader {
      return false;
   }
 
-  void handleIsometricEditorRequestSetNode(List<String> arguments) {
-    final player = _player;
-    if (player == null) return;
-    final game = player.game;
-    if (game is! IsometricGame) return;
-    if (!isLocalMachine && game is IsometricEditor == false) return;
-
-    var nodeIndex = parseArg2(arguments);
-    var nodeType = parseArg3(arguments);
-    var nodeOrientation = parseArg4(arguments);
-
-    if (nodeIndex == null) {
-      return;
-    }
-    if (nodeType == null) {
-      return;
-    }
-    if (nodeOrientation == null) {
-      return;
-    }
-    if (!NodeType.supportsOrientation(nodeType, nodeOrientation)){
-      nodeOrientation = NodeType.getDefaultOrientation(nodeType);
-    }
-
-    game.setNode(
-        nodeIndex: nodeIndex,
-        nodeType: nodeType,
-        orientation: nodeOrientation,
-    );
-    if (nodeType == NodeType.Tree_Bottom){
-      final topIndex = nodeIndex + game.scene.area;
-      if (topIndex < game.scene.volume){
-        game.setNode(
-          nodeIndex: nodeIndex + game.scene.area,
-          nodeType: NodeType.Tree_Top,
-          orientation: nodeOrientation,
-        );
-      }
-    }
-  }
+  // void handleIsometricEditorRequestSetNode(List<String> arguments) {
+  //   final player = _player;
+  //   if (player == null) return;
+  //   final game = player.game;
+  //   if (game is! IsometricGame) return;
+  //   if (!isLocalMachine && game is IsometricEditor == false) return;
+  //
+  //   var nodeIndex = parseArg2(arguments);
+  //   var nodeType = parseArg3(arguments);
+  //   var nodeOrientation = parseArg4(arguments);
+  //
+  //   if (nodeIndex == null) {
+  //     return;
+  //   }
+  //   if (nodeType == null) {
+  //     return;
+  //   }
+  //   if (nodeOrientation == null) {
+  //     return;
+  //   }
+  //   if (!NodeType.supportsOrientation(nodeType, nodeOrientation)){
+  //     nodeOrientation = NodeType.getDefaultOrientation(nodeType);
+  //   }
+  //
+  //   game.setNode(
+  //       nodeIndex: nodeIndex,
+  //       nodeType: nodeType,
+  //       orientation: nodeOrientation,
+  //   );
+  //   if (nodeType == NodeType.Tree_Bottom){
+  //     final topIndex = nodeIndex + game.scene.area;
+  //     if (topIndex < game.scene.volume){
+  //       game.setNode(
+  //         nodeIndex: nodeIndex + game.scene.area,
+  //         nodeType: NodeType.Tree_Top,
+  //         orientation: nodeOrientation,
+  //       );
+  //     }
+  //   }
+  // }
 
   void handleIsometricEditorRequestGameObject(List<String> arguments) {
     final player = _player;
@@ -1209,7 +1209,7 @@ class Connection extends ByteReader {
     game.notifyPlayersSceneKeysChanged();
   }
 
-  void handleEditorRequestSetVariation(List<String> arguments) {
+  void handleEditorRequestSetNode(List<String> arguments) {
 
     final player = this.player;
 
