@@ -540,6 +540,8 @@ class IsometricParser with ByteReader, IsometricComponent {
       nodeOrientation: nodeOrientation,
       variation: nodeVariation,
     );
+
+    editor.refreshNodeSelectedIndex();
   }
 
   void readPlayerTarget() {

@@ -274,12 +274,12 @@ class IsometricEditor with IsometricComponent {
   }
 
   void refreshNodeSelectedIndex() {
-    if (nodeSelectedIndex.value >= scene.nodeTypes.length){
+    if (selectedIndex >= scene.nodeTypes.length){
       return;
     }
-    nodeSelectedType.value = scene.nodeTypes[nodeSelectedIndex.value];
-    nodeSelectedOrientation.value =
-      scene.nodeOrientations[nodeSelectedIndex.value];
+    nodeSelectedType.value = scene.nodeTypes[selectedIndex];
+    nodeSelectedOrientation.value = scene.nodeOrientations[selectedIndex];
+    nodeSelectedVariation.value = scene.nodeVariations[selectedIndex];
   }
 
   void deselectGameObject() {
