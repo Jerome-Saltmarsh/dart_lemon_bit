@@ -14,11 +14,15 @@ class Position implements Comparable<Position> {
   });
 
   int get indexRow => x ~/ Node_Size;
+
   int get indexColumn => y ~/ Node_Size;
+
   int get indexZ => z ~/ Node_Size_Half;
 
   double get renderX => (x - y) * 0.5;
+
   double get renderY => ((x + y) * 0.5) - z;
+
   double get order => x + y + z;
 
   double getDistance(Position value) =>

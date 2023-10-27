@@ -1615,4 +1615,17 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   void setCameraTarget(Position? target) {
     this.cameraTarget = target;
   }
+
+  @override
+  set aimTarget(Collider? value) {
+    if (
+      equippedWeaponIndex == -1 &&
+      value is GameObject &&
+      value.type == ItemType.Object &&
+      value.subType == ObjectType.Crystal_Glowing_False
+    ){
+      return;
+    }
+    super.aimTarget = value;
+  }
 }
