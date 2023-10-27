@@ -15,9 +15,11 @@ import 'package:gamestream_flutter/packages/lemon_components.dart';
 
 class IsometricOptions with IsometricComponent implements Updatable {
 
+
   var cameraPlay = Position();
   var cameraEdit = Position();
-
+  var charactersEffectParticles = true;
+  var renderWindVelocity = false;
   var renderCameraTargets = false;
   var emitLightsUsingRecursion = false;
   var renderRunLine = false;
@@ -50,8 +52,9 @@ class IsometricOptions with IsometricComponent implements Updatable {
   final edit = Watch(false);
   final messageStatus = Watch('');
   final error = Watch<GameError?>(null);
-
   late final Watch<Game> game;
+
+
 
 
   IsometricOptions(){

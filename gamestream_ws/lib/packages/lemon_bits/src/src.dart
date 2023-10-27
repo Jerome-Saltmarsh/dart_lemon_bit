@@ -1,8 +1,10 @@
 
 library src;
 
+export 'read_int.dart';
 export 'is_byte.dart';
 export 'read_byte.dart';
+export 'write_int.dart';
 export 'byte_hex.dart';
 export 'is_nibble.dart';
 export 'read_nibble_from_byte_1.dart';

@@ -16,12 +16,4 @@ int readByte6(int value) => readByteAtIndex(value: value, bits: bitsPerByte * 5)
 
 int readByte7(int value) => readByteAtIndex(value: value, bits: bitsPerByte * 6);
 
-int readByte8(int value) => readByteAtIndex(value: value, bits: 56);
-
-
-
-
-
-
-
-
+int readByte8(int value) => readByteAtIndex(value: value, bits: bitsPerByte * 7);

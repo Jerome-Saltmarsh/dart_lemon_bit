@@ -2157,6 +2157,10 @@ class IsometricScene with IsometricComponent implements Updatable {
     return nodeColors[index + totalColumns];
   }
 
+  int indexSouth(int index){
+    return index + totalColumns;
+  }
+
   bool nodeTypeBelowIs(int index, int value) => nodeType(index) == value;
 
   // TODO EXPENSIVE
@@ -2418,4 +2422,3 @@ class IsometricScene with IsometricComponent implements Updatable {
 
   }
 }
-

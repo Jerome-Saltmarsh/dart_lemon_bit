@@ -8,11 +8,13 @@ import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
+import 'package:gamestream_flutter/packages/common/src/types/wind.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_sprite/lib.dart';
 
 import '../classes/src.dart';
+import 'isometric_scene.dart';
 
 class IsometricRender with IsometricComponent {
 
@@ -119,6 +121,10 @@ class IsometricRender with IsometricComponent {
 
     if (options.renderVisibilityBeams){
       rendererNodes.renderVisibilityBeams();
+    }
+
+    if (options.renderWindVelocity){
+      renderWind();
     }
 
     renderEditMode();
@@ -726,5 +732,42 @@ class IsometricRender with IsometricComponent {
         scene.getIndexPositionY(indexTgt),
         scene.getIndexPositionZ(indexTgt) + 16,
     );
+  }
+
+  void renderWind() {
+
+    final player = this.player;
+    final scene = this.scene;
+    final playerIndex = player.nodeIndex;
+    final playerRow = player.indexRow;
+    final playerColumn = player.indexColumn;
+    final playerZ = player.indexZ;
+
+    final windIndexes = particles.windIndexes;
+
+    if (windIndexes.isEmpty){
+      return;
+    }
+
+    final totalColumns = scene.totalColumns;
+    final totalRows = scene.totalRows;
+    const radius = 1;
+
+    for (var row = playerRow - radius; row <= playerRow + radius; row++){
+      if (row < 0 || row >= totalRows) {
+        continue;
+      }
+      for (var column = playerColumn - radius; column <= playerColumn + radius; column++){
+        if (column < 0 || column >= totalColumns) {
+          continue;
+        }
+        final index = scene.getIndexZRC(playerZ, row, column);
+        final wind = windIndexes[index];
+        final windVX = Wind.getVelocityX(wind);
+        final windVY = Wind.getVelocityY(wind);
+        final windVZ = Wind.getVelocityZ(wind);
+        render.textIndex('$windVX $windVY $windVZ', index);
+      }
+    }
   }
 }

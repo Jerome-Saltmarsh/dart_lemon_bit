@@ -649,6 +649,16 @@ extension isometricDebugUI on IsometricDebug {
   Widget buildTabOptions() =>
       buildTab(
         children: [
+          buildRowToggle(
+            text: 'characters effect particles',
+            action: () => options.charactersEffectParticles = !options.charactersEffectParticles,
+            value: () => options.charactersEffectParticles,
+          ),
+          buildRowToggle(
+            text: 'render wind velocity',
+            action: () => options.renderWindVelocity = !options.renderWindVelocity,
+            value: () => options.renderWindVelocity,
+          ),
           buildRowRefresh('total_skipped', () => rendererNodes.totalSkipped),
           buildRowToggle(
              text: 'renderCameraTargets',

@@ -127,5 +127,13 @@ class Particle extends Position {
   void update(IsometricParticles particles){
 
   }
+
+  void addForce({
+    required double speed,
+    required double angle,
+  }) {
+    vx += adj(angle, speed);
+    vy += opp(angle, speed);
+  }
 }
 
