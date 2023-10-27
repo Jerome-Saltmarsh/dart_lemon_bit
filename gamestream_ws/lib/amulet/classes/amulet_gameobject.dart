@@ -22,11 +22,11 @@ class AmuletGameObject extends GameObject {
     this.deactivationTimer = deactivationTimer;
     enabledFixed = false;
     enabledGravity = true;
-    enabledCollidable = true;
+    collidable = true;
     collectable = item.collectable;
     persistable = false;
-    enabledHit = false;
-    enabledPhysical = false;
+    hitbox = false;
+    physical = false;
   }
 
   @override

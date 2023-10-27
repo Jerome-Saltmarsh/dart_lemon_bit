@@ -825,10 +825,10 @@ class AmuletGameTutorial extends AmuletGame {
         subType: ObjectType.Crystal_Glowing_True,
         team: TeamType.Alone,
       )
-        ..enabledHit = false
+        ..hitbox = false
         ..enabledFixed = true
         ..destroyable = false
-        ..physicsRadius = 8
+        ..radius = 8
         ..healthMax = 0
         ..health = 0;
 
@@ -837,10 +837,10 @@ class AmuletGameTutorial extends AmuletGame {
         subType: ObjectType.Crystal_Glowing_False,
         team: TeamType.Alone,
       )
-      ..enabledHit = true
+      ..hitbox = true
       ..enabledFixed = true
       ..destroyable = false
-      ..physicsRadius = 8
+      ..radius = 8
       ..healthMax = 0
       ..health = 0;
 

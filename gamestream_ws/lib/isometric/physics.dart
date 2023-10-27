@@ -33,7 +33,7 @@ class Physics {
     I? target;
     for (var collider in colliders) {
       if (!collider.active) continue;
-      if (!collider.enabledHit) continue;
+      if (!collider.hitbox) continue;
       if (collider == character) continue;
       final distance =  character.getDistance(collider);
       if (distance > range) continue;
@@ -65,7 +65,7 @@ class Physics {
 
     for (final collider in colliders) {
       if (!collider.active) continue;
-      if (!collider.enabledHit) continue;
+      if (!collider.hitbox) continue;
       if (predicate != null && predicate(collider)) continue;
       if (collider.boundsBottom < top) continue;
       if (collider.boundsTop > bottom) break;

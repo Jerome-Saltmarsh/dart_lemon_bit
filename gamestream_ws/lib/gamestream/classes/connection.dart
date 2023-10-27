@@ -532,7 +532,7 @@ class Connection extends ByteReader {
 
       case IsometricEditorGameObjectRequest.Toggle_Strikable:
         if (selectedGameObject == null) return;
-        selectedGameObject.enabledHit = !selectedGameObject.enabledHit;
+        selectedGameObject.hitbox = !selectedGameObject.hitbox;
         selectedGameObject.physicsVelocityZ = 0;
         player.writeEditorGameObjectSelected();
         break;
@@ -570,7 +570,7 @@ class Connection extends ByteReader {
 
       case IsometricEditorGameObjectRequest.Toggle_Physical:
         if (selectedGameObject == null) return;
-        selectedGameObject.enabledPhysical = !selectedGameObject.enabledPhysical;
+        selectedGameObject.physical = !selectedGameObject.physical;
         player.writeEditorGameObjectSelected();
         break;
 

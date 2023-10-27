@@ -73,12 +73,12 @@ class SceneWriter extends ByteWriter {
       writeByte(gameObject.team);
 
       writeByte(writeBits(
-          gameObject.enabledCollidable,
+          gameObject.collidable,
           gameObject.collectable,
           gameObject.enabledFixed,
           gameObject.enabledGravity,
-          gameObject.enabledHit,
-          gameObject.enabledPhysical,
+          gameObject.hitbox,
+          gameObject.physical,
           gameObject.interactable,
           gameObject.destroyable,
       ));

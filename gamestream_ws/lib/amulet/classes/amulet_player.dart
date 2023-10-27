@@ -1621,8 +1621,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     if (
       equippedWeaponIndex == -1 &&
       value is GameObject &&
-      value.type == ItemType.Object &&
-      value.subType == ObjectType.Crystal_Glowing_False
+      value.hitbox
     ){
       return;
     }

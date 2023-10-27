@@ -16,12 +16,12 @@ abstract class Collider extends Position {
   var physicsVelocityZ = 0.0;
   var physicsFriction = Physics.Friction;
   var physicsBounce = false;
-  var physicsRadius = 0.0;
+  var radius = 0.0;
 
-  var enabledCollidable = true;
-  var enabledHit = true;
+  var collidable = true;
+  var hitbox = true;
   var enabledGravity = true;
-  var enabledPhysical = true;
+  var physical = true;
   var enabledFixed = true;
 
   var startPositionX = 0.0;
@@ -47,7 +47,7 @@ abstract class Collider extends Position {
     this.x = x;
     this.y = y;
     this.z = z;
-    this.physicsRadius = radius;
+    this.radius = radius;
     saveStartAsCurrentPosition();
   }
 
@@ -62,16 +62,16 @@ abstract class Collider extends Position {
   double get velocityAngle => rad(physicsVelocityX, physicsVelocityY);
 
   /// Expensive Operation
-  double get boundsLeft => x - physicsRadius;
+  double get boundsLeft => x - radius;
 
   /// Expensive Operation
-  double get boundsRight => x + physicsRadius;
+  double get boundsRight => x + radius;
 
   /// Expensive Operation
-  double get boundsTop => y - physicsRadius;
+  double get boundsTop => y - radius;
 
   /// Expensive Operation
-  double get boundsBottom => y + physicsRadius;
+  double get boundsBottom => y + radius;
 
   /// SETTERS
   void set velocitySpeed(double value){

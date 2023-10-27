@@ -123,9 +123,9 @@ class Character extends Collider {
       this.name = name;
     }
     enabledFixed = false;
-    enabledPhysical = true;
-    enabledHit = true;
-    physicsRadius = CharacterType.getRadius(characterType);
+    physical = true;
+    hitbox = true;
+    radius = CharacterType.getRadius(characterType);
     setDestinationToCurrentPosition();
 
     if (doesWander) {
@@ -263,8 +263,8 @@ class Character extends Collider {
     z = startPositionZ;
     active = true;
     health = maxHealth;
-    enabledPhysical = true;
-    enabledHit = true;
+    physical = true;
+    hitbox = true;
     characterState = CharacterState.Spawning;
     frame = 0;
     actionDuration = duration;
@@ -294,7 +294,7 @@ class Character extends Collider {
     if ((target.z - z).abs() > Character_Height)
       return false;
     if (target is Collider) {
-      return withinRadiusPosition(target, Interact_Radius + target.physicsRadius);
+      return withinRadiusPosition(target, Interact_Radius + target.radius);
     }
     return withinRadiusPosition(target, Interact_Radius);
   }
@@ -312,7 +312,7 @@ class Character extends Collider {
     if ((target.z - z).abs() > Character_Height)
       return false;
     if (target is Collider) {
-      return withinRadiusPosition(target, weaponRange + target.physicsRadius);
+      return withinRadiusPosition(target, weaponRange + target.radius);
     }
     return withinRadiusPosition(target, weaponRange);
   }

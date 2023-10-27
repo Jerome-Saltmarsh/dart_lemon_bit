@@ -641,7 +641,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       if (value.collectable){
         return TargetAction.Collect;
       }
-      if (value.enabledPhysical && value.enabledHit){
+      if (value.physical && value.hitbox){
         return TargetAction.Attack;
       }
       return TargetAction.Run;
@@ -835,10 +835,10 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeByte(NetworkResponse.Editor);
     writeByte(NetworkResponseEditor.Editor_GameObject_Selected);
     writeUInt16(selectedGameObject.id);
-    writeBool(selectedGameObject.enabledHit);
+    writeBool(selectedGameObject.hitbox);
     writeBool(selectedGameObject.enabledFixed);
     writeBool(selectedGameObject.collectable);
-    writeBool(selectedGameObject.enabledPhysical);
+    writeBool(selectedGameObject.physical);
     writeBool(selectedGameObject.persistable);
     writeBool(selectedGameObject.enabledGravity);
   }
@@ -999,7 +999,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       writeByte(IsometricType.GameObject);
       writeString(gameObject.runtimeType.toString());
       writeUInt16(gameObject.team);
-      writeUInt16(gameObject.physicsRadius.toInt());
+      writeUInt16(gameObject.radius.toInt());
       writeUInt16(gameObject.health);
       writeUInt16(gameObject.healthMax);
       writeIsometricPosition(gameObject);
@@ -1015,7 +1015,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       writeByte(character.action);
       writeByte(character.goal);
       writeUInt16(character.team);
-      writeUInt16(character.physicsRadius.toInt());
+      writeUInt16(character.radius.toInt());
       writeUInt16(selectedCollider.health);
       writeUInt16(selectedCollider.maxHealth);;
       writeIsometricPosition(character);
