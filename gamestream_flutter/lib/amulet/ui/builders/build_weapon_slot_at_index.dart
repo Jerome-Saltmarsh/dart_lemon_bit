@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/amulet/amulet.dart';
 import 'package:gamestream_flutter/gamestream/ui.dart';
-import 'package:gamestream_flutter/packages/common/src/amulet/amulet_item.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
@@ -11,18 +10,32 @@ Widget buildWeaponSlotAtIndex(int index, {
   required Amulet amulet,
   double size = 64,
 }) {
+
+  final activeBorder = Container(
+    decoration: BoxDecoration(
+      border: Border.all(color: Colors.white, width: 2),
+      borderRadius: borderRadius4,
+        color: Colors.black12
+    ),
+    width: size,
+    height: size,
+    // rounded: true,
+  );
+
+  final notActiveBorder = Container(
+    decoration: BoxDecoration(
+      borderRadius: borderRadius4,
+      color: Colors.white12
+    ),
+    width: size,
+    height: size,
+    // rounded: true,
+  );
+
   final backgroundSelectedWeapon = buildWatch(
       amulet.equippedWeaponIndex,
-          (equippedWeaponIndex) => GSContainer(
-        color: index == equippedWeaponIndex
-            ? Colors.green
-            : Colors.white12,
-        // ? Colors.white12
-        // : Colors.black12,
-        width: size,
-        height: size,
-        rounded: true,
-      ));
+          (equippedWeaponIndex) => equippedWeaponIndex == index ? activeBorder : notActiveBorder
+  );
 
   final backgroundActivePower = buildWatch(amulet.activatedPowerIndex, (activatedPowerIndex){
     if (index != activatedPowerIndex)
@@ -148,7 +161,7 @@ Widget buildWeaponSlotAtIndex(int index, {
           ],
         ),
       ),
-      height2,
+      height4,
       watchCharges,
     ],
   );
