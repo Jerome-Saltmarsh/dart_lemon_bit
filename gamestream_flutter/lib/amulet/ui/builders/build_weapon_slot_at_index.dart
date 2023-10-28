@@ -42,7 +42,7 @@ Widget buildWeaponSlotAtIndex(int index, {
       return nothing;
 
     return GSContainer(
-      color: Colors.green.withOpacity(0.5),
+      color: Colors.purple.withOpacity(0.5),
       width: size,
       height: size,
       rounded: true,
@@ -55,19 +55,21 @@ Widget buildWeaponSlotAtIndex(int index, {
   final weapons = amulet.weapons;
   final itemSlotWeapon = weapons[index];
 
-  final chargeColorFull = Colors.green;
-  final chargeColorEmpty = Colors.green.withOpacity(0.2);
+  final chargeColorFull = Colors.blue;
+  final chargeColorEmpty = chargeColorFull.withOpacity(0.2);
+
+  final chargesNotRemainingContainer = GSContainer(
+    color: Colors.red.withOpacity(0.5),
+    width: size,
+    height: size,
+    rounded: true,
+  );
 
   final watchChargesRemaining = buildWatch(itemSlotWeapon.chargesRemaining, (chargesRemaining) {
     if (chargesRemaining){
       return nothing;
     }
-    return GSContainer(
-      color: Colors.red.withOpacity(0.5),
-      width: size,
-      height: size,
-      rounded: true,
-    );
+    return chargesNotRemainingContainer;
   });
 
   final watchAmuletItem = buildWatch(itemSlotWeapon.amuletItem, (amuletItem){
@@ -97,7 +99,7 @@ Widget buildWeaponSlotAtIndex(int index, {
             width: chargeWidthLeft,
             height: size * goldenRatio_0381,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(topLeft: radius, bottomLeft: radius),
+              borderRadius: const BorderRadius.only(topLeft: radius, bottomLeft: radius),
               color: rechargeBarColorFull,
             ),
           ),
@@ -105,7 +107,7 @@ Widget buildWeaponSlotAtIndex(int index, {
             width: chargeWidthRight,
             height: size * goldenRatio_0381,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(topRight: radius, bottomRight: radius),
+              borderRadius: const BorderRadius.only(topRight: radius, bottomRight: radius),
               color: rechargeBarColorEmpty,
             ),
           ),
