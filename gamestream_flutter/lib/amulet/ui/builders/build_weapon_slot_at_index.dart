@@ -46,10 +46,36 @@ Widget buildWeaponSlotAtIndex(int index, {
   final chargeColorEmpty = Colors.green.withOpacity(0.2);
 
   final watchCharges = buildWatch(itemSlotWeapon.max, (maxCharges) {
+
+    final chargeWidth = size / maxCharges;
+
+    final rechargeBar = buildWatch(itemSlotWeapon.cooldownPercentage, (cooldownPerc) {
+
+      final chargeWidthLeft = chargeWidth * cooldownPerc;
+      final chargeWidthRight = chargeWidth - chargeWidthLeft;
+
+      return Row(
+        children: [
+          Container(
+            width: chargeWidthLeft,
+            height: size * goldenRatio_0381,
+            color: Colors.orangeAccent,
+          ),
+          Container(
+            width: chargeWidthRight,
+            height: size * goldenRatio_0381,
+            color: Colors.orangeAccent.withOpacity(0.2),
+          ),
+        ],
+      );
+    });
+
     return buildWatch(itemSlotWeapon.charges, (charges) {
-      final chargeWidth = size / maxCharges;
       return Row(
         children: List.generate(maxCharges, (index) {
+          if (index == charges){
+            return rechargeBar;
+          }
           return Container(
             width: chargeWidth,
             height: size * goldenRatio_0381,
