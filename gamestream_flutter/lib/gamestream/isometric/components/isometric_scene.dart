@@ -4,20 +4,20 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:gamestream_flutter/gamestream/isometric/classes/particle_roam.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_nodes.dart';
-import 'package:gamestream_flutter/gamestream/isometric/functions/src.dart';
-import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
-import 'package:gamestream_flutter/packages/common.dart';
-import 'package:lemon_engine/lemon_engine.dart';
-import 'package:lemon_math/src.dart';
-import 'package:lemon_watch/src.dart';
-import 'package:gamestream_flutter/isometric/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
+import 'package:gamestream_flutter/gamestream/isometric/enums/node_visibility.dart';
+import 'package:gamestream_flutter/gamestream/isometric/functions/src.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
+import 'package:gamestream_flutter/isometric/functions/get_render.dart';
+import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/packages/lemon_components.dart';
+import 'package:lemon_engine/lemon_engine.dart';
+import 'package:lemon_math/src.dart';
+import 'package:lemon_watch/src.dart';
 
 import '../../../isometric/classes/position.dart';
 import 'functions/convert_seconds_to_ambient_alpha.dart';
@@ -2050,7 +2050,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     if (outOfBoundsPosition(position))
       return false;
 
-    return nodeVisibility[getIndexPosition(position)] != Visibility.invisible;
+    return nodeVisibility[getIndexPosition(position)] != NodeVisibility.invisible;
   }
 
   int getNodeTypeAtPosition(Position position) =>
@@ -2312,7 +2312,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     }
 
     for (var i = 0; i < visited3DStackIndex; i++){
-      nodeVisibility[visited3DStack[i]] = Visibility.opaque;
+      nodeVisibility[visited3DStack[i]] = NodeVisibility.opaque;
     }
 
     this.visited2DStackIndex = 0;
@@ -2345,6 +2345,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     final area = this.area;
     final nodeVisibility = this.nodeVisibility;
     final visited3DStack = this.visited3DStack;
+    final nodeOrientations = this.nodeOrientations;
 
     var j = 0;
 
@@ -2354,7 +2355,7 @@ class IsometricScene with IsometricComponent implements Updatable {
        if (hide || nodeOrientations[index] != NodeOrientation.None){
          hide = true;
          if (j >= 1) {
-           nodeVisibility[index] = (space || j >= 2) ? Visibility.invisible : Visibility.transparent;
+           nodeVisibility[index] = (space || j >= 2) ? NodeVisibility.invisible : NodeVisibility.transparent;
            visited3DStack[visited3DStackIndex++] = index;
          }
        } else {

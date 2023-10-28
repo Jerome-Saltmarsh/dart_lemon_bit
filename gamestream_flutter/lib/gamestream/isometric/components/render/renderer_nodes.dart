@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+
+import 'package:gamestream_flutter/gamestream/isometric/enums/node_visibility.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_src_nodes_y.dart';
@@ -201,11 +203,11 @@ class RendererNodes extends RenderGroup {
               if (srcY != null) {
 
                 final visibility = nodeVisibility[nodeIndex];
-                if (visibility != Visibility.invisible) {
+                if (visibility != NodeVisibility.invisible) {
                   if (visibility != previousVisibility) {
                     engine.flushBuffer();
                     previousVisibility = visibility;
-                    if (visibility == Visibility.transparent) {
+                    if (visibility == NodeVisibility.transparent) {
                       engine.color = colorTransparent;
                     } else {
                       engine.color = Colors.white;
@@ -487,11 +489,11 @@ class RendererNodes extends RenderGroup {
               } else {
 
                 final visibility = scene.nodeVisibility[nodeIndex];
-                if (visibility != Visibility.invisible) {
+                if (visibility != NodeVisibility.invisible) {
                   if (visibility != previousVisibility) {
                     engine.flushBuffer();
                     previousVisibility = visibility;
-                    if (visibility == Visibility.transparent) {
+                    if (visibility == NodeVisibility.transparent) {
                       engine.color = colorTransparent;
                     } else {
                       engine.color = Colors.white;
@@ -733,6 +735,7 @@ class RendererNodes extends RenderGroup {
     final types = scene.nodeTypes;
     final area = scene.area;
     final projection = scene.projection;
+    final visited2D = scene.visited2D;
 
     while (projectionIndex < totalNodes){
       if (orientations[projectionIndex] != NodeOrientation.None && !const [
@@ -743,7 +746,7 @@ class RendererNodes extends RenderGroup {
         NodeType.Tree_Bottom,
         NodeType.Grass_Long,
       ].contains(types[projectionIndex])){
-        if (!scene.visited2D[projectionIndex % area]){
+        if (!visited2D[projectionIndex % area]){
           scene.emitHeightMapIsland(projectionIndex - (zi * area));
         }
       }
@@ -757,7 +760,7 @@ class RendererNodes extends RenderGroup {
     final stack = nodeVisibilityStack;
     final nodeVisibility = scene.nodeVisibility;
     for (var i = 0; i < total; i++){
-       nodeVisibility[stack[i]] = Visibility.opaque;
+       nodeVisibility[stack[i]] = NodeVisibility.opaque;
     }
     nodeVisibilityStackIndex = 0;
   }
@@ -3617,7 +3620,7 @@ class RendererNodes extends RenderGroup {
       if (scene.nodeOrientations[targetIndex] == NodeOrientation.None)
         continue;
 
-      scene.nodeVisibility[targetIndex] = Visibility.transparent;
+      scene.nodeVisibility[targetIndex] = NodeVisibility.transparent;
       nodeVisibilityStack[nodeVisibilityStackIndex++] = targetIndex;
       targetIndex += scene.projection;
     }
@@ -3716,7 +3719,7 @@ class RendererNodes extends RenderGroup {
 
       if ((vx > 0 || vy > 0) && !(vx < 0 || vy < 0)) {
         var i = scene.getIndexZRC(initialZ, row, column);
-        emitVisibilityVertical(i, Visibility.invisible);
+        emitVisibilityVertical(i, NodeVisibility.invisible);
       } else {
 
         while (
@@ -3729,7 +3732,7 @@ class RendererNodes extends RenderGroup {
         if (targetIndex >= totalNodes){
           continue;
         } else {
-          emitVisibilityVertical(targetIndex, Visibility.invisible);
+          emitVisibilityVertical(targetIndex, NodeVisibility.invisible);
         }
 
       }
@@ -3779,11 +3782,7 @@ class RendererNodes extends RenderGroup {
 
 }
 
-class Visibility {
-  static const opaque = 0;
-  static const transparent = 1;
-  static const invisible = 2;
-}
+
 
 int mapVariationToTreeType(int variation){
   if (variation < 126) {

@@ -2,6 +2,10 @@ import 'package:gamestream_flutter/gamestream/isometric/classes/src.dart';
 import 'package:gamestream_flutter/packages/common/src.dart';
 import 'package:lemon_math/src.dart';
 
+
+/// x: 00 - 10
+/// y: 11 - 20
+/// z: 21 - 31
 class Particle extends Position {
 
   var blownByWind = true;
@@ -79,9 +83,9 @@ class Particle extends Position {
 
   void applyAirFriction(){
     const gravity = 0.04;
-    vz -= gravity * weight;
     vx *= frictionAir;
     vy *= frictionAir;
+    vz -= gravity * weight;
   }
 
   void applyFloorFriction(){
@@ -92,21 +96,9 @@ class Particle extends Position {
     rotationVelocity *= rotationFriction;
   }
 
-  // void applyLimits(){
-  //   if (scale < 0) {
-  //     scale = 0;
-  //     deactivate();
-  //   }
-  //   if (z <= 0) {
-  //     z = 0;
-  //     deactivate();
-  //   }
-  // }
-
   @override
-  String toString() {
-    return '{x: ${x.toInt()}, y: ${y.toInt()}, z: ${z.toInt()}, active: $active, type: ${ParticleType.getName(type)}';
-  }
+  String toString() =>
+      '{x: ${x.toInt()}, y: ${y.toInt()}, z: ${z.toInt()}, active: $active, type: ${ParticleType.getName(type)}';
 
   static int compare(Particle a, Particle b){
      final aActive = a.active;

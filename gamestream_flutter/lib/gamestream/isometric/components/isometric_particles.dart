@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/gamestream/isometric/classes/particle_butterf
 import 'package:gamestream_flutter/gamestream/isometric/classes/particle_glow.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/particle_whisp.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_scene.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/render/renderer_nodes.dart';
+import 'package:gamestream_flutter/gamestream/isometric/enums/node_visibility.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/packages/common/src/types/src.dart';
@@ -1084,7 +1084,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
       final index = (indexZ * sceneArea) + (indexX * sceneColumns) + indexY;
 
-      if (nodeVisibility[index] == Visibility.invisible && particle.onscreen){
+      if (nodeVisibility[index] == NodeVisibility.invisible && particle.onscreen){
         particle.onscreen = false;
       }
 
