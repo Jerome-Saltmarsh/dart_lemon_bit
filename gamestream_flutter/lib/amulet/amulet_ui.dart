@@ -203,7 +203,7 @@ class AmuletUI {
     rounded: true,
     child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: List.generate(amulet.weapons.length, (index) => buildWeaponSlotAtIndex(index, amulet: amulet)),
         ),
   );

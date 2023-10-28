@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/amulet/amulet.dart';
 import 'package:gamestream_flutter/amulet/ui/widgets/build_text_percentage.dart';
+import 'package:gamestream_flutter/gamestream/ui.dart';
 import 'package:gamestream_flutter/gamestream/ui/builders/build_watch.dart';
 import 'package:gamestream_flutter/gamestream/ui/constants/height.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/gs_container.dart';
@@ -49,22 +50,33 @@ Widget buildWeaponSlotAtIndex(int index, {
 
     final chargeWidth = size / maxCharges;
 
+    final rechargeBarColorFull =  Colors.orangeAccent;
+    final rechargeBarColorEmpty =  Colors.orangeAccent.withOpacity(0.2);
+
     final rechargeBar = buildWatch(itemSlotWeapon.cooldownPercentage, (cooldownPerc) {
 
       final chargeWidthLeft = chargeWidth * cooldownPerc;
       final chargeWidthRight = chargeWidth - chargeWidthLeft;
+
+      const radius = Radius.circular(2);
 
       return Row(
         children: [
           Container(
             width: chargeWidthLeft,
             height: size * goldenRatio_0381,
-            color: Colors.orangeAccent,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(topLeft: radius, bottomLeft: radius),
+              color: rechargeBarColorFull,
+            ),
           ),
           Container(
             width: chargeWidthRight,
             height: size * goldenRatio_0381,
-            color: Colors.orangeAccent.withOpacity(0.2),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(topRight: radius, bottomRight: radius),
+              color: rechargeBarColorEmpty,
+            ),
           ),
         ],
       );
@@ -79,7 +91,10 @@ Widget buildWeaponSlotAtIndex(int index, {
           return Container(
             width: chargeWidth,
             height: size * goldenRatio_0381,
-            color: index < charges ? chargeColorFull : chargeColorEmpty,
+            decoration: BoxDecoration(
+              color: index < charges ? chargeColorFull : chargeColorEmpty,
+              borderRadius: borderRadius2,
+            ),
           );
         }),
       );
@@ -91,8 +106,6 @@ Widget buildWeaponSlotAtIndex(int index, {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        watchCharges,
-        height4,
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 2),
           child: Stack(
@@ -115,27 +128,27 @@ Widget buildWeaponSlotAtIndex(int index, {
                     color: Colors.white70,
                   )
               ),
-              if (amuletItem != null)
-              Positioned(
-                  bottom: 8,
-                  right: 8,
-                  child: buildWatch(
-                      weapons[index].cooldownPercentage,
-                      buildTextPercentage,
-                  )
-              ),
-              if (amuletItem != null)
-              Positioned(
-                  bottom: 8,
-                  left: 8,
-                  child: buildWatch(weapons[index].charges, buildText)
-              ),
-              if (amuletItem != null)
-              Positioned(
-                  top: 8,
-                  right: 8,
-                  child: buildWatch(weapons[index].max, buildText)
-              )
+              // if (amuletItem != null)
+              // Positioned(
+              //     bottom: 8,
+              //     right: 8,
+              //     child: buildWatch(
+              //         weapons[index].cooldownPercentage,
+              //         buildTextPercentage,
+              //     )
+              // ),
+              // if (amuletItem != null)
+              // Positioned(
+              //     bottom: 8,
+              //     left: 8,
+              //     child: buildWatch(weapons[index].charges, buildText)
+              // ),
+              // if (amuletItem != null)
+              // Positioned(
+              //     top: 8,
+              //     right: 8,
+              //     child: buildWatch(weapons[index].max, buildText)
+              // )
             ],
           ),
         ),
@@ -149,7 +162,10 @@ Widget buildWeaponSlotAtIndex(int index, {
         //     Container(width: 8, height: 8, color: Colors.white38,),
         //   ],
         // )
+        height2,
+        watchCharges,
       ],
+
     );
   });
 
