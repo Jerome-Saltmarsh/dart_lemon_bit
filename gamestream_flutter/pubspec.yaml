@@ -57,6 +57,7 @@ flutter:
     - images/website/
     - images/characters/
     - sprites/isometric/
+    - sprites/isometric/gameobjects/
     - sprites/isometric/flame/
     - sprites/isometric/kid/south/arms_left/regular/
     - sprites/isometric/kid/south/arms_right/regular/

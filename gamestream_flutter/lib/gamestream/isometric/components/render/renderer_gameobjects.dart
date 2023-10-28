@@ -7,6 +7,15 @@ import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 
+class SurfaceIndex {
+  static const east = 0;
+  static const north = 1;
+  static const solid = 2;
+  static const south = 3;
+  static const top = 4;
+  static const west = 5;
+}
+
 class RendererGameObjects extends RenderGroup {
 
 
@@ -20,6 +29,10 @@ class RendererGameObjects extends RenderGroup {
     final gameObject = this.gameObject;
     final type = gameObject.type;
     final subType = gameObject.subType;
+    final render = this.render;
+    final engine = this.engine;
+    final images = this.images;
+    final scene = this.scene;
 
     if (type == ItemType.Object && subType == ObjectType.Sphere){
 
@@ -107,8 +120,6 @@ class RendererGameObjects extends RenderGroup {
 
       final color = (subType == ObjectType.Crystal_Glowing_False ? colors.purple_3 : colors.aqua_2).value;
 
-      // render.textPosition(gameObject, ObjectType.getName(subType), offsetY: -50);
-
       render.sprite(
           sprite: sprite,
           frame: sprite.getFrame(row: 0, column: 0),
@@ -190,6 +201,88 @@ class RendererGameObjects extends RenderGroup {
           anchorY: anchorY,
         );
       }
+
+      engine.setBlendModeDstATop();
+      return;
+    }
+
+    if (
+      type == ItemType.Object &&
+      const [
+        ObjectType.Rock1,
+      ].contains(subType)
+    ){
+      final scene = this.scene;
+      final gameObjectIndex = scene.getIndexPosition(gameObject);
+      const scale = 0.15;
+
+      final dstX = gameObject.renderX;
+      final dstY = gameObject.renderY;
+      const anchorY = 0.66;
+
+      final sprite = images.rock1;
+
+      engine.setBlendModeModulate();
+
+      render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: SurfaceIndex.solid),
+        color: colors.grey_1.value,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+
+      render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: SurfaceIndex.south),
+        color: scene.colorSouth(gameObjectIndex),
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+
+      render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: SurfaceIndex.top),
+        color: scene.colorAbove(gameObjectIndex),
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+
+      render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: SurfaceIndex.west),
+        color: scene.colorWest(gameObjectIndex),
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+
+      render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: SurfaceIndex.north),
+        color: scene.colorNorth(gameObjectIndex),
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+
+      render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: SurfaceIndex.east),
+        color: scene.colorEast(gameObjectIndex),
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
 
       engine.setBlendModeDstATop();
       return;

@@ -483,12 +483,10 @@ class RendererNodes extends RenderGroup {
                       );
                       break;
                   }
-                  // engine.flushBuffer();
-                  // engine.renderText(compositor.order.toString(), dstX - 10, dstY - 10);
                 }
               } else {
 
-                final visibility = scene.nodeVisibility[nodeIndex];
+                final visibility = nodeVisibility[nodeIndex];
                 if (visibility != NodeVisibility.invisible) {
                   if (visibility != previousVisibility) {
                     engine.flushBuffer();
@@ -531,18 +529,6 @@ class RendererNodes extends RenderGroup {
                           animationFrame: animationFrame1 + variations[nodeIndex],
                         );
                       }
-                      // if (renderRainFalling) {
-                      //   renderNodeRainFalling(
-                      //     dstX: dstX,
-                      //     dstY: dstY,
-                      //     color: nodeColors[nodeIndex],
-                      //     rainType: rainType,
-                      //     windType: windType,
-                      //     animationFrame: (animationFrame1 +
-                      //         variations[nodeIndex]),
-                      //   );
-                      // }
-
                       break;
 
                     default:

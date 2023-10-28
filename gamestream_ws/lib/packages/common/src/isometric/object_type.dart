@@ -38,6 +38,7 @@ class ObjectType {
   static const Crystal_Glowing_False = 12;
   static const Crystal_Glowing_True = 41;
   static const Sphere = 42;
+  static const Rock1 = 43;
 
   static bool isMaterialMetal(int value) => const [
       Barrel_Explosive
@@ -86,6 +87,7 @@ class ObjectType {
       Grenade: 'Grenade',
       Crystal_Glowing_True: 'Crystal Glowing',
       Sphere: 'Sphere',
+      Rock1: 'Rock1',
     }[value] ?? 'object-type-unknown-$value';
   }
 
@@ -126,7 +128,8 @@ class ObjectType {
     Flag_Spawn_Blue,
     Grenade,
     Crystal_Glowing_True,
-    Sphere
+    Sphere,
+    Rock1,
   ];
 
 }

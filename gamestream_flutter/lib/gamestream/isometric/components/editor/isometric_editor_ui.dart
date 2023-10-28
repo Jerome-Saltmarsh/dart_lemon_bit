@@ -29,6 +29,7 @@ extension IsometricEditorUI on IsometricEditor {
     ObjectType.Barrel_Explosive,
     ObjectType.Crate_Wooden,
     ObjectType.Sphere,
+    ObjectType.Rock1,
   ];
 
   static const editorGridTypesColumn1 = [
