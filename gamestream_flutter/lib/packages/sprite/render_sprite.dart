@@ -22,15 +22,13 @@ void spriteExternal({
 
   final spriteSrc = sprite.src;
   final spriteDst = sprite.dst;
-  final atlasX = sprite.atlasX;
-  final atlasY = sprite.atlasY;
   final f = frame * 4;
   final dstLeft = spriteSrc[f + 0];
   final dstTop = spriteSrc[f + 1];
-  final srcLeft = spriteDst[f + 0] + atlasX;
-  final srcTop = spriteDst[f + 1] + atlasY;
-  final srcRight = spriteDst[f + 2] + atlasX;
-  final srcBottom = spriteDst[f + 3] + atlasY;
+  final srcLeft = spriteDst[f + 0];
+  final srcTop = spriteDst[f + 1];
+  final srcRight = spriteDst[f + 2];
+  final srcBottom = spriteDst[f + 3];
 
   renderCanvasAbs(
     canvas: canvas,

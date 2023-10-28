@@ -612,17 +612,26 @@ class IsometricImages with IsometricComponent {
     try {
       image = image ?? await loadImageAsset('$name.png');
       final json = await loadAssetJson('$name.json');
+
+      final dst = parse<Float32List>(json['dst']);
+      final length = dst.length;
+
+      for (var i = 0; i < length; i += 4){
+        dst[i + 0] += atlasX;
+        dst[i + 1] += atlasY;
+        dst[i + 2] += atlasX;
+        dst[i + 3] += atlasY;
+      }
+
       return Sprite(
         image: image,
         src: parse(json['src']),
-        dst: parse(json['dst']),
+        dst: dst,
         rows: parse(json['rows']),
         columns: parse(json['columns']),
         srcWidth: parse(json['width']),
         srcHeight: parse(json['height']),
         mode: mode,
-        atlasX: atlasX,
-        atlasY: atlasY,
       );
     } catch(e) {
       print(e);

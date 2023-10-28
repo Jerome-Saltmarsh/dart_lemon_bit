@@ -13,8 +13,6 @@ class Sprite {
   final int mode;
   final double srcWidth;
   final double srcHeight;
-  final int atlasX;
-  final int atlasY;
 
   Sprite({
     required this.image,
@@ -25,8 +23,6 @@ class Sprite {
     required this.mode,
     required this.srcWidth,
     required this.srcHeight,
-    this.atlasX = 0,
-    this.atlasY = 0,
   });
 
   int getFramePercentage(int row, double actionComplete) {

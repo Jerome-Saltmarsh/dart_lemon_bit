@@ -78,21 +78,19 @@ class IsometricRender with IsometricComponent {
     if (sprite.src.isEmpty)
       return;
 
+    final engine = this.engine;
     engine.bufferImage = sprite.image;
     final spriteSrc = sprite.src;
     final spriteDst = sprite.dst;
-    final atlasX = sprite.atlasX;
-    final atlasY = sprite.atlasY;
     final f = frame * 4;
     final srcLeft = spriteSrc[f + 0];
     final srcTop = spriteSrc[f + 1];
-
     engine.render(
         color: color,
-        srcLeft: spriteDst[f + 0] + atlasX,
-        srcTop: spriteDst[f + 1] + atlasY,
-        srcRight: spriteDst[f + 2] + atlasX,
-        srcBottom: spriteDst[f + 3] + atlasY,
+        srcLeft: spriteDst[f + 0],
+        srcTop: spriteDst[f + 1],
+        srcRight: spriteDst[f + 2],
+        srcBottom: spriteDst[f + 3],
         scale: scale,
         rotation: 0,
         dstX: dstX - (sprite.srcWidth * anchorX * scale) + (srcLeft * scale),
