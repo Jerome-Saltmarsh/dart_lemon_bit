@@ -36,18 +36,33 @@ Widget buildWeaponSlotAtIndex(int index, {
     );
   });
 
-  final backgroundNoChargesRemaining =  GSContainer(
-    color: Colors.red.withOpacity(0.5),
-    width: size,
-    height: size,
-    rounded: true,
-  );
+
+
 
   final weapons = amulet.weapons;
   final itemSlotWeapon = weapons[index];
 
   final chargeColorFull = Colors.green;
   final chargeColorEmpty = Colors.green.withOpacity(0.2);
+
+  final watchChargesRemaining = buildWatch(itemSlotWeapon.chargesRemaining, (chargesRemaining) {
+    if (chargesRemaining){
+      return nothing;
+    }
+    return GSContainer(
+      color: Colors.red.withOpacity(0.5),
+      width: size,
+      height: size,
+      rounded: true,
+    );
+  });
+
+  final watchAmuletItem = buildWatch(itemSlotWeapon.amuletItem, (amuletItem){
+      if (amuletItem == null){
+        return nothing;
+      }
+      return watchChargesRemaining;
+  });
 
   final watchCharges = buildWatch(itemSlotWeapon.max, (maxCharges) {
 
@@ -104,79 +119,39 @@ Widget buildWeaponSlotAtIndex(int index, {
     });
   });
 
-  return buildWatch(itemSlotWeapon.amuletItem, (AmuletItem? amuletItem) {
-
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 2),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              backgroundSelectedWeapon,
-              backgroundActivePower,
-              buildWatch(itemSlotWeapon.chargesRemaining, (t) {
-                if (t){
-                  return nothing;
-                }
-                return backgroundNoChargesRemaining;
-              }),
-              Positioned(
-                  child: buildItemSlot(
-                      weapons[index],
-                      amulet: amulet,
-                      color: Colors.transparent
-                  )
-              ),
-              Positioned(
-                  top: 8,
-                  left: 8,
-                  child: buildText(
-                    const['A', 'S', 'D', 'F'][index],
-                    color: Colors.white70,
-                  )
-              ),
-              // if (amuletItem != null)
-              // Positioned(
-              //     bottom: 8,
-              //     right: 8,
-              //     child: buildWatch(
-              //         weapons[index].cooldownPercentage,
-              //         buildTextPercentage,
-              //     )
-              // ),
-              // if (amuletItem != null)
-              // Positioned(
-              //     bottom: 8,
-              //     left: 8,
-              //     child: buildWatch(weapons[index].charges, buildText)
-              // ),
-              // if (amuletItem != null)
-              // Positioned(
-              //     top: 8,
-              //     right: 8,
-              //     child: buildWatch(weapons[index].max, buildText)
-              // )
-            ],
-          ),
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.end,
+    children: [
+      Container(
+        margin: const EdgeInsets.symmetric(horizontal: 2),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            backgroundSelectedWeapon,
+            backgroundActivePower,
+            watchAmuletItem,
+            Positioned(
+                child: buildItemSlot(
+                    weapons[index],
+                    amulet: amulet,
+                    color: Colors.transparent
+                )
+            ),
+            Positioned(
+                top: 8,
+                left: 8,
+                child: buildText(
+                  const['A', 'S', 'D', 'F'][index],
+                  color: Colors.white70,
+                )
+            ),
+          ],
         ),
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.center,
-        //   children: [
-        //     Container(width: 8, height: 8, color: Colors.white,),
-        //     width4,
-        //     Container(width: 8, height: 8, color: Colors.white,),
-        //     width4,
-        //     Container(width: 8, height: 8, color: Colors.white38,),
-        //   ],
-        // )
-        height2,
-        watchCharges,
-      ],
-
-    );
-  });
+      ),
+      height2,
+      watchCharges,
+    ],
+  );
 
 
 }
