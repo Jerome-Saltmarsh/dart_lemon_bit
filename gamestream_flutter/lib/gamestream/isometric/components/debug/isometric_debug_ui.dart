@@ -724,9 +724,9 @@ extension isometricDebugUI on IsometricDebug {
          buildRowRefresh('smoke-sources', () => scene.smokeSourcesTotal),
          buildRowRefresh('total-gameobjects', () => scene.gameObjects.length),
          buildRowRefresh('total-characters', () => scene.totalCharacters),
-         buildRowRefresh('screen-top-left-column', () {
-           return convertRenderToColumn(engine.Screen_Right, engine.Screen_Top, 0);
-         }),
+         buildRowRefresh('total_columns', () => scene.totalColumns),
+         buildRowRefresh('total_rows', () => scene.totalRows),
+         buildRowRefresh('total_z', () => scene.totalZ),
     ],
   );
 
