@@ -222,17 +222,17 @@ class RendererGameObjects extends RenderGroup {
 
       final sprite = images.rock1;
 
-      engine.setBlendModeModulate();
+      // engine.setBlendModeModulate();
 
-      render.sprite(
-        sprite: sprite,
-        frame: sprite.getFrame(row: 0, column: SurfaceIndex.solid),
-        color: colors.grey_1.value,
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
+      // render.sprite(
+      //   sprite: sprite,
+      //   frame: sprite.getFrame(row: 0, column: SurfaceIndex.solid),
+      //   color: colors.grey_1.value,
+      //   scale: scale,
+      //   dstX: dstX,
+      //   dstY: dstY,
+      //   anchorY: anchorY,
+      // );
 
       render.sprite(
         sprite: sprite,
@@ -247,7 +247,7 @@ class RendererGameObjects extends RenderGroup {
       render.sprite(
         sprite: sprite,
         frame: sprite.getFrame(row: 0, column: SurfaceIndex.top),
-        color: scene.colorAbove(gameObjectIndex),
+        color: scene.nodeColors[gameObjectIndex],
         scale: scale,
         dstX: dstX,
         dstY: dstY,
@@ -284,7 +284,7 @@ class RendererGameObjects extends RenderGroup {
         anchorY: anchorY,
       );
 
-      engine.setBlendModeDstATop();
+      // engine.setBlendModeDstATop();
       return;
     }
 
