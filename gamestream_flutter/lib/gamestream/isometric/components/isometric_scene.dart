@@ -2338,7 +2338,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     }
 
     final i = (row * totalColumns) + column;
-    if (heightMap[i] <= z || visited2D[i]){
+    if (visited2D[i] || heightMap[i] <= z){
       return;
     }
 

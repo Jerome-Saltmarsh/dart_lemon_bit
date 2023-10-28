@@ -685,13 +685,15 @@ class RendererNodes extends RenderGroup {
     scene.resetNodeVisibility();
     beamTotal = 0;
 
-    var searchIndex = 0;
-    if (scene.nodeOrientations[scene.area + scene.area] == NodeOrientation.None){
-      searchIndex = player.nodeIndex + scene.area + scene.area;
-    } else {
-      searchIndex = player.nodeIndex + scene.area;
-    }
-    scene.emitHeightMapIsland(searchIndex);
+    // var searchIndex = 0;
+    // if (scene.nodeOrientations[scene.area + scene.area] == NodeOrientation.None){
+    //   searchIndex = player.nodeIndex + scene.area + scene.area;
+    // } else {
+    //   searchIndex = player.nodeIndex + scene.area;
+    // }
+    // scene.emitHeightMapIsland(searchIndex);
+    // scene.emitHeightMapIsland(player.nodeIndex + scene.area);
+    scene.emitHeightMapIsland(player.nodeIndex);
     ensureVisible2(player.nodeIndex);
 
     if (player.indexRow + 1 < scene.totalRows - 1){
