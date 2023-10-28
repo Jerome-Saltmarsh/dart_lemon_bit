@@ -1088,8 +1088,10 @@ class RendererNodes extends RenderGroup {
         renderBoulder(
           dstX: dstX,
           dstY: dstY,
-          colorWest: scene.colorWest(index),
+          colorNorth: scene.colorNorth(index),
+          colorEast: scene.colorEast(index),
           colorSouth: scene.colorSouth(index),
+          colorWest: scene.colorWest(index),
         );
         return;
       case NodeType.Oven:
@@ -1151,34 +1153,64 @@ class RendererNodes extends RenderGroup {
   void renderBoulder({
     required double dstX,
     required double dstY,
-    required int colorWest,
+    required int colorNorth,
+    required int colorEast,
     required int colorSouth,
+    required int colorWest,
   }) {
     const anchorY = 0.28;
+    const size = 46.0;
+    final atlasNodes = this.atlasNodes;
+    final engine = this.engine;
 
     engine.renderSprite(
       image: atlasNodes,
-      srcX: Src_X_Sprite_Boulder_West,
-      srcY: Src_Y_Sprite_Boulder,
-      srcWidth: Src_Width_Sprite_Boulder,
-      srcHeight: Src_Height_Sprite_Boulder,
+      srcX: 1264,
+      srcY: 448,
+      srcWidth: size,
+      srcHeight: size,
+      dstX: dstX,
+      dstY: dstY,
+      color: colorNorth,
+      anchorY: anchorY,
+    );
+
+    engine.renderSprite(
+      image: atlasNodes,
+      srcX: 1264 + size,
+      srcY: 448,
+      srcWidth: size,
+      srcHeight: size,
+      dstX: dstX,
+      dstY: dstY,
+      color: colorEast,
+      anchorY: anchorY,
+    );
+
+    engine.renderSprite(
+      image: atlasNodes,
+      srcX: 1264 + size + size,
+      srcY: 448,
+      srcWidth: size,
+      srcHeight: size,
+      dstX: dstX,
+      dstY: dstY,
+      color: colorSouth,
+      anchorY: anchorY,
+    );
+
+    engine.renderSprite(
+      image: atlasNodes,
+      srcX: 1264 + size + size + size,
+      srcY: 448,
+      srcWidth: size,
+      srcHeight: size,
       dstX: dstX,
       dstY: dstY,
       color: colorWest,
       anchorY: anchorY,
     );
 
-    engine.renderSprite(
-      image: atlasNodes,
-      srcX: Src_X_Sprite_Boulder_South,
-      srcY: Src_Y_Sprite_Boulder,
-      srcWidth: Src_Width_Sprite_Boulder,
-      srcHeight: Src_Height_Sprite_Boulder,
-      dstX: dstX,
-      dstY: dstY,
-      color: colorSouth,
-      anchorY: anchorY,
-    );
 
   }
 

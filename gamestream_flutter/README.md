@@ -10,6 +10,8 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 [TODO]
+- the boots of asgamoth
+- the boots of asmaroth
 - tutorial game
 - fix render front
 - feature separate regions 
