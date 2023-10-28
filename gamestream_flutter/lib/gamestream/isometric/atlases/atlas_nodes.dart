@@ -80,7 +80,7 @@ class AtlasNodeX {
 }
 
 class AtlasNodeY {
-  static const Water = 512.0;
+  static const Water = 509.0;
   static const Stone = 0.0;
   static const Plain_Solid = 0.0;
   static const Torch = 749.0;
