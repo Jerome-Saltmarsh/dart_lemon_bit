@@ -568,6 +568,10 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
 
     switch (amuletItem.selectAction) {
       case AmuletItemAction.Equip:
+        if (equippedWeaponIndex == index){
+          performForceAttack();
+          return;
+        }
         equippedWeaponIndex = index;
         deselectActivatedPower();
         break;
@@ -1630,4 +1634,5 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     }
     super.aimTarget = value;
   }
+
 }

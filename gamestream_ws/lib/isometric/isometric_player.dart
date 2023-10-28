@@ -1369,4 +1369,12 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeByte(NetworkResponseIsometric.Zoom);
     writeDouble(value * 10);
   }
+
+  void performForceAttack(){
+    if (deadOrBusy){
+      return;
+    }
+    lookAtMouse();
+    forceAttack = true;
+  }
 }

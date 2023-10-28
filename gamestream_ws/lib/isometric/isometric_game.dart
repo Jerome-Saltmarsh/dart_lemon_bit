@@ -275,8 +275,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (mouseRightClicked){
       if (player is AmuletPlayer){
         if (player.activatedPowerIndex == -1){
-          player.lookAtMouse();
-          player.forceAttack = true;
+          player.performForceAttack();
           return;
         } else {
           player.deselectActivatedPower();
@@ -311,8 +310,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
       if (aimTarget == null || (player.isEnemy(aimTarget) && !player.controlsCanTargetEnemies)){
         if (keyDownShift){
-          player.lookAtMouse();
-          player.forceAttack = true;
+          player.performForceAttack();
           return;
         } else {
           player.setDestinationToMouse();
