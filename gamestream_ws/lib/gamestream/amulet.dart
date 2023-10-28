@@ -148,7 +148,9 @@ class Amulet {
   }
 
   void updateGames() {
-    for (final game in games) {
+    final games = this.games;
+    for (var i = 0; i < games.length; i++) {
+      final game = games[i];
       game.updateJobs();
       game.update();
       game.writePlayerResponses();

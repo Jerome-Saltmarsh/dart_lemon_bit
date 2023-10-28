@@ -27,6 +27,8 @@ class AmuletGameTutorial extends AmuletGame {
   static const flagsBowAddedToWeapons = 'add_bow_to_weapons';
   static const keysRoom4 = 'room_4';
 
+  var indexLeave = -1;
+
   static const objectives = TutorialObjective.values;
 
   final scripts = <AmuletPlayerScript>[];
@@ -40,8 +42,6 @@ class AmuletGameTutorial extends AmuletGame {
   late GameObject crystal2GlowingFalse;
   late GameObject crystal2GlowingTrue;
 
-  final finish = Position(x: -100);
-
   AmuletGameTutorial({
     required super.amulet,
     required super.scene,
@@ -54,13 +54,13 @@ class AmuletGameTutorial extends AmuletGame {
   ){
     instantiateGuide();
 
+    indexLeave = getSceneKey(keysFinish);
+
     crystal1GlowingFalse = spawnAtKeyCrystalGlowingFalse(keysCrystal1);
     crystal1GlowingTrue = spawnAtKeyCrystalGlowingTrue(keysCrystal1);
 
     crystal2GlowingFalse = spawnAtKeyCrystalGlowingFalse(keysCrystal2);
     crystal2GlowingTrue = spawnAtKeyCrystalGlowingTrue(keysCrystal2);
-
-    scene.movePositionToKey(finish, keysFinish);
   }
 
   String getSpawnKey(TutorialObjective objective) => switch (objective){
@@ -75,7 +75,6 @@ class AmuletGameTutorial extends AmuletGame {
        TutorialObjective.Open_Inventory => keysRoom4,
        TutorialObjective.Strike_Crystal_2 => keysRoom4,
        TutorialObjective.Leave => keysRoom4,
-       TutorialObjective.Finished => keysRoom4,
     };
 
   void refreshPlayerGameState(AmuletPlayer player) {
@@ -249,10 +248,12 @@ class AmuletGameTutorial extends AmuletGame {
   }
 
   void updatePlayersObjectiveConditions() {
-    for (final player in players){
-       if (isObjectiveCompleted(player)){
-          startNextTutorialObjective(player);
-       }
+    final players = this.players;
+    for (var i = 0; i < players.length; i++) {
+      final player = players[i];
+      if (isObjectiveCompleted(player)) {
+        startNextTutorialObjective(player);
+      }
     }
   }
 
@@ -264,8 +265,7 @@ class AmuletGameTutorial extends AmuletGame {
           player.weapons.any((element) => element.amuletItem == AmuletItem.Weapon_Old_Bow),
        TutorialObjective.Draw_Bow =>
         player.equippedWeapon?.amuletItem == AmuletItem.Weapon_Old_Bow,
-       TutorialObjective.Leave =>
-           player.withinRadiusPosition(finish, 10),
+       TutorialObjective.Leave => getNodeIndexV3(player) == indexLeave,
         _ => false
     };
 
@@ -285,7 +285,7 @@ class AmuletGameTutorial extends AmuletGame {
   void startNextTutorialObjective(AmuletPlayer player){
      final current = getObjective(player);
      if (current == objectives.last) {
-       print("startNextTutorialObjective() - current == tutorialObjectives.last");
+       amulet.playerChangeGame(player: player, target: amulet.amuletGameTown);
        return;
      }
 
@@ -336,9 +336,7 @@ class AmuletGameTutorial extends AmuletGame {
       case TutorialObjective.Strike_Crystal_2:
         break;
       case TutorialObjective.Leave:
-        break;
-      case TutorialObjective.Finished:
-        onObjectiveSetFinished(player);
+        onObjectiveSetLeave(player);
         break;
     }
   }
@@ -721,10 +719,7 @@ class AmuletGameTutorial extends AmuletGame {
       return;
     }
 
-    if (
-      target == crystal2GlowingFalse &&
-      getObjective(srcCharacter) == TutorialObjective.Strike_Crystal_2
-    ){
+    if (target == crystal2GlowingFalse){
       onStruckCrystal2(player);
       return;
     }
@@ -775,10 +770,6 @@ class AmuletGameTutorial extends AmuletGame {
         .controlsEnabled()
         .cameraClearTarget()
     ;
-  }
-
-  void onObjectiveSetFinished(AmuletPlayer player) {
-
   }
 
   void onObjectiveSetDrawBow(AmuletPlayer player) =>
@@ -855,18 +846,32 @@ class AmuletGameTutorial extends AmuletGame {
         team: team,
       );
 
-  void onStruckCrystal2(AmuletPlayer player) =>
-      runScript(player)
-        .puzzleSolved()
-        .deactivate(crystal2GlowingFalse)
-        .activate(crystal2GlowingTrue)
-        .controlsDisabled()
-        .wait(seconds: 1)
-        .cameraSetTargetSceneKey(keysExit)
-        .wait(seconds: 1)
-        .setNodeEmptyAtSceneKey(keysExit)
-        .wait(seconds: 1)
-        .end();
+  void onStruckCrystal2(AmuletPlayer player) {
+     if (getObjective(player) != TutorialObjective.Strike_Crystal_2){
+       return;
+     }
+     deactivate(crystal2GlowingFalse);
+     activate(crystal2GlowingTrue);
+     startNextTutorialObjective(player);
+  }
 
+  void onObjectiveSetLeave(AmuletPlayer player) =>
+      runScript(player)
+          .controlsDisabled()
+          .movePositionToSceneKey(guide, keysSpawnBow)
+          .puzzleSolved()
+          .wait(seconds: 1)
+          .faceEachOther(guide, player)
+          .activate(guide)
+          .cameraSetTarget(guide)
+          .wait(seconds: 1)
+          .talk('one has done well. the world outside awaits.')
+          .wait(seconds: 1)
+          .cameraSetTargetSceneKey(keysExit)
+          .wait(seconds: 1)
+          .setNodeEmptyAtSceneKey(keysExit)
+          .wait(seconds: 1)
+          .deactivate(guide)
+          .end();
 }
 
