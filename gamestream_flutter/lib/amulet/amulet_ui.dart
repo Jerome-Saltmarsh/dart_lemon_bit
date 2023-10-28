@@ -42,12 +42,15 @@ class AmuletUI {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Column(
-                  children: [
-                    buildPlayerHealthBar(),
-                    height4,
-                    buildPlayerWeapons(),
-                  ],
+                GSContainer(
+                  padding: const EdgeInsets.all(4),
+                  child: Column(
+                    children: [
+                      buildPlayerHealthBar(),
+                      height4,
+                      buildPlayerWeapons(),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -198,14 +201,10 @@ class AmuletUI {
     );
   }
 
-  Widget buildPlayerWeapons() => GSContainer(
-    padding: const EdgeInsets.all(4),
-    rounded: true,
-    child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: List.generate(amulet.weapons.length, (index) => buildWeaponSlotAtIndex(index, amulet: amulet)),
-        ),
+  Widget buildPlayerWeapons() =>         Row(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: List.generate(amulet.weapons.length, (index) => buildWeaponSlotAtIndex(index, amulet: amulet)),
   );
 
   Widget buildPlayerTreasures() => buildInventoryContainer(
