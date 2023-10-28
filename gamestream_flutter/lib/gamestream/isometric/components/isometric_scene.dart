@@ -448,6 +448,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     NodeType.Grass_Long,
     NodeType.Tree_Bottom,
     NodeType.Tree_Top,
+    NodeType.Water,
   ].contains(nodeType);
 
   bool nodeOrientationBlocksVertical(int nodeOrientation) => (const [
