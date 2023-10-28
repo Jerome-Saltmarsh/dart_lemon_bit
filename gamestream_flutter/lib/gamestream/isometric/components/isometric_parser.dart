@@ -130,7 +130,7 @@ class IsometricParser with ByteReader, IsometricComponent {
 
   void readNetworkResponseGameError() {
     final errorTypeIndex = readByte();
-    options.error.value = GameError.fromIndex(errorTypeIndex);
+    options.gameError.value = GameError.fromIndex(errorTypeIndex);
   }
 
   void readGameObjectDeleted() {

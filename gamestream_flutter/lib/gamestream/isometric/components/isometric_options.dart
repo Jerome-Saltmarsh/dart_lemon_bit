@@ -51,7 +51,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
   final gameType = Watch(GameType.Website);
   final edit = Watch(false);
   final messageStatus = Watch('');
-  final error = Watch<GameError?>(null);
+  final gameError = Watch<GameError?>(null);
   late final Watch<Game> game;
 
 
@@ -61,7 +61,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
     gameType.onChanged(_onChangedGameType);
     edit.onChanged(_onChangedEdit);
     messageStatus.onChanged(_onChangedMessageStatus);
-    error.onChanged(_onChangedGameError);
+    gameError.onChanged(_onChangedGameError);
     rendersSinceUpdate.onChanged(_onChangedRendersSinceUpdate);
     sceneName.onChanged((t) {print('scene.name = $t');});
   }
@@ -184,7 +184,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
     if (clearErrorTimer > 0) {
       clearErrorTimer--;
       if (clearErrorTimer <= 0)
-        error.value = null;
+        gameError.value = null;
     }
   }
 

@@ -86,7 +86,7 @@ class IsometricGame extends Game {
           child: ui.buildMainMenu(children: buildMenuItems()),
       ),
       Positioned(
-        bottom: 16,
+        top: 8,
         left: 0,
         child: Container(
             width: engine.screen.width,
@@ -96,7 +96,7 @@ class IsometricGame extends Game {
     ]);
 
   Widget buildGameError(){
-    return buildWatch(options.error, (error){
+    return buildWatch(options.gameError, (error){
        if (error == null)
          return nothing;
 

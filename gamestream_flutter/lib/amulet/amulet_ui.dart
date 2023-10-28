@@ -69,7 +69,7 @@ class AmuletUI {
         buildPositionedAmuletItemHover(),
         buildPositionedMessage(),
         Positioned(
-          bottom: margin2,
+          top: margin2,
           child: Container(
             width: amulet.engine.screen.width,
             alignment: Alignment.center,
