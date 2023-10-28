@@ -95,6 +95,7 @@ class RendererNodes extends RenderGroup {
   @override
   void renderFunction() {
     final engine = this.engine;
+    final frameWater = animation.frameWater;
     engine.bufferImage = atlasNodes;
     previousNodeTransparent = false;
 
@@ -864,7 +865,7 @@ class RendererNodes extends RenderGroup {
         renderNodeWater(
           dstX: dstX,
           dstY: dstY,
-          color: scene.getColor(index),
+          color: scene.colorAbove(index),
           animationFrame: ((animation.frameWater + ((scene.getRowColumn(index)) * 3)) % 10), // TODO Optimize
         );
         break;
