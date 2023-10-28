@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/amulet/amulet.dart';
-import 'package:gamestream_flutter/amulet/ui/widgets/build_text_percentage.dart';
 import 'package:gamestream_flutter/gamestream/ui.dart';
-import 'package:gamestream_flutter/gamestream/ui/builders/build_watch.dart';
-import 'package:gamestream_flutter/gamestream/ui/constants/height.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/gs_container.dart';
 import 'package:gamestream_flutter/packages/common/src/amulet/amulet_item.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
@@ -39,6 +35,13 @@ Widget buildWeaponSlotAtIndex(int index, {
       rounded: true,
     );
   });
+
+  final backgroundNoChargesRemaining =  GSContainer(
+    color: Colors.red.withOpacity(0.5),
+    width: size,
+    height: size,
+    rounded: true,
+  );
 
   final weapons = amulet.weapons;
   final itemSlotWeapon = weapons[index];
@@ -113,6 +116,12 @@ Widget buildWeaponSlotAtIndex(int index, {
             children: [
               backgroundSelectedWeapon,
               backgroundActivePower,
+              buildWatch(itemSlotWeapon.chargesRemaining, (t) {
+                if (t){
+                  return nothing;
+                }
+                return backgroundNoChargesRemaining;
+              }),
               Positioned(
                   child: buildItemSlot(
                       weapons[index],
