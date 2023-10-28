@@ -212,27 +212,83 @@ class RendererGameObjects extends RenderGroup {
         ObjectType.Rock1,
       ].contains(subType)
     ){
+      const scale = 0.15;
       final scene = this.scene;
       final gameObjectIndex = scene.getIndexPosition(gameObject);
-      const scale = 0.15;
-
       final dstX = gameObject.renderX;
       final dstY = gameObject.renderY;
       const anchorY = 0.66;
-
       final sprite = images.rock1;
 
-      // engine.setBlendModeModulate();
 
-      // render.sprite(
-      //   sprite: sprite,
-      //   frame: sprite.getFrame(row: 0, column: SurfaceIndex.solid),
-      //   color: colors.grey_1.value,
-      //   scale: scale,
-      //   dstX: dstX,
-      //   dstY: dstY,
-      //   anchorY: anchorY,
-      // );
+      render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: SurfaceIndex.south),
+        color: scene.colorSouth(gameObjectIndex),
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+
+      render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: SurfaceIndex.top),
+        color: scene.nodeColors[gameObjectIndex],
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+
+      render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: SurfaceIndex.west),
+        color: scene.colorWest(gameObjectIndex),
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+
+      render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: SurfaceIndex.north),
+        color: scene.colorNorth(gameObjectIndex),
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+
+      render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: SurfaceIndex.east),
+        color: scene.colorEast(gameObjectIndex),
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+
+      // engine.setBlendModeDstATop();
+      return;
+    }
+
+    if (
+      type == ItemType.Object &&
+      const [
+        ObjectType.Tree1,
+      ].contains(subType)
+    ){
+      const scale = 0.3;
+      final scene = this.scene;
+      final gameObjectIndex = scene.getIndexPosition(gameObject);
+      final dstX = gameObject.renderX;
+      final dstY = gameObject.renderY;
+      const anchorY = 0.66;
+      final sprite = images.tree1;
+
 
       render.sprite(
         sprite: sprite,

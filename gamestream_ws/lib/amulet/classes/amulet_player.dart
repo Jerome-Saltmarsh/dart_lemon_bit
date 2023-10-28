@@ -401,12 +401,15 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     required AmuletItem? amuletItem,
     int cooldown = 0,
   }){
+
     if (!isValidWeaponIndex(index)) {
       writeAmuletError('Invalid weapon index $index');
       return;
     }
-    if (amuletItem != null && !amuletItem.isWeapon)
+
+    if (amuletItem != null && !amuletItem.isWeapon && !amuletItem.isSpell){
       return;
+    }
 
     weapons[index].amuletItem = amuletItem;
     weapons[index].cooldown = cooldown;
