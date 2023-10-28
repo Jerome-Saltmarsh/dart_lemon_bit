@@ -38,6 +38,17 @@ class IsometricAnimation {
       frameRate5++;
     }
 
+    if (frameRate1 % 6 == 0){
+      if (frameWater++ >= 9){
+        frameWater = 0;
+      }
+      frameWaterHeight = const [
+        0, 1, 2, 3, 4, 5, 4, 3, 2, 1,
+      ][frameWater];
+      frameWaterSrcX = frameWater * Node_Size;
+    }
+
+
     if (frame++ < rendersPerFrame)
       return;
 
@@ -64,13 +75,5 @@ class IsometricAnimation {
       frame16 = 0;
     }
 
-    if (frameWater++ >= 9){
-      frameWater = 0;
-    }
-    frameWaterHeight = const [
-      0, 1, 2, 3, 4, 5, 4, 3, 2, 1,
-    ][frameWater];
-
-    frameWaterSrcX = frameWater * Node_Size;
   }
 }
