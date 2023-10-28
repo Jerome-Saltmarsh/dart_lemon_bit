@@ -59,6 +59,7 @@ class IsometricPlayer with IsometricComponent {
   final target = Position();
   final health = Watch(0);
   final maxHealth = Watch(0);
+  final healthPercentage = Watch(0.0);
   final weaponDamage = Watch(0);
   final weaponCooldown = Watch(1.0);
   final credits = Watch(0);
@@ -73,6 +74,21 @@ class IsometricPlayer with IsometricComponent {
   late final debugging = Watch(false, onChanged: onChangedDebugging);
 
   IsometricPlayer() {
+
+    health.onChanged((t) {
+       if (maxHealth.value <= 0){
+         healthPercentage.value = 0;
+       }
+       healthPercentage.value = t / maxHealth.value;
+    });
+
+    maxHealth.onChanged((maxHealth) {
+       if (maxHealth <= 0){
+         healthPercentage.value = 0;
+       }
+       healthPercentage.value = health.value / maxHealth;
+    });
+
     legsType.onChanged((t) {
       print('player.legsType(${LegType.getName(t)})');
     });

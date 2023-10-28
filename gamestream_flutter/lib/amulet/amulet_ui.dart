@@ -544,37 +544,28 @@ class AmuletUI {
                   color: skillPoints > 0 ? Colors.green : Colors.white70))));
 
   Widget buildPlayerHealthBar(){
-    const width = 240.0;
+    const width = 282.0;
     const height = 20.0;
+
+
+
      return IgnorePointer(
-       child: buildWatch(amulet.player.maxHealth, (maxHealth) {
-         if (maxHealth == 0) return nothing;
-         return buildWatch(amulet.player.health, (health) {
-           return Container(
-             width: width,
+       child: buildWatch(amulet.player.healthPercentage, (healthPercentage) {
+         if (healthPercentage == 0) {
+           return nothing;
+         }
+         return Container(
+           width: width,
+           height: height,
+           color: Colors.black26,
+           padding: const EdgeInsets.all(2),
+           alignment: Alignment.center,
+           child: Container(
+             width: width * healthPercentage,
              height: height,
-             child: Stack(
-               children: [
-                 Container(
-                   width: width,
-                   height: height,
-                   color: amulet.style.containerColor,
-                 ),
-                 Container(
-                   width: width * (health / maxHealth),
-                   height: height,
-                   color: Color.lerp(Colors.red, Colors.green, (health / maxHealth)),
-                 ),
-                 Container(
-                     width: width,
-                     height: height,
-                     alignment: Alignment.center,
-                     child: buildText('$health / $maxHealth', color: Colors.white54),
-                 ),
-               ],
-             ),
-           );
-         });
+             color: Color.lerp(Colors.red, Colors.green, healthPercentage),
+           ),
+         );
        }),
      );
   }
