@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/amulet/amulet.dart';
 import 'package:gamestream_flutter/amulet/ui/widgets/build_text_percentage.dart';
 import 'package:gamestream_flutter/gamestream/ui/builders/build_watch.dart';
+import 'package:gamestream_flutter/gamestream/ui/constants/height.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/gs_container.dart';
 import 'package:gamestream_flutter/packages/common/src/amulet/amulet_item.dart';
+import 'package:golden_ratio/constants.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 import 'build_item_slot.dart';
@@ -40,10 +42,31 @@ Widget buildWeaponSlotAtIndex(int index, {
   final weapons = amulet.weapons;
   final itemSlotWeapon = weapons[index];
 
+  final chargeColorFull = Colors.green;
+  final chargeColorEmpty = Colors.green.withOpacity(0.2);
+
+  final watchCharges = buildWatch(itemSlotWeapon.max, (maxCharges) {
+    return buildWatch(itemSlotWeapon.charges, (charges) {
+      final chargeWidth = size / maxCharges;
+      return Row(
+        children: List.generate(maxCharges, (index) {
+          return Container(
+            width: chargeWidth,
+            height: size * goldenRatio_0381,
+            color: index < charges ? chargeColorFull : chargeColorEmpty,
+          );
+        }),
+      );
+    });
+  });
+
   return buildWatch(itemSlotWeapon.amuletItem, (AmuletItem? amuletItem) {
 
     return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
+        watchCharges,
+        height4,
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 2),
           child: Stack(
@@ -53,7 +76,7 @@ Widget buildWeaponSlotAtIndex(int index, {
               backgroundActivePower,
               Positioned(
                   child: buildItemSlot(
-                      amulet.weapons[index],
+                      weapons[index],
                       amulet: amulet,
                       color: Colors.transparent
                   )
