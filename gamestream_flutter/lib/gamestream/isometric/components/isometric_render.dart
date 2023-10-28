@@ -14,7 +14,6 @@ import 'package:lemon_math/src.dart';
 import 'package:lemon_sprite/lib.dart';
 
 import '../classes/src.dart';
-import 'isometric_scene.dart';
 
 class IsometricRender with IsometricComponent {
 

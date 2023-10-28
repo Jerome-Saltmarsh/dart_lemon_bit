@@ -2268,6 +2268,7 @@ class IsometricScene with IsometricComponent implements Updatable {
 
     final visited2DStack = this.visited2DStack;
     final totalColumns = this.totalColumns;
+    final totalRows = this.totalRows;
     final z = getIndexZ(index);
     final heightMapHeight = getHeightMapHeightAt(index);
 
@@ -2275,7 +2276,9 @@ class IsometricScene with IsometricComponent implements Updatable {
       return;
     }
 
-    visit(getRow(index), getColumn(index), z);
+    final visited2D = this.visited2D;
+
+    visit(getRow(index), getColumn(index), z, totalColumns: totalColumns, totalRows: totalRows, visited2D: visited2D);
 
     var j = 0;
 
@@ -2284,10 +2287,10 @@ class IsometricScene with IsometricComponent implements Updatable {
       final row = i ~/ totalColumns;
       final column = i % totalColumns;
 
-      visit(row - 1, column, z);
-      visit(row + 1, column, z);
-      visit(row, column + 1, z);
-      visit(row, column - 1, z);
+      visit(row - 1, column, z, totalColumns: totalColumns, totalRows: totalRows, visited2D: visited2D);
+      visit(row + 1, column, z, totalColumns: totalColumns, totalRows: totalRows, visited2D: visited2D);
+      visit(row, column + 1, z, totalColumns: totalColumns, totalRows: totalRows, visited2D: visited2D);
+      visit(row, column - 1, z, totalColumns: totalColumns, totalRows: totalRows, visited2D: visited2D);
       j++;
     }
 
@@ -2319,7 +2322,11 @@ class IsometricScene with IsometricComponent implements Updatable {
     this.visited3DStackIndex = 0;
   }
 
-  void visit(int row, int column, int z){
+  void visit(int row, int column, int z, {
+    required BoolList visited2D,
+    required int totalRows,
+    required int totalColumns,
+  }){
 
     if (
       row < 0 ||
