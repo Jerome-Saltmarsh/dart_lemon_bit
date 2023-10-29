@@ -6,7 +6,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Rare,
     type: ItemType.Weapon,
     subType: WeaponType.Sword,
-    actionFrame: 15,
     performDuration: 20,
     level1: AmuletItemLevel(
       charges: 1,
@@ -44,7 +43,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Weapon,
     subType: WeaponType.Sword,
-    actionFrame: 20,
     performDuration: 25,
     level1: AmuletItemLevel(
       damage: 1,
@@ -81,7 +79,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Unique,
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
-    actionFrame: 20,
     performDuration: 25,
     level1: AmuletItemLevel(
         range: 100,
@@ -94,7 +91,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Rare,
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
-    actionFrame: 15,
     performDuration: 20,
     level1: AmuletItemLevel(
         range: 100,
@@ -107,7 +103,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Weapon,
     subType: WeaponType.Bow,
-    actionFrame: 20,
     performDuration: 30,
     level1: AmuletItemLevel(
       information: 'A worn out bow',
@@ -138,7 +133,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Rare,
     type: ItemType.Weapon,
     subType: WeaponType.Bow,
-    actionFrame: 12,
     performDuration: 25,
     level1: AmuletItemLevel(
         range: 150,
@@ -409,7 +403,6 @@ enum AmuletItem {
   final bool collectable;
   final bool consumable;
   final AmuletItemQuality quality;
-  final int actionFrame;
   final int performDuration;
   final AmuletItemLevel level1;
   final AmuletItemLevel? level2;
@@ -429,7 +422,6 @@ enum AmuletItem {
     this.level5,
     this.collectable = true,
     this.consumable = false,
-    this.actionFrame = -1,
     this.performDuration = -1,
   });
 
@@ -534,9 +526,6 @@ enum AmuletItem {
           (element) => element.type == type && element.subType == subType);
 
   void validate() {
-    if (actionFrame > performDuration) {
-      throw Exception('performFrame cannot be greater than performDuration');
-    }
 
     if (isWeapon) {
       if (level1.range <= 0) {

@@ -315,8 +315,8 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
 
     _equippedWeaponIndex = value;
     weaponType = equippedWeaponType;
-    attackActionFrame = item.actionFrame;
-    attackDuration = item.performDuration;
+    // attackActionFrame = item.actionFrame;
+    // attackDuration = item.performDuration;
 
     game.dispatchGameEvent(GameEventType.Weapon_Type_Equipped,
         x,
@@ -600,7 +600,6 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
         activatedPowerIndex = index;
         setCharacterStateCasting(
             duration: itemStats.performDuration,
-            actionFrame: itemStats.performActionFrame,
         );
         itemSlot.cooldown = 0;
         itemSlot.cooldownDuration = itemStats.cooldown;

@@ -2745,13 +2745,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     if (character.weaponType == WeaponType.Bow) {
       character.setCharacterStateFire(
-        duration: character.attackDuration,
-        actionFrame: character.attackActionFrame,
+        duration: 20, // TODO
       );
     } else {
       character.setCharacterStateStriking(
-        duration: character.attackDuration,
-        actionFrame: character.attackActionFrame,
+        duration: 20, // TODO
       );
     }
   }

@@ -163,9 +163,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       name: 'Fallen',
       runSpeed: 0.75,
     )
-      ..weaponHitForce = 2
-      ..attackDuration = 20
-      ..attackActionFrame = 12;
+      ..weaponHitForce = 2;
+      // ..attackDuration = 20
+      // ..attackActionFrame = 12;
 
     characters.add(character);
     return character;
@@ -189,8 +189,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       runSpeed: 0.75,
     )
       ..weaponHitForce = 2
-      ..attackDuration = 20
-      ..attackActionFrame = 12
+      // ..attackDuration = 20
+      // ..attackActionFrame = 12
     );
   }
 

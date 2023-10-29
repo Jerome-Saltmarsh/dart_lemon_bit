@@ -8,9 +8,6 @@ void playerUseAmuletItem(AmuletPlayer player, AmuletItem item) {
     case AmuletItemAction.Equip:
       throw Exception();
     case AmuletItemAction.Caste:
-      if (item.actionFrame < 0) {
-        throw Exception('item.actionFrame < 0');
-      }
       if (item.performDuration < 0) {
         throw Exception('item.performDuration < 0');
       }
@@ -21,7 +18,7 @@ void playerUseAmuletItem(AmuletPlayer player, AmuletItem item) {
       // );
       player.setCharacterStateCasting(
           duration: item.performDuration,
-          actionFrame: item.actionFrame,
+          // actionFrame: item.actionFrame,
       );
       break;
     case AmuletItemAction.Targeted_Enemy:
@@ -30,7 +27,6 @@ void playerUseAmuletItem(AmuletPlayer player, AmuletItem item) {
         return;
       }
       player.setCharacterStateStriking(
-        actionFrame: item.actionFrame,
         duration: item.performDuration,
       );
       break;
@@ -40,14 +36,12 @@ void playerUseAmuletItem(AmuletPlayer player, AmuletItem item) {
         return;
       }
       player.setCharacterStateStriking(
-        actionFrame: item.actionFrame,
         duration: item.performDuration,
       );
       break;
     case AmuletItemAction.Positional:
       player.setCharacterStateStriking(
         duration: item.performDuration,
-        actionFrame: item.actionFrame,
       );
       break;
     case AmuletItemAction.None:

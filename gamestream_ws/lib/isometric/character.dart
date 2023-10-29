@@ -1,9 +1,11 @@
 import 'dart:typed_data';
 
+import 'package:gamestream_ws/isometric/consts/caste_action_frame_percentage.dart';
 import 'package:gamestream_ws/isometric/isometric_game.dart';
 import 'package:gamestream_ws/packages.dart';
 
 import 'collider.dart';
+import 'consts/fire_action_frame_percentage.dart';
 import 'isometric_settings.dart';
 import 'position.dart';
 
@@ -40,8 +42,8 @@ class Character extends Collider {
   var invincible = false;
   var actionDuration = -1;
   var actionFrame = -1;
-  var attackDuration = 0;
-  var attackActionFrame = 0;
+  // var attackDuration = 0;
+  // var attackActionFrame = 0;
   var weaponHitForce = 10.0;
   var weaponRecoil = 0.25;
   var weaponType = WeaponType.Unarmed;
@@ -215,6 +217,8 @@ class Character extends Collider {
       (!characterStateHurt || hurtStateBusy);
 
   bool get deadOrBusy => dead || busy;
+
+  bool get deadInactiveOrBusy => dead || !active || busy;
 
   bool get canChangeEquipment => !dead || characterStateChanging;
 
@@ -525,11 +529,11 @@ class Character extends Collider {
 
   void setCharacterStateCasting({
     required int duration,
-    required int actionFrame,
   }){
-    assert (active);
-    assert (alive);
-    this.actionFrame = actionFrame;
+    if (deadInactiveOrBusy){
+      return;
+    }
+    actionFrame = (duration * casteActionFramePercentage).toInt();
     setDestinationToCurrentPosition();
     setCharacterState(
       value: CharacterState.Casting,
@@ -539,14 +543,14 @@ class Character extends Collider {
 
   void setCharacterStateFire({
     required int duration,
-    required int actionFrame,
   }){
-    assert (active);
-    assert (alive);
-    assert (duration > 0);
-    assert (actionFrame < duration);
-
-    this.actionFrame = actionFrame;
+    if (deadInactiveOrBusy){
+      return;
+    }
+    if (duration <= 0){
+      throw Exception('invalid duration');
+    }
+    actionFrame = (duration * fireActionFramePercentage).toInt();
     setDestinationToCurrentPosition();
     setCharacterState(
       value: CharacterState.Fire,
@@ -556,11 +560,14 @@ class Character extends Collider {
 
   void setCharacterStateStriking({
     required int duration,
-    required int actionFrame,
+    // required int actionFrame,
   }){
-    assert (active);
-    assert (alive);
-    this.actionFrame = actionFrame;
+    if (deadInactiveOrBusy){
+      return;
+    }
+
+    const actionFramePercentage = 0.6;
+    this.actionFrame = (duration * actionFramePercentage).toInt();
     setDestinationToCurrentPosition();
     setCharacterState(
       value: CharacterState.Strike,
@@ -570,7 +577,7 @@ class Character extends Collider {
 
   void setCharacterStateIdle({int duration = 0}){
     if (
-      deadOrBusy ||
+      deadOrInactive ||
       characterStateIdle
     ) return;
 
@@ -595,7 +602,7 @@ class Character extends Collider {
     assert (value != CharacterState.Dead); // use game.setCharacterStateDead
     assert (value != CharacterState.Hurt); // use character.setCharacterStateHurt
 
-    if (characterState == value || deadOrBusy) {
+    if (characterState == value || deadInactiveOrBusy) {
       return;
     }
 
