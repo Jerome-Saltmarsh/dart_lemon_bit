@@ -368,7 +368,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
         availableWeaponSlot.amuletItem = amuletItem;
         refillItemSlot(itemSlot: availableWeaponSlot);
         amuletGame.onAmuletItemAcquired(this, amuletItem);
-        if (equippedWeaponIndex == -1){
+        if (noWeaponEquipped){
           equippedWeaponIndex = weapons.indexOf(availableWeaponSlot);
         }
         notifyEquipmentDirty();
@@ -1623,7 +1623,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   @override
   set aimTarget(Collider? value) {
     if (
-      equippedWeaponIndex == -1 &&
+      noWeaponEquipped &&
       value is GameObject &&
       value.hitbox
     ){
@@ -1646,7 +1646,11 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   @override
   void attack() {
 
-    if (equippedWeaponIndex == -1){
+    if (deadInactiveOrBusy){
+      return;
+    }
+
+    if (noWeaponEquipped){
       return;
     }
 
@@ -1694,34 +1698,40 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
         throw Exception('amuletPlayer.attack() - weapon type not implemented ${WeaponType.getName(subType)}');
     }
 
-
     reduceAmuletItemSlotCharges(equippedWeaponSlot);
   }
 
+  bool get noWeaponEquipped => equippedWeaponIndex == -1;
+
   void useActivatedPower() {
+
+    if (deadInactiveOrBusy){
+      return;
+    }
+
     if (activatedPowerIndex < 0) {
-      throw Exception('activatedPowerIndex < 0 : $activatedPowerIndex < 0');
+      return;
     }
 
     if (activatedPowerIndex >= weapons.length) {
       throw Exception('invalid weapon index: $activatedPowerIndex');
     }
 
-    final itemSlot = weapons[activatedPowerIndex];
-    final item = itemSlot.amuletItem;
+    final amuletItemSlot = weapons[activatedPowerIndex];
+    final amuletItem = amuletItemSlot.amuletItem;
 
-    if (item == null) {
+    if (amuletItem == null) {
       throw Exception();
     }
 
-    final stats = getAmuletItemLevel(item);
+    final stats = getAmuletItemLevel(amuletItem);
 
     if (stats == null){
       throw Exception('must have stats for activated item');
     }
 
-    itemSlot.cooldown = stats.cooldown;
-    onAmuletItemUsed(item);
+    amuletItemSlot.cooldown = stats.cooldown;
+    onAmuletItemUsed(amuletItem);
   }
 
   void onAmuletItemUsed(AmuletItem amuletItem) {
@@ -1804,7 +1814,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
           final emptyWeaponSlot = getEmptyWeaponSlot();
           if (emptyWeaponSlot != null){
             swapAmuletItemSlots(inventorySlot, emptyWeaponSlot);
-            if (equippedWeaponIndex == -1){
+            if (noWeaponEquipped){
               equippedWeaponIndex = weapons.indexOf(emptyWeaponSlot);
             }
           } else {
