@@ -3311,8 +3311,9 @@ class RendererNodes extends RenderGroup {
   }) {
 
     final engine = this.engine;
+    final render = engine.render;
 
-    engine.render(
+    render(
       color: colorAbove,
       srcLeft: srcX,
       srcTop: srcY,
@@ -3324,7 +3325,7 @@ class RendererNodes extends RenderGroup {
       dstY: dstY - Node_Size_Half,
     );
 
-    engine.render(
+    render(
       color: colorWest,
       srcLeft: srcX + Src_X_Side_West,
       srcTop: srcY,
@@ -3336,7 +3337,7 @@ class RendererNodes extends RenderGroup {
       dstY: dstY,
     );
 
-    engine.render(
+    render(
       color: colorSouth,
       srcLeft: srcX + Src_X_Side_South,
       srcTop: srcY,
