@@ -907,7 +907,39 @@ abstract class LemonEngine extends StatelessWidget {
     dst[i + 3] = dstY;
 
     bufferIndex++;
-    if (bufferIndex == 128) {
+    if (index + 1 >= 128) {
+      flushAll();
+    }
+  }
+
+  void renderFast({
+    required int color,
+    required double srcLeft,
+    required double srcTop,
+    required double srcRight,
+    required double srcBottom,
+    required double scale,
+    required double rotation,
+    required double dstX,
+    required double dstY,
+    required Int32List clr,
+    required Float32List src,
+    required Float32List dst,
+  }){
+    final index = bufferIndex;
+    final i = index << 2;
+    clr[index] = color;
+    src[i] = srcLeft;
+    src[i + 1] = srcTop;
+    src[i + 2] = srcRight;
+    src[i + 3] = srcBottom;
+    dst[i] = scale;
+    dst[i + 1] = rotation;
+    dst[i + 2] = dstX;
+    dst[i + 3] = dstY;
+
+    bufferIndex++;
+    if (index + 1 >= 128) {
       flushAll();
     }
   }

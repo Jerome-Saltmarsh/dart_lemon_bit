@@ -1,13 +1,12 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-
-import 'package:gamestream_flutter/gamestream/isometric/enums/node_visibility.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_src_nodes_y.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_scene.dart';
+import 'package:gamestream_flutter/gamestream/isometric/enums/node_visibility.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/isometric/functions/get_render.dart';
 import 'package:gamestream_flutter/packages/common.dart';
@@ -125,6 +124,11 @@ class RendererNodes extends RenderGroup {
     final lightningFlashing = environment.lightningFlashing;
     final lightningColor = this.lightningColor;
     final nodeVisibility = scene.nodeVisibility;
+
+    final src = engine.bufferSrc;
+    final dst = engine.bufferDst;
+    final clr = engine.bufferClr;
+    final renderFast = engine.renderFast;
 
     int lineZ;
     int lineColumn;
@@ -252,6 +256,10 @@ class RendererNodes extends RenderGroup {
                         colorAbove: colorAbove,
                         colorSouth: colorSouth,
                         colorWest: colorWest,
+                        clr: clr,
+                        dst: dst,
+                        src: src,
+                        render: renderFast,
                       );
                       break;
                     case NodeOrientation.Half_West:
@@ -3308,10 +3316,11 @@ class RendererNodes extends RenderGroup {
     required int colorAbove,
     required int colorWest,
     required int colorSouth,
+    required Int32List clr,
+    required Float32List src,
+    required Float32List dst,
+    required Function render,
   }) {
-
-    final engine = this.engine;
-    final render = engine.render;
 
     render(
       color: colorAbove,
@@ -3323,6 +3332,9 @@ class RendererNodes extends RenderGroup {
       rotation: 0,
       dstX: dstX - Node_Size_Half,
       dstY: dstY - Node_Size_Half,
+      clr: clr,
+      dst: dst,
+      src: src,
     );
 
     render(
@@ -3335,6 +3347,9 @@ class RendererNodes extends RenderGroup {
       rotation: 0,
       dstX: dstX - Node_Size_Half,
       dstY: dstY,
+      clr: clr,
+      dst: dst,
+      src: src,
     );
 
     render(
@@ -3347,6 +3362,9 @@ class RendererNodes extends RenderGroup {
       rotation: 0,
       dstX: dstX,
       dstY: dstY,
+      clr: clr,
+      dst: dst,
+      src: src,
     );
   }
 
