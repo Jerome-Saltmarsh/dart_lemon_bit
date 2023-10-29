@@ -449,21 +449,22 @@ class IsometricScene with IsometricComponent implements Updatable {
     NodeType.Tree_Bottom,
     NodeType.Tree_Top,
     NodeType.Water,
+    NodeType.Boulder,
   ].contains(nodeType);
 
-  bool nodeOrientationBlocksVertical(int nodeOrientation) => (const [
+  bool nodeOrientationBlocksVertical(int nodeOrientation) => const [
     NodeOrientation.Solid,
     NodeOrientation.Half_Vertical_Top,
     NodeOrientation.Half_Vertical_Center,
     NodeOrientation.Half_Vertical_Bottom,
-  ]).contains(nodeOrientation);
+  ].contains(nodeOrientation);
 
-  bool nodeOrientationBlocksVerticalDown(int nodeOrientation) => (const [
+  bool nodeOrientationBlocksVerticalDown(int nodeOrientation) => const [
     NodeOrientation.Solid,
     NodeOrientation.Half_Vertical_Top,
     NodeOrientation.Half_Vertical_Center,
     NodeOrientation.Half_Vertical_Bottom,
-  ]).contains(nodeOrientation);
+  ].contains(nodeOrientation);
 
   int getProjectionIndex(int nodeIndex) => nodeIndex % projection;
 
@@ -1251,8 +1252,9 @@ class IsometricScene with IsometricComponent implements Updatable {
         NodeType.Grass_Long,
         NodeType.Tree_Bottom,
         NodeType.Tree_Top,
+        NodeType.Boulder,
       ].contains(nodeType)) {
-        brightness--;
+        brightness -= 2;
         if (brightness < 0){
           continue;
         }
