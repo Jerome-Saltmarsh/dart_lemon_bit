@@ -766,7 +766,23 @@ class AmuletGameTutorial extends AmuletGame {
           'one is here to to guide another.'
           'move by left clicking the mouse.'
         )
+        .wait(seconds: 1)
+        .add(() {
+          player.writeGameEvent(
+              type: GameEventType.Teleport_Start,
+              x: guide.x,
+              y: guide.y,
+              z: guide.z,
+              angle: 0,
+          );
+        })
+        .deactivate(guide)
+        .wait(seconds: 1)
         .movePositionToSceneKey(guide, keysGuideSpawn1)
+        .cameraSetTarget(guide)
+        .wait(seconds: 1)
+        .activate(guide)
+        .wait(seconds: 2)
         .controlsEnabled()
         .cameraClearTarget()
     ;

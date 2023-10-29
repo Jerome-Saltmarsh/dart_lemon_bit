@@ -1654,7 +1654,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       );
     }
 
-    // src.weaponState = WeaponState.Performing;
     dispatchAttackPerformed(
       src.weaponType,
       src.x + adj(angle, 60),
