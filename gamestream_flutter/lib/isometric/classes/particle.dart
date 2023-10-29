@@ -42,11 +42,9 @@ class Particle extends Position {
 
   int get direction => IsometricDirection.fromRadian(rotation);
 
-  double get duration01 => durationTotal <= 0 ? 0 : duration / durationTotal;
-
-  void setSpeed(double angle, double speed){
-    vx = adj(angle, speed);
-    vy = opp(angle, speed);
+  double get duration01 {
+    final durationTotal = this.durationTotal;
+    return durationTotal <= 0 ? 0 : duration / durationTotal;
   }
 
   void deactivate(){
@@ -67,12 +65,17 @@ class Particle extends Position {
     x += vx;
     y += vy;
     z += vz;
+
     if (z < 0){
       z = 0;
     }
+
+    final rotationVelocity = this.rotationVelocity;
     if (rotationVelocity != 0) {
       rotation = (rotation + rotationVelocity) % pi2;
     }
+
+    final scaleVelocity = this.scaleVelocity;
     if (scaleVelocity != 0) {
       scale += scaleVelocity;
       if (scale < 0){
@@ -82,9 +85,13 @@ class Particle extends Position {
   }
 
   void applyAirFriction(){
-    const gravity = 0.04;
+    final frictionAir = this.frictionAir;
     vx *= frictionAir;
     vy *= frictionAir;
+  }
+
+  void applyGravity(){
+    const gravity = 0.04;
     vz -= gravity * weight;
   }
 
@@ -98,7 +105,13 @@ class Particle extends Position {
 
   @override
   String toString() =>
-      '{x: ${x.toInt()}, y: ${y.toInt()}, z: ${z.toInt()}, active: $active, type: ${ParticleType.getName(type)}';
+          '{'
+          'x: ${x.toInt()}, '
+          'y: ${y.toInt()}, '
+          'z: ${z.toInt()}, '
+          'active: $active, '
+          'type: ${ParticleType.getName(type)}'
+          '}';
 
   static int compare(Particle a, Particle b){
      final aActive = a.active;
@@ -126,6 +139,11 @@ class Particle extends Position {
   }) {
     vx += adj(angle, speed);
     vy += opp(angle, speed);
+  }
+
+  void setSpeed(double angle, double speed){
+    vx = adj(angle, speed);
+    vy = opp(angle, speed);
   }
 }
 

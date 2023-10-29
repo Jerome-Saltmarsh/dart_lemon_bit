@@ -1150,6 +1150,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
     } else {
       particle.applyAirFriction();
+      particle.applyGravity();
       if (windy && particle.blownByWind) {
         particle.vx = clamp(particle.vx - windStrength, -maxVelocity, maxVelocity);
         particle.vy = clamp(particle.vy + windStrength, -maxVelocity, maxVelocity);
