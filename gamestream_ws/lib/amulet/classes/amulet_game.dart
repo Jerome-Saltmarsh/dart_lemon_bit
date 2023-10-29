@@ -4,7 +4,6 @@ import 'package:gamestream_ws/gamestream.dart';
 import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages.dart';
 
-import '../functions/item_slot/item_slot_reduce_charge.dart';
 import 'fiend_type.dart';
 
 
@@ -545,24 +544,21 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       final equippedWeaponIndex = character.equippedWeaponIndex;
 
       if (equippedWeaponIndex == -1){
-        character.writeGameError(GameError.No_Weapon_Equipped);
         return;
       }
 
       final weapons = character.weapons;
       final equippedWeapon = weapons[equippedWeaponIndex];
 
-      if (!itemSlotChargesRemaining(equippedWeapon)) {
+      if (equippedWeapon.chargesEmpty) {
         character.writeGameError(GameError.Insufficient_Weapon_Charges);
         return;
       }
 
-      itemSlotReduceCharge(equippedWeapon);
+      character.reduceAmuletItemSlotCharges(equippedWeapon);
     }
     super.characterAttack(character);
   }
-
-  bool itemSlotChargesRemaining(AmuletItemSlot itemSlot) => itemSlot.charges > 0;
 
   @override
   AmuletPlayer buildPlayer() {

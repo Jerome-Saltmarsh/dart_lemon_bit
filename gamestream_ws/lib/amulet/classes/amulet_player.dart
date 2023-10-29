@@ -1,6 +1,5 @@
 
 import 'package:gamestream_ws/amulet/classes/amulet_character.dart';
-import 'package:gamestream_ws/amulet/functions/item_slot/item_slot_reduce_charge.dart';
 import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages.dart';
 import 'package:gamestream_ws/packages/common/src/types/audio_type.dart';
@@ -598,7 +597,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
         activatedPowerIndex = index;
         break;
       case AmuletItemAction.Caste:
-        itemSlotReduceCharge(itemSlot);
+        reduceAmuletItemSlotCharges(itemSlot);
         activatedPowerIndex = index;
         setCharacterStateStriking(
             character: this,
@@ -611,7 +610,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
         amuletGame.onAmuletItemUsed(this, amuletItem);
         break;
       case AmuletItemAction.Instant:
-        itemSlotReduceCharge(itemSlot);
+        reduceAmuletItemSlotCharges(itemSlot);
         itemSlot.cooldown = 0;
         itemSlot.cooldownDuration = itemStats.cooldown;
         writePlayerWeapon(index);
@@ -1640,5 +1639,10 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
      writeByte(NetworkResponse.Amulet);
      writeByte(NetworkResponseAmulet.Play_AudioType);
      writeByte(audioType.index);
+  }
+
+  void reduceAmuletItemSlotCharges(AmuletItemSlot amuletItemSlot) {
+    amuletItemSlot.reduceCharges();
+    writeWeapons();
   }
 }
