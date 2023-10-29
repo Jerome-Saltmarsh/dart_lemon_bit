@@ -209,6 +209,7 @@ class IsometricEvents with IsometricComponent {
         for (var i = 0; i < 5; i++) {
           particles.spawnParticleConfettiByType(x, y, z, ParticleType.Confetti_Blue);
         }
+        audio.play(audio.teleport, x, y, z);
         break;
 
       case GameEventType.Teleport_End:

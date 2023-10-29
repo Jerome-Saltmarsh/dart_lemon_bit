@@ -134,7 +134,7 @@ class AmuletUI {
 
   Positioned buildDialogTalk() {
 
-    const width = 300.0;
+    const width = 296.0;
     const height = width * goldenRatio_0618;
 
     final npcOptions = amulet.npcOptions;
