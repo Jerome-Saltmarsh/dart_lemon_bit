@@ -7,10 +7,6 @@ import 'package:gamestream_ws/packages.dart';
 import 'character.dart';
 import 'collider.dart';
 import 'isometric_environment.dart';
-import 'functions/character/set_character_state_fire.dart';
-import 'functions/character/set_character_state_idle.dart';
-import 'functions/character/set_character_state_running.dart';
-import 'functions/character/set_character_state_striking.dart';
 import 'gameobject.dart';
 import 'physics.dart';
 import 'isometric_player.dart';
@@ -290,7 +286,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     if (keyDownShift){
-      setCharacterStateIdle(player);
+      player.setCharacterStateIdle();
     }
 
     if (mouseLeftDown) {
@@ -389,7 +385,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void characterRunInDirection(Character character, int direction) {
     if (direction == IsometricDirection.None && character.target == null) {
-      setCharacterStateIdle(character);
+      character.setCharacterStateIdle();
       return;
     }
 
@@ -398,15 +394,15 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         return;
       }
       clearCharacterTarget(character);
-      setCharacterStateIdle(character);
+      character.setCharacterStateIdle();
       return;
     } else if (direction == IsometricDirection.None) {
       clearCharacterTarget(character);
-      setCharacterStateIdle(character);
+      character.setCharacterStateIdle();
       return;
     }
     character.direction = direction;
-    setCharacterStateRunning(character);
+    character.setCharacterStateRunning();
     clearCharacterTarget(character);
   }
 
@@ -2132,7 +2128,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void clearCharacterTarget(Character character) {
     if (character.target == null) return;
     character.target = null;
-    setCharacterStateIdle(character);
+    character.setCharacterStateIdle();
   }
 
   /// WARNING EXPENSIVE OPERATION
@@ -2471,7 +2467,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void characterActionIdle(Character character) {
     character.goal = CharacterGoal.Idle;
     character.action = CharacterAction.Idle;
-    setCharacterStateIdle(character);
+    character.setCharacterStateIdle();
   }
 
   void characterRunToTarget(Character character){
@@ -2575,7 +2571,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void characterActionRunToDestination(Character character) {
     character.action = CharacterAction.Run_To_Destination;
     character.faceRunDestination();
-    setCharacterStateRunning(character);
+    character.setCharacterStateRunning();
   }
 
   bool characterShouldRunToTarget(Character character) {
@@ -2682,7 +2678,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     final target = character.target;
 
     if (character.interacting) {
-      setCharacterStateIdle(character);
+      character.setCharacterStateIdle();
       character.setDestinationToCurrentPosition();
       return;
     }
@@ -2693,7 +2689,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     if (character.targetWithinRadius(IsometricSettings.Interact_Radius)){
         customOnInteraction(character, target);
-        setCharacterStateIdle(character);
+        character.setCharacterStateIdle();
         character.setDestinationToCurrentPosition();
         return;
     }
@@ -2748,14 +2744,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.clearPath();
 
     if (character.weaponType == WeaponType.Bow) {
-      setCharacterStateFire(
-        character: character,
+      character.setCharacterStateFire(
         duration: character.attackDuration,
         actionFrame: character.attackActionFrame,
       );
     } else {
-      setCharacterStateStriking(
-        character: character,
+      character.setCharacterStateStriking(
         duration: character.attackDuration,
         actionFrame: character.attackActionFrame,
       );

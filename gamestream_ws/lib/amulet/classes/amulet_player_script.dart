@@ -47,7 +47,7 @@ class AmuletPlayerScript {
         if (enabled){
           player.clearCameraTarget();
         } else {
-          setCharacterStateIdle(player);
+          player.setCharacterStateIdle();
           player.clearPath();
           player.setDestinationToCurrentPosition();
         }

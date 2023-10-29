@@ -4,9 +4,6 @@ import 'package:gamestream_ws/isometric/isometric_game.dart';
 import 'package:gamestream_ws/packages.dart';
 
 import 'collider.dart';
-import 'functions/character/set_character_state.dart';
-import 'functions/character/set_character_state_idle.dart';
-import 'functions/character/set_character_state_running.dart';
 import 'isometric_settings.dart';
 import 'position.dart';
 
@@ -370,7 +367,7 @@ class Character extends Collider {
 
   void runToDestination(){
     faceRunDestination();
-    setCharacterStateRunning(this);
+    setCharacterStateRunning();
   }
 
   void faceRunDestination() {
@@ -391,7 +388,7 @@ class Character extends Collider {
     clearTarget();
     clearPath();
     setDestinationToCurrentPosition();
-    setCharacterStateIdle(this);
+    setCharacterStateIdle();
   }
 
   /// throws an exception if target is null
@@ -426,7 +423,7 @@ class Character extends Collider {
   }
 
   void idle() {
-    setCharacterStateIdle(this);
+    setCharacterStateIdle();
     setDestinationToCurrentPosition();
   }
 
@@ -535,9 +532,77 @@ class Character extends Collider {
     this.actionFrame = actionFrame;
     setDestinationToCurrentPosition();
     setCharacterState(
-      character: this,
       value: CharacterState.Casting,
       duration: duration,
     );
   }
+
+  void setCharacterStateFire({
+    required int duration,
+    required int actionFrame,
+  }){
+    assert (active);
+    assert (alive);
+    assert (duration > 0);
+    assert (actionFrame < duration);
+
+    this.actionFrame = actionFrame;
+    setDestinationToCurrentPosition();
+    setCharacterState(
+      value: CharacterState.Fire,
+      duration: duration,
+    );
+  }
+
+  void setCharacterStateStriking({
+    required int duration,
+    required int actionFrame,
+  }){
+    assert (active);
+    assert (alive);
+    this.actionFrame = actionFrame;
+    setDestinationToCurrentPosition();
+    setCharacterState(
+      value: CharacterState.Strike,
+      duration: duration,
+    );
+  }
+
+  void setCharacterStateIdle({int duration = 0}){
+    if (
+      deadOrBusy ||
+      characterStateIdle
+    ) return;
+
+    setDestinationToCurrentPosition();
+    setCharacterState(
+      value: CharacterState.Idle,
+      duration: duration,
+    );
+  }
+
+  void setCharacterStateRunning() =>
+    setCharacterState(
+      value: CharacterState.Running,
+      duration: 0,
+    );
+
+  void setCharacterState({
+    required int value,
+    required int duration,
+  }) {
+    assert (duration >= 0);
+    assert (value != CharacterState.Dead); // use game.setCharacterStateDead
+    assert (value != CharacterState.Hurt); // use character.setCharacterStateHurt
+
+    if (characterState == value || deadOrBusy) {
+      return;
+    }
+
+    characterState = value;
+    frame = 0;
+    this.actionDuration = duration;
+  }
+
+
 }

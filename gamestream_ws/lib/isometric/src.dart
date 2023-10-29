@@ -18,4 +18,3 @@ export 'scenes.dart';
 export 'isometric_settings.dart';
 export 'side.dart';
 export 'isometric_time.dart';
-export 'functions/character/src.dart';

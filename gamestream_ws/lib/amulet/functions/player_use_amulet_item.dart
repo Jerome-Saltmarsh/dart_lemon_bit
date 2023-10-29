@@ -1,7 +1,6 @@
 import 'package:gamestream_ws/amulet/classes/amulet_player.dart';
 import 'package:gamestream_ws/packages/common/src.dart';
 
-import '../../isometric/functions/character/set_character_state_striking.dart';
 
 void playerUseAmuletItem(AmuletPlayer player, AmuletItem item) {
 
@@ -30,8 +29,7 @@ void playerUseAmuletItem(AmuletPlayer player, AmuletItem item) {
         player.deselectActivatedPower();
         return;
       }
-      setCharacterStateStriking(
-        character: player,
+      player.setCharacterStateStriking(
         actionFrame: item.actionFrame,
         duration: item.performDuration,
       );
@@ -41,15 +39,13 @@ void playerUseAmuletItem(AmuletPlayer player, AmuletItem item) {
         player.deselectActivatedPower();
         return;
       }
-      setCharacterStateStriking(
-        character: player,
+      player.setCharacterStateStriking(
         actionFrame: item.actionFrame,
         duration: item.performDuration,
       );
       break;
     case AmuletItemAction.Positional:
-      setCharacterStateStriking(
-        character: player,
+      player.setCharacterStateStriking(
         duration: item.performDuration,
         actionFrame: item.actionFrame,
       );
