@@ -53,7 +53,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     customInit();
 
     for (final gameObject in gameObjects) {
-      customOnGameObjectSpawned(gameObject);
+      onGameObjectSpawned(gameObject);
     }
   }
 
@@ -74,7 +74,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
        characters.add(value);
     }
     if (value is GameObject){
-       gameObjects.add(value);
+      if (gameObjects.contains(value)){
+        return;
+      }
+      gameObjects.add(value);
+      onGameObjectedAdded(value);
     }
     if (value is Projectile){
       projectiles.add(value);
@@ -151,7 +155,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void customInit() {}
 
   /// @override
-  void customOnGameObjectSpawned(GameObject gameObject) {}
+  void onGameObjectSpawned(GameObject gameObject) {}
 
   /// @override
   void customOnGameObjectDestroyed(GameObject gameObject) {}
@@ -1778,7 +1782,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       gameObject.physicsFriction = Physics.Friction;
       gameObject.team = team;
       gameObject.synchronizePrevious();
-      customOnGameObjectSpawned(gameObject);
+      onGameObjectSpawned(gameObject);
       return gameObject;
     }
     final instance = GameObject(
@@ -1793,7 +1797,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     instance.active = true;
     instance.dirty = true;
     gameObjects.add(instance);
-    customOnGameObjectSpawned(instance);
+    onGameObjectSpawned(instance);
     return instance;
   }
 
@@ -1814,12 +1818,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void dispatchGameEvent(int gameEventType, double x, double y, double z, [double angle = 0]) {
     final players = this.players;
     for (final player in players) {
-      if (!player.onScreen(x, y)) continue;
-      player.writeGameEvent(type: gameEventType,
+      player.writeGameEvent(
+          type: gameEventType,
           x: x,
           y: y,
           z: z,
-          angle: angle);
+          angle: angle,
+      );
     }
   }
 
@@ -2770,4 +2775,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       player.writeSceneKeys();
     }
   }
+
+  void onGameObjectedAdded(GameObject value) {}
 }

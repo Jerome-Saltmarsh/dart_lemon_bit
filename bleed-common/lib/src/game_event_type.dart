@@ -46,4 +46,6 @@ class GameEventType {
   static const Bow_Released             = 87;
   static const Lightning_Bolt = 88;
   static const Spell_Used = 89;
+  static const GameObject_Spawned = 90;
+  static const Amulet_GameObject_Spawned = 91;
 }

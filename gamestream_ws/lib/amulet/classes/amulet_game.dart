@@ -609,4 +609,21 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     player.writeByte(amuletScene.index);
   }
 
+  @override
+  void onGameObjectSpawned(GameObject gameObject) {
+    // if (gameObject.type != ItemType.Object) {
+    //   dispatchGameEventPosition(GameEventType.GameObject_Spawned, gameObject);
+    //   dispatchByte(gameObject.type);
+    //   dispatchByte(gameObject.subType);
+    // }
+  }
+
+  @override
+  void onGameObjectedAdded(GameObject gameObject) {
+    if (gameObject is AmuletGameObject) {
+      dispatchGameEventPosition(GameEventType.Amulet_GameObject_Spawned, gameObject);
+      dispatchByte(gameObject.type);
+      dispatchByte(gameObject.subType);
+    }
+  }
 }

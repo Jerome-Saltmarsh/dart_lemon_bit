@@ -111,6 +111,16 @@ class IsometricEvents with IsometricComponent {
       case GameEventType.Node_Struck:
         onNodeStruck(x, y, z);
         break;
+      case GameEventType.GameObject_Spawned:
+        final type = parser.readByte();
+        final subType = parser.readByte();
+        onGameObjectSpawned(x: x, y: y, z: z, type: type, subType: subType);
+        break;
+      case GameEventType.Amulet_GameObject_Spawned:
+        final type = parser.readByte();
+        final subType = parser.readByte();
+        onGameObjectSpawned(x: x, y: y, z: z, type: type, subType: subType);
+        break;
       case GameEventType.Node_Deleted:
         audio.play(audio.hover_over_button_sound_30, x, y, z);
         break;
@@ -680,5 +690,15 @@ class IsometricEvents with IsometricComponent {
 
   void onGameJoined() {
     camera.centerOnPlayer();
+  }
+
+  void onGameObjectSpawned({
+    required double x,
+    required double y,
+    required double z,
+    required int type,
+    required int subType,
+  }) {
+    audio.play(audio.change_cloths, x, y, z);
   }
 }

@@ -37,4 +37,6 @@ class AmuletGameObject extends GameObject {
     // TODO: implement onSameTeamAs
     throw UnimplementedError();
   }
+
+
 }

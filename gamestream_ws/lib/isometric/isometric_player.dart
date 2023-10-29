@@ -653,10 +653,9 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     return TargetAction.Run;
   }
 
-  bool onScreen(double x, double y){
-    const Max_Distance = 800.0;
-    if ((this.x - x).abs() > Max_Distance) return false;
-    if ((this.y - y).abs() > Max_Distance) return false;
+  bool onScreen(double x, double y, {double minRadius = 800}){
+    if ((this.x - x).abs() > minRadius) return false;
+    if ((this.y - y).abs() > minRadius) return false;
     return true;
   }
 
