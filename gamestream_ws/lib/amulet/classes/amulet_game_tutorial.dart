@@ -756,11 +756,13 @@ class AmuletGameTutorial extends AmuletGame {
         .controlsDisabled()
         .zoom(1.5)
         .snapCameraToPlayer()
+        .wait(seconds: 1)
         .movePositionToSceneKey(guide, keysGuideSpawn0)
+        .cameraSetTarget(guide)
         .wait(seconds: 1)
         .activate(guide)
-        .cameraSetTarget(guide)
         .faceEachOther(player, guide)
+        .wait(seconds: 1)
         .talk(
           'greetings.'
           'one is here to to guide another.'
