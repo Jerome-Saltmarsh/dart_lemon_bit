@@ -1721,10 +1721,10 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     }
 
     itemSlot.cooldown = stats.cooldown;
-    useAmuletItem(item);
+    onAmuletItemUsed(item);
   }
 
-  void useAmuletItem(AmuletItem amuletItem) {
+  void onAmuletItemUsed(AmuletItem amuletItem) {
 
     final amuletItemLevel = getAmuletItemLevel(amuletItem);
 
@@ -1779,5 +1779,77 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     }
   }
 
+
+  void useSlotTypeAtIndex(SlotType slotType, int index) {
+    if (index < 0)
+      return;
+
+    switch (slotType){
+
+      case SlotType.Weapons:
+        selectWeaponAtIndex(index);
+        return;
+      case SlotType.Items:
+        if (index >= items.length)
+          return;
+
+        final inventorySlot = items[index];
+        final item = inventorySlot.amuletItem;
+
+        if (item == null) {
+          return;
+        }
+
+        if (item.isWeapon) {
+          final emptyWeaponSlot = getEmptyWeaponSlot();
+          if (emptyWeaponSlot != null){
+            swapAmuletItemSlots(inventorySlot, emptyWeaponSlot);
+            if (equippedWeaponIndex == -1){
+              equippedWeaponIndex = weapons.indexOf(emptyWeaponSlot);
+            }
+          } else {
+            writeGameError(GameError.Weapon_Rack_Full);
+          }
+        } else
+        if (item.isTreasure) {
+          final emptyTreasureSlot = getEmptyTreasureSlot();
+          if (emptyTreasureSlot != null){
+            swapAmuletItemSlots(inventorySlot, emptyTreasureSlot);
+          }
+        } else
+        if (item.isHelm){
+          swapAmuletItemSlots(inventorySlot, equippedHelm);
+        } else
+        if (item.isLegs){
+          swapAmuletItemSlots(inventorySlot, equippedLegs);
+        } else
+        if (item.isBody){
+          swapAmuletItemSlots(inventorySlot, equippedBody);
+        } else
+        if (item.isShoes){
+          swapAmuletItemSlots(inventorySlot, equippedShoe);
+        }
+        if (item.isHand){
+          if (equippedHandLeft.amuletItem == null){
+            swapAmuletItemSlots(inventorySlot, equippedHandLeft);
+          } else {
+            swapAmuletItemSlots(inventorySlot, equippedHandRight);
+          }
+        }
+
+        if (item.isConsumable){
+          final consumableType = item.subType;
+          consumeItem(consumableType);
+          clearSlot(inventorySlot);
+          writePlayerEventItemTypeConsumed(consumableType);
+          return;
+        }
+        break;
+
+      default:
+        swapWithAvailableItemSlot(getItemSlot(slotType, index));
+        break;
+    }
+  }
 
 }
