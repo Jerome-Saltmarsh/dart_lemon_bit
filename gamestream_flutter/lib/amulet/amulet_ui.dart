@@ -31,7 +31,7 @@ class AmuletUI {
   Widget buildAmuletUI() => Stack(
       alignment: Alignment.center,
       children: [
-        buildPositionedNpcText(),
+        buildDialogTalk(),
         Positioned(
           bottom: 4,
           left: 0,
@@ -132,7 +132,7 @@ class AmuletUI {
     return IgnorePointer(child: buildWatch(amulet.error, (error) => buildText(error, color: color)));
   }
 
-  Positioned buildPositionedNpcText() {
+  Positioned buildDialogTalk() {
 
     const width = 300.0;
     const height = width * goldenRatio_0618;
@@ -168,7 +168,7 @@ class AmuletUI {
     });
 
     return Positioned(
-      bottom: margin2,
+      bottom: margin2 + 10,
       child:
       buildWatch(amulet.playerInteracting, (interacting) => !interacting ? nothing :
       buildWatch(amulet.npcTextIndex, (npcTextIndex) {
