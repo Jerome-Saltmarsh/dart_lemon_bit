@@ -96,6 +96,11 @@ extension AmuletParser on IsometricParser {
          final amuletScene = AmuletScene.values[index];
          amulet.amuletScene.value = amuletScene;
          break;
+       case NetworkResponseAmulet.Play_AudioType:
+         final audioTypeIndex = readByte();
+         final audioType = AudioType.values[audioTypeIndex];
+         onPlayAudioType(audioType);
+         break;
      }
   }
 
@@ -130,6 +135,14 @@ extension AmuletParser on IsometricParser {
       charges: charges,
       max: max,
     );
+  }
+
+  void onPlayAudioType(AudioType audioType) {
+     switch (audioType){
+       case AudioType.unlock_2:
+         audio.unlock_2.play();
+         break;
+     }
   }
 }
 

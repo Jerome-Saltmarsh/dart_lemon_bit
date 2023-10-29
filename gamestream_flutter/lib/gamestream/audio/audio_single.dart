@@ -37,6 +37,7 @@ class AudioSingle {
   void play({double volume = 1.0}) async {
     final playVolume = this.volume * volume;
     if (playVolume <= 0) return;
+    final audioPlayer = this.audioPlayer;
     await audioPlayer.setVolume(min(playVolume, 1));
     if (audioPlayer.audioSource == null) throw Exception('no audio source');
     await audioPlayer.seek(null);

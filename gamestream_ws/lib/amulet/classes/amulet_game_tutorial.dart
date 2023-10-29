@@ -3,6 +3,7 @@ import 'package:gamestream_ws/amulet/classes/enums/tutorial_objective.dart';
 import 'package:gamestream_ws/amulet/src.dart';
 import 'package:gamestream_ws/isometric/src.dart';
 import 'package:gamestream_ws/packages.dart';
+import 'package:gamestream_ws/packages/common/src/types/audio_type.dart';
 
 import 'amulet_player_script.dart';
 import 'fiend_type.dart';
@@ -725,11 +726,9 @@ class AmuletGameTutorial extends AmuletGame {
     }
   }
 
-  /// todo
   /// zoom the camera in
   /// then return the camera zoom to the previous value
   void onStruckCrystal1(AmuletPlayer player) {
-    // var zoomSaved = 0.0;
     runScript(player)
         .zoom(2)
         .deactivate(crystal1GlowingFalse)
@@ -740,6 +739,7 @@ class AmuletGameTutorial extends AmuletGame {
         .wait(seconds: 3)
         .cameraSetTargetSceneKey(keysDoor01)
         .wait(seconds: 2)
+        .playAudioType(AudioType.unlock_2)
         .setNodeEmptyAtSceneKey(keysDoor01)
         .wait(seconds: 1)
         .add(() => startNextTutorialObjective(player))

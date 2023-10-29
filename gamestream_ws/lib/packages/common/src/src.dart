@@ -1,6 +1,6 @@
 library src;
 
-export 'types/player_mode.dart';
+export 'types/src.dart';
 export 'isometric/src.dart';
 export 'amulet/src.dart';
 export 'editor/src.dart';

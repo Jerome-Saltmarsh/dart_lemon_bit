@@ -19,4 +19,5 @@ class NetworkResponseAmulet {
    static const Active_Power_Position = 16;
    static const Error = 17;
    static const Amulet_Scene = 18;
+   static const Play_AudioType = 19;
 }

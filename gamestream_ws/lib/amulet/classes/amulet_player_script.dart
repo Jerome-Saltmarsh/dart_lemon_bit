@@ -1,6 +1,7 @@
 import 'package:gamestream_ws/gamestream/amulet.dart';
 import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages/common/src/player_event.dart';
+import 'package:gamestream_ws/packages/common/src/types/audio_type.dart';
 
 import 'amulet_game.dart';
 import 'amulet_player.dart';
@@ -127,9 +128,11 @@ class AmuletPlayerScript {
 
   AmuletGame getAmuletGame() => player.amuletGame;
 
-  AmuletPlayerScript setNodeEmptyAtSceneKey(String sceneKey) {
-    return setNodeEmptyAtIndex(getSceneKeyIndex(sceneKey));
-  }
+  AmuletPlayerScript setNodeEmptyAtSceneKey(String sceneKey) =>
+      setNodeEmptyAtIndex(getSceneKeyIndex(sceneKey));
+
+  AmuletPlayerScript playAudioType(AudioType audioType) =>
+      add(() => player.playAudioType(audioType));
 
   AmuletPlayerScript setNodeEmptyAtIndex(int index) =>
       add(() {

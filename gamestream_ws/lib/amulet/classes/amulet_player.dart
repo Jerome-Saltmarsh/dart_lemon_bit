@@ -3,6 +3,7 @@ import 'package:gamestream_ws/amulet/classes/amulet_character.dart';
 import 'package:gamestream_ws/amulet/functions/item_slot/item_slot_reduce_charge.dart';
 import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages.dart';
+import 'package:gamestream_ws/packages/common/src/types/audio_type.dart';
 
 import '../getters/get_player_level_for_amulet_item.dart';
 import 'amulet_game.dart';
@@ -1635,4 +1636,9 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     super.aimTarget = value;
   }
 
+  void playAudioType(AudioType audioType){
+     writeByte(NetworkResponse.Amulet);
+     writeByte(NetworkResponseAmulet.Play_AudioType);
+     writeByte(audioType.index);
+  }
 }
