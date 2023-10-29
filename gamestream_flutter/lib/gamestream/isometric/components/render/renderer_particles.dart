@@ -226,7 +226,7 @@ class RendererParticles extends RenderGroup {
           break;
         case ParticleType.Confetti_White:
           engine.renderSprite(
-            image: images.shades,
+            image: images.shadesTransparent,
             dstX: dstX,
             dstY: dstY,
             srcX: 864,

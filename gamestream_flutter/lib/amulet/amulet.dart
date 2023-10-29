@@ -398,4 +398,12 @@ class Amulet extends IsometricGame {
          break;
      }
   }
+
+  void onNetworkDone() {
+      clearEquippedWeapon();
+  }
+
+  void clearEquippedWeapon() {
+    equippedWeaponIndex.value = -1;
+  }
 }

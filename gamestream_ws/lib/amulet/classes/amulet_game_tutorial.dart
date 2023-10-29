@@ -466,6 +466,9 @@ class AmuletGameTutorial extends AmuletGame {
     super.customOnCharacterKilled(target, src);
 
     if (target == fiend01) {
+      if (src is AmuletPlayer){
+        runScript(src).puzzleSolved();
+      }
       onCharacterKilledFiend01(target);
       return;
     }
@@ -601,7 +604,7 @@ class AmuletGameTutorial extends AmuletGame {
       .wait(seconds: 1)
       .playAudioType(AudioType.unlock_2)
       .setNodeEmptyAtSceneKey(keysDoor02)
-      .gameEventSceneKey(GameEventType.Spawn_Confetti, keysDoor01)
+      .gameEventSceneKey(GameEventType.Spawn_Confetti, keysDoor02)
       .wait(seconds: 1)
       .deactivate(guide)
       .controlsEnabled()
@@ -629,12 +632,10 @@ class AmuletGameTutorial extends AmuletGame {
             'the power of every item is determined by these elements.'
             'for example.'
             'the sword one doth possess is at level 1.'
-            'level two demands one hath at least 1 element of fire.'
-            'hover the mouse over an item to see this information.'
+            'level two requires at least 1 element of fire.'
+            'hover the mouse over an item icon to see this information.'
             'one can see ones elements at the top left corner of the screen.'
-            'each level gained allows one to improve one element.'
-            'one may select an element to improve it.'
-            'another challenge doth await one.'
+            'each level gained allows one to element to be increased.'
           )
           .deactivate(guide)
           .wait(seconds: 1)
@@ -642,6 +643,7 @@ class AmuletGameTutorial extends AmuletGame {
           .wait(seconds: 1)
           .playAudioType(AudioType.unlock_2)
           .setNodeEmptyAtSceneKey(keysDoor03)
+          .gameEventSceneKey(GameEventType.Spawn_Confetti, keysDoor03)
           .wait(seconds: 1)
           .end()
           .add(() => startNextTutorialObjective(player));

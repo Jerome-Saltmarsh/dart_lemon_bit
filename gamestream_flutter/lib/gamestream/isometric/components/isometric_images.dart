@@ -73,6 +73,7 @@ class IsometricImages with IsometricComponent {
   late final Image sphereSouth;
   late final Image sphereWest;
   late final Image shades;
+  late final Image shadesTransparent;
   late final Image pixel;
   late final Image atlas_projectiles;
   late final Image zombie;
@@ -109,6 +110,7 @@ class IsometricImages with IsometricComponent {
 
     empty = await loadPng('empty');
     loadPng('shades').then((value) => shades = value);
+    loadPng('shades_transparent').then((value) => shadesTransparent = value);
     loadPng('sphere/top').then((value) => sphereTop = value);
     loadPng('sphere/north').then((value) => sphereNorth = value);
     loadPng('sphere/east').then((value) => sphereEast = value);

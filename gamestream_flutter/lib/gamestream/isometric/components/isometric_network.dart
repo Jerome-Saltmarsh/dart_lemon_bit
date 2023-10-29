@@ -22,12 +22,12 @@ class IsometricNetwork with IsometricComponent {
       readString: parser.readServerResponseString,
       readBytes: parser.parseBytes,
       onError: onNetworkError,
-      onDone: () {
-        print('onDone()');
-        this.player.clearCache();
-
-      }
+      onDone: onNetworkDone,
     );
+  }
+
+  void onNetworkDone(){
+    this.player.onNetworkDone();
   }
 
   void onNetworkError(Object error, StackTrace stack) {

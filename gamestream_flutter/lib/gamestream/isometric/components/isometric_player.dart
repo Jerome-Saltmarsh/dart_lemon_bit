@@ -293,7 +293,7 @@ class IsometricPlayer with IsometricComponent {
         player.debugging.value = parser.readBool();
         break;
       case NetworkResponsePlayer.Cache_Cleared:
-        clearCache();
+        onNetworkDone();
         break;
     }
   }
@@ -438,8 +438,9 @@ class IsometricPlayer with IsometricComponent {
         value,
       );
 
-  void clearCache() {
+  void onNetworkDone() {
     scene.clear();
+    amulet.onNetworkDone();
   }
 
   void updateIndexes(){
