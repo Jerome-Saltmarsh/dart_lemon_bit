@@ -168,6 +168,16 @@ class IsometricEvents with IsometricComponent {
       case GameEventType.Arrow_Hit:
         audio.play(audio.arrow_impact, x, y, z);
         break;
+      case GameEventType.Spawn_Confetti:
+        for (var i = 0; i < 6; i++){
+          particles.spawnParticleConfettiByType(
+            x,
+            y,
+            z,
+            ParticleType.Confetti_White,
+          );
+        }
+        break;
       case GameEventType.Draw_Bow:
         audio.play(audio.bow_draw, x, y, z);
         break;
@@ -206,16 +216,18 @@ class IsometricEvents with IsometricComponent {
         break;
 
       case GameEventType.Teleport_Start:
+        final spawnConfetti = particles.spawnParticleConfettiByType;
         for (var i = 0; i < 5; i++) {
-          particles.spawnParticleConfettiByType(x, y, z, ParticleType.Confetti_Blue);
+          spawnConfetti(x, y, z, ParticleType.Confetti_White);
         }
-        audio.play(audio.teleport, x, y, z);
+        audio.play(audio.magical_swoosh_18, x, y, z);
         break;
 
       case GameEventType.Teleport_End:
         for (var i = 0; i < 5; i++) {
-          particles.spawnParticleConfettiByType(x, y, z, ParticleType.Confetti_Blue);
+          particles.spawnParticleConfettiByType(x, y, z, ParticleType.Confetti_White);
         }
+        audio.play(audio.magical_swoosh_18, x, y, z);
         break;
 
       case GameEventType.Character_Death:

@@ -146,6 +146,25 @@ class AmuletPlayerScript {
         getAmuletGame().activate(collider);
       });
 
+  AmuletPlayerScript gameEventPosition(int gameEvent, Position position) =>
+      add(() => getAmuletGame().dispatchGameEventPosition(gameEvent, position));
+
+  AmuletPlayerScript gameEventSceneKey(int gameEvent, String sceneKey) =>
+      gameEventIndex(gameEvent, getScene().getKey(sceneKey));
+
+  AmuletPlayerScript gameEventIndex(int gameEvent, int index) {
+    final scene = getScene();
+    return gameEventXYZ(
+        gameEvent,
+        scene.getIndexX(index),
+        scene.getIndexY(index),
+        scene.getIndexZ(index),
+    );
+  }
+
+  AmuletPlayerScript gameEventXYZ(int gameEvent, double x, double y, double z) =>
+      add(() => player.amuletGame.dispatchGameEvent(gameEvent, x, y, z));
+
   AmuletPlayerScript deactivate(Collider collider) =>
       add(() {
         log('deactivate($collider)');

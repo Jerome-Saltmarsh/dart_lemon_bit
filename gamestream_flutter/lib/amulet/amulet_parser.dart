@@ -142,6 +142,9 @@ extension AmuletParser on IsometricParser {
        case AudioType.unlock_2:
          audio.unlock_2.play();
          break;
+       case AudioType.magical_swoosh_18:
+         audio.magical_swoosh_18.play();
+         break;
      }
   }
 }

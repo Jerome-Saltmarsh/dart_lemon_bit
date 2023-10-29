@@ -8,6 +8,10 @@ class BoolList {
     _list = Uint8List(length);
   }
 
+  void fill(bool value){
+    _list.fillRange(0, _list.length, value ? 1 : 0);
+  }
+
   factory BoolList.fromList(List<bool> sourceList) {
     final length = sourceList.length;
     final uint8List = Uint8List(length);

@@ -224,6 +224,19 @@ class RendererParticles extends RenderGroup {
             color: scene.getRenderColorPosition(particle),
           );
           break;
+        case ParticleType.Confetti_White:
+          engine.renderSprite(
+            image: images.shades,
+            dstX: dstX,
+            dstY: dstY,
+            srcX: 864,
+            srcY: 0,
+            srcWidth: 8,
+            srcHeight: 8,
+            scale: particle.scale,
+            color: scene.getRenderColorPosition(particle),
+          );
+          break;
         case ParticleType.Bubble_Small:
           engine.renderSprite(
             image: images.atlas_gameobjects,

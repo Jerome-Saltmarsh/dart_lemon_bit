@@ -2262,9 +2262,10 @@ class IsometricScene with IsometricComponent implements Updatable {
   var visited2DStackIndex = 0;
   var visited3DStackIndex = 0;
 
-  void clearVisited(){
+  void clearVisited() {
     visited2DStackIndex = 0;
     visited3DStackIndex = 0;
+    visited2D.fill(false);
   }
 
   void emitHeightMapIsland(int index) {
@@ -2438,11 +2439,12 @@ class IsometricScene with IsometricComponent implements Updatable {
   }
 
   void clear(){
+    clearVisited();
     totalCharacters = 0;
     totalProjectiles = 0;
     characters.clear();
     gameObjects.clear();
     projectiles.clear();
-
+    nodeVisibility.fillRange(0, nodeVisibility.length, NodeVisibility.opaque);
   }
 }

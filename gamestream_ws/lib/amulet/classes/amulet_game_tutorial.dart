@@ -404,9 +404,17 @@ class AmuletGameTutorial extends AmuletGame {
             .activate(guide)
             .cameraSetTarget(guide)
             .faceEachOther(player, guide)
-            .talk('danger doth lieth ahead')
-            .add(actionSpawnWeaponSwordAtGuide)
+            .talk('danger lies in ones path')
             .deactivate(guide)
+            .add(actionSpawnWeaponSwordAtGuide)
+            .end();
+        break;
+      case TutorialObjective.Strike_Crystal_1:
+        runScript(player)
+            .controlsDisabled()
+            .cameraSetTarget(guide)
+            .faceEachOther(player, guide)
+            .talk('hover the mouse over a target and left click to strike it')
             .end();
         break;
       case TutorialObjective.Use_Heal:
@@ -591,7 +599,9 @@ class AmuletGameTutorial extends AmuletGame {
       )
       .cameraSetTargetSceneKey(keysDoor02)
       .wait(seconds: 1)
+      .playAudioType(AudioType.unlock_2)
       .setNodeEmptyAtSceneKey(keysDoor02)
+      .gameEventSceneKey(GameEventType.Spawn_Confetti, keysDoor01)
       .wait(seconds: 1)
       .deactivate(guide)
       .controlsEnabled()
@@ -630,6 +640,7 @@ class AmuletGameTutorial extends AmuletGame {
           .wait(seconds: 1)
           .cameraSetTargetSceneKey(keysDoor03)
           .wait(seconds: 1)
+          .playAudioType(AudioType.unlock_2)
           .setNodeEmptyAtSceneKey(keysDoor03)
           .wait(seconds: 1)
           .end()
@@ -733,14 +744,16 @@ class AmuletGameTutorial extends AmuletGame {
         .zoom(2)
         .deactivate(crystal1GlowingFalse)
         .activate(crystal1GlowingTrue)
+        .gameEventPosition(GameEventType.Spawn_Confetti, crystal1GlowingTrue)
         .deactivate(guide)
         .puzzleSolved()
         .controlsDisabled()
-        .wait(seconds: 3)
-        .cameraSetTargetSceneKey(keysDoor01)
         .wait(seconds: 2)
+        .cameraSetTargetSceneKey(keysDoor01)
+        .wait(seconds: 3)
         .playAudioType(AudioType.unlock_2)
         .setNodeEmptyAtSceneKey(keysDoor01)
+        .gameEventSceneKey(GameEventType.Spawn_Confetti, keysDoor01)
         .wait(seconds: 1)
         .add(() => startNextTutorialObjective(player))
         .end();
@@ -760,6 +773,7 @@ class AmuletGameTutorial extends AmuletGame {
         .movePositionToSceneKey(guide, keysGuideSpawn0)
         .cameraSetTarget(guide)
         .wait(seconds: 1)
+        .gameEventPosition(GameEventType.Teleport_Start, guide)
         .activate(guide)
         .faceEachOther(player, guide)
         .wait(seconds: 1)
@@ -769,20 +783,12 @@ class AmuletGameTutorial extends AmuletGame {
           'move by left clicking the mouse.'
         )
         .wait(seconds: 1)
-        .add(() {
-          player.writeGameEvent(
-              type: GameEventType.Teleport_Start,
-              x: guide.x,
-              y: guide.y,
-              z: guide.z,
-              angle: 0,
-          );
-        })
+        .gameEventPosition(GameEventType.Teleport_Start, guide)
         .deactivate(guide)
-        .wait(seconds: 1)
         .movePositionToSceneKey(guide, keysGuideSpawn1)
         .cameraSetTarget(guide)
-        .wait(seconds: 1)
+        .wait(seconds: 2)
+        .gameEventPosition(GameEventType.Teleport_End, guide)
         .activate(guide)
         .wait(seconds: 2)
         .controlsEnabled()
@@ -811,16 +817,6 @@ class AmuletGameTutorial extends AmuletGame {
           'strike by hovering the mouse over a target and left clicking.'
           'one can also attack at any time using right click.'
         )
-        .add(() {
-          player.writeGameEvent(
-              type: GameEventType.Blink_Depart,
-              x: guide.x,
-              y: guide.y,
-              z: guide.z,
-              angle: 0,
-          );
-        })
-        .deactivate(guide)
         .end();
 
   GameObject spawnAtKeyCrystalGlowing(String key, bool value) =>
@@ -887,6 +883,7 @@ class AmuletGameTutorial extends AmuletGame {
           .wait(seconds: 1)
           .cameraSetTargetSceneKey(keysExit)
           .wait(seconds: 1)
+          .playAudioType(AudioType.unlock_2)
           .setNodeEmptyAtSceneKey(keysExit)
           .wait(seconds: 1)
           .deactivate(guide)

@@ -48,4 +48,5 @@ class GameEventType {
   static const Spell_Used = 89;
   static const GameObject_Spawned = 90;
   static const Amulet_GameObject_Spawned = 91;
+  static const Spawn_Confetti = 92;
 }
