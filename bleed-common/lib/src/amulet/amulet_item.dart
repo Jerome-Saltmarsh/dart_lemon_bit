@@ -45,7 +45,7 @@ enum AmuletItem {
       cooldown: 5,
       charges: 5,
       information: 'An old blunt sword',
-      performDuration: 40,
+      performDuration: 32,
     ),
     level2: AmuletItemLevel(
       damage: 2,

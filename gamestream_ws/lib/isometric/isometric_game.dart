@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:gamestream_ws/amulet.dart';
-import 'package:gamestream_ws/amulet/setters/amulet_player/use_activated_power.dart';
 import 'package:gamestream_ws/gamestream.dart';
 import 'package:gamestream_ws/packages.dart';
 
@@ -300,7 +299,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         player is AmuletPlayer &&
         player.activatedPowerIndex != -1
     ) {
-      amuletPlayerUseActivatedPower(player);
+      player.useActivatedPower();
       player.mouseLeftDownIgnore = true;
       return;
     }

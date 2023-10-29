@@ -1697,4 +1697,87 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
 
     reduceAmuletItemSlotCharges(equippedWeaponSlot);
   }
+
+  void useActivatedPower() {
+    if (activatedPowerIndex < 0) {
+      throw Exception('activatedPowerIndex < 0 : $activatedPowerIndex < 0');
+    }
+
+    if (activatedPowerIndex >= weapons.length) {
+      throw Exception('invalid weapon index: $activatedPowerIndex');
+    }
+
+    final itemSlot = weapons[activatedPowerIndex];
+    final item = itemSlot.amuletItem;
+
+    if (item == null) {
+      throw Exception();
+    }
+
+    final stats = getAmuletItemLevel(item);
+
+    if (stats == null){
+      throw Exception('must have stats for activated item');
+    }
+
+    itemSlot.cooldown = stats.cooldown;
+    useAmuletItem(item);
+  }
+
+  void useAmuletItem(AmuletItem amuletItem) {
+
+    final amuletItemLevel = getAmuletItemLevel(amuletItem);
+
+    if (amuletItemLevel == null) {
+      writeGameError(GameError.Insufficient_Elements);
+      return;
+    }
+
+    switch (amuletItem.selectAction) {
+      case AmuletItemAction.Equip:
+        attack();
+        break;
+      case AmuletItemAction.Caste:
+
+        if (amuletItemLevel.performDuration <= 0){
+          throw Exception('stats.performDuration <= 0 ${amuletItem} ${amuletItemLevel}');
+        }
+
+        setCharacterStateCasting(
+          duration: amuletItemLevel.performDuration,
+        );
+        break;
+      case AmuletItemAction.Targeted_Enemy:
+        if (target == null) {
+          deselectActivatedPower();
+          return;
+        }
+        setCharacterStateStriking(
+          duration: amuletItemLevel.performDuration,
+        );
+        break;
+      case AmuletItemAction.Targeted_Ally:
+        if (target == null) {
+          deselectActivatedPower();
+          return;
+        }
+        setCharacterStateStriking(
+          duration: amuletItemLevel.performDuration,
+        );
+        break;
+      case AmuletItemAction.Positional:
+        setCharacterStateStriking(
+          duration: amuletItemLevel.performDuration,
+        );
+        break;
+      case AmuletItemAction.None:
+        break;
+      case AmuletItemAction.Instant:
+        break;
+      case AmuletItemAction.Consume:
+        break;
+    }
+  }
+
+
 }

@@ -20,6 +20,7 @@ ctrl + []               : move caret to code block
 * [new]: item tabs weapons amulets etc
 
 ## 29.10.2023
+* [new]: remove perform frame
 * [new]: character state casting
 * [fix]: inventory slots remain green after drag
 * [fix]: node transparency broken after reconnect
