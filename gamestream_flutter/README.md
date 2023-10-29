@@ -9,17 +9,18 @@ ctrl + shift + e        : view recent changes
 alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
-## TODO
+## CURRENT
 * [new]: highlight item slot during tutorial
+* [new]: item tabs weapons amulets etc
 
-## BACKLOG
+## TODO
 * [new]: model hair
 * [fix]: orc strike sprite not rendered
 * [new]: optimize particle position using vector32
 * [new]: gameobject tree stump
-* [new]: item tabs weapons amulets etc
 
 ## 29.10.2023
+* [new]: myst image fade opacity
 * [new]: remove perform frame
 * [new]: character state casting
 * [fix]: inventory slots remain green after drag

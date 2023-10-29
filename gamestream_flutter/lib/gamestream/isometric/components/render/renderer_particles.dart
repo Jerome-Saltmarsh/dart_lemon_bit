@@ -558,25 +558,25 @@ class RendererParticles extends RenderGroup {
   }
 
   void renderMyst() {
-    const width = 32.0;
-    const height = 32.0;
+    const size = 64.0;
+    const totalFrames = 9;
 
-    final duration = particle.duration01;
-    final opacity = 1.0 - (duration < 0.5 ? duration / 0.5 : (1.0 - ((duration - 0.5) / 0.5)));
-    final totalFrames = 8;
+    final particle = this.particle;
+    final duration01 = particle.duration01;
+    final opacity = 1.0 - (duration01 < 0.5 ? duration01 / 0.5 : (1.0 - ((duration01 - 0.5) / 0.5)));
     final frame = (opacity * totalFrames).round();
 
     engine.renderSpriteRotated(
       image: images.atlas_nodes,
       dstX: particle.renderX,
       dstY: particle.renderY,
-      srcX: 1584,
-      srcY: frame * height,
-      srcWidth: width,
-      srcHeight: height,
+      srcX: 656 + (frame * size),
+      srcY: 1600,
+      srcWidth: size,
+      srcHeight: size,
       color: scene.getRenderColorPosition(particle),
       rotation: particle.rotation,
-      scale: particle.scale * 1.5,
+      scale: particle.scale,
     );
   }
 
