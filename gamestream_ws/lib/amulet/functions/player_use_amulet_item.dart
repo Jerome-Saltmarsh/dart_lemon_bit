@@ -2,23 +2,26 @@ import 'package:gamestream_ws/amulet/classes/amulet_player.dart';
 import 'package:gamestream_ws/packages/common/src.dart';
 
 
-void playerUseAmuletItem(AmuletPlayer player, AmuletItem item) {
+void playerUseAmuletItem(AmuletPlayer player, AmuletItem amuletItem) {
 
-  switch (item.selectAction) {
+  final amuletItemLevel = player.getAmuletItemLevel(amuletItem);
+
+  if (amuletItemLevel == null) {
+    player.writeGameError(GameError.Insufficient_Elements);
+    return;
+  }
+
+  switch (amuletItem.selectAction) {
     case AmuletItemAction.Equip:
       throw Exception();
     case AmuletItemAction.Caste:
-      if (item.performDuration < 0) {
-        throw Exception('item.performDuration < 0');
+
+      if (amuletItemLevel.performDuration <= 0){
+        throw Exception('stats.performDuration <= 0 ${amuletItem} ${amuletItemLevel}');
       }
-      // setCharacterStateStriking(
-      //   character: player,
-      //   actionFrame: item.actionFrame,
-      //   duration: item.performDuration,
-      // );
+
       player.setCharacterStateCasting(
-          duration: item.performDuration,
-          // actionFrame: item.actionFrame,
+          duration: amuletItemLevel.performDuration,
       );
       break;
     case AmuletItemAction.Targeted_Enemy:
@@ -27,7 +30,7 @@ void playerUseAmuletItem(AmuletPlayer player, AmuletItem item) {
         return;
       }
       player.setCharacterStateStriking(
-        duration: item.performDuration,
+        duration: amuletItemLevel.performDuration,
       );
       break;
     case AmuletItemAction.Targeted_Ally:
@@ -36,12 +39,12 @@ void playerUseAmuletItem(AmuletPlayer player, AmuletItem item) {
         return;
       }
       player.setCharacterStateStriking(
-        duration: item.performDuration,
+        duration: amuletItemLevel.performDuration,
       );
       break;
     case AmuletItemAction.Positional:
       player.setCharacterStateStriking(
-        duration: item.performDuration,
+        duration: amuletItemLevel.performDuration,
       );
       break;
     case AmuletItemAction.None:

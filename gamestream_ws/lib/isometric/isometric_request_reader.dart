@@ -178,7 +178,7 @@ extension IsometricRequestReader on Connection {
         break;
 
       case NetworkRequestIsometric.Debug_Attack:
-        game.characterAttack(player);
+        player.attack();
         break;
 
       case NetworkRequestIsometric.Toggle_Debugging:

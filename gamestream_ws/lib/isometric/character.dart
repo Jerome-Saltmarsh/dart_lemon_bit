@@ -42,8 +42,6 @@ class Character extends Collider {
   var invincible = false;
   var actionDuration = -1;
   var actionFrame = -1;
-  // var attackDuration = 0;
-  // var attackActionFrame = 0;
   var weaponHitForce = 10.0;
   var weaponRecoil = 0.25;
   var weaponType = WeaponType.Unarmed;
@@ -423,7 +421,7 @@ class Character extends Collider {
       throw Exception('target == null');
     }
     faceTarget();
-    game.characterAttack(this);
+    attack();
   }
 
   void idle() {
@@ -560,7 +558,6 @@ class Character extends Collider {
 
   void setCharacterStateStriking({
     required int duration,
-    // required int actionFrame,
   }){
     if (deadInactiveOrBusy){
       return;
@@ -612,4 +609,21 @@ class Character extends Collider {
   }
 
 
+  void attack() {
+    clearPath();
+
+    if (weaponType == WeaponType.Bow) {
+      setCharacterStateFire(
+        duration: attackDuration, // TODO
+      );
+    } else {
+      setCharacterStateStriking(
+        duration: attackDuration, // TODO
+      );
+    }
+  }
+
+  int get attackDuration {
+    return 20;
+  }
 }

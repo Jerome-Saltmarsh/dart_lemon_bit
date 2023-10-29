@@ -6,7 +6,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Rare,
     type: ItemType.Weapon,
     subType: WeaponType.Sword,
-    performDuration: 20,
     level1: AmuletItemLevel(
       charges: 1,
       cooldown: 20,
@@ -15,7 +14,6 @@ enum AmuletItem {
       information: 'Teleports a short distance',
       quantity: 2,
       performDuration: 16,
-      performActionFrame: 8,
     ),
     level2: AmuletItemLevel(
       charges: 2,
@@ -25,7 +23,6 @@ enum AmuletItem {
       information: 'teleport slightly further',
       quantity: 3,
       performDuration: 16,
-      performActionFrame: 8,
     ),
     level3: AmuletItemLevel(
       charges: 2,
@@ -35,7 +32,6 @@ enum AmuletItem {
       information: 'teleports a short distance',
       quantity: 4,
       performDuration: 16,
-      performActionFrame: 8,
     ),
   ),
   Weapon_Rusty_Old_Sword(
@@ -43,15 +39,13 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Weapon,
     subType: WeaponType.Sword,
-    performDuration: 25,
     level1: AmuletItemLevel(
       damage: 1,
       range: 60,
       cooldown: 5,
       charges: 5,
       information: 'An old blunt sword',
-      performDuration: 30,
-      performActionFrame: 20,
+      performDuration: 40,
     ),
     level2: AmuletItemLevel(
       damage: 2,
@@ -60,8 +54,7 @@ enum AmuletItem {
       charges: 7,
       information: 'An old blunt sword',
       earth: 1,
-      performDuration: 30,
-      performActionFrame: 20,
+      performDuration: 28,
     ),
     level3: AmuletItemLevel(
       damage: 4,
@@ -70,8 +63,7 @@ enum AmuletItem {
       charges: 7,
       information: 'An old blunt sword',
       earth: 5,
-      performDuration: 25,
-      performActionFrame: 18,
+      performDuration: 26
     ),
   ),
   Weapon_Staff_Of_Flames(
@@ -79,7 +71,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Unique,
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
-    performDuration: 25,
     level1: AmuletItemLevel(
         range: 100,
         damage: 1,
@@ -91,7 +82,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Rare,
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
-    performDuration: 20,
     level1: AmuletItemLevel(
         range: 100,
         damage: 1,
@@ -103,13 +93,13 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     type: ItemType.Weapon,
     subType: WeaponType.Bow,
-    performDuration: 30,
     level1: AmuletItemLevel(
       information: 'A worn out bow',
       damage: 1,
       charges: 5,
       cooldown: 4,
       range: 150,
+      performDuration: 20,
     ),
     level2: AmuletItemLevel(
       information: 'A worn out bow',
@@ -118,6 +108,7 @@ enum AmuletItem {
       cooldown: 4,
       range: 160,
       air: 2,
+      performDuration: 18,
     ),
     level3: AmuletItemLevel(
       information: 'A worn out bow',
@@ -126,6 +117,7 @@ enum AmuletItem {
       cooldown: 3,
       range: 170,
       air: 5,
+      performDuration: 16,
     ),
   ),
   Weapon_Holy_Bow(
@@ -133,7 +125,6 @@ enum AmuletItem {
     quality: AmuletItemQuality.Rare,
     type: ItemType.Weapon,
     subType: WeaponType.Bow,
-    performDuration: 25,
     level1: AmuletItemLevel(
         range: 150,
         damage: 5,
@@ -362,39 +353,34 @@ enum AmuletItem {
         cooldown: 30,
         health: 3,
         performDuration: 25,
-        performActionFrame: 20,
       ),
       level2: AmuletItemLevel(
         cooldown: 28,
         information: 'heals a small amount of health',
         health: 5,
         water: 1,
-        performDuration: 25,
-        performActionFrame: 20,
+        performDuration: 22,
       ),
       level3: AmuletItemLevel(
         cooldown: 26,
         information: 'heals a small amount of health',
         health: 7,
         water: 5,
-        performDuration: 25,
-        performActionFrame: 20,
+        performDuration: 19,
       ),
       level4: AmuletItemLevel(
         cooldown: 25,
         information: 'heals a small amount of health',
         health: 12,
         water: 8,
-        performDuration: 25,
-        performActionFrame: 20,
+        performDuration: 16,
       ),
       level5: AmuletItemLevel(
         cooldown: 24,
         information: 'heals a small amount of health',
         health: 7,
         water: 16,
-        performDuration: 25,
-        performActionFrame: 20,
+        performDuration: 14,
       ));
 
   final AmuletItemAction selectAction;
@@ -403,7 +389,6 @@ enum AmuletItem {
   final bool collectable;
   final bool consumable;
   final AmuletItemQuality quality;
-  final int performDuration;
   final AmuletItemLevel level1;
   final AmuletItemLevel? level2;
   final AmuletItemLevel? level3;
@@ -422,7 +407,6 @@ enum AmuletItem {
     this.level5,
     this.collectable = true,
     this.consumable = false,
-    this.performDuration = -1,
   });
 
   AmuletItemLevel? getStatsForLevel(int level) => switch (level) {

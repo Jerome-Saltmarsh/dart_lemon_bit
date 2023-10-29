@@ -2460,7 +2460,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void characterGoalForceAttack(Character character) {
     character.goal = CharacterGoal.Force_Attack;
     character.lookAtTarget();
-    characterAttack(character);
+    character.attack();
     character.forceAttack = false;
   }
 
@@ -2740,19 +2740,19 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     );
   }
 
-  void characterAttack(Character character) {
-    character.clearPath();
-
-    if (character.weaponType == WeaponType.Bow) {
-      character.setCharacterStateFire(
-        duration: 20, // TODO
-      );
-    } else {
-      character.setCharacterStateStriking(
-        duration: 20, // TODO
-      );
-    }
-  }
+  // void characterAttack(Character character) {
+  //   character.clearPath();
+  //
+  //   if (character.weaponType == WeaponType.Bow) {
+  //     character.setCharacterStateFire(
+  //       duration: 20, // TODO
+  //     );
+  //   } else {
+  //     character.setCharacterStateStriking(
+  //       duration: 20, // TODO
+  //     );
+  //   }
+  // }
 
   void sortMarksAndDispatch() {
     scene.sortMarks();

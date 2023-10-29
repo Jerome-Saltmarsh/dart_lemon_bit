@@ -139,11 +139,11 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     if (amuletItem == null){
       return null;
     }
-    return getStatsForAmuletItem(amuletItem);
+    return getAmuletItemLevel(amuletItem);
   }
 
 
-  AmuletItemLevel? getStatsForAmuletItem(AmuletItem amuletItem) =>
+  AmuletItemLevel? getAmuletItemLevel(AmuletItem amuletItem) =>
       amuletItem.getStatsForLevel(
           getLevelForAmuletItem(this, amuletItem)
       );
@@ -172,7 +172,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
       throw Exception('item == null');
     }
 
-    return getStatsForAmuletItem(item);
+    return getAmuletItemLevel(item);
   }
 
   @override
@@ -558,7 +558,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
       return;
     }
 
-    final itemStats = getStatsForAmuletItem(amuletItem);
+    final itemStats = getAmuletItemLevel(amuletItem);
 
     if (itemStats == null){
       writeGameError(GameError.Insufficient_Elements);
@@ -874,7 +874,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
 
   void pickupItem(AmuletItem item) {
 
-    final stats = getStatsForAmuletItem(item);
+    final stats = getAmuletItemLevel(item);
 
     if (stats == null){
       return;
@@ -1187,7 +1187,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
       return;
     }
 
-    final activeAbilityStats = getStatsForAmuletItem(activeAbility);
+    final activeAbilityStats = getAmuletItemLevel(activeAbility);
 
     if (activeAbilityStats == null){
       writeGameError(GameError.Insufficient_Elements);
@@ -1641,5 +1641,60 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   void reduceAmuletItemSlotCharges(AmuletItemSlot amuletItemSlot) {
     amuletItemSlot.reduceCharges();
     writeWeapons();
+  }
+
+  @override
+  void attack() {
+
+    if (equippedWeaponIndex == -1){
+      return;
+    }
+
+    final equippedWeaponSlot = weapons[equippedWeaponIndex];
+
+    if (equippedWeaponSlot.chargesEmpty) {
+      writeGameError(GameError.Insufficient_Weapon_Charges);
+      return;
+    }
+
+    final equippedWeaponAmuletItem = equippedWeaponSlot.amuletItem;
+
+    if (equippedWeaponAmuletItem == null){
+      return;
+    }
+
+    final equippedWeaponLevel = getAmuletItemLevel(equippedWeaponAmuletItem);
+
+    if (equippedWeaponLevel == null){
+      writeGameError(GameError.Insufficient_Elements);
+      return;
+    }
+
+    final performDuration = equippedWeaponLevel.performDuration;
+
+    if (performDuration <= 0){
+      throw Exception('performDuration <= 0');
+    }
+
+    final subType = equippedWeaponAmuletItem.subType;
+    this.weaponDamage = equippedWeaponLevel.damage;
+
+    switch (subType){
+      case WeaponType.Sword:
+        setCharacterStateStriking(
+            duration: performDuration,
+        );
+        break;
+      case WeaponType.Bow:
+        setCharacterStateFire(
+            duration: performDuration,
+        );
+        break;
+      default:
+        throw Exception('amuletPlayer.attack() - weapon type not implemented ${WeaponType.getName(subType)}');
+    }
+
+
+    reduceAmuletItemSlotCharges(equippedWeaponSlot);
   }
 }

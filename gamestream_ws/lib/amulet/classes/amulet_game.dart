@@ -538,27 +538,27 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     spawnCharacterAtIndex(index);
   }
 
-  @override
-  void characterAttack(Character character) {
-    if (character is AmuletPlayer){
-      final equippedWeaponIndex = character.equippedWeaponIndex;
-
-      if (equippedWeaponIndex == -1){
-        return;
-      }
-
-      final weapons = character.weapons;
-      final equippedWeapon = weapons[equippedWeaponIndex];
-
-      if (equippedWeapon.chargesEmpty) {
-        character.writeGameError(GameError.Insufficient_Weapon_Charges);
-        return;
-      }
-
-      character.reduceAmuletItemSlotCharges(equippedWeapon);
-    }
-    super.characterAttack(character);
-  }
+  // @override
+  // void characterAttack(Character character) {
+  //   if (character is AmuletPlayer){
+  //     final equippedWeaponIndex = character.equippedWeaponIndex;
+  //
+  //     if (equippedWeaponIndex == -1){
+  //       return;
+  //     }
+  //
+  //     final weapons = character.weapons;
+  //     final equippedWeapon = weapons[equippedWeaponIndex];
+  //
+  //     if (equippedWeapon.chargesEmpty) {
+  //       character.writeGameError(GameError.Insufficient_Weapon_Charges);
+  //       return;
+  //     }
+  //
+  //     character.reduceAmuletItemSlotCharges(equippedWeapon);
+  //   }
+  //   character.attack();
+  // }
 
   @override
   AmuletPlayer buildPlayer() {
@@ -571,7 +571,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   void useAmuletItemSpellHeal(AmuletPlayer character) {
 
-    final stats = character.getStatsForAmuletItem(AmuletItem.Spell_Heal);
+    final stats = character.getAmuletItemLevel(AmuletItem.Spell_Heal);
     if (stats == null) {
       character.writeGameError(GameError.Insufficient_Elements);
       return;

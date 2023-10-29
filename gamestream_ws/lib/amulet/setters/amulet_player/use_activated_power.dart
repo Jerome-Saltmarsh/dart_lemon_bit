@@ -20,7 +20,7 @@ void amuletPlayerUseActivatedPower(AmuletPlayer player) {
     throw Exception();
   }
 
-  final stats = player.getStatsForAmuletItem(item);
+  final stats = player.getAmuletItemLevel(item);
   if (stats != null) {
     itemSlot.cooldown = stats.cooldown;
   }

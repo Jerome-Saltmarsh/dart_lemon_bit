@@ -13,7 +13,6 @@ class AmuletItemLevel {
   final double movement;
   final String information;
   final int performDuration;
-  final int performActionFrame;
 
   const AmuletItemLevel({
     required this.information,
@@ -30,6 +29,5 @@ class AmuletItemLevel {
     this.charges = 0,
     this.cooldown = 0,
     this.performDuration = 0,
-    this.performActionFrame = 0,
   });
 }
