@@ -9,34 +9,29 @@ ctrl + shift + e        : view recent changes
 alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
-[TODO]
-- the boots of asgamoth
-- the boots of asmaroth
-- tutorial game
-- fix render front
-- feature separate regions 
-- feature item slot charges
-- feature auth token
-- feature spell lightning bolt with levels
-- feature firebase authentication
-- feature user service encrypt passwords
-- feature mobile compatibility
-- feature dynamic wind
-- feature windows executable
-- feature stash
-- feature store
-- feature glove type leather
-- feature particle flame spark
-- feature particle wind animation
-- feature character wolf
-- feature character floating flaming skull
-- feature character witch
-- feature body type chain mail
-- feature helm type hoodie
-- feature glove type silk
-- feature particle crow
-- feature particle chicken
-- improve ai pathfinding 
+## TODO
+* [new]: highlight item slot during tutorial
+* [fix]: inventory slots remain green after drag
+* [new]: character state casting
+* [fix]: orc strike sprite not rendered
+
+## BACKLOG
+* [new]: optimize particle position using vector32
+* [new]: gameobject tree stump
+
+## 29.10.2023
+* [fix]: node transparency broken after reconnect
+* [fix]: on use item reduce charge immediately
+
+## 28.10.2023
+* [new]: boulder north and east shades
+* [new]: remove atlas x and y from sprite
+* [fix]: render water
+* [new]: slot type ui charges bars
+* [fix]: spell heal not equipped on refresh game
+* [fix]: wall transparency
+* [new]: gameobject small rock
+* [new]: gameobject tree
 
 17.10.2023
 - initialize new players with armour and weapons

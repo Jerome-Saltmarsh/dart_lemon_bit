@@ -387,12 +387,10 @@ class Amulet extends IsometricGame {
   }
 
   void onChangedNetworkConnectionStatus(ConnectionStatus connection) {
-
      switch (connection){
        case ConnectionStatus.Connected:
          options.edit.value = false;
          cameraTargetSet.value = false;
-
          break;
        default:
          break;
@@ -400,10 +398,17 @@ class Amulet extends IsometricGame {
   }
 
   void onNetworkDone() {
+      clearAmuletScene();
       clearEquippedWeapon();
+      clearDragging();
+      clearActivatedPowerIndex();
   }
 
-  void clearEquippedWeapon() {
-    equippedWeaponIndex.value = -1;
-  }
+  void clearAmuletScene() => amuletScene.value = null;
+
+  void clearActivatedPowerIndex() => activatedPowerIndex.value = -1;
+
+  void clearDragging() => dragging.value = null;
+
+  void clearEquippedWeapon() => equippedWeaponIndex.value = -1;
 }
