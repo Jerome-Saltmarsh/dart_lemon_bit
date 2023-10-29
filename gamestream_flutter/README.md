@@ -11,15 +11,17 @@ ctrl + []               : move caret to code block
 
 ## TODO
 * [new]: highlight item slot during tutorial
-* [fix]: inventory slots remain green after drag
 * [new]: character state casting
+* [new]: model hair
 * [fix]: orc strike sprite not rendered
 
 ## BACKLOG
 * [new]: optimize particle position using vector32
 * [new]: gameobject tree stump
+* [new]: item tabs weapons amulets etc
 
 ## 29.10.2023
+* [fix]: inventory slots remain green after drag
 * [fix]: node transparency broken after reconnect
 * [fix]: on use item reduce charge immediately
 

@@ -4,6 +4,7 @@ import 'package:gamestream_ws/isometric/isometric_game.dart';
 import 'package:gamestream_ws/packages.dart';
 
 import 'collider.dart';
+import 'functions/character/set_character_state.dart';
 import 'functions/character/set_character_state_idle.dart';
 import 'functions/character/set_character_state_running.dart';
 import 'isometric_settings.dart';
@@ -523,5 +524,20 @@ class Character extends Collider {
       }
 
       return thisTeam == thatTeam;
+  }
+
+  void setCharacterStateCasting({
+    required int duration,
+    required int actionFrame,
+  }){
+    assert (active);
+    assert (alive);
+    this.actionFrame = actionFrame;
+    setDestinationToCurrentPosition();
+    setCharacterState(
+      character: this,
+      value: CharacterState.Casting,
+      duration: duration,
+    );
   }
 }

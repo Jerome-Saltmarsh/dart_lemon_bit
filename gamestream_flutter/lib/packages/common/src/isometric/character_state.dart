@@ -9,6 +9,7 @@ class CharacterState {
   static const Dead = 7;
   static const Aiming = 8;
   static const Fire = 9;
+  static const Casting = 10;
 
   static String getName(int value) => const {
       Idle: 'Idle',
@@ -21,5 +22,6 @@ class CharacterState {
       Spawning: 'Spawning',
       Aiming: 'Aiming',
       Fire: 'Fire',
+      Casting: 'Casting',
     }[value] ?? 'unknown-$value';
 }

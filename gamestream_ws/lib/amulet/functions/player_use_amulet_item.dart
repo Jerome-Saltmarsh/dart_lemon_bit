@@ -15,10 +15,14 @@ void playerUseAmuletItem(AmuletPlayer player, AmuletItem item) {
       if (item.performDuration < 0) {
         throw Exception('item.performDuration < 0');
       }
-      setCharacterStateStriking(
-        character: player,
-        actionFrame: item.actionFrame,
-        duration: item.performDuration,
+      // setCharacterStateStriking(
+      //   character: player,
+      //   actionFrame: item.actionFrame,
+      //   duration: item.performDuration,
+      // );
+      player.setCharacterStateCasting(
+          duration: item.performDuration,
+          actionFrame: item.actionFrame,
       );
       break;
     case AmuletItemAction.Targeted_Enemy:

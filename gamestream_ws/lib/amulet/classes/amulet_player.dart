@@ -599,8 +599,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
       case AmuletItemAction.Caste:
         reduceAmuletItemSlotCharges(itemSlot);
         activatedPowerIndex = index;
-        setCharacterStateStriking(
-            character: this,
+        setCharacterStateCasting(
             duration: itemStats.performDuration,
             actionFrame: itemStats.performActionFrame,
         );

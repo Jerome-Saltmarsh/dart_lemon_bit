@@ -3,7 +3,6 @@ import 'package:gamestream_flutter/packages/common/src/isometric/character_state
 import 'package:lemon_sprite/lib.dart';
 
 
-
 class CharacterSpriteGroup {
   final Sprite idle;
   final Sprite running;
@@ -12,6 +11,7 @@ class CharacterSpriteGroup {
   final Sprite fire;
   final Sprite strike;
   final Sprite hurt;
+  final Sprite casting;
 
   CharacterSpriteGroup({
     required this.idle,
@@ -21,6 +21,7 @@ class CharacterSpriteGroup {
     required this.fire,
     required this.strike,
     required this.hurt,
+    required this.casting,
   });
 
   Sprite fromCharacterState(int characterState) =>
@@ -32,6 +33,7 @@ class CharacterSpriteGroup {
         CharacterState.Dead => dead,
         CharacterState.Fire => fire,
         CharacterState.Changing => change,
+        CharacterState.Casting => casting,
         _ => throw Exception(),
       };
 }

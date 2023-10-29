@@ -177,6 +177,7 @@ class IsometricImages with IsometricComponent {
         fire: emptySprite,
         strike: emptySprite,
         hurt: emptySprite,
+        casting: emptySprite,
     );
 
     for (final kidCharacterSpritesIsometric in kidCharacterSpritesIsometrics){
@@ -464,6 +465,7 @@ class IsometricImages with IsometricComponent {
       hurt: await loadSprite(name: 'sprites/isometric/fallen/hurt/hurt', mode: AnimationMode.single),
       fire: emptySprite,
       change: emptySprite,
+      casting: emptySprite,
     );
 
     spriteGroupFallenSouth = CharacterSpriteGroup(
@@ -474,6 +476,7 @@ class IsometricImages with IsometricComponent {
       hurt: await loadSprite(name: 'sprites/isometric/fallen/hurt/south', mode: AnimationMode.single),
       fire: emptySprite,
       change: emptySprite,
+      casting: emptySprite,
     );
 
     spriteGroupFallenShadow = CharacterSpriteGroup(
@@ -484,6 +487,7 @@ class IsometricImages with IsometricComponent {
       hurt: await loadSprite(name: 'sprites/isometric/fallen/hurt/shadow', mode: AnimationMode.single),
       fire: emptySprite,
       change: emptySprite,
+      casting: emptySprite,
     );
 
     spriteGroupSkeletonWest = CharacterSpriteGroup(
@@ -494,6 +498,7 @@ class IsometricImages with IsometricComponent {
       hurt: await loadSprite(name: 'sprites/isometric/skeleton/west/hurt', mode: AnimationMode.single),
       fire: await loadSprite(name: 'sprites/isometric/skeleton/west/fire', mode: AnimationMode.single),
       change: emptySprite,
+      casting: emptySprite,
     );
 
     spriteGroupSkeletonSouth = CharacterSpriteGroup(
@@ -504,6 +509,7 @@ class IsometricImages with IsometricComponent {
       hurt: await loadSprite(name: 'sprites/isometric/skeleton/south/hurt', mode: AnimationMode.single),
       fire: await loadSprite(name: 'sprites/isometric/skeleton/south/fire', mode: AnimationMode.single),
       change: emptySprite,
+      casting: emptySprite,
     );
 
     spriteGroupSkeletonShadow = CharacterSpriteGroup(
@@ -514,6 +520,7 @@ class IsometricImages with IsometricComponent {
       hurt: await loadSprite(name: 'sprites/isometric/skeleton/shadow/hurt', mode: AnimationMode.single),
       fire: await loadSprite(name: 'sprites/isometric/skeleton/shadow/fire', mode: AnimationMode.single),
       change: emptySprite,
+      casting: emptySprite,
     );
 
     flame0 = await loadSprite(
@@ -550,6 +557,7 @@ class IsometricImages with IsometricComponent {
     bool skipFire = false,
     bool skipStrike = false,
     bool skipHurt = false,
+    bool skipCasting = false,
   }) async {
     final typeName = SpriteGroupType.getName(type).toLowerCase();
     final subTypeName = SpriteGroupType.getSubTypeName(type, subType).toLowerCase().replaceAll(' ', '_');
@@ -573,6 +581,7 @@ class IsometricImages with IsometricComponent {
         fire: skipFire ? emptySprite : await loadSprite(name: '$directory/fire', mode: AnimationMode.single),
         strike: skipStrike ? emptySprite : await loadSprite(name: '$directory/strike', mode: AnimationMode.single),
         hurt: skipHurt ? emptySprite : await loadSprite(name: '$directory/hurt', mode: AnimationMode.single),
+        casting: skipCasting ? emptySprite : await loadSprite(name: '$directory/casting', mode: AnimationMode.single),
     );
   }
 
@@ -593,6 +602,7 @@ class IsometricImages with IsometricComponent {
       fire: emptySprite,
       strike: emptySprite,
       hurt: emptySprite,
+      casting: emptySprite,
     );
   }
 

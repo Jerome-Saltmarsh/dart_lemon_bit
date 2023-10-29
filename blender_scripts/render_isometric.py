@@ -196,8 +196,8 @@ def render_camera_track(camera_track, direction):
     if camera_track.name == 'isometric':
         set_render_frames(1, 64)
         unmute_rotation_track('rotation_8')
-        for rig_kid_animation_track in armature_kid_animation_tracks:
-            rig_kid_animation_track.mute = rig_kid_animation_track.name == 'tpose'
+        # for rig_kid_animation_track in armature_kid_animation_tracks:
+        #     rig_kid_animation_track.mute = rig_kid_animation_track.name == 'tpose'
 
     armature_kid_animation_tracks = get_animation_tracks_unmuted("armature_kid")
     exports = get_collection("exports")
