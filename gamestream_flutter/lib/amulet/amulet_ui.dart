@@ -151,6 +151,18 @@ class AmuletUI {
         child: buildText('next')
     );
 
+    final npcNameColor = Colors.orange.withOpacity(goldenRatio_0618);
+    final npcName = buildWatch(amulet.npcName, (npcName) {
+      if (npcName.isEmpty){
+        return nothing;
+      }
+      return GSContainer(
+        color: Colors.black12,
+        rounded: true,
+        padding: const EdgeInsets.all(8),
+        child: buildText(npcName, color: npcNameColor),
+      );
+    });
     final options = buildWatch(amulet.npcOptionsReads, (t) {
 
       if (npcOptions.isEmpty){
@@ -188,6 +200,7 @@ class AmuletUI {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              alignLeft(child: npcName),
               Expanded(child: Center(child: buildText(npcText[npcTextIndex], color: Colors.white70))),
               if (npcTextIndex + 1 < npcText.length)
                 optionsNext,
@@ -898,6 +911,13 @@ class AmuletUI {
 
 Widget alignRight({required Widget child})=> Row(
     mainAxisAlignment: MainAxisAlignment.end,
+    children: [
+      child
+    ],
+  );
+
+Widget alignLeft({required Widget child})=> Row(
+    mainAxisAlignment: MainAxisAlignment.start,
     children: [
       child
     ],

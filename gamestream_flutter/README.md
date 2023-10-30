@@ -20,6 +20,7 @@ ctrl + []               : move caret to code block
 * [new]: optimize particle position using vector32
 
 ## 30.10.2023
+* [new]: add npc name to talk dialog 
 * [new]: flame audio
 * [fix]: calculate volume from screen center distance
 * [new]: refactor gamestream_ws
