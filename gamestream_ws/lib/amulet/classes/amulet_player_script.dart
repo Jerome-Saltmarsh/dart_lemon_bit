@@ -1,4 +1,4 @@
-import 'package:gamestream_ws/gamestream/amulet.dart';
+import 'package:gamestream_ws/gamestream/classes/amulet.dart';
 import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages/common/src/player_event.dart';
 import 'package:gamestream_ws/packages/common/src/types/audio_type.dart';

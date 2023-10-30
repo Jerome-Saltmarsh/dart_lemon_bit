@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:gamestream_ws/gamestream/amulet.dart';
+import 'package:gamestream_ws/gamestream/classes/amulet.dart';
 import 'package:gamestream_ws/packages.dart';
 
 import 'character.dart';

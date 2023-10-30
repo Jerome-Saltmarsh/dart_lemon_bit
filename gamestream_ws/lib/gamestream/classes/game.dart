@@ -1,4 +1,4 @@
-import 'package:gamestream_ws/gamestream/amulet.dart';
+import 'package:gamestream_ws/gamestream/classes/amulet.dart';
 import 'package:gamestream_ws/packages/common/src/game_type.dart';
 
 import 'job.dart';

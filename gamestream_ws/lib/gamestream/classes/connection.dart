@@ -3,9 +3,8 @@ import 'dart:typed_data';
 
 import 'package:gamestream_ws/amulet.dart';
 import 'package:gamestream_ws/editor/isometric_editor.dart';
-import 'package:gamestream_ws/gamestream/functions/write_json_to_amulet_player.dart';
-import 'package:gamestream_ws/gamestream/src.dart';
-import 'package:gamestream_ws/isometric/src.dart';
+import 'package:gamestream_ws/gamestream.dart';
+import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages.dart';
 import 'package:gamestream_ws/packages/common/src/duration_auto_save.dart';
 

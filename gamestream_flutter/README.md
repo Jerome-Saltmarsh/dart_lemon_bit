@@ -19,6 +19,9 @@ ctrl + []               : move caret to code block
 * [new]: gameobject tree stump
 * [new]: optimize particle position using vector32
 
+## 30.10.2023
+* [new]: refactor gamestream_ws
+
 ## 29.10.2023
 * [new]: myst image fade opacity
 * [new]: remove perform frame

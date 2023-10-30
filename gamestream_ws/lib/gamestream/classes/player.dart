@@ -1,4 +1,4 @@
-import 'package:gamestream_ws/gamestream/amulet.dart';
+import 'package:gamestream_ws/gamestream/classes/amulet.dart';
 import 'package:gamestream_ws/packages/common.dart';
 import 'package:lemon_byte/byte_writer.dart';
 

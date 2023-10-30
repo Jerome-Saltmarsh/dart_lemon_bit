@@ -14,7 +14,7 @@ import 'package:gamestream_ws/packages/common/src/amulet/amulet_item.dart';
 import 'package:gamestream_ws/packages/common/src/amulet/amulet_scene.dart';
 import 'package:gamestream_ws/packages/common/src/duration_auto_save.dart';
 
-import '../isometric/classes/scenes.dart';
+import '../../isometric/classes/scenes.dart';
 
 class Amulet {
 

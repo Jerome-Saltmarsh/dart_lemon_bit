@@ -3,12 +3,12 @@ import 'dart:io';
 
 import 'package:gamestream_ws/amulet.dart';
 import 'package:gamestream_ws/gamestream/classes/connection.dart';
-import 'package:gamestream_ws/gamestream/server.dart';
+import 'package:gamestream_ws/gamestream/classes/server.dart';
 import 'package:gamestream_ws/isometric/classes/isometric_player.dart';
 import 'package:gamestream_ws/user_service/user_service.dart';
 import 'package:gamestream_ws/packages.dart';
 import 'amulet.dart';
-import 'functions/map_isometric_player_to_json.dart';
+import '../functions/map_isometric_player_to_json.dart';
 import 'package:typedef/json.dart';
 
 class Nerve {
