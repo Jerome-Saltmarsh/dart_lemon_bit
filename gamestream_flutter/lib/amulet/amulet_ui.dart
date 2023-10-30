@@ -585,12 +585,7 @@ class AmuletUI {
   }
 
   Widget buildPlayerLevel() =>
-      GSContainer(
-        color: Colors.black26,
-        padding: const EdgeInsets.all(8),
-        rounded: true,
-        child: buildWatch(amulet.playerLevel, (level) => buildText('Lvl $level', color: Colors.white70))
-      );
+      buildWatch(amulet.playerLevel, (level) => buildText('lvl $level', color: Colors.white70));
 
   Widget buildPlayerExperienceBar({double height = 10}) {
     final width = 200.0;
@@ -712,21 +707,18 @@ class AmuletUI {
   }
 
   Widget buildPlayerStatsRow() => GSContainer(
-    padding: const EdgeInsets.all(4),
+    padding: const EdgeInsets.all(0),
+    width: 262,
     child: Column(
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            buildPlayerLevel(),
-            width8,
+            Expanded(child: Center(child: buildPlayerLevel())),
             buildPlayerExperienceBar(),
           ],
         ),
-        height4,
-        SizedBox(
-            width: 264,
-            child: buildAmuletElements(),
-        ),
+        buildAmuletElements(),
       ],
     ),
   );
