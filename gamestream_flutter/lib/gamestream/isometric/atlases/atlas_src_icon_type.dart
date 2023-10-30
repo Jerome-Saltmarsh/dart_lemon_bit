@@ -41,5 +41,9 @@ const atlasSrcIconType = <IconType, List<double>> {
   IconType.Inventory_Glove_Right: [407, 387, 35, 115],
   IconType.Inventory_Shoes: [445, 387, 111, 113],
   IconType.Inventory_Treasure: [404, 291, 24, 26],
+  IconType.Element_Fire: [848, 0, 32, 32],
+  IconType.Element_Water: [880, 0, 32, 32],
+  IconType.Element_Earth: [912, 0, 32, 32],
+  IconType.Element_Air: [944, 0, 32, 32],
 };
 

@@ -372,15 +372,15 @@ class IsometricUI with IsometricComponent {
   Widget buildIconCog() => onPressed(
       action: options.windowOpenMenu.toggle,
       child: Container(
-        width: 32,
-        child: buildAtlasIconType(IconType.Cog),
+        width: 20,
+        child: buildAtlasIconType(IconType.Cog, color: Colors.white54.value),
       )
   );
 
   Widget buildIconCogTurned() => onPressed(
       action: options.windowOpenMenu.toggle,
       child: Container(
-        width: 32,
+        width: 20,
         child: buildAtlasIconType(IconType.Cog_Turned),
       )
   );
@@ -389,6 +389,7 @@ class IsometricUI with IsometricComponent {
       IconType iconType,
       {
         double scale = 1,
+        int? color,
       }
   ) {
 
@@ -415,6 +416,7 @@ class IsometricUI with IsometricComponent {
           srcWidth: src[2],
           srcHeight: src[3],
           scale: scale,
+          color: color,
         ),
       );
   }

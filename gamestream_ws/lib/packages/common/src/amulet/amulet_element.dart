@@ -2,7 +2,6 @@
 enum AmuletElement {
   fire,
   water,
-  wind,
+  air,
   earth,
-  electricity,
 }

@@ -38,4 +38,8 @@ enum IconType {
   Inventory_Glove_Right,
   Inventory_Shoes,
   Inventory_Treasure,
+  Element_Fire,
+  Element_Water,
+  Element_Air,
+  Element_Earth,
 }

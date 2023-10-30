@@ -301,9 +301,8 @@ class Amulet extends IsometricGame {
       switch (amuletElement) {
         AmuletElement.fire => elementFire,
         AmuletElement.water => elementWater,
-        AmuletElement.wind => elementWind,
+        AmuletElement.air => elementWind,
         AmuletElement.earth => elementEarth,
-        AmuletElement.electricity => elementElectricity,
       };
 
   void upgradeAmuletElement(AmuletElement amuletElement) =>

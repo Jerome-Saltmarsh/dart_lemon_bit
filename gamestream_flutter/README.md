@@ -14,6 +14,7 @@ ctrl + []               : move caret to code block
 * [fix]: blend color and ambient light
 
 ## TODO
+* [new]: element icons
 * [fix]: orc strike sprite not rendered
 * [new]: item tabs weapons amulets etc
 * [new]: model hair

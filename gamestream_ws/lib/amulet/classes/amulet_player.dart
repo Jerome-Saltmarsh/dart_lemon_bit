@@ -28,7 +28,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
 
   var elementFire = 0;
   var elementWater = 0;
-  var elementWind = 0;
+  var elementAir = 0;
   var elementEarth = 0;
   var elementElectricity = 0;
 
@@ -1362,7 +1362,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     writeByte(NetworkResponseAmuletPlayer.Elements);
     writeByte(elementFire);
     writeByte(elementWater);
-    writeByte(elementWind);
+    writeByte(elementAir);
     writeByte(elementEarth);
     writeByte(elementElectricity);
   }
@@ -1386,15 +1386,15 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
       case AmuletElement.water:
         elementWater++;
         break;
-      case AmuletElement.wind:
-        elementWind++;
+      case AmuletElement.air:
+        elementAir++;
         break;
       case AmuletElement.earth:
         elementEarth++;
         break;
-      case AmuletElement.electricity:
-        elementElectricity++;
-        break;
+      // case AmuletElement.electricity:
+      //   elementElectricity++;
+      //   break;
     }
     writeAmuletElements();
   }
@@ -1876,7 +1876,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
       amuletItem.getLevel(
         fire: elementFire,
         water: elementWater,
-        wind: elementWind,
+        wind: elementAir,
         earth: elementEarth,
         electricity: elementElectricity,
       );

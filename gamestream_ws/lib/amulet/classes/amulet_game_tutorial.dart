@@ -428,6 +428,9 @@ class AmuletGameTutorial extends AmuletGame {
         runScript(player)
             .cameraSetTarget(guide)
             .faceEachOther(player, guide)
+            .add(() {
+              // highlight inventory slot
+            })
             .talk(guide, 'open the inventory by hovering the mouse over the inventory icon at the bottom left corner of the screen')
             .end();
         break;

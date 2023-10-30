@@ -8,7 +8,6 @@ import 'package:gamestream_flutter/packages/common/src/amulet/amulet_element.dar
 Color getAmuletElementColor(AmuletElement amuletElement) => const {
   AmuletElement.fire: Colors.red,
   AmuletElement.water: Colors.blue,
-  AmuletElement.wind: Colors.greenAccent,
+  AmuletElement.air: Colors.greenAccent,
   AmuletElement.earth: Colors.brown,
-  AmuletElement.electricity: Colors.yellow,
 }[amuletElement] ?? (throw Exception('mapElementToColor($amuletElement)'));

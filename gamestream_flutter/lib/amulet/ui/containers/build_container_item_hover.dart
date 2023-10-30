@@ -114,11 +114,11 @@ Widget buildContainerItemStats(AmuletItemLevel itemStats, int level) =>
                     if (itemStats.water > 0)
                       buildStatColumn2(AmuletElement.water, itemStats.water, components),
                     if (itemStats.air > 0)
-                      buildStatColumn2(AmuletElement.wind, itemStats.air, components),
+                      buildStatColumn2(AmuletElement.air, itemStats.air, components),
                     if (itemStats.earth > 0)
                       buildStatColumn2(AmuletElement.earth, itemStats.earth, components),
-                    if (itemStats.electricity > 0)
-                      buildStatColumn2(AmuletElement.electricity, itemStats.electricity, components),
+                    // if (itemStats.electricity > 0)
+                    //   buildStatColumn2(AmuletElement.electricity, itemStats.electricity, components),
                   ])
             ],
           ),

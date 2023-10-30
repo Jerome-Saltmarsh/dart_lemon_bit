@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:gamestream_flutter/amulet/amulet.dart';
+import 'package:gamestream_flutter/amulet/maps/map_amulet_element_to_icon_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
 import 'package:gamestream_flutter/gamestream/ui.dart';
 import 'package:gamestream_flutter/packages/common.dart';
@@ -583,11 +584,10 @@ class AmuletUI {
      );
   }
 
-  Widget buildPlayerLevel({double size = 25}) =>
+  Widget buildPlayerLevel() =>
       GSContainer(
-        padding: const EdgeInsets.all(4),
-        width: size * goldenRatio_1618 * goldenRatio_1381,
-        height: size,
+        color: Colors.black26,
+        padding: const EdgeInsets.all(8),
         rounded: true,
         child: buildWatch(amulet.playerLevel, (level) => buildText('Lvl $level', color: Colors.white70))
       );
@@ -711,18 +711,24 @@ class AmuletUI {
     );
   }
 
-  Widget buildPlayerStatsRow() => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Row(
-        children: [
-          buildPlayerLevel(),
-          width8,
-          buildPlayerExperienceBar(),
-        ],
-      ),
-      buildAmuletElements(),
-    ],
+  Widget buildPlayerStatsRow() => GSContainer(
+    padding: const EdgeInsets.all(4),
+    child: Column(
+      children: [
+        Row(
+          children: [
+            buildPlayerLevel(),
+            width8,
+            buildPlayerExperienceBar(),
+          ],
+        ),
+        height4,
+        SizedBox(
+            width: 264,
+            child: buildAmuletElements(),
+        ),
+      ],
+    ),
   );
 
   Widget buildInventoryButton() {
@@ -869,37 +875,27 @@ class AmuletUI {
       ));
 
   Widget buildAmuletElements() => Row(
+       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: AmuletElement.values
             .map(buildAmuletElement)
             .toList(growable: false)
     );
 
+
   Widget buildAmuletElement(AmuletElement amuletElement) {
-
-    return buildWatch(amulet.elementPoints, (elementPoints) {
-      const size = 40.0;
-      return onPressed(
-        action: elementPoints <= 0 ? null :(){
-          amulet.upgradeAmuletElement(amuletElement);
-        },
-        child: Container(
-          width: size,
-          height: size,
-          margin: const EdgeInsets.only(right: 4),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: amulet.style.containerColor,
-            border: Border.all(color: getAmuletElementColor(amuletElement), width: 1),
-          ),
-          alignment: Alignment.center,
-          child: buildWatch(
-            amulet.getAmuletElementWatch(amuletElement),
-            buildText,
-          ),
-        ),
-      );
-    });
-
+    final icon = IsometricIcon(iconType: mapAmuletElementToIconType(amuletElement));
+    final watchAmuletElement = amulet.getAmuletElementWatch(amuletElement);
+    return Row(
+      children: [
+        icon,
+        Container(
+          color: Colors.black12,
+            width: 32,
+            height: 32,
+            alignment: Alignment.center,
+            child: buildWatch(watchAmuletElement, (t) => buildText(t, color: Colors.white70))),
+      ],
+    );
   }
 
   Widget buildElementPoints() =>

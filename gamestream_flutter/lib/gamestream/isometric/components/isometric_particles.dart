@@ -9,7 +9,6 @@ import 'package:gamestream_flutter/gamestream/isometric/components/isometric_sce
 import 'package:gamestream_flutter/gamestream/isometric/enums/node_visibility.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/packages/common.dart';
-import 'package:gamestream_flutter/packages/common/src/types/src.dart';
 import 'package:gamestream_flutter/packages/lemon_components.dart';
 import 'package:lemon_math/src.dart';
 

@@ -226,7 +226,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     final level = amuletItem.getLevel(
         fire: character.elementFire,
         water: character.elementWater,
-        wind: character.elementWind,
+        wind: character.elementAir,
         earth: character.elementEarth,
         electricity: character.elementElectricity,
     );

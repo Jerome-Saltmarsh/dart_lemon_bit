@@ -8,7 +8,6 @@ import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
-import 'package:gamestream_flutter/packages/common/src/types/wind.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_sprite/lib.dart';
