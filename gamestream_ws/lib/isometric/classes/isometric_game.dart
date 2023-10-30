@@ -2693,7 +2693,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         return;
     }
 
-    if (character.targetPerceptible){
+    if (character.targetPerceptible || !character.pathFindingEnabled){
         characterActionRunTowardsTarget(character);
         return;
     }
