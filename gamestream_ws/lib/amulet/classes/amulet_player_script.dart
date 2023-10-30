@@ -1,5 +1,6 @@
 import 'package:gamestream_ws/gamestream/classes/amulet.dart';
 import 'package:gamestream_ws/isometric.dart';
+import 'package:gamestream_ws/packages/common/src/amulet/amulet_item.dart';
 import 'package:gamestream_ws/packages/common/src/player_event.dart';
 import 'package:gamestream_ws/packages/common/src/types/audio_type.dart';
 
@@ -38,6 +39,12 @@ class AmuletPlayerScript {
   }
 
   AmuletPlayerScript controlsDisabled() => controls(false);
+
+  AmuletPlayerScript clearHighlightedItem() =>
+      add(() => player.writeClearHighlightedAmuletItem());
+
+  AmuletPlayerScript highlightAmuletItem(AmuletItem amuletItem) =>
+      add(() => player.writeHighlightAmuletItems(amuletItem));
 
   AmuletPlayerScript controlsEnabled() => controls(true);
 

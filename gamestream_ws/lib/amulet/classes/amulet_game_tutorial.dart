@@ -116,6 +116,9 @@ class AmuletGameTutorial extends AmuletGame {
       case TutorialObjective.Use_Heal:
         onObjectiveSetUseHeal(player);
         break;
+      case TutorialObjective.Draw_Bow:
+        onObjectiveSetDrawBow(player);
+        break;
       default:
         break;
     }
@@ -320,7 +323,7 @@ class AmuletGameTutorial extends AmuletGame {
         onObjectiveSetStrikeCrystal1(player);
         break;
       case TutorialObjective.Acquire_Heal:
-        onObjectiveSetUseHeal(player);
+        // onObjectiveSetUseHeal(player);
         break;
       case TutorialObjective.Use_Heal:
         onObjectiveSetUseHeal(player);
@@ -354,7 +357,7 @@ class AmuletGameTutorial extends AmuletGame {
         .wait(seconds: 1)
         .cameraSetTarget(guide)
         .faceEachOther(player, guide)
-        .add(() => player.writeHighlightAmuletItems(AmuletItem.Spell_Heal))
+        .highlightAmuletItem(AmuletItem.Spell_Heal)
         .talk(guide,
           'one has acquired the spell of healing.'
           'caste heal by pressing the heal icon at the bottom of the screen'
@@ -584,7 +587,9 @@ class AmuletGameTutorial extends AmuletGame {
     }
   }
 
-  void onSpellHealUsedForTheFirstTime(AmuletPlayer player) => runScript(player)
+  void onSpellHealUsedForTheFirstTime(AmuletPlayer player) {
+    runScript(player)
+      .clearHighlightedItem()
       .controlsDisabled()
       .wait(seconds: 1)
       .faceEachOther(player, guide)
@@ -602,6 +607,7 @@ class AmuletGameTutorial extends AmuletGame {
       .deactivate(guide)
       .controlsEnabled()
       .add(() => startNextTutorialObjective(player));
+  }
 
 
   void onFiends02Vanquished(AmuletPlayer player) =>
@@ -669,8 +675,9 @@ class AmuletGameTutorial extends AmuletGame {
   void onObjectiveSetEquipBow(AmuletPlayer player) =>
     runScript(player)
       .faceEachOther(player, guide)
+      .highlightAmuletItem(AmuletItem.Weapon_Old_Bow)
       .talk(guide,
-        'one adds the bow to the weapons rack by clicking the bow icon in the inventory.',
+        'add the bow to the weapons rack by clicking the bow icon in the inventory.',
       );
 
   @override
@@ -795,6 +802,7 @@ class AmuletGameTutorial extends AmuletGame {
       .controlsDisabled()
       .cameraSetTarget(guide)
       .faceEachOther(player, guide)
+      .highlightAmuletItem(AmuletItem.Weapon_Old_Bow)
       .talk(guide,
         'excellent.'
         'draw the bow by clicking the bow icon at the bottom of the screen'

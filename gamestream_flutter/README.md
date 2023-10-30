@@ -10,9 +10,7 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
-* [new]: highlight item slot during tutorial
 * [fix]: blend color and ambient light
-
 
 ## TODO
 * [fix]: inventory slots remain green after drag
@@ -23,6 +21,7 @@ ctrl + []               : move caret to code block
 * [new]: gameobject tree stump
 
 ## 30.10.2023
+* [new]: highlight item slot during tutorial
 * [new]: bootstrap particles 
 * [new]: add npc name to talk dialog 
 * [new]: flame audio
