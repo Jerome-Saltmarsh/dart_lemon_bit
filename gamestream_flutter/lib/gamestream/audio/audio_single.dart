@@ -6,14 +6,13 @@ import 'package:just_audio/just_audio.dart';
 class AudioSingle {
   final String name;
   late AudioSource source;
-  late double volume;
   final audioPlayer = AudioPlayer();
 
   String get url => 'assets/audio/$name.mp3';
 
   AudioSingle({
     required this.name,
-    this.volume = 1,
+    // this.volume = 1,
   }){
     source = AudioSource.uri(Uri.parse(url));
     audioPlayer.setAudioSource(source);
@@ -35,10 +34,9 @@ class AudioSingle {
   }
 
   void play({double volume = 1.0}) async {
-    final playVolume = this.volume * volume;
-    if (playVolume <= 0) return;
+    if (volume <= 0) return;
     final audioPlayer = this.audioPlayer;
-    await audioPlayer.setVolume(min(playVolume, 1));
+    await audioPlayer.setVolume(min(volume, 1));
     if (audioPlayer.audioSource == null) throw Exception('no audio source');
     await audioPlayer.seek(null);
     if (!audioPlayer.playing){

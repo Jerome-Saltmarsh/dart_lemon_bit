@@ -58,6 +58,7 @@ class IsometricEvents with IsometricComponent {
             x,
             y,
             z,
+            volume: 0.5,
         );
         break;
       case MaterialType.Stone:

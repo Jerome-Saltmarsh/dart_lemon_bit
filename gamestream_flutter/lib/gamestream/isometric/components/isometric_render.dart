@@ -131,6 +131,9 @@ class IsometricRender with IsometricComponent {
       renderCameraTargets();
     }
 
+    // final screenCenterX = convertRenderToSceneX(engine.screenCenterWorldX, x);
+    // final screenCenterY = convertRenderToSceneY(engine.screenCenterWorldY, y);
+
     debug.drawCanvas();
     options.game.value.drawCanvas(canvas, size);
     options.rendersSinceUpdate.value++;

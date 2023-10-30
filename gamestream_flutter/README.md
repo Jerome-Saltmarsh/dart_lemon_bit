@@ -10,6 +10,7 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
+* [new]: flame audio
 * [new]: highlight item slot during tutorial
 * [fix]: orc strike sprite not rendered
 * [new]: item tabs weapons amulets etc
@@ -20,6 +21,7 @@ ctrl + []               : move caret to code block
 * [new]: optimize particle position using vector32
 
 ## 30.10.2023
+* [fix]: calculate volume from screen center distance
 * [new]: refactor gamestream_ws
 
 ## 29.10.2023
