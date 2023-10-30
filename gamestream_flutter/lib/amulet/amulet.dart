@@ -413,4 +413,8 @@ class Amulet extends IsometricGame {
 
   void clearEquippedWeapon() => equippedWeaponIndex.value = -1;
 
+  void clearHighlightAmuletItem(){
+    highlightedAmuletItem.value = null;
+  }
+
 }

@@ -78,7 +78,7 @@ class AmuletGameTutorial extends AmuletGame {
     };
 
   void refreshPlayerGameState(AmuletPlayer player) {
-
+    player.writeClearHighlightedAmuletItem();
     removeFiends();
     gameObjects.removeWhere((element) =>
       !element.persistable &&
@@ -112,6 +112,9 @@ class AmuletGameTutorial extends AmuletGame {
     switch (getObjective(player)){
       case TutorialObjective.Acquire_Sword:
         onObjectiveSetAcquireSword(player);
+        break;
+      case TutorialObjective.Use_Heal:
+        onObjectiveSetUseHeal(player);
         break;
       default:
         break;
@@ -307,6 +310,8 @@ class AmuletGameTutorial extends AmuletGame {
       TutorialObjective tutorialObjective,
   ){
     player.data['tutorial_objective'] = tutorialObjective.name;
+    player.writeClearHighlightedAmuletItem();
+
     switch (tutorialObjective) {
       case TutorialObjective.Acquire_Sword:
         onObjectiveSetAcquireSword(player);
@@ -315,7 +320,7 @@ class AmuletGameTutorial extends AmuletGame {
         onObjectiveSetStrikeCrystal1(player);
         break;
       case TutorialObjective.Acquire_Heal:
-        onObjectiveSetAcquireHeal(player);
+        onObjectiveSetUseHeal(player);
         break;
       case TutorialObjective.Use_Heal:
         onObjectiveSetUseHeal(player);
@@ -339,18 +344,6 @@ class AmuletGameTutorial extends AmuletGame {
         onObjectiveSetLeave(player);
         break;
     }
-  }
-
-  void onObjectiveSetAcquireHeal(AmuletPlayer player) {
-    // runScript(player)
-    //     .deactivate(guide)
-    //     .controlsDisabled()
-    //     .wait(seconds: 1)
-    //     .cameraSetTargetSceneKey(keysDoor01)
-    //     .wait(seconds: 2)
-    //     .setNodeEmptyAtSceneKey(keysDoor01)
-    //     .wait(seconds: 1)
-    //     .controlsEnabled();
   }
 
   void onObjectiveSetUseHeal(AmuletPlayer player) {

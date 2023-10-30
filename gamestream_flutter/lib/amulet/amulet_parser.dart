@@ -107,6 +107,9 @@ extension AmuletParser on IsometricParser {
          final amuletItem = AmuletItem.values[amuletItemIndex];
          amulet.highlightedAmuletItem.value = amuletItem;
          break;
+       case NetworkResponseAmulet.Highlight_Amulet_Item_Clear:
+         amulet.clearHighlightAmuletItem();
+         break;
      }
   }
 
