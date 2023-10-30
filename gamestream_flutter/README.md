@@ -13,6 +13,7 @@ ctrl + []               : move caret to code block
 * [new]: highlight item slot during tutorial
 * [fix]: blend color and ambient light
 
+
 ## TODO
 * [fix]: inventory slots remain green after drag
 * [new]: element icons

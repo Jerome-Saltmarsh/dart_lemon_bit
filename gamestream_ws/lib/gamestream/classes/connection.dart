@@ -46,10 +46,9 @@ class Connection extends ByteReader {
   }
 
   void onDisconnect(dynamic value) {
-    // nerve.onDisconnected(this);
-    _player = null;
     onDone?.call();
     subscription.cancel();
+    _player = null;
   }
 
   void onStreamError(Object error, StackTrace stackTrace){
