@@ -1,20 +1,7 @@
 library isometric;
 
-export 'handle_request_modify_canvas_size.dart';
-export 'character.dart';
-export 'collider.dart';
-export 'isometric_environment.dart';
-export 'isometric_game.dart';
-export 'gameobject.dart';
-export 'hit_type.dart';
-export 'physics.dart';
-export 'isometric_player.dart';
-export 'position.dart';
-export 'projectile.dart';
-export 'scene.dart';
-export 'scene_generator.dart';
-export 'scene_writer.dart';
-export 'scenes.dart';
-export 'isometric_settings.dart';
-export 'side.dart';
-export 'isometric_time.dart';
+export 'classes/src.dart';
+export 'consts/src.dart';
+export 'extensions/src.dart';
+export 'functions/src.dart';
+export 'types/src.dart';

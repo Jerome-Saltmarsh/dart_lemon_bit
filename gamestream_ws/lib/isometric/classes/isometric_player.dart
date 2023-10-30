@@ -17,7 +17,7 @@ import 'position.dart';
 import 'projectile.dart';
 import 'scene.dart';
 import 'scene_writer.dart';
-import 'isometric_settings.dart';
+import '../consts/isometric_settings.dart';
 
 
 class IsometricPlayer extends Character with ByteWriter implements Player {

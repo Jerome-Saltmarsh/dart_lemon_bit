@@ -4,7 +4,7 @@ import 'package:gamestream_ws/gamestream/amulet.dart';
 import 'package:gamestream_ws/packages.dart';
 
 import 'character.dart';
-import 'physics.dart';
+import '../consts/physics.dart';
 import 'position.dart';
 
 abstract class Collider extends Position {

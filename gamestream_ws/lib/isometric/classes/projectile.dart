@@ -2,7 +2,7 @@
 import 'package:gamestream_ws/packages/common.dart';
 
 import 'character.dart';
-import 'physics.dart';
+import '../consts/physics.dart';
 import 'collider.dart';
 import 'position.dart';
 

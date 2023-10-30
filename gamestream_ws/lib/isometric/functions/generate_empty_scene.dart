@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:gamestream_ws/isometric/scene.dart';
+import 'package:gamestream_ws/isometric/classes/scene.dart';
 import 'package:gamestream_ws/packages/common/src/isometric/node_orientation.dart';
 import 'package:gamestream_ws/packages/common/src/isometric/node_type.dart';
 

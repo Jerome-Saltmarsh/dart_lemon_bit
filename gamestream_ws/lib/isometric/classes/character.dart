@@ -1,12 +1,12 @@
 import 'dart:typed_data';
 
 import 'package:gamestream_ws/isometric/consts/caste_action_frame_percentage.dart';
-import 'package:gamestream_ws/isometric/isometric_game.dart';
+import 'package:gamestream_ws/isometric/classes/isometric_game.dart';
 import 'package:gamestream_ws/packages.dart';
 
 import 'collider.dart';
-import 'consts/fire_action_frame_percentage.dart';
-import 'isometric_settings.dart';
+import '../consts/fire_action_frame_percentage.dart';
+import '../consts/isometric_settings.dart';
 import 'position.dart';
 
 class Character extends Collider {

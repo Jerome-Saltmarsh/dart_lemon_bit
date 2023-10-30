@@ -7,12 +7,12 @@ import 'character.dart';
 import 'collider.dart';
 import 'isometric_environment.dart';
 import 'gameobject.dart';
-import 'physics.dart';
+import '../consts/physics.dart';
 import 'isometric_player.dart';
 import 'position.dart';
 import 'projectile.dart';
 import 'scene.dart';
-import 'isometric_settings.dart';
+import '../consts/isometric_settings.dart';
 import 'isometric_time.dart';
 
 

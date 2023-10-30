@@ -1,4 +1,3 @@
-import 'package:gamestream_ws/isometric/functions/generate_empty_scene.dart';
 import 'package:gamestream_ws/packages/common.dart';
 import 'package:gamestream_ws/isometric/src.dart';
 

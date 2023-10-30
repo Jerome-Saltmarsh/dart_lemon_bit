@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages.dart';
 
-import 'scene_reader.dart';
 
 class Scenes {
   String get sceneDirectoryPath =>  isLocalMachine ? '${Directory.current.path}/scenes' : '/app/bin/scenes';

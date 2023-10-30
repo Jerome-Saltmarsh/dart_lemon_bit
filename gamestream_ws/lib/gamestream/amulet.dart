@@ -8,13 +8,13 @@ import 'package:gamestream_ws/amulet/classes/amulet_game_tutorial.dart';
 import 'package:gamestream_ws/amulet/classes/amulet_player.dart';
 import 'package:gamestream_ws/amulet/classes/fiend_type.dart';
 import 'package:gamestream_ws/gamestream.dart';
-import 'package:gamestream_ws/isometric/isometric_environment.dart';
-import 'package:gamestream_ws/isometric/isometric_time.dart';
+import 'package:gamestream_ws/isometric/classes/isometric_environment.dart';
+import 'package:gamestream_ws/isometric/classes/isometric_time.dart';
 import 'package:gamestream_ws/packages/common/src/amulet/amulet_item.dart';
 import 'package:gamestream_ws/packages/common/src/amulet/amulet_scene.dart';
 import 'package:gamestream_ws/packages/common/src/duration_auto_save.dart';
 
-import '../isometric/scenes.dart';
+import '../isometric/classes/scenes.dart';
 
 class Amulet {
 

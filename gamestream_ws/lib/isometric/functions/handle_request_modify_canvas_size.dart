@@ -1,7 +1,7 @@
 import 'package:gamestream_ws/packages/common.dart';
 import 'dart:typed_data';
 
-import 'package:gamestream_ws/isometric/isometric_player.dart';
+import 'package:gamestream_ws/isometric/classes/isometric_player.dart';
 
 void handleRequestModifyCanvasSize(NetworkRequestModifyCanvasSize request, IsometricPlayer player){
   final game = player.game;
