@@ -15,7 +15,6 @@ import 'package:gamestream_flutter/packages/lemon_components.dart';
 
 class IsometricOptions with IsometricComponent implements Updatable {
 
-
   var cameraPlay = Position();
   var cameraEdit = Position();
   var charactersEffectParticles = true;

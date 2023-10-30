@@ -127,6 +127,8 @@ class IsometricScene with IsometricComponent implements Updatable {
           break;
       }
     }
+
+    particles.bootstrap();
   }
 
   void onChangedInterpolationEaseType(EaseType easeType){

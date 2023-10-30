@@ -990,9 +990,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
   void onComponentUpdate() {
 
-    // updateWindNodes();
-    // applyCharactersToWind();
-
     if (options.charactersEffectParticles){
       applyCharactersToParticles();
     }
@@ -1007,9 +1004,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
     if (!windy && nextMystEmission-- <= 0) {
       nextMystEmission = 30;
-      for (final index in mystIndexes) {
-        spawnMystAtIndex(index);
-      }
+      spawnMystAtMystIndexes();
     }
 
     nextParticleFrame--;
@@ -1092,6 +1087,13 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
       particle.nodeIndex = index;
       updateParticle(particle, scene, index, nodeOrientation);
+    }
+  }
+
+  void spawnMystAtMystIndexes() {
+     final mystIndexes = this.mystIndexes;
+    for (final index in mystIndexes) {
+      spawnMystAtIndex(index);
     }
   }
 
@@ -1376,6 +1378,15 @@ class IsometricParticles with IsometricComponent implements Updatable {
         }
       }
     }
+  }
+
+  void bootstrap() {
+    final charactersEffectParticles = options.charactersEffectParticles;
+    options.charactersEffectParticles = false;
+    for (var i = 0; i < 500; i++) {
+      onComponentUpdate();
+    }
+    options.charactersEffectParticles = charactersEffectParticles;
   }
 }
 

@@ -663,9 +663,10 @@ class IsometricParser with ByteReader, IsometricComponent {
 
   void readMarks() {
     final length = readUInt16();
-    scene.marks = Uint32List(length);
+    final marks = Uint32List(length);
+    scene.marks = marks;
     for (var i = 0; i < length; i++) {
-      scene.marks[i] = readUInt32();
+      marks[i] = readUInt32();
     }
     scene.marksChangedNotifier.value++;
   }
