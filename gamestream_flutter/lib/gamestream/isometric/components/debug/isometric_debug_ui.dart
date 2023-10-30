@@ -160,6 +160,7 @@ extension isometricDebugUI on IsometricDebug {
               'aim-target-type: ${player.aimTargetType}\n'
               'aim-target-position: ${player.aimTargetPosition}\n'
               'target-position: ${player.targetPosition}\n'
+              'audio-volume-flame: ${audio.audioLoopFire.volume}\n'
           )),
           buildWatch(options.gameType, (GameType value) => buildText('game-type: ${value.name}')),
           // buildWatch(engine.deviceType, (int deviceType) => buildText('device-type: ${DeviceType.getName(deviceType)}', onPressed: engine.toggleDeviceType)),

@@ -70,13 +70,17 @@ class IsometricAudio with IsometricComponent implements Updatable {
     AudioSingle(name: 'gong'),
   ];
 
+  late final audioLoopFire = AudioLoop(name: 'fire', getTargetVolume: getVolumeFire, volumeFade: 1.0);
+
   late final audioLoops = <AudioLoop> [
     AudioLoop(name: 'wind', getTargetVolume: environment.getVolumeTargetWind),
     AudioLoop(name: 'rain', getTargetVolume: getVolumeTargetRain),
     AudioLoop(name: 'crickets', getTargetVolume: getVolumeTargetCrickets),
     AudioLoop(name: 'day-ambience', getTargetVolume: getVolumeTargetDayAmbience),
     AudioLoop(name: 'distant-thunder', getTargetVolume: getVolumeTargetDistanceThunder),
-    AudioLoop(name: 'heart-beat', getTargetVolume: getVolumeHeartBeat),
+    // AudioLoop(name: 'heart-beat', getTargetVolume: getVolumeHeartBeat),
+    audioLoopFire,
+    // AudioLoop(name: 'fire', getTargetVolume: getVolumeFire, volumeFade: 1.0),
   ];
 
 
@@ -261,6 +265,57 @@ class IsometricAudio with IsometricComponent implements Updatable {
     return 0;
   }
 
+  double getDistanceFromScreenCenter(double x, double y, double z){
+    final engine = this.engine;
+    final screenCenterWorldX = engine.screenCenterWorldX;
+    final screenCenterWorldY = engine.screenCenterWorldY;
+    final screenCenterGridX = convertRenderToSceneX(screenCenterWorldX, screenCenterWorldY);
+    final screenCenterGridY = convertRenderToSceneY(screenCenterWorldX, screenCenterWorldY);
+    return getDistanceXYZ(x, y, z, screenCenterGridX, screenCenterGridY, player.z);
+  }
+
+  double getVolumeFire() {
+
+    final scene = this.scene;
+    final nodeLightSourcesTotal = scene.nodeLightSourcesTotal;
+    final nodeLightSources = scene.nodeLightSources;
+    final nodeTypes = scene.nodeTypes;
+
+    var nearestDistance = 10000.0;
+
+    for (var i = 0; i < nodeLightSourcesTotal; i++){
+      final nodeIndex = nodeLightSources[i];
+      final nodeType = nodeTypes[nodeIndex];
+
+      if (!const [
+        NodeType.Torch,
+        NodeType.Fireplace,
+        NodeType.Torch_Red,
+        NodeType.Torch_Blue,
+      ].contains(nodeType)) {
+        continue;
+      }
+
+      final nodeX = scene.getIndexPositionX(nodeIndex);
+      final nodeY = scene.getIndexPositionY(nodeIndex);
+      final nodeZ = scene.getIndexPositionZ(nodeIndex);
+
+      final nodeDistanceFromScreenCenter = getDistanceFromScreenCenter(
+          nodeX,
+          nodeY,
+          nodeZ,
+      );
+
+      if (nodeDistanceFromScreenCenter > nearestDistance){
+        continue;
+      }
+
+      nearestDistance = nodeDistanceFromScreenCenter;
+    }
+
+    return convertDistanceToVolume(nearestDistance, maxDistance: 100);
+  }
+
   double getVolumeHeartBeat(){
     if (player.maxHealth.value <= 0) return 0.0;
     return 1.0 - player.health.value / player.maxHealth.value;
@@ -381,14 +436,14 @@ class IsometricAudio with IsometricComponent implements Updatable {
       }){
     if (!enabledSound.value) return;
 
-    final engine = this.engine;
-    final screenCenterWorldX = engine.screenCenterWorldX;
-    final screenCenterWorldY = engine.screenCenterWorldY;
-    final screenCenterGridX = convertRenderToSceneX(screenCenterWorldX, screenCenterWorldY);
-    final screenCenterGridY = convertRenderToSceneY(screenCenterWorldX, screenCenterWorldY);
-    final distanceFromPlayer = getDistanceXYZ(x, y, z, screenCenterGridX, screenCenterGridY, player.z);;
-    final distanceVolume = IsometricAudio.convertDistanceToVolume(
-      distanceFromPlayer,
+    final distanceFromScreenCenter = getDistanceFromScreenCenter(x, y, z);
+
+    if (distanceFromScreenCenter > maxDistance){
+      return;
+    }
+
+    final distanceVolume = convertDistanceToVolume(
+      distanceFromScreenCenter,
       maxDistance: maxDistance,
     );
     audioSingle.play(volume: distanceVolume * volume);

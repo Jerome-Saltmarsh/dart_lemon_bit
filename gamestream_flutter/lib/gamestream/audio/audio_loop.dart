@@ -3,22 +3,28 @@ import 'package:lemon_math/src.dart';
 
 class AudioLoop {
 
-  static const Min_Volume_Change = 0.005;
-  static const Volume_Fade = 0.05;
+  static const minVolumeDelta = 0.005;
+
 
   final String name;
-  double get volume => audioPlayer.volume;
   double Function() getTargetVolume;
   final audioPlayer = AudioPlayer();
   late Duration duration;
   var durationInSeconds = 0;
+  var volumeFade = 0.05;
 
-  AudioLoop({required this.name, required this.getTargetVolume}) {
+  AudioLoop({
+    required this.name,
+    required this.getTargetVolume,
+    this.volumeFade = 0.05,
+  }) {
     load().catchError((error){
        print('an error occurred loading $name');
        print(error);
     });
   }
+
+  double get volume => audioPlayer.volume;
 
   Future load() async {
     final d = await audioPlayer.setUrl('assets/audio/$name.mp3');
@@ -42,9 +48,14 @@ class AudioLoop {
 
   void update(){
     final targetVolume = clamp01(getTargetVolume());
-    final change = (targetVolume - volume) * Volume_Fade;
-    if (change.abs() < Min_Volume_Change) return;
-    setVolume(volume + change);
+    final volumeDelta = (targetVolume - volume) * volumeFade;
+    if (volumeDelta.abs() < minVolumeDelta) {
+      if (targetVolume == 0 && volume != 0){
+        setVolume(0);
+      }
+      return;
+    }
+    setVolume(volume + volumeDelta);
   }
 
   void setVolume(double value){

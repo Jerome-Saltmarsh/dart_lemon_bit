@@ -30,6 +30,7 @@ class IsometricEvents with IsometricComponent {
     editor.refreshNodeSelectedIndex();
   }
 
+  // TODO optimize
   void onFootstep(double x, double y, double z) {
     if (environment.raining.value && (
         scene.getTypeXYZSafe(x, y, z) == NodeType.Rain_Landing
