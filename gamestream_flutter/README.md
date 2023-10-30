@@ -11,13 +11,13 @@ ctrl + []               : move caret to code block
 
 ## CURRENT
 * [new]: highlight item slot during tutorial
+* [fix]: orc strike sprite not rendered
 * [new]: item tabs weapons amulets etc
 
 ## TODO
 * [new]: model hair
-* [fix]: orc strike sprite not rendered
-* [new]: optimize particle position using vector32
 * [new]: gameobject tree stump
+* [new]: optimize particle position using vector32
 
 ## 29.10.2023
 * [new]: myst image fade opacity

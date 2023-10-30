@@ -11,7 +11,7 @@ import 'package:gamestream_ws/isometric/scene_reader.dart';
 import 'package:gamestream_ws/isometric/src.dart';
 import 'package:gamestream_ws/packages.dart';
 import 'package:gamestream_ws/packages/common/src/duration_auto_save.dart';
-import 'package:gamestream_ws/users/functions/map_isometric_player_to_json.dart';
+import 'package:gamestream_ws/gamestream/functions/map_isometric_player_to_json.dart';
 
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_byte/byte_writer.dart';

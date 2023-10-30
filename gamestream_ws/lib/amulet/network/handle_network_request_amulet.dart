@@ -1,7 +1,7 @@
 import 'package:gamestream_ws/gamestream/classes/connection.dart';
 import 'package:gamestream_ws/packages.dart';
 
-import 'classes/amulet_player.dart';
+import '../classes/amulet_player.dart';
 
 extension AmuletRequestHandler on Connection {
 
