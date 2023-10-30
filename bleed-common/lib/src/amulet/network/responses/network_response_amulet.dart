@@ -21,5 +21,6 @@ class NetworkResponseAmulet {
    static const Amulet_Scene = 18;
    static const Play_AudioType = 19;
    static const Highlight_Amulet_Item = 20;
-   static const Highlight_Inventory_Icon = 21;
+   static const Highlight_Amulet_Item_Clear = 21;
+   static const Highlight_Inventory_Icon = 22;
 }
