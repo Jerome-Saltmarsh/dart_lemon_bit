@@ -1021,20 +1021,6 @@ class Connection extends ByteReader {
     sink.close(closeCode, reason);
   }
 
-  void performAutoSave() {
-    final player = this._player;
-    if (player is! AmuletPlayer){
-       return;
-    }
-
-    final characterJson = mapIsometricPlayerToJson(player);
-    characterJson['auto_save'] = DateTime.now().toUtc().toIso8601String();
-    nerve.userService.saveUserCharacter(
-      userId: player.userId,
-      character: characterJson,
-    );
-  }
-
   void handleEditorRequestNewScene(List<String> arguments) {
     leaveCurrentGame();
     joinGameEditorScene(generateEmptyScene());

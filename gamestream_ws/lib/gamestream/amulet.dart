@@ -133,7 +133,7 @@ class Amulet {
   void _initializeTimerAutoSave() {
     timerRefreshUserCharacterLocks = Timer.periodic(
       durationAutoSave,
-      nerve.server.applyAutoSave,
+      nerve.applyAutoSave,
     );
   }
 
