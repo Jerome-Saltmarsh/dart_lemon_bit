@@ -1,5 +1,4 @@
 import 'package:gamestream_ws/amulet.dart';
-import 'package:gamestream_ws/amulet/setters/amulet_player/clear_activated_power_index.dart';
 import 'package:gamestream_ws/gamestream.dart';
 import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages.dart';
@@ -209,14 +208,14 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       return;
     }
 
-    character.actionFrame = -1;
+    character.clearActionFrame();
     final activeItemSlot = character.activeItemSlot;
 
     if (activeItemSlot == null) {
       return;
     }
 
-    clearActivatedPowerIndex(character);
+    character.clearActivatedPowerIndex();
 
     final amuletItem = activeItemSlot.amuletItem;
 

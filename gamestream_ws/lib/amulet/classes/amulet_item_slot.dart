@@ -7,7 +7,13 @@ class AmuletItemSlot {
   var charges = 0;
   var max = 0;
 
-  double get cooldownPercentage => cooldown / cooldownDuration;
+  double get cooldownPercentage {
+    final cooldownDuration = this.cooldownDuration;
+    if (cooldownDuration <= 0){
+      return 1.0;
+    }
+    return cooldown / cooldownDuration;
+  }
 
   @override
   String toString() => '{'
@@ -19,17 +25,26 @@ class AmuletItemSlot {
   '}';
 
   void incrementCooldown(){
-    assert (charges < max);
-    cooldown++;
-    if (cooldown < cooldownDuration)
+    if (charges >= max){
       return;
+    }
+
+    cooldown++;
+    if (cooldown < cooldownDuration){
+      return;
+    }
+
     charges++;
+    clearCooldown();
+  }
+
+  void clearCooldown() {
     cooldown = 0;
   }
 
   void clear(){
+    clearCooldown();
     amuletItem = null;
-    cooldown = 0;
     cooldownDuration = 0;
     charges = 0;
     max = 0;

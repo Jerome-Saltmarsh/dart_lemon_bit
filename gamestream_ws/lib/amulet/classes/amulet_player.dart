@@ -3,7 +3,6 @@ import 'package:gamestream_ws/amulet/classes/amulet_character.dart';
 import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages.dart';
 
-import '../getters/get_player_level_for_amulet_item.dart';
 import 'amulet_game.dart';
 import 'amulet_item_slot.dart';
 import 'amulet_npc.dart';
@@ -130,7 +129,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
       throw Exception('item == null');
     }
 
-    return getLevelForAmuletItem(this, item);
+    return getLevelForAmuletItem(item);
   }
 
 
@@ -145,17 +144,8 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
 
   AmuletItemLevel? getAmuletItemLevel(AmuletItem amuletItem) =>
       amuletItem.getStatsForLevel(
-          getLevelForAmuletItem(this, amuletItem)
+          getLevelForAmuletItem(amuletItem)
       );
-
-  // int getLevelForAmuletItem(AmuletItem amuletItem) =>
-  //     amuletItem.getLevel(
-  //       fire: elementFire,
-  //       water: elementWater,
-  //       wind: elementWind,
-  //       earth: elementEarth,
-  //       electricity: elementElectricity,
-  //     );
 
   @override
   int get weaponCooldown => equippedWeapon != null ? equippedWeapon!.cooldown : -1;
@@ -1789,7 +1779,6 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     }
   }
 
-
   void useSlotTypeAtIndex(SlotType slotType, int index) {
     if (index < 0)
       return;
@@ -1861,5 +1850,26 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
         break;
     }
   }
+
+  void clearActivatedPowerIndex(){
+    activatedPowerIndex = -1;
+  }
+
+  void clearActionFrame(){
+    setActionFrame(-1);
+  }
+
+  void setActionFrame(int value){
+    actionFrame = value;
+  }
+
+  int getLevelForAmuletItem(AmuletItem amuletItem) =>
+      amuletItem.getLevel(
+        fire: elementFire,
+        water: elementWater,
+        wind: elementWind,
+        earth: elementEarth,
+        electricity: elementElectricity,
+      );
 
 }
