@@ -66,6 +66,7 @@ class Amulet extends IsometricGame {
   final playerInteracting = Watch(false);
   final npcTextIndex = Watch(-1);
   final npcText = <String>[];
+  final npcName = Watch('');
   final npcOptions = <String>[];
   final npcOptionsReads = Watch(0);
   final equippedWeaponIndex = Watch(-1);
@@ -364,13 +365,12 @@ class Amulet extends IsometricGame {
     );
   }
 
-  void onChangedPlayerInteracting(bool t) {
-    if (!t){
-      npcOptions.clear();
-      npcText.clear();
-      npcTextIndex.value = -1;
-      npcOptionsReads.value++;
-    }
+  void onChangedPlayerInteracting(bool interacting) {
+    if (interacting) return;
+    npcOptions.clear();
+    npcText.clear();
+    npcTextIndex.value = -1;
+    npcOptionsReads.value++;
   }
 
   void onChangedNpcTextIndex(int value) {

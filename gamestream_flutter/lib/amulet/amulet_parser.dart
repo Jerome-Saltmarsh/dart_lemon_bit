@@ -13,6 +13,7 @@ extension AmuletParser on IsometricParser {
          break;
        case NetworkResponseAmulet.Npc_Talk:
          amulet.npcText.clear();
+         amulet.npcName.value = readString();
          final texts = readString().split(_regex).map((e) => e.trim()).toList(growable: true);
          texts.removeWhere((element) => element.isEmpty);
          amulet.npcText.addAll(texts);

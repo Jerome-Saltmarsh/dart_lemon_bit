@@ -37,8 +37,8 @@ class AmuletGameTown extends AmuletGame {
         weaponRange: 200,
         weaponCooldown: 30,
         name: "Sybil",
-        interact: (player) {
-          player.talk("Hello there", options: [
+        interact: (player, self) {
+          player.talk(self, "Hello there", options: [
             TalkOption("Goodbye", endPlayerInteraction),
             TalkOption("Buy", endPlayerInteraction),
           ]);

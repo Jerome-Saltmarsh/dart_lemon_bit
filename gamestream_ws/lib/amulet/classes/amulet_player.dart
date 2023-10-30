@@ -10,6 +10,8 @@ import 'talk_option.dart';
 
 class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
 
+  static const healthBase = 10;
+
   var previousCameraTarget = false;
   Position? cameraTarget;
 
@@ -19,7 +21,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   var activePowerY = 0.0;
   var activePowerZ = 0.0;
 
-  static const healthBase = 10;
+  var npcName = '';
   var npcText = '';
   var npcOptions = <TalkOption>[];
   Function? onInteractionOver;
@@ -461,11 +463,15 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     return TargetAction.Run;
   }
 
-  void talk(String text, {List<TalkOption>? options}) {
+  void talk(Collider speaker, String text, {List<TalkOption>? options}) {
+
+    cameraTarget = speaker;
+
     if (text.isNotEmpty){
       interacting = true;
     }
      npcText = text;
+     npcName = speaker.name;
      if (options != null){
        this.npcOptions = options;
      } else {
@@ -477,7 +483,9 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   void endInteraction() {
     if (!interacting) return;
     interacting = false;
-    talk('');
+    npcName = '';
+    npcText = '';
+    npcOptions.clear();
     writeByte(NetworkResponse.Amulet_Player);
     writeByte(NetworkResponseAmuletPlayer.End_Interaction);
     clearTarget();
@@ -1000,6 +1008,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   void writeNpcTalk() {
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Npc_Talk);
+    writeString(npcName);
     writeString(npcText);
     writeByte(npcOptions.length);
     for (final option in npcOptions) {

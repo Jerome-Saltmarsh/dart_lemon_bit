@@ -701,7 +701,7 @@ class IsometricParser with ByteReader, IsometricComponent {
         amulet.messageIndex.value = 0;
         break;
       case NetworkResponseAmuletPlayer.End_Interaction:
-        amulet.endInteraction();
+        amulet.playerInteracting.value = false;
         break;
       case NetworkResponseAmuletPlayer.Camera_Target:
         readCameraTarget();

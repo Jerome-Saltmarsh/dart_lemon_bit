@@ -94,17 +94,14 @@ class AmuletPlayerScript {
   AmuletPlayerScript cameraSetTarget(Position? position) =>
       add(() => player.cameraTarget = position);
 
-  AmuletPlayerScript talk(String text, {List<TalkOption>? options, Position? target}) {
+  AmuletPlayerScript talk(Collider speaker, String text, {List<TalkOption>? options}) {
     var initialized = false;
     return add(() {
       if (initialized) {
         return !player.interacting;
       }
-      if (target != null){
-        player.cameraTarget = target;
-      }
 
-      player.talk(text, options: options);
+      player.talk(speaker, text, options: options);
       initialized = true;
       log('talk(text: "$text")');
       return false;

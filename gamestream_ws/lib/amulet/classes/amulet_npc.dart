@@ -6,7 +6,7 @@ import 'amulet_player.dart';
 
 class AmuletNpc extends Character with AmuletCharacter {
 
-  Function(AmuletPlayer player)? interact;
+  Function(AmuletPlayer player, AmuletNpc self)? interact;
 
   AmuletNpc({
     required super.characterType,

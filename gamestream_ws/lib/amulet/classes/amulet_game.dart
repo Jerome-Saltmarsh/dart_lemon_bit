@@ -516,7 +516,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     if (character is AmuletPlayer && target is AmuletNpc){
        character.interacting = true;
-       target.interact?.call(character);
+       target.interact?.call(character, target);
     }
   }
 
