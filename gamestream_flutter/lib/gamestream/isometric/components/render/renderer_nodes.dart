@@ -259,7 +259,6 @@ class RendererNodes extends RenderGroup {
                         clr: clr,
                         dst: dst,
                         src: src,
-                        render: renderFast,
                       );
                       break;
                     case NodeOrientation.Half_West:
@@ -3319,10 +3318,11 @@ class RendererNodes extends RenderGroup {
     required Int32List clr,
     required Float32List src,
     required Float32List dst,
-    required Function render,
   }) {
 
-    render(
+    final renderFast = engine.renderFast;
+
+    renderFast(
       color: colorAbove,
       srcLeft: srcX,
       srcTop: srcY,
@@ -3337,7 +3337,7 @@ class RendererNodes extends RenderGroup {
       src: src,
     );
 
-    render(
+    renderFast(
       color: colorWest,
       srcLeft: srcX + Src_X_Side_West,
       srcTop: srcY,
@@ -3352,7 +3352,7 @@ class RendererNodes extends RenderGroup {
       src: src,
     );
 
-    render(
+    renderFast(
       color: colorSouth,
       srcLeft: srcX + Src_X_Side_South,
       srcTop: srcY,
