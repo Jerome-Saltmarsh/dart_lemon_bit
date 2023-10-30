@@ -21,17 +21,6 @@ class Server {
     startWebsocketServer(port: 8080);
   }
 
-  // void applyAutoSave(_){
-  //   print('applyAutoSave()');
-  //   final connections = this.connections;
-  //   for (final connection in connections){
-  //     final player = connection.player;
-  //     if (player is AmuletPlayer){
-  //       nerve.performAutoSave(player);
-  //     }
-  //   }
-  // }
-
   void handleServeCompleted(HttpServer httpServer){
     this.httpServer = httpServer;
     print('nerve.handleServeCompleted()');
@@ -68,8 +57,8 @@ class Server {
     ;
   }
 
-
   void onConnectionDone(Connection connection){
+    nerve.onDisconnected(connection);
     if (connections.remove(connection)){
       print('gamestream_server - connection removed');
       print("Current Connections: ${connections.length}, Total Connections: ${connectionsTotal}");

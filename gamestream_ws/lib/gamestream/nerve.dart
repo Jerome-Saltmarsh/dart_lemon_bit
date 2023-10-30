@@ -2,11 +2,14 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:gamestream_ws/amulet.dart';
+import 'package:gamestream_ws/gamestream/classes/connection.dart';
 import 'package:gamestream_ws/gamestream/server.dart';
+import 'package:gamestream_ws/isometric/isometric_player.dart';
 import 'package:gamestream_ws/user_service/user_service.dart';
 import 'package:gamestream_ws/packages.dart';
 import 'amulet.dart';
 import 'functions/map_isometric_player_to_json.dart';
+import 'package:typedef/json.dart';
 
 class Nerve {
   late final Amulet amulet;
@@ -49,9 +52,24 @@ class Nerve {
   void performAutoSave(AmuletPlayer player) {
     final characterJson = mapIsometricPlayerToJson(player);
     characterJson['auto_save'] = DateTime.now().toUtc().toIso8601String();
+    persistPlayer(player, characterJson);
+  }
+
+  void onDisconnected(Connection connection) {
+    final player = connection.player;
+    if (player != null) {
+      if (player is IsometricPlayer && player.persistOnDisconnect){
+        final characterJson = mapIsometricPlayerToJson(player);
+        characterJson.remove('auto_save');
+        persistPlayer(player, characterJson);
+      }
+      connection.leaveCurrentGame();
+    }
+  }
+
+  void persistPlayer(IsometricPlayer player, Json character) =>
     userService.saveUserCharacter(
       userId: player.userId,
-      character: characterJson,
+      character: character,
     );
-  }
 }
