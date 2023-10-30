@@ -1881,4 +1881,10 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
         electricity: elementElectricity,
       );
 
+  writeHighlightAmuletItems(AmuletItem amuletItem){
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Highlight_Amulet_Item);
+    writeByte(amuletItem.index);
+  }
+
 }

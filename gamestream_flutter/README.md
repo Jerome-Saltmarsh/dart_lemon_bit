@@ -14,6 +14,7 @@ ctrl + []               : move caret to code block
 * [fix]: blend color and ambient light
 
 ## TODO
+* [fix]: inventory slots remain green after drag
 * [new]: element icons
 * [fix]: orc strike sprite not rendered
 * [new]: item tabs weapons amulets etc
@@ -31,7 +32,6 @@ ctrl + []               : move caret to code block
 * [new]: myst image fade opacity
 * [new]: remove perform frame
 * [new]: character state casting
-* [fix]: inventory slots remain green after drag
 * [fix]: node transparency broken after reconnect
 * [fix]: on use item reduce charge immediately
 

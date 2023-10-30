@@ -361,6 +361,7 @@ class AmuletGameTutorial extends AmuletGame {
         .wait(seconds: 1)
         .cameraSetTarget(guide)
         .faceEachOther(player, guide)
+        .add(() => player.writeHighlightAmuletItems(AmuletItem.Spell_Heal))
         .talk(guide,
           'one has acquired the spell of healing.'
           'caste heal by pressing the heal icon at the bottom of the screen'
@@ -421,6 +422,7 @@ class AmuletGameTutorial extends AmuletGame {
             .controlsDisabled()
             .cameraSetTarget(guide)
             .faceEachOther(player, guide)
+            .add(() => player.writeHighlightAmuletItems(AmuletItem.Spell_Heal))
             .talk(guide, 'caste heal by pressing the heal icon at the bottom of the screen.')
             .end();
         break;
@@ -428,9 +430,6 @@ class AmuletGameTutorial extends AmuletGame {
         runScript(player)
             .cameraSetTarget(guide)
             .faceEachOther(player, guide)
-            .add(() {
-              // highlight inventory slot
-            })
             .talk(guide, 'open the inventory by hovering the mouse over the inventory icon at the bottom left corner of the screen')
             .end();
         break;

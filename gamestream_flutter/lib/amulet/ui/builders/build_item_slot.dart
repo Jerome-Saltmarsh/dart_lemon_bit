@@ -10,7 +10,9 @@ Widget buildItemSlot(ItemSlot itemSlot, {
   required Amulet amulet,
   Color? color,
   Widget? onEmpty,
-}) => Container(
+}) {
+
+  final container = Container(
     margin: const EdgeInsets.all(2),
     child: buildWatch(itemSlot.amuletItem, (item) {
       return buildWatch(amulet.dragging, (dragging) => DragTarget(
@@ -32,13 +34,17 @@ Widget buildItemSlot(ItemSlot itemSlot, {
             data: itemSlot,
             feedback: MMOItemImage(item: item, size: 64),
             onDragStarted: () {
+              amulet.setInventoryOpen(true);
               amulet.dragging.value = itemSlot;
+            },
+            onDraggableCanceled: (velocity, offset){
+              amulet.clearDragging();
             },
             onDragEnd: (details) {
               if (amulet.engine.mouseOverCanvas){
                 amulet.dropItemSlot(itemSlot);
               }
-              amulet.dragging.value = null;
+              amulet.clearDragging();
             },
             child: onPressed(
               onRightClick: () =>
@@ -52,3 +58,19 @@ Widget buildItemSlot(ItemSlot itemSlot, {
     }
     ),
   );
+
+  return buildWatch(amulet.highlightedAmuletItem, (highlightedAmuletItem){
+    return buildWatch(itemSlot.amuletItem, (amuletItem) {
+       if (highlightedAmuletItem != null && highlightedAmuletItem == amuletItem) {
+         return buildBorder(
+             width: 4,
+             color: Colors.white,
+             child: container);
+       }
+
+       return container;
+    });
+  });
+
+
+}

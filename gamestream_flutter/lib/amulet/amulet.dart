@@ -36,6 +36,8 @@ class Amulet extends IsometricGame {
   final dragging = Watch<ItemSlot?>(null);
   final emptyItemSlot = buildText('-');
 
+  final highlightedAmuletItem = Watch<AmuletItem?>(null);
+
   final slotContainerDefault = Container(
     color: Colors.black12,
     alignment: Alignment.center,
@@ -410,4 +412,5 @@ class Amulet extends IsometricGame {
   void clearDragging() => dragging.value = null;
 
   void clearEquippedWeapon() => equippedWeaponIndex.value = -1;
+
 }

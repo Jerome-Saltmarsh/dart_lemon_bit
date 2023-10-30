@@ -102,6 +102,11 @@ extension AmuletParser on IsometricParser {
          final audioType = AudioType.values[audioTypeIndex];
          onPlayAudioType(audioType);
          break;
+       case NetworkResponseAmulet.Highlight_Amulet_Item:
+         final amuletItemIndex = readByte();
+         final amuletItem = AmuletItem.values[amuletItemIndex];
+         amulet.highlightedAmuletItem.value = amuletItem;
+         break;
      }
   }
 
