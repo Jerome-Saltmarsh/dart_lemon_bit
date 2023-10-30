@@ -798,7 +798,11 @@ class AmuletUI {
 
     return MouseRegion(
       onEnter: (_) => amulet.setInventoryOpen(true),
-      onExit: (_) => amulet.setInventoryOpen(false),
+      onExit: (_) {
+        if (amulet.dragging.value == null) {
+          amulet.setInventoryOpen(false);
+        }
+      },
       child: buildWatch(amulet.playerInventoryOpen, (inventoryOpen) =>
       inventoryOpen ? Column(
         crossAxisAlignment: CrossAxisAlignment.start,
