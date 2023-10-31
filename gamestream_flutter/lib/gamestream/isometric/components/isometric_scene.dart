@@ -708,7 +708,7 @@ class IsometricScene with IsometricComponent implements Updatable {
       return;
     }
     ambientStack[ambientStackIndex] = index;
-    nodeColors[index] = setAlpha(color: currentColor, alpha: alpha.clamp(0, 255));
+    nodeColors[index] = setAlpha(color: currentColor, alpha: alpha);
   }
 
   void updateCharacterColors(){
