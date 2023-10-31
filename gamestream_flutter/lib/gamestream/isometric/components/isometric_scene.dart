@@ -664,13 +664,11 @@ class IsometricScene with IsometricComponent implements Updatable {
     required int index,
     required double intensity,
     required int color,
+    required int ambientAlpha,
     required Uint32List nodeColors,
-    // required Uint16List colorStack,
   }){
-    // if (index < 0) return;
-    // if (index >= totalNodes) return;
-
     final ambientIntensity = intensity * (ambientAlpha / 255);
+
     final currentColor = nodeColors[index];
     final currentRed = getRed(currentColor);
     final currentGreen = getGreen(currentColor);
@@ -687,8 +685,6 @@ class IsometricScene with IsometricComponent implements Updatable {
     final interpolatedBlue = interpolateByte(currentBlue, colorBlue, ambientIntensity);
     final interpolatedAlpha = interpolateByte(currentAlpha, colorAlpha, ambientIntensity);
 
-    // colorStackIndex++;
-    // colorStack[colorStackIndex] = index;
     nodeColors[index] = int32(
       interpolatedAlpha,
       interpolatedRed,
@@ -1220,7 +1216,7 @@ class IsometricScene with IsometricComponent implements Updatable {
           intensity: (brightness > 5 ? 1.0 : interpolations[brightness]) * intensity,
           color: value,
           nodeColors: nodeColors,
-          // colorStack: colorStack,
+          ambientAlpha: ambientAlpha,
         );
         colorStackIndex++;
         colorStack[colorStackIndex] = index;
