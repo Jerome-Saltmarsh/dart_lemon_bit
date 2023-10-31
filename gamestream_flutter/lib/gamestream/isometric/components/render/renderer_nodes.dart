@@ -111,6 +111,7 @@ class RendererNodes extends RenderGroup {
     final index = plainIndex;
     final nodeTypes = scene.nodeTypes;
     final variations = scene.nodeVariations;
+    final nodeRandoms = scene.nodeRandoms;
     final orientations = scene.nodeOrientations;
     final nodeColors = scene.nodeColors;
     final ambientColor = scene.ambientColor;
@@ -514,7 +515,7 @@ class RendererNodes extends RenderGroup {
                         color: nodeColors[nodeIndex],
                         rainType: rainType,
                         windType: windType,
-                        animationFrame: animationFrame1 + variations[nodeIndex],
+                        animationFrame: animationFrame1 + nodeRandoms[nodeIndex],
                       );
                       break;
 
@@ -523,7 +524,7 @@ class RendererNodes extends RenderGroup {
                         renderNodeRainLandingOnWater(
                           dstX: dstX,
                           dstY: dstY,
-                          variation: variations[nodeIndex],
+                          variation: nodeRandoms[nodeIndex],
                           color: scene.getColor(nodeIndex),
                           rainType: rainType,
                         );

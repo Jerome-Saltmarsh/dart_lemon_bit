@@ -64,6 +64,7 @@ class IsometricScene with IsometricComponent implements Updatable {
   var nodeVariations = Uint8List(0);
   var miniMap = Uint8List(0);
   var heightMap = Uint16List(0);
+  var nodeRandoms = Uint8List(400000);
   var totalNodes = 0;
   var area = 0;
   var area2 = 0;
@@ -97,6 +98,15 @@ class IsometricScene with IsometricComponent implements Updatable {
       easeType: interpolationEaseType.value,
     );
     marksChangedNotifier.onChanged(onChangedMarks);
+    shuffleNodeRandoms();
+  }
+
+  void shuffleNodeRandoms() {
+    final nodeRandoms = this.nodeRandoms;
+    final length = nodeRandoms.length;
+    for (var i = 0; i < length; i++){
+      nodeRandoms[i] = randomByte();
+    }
   }
 
   void onChangedMarks(int count){
