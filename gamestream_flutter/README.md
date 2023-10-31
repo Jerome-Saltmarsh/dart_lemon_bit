@@ -12,7 +12,6 @@ ctrl + []               : move caret to code block
 ## CURRENT
 * [new]: render character north and east
 * [new]: grass nodes 3
-* [fix]: blend color and ambient light
 
 ## TODO
 * [fix]: inventory slots remain green after drag
@@ -20,6 +19,9 @@ ctrl + []               : move caret to code block
 * [new]: item tabs weapons amulets etc
 * [new]: model hair
 * [new]: gameobject tree stump
+
+## 31.10.2023
+* [fix]: blend color and ambient light
 
 ## 30.10.2023
 * [new]: element icons

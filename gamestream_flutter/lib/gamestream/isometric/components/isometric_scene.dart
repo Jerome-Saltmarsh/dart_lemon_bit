@@ -5,6 +5,7 @@ import 'dart:ui';
 
 import 'package:gamestream_flutter/gamestream/isometric/classes/particle_roam.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
+import 'package:gamestream_flutter/gamestream/isometric/consts/map_projectile_type_to_emission_ambient.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/node_visibility.dart';
 import 'package:gamestream_flutter/gamestream/isometric/functions/src.dart';
@@ -667,7 +668,8 @@ class IsometricScene with IsometricComponent implements Updatable {
     required int ambientAlpha,
     required Uint32List nodeColors,
   }){
-    final ambientIntensity = intensity * (ambientAlpha / 255);
+    final ambientIntensity = ambientAlpha / 255;
+    final interpolation = intensity * ambientIntensity;
 
     final currentColor = nodeColors[index];
     final currentRed = getRed(currentColor);
@@ -680,10 +682,17 @@ class IsometricScene with IsometricComponent implements Updatable {
     final colorBlue = getBlue(color);
     final colorAlpha = getAlpha(color);
 
-    final interpolatedRed = interpolateByte(currentRed, colorRed, ambientIntensity);
-    final interpolatedGreen = interpolateByte(currentGreen, colorGreen, ambientIntensity);
-    final interpolatedBlue = interpolateByte(currentBlue, colorBlue, ambientIntensity);
-    final interpolatedAlpha = interpolateByte(currentAlpha, colorAlpha, ambientIntensity);
+    final interpolatedRed = interpolateByte(currentRed, colorRed, interpolation);
+    final interpolatedGreen = interpolateByte(currentGreen, colorGreen, interpolation);
+    final interpolatedBlue = interpolateByte(currentBlue, colorBlue, interpolation);
+
+    int interpolatedAlpha;
+    if (currentAlpha < colorAlpha){
+      interpolatedAlpha = interpolateByte(currentAlpha, colorAlpha, interpolation);
+    } else {
+      interpolatedAlpha = currentAlpha;
+    }
+
 
     nodeColors[index] = int32(
       interpolatedAlpha,
@@ -712,6 +721,8 @@ class IsometricScene with IsometricComponent implements Updatable {
   }
 
   void updateCharacterColors(){
+    final totalCharacters = this.totalCharacters;
+    final characters = this.characters;
     for (var i = 0; i < totalCharacters; i++){
       final character = characters[i];
       character.color =  getRenderColorPosition(character);
@@ -725,8 +736,10 @@ class IsometricScene with IsometricComponent implements Updatable {
     return characters[totalCharacters];
   }
 
-  void applyEmissionsCharacters() {
+  void applyEmissionAmbientCharacters() {
     final alpha = lighting.emissionAlphaCharacter;
+    final totalCharacters = this.totalCharacters;
+    final characters = this.characters;
     for (var i = 0; i < totalCharacters; i++) {
       final character = characters[i];
 
@@ -1373,123 +1386,60 @@ class IsometricScene with IsometricComponent implements Updatable {
 
   void applyEmissions(){
     totalActiveLights = 0;
-    applyEmissionsScene();
-    applyEmissionGameObjects();
-    applyEmissionsProjectiles();
-    applyEmissionsParticles();
+    applyEmissionAmbientNodes();
+    applyEmissionAmbientCharacters();
+    applyEmissionAmbientGameObjects();
+    applyEmissionAmbientProjectiles();
     applyEmissionEditorSelectedNode();
+    applyEmissionColorNodes();
+    applyEmissionColorParticles();
+    applyEmissionColorGameObjects();
     updateCharacterColors();
   }
 
-  void applyEmissionsScene() {
+  void applyEmissionAmbientNodes() {
     if (bakeStackRecording){
       recordBakeStack();
     } else {
       applyEmissionBakeStack();
     }
-
-    applyEmissionsCharacters();
-    applyEmissionsColoredLightSources();
   }
 
-  void applyEmissionsProjectiles() {
+  void applyEmissionAmbientProjectiles() {
+    final totalProjectiles = this.totalProjectiles;
+    final projectiles = this.projectiles;
     for (var i = 0; i < totalProjectiles; i++){
-      applyProjectileEmission(projectiles[i]);
+      applyProjectileEmissionAmbient(projectiles[i]);
     }
   }
 
-  void applyProjectileEmission(Projectile projectile) {
-    if (projectile.type == ProjectileType.Orb) {
+  void applyProjectileEmissionAmbient(Projectile projectile) {
+    final alpha = mapProjectileTypeEmissionToEmissionAmbient[projectile.type];
+
+    if (alpha == null){
       return;
     }
-    if (projectile.type == ProjectileType.Bullet) {
-      applyVector3EmissionAmbient(projectile,
-        alpha: 50,
-      );
-      return;
-    }
-    if (projectile.type == ProjectileType.Fireball) {
-      //  emitLightColoredAtPosition(projectile,
-      //   hue: 167,
-      //   alpha: 50,
-      //   saturation: 1,
-      //   value: 1,
-      // );
-      return;
-    }
-    if (projectile.type == ProjectileType.Arrow) {
-      applyVector3EmissionAmbient(projectile,
-        alpha: 50,
-      );
-      return;
-    }
-    if (projectile.type == ProjectileType.FrostBall) {
-      //  emitLightColoredAtPosition(
-      //    projectile,
-      //    hue: 203,
-      //    saturation: 43,
-      //    value: 100,
-      //    alpha: 80,
-      //
-      // );
-      return;
-    }
+
+    applyVector3EmissionAmbient(projectile,
+      alpha: alpha,
+    );
   }
 
-  void applyEmissionGameObjects() {
+  void applyEmissionAmbientGameObjects() {
     final gameObjects = this.gameObjects;
     for (final gameObject in gameObjects) {
-      if (!gameObject.active) continue;
+      if (!gameObject.active || gameObject.emissionType != EmissionType.Ambient)
+        continue;
 
-      if (
-        gameObject.type == ItemType.Object &&
-        gameObject.subType == ObjectType.Crystal_Glowing_False
-      ){
-        emitLight(
-          index: getIndexPosition(gameObject),
-          value: colors.purple_1.value,
-          intensity: 0.1,
-          ambient: false,
-        );
-      }
-
-      if (
-        gameObject.type == ItemType.Object &&
-        gameObject.subType == ObjectType.Crystal_Glowing_True
-      ){
-        emitLight(
-          index: getIndexPosition(gameObject),
-          value: colors.aqua_2.value,
-          intensity: 0.35,
-          ambient: false,
-        );
-      }
-
-      switch (gameObject.emissionType) {
-        case EmissionType.None:
-          continue;
-        case EmissionType.Color:
-        // TODO
-        // emitLightColoredAtPosition(
-        //   gameObject,
-        //   hue: gameObject.emissionHue,
-        //   saturation: gameObject.emissionSat,
-        //   value: gameObject.emissionVal,
-        //   alpha: gameObject.emissionAlp,
-        //   intensity: gameObject.emissionIntensity,
-        // );
-          continue;
-        case EmissionType.Ambient:
-          applyVector3EmissionAmbient(gameObject,
-            alpha: gameObject.emissionAlp,
-            intensity: gameObject.emissionIntensity,
-          );
-          continue;
-      }
+      applyVector3EmissionAmbient(
+        gameObject,
+        alpha: gameObject.emissionAlp,
+        intensity: gameObject.emissionIntensity,
+      );
     }
   }
 
-  void applyEmissionsParticles() {
+  void applyEmissionColorParticles() {
     final particles = this.particles.children;
     final length = particles.length;
     for (var i = 0; i < length; i++) {
@@ -1539,7 +1489,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     }
   }
 
-  void applyEmissionsColoredLightSources() {
+  void applyEmissionColorNodes() {
 
     final colors = amulet.colors;
     final torchEmissionIntensityColored = amulet.lighting.torchEmissionIntensityColored;
@@ -2027,5 +1977,36 @@ class IsometricScene with IsometricComponent implements Updatable {
     gameObjects.clear();
     projectiles.clear();
     nodeVisibility.fillRange(0, nodeVisibility.length, NodeVisibility.opaque);
+  }
+
+  void applyEmissionColorGameObjects() {
+    final gameObjects = this.gameObjects;
+    for (final gameObject in gameObjects) {
+      if (!gameObject.active) continue;
+
+      if (
+        gameObject.type == ItemType.Object &&
+        gameObject.subType == ObjectType.Crystal_Glowing_False
+      ){
+        emitLight(
+          index: getIndexPosition(gameObject),
+          value: colors.purple_1.value,
+          intensity: 0.15,
+          ambient: false,
+        );
+      }
+
+      if (
+        gameObject.type == ItemType.Object &&
+        gameObject.subType == ObjectType.Crystal_Glowing_True
+      ){
+        emitLight(
+          index: getIndexPosition(gameObject),
+          value: colors.aqua_2.value,
+          intensity: 0.35,
+          ambient: false,
+        );
+      }
+    }
   }
 }
