@@ -145,15 +145,15 @@ direction_west = 'west'
 
 name_materials_cell_shade = 'cell_shade'
 
-direction_north_vector = (1.0, 1.0, 0)
-direction_east_vector = (1.0, -1.0, 0)
+direction_north_vector = (1.0, 0.0, 0)
+direction_east_vector = (0.0, -1.0, 0)
 direction_south_vector = (0, -1.0, 0)
 direction_west_vector = (0, 1.0, 0)
 
-direction_north_threshold = -0.35
-direction_east_threshold = -0.35
-direction_south_threshold = 0
-direction_west_threshold = 0
+direction_north_threshold = -0.0
+direction_east_threshold = -0.6
+direction_south_threshold = 0.15
+direction_west_threshold = 0.15
 
 
 def get_material_cell_shade():
