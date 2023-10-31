@@ -664,13 +664,13 @@ class IsometricScene with IsometricComponent implements Updatable {
     required int index,
     required double intensity,
     required int color,
+    required Uint32List nodeColors,
+    // required Uint16List colorStack,
   }){
-    if (index < 0) return;
-    if (index >= totalNodes) return;
+    // if (index < 0) return;
+    // if (index >= totalNodes) return;
 
     final ambientIntensity = intensity * (ambientAlpha / 255);
-    final nodeColors = this.nodeColors;
-
     final currentColor = nodeColors[index];
     final currentRed = getRed(currentColor);
     final currentGreen = getGreen(currentColor);
@@ -687,8 +687,8 @@ class IsometricScene with IsometricComponent implements Updatable {
     final interpolatedBlue = interpolateByte(currentBlue, colorBlue, ambientIntensity);
     final interpolatedAlpha = interpolateByte(currentAlpha, colorAlpha, ambientIntensity);
 
-    colorStackIndex++;
-    colorStack[colorStackIndex] = index;
+    // colorStackIndex++;
+    // colorStack[colorStackIndex] = index;
     nodeColors[index] = int32(
       interpolatedAlpha,
       interpolatedRed,
@@ -714,7 +714,7 @@ class IsometricScene with IsometricComponent implements Updatable {
 
     final currentRGB = getRGB(currentColor);
     if (currentRGB != ambientRGB){
-      final currentIntensity = (ambientAlpha - currentAlpha) / 128;
+      final currentIntensity = (ambientAlpha - currentAlpha) / options.alphaBlend;
       final alphaBlend = 1.0 - currentIntensity;
       alpha = interpolate(currentAlpha, alpha, alphaBlend).toInt();
       if (currentAlpha <= alpha) {
@@ -852,59 +852,34 @@ class IsometricScene with IsometricComponent implements Updatable {
     this.emitLightBeamStackTotal = 0;
     var total = 0;
 
-    if (options.emitLightsUsingRecursion){
-      for (var vz = -1; vz <= 1; vz++){
+    for (var vz = -1; vz <= 1; vz++){
+      final vzByte = signToByte(vz) << 4;
+      for (var vy = vyStart; vy <= vyEnd; vy++){
+        final vyByte = signToByte(vy) << 2;
         for (var vx = vxStart; vx <= vxEnd; vx++){
-          for (var vy = vyStart; vy <= vyEnd; vy++){
-            emitLightBeamRecursive(
-                row: row,
-                column: column,
-                z: z,
-                brightness: brightness,
-                vx: vx,
-                vy: vy,
-                vz: vz,
-                value: value,
-                intensity: intensity,
-                minRenderX: minRenderX,
-                maxRenderX: maxRenderX,
-                minRenderY: minRenderY,
-                maxRenderY: maxRenderY,
-                recordMode: bakeStackRecording,
-                ambient: ambient,
-            );
-          }
+          stackB[total++] =
+          signToByte(vx) |
+          vyByte |
+          vzByte ;
         }
       }
-    } else {
-      for (var vz = -1; vz <= 1; vz++){
-        final vzByte = signToByte(vz) << 4;
-        for (var vy = vyStart; vy <= vyEnd; vy++){
-          final vyByte = signToByte(vy) << 2;
-          for (var vx = vxStart; vx <= vxEnd; vx++){
-              stackB[total++] =
-                signToByte(vx) |
-                vyByte |
-                vzByte ;
-            }
-          }
-      }
-
-      stackA.fillRange(0, total, row | column << 8 | z << 16 | brightness << 24);
-      emitLightBeamStackTotal = total;
-
-      emitLightBeam(
-        value: value,
-        intensity: intensity,
-        ambient: ambient,
-        minRenderX: minRenderX,
-        maxRenderX: maxRenderX,
-        minRenderY: minRenderY,
-        maxRenderY: maxRenderY,
-        recordMode: bakeStackRecording,
-      );
-      emitLightBeamStackTotal = 0;
     }
+
+    stackA.fillRange(0, total, row | column << 8 | z << 16 | brightness << 24);
+    emitLightBeamStackTotal = total;
+
+    emitLightBeam(
+      value: value,
+      intensity: intensity,
+      ambient: ambient,
+      minRenderX: minRenderX,
+      maxRenderX: maxRenderX,
+      minRenderY: minRenderY,
+      maxRenderY: maxRenderY,
+      recordMode: bakeStackRecording,
+    );
+    emitLightBeamStackTotal = 0;
+
   }
 
   void applyEmissionBakeStack() {
@@ -1013,6 +988,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     final ambientRGB = this.ambientRGB;
     final nodeColors = this.nodeColors;
     final ambientStack = this.ambientStack;
+    final colorStack = this.colorStack;
     final interpolations = this.interpolations;
     final nodeTypes = this.nodeTypes;
     final nodeOrientations = this.nodeOrientations;
@@ -1243,7 +1219,11 @@ class IsometricScene with IsometricComponent implements Updatable {
           index: index,
           intensity: (brightness > 5 ? 1.0 : interpolations[brightness]) * intensity,
           color: value,
+          nodeColors: nodeColors,
+          // colorStack: colorStack,
         );
+        colorStackIndex++;
+        colorStack[colorStackIndex] = index;
       }
 
       if (recordMode) {
@@ -1375,390 +1355,6 @@ class IsometricScene with IsometricComponent implements Updatable {
 
     this.ambientStackIndex = ambientStackIndex;
   }
-
-  void emitLightBeamRecursive({
-    required int row,
-    required int column,
-    required int z,
-    required int brightness,
-    required int vx,
-    required int vy,
-    required int vz,
-    required int value,
-    required double intensity,
-    required double minRenderX,
-    required double maxRenderX,
-    required double minRenderY,
-    required double maxRenderY,
-    required bool recordMode,
-    required bool ambient,
-  }){
-    if (brightness < 0)
-      return;
-
-    // cache values in cpu
-    final area = this.area;
-    final rows = totalRows;
-    final columns = totalColumns;
-    final zs = totalZ;
-    final ambientAlpha = this.ambientAlpha;
-    final ambientRGB = this.ambientRGB;
-    final nodeColors = this.nodeColors;
-    final ambientStack = this.ambientStack;
-    final interpolations = this.interpolations;
-    final nodeTypes = this.nodeTypes;
-    final nodeOrientations = this.nodeOrientations;
-
-    while (true) {
-      var velocity = vx.abs() + vy.abs() + vz.abs();
-      brightness -= velocity;
-
-      if (brightness < 0)
-        return;
-
-      if (vx != 0) {
-        row += vx;
-        if (row < 0 || row >= rows)
-          return;
-      }
-
-      if (vy != 0) {
-        column += vy;
-        if (column < 0 || column >= columns)
-          return;
-      }
-
-      if (vz != 0) {
-        z += vz;
-        if (z < 0 || z >= zs)
-          return;
-      }
-
-      final index = (z * area) + (row * columns) + column;
-
-      if (!recordMode) {
-        final row =  (index % area) ~/ columns;
-        final column = index % columns;
-        final renderX = (row - column) * Node_Size_Half;
-
-        if (renderX < minRenderX && (vx < 0 || vy > 0))
-          return;
-
-        if (renderX > maxRenderX && (vx > 0 || vy < 0))
-          return;
-
-        final renderY = getRenderYOfRowColumnZ(
-          row,
-          column,
-          index ~/ area,
-        );
-
-        if (renderY < minRenderY && (vx < 0 || vy < 0 || vz > 0))
-          return;
-
-        if (renderY > maxRenderY && (vx > 0 || vy > 0))
-          return;
-      }
-
-      final nodeType = nodeTypes[index];
-      final nodeOrientation = nodeOrientations[index];
-
-      if (!isNodeTypeTransparent(nodeType)) {
-        if (nodeOrientation == NodeOrientation.Solid)
-          return;
-
-        if (vx < 0) {
-          if (const [
-            NodeOrientation.Half_South,
-            NodeOrientation.Corner_South_East,
-            NodeOrientation.Corner_South_West,
-          ].contains(nodeOrientation)) return;
-
-          if (nodeOrientation == NodeOrientation.Slope_South && vz == 0){
-            return;
-          }
-
-          if (const [
-            NodeOrientation.Half_North,
-            NodeOrientation.Corner_North_East,
-            NodeOrientation.Corner_North_West,
-            NodeOrientation.Slope_North,
-          ].contains(nodeOrientation)) vx = 0;
-        } else if (vx > 0) {
-          if (const [
-            NodeOrientation.Half_North,
-            NodeOrientation.Corner_North_East,
-            NodeOrientation.Corner_North_West,
-          ].contains(nodeOrientation)) return;
-
-          if (NodeOrientation.Slope_North == nodeOrientation && vz == 0){
-            return;
-          }
-
-          if (const [
-            NodeOrientation.Half_South,
-            NodeOrientation.Corner_South_East,
-            NodeOrientation.Corner_South_West,
-            NodeOrientation.Slope_South,
-          ].contains(nodeOrientation)){
-            vx = 0;
-          }
-        }
-
-        if (vy < 0) {
-          if (const [
-            NodeOrientation.Half_West,
-            NodeOrientation.Corner_North_West,
-            NodeOrientation.Corner_South_West,
-          ].contains(nodeOrientation)) {
-            return;
-          }
-
-          if (nodeOrientation == NodeOrientation.Slope_West && vz == 0){
-            return;
-          }
-
-          if (const [
-            NodeOrientation.Half_East,
-            NodeOrientation.Corner_South_East,
-            NodeOrientation.Corner_North_East,
-            NodeOrientation.Slope_East,
-          ].contains(nodeOrientation)) vy = 0;
-        } else if (vy > 0) {
-          if (const [
-            NodeOrientation.Half_East,
-            NodeOrientation.Corner_South_East,
-            NodeOrientation.Corner_North_East,
-          ].contains(nodeOrientation)) return;
-
-          if (nodeOrientation == NodeOrientation.Slope_East && vz == 0){
-            return;
-          }
-
-          if (const [
-            NodeOrientation.Half_West,
-            NodeOrientation.Corner_South_West,
-            NodeOrientation.Corner_North_West,
-            NodeOrientation.Slope_West,
-          ].contains(nodeOrientation)) vy = 0;
-        }
-
-        if (vz < 0) {
-          if (const [
-            NodeOrientation.Half_Vertical_Bottom,
-          ].contains(nodeOrientation)) {
-            return;
-          }
-
-          if (const [
-            NodeOrientation.Half_Vertical_Bottom,
-            NodeOrientation.Half_Vertical_Center,
-          ].contains(nodeOrientation)) {
-            vz = 0;
-          }
-        }
-
-        if (vz > 0) {
-          if (const [
-            NodeOrientation.Half_Vertical_Top
-          ]
-              .contains(nodeOrientation)) {
-            return;
-          }
-
-          if (const [
-            NodeOrientation.Half_Vertical_Top,
-            NodeOrientation.Half_Vertical_Center,
-          ].contains(nodeOrientation)) {
-            vz = 0;
-          }
-        }
-      }
-
-      if (ambient){
-        ambientStackIndex++;
-        applyAmbient(
-          index: index,
-          alpha: interpolate(ambientAlpha, value, brightness > 5 ? 1.0 : interpolations[brightness]).toInt(),
-          ambientRGB: ambientRGB,
-          ambientAlpha: ambientAlpha,
-          nodeColors: nodeColors,
-          ambientStack: ambientStack,
-          ambientStackIndex: ambientStackIndex,
-        );
-      } else {
-        applyColor(
-          index: index,
-          intensity: (brightness > 5 ? 1.0 : interpolations[brightness]) * intensity,
-          color: value,
-        );
-      }
-
-      if (recordMode) {
-        bakeStackIndex[bakeStackTotal] = index;
-        bakeStackBrightness[bakeStackTotal] = brightness;
-        bakeStackTotal++;
-      }
-
-      if (const [
-        NodeType.Grass_Long,
-        NodeType.Tree_Bottom,
-        NodeType.Tree_Top,
-      ].contains(nodeType)) {
-        brightness--;
-        if (brightness < 0)
-          return;
-      }
-
-      velocity = vx.abs() + vy.abs() + vz.abs();
-
-      if (velocity <= 0)
-        return;
-
-      if (velocity > 1)
-        break;
-    }
-    if (vx.abs() + vy.abs() + vz.abs() == 3) {
-      emitLightBeamRecursive(
-        row: row,
-        column: column,
-        z: z,
-        brightness: brightness,
-        value: value,
-        vx: vx,
-        vy: vy,
-        vz: vz,
-        intensity: intensity,
-        ambient: ambient,
-        minRenderX: minRenderX,
-        maxRenderX: maxRenderX,
-        minRenderY: minRenderY,
-        maxRenderY: maxRenderY,
-        recordMode: recordMode,
-      );
-    }
-
-    if (vx.abs() + vy.abs() == 2) {
-      emitLightBeamRecursive(
-        row: row,
-        column: column,
-        z: z,
-        brightness: brightness,
-        value: value,
-        vx: vx,
-        vy: vy,
-        vz: 0,
-        intensity: intensity,
-        ambient: ambient,
-        minRenderX: minRenderX,
-        maxRenderX: maxRenderX,
-        minRenderY: minRenderY,
-        maxRenderY: maxRenderY,
-        recordMode: recordMode,
-      );
-    }
-
-    if (vx.abs() + vz.abs() == 2) {
-      emitLightBeamRecursive(
-        row: row,
-        column: column,
-        z: z,
-        brightness: brightness,
-        value: value,
-        vx: vx,
-        vy: 0,
-        vz: vz,
-        intensity: intensity,
-        ambient: ambient,
-        minRenderX: minRenderX,
-        maxRenderX: maxRenderX,
-        minRenderY: minRenderY,
-        maxRenderY: maxRenderY,
-        recordMode: recordMode,
-      );
-    }
-
-    if (vy.abs() + vz.abs() == 2) {
-      emitLightBeamRecursive(
-        row: row,
-        column: column,
-        z: z,
-        brightness: brightness,
-        value: value,
-        vx: 0,
-        vy: vy,
-        vz: vz,
-        intensity: intensity,
-        ambient: ambient,
-        minRenderX: minRenderX,
-        maxRenderX: maxRenderX,
-        minRenderY: minRenderY,
-        maxRenderY: maxRenderY,
-        recordMode: recordMode,
-      );
-    }
-
-    if (vy != 0) {
-      emitLightBeamRecursive(
-        row: row,
-        column: column,
-        z: z,
-        brightness: brightness,
-        value: value,
-        vx: 0,
-        vy: vy,
-        vz: 0,
-        intensity: intensity,
-        ambient: ambient,
-        minRenderX: minRenderX,
-        maxRenderX: maxRenderX,
-        minRenderY: minRenderY,
-        maxRenderY: maxRenderY,
-        recordMode: recordMode,
-      );
-    }
-
-    if (vx != 0) {
-      emitLightBeamRecursive(
-        row: row,
-        column: column,
-        z: z,
-        brightness: brightness,
-        value: value,
-        vx: vx,
-        vy: 0,
-        vz: 0,
-        intensity: intensity,
-        ambient: ambient,
-        minRenderX: minRenderX,
-        maxRenderX: maxRenderX,
-        minRenderY: minRenderY,
-        maxRenderY: maxRenderY,
-        recordMode: recordMode,
-      );
-    }
-
-    if (vz != 0) {
-      emitLightBeamRecursive(
-        row: row,
-        column: column,
-        z: z,
-        brightness: brightness,
-        value: value,
-        vx: 0,
-        vy: 0,
-        vz: vz,
-        intensity: intensity,
-        ambient: ambient,
-        minRenderX: minRenderX,
-        maxRenderX: maxRenderX,
-        minRenderY: minRenderY,
-        maxRenderY: maxRenderY,
-        recordMode: recordMode,
-      );
-    }
-  }
-
 
   void recordBakeStack() {
     print('scene.recordBakeStack()');

@@ -655,6 +655,13 @@ extension isometricDebugUI on IsometricDebug {
             value: () => options.charactersEffectParticles,
           ),
           buildRowToggle(
+            text: 'alpha blend',
+            action: () => ui.showDialogGetInt(onSelected: (int value){
+              options.alphaBlend = value;
+            }),
+            value: () => options.alphaBlend,
+          ),
+          buildRowToggle(
             text: 'render wind velocity',
             action: () => options.renderWindVelocity = !options.renderWindVelocity,
             value: () => options.renderWindVelocity,
@@ -664,11 +671,6 @@ extension isometricDebugUI on IsometricDebug {
              text: 'renderCameraTargets',
              action: options.toggleRenderCameraTargets,
              value: () => options.renderCameraTargets,
-          ),
-          buildRowToggle(
-             text: 'emitLightsUsingRecursion',
-             action: () => options.emitLightsUsingRecursion = !options.emitLightsUsingRecursion,
-             value: () => options.emitLightsUsingRecursion,
           ),
           buildRowToggle(
              text: 'render height map',

@@ -10,7 +10,6 @@ import 'package:golden_ratio/constants.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
-import 'functions/get_amulet_element_colofr.dart';
 import 'ui/builders/build_item_slot.dart';
 import 'ui/builders/build_weapon_slot_at_index.dart';
 import 'ui/containers/build_container_item_hover.dart';

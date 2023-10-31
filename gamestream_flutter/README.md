@@ -10,17 +10,19 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
+* [new]: render character north and east
+* [new]: grass nodes 3
 * [fix]: blend color and ambient light
 
 ## TODO
 * [fix]: inventory slots remain green after drag
-* [new]: element icons
 * [fix]: orc strike sprite not rendered
 * [new]: item tabs weapons amulets etc
 * [new]: model hair
 * [new]: gameobject tree stump
 
 ## 30.10.2023
+* [new]: element icons
 * [new]: highlight item slot during tutorial
 * [new]: bootstrap particles 
 * [new]: add npc name to talk dialog 
