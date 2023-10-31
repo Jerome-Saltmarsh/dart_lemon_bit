@@ -707,16 +707,6 @@ class IsometricScene with IsometricComponent implements Updatable {
     if (currentAlpha <= alpha) {
       return;
     }
-
-    final currentRGB = getRGB(currentColor);
-    if (currentRGB != ambientRGB){
-      final currentIntensity = (ambientAlpha - currentAlpha) / options.alphaBlend;
-      final alphaBlend = 1.0 - currentIntensity;
-      alpha = interpolate(currentAlpha, alpha, alphaBlend).toInt();
-      if (currentAlpha <= alpha) {
-        return;
-      }
-    }
     ambientStack[ambientStackIndex] = index;
     nodeColors[index] = setAlpha(color: currentColor, alpha: alpha.clamp(0, 255));
   }
@@ -1224,9 +1214,10 @@ class IsometricScene with IsometricComponent implements Updatable {
       }
 
       if (recordMode) {
+        final bakeStackTotal = this.bakeStackTotal;
         bakeStackIndex[bakeStackTotal] = index;
         bakeStackBrightness[bakeStackTotal] = brightness;
-        bakeStackTotal++;
+        this.bakeStackTotal++;
       }
 
       if (const [
@@ -1280,7 +1271,6 @@ class IsometricScene with IsometricComponent implements Updatable {
         stackB[stackTotal++] =
           vxByte << 0 |
           vyByte << 2 ;
-          // signToByte(0) << 4 ;
       }
 
       if (vx.abs() + vz.abs() == 2) {
@@ -1304,7 +1294,6 @@ class IsometricScene with IsometricComponent implements Updatable {
           brightness << 24 ;
 
         stackB[stackTotal++] =
-          // signToByte(vx) << 0 |
           vyByte << 2 |
           vzByte << 4 ;
       }
@@ -1319,8 +1308,6 @@ class IsometricScene with IsometricComponent implements Updatable {
 
         stackB[stackTotal++] =
           vxByte << 0 ;
-          // signToByte(0) << 2 |
-          // signToByte(vz) << 4 ;
       }
 
       if (vy != 0) {
@@ -1331,9 +1318,7 @@ class IsometricScene with IsometricComponent implements Updatable {
           brightness << 24 ;
 
         stackB[stackTotal++] =
-          // signToByte(vx) << 0 |
           vyByte << 2;
-          // signToByte(vz) << 4 ;
       }
 
       if (vz != 0) {
@@ -1344,8 +1329,6 @@ class IsometricScene with IsometricComponent implements Updatable {
           brightness << 24 ;
 
         stackB[stackTotal++] =
-          // signToByte(vx) << 0 |
-          // signToByte(0) << 2 |
           vzByte << 4 ;
       }
     }
