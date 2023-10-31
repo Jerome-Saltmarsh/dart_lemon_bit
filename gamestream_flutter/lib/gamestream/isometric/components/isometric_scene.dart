@@ -23,6 +23,7 @@ import 'package:lemon_watch/src.dart';
 import '../../../isometric/classes/position.dart';
 import 'functions/convert_seconds_to_ambient_alpha.dart';
 import 'render/classes/bool_list.dart';
+import 'render/renderer_characters.dart';
 
 class IsometricScene with IsometricComponent implements Updatable {
 
@@ -141,7 +142,7 @@ class IsometricScene with IsometricComponent implements Updatable {
         case MarkType.Moth:
           particles.spawnFlying(x: x, y: y, z: z)
             ..shadowScale = 0.25
-            ..speed = 2.2
+            ..speed = 1.8
             ..type = ParticleType.Moth;
           break;
       }
@@ -1689,7 +1690,8 @@ class IsometricScene with IsometricComponent implements Updatable {
       NodeOrientation.Corner_South_East,
       NodeOrientation.Slope_East,
     ].contains(nodeOrientations[indexWest])){
-      return nodeColors[index];
+      final current = nodeColors[index];
+      return merge32BitColors(current, ambientColor);
     }
 
     return nodeColors[indexWest];
@@ -1699,7 +1701,8 @@ class IsometricScene with IsometricComponent implements Updatable {
   int colorEast(int index){
     final column = getColumn(index);
     if (column - 1 < 0){
-      return nodeColors[index];
+      final current = nodeColors[index];
+      return merge32BitColors(current, ambientColor);
     }
 
     final indexEast = index - 1;
@@ -1711,7 +1714,8 @@ class IsometricScene with IsometricComponent implements Updatable {
       NodeOrientation.Corner_South_West,
       NodeOrientation.Slope_West,
     ].contains(nodeOrientations[indexEast])){
-      return nodeColors[index];
+      final current = nodeColors[index];
+      return merge32BitColors(current, ambientColor);
     }
 
     return nodeColors[indexEast];
@@ -1734,7 +1738,8 @@ class IsometricScene with IsometricComponent implements Updatable {
       NodeOrientation.Corner_South_West,
       NodeOrientation.Slope_South,
     ].contains(orientationNorth)){
-      return nodeColors[index];
+      final current = nodeColors[index];
+      return merge32BitColors(current, ambientColor);
     }
 
     return nodeColors[indexNorth];
@@ -1756,7 +1761,8 @@ class IsometricScene with IsometricComponent implements Updatable {
       NodeOrientation.Corner_North_West,
       NodeOrientation.Slope_North,
     ].contains(nodeOrientations[indexSouth])){
-      return nodeColors[index];
+      final current = nodeColors[index];
+      return merge32BitColors(current, ambientColor);
     }
 
     return nodeColors[indexSouth];
