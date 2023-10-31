@@ -1011,6 +1011,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     var velocity = -1;
 
     var ambientStackIndex = this.ambientStackIndex;
+    var colorStackIndex = this.colorStackIndex;
 
     while (stackFrame < stackTotal) {
       
@@ -1350,6 +1351,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     }
 
     this.ambientStackIndex = ambientStackIndex;
+    this.colorStackIndex = colorStackIndex;
   }
 
   void recordBakeStack() {
@@ -1397,7 +1399,6 @@ class IsometricScene with IsometricComponent implements Updatable {
   }
 
   void applyEmissionsScene() {
-    applyEmissionsColoredLightSources();
     if (bakeStackRecording){
       recordBakeStack();
     } else {
@@ -1405,6 +1406,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     }
 
     applyEmissionsCharacters();
+    applyEmissionsColoredLightSources();
   }
 
   void applyEmissionsProjectiles() {

@@ -662,6 +662,13 @@ extension isometricDebugUI on IsometricDebug {
             value: () => options.alphaBlend,
           ),
           buildRowToggle(
+            text: 'ambient alpha',
+            action: () => ui.showDialogGetInt(onSelected: (int value){
+              scene.ambientAlpha = value;
+            }),
+            value: () => scene.ambientAlpha,
+          ),
+          buildRowToggle(
             text: 'render wind velocity',
             action: () => options.renderWindVelocity = !options.renderWindVelocity,
             value: () => options.renderWindVelocity,
