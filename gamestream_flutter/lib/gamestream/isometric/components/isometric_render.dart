@@ -679,7 +679,7 @@ class IsometricRender with IsometricComponent {
     );
   }
 
-  void projectShadow(Position v3){
+  void projectShadow(Position v3, {double scale = 1}){
     final scene = this.scene;
     if (!scene.inBoundsPosition(v3)) return;
 
@@ -698,7 +698,12 @@ class IsometricRender with IsometricComponent {
       duration: 2,
       frictionAir: 1.0,
       blownByWind: false,
+      scale: scale,
     );
+
+    if (v3 is Particle){
+       // if (v)
+    }
   }
 
 

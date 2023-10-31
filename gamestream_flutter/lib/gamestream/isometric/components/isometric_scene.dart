@@ -134,7 +134,15 @@ class IsometricScene with IsometricComponent implements Updatable {
           particles.mystIndexes.add(markIndex);
           break;
         case MarkType.Butterfly:
-          particles.spawnButterfly(x: x, y: y, z: z);
+          particles.spawnFlying(x: x, y: y, z: z)
+            ..shadowScale = 0.4
+            ..type = ParticleType.Butterfly;
+          break;
+        case MarkType.Moth:
+          particles.spawnFlying(x: x, y: y, z: z)
+            ..shadowScale = 0.25
+            ..speed = 2.2
+            ..type = ParticleType.Moth;
           break;
       }
     }

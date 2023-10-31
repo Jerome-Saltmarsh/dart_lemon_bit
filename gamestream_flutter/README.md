@@ -11,9 +11,9 @@ ctrl + []               : move caret to code block
 
 ## CURRENT
 * [new]: render character north and east
-* [new]: grass nodes 3
 
 ## TODO
+* [new]: node type short grass
 * [fix]: inventory slots remain green after drag
 * [fix]: orc strike sprite not rendered
 * [new]: item tabs weapons amulets etc
@@ -21,6 +21,8 @@ ctrl + []               : move caret to code block
 * [new]: gameobject tree stump
 
 ## 31.10.2023
+* [new]: particle type moth
+* [new]: grass nodes 3
 * [fix]: blend color and ambient light
 
 ## 30.10.2023

@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/gamestream/isometric/components/isometric_sce
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:lemon_math/src.dart';
 
-class ButterflyMode {
+class FlyMode {
   static const flying = 0;
   static const landing = 1;
   static const landed = 2;
@@ -17,19 +17,20 @@ class ButterflyMode {
 /// landing
 /// landed
 /// taking-off
-class ParticleButterfly extends ParticleRoam {
+class ParticleFlying extends ParticleRoam {
 
   var speed = 1.5;
   var moving = false;
   var roamDuration = 0;
-  var mode = ButterflyMode.flying;
+  var mode = FlyMode.flying;
+  var shadowScale = 1.0;
 
   static const changeTargetRadius = 5.0;
   static const verticalSpeed = 1.5;
   static const verticalSpeedBat = 0.3;
   static const speedBat = 1.5;
 
-  ParticleButterfly({required super.x, required super.y, required super.z}) {
+  ParticleFlying({required super.x, required super.y, required super.z}) {
     type = ParticleType.Butterfly;
     startX = x;
     startY = y;
@@ -45,7 +46,7 @@ class ParticleButterfly extends ParticleRoam {
   void update(IsometricParticles particles) {
 
     if (moving && particles.screen.contains(this)){
-      particles.render.projectShadow(this);
+      particles.render.projectShadow(this, scale: shadowScale);
     }
 
     if (type == ParticleType.Bat){
@@ -58,9 +59,9 @@ class ParticleButterfly extends ParticleRoam {
   void updateButterfly(IsometricParticles particles) {
 
     switch (mode) {
-      case ButterflyMode.flying:
+      case FlyMode.flying:
         if (roamDuration-- <= 0){
-          mode = ButterflyMode.landing;
+          mode = FlyMode.landing;
           vx = 0;
           vy = 0;
           targetZ = particles.scene.getProjectionZ(this) + 0.1;
@@ -68,17 +69,17 @@ class ParticleButterfly extends ParticleRoam {
           changeTarget();
         }
         break;
-      case ButterflyMode.landing:
+      case FlyMode.landing:
         if (z > targetZ){
           z -= verticalSpeed;
         } else {
-          mode = ButterflyMode.landed;
+          mode = FlyMode.landed;
           roamDuration = randomInt(300, 500);
           moving = false;
           stop();
         }
         break;
-      case ButterflyMode.landed:
+      case FlyMode.landed:
         if (roamDuration-- <= 0){
           takeOff();
         } else {
@@ -93,11 +94,11 @@ class ParticleButterfly extends ParticleRoam {
           }
         }
         break;
-      case ButterflyMode.takingOff:
+      case FlyMode.takingOff:
         if (z < targetZ){
           z += verticalSpeed;
         } else {
-          mode = ButterflyMode.flying;
+          mode = FlyMode.flying;
           roamDuration = randomInt(300, 500);
           changeTarget();
         }
@@ -105,7 +106,7 @@ class ParticleButterfly extends ParticleRoam {
   }
 
   void takeOff() {
-    mode = ButterflyMode.takingOff;
+    mode = FlyMode.takingOff;
     targetZ = z + Node_Height + Node_Height_Half;
     moving = true;
   }
@@ -121,13 +122,13 @@ class ParticleButterfly extends ParticleRoam {
     }
 
     switch (mode) {
-      case ButterflyMode.flying:
+      case FlyMode.flying:
         updateBatFlying(scene);
         break;
-      case ButterflyMode.landing:
+      case FlyMode.landing:
         updateBatLanding();
         break;
-      case ButterflyMode.landed:
+      case FlyMode.landed:
         updateBatLanded();
         break;
     }
@@ -160,7 +161,7 @@ class ParticleButterfly extends ParticleRoam {
     }
 
     moving = true;
-    mode = ButterflyMode.landing;
+    mode = FlyMode.landing;
     targetX = scene.getIndexPositionX(nearestTreeTop);
     targetY = scene.getIndexPositionY(nearestTreeTop);
     targetZ = scene.getIndexPositionZ(nearestTreeTop);
@@ -191,7 +192,7 @@ class ParticleButterfly extends ParticleRoam {
   }
 
   void setModeLanded() {
-    mode = ButterflyMode.landed;
+    mode = FlyMode.landed;
     moving = false;
     setRandomDuration(100, 300);
     stop();
@@ -215,7 +216,7 @@ class ParticleButterfly extends ParticleRoam {
 
   void setBatModeFlying() {
     changeTarget();
-    mode = ButterflyMode.flying;
+    mode = FlyMode.flying;
     targetZ = z + Node_Height;
     setRandomDuration(300, 600);
   }

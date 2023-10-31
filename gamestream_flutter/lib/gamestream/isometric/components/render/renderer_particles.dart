@@ -1,4 +1,4 @@
-import 'package:gamestream_flutter/gamestream/isometric/classes/particle_butterfly.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/particle_flying.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/packages/common.dart';
@@ -125,7 +125,7 @@ class RendererParticles extends RenderGroup {
         case ParticleType.Butterfly:
           final sprite = images.butterfly;
 
-          if (particle is ParticleButterfly){
+          if (particle is ParticleFlying){
             final direction = IsometricDirection.fromRadian(particle.rotation);
             render.sprite(
               sprite: sprite,
@@ -140,9 +140,26 @@ class RendererParticles extends RenderGroup {
             );
           }
           break;
+        case ParticleType.Moth:
+          if (particle is ParticleFlying){
+            final sprite = images.moth;
+            final direction = IsometricDirection.fromRadian(particle.rotation);
+            render.sprite(
+              sprite: sprite,
+              frame: sprite.getFrame(
+                  row: IsometricDirection.toInputDirection(direction),
+                  column: particle.moving ? animation.frame1 % 2 : 0,
+              ),
+              color: scene.getColor(particle.nodeIndex), // TODO Optimize
+              scale: 0.1,
+              dstX: dstX,
+              dstY: dstY,
+            );
+          }
+          break;
         case ParticleType.Bat:
           final sprite = images.bat;
-          if (particle is ParticleButterfly){
+          if (particle is ParticleFlying){
             final direction = IsometricDirection.fromRadian(particle.rotation);
             render.sprite(
               sprite: sprite,
@@ -501,7 +518,7 @@ class RendererParticles extends RenderGroup {
               srcHeight: 16,
               dstX: dstX,
               dstY: dstY,
-              scale: 0.5,
+              scale: particle.scale,
           );
           break;
         case ParticleType.Lightning_Bolt:

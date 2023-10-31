@@ -157,6 +157,7 @@ flutter:
     - sprites/isometric/skeleton/west/
     - sprites/isometric/skeleton/shadow/
     - sprites/isometric/butterfly/
+    - sprites/isometric/moth/
     - sprites/isometric/bat/
     - audio/
     - audio/ui/

@@ -319,7 +319,7 @@ packages:
       path: "../dart-lemon-engine"
       relative: true
     source: path
-    version: "0.5.9"
+    version: "0.6.1"
   lemon_math:
     dependency: "direct main"
     description:

@@ -2,7 +2,7 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:gamestream_flutter/gamestream/isometric/classes/particle_butterfly.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/particle_flying.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/particle_glow.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/particle_whisp.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_scene.dart';
@@ -1199,17 +1199,19 @@ class IsometricParticles with IsometricComponent implements Updatable {
         ..movementSpeed = 0.7
   );
 
-  void spawnButterfly({
+  ParticleFlying spawnFlying({
     required double x,
     required double y,
     required double z,
-  }) => children.add(
-      ParticleButterfly(
-          x: x,
-          y: y,
-          z: z,
-      )
-  );
+  }) {
+    final instance = ParticleFlying(
+      x: x,
+      y: y,
+      z: z,
+    );
+    children.add(instance);
+    return instance;
+  }
 
   void spawnMystAtIndex(int index) {
     const radius = 100.0;
