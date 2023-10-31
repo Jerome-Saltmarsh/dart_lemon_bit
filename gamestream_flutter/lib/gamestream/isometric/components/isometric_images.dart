@@ -15,24 +15,34 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'types/sprite_group_type.dart';
 
+enum RenderDirection{
+  north,
+  east,
+  south,
+  west
+}
 
-const renderDirections = [
-  'south',
-  'west',
-];
+// const renderDirections = [
+//   'south',
+//   'west',
+// ];
 
 class IsometricImages with IsometricComponent {
 
   var imagesCached = false;
   
   final byteDataEmpty = ByteData(0);
+  final kidCharacterSpritesIsometricNorth = KidCharacterSprites();
+  final kidCharacterSpritesIsometricEast = KidCharacterSprites();
   final kidCharacterSpritesIsometricSouth = KidCharacterSprites();
   final kidCharacterSpritesIsometricWest = KidCharacterSprites();
 
-  late final kidCharacterSpritesIsometrics = [
-    kidCharacterSpritesIsometricSouth,
-    kidCharacterSpritesIsometricWest,
-  ];
+  late final kidCharacterSpritesIsometric = {
+    RenderDirection.north: kidCharacterSpritesIsometricNorth,
+    RenderDirection.east: kidCharacterSpritesIsometricEast,
+    RenderDirection.south: kidCharacterSpritesIsometricSouth,
+    RenderDirection.west: kidCharacterSpritesIsometricWest,
+  };
 
   final kidCharacterSpritesFront = KidCharacterSprites();
   final totalImages = Watch(0);
@@ -181,7 +191,7 @@ class IsometricImages with IsometricComponent {
         casting: emptySprite,
     );
 
-    for (final kidCharacterSpritesIsometric in kidCharacterSpritesIsometrics){
+    for (final kidCharacterSpritesIsometric in kidCharacterSpritesIsometric.values){
       kidCharacterSpritesIsometric.handLeft[0] = spriteGroupEmpty;
       kidCharacterSpritesIsometric.handRight[0] = spriteGroupEmpty;
       kidCharacterSpritesIsometric.weapons[0] = spriteGroupEmpty;
@@ -222,7 +232,7 @@ class IsometricImages with IsometricComponent {
     loadSpriteGroupFront(type: SpriteGroupType.Shoes_Left, subType: ShoeType.Iron_Plates);
     loadSpriteGroupFront(type: SpriteGroupType.Shoes_Right, subType: ShoeType.Iron_Plates);
 
-    for (final direction in renderDirections){
+    for (final direction in RenderDirection.values){
       loadSpriteGroupIsometric(
           direction: direction,
           type: SpriteGroupType.Arms_Left, subType: ArmType.regular, skipHurt: true);
@@ -385,7 +395,7 @@ class IsometricImages with IsometricComponent {
           type: SpriteGroupType.Hair_Top,
           subType: hairType,
       );
-      for (final direction in renderDirections){
+      for (final direction in RenderDirection.values){
         loadSpriteGroupIsometric(
           direction: direction,
           type: SpriteGroupType.Hair_Front,
@@ -555,7 +565,7 @@ class IsometricImages with IsometricComponent {
   void loadSpriteGroupIsometric({
     required int type,
     required int subType,
-    required String direction,
+    required RenderDirection direction,
     bool skipIdle = false,
     bool skipRunning = false,
     bool skipChange = false,
@@ -568,16 +578,14 @@ class IsometricImages with IsometricComponent {
     final typeName = SpriteGroupType.getName(type).toLowerCase();
     final subTypeName = SpriteGroupType.getSubTypeName(type, subType).toLowerCase().replaceAll(' ', '_');
 
-    KidCharacterSprites kidCharacterSprites;
+    final kidCharacterSprites = kidCharacterSpritesIsometric[direction];
 
-    if (direction == 'south'){
-      kidCharacterSprites = kidCharacterSpritesIsometricSouth;
-    } else {
-      kidCharacterSprites = kidCharacterSpritesIsometricWest;
+    if (kidCharacterSprites == null){
+      throw Exception('loadSpriteGroupIsometric() - kidCharacterSprites == null: $direction');
     }
 
     final kidCharacterSpriteGroup = kidCharacterSprites.values[type] ?? (throw Exception('images.loadSpriteGroup2($typeName, $subTypeName)'));
-    final directory = 'sprites/isometric/kid/$direction/$typeName/$subTypeName';
+    final directory = 'sprites/isometric/kid/${direction.name}/$typeName/$subTypeName';
 
     kidCharacterSpriteGroup[subType] = CharacterSpriteGroup(
         idle: skipIdle ? emptySprite : await loadSprite(name: '$directory/idle', mode: AnimationMode.bounce),

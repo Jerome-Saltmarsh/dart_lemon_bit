@@ -1679,34 +1679,87 @@ class IsometricScene with IsometricComponent implements Updatable {
     if (column + 1 >= totalColumns){
       return ambientColor;
     }
-    return nodeColors[index + 1];
+
+    final indexWest = index + 1;
+
+    if (const [
+      NodeOrientation.Solid,
+      NodeOrientation.Half_East,
+      NodeOrientation.Corner_North_East,
+      NodeOrientation.Corner_South_East,
+      NodeOrientation.Slope_East,
+    ].contains(nodeOrientations[indexWest])){
+      return nodeColors[index];
+    }
+
+    return nodeColors[indexWest];
   }
 
   // TODO EXPENSIVE
   int colorEast(int index){
     final column = getColumn(index);
     if (column - 1 < 0){
-      return ambientColor;
+      return nodeColors[index];
     }
-    return nodeColors[index - 1];
+
+    final indexEast = index - 1;
+
+    if (const [
+      NodeOrientation.Solid,
+      NodeOrientation.Half_West,
+      NodeOrientation.Corner_North_West,
+      NodeOrientation.Corner_South_West,
+      NodeOrientation.Slope_West,
+    ].contains(nodeOrientations[indexEast])){
+      return nodeColors[index];
+    }
+
+    return nodeColors[indexEast];
   }
 
   // TODO EXPENSIVE
   int colorNorth(int index){
     final row = getRow(index);
     if (row - 1 < 0) {
-      return ambientColor;
+      return nodeColors[index];
     }
-    return nodeColors[index - totalColumns];
+
+    final indexNorth = index - totalColumns;
+    final orientationNorth = nodeOrientations[indexNorth];
+
+    if (const [
+      NodeOrientation.Solid,
+      NodeOrientation.Half_South,
+      NodeOrientation.Corner_South_East,
+      NodeOrientation.Corner_South_West,
+      NodeOrientation.Slope_South,
+    ].contains(orientationNorth)){
+      return nodeColors[index];
+    }
+
+    return nodeColors[indexNorth];
   }
 
   // TODO EXPENSIVE
   int colorSouth(int index){
     final row = getRow(index);
     if (row + 1 >= totalRows) {
-      return ambientColor;
+      return nodeColors[index];
     }
-    return nodeColors[index + totalColumns];
+
+    final indexSouth = index + totalColumns;
+
+    if (const [
+      NodeOrientation.Solid,
+      NodeOrientation.Half_North,
+      NodeOrientation.Corner_North_East,
+      NodeOrientation.Corner_North_West,
+      NodeOrientation.Slope_North,
+    ].contains(nodeOrientations[indexSouth])){
+      return nodeColors[index];
+    }
+
+    return nodeColors[indexSouth];
   }
 
   int indexSouth(int index){

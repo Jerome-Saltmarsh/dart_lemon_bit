@@ -225,7 +225,7 @@ class RendererCharacters extends RenderGroup {
   /// TODO OPTIMIZE
   void renderCharacterKid(Character character) {
     const anchorY = 0.7;
-
+    final scene = this.scene;
     final characterIndex = scene.getIndexPosition(character);
     final scale = options.characterRenderScale;
     final direction = IsometricDirection.toInputDirection(character.direction);
@@ -234,10 +234,10 @@ class RendererCharacters extends RenderGroup {
     final colorE = scene.colorEast(characterIndex);
     final colorS = scene.colorSouth(characterIndex);
     final colorW = scene.colorWest(characterIndex);
-    // final colorWest = colorW;
-    // final colorSouth = colorS;
-    final colorWest = merge32BitsColors3(colorN, colorW, color);
-    final colorSouth = merge32BitsColors3(colorS, colorE, color);
+    final colorNorth = merge32BitColors(color, colorN);
+    final colorEast = merge32BitColors(color, colorE);
+    final colorSouth = merge32BitColors(color, colorS);
+    final colorWest = merge32BitColors(color, colorW);
     final dstX = character.renderX;
     final dstY = character.renderY;
     final characterState = character.state;
@@ -246,6 +246,9 @@ class RendererCharacters extends RenderGroup {
     final actionComplete = character.actionComplete;
     final completingAction = actionComplete > 0;
 
+    final images = this.images;
+    final spritesNorth = images.kidCharacterSpritesIsometricNorth;
+    final spritesEast = images.kidCharacterSpritesIsometricEast;
     final spritesSouth = images.kidCharacterSpritesIsometricSouth;
     final spritesWest = images.kidCharacterSpritesIsometricWest;
     final atlasHandsLeftSouth = spritesSouth.handLeft[character.handTypeLeft] ?? (throw Exception());
@@ -270,6 +273,8 @@ class RendererCharacters extends RenderGroup {
     final atlasArmLeftWest = spritesWest.armLeft[ArmType.regular] ?? (throw Exception());
     final atlasArmRightSouth = spritesSouth.armRight[ArmType.regular] ?? (throw Exception());
     final atlasArmRightWest = spritesWest.armRight[ArmType.regular] ?? (throw Exception());
+    final atlasHeadNorth = spritesNorth.head[character.headType] ?? (throw Exception());
+    final atlasHeadEast = spritesEast.head[character.headType] ?? (throw Exception());
     final atlasHeadSouth = spritesSouth.head[character.headType] ?? (throw Exception());
     final atlasHeadWest = spritesWest.head[character.headType] ?? (throw Exception());
     final atlasTorsoTopSouth = spritesSouth.torsoTop[character.gender] ?? (throw Exception());
@@ -293,6 +298,8 @@ class RendererCharacters extends RenderGroup {
     final spriteBodyWest = atlasBodyWest.fromCharacterState(characterState);
     final spriteBodyArmSouth = atlasBodyArmSouth.fromCharacterState(characterState);
     final spriteBodyArmWest = atlasBodyArmWest.fromCharacterState(characterState);
+    final spriteHeadNorth = atlasHeadNorth.fromCharacterState(characterState);
+    final spriteHeadEast = atlasHeadEast.fromCharacterState(characterState);
     final spriteHeadSouth = atlasHeadSouth.fromCharacterState(characterState);
     final spriteHeadWest = atlasHeadWest.fromCharacterState(characterState);
     final spriteArmLeftSouth = atlasArmLeftSouth.fromCharacterState(characterState);
@@ -837,6 +844,32 @@ class RendererCharacters extends RenderGroup {
     );
 
     modulate(
+      sprite: spriteHeadNorth,
+      frame: completingAction
+          ? spriteHeadNorth.getFramePercentage(row, actionComplete)
+          : spriteHeadNorth.getFrame(row: row, column: animationFrame),
+      color1: colorSkin,
+      color2: colorNorth,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
+    modulate(
+      sprite: spriteHeadEast,
+      frame: completingAction
+          ? spriteHeadEast.getFramePercentage(row, actionComplete)
+          : spriteHeadEast.getFrame(row: row, column: animationFrame),
+      color1: colorSkin,
+      color2: colorEast,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
+    modulate(
       sprite: spriteHairInFront,
       frame: hairFrame,
       color1: colorHair,
@@ -1021,6 +1054,33 @@ int mergeColors(int a, int b) {
 
   return mergedColor;
 }
+
+
+int merge32BitColors(int a, int b) {
+
+  // Extract the color components from a and b.
+  int alphaA = (a >> 24) & 0xFF;
+  int redA = (a >> 16) & 0xFF;
+  int greenA = (a >> 8) & 0xFF;
+  int blueA = a & 0xFF;
+
+  int alphaB = (b >> 24) & 0xFF;
+  int redB = (b >> 16) & 0xFF;
+  int greenB = (b >> 8) & 0xFF;
+  int blueB = b & 0xFF;
+
+  // Merge the color components using your desired logic.
+  int mergedAlpha = (alphaA + alphaB) ~/ 2;
+  int mergedRed = (redA + redB) ~/ 2;
+  int mergedGreen = (greenA + greenB) ~/ 2;
+  int mergedBlue = (blueA + blueB) ~/ 2;
+
+  // Combine the merged color components to create the result color.
+  int resultColor = (mergedAlpha << 24) | (mergedRed << 16) | (mergedGreen << 8) | mergedBlue;
+
+  return resultColor;
+}
+
 
 int merge32BitsColors3(int a, int b, int c) {
   // Extract the alpha, red, green, and blue components of each color.

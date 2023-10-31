@@ -5,6 +5,13 @@ import subprocess
 print('current_dir: ' + os.path.dirname(bpy.data.filepath))
 
 
+def get_material(name):
+    material = bpy.data.materials.get(name)
+    if material is None:
+        raise ValueError(f'get_material({name}) - not found')
+    return material
+
+
 def get_animation_tracks(object_name):
     animation_object = get_object(object_name)
     if animation_object:
@@ -122,13 +129,6 @@ def set_render_frames(start, end):
     scene.frame_end = end
 
 
-def unmute_rotation_track(pivot_track_name):
-    rotation_animation_tracks = get_animation_tracks("rotation")
-    if rotation_animation_tracks:
-        for animation_track in rotation_animation_tracks:
-            animation_track.mute = animation_track.name != pivot_track_name
-
-
 def mute_animation_tracks(object_name):
     animation_tracks = get_animation_tracks(object_name)
     if animation_tracks:
@@ -137,6 +137,35 @@ def mute_animation_tracks(object_name):
 
 
 # BUSINESS LOGIC
+
+direction_north = 'north'
+direction_east = 'east'
+direction_south = 'south'
+direction_west = 'west'
+
+name_materials_cell_shade = 'cell_shade'
+
+direction_north_vector = (1.0, 1.0, 0)
+direction_east_vector = (1.0, -1.0, 0)
+direction_south_vector = (0, -1.0, 0)
+direction_west_vector = (0, 1.0, 0)
+
+direction_north_threshold = -0.35
+direction_east_threshold = -0.35
+direction_south_threshold = 0
+direction_west_threshold = 0
+
+
+def get_material_cell_shade():
+    return get_material(name_materials_cell_shade)
+
+
+def unmute_rotation_track(pivot_track_name):
+    rotation_animation_tracks = get_animation_tracks("rotation")
+    if rotation_animation_tracks:
+        for animation_track in rotation_animation_tracks:
+            animation_track.mute = animation_track.name != pivot_track_name
+
 
 def build_sprites_from_renders():
     print('build_sprites_from_renders()')
@@ -175,17 +204,12 @@ def enable_animation_tracks_by_name(name):
             animation_track.mute = animation_track.name != name
 
 
-def render_camera_track(camera_track, direction):
-    print(f'render_camera_track({camera_track.name})')
+def render_camera_track(camera_track, render_direction):
+    print(f'render_camera_track({camera_track.name}, {render_direction})')
     armature_kid_animation_tracks = get_animation_tracks_rig_kid()
     mute_animation_tracks("rotation")
     camera_track.mute = False
-
-    if direction == 'west':
-        assign_cell_shade_operation_west()
-
-    if direction == 'south':
-        assign_cell_shade_operation_south()
+    set_render_direction(render_direction)
 
     if camera_track.name == 'front':
         set_render_frames(1, 8)
@@ -241,7 +265,7 @@ def render_camera_track(camera_track, direction):
                 obj.hide_render = False
                 object_name = obj.name.replace(active_export.name + "_", "")
                 mesh_directory = os.path.join(
-                    get_render_directory(camera_track) + "/kid/" + direction + "/",
+                    get_render_directory(camera_track) + "/kid/" + render_direction + "/",
                     active_export.name, object_name, armature_kid_animation_track.name
                 )
                 os.makedirs(mesh_directory, exist_ok=True)
@@ -265,6 +289,10 @@ def render_camera_track(camera_track, direction):
 
 
 def assign_cell_shade_operation_west():
+    assign_cell_shade_operation('LESS_THAN')
+
+
+def assign_cell_shade_north():
     assign_cell_shade_operation('LESS_THAN')
 
 
@@ -297,6 +325,44 @@ def assign_cell_shade_operation(operation):
     raise ValueError('could not find math node')
 
 
+def map_direction_to_vector(direction):
+    if direction == direction_north:
+        return direction_north_vector
+    if direction == direction_east:
+        return direction_east_vector
+    if direction == direction_south:
+        return direction_south_vector
+    if direction == direction_west:
+        return direction_west_vector
+    raise ValueError('invalid direction')
+
+
+def map_direction_to_threshold(direction):
+    if direction == direction_north:
+        return direction_north_threshold
+    if direction == direction_east:
+        return direction_east_threshold
+    if direction == direction_south:
+        return direction_south_threshold
+    if direction == direction_west:
+        return direction_west_threshold
+    raise ValueError('invalid direction')
+
+
+def set_render_direction(direction):
+    material = get_material_cell_shade()
+    nodes = material.node_tree.nodes
+
+    for node in nodes:
+        if node.type == 'VECT_MATH':
+            node.inputs[1].default_value = map_direction_to_vector(direction)
+            continue
+
+        if node.type == 'MATH':
+            node.inputs[1].default_value = map_direction_to_threshold(direction)
+            continue
+
+
 def render_unmuted_rotation_tracks():
     print('render_unmuted_rotation_tracks()')
     hide_mesh_kid()
@@ -310,8 +376,10 @@ def render_unmuted_rotation_tracks():
         unmuted_camera_track.mute = True
 
     for unmuted_camera_track in unmuted_camera_tracks:
-        render_camera_track(unmuted_camera_track, 'west')
-        render_camera_track(unmuted_camera_track, 'south')
+        render_camera_track(unmuted_camera_track, direction_north)
+        render_camera_track(unmuted_camera_track, direction_east)
+        render_camera_track(unmuted_camera_track, direction_south)
+        render_camera_track(unmuted_camera_track, direction_west)
 
     for unmuted_camera_track in unmuted_camera_tracks:
         unmuted_camera_track.mute = False
@@ -321,3 +389,4 @@ render_unmuted_rotation_tracks()
 build_sprites_from_renders()
 set_render_path("c:/tmp")
 print('render sprites complete')
+
