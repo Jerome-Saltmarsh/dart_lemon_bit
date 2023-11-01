@@ -1305,7 +1305,7 @@ extension IsometricEditorUI on IsometricEditor {
             ),
             buildWatch(nodeSelectedVariation, (variation) {
               return Row(
-                children: List.generate(3, (index) {
+                children: List.generate(4, (index) {
                   return onPressed(
                     action: () => setNode(index: selectedIndex, variation: index),
                     child: Container(

@@ -59,8 +59,8 @@ class RendererParticles extends RenderGroup {
             dstY: dstY,
             srcX: 0.0,
             srcY: 40,
-            srcWidth: 4,
-            srcHeight: 4,
+            srcWidth: 3,
+            srcHeight: 3,
             color: scene.getRenderColorPosition(particle),
           );
           break;

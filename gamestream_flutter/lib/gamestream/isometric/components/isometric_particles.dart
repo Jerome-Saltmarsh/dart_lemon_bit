@@ -1168,7 +1168,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
                 x: x,
                 y: y,
                 z: z + 5,
-                zv: 2.5,
+                zv: 2,
             );
           }
         }
