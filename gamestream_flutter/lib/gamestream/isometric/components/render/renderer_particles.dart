@@ -189,6 +189,18 @@ class RendererParticles extends RenderGroup {
             color: particle.emissionColor,
           );
           break;
+        case ParticleType.Water_Drop_Large:
+          engine.renderSprite(
+            image: images.atlas_gameobjects,
+            dstX: dstX,
+            dstY: dstY,
+            srcX: 0.0,
+            srcY: 40,
+            srcWidth: 1,
+            srcHeight: 3,
+            color: scene.getRenderColorPosition(particle),
+          );
+          break;
         case ParticleType.Block_Wood:
           engine.renderSprite(
             image: images.atlas_gameobjects,

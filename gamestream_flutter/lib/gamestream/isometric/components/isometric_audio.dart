@@ -95,6 +95,7 @@ class IsometricAudio with IsometricComponent implements Updatable {
   final voiceYourTeamHasScoredAPoint = AudioSingle(name: 'voices/voice_your_team_has_scored_a_point');
   final voiceTheEnemyFlagIsAtTheirBase = AudioSingle(name: 'voices/voice_the_enemy_flag_is_at_their_base');
 
+  final waterDrop = AudioSingle(name: 'sounds/water_drip');
   final unlock_2 = AudioSingle(name: 'sounds/unlock_2');
   final jump = AudioSingle(name: 'sounds/jump');
   final dog_woolf_howl_4 = AudioSingle(name: 'dog-woolf-howl-4');

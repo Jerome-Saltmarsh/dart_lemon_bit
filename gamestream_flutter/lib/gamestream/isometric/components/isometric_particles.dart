@@ -191,6 +191,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
   final indexesWaterDrops = <int>[];
 
   var nextMystEmission = 0;
+  var nextEmissionWaterDrop = 0;
 
   int get bodyPartDuration =>  randomInt(120, 200);
 
@@ -289,7 +290,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
         angle: randomAngle(),
         speed: 0.5,
         zv: zv,
-        weight: 5,
+        weight: 3.5,
         duration: duration,
         rotation: 0,
         rotationV: 0,
@@ -1005,7 +1006,11 @@ class IsometricParticles with IsometricComponent implements Updatable {
     if (!windy && nextMystEmission-- <= 0) {
       nextMystEmission = 30;
       spawnMystAtMystIndexes();
-      spawnWaterDropAtIndexes();
+    }
+
+    if (nextEmissionWaterDrop-- <= 0) {
+      nextEmissionWaterDrop = 60;
+      spawnWaterDropLargeAtIndexes();
     }
 
     nextParticleFrame--;
@@ -1098,10 +1103,10 @@ class IsometricParticles with IsometricComponent implements Updatable {
     }
   }
 
-  void spawnWaterDropAtIndexes() {
+  void spawnWaterDropLargeAtIndexes() {
      final indexes = this.indexesWaterDrops;
     for (final index in indexes) {
-      spawnWaterDrop(index);
+      spawnWaterDropLarge(index);
     }
   }
 
@@ -1152,6 +1157,22 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
     if (nodeCollision) {
       if (particle.deactiveOnNodeCollision){
+
+        if (particle.type == ParticleType.Water_Drop_Large){
+          final x = particle.x;
+          final y = particle.y;
+          final z = particle.z;
+          audio.play(audio.waterDrop, x, y, z, maxDistance: 300, volume: 0.6);
+          for (var i = 0; i < 3; i++) {
+            spawnParticleWaterDrop(
+                x: x,
+                y: y,
+                z: z + 5,
+                zv: 2.5,
+            );
+          }
+        }
+
         particle.deactivate();
         return;
       }
@@ -1240,22 +1261,25 @@ class IsometricParticles with IsometricComponent implements Updatable {
     )..nodeCollidable = false;
   }
 
-  void spawnWaterDrop(int index) {
+  void spawnWaterDropLarge(int index) {
     final scene = this.scene;
     const radius = 5.0;
     spawnParticle(
-        type: ParticleType.Water_Drop,
+        type: ParticleType.Water_Drop_Large,
         blownByWind: false,
         x: scene.getIndexPositionX(index) + giveOrTake(radius),
         y: scene.getIndexPositionY(index) + giveOrTake(radius),
         z: scene.getIndexPositionZ(index),
         angle: 0,
         speed: 0,
-        weight: 0.2,
+        weight: 1,
         duration: 1000,
         frictionAir: 1.00,
         rotationV: 0,
-    )..nodeCollidable = true;
+    )
+       ..vz = 0
+       ..deactiveOnNodeCollision = true
+      ..nodeCollidable = true;
   }
 
   void spawnTrail(double x, double y, double z, {required int color}) => spawnParticle(

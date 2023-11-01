@@ -10,7 +10,6 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
-* [new]: particle emitter water drops
 
 ## TODO
 * [new]: gameobject tree stump
@@ -20,6 +19,7 @@ ctrl + []               : move caret to code block
 * [new]: model hair
 
 ## 01.11.2023
+* [new]: particle emitter water drops
 * [new]: level and element upgrade audio
 * [new]: ui element points available
 * [new]: remove talent type

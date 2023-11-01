@@ -46,7 +46,7 @@ class ParticleType {
   static const Trail = 44;
   static const Bat = 45;
   static const Moth = 46;
-  // static const Water_Drop = 47;
+  static const Water_Drop_Large = 47;
 
   static String getName(int particleType) => const {
       Smoke: 'Smoke',
@@ -61,6 +61,6 @@ class ParticleType {
       Butterfly: 'butterfly',
       Trail: 'trail',
       Moth: 'moth',
-
+      Water_Drop_Large: 'Water_Drop_Large'
     }[particleType] ?? 'unknown-$particleType';
 }
