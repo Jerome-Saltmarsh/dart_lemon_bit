@@ -650,6 +650,16 @@ extension isometricDebugUI on IsometricDebug {
       buildTab(
         children: [
           buildRowToggle(
+            text: 'render_north',
+            action: () => options.renderNorth = !options.renderNorth,
+            value: () => options.renderNorth,
+          ),
+          buildRowToggle(
+            text: 'render_east',
+            action: () => options.renderEast = !options.renderEast,
+            value: () => options.renderEast,
+          ),
+          buildRowToggle(
             text: 'characters effect particles',
             action: () => options.charactersEffectParticles = !options.charactersEffectParticles,
             value: () => options.charactersEffectParticles,

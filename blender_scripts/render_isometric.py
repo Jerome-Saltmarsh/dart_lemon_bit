@@ -162,9 +162,9 @@ direction_south_vector = (0, -1.0, 0)
 direction_west_vector = (0, 1.0, 0)
 
 direction_north_threshold = -0.7
-direction_east_threshold = -0.83
-direction_south_threshold = 0.15
-direction_west_threshold = 0.15
+direction_east_threshold = -0.7
+direction_south_threshold = 0.2
+direction_west_threshold = 0.2
 
 
 def get_material_cell_shade():

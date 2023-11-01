@@ -234,10 +234,12 @@ class RendererCharacters extends RenderGroup {
     final colorE = scene.colorEast(characterIndex);
     final colorS = scene.colorSouth(characterIndex);
     final colorW = scene.colorWest(characterIndex);
-    final colorNorth = merge32BitColors(color, colorN);
-    final colorEast = merge32BitColors(color, colorE);
-    final colorSouth = merge32BitColors(color, colorS);
-    final colorWest = merge32BitColors(color, colorW);
+    // final colorNorth = merge32BitColors(color, colorN);
+    // final colorEast = merge32BitColors(color, colorE);
+    final colorNorth = colorN;
+    final colorEast = colorE;
+    final colorSouth = merge32BitColors(colorS, colorE);
+    final colorWest = merge32BitColors(colorN, colorW);
     final dstX = character.renderX;
     final dstY = character.renderY;
     final characterState = character.state;
@@ -843,31 +845,36 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    modulate(
-      sprite: spriteHeadNorth,
-      frame: completingAction
-          ? spriteHeadNorth.getFramePercentage(row, actionComplete)
-          : spriteHeadNorth.getFrame(row: row, column: animationFrame),
-      color1: colorSkin,
-      color2: colorNorth,
-      scale: scale,
-      dstX: dstX,
-      dstY: dstY,
-      anchorY: anchorY,
-    );
+    if (options.renderNorth){
+      modulate(
+        sprite: spriteHeadNorth,
+        frame: completingAction
+            ? spriteHeadNorth.getFramePercentage(row, actionComplete)
+            : spriteHeadNorth.getFrame(row: row, column: animationFrame),
+        color1: colorSkin,
+        color2: colorNorth,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+    }
 
-    modulate(
-      sprite: spriteHeadEast,
-      frame: completingAction
-          ? spriteHeadEast.getFramePercentage(row, actionComplete)
-          : spriteHeadEast.getFrame(row: row, column: animationFrame),
-      color1: colorSkin,
-      color2: colorEast,
-      scale: scale,
-      dstX: dstX,
-      dstY: dstY,
-      anchorY: anchorY,
-    );
+    if (options.renderEast){
+      modulate(
+        sprite: spriteHeadEast,
+        frame: completingAction
+            ? spriteHeadEast.getFramePercentage(row, actionComplete)
+            : spriteHeadEast.getFrame(row: row, column: animationFrame),
+        color1: colorSkin,
+        color2: colorEast,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+
+    }
 
     modulate(
       sprite: spriteHairInFront,
