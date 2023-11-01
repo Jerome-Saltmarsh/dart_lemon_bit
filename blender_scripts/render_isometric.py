@@ -87,6 +87,13 @@ def render_false(target):
 
 
 def get_object(object_name):
+    value = try_get_object(object_name)
+    if not value:
+        raise ValueError(f'get_object({object_name}) - no object found')
+    return value
+
+
+def try_get_object(object_name):
     return bpy.data.objects.get(object_name)
 
 
@@ -143,25 +150,29 @@ direction_east = 'east'
 direction_south = 'south'
 direction_west = 'west'
 
-name_materials_cell_shade = 'cell_shade'
+name_mesh_kid = 'mesh_kid'
+name_material_cell_shade = 'cell_shade'
+name_object_rotation = 'rotation'
 
-direction_north_vector = (1.0, 0.0, 0)
+directory_renders = 'C:/Users/Jerome/github/bleed/lemon_atlas/assets/renders/'
+
+direction_north_vector = (0.0, 1.0, 0)
 direction_east_vector = (0.0, -1.0, 0)
 direction_south_vector = (0, -1.0, 0)
 direction_west_vector = (0, 1.0, 0)
 
-direction_north_threshold = -0.0
-direction_east_threshold = -0.6
+direction_north_threshold = -0.7
+direction_east_threshold = -0.83
 direction_south_threshold = 0.15
 direction_west_threshold = 0.15
 
 
 def get_material_cell_shade():
-    return get_material(name_materials_cell_shade)
+    return get_material(name_material_cell_shade)
 
 
 def unmute_rotation_track(pivot_track_name):
-    rotation_animation_tracks = get_animation_tracks("rotation")
+    rotation_animation_tracks = get_animation_tracks(name_object_rotation)
     if rotation_animation_tracks:
         for animation_track in rotation_animation_tracks:
             animation_track.mute = animation_track.name != pivot_track_name
@@ -184,13 +195,13 @@ def build_sprites_from_renders():
 
 
 def hide_mesh_kid():
-    mesh_obj = get_object('mesh_kid')
+    mesh_obj = try_get_object(name_mesh_kid)
     if mesh_obj:
-        mesh_obj.hide_render = True
+        set_render_false(mesh_obj)
 
 
-def get_render_directory(camera_track):
-    return 'C:/Users/Jerome/github/bleed/lemon_atlas/assets/renders/' + camera_track.name
+def get_render_directory_for_camera_track(camera_track):
+    return directory_renders + camera_track.name
 
 
 def get_character_armatures():
@@ -207,6 +218,11 @@ def enable_animation_tracks_by_name(name):
 def render_camera_track(camera_track, render_direction):
     print(f'render_camera_track({camera_track.name}, {render_direction})')
     armature_kid_animation_tracks = get_animation_tracks_rig_kid()
+    object_rotation = get_object(name_object_rotation)
+
+    if not object_rotation:
+        raise ValueError('object_rotation could not be found')
+
     mute_animation_tracks("rotation")
     camera_track.mute = False
     set_render_direction(render_direction)
@@ -265,7 +281,7 @@ def render_camera_track(camera_track, render_direction):
                 obj.hide_render = False
                 object_name = obj.name.replace(active_export.name + "_", "")
                 mesh_directory = os.path.join(
-                    get_render_directory(camera_track) + "/kid/" + render_direction + "/",
+                    get_render_directory_for_camera_track(camera_track) + "/kid/" + render_direction + "/",
                     active_export.name, object_name, armature_kid_animation_track.name
                 )
                 os.makedirs(mesh_directory, exist_ok=True)
@@ -389,4 +405,3 @@ render_unmuted_rotation_tracks()
 build_sprites_from_renders()
 set_render_path("c:/tmp")
 print('render sprites complete')
-
