@@ -20,7 +20,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
   var alphaBlend = 128;
   var cameraPlay = Position();
   var cameraEdit = Position();
-  var charactersEffectParticles = true;
+  var charactersEffectParticles = false;
   var renderWindVelocity = false;
   var renderCameraTargets = false;
   var renderRunLine = false;

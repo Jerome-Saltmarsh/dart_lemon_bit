@@ -20,6 +20,7 @@ ctrl + []               : move caret to code block
 * [new]: gameobject tree stump
 
 ## 01.11.2023
+* [fix]: incorrect equipped index on change scene
 * [new]: node type short grass
 * [new]: render character north and east
 

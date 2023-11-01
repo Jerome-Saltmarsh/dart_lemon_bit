@@ -1891,4 +1891,10 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Highlight_Amulet_Item_Clear);
   }
+
+  @override
+  void downloadScene() {
+    super.downloadScene();
+    writeEquippedWeaponIndex();
+  }
 }
