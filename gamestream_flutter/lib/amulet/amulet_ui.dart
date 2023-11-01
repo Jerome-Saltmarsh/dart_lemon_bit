@@ -732,17 +732,25 @@ class AmuletUI {
   Widget buildAmuletElement(AmuletElement amuletElement) {
     final icon = IsometricIcon(iconType: mapAmuletElementToIconType(amuletElement));
     final watchAmuletElement = amulet.getAmuletElementWatch(amuletElement);
-    return Row(
+
+    final row = Row(
       children: [
         icon,
         Container(
-          color: Colors.black12,
+            color: Colors.black12,
             width: 32,
             height: 32,
             alignment: Alignment.center,
             child: buildWatch(watchAmuletElement, (t) => buildText(t, color: Colors.white70))),
       ],
     );
+
+    return buildWatch(amulet.elementPointsAvailable, (elementPointsAvailable) =>
+        onPressed(
+          action: elementPointsAvailable ? () => amulet.upgradeAmuletElement(amuletElement) : null,
+          child: row,
+      ));
+
   }
 
   Widget buildElementPoints() =>
@@ -751,7 +759,8 @@ class AmuletUI {
           return nothing;
         }
         return GSContainer(
-          child: buildText('POINTS: $elementPoints', color: Colors.green),
+          padding: const EdgeInsets.all(4),
+          child: buildText('POINTS $elementPoints', color: Colors.green),
         );
       });
 }

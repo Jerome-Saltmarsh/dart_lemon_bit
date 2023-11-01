@@ -205,6 +205,9 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   AmuletItemSlot? get equippedWeapon => _equippedWeaponIndex == -1 ? null : weapons[_equippedWeaponIndex];
 
   set experience(int value){
+    if (value < 0){
+      value = 0;
+    }
     _experience = value;
     writePlayerExperience();
   }
@@ -1830,5 +1833,8 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
 
   void gainLevel(){
     level++;
+    elementPoints++;
+    experience -= experienceRequired;
+    experienceRequired = amuletGame.getExperienceRequiredForLevel(level);
   }
 }

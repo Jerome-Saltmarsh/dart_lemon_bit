@@ -31,6 +31,8 @@ class Amulet extends IsometricGame {
   final elementEarth = Watch(0);
   final elementElectricity = Watch(0);
 
+  final elementPointsAvailable = Watch(false);
+
   late final AmuletUI amuletUI;
 
   final dragging = Watch<ItemSlot?>(null);
@@ -90,7 +92,11 @@ class Amulet extends IsometricGame {
     npcTextIndex.onChanged(onChangedNpcTextIndex);
     error.onChanged(onChangedError);
     cameraTargetSet.onChanged(onChangedCameraTargetSet);
+    elementPoints.onChanged(onChangedElementPoints);
   }
+
+  void onChangedElementPoints(int elementPoints) =>
+      elementPointsAvailable.value = elementPoints > 0;
 
   @override
   void onComponentReady() {
@@ -393,6 +399,6 @@ class Amulet extends IsometricGame {
   void requestGainLevel() =>
       network.sendNetworkRequest(
           NetworkRequest.Amulet,
-          NetworkRequestAmulet.Gain_Level,
+          NetworkRequestAmulet.Gain_Level.index,
       );
 }
