@@ -561,48 +561,11 @@ extension isometricDebugUI on IsometricDebug {
                   child: buildText(value));
             }),
           ),
+          buildButtonAcquireItem(),
           onPressed(
-              action: (){
-                ui.showDialog(child: GSContainer(
-                  width: 400,
-                  height: 400 * goldenRatio_1381,
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          buildText('Acquire Item'),
-                          onPressed(
-                              action: ui.closeDialog,
-                              child: buildText('Close'),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        height: 300,
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children:
-                              AmuletItem.values.map((e) {
-                                return onPressed(
-                                  action: (){
-                                    amulet.requestAcquireAmuletItem(e);
-                                  },
-                                  child: GSContainer(
-                                      color: Colors.green,
-                                      margin: const EdgeInsets.only(bottom: 4),
-                                      child: buildText(e.name)),
-                                );
-                              }).toList(growable: false)
-                            ,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ));
-              },
-              child: buildText('acquire item')),
+            action: amulet.requestGainLevel,
+            child: buildText('GAIN LEVEL'),
+          ),
         ],
       );
 
@@ -829,7 +792,54 @@ extension isometricDebugUI on IsometricDebug {
       ],
     );
   }
+
+  Widget buildButtonAcquireItem() {
+    return onPressed(
+        action: (){
+          ui.showDialog(child: GSContainer(
+            width: 400,
+            height: 400 * goldenRatio_1381,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    buildText('Acquire Item'),
+                    onPressed(
+                      action: ui.closeDialog,
+                      child: buildText('Close'),
+                    ),
+                  ],
+                ),
+                Container(
+                  height: 300,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children:
+                      AmuletItem.values.map((e) {
+                        return onPressed(
+                          action: (){
+                            amulet.requestAcquireAmuletItem(e);
+                          },
+                          child: GSContainer(
+                              color: Colors.green,
+                              margin: const EdgeInsets.only(bottom: 4),
+                              child: buildText(e.name)),
+                        );
+                      }).toList(growable: false)
+                      ,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ));
+        },
+        child: buildText('acquire item'));
+  }
+
 }
+
 
 
 Widget buildWatchMapText<T>(Watch<T> watch, dynamic mapper(T t))

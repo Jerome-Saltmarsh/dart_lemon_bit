@@ -13,6 +13,7 @@ extension AmuletRequestHandler on Connection {
       return;
     }
 
+    final amuletPlayer = player;
     final amuletGame = player.amuletGame;
 
     final inventoryOpen = arguments.getArgBool('--inventory');
@@ -65,21 +66,8 @@ extension AmuletRequestHandler on Connection {
         if (index == null) return;
         player.selectNpcTalkOption(index);
         break;
-      case NetworkRequestAmulet.Toggle_Skills_Dialog:
-        player.toggleSkillsDialog();
-        break;
       case NetworkRequestAmulet.Toggle_Inventory_Open:
         player.toggleInventoryOpen();
-        break;
-      case NetworkRequestAmulet.Upgrade_Talent:
-        final index = parseArg2(arguments);
-        if (index == null) return;
-        if (!isValidIndex(index, AmuletTalentType.values)){
-          errorInvalidClientRequest();
-          return;
-        }
-        final mmoTalentType = AmuletTalentType.values[index];
-        player.upgradeTalent(mmoTalentType);
         break;
       case NetworkRequestAmulet.Upgrade_Element:
         final index = parseArg2(arguments);
@@ -93,6 +81,12 @@ extension AmuletRequestHandler on Connection {
         break;
       case NetworkRequestAmulet.Set_Inventory_Open:
         throw Exception('not implemented');
+      case NetworkRequestAmulet.Gain_Level:
+        if (!amuletPlayer.admin) {
+          throw Exception('player must be admin');
+        }
+        amuletPlayer.level++;
+        break;
       case NetworkRequestAmulet.Player_Change_Game:
         final index = getArg(arguments, 2);
         final amuletScene = AmuletScene.values[index];

@@ -14,7 +14,6 @@ import 'ui/builders/build_item_slot.dart';
 import 'ui/builders/build_weapon_slot_at_index.dart';
 import 'ui/containers/build_container_item_hover.dart';
 import 'ui/containers/build_container_player_front.dart';
-import 'ui/src.dart';
 
 class AmuletUI {
 
@@ -547,20 +546,9 @@ class AmuletUI {
       ],),
   );
 
-  Widget buildTalentPointsRemaining() =>
-      buildWatch(
-          amulet.playerTalentPoints,
-      (skillPoints) => onPressed(
-          action: amulet.network.sendAmuletRequest.toggleTalentsDialog,
-          child: GSContainer(
-              child: buildText('Talents $skillPoints',
-                  color: skillPoints > 0 ? Colors.green : Colors.white70))));
-
   Widget buildPlayerHealthBar(){
     const width = 282.0;
     const height = 20.0;
-
-
 
      return IgnorePointer(
        child: buildWatch(amulet.player.healthPercentage, (healthPercentage) {
@@ -613,98 +601,6 @@ class AmuletUI {
       );
   }
 
-  Widget buildTalent(AmuletTalentType talentType){
-    final currentLevel = amulet.getTalentLevel(talentType);
-    final nextLevel = currentLevel + 1;
-    final maxLevel = talentType.maxLevel;
-    final maxLevelReached = currentLevel >= maxLevel;
-    final cost = nextLevel * talentType.levelCostMultiplier;
-    final talentPoints = amulet.playerTalentPoints.value;
-    final canUpgrade = currentLevel < maxLevel && cost <= talentPoints;
-    final canAfford = cost <= talentPoints;
-
-    const barWidth = 130.0;
-    const barHeight = barWidth * goldenRatio_0381 * goldenRatio_0618;
-
-    return MouseRegion(
-      onEnter: (_){
-        amulet.talentHover.value = talentType;
-      },
-      onExit: (_){
-        if (amulet.talentHover.value == talentType){
-          amulet.talentHover.value = null;
-        }
-      },
-      child: GSContainer(
-        color: Colors.black26,
-        margin: const EdgeInsets.all(4),
-        padding: null,
-        rounded: true,
-        child: onPressed(
-          action: canUpgrade ? () => amulet.network.sendAmuletRequest.upgradeTalent(talentType) : null,
-          child: Container(
-            padding: const EdgeInsets.all(4),
-            width: 200,
-            height: 200,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Positioned(
-                  top: 12,
-                  left: 12,
-                  child: MMOTalentIcon(talentType: talentType, size: 32),
-                ),
-                Positioned(
-                  bottom: 0,
-                  child: Column(
-                    children: [
-                      // buildText(talentType.name.replaceAll('_', ' ')),
-                      Row(
-                        children: [
-                          Container(
-                            color: Colors.black26,
-                            child: Stack(
-                              children: [
-                                Container(
-                                  color: Colors.green,
-                                  alignment: Alignment.centerLeft,
-                                  width: barWidth * (currentLevel / maxLevel),
-                                  height: barHeight,
-                                ),
-                                Container(
-                                  alignment: Alignment.center,
-                                  width: barWidth,
-                                  height: barHeight,
-                                  child: buildText('$currentLevel / $maxLevel', color: Colors.white54),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                if (!maxLevelReached)
-                  Positioned(
-                      top: 2,
-                      right: 2,
-                      child: GSContainer(
-                          rounded: true,
-                          color: Colors.black12,
-                          padding: const EdgeInsets.all(4),
-                          child: buildText(cost, color: canAfford ? Colors.green : Colors.red)
-                      )
-                  ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget buildPlayerStatsRow() => GSContainer(
     padding: const EdgeInsets.all(0),
     width: 262,
@@ -718,6 +614,7 @@ class AmuletUI {
           ],
         ),
         buildAmuletElements(),
+        buildElementPoints(),
       ],
     ),
   );
@@ -824,51 +721,6 @@ class AmuletUI {
               ),
             );
 
-  Widget buildDialogPlayerTalents() {
-    return buildWatch(
-        amulet.playerTalentsChangedNotifier,
-            (_) {
-
-          final dialog = GSContainer(
-            width: 500,
-            rounded: true,
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                        margin: EdgeInsets.only(left: 20),
-                        child: buildDialogTitle('TALENTS ${amulet.playerTalentPoints.value}')
-                    ),
-                    buildButtonClose(action: amulet.network.sendAmuletRequest.toggleTalentsDialog),
-                  ],
-                ),
-                GSContainer(
-                    height: amulet.engine.screen.height - 270,
-                    alignment: Alignment.topLeft,
-                    child: GridView.count(
-                        crossAxisCount: 4,
-                        children: AmuletTalentType.values
-                            .map(buildTalent)
-                            .toList(growable: false))),
-              ],
-            ),
-          );
-
-          return buildWatch(amulet.playerTalentDialogOpen,
-                  (playersDialogOpen) => !playersDialogOpen ? nothing : dialog);
-        });
-  }
-
-  Widget buildTalentHoverDialog() => buildWatch(
-      amulet.talentHover,
-          (talentType) => talentType == null
-          ? nothing
-          : GSContainer(
-        child: buildText(talentType.name),
-      ));
-
   Widget buildAmuletElements() => Row(
        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: AmuletElement.values
@@ -894,10 +746,14 @@ class AmuletUI {
   }
 
   Widget buildElementPoints() =>
-      GSContainer(
-          child: buildWatch(amulet.elementPoints, (t) => buildText('points: $t'))
-
-      );
+      buildWatch(amulet.elementPoints, (elementPoints) {
+        if (elementPoints <= 0){
+          return nothing;
+        }
+        return GSContainer(
+          child: buildText('POINTS: $elementPoints', color: Colors.green),
+        );
+      });
 }
 
 Widget alignRight({required Widget child})=> Row(

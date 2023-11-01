@@ -59,7 +59,6 @@ class Amulet extends IsometricGame {
 
   final messages = <String>[];
   final messageIndex = Watch(-1);
-  final talentHover = Watch<AmuletTalentType?>(null);
   final itemHover = Watch<AmuletItem?>(null);
   final activePowerPosition = Position();
   final weapons = List<ItemSlot>.generate(4, (index) => ItemSlot(index: index, slotType: SlotType.Weapons));
@@ -82,16 +81,11 @@ class Amulet extends IsometricGame {
   final playerLevel = Watch(0);
   final playerExperience = Watch(0);
   final playerExperienceRequired = Watch(0);
-  final playerTalentPoints = Watch(0);
-  final playerTalentDialogOpen = Watch(false);
   final playerInventoryOpen = Watch(false);
-  final playerTalents = List.generate(AmuletTalentType.values.length, (index) => 0, growable: false);
-  final playerTalentsChangedNotifier = Watch(0);
 
   Amulet(){
     print('MmoGame()');
     playerInventoryOpen.onChanged(onChangedPlayerInventoryOpen);
-    playerTalentDialogOpen.onChanged(onChangedPlayerTalentsDialogOpen);
     playerInteracting.onChanged(onChangedPlayerInteracting);
     npcTextIndex.onChanged(onChangedNpcTextIndex);
     error.onChanged(onChangedError);
@@ -208,10 +202,6 @@ class Amulet extends IsometricGame {
       selectWeapon(3);
       return;
     }
-    if (key == KeyCode.T){
-      network.sendAmuletRequest.toggleTalentsDialog();
-      return;
-    }
   }
 
   @override
@@ -238,23 +228,6 @@ class Amulet extends IsometricGame {
       clearItemHover();
     }
   }
-
-  void onChangedPlayerTalentsDialogOpen(bool talentsDialogOpen) {
-    audio.click_sound_8();
-    if (!talentsDialogOpen){
-      clearTalentHover();
-    }
-  }
-
-  void clearTalentHover() {
-    talentHover.value = null;
-  }
-
-  int getTalentLevel(AmuletTalentType talent) =>
-      playerTalents[talent.index];
-
-  bool maxLevelReached(AmuletTalentType talent) =>
-      getTalentLevel(talent) >= talent.maxLevel;
 
   void reportItemSlotDragged({
     required ItemSlot src,
@@ -417,4 +390,9 @@ class Amulet extends IsometricGame {
     highlightedAmuletItem.value = null;
   }
 
+  void requestGainLevel() =>
+      network.sendNetworkRequest(
+          NetworkRequest.Amulet,
+          NetworkRequestAmulet.Gain_Level,
+      );
 }

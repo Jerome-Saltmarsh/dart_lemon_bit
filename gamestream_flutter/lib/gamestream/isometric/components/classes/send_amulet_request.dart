@@ -14,12 +14,6 @@ class SendAmuletRequest {
   void selectTalkOption(int index) =>
       sendAmuletRequest(NetworkRequestAmulet.Select_Talk_Option, index);
 
-  void toggleTalentsDialog() =>
-      sendAmuletRequest(NetworkRequestAmulet.Toggle_Skills_Dialog);
-
-  void upgradeTalent(AmuletTalentType talentType) =>
-      sendAmuletRequest(NetworkRequestAmulet.Upgrade_Talent, talentType.index);
-
   void sendAmuletRequest(NetworkRequestAmulet request, [dynamic message]) =>
       network.sendNetworkRequest(
           NetworkRequest.Amulet,

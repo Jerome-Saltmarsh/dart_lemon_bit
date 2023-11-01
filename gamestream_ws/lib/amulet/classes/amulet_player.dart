@@ -12,6 +12,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
 
   static const healthBase = 10;
 
+  var admin = false;
   var previousCameraTarget = false;
   Position? cameraTarget;
 
@@ -34,19 +35,16 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
 
   final weapons = List<AmuletItemSlot>.generate(4, (index) => AmuletItemSlot());
   final treasures = List<AmuletItemSlot>.generate(4, (index) => AmuletItemSlot());
-  final talents = List.generate(AmuletTalentType.values.length, (index) => 0, growable: false);
 
   late List<AmuletItemSlot> items;
 
   var _elementPoints = 0;
   var _inventoryOpen = false;
-  var _skillsDialogOpen = false;
   var _experience = 0;
   var _experienceRequired = 1;
   var _level = 1;
   var _equippedWeaponIndex = -1;
   var _activatedPowerIndex = -1;
-  var _skillPoints = 1;
 
   AmuletPlayer({
     required this.amuletGame,
@@ -75,9 +73,6 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     writePlayerLevel();
     writePlayerExperience();
     writePlayerExperienceRequired();
-    writePlayerTalentPoints();
-    writePlayerTalentDialogOpen();
-    writePlayerTalents();
     writeGender();
     writePlayerComplexion();
   }
@@ -113,10 +108,6 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   int get experienceRequired => _experienceRequired;
 
   int get level => _level;
-
-  int get talentPoints => _skillPoints;
-
-  bool get talentDialogOpen => _skillsDialogOpen;
 
   bool get inventoryOpen => _inventoryOpen;
 
@@ -226,16 +217,6 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   set level(int value){
     _level = value;
     writePlayerLevel();
-  }
-
-  set talentPoints(int value){
-    _skillPoints = value;
-    writePlayerTalentPoints();
-  }
-
-  set talentDialogOpen(bool value){
-    _skillsDialogOpen = value;
-    writePlayerTalentDialogOpen();
   }
 
   set inventoryOpen(bool value){
@@ -1040,26 +1021,10 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     writeByte(level);
   }
 
-  void writePlayerTalentPoints() {
-    writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Player_Talent_Points);
-    writeByte(talentPoints);
-  }
-
-  void writePlayerTalentDialogOpen() {
-    writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Player_Talent_Dialog_Open);
-    writeBool(talentDialogOpen);
-  }
-
   void writePlayerInventoryOpen() {
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Inventory_Open);
     writeBool(inventoryOpen);
-  }
-
-  void toggleSkillsDialog() {
-    talentDialogOpen = !talentDialogOpen;
   }
 
   static AmuletItemSlot getEmptySlot(List<AmuletItemSlot> items) =>
@@ -1080,41 +1045,6 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
         return i;
     }
     return -1;
-  }
-
-  void upgradeTalent(AmuletTalentType talent) {
-
-     final currentLevel = talents[talent.index];
-
-     if (currentLevel >= talent.maxLevel){
-       writeAmuletError("Maximum talent level reached");
-       return;
-     }
-
-     final nextLevel = currentLevel + 1;
-     final cost = nextLevel * talent.levelCostMultiplier;
-
-     if (talentPoints < cost){
-       writeAmuletError('Insufficient talent points');
-       return;
-     }
-
-     writePlayerEvent(PlayerEvent.Talent_Upgraded);
-     talents[talent.index]++;
-     talentPoints -= cost;
-     writePlayerTalents();
-
-     if (talent == AmuletTalentType.Healthy){
-       health = maxHealth;
-     }
-
-     writePlayerHealth();
-  }
-
-  void writePlayerTalents() {
-    writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Player_Talents);
-    talents.forEach(writeByte);
   }
 
   @override
@@ -1896,5 +1826,9 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   void downloadScene() {
     super.downloadScene();
     writeEquippedWeaponIndex();
+  }
+
+  void gainLevel(){
+    level++;
   }
 }

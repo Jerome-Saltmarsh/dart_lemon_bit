@@ -7,6 +7,7 @@ extension AmuletParser on IsometricParser {
   static final _regex = RegExp(r'[.!]');
 
   void readNetworkResponseAmulet(){
+     final amulet = this.amulet;
      switch (readByte()){
        case NetworkResponseAmulet.Player_Interacting:
          amulet.playerInteracting.value = readBool();
@@ -65,22 +66,8 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Level:
          amulet.playerLevel.value = readByte();
          break;
-       case NetworkResponseAmulet.Player_Talent_Points:
-         amulet.playerTalentPoints.value = readByte();
-         amulet.playerTalentsChangedNotifier.value++;
-         break;
-       case NetworkResponseAmulet.Player_Talent_Dialog_Open:
-         amulet.playerTalentDialogOpen.value = readBool();
-         break;
        case NetworkResponseAmulet.Player_Inventory_Open:
          amulet.playerInventoryOpen.value = readBool();
-         break;
-       case NetworkResponseAmulet.Player_Talents:
-         final playerTalents = amulet.playerTalents;
-         for (var i = 0; i < playerTalents.length; i++){
-          playerTalents[i] = readByte();
-         }
-         amulet.playerTalentsChangedNotifier.value++;
          break;
        case NetworkResponseAmulet.Activated_Power_Index:
          amulet.activatedPowerIndex.value = readInt8();
