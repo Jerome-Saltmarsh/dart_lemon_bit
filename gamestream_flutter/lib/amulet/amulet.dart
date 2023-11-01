@@ -405,4 +405,8 @@ class Amulet extends IsometricGame {
   void onPlayerLevelGained() {
     audio.buff_10.play();
   }
+
+  void onPlayerElementUpgraded() {
+    audio.buff_1.play();
+  }
 }

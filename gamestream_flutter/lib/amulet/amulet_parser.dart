@@ -100,6 +100,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Level_Gained:
          amulet.onPlayerLevelGained();
          break;
+       case NetworkResponseAmulet.Element_Upgraded:
+         amulet.onPlayerElementUpgraded();
+         break;
        case NetworkResponseAmulet.Spawn_Confetti:
          final x = readDouble();
          final y = readDouble();

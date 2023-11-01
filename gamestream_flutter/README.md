@@ -10,7 +10,7 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
-* [new]: ui element points available
+
 
 ## TODO
 * [fix]: inventory slots remain green after drag
@@ -20,6 +20,8 @@ ctrl + []               : move caret to code block
 * [new]: gameobject tree stump
 
 ## 01.11.2023
+* [new]: level and element upgrade audio
+* [new]: ui element points available
 * [new]: remove talent type
 * [fix]: incorrect equipped index on change scene
 * [new]: node type short grass

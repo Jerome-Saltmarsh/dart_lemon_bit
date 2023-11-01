@@ -1325,11 +1325,10 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
       case AmuletElement.earth:
         elementEarth++;
         break;
-      // case AmuletElement.electricity:
-      //   elementElectricity++;
-      //   break;
     }
     writeAmuletElements();
+    writeElementUpgraded();
+    spawnConfettiAtPosition(this);
   }
 
   @override
@@ -1865,5 +1864,10 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     writeDouble(x);
     writeDouble(y);
     writeDouble(z);
+  }
+
+  void writeElementUpgraded() {
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Element_Upgraded);
   }
 }
