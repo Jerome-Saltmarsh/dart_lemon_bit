@@ -395,7 +395,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     while (player.experience > player.experienceRequired) {
       player.gainLevel();
-      onPlayerLevelGained(player);
+      player.experience -= player.experienceRequired;
+      player.experienceRequired = getExperienceRequiredForLevel(player.level);
     }
   }
 
@@ -582,7 +583,17 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   void onAmuletItemAcquired(AmuletPlayer amuletPlayer, AmuletItem amuletItem) {}
 
-  void onPlayerLevelGained(AmuletPlayer player) {}
+  void onPlayerLevelGained(AmuletPlayer player) {
+
+    final players = this.players;
+
+    for (final otherPlayer in players){
+      if (!player.onSameTeam(otherPlayer)) {
+        continue;
+      }
+      otherPlayer.spawnConfettiAtPosition(player);
+    }
+  }
 
   void onPlayerInventoryMoved(
       AmuletPlayer player,

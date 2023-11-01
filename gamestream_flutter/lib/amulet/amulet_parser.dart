@@ -97,6 +97,17 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Highlight_Amulet_Item_Clear:
          amulet.clearHighlightAmuletItem();
          break;
+       case NetworkResponseAmulet.Player_Level_Gained:
+         amulet.onPlayerLevelGained();
+         break;
+       case NetworkResponseAmulet.Spawn_Confetti:
+         final x = readDouble();
+         final y = readDouble();
+         final z = readDouble();
+         for (var i = 0; i < 10; i++){
+           particles.spawnParticleConfettiByType(x, y, z, ParticleType.Confetti_White);
+         }
+         break;
      }
   }
 

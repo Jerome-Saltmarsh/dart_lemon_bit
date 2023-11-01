@@ -58,7 +58,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     characterType = CharacterType.Kid;
     hurtable = false;
     hurtStateBusy = false;
-    health = maxHealth;
+    regainFullHealth();
     equippedWeaponIndex = 0;
     active = false;
     equipmentDirty = true;
@@ -633,7 +633,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
 
     if (itemType == ItemType.Consumable){
       if (subType == ConsumableType.Health_Potion){
-        health = maxHealth;
+        regainFullHealth();
         setCharacterStateChanging();
         clearItem(index);
         writePlayerEvent(PlayerEvent.Drink);
@@ -1834,7 +1834,36 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   void gainLevel(){
     level++;
     elementPoints++;
-    experience -= experienceRequired;
-    experienceRequired = amuletGame.getExperienceRequiredForLevel(level);
+    regainFullHealth();
+    writePlayerLevelGained();
+    amuletGame.onPlayerLevelGained(this);
+  }
+
+  void writePlayerLevelGained() {
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Player_Level_Gained);
+  }
+
+  void regainFullHealth() {
+    health = maxHealth;
+  }
+
+  void spawnConfettiAtPosition(Position position) =>
+    spawnConfetti(
+      x: position.x,
+      y: position.y,
+      z: position.z,
+    );
+
+  void spawnConfetti({
+    required double x,
+    required double y,
+    required double z,
+  }) {
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Spawn_Confetti);
+    writeDouble(x);
+    writeDouble(y);
+    writeDouble(z);
   }
 }

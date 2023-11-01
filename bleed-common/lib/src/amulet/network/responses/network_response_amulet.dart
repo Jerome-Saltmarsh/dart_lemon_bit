@@ -19,5 +19,6 @@ class NetworkResponseAmulet {
    static const Play_AudioType = 19;
    static const Highlight_Amulet_Item = 20;
    static const Highlight_Amulet_Item_Clear = 21;
-   static const Highlight_Inventory_Icon = 22;
+   static const Player_Level_Gained = 23;
+   static const Spawn_Confetti = 24;
 }
