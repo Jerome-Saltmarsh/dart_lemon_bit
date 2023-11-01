@@ -44,36 +44,24 @@ class NodeType {
   static const Glass = 87;
   static const Torch_Blue = 88;
   static const Torch_Red = 89;
+  static const Grass_Short = 90;
 
-  // static bool isMaterialWood(int value) => const [
-  //   Torch,
-  //   Tree_Bottom,
-  //   Table,
-  //   Wood,
-  //   Wooden_Plank
+  // static bool isMaterialStone(int value) => const [
+  //       Concrete,
+  //       Boulder,
+  //       Oven,
+  //       Brick,
+  //       Road,
+  //       Road_2,
+  //       Tile,
+  //       Bricks_Red,
+  //       Bricks_Brown,
+  //       Chimney
   // ].contains(value);
 
-  // static bool isMaterialGrass(int value) => const [
-  //   Grass_Long,
-  //   Grass
-  // ].contains(value);
 
-  static bool isMaterialStone(int value) => const [
-        Concrete,
-        Boulder,
-        Oven,
-        Brick,
-        Road,
-        Road_2,
-        Tile,
-        Bricks_Red,
-        Bricks_Brown,
-        Chimney
-  ].contains(value);
-      
-  
-  static bool isMaterialDirt(int value) =>
-      value == Sandbag;
+  // static bool isMaterialDirt(int value) =>
+  //     value == Sandbag;
 
   static bool supportsOrientationSolid(int type) => const [
         Brick,
@@ -106,6 +94,7 @@ class NodeType {
         Rain_Landing,
         Tree_Top,
         Grass_Long,
+        Grass_Short,
         Sunflower,
         Dust,
         Rain_Falling
@@ -319,6 +308,7 @@ class NodeType {
     Tree_Bottom: 'Tree Bottom',
     Tree_Top: 'Tree Top',
     Grass_Long: 'Grass Long',
+    Grass_Short: 'Grass Short',
     Rain_Falling: 'Rain Falling',
     Rain_Landing: 'Rain Landing',
     Fireplace: 'Fireplace',

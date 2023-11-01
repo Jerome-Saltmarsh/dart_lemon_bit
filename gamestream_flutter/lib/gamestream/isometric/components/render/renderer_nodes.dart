@@ -1043,6 +1043,16 @@ class RendererNodes extends RenderGroup {
               : (((row - column) + animation.frame6) % 6), // TODO Optimize
         );
         break;
+      case NodeType.Grass_Short:
+
+        renderStandardNode(
+          dstX: dstX,
+          dstY: dstY,
+          srcX: 848 + variation * 50,
+          srcY: 0,
+          color: color,
+        );
+        break;
       case NodeType.Tile:
         renderNodeTemplateShaded(
           srcX: 588,

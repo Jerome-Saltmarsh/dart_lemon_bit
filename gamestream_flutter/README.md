@@ -10,15 +10,17 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
-* [new]: render character north and east
 
 ## TODO
-* [new]: node type short grass
 * [fix]: inventory slots remain green after drag
 * [fix]: orc strike sprite not rendered
 * [new]: item tabs weapons amulets etc
 * [new]: model hair
 * [new]: gameobject tree stump
+
+## 01.11.2023
+* [new]: node type short grass
+* [new]: render character north and east
 
 ## 31.10.2023
 * [new]: particle type moth

@@ -56,6 +56,7 @@ extension IsometricEditorUI on IsometricEditor {
   static const editorGridTypesColumn2 = [
     NodeType.Grass,
     NodeType.Grass_Long,
+    NodeType.Grass_Short,
     NodeType.Metal,
     NodeType.Sunflower,
     NodeType.Window,
