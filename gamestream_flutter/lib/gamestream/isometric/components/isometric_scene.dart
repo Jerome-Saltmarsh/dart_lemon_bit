@@ -114,6 +114,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     final particles = this.particles;
     particles.children.removeWhere((element) => element is ParticleRoam);
     particles.mystIndexes.clear();
+    particles.indexesWaterDrops.clear();
     final marks = this.marks;
     for (final markValue in marks) {
       final markType = MarkType.getType(markValue);
@@ -133,6 +134,9 @@ class IsometricScene with IsometricComponent implements Updatable {
           break;
         case MarkType.Spawn_Myst:
           particles.mystIndexes.add(markIndex);
+          break;
+        case MarkType.Water_Drops:
+          particles.indexesWaterDrops.add(markIndex);
           break;
         case MarkType.Butterfly:
           particles.spawnFlying(x: x, y: y, z: z)

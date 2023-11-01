@@ -10,14 +10,14 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
-
+* [new]: particle emitter water drops
 
 ## TODO
+* [new]: gameobject tree stump
 * [fix]: inventory slots remain green after drag
 * [fix]: orc strike sprite not rendered
 * [new]: item tabs weapons amulets etc
 * [new]: model hair
-* [new]: gameobject tree stump
 
 ## 01.11.2023
 * [new]: level and element upgrade audio

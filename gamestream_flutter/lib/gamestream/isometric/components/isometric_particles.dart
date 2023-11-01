@@ -188,6 +188,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
   final children = <Particle>[];
 
   final mystIndexes = <int>[];
+  final indexesWaterDrops = <int>[];
 
   var nextMystEmission = 0;
 
@@ -1004,6 +1005,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
     if (!windy && nextMystEmission-- <= 0) {
       nextMystEmission = 30;
       spawnMystAtMystIndexes();
+      spawnWaterDropAtIndexes();
     }
 
     nextParticleFrame--;
@@ -1093,6 +1095,13 @@ class IsometricParticles with IsometricComponent implements Updatable {
      final mystIndexes = this.mystIndexes;
     for (final index in mystIndexes) {
       spawnMystAtIndex(index);
+    }
+  }
+
+  void spawnWaterDropAtIndexes() {
+     final indexes = this.indexesWaterDrops;
+    for (final index in indexes) {
+      spawnWaterDrop(index);
     }
   }
 
@@ -1215,6 +1224,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
   void spawnMystAtIndex(int index) {
     const radius = 100.0;
+    final scene = this.scene;
     spawnParticle(
         type: ParticleType.Myst,
         blownByWind: true,
@@ -1228,6 +1238,24 @@ class IsometricParticles with IsometricComponent implements Updatable {
         frictionAir: 1.00,
         rotationV: giveOrTake(0.005),
     )..nodeCollidable = false;
+  }
+
+  void spawnWaterDrop(int index) {
+    final scene = this.scene;
+    const radius = 5.0;
+    spawnParticle(
+        type: ParticleType.Water_Drop,
+        blownByWind: false,
+        x: scene.getIndexPositionX(index) + giveOrTake(radius),
+        y: scene.getIndexPositionY(index) + giveOrTake(radius),
+        z: scene.getIndexPositionZ(index),
+        angle: 0,
+        speed: 0,
+        weight: 0.2,
+        duration: 1000,
+        frictionAir: 1.00,
+        rotationV: 0,
+    )..nodeCollidable = true;
   }
 
   void spawnTrail(double x, double y, double z, {required int color}) => spawnParticle(
