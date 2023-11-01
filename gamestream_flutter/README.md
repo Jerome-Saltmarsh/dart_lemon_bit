@@ -10,6 +10,7 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
+* [new]: ui element points available
 
 ## TODO
 * [fix]: inventory slots remain green after drag
