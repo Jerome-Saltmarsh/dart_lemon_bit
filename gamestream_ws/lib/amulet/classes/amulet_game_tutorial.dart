@@ -785,15 +785,10 @@ class AmuletGameTutorial extends AmuletGame {
         )
         .wait(seconds: 1)
         .gameEventPosition(GameEventType.Teleport_Start, guide)
-        .deactivate(guide)
         .movePositionToSceneKey(guide, keysGuideSpawn1)
-        .cameraSetTarget(guide)
-        .wait(seconds: 2)
         .gameEventPosition(GameEventType.Teleport_End, guide)
-        .activate(guide)
         .wait(seconds: 2)
-        .controlsEnabled()
-        .cameraClearTarget()
+        .end()
     ;
   }
 
