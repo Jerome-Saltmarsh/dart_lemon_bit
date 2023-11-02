@@ -10,9 +10,7 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
-* [new]: highlight inventory icon 
-* [new]: highlight element container
-* [new]: node type cobwebs
+* [fix]: load image errors
 
 ## TODO
 * [new]: gameobject tree stump
@@ -22,6 +20,8 @@ ctrl + []               : move caret to code block
 * [new]: model hair
 
 ## 02.11.2023
+* [new]: node type cobwebs
+* [new]: highlight inventory icon
 * [new]: hide time in tutorial
 
 ## 01.11.2023

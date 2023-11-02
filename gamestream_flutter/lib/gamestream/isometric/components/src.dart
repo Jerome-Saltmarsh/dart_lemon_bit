@@ -1,6 +1,7 @@
 
 library src;
 
+export 'enums/render_direction.dart';
 export 'isometric_animation.dart';
 export 'isometric_audio.dart';
 export 'isometric_camera.dart';

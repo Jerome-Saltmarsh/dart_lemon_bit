@@ -13,19 +13,10 @@ import 'package:lemon_sprite/lib.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'enums/render_direction.dart';
 import 'types/sprite_group_type.dart';
 
-enum RenderDirection{
-  north,
-  east,
-  south,
-  west
-}
 
-// const renderDirections = [
-//   'south',
-//   'west',
-// ];
 
 class IsometricImages with IsometricComponent {
 
@@ -51,7 +42,6 @@ class IsometricImages with IsometricComponent {
   final _completerImages = Completer();
 
   late final CharacterSpriteGroup spriteGroupKidShadow;
-
   late final CharacterSpriteGroup spriteGroupFallenWest;
   late final CharacterSpriteGroup spriteGroupFallenSouth;
   late final CharacterSpriteGroup spriteGroupFallenShadow;
@@ -587,6 +577,13 @@ class IsometricImages with IsometricComponent {
     final kidCharacterSpriteGroup = kidCharacterSprites.values[type] ?? (throw Exception('images.loadSpriteGroup2($typeName, $subTypeName)'));
     final directory = 'sprites/isometric/kid/${direction.name}/$typeName/$subTypeName';
 
+    if (
+      const[RenderDirection.north, RenderDirection.east].contains(direction) &&
+      !const[SpriteGroupType.Heads].contains(type)
+    ) {
+        return;
+    }
+
     kidCharacterSpriteGroup[subType] = CharacterSpriteGroup(
         idle: skipIdle ? emptySprite : await loadSprite(name: '$directory/idle', mode: AnimationMode.bounce),
         running: skipRunning ? emptySprite : await loadSprite(name: '$directory/running', mode: AnimationMode.loop),
@@ -660,7 +657,7 @@ class IsometricImages with IsometricComponent {
         mode: mode,
       );
     } catch(e) {
-      print(e);
+      // print(e);
       return emptySprite;
     }
   }
