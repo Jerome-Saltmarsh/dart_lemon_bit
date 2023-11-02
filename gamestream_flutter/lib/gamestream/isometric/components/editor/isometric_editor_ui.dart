@@ -1,5 +1,6 @@
 
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
+import 'package:gamestream_flutter/gamestream/ui.dart';
 import 'package:gamestream_flutter/gamestream/ui/builders/build_watch.dart';
 import 'package:gamestream_flutter/gamestream/ui/builders/build_watch_bool.dart';
 import 'package:gamestream_flutter/gamestream/ui/constants/height.dart';
@@ -8,6 +9,7 @@ import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
 import 'package:gamestream_flutter/packages/common.dart';
+import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
@@ -211,8 +213,8 @@ extension IsometricEditorUI on IsometricEditor {
         buildButton(child: 'DOWNLOAD', action: downloadScene),
         buildButton(child: 'NEW', action: newScene),
         buildButton(child: 'LOAD', action: uploadScene),
-        buildButton(child: 'EDIT', action: toggleWindowEnabledScene),
-        buildButton(child: 'MAP SIZE', action: toggleWindowEnabledCanvasSize),
+        buildButton(child: 'EDIT', action: windowEnabledScene.toggle),
+        buildButton(child: 'MAP SIZE', action: windowEnabledCanvasSize.toggle),
         buildButton(child: 'GENERATE', action: windowEnabledGenerate.toggle),
         if (engine.isLocalHost)
           buildButton(child: 'SAVE', action: saveScene),
@@ -221,128 +223,136 @@ extension IsometricEditorUI on IsometricEditor {
 
   Widget buildWindowEditCanvasSize() => Center(
     child: GSContainer(
-      child: Container(
-        padding: const EdgeInsets.all(10),
-        width: 400,
-        height: 520,
-        color: colors.brownLight,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                buildText('CANVAS SIZE'),
-                onPressed(
-                    action: toggleWindowEnabledCanvasSize,
-                    child: buildText('Close'),
-                ),
-              ],
-            ),
-            // watch(GameNodes.totalRows)
-            Expanded(
-              child: Center(
-                child: Stack(
+      width: 500,
+      height: 500 * goldenRatio_0618,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              buildText('CANVAS SIZE'),
+              onPressed(
+                  action: windowEnabledCanvasSize.toggle,
+                  child: buildText('Close'),
+              ),
+            ],
+          ),
+          GSContainer(
+            color: Colors.white12,
+            child: GSRefresh((){
+              return Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    engine.buildAtlasImage(
-                      image: amulet.images.atlas_icons,
-                      srcX: 193,
-                      srcY: 32,
-                      srcWidth: 96,
-                      srcHeight: 96,
-                      scale: 2.0,
-                    ),
-                    buildPositionedIconButton(
-                      top: 0,
-                      left: 0,
-                      action: () => sendClientRequestModifyCanvasSize(NetworkRequestModifyCanvasSize.Add_Row_Start),
-                      iconType: IconType.Plus,
-                      hint: 'Add Row',
-                    ),
-                    buildPositionedIconButton(
-                      top: 0,
-                      left: 40,
-                      action: () => sendClientRequestModifyCanvasSize(NetworkRequestModifyCanvasSize.Remove_Row_Start),
-                      iconType: IconType.Minus,
-                      hint: 'Remove Row',
-                    ),
-                    buildPositionedIconButton(
-                      top: 0,
-                      left: 150,
-                      action: () => sendClientRequestModifyCanvasSize(NetworkRequestModifyCanvasSize.Add_Column_Start),
-                      iconType: IconType.Plus,
-                      hint: 'Add Column',
-                    ),
-                    buildPositionedIconButton(
-                      top: 20,
-                      left: 160,
-                      action: () => sendClientRequestModifyCanvasSize(NetworkRequestModifyCanvasSize.Remove_Column_Start),
-                      iconType: IconType.Minus,
-                      hint: 'Remove Column',
-                    ),
-                    buildPositionedIconButton(
-                      top: 160,
-                      left: 120,
-                      action: () => sendClientRequestModifyCanvasSize(NetworkRequestModifyCanvasSize.Remove_Row_End),
-                      iconType: IconType.Minus,
-                      hint: 'Remove Row',
-                    ),
-                    buildPositionedIconButton(
-                      top: 160,
-                      left: 160,
-                      action: () => sendClientRequestModifyCanvasSize(NetworkRequestModifyCanvasSize.Add_Row_End),
-                      iconType: IconType.Plus,
-                      hint: 'Add Row',
-                    ),
-                    buildPositionedIconButton(
-                      top: 140,
-                      left: 0,
-                      action: () => sendClientRequestModifyCanvasSize(NetworkRequestModifyCanvasSize.Add_Column_End),
-                      iconType: IconType.Plus,
-                      hint: 'Add Column',
-                    ),
-                    buildPositionedIconButton(
-                      top: 140,
-                      left: 40,
-                      action: () => sendClientRequestModifyCanvasSize(NetworkRequestModifyCanvasSize.Remove_Column_End),
-                      iconType: IconType.Minus,
-                      hint: 'Remove Column',
-                    ),
-                    buildPositionedIconButton(
-                      top: 80,
-                      left: 60,
-                      action: () => sendClientRequestModifyCanvasSize(NetworkRequestModifyCanvasSize.Add_Z),
-                      iconType: IconType.Plus,
-                      hint: 'Add Z',
-                    ),
-                    buildPositionedIconButton(
-                      top: 80,
-                      left: 100,
-                      action: () => sendClientRequestModifyCanvasSize(NetworkRequestModifyCanvasSize.Remove_Z),
-                      iconType: IconType.Minus,
-                      hint: 'Remove Z',
-                    ),
+                    buildText('rows: ${scene.totalRows}'),
+                    buildText('columns: ${scene.totalColumns}'),
+                    buildText('z: ${scene.totalZ}'),
                   ],
-                ),
+              );
+            }),
+          ),
+          Expanded(
+            child: Center(
+              child: Stack(
+                children: [
+                  engine.buildAtlasImage(
+                    image: amulet.images.atlas_icons,
+                    srcX: 193,
+                    srcY: 32,
+                    srcWidth: 96,
+                    srcHeight: 96,
+                    scale: 2.0,
+                  ),
+                  buildPositionedIconButton(
+                    top: 0,
+                    left: 0,
+                    action: () => sendClientRequestModifyCanvasSize(NetworkRequestModifyCanvasSize.Add_Row_Start),
+                    iconType: IconType.Plus,
+                    hint: 'Add Row',
+                  ),
+                  buildPositionedIconButton(
+                    top: 0,
+                    left: 40,
+                    action: () => sendClientRequestModifyCanvasSize(NetworkRequestModifyCanvasSize.Remove_Row_Start),
+                    iconType: IconType.Minus,
+                    hint: 'Remove Row',
+                  ),
+                  buildPositionedIconButton(
+                    top: 0,
+                    left: 150,
+                    action: () => sendClientRequestModifyCanvasSize(NetworkRequestModifyCanvasSize.Add_Column_Start),
+                    iconType: IconType.Plus,
+                    hint: 'Add Column',
+                  ),
+                  buildPositionedIconButton(
+                    top: 20,
+                    left: 160,
+                    action: () => sendClientRequestModifyCanvasSize(NetworkRequestModifyCanvasSize.Remove_Column_Start),
+                    iconType: IconType.Minus,
+                    hint: 'Remove Column',
+                  ),
+                  buildPositionedIconButton(
+                    top: 160,
+                    left: 120,
+                    action: () => sendClientRequestModifyCanvasSize(NetworkRequestModifyCanvasSize.Remove_Row_End),
+                    iconType: IconType.Minus,
+                    hint: 'Remove Row',
+                  ),
+                  buildPositionedIconButton(
+                    top: 160,
+                    left: 160,
+                    action: () => sendClientRequestModifyCanvasSize(NetworkRequestModifyCanvasSize.Add_Row_End),
+                    iconType: IconType.Plus,
+                    hint: 'Add Row',
+                  ),
+                  buildPositionedIconButton(
+                    top: 140,
+                    left: 0,
+                    action: () => sendClientRequestModifyCanvasSize(NetworkRequestModifyCanvasSize.Add_Column_End),
+                    iconType: IconType.Plus,
+                    hint: 'Add Column',
+                  ),
+                  buildPositionedIconButton(
+                    top: 140,
+                    left: 40,
+                    action: () => sendClientRequestModifyCanvasSize(NetworkRequestModifyCanvasSize.Remove_Column_End),
+                    iconType: IconType.Minus,
+                    hint: 'Remove Column',
+                  ),
+                  buildPositionedIconButton(
+                    top: 80,
+                    left: 60,
+                    action: () => sendClientRequestModifyCanvasSize(NetworkRequestModifyCanvasSize.Add_Z),
+                    iconType: IconType.Plus,
+                    hint: 'Add Z',
+                  ),
+                  buildPositionedIconButton(
+                    top: 80,
+                    left: 100,
+                    action: () => sendClientRequestModifyCanvasSize(NetworkRequestModifyCanvasSize.Remove_Z),
+                    iconType: IconType.Minus,
+                    hint: 'Remove Z',
+                  ),
+                ],
               ),
             ),
-            // Container(
-            //   height: 450,
-            //   child: SingleChildScrollView(
-            //     child: Column(
-            //       crossAxisAlignment: CrossAxisAlignment.start,
-            //       children: RequestModifyCanvasSize.values
-            //         .map((e) => container(
-            //                         child: e.name,
-            //                         action: () => GameNetwork.sendClientRequestModifyCanvasSize(e)
-            //                     )
-            //         )
-            //     .toList(),
-            //     ),
-            //   ),
-            // ),
-          ],
-        ),
+          ),
+          // Container(
+          //   height: 450,
+          //   child: SingleChildScrollView(
+          //     child: Column(
+          //       crossAxisAlignment: CrossAxisAlignment.start,
+          //       children: RequestModifyCanvasSize.values
+          //         .map((e) => container(
+          //                         child: e.name,
+          //                         action: () => GameNetwork.sendClientRequestModifyCanvasSize(e)
+          //                     )
+          //         )
+          //     .toList(),
+          //     ),
+          //   ),
+          // ),
+        ],
       ),
     ),
   );
@@ -415,7 +425,7 @@ extension IsometricEditorUI on IsometricEditor {
               children: [
                 buildText('Edit Scene'),
                 onPressed(
-                  action: toggleWindowEnabledScene,
+                  action: windowEnabledScene.toggle,
                   child: buildText('Close')),
               ],
             ),

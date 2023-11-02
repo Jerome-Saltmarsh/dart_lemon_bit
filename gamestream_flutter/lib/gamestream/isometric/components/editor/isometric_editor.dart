@@ -12,8 +12,8 @@ import 'editor_tab.dart';
 
 class IsometricEditor with IsometricComponent {
 
-  final windowEnabledScene = Watch(false);
-  final windowEnabledCanvasSize = Watch(false);
+  final windowEnabledScene = WatchBool(false);
+  final windowEnabledCanvasSize = WatchBool(false);
   final windowEnabledGenerate = WatchBool(false);
 
   final generateRows = WatchInt(50, min: 5, max: 200);
@@ -651,14 +651,6 @@ class IsometricEditor with IsometricComponent {
       return;
     }
     loadScene(sceneBytes);
-  }
-
-  void toggleWindowEnabledScene() {
-    windowEnabledScene.value = !windowEnabledScene.value;
-  }
-
-  void toggleWindowEnabledCanvasSize() {
-    windowEnabledCanvasSize.value = !windowEnabledCanvasSize.value;
   }
 
   void exportSceneToJson() {

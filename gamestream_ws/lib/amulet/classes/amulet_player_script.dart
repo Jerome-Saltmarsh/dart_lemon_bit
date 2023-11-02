@@ -17,6 +17,10 @@ class AmuletPlayerScript {
 
   bool get finished => index >= actions.length;
 
+  Amulet get amulet => player.amulet;
+
+  AmuletGame get amuletGame => player.amuletGame;
+
   void update(){
     final action = actions[index];
     if (action.call() != false){
@@ -174,6 +178,13 @@ class AmuletPlayerScript {
         log('deactivate($collider)');
         getAmuletGame().deactivate(collider);
       });
+
+  AmuletPlayerScript changeGame(AmuletGame game, {String? sceneKey}) =>
+      add(() => amulet.playerChangeGame(
+          player: player,
+          target: game,
+          sceneKey: sceneKey,
+      ));
 
   AmuletPlayerScript flag(String flagName) =>
       add(() {

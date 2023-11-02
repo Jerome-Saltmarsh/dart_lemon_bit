@@ -10,9 +10,10 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
-* [fix]: load image errors
+* [new]: world map
 
 ## TODO
+* [fix]: kid casting shadow
 * [new]: gameobject tree stump
 * [fix]: inventory slots remain green after drag
 * [fix]: orc strike sprite not rendered
@@ -20,6 +21,7 @@ ctrl + []               : move caret to code block
 * [new]: model hair
 
 ## 02.11.2023
+* [fix]: load image errors
 * [new]: node type cobwebs
 * [new]: highlight inventory icon
 * [new]: hide time in tutorial

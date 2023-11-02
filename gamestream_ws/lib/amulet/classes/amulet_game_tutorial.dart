@@ -121,6 +121,9 @@ class AmuletGameTutorial extends AmuletGame {
       case TutorialObjective.Draw_Bow:
         onObjectiveSetDrawBow(player);
         break;
+      case TutorialObjective.Leave:
+        onObjectiveSetLeave(player);
+        break;
       default:
         break;
     }
@@ -445,6 +448,9 @@ class AmuletGameTutorial extends AmuletGame {
             .faceEachOther(player, guide)
             .talk(guide, 'draw the bow by pressing the bow icon at the bottom of the screen.')
             .end();
+        break;
+      case TutorialObjective.Leave:
+        onObjectiveSetLeave(player);
         break;
       default:
         break;
@@ -873,21 +879,49 @@ class AmuletGameTutorial extends AmuletGame {
   void onObjectiveSetLeave(AmuletPlayer player) =>
       runScript(player)
           .controlsDisabled()
-          .movePositionToSceneKey(guide, keysSpawnBow)
-          .puzzleSolved()
-          .wait(seconds: 1)
-          .faceEachOther(guide, player)
           .activate(guide)
+          .movePositionToSceneKey(guide, keysSpawnBow)
           .cameraSetTarget(guide)
-          .wait(seconds: 1)
-          .talk(guide, 'one has done well. the world outside awaits.')
-          .wait(seconds: 1)
-          .cameraSetTargetSceneKey(keysExit)
-          .wait(seconds: 1)
-          .playAudioType(AudioType.unlock_2)
-          .setNodeEmptyAtSceneKey(keysExit)
-          .wait(seconds: 1)
-          .deactivate(guide)
+          .faceEachOther(player, guide)
+          .talk(guide,
+            'one has learnt all another can teach.'
+            'is one ready to begin?',
+            options: [
+              TalkOption('Yes', (player) {
+                runScript(player)
+                    .talk(guide, 'very well.')
+                    .cameraClearTarget()
+                    .wait(seconds: 1)
+                    .deactivate(player)
+                    .add(() => player.spawnConfettiAtPosition(player))
+                    .wait(seconds: 2)
+                    .wait(seconds: 1)
+                    .add(() => player.spawnConfettiAtPosition(player))
+                    .activate(player)
+                    .end()
+                    .changeGame(amulet.amuletGameTown, sceneKey: 'player_spawn')
+                ;
+              }),
+              TalkOption('No', (player) => player.endInteraction),
+          ])
           .end();
+      // runScript(player)
+      //     .controlsDisabled()
+      //     .movePositionToSceneKey(guide, keysSpawnBow)
+      //     .puzzleSolved()
+      //     .wait(seconds: 1)
+      //     .faceEachOther(guide, player)
+      //     .activate(guide)
+      //     .cameraSetTarget(guide)
+      //     .wait(seconds: 1)
+      //     .talk(guide, 'one has done well. the world outside awaits.')
+      //     .wait(seconds: 1)
+      //     .cameraSetTargetSceneKey(keysExit)
+      //     .wait(seconds: 1)
+      //     .playAudioType(AudioType.unlock_2)
+      //     .setNodeEmptyAtSceneKey(keysExit)
+      //     .wait(seconds: 1)
+      //     .deactivate(guide)
+      //     .end();
 }
 

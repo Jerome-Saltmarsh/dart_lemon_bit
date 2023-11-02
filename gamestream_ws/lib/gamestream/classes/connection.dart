@@ -649,9 +649,10 @@ class Connection extends ByteReader {
   }
 
   Future joinGameEditorScene(Scene scene) async {
-    final game = IsometricEditor(scene: scene);
-    nerve.amulet.addGame(game);
-    joinGame(game);
+    // final game = IsometricEditor(scene: scene);
+    // nerve.amulet.addGame(game);
+    // joinGame(game);
+    throw Exception('no longer supported');
   }
 
   void joinGame(Game game){

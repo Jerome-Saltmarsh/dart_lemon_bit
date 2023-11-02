@@ -28,7 +28,7 @@ class Amulet {
   var frame = 0;
   final amuletTime = IsometricTime();
   final amuletEnvironment = IsometricEnvironment();
-  final games = <Game>[];
+  final games = <AmuletGame>[];
   final scenes = Scenes();
   var _updateTimerInitialized = false;
 
@@ -42,12 +42,17 @@ class Amulet {
   late final AmuletGame amuletRoad01;
   late final AmuletGame amuletRoad02;
 
+  final rows = 3;
+  final columns = 3;
+  final worldMap = <AmuletGame>[];
+
   AmuletGame getAmuletSceneGame(AmuletScene scene) {
     if (scene == AmuletScene.Tutorial){
      return buildAmuletGameTutorial();
     }
+    final games = this.games;
     for (final game in games){
-      if (game is AmuletGame && game.amuletScene == scene){
+      if (game.amuletScene == scene){
          return game;
       }
     }
@@ -114,10 +119,16 @@ class Amulet {
     games.add(amuletRoad01);
     games.add(amuletRoad02);
 
-    connectNorthSouth(amuletGameTown, amuletRoad01);
-    connectNorthSouth(amuletRoad01, amuletRoad02);
+    worldMap.add(amuletGameTown);
+    worldMap.add(amuletGameTown);
+    worldMap.add(amuletGameTown);
+    worldMap.add(amuletGameTown);
+    worldMap.add(amuletGameTown);
+    worldMap.add(amuletGameTown);
+    worldMap.add(amuletGameTown);
+    worldMap.add(amuletGameTown);
+    worldMap.add(amuletGameTown);
   }
-
 
   void _initializeUpdateTimer() {
     if (_updateTimerInitialized) {
@@ -139,12 +150,45 @@ class Amulet {
 
   void _fixedUpdate(Timer timer) {
     frame++;
-
-    // if (frame % 100 == 0) {
-    //   removeEmptyGames();
-    // }
+    updateWorldMap();
     updateGames();
     nerve.server.sendResponseToClients();
+  }
+
+  void updateWorldMap() {
+    const padding = 50.0;
+    const paddingPlus = padding + 25;
+    final worldMap = this.worldMap;
+    final worldMapLength = worldMap.length;
+    for (var i = 0; i < worldMapLength; i++) {
+      final game = worldMap[i];
+      final scene = game.scene;
+      final rowsAbove = i % rows > 0;
+      final rowsBelow = i % rows < rows - 1;
+      final xMax = scene.rowLength - padding;
+
+      if (rowsAbove || rowsAbove) {
+        final players = game.players;
+        for (var j = 0; j < players.length; j++) {
+          final player = players[j];
+          final playerX = player.x;
+          if (rowsAbove && playerX < padding) {
+            final targetGameIndex = i - 1;
+            final targetGame = worldMap[targetGameIndex];
+            playerChangeGame(player: player, target: targetGame);
+            player.x = targetGame.scene.rowLength - paddingPlus;
+            continue;
+          }
+          if (rowsBelow && playerX > xMax) {
+            final targetGameIndex = i + 1;
+            final targetGame = worldMap[targetGameIndex];
+            playerChangeGame(player: player, target: targetGame);
+            player.x = paddingPlus;
+            continue;
+          }
+        }
+      }
+    }
   }
 
   void updateGames() {
@@ -157,10 +201,10 @@ class Amulet {
     }
   }
 
-  void connectNorthSouth(AmuletGame a, AmuletGame b){
-    a.gameNorth = b;
-    b.gameSouth = a;
-  }
+  // void connectNorthSouth(AmuletGame a, AmuletGame b){
+  //   a.gameNorth = b;
+  //   b.gameSouth = a;
+  // }
 
   AmuletGameTutorial buildAmuletGameTutorial(){
     final game = AmuletGameTutorial(
@@ -191,7 +235,7 @@ class Amulet {
     return player;
   }
 
-  Game addGame(Game game) {
+  AmuletGame addGame(AmuletGame game) {
     if (!games.contains(game)){
       games.add(game);
     }
@@ -211,16 +255,10 @@ class Amulet {
   }){
     final currentGame = player.amuletGame;
     if (currentGame == target){
-      throw Exception();
+      return;
     }
     currentGame.remove(player);
-    player.endInteraction();
-    player.clearPath();
-    player.clearTarget();
-    player.clearCache();
-    player.setDestinationToCurrentPosition();
-    player.game = target;
-    player.amuletGame = target;
+    player.setGame(target);
     target.add(player);
 
     if (sceneKey != null){
