@@ -623,19 +623,23 @@ class AmuletUI {
     const scale = 1.8;
     final iconOpen = IsometricIcon(iconType: IconType.Inventory_Open, scale: scale,);
     final iconClosed = IsometricIcon(iconType: IconType.Inventory_Closed, scale: scale,);
+    final watchInventoryOpen = buildWatch(amulet.playerInventoryOpen, (inventoryOpen) =>
+      inventoryOpen ? iconOpen : iconClosed);
+
+    final flashingTrue = ColorChangingContainer(size: itemImageSize, child: watchInventoryOpen);
+    final flashingFalse = GSContainer(
+        width: itemImageSize,
+        height: itemImageSize,
+        child: watchInventoryOpen,
+    );
+
     return onPressed(
         action: amulet.network.sendAmuletRequest.toggleInventoryOpen,
         child: Stack(
           alignment: Alignment.center,
           children: [
-            Positioned(
-              child: GSContainer(
-                width: itemImageSize,
-                height: itemImageSize,
-                child: buildWatch(amulet.playerInventoryOpen, (inventoryOpen) =>
-                    inventoryOpen ? iconOpen : iconClosed)
-              ),
-            ),
+            buildWatch(amulet.options.highlightIconInventory, (highlightIconInventory) =>
+              highlightIconInventory ? flashingTrue : flashingFalse),
             Positioned(
               top: 8,
               left: 8,

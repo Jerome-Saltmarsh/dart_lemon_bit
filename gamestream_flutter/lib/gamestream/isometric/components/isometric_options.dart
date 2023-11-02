@@ -40,6 +40,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
   var messageStatusDuration = 0;
   var renderResponse = true;
 
+  final highlightIconInventory = WatchBool(false);
   final timeVisible = WatchBool(true);
   final windowOpenMenu = WatchBool(false);
   final operationStatus = Watch(OperationStatus.None);

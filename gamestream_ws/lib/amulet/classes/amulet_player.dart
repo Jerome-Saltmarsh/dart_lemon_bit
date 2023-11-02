@@ -1820,7 +1820,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     writeByte(amuletItem.index);
   }
 
-  writeClearHighlightedAmuletItem(){
+  void writeClearHighlightedAmuletItem(){
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Highlight_Amulet_Item_Clear);
   }
@@ -1830,6 +1830,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     super.downloadScene();
     writeEquippedWeaponIndex();
     writeOptionsSetTimeVisible(game is! AmuletGameTutorial);
+    writeOptionsSetHighlightIconInventory(false);
   }
 
   void gainLevel(){
@@ -1876,6 +1877,12 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   void writeOptionsSetTimeVisible(bool value){
     writeByte(NetworkResponse.Options);
     writeByte(NetworkResponseOptions.setTimeVisible);
+    writeBool(value);
+  }
+
+  void writeOptionsSetHighlightIconInventory(bool value){
+    writeByte(NetworkResponse.Options);
+    writeByte(NetworkResponseOptions.setHighlightIconInventory);
     writeBool(value);
   }
 }

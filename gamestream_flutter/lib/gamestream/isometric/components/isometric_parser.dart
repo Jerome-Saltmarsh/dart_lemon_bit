@@ -749,6 +749,9 @@ class IsometricParser with ByteReader, IsometricComponent {
       case NetworkResponseOptions.setTimeVisible:
         options.timeVisible.value = readBool();
         break;
+      case NetworkResponseOptions.setHighlightIconInventory:
+        options.highlightIconInventory.value = readBool();
+        break;
       default:
         throw Exception('invalid readNetworkResponseOptions()');
     }

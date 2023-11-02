@@ -79,6 +79,8 @@ class AmuletGameTutorial extends AmuletGame {
 
   void refreshPlayerGameState(AmuletPlayer player) {
     player.writeClearHighlightedAmuletItem();
+    player.writeOptionsSetHighlightIconInventory(false);
+
     removeFiends();
     gameObjects.removeWhere((element) =>
       !element.persistable &&
@@ -314,6 +316,7 @@ class AmuletGameTutorial extends AmuletGame {
   ){
     player.data['tutorial_objective'] = tutorialObjective.name;
     player.writeClearHighlightedAmuletItem();
+    player.writeOptionsSetHighlightIconInventory(false);
 
     switch (tutorialObjective) {
       case TutorialObjective.Acquire_Sword:
@@ -665,6 +668,7 @@ class AmuletGameTutorial extends AmuletGame {
         .activate(guide)
         .wait(seconds: 1)
         .faceEachOther(player, guide)
+        .add(() => player.writeOptionsSetHighlightIconInventory(true))
         .talk(guide,
           'one hath acquired a new weapon.'
           'one must now learn of the inventory.'

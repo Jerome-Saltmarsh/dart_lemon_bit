@@ -22,4 +22,5 @@ class NetworkResponseAmulet {
    static const Player_Level_Gained = 23;
    static const Spawn_Confetti = 24;
    static const Element_Upgraded = 25;
+   static const Highlight_Icon_Inventory = 26;
 }
