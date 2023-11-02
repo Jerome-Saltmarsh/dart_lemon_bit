@@ -103,6 +103,9 @@ class IsometricParser with ByteReader, IsometricComponent {
       case NetworkResponse.Server_Error:
         readNetworkServerError();
         break;
+      case NetworkResponse.Options:
+        readNetworkResponseOptions();
+        break;
       default:
         readNetworkResponseDefault();
         return;
@@ -179,9 +182,9 @@ class IsometricParser with ByteReader, IsometricComponent {
         readPlayerAimTarget();
         break;
 
-      case NetworkResponseIsometric.Player_Accuracy:
-        player.accuracy.value = readPercentage();
-        break;
+      // case NetworkResponseIsometric.Player_Accuracy:
+      //   player.accuracy.value = readPercentage();
+      //   break;
 
       case NetworkResponseIsometric.Player_Weapon_Duration_Percentage:
         player.weaponCooldown.value = readPercentage();
@@ -739,5 +742,15 @@ class IsometricParser with ByteReader, IsometricComponent {
   void readZoom() {
     final value = readDouble();
     engine.targetZoom = value / 10.0;
+  }
+
+  void readNetworkResponseOptions() {
+    switch (readByte()){
+      case NetworkResponseOptions.setTimeVisible:
+        options.timeVisible.value = readBool();
+        break;
+      default:
+        throw Exception('invalid readNetworkResponseOptions()');
+    }
   }
 }

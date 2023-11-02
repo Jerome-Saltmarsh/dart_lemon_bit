@@ -311,7 +311,7 @@ class IsometricUI with IsometricComponent {
               Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    controlTime,
+                    buildWatchBool(options.timeVisible, () => controlTime),
                     width32,
                     menuVisible ? buildIconCogTurned() : buildIconCog(),
                     width16,

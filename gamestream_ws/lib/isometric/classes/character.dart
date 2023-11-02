@@ -15,7 +15,6 @@ class Character extends Collider {
   static const maxAnimationDeathFrames = maxAnimationFrames - 2;
 
   /// between 0 and 1. 0 means very accurate and 1 is very inaccurate
-  var _weaponAccuracy = 0.0;
   var _angle = 0.0;
   var _health = 1;
   var _maxHealth = 1;
@@ -181,8 +180,6 @@ class Character extends Collider {
 
   bool get aliveAndActive => alive && active;
 
-  double get weaponAccuracy => _weaponAccuracy;
-
   bool get characterTypeTemplate =>
       characterType == CharacterType.Kid;
 
@@ -231,10 +228,6 @@ class Character extends Collider {
   int get health => _health;
 
   int get maxHealth => _maxHealth;
-
-  set weaponAccuracy(double value) {
-    _weaponAccuracy = clamp01(value);
-  }
 
   set maxHealth(int value){
     if (value <= 0) return;
@@ -342,20 +335,13 @@ class Character extends Collider {
       angleBetween(this.x, this.y, x, y);
 
   void update() {
-    const change = 0.01;
-
-    if (weaponAccuracy.abs() > change){
-      if (weaponAccuracy > 0) {
-        weaponAccuracy -= change;
-      } else {
-        weaponAccuracy += change;
-      }
-    }
-
-    if (runToDestinationEnabled && !arrivedAtDestination && withinRadiusXYZ(runX, runY, runZ, 8)){
+    if (
+      runToDestinationEnabled &&
+      !arrivedAtDestination &&
+      withinRadiusXYZ(runX, runY, runZ, 8)
+    ){
        setDestinationToCurrentPosition();
     }
-
   }
 
   void runStraightToTarget(){

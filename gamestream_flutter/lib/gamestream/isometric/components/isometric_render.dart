@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/functions/get_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
-import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
@@ -484,33 +483,33 @@ class IsometricRender with IsometricComponent {
         scale: 0.4,
       );
 
-  void renderCursor(Canvas canvas) {
-
-    if (!options.renderCursorEnable)
-      return;
-
-    if (amulet.dragging.value != null)
-      return;
-
-    final cooldown = player.weaponCooldown.value;
-    final accuracy = player.accuracy.value;
-    final distance = ((1.0 - cooldown) + (1.0 - accuracy)) * 10.0 + 5;
-
-    switch (options.cursorType) {
-      case IsometricCursorType.CrossHair_White:
-        canvasRenderCursorCrossHair(canvas, distance);
-        break;
-      case IsometricCursorType.Hand:
-        canvasRenderCursorHand(canvas);
-        return;
-      case IsometricCursorType.Talk:
-        canvasRenderCursorTalk(canvas);
-        return;
-      case IsometricCursorType.CrossHair_Red:
-        canvasRenderCursorCrossHairRed(canvas, distance);
-        break;
-    }
-  }
+  // void renderCursor(Canvas canvas) {
+  //
+  //   if (!options.renderCursorEnable)
+  //     return;
+  //
+  //   if (amulet.dragging.value != null)
+  //     return;
+  //
+  //   final cooldown = player.weaponCooldown.value;
+  //   final accuracy = player.accuracy.value;
+  //   final distance = ((1.0 - cooldown) + (1.0 - accuracy)) * 10.0 + 5;
+  //
+  //   switch (options.cursorType) {
+  //     case IsometricCursorType.CrossHair_White:
+  //       canvasRenderCursorCrossHair(canvas, distance);
+  //       break;
+  //     case IsometricCursorType.Hand:
+  //       canvasRenderCursorHand(canvas);
+  //       return;
+  //     case IsometricCursorType.Talk:
+  //       canvasRenderCursorTalk(canvas);
+  //       return;
+  //     case IsometricCursorType.CrossHair_Red:
+  //       canvasRenderCursorCrossHairRed(canvas, distance);
+  //       break;
+  //   }
+  // }
 
   void canvasRenderCursorCrossHair(Canvas canvas, double range){
     const srcX = 0;

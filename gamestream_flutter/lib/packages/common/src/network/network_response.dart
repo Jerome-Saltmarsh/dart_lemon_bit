@@ -17,4 +17,5 @@ class NetworkResponse {
   static const Editor = 39;
   static const Amulet_Player = 40;
   static const Server_Error = 41;
+  static const Options = 42;
 }

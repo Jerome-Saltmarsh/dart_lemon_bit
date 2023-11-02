@@ -1,5 +1,6 @@
 
 import 'package:gamestream_ws/amulet/classes/amulet_character.dart';
+import 'package:gamestream_ws/amulet/classes/amulet_game_tutorial.dart';
 import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages.dart';
 
@@ -1828,6 +1829,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   void downloadScene() {
     super.downloadScene();
     writeEquippedWeaponIndex();
+    writeOptionsSetTimeVisible(game is! AmuletGameTutorial);
   }
 
   void gainLevel(){
@@ -1869,5 +1871,11 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   void writeElementUpgraded() {
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Element_Upgraded);
+  }
+
+  void writeOptionsSetTimeVisible(bool value){
+    writeByte(NetworkResponse.Options);
+    writeByte(NetworkResponseOptions.setTimeVisible);
+    writeBool(value);
   }
 }

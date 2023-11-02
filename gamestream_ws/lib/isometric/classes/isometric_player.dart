@@ -42,7 +42,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
   var _previousCharacterState = -1;
   var weaponDurationPercentagePrevious = 0.0;
-  var accuracyPrevious = 0.0;
   var totalProjectiles = 0;
   var inputMode = InputMode.Keyboard;
   var screenLeft = 0.0;
@@ -294,15 +293,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   void deactivate() {
     super.deactivate();
     writePlayerActive();
-  }
-
-  void writeAccuracy(){
-    if (weaponAccuracy == accuracyPrevious) return;
-
-    accuracyPrevious = weaponAccuracy;
-    writeByte(NetworkResponse.Isometric);
-    writeByte(NetworkResponseIsometric.Player_Accuracy);
-    writePercentage(weaponAccuracy);
   }
 
   void writePlayerPosition(){

@@ -10,6 +10,9 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
+* [new]: highlight inventory icon 
+* [new]: highlight element container
+* [new]: node type cobwebs
 
 ## TODO
 * [new]: gameobject tree stump
@@ -17,6 +20,9 @@ ctrl + []               : move caret to code block
 * [fix]: orc strike sprite not rendered
 * [new]: item tabs weapons amulets etc
 * [new]: model hair
+
+## 02.11.2023
+* [new]: hide time in tutorial
 
 ## 01.11.2023
 * [new]: particle emitter water drops
