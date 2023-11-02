@@ -163,27 +163,58 @@ class Amulet {
     for (var i = 0; i < worldMapLength; i++) {
       final game = worldMap[i];
       final scene = game.scene;
-      final rowsAbove = i % rows > 0;
-      final rowsBelow = i % rows < rows - 1;
+      final players = game.players;
+      final row = i % rows;
+      final column = i % columns;
+      final rowsAbove = row > 0;
+      final rowsBelow = row < rows - 1;
+      final columnsAbove = column > 0;
+      final columnsBelow = column < columns - 1;
       final xMax = scene.rowLength - padding;
+      final yMax = scene.columnLength - padding;
+      var playerLength = players.length;
 
-      if (rowsAbove || rowsAbove) {
-        final players = game.players;
-        for (var j = 0; j < players.length; j++) {
+      if (columnsBelow || rowsAbove) {
+        for (var j = 0; j < playerLength; j++) {
           final player = players[j];
           final playerX = player.x;
           if (rowsAbove && playerX < padding) {
             final targetGameIndex = i - 1;
             final targetGame = worldMap[targetGameIndex];
             playerChangeGame(player: player, target: targetGame);
-            player.x = targetGame.scene.rowLength - paddingPlus;
+            playerLength--;
+            player.x = xMax - padding;
             continue;
           }
           if (rowsBelow && playerX > xMax) {
             final targetGameIndex = i + 1;
             final targetGame = worldMap[targetGameIndex];
             playerChangeGame(player: player, target: targetGame);
+            playerLength--;
             player.x = paddingPlus;
+            continue;
+          }
+        }
+      }
+
+      if (columnsBelow || columnsAbove) {
+        for (var j = 0; j < playerLength; j++) {
+          final player = players[j];
+          final playerY = player.y;
+          if (columnsAbove && playerY < padding) {
+            final targetGameIndex = i - columns;
+            final targetGame = worldMap[targetGameIndex];
+            playerChangeGame(player: player, target: targetGame);
+            playerLength--;
+            player.y = yMax - padding;
+            continue;
+          }
+          if (columnsBelow && playerY > yMax) {
+            final targetGameIndex = i + 1;
+            final targetGame = worldMap[targetGameIndex];
+            playerChangeGame(player: player, target: targetGame);
+            playerLength--;
+            player.y = paddingPlus;
             continue;
           }
         }
