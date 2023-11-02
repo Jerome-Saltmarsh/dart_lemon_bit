@@ -841,8 +841,8 @@ class AmuletUI {
           final nodeType = worldFlatMap[nodeIndex];
           final nodeRow = nodeIndex ~/ size;
           final nodeColum = nodeIndex % size;
-          final x = row + nodeRow;
-          final y = column + nodeColum;
+          final x = (row * size) + nodeRow;
+          final y = (column * size) + nodeColum;
           final f = i * 4;
 
           clrs[i] = mapNodeTypeToColor(nodeType).value;
