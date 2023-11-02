@@ -1898,4 +1898,10 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     this.game = game;
     this.amuletGame = game;
   }
+
+  void writeWorldMapBytes(){
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.World_Map_Bytes);
+    writeBytes(amulet.worldMapBytes);
+  }
 }

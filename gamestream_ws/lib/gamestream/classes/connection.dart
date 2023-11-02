@@ -25,7 +25,7 @@ class Connection extends ByteReader {
   late WebSocketSink sink;
   late StreamSubscription subscription;
 
-  Player? _player;
+  late AmuletPlayer player;
   Function? onDone;
 
   int? arg0;
@@ -34,8 +34,6 @@ class Connection extends ByteReader {
   int? arg3;
   int? arg4;
 
-  Player? get player => _player;
-
   Connection({
     required this.webSocket,
     required this.nerve,
@@ -43,12 +41,20 @@ class Connection extends ByteReader {
     sink = webSocket.sink;
     sink.done.then(onDisconnect);
     subscription = webSocket.stream.listen(onData, onError: onStreamError);
+    player = AmuletPlayer(
+        amuletGame: nerve.amulet.amuletGameTown,
+        itemLength: 6,
+        x: 0,
+        y: 0,
+        z: 0,
+    );
+
+    player.writeWorldMapBytes();
   }
 
   void onDisconnect(dynamic value) {
     onDone?.call();
     subscription.cancel();
-    _player = null;
   }
 
   void onStreamError(Object error, StackTrace stackTrace){
@@ -58,8 +64,6 @@ class Connection extends ByteReader {
   }
 
   void sendBufferToClient(){
-    final player = _player;
-    if (player == null) return;
     sink.add(player.compile());
   }
 
@@ -86,8 +90,8 @@ class Connection extends ByteReader {
     if (args is String) {
       try {
         return onDataStringArray(args.split(" "));
-      } catch(error){
-        player?.reportException(error);
+      } catch (error){
+        player.reportException(error);
       }
       return;
     }
@@ -119,24 +123,11 @@ class Connection extends ByteReader {
     if (clientRequest == NetworkRequest.Join)
       return handleClientRequestJoin(arguments);
 
-    final player = _player;
-
-    if (player == null)
-      return errorPlayerNotFound();
-
     final game = player.game;
 
     switch (clientRequest) {
 
       case NetworkRequest.Editor_Request:
-
-        if (player is! IsometricPlayer){
-          return;
-        }
-
-        if (game is! IsometricGame)
-          return errorInvalidPlayerType();
-
         final isometricEditorRequestIndex = parseArg1(arguments);
 
         if (isometricEditorRequestIndex == null) return;
@@ -331,9 +322,6 @@ class Connection extends ByteReader {
         break;
 
       case NetworkRequest.Inventory_Request:
-        if (player is! AmuletPlayer)
-          return;
-
         handleInventoryRequest(player, arguments.map(int.parse).toList(growable: false));
         break;
 
@@ -410,8 +398,6 @@ class Connection extends ByteReader {
   // }
 
   void handleIsometricEditorRequestGameObject(List<String> arguments) {
-    final player = _player;
-    if (player == null) return;
     if (!isLocalMachine && player.game is! IsometricEditor) return;
 
     final gameObjectRequestIndex = parseArg2(arguments);
@@ -423,7 +409,6 @@ class Connection extends ByteReader {
       return errorInvalidClientRequest();
 
     final gameObjectRequest = gameObjectRequests[gameObjectRequestIndex];
-    if (player is! IsometricPlayer) return;
     final selectedGameObject = player.editorSelectedGameObject;
 
     switch (gameObjectRequest) {
@@ -564,9 +549,6 @@ class Connection extends ByteReader {
   }
 
   void handleClientRequestUpdate(Uint8List args, {required bool debug}) {
-    final player = _player;
-
-    if (player == null) return errorPlayerNotFound();
 
     player.framesSinceClientRequest = 0;
 
@@ -649,15 +631,21 @@ class Connection extends ByteReader {
   }
 
   Future joinGameEditorScene(Scene scene) async {
-    // final game = IsometricEditor(scene: scene);
-    // nerve.amulet.addGame(game);
-    // joinGame(game);
+    final game = AmuletGame(
+        scene: scene,
+        amulet: nerve.amulet,
+        time: IsometricTime(),
+        environment: IsometricEnvironment(),
+        name: generateRandomName(),
+        fiendTypes: [],
+        amuletScene: AmuletScene.Editor
+    );
+    nerve.amulet.addGame(game);
+    joinGame(game);
     throw Exception('no longer supported');
   }
 
-  void joinGame(Game game){
-    final player = game.createPlayer();
-    _player = player;
+  void joinGame(AmuletGame game){
     game.players.add(player);
     player.writeGameType();
     game.onPlayerJoined(player);
@@ -697,10 +685,6 @@ class Connection extends ByteReader {
 
       if (userId == null){
           playerJoinAmuletTown();
-          final player = _player;
-          if (player is! AmuletPlayer){
-            throw Exception('player is! AmuletPlayer');
-          }
           player.name = arguments.getArg('--name') ?? 'anon${randomInt(9999, 99999)}';
           player.complexion = arguments.tryGetArgInt('--complexion') ?? 0;
           player.hairType = arguments.tryGetArgInt('--hairType') ?? 0;
@@ -720,12 +704,6 @@ class Connection extends ByteReader {
 
       nerve.userService.getUser(userId).then((user) {
         playerJoinAmuletTown();
-        final player = _player;
-
-        if (player is! AmuletPlayer){
-          throw Exception('player is! AmuletPlayer');
-        }
-
         player.userId = userId;
         player.active = false;
 
@@ -829,12 +807,7 @@ class Connection extends ByteReader {
   }
 
   void readSceneRequest(List<String> arguments) {
-    final player = this.player;
 
-    if (player is! IsometricPlayer) {
-      errorInvalidPlayerType();
-      return;
-    }
     final sceneRequestIndex = parseArg1(arguments);
     if (sceneRequestIndex == null)
       return;
@@ -862,11 +835,6 @@ class Connection extends ByteReader {
   }
 
   void readEnvironmentRequest(List<String> arguments) {
-    final player = this.player;
-    if (player is! IsometricPlayer) {
-      errorInvalidPlayerType();
-      return;
-    }
     if (!isLocalMachine && player.game is! IsometricEditor) return;
 
     final environmentRequest = parseArg1(arguments);
@@ -902,11 +870,6 @@ class Connection extends ByteReader {
 
   void handleNetworkRequestDebug() {
 
-    final player = _player;
-
-    if (player is! AmuletPlayer) {
-      return;
-    }
     final debugRequest = arg1;
     if (debugRequest == null){
       return;
@@ -931,9 +894,6 @@ class Connection extends ByteReader {
   }
 
   void handlePlayerRequest(List<String> arguments) {
-    if (_player is! IsometricPlayer) {
-      return;
-    }
     final playerRequestIndex = arg1;
     if (playerRequestIndex == null){
       return;
@@ -943,8 +903,6 @@ class Connection extends ByteReader {
       return;
     }
     final playerRequest = NetworkRequestPlayer.values[playerRequestIndex];
-
-    final player = _player as IsometricPlayer;
 
     switch (playerRequest) {
       case NetworkRequestPlayer.toggleGender:
@@ -1009,15 +967,8 @@ class Connection extends ByteReader {
   }
 
   void leaveCurrentGame(){
-    final player = _player;
-
-    if (player == null){
-      return;
-    }
-
     final game = player.game;
     game.removePlayer(player);
-    _player = null;
   }
 
   void onPlayerLoaded(AmuletPlayer player) {
@@ -1067,12 +1018,6 @@ class Connection extends ByteReader {
       throw Exception('arguments.length < 3');
     }
 
-    final player = _player;
-
-    if (player is! AmuletPlayer){
-      return;
-    }
-
     final game = player.game;
     final scene = game.scene;
     final name = arguments[2];
@@ -1087,11 +1032,6 @@ class Connection extends ByteReader {
 
   void handleEditorRequestDeleteKey(List<String> arguments) {
 
-    final player = _player;
-    if (player is! AmuletPlayer){
-      return;
-    }
-
     if (arguments.length < 3){
       errorInvalidClientRequest();
       return;
@@ -1105,11 +1045,6 @@ class Connection extends ByteReader {
   }
 
   void handleEditorRequestMoveKey(List<String> arguments) {
-    final player = _player;
-    if (player is! AmuletPlayer){
-      sendServerError('player is! AmuletPlayer');
-      return;
-    }
 
     final name = arguments.getArg('--name');
     final index = arguments.tryGetArgInt('--index');
@@ -1138,11 +1073,6 @@ class Connection extends ByteReader {
   }
 
   void handleEditorRequestRenameKey(List<String> arguments) {
-    final player = _player;
-    if (player is! AmuletPlayer){
-      sendServerError('player is! AmuletPlayer');
-      return;
-    }
 
     final from = arguments.getArg('--from');
     final to = arguments.getArg('--to');
@@ -1178,13 +1108,6 @@ class Connection extends ByteReader {
   }
 
   void handleEditorRequestSetNode(List<String> arguments) {
-
-    final player = this.player;
-
-    if (player is! IsometricPlayer){
-      return;
-    }
-
     player.game.setNode(
       nodeIndex: arguments.getArgInt('--index'),
       nodeType: arguments.tryGetArgInt('--type'),

@@ -23,4 +23,5 @@ class NetworkResponseAmulet {
    static const Spawn_Confetti = 24;
    static const Element_Upgraded = 25;
    static const Highlight_Icon_Inventory = 26;
+   static const World_Map_Bytes = 27;
 }

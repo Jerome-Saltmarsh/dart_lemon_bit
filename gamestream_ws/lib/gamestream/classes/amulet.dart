@@ -1,6 +1,7 @@
 
 
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:gamestream_ws/amulet/classes/amulet_game.dart';
 import 'package:gamestream_ws/amulet/classes/amulet_game_town.dart';
@@ -13,6 +14,7 @@ import 'package:gamestream_ws/isometric/classes/isometric_time.dart';
 import 'package:gamestream_ws/packages/common/src/amulet/amulet_item.dart';
 import 'package:gamestream_ws/packages/common/src/amulet/amulet_scene.dart';
 import 'package:gamestream_ws/packages/common/src/duration_auto_save.dart';
+import 'package:lemon_byte/byte_writer.dart';
 
 import '../../isometric/classes/scenes.dart';
 
@@ -42,9 +44,22 @@ class Amulet {
   late final AmuletGame amuletRoad01;
   late final AmuletGame amuletRoad02;
 
+  static const mapSize = 100;
   final rows = 3;
   final columns = 3;
   final worldMap = <AmuletGame>[];
+
+  /// a minimap of all the worlds collapsed scene
+  var worldMapBytes = Uint8List(0);
+
+  Future construct() async {
+    AmuletItem.values.forEach((item) => item.validate());
+    await scenes.load();
+    _initializeUpdateTimer();
+    _initializeTimerAutoSave();
+    _initializeGames();
+    _compileWorldMapBytes();
+  }
 
   AmuletGame getAmuletSceneGame(AmuletScene scene) {
     if (scene == AmuletScene.Tutorial){
@@ -67,14 +82,6 @@ class Amulet {
       throw Exception('could not find scenes directory: ${scenes
           .sceneDirectoryPath}');
     }
-  }
-
-  Future construct() async {
-    AmuletItem.values.forEach((item) => item.validate());
-    await scenes.load();
-    _initializeUpdateTimer();
-    _initializeTimerAutoSave();
-    _initializeGames();
   }
 
   void _initializeGames() {
@@ -299,5 +306,17 @@ class Amulet {
 
   void removeGame(Game game){
     games.remove(game);
+  }
+
+  void _compileWorldMapBytes() {
+    final byteWriter = ByteWriter();
+    byteWriter.writeByte(rows);
+    byteWriter.writeByte(columns);
+    for (var game in worldMap) {
+      final flatNodes = game.flatNodes;
+      byteWriter.writeUInt24(flatNodes.length);
+      byteWriter.writeBytes(flatNodes);
+    }
+    worldMapBytes = byteWriter.compile();
   }
 }

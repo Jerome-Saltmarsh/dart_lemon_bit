@@ -1,4 +1,6 @@
 
+import 'dart:typed_data';
+
 import 'package:gamestream_flutter/amulet/amulet_ui.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/packages/lemon_websocket_client/connection_status.dart';
@@ -13,13 +15,17 @@ import 'package:lemon_widgets/lemon_widgets.dart';
 import 'amulet_render.dart';
 
 
-class Game {
-
-}
-
 class Amulet extends IsometricGame {
 
-  final games = Watch(<Game>[]);
+  var worldMapClrs = Int32List(0);
+  var worldMapDsts = Float32List(0);
+  var worldMapSrcs = Float32List(0);
+
+  var worldRows = 0;
+  var worldColumns = 0;
+  var worldFlatMaps = <Uint8List>[];
+  final worldFlatMapsNotifier = Watch(0);
+
   final amuletScene = Watch<AmuletScene?>(null);
   final cameraTargetSet = Watch(false);
   final cameraTarget = Position();

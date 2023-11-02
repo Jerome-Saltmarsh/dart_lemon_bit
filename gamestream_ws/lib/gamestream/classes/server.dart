@@ -66,6 +66,7 @@ class Server {
   }
 
   void sendResponseToClients(){
+    final connections = this.connections;
     for (final connection in connections) {
       connection.sendBufferToClient();
     }

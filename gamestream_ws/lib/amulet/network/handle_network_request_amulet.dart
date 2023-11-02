@@ -1,18 +1,11 @@
 import 'package:gamestream_ws/gamestream/classes/connection.dart';
 import 'package:gamestream_ws/packages.dart';
 
-import '../classes/amulet_player.dart';
-
 extension AmuletRequestHandler on Connection {
 
   void handleNetworkRequestAmulet(List<String> arguments){
 
     final player = this.player;
-    if (player is! AmuletPlayer) {
-      errorInvalidPlayerType();
-      return;
-    }
-
     final amuletPlayer = player;
     final amuletGame = player.amuletGame;
 

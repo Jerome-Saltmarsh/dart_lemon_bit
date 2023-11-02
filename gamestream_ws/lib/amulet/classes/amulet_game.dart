@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:gamestream_ws/amulet.dart';
 import 'package:gamestream_ws/gamestream.dart';
 import 'package:gamestream_ws/isometric.dart';
@@ -17,6 +19,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   final AmuletScene amuletScene;
   var cooldownTimer = 0;
 
+  var flatNodes = Uint8List(0);
+
   AmuletGame({
     required this.amulet,
     required super.scene,
@@ -27,6 +31,44 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required this.amuletScene,
   }) : super(gameType: GameType.Amulet) {
     spawnFiendsAtSpawnNodes();
+    refreshFlatNodes();
+  }
+
+  void refreshFlatNodes(){
+    final scene = this.scene;
+    final area = scene.area;
+    if (this.flatNodes.length != area) {
+      this.flatNodes = Uint8List(area);
+    }
+    final flatNodes = this.flatNodes;
+    final rows = scene.rows;
+    final columns = scene.columns;
+    final zs = scene.height;
+    final nodeTypes = scene.types;
+    var i = 0;
+    for (var row = 0; row < rows; row++){
+      for (var column = 0; column < columns; column++) {
+        for (var z = zs - 1; z >= 0; z--){
+          final index = (z * area) + (row * columns) + column;
+           final nodeType = nodeTypes[index];
+           if (const [
+             NodeType.Empty,
+             NodeType.Rain_Falling,
+             NodeType.Rain_Landing,
+           ].contains(nodeType)){
+             if (z == 0){
+               flatNodes[i] = NodeType.Empty;
+               i++;
+               break;
+             }
+             continue;;
+           }
+           flatNodes[i] = nodeType;
+           i++;
+           break;
+        }
+      }
+    }
   }
 
   @override

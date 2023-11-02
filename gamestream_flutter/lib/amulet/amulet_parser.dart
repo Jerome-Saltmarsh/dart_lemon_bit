@@ -111,6 +111,9 @@ extension AmuletParser on IsometricParser {
            particles.spawnParticleConfettiByType(x, y, z, ParticleType.Confetti_White);
          }
          break;
+       case NetworkResponseAmulet.World_Map_Bytes:
+         readWorldMapBytes();
+         break;
      }
   }
 
@@ -156,6 +159,23 @@ extension AmuletParser on IsometricParser {
          audio.magical_swoosh_18.play();
          break;
      }
+  }
+
+  void readWorldMapBytes() {
+    final rows = readByte();;
+    final columns = readByte();;
+    final total = rows * columns;
+    amulet.worldRows = rows;
+    amulet.worldColumns = columns;
+    amulet.worldFlatMaps.clear();
+
+    for (var i = 0; i < total; i++){
+      final length = readUInt24();
+      final bytes = readBytes(length);
+      amulet.worldFlatMaps.add(bytes);
+    }
+
+    amulet.amuletUI.buildWorldSrcAndDst();
   }
 }
 

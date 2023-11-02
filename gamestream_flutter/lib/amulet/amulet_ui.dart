@@ -1,3 +1,6 @@
+import 'dart:math';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 import 'package:gamestream_flutter/amulet/amulet.dart';
@@ -7,6 +10,7 @@ import 'package:gamestream_flutter/gamestream/ui.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/website/widgets/gs_fullscreen.dart';
 import 'package:golden_ratio/constants.dart';
+import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
@@ -31,6 +35,11 @@ class AmuletUI {
       alignment: Alignment.center,
       children: [
         buildDialogTalk(),
+        Positioned(
+            bottom: 8,
+            right: 8,
+            child: buildMiniMap(),
+        ),
         Positioned(
           bottom: 4,
           left: 0,
@@ -767,6 +776,98 @@ class AmuletUI {
           child: buildText('POINTS $elementPoints', color: Colors.green),
         );
       });
+
+  Widget buildMiniMap() {
+    final frame = ValueNotifier(0);
+    final paint = Paint()..color = Colors.white;
+     return Container(
+       width: 200,
+       height: 200,
+       color: Colors.white,
+       child: buildWatch(amulet.worldFlatMapsNotifier, (t) {
+         return CustomCanvas(paint: (canvas, size){
+           canvas.rotate(pi * 0.25);
+           canvas.drawRawAtlas(
+               amulet.images.shades,
+               amulet.worldMapDsts,
+               amulet.worldMapSrcs,
+               amulet.worldMapClrs,
+               BlendMode.modulate,
+               null,
+               paint,
+           );
+         }, frame: frame);
+       }),
+     );
+  }
+
+
+
+  Color mapNodeTypeToColor(int nodeType){
+    return const {
+      NodeType.Water: Colors.blue,
+      NodeType.Grass: Colors.green,
+      NodeType.Brick: Colors.grey,
+      NodeType.Tree_Top: Colors.teal,
+      NodeType.Wood: Colors.brown,
+      NodeType.Soil: Colors.brown,
+    }[nodeType] ?? Colors.black;
+  }
+
+  void buildWorldSrcAndDst(){
+    print('amuletUI.buildWorldSrcAndDst()');
+    var index = 0;
+    final size = 100;
+    final area = size * size;
+    final worldRows = amulet.worldRows;
+    final worldColumns = amulet.worldColumns;
+    final worldFlatMaps = amulet.worldFlatMaps;
+    final total = worldFlatMaps.length * area;
+
+    final clrs = Int32List(total);
+    final dsts = Float32List(total * 4);
+    final srcs = Float32List(total * 4);
+
+    amulet.worldMapClrs = clrs;
+    amulet.worldMapDsts = dsts;
+    amulet.worldMapSrcs = srcs;
+
+    var i = 0;
+    for (var row = 0; row < worldRows; row++){
+      for (var column = 0; column < worldColumns; column++){
+        final worldFlatMap = worldFlatMaps[index];
+
+        for (var nodeIndex = 0; nodeIndex < area; nodeIndex++){
+          final nodeType = worldFlatMap[nodeIndex];
+          final nodeRow = nodeIndex ~/ size;
+          final nodeColum = nodeIndex % size;
+          final x = row + nodeRow;
+          final y = column + nodeColum;
+          final f = i * 4;
+
+          clrs[i] = mapNodeTypeToColor(nodeType).value;
+
+          srcs[f + 0] = 96; // left
+          srcs[f + 1] = 0; // top
+          srcs[f + 2] = 97; // right
+          srcs[f + 3] = 1; // bottom
+
+          dsts[f + 0] = 1.0; // scale
+          dsts[f + 1] = 0; // rotation
+          dsts[f + 2] = x.toDouble();
+          dsts[f + 3] = y.toDouble();
+
+          i++;
+        }
+
+        index++;
+
+      }
+    }
+
+    amulet.worldFlatMapsNotifier.value++;
+  }
+
 }
 
 Widget alignRight({required Widget child})=> Row(
