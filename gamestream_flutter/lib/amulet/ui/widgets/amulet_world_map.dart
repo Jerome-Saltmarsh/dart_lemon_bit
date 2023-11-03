@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/amulet/amulet.dart';
 import 'package:lemon_engine/lemon_engine.dart';
+import 'package:lemon_math/src.dart';
 
 class AmuletWorldMap extends StatelessWidget {
   final Amulet amulet;
@@ -21,30 +22,40 @@ class AmuletWorldMap extends StatelessWidget {
 
 
     final canvas = CustomCanvas(
-      paint: (canvas, size) {
+      paint: (canvas, canvasSize) {
         final amulet = this.amulet;
         final worldMapPicture = amulet.worldMapPicture;
         if (worldMapPicture == null) {
           return;
         }
 
-        const size = 100.0;
-
+        const mapSize = 100.0;
+        final canvasWidth = canvasSize.width;
+        final canvasHeight = canvasSize.height;
+        final centerX = canvasWidth * 0.5;
+        final centerY = canvasHeight * 0.5;
         final player = amulet.player;
         final position = player.position;
         final scene = amulet.scene;
         final ratioX = position.x / scene.lengthRows;
         final ratioY = position.y / scene.lengthColumns;
-        final posX = amulet.worldRow * size + (size * ratioX);
-        final posY = amulet.worldColumn * size + (size * ratioY);
-        // final globalLengthX = size * amulet.worldRow;
-        // final globalLengthY = size * amulet.worldColumns;
-
+        final posX = amulet.worldRow * mapSize + (mapSize * ratioX);
+        final posY = amulet.worldColumn * mapSize + (mapSize * ratioY);
         paint.color = Colors.red;
-        // canvas.translate(posX - (size * 0.5), posY - (size * 0.5));
-        canvas.rotate(pi * 0.25);
+
+        // final translateX = centerX - posX;
+        // final translateY = centerY - posY;
+        // canvas.translate(adj(piQuarter, posX), opp(piQuarter, posY));
+        // canvas.translate(posX, posY);
+
+        // canvas.translate(-posX, 0);
+        // canvas.rotate(pi * 0.25);
         canvas.drawPicture(worldMapPicture);
+        // canvas.drawCircle(Offset(0, posY), 10, paint);
         canvas.drawCircle(Offset(posX, posY), 10, paint);
+
+
+
       },
     );
 

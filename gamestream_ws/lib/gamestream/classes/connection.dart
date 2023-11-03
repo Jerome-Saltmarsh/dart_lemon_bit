@@ -723,7 +723,8 @@ class Connection extends ByteReader {
             if (character.containsKey('tutorial_completed')){
               playerJoinAmuletTown();
             } else {
-              playerJoinGameTutorial();
+              playerJoinAmuletTown();
+              // playerJoinGameTutorial();
             }
 
             player.userId = userId;
@@ -754,6 +755,9 @@ class Connection extends ByteReader {
 
   void playerJoinAmuletTown() {
     joinGame(nerve.amulet.amuletGameTown);
+    player.x = 1000;
+    player.y = 1000;
+    player.z = 50;
   }
 
   void cancelSubscription() {

@@ -453,8 +453,6 @@ class Amulet extends IsometricGame {
           final nodeType = worldFlatMap[nodeIndex];
           final nodeRow = nodeIndex ~/ size;
           final nodeColumn = nodeIndex % size;
-          // final nodeColumn = nodeIndex ~/ size;
-          // final nodeRow = nodeIndex % size;
           final x = (worldRow * size) + nodeRow;
           final y = (worldColumn * size) + nodeColumn;
           final f = i * 4;
