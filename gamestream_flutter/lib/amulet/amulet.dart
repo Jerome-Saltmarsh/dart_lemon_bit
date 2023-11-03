@@ -31,7 +31,7 @@ class Amulet extends IsometricGame {
   var worldRows = 0;
   var worldColumns = 0;
   var worldFlatMaps = <Uint8List>[];
-  Picture? worldMapPicture;
+  ui.Image? worldMapPicture;
 
   var playerWorldX = 0.0;
   var playerWorldY = 0.0;
@@ -506,7 +506,10 @@ class Amulet extends IsometricGame {
       paint,
     );
 
-    worldMapPicture = recorder.endRecording();
+     final picture = recorder.endRecording();
+     picture.toImage(300, 300).then((value) {
+       worldMapPicture = value;
+     });
   }
 
   void onWorldMapChanged() {

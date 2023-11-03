@@ -7,7 +7,6 @@ class AmuletWorldMap extends StatelessWidget {
   final Amulet amulet;
   final paint = Paint()..color = Colors.white;
   final double size;
-  var frame = 0;
 
   AmuletWorldMap({
     super.key,
@@ -44,35 +43,42 @@ class AmuletWorldMap extends StatelessWidget {
         final translateX = centerX - posX;
         final translateY = centerY - posY;
 
-        canvas.translate(centerX, -100);
+        canvas.translate(centerX, -50);
         canvas.rotate(piQuarter);
         canvas.translate(translateX, translateY);
 
-        canvas.drawPicture(worldMapPicture);
+        canvas.drawImage(worldMapPicture, Offset(0, 0), paint);
         canvas.drawCircle(Offset(posX, posY), 5, paint);
         paint.color = Colors.blue;
-        canvas.drawCircle(Offset(centerX, centerY), 5, paint);
+        // canvas.drawCircle(Offset(centerX, centerY), 5, paint);
 
 
 
       },
     );
 
-    return ClipOval(
-      child: Container(
-          width: size,
-          height: size,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.white,
+    return Container(
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: amulet.style.containerColor,
+      ),
+      child: ClipOval(
+        child: Container(
+            width: size,
+            height: size,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: amulet.style.containerColor,
+            ),
+            child: CustomTicker(
+              onTrick: (duration) {
+
+              },
+              child: canvas,
+            ),
           ),
-          child: CustomTicker(
-            onTrick: (duration) {
-              frame++;
-            },
-            child: canvas,
-          ),
-        ),
+      ),
     );
   }
 }
