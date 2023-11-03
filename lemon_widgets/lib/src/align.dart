@@ -11,3 +11,17 @@ Widget align({required Widget child, required Alignment alignment}){
       throw Exception('alignment not implemented: $alignment');
   }
 }
+
+Widget alignRight({required Widget child})=> Row(
+  mainAxisAlignment: MainAxisAlignment.end,
+  children: [
+    child
+  ],
+);
+
+Widget alignLeft({required Widget child})=> Row(
+  mainAxisAlignment: MainAxisAlignment.start,
+  children: [
+    child
+  ],
+);

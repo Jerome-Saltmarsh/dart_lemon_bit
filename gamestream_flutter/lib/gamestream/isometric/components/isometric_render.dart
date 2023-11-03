@@ -114,6 +114,8 @@ class IsometricRender with IsometricComponent {
     particles.onComponentUpdate();
     compositor.render3D();
 
+    amulet.renderWorldMap();
+
     if (options.renderVisibilityBeams){
       rendererNodes.renderVisibilityBeams();
     }

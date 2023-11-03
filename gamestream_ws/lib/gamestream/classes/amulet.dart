@@ -45,8 +45,8 @@ class Amulet {
   late final AmuletGame amuletRoad02;
 
   static const mapSize = 100;
-  final rows = 3;
-  final columns = 3;
+  final worldRows = 3;
+  final worldColumns = 3;
   final worldMap = <AmuletGame>[];
 
   /// a minimap of all the worlds collapsed scene
@@ -135,6 +135,13 @@ class Amulet {
     worldMap.add(amuletGameTown);
     worldMap.add(amuletGameTown);
     worldMap.add(amuletGameTown);
+
+    for (var i = 0; i < worldMap.length; i++){
+      final game = worldMap[i];
+      game.worldIndex = i;
+      game.worldColumn = i % worldColumns;
+      game.worldRow = i ~/ worldColumns;
+    }
   }
 
   void _initializeUpdateTimer() {
@@ -171,12 +178,12 @@ class Amulet {
       final game = worldMap[i];
       final scene = game.scene;
       final players = game.players;
-      final row = i % rows;
-      final column = i % columns;
+      final row = i % worldRows;
+      final column = i ~/ worldColumns;
       final rowsAbove = row > 0;
-      final rowsBelow = row < rows - 1;
+      final rowsBelow = row < worldRows - 1;
       final columnsAbove = column > 0;
-      final columnsBelow = column < columns - 1;
+      final columnsBelow = column < worldColumns - 1;
       final xMax = scene.rowLength - padding;
       final yMax = scene.columnLength - padding;
       var playerLength = players.length;
@@ -209,7 +216,7 @@ class Amulet {
           final player = players[j];
           final playerY = player.y;
           if (columnsAbove && playerY < padding) {
-            final targetGameIndex = i - columns;
+            final targetGameIndex = i - worldColumns;
             final targetGame = worldMap[targetGameIndex];
             playerChangeGame(player: player, target: targetGame);
             playerLength--;
@@ -310,8 +317,8 @@ class Amulet {
 
   void _compileWorldMapBytes() {
     final byteWriter = ByteWriter();
-    byteWriter.writeByte(rows);
-    byteWriter.writeByte(columns);
+    byteWriter.writeByte(worldRows);
+    byteWriter.writeByte(worldColumns);
     for (var game in worldMap) {
       final flatNodes = game.flatNodes;
       byteWriter.writeUInt24(flatNodes.length);

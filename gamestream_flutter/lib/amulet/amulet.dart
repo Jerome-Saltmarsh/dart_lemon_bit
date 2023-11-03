@@ -1,5 +1,6 @@
 
 import 'dart:typed_data';
+import 'dart:ui';
 
 import 'package:gamestream_flutter/amulet/amulet_ui.dart';
 import 'package:gamestream_flutter/packages/common.dart';
@@ -13,18 +14,24 @@ import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 import 'amulet_render.dart';
+import 'dart:ui' as ui;
 
 
 class Amulet extends IsometricGame {
+
+  // final worldMapFrame = ValueNotifier(0);
 
   var worldMapClrs = Int32List(0);
   var worldMapDsts = Float32List(0);
   var worldMapSrcs = Float32List(0);
 
+  var worldRow = 0;
+  var worldColumn = 0;
+
   var worldRows = 0;
   var worldColumns = 0;
   var worldFlatMaps = <Uint8List>[];
-  final worldFlatMapsNotifier = Watch(0);
+  Picture? worldMapPicture;
 
   final amuletScene = Watch<AmuletScene?>(null);
   final cameraTargetSet = Watch(false);
@@ -414,5 +421,99 @@ class Amulet extends IsometricGame {
 
   void onPlayerElementUpgraded() {
     audio.buff_1.play();
+  }
+
+  void buildWorldMapSrcAndDst(){
+    print('amulet.buildWorldMapSrcAndDst()');
+    var index = 0;
+    final size = 100;
+    final area = size * size;
+    final worldRows = this.worldRows;
+    final worldColumns = this.worldColumns;
+    final worldFlatMaps = this.worldFlatMaps;
+    final total = worldFlatMaps.length * area;
+
+    final clrs = Int32List(total);
+    final dsts = Float32List(total * 4);
+    final srcs = Float32List(total * 4);
+
+    worldMapClrs = clrs;
+    worldMapDsts = dsts;
+    worldMapSrcs = srcs;
+
+    var i = 0;
+    for (var row = 0; row < worldRows; row++){
+      for (var column = 0; column < worldColumns; column++){
+        final worldFlatMap = worldFlatMaps[index];
+
+        for (var nodeIndex = 0; nodeIndex < area; nodeIndex++){
+          final nodeType = worldFlatMap[nodeIndex];
+          final nodeRow = nodeIndex ~/ size;
+          final nodeColum = nodeIndex % size;
+          final x = (row * size) + nodeRow;
+          final y = (column * size) + nodeColum;
+          final f = i * 4;
+
+          clrs[i] = mapNodeTypeToColor(nodeType).value;
+
+          srcs[f + 0] = 96; // left
+          srcs[f + 1] = 0; // top
+          srcs[f + 2] = 97; // right
+          srcs[f + 3] = 1; // bottom
+
+          dsts[f + 0] = 1.0; // scale
+          dsts[f + 1] = 0; // rotation
+          dsts[f + 2] = x.toDouble();
+          dsts[f + 3] = y.toDouble();
+
+          i++;
+        }
+
+        index++;
+
+      }
+    }
+
+    onWorldMapChanged();
+  }
+
+  Color mapNodeTypeToColor(int nodeType){
+    return const {
+      NodeType.Water: Colors.blue,
+      NodeType.Grass: Colors.green,
+      NodeType.Brick: Colors.grey,
+      NodeType.Tree_Top: Colors.teal,
+      NodeType.Wood: Colors.brown,
+      NodeType.Soil: Colors.brown,
+    }[nodeType] ?? Colors.black;
+  }
+
+  void recordWorldMapPicture(){
+    print('amulet.recordWorldMapPicture()');
+    final paint = Paint()..color = Colors.white;
+    final recorder = ui.PictureRecorder();
+    final canvas = Canvas(recorder);
+    canvas.drawRawAtlas(
+      images.shades,
+      worldMapDsts,
+      worldMapSrcs,
+      worldMapClrs,
+      BlendMode.modulate,
+      null,
+      paint,
+    );
+
+    worldMapPicture = recorder.endRecording();
+  }
+
+  void onWorldMapChanged() {
+    print('amulet.onWorldMapChanged()');
+    recordWorldMapPicture();
+  }
+
+  void renderWorldMap(){
+
+    // if (worldMapKey.)
+    // worldMapFrame.value++;
   }
 }

@@ -31,6 +31,7 @@ class IsometricCompositor with IsometricComponent {
     rendererProjectiles.reset();
     rendererEditor.reset();
 
+    // amulet.repaintMiniMapNotifier.value++;
 
     final nodes = rendererNodes;
     final characters = rendererCharacters;

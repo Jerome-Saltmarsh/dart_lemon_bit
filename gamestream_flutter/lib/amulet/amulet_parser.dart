@@ -31,6 +31,10 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Item_Length:
          amulet.setItemLength(readUInt16());
          break;
+       case NetworkResponseAmulet.Player_World_Index:
+         amulet.worldRow = readByte();
+         amulet.worldColumn = readByte();
+         break;
        case NetworkResponseAmulet.Player_Item:
          final index = readUInt16();
          final type = readInt16();
@@ -167,15 +171,16 @@ extension AmuletParser on IsometricParser {
     final total = rows * columns;
     amulet.worldRows = rows;
     amulet.worldColumns = columns;
-    amulet.worldFlatMaps.clear();
+    final worldFlatMaps = amulet.worldFlatMaps;
+    worldFlatMaps.clear();
 
     for (var i = 0; i < total; i++){
       final length = readUInt24();
       final bytes = readBytes(length);
-      amulet.worldFlatMaps.add(bytes);
+      worldFlatMaps.add(bytes);
     }
 
-    amulet.amuletUI.buildWorldSrcAndDst();
+    amulet.buildWorldMapSrcAndDst();
   }
 }
 

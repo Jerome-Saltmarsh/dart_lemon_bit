@@ -13,12 +13,14 @@ ctrl + []               : move caret to code block
 * [new]: world map
 
 ## TODO
+* [new]: render body north and east  
+* [new]: character state strike two
 * [fix]: kid casting shadow
-* [new]: gameobject tree stump
 * [fix]: inventory slots remain green after drag
 * [fix]: orc strike sprite not rendered
 * [new]: item tabs weapons amulets etc
 * [new]: model hair
+* [new]: gameobject tree stump
 
 ## 02.11.2023
 * [fix]: load image errors

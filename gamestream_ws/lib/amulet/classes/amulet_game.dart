@@ -21,6 +21,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   var flatNodes = Uint8List(0);
 
+  var worldIndex = 255;
+  var worldRow = 255;
+  var worldColumn = 255;
+
   AmuletGame({
     required this.amulet,
     required super.scene,
@@ -664,5 +668,14 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       dispatchByte(gameObject.type);
       dispatchByte(gameObject.subType);
     }
+  }
+
+  @override
+  void onPlayerJoined(AmuletPlayer player) {
+    super.onPlayerJoined(player);
+    player.writeByte(NetworkResponse.Amulet);
+    player.writeByte(NetworkResponseAmulet.Player_World_Index);
+    player.writeByte(worldRow);
+    player.writeByte(worldColumn);
   }
 }
