@@ -1370,6 +1370,9 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     if (z != null){
       this.z = z;
     }
+    
+    clearPath();
+    setDestinationToCurrentPosition();
     writePlayerPositionAbsolute();
     writePlayerEvent(PlayerEvent.Player_Moved);
   }
