@@ -51,8 +51,12 @@ class AmuletWorldMap extends StatelessWidget {
         // canvas.translate(canvasWidth * 0.5, 0);
 
         // canvas.translate(canvasWidth * 0.5, -canvasHeight * 0.5);
+
+        canvas.translate(canvasWidth * 0.5, 0);
+        canvas.rotate(piQuarter);
         canvas.translate(translateX, translateY);
-        // canvas.rotate(pi * 0.25);
+
+
         canvas.drawPicture(worldMapPicture);
         canvas.drawCircle(Offset(posX, posY), 10, paint);
         paint.color = Colors.blue;
