@@ -33,7 +33,7 @@ class AmuletUI {
         Positioned(
           bottom: 8,
           right: 8,
-          child: AmuletWorldMap(amulet: amulet),
+          child: AmuletWorldMap(amulet: amulet, size: 200),
         ),
         Positioned(
           bottom: 4,

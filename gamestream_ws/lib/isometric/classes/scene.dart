@@ -175,11 +175,10 @@ class Scene {
         shapes[indexEnd] == NodeOrientation.Solid
     ) return indexStart;
 
-    final path = this.path;
-
-    for (var i = 0; i <= visitHistoryIndex; i++) {
-      path[visitHistory[i]] = Not_Visited;
-    }
+    // final path = this.path;
+    // for (var i = 0; i <= visitHistoryIndex; i++) {
+    //   path[visitHistory[i]] = Not_Visited;
+    // }
 
     visitHistoryIndex = 0;
     visitStackIndex = 0;

@@ -66,6 +66,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     equipmentDirty = true;
     setItemsLength(itemLength);
 
+    writeWorldMapBytes();
     writeAmuletElements();
     writeElementPoints();
     writeActivatedPowerIndex(_activatedPowerIndex);
@@ -1903,5 +1904,12 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.World_Map_Bytes);
     writeBytes(amulet.worldMapBytes);
+  }
+
+  void writeWorldIndex(){
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Player_World_Index);
+    writeByte(amuletGame.worldRow);
+    writeByte(amuletGame.worldColumn);
   }
 }

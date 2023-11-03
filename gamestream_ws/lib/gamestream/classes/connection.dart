@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:gamestream_ws/amulet.dart';
+import 'package:gamestream_ws/amulet/classes/amulet_game_editor.dart';
 import 'package:gamestream_ws/editor/isometric_editor.dart';
 import 'package:gamestream_ws/gamestream.dart';
 import 'package:gamestream_ws/isometric.dart';
@@ -41,15 +42,10 @@ class Connection extends ByteReader {
     sink = webSocket.sink;
     sink.done.then(onDisconnect);
     subscription = webSocket.stream.listen(onData, onError: onStreamError);
-    player = AmuletPlayer(
-        amuletGame: nerve.amulet.amuletGameTown,
-        itemLength: 6,
-        x: 0,
-        y: 0,
-        z: 0,
-    );
+  }
 
-    player.writeWorldMapBytes();
+  void playerJoinGameTutorial() {
+    joinGame(nerve.amulet.buildAmuletGameTutorial());
   }
 
   void onDisconnect(dynamic value) {
@@ -64,6 +60,9 @@ class Connection extends ByteReader {
   }
 
   void sendBufferToClient(){
+    if (!playerCreated){
+      return;
+    }
     sink.add(player.compile());
   }
 
@@ -631,24 +630,20 @@ class Connection extends ByteReader {
   }
 
   Future joinGameEditorScene(Scene scene) async {
-    final game = AmuletGame(
+    final game = AmuletGameEditor(
         scene: scene,
         amulet: nerve.amulet,
-        time: IsometricTime(),
-        environment: IsometricEnvironment(),
-        name: generateRandomName(),
-        fiendTypes: [],
-        amuletScene: AmuletScene.Editor
     );
     nerve.amulet.addGame(game);
     joinGame(game);
-    throw Exception('no longer supported');
   }
 
   void joinGame(AmuletGame game){
-    game.players.add(player);
-    player.writeGameType();
-    game.onPlayerJoined(player);
+    if (!playerCreated) {
+      player = AmuletPlayer(amuletGame: game, itemLength: 6, x: 0, y: 0, z: 0);
+    }
+    game.add(player);
+    playerCreated = true;
   }
 
   void errorInsufficientResources(){
@@ -667,12 +662,15 @@ class Connection extends ByteReader {
     sendGameError(GameError.PlayerDead);
   }
 
+  var playerCreated = false;
+
   void handleClientRequestJoin(List<String> arguments) {
 
     if (arguments.length < 2) {
       errorInvalidClientRequest();
       return;
     }
+
 
     final gameTypeIndex =  arguments.tryGetArgInt('--gameType');
     if (gameTypeIndex == null || !isValidIndex(gameTypeIndex, GameType.values)){
@@ -684,7 +682,7 @@ class Connection extends ByteReader {
       final userId = arguments.getArg('--userId');
 
       if (userId == null){
-          playerJoinAmuletTown();
+          playerJoinGameTutorial();
           player.name = arguments.getArg('--name') ?? 'anon${randomInt(9999, 99999)}';
           player.complexion = arguments.tryGetArgInt('--complexion') ?? 0;
           player.hairType = arguments.tryGetArgInt('--hairType') ?? 0;
@@ -703,9 +701,6 @@ class Connection extends ByteReader {
       }
 
       nerve.userService.getUser(userId).then((user) {
-        playerJoinAmuletTown();
-        player.userId = userId;
-        player.active = false;
 
         final characters = user.getList<Json>('characters');
         for (final character in characters) {
@@ -725,6 +720,15 @@ class Connection extends ByteReader {
                 return;
               }
             }
+            if (character.containsKey('tutorial_completed')){
+              playerJoinAmuletTown();
+            } else {
+              playerJoinGameTutorial();
+            }
+
+            player.userId = userId;
+            // player.active = false;
+
             character['auto_save'] = nowUtc.toIso8601String();
             nerve.userService.saveUserCharacter(
                 userId: userId,
@@ -973,9 +977,9 @@ class Connection extends ByteReader {
 
   void onPlayerLoaded(AmuletPlayer player) {
 
-    if (!player.data.containsKey('tutorial_completed')){
-      nerve.amulet.playerStartTutorial(player);
-    }
+    // if (!player.data.containsKey('tutorial_completed')){
+    //   nerve.amulet.playerStartTutorial(player);
+    // }
     player.refillItemSlotsWeapons();
   }
 

@@ -505,6 +505,7 @@ class AmuletGameTutorial extends AmuletGame {
 
   @override
   void onPlayerJoined(AmuletPlayer player) {
+    super.onPlayerJoined(player);
     refreshPlayerGameState(player);
   }
 
@@ -781,7 +782,7 @@ class AmuletGameTutorial extends AmuletGame {
         .zoom(1.5)
         .snapCameraToPlayer()
         .wait(seconds: 1)
-        .movePositionToSceneKey(guide, keysGuideSpawn0)
+        // .movePositionToSceneKey(guide, keysGuideSpawn0)
         .cameraSetTarget(guide)
         .wait(seconds: 1)
         .gameEventPosition(GameEventType.Teleport_Start, guide)
@@ -795,7 +796,7 @@ class AmuletGameTutorial extends AmuletGame {
         )
         .wait(seconds: 1)
         .gameEventPosition(GameEventType.Teleport_Start, guide)
-        .movePositionToSceneKey(guide, keysGuideSpawn1)
+        // .movePositionToSceneKey(guide, keysGuideSpawn1)
         .gameEventPosition(GameEventType.Teleport_End, guide)
         .wait(seconds: 2)
         .end()

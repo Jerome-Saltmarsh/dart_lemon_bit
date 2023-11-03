@@ -80,9 +80,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
     if (value is T) {
       players.add(value);
-      value.game = this;
-      value.sceneDownloaded = false;
-      value.downloadScene();
       onPlayerJoined(value);
     }
   }
@@ -2767,4 +2764,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void onGameObjectedAdded(GameObject value) {}
+
+  @override
+  void onPlayerJoined(T player) {
+    super.onPlayerJoined(player);
+    player.writeGameType();
+    player.game = this;
+    player.sceneDownloaded = false;
+    player.downloadScene();
+  }
 }

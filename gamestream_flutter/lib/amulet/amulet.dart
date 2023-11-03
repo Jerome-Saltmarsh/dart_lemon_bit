@@ -33,6 +33,9 @@ class Amulet extends IsometricGame {
   var worldFlatMaps = <Uint8List>[];
   Picture? worldMapPicture;
 
+  var playerWorldX = 0.0;
+  var playerWorldY = 0.0;
+
   final amuletScene = Watch<AmuletScene?>(null);
   final cameraTargetSet = Watch(false);
   final cameraTarget = Position();

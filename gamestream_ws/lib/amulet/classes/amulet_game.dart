@@ -65,7 +65,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
                i++;
                break;
              }
-             continue;;
+             continue;
            }
            flatNodes[i] = nodeType;
            i++;
@@ -673,9 +673,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   @override
   void onPlayerJoined(AmuletPlayer player) {
     super.onPlayerJoined(player);
-    player.writeByte(NetworkResponse.Amulet);
-    player.writeByte(NetworkResponseAmulet.Player_World_Index);
-    player.writeByte(worldRow);
-    player.writeByte(worldColumn);
+    player.writeWorldIndex();
   }
 }

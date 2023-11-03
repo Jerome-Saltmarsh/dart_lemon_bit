@@ -766,6 +766,8 @@ extension isometricDebugUI on IsometricDebug {
   Widget buildTabAmulet() => GSContainer(
       child: Column(
         children: [
+          buildRowRefresh('world_row', () => amulet.worldRow),
+          buildRowRefresh('world_column', () => amulet.worldColumn),
           buildText('CHANGE GAME'),
           buildWatch(amulet.amuletScene, (activeAmuletScene) => Column(
               children: AmuletScene.values.map((amuletScene) => onPressed(

@@ -127,14 +127,14 @@ class Amulet {
     games.add(amuletRoad02);
 
     worldMap.add(amuletGameTown);
-    worldMap.add(amuletGameTown);
-    worldMap.add(amuletGameTown);
-    worldMap.add(amuletGameTown);
-    worldMap.add(amuletGameTown);
-    worldMap.add(amuletGameTown);
-    worldMap.add(amuletGameTown);
-    worldMap.add(amuletGameTown);
-    worldMap.add(amuletGameTown);
+    worldMap.add(amuletRoad01);
+    worldMap.add(amuletRoad02);
+    worldMap.add(amuletRoad01);
+    worldMap.add(amuletRoad01);
+    worldMap.add(amuletRoad01);
+    worldMap.add(amuletRoad01);
+    worldMap.add(amuletRoad01);
+    worldMap.add(amuletRoad01);
 
     for (var i = 0; i < worldMap.length; i++){
       final game = worldMap[i];
@@ -269,15 +269,6 @@ class Amulet {
       games.removeAt(i);
       i--;
     }
-  }
-
-  Player joinGame(Game game) {
-    final player = game.createPlayer();
-    final players = game.players;
-    if (!players.contains(player)){
-      players.add(player);
-    }
-    return player;
   }
 
   AmuletGame addGame(AmuletGame game) {
