@@ -480,18 +480,21 @@ class Amulet extends IsometricGame {
     onWorldMapChanged();
   }
 
+  late final colorMap = {
+    NodeType.Water: colors.blue_2,
+    NodeType.Grass: colors.sage_2,
+    NodeType.Brick: colors.grey_2,
+    NodeType.Tree_Top: colors.sage_3,
+    NodeType.Wood: colors.brown_3,
+    NodeType.Soil: colors.brown_2,
+  };
+
   Color mapNodeTypeToColor(int nodeType){
-    return const {
-      NodeType.Water: Colors.blue,
-      NodeType.Grass: Colors.green,
-      NodeType.Brick: Colors.grey,
-      NodeType.Tree_Top: Colors.teal,
-      NodeType.Wood: Colors.brown,
-      NodeType.Soil: Colors.brown,
-    }[nodeType] ?? Colors.black;
+    return colorMap[nodeType] ?? Colors.black;
   }
 
   void recordWorldMapPicture(){
+
     print('amulet.recordWorldMapPicture()');
     final paint = Paint()..color = Colors.white;
     final recorder = ui.PictureRecorder();
