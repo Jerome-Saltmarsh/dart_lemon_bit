@@ -56,15 +56,17 @@ class Nerve {
   }
 
   void onDisconnected(Connection connection) {
-    final player = connection.player;
-    if (player != null) {
-      if (player is IsometricPlayer && player.persistOnDisconnect){
-        final characterJson = mapIsometricPlayerToJson(player);
-        characterJson.remove('auto_save');
-        persistPlayer(player, characterJson);
-      }
-      connection.leaveCurrentGame();
+    if (!connection.playerCreated){
+      return;
     }
+    final player = connection.player;
+    if (player.persistOnDisconnect){
+      final characterJson = mapIsometricPlayerToJson(player);
+      characterJson.remove('auto_save');
+      persistPlayer(player, characterJson);
+    }
+    connection.leaveCurrentGame();
+
   }
 
   void persistPlayer(IsometricPlayer player, Json character) =>

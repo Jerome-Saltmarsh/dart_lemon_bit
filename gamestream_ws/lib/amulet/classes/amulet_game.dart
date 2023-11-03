@@ -675,4 +675,12 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     super.onPlayerJoined(player);
     player.writeWorldIndex();
   }
+
+  @override
+  void revive(AmuletPlayer player) {
+    super.revive(player);
+    player.x = 1000;
+    player.y = 1000;
+    player.z = 300.0;
+  }
 }

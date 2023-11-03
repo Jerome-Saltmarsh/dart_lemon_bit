@@ -43,16 +43,20 @@ class AmuletWorldMap extends StatelessWidget {
         final posY = amulet.worldColumn * mapSize + (mapSize * ratioY);
         paint.color = Colors.red;
 
-        // final translateX = centerX - posX;
-        // final translateY = centerY - posY;
-        // canvas.translate(adj(piQuarter, posX), opp(piQuarter, posY));
-        // canvas.translate(posX, posY);
+        final translateX = centerX - posX;
+        final translateY = centerY - posY;
+        // canvas.translate(adj(piQuarter, translateX), opp(piQuarter, translateY));
+        // canvas.translate(adj(piQuarter, translateX), opp(piQuarter, translateY));
+        // canvas.translate(translateX, 0);
+        // canvas.translate(canvasWidth * 0.5, 0);
 
-        // canvas.translate(-posX, 0);
+        // canvas.translate(canvasWidth * 0.5, -canvasHeight * 0.5);
+        canvas.translate(translateX, translateY);
         // canvas.rotate(pi * 0.25);
         canvas.drawPicture(worldMapPicture);
-        // canvas.drawCircle(Offset(0, posY), 10, paint);
         canvas.drawCircle(Offset(posX, posY), 10, paint);
+        paint.color = Colors.blue;
+        canvas.drawCircle(Offset(centerX, centerY), 10, paint);
 
 
 
