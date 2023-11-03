@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/amulet/amulet.dart';
 import 'package:lemon_engine/lemon_engine.dart';
@@ -45,38 +43,36 @@ class AmuletWorldMap extends StatelessWidget {
 
         final translateX = centerX - posX;
         final translateY = centerY - posY;
-        // canvas.translate(adj(piQuarter, translateX), opp(piQuarter, translateY));
-        // canvas.translate(adj(piQuarter, translateX), opp(piQuarter, translateY));
-        // canvas.translate(translateX, 0);
-        // canvas.translate(canvasWidth * 0.5, 0);
 
-        // canvas.translate(canvasWidth * 0.5, -canvasHeight * 0.5);
-
-        canvas.translate(canvasWidth * 0.5, 0);
+        canvas.translate(centerX, -100);
         canvas.rotate(piQuarter);
         canvas.translate(translateX, translateY);
 
-
         canvas.drawPicture(worldMapPicture);
-        canvas.drawCircle(Offset(posX, posY), 10, paint);
+        canvas.drawCircle(Offset(posX, posY), 5, paint);
         paint.color = Colors.blue;
-        canvas.drawCircle(Offset(centerX, centerY), 10, paint);
+        canvas.drawCircle(Offset(centerX, centerY), 5, paint);
 
 
 
       },
     );
 
-    return Container(
-        width: size,
-        height: size,
-        color: Colors.white,
-        child: CustomTicker(
-          onTrick: (duration) {
-            frame++;
-          },
-          child: canvas,
+    return ClipOval(
+      child: Container(
+          width: size,
+          height: size,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white,
+          ),
+          child: CustomTicker(
+            onTrick: (duration) {
+              frame++;
+            },
+            child: canvas,
+          ),
         ),
-      );
+    );
   }
 }
