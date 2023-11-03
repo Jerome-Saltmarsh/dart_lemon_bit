@@ -445,16 +445,18 @@ class Amulet extends IsometricGame {
     worldMapSrcs = srcs;
 
     var i = 0;
-    for (var row = 0; row < worldRows; row++){
-      for (var column = 0; column < worldColumns; column++){
+    for (var worldColumn = 0; worldColumn < worldColumns; worldColumn++){
+    for (var worldRow = 0; worldRow < worldRows; worldRow++){
         final worldFlatMap = worldFlatMaps[index];
 
         for (var nodeIndex = 0; nodeIndex < area; nodeIndex++){
           final nodeType = worldFlatMap[nodeIndex];
           final nodeRow = nodeIndex ~/ size;
-          final nodeColum = nodeIndex % size;
-          final x = (row * size) + nodeRow;
-          final y = (column * size) + nodeColum;
+          final nodeColumn = nodeIndex % size;
+          // final nodeColumn = nodeIndex ~/ size;
+          // final nodeRow = nodeIndex % size;
+          final x = (worldRow * size) + nodeRow;
+          final y = (worldColumn * size) + nodeColumn;
           final f = i * 4;
 
           clrs[i] = mapNodeTypeToColor(nodeType).value;

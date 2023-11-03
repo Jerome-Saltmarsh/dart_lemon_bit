@@ -6,4 +6,5 @@ enum AmuletScene {
   Road_01,
   Road_02,
   Editor,
+  Generated,
 }

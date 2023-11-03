@@ -9,8 +9,7 @@ import 'package:gamestream_ws/amulet/classes/amulet_game_tutorial.dart';
 import 'package:gamestream_ws/amulet/classes/amulet_player.dart';
 import 'package:gamestream_ws/amulet/classes/fiend_type.dart';
 import 'package:gamestream_ws/gamestream.dart';
-import 'package:gamestream_ws/isometric/classes/isometric_environment.dart';
-import 'package:gamestream_ws/isometric/classes/isometric_time.dart';
+import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages/common/src/amulet/amulet_item.dart';
 import 'package:gamestream_ws/packages/common/src/amulet/amulet_scene.dart';
 import 'package:gamestream_ws/packages/common/src/duration_auto_save.dart';
@@ -129,12 +128,12 @@ class Amulet {
     worldMap.add(amuletGameTown);
     worldMap.add(amuletRoad01);
     worldMap.add(amuletRoad02);
-    worldMap.add(amuletRoad01);
-    worldMap.add(amuletRoad01);
-    worldMap.add(amuletRoad01);
-    worldMap.add(amuletRoad01);
-    worldMap.add(amuletRoad01);
-    worldMap.add(amuletRoad01);
+    worldMap.add(buildEmptyField());
+    worldMap.add(buildEmptyField());
+    worldMap.add(buildEmptyField());
+    worldMap.add(buildEmptyField());
+    worldMap.add(buildEmptyField());
+    worldMap.add(buildEmptyField());
 
     for (var i = 0; i < worldMap.length; i++){
       final game = worldMap[i];
@@ -142,6 +141,20 @@ class Amulet {
       game.worldColumn = i % worldColumns;
       game.worldRow = i ~/ worldColumns;
     }
+  }
+
+  AmuletGame buildEmptyField(){
+    final instance = AmuletGame(
+      amulet: this,
+      scene: generateEmptyScene(rows: 100, columns: 100, name: 'generated'),
+      time: amuletTime,
+      environment: amuletEnvironment,
+      name: 'generated',
+      fiendTypes: [FiendType.Fallen_01],
+      amuletScene: AmuletScene.Generated,
+    );
+    games.add(instance);
+    return instance;
   }
 
   void _initializeUpdateTimer() {
@@ -178,34 +191,36 @@ class Amulet {
       final game = worldMap[i];
       final scene = game.scene;
       final players = game.players;
-      final row = i % worldRows;
-      final column = i ~/ worldColumns;
-      final rowsAbove = row > 0;
-      final rowsBelow = row < worldRows - 1;
-      final columnsAbove = column > 0;
-      final columnsBelow = column < worldColumns - 1;
+      final worldRow = i ~/ worldColumns;
+      final worldColumn = i % worldColumns;
+      final rowsAbove = worldRow > 0;
+      final rowsBelow = worldRow < worldRows - 1;
+      final columnsAbove = worldColumn > 0;
+      final columnsBelow = worldColumn < worldColumns - 1;
       final xMax = scene.rowLength - padding;
       final yMax = scene.columnLength - padding;
       var playerLength = players.length;
 
-      if (columnsBelow || rowsAbove) {
+      if (rowsBelow || rowsAbove) {
         for (var j = 0; j < playerLength; j++) {
           final player = players[j];
           final playerX = player.x;
           if (rowsAbove && playerX < padding) {
-            final targetGameIndex = i - 1;
+            final targetGameIndex = i - worldColumns;
             final targetGame = worldMap[targetGameIndex];
             playerChangeGame(player: player, target: targetGame);
             playerLength--;
-            player.x = xMax - padding;
+            player.setPosition(
+              x: xMax - padding
+            );
             continue;
           }
           if (rowsBelow && playerX > xMax) {
-            final targetGameIndex = i + 1;
+            final targetGameIndex = i + worldColumns;
             final targetGame = worldMap[targetGameIndex];
             playerChangeGame(player: player, target: targetGame);
             playerLength--;
-            player.x = paddingPlus;
+            player.setPosition(x: paddingPlus);
             continue;
           }
         }
@@ -216,11 +231,11 @@ class Amulet {
           final player = players[j];
           final playerY = player.y;
           if (columnsAbove && playerY < padding) {
-            final targetGameIndex = i - worldColumns;
+            final targetGameIndex = i - 1;
             final targetGame = worldMap[targetGameIndex];
             playerChangeGame(player: player, target: targetGame);
             playerLength--;
-            player.y = yMax - padding;
+            player.setPosition(y: yMax - padding);
             continue;
           }
           if (columnsBelow && playerY > yMax) {
@@ -228,7 +243,7 @@ class Amulet {
             final targetGame = worldMap[targetGameIndex];
             playerChangeGame(player: player, target: targetGame);
             playerLength--;
-            player.y = paddingPlus;
+            player.setPosition(y: paddingPlus);
             continue;
           }
         }

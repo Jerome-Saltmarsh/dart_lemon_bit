@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/amulet/amulet.dart';
 import 'package:lemon_engine/lemon_engine.dart';
@@ -40,6 +42,7 @@ class AmuletWorldMap extends StatelessWidget {
 
         paint.color = Colors.red;
         // canvas.translate(posX - (size * 0.5), posY - (size * 0.5));
+        canvas.rotate(pi * 0.25);
         canvas.drawPicture(worldMapPicture);
         canvas.drawCircle(Offset(posX, posY), 10, paint);
       },
