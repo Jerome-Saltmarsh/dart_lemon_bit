@@ -828,25 +828,26 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     final numberOfCollidersMinusOne = numberOfColliders - 1;
     for (var i = 0; i < numberOfCollidersMinusOne; i++) {
       final colliderI = colliders[i];
-      if (!colliderI.active) continue;
-      if (!colliderI.collidable) continue;
+      if (!colliderI.active || !colliderI.collidable) continue;
       final colliderIOrder = colliderI.order;
       final colliderIRadius = colliderI.radius;
+      final colliderIBoundsBottom = colliderI.boundsBottom;
+      final colliderIBoundsRight = colliderI.boundsRight;
+      final colliderIBoundsLeft = colliderI.boundsLeft;
+      final colliderIZ = colliderI.z;
+
       for (var j = i + 1; j < numberOfColliders; j++) {
         final colliderJ = colliders[j];
-        if (!colliderJ.active) continue;
-        if (!colliderJ.collidable) continue;
+        if (!colliderJ.active || !colliderJ.collidable) continue;
         final colliderJOrder = colliderJ.order;
         if (colliderJOrder - colliderIOrder > (colliderIRadius + colliderJ.radius))
           break;
-        if (colliderJ.boundsTop > colliderI.boundsBottom)
-          continue;
-        if (colliderJ.boundsLeft > colliderI.boundsRight)
-          continue;
-        if (colliderJ.boundsRight < colliderI.boundsLeft)
-          continue;
-        if ((colliderJ.z - colliderI.z).abs() > Node_Height)
-          continue;
+        if (
+          colliderJ.boundsTop > colliderIBoundsBottom ||
+          colliderJ.boundsLeft > colliderIBoundsRight ||
+          colliderJ.boundsRight < colliderIBoundsLeft ||
+          (colliderJ.z - colliderIZ).abs() > Node_Height
+        ) continue;
         internalOnCollisionBetweenColliders(colliderJ, colliderI);
       }
     }
