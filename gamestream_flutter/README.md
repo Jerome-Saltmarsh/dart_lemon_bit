@@ -10,17 +10,21 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
-* [new]: world map
+* [new]: render body north and east
+* [new]: character state strike two
+* [new]: design map 0
 
 ## TODO
-* [new]: render body north and east  
-* [new]: character state strike two
+* [fix]: render orc north and east
 * [fix]: kid casting shadow
 * [fix]: inventory slots remain green after drag
 * [fix]: orc strike sprite not rendered
 * [new]: item tabs weapons amulets etc
 * [new]: model hair
 * [new]: gameobject tree stump
+
+## 03.11.2023
+* [new]: world map
 
 ## 02.11.2023
 * [fix]: load image errors

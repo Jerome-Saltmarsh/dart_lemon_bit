@@ -11,9 +11,9 @@ abstract class Collider extends Position {
   /// do not mutate directly use game.deactivateCollider
   var active = true;
 
-  var physicsVelocityX = 0.0;
-  var physicsVelocityY = 0.0;
-  var physicsVelocityZ = 0.0;
+  var velocityX = 0.0;
+  var velocityY = 0.0;
+  var velocityZ = 0.0;
   var physicsFriction = Physics.Friction;
   var physicsBounce = false;
   var radius = 0.0;
@@ -56,10 +56,10 @@ abstract class Collider extends Position {
   bool get inactive => !active;
 
   /// Expensive Operation
-  double get velocitySpeed => hyp2(physicsVelocityX, physicsVelocityY);
+  double get velocitySpeed => hyp2(velocityX, velocityY);
 
   /// Expensive Operation
-  double get velocityAngle => rad(physicsVelocityX, physicsVelocityY);
+  double get velocityAngle => rad(velocityX, velocityY);
 
   /// Expensive Operation
   double get boundsLeft => x - radius;
@@ -77,8 +77,8 @@ abstract class Collider extends Position {
   void set velocitySpeed(double value){
     assert (value >= 0);
     final currentAngle = velocityAngle;
-    physicsVelocityX = adj(currentAngle, value);
-    physicsVelocityY = opp(currentAngle, value);
+    velocityX = adj(currentAngle, value);
+    velocityY = opp(currentAngle, value);
   }
 
   // METHODS
@@ -97,8 +97,8 @@ abstract class Collider extends Position {
   }
 
   void setVelocity(double angle, double speed){
-    physicsVelocityX = adj(angle, speed);
-    physicsVelocityY = opp(angle, speed);
+    velocityX = adj(angle, speed);
+    velocityY = opp(angle, speed);
   }
 
   void applyForce({
@@ -106,8 +106,8 @@ abstract class Collider extends Position {
     required double angle,
   }) {
     if (enabledFixed) return;
-    physicsVelocityX += adj(angle, force);
-    physicsVelocityY += opp(angle, force);
+    velocityX += adj(angle, force);
+    velocityY += opp(angle, force);
   }
 
   void clampVelocity(double value){
@@ -121,16 +121,16 @@ abstract class Collider extends Position {
     if (enabledFixed) return;
 
 
-    x += (physicsVelocityX * Amulet.Fixed_Time);
-    y += (physicsVelocityY * Amulet.Fixed_Time);
-    z += (physicsVelocityZ * Amulet.Fixed_Time);
-    physicsVelocityX *= physicsFriction;
-    physicsVelocityY *= physicsFriction;
+    x += (velocityX * Amulet.Fixed_Time);
+    y += (velocityY * Amulet.Fixed_Time);
+    z += (velocityZ * Amulet.Fixed_Time);
+    velocityX *= physicsFriction;
+    velocityY *= physicsFriction;
 
     if (enabledGravity) {
-      physicsVelocityZ -= Physics.Gravity * Amulet.Fixed_Time;
-      if (physicsVelocityZ < -Physics.Max_Fall_Velocity) {
-        physicsVelocityZ = -Physics.Max_Fall_Velocity * Amulet.Fixed_Time;
+      velocityZ -= Physics.Gravity * Amulet.Fixed_Time;
+      if (velocityZ < -Physics.Max_Fall_Velocity) {
+        velocityZ = -Physics.Max_Fall_Velocity * Amulet.Fixed_Time;
       }
     }
   }
@@ -205,8 +205,8 @@ abstract class Collider extends Position {
 
   void deactivate(){
     active = false;
-    physicsVelocityX = 0;
-    physicsVelocityY = 0;
-    physicsVelocityZ = 0;
+    velocityX = 0;
+    velocityY = 0;
+    velocityZ = 0;
   }
 }
