@@ -82,49 +82,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   void update() {
     super.update();
     updateCooldownTimer();
-    // updatePlayers();
   }
-
-  // void updatePlayers() {
-  //   const padding = 25.0;
-  //   final players = this.players;
-  //   final gameNorth = this.gameNorth;
-  //   final gameSouth = this.gameSouth;
-  //   final maxX = scene.rowLength - padding;
-  //
-  //   var length = players.length;
-  //
-  //   for (var i = 0; i < length; i++){
-  //     final player = players[i];
-  //     final x = player.x;
-  //     if (x < padding && gameNorth != null) {
-  //       amulet.playerChangeGame(
-  //         player: player,
-  //         target: gameNorth,
-  //       );
-  //       player.x = gameNorth.scene.rowLength - 50;
-  //       player.y = player.y.clamp(0, gameNorth.scene.columnLength);
-  //       player.writePlayerPositionAbsolute();
-  //       player.writePlayerEvent(PlayerEvent.Player_Moved);
-  //       i--;
-  //       length = players.length;
-  //       continue;
-  //     }
-  //
-  //     if (x > maxX && gameSouth != null){
-  //       amulet.playerChangeGame(
-  //         player: player,
-  //         target: gameSouth,
-  //       );
-  //       player.x = padding + 25;
-  //       player.y = player.y.clamp(0, gameSouth.scene.columnLength);
-  //       player.writePlayerPositionAbsolute();
-  //       player.writePlayerEvent(PlayerEvent.Player_Moved);
-  //       i--;
-  //       length = players.length;
-  //     }
-  //   }
-  // }
 
   void updateCooldownTimer() {
     if (cooldownTimer-- > 0)

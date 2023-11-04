@@ -24,6 +24,7 @@ ctrl + []               : move caret to code block
 * [new]: gameobject tree stump
 
 ## 04.11.2023
+* [new]: compress world map bytes
 * [new]: character state strike two
 * [new]: optimize gameobject collision detection
 

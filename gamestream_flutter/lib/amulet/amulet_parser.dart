@@ -1,6 +1,9 @@
 
+import 'dart:typed_data';
+
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_parser.dart';
+import 'package:lemon_byte/byte_reader.dart';
 
 extension AmuletParser on IsometricParser {
 
@@ -166,18 +169,24 @@ extension AmuletParser on IsometricParser {
   }
 
   void readWorldMapBytes() {
-    final rows = readByte();;
-    final columns = readByte();;
-    final total = rows * columns;
-    amulet.worldRows = rows;
-    amulet.worldColumns = columns;
+    final worldRows = readByte();;
+    final worldColumns = readByte();;
+    final total = worldRows * worldColumns;
+    amulet.worldRows = worldRows;
+    amulet.worldColumns = worldColumns;
     final worldFlatMaps = amulet.worldFlatMaps;
     worldFlatMaps.clear();
 
+    final compressedBytesLength = readUInt16();
+    final compressedBytes = readBytes(compressedBytesLength);
+    final bytesDecompressed = decoder.decodeBytes(compressedBytes);
+    final byteReader = ByteReader();
+    byteReader.values = bytesDecompressed;
+
     for (var i = 0; i < total; i++){
-      final length = readUInt24();
-      final bytes = readBytes(length);
-      worldFlatMaps.add(bytes);
+      final length = byteReader.readUInt24();
+      final bytes = byteReader.readBytes(length);
+      worldFlatMaps.add(Uint8List.fromList(bytes));
     }
 
     amulet.buildWorldMapSrcAndDst();

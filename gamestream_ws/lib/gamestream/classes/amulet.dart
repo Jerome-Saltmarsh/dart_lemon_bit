@@ -1,6 +1,7 @@
 
 
 import 'dart:async';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:gamestream_ws/amulet/classes/amulet_game.dart';
@@ -321,13 +322,14 @@ class Amulet {
 
   void _compileWorldMapBytes() {
     final byteWriter = ByteWriter();
-    byteWriter.writeByte(worldRows);
-    byteWriter.writeByte(worldColumns);
+    final compressor = ZLibCodec();
     for (var game in worldMap) {
       final flatNodes = game.flatNodes;
       byteWriter.writeUInt24(flatNodes.length);
       byteWriter.writeBytes(flatNodes);
     }
-    worldMapBytes = byteWriter.compile();
+    final bytes = byteWriter.compile();
+    final bytesCompressed = compressor.encode(bytes);
+    worldMapBytes = Uint8List.fromList(bytesCompressed);
   }
 }
