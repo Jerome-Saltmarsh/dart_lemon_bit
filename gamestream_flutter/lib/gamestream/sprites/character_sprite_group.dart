@@ -9,7 +9,8 @@ class CharacterSpriteGroup {
   final Sprite change;
   final Sprite dead;
   final Sprite fire;
-  final Sprite strike;
+  final Sprite strike1;
+  final Sprite strike2;
   final Sprite hurt;
   final Sprite casting;
 
@@ -19,7 +20,8 @@ class CharacterSpriteGroup {
     required this.change,
     required this.dead,
     required this.fire,
-    required this.strike,
+    required this.strike1,
+    required this.strike2,
     required this.hurt,
     required this.casting,
   });
@@ -28,8 +30,8 @@ class CharacterSpriteGroup {
       switch (characterState) {
         CharacterState.Idle => idle,
         CharacterState.Running => running,
-        CharacterState.Strike_1 => strike,
-        CharacterState.Strike_2 => strike,
+        CharacterState.Strike_1 => strike1,
+        CharacterState.Strike_2 => strike2,
         CharacterState.Hurt => hurt,
         CharacterState.Dead => dead,
         CharacterState.Fire => fire,

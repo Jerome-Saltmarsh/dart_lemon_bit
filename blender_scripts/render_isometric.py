@@ -19,7 +19,7 @@ def get_animation_tracks(object_name):
     raise ValueError('get_animation_tracks("' + object_name + '") is null')
 
 
-def get_animation_tracks_unmuted(object_name):
+def get_active_animation_tracks(object_name):
     unmuted_tracks = []
     animation_tracks = get_animation_tracks(object_name)
     for animation_track in animation_tracks:
@@ -153,6 +153,8 @@ direction_west = 'west'
 name_mesh_kid = 'mesh_kid'
 name_material_cell_shade = 'cell_shade'
 name_object_rotation = 'rotation'
+name_object_direction = 'direction'
+name_object_camera = 'camera'
 
 directory_renders = 'C:/Users/Jerome/github/bleed/lemon_atlas/assets/renders/'
 
@@ -215,7 +217,7 @@ def enable_animation_tracks_by_name(name):
             animation_track.mute = animation_track.name != name
 
 
-def render_camera_track(camera_track, render_direction):
+def render_camera_track_by_direction(camera_track, render_direction):
     print(f'render_camera_track({camera_track.name}, {render_direction})')
     armature_kid_animation_tracks = get_animation_tracks_rig_kid()
     object_rotation = get_object(name_object_rotation)
@@ -239,7 +241,7 @@ def render_camera_track(camera_track, render_direction):
         # for rig_kid_animation_track in armature_kid_animation_tracks:
         #     rig_kid_animation_track.mute = rig_kid_animation_track.name == 'tpose'
 
-    armature_kid_animation_tracks = get_animation_tracks_unmuted("armature_kid")
+    armature_kid_animation_tracks = get_active_animation_tracks("armature_kid")
     exports = get_collection("exports")
 
     if not exports:
@@ -383,7 +385,8 @@ def render_unmuted_rotation_tracks():
     print('render_unmuted_rotation_tracks()')
     hide_mesh_kid()
     set_render_engine_eevee()
-    unmuted_camera_tracks = get_animation_tracks_unmuted('camera')
+    unmuted_camera_tracks = get_active_animation_tracks(name_object_camera)
+    active_direction_tracks = get_active_animation_tracks(name_object_direction)
 
     if not unmuted_camera_tracks:
         raise ValueError('no active camera animation tracks')
@@ -392,10 +395,8 @@ def render_unmuted_rotation_tracks():
         unmuted_camera_track.mute = True
 
     for unmuted_camera_track in unmuted_camera_tracks:
-        render_camera_track(unmuted_camera_track, direction_north)
-        render_camera_track(unmuted_camera_track, direction_east)
-        render_camera_track(unmuted_camera_track, direction_south)
-        render_camera_track(unmuted_camera_track, direction_west)
+        for active_direction_track in active_direction_tracks:
+            render_camera_track_by_direction(unmuted_camera_track, active_direction_track.name)
 
     for unmuted_camera_track in unmuted_camera_tracks:
         unmuted_camera_track.mute = False

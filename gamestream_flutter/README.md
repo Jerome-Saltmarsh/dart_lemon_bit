@@ -11,7 +11,6 @@ ctrl + []               : move caret to code block
 
 ## CURRENT
 * [new]: render body north and east
-* [new]: character state strike two
 * [new]: design map 0
 
 ## TODO
@@ -25,6 +24,7 @@ ctrl + []               : move caret to code block
 * [new]: gameobject tree stump
 
 ## 04.11.2023
+* [new]: character state strike two
 * [new]: optimize gameobject collision detection
 
 ## 03.11.2023
