@@ -23,6 +23,9 @@ ctrl + []               : move caret to code block
 * [new]: model hair
 * [new]: gameobject tree stump
 
+## 04.11.2023
+* [new]: optimize gameobject collision detection
+
 ## 03.11.2023
 * [new]: world map
 
