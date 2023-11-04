@@ -835,7 +835,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       for (var j = i + 1; j < numberOfColliders; j++) {
         final colliderJ = colliders[j];
         if (!colliderJ.active) continue;
-        if (!colliderI.collidable) continue;
+        if (!colliderJ.collidable) continue;
         final colliderJOrder = colliderJ.order;
         if (colliderJOrder - colliderIOrder > (colliderIRadius + colliderJ.radius))
           break;
