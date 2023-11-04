@@ -226,22 +226,40 @@ class IsometricImages with IsometricComponent {
     for (final direction in RenderDirection.values){
       loadSpriteGroupIsometric(
           direction: direction,
-          type: SpriteGroupType.Arms_Left, subType: ArmType.regular, skipHurt: true);
+          type: SpriteGroupType.Arms_Left,
+          subType: ArmType.regular,
+          skipHurt: true,
+      );
       loadSpriteGroupIsometric(
           direction: direction,
-          type: SpriteGroupType.Arms_Right, subType: ArmType.regular, skipHurt: true);
+          type: SpriteGroupType.Arms_Right,
+          subType: ArmType.regular,
+          skipHurt: true,
+      );
       loadSpriteGroupIsometric(
           direction: direction,
-          type: SpriteGroupType.Body_Male, subType: BodyType.Shirt_Blue, skipHurt: true);
+          type: SpriteGroupType.Body_Male,
+          subType: BodyType.Shirt_Blue,
+          skipHurt: true,
+      );
       loadSpriteGroupIsometric(
           direction: direction,
-          type: SpriteGroupType.Body_Male, subType: BodyType.Leather_Armour, skipHurt: true);
+          type: SpriteGroupType.Body_Male,
+          subType: BodyType.Leather_Armour,
+          skipHurt: true,
+      );
       loadSpriteGroupIsometric(
           direction: direction,
-          type: SpriteGroupType.Body_Female, subType: BodyType.Leather_Armour, skipHurt: true);
+          type: SpriteGroupType.Body_Female,
+          subType: BodyType.Leather_Armour,
+          skipHurt: true,
+      );
       loadSpriteGroupIsometric(
           direction: direction,
-          type: SpriteGroupType.Body_Arms, subType: BodyType.Shirt_Blue, skipHurt: true);
+          type: SpriteGroupType.Body_Arms,
+          subType: BodyType.Shirt_Blue,
+          skipHurt: true,
+      );
       loadSpriteGroupIsometric(
         direction: direction,
         type: SpriteGroupType.Body_Arms,
@@ -586,7 +604,7 @@ class IsometricImages with IsometricComponent {
 
     if (
       const[RenderDirection.north, RenderDirection.east].contains(direction) &&
-      !const[SpriteGroupType.Heads].contains(type)
+      !const[SpriteGroupType.Heads, SpriteGroupType.Body_Male].contains(type)
     ) {
         return;
     }

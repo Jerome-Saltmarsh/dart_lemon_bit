@@ -10,15 +10,15 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
-* [new]: render body north and east
 * [new]: design map 0
 
 ## TODO
 * [fix]: editor select gameobject
-* [fix]: render orc north and east
 * [fix]: kid casting shadow
 * [fix]: inventory slots remain green after drag
 * [fix]: orc strike sprite not rendered
+* [new]: render orc north and east
+* [new]: render tree north and east
 * [new]: item tabs weapons amulets etc
 * [new]: model hair
 * [new]: gameobject tree stump
