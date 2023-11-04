@@ -44,8 +44,7 @@ class Nerve {
     final connections = server.connections;
     for (final connection in connections){
       final player = connection.player;
-      if (player is AmuletPlayer)
-        performAutoSave(player);
+      performAutoSave(player);
     }
   }
 

@@ -15,8 +15,6 @@ import 'package:gamestream_ws/packages/common/src/amulet/amulet_scene.dart';
 import 'package:gamestream_ws/packages/common/src/duration_auto_save.dart';
 import 'package:lemon_byte/byte_writer.dart';
 
-import '../../isometric/classes/scenes.dart';
-
 class Amulet {
 
   final Nerve nerve;

@@ -1,11 +1,6 @@
-import 'dart:math';
-
-import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/packages/common.dart';
-import 'package:golden_ratio/constants.dart';
-import 'package:lemon_math/src.dart';
 import 'package:lemon_sprite/lib.dart';
 
 class RendererCharacters extends RenderGroup {
@@ -60,6 +55,8 @@ class RendererCharacters extends RenderGroup {
 
   void renderCurrentCharacter(){
 
+    final character = this.character;
+
     if (!renderBottom){
       if (!character.allie && options.renderHealthBarEnemies) {
         render.characterHealthBar(character);
@@ -91,135 +88,6 @@ class RendererCharacters extends RenderGroup {
       default:
         throw Exception('Cannot render character type: ${character.characterType}');
     }
-  }
-
-  double getZombieSrcX(Character character) {
-    const framesPerDirection = 0;
-    switch (character.state) {
-      case CharacterState.Running:
-        return loop4(
-            animation: const [3, 4, 5, 6],
-            character: character,
-            framesPerDirection: framesPerDirection
-        );
-      case CharacterState.Idle:
-        return single(
-            frame: 1,
-            direction: character.direction,
-            framesPerDirection: framesPerDirection
-        );
-      case CharacterState.Hurt:
-        return single(
-          frame: 2,
-          direction: character.direction,
-          framesPerDirection: framesPerDirection,
-        );
-      case CharacterState.Strike:
-        return animate(
-          animation: const [7, 7, 8, 8],
-          character: character,
-          framesPerDirection: framesPerDirection,
-        );
-      case CharacterState.Stunned:
-        render.starsPosition(character);
-
-        return single(
-            frame: 1,
-            direction: character.direction,
-            framesPerDirection: framesPerDirection
-        );
-      default:
-        throw Exception('Render zombie invalid state ${character.state}');
-    }
-  }
-
-  double single({
-    required int frame,
-    required num direction,
-    required int framesPerDirection,
-    double size = 64.0
-  }) {
-    return ((direction * framesPerDirection) + (frame - 1)) * size;
-  }
-
-  double loop4({
-    required List<int> animation,
-    required Character character,
-    required int framesPerDirection,
-    double size = 64,
-  }) => (character.renderDirection * framesPerDirection * size) +
-        ((animation[character.animationFrame % 4] - 1) * size);
-
-  double animate({
-    required List<int> animation,
-    required Character character,
-    required int framesPerDirection,
-    double size = 64.0
-  }) {
-    final animationFrame = min(character.animationFrame, animation.length - 1);
-    final frame = animation[animationFrame] - 1;
-    return (character.renderDirection * framesPerDirection * size) + (frame * size);
-  }
-
-  void renderCharacterShadowCircle(Character character) {
-    final maxNodes = 5;
-    final lightIndex = scene.getNearestLightSourcePosition(
-        character, maxDistance: maxNodes);
-
-    double x;
-    double y;
-    double z;
-    double radius;
-
-    if (lightIndex != -1) {
-      final lightRow = scene.getRow(lightIndex);
-      final lightColumn = scene.getColumn(lightIndex);
-      final lightZ = scene.getIndexZ(lightIndex);
-
-      final lightX = (lightRow * Node_Size) + Node_Size_Half;
-      final lightY = (lightColumn * Node_Size) + Node_Size_Half;
-      final lightPosZ = (lightZ * Node_Height) + Node_Height_Half;
-
-      final angle = angleBetween(lightX, lightY, character.x, character.y);
-      final distance = getDistanceXYZ(
-          character.x,
-          character.y,
-          character.z,
-          lightX,
-          lightY,
-          lightPosZ,
-      );
-
-      final maxDistance = maxNodes * Node_Size;
-      final distanceInverse =  (distance <= 0 ? 0 : (maxDistance / distance)).clamp(0, 1);
-      final shadowDistance = distanceInverse * 8.0;
-      x = character.x + adj(angle, shadowDistance);
-      y = character.y + opp(angle, shadowDistance);
-      z = character.z;
-    } else {
-      x = character.x;
-      y = character.y;
-      z = character.z;
-    }
-
-    const radiusBase = 6.0;
-    const radiusDelta = goldenRatio_0618;
-    const shadowRadia = [
-      radiusBase,
-      radiusBase + radiusDelta,
-      radiusBase,
-      radiusBase - radiusDelta,
-    ];
-
-    if (character.running) {
-      radius = shadowRadia[character.animationFrame % 4];
-    } else {
-      radius = shadowRadia[0];
-    }
-
-    engine.color = options.characterShadowColor;
-    render.circleFilled(x, y, z, radius);
-    engine.color = Colors.white;
   }
 
   /// TODO OPTIMIZE

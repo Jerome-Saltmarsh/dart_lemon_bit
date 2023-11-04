@@ -7,11 +7,6 @@ extension IsometricRequestReader on Connection {
 
   void readIsometricRequest(List<String> arguments){
     final player = this.player;
-
-    if (player is! IsometricPlayer) {
-      errorInvalidPlayerType();
-      return;
-    }
     final game = player.game;
     final isometricClientRequestIndex = parseArg1(arguments);
     if (isometricClientRequestIndex == null)

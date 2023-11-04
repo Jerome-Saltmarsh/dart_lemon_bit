@@ -2,7 +2,6 @@
 import 'dart:typed_data';
 
 
-import 'package:gamestream_ws/amulet.dart';
 import 'package:gamestream_ws/editor/isometric_editor.dart';
 import 'package:gamestream_ws/gamestream.dart';
 import 'package:gamestream_ws/packages.dart';
@@ -512,11 +511,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
         writeCharacterTemplate(character, cacheIndex);
       }
 
-      if (const [
-        CharacterState.Fire,
-        CharacterState.Strike,
-      ].contains(character.characterState)
-      ){
+      if (CharacterState.supportsAction.contains(character.characterState)){
         writePercentage(character.actionCompletionPercentage);
       }
 

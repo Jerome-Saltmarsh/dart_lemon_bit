@@ -197,7 +197,8 @@ class Character extends Collider {
 
   bool get firing => characterState == CharacterState.Fire;
 
-  bool get striking => characterState == CharacterState.Strike;
+  bool get striking =>
+      const [CharacterState.Strike_1, CharacterState.Strike_2].contains(characterState);
 
   bool get idling => characterState == CharacterState.Idle;
 
@@ -553,7 +554,7 @@ class Character extends Collider {
     this.actionFrame = (duration * actionFramePercentage).toInt();
     setDestinationToCurrentPosition();
     setCharacterState(
-      value: CharacterState.Strike,
+      value: randomItem(CharacterState.strikes),
       duration: duration,
     );
   }

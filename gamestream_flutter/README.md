@@ -15,6 +15,7 @@ ctrl + []               : move caret to code block
 * [new]: design map 0
 
 ## TODO
+* [fix]: editor select gameobject
 * [fix]: render orc north and east
 * [fix]: kid casting shadow
 * [fix]: inventory slots remain green after drag

@@ -28,7 +28,8 @@ class CharacterSpriteGroup {
       switch (characterState) {
         CharacterState.Idle => idle,
         CharacterState.Running => running,
-        CharacterState.Strike => strike,
+        CharacterState.Strike_1 => strike,
+        CharacterState.Strike_2 => strike,
         CharacterState.Hurt => hurt,
         CharacterState.Dead => dead,
         CharacterState.Fire => fire,

@@ -1,22 +1,34 @@
 class CharacterState {
   static const Idle = 0;
   static const Running = 1;
-  static const Strike = 2;
-  static const Changing = 3;
-  static const Stunned = 4;
-  static const Spawning = 5;
-  static const Hurt = 6;
-  static const Dead = 7;
-  static const Aiming = 8;
-  static const Fire = 9;
-  static const Casting = 10;
+  static const Strike_1 = 2;
+  static const Strike_2 = 3;
+  static const Changing = 4;
+  static const Stunned = 5;
+  static const Spawning = 6;
+  static const Hurt = 7;
+  static const Dead = 8;
+  static const Aiming = 9;
+  static const Fire = 10;
+  static const Casting = 11;
+
+  static const strikes = [
+    Strike_1, Strike_2,
+  ];
+
+  static const supportsAction = [
+    Fire,
+    Strike_1,
+    Strike_2,
+  ];
 
   static String getName(int value) => const {
       Idle: 'Idle',
       Running: 'Running',
       Dead: 'Dead',
       Changing: 'Changing',
-      Strike: 'Strike',
+      Strike_1: 'Strike_1',
+      Strike_2: 'Strike_2',
       Hurt: 'Hurt',
       Stunned: 'Stunned',
       Spawning: 'Spawning',
