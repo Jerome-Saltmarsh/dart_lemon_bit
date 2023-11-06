@@ -106,15 +106,15 @@ class IsometricGame extends Game {
 
   @override
   void onLeftClicked() {
-    if (io.inputModeTouch) {
-      io.touchController.onClick();
+    // if (io.inputModeTouch) {
+    //   io.touchController.onClick();
+    // }
+    if (debugMode) {
+      debug.onMouseLeftClicked();
+      return;
     }
     if (editMode) {
       editor.onMouseLeftClicked();
-      return;
-    }
-    if (debugMode) {
-      debug.onMouseLeftClicked();
       return;
     }
   }

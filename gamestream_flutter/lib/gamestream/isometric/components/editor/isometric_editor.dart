@@ -163,30 +163,21 @@ class IsometricEditor with IsometricComponent {
         paint();
         break;
       case KeyCode.G:
-
-        if (!engine.keyPressedShiftLeft){
-          cameraCenterOnNodeSelectedIndex();
-          return;
-        }
-
+        // if (!engine.keyPressedShiftLeft){
+        //   cameraCenterOnNodeSelectedIndex();
+        //   return;
+        // }
         switch (editorTab.value){
           case EditorTab.Keys:
-            final selectedKey = selectedKeyEntry.value;
-            if (selectedKey == null){
-              break;
-            }
             moveSelectedKeyEntryToNodeSelected();
             return;
+          case EditorTab.Objects:
+            moveSelectedGameObjectToMouse();
+            return;
           default:
-            break;
+            cameraCenterOnNodeSelectedIndex();
+            return;
         }
-
-        if (gameObjectSelected.value) {
-          sendGameObjectRequestMoveToMouse();
-        } else {
-          cameraCenterOnNodeSelectedIndex();
-        }
-        break;
       case KeyCode.R:
         selectPaintType();
         break;
@@ -266,6 +257,12 @@ class IsometricEditor with IsometricComponent {
           markType: MarkType.values[5],
         );
         break;
+    }
+  }
+
+  void moveSelectedGameObjectToMouse() {
+    if (gameObjectSelected.value) {
+      sendGameObjectRequestMoveToMouse();
     }
   }
 
@@ -478,7 +475,6 @@ class IsometricEditor with IsometricComponent {
 
   void onChangedEditTab(EditorTab editTab) {
     deselectGameObject();
-    io.enabledMouseClick = editTab != EditorTab.Marks;
   }
 
   void setSelectedObjectedIntensity(double value) =>

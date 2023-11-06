@@ -13,7 +13,6 @@ ctrl + []               : move caret to code block
 * [new]: design map 0
 
 ## TODO
-* [fix]: editor select gameobject
 * [fix]: kid casting shadow
 * [fix]: inventory slots remain green after drag
 * [fix]: orc strike sprite not rendered
@@ -22,11 +21,15 @@ ctrl + []               : move caret to code block
 * [new]: item tabs weapons amulets etc
 * [new]: model hair
 * [new]: gameobject tree stump
+* [new]: gameobject wooden barrel
+
+## 06.11.2023
+* [fix]: editor select gameobject
 
 ## 04.11.2023
 * [new]: compress world map bytes
 * [new]: character state strike two
-* [new]: optimize gameobject collision detection
+* [new]: optimize collider collision detection
 
 ## 03.11.2023
 * [new]: world map

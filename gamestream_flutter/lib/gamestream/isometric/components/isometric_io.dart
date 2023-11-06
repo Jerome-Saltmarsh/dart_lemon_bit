@@ -11,8 +11,6 @@ import 'classes/touch_controller.dart';
 
 class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
 
-  var enabledMouseClick = true;
-
   var previousMouseX = 0;
   var previousMouseY = 0;
   var previousScreenLeft = 0;
@@ -89,7 +87,7 @@ class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
 
     var hex = getDirection();
 
-    if (enabledMouseClick && engine.watchMouseLeftDown.value) {
+    if (engine.watchMouseLeftDown.value) {
       hex = hex | ByteHex.Hex_16;
     }
 
@@ -248,7 +246,12 @@ class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
       | changeScreenRight << 4
       | changeScreenBottom << 6;
 
-    writeByte(getComputerInputAsByte());
+    if (options.editMode){
+      writeByte(0);
+    } else {
+      writeByte(getComputerInputAsByte());
+    }
+
     writeByte(compress1);
     writeByte(compress2);
 

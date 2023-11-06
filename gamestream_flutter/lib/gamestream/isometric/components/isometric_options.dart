@@ -5,7 +5,6 @@ import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/editor/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
@@ -137,14 +136,12 @@ class IsometricOptions with IsometricComponent implements Updatable {
   void _onChangedEdit(bool value) {
     if (value) {
       editor.cameraCenterOnNodeSelectedIndex();
-      io.enabledMouseClick = editor.editorTab.value != EditorTab.Marks;
       editor.cursorSetToPlayer();
-      camera.target = options.cameraEdit;
+      camera.target = cameraEdit;
     } else {
-      io.enabledMouseClick = true;
       actions.cameraPlayerTargetPlayer();
       editor.deselectGameObject();
-      camera.target = options.cameraPlay;
+      camera.target = cameraPlay;
     }
   }
 

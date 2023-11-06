@@ -48,8 +48,6 @@ class IsometricPlayer with IsometricComponent {
   final handTypeLeft = Watch(0);
   final handTypeRight = Watch(0);
   final complexion = Watch(0);
-  // final previousPosition = Position();
-  // final accuracy = Watch(1.0);
   final energy = Watch(0);
   final energyMax = Watch(0);
   final abilityTarget = Position();

@@ -414,7 +414,7 @@ class Connection extends ByteReader {
 
 
       case IsometricEditorGameObjectRequest.Select:
-        final gameObjects = player.scene.gameObjects;
+        final gameObjects = player.game.gameObjects;
         if (gameObjects.isEmpty) return;
         final mouseX = player.mouseX;
         final mouseY = player.mouseY;
