@@ -1398,17 +1398,19 @@ class RendererNodes extends RenderGroup {
           ? renderTreeTopPine(
               dstX: dstX,
               dstY: dstY,
-              colorWest: colorWest,
-              colorSouth: colorSouth,
               colorNorth: colorNorth,
               colorEast: colorEast,
+              colorSouth: colorSouth,
+              colorWest: colorWest,
               animationFrame: animationFrame,
             )
-          : renderNodeTreeTopOak(
+          : renderTreeTopOak(
               dstX: dstX,
               dstY: dstY,
-              colorWest: colorWest,
+              colorNorth: colorNorth,
+              colorEast: colorEast,
               colorSouth: colorSouth,
+              colorWest: colorWest,
               animationFrame: animationFrame,
             );
 
@@ -1443,22 +1445,31 @@ class RendererNodes extends RenderGroup {
               animationFrame: animationFrame,
             );
 
-  void renderNodeTreeTopOak({
+  void renderTreeTopOak({
     required double dstX,
     required double dstY,
-    required int colorWest,
+    required int colorNorth,
+    required int colorEast,
     required int colorSouth,
+    required int colorWest,
     required int animationFrame,
-  }){
+  }) {
     final shift = treeAnimation[animationFrame % treeAnimationLength] * wind;
     final shiftRotation = treeAnimation[(animationFrame - 2) % treeAnimationLength] * wind;
     final rotation = shiftRotation * 0.0066;
+    final engine = this.engine;
+    final atlasNodes = this.atlasNodes;
     const anchorY = 0.82;
 
+    const srcX = 656.0;
+    const srcY = 1454.0;
+    const srcWidth = 48.0;
+
+    // west
     engine.renderSpriteRotated(
       image: atlasNodes,
-      srcX: Src_X_Sprite_Tree_Oak_Top_West,
-      srcY: Src_Y_Sprite_Tree,
+      srcX: srcX + (srcWidth * 4),
+      srcY: srcY,
       srcWidth: Src_Width_Sprite_Tree,
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX + (shift * 0.5),
@@ -1468,15 +1479,44 @@ class RendererNodes extends RenderGroup {
       anchorY: anchorY,
     );
 
+    // south
     engine.renderSpriteRotated(
       image: atlasNodes,
-      srcX: Src_X_Sprite_Tree_Oak_Top_South,
-      srcY: Src_Y_Sprite_Tree,
-      srcWidth: Src_Width_Sprite_Tree,
+      srcX: srcX + (srcWidth * 5),
+      srcY: srcY,
+      srcWidth: srcWidth,
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX + (shift * 0.5),
       dstY: dstY + 40,
       color: colorSouth,
+      rotation: rotation,
+      anchorY: anchorY,
+    );
+
+    // north
+    engine.renderSpriteRotated(
+      image: atlasNodes,
+      srcX: srcX + (srcWidth * 7),
+      srcY: srcY,
+      srcWidth: Src_Width_Sprite_Tree,
+      srcHeight: Src_Height_Sprite_Tree,
+      dstX: dstX + (shift * 0.5),
+      dstY: dstY + 40,
+      color: colorNorth,
+      rotation: rotation,
+      anchorY: anchorY,
+    );
+
+    // east
+    engine.renderSpriteRotated(
+      image: atlasNodes,
+      srcX: srcX + (srcWidth * 6),
+      srcY: srcY,
+      srcWidth: Src_Width_Sprite_Tree,
+      srcHeight: Src_Height_Sprite_Tree,
+      dstX: dstX + (shift * 0.5),
+      dstY: dstY + 40,
+      color: colorEast,
       rotation: rotation,
       anchorY: anchorY,
     );
@@ -1567,19 +1607,23 @@ class RendererNodes extends RenderGroup {
     required int colorSouth,
     required int colorWest,
     required int animationFrame,
-}) {
+  }) {
+    const anchorY = 0.72;
+    const dstYShift = 32;
+    const srcX = 656.0;
+    const srcY = 1454.0;
+    const srcWidth = 48.0;
+
     final shiftRotation = treeAnimation[animationFrame % treeAnimationLength] * wind;
     final rotation = shiftRotation * 0.013;
     final engine = this.engine;
     final atlasNodes = this.atlasNodes;
-    const anchorY = 0.72;
-    const dstYShift = 32;
 
     // west
     engine.renderSpriteRotated(
       image: atlasNodes,
-      srcX: Src_X_Sprite_Tree_Oak_Bottom_West,
-      srcY: Src_Y_Sprite_Tree,
+      srcX: srcX,
+      srcY: srcY,
       srcWidth: Src_Width_Sprite_Tree,
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX,
@@ -1592,8 +1636,8 @@ class RendererNodes extends RenderGroup {
     // south
     engine.renderSpriteRotated(
       image: atlasNodes,
-      srcX: Src_X_Sprite_Tree_Oak_Bottom_South,
-      srcY: Src_Y_Sprite_Tree,
+      srcX: srcX + srcWidth * 1,
+      srcY: srcY,
       srcWidth: Src_Width_Sprite_Tree,
       srcHeight: Src_Height_Sprite_Tree,
       dstX: dstX,
@@ -1603,7 +1647,33 @@ class RendererNodes extends RenderGroup {
       anchorY: anchorY,
     );
 
+    // north
+    engine.renderSpriteRotated(
+      image: atlasNodes,
+      srcX: srcX + (srcWidth * 3),
+      srcY: srcY,
+      srcWidth: Src_Width_Sprite_Tree,
+      srcHeight: Src_Height_Sprite_Tree,
+      dstX: dstX,
+      dstY: dstY + dstYShift,
+      color: colorNorth,
+      rotation: rotation,
+      anchorY: anchorY,
+    );
 
+    // east
+    engine.renderSpriteRotated(
+      image: atlasNodes,
+      srcX: srcX + (srcWidth * 2),
+      srcY: srcY,
+      srcWidth: Src_Width_Sprite_Tree,
+      srcHeight: Src_Height_Sprite_Tree,
+      dstX: dstX,
+      dstY: dstY + dstYShift,
+      color: colorEast,
+      rotation: rotation,
+      anchorY: anchorY,
+    );
   }
 
   void renderTreeBottomPine({
