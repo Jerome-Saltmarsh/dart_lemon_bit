@@ -795,14 +795,19 @@ class RendererCharacters extends RenderGroup {
 
   void renderCharacterFallen(Character character) {
 
+    final renderBottom = this.renderBottom;
+    final characterDead = character.dead;
+
     if (
-      (renderBottom && !character.dead) ||
-      (!renderBottom && character.dead))
+      (renderBottom && !characterDead) ||
+      (!renderBottom && characterDead))
       return;
 
     const scale = 0.61;
     const anchorY = 0.6;
 
+    final scene = this.scene;
+    final images = this.images;
     final row = character.renderDirection;
     final column = character.animationFrame;
     final spriteWest = images.spriteGroupFallenWest.fromCharacterState(character.state);
@@ -816,14 +821,17 @@ class RendererCharacters extends RenderGroup {
     final colorW = scene.colorWest(characterIndex);
     final colorWest = merge32BitsColors3(colorN, colorW, color);
     final colorSouth = merge32BitsColors3(colorS, colorE, color);
+    final render = this.render;
+    final dstX = character.renderX;
+    final dstY = character.renderY;
 
     render.sprite(
       sprite: spriteShadow,
       frame: spriteShadow.getFrame(row: row, column: column),
       color: character.color,
       scale: scale,
-      dstX: character.renderX,
-      dstY: character.renderY,
+      dstX: dstX,
+      dstY: dstY,
       anchorY: anchorY,
     );
 
@@ -832,8 +840,8 @@ class RendererCharacters extends RenderGroup {
       frame: spriteWest.getFrame(row: row, column: column),
       color: colorWest,
       scale: scale,
-      dstX: character.renderX,
-      dstY: character.renderY,
+      dstX: dstX,
+      dstY: dstY,
       anchorY: anchorY,
     );
 
@@ -842,8 +850,8 @@ class RendererCharacters extends RenderGroup {
       frame: spriteSouth.getFrame(row: row, column: column),
       color: colorSouth,
       scale: scale,
-      dstX: character.renderX,
-      dstY: character.renderY,
+      dstX: dstX,
+      dstY: dstY,
       anchorY: anchorY,
     );
   }
