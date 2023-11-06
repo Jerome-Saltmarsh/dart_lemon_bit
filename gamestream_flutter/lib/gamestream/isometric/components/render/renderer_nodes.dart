@@ -919,6 +919,8 @@ class RendererNodes extends RenderGroup {
           treeType: mapVariationToTreeType(nodeVariationBelow),
           colorWest: scene.colorWest(index),
           colorSouth: scene.colorSouth(index),
+          colorNorth: scene.colorNorth(index),
+          colorEast: scene.colorEast(index),
           animationFrame: row + column + animation.frame1, // TODO Optimize
         );
         break;
@@ -929,8 +931,10 @@ class RendererNodes extends RenderGroup {
           dstX: dstX,
           dstY: dstY,
           treeType: mapVariationToTreeType(variation),
-          colorWest: scene.colorWest(index),
+          colorNorth: scene.colorNorth(index),
+          colorEast: scene.colorEast(index),
           colorSouth: scene.colorSouth(index),
+          colorWest: scene.colorWest(index),
           animationFrame: row + column + animation.frame1, // TODO Optimize
         );
         break;
@@ -1384,8 +1388,10 @@ class RendererNodes extends RenderGroup {
     required double dstX,
     required double dstY,
     required int treeType,
-    required int colorWest,
+    required int colorNorth,
+    required int colorEast,
     required int colorSouth,
+    required int colorWest,
     required int animationFrame,
   }) =>
       treeType == TreeType.Pine
@@ -1394,6 +1400,8 @@ class RendererNodes extends RenderGroup {
               dstY: dstY,
               colorWest: colorWest,
               colorSouth: colorSouth,
+              colorNorth: colorNorth,
+              colorEast: colorEast,
               animationFrame: animationFrame,
             )
           : renderNodeTreeTopOak(
@@ -1408,23 +1416,30 @@ class RendererNodes extends RenderGroup {
     required double dstX,
     required double dstY,
     required int treeType,
-    required int colorWest,
+    required int colorNorth,
+    required int colorEast,
     required int colorSouth,
+    required int colorWest,
     required int animationFrame,
   }) =>
       treeType == TreeType.Pine
           ? renderTreeBottomPine(
               dstX: dstX,
               dstY: dstY,
-              colorWest: colorWest,
+              colorNorth: colorNorth,
+              colorEast: colorEast,
               colorSouth: colorSouth,
+              colorWest: colorWest,
               animationFrame: animationFrame,
             )
           : renderTreeBottomOak(
               dstX: dstX,
               dstY: dstY,
+              colorNorth: colorNorth,
+              colorEast: colorEast,
               colorWest: colorWest,
               colorSouth: colorSouth,
+
               animationFrame: animationFrame,
             );
 
@@ -1435,8 +1450,8 @@ class RendererNodes extends RenderGroup {
     required int colorSouth,
     required int animationFrame,
   }){
-    final shift = treeAnimation[animationFrame % treeAnimation.length] * wind;
-    final shiftRotation = treeAnimation[(animationFrame - 2) % treeAnimation.length] * wind;
+    final shift = treeAnimation[animationFrame % treeAnimationLength] * wind;
+    final shiftRotation = treeAnimation[(animationFrame - 2) % treeAnimationLength] * wind;
     final rotation = shiftRotation * 0.0066;
     const anchorY = 0.82;
 
@@ -1470,15 +1485,24 @@ class RendererNodes extends RenderGroup {
   void renderTreeTopPine({
     required double dstX,
     required double dstY,
-    required int colorWest,
+    required int colorNorth,
+    required int colorEast,
     required int colorSouth,
+    required int colorWest,
     required int animationFrame,
 }) {
-    final shift = treeAnimation[animationFrame % treeAnimation.length] * wind;
-    final shiftRotation = treeAnimation[(animationFrame - 2) % treeAnimation.length] * wind;
+    final shift = treeAnimation[animationFrame % treeAnimationLength] * wind;
+    final shiftRotation = treeAnimation[(animationFrame - 2) % treeAnimationLength] * wind;
     final rotation = shiftRotation * 0.0066;
+    final engine = this.engine;
+    final atlasNodes = this.atlasNodes;
     const anchorY = 0.82;
 
+    const srcX = 656.0;
+    const srcY = 1527.0;
+    const srcWidth = 48.0;
+
+    // west
     engine.renderSpriteRotated(
       image: atlasNodes,
       srcX: Src_X_Sprite_Tree_Pine_Top_West,
@@ -1492,6 +1516,7 @@ class RendererNodes extends RenderGroup {
       anchorY: anchorY,
     );
 
+    // south
     engine.renderSpriteRotated(
       image: atlasNodes,
       srcX: Src_X_Sprite_Tree_Pine_Top_South,
@@ -1505,17 +1530,48 @@ class RendererNodes extends RenderGroup {
       anchorY: anchorY,
     );
 
+    // north
+    engine.renderSpriteRotated(
+      image: atlasNodes,
+      srcX: srcX + (srcWidth * 7),
+      srcY: srcY,
+      srcWidth: Src_Width_Sprite_Tree,
+      srcHeight: Src_Height_Sprite_Tree,
+      dstX: dstX + (shift * 0.5),
+      dstY: dstY + 40,
+      color: colorNorth,
+      rotation: rotation,
+      anchorY: anchorY,
+    );
+
+    // east
+    engine.renderSpriteRotated(
+      image: atlasNodes,
+      srcX: srcX + (srcWidth * 6),
+      srcY: srcY,
+      srcWidth: Src_Width_Sprite_Tree,
+      srcHeight: Src_Height_Sprite_Tree,
+      dstX: dstX + (shift * 0.5),
+      dstY: dstY + 40,
+      color: colorEast,
+      rotation: rotation,
+      anchorY: anchorY,
+    );
   }
 
   void renderTreeBottomOak({
     required double dstX,
     required double dstY,
-    required int colorWest,
+    required int colorNorth,
+    required int colorEast,
     required int colorSouth,
+    required int colorWest,
     required int animationFrame,
 }) {
     final shiftRotation = treeAnimation[animationFrame % treeAnimationLength] * wind;
     final rotation = shiftRotation * 0.013;
+    final engine = this.engine;
+    final atlasNodes = this.atlasNodes;
     const anchorY = 0.72;
     const dstYShift = 32;
 
@@ -1546,19 +1602,29 @@ class RendererNodes extends RenderGroup {
       rotation: rotation,
       anchorY: anchorY,
     );
+
+
   }
 
   void renderTreeBottomPine({
     required double dstX,
     required double dstY,
-    required int colorWest,
+    required int colorNorth,
+    required int colorEast,
     required int colorSouth,
+    required int colorWest,
     required int animationFrame,
   }) {
-    final shiftRotation = treeAnimation[animationFrame % treeAnimationLength] * wind;
-    final rotation = shiftRotation * 0.013;
     const anchorY = 0.72;
     const dstYShift = 32;
+    const srcX = 656.0;
+    const srcY = 1527.0;
+    const srcWidth = 48.0;
+
+    final shiftRotation = treeAnimation[animationFrame % treeAnimationLength] * wind;
+    final rotation = shiftRotation * 0.013;
+    final engine = this.engine;
+    final atlasNodes = this.atlasNodes;
 
     // west
     engine.renderSpriteRotated(
@@ -1584,6 +1650,34 @@ class RendererNodes extends RenderGroup {
       dstX: dstX,
       dstY: dstY + dstYShift,
       color: colorSouth,
+      rotation: rotation,
+      anchorY: anchorY,
+    );
+
+    // north
+    engine.renderSpriteRotated(
+      image: atlasNodes,
+      srcX: srcX + (srcWidth * 3),
+      srcY: srcY,
+      srcWidth: Src_Width_Sprite_Tree,
+      srcHeight: Src_Height_Sprite_Tree,
+      dstX: dstX,
+      dstY: dstY + dstYShift,
+      color: colorNorth,
+      rotation: rotation,
+      anchorY: anchorY,
+    );
+
+    // east
+    engine.renderSpriteRotated(
+      image: atlasNodes,
+      srcX: srcX + (srcWidth * 2),
+      srcY: srcY,
+      srcWidth: Src_Width_Sprite_Tree,
+      srcHeight: Src_Height_Sprite_Tree,
+      dstX: dstX,
+      dstY: dstY + dstYShift,
+      color: colorEast,
       rotation: rotation,
       anchorY: anchorY,
     );
@@ -3832,7 +3926,7 @@ class RendererNodes extends RenderGroup {
 
 
 int mapVariationToTreeType(int variation){
-  if (variation < 126) {
+  if (variation == 0) {
     return TreeType.Oak;
   }
   return TreeType.Pine;

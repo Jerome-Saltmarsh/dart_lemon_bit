@@ -10,9 +10,9 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
-* [new]: render tree north and east
 
 ## TODO
+* [new]: render tree oak north and east
 * [fix]: inventory slots remain green after drag
 * [new]: design map 0
 * [new]: item tabs weapons amulets etc
@@ -21,6 +21,7 @@ ctrl + []               : move caret to code block
 * [new]: gameobject wooden barrel
 
 ## 06.11.2023
+* [new]: render tree pine north and east
 * [fix]: orc strike sprite not rendered
 * [fix]: kid strike two shadow
 * [new]: kid casting shadow

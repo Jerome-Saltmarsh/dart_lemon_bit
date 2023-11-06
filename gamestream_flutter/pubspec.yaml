@@ -82,7 +82,6 @@ flutter:
     - sprites/isometric/kid/south/helms/steel/
     - sprites/isometric/kid/south/helms/wizard_hat/
     - sprites/isometric/kid/south/legs/leather/
-    - sprites/isometric/kid/south/shadow/regular/
     - sprites/isometric/kid/south/torso_top/female/
     - sprites/isometric/kid/south/torso_top/male/
     - sprites/isometric/kid/south/torso_bottom/female/
@@ -112,7 +111,6 @@ flutter:
     - sprites/isometric/kid/west/helms/steel/
     - sprites/isometric/kid/west/helms/wizard_hat/
     - sprites/isometric/kid/west/legs/leather/
-    - sprites/isometric/kid/west/shadow/regular/
     - sprites/isometric/kid/west/torso_top/female/
     - sprites/isometric/kid/west/torso_top/male/
     - sprites/isometric/kid/west/torso_bottom/female/
