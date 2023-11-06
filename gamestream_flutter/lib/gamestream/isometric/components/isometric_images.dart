@@ -189,7 +189,7 @@ class IsometricImages with IsometricComponent {
       dead: await loadSprite(name: 'sprites/isometric/kid/shadow/dead', mode: AnimationMode.single),
       fire: await loadSprite(name: 'sprites/isometric/kid/shadow/fire', mode: AnimationMode.single),
       strike1: await loadSprite(name: 'sprites/isometric/kid/shadow/strike', mode: AnimationMode.single),
-      strike2: await loadSprite(name: 'sprites/isometric/kid/shadow/strike', mode: AnimationMode.single),
+      strike2: await loadSprite(name: 'sprites/isometric/kid/shadow/strike_2', mode: AnimationMode.single),
       hurt: await loadSprite(name: 'sprites/isometric/kid/shadow/hurt', mode: AnimationMode.single),
       casting: await loadSprite(name: 'sprites/isometric/kid/shadow/casting', mode: AnimationMode.single),
     );

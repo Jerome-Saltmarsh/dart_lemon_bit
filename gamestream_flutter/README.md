@@ -13,7 +13,6 @@ ctrl + []               : move caret to code block
 * [new]: design map 0
 
 ## TODO
-* [fix]: kid strike two shadow
 * [fix]: inventory slots remain green after drag
 * [fix]: orc strike sprite not rendered
 * [new]: render orc north and east
@@ -24,6 +23,7 @@ ctrl + []               : move caret to code block
 * [new]: gameobject wooden barrel
 
 ## 06.11.2023
+* [fix]: kid strike two shadow
 * [new]: kid casting shadow
 * [fix]: editor select gameobject
 
