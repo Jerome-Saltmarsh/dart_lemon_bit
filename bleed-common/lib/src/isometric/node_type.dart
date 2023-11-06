@@ -45,23 +45,7 @@ class NodeType {
   static const Torch_Blue = 88;
   static const Torch_Red = 89;
   static const Grass_Short = 90;
-
-  // static bool isMaterialStone(int value) => const [
-  //       Concrete,
-  //       Boulder,
-  //       Oven,
-  //       Brick,
-  //       Road,
-  //       Road_2,
-  //       Tile,
-  //       Bricks_Red,
-  //       Bricks_Brown,
-  //       Chimney
-  // ].contains(value);
-
-
-  // static bool isMaterialDirt(int value) =>
-  //     value == Sandbag;
+  static const Tree_Stump = 91;
 
   static bool supportsOrientationSolid(int type) => const [
         Brick,
@@ -114,6 +98,7 @@ class NodeType {
         Wood,
         Road,
         Metal,
+        Tree_Stump,
         Fireplace
   ].contains(type);
 

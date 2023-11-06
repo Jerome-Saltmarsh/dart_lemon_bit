@@ -836,16 +836,16 @@ class RendererNodes extends RenderGroup {
     required int color,
   }) {
 
-    // if (currentNodeWithinIsland && currentNodeZ >= playerZ + 2) return;
-    // final transparent = currentNodeTransparent;
-    // if (previousNodeTransparent != transparent) {
-    // TODO use engine.color.opacity = 0.5;
-    //   previousNodeTransparent = transparent;
-    //   engine.bufferImage = transparent ? images.atlas_nodes_transparent : images.atlas_nodes;
-    // }
-
     switch (nodeType) {
 
+      case NodeType.Water:
+        renderNodeWater(
+          dstX: dstX,
+          dstY: dstY,
+          color: scene.colorAbove(index),
+          animationFrame: ((animation.frameWater + ((scene.getRowColumn(index)) * 3)) % 10), // TODO Optimize
+        );
+        break;
       case NodeType.Bricks_Red:
         renderNodeTemplateShaded(
             srcX: IsometricConstants.Sprite_Width_Padded_13,
@@ -864,14 +864,17 @@ class RendererNodes extends RenderGroup {
           color: color
         );
         return;
-      case NodeType.Water:
-        renderNodeWater(
+
+      case NodeType.Tree_Stump:
+        renderStandardNode(
+          color: color,
+          srcX: 292,
+          srcY: 1545,
           dstX: dstX,
           dstY: dstY,
-          color: scene.colorAbove(index),
-          animationFrame: ((animation.frameWater + ((scene.getRowColumn(index)) * 3)) % 10), // TODO Optimize
         );
-        break;
+        return;
+
       case NodeType.Dust:
         break;
       case NodeType.Sandbag:

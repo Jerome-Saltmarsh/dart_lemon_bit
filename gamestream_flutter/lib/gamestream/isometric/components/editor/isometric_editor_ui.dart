@@ -29,7 +29,7 @@ extension IsometricEditorUI on IsometricEditor {
     ObjectType.Crystal_Glowing_True,
   ];
 
-  static const editorGridTypesColumn1 = [
+  static const nodeTypesColumn1 = [
     NodeType.Water,
     NodeType.Brick,
     NodeType.Bricks_Red,
@@ -47,7 +47,7 @@ extension IsometricEditorUI on IsometricEditor {
     NodeType.Scaffold,
   ];
 
-  static const editorGridTypesColumn2 = [
+  static const nodeTypesColumn2 = [
     NodeType.Grass,
     NodeType.Grass_Long,
     NodeType.Grass_Short,
@@ -63,8 +63,8 @@ extension IsometricEditorUI on IsometricEditor {
     NodeType.Torch_Blue,
     NodeType.Torch_Red,
     NodeType.Fireplace,
+    NodeType.Tree_Stump,
   ];
-
 
   Widget buildEditor(){
     return buildWatch(editorTab, buildUI);
@@ -1245,11 +1245,11 @@ extension IsometricEditorUI on IsometricEditor {
             children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: editorGridTypesColumn1.map(buildButtonSelectNodeType).toList(),
+                children: nodeTypesColumn1.map(buildButtonSelectNodeType).toList(),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: editorGridTypesColumn2.map(buildButtonSelectNodeType).toList(),
+                children: nodeTypesColumn2.map(buildButtonSelectNodeType).toList(),
               ),
             ],
           ),

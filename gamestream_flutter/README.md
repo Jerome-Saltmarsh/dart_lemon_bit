@@ -13,13 +13,14 @@ ctrl + []               : move caret to code block
 
 ## TODO
 * [fix]: inventory slots remain green after drag
+* [fix]: colored particle emission
 * [new]: design map 0
 * [new]: item tabs weapons amulets etc
 * [new]: model hair
-* [new]: gameobject tree stump
 * [new]: gameobject wooden barrel
 
 ## 06.11.2023
+* [new]: node type tree stump
 * [new]: render tree oak north and east
 * [new]: render tree pine north and east
 * [fix]: orc strike sprite not rendered
