@@ -762,4 +762,14 @@ class IsometricEditor with IsometricComponent {
       '--from $from --to $to',
     );
   }
+
+  void onMouseRightClicked() {
+    switch (editorTab.value){
+      case EditorTab.Objects:
+        deselectGameObject();
+        break;
+      default:
+        break;
+    }
+  }
 }

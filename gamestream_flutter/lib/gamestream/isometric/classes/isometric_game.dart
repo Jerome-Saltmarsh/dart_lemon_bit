@@ -125,6 +125,11 @@ class IsometricGame extends Game {
       debug.onMouseRightClicked();
       return;
     }
+
+    if (editMode){
+      editor.onMouseRightClicked();
+      return;
+    }
   }
 
   @override
