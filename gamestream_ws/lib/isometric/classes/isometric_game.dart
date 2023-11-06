@@ -1364,7 +1364,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     dispatchGameEventPosition(GameEventType.Blue_Orb_Fired, src);
     return spawnProjectile(
       src: src,
-      accuracy: 0,
       range: range,
       target: src.target,
       projectileType: ProjectileType.Orb,
@@ -1378,7 +1377,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required Character src,
     required int damage,
     required double range,
-    double accuracy = 0,
     Position? target,
     double? angle,
   }) {
@@ -1387,7 +1385,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     dispatchGameEvent(GameEventType.Arrow_Fired, src.x, src.y, src.z);
     spawnProjectile(
       src: src,
-      accuracy: accuracy,
       range: range,
       target: target,
       angle: target != null ? null : angle ?? src.angle,
@@ -1404,7 +1401,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }) =>
       spawnProjectile(
         src: src,
-        accuracy: 0,
         range: range,
         target: src.target,
         angle: angle,
@@ -1419,7 +1415,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }) =>
       spawnProjectile(
         src: src,
-        accuracy: 0,
         range: range,
         target: src.target,
         angle: angle,
@@ -1451,7 +1446,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     for (var i = 0; i < 5; i++) {
       spawnProjectile(
         src: src,
-        accuracy: 0,
         angle: angle + giveOrTake(0.25),
         range: src.weaponRange,
         projectileType: ProjectileType.Bullet,
@@ -1473,7 +1467,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required double range,
     required int projectileType,
     required int damage,
-    double accuracy = 0,
     double? angle = 0,
     Position? target,
   }) {
@@ -1487,10 +1480,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       } else {
         finalAngle = src.angle;
       }
-    }
-    if (accuracy != 0) {
-      const accuracyAngleDeviation = pi * 0.1;
-      finalAngle += giveOrTake(accuracy * accuracyAngleDeviation);
     }
     projectile.damage = damage;
     projectile.hitbox = true;

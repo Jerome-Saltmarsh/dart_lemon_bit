@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:gamestream_ws/amulet.dart';
@@ -271,6 +272,23 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         break;
       case AmuletItem.Spell_Heal:
         useAmuletItemSpellHeal(character);
+        break;
+      case AmuletItem.Spell_Split_Arrow:
+        final totalArrows = stats.quantity;
+        final radian = pi * 0.25;
+        final radianPerArrow = radian / totalArrows;
+        final initialAngle = character.angle - (radian * 0.5);
+        var angle = initialAngle;
+        for (var i = 0; i < totalArrows; i++){
+          spawnProjectileArrow(
+              src: character,
+              damage: character.equippedWeaponDamage ?? (throw Exception()),
+              range: character.equippedWeaponRange ?? (throw Exception()),
+              angle: angle,
+          );
+          angle += radianPerArrow;
+        }
+
         break;
       default:
         throw Exception('amulet.PerformCharacterAction($amuletItem)');
@@ -639,4 +657,5 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     player.y = 1000;
     player.z = 300.0;
   }
+
 }

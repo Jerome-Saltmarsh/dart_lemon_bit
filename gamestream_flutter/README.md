@@ -13,6 +13,7 @@ ctrl + []               : move caret to code block
 * [fix]: render shoe type iron plates running
 
 ## TODO
+* [new]: amulet item action directional
 * [new]: gameobject wooden barrel
 * [fix]: incorrect particle type
 * [new]: flames emit smoke particles

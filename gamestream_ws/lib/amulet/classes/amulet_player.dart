@@ -33,6 +33,10 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   var elementWater = 0;
   var elementElectricity = 0;
 
+  int? get equippedWeaponDamage => equippedWeaponAmuletItemLevel?.damage;
+
+  double? get equippedWeaponRange => equippedWeaponAmuletItemLevel?.range;
+
   final weapons = List<AmuletItemSlot>.generate(4, (index) => AmuletItemSlot());
   final treasures = List<AmuletItemSlot>.generate(4, (index) => AmuletItemSlot());
 
@@ -560,6 +564,13 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
         deselectActivatedPower();
         break;
       case AmuletItemAction.Positional:
+        if (activatedPowerIndex == index){
+          deselectActivatedPower();
+          return;
+        }
+        activatedPowerIndex = index;
+        break;
+      case AmuletItemAction.Directional:
         if (activatedPowerIndex == index){
           deselectActivatedPower();
           return;
@@ -1677,6 +1688,19 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
       return;
     }
 
+    final dependency = amuletItem.dependency;
+
+    if (dependency != null){
+      final equippedWeaponAmuletItem = equippedWeapon?.amuletItem;
+
+      if (equippedWeaponAmuletItem == null || equippedWeaponAmuletItem.subType != dependency) {
+        writeGameError(GameError.Weapon_Required);
+        return;
+      }
+
+    }
+
+
     switch (amuletItem.selectAction) {
       case AmuletItemAction.Equip:
         attack();
@@ -1719,6 +1743,11 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
       case AmuletItemAction.Instant:
         break;
       case AmuletItemAction.Consume:
+        break;
+      case AmuletItemAction.Directional:
+        setCharacterStateStriking(
+          duration: amuletItemLevel.performDuration,
+        );
         break;
     }
   }

@@ -70,7 +70,16 @@ enum GameError {
   Invalid_Treasure_Index,
   Treasures_Full,
   Talent_Already_Unlocked,
-  Parent_Talent_Required_To_Unlock, Talent_Max_Level, Selected_Mark_Index_Not_Set, Invalid_Mark_Stack_Index, Insufficient_Element_Points, Insufficient_Elements, Weapon_Rack_Full, Insufficient_Weapon_Charges, No_Weapon_Equipped;
+  Parent_Talent_Required_To_Unlock,
+  Talent_Max_Level,
+  Selected_Mark_Index_Not_Set,
+  Invalid_Mark_Stack_Index,
+  Insufficient_Element_Points,
+  Insufficient_Elements,
+  Weapon_Rack_Full,
+  Insufficient_Weapon_Charges,
+  No_Weapon_Equipped,
+  Weapon_Required;
 
   static GameError fromIndex(int index) {
     if (index < 0) throw Exception('$index < 0');

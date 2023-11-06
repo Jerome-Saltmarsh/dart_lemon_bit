@@ -11,7 +11,6 @@ enum AmuletItem {
       cooldown: 20,
       range: 150,
       information: 'Teleports a short distance',
-      quantity: 2,
       performDuration: 16,
     ),
     level2: AmuletItemLevel(
@@ -19,7 +18,6 @@ enum AmuletItem {
       cooldown: 23,
       range: 160,
       information: 'teleport slightly further',
-      quantity: 3,
       performDuration: 16,
     ),
     level3: AmuletItemLevel(
@@ -27,7 +25,6 @@ enum AmuletItem {
       cooldown: 21,
       range: 170,
       information: 'teleports a short distance',
-      quantity: 4,
       performDuration: 16,
     ),
   ),
@@ -69,7 +66,8 @@ enum AmuletItem {
     level1: AmuletItemLevel(
         range: 100,
         damage: 1,
-        information: 'An old blunt sword',
+        information: 'An ancient staff of that emits a red glowing amber',
+        fire: 10,
     ),
   ),
   Weapon_Staff_Of_Frozen_Lake(
@@ -82,6 +80,31 @@ enum AmuletItem {
         damage: 1,
         information: 'A powerful staff that eliminates cold',
     ),
+  ),
+  Spell_Split_Arrow(
+    dependency: WeaponType.Bow,
+    type: ItemType.Spell,
+    subType: SpellType.Split_Arrow,
+    quality: AmuletItemQuality.Common,
+    level1: AmuletItemLevel(
+      information: 'fires two arrows',
+      damage: 1,
+      fire: 0,
+      charges: 3,
+      cooldown: 30,
+      performDuration: 25,
+      quantity: 3,
+    ),
+    level2: AmuletItemLevel(
+      information: 'fires three arrows',
+      damage: 2,
+      fire: 3,
+      charges: 3,
+      cooldown: 30,
+      performDuration: 25,
+      quantity: 4,
+    ),
+    selectAction: AmuletItemAction.Directional,
   ),
   Weapon_Old_Bow(
     selectAction: AmuletItemAction.Equip,
@@ -369,6 +392,7 @@ enum AmuletItem {
         performDuration: 14,
       ));
 
+  final int? dependency;
   final AmuletItemAction selectAction;
   final int type;
   final int subType;
@@ -387,6 +411,7 @@ enum AmuletItem {
     required this.quality,
     required this.selectAction,
     required this.level1,
+    this.dependency,
     this.level2,
     this.level3,
     this.level4,
@@ -413,6 +438,12 @@ enum AmuletItem {
               : level2 != null
                   ? 2
                   : 1;
+
+  bool get isWeaponStaff => isWeapon && subType == WeaponType.Staff;
+
+  bool get isWeaponSword => isWeapon && subType == WeaponType.Sword;
+
+  bool get isWeaponBow => isWeapon && subType == WeaponType.Bow;
 
   bool get isWeapon => type == ItemType.Weapon;
 
