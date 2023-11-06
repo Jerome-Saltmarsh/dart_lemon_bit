@@ -24,7 +24,7 @@ class IsometricEditor with IsometricComponent {
 
   final selectedMarkListValue = Watch(0);
   final selectedMarkNodeIndex = Watch(0);
-  final selectedMarkListIndex = Watch(0);
+  final selectedMarkListIndex = Watch(-1);
   final selectedMarkType = Watch(0);
 
   final selectedKeyEntry = Watch<MapEntry<String, int>?>(null);
@@ -120,7 +120,7 @@ class IsometricEditor with IsometricComponent {
         selectedMarkNodeIndex.value = value & 0xFFFF;
         selectedMarkType.value = (value >> 16) & 0xFF;
       } else {
-        selectedMarkNodeIndex.value = -1;
+        deselectMarkIndex();
       }
     });
 
@@ -626,7 +626,7 @@ class IsometricEditor with IsometricComponent {
 
   void sendEditorRequest(EditorRequest request, [dynamic message]) =>
       network.sendNetworkRequest(
-        NetworkRequest.Editor_Request,
+        NetworkRequest.Edit,
         '${request.index} $message',
       );
 
@@ -664,27 +664,27 @@ class IsometricEditor with IsometricComponent {
 
   void markAdd(int value) =>
       network.sendArgs2(
-        NetworkRequest.Editor_Request,
+        NetworkRequest.Edit,
         EditorRequest.Mark_Add.index,
         value,
       );
 
   void markDelete() =>
       network.sendNetworkRequest(
-        NetworkRequest.Editor_Request,
+        NetworkRequest.Edit,
         EditorRequest.Mark_Delete.index,
       );
 
-  void markSelect(int index) =>
+  void selectMarkByIndex(int index) =>
       network.sendArgs2(
-        NetworkRequest.Editor_Request,
+        NetworkRequest.Edit,
         EditorRequest.Mark_Select.index,
         index,
       );
 
-  void markSetType(int markType) =>
+  void onPressedMarkType(int markType) =>
       network.sendArgs2(
-        NetworkRequest.Editor_Request,
+        NetworkRequest.Edit,
         EditorRequest.Mark_Set_Type.index,
         markType,
       );
@@ -697,7 +697,7 @@ class IsometricEditor with IsometricComponent {
       minRadius: 100.0,
     );
     if (nearestIndex != -1) {
-      markSelect(nearestIndex);
+      selectMarkByIndex(nearestIndex);
     }
   }
 
@@ -730,7 +730,7 @@ class IsometricEditor with IsometricComponent {
 
   void deleteKeyByName(String name){
       network.sendNetworkRequest(
-          NetworkRequest.Editor_Request,
+          NetworkRequest.Edit,
           EditorRequest.Delete_Key.index,
           name,
       );
@@ -749,7 +749,7 @@ class IsometricEditor with IsometricComponent {
 
   void moveKeyToIndex({required String name, required int index}) {
     network.sendNetworkRequest(
-      NetworkRequest.Editor_Request,
+      NetworkRequest.Edit,
       EditorRequest.Move_Key.index,
       '--name $name --index $index',
     );
@@ -757,7 +757,7 @@ class IsometricEditor with IsometricComponent {
 
   void renameKey({required String from, required String to}){
     network.sendNetworkRequest(
-      NetworkRequest.Editor_Request,
+      NetworkRequest.Edit,
       EditorRequest.Rename_Key.index,
       '--from $from --to $to',
     );
@@ -768,8 +768,17 @@ class IsometricEditor with IsometricComponent {
       case EditorTab.Objects:
         deselectGameObject();
         break;
+      case EditorTab.Marks:
+        deselectMarkIndex();
+        break;
       default:
         break;
     }
   }
+
+  void deselectMarkIndex() =>
+      network.sendRequest(
+          NetworkRequest.Edit,
+          EditorRequest.Mark_Deselect_Index.index,
+      );
 }

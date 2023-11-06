@@ -1204,7 +1204,7 @@ extension IsometricEditorUI on IsometricEditor {
           WatchBuilder(selectedMarkType, (int selectedMarkType) => Row(
               children: MarkType.values
                   .map((markType) => onPressed(
-                    action: () => markSetType(markType),
+                    action: () => onPressedMarkType(markType),
                     child: GSContainer(
                         color: selectedMarkType == markType ? colors.brownLight : colors.brownDark,
                         child: buildText(MarkType.getName(markType))))
@@ -1221,9 +1221,7 @@ extension IsometricEditorUI on IsometricEditor {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: List.generate(scene.marks.length, (index) => onPressed(
-                            action: (){
-                              markSelect(index);
-                            },
+                            action: () => selectMarkByIndex(index),
                             child: Container(
                                 padding: const EdgeInsets.all(6),
                                 color: index == selectedMarkListIndex ? Colors.white24 : null,
@@ -1656,7 +1654,7 @@ extension IsometricEditorUI on IsometricEditor {
       action: (){
         ui.showDialogGetString(onSelected: (name) {
           network.sendNetworkRequest(
-              NetworkRequest.Editor_Request,
+              NetworkRequest.Edit,
               EditorRequest.Add_Key.index,
               name,
               editor.nodeSelectedIndex.value

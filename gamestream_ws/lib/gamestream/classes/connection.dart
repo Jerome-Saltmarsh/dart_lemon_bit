@@ -126,7 +126,7 @@ class Connection extends ByteReader {
 
     switch (clientRequest) {
 
-      case NetworkRequest.Editor_Request:
+      case NetworkRequest.Edit:
         final isometricEditorRequestIndex = parseArg1(arguments);
 
         if (isometricEditorRequestIndex == null) return;
@@ -164,9 +164,6 @@ class Connection extends ByteReader {
           case EditorRequest.GameObject:
             handleIsometricEditorRequestGameObject(arguments);
             break;
-          // case EditorRequest.Set_Node:
-          //   handleIsometricEditorRequestSetNode(arguments);
-          //   break;
           case EditorRequest.Load_Scene:
             try {
               final args = arguments.map(int.parse).toList(growable: false);
@@ -187,7 +184,9 @@ class Connection extends ByteReader {
             if (!isLocalMachine && game is! IsometricEditor) return;
             game.reset();
             break;
-
+          case EditorRequest.Mark_Deselect_Index:
+            editor.selectedMarkListIndex = -1;
+            break;
           case EditorRequest.Mark_Select:
             if (!isLocalMachine && game is! IsometricEditor)
               return;
