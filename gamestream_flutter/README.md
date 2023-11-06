@@ -10,9 +10,10 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
-* [new]: gameobject wooden barrel
+* [fix]: render shoe type iron plates running
 
 ## TODO
+* [new]: gameobject wooden barrel
 * [fix]: incorrect particle type
 * [new]: flames emit smoke particles
 * [fix]: ai stuttering on idle
