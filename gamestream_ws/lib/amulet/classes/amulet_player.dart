@@ -141,14 +141,10 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     return getAmuletItemLevel(amuletItem);
   }
 
-
   AmuletItemLevel? getAmuletItemLevel(AmuletItem amuletItem) =>
       amuletItem.getStatsForLevel(
           getLevelForAmuletItem(amuletItem)
       );
-
-  @override
-  int get weaponCooldown => equippedWeapon != null ? equippedWeapon!.cooldown : -1;
 
   AmuletItemLevel? get equippedWeaponAmuletItemLevel {
     final weapon = equippedWeapon;
@@ -164,6 +160,9 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
 
     return getAmuletItemLevel(item);
   }
+
+  @override
+  int get weaponCooldown => equippedWeapon?.cooldown ?? -1;
 
   @override
   int get weaponDamage => equippedWeaponAmuletItemLevel?.damage ?? 1;
@@ -551,6 +550,13 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
 
     if (itemStats == null){
       writeGameError(GameError.Insufficient_Elements);
+      return;
+    }
+
+    final dependency = amuletItem.dependency;
+
+    if (dependency != null && equippedWeaponType != dependency){
+      writeGameError(GameError.Weapon_Required);
       return;
     }
 
