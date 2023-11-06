@@ -2,8 +2,6 @@ class AmuletItemLevel {
   final int damage;
   final int fire;
   final int water;
-  final int air;
-  final int earth;
   final int electricity;
   final int health;
   final int quantity;
@@ -21,8 +19,6 @@ class AmuletItemLevel {
     this.range = 0,
     this.fire = 0,
     this.water = 0,
-    this.air = 0,
-    this.earth = 0,
     this.electricity = 0,
     this.movement = 0,
     this.quantity = 0,

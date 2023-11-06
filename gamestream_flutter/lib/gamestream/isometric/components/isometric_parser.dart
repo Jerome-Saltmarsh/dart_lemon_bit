@@ -688,8 +688,6 @@ class IsometricParser with ByteReader, IsometricComponent {
       case NetworkResponseAmuletPlayer.Elements:
         amulet.elementFire.value = readByte();
         amulet.elementWater.value = readByte();
-        amulet.elementWind.value = readByte();
-        amulet.elementEarth.value = readByte();
         amulet.elementElectricity.value = readByte();
         break;
       case NetworkResponseAmuletPlayer.Element_Points:

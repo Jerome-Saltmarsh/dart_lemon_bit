@@ -10,7 +10,6 @@ enum AmuletItem {
       charges: 1,
       cooldown: 20,
       range: 150,
-      air: 0,
       information: 'Teleports a short distance',
       quantity: 2,
       performDuration: 16,
@@ -19,7 +18,6 @@ enum AmuletItem {
       charges: 2,
       cooldown: 23,
       range: 160,
-      air: 1,
       information: 'teleport slightly further',
       quantity: 3,
       performDuration: 16,
@@ -28,7 +26,6 @@ enum AmuletItem {
       charges: 2,
       cooldown: 21,
       range: 170,
-      air: 2,
       information: 'teleports a short distance',
       quantity: 4,
       performDuration: 16,
@@ -53,7 +50,6 @@ enum AmuletItem {
       cooldown: 5,
       charges: 7,
       information: 'An old blunt sword',
-      earth: 1,
       performDuration: 28,
     ),
     level3: AmuletItemLevel(
@@ -62,7 +58,6 @@ enum AmuletItem {
       cooldown: 5,
       charges: 7,
       information: 'An old blunt sword',
-      earth: 5,
       performDuration: 26
     ),
   ),
@@ -107,7 +102,6 @@ enum AmuletItem {
       charges: 6,
       cooldown: 4,
       range: 160,
-      air: 2,
       performDuration: 18,
     ),
     level3: AmuletItemLevel(
@@ -116,7 +110,6 @@ enum AmuletItem {
       charges: 6,
       cooldown: 3,
       range: 170,
-      air: 5,
       performDuration: 16,
     ),
   ),
@@ -133,7 +126,6 @@ enum AmuletItem {
         information: 'A mythical bow which does a lot of damage',
     ),
     level2: AmuletItemLevel(
-      air: 1,
       range: 160,
       damage: 8,
       cooldown: 38,
@@ -141,7 +133,6 @@ enum AmuletItem {
       information: 'A mythical bow which does a lot of damage',
     ),
     level3: AmuletItemLevel(
-      air: 2,
       range: 170,
       damage: 12,
       cooldown: 36,
@@ -315,31 +306,26 @@ enum AmuletItem {
       level1: AmuletItemLevel(
         cooldown: 30,
         information: 'teleports a short distance',
-        air: 2,
         range: 50,
       ),
       level2: AmuletItemLevel(
         cooldown: 28,
         information: 'teleports a short distance',
-        air: 4,
         range: 60,
       ),
       level3: AmuletItemLevel(
         cooldown: 26,
         information: 'teleports a short distance',
-        air: 7,
         range: 70,
       ),
       level4: AmuletItemLevel(
         cooldown: 26,
         information: 'teleports a short distance',
-        air: 8,
         range: 70,
       ),
       level5: AmuletItemLevel(
         cooldown: 24,
         information: 'teleports a short distance',
-        air: 16,
         range: 80,
       )),
   Spell_Heal(
@@ -541,30 +527,22 @@ enum AmuletItem {
     required AmuletItemLevel? stat,
     required int fire,
     required int water,
-    required int air,
-    required int earth,
     required int electricity,
   }) =>
       stat != null &&
       stat.fire <= fire &&
       stat.water <= water &&
-      stat.air <= air &&
-      stat.earth <= earth &&
       stat.electricity <= electricity;
 
   int getLevel({
     required int fire,
     required int water,
-    required int wind,
-    required int earth,
     required int electricity,
   }) {
     if (statsSupport(
       stat: this.level5,
       fire: fire,
       water: water,
-      air: wind,
-      earth: earth,
       electricity: electricity,
     )) {
       return 5;
@@ -574,8 +552,6 @@ enum AmuletItem {
       stat: this.level4,
       fire: fire,
       water: water,
-      air: wind,
-      earth: earth,
       electricity: electricity,
     )) {
       return 4;
@@ -585,8 +561,6 @@ enum AmuletItem {
       stat: this.level3,
       fire: fire,
       water: water,
-      air: wind,
-      earth: earth,
       electricity: electricity,
     )) {
       return 3;
@@ -596,8 +570,6 @@ enum AmuletItem {
       stat: this.level2,
       fire: fire,
       water: water,
-      air: wind,
-      earth: earth,
       electricity: electricity,
     )) {
       return 2;
@@ -607,8 +579,6 @@ enum AmuletItem {
       stat: this.level1,
       fire: fire,
       water: water,
-      air: wind,
-      earth: earth,
       electricity: electricity,
     )) {
       return 1;

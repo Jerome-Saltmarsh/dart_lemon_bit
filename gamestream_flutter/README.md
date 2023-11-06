@@ -10,17 +10,20 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
+* [new]: gameobject wooden barrel
 
 ## TODO
+* [fix]: incorrect particle type
 * [new]: flames emit smoke particles
+* [fix]: ai stuttering on idle
 * [fix]: inventory slots remain green after drag
 * [fix]: colored particle emission
 * [new]: design map 0
 * [new]: item tabs weapons amulets etc
 * [new]: model hair
-* [new]: gameobject wooden barrel
 
 ## 06.11.2023
+* [new]: three element types
 * [new]: node type tree stump
 * [new]: render tree oak north and east
 * [new]: render tree pine north and east

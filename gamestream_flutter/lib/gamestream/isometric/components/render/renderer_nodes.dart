@@ -866,10 +866,10 @@ class RendererNodes extends RenderGroup {
         return;
 
       case NodeType.Tree_Stump:
-        renderStandardNode(
+        renderNodeTypeTreeStump(
+          colorSouth: scene.colorSouth(index),
+          colorWest: scene.colorWest(index),
           color: color,
-          srcX: 292,
-          srcY: 1545,
           dstX: dstX,
           dstY: dstY,
         );
@@ -1154,6 +1154,38 @@ class RendererNodes extends RenderGroup {
       default:
         throw Exception('renderNode(index: ${index}, orientation: ${NodeOrientation.getName(scene.nodeOrientations[index])}');
     }
+  }
+
+  void renderNodeTypeTreeStump({
+    required int colorSouth,
+    required int colorWest,
+    required int color,
+    required double dstX,
+    required double dstY,
+  }) {
+    renderStandardNode(
+      color: color,
+      srcX: 292,
+      srcY: 1545,
+      dstX: dstX,
+      dstY: dstY,
+    );
+
+    renderStandardNode(
+      color: colorWest,
+      srcX: 243,
+      srcY: 1545,
+      dstX: dstX,
+      dstY: dstY,
+    );
+
+    renderStandardNode(
+      color: colorSouth,
+      srcX: 341,
+      srcY: 1545,
+      dstX: dstX,
+      dstY: dstY,
+    );
   }
 
   void renderFireplace({

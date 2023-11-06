@@ -40,6 +40,5 @@ enum IconType {
   Inventory_Treasure,
   Element_Fire,
   Element_Water,
-  Element_Air,
-  Element_Earth,
+  Element_Electricity,
 }

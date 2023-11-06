@@ -43,8 +43,6 @@ class Amulet extends IsometricGame {
   final elementPoints = Watch(0);
   final elementFire = Watch(0);
   final elementWater = Watch(0);
-  final elementWind = Watch(0);
-  final elementEarth = Watch(0);
   final elementElectricity = Watch(0);
 
   final elementPointsAvailable = Watch(false);
@@ -298,8 +296,7 @@ class Amulet extends IsometricGame {
       switch (amuletElement) {
         AmuletElement.fire => elementFire,
         AmuletElement.water => elementWater,
-        AmuletElement.air => elementWind,
-        AmuletElement.earth => elementEarth,
+        AmuletElement.electricity => elementElectricity,
       };
 
   void upgradeAmuletElement(AmuletElement amuletElement) =>
@@ -319,8 +316,6 @@ class Amulet extends IsometricGame {
       amuletItem.getLevel(
         fire: elementFire.value,
         water: elementWater.value,
-        wind: elementWind.value,
-        earth: elementEarth.value,
         electricity: elementElectricity.value,
     );
 
