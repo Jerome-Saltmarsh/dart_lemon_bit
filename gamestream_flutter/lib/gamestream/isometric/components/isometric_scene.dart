@@ -542,9 +542,12 @@ class IsometricScene with IsometricComponent implements Updatable {
   void refreshSmokeSources(){
     print('scene.refreshSmokeSources()');
     smokeSourcesTotal = 0;
+    final totalNodes = this.totalNodes;
+    final nodeTypes = this.nodeTypes;
     for (var i = 0; i < totalNodes; i++){
       if (!const [
-        NodeType.Fireplace
+        NodeType.Fireplace,
+        // NodeType.Torch,
       ].contains(nodeTypes[i]))
         continue;
       smokeSources[smokeSourcesTotal] = i;

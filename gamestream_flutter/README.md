@@ -12,6 +12,7 @@ ctrl + []               : move caret to code block
 ## CURRENT
 
 ## TODO
+* [new]: flames emit smoke particles
 * [fix]: inventory slots remain green after drag
 * [fix]: colored particle emission
 * [new]: design map 0
