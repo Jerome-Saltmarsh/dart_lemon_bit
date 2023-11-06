@@ -59,6 +59,7 @@ flutter:
     - sprites/isometric/
     - sprites/isometric/gameobjects/
     - sprites/isometric/flame/
+    - sprites/isometric/kid/shadow/
     - sprites/isometric/kid/north/head/boy/
     - sprites/isometric/kid/east/head/boy/
     - sprites/isometric/kid/north/head/girl/

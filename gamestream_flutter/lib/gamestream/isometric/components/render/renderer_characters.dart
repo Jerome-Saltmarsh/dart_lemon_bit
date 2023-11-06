@@ -117,6 +117,7 @@ class RendererCharacters extends RenderGroup {
     final completingAction = actionComplete > 0;
 
     final images = this.images;
+    final spritesShadow = images.kidCharacterSpriteGroupShadow;
     final spritesNorth = images.kidCharacterSpritesIsometricNorth;
     final spritesEast = images.kidCharacterSpritesIsometricEast;
     final spritesSouth = images.kidCharacterSpritesIsometricSouth;
@@ -151,7 +152,6 @@ class RendererCharacters extends RenderGroup {
     final atlasTorsoTopWest = spritesWest.torsoTop[character.gender] ?? (throw Exception());
     final atlasTorsoBottomSouth = spritesSouth.torsoBottom[character.gender] ?? (throw Exception());
     final atlasTorsoBottomWest = spritesWest.torsoBottom[character.gender] ?? (throw Exception());
-    final atlasShadow = spritesSouth.shadow[ShadowType.regular] ?? (throw Exception());
     final atlasHairFront = spritesSouth.hairFront[character.hairType] ?? (throw Exception());
     final atlasHairBack = spritesSouth.hairBack[character.hairType] ?? (throw Exception());
     final atlasHairTop = spritesSouth.hairTop[character.hairType] ?? (throw Exception());
@@ -186,7 +186,7 @@ class RendererCharacters extends RenderGroup {
     final spriteHandsLeftWest = atlasHandsLeftWest.fromCharacterState(characterState);
     final spriteHandsRightSouth = atlasHandsRightSouth.fromCharacterState(characterState);
     final spriteHandsRightWest = atlasHandsRightWest.fromCharacterState(characterState);
-    final spriteShadow = atlasShadow.fromCharacterState(characterState);
+    final spriteShadow = spritesShadow.fromCharacterState(characterState);
     final spriteHairFront = atlasHairFront.fromCharacterState(characterState);
     final spriteHairBack = atlasHairBack.fromCharacterState(characterState);
     final spriteShoesLeftSouth = atlasShoesLeftSouth.fromCharacterState(characterState);

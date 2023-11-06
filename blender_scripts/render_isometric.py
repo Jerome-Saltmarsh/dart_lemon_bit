@@ -404,5 +404,5 @@ def render_unmuted_rotation_tracks():
 
 render_unmuted_rotation_tracks()
 build_sprites_from_renders()
-set_render_path("c:/tmp")
+set_render_path("c:/tmp/")
 print('render sprites complete')

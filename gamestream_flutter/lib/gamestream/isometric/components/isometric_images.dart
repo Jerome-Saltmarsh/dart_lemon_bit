@@ -23,6 +23,7 @@ class IsometricImages with IsometricComponent {
   var imagesCached = false;
   
   final byteDataEmpty = ByteData(0);
+  late final CharacterSpriteGroup kidCharacterSpriteGroupShadow;
   final kidCharacterSpritesIsometricNorth = KidCharacterSprites();
   final kidCharacterSpritesIsometricEast = KidCharacterSprites();
   final kidCharacterSpritesIsometricSouth = KidCharacterSprites();
@@ -41,7 +42,6 @@ class IsometricImages with IsometricComponent {
   final values = <Image>[];
   final _completerImages = Completer();
 
-  late final CharacterSpriteGroup spriteGroupKidShadow;
   late final CharacterSpriteGroup spriteGroupFallenWest;
   late final CharacterSpriteGroup spriteGroupFallenSouth;
   late final CharacterSpriteGroup spriteGroupFallenShadow;
@@ -180,6 +180,18 @@ class IsometricImages with IsometricComponent {
         strike2: emptySprite,
         hurt: emptySprite,
         casting: emptySprite,
+    );
+
+    kidCharacterSpriteGroupShadow = CharacterSpriteGroup(
+      idle: await loadSprite(name: 'sprites/isometric/kid/shadow/idle', mode: AnimationMode.bounce),
+      running: await loadSprite(name: 'sprites/isometric/kid/shadow/running', mode: AnimationMode.loop),
+      change: await loadSprite(name: 'sprites/isometric/kid/shadow/change', mode: AnimationMode.bounce),
+      dead: await loadSprite(name: 'sprites/isometric/kid/shadow/dead', mode: AnimationMode.single),
+      fire: await loadSprite(name: 'sprites/isometric/kid/shadow/fire', mode: AnimationMode.single),
+      strike1: await loadSprite(name: 'sprites/isometric/kid/shadow/strike', mode: AnimationMode.single),
+      strike2: await loadSprite(name: 'sprites/isometric/kid/shadow/strike', mode: AnimationMode.single),
+      hurt: await loadSprite(name: 'sprites/isometric/kid/shadow/hurt', mode: AnimationMode.single),
+      casting: await loadSprite(name: 'sprites/isometric/kid/shadow/casting', mode: AnimationMode.single),
     );
 
     for (final kidCharacterSpritesIsometric in kidCharacterSpritesIsometric.values){

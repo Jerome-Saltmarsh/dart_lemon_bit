@@ -1184,57 +1184,55 @@ extension IsometricEditorUI on IsometricEditor {
     });
   }
 
-  Widget buildEditorTabMarks() => GSContainer(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+  Widget buildEditorTabMarks() => Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      WatchBuilder(selectedMarkType, (int selectedMarkType) => Row(
+          children: MarkType.values
+              .map((markType) => onPressed(
+                action: () => onPressedMarkType(markType),
+                child: GSContainer(
+                    color: selectedMarkType == markType ? colors.brownLight : colors.brownDark,
+                    child: buildText(MarkType.getName(markType))))
+              )
+              .toList(growable: false),
+        )),
+      Row(
         children: [
-          Row(
-            children: [
-              onPressed(
-                  action: onButtonPressedAddMark,
-                  child: GSContainer(child: buildText('ADD')),
-              ),
-              onPressed(
-                  action: markDelete,
-                  child: GSContainer(child: buildText('DELETE')),
-              ),
-            ],
+          onPressed(
+            action: onButtonPressedAddMark,
+            child: GSContainer(child: buildText('ADD')),
           ),
-          WatchBuilder(selectedMarkType, (int selectedMarkType) => Row(
-              children: MarkType.values
-                  .map((markType) => onPressed(
-                    action: () => onPressedMarkType(markType),
-                    child: GSContainer(
-                        color: selectedMarkType == markType ? colors.brownLight : colors.brownDark,
-                        child: buildText(MarkType.getName(markType))))
-                  )
-                  .toList(growable: false),
-            )),
-          Container(
-            height: 200,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  buildWatch(scene.marksChangedNotifier, (t) =>
-                  buildWatch(selectedMarkListIndex, (selectedMarkListIndex) => Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: List.generate(scene.marks.length, (index) => onPressed(
-                            action: () => selectMarkByIndex(index),
-                            child: Container(
-                                padding: const EdgeInsets.all(6),
-                                color: index == selectedMarkListIndex ? Colors.white24 : null,
-                                child: buildText(MarkType.getTypeName(scene.marks[index]))),
-                        )),
-                    )))
-                ],
-              ),
-            ),
-          )
+          onPressed(
+            action: markDelete,
+            child: GSContainer(child: buildText('DELETE')),
+          ),
         ],
       ),
-    );
+      Container(
+        height: 200,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              buildWatch(scene.marksChangedNotifier, (t) =>
+              buildWatch(selectedMarkListIndex, (selectedMarkListIndex) => Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: List.generate(scene.marks.length, (index) => onPressed(
+                        action: () => selectMarkByIndex(index),
+                        child: Container(
+                            padding: const EdgeInsets.all(6),
+                            color: index == selectedMarkListIndex ? Colors.white24 : null,
+                            child: buildText(MarkType.getTypeName(scene.marks[index]))),
+                    )),
+                )))
+            ],
+          ),
+        ),
+      )
+    ],
+  );
 
   void onButtonPressedAddMark() => markAdd(nodeSelectedIndex.value);
 
