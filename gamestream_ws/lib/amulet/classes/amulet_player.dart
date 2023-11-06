@@ -614,12 +614,10 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
         itemSlot.cooldownDuration = itemStats.cooldown;
         writePlayerWeapon(index);
         break;
-      case AmuletItemAction.None:
-        // TODO: Handle this case.
-        break;
       case AmuletItemAction.Consume:
         // TODO: Handle this case.
-        break;
+      case AmuletItemAction.None:
+        // TODO: Handle this case.
     }
   }
 
@@ -1634,25 +1632,35 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     final subType = equippedWeaponAmuletItem.subType;
     this.weaponDamage = equippedWeaponLevel.damage;
 
-    switch (subType){
-      case WeaponType.Sword:
-        setCharacterStateStriking(
-            duration: performDuration,
-        );
-        break;
-      case WeaponType.Bow:
-        setCharacterStateFire(
-            duration: performDuration,
-        );
-        break;
-      default:
-        throw Exception('amuletPlayer.attack() - weapon type not implemented ${WeaponType.getName(subType)}');
-    }
-
+    useWeaponType(weaponType: subType, duration: performDuration);
     reduceAmuletItemSlotCharges(equippedWeaponSlot);
   }
 
   bool get noWeaponEquipped => equippedWeaponIndex == -1;
+
+  void useWeaponType({required int weaponType, required int duration}) {
+    switch (weaponType) {
+      case WeaponType.Sword:
+        setCharacterStateStriking(
+          duration: duration,
+        );
+        break;
+      case WeaponType.Staff:
+        setCharacterStateStriking(
+          duration: duration,
+        );
+        break;
+      case WeaponType.Bow:
+        setCharacterStateFire(
+          duration: duration,
+        );
+        break;
+      default:
+        throw Exception(
+            'amuletPlayer.attack() - weapon type not implemented ${WeaponType
+                .getName(weaponType)}');
+    }
+  }
 
   void useActivatedPower() {
 
@@ -1703,9 +1711,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
         writeGameError(GameError.Weapon_Required);
         return;
       }
-
     }
-
 
     switch (amuletItem.selectAction) {
       case AmuletItemAction.Equip:
@@ -1726,7 +1732,8 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
           deselectActivatedPower();
           return;
         }
-        setCharacterStateStriking(
+        useWeaponType(
+          weaponType: dependency ?? amuletItem.subType,
           duration: amuletItemLevel.performDuration,
         );
         break;
@@ -1735,26 +1742,28 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
           deselectActivatedPower();
           return;
         }
-        setCharacterStateStriking(
+        setCharacterStateCasting(
           duration: amuletItemLevel.performDuration,
         );
         break;
       case AmuletItemAction.Positional:
-        setCharacterStateStriking(
+        useWeaponType(
+          weaponType: dependency ?? amuletItem.subType,
           duration: amuletItemLevel.performDuration,
         );
-        break;
-      case AmuletItemAction.None:
         break;
       case AmuletItemAction.Instant:
         break;
-      case AmuletItemAction.Consume:
-        break;
       case AmuletItemAction.Directional:
-        setCharacterStateStriking(
+        useWeaponType(
+          weaponType: dependency ?? amuletItem.subType,
           duration: amuletItemLevel.performDuration,
         );
         break;
+      case AmuletItemAction.Consume:
+        // TODO: Handle this case.
+      case AmuletItemAction.None:
+        // TODO: Handle this case.
     }
   }
 
