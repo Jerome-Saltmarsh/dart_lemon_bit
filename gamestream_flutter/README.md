@@ -13,6 +13,7 @@ ctrl + []               : move caret to code block
 * [fix]: render shoe type iron plates running
 
 ## TODO
+* [new]: amulet item weapon dependency
 * [new]: amulet item action directional
 * [new]: gameobject wooden barrel
 * [fix]: incorrect particle type
@@ -23,6 +24,11 @@ ctrl + []               : move caret to code block
 * [new]: design map 0
 * [new]: item tabs weapons amulets etc
 * [new]: model hair
+
+## 07.11.2023
+* [new]: front view lighting
+* [fix]: front view body not rendering
+* [fix]: load resource errors on startup
 
 ## 06.11.2023
 * [new]: three element types

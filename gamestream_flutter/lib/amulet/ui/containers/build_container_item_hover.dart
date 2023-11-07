@@ -13,9 +13,7 @@ import 'package:lemon_widgets/lemon_widgets.dart';
 Widget buildContainerAmuletItemHover({
   required Amulet amulet,
   double edgePadding = 150,
-}) {
-
-  return buildWatchNullable(
+}) => buildWatchNullable(
       amulet.itemHover, (item) {
         final levelCurrent = amulet.getAmuletPlayerItemLevel(item);
 
@@ -51,72 +49,97 @@ Widget buildContainerAmuletItemHover({
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             buildAmuletItemIcon(item),
+            // height8,
+            // GSContainer(
+            //   padding: const EdgeInsets.all(6),
+            //   child: buildText(item.description, color: Colors.white70, align: TextAlign.center),
+            //   color: Colors.white12,
+            // ),
             height8,
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                buildContainerItemStats(statsCurrent, levelCurrent),
+                buildContainerItemStats(statsCurrent, levelCurrent, color: Colors.green.shade900),
                 if (statsNext != null)
                  Container(
                      margin: const EdgeInsets.only(left: 32),
-                     child: buildContainerItemStats(statsNext, levelNext),
+                     child: buildContainerItemStats(statsNext, levelNext, color: Colors.orange.shade900),
                  ),
               ],
             ),
           ],
         );
       });
-}
 
 
-Widget buildAmuletItemIcon(AmuletItem item) => GSContainer(
+Widget buildAmuletItemIcon(AmuletItem item) {
+  final dependency = item.dependency;
+  return GSContainer(
   padding: const EdgeInsets.all(6),
       child: FittedBox(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Column(
           children: [
-            buildText(item.name.replaceAll('_', ' '),
-                size: 26, color: Colors.white.withOpacity(0.8)),
-            width8,
-            MMOItemImage(item: item, size: 64),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                buildText(item.name.replaceAll('_', ' '),
+                    size: 26, color: Colors.white.withOpacity(0.8)),
+                width8,
+                MMOItemImage(item: item, size: 64),
+              ],
+            ),
+            height8,
+            GSContainer(
+              padding: const EdgeInsets.all(6),
+              child: buildText(item.description, color: Colors.white70, align: TextAlign.center),
+              color: Colors.white12,
+            ),
+            if (dependency != null)
+              buildText('requires ${WeaponType.getName(dependency)}', color: Colors.white54),
           ],
         ),
       ),
     );
+}
 
-Widget buildContainerItemStats(AmuletItemLevel itemStats, int level) =>
+Widget buildContainerItemStats(AmuletItemLevel itemStats, int level, {Color? color}) =>
     IsometricBuilder(builder: (context, components) =>
-        GSContainer(
-          width: 270,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              GSContainer(
-                padding: const EdgeInsets.all(6),
-                child: buildText(itemStats.information, color: Colors.white70, align: TextAlign.center),
-                color: Colors.white12,
-              ),
-              height4,
-              buildTableRow('lvl', level),
-              if (itemStats.damage != 0)
-                buildTableRow('damage', itemStats.damage),
-              if (itemStats.charges != 0)
-                buildTableRow('charges', itemStats.charges),
-              if (itemStats.cooldown != 0)
-                buildTableRow('cooldown', itemStats.cooldown),
-              if (itemStats.range != 0)
-                buildTableRow('range', itemStats.range),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    if (itemStats.fire > 0)
-                      buildStatColumn2(AmuletElement.fire, itemStats.fire, components),
-                    if (itemStats.water > 0)
-                      buildStatColumn2(AmuletElement.water, itemStats.water, components),
-                    if (itemStats.electricity > 0)
-                      buildStatColumn2(AmuletElement.electricity, itemStats.electricity, components),
-                  ])
-            ],
+        buildBorder(
+          color: color ?? Colors.transparent,
+          width: 3,
+          child: GSContainer(
+            width: 270,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                alignLeft(child: buildBorder(child: buildText('LEVEL $level', color: color ?? Colors.white), padding: const EdgeInsets.all(4), color: color ?? Colors.white)),
+                if (itemStats.information != null)
+                  GSContainer(
+                    padding: const EdgeInsets.all(6),
+                    child: buildText(itemStats.information, color: Colors.white70, align: TextAlign.center),
+                    color: Colors.white12,
+                  ),
+                height4,
+                if (itemStats.damage != 0)
+                  buildTableRow('damage', itemStats.damage),
+                if (itemStats.charges != 0)
+                  buildTableRow('charges', itemStats.charges),
+                if (itemStats.cooldown != 0)
+                  buildTableRow('cooldown', itemStats.cooldown),
+                if (itemStats.range != 0)
+                  buildTableRow('range', itemStats.range),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      if (itemStats.fire > 0)
+                        buildStatColumn2(AmuletElement.fire, itemStats.fire, components),
+                      if (itemStats.water > 0)
+                        buildStatColumn2(AmuletElement.water, itemStats.water, components),
+                      if (itemStats.electricity > 0)
+                        buildStatColumn2(AmuletElement.electricity, itemStats.electricity, components),
+                    ])
+              ],
+            ),
           ),
         ));
 

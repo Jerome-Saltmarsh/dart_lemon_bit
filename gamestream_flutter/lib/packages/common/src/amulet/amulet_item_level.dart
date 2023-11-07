@@ -9,11 +9,11 @@ class AmuletItemLevel {
   final int quantity;
   final double range;
   final double movement;
-  final String information;
+  final String? information;
   final int performDuration;
 
   const AmuletItemLevel({
-    required this.information,
+    this.information,
     this.damage = 0,
     this.quantity = 0,
     this.health = 0,
