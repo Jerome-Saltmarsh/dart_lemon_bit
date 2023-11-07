@@ -281,18 +281,18 @@ class IsometricImages with IsometricComponent {
           subType: BodyType.Shirt_Blue,
           skipHurt: true,
       );
-      loadSpriteGroupIsometric(
-        direction: direction,
-        type: SpriteGroupType.Body_Arms,
-        subType: BodyType.Leather_Armour,
-        skipHurt: true,
-        skipFire: true,
-        skipStrike: true,
-        skipChange: true,
-        skipDead: true,
-        skipIdle: true,
-        skipRunning: true,
-      );
+      // loadSpriteGroupIsometric(
+      //   direction: direction,
+      //   type: SpriteGroupType.Body_Arms,
+      //   subType: BodyType.Leather_Armour,
+      //   skipHurt: true,
+      //   skipFire: true,
+      //   skipStrike: true,
+      //   skipChange: true,
+      //   skipDead: true,
+      //   skipIdle: true,
+      //   skipRunning: true,
+      // );
       loadSpriteGroupIsometric(
         direction: direction,
         type: SpriteGroupType.Hands_Left,
