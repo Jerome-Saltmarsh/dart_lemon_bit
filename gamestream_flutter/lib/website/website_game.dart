@@ -43,7 +43,7 @@ class WebsiteGame extends Game {
 
     for (final iconType in IconType.values){
        if (!atlasSrcIconType.containsKey(iconType)){
-         print('atlasSrcIconType does not contain $iconType');
+         print('validation: "atlasSrcIconType does not contain $iconType"');
        }
     }
 
@@ -52,13 +52,12 @@ class WebsiteGame extends Game {
       final values = entry.value;
       final atlas = Atlas.SrcCollection[type];
       if (atlas == null) {
-        print('missing atlas ${ItemType.getName(type)}');
+        print('validation: "missing atlas ${ItemType.getName(type)}"');
         continue;
       }
       for (final value in values){
         if (!atlas.containsKey(value)){
-          ui.error.value = 'missing atlas src for ${ItemType.getName(type)} ${ItemType.getNameSubType(type, value)}';
-          print('missing atlas src for ${ItemType.getName(type)} ${ItemType.getNameSubType(type, value)}');
+          print('validation: "missing atlas src for ${ItemType.getName(type)} ${ItemType.getNameSubType(type, value)}"');
         }
       }
     }
