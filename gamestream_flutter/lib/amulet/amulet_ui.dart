@@ -50,7 +50,7 @@ class AmuletUI {
                   child: Column(
                     children: [
                       buildPlayerHealthBar(),
-                      height4,
+                      height2,
                       buildPlayerWeapons(),
                     ],
                   ),
@@ -538,7 +538,7 @@ class AmuletUI {
 
   Widget buildPlayerHealthBar() {
     const width = 282.0;
-    const height = 20.0;
+    const height = 16.0;
 
     return IgnorePointer(
       child: buildWatch(amulet.player.healthPercentage, (healthPercentage) {

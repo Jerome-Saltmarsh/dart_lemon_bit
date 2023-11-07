@@ -79,10 +79,10 @@ Widget buildWeaponSlotAtIndex(int index, {
       return watchChargesRemaining;
   });
 
+  final height = size * goldenRatio_0381 * goldenRatio_0381;
+
   final watchCharges = buildWatch(itemSlotWeapon.max, (maxCharges) {
-
     final chargeWidth = size / maxCharges;
-
     final rechargeBarColorFull =  Colors.orangeAccent;
     final rechargeBarColorEmpty =  Colors.orangeAccent.withOpacity(0.2);
 
@@ -97,7 +97,7 @@ Widget buildWeaponSlotAtIndex(int index, {
         children: [
           Container(
             width: chargeWidthLeft,
-            height: size * goldenRatio_0381,
+            height: height,
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.only(topLeft: radius, bottomLeft: radius),
               color: rechargeBarColorFull,
@@ -105,7 +105,7 @@ Widget buildWeaponSlotAtIndex(int index, {
           ),
           Container(
             width: chargeWidthRight,
-            height: size * goldenRatio_0381,
+            height: height,
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.only(topRight: radius, bottomRight: radius),
               color: rechargeBarColorEmpty,
@@ -123,7 +123,7 @@ Widget buildWeaponSlotAtIndex(int index, {
           }
           return Container(
             width: chargeWidth,
-            height: size * goldenRatio_0381,
+            height: height,
             decoration: BoxDecoration(
               color: index < charges ? chargeColorFull : chargeColorEmpty,
               borderRadius: borderRadius2,
@@ -163,7 +163,6 @@ Widget buildWeaponSlotAtIndex(int index, {
           ],
         ),
       ),
-      height4,
       watchCharges,
     ],
   );
