@@ -10,7 +10,6 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
-* [fix]: render shoe type iron plates running
 
 ## TODO
 * [new]: amulet item weapon dependency
@@ -26,6 +25,8 @@ ctrl + []               : move caret to code block
 * [new]: model hair
 
 ## 07.11.2023
+* [fix]: use directional spell angle
+* [fix]: render shoe type iron plates running
 * [new]: front view lighting
 * [fix]: front view body not rendering
 * [fix]: load resource errors on startup

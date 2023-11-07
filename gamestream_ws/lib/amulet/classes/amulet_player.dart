@@ -1755,6 +1755,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
       case AmuletItemAction.Instant:
         break;
       case AmuletItemAction.Directional:
+        lookAtMouse();
         useWeaponType(
           weaponType: dependency ?? amuletItem.subType,
           duration: amuletItemLevel.performDuration,
