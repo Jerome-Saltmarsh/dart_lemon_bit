@@ -4,41 +4,19 @@ import 'package:lemon_sprite/lib.dart';
 
 void renderCanvasSprite({
   required Canvas canvas,
-  required Sprite? sprite,
+  required Sprite sprite,
   required int row,
   required int column,
-  int? color = null,
+  required BlendMode blendMode,
+  required int color,
   double scale = 1.0,
-}) {
-
-  if (sprite == null){
-    return;
-  }
-
-  final blendMode = color == null ? BlendMode.dstATop : BlendMode.modulate;
-  final frame = sprite.getFrame(row: row, column: column);
-
-  spriteExternal(
+}) => spriteExternal(
     canvas: canvas,
     sprite: sprite,
-    frame: frame,
-    color: 0,
+    frame: sprite.getFrame(row: row, column: column),
+    color: color,
     scale: scale,
     dstX: 0,
     dstY: 0,
     blendMode: blendMode,
   );
-
-  if (color != null){
-    spriteExternal(
-      canvas: canvas,
-      sprite: sprite,
-      frame: sprite.getFrame(row: row, column: column),
-      color: color,
-      scale: scale,
-      dstX: 0,
-      dstY: 0,
-      blendMode: blendMode,
-    );
-  }
-}

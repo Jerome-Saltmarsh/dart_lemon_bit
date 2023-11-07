@@ -1,5 +1,5 @@
 
-import 'package:flutter/rendering.dart';
+import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/amulet/ui/functions/render_canvas_character_sprites.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player.dart';
 import 'package:gamestream_flutter/gamestream/sprites/kid_character_sprites.dart';
@@ -11,6 +11,7 @@ void renderCanvasIsometricPlayer({
   required int row,
   required int column,
   required int characterState,
+  required int color,
 }) => renderCanvasCharacterSprites(
       canvas: canvas,
       sprites: sprites,
@@ -27,4 +28,5 @@ void renderCanvasIsometricPlayer({
       weaponType: player.weaponType.value,
       skinColor: player.colors.palette[player.complexion.value].value,
       hairColor: player.colors.palette[player.hairColor.value].value,
+      color: color,
   );

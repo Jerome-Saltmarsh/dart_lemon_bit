@@ -1,22 +1,17 @@
+import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/amulet/ui/functions/render_canvas_character_sprites.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_components.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
-import 'package:gamestream_flutter/gamestream/sprites/kid_character_sprites.dart';
-import 'package:gamestream_flutter/website/enums/website_page.dart';
-import 'package:gamestream_flutter/website/widgets/gs_button_region.dart';
-import 'package:lemon_math/src.dart';
-
-import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/ui.dart';
 import 'package:gamestream_flutter/packages/common.dart';
+import 'package:gamestream_flutter/website/enums/website_page.dart';
+import 'package:gamestream_flutter/website/widgets/gs_button_region.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
-import 'package:lemon_widgets/lemon_widgets.dart';
-
-import '../../amulet/ui/functions/render_canvas_sprite.dart';
+import 'package:lemon_math/src.dart';
 import 'package:lemon_watch/src.dart';
+import 'package:lemon_widgets/lemon_widgets.dart';
 
 
 typedef OnStart = Function({required int complex});
@@ -149,24 +144,29 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                       Positioned(
                         top: 100,
                         child: CustomCanvas(
-                          paint: (canvas, size) =>
-                            renderCanvasCharacterSprites(
-                              canvas: canvas,
-                              sprites: components.images.kidCharacterSpritesFront,
-                              row: row.value,
-                              column: 0,
-                              characterState: CharacterState.Idle,
-                              gender: gender.value,
-                              helmType: 0,
-                              headType: headType.value,
-                              bodyType: BodyType.Leather_Armour,
-                              shoeType: ShoeType.Leather_Boots,
-                              legsType: LegType.Leather,
-                              hairType: hairType.value,
-                              weaponType: 0,
-                              skinColor: palette[complexion.value].value,
-                              hairColor: palette[hairColor.value].value,
-                            ),
+                          paint: (canvas, size) {
+
+                            for (final sprite in components.images.kidCharacterSpritesFrontDirections){
+                              renderCanvasCharacterSprites(
+                                canvas: canvas,
+                                sprites: sprite,
+                                row: row.value,
+                                column: 0,
+                                characterState: CharacterState.Idle,
+                                gender: gender.value,
+                                helmType: 0,
+                                headType: headType.value,
+                                bodyType: BodyType.Leather_Armour,
+                                shoeType: ShoeType.Leather_Boots,
+                                legsType: LegType.Leather,
+                                hairType: hairType.value,
+                                weaponType: 0,
+                                skinColor: palette[complexion.value].value,
+                                hairColor: palette[hairColor.value].value,
+                                color: Colors.white.value,
+                              );
+                            }
+                          },
                         ),
                       ),
                       Positioned(
@@ -316,75 +316,79 @@ Widget buildColumn({
       ),
 );
 
-CustomCanvas buildCanvasPlayerCharacter(ValueNotifier<int> canvasFrame,
-    IsometricPlayer player, KidCharacterSprites sprites, int row) => CustomCanvas(
-      frame: canvasFrame,
-      paint: (canvas, size) {
-        final column = 0;
-        final gender = player.gender.value;
-        final isMale = gender == Gender.male;
-        final characterState = CharacterState.Idle;
-        final helm = sprites.helm[player.helmType.value]
-            ?.fromCharacterState(characterState);
-        final head = sprites.head[gender]?.fromCharacterState(characterState);
-        final bodySprite = isMale ? sprites.bodyMale : sprites.bodyFemale;
-        final body = bodySprite[player.bodyType.value]
-            ?.fromCharacterState(characterState);
-        final torsoTop = sprites.torsoTop[gender]?.fromCharacterState(characterState);
-        final torsoBottom = sprites.torsoBottom[gender]?.fromCharacterState(characterState);
-        final armsLeft = sprites.armLeft[ArmType.regular]
-            ?.fromCharacterState(characterState);
-        final armsRight = sprites.armRight[ArmType.regular]
-            ?.fromCharacterState(characterState);
-        final shoesLeft = sprites.shoesLeft[player.shoeType.value]
-            ?.fromCharacterState(characterState);
-        final shoesRight = sprites.shoesRight[player.shoeType.value]
-            ?.fromCharacterState(characterState);
-        final legs = sprites.legs[player.legsType.value]
-            ?.fromCharacterState(characterState);
-        final hair = sprites.hairFront[player.hairType.value]
-            ?.fromCharacterState(characterState);
-        final skinColor = player.skinColor.value;
-        final hairColor = player.colors.palette[player.hairColor.value].value;
-
-        renderCanvasSprite(
-            sprite: torsoTop,
-            canvas: canvas,
-            row: row,
-            column: column,
-            color: skinColor);
-        renderCanvasSprite(sprite: legs, canvas: canvas, row: row, column: column);
-        renderCanvasSprite(
-            sprite: armsLeft,
-            canvas: canvas,
-            row: row,
-            column: column,
-            color: skinColor);
-        renderCanvasSprite(
-            sprite: armsRight,
-            canvas: canvas,
-            row: row,
-            column: column,
-            color: skinColor);
-        renderCanvasSprite(
-            sprite: shoesLeft, canvas: canvas, row: row, column: column);
-        renderCanvasSprite(
-            sprite: shoesRight, canvas: canvas, row: row, column: column);
-        renderCanvasSprite(sprite: body, canvas: canvas, row: row, column: column);
-        renderCanvasSprite(
-            sprite: head,
-            canvas: canvas,
-            row: row,
-            column: column,
-            color: skinColor);
-        renderCanvasSprite(
-            sprite: hair,
-            canvas: canvas,
-            row: row,
-            column: column,
-            color: hairColor);
-        renderCanvasSprite(sprite: helm, canvas: canvas, row: row, column: column);
-      });
+// CustomCanvas buildCanvasPlayerCharacter(
+//     ValueNotifier<int> canvasFrame,
+//     IsometricPlayer player,
+//     KidCharacterSprites sprites,
+//     int row,
+// ) => CustomCanvas(
+//       frame: canvasFrame,
+//       paint: (canvas, size) {
+//         final column = 0;
+//         final gender = player.gender.value;
+//         final isMale = gender == Gender.male;
+//         final characterState = CharacterState.Idle;
+//         final helm = sprites.helm[player.helmType.value]
+//             ?.fromCharacterState(characterState);
+//         final head = sprites.head[gender]?.fromCharacterState(characterState);
+//         final bodySprite = isMale ? sprites.bodyMale : sprites.bodyFemale;
+//         final body = bodySprite[player.bodyType.value]
+//             ?.fromCharacterState(characterState);
+//         final torsoTop = sprites.torsoTop[gender]?.fromCharacterState(characterState);
+//         final torsoBottom = sprites.torsoBottom[gender]?.fromCharacterState(characterState);
+//         final armsLeft = sprites.armLeft[ArmType.regular]
+//             ?.fromCharacterState(characterState);
+//         final armsRight = sprites.armRight[ArmType.regular]
+//             ?.fromCharacterState(characterState);
+//         final shoesLeft = sprites.shoesLeft[player.shoeType.value]
+//             ?.fromCharacterState(characterState);
+//         final shoesRight = sprites.shoesRight[player.shoeType.value]
+//             ?.fromCharacterState(characterState);
+//         final legs = sprites.legs[player.legsType.value]
+//             ?.fromCharacterState(characterState);
+//         final hair = sprites.hairFront[player.hairType.value]
+//             ?.fromCharacterState(characterState);
+//         final skinColor = player.skinColor.value;
+//         final hairColor = player.colors.palette[player.hairColor.value].value;
+//
+//         renderCanvasSprite(
+//             sprite: torsoTop,
+//             canvas: canvas,
+//             row: row,
+//             column: column,
+//             color: skinColor);
+//         renderCanvasSprite(sprite: legs, canvas: canvas, row: row, column: column);
+//         renderCanvasSprite(
+//             sprite: armsLeft,
+//             canvas: canvas,
+//             row: row,
+//             column: column,
+//             color: skinColor);
+//         renderCanvasSprite(
+//             sprite: armsRight,
+//             canvas: canvas,
+//             row: row,
+//             column: column,
+//             color: skinColor);
+//         renderCanvasSprite(
+//             sprite: shoesLeft, canvas: canvas, row: row, column: column);
+//         renderCanvasSprite(
+//             sprite: shoesRight, canvas: canvas, row: row, column: column);
+//         renderCanvasSprite(sprite: body, canvas: canvas, row: row, column: column);
+//         renderCanvasSprite(
+//             sprite: head,
+//             canvas: canvas,
+//             row: row,
+//             column: column,
+//             color: skinColor);
+//         renderCanvasSprite(
+//             sprite: hair,
+//             canvas: canvas,
+//             row: row,
+//             column: column,
+//             color: hairColor);
+//         renderCanvasSprite(sprite: helm, canvas: canvas, row: row, column: column);
+//       });
 
 Widget buildColorWheel({
   required List<Color> colors,

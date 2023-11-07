@@ -19,6 +19,10 @@ def get_animation_tracks(object_name):
     raise ValueError('get_animation_tracks("' + object_name + '") is null')
 
 
+def object_animation_tracks(obj):
+    return obj.animation_data.nla_tracks
+
+
 def get_active_animation_tracks(object_name):
     unmuted_tracks = []
     animation_tracks = get_animation_tracks(object_name)
@@ -98,7 +102,10 @@ def try_get_object(object_name):
 
 
 def get_collection(collection_name):
-    return bpy.data.collections.get(collection_name)
+    collection = bpy.data.collections.get(collection_name)
+    if not collection:
+        raise ValueError(f'get_collection{collection_name} could not be found')
+    return collection
 
 
 def render():
@@ -107,10 +114,6 @@ def render():
 
 def set_render_path(value):
     bpy.context.scene.render.filepath = value
-
-
-def get_animation_tracks_rig_kid():
-    return get_animation_tracks("armature_kid")
 
 
 def get_armatures():
@@ -155,6 +158,12 @@ name_material_cell_shade = 'cell_shade'
 name_object_rotation = 'rotation'
 name_object_direction = 'direction'
 name_object_camera = 'camera'
+name_object_armature_kid = 'armature_kid'
+name_collection_exports = 'exports'
+name_camera_track_front = 'front'
+name_camera_track_isometric = 'isometric'
+name_rotation_track_1 = 'rotation_1'
+name_rotation_track_8 = 'rotation_8'
 
 directory_renders = 'C:/Users/Jerome/github/bleed/lemon_atlas/assets/renders/'
 
@@ -169,11 +178,22 @@ direction_south_threshold = 0.2
 direction_west_threshold = 0.2
 
 
+def get_animation_tracks_rig_kid():
+    return get_animation_tracks(name_object_armature_kid)
+
+
 def get_material_cell_shade():
     return get_material(name_material_cell_shade)
 
 
 def unmute_rotation_track(pivot_track_name):
+    rotation_animation_tracks = get_animation_tracks(name_object_rotation)
+    if rotation_animation_tracks:
+        for animation_track in rotation_animation_tracks:
+            animation_track.mute = animation_track.name != pivot_track_name
+
+
+def unmute_object_track(obj, pivot_track_name):
     rotation_animation_tracks = get_animation_tracks(name_object_rotation)
     if rotation_animation_tracks:
         for animation_track in rotation_animation_tracks:
@@ -220,32 +240,24 @@ def enable_animation_tracks_by_name(name):
 def render_camera_track_by_direction(camera_track, render_direction):
     print(f'render_camera_track({camera_track.name}, {render_direction})')
     armature_kid_animation_tracks = get_animation_tracks_rig_kid()
-    object_rotation = get_object(name_object_rotation)
-
-    if not object_rotation:
-        raise ValueError('object_rotation could not be found')
-
-    mute_animation_tracks("rotation")
+    mute_animation_tracks(name_object_rotation)
     camera_track.mute = False
     set_render_direction(render_direction)
 
-    if camera_track.name == 'front':
+    if camera_track.name == name_camera_track_front:
         set_render_frames(1, 8)
-        unmute_rotation_track('rotation_1')
+        unmute_rotation_track(name_rotation_track_1)
         for rig_kid_animation_track in armature_kid_animation_tracks:
             rig_kid_animation_track.mute = rig_kid_animation_track.name != 'idle'
 
-    if camera_track.name == 'isometric':
+    if camera_track.name == name_camera_track_isometric:
         set_render_frames(1, 64)
-        unmute_rotation_track('rotation_8')
+        unmute_rotation_track(name_rotation_track_8)
         # for rig_kid_animation_track in armature_kid_animation_tracks:
         #     rig_kid_animation_track.mute = rig_kid_animation_track.name == 'tpose'
 
-    armature_kid_animation_tracks = get_active_animation_tracks("armature_kid")
-    exports = get_collection("exports")
-
-    if not exports:
-        raise ValueError('exports not found')
+    armature_kid_animation_tracks = get_active_animation_tracks(name_object_armature_kid)
+    exports = get_collection(name_collection_exports)
 
     if not armature_kid_animation_tracks:
         raise ValueError('armature_kid_animation_tracks not found')

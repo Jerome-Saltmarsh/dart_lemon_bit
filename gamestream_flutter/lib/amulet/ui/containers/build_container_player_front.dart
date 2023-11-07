@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/amulet/ui/functions/render_canvas_isometric_player.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
 import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
@@ -34,15 +35,27 @@ Widget buildContainerPlayerFront({
             Positioned(
               top: 100,
               child: CustomCanvas(
-                  paint: (canvas, size) =>
-                      renderCanvasIsometricPlayer(
+                  paint: (canvas, size) {
+                    renderCanvasIsometricPlayer(
                         player: player,
                         canvas: canvas,
                         row: row,
                         column: column,
-                        sprites: player.images.kidCharacterSpritesFront,
+                        sprites: player.images.kidCharacterSpritesFrontSouth,
                         characterState: CharacterState.Idle,
-                      )
+                        color: Colors.transparent.value
+                    );
+                    renderCanvasIsometricPlayer(
+                        player: player,
+                        canvas: canvas,
+                        row: row,
+                        column: column,
+                        sprites: player.images.kidCharacterSpritesFrontWest,
+                        characterState: CharacterState.Idle,
+                        color: IsometricColors.Black.withOpacity(0.25).value,
+                    );
+
+                  }
               ),
             ),
             Positioned(

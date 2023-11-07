@@ -13,7 +13,7 @@ void spriteExternal({
   required double scale,
   required double dstX,
   required double dstY,
-  BlendMode blendMode = BlendMode.dstATop,
+  required BlendMode blendMode,
   double anchorX = 0.5,
   double anchorY = 0.5,
 }) {

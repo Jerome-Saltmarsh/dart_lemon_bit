@@ -144,8 +144,8 @@ class RendererCharacters extends RenderGroup {
     final atlasArmLeftWest = spritesWest.armLeft[ArmType.regular] ?? (throw Exception());
     final atlasArmRightSouth = spritesSouth.armRight[ArmType.regular] ?? (throw Exception());
     final atlasArmRightWest = spritesWest.armRight[ArmType.regular] ?? (throw Exception());
-    final atlasHeadNorth = spritesNorth.head[character.headType] ?? (throw Exception());
-    final atlasHeadEast = spritesEast.head[character.headType] ?? (throw Exception());
+    // final atlasHeadNorth = spritesNorth.head[character.headType] ?? (throw Exception());
+    // final atlasHeadEast = spritesEast.head[character.headType] ?? (throw Exception());
     final atlasHeadSouth = spritesSouth.head[character.headType] ?? (throw Exception());
     final atlasHeadWest = spritesWest.head[character.headType] ?? (throw Exception());
     final atlasTorsoTopSouth = spritesSouth.torsoTop[character.gender] ?? (throw Exception());
@@ -168,8 +168,8 @@ class RendererCharacters extends RenderGroup {
     final spriteBodyWest = atlasBodyWest.fromCharacterState(characterState);
     final spriteBodyArmSouth = atlasBodyArmSouth.fromCharacterState(characterState);
     final spriteBodyArmWest = atlasBodyArmWest.fromCharacterState(characterState);
-    final spriteHeadNorth = atlasHeadNorth.fromCharacterState(characterState);
-    final spriteHeadEast = atlasHeadEast.fromCharacterState(characterState);
+    // final spriteHeadNorth = atlasHeadNorth.fromCharacterState(characterState);
+    // final spriteHeadEast = atlasHeadEast.fromCharacterState(characterState);
     final spriteHeadSouth = atlasHeadSouth.fromCharacterState(characterState);
     final spriteHeadWest = atlasHeadWest.fromCharacterState(characterState);
     final spriteArmLeftSouth = atlasArmLeftSouth.fromCharacterState(characterState);
@@ -713,36 +713,36 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    if (options.renderNorth){
-      modulate(
-        sprite: spriteHeadNorth,
-        frame: completingAction
-            ? spriteHeadNorth.getFramePercentage(row, actionComplete)
-            : spriteHeadNorth.getFrame(row: row, column: animationFrame),
-        color1: colorSkin,
-        color2: colorNorth,
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
-    }
+    // if (options.renderNorth){
+    //   modulate(
+    //     sprite: spriteHeadNorth,
+    //     frame: completingAction
+    //         ? spriteHeadNorth.getFramePercentage(row, actionComplete)
+    //         : spriteHeadNorth.getFrame(row: row, column: animationFrame),
+    //     color1: colorSkin,
+    //     color2: colorNorth,
+    //     scale: scale,
+    //     dstX: dstX,
+    //     dstY: dstY,
+    //     anchorY: anchorY,
+    //   );
+    // }
 
-    if (options.renderEast){
-      modulate(
-        sprite: spriteHeadEast,
-        frame: completingAction
-            ? spriteHeadEast.getFramePercentage(row, actionComplete)
-            : spriteHeadEast.getFrame(row: row, column: animationFrame),
-        color1: colorSkin,
-        color2: colorEast,
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
-
-    }
+    // if (options.renderEast){
+    //   modulate(
+    //     sprite: spriteHeadEast,
+    //     frame: completingAction
+    //         ? spriteHeadEast.getFramePercentage(row, actionComplete)
+    //         : spriteHeadEast.getFrame(row: row, column: animationFrame),
+    //     color1: colorSkin,
+    //     color2: colorEast,
+    //     scale: scale,
+    //     dstX: dstX,
+    //     dstY: dstY,
+    //     anchorY: anchorY,
+    //   );
+    //
+    // }
 
     modulate(
       sprite: spriteHairInFront,
