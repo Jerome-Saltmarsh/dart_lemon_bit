@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/amulet/amulet.dart';
-import 'package:gamestream_flutter/amulet/functions/get_amulet_element_colofr.dart';
 import 'package:gamestream_flutter/amulet/ui/widgets/amulet_element_icon.dart';
 import 'package:gamestream_flutter/amulet/ui/widgets/mmo_item_image.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_components.dart';
@@ -69,29 +68,47 @@ Widget buildContainerAmuletItemHover({
 
 Widget buildAmuletItemIcon(AmuletItem item) {
   final dependency = item.dependency;
-  return GSContainer(
-    width: 276,
-  padding: const EdgeInsets.all(6),
+  return Container(
+    width: 278,
+    color: Color.fromRGBO(46, 34, 47, 1),
+  // padding: const EdgeInsets.all(6),
       child: FittedBox(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                buildText(item.name.replaceAll('_', ' '),
-                    size: 26, color: Colors.white.withOpacity(0.8)),
-                width8,
-                MMOItemImage(item: item, size: 64),
-              ],
+            GSContainer(
+              color: Colors.black12,
+              padding: const EdgeInsets.all(6),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  buildText(item.name.replaceAll('_', ' ').toUpperCase(),
+                      size: 26, color: Colors.white.withOpacity(0.8)),
+                  width8,
+                  MMOItemImage(item: item, size: 64),
+                ],
+              ),
             ),
             height8,
             GSContainer(
               padding: const EdgeInsets.all(6),
-              child: buildText(item.description, color: Colors.white70, align: TextAlign.center),
+              child: buildText(
+                  item.description,
+                  color: Colors.white70,
+                  align: TextAlign.center,
+              ),
               color: Colors.white12,
             ),
             if (dependency != null)
-              buildText('requires ${WeaponType.getName(dependency)}', color: Colors.white54),
+              GSContainer(
+                  padding: const EdgeInsets.all(6),
+                  color: Colors.black12,
+                  child: buildText(
+                    'requires ${WeaponType.getName(dependency)}',
+                    color: Colors.white54,
+                    italic: true,
+                  ),
+              ),
           ],
         ),
       ),
@@ -110,7 +127,11 @@ Widget buildContainerItemStats(AmuletItemLevel itemStats, int level, {Color? col
               children: [
                 Row(
                   children: [
-                    buildBorder(child: buildText('LVL $level', color: color ?? Colors.white), padding: const EdgeInsets.all(4), color: color ?? Colors.white),
+                    GSContainer(
+                      height: 32,
+                      color: color ?? Colors.white,
+                      child: buildText('LVL $level'), padding: const EdgeInsets.all(4),
+                    ),
                     const Expanded(child: SizedBox()),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -121,9 +121,8 @@ class AmuletUI {
         return buildWatch(
             amulet.playerInventoryOpen,
             (inventoryOpen) => Positioned(
-                  top: inventoryOpen ? margin1 : null,
-                  bottom: inventoryOpen ? null : margin2,
-                  left: inventoryOpen ? margin4 + 50 : margin1,
+                  top: margin1,
+                  left: inventoryOpen ? margin4 + 50 : null,
                   child: child,
                 ));
       });
@@ -563,10 +562,14 @@ class AmuletUI {
   }
 
   Widget buildPlayerLevel() => buildWatch(amulet.playerLevel,
-      (level) => buildText('lvl $level', color: Colors.white70));
+      (level) => Container(
+          alignment: Alignment.center,
+          width: 40,
+          height: 40,
+          child: buildText(level, color: Colors.white70, size: 22, bold: true)));
 
   Widget buildPlayerExperienceBar({double height = 10}) {
-    final width = 200.0;
+    final width = 186.0;
     return buildBorder(
         width: 2,
         color: Colors.white70,
@@ -592,19 +595,22 @@ class AmuletUI {
   }
 
   Widget buildPlayerStatsRow() => GSContainer(
-        padding: const EdgeInsets.all(0),
-        width: 262,
-        child: Column(
+        padding: EdgeInsets.zero,
+        // width: 262,
+        child: Row(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            buildPlayerLevel(),
+            Column(
               children: [
-                Expanded(child: Center(child: buildPlayerLevel())),
+                Row(
+                  children: [
+                    buildAmuletElements(),
+                    buildElementPoints(),
+                  ],
+                ),
                 buildPlayerExperienceBar(),
               ],
             ),
-            buildAmuletElements(),
-            buildElementPoints(),
           ],
         ),
       );
