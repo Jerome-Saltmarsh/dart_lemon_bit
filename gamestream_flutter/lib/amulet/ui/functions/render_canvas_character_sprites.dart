@@ -27,8 +27,8 @@ void renderCanvasCharacterSprites({
   final helm = sprites.helm[helmType]?.fromCharacterState(characterState);
   final head = sprites.head[headType]?.fromCharacterState(characterState) ?? (throw Exception());
   final bodySprite = isMale ? sprites.bodyMale : sprites.bodyFemale;
-  final body = bodySprite[bodyType]
-      ?.fromCharacterState(characterState);
+  final body = bodySprite[bodyType] ?.fromCharacterState(characterState);
+  final bodyArms = sprites.bodyArms[bodyType]?.fromCharacterState(characterState);
   final torsoTop = sprites.torsoTop[gender]?.fromCharacterState(characterState) ?? (throw Exception());
   final torsoBottom = sprites.torsoBottom[gender]?.fromCharacterState(characterState) ?? (throw Exception());
   final armsLeft = sprites.armLeft[ArmType.regular]
@@ -155,6 +155,17 @@ void renderCanvasCharacterSprites({
   if (body != null) {
     renderCanvasSprite(
       sprite: body,
+      canvas: canvas,
+      row: row,
+      column: column,
+      blendMode: BlendMode.dstATop,
+      color: color,
+    );
+  }
+
+  if (bodyArms != null) {
+    renderCanvasSprite(
+      sprite: bodyArms,
       canvas: canvas,
       row: row,
       column: column,

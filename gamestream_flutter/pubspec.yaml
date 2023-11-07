@@ -125,6 +125,7 @@ flutter:
     - sprites/isometric/crystal/
     - sprites/front/kid/south/arms_left/regular/
     - sprites/front/kid/south/arms_right/regular/
+    - sprites/front/kid/south/body_arms/shirt_blue/
     - sprites/front/kid/south/body_male/shirt_blue/
     - sprites/front/kid/south/body_male/leather_armour/
     - sprites/front/kid/south/body_female/leather_armour/
@@ -153,6 +154,7 @@ flutter:
     - sprites/front/kid/south/shoes_right/leather_boots/
     - sprites/front/kid/west/arms_left/regular/
     - sprites/front/kid/west/arms_right/regular/
+    - sprites/front/kid/west/body_arms/shirt_blue/
     - sprites/front/kid/west/body_male/shirt_blue/
     - sprites/front/kid/west/body_male/leather_armour/
     - sprites/front/kid/west/body_female/leather_armour/

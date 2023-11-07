@@ -69,12 +69,6 @@ class AmuletWorldMap extends StatelessWidget {
               color: amulet.style.containerColor,
             ),
             child: canvas,
-            // child: CustomTicker(
-            //   onTrick: (duration) {
-            //
-            //   },
-            //   child: canvas,
-            // ),
           ),
       ),
     );
