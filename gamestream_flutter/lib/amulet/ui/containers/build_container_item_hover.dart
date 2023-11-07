@@ -70,6 +70,7 @@ Widget buildContainerAmuletItemHover({
 Widget buildAmuletItemIcon(AmuletItem item) {
   final dependency = item.dependency;
   return GSContainer(
+    width: 276,
   padding: const EdgeInsets.all(6),
       child: FittedBox(
         child: Column(
@@ -139,6 +140,8 @@ Widget buildContainerItemStats(AmuletItemLevel itemStats, int level, {Color? col
                   buildTableRow('cooldown', itemStats.cooldown),
                 if (itemStats.range != 0)
                   buildTableRow('range', itemStats.range),
+                if (itemStats.quantity != 0)
+                  buildTableRow('quantity', itemStats.quantity),
               ],
             ),
           ),
