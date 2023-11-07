@@ -38,7 +38,7 @@ class AmuletWorldMap extends StatelessWidget {
         final ratioY = position.y / scene.lengthColumns;
         final posX = amulet.worldRow * mapSize + (mapSize * ratioX);
         final posY = amulet.worldColumn * mapSize + (mapSize * ratioY);
-        paint.color = Colors.red;
+        paint.color = Colors.white;
 
         final translateX = centerX - posX;
         final translateY = centerY - posY;
@@ -47,13 +47,10 @@ class AmuletWorldMap extends StatelessWidget {
         canvas.rotate(piQuarter);
         canvas.translate(translateX, translateY);
 
-        canvas.drawImage(worldMapPicture, Offset(0, 0), paint);
+        canvas.drawImage(worldMapPicture, const Offset(0, 0), paint);
+        // TODO optimize
         canvas.drawCircle(Offset(posX, posY), 5, paint);
         paint.color = Colors.blue;
-        // canvas.drawCircle(Offset(centerX, centerY), 5, paint);
-
-
-
       },
     );
 
@@ -71,12 +68,13 @@ class AmuletWorldMap extends StatelessWidget {
               shape: BoxShape.circle,
               color: amulet.style.containerColor,
             ),
-            child: CustomTicker(
-              onTrick: (duration) {
-
-              },
-              child: canvas,
-            ),
+            child: canvas,
+            // child: CustomTicker(
+            //   onTrick: (duration) {
+            //
+            //   },
+            //   child: canvas,
+            // ),
           ),
       ),
     );

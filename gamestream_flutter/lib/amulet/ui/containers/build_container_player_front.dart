@@ -43,7 +43,7 @@ Widget buildContainerPlayerFront({
                         column: column,
                         sprites: player.images.kidCharacterSpritesFrontSouth,
                         characterState: CharacterState.Idle,
-                        color: Colors.transparent.value
+                        color: player.scene.colorSouth(player.nodeIndex)
                     );
                     renderCanvasIsometricPlayer(
                         player: player,
@@ -52,7 +52,7 @@ Widget buildContainerPlayerFront({
                         column: column,
                         sprites: player.images.kidCharacterSpritesFrontWest,
                         characterState: CharacterState.Idle,
-                        color: IsometricColors.Black.withOpacity(0.25).value,
+                        color: player.scene.colorWest(player.nodeIndex)
                     );
 
                   }
