@@ -611,26 +611,26 @@ class IsometricEvents with IsometricComponent {
       int type,
       ){
     switch (type){
-      case ObjectType.Barrel:
+      case GameObjectType.Barrel:
         audio.play(audio.crate_breaking, x, y, z);
         for (var i = 0; i < 5; i++) {
           particles.spawnParticleBlockWood(x, y, z);
         }
         break;
-      case ObjectType.Toilet:
+      case GameObjectType.Toilet:
         audio.play(audio.crate_breaking, x, y, z);
         for (var i = 0; i < 5; i++) {
           particles.spawnParticleBlockWood(x, y, z);
         }
         break;
-      case ObjectType.Crate_Wooden:
+      case GameObjectType.Crate_Wooden:
         audio.play(audio.crate_breaking, x, y, z);
         for (var i = 0; i < 5; i++) {
           particles.spawnParticleBlockWood(x, y, z);
         }
         break;
 
-      case ObjectType.Credits:
+      case GameObjectType.Credits:
         for (var i = 0; i < 8; i++){
           particles.spawnParticleConfettiByType(
             x,

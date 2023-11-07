@@ -29,9 +29,9 @@ class GameObject extends Collider {
      switch (type){
        case ItemType.Object:
          switch (subType){
-           case ObjectType.Crystal_Glowing_False:
+           case GameObjectType.Crystal_Glowing_False:
              return MaterialType.Glass;
-           case ObjectType.Crystal_Glowing_True:
+           case GameObjectType.Crystal_Glowing_True:
              return MaterialType.Glass;
          }
      }

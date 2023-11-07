@@ -34,7 +34,7 @@ class RendererGameObjects extends RenderGroup {
     final images = this.images;
     final scene = this.scene;
 
-    if (type == ItemType.Object && subType == ObjectType.Sphere){
+    if (type == ItemType.Object && subType == GameObjectType.Sphere){
 
       final gameObjectIndex = scene.getIndexPosition(gameObject);
       final dstX = gameObject.renderX;
@@ -102,8 +102,8 @@ class RendererGameObjects extends RenderGroup {
     if (
       type == ItemType.Object &&
       const [
-        ObjectType.Crystal_Glowing_False,
-        ObjectType.Crystal_Glowing_True,
+        GameObjectType.Crystal_Glowing_False,
+        GameObjectType.Crystal_Glowing_True,
       ].contains(subType)
     ){
       final scene = this.scene;
@@ -118,7 +118,7 @@ class RendererGameObjects extends RenderGroup {
 
       engine.setBlendModeModulate();
 
-      final color = (subType == ObjectType.Crystal_Glowing_False ? colors.purple_3 : colors.aqua_2).value;
+      final color = (subType == GameObjectType.Crystal_Glowing_False ? colors.purple_3 : colors.aqua_2).value;
 
       render.sprite(
           sprite: sprite,
@@ -160,7 +160,7 @@ class RendererGameObjects extends RenderGroup {
         anchorY: anchorY,
       );
 
-      if (subType == ObjectType.Crystal_Glowing_False){
+      if (subType == GameObjectType.Crystal_Glowing_False){
         render.sprite(
           sprite: sprite,
           frame: sprite.getFrame(row: 0, column: 0),
@@ -209,7 +209,7 @@ class RendererGameObjects extends RenderGroup {
     if (
       type == ItemType.Object &&
       const [
-        ObjectType.Rock1,
+        GameObjectType.Rock1,
       ].contains(subType)
     ){
       const scale = 0.15;
@@ -278,7 +278,7 @@ class RendererGameObjects extends RenderGroup {
     if (
       type == ItemType.Object &&
       const [
-        ObjectType.Tree1,
+        GameObjectType.Tree1,
       ].contains(subType)
     ){
       const scale = 0.3;

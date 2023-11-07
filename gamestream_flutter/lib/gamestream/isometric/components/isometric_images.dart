@@ -190,7 +190,7 @@ class IsometricImages with IsometricComponent {
       fire: await loadSprite(name: 'sprites/isometric/kid/shadow/fire', mode: AnimationMode.single),
       strike1: await loadSprite(name: 'sprites/isometric/kid/shadow/strike', mode: AnimationMode.single),
       strike2: await loadSprite(name: 'sprites/isometric/kid/shadow/strike_2', mode: AnimationMode.single),
-      hurt: await loadSprite(name: 'sprites/isometric/kid/shadow/hurt', mode: AnimationMode.single),
+      hurt: emptySprite,
       casting: await loadSprite(name: 'sprites/isometric/kid/shadow/casting', mode: AnimationMode.single),
     );
 
@@ -324,12 +324,6 @@ class IsometricImages with IsometricComponent {
         direction: direction,
         type: SpriteGroupType.Legs,
         subType: LegType.Leather,
-        skipHurt: true,
-      );
-      loadSpriteGroupIsometric(
-        direction: direction,
-        type: SpriteGroupType.Shadow,
-        subType: ShadowType.regular,
         skipHurt: true,
       );
       loadSpriteGroupIsometric(

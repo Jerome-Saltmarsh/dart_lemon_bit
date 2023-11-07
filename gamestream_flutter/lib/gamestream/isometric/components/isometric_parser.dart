@@ -385,7 +385,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     gameObject.maxHealth = readUInt16();
     readIsometricPosition(gameObject);
 
-    if (gameObject.type == ItemType.Object && gameObject.subType == ObjectType.Crystal_Glowing_False){
+    if (gameObject.type == ItemType.Object && gameObject.subType == GameObjectType.Crystal_Glowing_False){
       gameObject.emissionType = EmissionType.Zero;
     }
 

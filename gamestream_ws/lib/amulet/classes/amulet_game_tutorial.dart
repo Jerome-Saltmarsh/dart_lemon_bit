@@ -84,7 +84,7 @@ class AmuletGameTutorial extends AmuletGame {
     removeFiends();
     gameObjects.removeWhere((element) =>
       !element.persistable &&
-      !const[ObjectType.Crystal_Glowing_False, ObjectType.Crystal_Glowing_True].contains(element.subType)
+      !const[GameObjectType.Crystal_Glowing_False, GameObjectType.Crystal_Glowing_True].contains(element.subType)
     );
 
     player.equipBody(AmuletItem.Armor_Leather_Basic, force: true);
@@ -835,7 +835,7 @@ class AmuletGameTutorial extends AmuletGame {
 
   GameObject spawnAtKeyCrystalGlowingTrue(String key) => spawnGameObjectAtKey(
         sceneKey: key,
-        subType: ObjectType.Crystal_Glowing_True,
+        subType: GameObjectType.Crystal_Glowing_True,
         team: TeamType.Alone,
       )
         ..hitbox = false
@@ -847,7 +847,7 @@ class AmuletGameTutorial extends AmuletGame {
 
   GameObject spawnAtKeyCrystalGlowingFalse(String sceneKey) => spawnGameObjectAtKey(
         sceneKey: sceneKey,
-        subType: ObjectType.Crystal_Glowing_False,
+        subType: GameObjectType.Crystal_Glowing_False,
         team: TeamType.Alone,
       )
       ..hitbox = true

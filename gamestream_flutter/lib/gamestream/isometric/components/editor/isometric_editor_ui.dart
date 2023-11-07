@@ -19,14 +19,14 @@ import 'isometric_editor.dart';
 extension IsometricEditorUI on IsometricEditor {
 
   static const gameObjects = const [
-    ObjectType.Barrel,
-    ObjectType.Barrel_Explosive,
-    ObjectType.Crate_Wooden,
-    ObjectType.Sphere,
-    ObjectType.Rock1,
-    ObjectType.Tree1,
-    ObjectType.Crystal_Glowing_False,
-    ObjectType.Crystal_Glowing_True,
+    GameObjectType.Barrel,
+    GameObjectType.Barrel_Explosive,
+    GameObjectType.Crate_Wooden,
+    GameObjectType.Sphere,
+    GameObjectType.Rock1,
+    GameObjectType.Tree1,
+    GameObjectType.Crystal_Glowing_False,
+    GameObjectType.Crystal_Glowing_True,
   ];
 
   static const nodeTypesColumn1 = [
@@ -461,7 +461,7 @@ extension IsometricEditorUI on IsometricEditor {
           color: style.containerColor,
           child: FittedBox(
             // child: amulet.ui.buildImageGameObject(objectType),
-            child: buildText(ObjectType.getName(objectType)),
+            child: buildText(GameObjectType.getName(objectType)),
           ),
         ),
       );

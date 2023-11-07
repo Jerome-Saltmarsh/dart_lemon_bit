@@ -31,7 +31,7 @@ export 'weapon_state.dart';
 export 'wind_type.dart';
 export 'weapon_type.dart';
 export 'body_type.dart';
-export 'object_type.dart';
+export 'gameobject_type.dart';
 export 'isometric_type.dart';
 export 'character_action.dart';
 export 'compress_type.dart';

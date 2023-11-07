@@ -1,5 +1,5 @@
 
-class ObjectType {
+class GameObjectType {
   static const Flag_Red = 1;
   static const Flag_Blue = 2;
   static const Spawn_Red = 3;
@@ -11,7 +11,6 @@ class ObjectType {
   static const Barrel_Flaming = 9;
   static const Credits = 10;
   static const Car = 11;
-
   static const Candle = 13;
   static const Barrel = 14;
   static const Barrel_Purple = 15;
