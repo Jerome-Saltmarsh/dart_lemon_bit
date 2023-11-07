@@ -10,21 +10,20 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
-
-## TODO
-* [new]: amulet item weapon dependency
-* [new]: amulet item action directional
-* [new]: gameobject wooden barrel
-* [fix]: incorrect particle type
-* [new]: flames emit smoke particles
-* [fix]: ai stuttering on idle
-* [fix]: inventory slots remain green after drag
-* [fix]: colored particle emission
-* [new]: design map 0
-* [new]: item tabs weapons amulets etc
 * [new]: model hair
 
+## TODO
+* [fix]: incorrect particle type
+* [new]: gameobject wooden crate
+* [fix]: ai stuttering on idle
+* [fix]: colored particle emission
+* [new]: flames emit smoke particles
+* [new]: design map 0
+* [new]: item tabs weapons amulets etc
+
 ## 07.11.2023
+* [new]: gameobject wooden barrel
+* [new]: amulet item weapon dependency
 * [fix]: use directional spell angle
 * [fix]: render shoe type iron plates running
 * [new]: front view lighting

@@ -6,6 +6,7 @@ import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart
 import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/packages/common.dart';
+import 'package:golden_ratio/constants.dart';
 
 class SurfaceIndex {
   static const east = 0;
@@ -93,6 +94,68 @@ class RendererGameObjects extends RenderGroup {
           dstX: dstX,
           dstY: dstY,
           color: scene.colorWest(gameObjectIndex)
+      );
+
+      return;
+    }
+
+    if (type == ItemType.Object && subType == GameObjectType.Barrel){
+
+      final gameObjectIndex = scene.getIndexPosition(gameObject);
+      final dstX = gameObject.renderX;
+      final dstY = gameObject.renderY;
+      final sprite = images.barrelWooden;
+      const scale = goldenRatio_0381;
+      const anchorY = 0.8;
+
+      render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: 2),
+        dstX: dstX,
+        dstY: dstY,
+        color: scene.colorSouth(gameObjectIndex),
+        scale: scale,
+        anchorY: anchorY,
+      );
+
+      render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: 4),
+        dstX: dstX,
+        dstY: dstY,
+        color: scene.colorWest(gameObjectIndex),
+        scale: scale,
+        anchorY: anchorY,
+      );
+
+      render.sprite(
+          sprite: sprite,
+          frame: sprite.getFrame(row: 0, column: 0),
+          dstX: dstX,
+          dstY: dstY,
+          color: scene.colorEast(gameObjectIndex),
+          scale: scale,
+          anchorY: anchorY,
+      );
+
+      render.sprite(
+          sprite: sprite,
+          frame: sprite.getFrame(row: 0, column: 1),
+          dstX: dstX,
+          dstY: dstY,
+          color: scene.colorNorth(gameObjectIndex),
+          scale: scale,
+          anchorY: anchorY,
+      );
+
+      render.sprite(
+          sprite: sprite,
+          frame: sprite.getFrame(row: 0, column: 3),
+          dstX: dstX,
+          dstY: dstY,
+          color: scene.colorAbove(gameObjectIndex),
+          scale: scale,
+          anchorY: anchorY,
       );
 
       return;
