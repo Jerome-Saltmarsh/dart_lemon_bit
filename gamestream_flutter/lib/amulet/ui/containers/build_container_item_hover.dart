@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/amulet/amulet.dart';
 import 'package:gamestream_flutter/amulet/functions/get_amulet_element_colofr.dart';
+import 'package:gamestream_flutter/amulet/ui/widgets/amulet_element_icon.dart';
 import 'package:gamestream_flutter/amulet/ui/widgets/mmo_item_image.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_components.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
@@ -49,12 +50,6 @@ Widget buildContainerAmuletItemHover({
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             buildAmuletItemIcon(item),
-            // height8,
-            // GSContainer(
-            //   padding: const EdgeInsets.all(6),
-            //   child: buildText(item.description, color: Colors.white70, align: TextAlign.center),
-            //   color: Colors.white12,
-            // ),
             height8,
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,7 +57,7 @@ Widget buildContainerAmuletItemHover({
                 buildContainerItemStats(statsCurrent, levelCurrent, color: Colors.green.shade900),
                 if (statsNext != null)
                  Container(
-                     margin: const EdgeInsets.only(left: 32),
+                     margin: const EdgeInsets.only(left: 8),
                      child: buildContainerItemStats(statsNext, levelNext, color: Colors.orange.shade900),
                  ),
               ],
@@ -106,13 +101,29 @@ Widget buildContainerItemStats(AmuletItemLevel itemStats, int level, {Color? col
     IsometricBuilder(builder: (context, components) =>
         buildBorder(
           color: color ?? Colors.transparent,
-          width: 3,
+          width: 2,
           child: GSContainer(
-            width: 270,
+            width: 276,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                alignLeft(child: buildBorder(child: buildText('LEVEL $level', color: color ?? Colors.white), padding: const EdgeInsets.all(4), color: color ?? Colors.white)),
+                Row(
+                  children: [
+                    buildBorder(child: buildText('LVL $level', color: color ?? Colors.white), padding: const EdgeInsets.all(4), color: color ?? Colors.white),
+                    const Expanded(child: SizedBox()),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          if (itemStats.fire > 0)
+                            buildStatColumn2(AmuletElement.fire, itemStats.fire, components),
+                          if (itemStats.water > 0)
+                            buildStatColumn2(AmuletElement.water, itemStats.water, components),
+                          if (itemStats.electricity > 0)
+                            buildStatColumn2(AmuletElement.electricity, itemStats.electricity, components),
+                        ])
+
+                  ],
+                ),
                 if (itemStats.information != null)
                   GSContainer(
                     padding: const EdgeInsets.all(6),
@@ -128,16 +139,6 @@ Widget buildContainerItemStats(AmuletItemLevel itemStats, int level, {Color? col
                   buildTableRow('cooldown', itemStats.cooldown),
                 if (itemStats.range != 0)
                   buildTableRow('range', itemStats.range),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      if (itemStats.fire > 0)
-                        buildStatColumn2(AmuletElement.fire, itemStats.fire, components),
-                      if (itemStats.water > 0)
-                        buildStatColumn2(AmuletElement.water, itemStats.water, components),
-                      if (itemStats.electricity > 0)
-                        buildStatColumn2(AmuletElement.electricity, itemStats.electricity, components),
-                    ])
               ],
             ),
           ),
@@ -148,18 +149,20 @@ Widget buildStatColumn2(
     int amount,
     IsometricComponents components,
 ) =>
-    buildBorder(
-      color: getAmuletElementColor(amuletElement),
-      radius: BorderRadius.zero,
-      width: 2,
-      child: Container(
-        width: 50,
-        height: 50,
-        alignment: Alignment.center,
-        color: Colors.black26,
-        child: buildText(amount, color: components.mmo.getAmuletElementWatch(amuletElement).value >= amount
-            ? Colors.green
-            : Colors.red),
-
-      ),
+    Row(
+      children: [
+        AmuletElementIcon(amuletElement: amuletElement),
+        Container(
+          alignment: Alignment.center,
+          width: 32,
+          height: 32,
+          color: Colors.black12,
+          child: FittedBox(
+            child: buildText(amount, color: components.mmo.getAmuletElementWatch(amuletElement).value >= amount
+                ? Colors.green
+                : Colors.red
+            ),
+          ),
+        ),
+      ],
     );

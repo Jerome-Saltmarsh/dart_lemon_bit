@@ -1,0 +1,18 @@
+
+
+import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/amulet/maps/map_amulet_element_to_icon_type.dart';
+import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
+import 'package:gamestream_flutter/packages/common.dart';
+
+class AmuletElementIcon extends StatelessWidget {
+
+  final AmuletElement amuletElement;
+
+  const AmuletElementIcon({super.key, required this.amuletElement});
+
+  @override
+  Widget build(BuildContext context) =>
+      IsometricIcon(iconType: mapAmuletElementToIconType(amuletElement));
+
+}

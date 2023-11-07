@@ -94,6 +94,8 @@ enum AmuletItem {
     level2: AmuletItemLevel(
       damage: 2,
       fire: 3,
+      water: 2,
+      electricity: 1,
       charges: 3,
       cooldown: 30,
       performDuration: 25,
