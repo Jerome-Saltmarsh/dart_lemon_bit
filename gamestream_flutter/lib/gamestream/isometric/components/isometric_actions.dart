@@ -86,20 +86,6 @@ class IsometricActions with IsometricComponent {
     options.setCameraPlay(player.position);
   }
 
-  void spawnPurpleFireExplosion(double x, double y, double z, {int amount = 5}){
-
-    audio.play(audio.magical_impact_16,x, y, z);
-
-    for (var i = 0; i < amount; i++) {
-      particles.spawnParticleFirePurple(
-        x: x + giveOrTake(5),
-        y: y + giveOrTake(5),
-        z: z, speed: 1,
-        angle: randomAngle(),
-      );
-    }
-  }
-
   void spawnParticleLightEmissionAmbient({
     required double x,
     required double y,

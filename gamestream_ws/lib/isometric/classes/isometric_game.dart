@@ -1017,8 +1017,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     assert (projectile.active);
     switch (projectile.type) {
       case ProjectileType.Orb:
-        dispatchGameEvent(GameEventType.Blue_Orb_Deactivated, projectile.x, projectile.y,
-            projectile.z);
         break;
       case ProjectileType.Rocket:
         final owner = projectile.parent;
@@ -1194,8 +1192,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       dispatchGameEvent(GameEventType.Arrow_Hit, target.x, target.y, target.z);
     }
     if (projectile.type == ProjectileType.Orb) {
-      dispatchGameEvent(
-          GameEventType.Blue_Orb_Deactivated, target.x, target.y, target.z);
+      // dispatchGameEvent(
+      //     GameEventType.Blue_Orb_Deactivated, target.x, target.y, target.z);
     }
   }
 

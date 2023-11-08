@@ -108,7 +108,6 @@ class IsometricEvents with IsometricComponent {
         onNodeSet(x, y, z);
         return;
       case GameEventType.GameObject_Timeout:
-        particles.spawnBubbles(x, y, z);
         break;
       case GameEventType.Node_Struck:
         onNodeStruck(x, y, z);
@@ -130,9 +129,6 @@ class IsometricEvents with IsometricComponent {
         final weaponType = (angle * radiansToDegrees).toInt();
         return onWeaponTypeEquipped(weaponType, x, y, z);
       case GameEventType.Player_Spawned:
-        for (var i = 0; i < 7; i++){
-          particles.spawnParticleOrbShard(x: x, y: y, z: z, angle: randomAngle());
-        }
         return;
       case GameEventType.Splash:
         onSplash(x, y, z);
@@ -171,12 +167,13 @@ class IsometricEvents with IsometricComponent {
         audio.play(audio.arrow_impact, x, y, z);
         break;
       case GameEventType.Spawn_Confetti:
+        final particles = this.particles;
         for (var i = 0; i < 6; i++){
           particles.spawnParticleConfettiByType(
             x,
             y,
             z,
-            ParticleType.Confetti_White,
+            ParticleType.Confetti,
           );
         }
         break;
@@ -208,26 +205,18 @@ class IsometricEvents with IsometricComponent {
       case GameEventType.Crate_Breaking:
         // return audio.crateBreaking(x, y);
         break;
-
-      case GameEventType.Blue_Orb_Deactivated:
-        actions.spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
-        for (var i = 0; i < 8; i++) {
-          particles.spawnParticleOrbShard(
-              x: x, y: y, z: z, duration: 30, speed: randomBetween(1, 2), angle: randomAngle());
-        }
-        break;
-
       case GameEventType.Teleport_Start:
         final spawnConfetti = particles.spawnParticleConfettiByType;
         for (var i = 0; i < 5; i++) {
-          spawnConfetti(x, y, z, ParticleType.Confetti_White);
+          spawnConfetti(x, y, z, ParticleType.Confetti);
         }
         audio.play(audio.magical_swoosh_18, x, y, z);
         break;
 
       case GameEventType.Teleport_End:
+        final particles = this.particles;
         for (var i = 0; i < 5; i++) {
-          particles.spawnParticleConfettiByType(x, y, z, ParticleType.Confetti_White);
+          particles.spawnParticleConfettiByType(x, y, z, ParticleType.Confetti);
         }
         audio.play(audio.magical_swoosh_18, x, y, z);
         break;
@@ -343,16 +332,6 @@ class IsometricEvents with IsometricComponent {
     audio.play(audio.swing_sword, x, y, z);
   }
 
-  void onAttackPerformedUnarmed(double x, double y, double z, double angle) {
-    particles.spawnParticleBubbles(
-      count: 3,
-      x: x,
-      y: y,
-      z: z,
-      angle: angle,
-    );
-  }
-
   void onSplash(double x, double y, double z) {
     for (var i = 0; i < 12; i++){
       final zv = randomBetween(1.5, 5);
@@ -368,21 +347,6 @@ class IsometricEvents with IsometricComponent {
     if (attackTypeAudio != null) {
       audio.play(attackTypeAudio, x, y, z);
     }
-
-    if (attackType == WeaponType.Unarmed){
-      particles.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
-      return;
-    }
-    if (attackType == WeaponType.Melee){
-      particles.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
-      return;
-    }
-    if (WeaponType.isMelee(attackType)) {
-      particles.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
-      return;
-    }
-
-    particles.spawnParticleStrikeBullet(x: x, y: y, z: z, angle: angle);
   }
 
   void onMeleeAttackPerformed(double x, double y, double z, double angle) {
@@ -392,21 +356,6 @@ class IsometricEvents with IsometricComponent {
     if (attackTypeAudio != null) {
       audio.play(attackTypeAudio, x, y, z);
     }
-
-    if (attackType == WeaponType.Unarmed){
-      particles.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
-      return;
-    }
-    if (attackType == WeaponType.Knife){
-      particles.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
-      return;
-    }
-    if (WeaponType.isMelee(attackType)) {
-      particles.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
-      return;
-    }
-
-    particles.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
     return;
   }
 
@@ -631,14 +580,7 @@ class IsometricEvents with IsometricComponent {
         break;
 
       case GameObjectType.Credits:
-        for (var i = 0; i < 8; i++){
-          particles.spawnParticleConfettiByType(
-            x,
-            y,
-            z,
-            ParticleType.Confetti_Cyan,
-          );
-        }
+        break;
     }
   }
 

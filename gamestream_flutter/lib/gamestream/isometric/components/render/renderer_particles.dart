@@ -224,33 +224,7 @@ class RendererParticles extends RenderGroup {
             color: scene.getRenderColorPosition(particle),
           );
           break;
-        case ParticleType.Confetti_Yellow:
-          engine.renderSprite(
-            image: images.shades,
-            dstX: dstX,
-            dstY: dstY,
-            srcX: 216,
-            srcY: 0,
-            srcWidth: 8,
-            srcHeight: 8,
-            scale: particle.scale,
-            color: scene.getRenderColorPosition(particle),
-          );
-          break;
-        case ParticleType.Confetti_Red:
-          engine.renderSprite(
-            image: images.shades,
-            dstX: dstX,
-            dstY: dstY,
-            srcX: 192,
-            srcY: 0,
-            srcWidth: 8,
-            srcHeight: 8,
-            scale: particle.scale,
-            color: scene.getRenderColorPosition(particle),
-          );
-          break;
-        case ParticleType.Confetti_White:
+        case ParticleType.Confetti:
           engine.renderSprite(
             image: images.shadesTransparent,
             dstX: dstX,
@@ -263,83 +237,6 @@ class RendererParticles extends RenderGroup {
             color: scene.getRenderColorPosition(particle),
           );
           break;
-        case ParticleType.Bubble_Small:
-          engine.renderSprite(
-            image: images.atlas_gameobjects,
-            dstX: dstX,
-            dstY: dstY,
-            srcX: 0.0,
-            srcY: 32,
-            srcWidth: 4,
-            srcHeight: 4,
-            color: scene.getRenderColorPosition(particle),
-          );
-          break;
-        case ParticleType.Bullet_Ring:
-          engine.renderSprite(
-            image: images.atlas_gameobjects,
-            dstX: dstX,
-            dstY: dstY,
-            srcX: 0.0,
-            srcY: 32,
-            srcWidth: 4,
-            srcHeight: 4,
-            color: scene.getRenderColorPosition(particle),
-          );
-          break;
-        case ParticleType.Confetti_Blue:
-          engine.renderSprite(
-            image: images.shades,
-            dstX: dstX,
-            dstY: dstY,
-            srcX: 560,
-            srcY: 0,
-            srcWidth: 8,
-            srcHeight: 8,
-            scale: particle.scale,
-            color: scene.getRenderColorPosition(particle),
-          );
-          break;
-        case ParticleType.Confetti_Green:
-          engine.renderSprite(
-            image: images.shades,
-            dstX: dstX,
-            dstY: dstY,
-            srcX: 384,
-            srcY: 0,
-            srcWidth: 8,
-            srcHeight: 8,
-            scale: particle.scale,
-            color: scene.getRenderColorPosition(particle),
-          );
-          break;
-        case ParticleType.Confetti_Purple:
-          engine.renderSprite(
-            image: images.shades,
-            dstX: dstX,
-            dstY: dstY,
-            srcX: 616,
-            srcY: 0,
-            srcWidth: 8,
-            srcHeight: 8,
-            scale: particle.scale,
-            color: scene.getRenderColorPosition(particle),
-          );
-          break;
-        case ParticleType.Confetti_Cyan:
-          engine.renderSprite(
-            image: images.shades,
-            dstX: dstX,
-            dstY: dstY,
-            srcX: 504,
-            srcY: 0,
-            srcWidth: 8,
-            srcHeight: 8,
-            scale: particle.scale,
-            color: scene.getRenderColorPosition(particle),
-          );
-          break;
-
         case ParticleType.Block_Brick:
           engine.renderSprite(
             image: images.atlas_gameobjects,
@@ -398,126 +295,6 @@ class RendererParticles extends RenderGroup {
             scale: particle.scale,
           );
           break;
-        case ParticleType.Shell:
-          renderShell(dstX, dstY);
-          break;
-        case ParticleType.Fire_Purple:
-          if (particle.frame > 24 ) {
-            particle.deactivate();
-            break;
-          }
-          engine.renderSprite(
-            image: images.atlas_particles,
-            dstX: dstX,
-            dstY: dstY,
-            srcX: 291,
-            srcY: 1 + 32.0 * (particle.frame ~/ 2) ,
-            srcWidth: 32,
-            srcHeight: 32,
-            scale: particle.scale,
-          );
-          break;
-
-        case ParticleType.Orb_Shard:
-          const size = 16.0;
-          engine.renderSprite(
-            image: images.atlas_gameobjects,
-            dstX: dstX,
-            dstY: dstY,
-            srcX: 224 ,
-            srcY: (particle.frame % 4) * size,
-            srcWidth: size,
-            srcHeight: size,
-            scale: particle.scale,
-          );
-          break;
-        case ParticleType.Star_Explosion:
-          if (particle.frame >= 7) {
-            return particle.deactivate();
-          }
-          engine.renderSprite(
-            image: images.atlas_particles,
-            dstX: dstX,
-            dstY: dstY,
-            srcX: 234.0,
-            srcY: 1 + 32.0 + (32.0 * particle.frame),
-            srcWidth: 32,
-            srcHeight: 32,
-          );
-          return;
-        case ParticleType.Bubble:
-          engine.renderSprite(
-            image: images.atlas_gameobjects,
-            dstX: dstX,
-            dstY: dstY,
-            srcX: 0.0,
-            srcY: 32,
-            srcWidth: 8,
-            srcHeight: 8,
-            color: scene.getRenderColorPosition(particle),
-          );
-          break;
-        case ParticleType.Zombie_Arm:
-          engine.renderSprite(
-            image: images.atlas_particles,
-            dstX: dstX,
-            dstY: dstY,
-            srcX: 34.0,
-            srcY: 1 + 64.0 * particle.direction,
-            srcWidth: 64,
-            srcHeight: 64,
-            color: scene.getRenderColorPosition(particle),
-          );
-          break;
-        case ParticleType.Zombie_Head:
-          engine.renderSprite(
-            image: images.atlas_particles,
-            dstX: dstX,
-            dstY: dstY,
-            srcX: 34.0 + 64,
-            srcY: 64.0 * particle.direction,
-            srcWidth: 64,
-            srcHeight: 64,
-            color: scene.getRenderColorPosition(particle),
-          );
-          break;
-        case ParticleType.Zombie_leg:
-          engine.renderSprite(
-            image: images.atlas_particles,
-            dstX: dstX,
-            dstY: dstY,
-            srcX: 34.0 + (64 * 2),
-            srcY: 64.0 * particle.direction,
-            srcWidth: 64,
-            srcHeight: 64,
-            color: scene.getRenderColorPosition(particle),
-          );
-          break;
-
-        case ParticleType.Zombie_Torso:
-          engine.renderSprite(
-            image: images.atlas_particles,
-            dstX: dstX,
-            dstY: dstY,
-            srcX: 34.0 + (64 * 3),
-            srcY: 64.0 * particle.direction,
-            srcWidth: 64,
-            srcHeight: 64,
-            color: scene.getRenderColorPosition(particle),
-          );
-          break;
-        case ParticleType.Strike_Blade:
-          renderParticleStrikeBlade();
-          break;
-        case ParticleType.Strike_Punch:
-          renderParticleStrikePunch();
-          break;
-        case ParticleType.Strike_Bullet:
-          renderParticleStrikeBullet();
-          break;
-        case ParticleType.Strike_Light:
-          renderParticleStrikeLight();
-          break;
         case ParticleType.Shadow:
           engine.renderSprite(
               image: images.atlas_particles,
@@ -547,21 +324,6 @@ class RendererParticles extends RenderGroup {
           break;
       }
     }
-
-  void renderShell(double dstX, double dstY) {
-    engine.renderSprite(
-      image: images.atlas_particles,
-      dstX: dstX,
-      dstY: dstY,
-      srcX: particle.direction * 32,
-      srcY: 522,
-      srcWidth: 32,
-      srcHeight: 16,
-      scale: 0.25,
-      color: scene.getRenderColorPosition(particle),
-    );
-  }
-
 
   void renderSmoke() {
 
@@ -602,89 +364,6 @@ class RendererParticles extends RenderGroup {
       srcHeight: size,
       color: scene.getRenderColorPosition(particle),
       scale: particle.scale * scale,
-    );
-  }
-
-  void renderParticleStrikeBlade() {
-    if (particle.frame >= 6 ) {
-      particle.deactivate();
-      return;
-    }
-    engine.renderSpriteRotated(
-      image: images.atlas_particles,
-      dstX: particle.renderX,
-      dstY: particle.renderY,
-      srcX: 688,
-      srcY: 1 + particle.frame * 61,
-      srcWidth: 84,
-      srcHeight: 61,
-      scale: particle.scale,
-      rotation: particle.rotation + piQuarter + piHalf,
-      anchorX: 0.5,
-      anchorY: 0.1,
-      color: scene.getRenderColorPosition(particle),
-    );
-  }
-
-  void renderParticleStrikePunch() {
-    if (particle.frame >= 6 ) {
-      particle.deactivate();
-      return;
-    }
-    engine.renderSpriteRotated(
-      image: images.atlas_particles,
-      dstX: particle.renderX,
-      dstY: particle.renderY,
-      srcX: 592,
-      srcY: particle.frame * 47,
-      srcWidth: 31,
-      srcHeight: 47,
-      scale: particle.scale,
-      rotation: particle.rotation + piQuarter + piHalf,
-      anchorX: 0.4,
-      anchorY: 0.1,
-      color: scene.getRenderColorPosition(particle),
-    );
-  }
-
-  void renderParticleStrikeBullet() {
-    if (particle.frame >= 6 ) {
-      particle.deactivate();
-      return;
-    }
-    engine.renderSpriteRotated(
-      image: images.atlas_particles,
-      dstX: particle.renderX,
-      dstY: particle.renderY,
-      srcX: 624,
-      srcY: particle.frame * 47,
-      srcWidth: 31,
-      srcHeight: 47,
-      scale: particle.scale,
-      rotation: particle.rotation + piQuarter + piHalf,
-      anchorX: 0.5,
-      anchorY: 0.1,
-      color: scene.getRenderColorPosition(particle),
-    );
-  }
-  void renderParticleStrikeLight() {
-    if (particle.frame >= 6 ) {
-      particle.deactivate();
-      return;
-    }
-    engine.renderSpriteRotated(
-      image: images.atlas_particles,
-      dstX: particle.renderX,
-      dstY: particle.renderY,
-      srcX: 656,
-      srcY: particle.frame * 47,
-      srcWidth: 31,
-      srcHeight: 47,
-      scale: particle.scale,
-      rotation: particle.rotation + piQuarter + piHalf,
-      anchorX: 0.5,
-      anchorY: 0.1,
-      color: scene.getRenderColorPosition(particle),
     );
   }
 

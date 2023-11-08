@@ -1493,14 +1493,6 @@ class IsometricScene with IsometricComponent implements Updatable {
         actions.spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
         continue;
       }
-      if (projectile.type == ProjectileType.Orb) {
-        particles.spawnParticleOrbShard(
-          x: projectile.x,
-          y: projectile.y,
-          z: projectile.z,
-          angle: randomAngle(),
-        );
-      }
     }
   }
 

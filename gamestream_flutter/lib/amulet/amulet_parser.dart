@@ -114,8 +114,9 @@ extension AmuletParser on IsometricParser {
          final x = readDouble();
          final y = readDouble();
          final z = readDouble();
+         final particles = this.particles;
          for (var i = 0; i < 10; i++){
-           particles.spawnParticleConfettiByType(x, y, z, ParticleType.Confetti_White);
+           particles.spawnParticleConfettiByType(x, y, z, ParticleType.Confetti);
          }
          break;
        case NetworkResponseAmulet.World_Map_Bytes:
