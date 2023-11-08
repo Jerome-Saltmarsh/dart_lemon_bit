@@ -1,8 +1,10 @@
 import 'package:gamestream_flutter/gamestream/isometric/classes/particle_flying.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_images.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:golden_ratio/constants.dart';
+import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
 
 class RendererParticles extends RenderGroup {
@@ -22,7 +24,7 @@ class RendererParticles extends RenderGroup {
   }
 
   @override
-  void renderFunction() {
+  void renderFunction(LemonEngine engine, IsometricImages images) {
     final particle = this.particle;
     final dstX = particle.renderX;
     final dstY = particle.renderY;
@@ -30,14 +32,9 @@ class RendererParticles extends RenderGroup {
     assert(particle.active);
     assert(particle.onscreen);
 
-    if (particle.delay > 0){
+    if (particle.delay > 0) {
       return;
     }
-
-    // assert(dstX > engine.Screen_Left - 50);
-    // assert(dstX < engine.Screen_Right + 50);
-    // assert(dstY > engine.Screen_Top - 50);
-    // assert(dstY < engine.Screen_Bottom + 50);
 
     final particleType = particle.type;
 

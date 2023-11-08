@@ -2,8 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/editor/editor_tab.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_images.dart';
 import 'package:gamestream_flutter/packages/common/src/isometric/mark_type.dart';
 import 'package:gamestream_flutter/packages/common/src/isometric/node_size.dart';
+import 'package:lemon_engine/lemon_engine.dart';
 
 
 class RendererEditor extends RenderGroup {
@@ -76,7 +78,7 @@ class RendererEditor extends RenderGroup {
   }
 
   @override
-  void renderFunction() {
+  void renderFunction(LemonEngine engine, IsometricImages images) {
     if (marksTabEnabled){
       renderTabMarks();
       return;

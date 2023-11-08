@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_src_nodes_y.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_images.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_scene.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/node_visibility.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/isometric/functions/get_render.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:golden_ratio/constants.dart';
+import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
 
 import 'constants/node_src.dart';
@@ -92,9 +94,7 @@ class RendererNodes extends RenderGroup {
   final colorTransparent = Colors.white.withOpacity(0.15);
 
   @override
-  void renderFunction() {
-    final engine = this.engine;
-    final frameWater = animation.frameWater;
+  void renderFunction(LemonEngine engine, IsometricImages images) {
     engine.bufferImage = atlasNodes;
     previousNodeTransparent = false;
 
@@ -129,7 +129,6 @@ class RendererNodes extends RenderGroup {
     final src = engine.bufferSrc;
     final dst = engine.bufferDst;
     final clr = engine.bufferClr;
-    final renderFast = engine.renderFast;
 
     int lineZ;
     int lineColumn;

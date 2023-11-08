@@ -14,6 +14,7 @@ ctrl + []               : move caret to code block
 
 ## TODO
 * [fix]: incorrect particle type
+* [fix]: persist gameobject properties
 * [fix]: ai stuttering on idle
 * [fix]: colored particle emission
 * [new]: particle wind blowing 

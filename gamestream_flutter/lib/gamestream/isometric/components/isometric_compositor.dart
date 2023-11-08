@@ -39,6 +39,8 @@ class IsometricCompositor with IsometricComponent {
     final gameObjects = rendererGameObjects;
     final particles = rendererParticles;
     final editor = rendererEditor;
+    final engine = this.engine;
+    final images = this.images;
 
     var charactersRemaining = characters.remaining;
     var projectilesRemaining = projectiles.remaining;
@@ -109,7 +111,7 @@ class IsometricCompositor with IsometricComponent {
       }
 
       this.order = nextOrder.toInt();
-      next.renderNext();
+      next.renderNext(engine, images);
 
       if (next.remaining) {
         if (next == nodes){
@@ -140,7 +142,6 @@ class IsometricCompositor with IsometricComponent {
           editorOrder = editor.order;
           continue;
         }
-
       }
 
       totalRemaining--;

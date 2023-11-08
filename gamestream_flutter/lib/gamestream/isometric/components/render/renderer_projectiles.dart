@@ -1,5 +1,7 @@
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_images.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
+import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 
@@ -8,7 +10,8 @@ class RendererProjectiles extends RenderGroup {
   late Projectile projectile;
 
   @override
-  void renderFunction() {
+  void renderFunction(LemonEngine engine, IsometricImages images) {
+    final projectile = this.projectile;
     final dstX = projectile.renderX;
     final dstY = projectile.renderY;
     final angle = projectile.angle;

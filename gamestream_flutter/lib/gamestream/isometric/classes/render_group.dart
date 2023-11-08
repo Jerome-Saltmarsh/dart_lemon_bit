@@ -1,5 +1,7 @@
 
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_images.dart';
+import 'package:lemon_engine/lemon_engine.dart';
 
 abstract class RenderGroup with IsometricComponent {
   var _index = 0;
@@ -7,7 +9,7 @@ abstract class RenderGroup with IsometricComponent {
   var order = 0.0;
   var remaining = true;
 
-  void renderFunction();
+  void renderFunction(LemonEngine lemonEngine, IsometricImages images);
   void updateFunction();
   int getTotal();
 
@@ -34,9 +36,8 @@ abstract class RenderGroup with IsometricComponent {
     remaining = false;
   }
 
-  // returns true if remaining
-  bool renderNext() {
-    renderFunction();
+  bool renderNext(LemonEngine engine, IsometricImages images) {
+    renderFunction(engine, images);
     _index++;
     if (_index >= total) {
       remaining = false;

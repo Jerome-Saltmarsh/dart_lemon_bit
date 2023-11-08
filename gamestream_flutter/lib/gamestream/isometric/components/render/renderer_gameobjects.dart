@@ -2,11 +2,13 @@ import 'dart:ui';
 
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_images.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:golden_ratio/constants.dart';
+import 'package:lemon_engine/lemon_engine.dart';
 
 class SurfaceIndex {
   static const east = 0;
@@ -26,13 +28,11 @@ class RendererGameObjects extends RenderGroup {
   int getTotal() => scene.gameObjects.length;
 
   @override
-  void renderFunction() {
+  void renderFunction(LemonEngine engine, IsometricImages images) {
     final gameObject = this.gameObject;
     final type = gameObject.type;
     final subType = gameObject.subType;
     final render = this.render;
-    final engine = this.engine;
-    final images = this.images;
     final scene = this.scene;
 
     if (type == ItemType.Object && subType == GameObjectType.Sphere){

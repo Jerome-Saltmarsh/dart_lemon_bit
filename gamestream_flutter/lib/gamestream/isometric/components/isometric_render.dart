@@ -353,20 +353,25 @@ class IsometricRender with IsometricComponent {
   void shadowBelowXYZ(double x, double y, double z){
     if (z < Node_Height)
       return;
+
+    final scene = this.scene;
+
     if (z >= scene.lengthZ)
       return;
 
+    final nodeOrientations = scene.nodeOrientations;
     final nodeIndex = scene.getIndexXYZ(x, y, z);
-    var nodeBelowIndex = nodeIndex - scene.area;
-    var nodeBelowOrientation = scene.nodeOrientations[nodeBelowIndex];
+    final area = scene.area;
+    var nodeBelowIndex = nodeIndex - area;
+    var nodeBelowOrientation = nodeOrientations[nodeBelowIndex];
     var height = z % Node_Height;
     while (nodeBelowOrientation == NodeOrientation.None) {
-      nodeBelowIndex -= scene.area;
-      if (nodeBelowIndex < scene.area){
+      nodeBelowIndex -= area;
+      if (nodeBelowIndex < area){
         return;
       }
       height += Node_Height;
-      nodeBelowOrientation = scene.nodeOrientations[nodeBelowIndex];
+      nodeBelowOrientation = nodeOrientations[nodeBelowIndex];
     }
 
     renderShadow(

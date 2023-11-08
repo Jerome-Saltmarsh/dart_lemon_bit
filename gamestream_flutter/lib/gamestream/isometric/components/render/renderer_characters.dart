@@ -1,6 +1,8 @@
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_images.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/packages/common.dart';
+import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_sprite/lib.dart';
 
 class RendererCharacters extends RenderGroup {
@@ -48,13 +50,7 @@ class RendererCharacters extends RenderGroup {
   }
 
   @override
-  void renderFunction() => renderCurrentCharacter();
-
-  @override
-  int getTotal() => scene.totalCharacters * 2;
-
-  void renderCurrentCharacter(){
-
+  void renderFunction(LemonEngine engine, IsometricImages images) {
     final character = this.character;
 
     if (!renderBottom){
@@ -88,7 +84,12 @@ class RendererCharacters extends RenderGroup {
       default:
         throw Exception('Cannot render character type: ${character.characterType}');
     }
+
   }
+
+  @override
+  int getTotal() => scene.totalCharacters * 2;
+
 
   /// TODO OPTIMIZE
   void renderCharacterKid(Character character) {
