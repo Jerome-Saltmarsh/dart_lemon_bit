@@ -196,9 +196,12 @@ class IsometricParticles with IsometricComponent implements Updatable {
   int get bodyPartDuration =>  randomInt(120, 200);
 
   Particle getInstance() {
+    final children = this.children;
     for (final particle in children) {
-      if (!particle.active)
+      if (!particle.active) {
+        assert (particle.duration <= 0 || particle.durationTotal <= 0);
         return particle;
+      }
     }
 
     final instance = Particle();

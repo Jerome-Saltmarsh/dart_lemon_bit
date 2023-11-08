@@ -685,19 +685,19 @@ class IsometricRender with IsometricComponent {
     );
   }
 
-  void projectShadow(Position v3, {double scale = 1}){
+  void projectShadow(Position position, {double scale = 1}){
     final scene = this.scene;
-    if (!scene.inBoundsPosition(v3)) return;
+    if (!scene.inBoundsPosition(position)) return;
 
-    final z = scene.getProjectionZ(v3);
+    final z = scene.getProjectionZ(position);
     if (z < 0) return;
-    if (z > v3.z)
+    if (z > position.z)
       return;
 
     particles.spawnParticle(
       type: ParticleType.Shadow,
-      x: v3.x,
-      y: v3.y,
+      x: position.x,
+      y: position.y,
       z: z,
       angle: 0,
       speed: 0,
@@ -706,10 +706,6 @@ class IsometricRender with IsometricComponent {
       blownByWind: false,
       scale: scale,
     );
-
-    if (v3 is Particle){
-       // if (v)
-    }
   }
 
 
