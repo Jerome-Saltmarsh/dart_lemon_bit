@@ -807,6 +807,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     if (index < 0) return;
     if (index >= totalNodes) return;
 
+    final engine = this.engine;
     final padding = interpolationPadding;
     final minRenderX = engine.Screen_Left - padding;
     final maxRenderX = engine.Screen_Right + padding;
@@ -815,11 +816,9 @@ class IsometricScene with IsometricComponent implements Updatable {
 
     if (!bakeStackRecording){
       final rx = getIndexRenderX(index);
-      if (rx < minRenderX) return;
-      if (rx > maxRenderX) return;
+      if (rx < minRenderX || rx > maxRenderX) return;
       final ry = getIndexRenderY(index);
-      if (ry < engine.Screen_Top - padding) return;
-      if (ry > engine.Screen_Bottom + padding) return;
+      if (ry < minRenderY || ry > maxRenderY) return;
     }
 
     totalActiveLights++;
@@ -1470,8 +1469,10 @@ class IsometricScene with IsometricComponent implements Updatable {
     final length = particles.length;
     for (var i = 0; i < length; i++) {
       final particle = particles[i];
-      if (!particle.active) continue;
-      if (!particle.emitsLight) continue;
+      if (
+        !particle.active ||
+        !particle.emitsLight
+      ) continue;
       emitLight(
         index: getIndexPosition(particle),
         value: particle.emissionColor,

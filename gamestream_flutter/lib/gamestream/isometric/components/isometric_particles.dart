@@ -194,8 +194,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
   var nextMystEmission = 0;
   var nextEmissionWaterDrop = 0;
 
-  int get bodyPartDuration =>  randomInt(120, 200);
-
   Particle getInstance() {
     final children = this.children;
     for (final particle in children) {
