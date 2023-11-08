@@ -17,12 +17,12 @@ ctrl + []               : move caret to code block
 * [fix]: ai stuttering on idle
 * [fix]: colored particle emission
 * [new]: particle wind blowing 
-* [new]: gameobject wooden crate
 * [new]: flames emit smoke particles
 * [new]: design map 0
 * [new]: item tabs weapons amulets etc
 
 ## 08.11.2023
+* [new]: gameobject wooden crate
 * [fix]: gameobject persistence
 * [fix]: incorrect particle type
 

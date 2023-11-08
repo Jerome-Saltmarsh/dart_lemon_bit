@@ -166,13 +166,22 @@ class RendererGameObjects extends RenderGroup {
       final gameObjectIndex = scene.getIndexPosition(gameObject);
       final dstX = gameObject.renderX;
       final dstY = gameObject.renderY;
-      final sprite = images.crate;
-      const scale = goldenRatio_0381;
+
+      const scale = goldenRatio_0618;
       const anchorY = 0.8;
 
-      render.sprite(
-        sprite: sprite,
-        frame: sprite.getFrame(row: 0, column: 0),
+      const srcX = 1.0;
+      const srcY = 601.0;
+      const width = 48.0;
+      const height = 73.0;
+      final image = images.atlas_gameobjects;
+
+      engine.renderSprite(
+        image: image,
+        srcX: srcX,
+        srcY: srcY,
+        srcWidth: width,
+        srcHeight: height,
         dstX: dstX,
         dstY: dstY,
         color: scene.colorSouth(gameObjectIndex),
@@ -180,9 +189,12 @@ class RendererGameObjects extends RenderGroup {
         anchorY: anchorY,
       );
 
-      render.sprite(
-        sprite: sprite,
-        frame: sprite.getFrame(row: 0, column: 1),
+      engine.renderSprite(
+        image: image,
+        srcX: srcX + width,
+        srcY: srcY,
+        srcWidth: width,
+        srcHeight: height,
         dstX: dstX,
         dstY: dstY,
         color: scene.colorAbove(gameObjectIndex),
@@ -190,14 +202,17 @@ class RendererGameObjects extends RenderGroup {
         anchorY: anchorY,
       );
 
-      render.sprite(
-          sprite: sprite,
-          frame: sprite.getFrame(row: 0, column: 2),
-          dstX: dstX,
-          dstY: dstY,
-          color: scene.colorWest(gameObjectIndex),
-          scale: scale,
-          anchorY: anchorY,
+      engine.renderSprite(
+        image: image,
+        srcX: srcX + width + width,
+        srcY: srcY,
+        srcWidth: width,
+        srcHeight: height,
+        dstX: dstX,
+        dstY: dstY,
+        color: scene.colorWest(gameObjectIndex),
+        scale: scale,
+        anchorY: anchorY,
       );
 
       return;
