@@ -161,6 +161,48 @@ class RendererGameObjects extends RenderGroup {
       return;
     }
 
+    if (type == ItemType.Object && subType == GameObjectType.Crate_Wooden){
+
+      final gameObjectIndex = scene.getIndexPosition(gameObject);
+      final dstX = gameObject.renderX;
+      final dstY = gameObject.renderY;
+      final sprite = images.crate;
+      const scale = goldenRatio_0381;
+      const anchorY = 0.8;
+
+      render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: 0),
+        dstX: dstX,
+        dstY: dstY,
+        color: scene.colorSouth(gameObjectIndex),
+        scale: scale,
+        anchorY: anchorY,
+      );
+
+      render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: 1),
+        dstX: dstX,
+        dstY: dstY,
+        color: scene.colorAbove(gameObjectIndex),
+        scale: scale,
+        anchorY: anchorY,
+      );
+
+      render.sprite(
+          sprite: sprite,
+          frame: sprite.getFrame(row: 0, column: 2),
+          dstX: dstX,
+          dstY: dstY,
+          color: scene.colorWest(gameObjectIndex),
+          scale: scale,
+          anchorY: anchorY,
+      );
+
+      return;
+    }
+
 
     if (
       type == ItemType.Object &&

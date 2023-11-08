@@ -798,7 +798,8 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeByte(NetworkResponseIsometric.Scene);
     var compiled = scene.compiled;
     if (compiled == null) {
-      compiled = SceneWriter.compileScene(scene, gameObjects: false);
+
+      compiled = SceneWriter().compileScene(scene, gameObjects: false);
       scene.compiled = compiled;
     }
     writeBytes(compiled);

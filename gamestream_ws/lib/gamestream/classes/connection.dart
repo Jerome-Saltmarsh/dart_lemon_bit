@@ -248,7 +248,8 @@ class Connection extends ByteReader {
             break;
 
           case EditorRequest.Download:
-            final compiled = SceneWriter.compileScene(player.scene, gameObjects: true);
+            final sceneWriter = SceneWriter();
+            final compiled = sceneWriter.compileScene(player.scene, gameObjects: true);
             player.writeByte(NetworkResponse.Scene);
             player.writeByte(NetworkResponseScene.Download_Scene);
 
@@ -281,6 +282,7 @@ class Connection extends ByteReader {
               player.writeGameError(GameError.Save_Scene_Failed);
               return;
             }
+            game.applyChangesToScene();
             nerve.amulet.scenes.saveSceneToFile(game.scene);
             break;
 

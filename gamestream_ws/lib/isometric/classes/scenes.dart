@@ -48,10 +48,11 @@ class Scenes {
 
   void saveSceneToFile(Scene scene) {
     scene.clearCompiled();
+    final sceneWriter = SceneWriter();
     writeBytesToFile(
       fileName: '${scene.name}.scene',
       directory: sceneDirectoryPath,
-      contents: SceneWriter.compileScene(scene, gameObjects: true),
+      contents: sceneWriter.compileScene(scene, gameObjects: true),
     );
   }
 }

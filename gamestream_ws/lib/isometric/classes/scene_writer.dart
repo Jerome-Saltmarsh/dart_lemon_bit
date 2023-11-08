@@ -10,18 +10,13 @@ import 'package:lemon_byte/byte_writer.dart';
 
 class SceneWriter extends ByteWriter {
 
-  static final _instance = SceneWriter();
   final encoder = ZLibEncoder(
             level: ZLibOption.minLevel,
             memLevel: ZLibOption.minMemLevel,
             strategy: ZLibOption.strategyFixed,
   );
 
-  static Uint8List compileScene(Scene scene, {required bool gameObjects}){
-    return _instance._compileScene(scene, gameObjects: gameObjects);
-  }
-
-  Uint8List _compileScene(Scene scene, {required bool gameObjects}){
+  Uint8List compileScene(Scene scene, {required bool gameObjects}){
     clear();
     writeNodes(scene);
     writeMarks(scene);

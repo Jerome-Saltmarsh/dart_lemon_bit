@@ -2589,4 +2589,16 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       projectile.target = null;
     }
   }
+
+  void applyChangesToScene(){
+    final gameObjects = this.gameObjects;
+    final sceneGameObjects = scene.gameObjects;
+    sceneGameObjects.clear();
+    for (final gameObject in gameObjects){
+      if (!gameObject.persistable) {
+        continue;
+      }
+      sceneGameObjects.add(gameObject);
+    }
+  }
 }

@@ -66,6 +66,7 @@ class IsometricImages with IsometricComponent {
   late final Sprite crystalSouth;
   late final Sprite crystalWest;
   late final Sprite barrelWooden;
+  late final Sprite crate;
 
   late final CharacterSpriteGroup spriteGroupEmpty;
 
@@ -493,6 +494,14 @@ class IsometricImages with IsometricComponent {
         atlasX: 1,
         atlasY: 443,
     ).then((value) => barrelWooden = value);
+
+    loadSprite(
+        name: 'sprites/isometric/gameobjects/crate',
+        image: atlas_gameobjects,
+        mode: AnimationMode.single,
+        atlasX: 1,
+        atlasY: 527,
+    ).then((value) => crate = value);
 
     itemTypeAtlases = {
       ItemType.Weapon: atlas_weapons,
