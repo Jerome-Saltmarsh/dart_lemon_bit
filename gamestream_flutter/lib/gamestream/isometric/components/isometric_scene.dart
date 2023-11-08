@@ -1483,6 +1483,8 @@ class IsometricScene with IsometricComponent implements Updatable {
   }
 
   void updateProjectiles() {
+    final totalProjectiles = this.totalProjectiles;
+    final projectiles = this.projectiles;
     for (var i = 0; i < totalProjectiles; i++) {
       final projectile = projectiles[i];
       if (projectile.type == ProjectileType.Rocket) {

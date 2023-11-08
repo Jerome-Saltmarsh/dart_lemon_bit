@@ -123,43 +123,55 @@ class RendererCharacters extends RenderGroup {
     // final spritesEast = images.kidCharacterSpritesIsometricEast;
     final spritesSouth = images.kidCharacterSpritesIsometricSouth;
     final spritesWest = images.kidCharacterSpritesIsometricWest;
-    final atlasHandsLeftSouth = spritesSouth.handLeft[character.handTypeLeft] ?? (throw Exception());
-    final atlasHandsLeftWest = spritesWest.handLeft[character.handTypeLeft] ?? (throw Exception());
-    final atlasHandsRightSouth = spritesSouth.handRight[character.handTypeRight] ?? (throw Exception());
-    final atlasHandsRightWest = spritesWest.handRight[character.handTypeRight] ?? (throw Exception());
-    final atlasHelmSouth = spritesSouth.helm[character.helmType] ?? (throw Exception());
-    final atlasHelmWest = spritesWest.helm[character.helmType] ?? (throw Exception());
-    final atlasLegsSouth =  spritesSouth.legs[character.legType] ?? (throw Exception());
-    final atlasLegsWest =  spritesWest.legs[character.legType] ?? (throw Exception());
-    final bodySpriteSouth = character.gender == Gender.male ? spritesSouth.bodyMale : spritesSouth.bodyFemale;
-    final bodySpriteWest = character.gender == Gender.male ? spritesWest.bodyMale : spritesWest.bodyFemale;
-    final atlasBodySouth = bodySpriteSouth[character.bodyType] ?? (throw Exception());
-    final atlasBodyWest = bodySpriteWest[character.bodyType] ?? (throw Exception());
-    final atlasWeaponSouth = spritesSouth.weapons[character.weaponType]
+
+    final handTypeLeft = character.handTypeLeft;
+    final handTypeRight = character.handTypeRight;
+    final helmType = character.helmType;
+    final legType = character.legType;
+    final gender = character.gender;
+    final bodyType = character.bodyType;
+    final weaponType = character.weaponType;
+    final headType = character.headType;
+    final hairType = character.hairType;
+    final shoeType = character.shoeType;
+
+    final atlasHandsLeftSouth = spritesSouth.handLeft[handTypeLeft] ?? (throw Exception());
+    final atlasHandsLeftWest = spritesWest.handLeft[handTypeLeft] ?? (throw Exception());
+    final atlasHandsRightSouth = spritesSouth.handRight[handTypeRight] ?? (throw Exception());
+    final atlasHandsRightWest = spritesWest.handRight[handTypeRight] ?? (throw Exception());
+    final atlasHelmSouth = spritesSouth.helm[helmType] ?? (throw Exception());
+    final atlasHelmWest = spritesWest.helm[helmType] ?? (throw Exception());
+    final atlasLegsSouth =  spritesSouth.legs[legType] ?? (throw Exception());
+    final atlasLegsWest =  spritesWest.legs[legType] ?? (throw Exception());
+    final bodySpriteSouth = gender == Gender.male ? spritesSouth.bodyMale : spritesSouth.bodyFemale;
+    final bodySpriteWest = gender == Gender.male ? spritesWest.bodyMale : spritesWest.bodyFemale;
+    final atlasBodySouth = bodySpriteSouth[bodyType] ?? (throw Exception());
+    final atlasBodyWest = bodySpriteWest[bodyType] ?? (throw Exception());
+    final atlasWeaponSouth = spritesSouth.weapons[weaponType]
         ?? spritesSouth.weapons[WeaponType.Unarmed] ?? (throw Exception());
-    final atlasWeaponWest = spritesWest.weapons[character.weaponType]
+    final atlasWeaponWest = spritesWest.weapons[weaponType]
         ?? spritesWest.weapons[WeaponType.Unarmed] ?? (throw Exception());
-    final atlasBodyArmSouth = spritesSouth.bodyArms[character.bodyType];
-    final atlasBodyArmWest = spritesWest.bodyArms[character.bodyType];
+    final atlasBodyArmSouth = spritesSouth.bodyArms[bodyType];
+    final atlasBodyArmWest = spritesWest.bodyArms[bodyType];
     final atlasArmLeftSouth = spritesSouth.armLeft[ArmType.regular] ?? (throw Exception());
     final atlasArmLeftWest = spritesWest.armLeft[ArmType.regular] ?? (throw Exception());
     final atlasArmRightSouth = spritesSouth.armRight[ArmType.regular] ?? (throw Exception());
     final atlasArmRightWest = spritesWest.armRight[ArmType.regular] ?? (throw Exception());
     // final atlasHeadNorth = spritesNorth.head[character.headType] ?? (throw Exception());
     // final atlasHeadEast = spritesEast.head[character.headType] ?? (throw Exception());
-    final atlasHeadSouth = spritesSouth.head[character.headType] ?? (throw Exception());
-    final atlasHeadWest = spritesWest.head[character.headType] ?? (throw Exception());
-    final atlasTorsoTopSouth = spritesSouth.torsoTop[character.gender] ?? (throw Exception());
-    final atlasTorsoTopWest = spritesWest.torsoTop[character.gender] ?? (throw Exception());
-    final atlasTorsoBottomSouth = spritesSouth.torsoBottom[character.gender] ?? (throw Exception());
-    final atlasTorsoBottomWest = spritesWest.torsoBottom[character.gender] ?? (throw Exception());
-    final atlasHairFront = spritesSouth.hairFront[character.hairType] ?? (throw Exception());
-    final atlasHairBack = spritesSouth.hairBack[character.hairType] ?? (throw Exception());
-    final atlasHairTop = spritesSouth.hairTop[character.hairType] ?? (throw Exception());
-    final atlasShoesLeftSouth = spritesSouth.shoesLeft[character.shoeType] ?? (throw Exception());
-    final atlasShoesLeftWest = spritesWest.shoesLeft[character.shoeType] ?? (throw Exception());
-    final atlasShoesRightSouth = spritesSouth.shoesRight[character.shoeType] ?? (throw Exception());
-    final atlasShoesRightWest = spritesWest.shoesRight[character.shoeType] ?? (throw Exception());
+    final atlasHeadSouth = spritesSouth.head[headType] ?? (throw Exception());
+    final atlasHeadWest = spritesWest.head[headType] ?? (throw Exception());
+    final atlasTorsoTopSouth = spritesSouth.torsoTop[gender] ?? (throw Exception());
+    final atlasTorsoTopWest = spritesWest.torsoTop[gender] ?? (throw Exception());
+    final atlasTorsoBottomSouth = spritesSouth.torsoBottom[gender] ?? (throw Exception());
+    final atlasTorsoBottomWest = spritesWest.torsoBottom[gender] ?? (throw Exception());
+    final atlasHairFront = spritesSouth.hairFront[hairType] ?? (throw Exception());
+    final atlasHairBack = spritesSouth.hairBack[hairType] ?? (throw Exception());
+    final atlasHairTop = spritesSouth.hairTop[hairType] ?? (throw Exception());
+    final atlasShoesLeftSouth = spritesSouth.shoesLeft[shoeType] ?? (throw Exception());
+    final atlasShoesLeftWest = spritesWest.shoesLeft[shoeType] ?? (throw Exception());
+    final atlasShoesRightSouth = spritesSouth.shoesRight[shoeType] ?? (throw Exception());
+    final atlasShoesRightWest = spritesWest.shoesRight[shoeType] ?? (throw Exception());
 
     final spriteWeaponSouth = atlasWeaponSouth.fromCharacterState(characterState);
     final spriteWeaponWest = atlasWeaponWest.fromCharacterState(characterState);
