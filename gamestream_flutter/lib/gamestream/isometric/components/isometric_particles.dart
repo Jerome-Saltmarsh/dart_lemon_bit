@@ -214,7 +214,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
   }
 
   Particle spawnParticle({
-    required int type,
+    required int particleType,
     required double x,
     required double y,
     required double z,
@@ -229,19 +229,18 @@ class IsometricParticles with IsometricComponent implements Updatable {
     double rotation = 0,
     double rotationV = 0,
     bounciness = 0.5,
-    bool animation = false,
     int delay = 0,
   }) {
     assert(duration > 0);
     assert (frictionAir >= 0 && frictionAir <= 1.0);
 
     final particle = getInstance();
-    particle.type = type;
+    particle.type = particleType;
     particle.frictionAir = frictionAir;
     particle.blownByWind = const [
       ParticleType.Smoke,
       ParticleType.Myst,
-    ].contains(type);
+    ].contains(particleType);
     particle.x = x;
     particle.y = y;
     particle.z = z;
@@ -250,13 +249,16 @@ class IsometricParticles with IsometricComponent implements Updatable {
     particle.deactiveOnNodeCollision = const [
        ParticleType.Blood,
        ParticleType.Water_Drop,
-    ].contains(type);
+    ].contains(particleType);
 
     if (particle.deactiveOnNodeCollision){
       particle.nodeCollidable = true;
     }
 
-    particle.animation = animation;
+    particle.animation = const [
+      ParticleType.Lightning_Bolt,
+      ParticleType.Wind,
+    ].contains(particleType);
     particle.emitsLight = false;
     particle.delay = delay;
 
@@ -288,7 +290,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
     int duration = 30,
   }) {
     spawnParticle(
-        type: ParticleType.Water_Drop,
+        particleType: ParticleType.Water_Drop,
         x: x,
         y: y,
         z: z,
@@ -312,7 +314,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
     required double speed
   }) {
     spawnParticle(
-      type: ParticleType.Blood,
+      particleType: ParticleType.Blood,
       x: x,
       y: y,
       z: z,
@@ -339,7 +341,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
     double scaleV = 0.01,
   }) =>
       spawnParticle(
-        type: ParticleType.Smoke,
+        particleType: ParticleType.Smoke,
         x: x,
         y: y,
         z: z,
@@ -363,7 +365,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
     required double speed,
     int delay = 0,
   }) => spawnParticle(
-    type: ParticleType.Gunshot_Smoke,
+    particleType: ParticleType.Gunshot_Smoke,
     x: x,
     y: y,
     z: z,
@@ -379,7 +381,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
   void spawnParticleRockShard(double x, double y){
     spawnParticle(
-      type: ParticleType.Rock,
+      particleType: ParticleType.Rock,
       x: x,
       y: y,
       z: randomBetween(0.0, 0.2),
@@ -398,7 +400,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
   void spawnParticleTreeShard(double x, double y, double z){
     spawnParticle(
-      type: ParticleType.Tree_Shard,
+      particleType: ParticleType.Tree_Shard,
       x: x,
       y: y,
       z: z,
@@ -418,7 +420,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
   void spawnParticleBlockWood(double x, double y, double z, [int count = 3]){
     for (var i = 0; i < count; i++){
       spawnParticle(
-        type: ParticleType.Block_Wood,
+        particleType: ParticleType.Block_Wood,
         x: x,
         y: y,
         z: z,
@@ -438,7 +440,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
   void spawnParticleConfettiByType(double x, double y, double z, int type) {
     spawnParticle(
-      type: type,
+      particleType: type,
       x: x,
       y: y,
       z: z,
@@ -456,7 +458,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
   void spawnParticleBlockGrass(double x, double y, double z, [int count = 3]){
     for (var i = 0; i < count; i++){
       spawnParticle(
-        type: ParticleType.Block_Grass,
+        particleType: ParticleType.Block_Grass,
         x: x,
         y: y,
         z: z,
@@ -477,7 +479,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
   void spawnParticleBlockBrick(double x, double y, double z, [int count = 3]){
     for (var i = 0; i < count; i++){
       spawnParticle(
-        type: ParticleType.Block_Brick,
+        particleType: ParticleType.Block_Brick,
         x: x,
         y: y,
         z: z,
@@ -498,7 +500,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
   void spawnParticleBlockSand(double x, double y, double z, [int count = 3]){
     for (var i = 0; i < count; i++){
       spawnParticle(
-        type: ParticleType.Block_Sand,
+        particleType: ParticleType.Block_Sand,
         x: x,
         y: y,
         z: z,
@@ -524,7 +526,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
     required double intensity,
   }) =>
       spawnParticle(
-        type: ParticleType.Light_Emission,
+        particleType: ParticleType.Light_Emission,
         x: x,
         y: y,
         z: z,
@@ -532,41 +534,15 @@ class IsometricParticles with IsometricComponent implements Updatable {
         speed: 0,
         weight: 0,
         duration: 35,
-        animation: true,
         frictionAir: 0.98,
       )
         ..flash = true
         ..emissionIntensity = intensity
         ..emissionColor = color;
 
-  void spawnParticleAnimation({
-    required double x,
-    required double y,
-    required double z,
-    required int type,
-    int duration = 100,
-    double scale = 1.0,
-    double angle = 0,
-  }) =>
-      spawnParticle(
-        type: type,
-        x: x,
-        y: y,
-        z: z,
-        angle: angle,
-        rotation: angle,
-        speed: 0,
-        scaleV: 0,
-        weight: 0,
-        duration: duration,
-        scale: scale,
-        animation: true,
-        frictionAir: 0.98,
-      );
-
   void spawnParticleConfetti(double x, double y, double z) {
     spawnParticle(
-      type: ParticleType.Confetti,
+      particleType: ParticleType.Confetti,
       x: x,
       y: y,
       z: z,
@@ -844,7 +820,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
     const radius = 100.0;
     final scene = this.scene;
     spawnParticle(
-        type: ParticleType.Myst,
+        particleType: ParticleType.Myst,
         x: scene.getIndexPositionX(index) + giveOrTake(radius),
         y: scene.getIndexPositionY(index) + giveOrTake(radius),
         z: scene.getIndexPositionZ(index),
@@ -861,7 +837,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
     final scene = this.scene;
     const radius = 5.0;
     spawnParticle(
-        type: ParticleType.Water_Drop_Large,
+        particleType: ParticleType.Water_Drop_Large,
         x: scene.getIndexPositionX(index) + giveOrTake(radius),
         y: scene.getIndexPositionY(index) + giveOrTake(radius),
         z: scene.getIndexPositionZ(index),
@@ -878,7 +854,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
   }
 
   void spawnTrail(double x, double y, double z, {required int color}) => spawnParticle(
-         type: ParticleType.Trail,
+         particleType: ParticleType.Trail,
          x: x,
          y: y,
          z: z,
@@ -890,12 +866,11 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
   void spawnLightningBolt(double x, double y, double z) {
     spawnParticle(
-        type: ParticleType.Lightning_Bolt,
+        particleType: ParticleType.Lightning_Bolt,
         x: x,
         y: y,
         z: z,
         frictionAir: 0,
-        animation: true,
         duration: 20,
     );
   }

@@ -3,11 +3,7 @@ import 'package:gamestream_flutter/packages/common/src.dart';
 import 'package:lemon_math/src.dart';
 
 
-/// x: 00 - 10
-/// y: 11 - 20
-/// z: 21 - 31
 class Particle extends Position {
-
   var blownByWind = true;
   var frictionAir = 0.98;
   var wind = 0;

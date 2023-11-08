@@ -1570,11 +1570,15 @@ class IsometricScene with IsometricComponent implements Updatable {
   }
 
   void updateParticleSmokeEmitters(){
-    if (nextEmissionSmoke-- > 0)
+    if (nextEmissionSmoke-- > 0){
       return;
+    }
 
     nextEmissionSmoke = framesPerSmokeEmission;
     final smokeDuration = options.sceneSmokeSourcesSmokeDuration;
+    final smokeSourcesTotal = this.smokeSourcesTotal;
+    final smokeSources = this.smokeSources;
+    final particles = this.particles;
 
     for (var i = 0; i < smokeSourcesTotal; i++){
       final index = smokeSources[i];

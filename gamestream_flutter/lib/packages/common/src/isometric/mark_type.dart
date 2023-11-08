@@ -1,4 +1,6 @@
 
+import 'package:gamestream_flutter/packages/common.dart';
+
 /// a mark value is 32 bit integer comprised of two parts
 /// the first two bytes are used to store the node index
 /// the third byte is used to store the mark type
@@ -12,6 +14,7 @@ class MarkType {
   static const Butterfly = 5;
   static const Moth = 6;
   static const Water_Drops = 7;
+  static const Windy = 8;
 
   static const values = [
     Spawn_Player,
@@ -22,6 +25,7 @@ class MarkType {
     Butterfly,
     Moth,
     Water_Drops,
+    Windy,
   ];
 
   static String getTypeName(int markValue) => getName(getType(markValue));
@@ -37,7 +41,8 @@ class MarkType {
     Glow: 'Glow',
     Butterfly: 'Butterfly',
     Moth: 'Moth',
-    Water_Drops: 'Water_Drops'
+    Water_Drops: 'Water_Drops',
+    Windy: 'Windy',
   }[markType] ?? (throw Exception('MarkType.getName($markType)'));
 
   static int getIndex(int markValue) => markValue & 0xFFFF;

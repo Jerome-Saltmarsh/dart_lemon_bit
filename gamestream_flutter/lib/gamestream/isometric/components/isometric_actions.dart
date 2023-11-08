@@ -50,7 +50,7 @@ class IsometricActions with IsometricComponent {
 
     for (var i = 0; i < 7; i++) {
       particles.spawnParticle(
-        type: ParticleType.Fire,
+        particleType: ParticleType.Fire,
         x: x,
         y: y,
         z: z,
@@ -91,7 +91,7 @@ class IsometricActions with IsometricComponent {
     required double z,
   }) =>
       particles.spawnParticle(
-        type: ParticleType.Light_Emission,
+        particleType: ParticleType.Light_Emission,
         x: x,
         y: y,
         z: z,
@@ -99,7 +99,6 @@ class IsometricActions with IsometricComponent {
         speed: 0,
         weight: 0,
         duration: 35,
-        animation: true,
         frictionAir: 1.0,
       )
         ..flash = true
@@ -115,7 +114,7 @@ class IsometricActions with IsometricComponent {
     double scale = 1.0
   }) =>
       particles.spawnParticle(
-        type: ParticleType.Fire,
+        particleType: ParticleType.Fire,
         x: x,
         y: y,
         z: z,

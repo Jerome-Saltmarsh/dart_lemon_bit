@@ -695,7 +695,7 @@ class IsometricRender with IsometricComponent {
       return;
 
     particles.spawnParticle(
-      type: ParticleType.Shadow,
+      particleType: ParticleType.Shadow,
       x: position.x,
       y: position.y,
       z: z,
