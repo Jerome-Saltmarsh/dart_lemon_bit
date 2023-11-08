@@ -39,4 +39,16 @@ class ParticleType {
       Water_Drop_Large: 'Water_Drop_Large',
       Wind: 'wind',
     }[particleType] ?? 'unknown-$particleType';
+
+  static const frictionAir = {
+    Water_Drop: 0.98,
+    Blood: 0.98,
+    Smoke: 0.99,
+    Rock: 0.98,
+    Tree_Shard: 0.98,
+    Block_Wood: 0.98,
+    Block_Grass: 0.98,
+    Block_Brick: 0.98,
+    Trail: 0.0,
+  };
 }

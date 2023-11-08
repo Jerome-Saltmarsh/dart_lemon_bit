@@ -218,7 +218,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
     required double x,
     required double y,
     required double z,
-    required double frictionAir,
     double speed = 0,
     double angle = 0,
     double zv = 0,
@@ -231,12 +230,12 @@ class IsometricParticles with IsometricComponent implements Updatable {
     bounciness = 0.5,
     int delay = 0,
   }) {
-    assert(duration > 0);
-    assert (frictionAir >= 0 && frictionAir <= 1.0);
+    assert (duration > 0);
+    // assert (frictionAir >= 0 && frictionAir <= 1.0);
 
     final particle = getInstance();
     particle.type = particleType;
-    particle.frictionAir = frictionAir;
+    particle.frictionAir = ParticleType.frictionAir[particleType] ?? 1.0;
     particle.blownByWind = const [
       ParticleType.Smoke,
       ParticleType.Myst,
@@ -302,7 +301,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
         rotation: 0,
         rotationV: 0,
         scaleV: 0,
-        frictionAir: 0.98,
+        // frictionAir: 0.98,
     );
   }
 
@@ -328,7 +327,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
       scale: 0.6,
       scaleV: 0,
       bounciness: 0,
-      frictionAir: 0.98,
+      // frictionAir: 0.98,
     );
   }
 
@@ -354,7 +353,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
         weight: -0.15,
         duration: duration,
         scale: scale,
-        frictionAir: 0.99,
+        // frictionAir: 0.99,
       );
 
   void spawnParticleShotSmoke({
@@ -376,7 +375,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
     duration: 120,
     scale: 0.35 + giveOrTake(0.15),
     scaleV: 0.0015,
-    frictionAir: 1.0,
+    // frictionAir: 1.0,
   )..delay = delay;
 
   void spawnParticleRockShard(double x, double y){
@@ -394,7 +393,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
       scaleV: 0,
       rotation: randomAngle(),
       bounciness: 0.35,
-      frictionAir: 0.98,
     );
   }
 
@@ -413,7 +411,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
       scaleV: 0,
       rotation: randomAngle(),
       bounciness: 0.35,
-      frictionAir: 0.98,
     );
   }
 
@@ -433,7 +430,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
         scaleV: 0,
         rotation: randomAngle(),
         bounciness: 0,
-        frictionAir: 0.98,
       );
     }
   }
@@ -451,7 +447,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
       scale: 0.5,
       duration: randomInt(25, 150),
       delay: randomInt(0, 10),
-      frictionAir: 0.98,
     );
   }
 
@@ -471,7 +466,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
         scaleV: 0,
         rotation: randomAngle(),
         bounciness: 0,
-        frictionAir: 0.98,
       );
     }
   }
@@ -492,7 +486,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
         scaleV: 0,
         rotation: randomAngle(),
         bounciness: 0,
-        frictionAir: 0.98,
       );
     }
   }
@@ -513,7 +506,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
         scaleV: 0,
         rotation: randomAngle(),
         bounciness: 0,
-        frictionAir: 0.98,
       );
     }
   }
@@ -534,7 +526,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
         speed: 0,
         weight: 0,
         duration: 35,
-        frictionAir: 0.98,
       )
         ..flash = true
         ..emissionIntensity = intensity
@@ -552,7 +543,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
       scale: 0.5,
       duration: 40,
       delay: randomInt(0, 8),
-      frictionAir: 0.98,
     );
   }
 
@@ -828,7 +818,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
         speed: 0.05,
         weight: 0,
         duration: 1000,
-        frictionAir: 1.00,
         rotationV: giveOrTake(0.005),
     )..nodeCollidable = false;
   }
@@ -845,7 +834,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
         speed: 0,
         weight: 1,
         duration: 1000,
-        frictionAir: 1.00,
         rotationV: 0,
     )
        ..vz = 0
@@ -858,7 +846,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
          x: x,
          y: y,
          z: z,
-         frictionAir: 0,
          weight: 0.04,
          duration: 120,
      )..nodeCollidable = false
@@ -870,7 +857,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
         x: x,
         y: y,
         z: z,
-        frictionAir: 0,
         duration: 20,
     );
   }

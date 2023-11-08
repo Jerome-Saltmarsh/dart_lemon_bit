@@ -62,7 +62,7 @@ class IsometricActions with IsometricComponent {
         scaleV: 0,
         rotation: 0,
         bounciness: 0,
-        frictionAir: 1.0,
+        // frictionAir: 1.0,
       );
     }
 
@@ -99,7 +99,7 @@ class IsometricActions with IsometricComponent {
         speed: 0,
         weight: 0,
         duration: 35,
-        frictionAir: 1.0,
+        // frictionAir: 1.0,
       )
         ..flash = true
         ..emissionColor = scene.ambientColor
@@ -126,7 +126,7 @@ class IsometricActions with IsometricComponent {
         weight: -1,
         duration: duration,
         scale: scale,
-        frictionAir: 1.0,
+        // frictionAir: 1.0,
       )
         ..emitsLight = true
         ..emissionColor = scene.ambientColor

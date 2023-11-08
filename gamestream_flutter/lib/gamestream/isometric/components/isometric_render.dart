@@ -702,7 +702,7 @@ class IsometricRender with IsometricComponent {
       angle: 0,
       speed: 0,
       duration: 2,
-      frictionAir: 1.0,
+      // frictionAir: 1.0,
       scale: scale,
     );
   }

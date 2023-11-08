@@ -36,6 +36,7 @@ class IsometricScene with IsometricComponent implements Updatable {
   var nextLightingUpdate = 0;
   var framesPerSmokeEmission = 10;
   var nextEmissionSmoke = 0;
+  var nextEmissionWind = 0;
   var totalProjectiles = 0;
   var bakeStackTotal = 0;
   var bakeStackIndex = Uint16List(100000);
@@ -244,6 +245,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     updateProjectiles();
     updateGameObjects();
     updateParticleSmokeEmitters();
+    updateParticleWindEmitters();
 
     if (nextLightingUpdate-- <= 0) {
       nextLightingUpdate = options.framesPerLightingUpdate;
@@ -2091,5 +2093,21 @@ class IsometricScene with IsometricComponent implements Updatable {
         );
       }
     }
+  }
+
+  void updateParticleWindEmitters() {
+    if (nextEmissionWind-- > 0){
+      return;
+    }
+
+    nextEmissionWind = 200;
+
+    // particles.spawnParticle(
+    //     particleType: particleType,
+    //     x: x,
+    //     y: y,
+    //     z: z,
+    //     frictionAir: frictionAir,
+    // )
   }
 }
