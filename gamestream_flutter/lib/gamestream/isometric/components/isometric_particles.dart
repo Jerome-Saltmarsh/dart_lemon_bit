@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:gamestream_flutter/gamestream/isometric/classes/particle_flying.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/particle_glow.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/particle_roam.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/particle_whisp.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_scene.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/node_visibility.dart';
@@ -198,8 +199,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
   Particle getInstance() {
     final children = this.children;
     for (final particle in children) {
-      if (!particle.active) {
-        assert (particle.duration <= 0 || particle.durationTotal <= 0);
+      if (!particle.active && particle is! ParticleRoam) {
         return particle;
       }
     }
@@ -221,7 +221,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
     required double y,
     required double z,
     required double frictionAir,
-    required bool blownByWind,
     double speed = 0,
     double angle = 0,
     double zv = 0,
@@ -237,14 +236,19 @@ class IsometricParticles with IsometricComponent implements Updatable {
   }) {
     assert(duration > 0);
     assert (frictionAir >= 0 && frictionAir <= 1.0);
+
     final particle = getInstance();
     particle.type = type;
     particle.frictionAir = frictionAir;
-    particle.blownByWind = blownByWind;
+    particle.blownByWind = const [
+      ParticleType.Smoke,
+      ParticleType.Myst,
+    ].contains(type);
     particle.x = x;
     particle.y = y;
     particle.z = z;
     particle.active = true;
+
     particle.deactiveOnNodeCollision = const [
        ParticleType.Blood,
        ParticleType.Water_Drop,
@@ -299,7 +303,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
         rotationV: 0,
         scaleV: 0,
         frictionAir: 0.98,
-        blownByWind: true,
     );
   }
 
@@ -315,7 +318,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
       x: x,
       y: y,
       z: z,
-      blownByWind: true,
       zv: randomBetween(2, 3),
       angle: angle,
       speed: speed,
@@ -340,7 +342,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
   }) =>
       spawnParticle(
         type: ParticleType.Smoke,
-        blownByWind: true,
         x: x,
         y: y,
         z: z,
@@ -365,7 +366,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
     int delay = 0,
   }) => spawnParticle(
     type: ParticleType.Gunshot_Smoke,
-    blownByWind: true,
     x: x,
     y: y,
     z: z,
@@ -382,7 +382,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
   void spawnParticleRockShard(double x, double y){
     spawnParticle(
       type: ParticleType.Rock,
-      blownByWind: false,
       x: x,
       y: y,
       z: randomBetween(0.0, 0.2),
@@ -402,7 +401,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
   void spawnParticleTreeShard(double x, double y, double z){
     spawnParticle(
       type: ParticleType.Tree_Shard,
-      blownByWind: false,
       x: x,
       y: y,
       z: z,
@@ -423,7 +421,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
     for (var i = 0; i < count; i++){
       spawnParticle(
         type: ParticleType.Block_Wood,
-        blownByWind: false,
         x: x,
         y: y,
         z: z,
@@ -447,7 +444,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
       x: x,
       y: y,
       z: z,
-      blownByWind: false,
       zv: randomBetween(0, 1),
       angle: randomAngle(),
       speed: randomBetween(0.5, 1.0),
@@ -466,7 +462,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
         x: x,
         y: y,
         z: z,
-        blownByWind: false,
         angle: randomAngle(),
         speed: randomBetween(0.5, 1.25),
         zv: randomBetween(2, 3),
@@ -488,7 +483,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
         x: x,
         y: y,
         z: z,
-        blownByWind: false,
         angle: randomAngle(),
         speed: randomBetween(0.5, 1.25),
         zv: randomBetween(2, 3),
@@ -510,7 +504,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
         x: x,
         y: y,
         z: z,
-        blownByWind: false,
         angle: randomAngle(),
         speed: randomBetween(0.5, 1.25),
         zv: randomBetween(2, 3),
@@ -534,7 +527,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
   }) =>
       spawnParticle(
         type: ParticleType.Light_Emission,
-        blownByWind: false,
         x: x,
         y: y,
         z: z,
@@ -560,7 +552,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
   }) =>
       spawnParticle(
         type: type,
-        blownByWind: false,
         x: x,
         y: y,
         z: z,
@@ -581,7 +572,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
       x: x,
       y: y,
       z: z,
-      blownByWind: false,
       angle: randomAngle(),
       speed: randomBetween(0.5, 2.0),
       weight: -0.02,
@@ -857,7 +847,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
     final scene = this.scene;
     spawnParticle(
         type: ParticleType.Myst,
-        blownByWind: true,
         x: scene.getIndexPositionX(index) + giveOrTake(radius),
         y: scene.getIndexPositionY(index) + giveOrTake(radius),
         z: scene.getIndexPositionZ(index),
@@ -875,7 +864,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
     const radius = 5.0;
     spawnParticle(
         type: ParticleType.Water_Drop_Large,
-        blownByWind: false,
         x: scene.getIndexPositionX(index) + giveOrTake(radius),
         y: scene.getIndexPositionY(index) + giveOrTake(radius),
         z: scene.getIndexPositionZ(index),
@@ -899,7 +887,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
          frictionAir: 0,
          weight: 0.04,
          duration: 120,
-         blownByWind: false,
      )..nodeCollidable = false
       ..emissionColor = color;
 
@@ -910,7 +897,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
         y: y,
         z: z,
         frictionAir: 0,
-        blownByWind: false,
         animation: true,
         duration: 20,
     );

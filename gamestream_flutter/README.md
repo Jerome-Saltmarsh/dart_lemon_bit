@@ -13,7 +13,6 @@ ctrl + []               : move caret to code block
 * [new]: model hair
 
 ## TODO
-* [fix]: incorrect particle type
 * [fix]: persist gameobject properties
 * [fix]: ai stuttering on idle
 * [fix]: colored particle emission
@@ -25,6 +24,7 @@ ctrl + []               : move caret to code block
 
 ## 08.11.2023
 * [fix]: gameobject persistence
+* [fix]: incorrect particle type
 
 ## 07.11.2023
 * [new]: gameobject wooden barrel

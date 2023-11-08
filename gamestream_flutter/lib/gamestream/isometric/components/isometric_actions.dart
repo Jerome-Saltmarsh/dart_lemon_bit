@@ -51,7 +51,6 @@ class IsometricActions with IsometricComponent {
     for (var i = 0; i < 7; i++) {
       particles.spawnParticle(
         type: ParticleType.Fire,
-        blownByWind: false,
         x: x,
         y: y,
         z: z,
@@ -93,7 +92,6 @@ class IsometricActions with IsometricComponent {
   }) =>
       particles.spawnParticle(
         type: ParticleType.Light_Emission,
-        blownByWind: false,
         x: x,
         y: y,
         z: z,
@@ -118,7 +116,6 @@ class IsometricActions with IsometricComponent {
   }) =>
       particles.spawnParticle(
         type: ParticleType.Fire,
-        blownByWind: false,
         x: x,
         y: y,
         z: z,
