@@ -75,10 +75,16 @@ extension AmuletRequestHandler on Connection {
       case NetworkRequestAmulet.Set_Inventory_Open:
         throw Exception('not implemented');
       case NetworkRequestAmulet.Gain_Level:
-        if (!nerve.admin) {
+        if (!root.admin) {
           throw Exception('admin mode not enabled');
         }
         amuletPlayer.gainLevel();
+        break;
+      case NetworkRequestAmulet.Reset:
+        if (!root.admin) {
+          throw Exception('admin mode not enabled');
+        }
+        root.amulet.resetPlayer(amuletPlayer);
         break;
       case NetworkRequestAmulet.Player_Change_Game:
         final index = getArg(arguments, 2);

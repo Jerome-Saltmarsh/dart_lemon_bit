@@ -14,13 +14,15 @@ import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages/common/src/amulet/amulet_item.dart';
 import 'package:gamestream_ws/packages/common/src/amulet/amulet_scene.dart';
 import 'package:gamestream_ws/packages/common/src/duration_auto_save.dart';
+import 'package:gamestream_ws/packages/common/src/isometric/character_state.dart';
+import 'package:gamestream_ws/packages/lemon_math/src/random/give_or_take.dart';
 import 'package:lemon_byte/byte_writer.dart';
 
 class Amulet {
 
-  final Nerve nerve;
+  final Root root;
 
-  Amulet({required this.nerve});
+  Amulet({required this.root});
 
   static const Frames_Per_Second = 45;
   static const Fixed_Time = 50 / Frames_Per_Second;
@@ -170,7 +172,7 @@ class Amulet {
   void _initializeTimerAutoSave() {
     timerRefreshUserCharacterLocks = Timer.periodic(
       durationAutoSave,
-      nerve.applyAutoSave,
+      root.applyAutoSave,
     );
   }
 
@@ -178,7 +180,7 @@ class Amulet {
     frame++;
     updateWorldMap();
     updateGames();
-    nerve.server.sendResponseToClients();
+    root.server.sendResponseToClients();
   }
 
   void updateWorldMap() {
@@ -331,5 +333,40 @@ class Amulet {
     final bytes = byteWriter.compile();
     final bytesCompressed = compressor.encode(bytes);
     worldMapBytes = Uint8List.fromList(bytesCompressed);
+  }
+
+  void resetPlayer(AmuletPlayer player) {
+      playerChangeGame(player: player, target: amuletGameTown);
+      player.setPosition(
+        x: 620 + giveOrTake(10),
+        y: 523 + giveOrTake(10),
+        z: 96,
+      );
+      player.level = 1;
+      player.experience = 0;
+      final weapons = player.weapons;
+
+      for (final weapon in weapons){
+        weapon.amuletItem = null;
+        weapon.cooldown = 0;
+        weapon.cooldownDuration = 0;
+      }
+      for (final weapon in player.items){
+        weapon.amuletItem = null;
+        weapon.cooldown = 0;
+        weapon.cooldownDuration = 0;
+      }
+      for (final weapon in player.treasures){
+        weapon.amuletItem = null;
+        weapon.cooldown = 0;
+        weapon.cooldownDuration = 0;
+      }
+      weapons[0].amuletItem = AmuletItem.Weapon_Rusty_Old_Sword;
+      weapons[1].amuletItem = AmuletItem.Weapon_Old_Bow;
+      weapons[2].amuletItem = AmuletItem.Spell_Heal;
+      player.health = player.maxHealth;
+      player.writeWeapons();
+      player.characterState = CharacterState.Idle;
+      player.clearActionFrame();
   }
 }

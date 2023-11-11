@@ -6,17 +6,17 @@ import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'connection.dart';
-import 'nerve.dart';
+import 'root.dart';
 
 class Server {
 
-  final Nerve nerve;
+  final Root root;
   HttpServer? httpServer;
   var connectionsTotal = 0;
   final int port;
   final connections = <Connection>[];
 
-  Server({required this.nerve, required this.port});
+  Server({required this.root, required this.port});
 
   Future construct() async {
     startWebsocketServer(port: port);
@@ -36,7 +36,7 @@ class Server {
   void onConnection(WebSocketChannel webSocketChannel) {
     final connection = Connection(
       webSocket: webSocketChannel,
-      nerve: nerve,
+      root: root,
     );
     connections.add(connection);
     connection.onDone = () => onConnectionDone(connection);
@@ -59,7 +59,7 @@ class Server {
   }
 
   void onConnectionDone(Connection connection){
-    nerve.onDisconnected(connection);
+    root.onDisconnected(connection);
     if (connections.remove(connection)){
       print('gamestream_server - connection removed');
       print("Current Connections: ${connections.length}, Total Connections: ${connectionsTotal}");

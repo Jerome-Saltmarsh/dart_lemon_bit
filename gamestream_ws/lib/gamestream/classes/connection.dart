@@ -18,7 +18,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 class Connection extends ByteReader {
 
-  final Nerve nerve;
+  final Root root;
   final errorWriter = ByteWriter();
   final started = DateTime.now();
 
@@ -37,7 +37,7 @@ class Connection extends ByteReader {
 
   Connection({
     required this.webSocket,
-    required this.nerve,
+    required this.root,
   }){
     sink = webSocket.sink;
     sink.done.then(onDisconnect);
@@ -45,7 +45,7 @@ class Connection extends ByteReader {
   }
 
   void playerJoinGameTutorial() {
-    joinGame(nerve.amulet.buildAmuletGameTutorial());
+    joinGame(root.amulet.buildAmuletGameTutorial());
   }
 
   void onDisconnect(dynamic value) {
@@ -283,7 +283,7 @@ class Connection extends ByteReader {
               return;
             }
             game.applyChangesToScene();
-            nerve.amulet.scenes.saveSceneToFile(game.scene);
+            root.amulet.scenes.saveSceneToFile(game.scene);
             break;
 
           case EditorRequest.Modify_Canvas_Size:
@@ -633,9 +633,9 @@ class Connection extends ByteReader {
   Future joinGameEditorScene(Scene scene) async {
     final game = AmuletGameEditor(
         scene: scene,
-        amulet: nerve.amulet,
+        amulet: root.amulet,
     );
-    nerve.amulet.addGame(game);
+    root.amulet.addGame(game);
     joinGame(game);
   }
 
@@ -701,7 +701,7 @@ class Connection extends ByteReader {
         throw Exception('characterId == null');
       }
 
-      nerve.userService.getUser(userId).then((user) {
+      root.userService.getUser(userId).then((user) {
 
         final characters = user.getList<Json>('characters');
         for (final character in characters) {
@@ -709,7 +709,7 @@ class Connection extends ByteReader {
           if (uuid == characterId) {
             final nowUtc = DateTime.now().toUtc();
             final lockDateIso8601String = character.tryGetString('auto_save');
-            if (lockDateIso8601String != null && !nerve.admin){
+            if (lockDateIso8601String != null && !root.admin){
               final lockDate = DateTime.parse(lockDateIso8601String);
               final lockDuration = nowUtc.difference(lockDate);
               if (lockDuration.inSeconds < durationAutoSave.inSeconds){
@@ -732,7 +732,7 @@ class Connection extends ByteReader {
             // player.active = false;
 
             character['auto_save'] = nowUtc.toIso8601String();
-            nerve.userService.saveUserCharacter(
+            root.userService.saveUserCharacter(
                 userId: userId,
                 character: character,
             );
@@ -755,7 +755,7 @@ class Connection extends ByteReader {
   }
 
   void playerJoinAmuletTown() {
-    joinGame(nerve.amulet.amuletGameTown);
+    joinGame(root.amulet.amuletGameTown);
     player.setPosition(
       x: 620 + giveOrTake(10),
       y: 523 + giveOrTake(10),

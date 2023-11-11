@@ -411,7 +411,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     while (player.experience > player.experienceRequired) {
       player.gainLevel();
       player.experience -= player.experienceRequired;
-      player.experienceRequired = getExperienceRequiredForLevel(player.level);
     }
   }
 
@@ -474,10 +473,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     add(amuletGameObject);
     return amuletGameObject;
-  }
-
-  int getExperienceRequiredForLevel(int level){
-    return level * 5;
   }
 
   @override

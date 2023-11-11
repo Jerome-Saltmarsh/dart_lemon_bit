@@ -413,6 +413,12 @@ class Amulet extends IsometricGame {
           NetworkRequestAmulet.Gain_Level.index,
       );
 
+  void requestReset() =>
+      network.sendNetworkRequest(
+          NetworkRequest.Amulet,
+          NetworkRequestAmulet.Reset.index,
+      );
+
   void onPlayerLevelGained() {
     audio.buff_10.play();
   }

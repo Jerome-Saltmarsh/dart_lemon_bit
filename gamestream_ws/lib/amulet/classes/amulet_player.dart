@@ -45,7 +45,6 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   var _elementPoints = 0;
   var _inventoryOpen = false;
   var _experience = 0;
-  var _experienceRequired = 1;
   var _level = 1;
   var _equippedWeaponIndex = -1;
   var _activatedPowerIndex = -1;
@@ -112,7 +111,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
 
   int get experience => _experience;
 
-  int get experienceRequired => _experienceRequired;
+  int get experienceRequired => level * 5;
 
   int get level => _level;
 
@@ -218,14 +217,10 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     writePlayerExperience();
   }
 
-  set experienceRequired(int value){
-    _experienceRequired = value;
-    writePlayerExperienceRequired();
-  }
-
   set level(int value){
     _level = value;
     writePlayerLevel();
+    writePlayerExperienceRequired();
   }
 
   set inventoryOpen(bool value){
@@ -1955,5 +1950,9 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     writeByte(NetworkResponseAmulet.Player_World_Index);
     writeByte(amuletGame.worldRow);
     writeByte(amuletGame.worldColumn);
+  }
+
+  int getExperienceRequiredForLevel(int level){
+    return level * 5;
   }
 }

@@ -562,10 +562,8 @@ extension isometricDebugUI on IsometricDebug {
             }),
           ),
           buildButtonAcquireItem(),
-          onPressed(
-            action: amulet.requestGainLevel,
-            child: buildText('GAIN LEVEL'),
-          ),
+          buildButtonGainLevel(),
+          buildButtonReset(),
         ],
       );
 
@@ -814,7 +812,7 @@ extension isometricDebugUI on IsometricDebug {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    buildText('Acquire Item'),
+                    buildText('ACQUIRE ITEM'),
                     onPressed(
                       action: ui.closeDialog,
                       child: buildText('Close'),
@@ -845,10 +843,21 @@ extension isometricDebugUI on IsometricDebug {
             ),
           ));
         },
-        child: buildText('acquire item'));
+        child: GSContainer(child: buildText('ACQUIRE ITEM')));
   }
 
+  Widget buildButtonReset() => onPressed(
+    action: amulet.requestReset,
+    child: GSContainer(child: buildText('RESET')),
+  );
+
+  Widget buildButtonGainLevel() => onPressed(
+    action: amulet.requestGainLevel,
+    child: GSContainer(child: buildText('GAIN LEVEL')),
+  );
 }
+
+
 
 
 

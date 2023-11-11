@@ -11,19 +11,19 @@ import 'amulet.dart';
 import '../functions/map_isometric_player_to_json.dart';
 import 'package:typedef/json.dart';
 
-class Nerve {
+class Root {
   late final Amulet amulet;
   late final Server server;
   final UserService userService;
   final bool admin;
 
-  Nerve({
+  Root({
     required this.userService,
     this.admin = false,
     int port = 8080,
   }){
-    server = Server(nerve: this, port: port);
-    amulet = Amulet(nerve: this);
+    server = Server(root: this, port: port);
+    amulet = Amulet(root: this);
     _construct();
   }
 

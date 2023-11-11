@@ -7,7 +7,7 @@ import 'package:gamestream_ws/user_service/user_service_http.dart';
 import 'package:gamestream_ws/user_service/user_service_local.dart';
 
 void main(List<String> arguments) {
-  Nerve(
+  Root(
     userService: getUserService(arguments),
     admin: arguments.contains('--admin'),
     port: arguments.tryGetArgInt('--port') ?? 8080
