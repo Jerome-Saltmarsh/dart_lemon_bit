@@ -335,27 +335,6 @@ class RendererParticles extends RenderGroup {
       }
     }
 
-  void renderSmoke() {
-
-    final totalFrames = 8;
-    final frame = (particle.duration01 * totalFrames).round();
-    const width = 32.0;
-    const height = 32.0;
-
-    engine.renderSpriteRotated(
-      image: images.atlas_nodes,
-      dstX: particle.renderX,
-      dstY: particle.renderY,
-      srcX: 1584,
-      srcY: frame * height,
-      srcWidth: width,
-      srcHeight: height,
-      color: scene.getRenderColorPosition(particle),
-      rotation: particle.rotation,
-      scale: particle.scale * 0.5,
-    );
-  }
-
   void renderMyst(Particle particle, {double scale = 1.0}) {
     const size = 64.0;
     const totalFrames = 9;

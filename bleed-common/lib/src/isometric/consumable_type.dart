@@ -1,21 +1,24 @@
 
 class ConsumableType {
-  static const Health_Potion = 0;
-  static const Magic_Potion = 1;
-  static const Meat_Drumstick = 2;
-  static const Treasure_Box = 3;
+  static const Potion_Red = 0;
+  static const Potion_Blue = 1;
+  static const Potion_Green = 2;
+  static const Potion_Yellow = 3;
+  static const Meat_Drumstick = 4;
 
   static String getName(int type) => const {
-      Health_Potion: 'Health_Potion',
-      Magic_Potion: 'Magic_Potion',
+      Potion_Red: 'Health_Potion',
+      Potion_Blue: 'Potion_Blue',
+      Potion_Green: 'Potion_Green',
+      Potion_Yellow: 'Potion_Yellow',
       Meat_Drumstick: 'Meat_Drumstick',
-      Treasure_Box: 'Treasure_Box',
     }[type] ?? 'unknown-consumable-type-$type';
 
   static const values = [
-    Health_Potion,
-    Magic_Potion,
+    Potion_Red,
+    Potion_Blue,
+    Potion_Green,
+    Potion_Yellow,
     Meat_Drumstick,
-    Treasure_Box,
   ];
 }

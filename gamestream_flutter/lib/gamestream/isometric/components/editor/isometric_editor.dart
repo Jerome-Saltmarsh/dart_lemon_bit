@@ -458,6 +458,7 @@ class IsometricEditor with IsometricComponent {
     gameObjectSelected.value = false;
     refreshNodeSelectedIndex();
     deselectGameObject();
+    // deselectMarkIndex();
     cameraCenterOnNodeSelectedIndex();
   }
 

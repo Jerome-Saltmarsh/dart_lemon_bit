@@ -65,6 +65,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     equippedWeaponIndex = 0;
     active = false;
     equipmentDirty = true;
+    spawnLootOnDeath = false;
     setItemsLength(itemLength);
 
     writeWorldMapBytes();
@@ -636,27 +637,27 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     if (item == null)
       return;
 
-    final itemType = item.type;
-    final subType = item.subType;
+    // final itemType = item.type;
+    // final subType = item.subType;
 
     if (item.isTreasure) {
       addToEmptyTreasureSlot(selected);
       return;
     }
 
-    if (itemType == ItemType.Consumable){
-      if (subType == ConsumableType.Health_Potion){
-        regainFullHealth();
-        setCharacterStateChanging();
-        clearItem(index);
-        writePlayerEvent(PlayerEvent.Drink);
-      }
-      return;
-    }
+    // if (itemType == ItemType.Consumable){
+    //   if (subType == ConsumableType.){
+    //     regainFullHealth();
+    //     setCharacterStateChanging();
+    //     clearItem(index);
+    //     writePlayerEvent(PlayerEvent.Drink);
+    //   }
+    //   return;
+    // }
 
     switch (item.type) {
       case ItemType.Consumable:
-        break;
+        throw Exception('not implemented');
       case ItemType.Weapon:
         final emptyWeaponIndex = getEmptyWeaponIndex();
         if (emptyWeaponIndex != -1){
@@ -867,29 +868,29 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     shoeType = item.subType;
   }
 
-  void pickupItem(AmuletItem item) {
-
-    final stats = getAmuletItemLevel(item);
-
-    if (stats == null){
-      return;
-    }
-
-    if (stats.health > 0){
-      health += stats.health;
-      writePlayerEvent(PlayerEvent.Eat);
-    }
-  }
+  // void pickupItem(AmuletItem item) {
+  //
+  //   final stats = getAmuletItemLevel(item);
+  //
+  //   if (stats == null){
+  //     return;
+  //   }
+  //
+  //   if (stats.health > 0){
+  //     health += stats.health;
+  //     writePlayerEvent(PlayerEvent.Eat);
+  //   }
+  // }
 
   void cleanEquipment(){
     if (!equipmentDirty)
       return;
 
-    assert (equippedHelm.amuletItem?.isHelm ?? true);
-    assert (equippedBody.amuletItem?.isBody ?? true);
-    assert (equippedLegs.amuletItem?.isLegs ?? true);
-    assert (equippedWeapon?.amuletItem?.isWeapon ?? true);
-    assert (equippedShoe.amuletItem?.isShoes ?? true);
+    // assert (equippedHelm.amuletItem?.isHelm ?? true);
+    // assert (equippedBody.amuletItem?.isBody ?? true);
+    // assert (equippedLegs.amuletItem?.isLegs ?? true);
+    // assert (equippedWeapon?.amuletItem?.isWeapon ?? true);
+    // assert (equippedShoe.amuletItem?.isShoes ?? true);
 
     health = clamp(health, 0, maxHealth);
     weaponType = equippedWeapon?.amuletItem?.subType ?? WeaponType.Unarmed;
@@ -1265,16 +1266,6 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
       SlotType.Weapons => weapons[index]
     };
 
-
-  void consumeItem(int consumableType) {
-      switch (consumableType) {
-        case ConsumableType.Health_Potion:
-          health += 10;
-          break;
-
-      }
-  }
-
   void dropItemSlotItem(AmuletItemSlot itemSlot){
     final amuletItem = itemSlot.amuletItem;
 
@@ -1418,7 +1409,11 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     }
     final itemStats = getAmuletItemLevelsForItemSlot(itemSlot);
     if (itemStats == null) {
-      throw Exception('itemStats == null');
+      itemSlot.max = 0;
+      itemSlot.charges = 0;
+      itemSlot.cooldown = 0;
+      itemSlot.cooldownDuration = 0;
+      return;
     }
     final max = itemStats.charges;
     itemSlot.max = max;
@@ -1818,11 +1813,12 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
         }
 
         if (item.isConsumable){
-          final consumableType = item.subType;
-          consumeItem(consumableType);
-          clearSlot(inventorySlot);
-          writePlayerEventItemTypeConsumed(consumableType);
-          return;
+          // final consumableType = item.subType;
+          // consumeItem(consumableType);
+          // clearSlot(inventorySlot);
+          // writePlayerEventItemTypeConsumed(consumableType);
+          // return;
+          throw Exception('not implemented');
         }
         break;
 

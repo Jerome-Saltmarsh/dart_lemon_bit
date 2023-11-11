@@ -16,6 +16,7 @@ ctrl + []               : move caret to code block
 
 ## TODO
 * [new]: model hair
+* [new]: health cooldown experience item
 * [fix]: barrels and crates should not be interactable
 * [fix]: persist gameobject properties
 * [fix]: ai stuttering on idle

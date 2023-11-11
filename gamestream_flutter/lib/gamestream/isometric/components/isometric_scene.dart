@@ -125,7 +125,7 @@ class IsometricScene with IsometricComponent implements Updatable {
       final z = getIndexPositionZ(markIndex);
 
       switch (markType){
-        case MarkType.Spawn_Whisp:
+        case MarkType.Whisp:
           for (var i = 0; i < 3; i++){
             particles.spawnWhisp(x: x + giveOrTake(10), y: y + giveOrTake(10), z: z);
           }
@@ -133,7 +133,7 @@ class IsometricScene with IsometricComponent implements Updatable {
         case MarkType.Glow:
           particles.spawnGlow(x: x, y: y, z: z);
           break;
-        case MarkType.Spawn_Myst:
+        case MarkType.Myst:
           particles.mystIndexes.add(markIndex);
           break;
         case MarkType.Water_Drops:

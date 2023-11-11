@@ -85,4 +85,17 @@ class AmuletGameTown extends AmuletGame {
     ..experience = 0
     ..complexion = ComplexionType.fair;
 
+  @override
+  void revive(AmuletPlayer player) {
+    super.revive(player);
+    movePlayerToSpawnPoint(player);
+  }
+
+  void movePlayerToSpawnPoint(AmuletPlayer player) {
+    player.setPosition(
+      x: 620 + giveOrTake(10),
+      y: 523 + giveOrTake(10),
+      z: 96,
+    );
+  }
 }

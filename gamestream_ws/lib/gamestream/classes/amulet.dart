@@ -92,7 +92,7 @@ class Amulet {
       time: amuletTime,
       environment: amuletEnvironment,
       fiendTypes: [
-        FiendType.Fallen_01,
+        FiendType.Fallen,
       ],
       name: 'town',
     );
@@ -104,7 +104,7 @@ class Amulet {
       environment: amuletEnvironment,
       name: 'road 1',
       fiendTypes: [
-        FiendType.Fallen_01,
+        FiendType.Fallen,
       ],
       amuletScene: AmuletScene.Road_01,
     );
@@ -116,8 +116,8 @@ class Amulet {
       environment: amuletEnvironment,
       name: 'road 2',
       fiendTypes: [
-        FiendType.Fallen_01,
-        FiendType.Skeleton_01,
+        FiendType.Fallen,
+        FiendType.Skeleton,
       ],
       amuletScene: AmuletScene.Road_02,
     );
@@ -151,7 +151,7 @@ class Amulet {
       time: amuletTime,
       environment: amuletEnvironment,
       name: 'generated',
-      fiendTypes: [FiendType.Fallen_01],
+      fiendTypes: [FiendType.Fallen],
       amuletScene: AmuletScene.Generated,
     );
     games.add(instance);
@@ -369,6 +369,7 @@ class Amulet {
       player.equippedHandLeft.clear();
       player.equippedBody.clear();
       player.equippedLegs.clear();
+      player.equippedShoe.clear();
       player.equippedBody.amuletItem = AmuletItem.Armor_Leather_Basic;
       player.equippedLegs.amuletItem = AmuletItem.Pants_Travellers;
       player.refillItemSlot(player.equippedBody);

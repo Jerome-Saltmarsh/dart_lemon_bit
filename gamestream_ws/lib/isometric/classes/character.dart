@@ -19,6 +19,9 @@ class Character extends Collider {
   var _health = 1;
   var _maxHealth = 1;
 
+  // var chanceOfDropConsumable = 0.25;
+  var chanceOfDropConsumable = 1.00;
+  var chanceOfDropLoot = 0.05;
   var spawnLootOnDeath = true;
   var respawnDurationTotal = 30;
   var gender = Gender.female;

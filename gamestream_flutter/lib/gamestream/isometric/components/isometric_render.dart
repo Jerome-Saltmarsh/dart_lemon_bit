@@ -475,21 +475,6 @@ class IsometricRender with IsometricComponent {
         y: player.aimTargetPosition.renderY - 55);
   }
 
-  void starsPosition(Position v3) =>
-      stars(v3.renderX, v3.renderY - 40);
-
-  void stars(double x, double y) =>
-      engine.renderSprite(
-        image: images.sprite_stars,
-        srcX: 125.0 * animation.frame16,
-        srcY: 0,
-        srcWidth: 125,
-        srcHeight: 125,
-        dstX: x,
-        dstY: y,
-        scale: 0.4,
-      );
-
   // void renderCursor(Canvas canvas) {
   //
   //   if (!options.renderCursorEnable)

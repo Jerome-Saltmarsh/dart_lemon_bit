@@ -93,15 +93,11 @@ class RendererEditor extends RenderGroup {
   void renderTabMarks() {
     render.textIndex(markType, markIndex);
     switch (markType){
-      case MarkType.Spawn_Whisp:
+      case MarkType.Whisp:
         engine.color = colors.white;
         render.circleOutlineAtIndex(index: markIndex, radius: 15.0);
         break;
-      case MarkType.Spawn_Player:
-        engine.color = colors.blue_0;
-        render.circleOutlineAtIndex(index: markIndex, radius: 15.0);
-        break;
-      case MarkType.Spawn_Fallen:
+      case MarkType.Fiend:
         engine.color = colors.red_2;
         render.circleOutlineAtIndex(index: markIndex, radius: 100.0);
         break;

@@ -2,7 +2,7 @@
 import 'package:gamestream_flutter/packages/common/src/isometric/consumable_type.dart';
 
 const atlasSrcConsumables = <int, List<double>>{
-  ConsumableType.Health_Potion: [
+  ConsumableType.Potion_Red: [
     5, // x
     2, // y
     22, // width
@@ -10,9 +10,25 @@ const atlasSrcConsumables = <int, List<double>>{
     1, // scale
     0.5, // anchorY
   ],
-  ConsumableType.Magic_Potion: [
+  ConsumableType.Potion_Blue: [
     37, // x
     2, // y
+    22, // width
+    26, // height
+    1, // scale
+    0.5, // anchorY
+  ],
+  ConsumableType.Potion_Green: [
+    5, // x
+    34, // y
+    22, // width
+    26, // height
+    1, // scale
+    0.5, // anchorY
+  ],
+  ConsumableType.Potion_Yellow: [
+    37, // x
+    34, // y
     22, // width
     26, // height
     1, // scale
@@ -23,14 +39,6 @@ const atlasSrcConsumables = <int, List<double>>{
     3, // y
     25, // width
     26, // height
-    1, // scale
-    0.5, // anchorY
-  ],
-  ConsumableType.Treasure_Box: [
-    0, // x
-    0, // y
-    26, // width
-    25, // height
     1, // scale
     0.5, // anchorY
   ],

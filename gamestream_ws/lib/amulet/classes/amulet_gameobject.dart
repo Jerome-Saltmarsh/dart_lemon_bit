@@ -23,7 +23,7 @@ class AmuletGameObject extends GameObject {
     enabledFixed = false;
     enabledGravity = true;
     collidable = true;
-    collectable = item.collectable;
+    collectable = !item.consumable;
     persistable = false;
     hitbox = false;
     physical = false;
@@ -37,6 +37,4 @@ class AmuletGameObject extends GameObject {
     // TODO: implement onSameTeamAs
     throw UnimplementedError();
   }
-
-
 }

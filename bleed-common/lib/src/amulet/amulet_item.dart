@@ -35,14 +35,14 @@ enum AmuletItem {
     level1: AmuletItemLevel(
       damage: 1,
       range: 60,
-      cooldown: 5,
+      cooldown: 4,
       charges: 5,
       performDuration: 32,
     ),
     level2: AmuletItemLevel(
       damage: 2,
       range: 60,
-      cooldown: 5,
+      cooldown: 4,
       charges: 7,
       performDuration: 28,
       fire: 1,
@@ -50,7 +50,7 @@ enum AmuletItem {
     level3: AmuletItemLevel(
       damage: 4,
       range: 60,
-      cooldown: 5,
+      cooldown: 4,
       charges: 7,
       performDuration: 26,
       fire: 3,
@@ -265,31 +265,33 @@ enum AmuletItem {
     description: 'commonly worn by electric mages',
     level1: AmuletItemLevel(),
   ),
-  Health_Potion(
+  Potion_Health(
     selectAction: AmuletItemAction.Consume,
     quality: AmuletItemQuality.Common,
     type: ItemType.Consumable,
-    subType: ConsumableType.Health_Potion,
+    subType: ConsumableType.Potion_Red,
     consumable: true,
     description: 'Replenishes health',
-    level1: AmuletItemLevel(),
+    level1: AmuletItemLevel(
+      health: 5,
+    ),
   ),
-  Treasure_Box(
+  Potion_Magic(
     selectAction: AmuletItemAction.Consume,
     quality: AmuletItemQuality.Common,
     type: ItemType.Consumable,
-    subType: ConsumableType.Treasure_Box,
-    collectable: false,
+    subType: ConsumableType.Potion_Blue,
+    consumable: true,
+    description: 'reduces cooldowns',
+    level1: AmuletItemLevel(),
+  ),
+  Potion_Experience(
+    selectAction: AmuletItemAction.Consume,
+    quality: AmuletItemQuality.Common,
+    type: ItemType.Consumable,
+    subType: ConsumableType.Potion_Yellow,
     description: 'increases experience',
-    level1: AmuletItemLevel(),
-  ),
-  Meat_Drumstick(
-    selectAction: AmuletItemAction.Consume,
-    quality: AmuletItemQuality.Common,
-    type: ItemType.Consumable,
-    subType: ConsumableType.Meat_Drumstick,
-    collectable: false,
-    description: 'replenishes health',
+    consumable: true,
     level1: AmuletItemLevel(),
   ),
   Lost_Pendant_Of_Dreams(
@@ -412,7 +414,6 @@ enum AmuletItem {
   final AmuletItemAction selectAction;
   final int type;
   final int subType;
-  final bool collectable;
   final bool consumable;
   final AmuletItemQuality quality;
   final AmuletItemLevel level1;
@@ -433,7 +434,6 @@ enum AmuletItem {
     this.level3,
     this.level4,
     this.level5,
-    this.collectable = true,
     this.consumable = false,
   });
 
@@ -481,22 +481,33 @@ enum AmuletItem {
   bool get isTreasure => type == ItemType.Treasure;
 
   static final valuesCommon = _findByQuality(AmuletItemQuality.Common);
+
   static final valuesUnique = _findByQuality(AmuletItemQuality.Unique);
+
   static final valuesRare = _findByQuality(AmuletItemQuality.Rare);
+
   static final valuesMythical = _findByQuality(AmuletItemQuality.Mythical);
 
   static final typeBodies =
       values.where((element) => element.isBody).toList(growable: false);
+
   static final typeHelms =
       values.where((element) => element.isHelm).toList(growable: false);
+
   static final typeShoes =
       values.where((element) => element.isShoes).toList(growable: false);
+
   static final typeWeapons =
       values.where((element) => element.isWeapon).toList(growable: false);
+
   static final typeHands =
       values.where((element) => element.isHand).toList(growable: false);
+
   static final typeLegs =
       values.where((element) => element.isLegs).toList(growable: false);
+
+  static final typeConsumables =
+      values.where((element) => element.isConsumable).toList(growable: false);
 
   static AmuletItem getBody(int type) =>
       typeBodies.firstWhere((element) => element.subType == type);

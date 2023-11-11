@@ -82,9 +82,9 @@ class IsometricImages with IsometricComponent {
   late final Image shadesTransparent;
   late final Image pixel;
   late final Image atlas_projectiles;
-  late final Image zombie;
-  late final Image zombie_shadow;
-  late final Image character_dog;
+  // late final Image zombie;
+  // late final Image zombie_shadow;
+  // late final Image character_dog;
   late final Image atlas_particles;
   late final Image atlas_helms;
   late final Image atlas_hands;
@@ -97,12 +97,11 @@ class IsometricImages with IsometricComponent {
   late final Image atlas_icons;
   late final Image atlas_consumables;
   late final Image atlas_treasures;
-  late final Image atlas_nodes_mini;
+  // late final Image atlas_nodes_mini;
   late final Image atlas_weapons;
   late final Image atlas_spells;
-  late final Image atlas_talents;
-  late final Image sprite_stars;
-  late final Image sprite_shield;
+  // late final Image sprite_stars;
+  // late final Image sprite_shield;
   late final Image square;
   late final Image template_spinning;
 
@@ -113,8 +112,6 @@ class IsometricImages with IsometricComponent {
   @override
   Future onComponentInit(SharedPreferences sharedPreferences) async {
     print('isometric.images.onComponentInitialize()');
-
-
 
     empty = await loadPng('empty');
     loadPng('shades').then((value) => shades = value);
@@ -127,14 +124,10 @@ class IsometricImages with IsometricComponent {
     loadPng('square').then((value) => square = value);
     loadPng('atlas_nodes').then((value) => atlas_nodes = value);
     loadPng('atlas_characters').then((value) => atlas_characters = value);
-    loadPng('atlas_zombie').then((value) => zombie = value);
-    loadPng('atlas_zombie_shadow').then((value) => zombie_shadow = value);
     loadPng('atlas_gameobjects').then((value) => atlas_gameobjects = value);
     loadPng('atlas_particles').then((value) => atlas_particles = value);
     loadPng('atlas_projectiles').then((value) => atlas_projectiles = value);
-    loadPng('atlas_nodes_mini').then((value) => atlas_nodes_mini = value);
     loadPng('atlas_weapons').then((value) => atlas_weapons = value);
-    loadPng('atlas_talents').then((value) => atlas_talents = value);
     loadPng('atlas_icons').then((value) => atlas_icons = value);
     loadPng('atlas_consumables').then((value) => atlas_consumables = value);
     loadPng('atlas_treasures').then((value) => atlas_treasures = value);
@@ -144,9 +137,6 @@ class IsometricImages with IsometricComponent {
     loadPng('atlas_body').then((value) => atlas_body = value);
     loadPng('atlas_legs').then((value) => atlas_legs = value);
     loadPng('atlas_shoes').then((value) => atlas_shoes = value);
-    loadPng('character-dog').then((value) => character_dog = value);
-    loadPng('sprites/sprite-stars').then((value) => sprite_stars = value);
-    loadPng('sprites/sprite-shield').then((value) => sprite_shield = value);
 
     emptySprite = Sprite(
         image: empty,
