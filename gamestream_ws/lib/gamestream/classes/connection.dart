@@ -680,11 +680,11 @@ class Connection extends ByteReader {
     }
 
     if (arguments.length > 2) {
-      final userId = arguments.getArg('--userId');
+      final userId = arguments.tryGetArgString('--userId');
 
       if (userId == null){
           playerJoinGameTutorial();
-          player.name = arguments.getArg('--name') ?? 'anon${randomInt(9999, 99999)}';
+          player.name = arguments.tryGetArgString('--name') ?? 'anon${randomInt(9999, 99999)}';
           player.complexion = arguments.tryGetArgInt('--complexion') ?? 0;
           player.hairType = arguments.tryGetArgInt('--hairType') ?? 0;
           player.hairColor = arguments.tryGetArgInt('--hairColor') ?? 0;
@@ -695,7 +695,7 @@ class Connection extends ByteReader {
           return;
       }
 
-      final characterId = arguments.getArg('--characterId');
+      final characterId = arguments.tryGetArgString('--characterId');
 
       if (characterId == null){
         throw Exception('characterId == null');
@@ -756,9 +756,11 @@ class Connection extends ByteReader {
 
   void playerJoinAmuletTown() {
     joinGame(nerve.amulet.amuletGameTown);
-    player.x = 1000;
-    player.y = 1000;
-    player.z = 50;
+    player.setPosition(
+      x: 620 + giveOrTake(10),
+      y: 523 + giveOrTake(10),
+      z: 96,
+    );
   }
 
   void cancelSubscription() {
@@ -1055,7 +1057,7 @@ class Connection extends ByteReader {
 
   void handleEditorRequestMoveKey(List<String> arguments) {
 
-    final name = arguments.getArg('--name');
+    final name = arguments.tryGetArgString('--name');
     final index = arguments.tryGetArgInt('--index');
 
     if (name == null){
@@ -1083,8 +1085,8 @@ class Connection extends ByteReader {
 
   void handleEditorRequestRenameKey(List<String> arguments) {
 
-    final from = arguments.getArg('--from');
-    final to = arguments.getArg('--to');
+    final from = arguments.tryGetArgString('--from');
+    final to = arguments.tryGetArgString('--to');
 
     if (from == null){
       sendServerError('--from required');

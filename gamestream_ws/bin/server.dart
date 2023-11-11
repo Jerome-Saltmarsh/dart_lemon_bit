@@ -15,13 +15,13 @@ void main(List<String> arguments) {
 }
 
 UserService getUserService(List<String> arguments) {
-  switch (arguments.getArg('--database')){
+  switch (arguments.tryGetArgString('--database')){
       case 'firestore':
           return UserServiceFirestore();
       case 'local':
           return UserServiceLocal();
       case 'http':
-          final url = arguments.getArg('--url');
+          final url = arguments.tryGetArgString('--url');
           return UserServiceHttp(
               url: url ?? 'https://gamestream-http-osbmaezptq-uc.a.run.app',
           );

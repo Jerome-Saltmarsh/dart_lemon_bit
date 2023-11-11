@@ -1,5 +1,6 @@
 extension Args on List<String> {
-  String? getArg(String name){
+
+  String? tryGetArgString(String name){
     final index = indexOf(name);
     if (index == -1){
       return null;
@@ -11,7 +12,7 @@ extension Args on List<String> {
   }
 
   int? tryGetArgInt(String name){
-    final arg = getArg(name);
+    final arg = tryGetArgString(name);
     if (arg == null){
       return null;
     }
@@ -19,7 +20,7 @@ extension Args on List<String> {
   }
 
   int getArgInt(String name){
-    final arg = getArg(name);
+    final arg = tryGetArgString(name);
     if (arg == null){
       throw Exception('expected int argument --$name');
     }
@@ -31,7 +32,7 @@ extension Args on List<String> {
   }
 
   bool? getArgBool(String name){
-    final arg = getArg(name);
+    final arg = tryGetArgString(name);
     if (arg == null){
       return null;
     }
