@@ -245,7 +245,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     updateProjectiles();
     updateGameObjects();
     updateParticleSmokeEmitters();
-    updateParticleWindEmitters();
+    // updateParticleWindEmitters();
 
     if (nextLightingUpdate-- <= 0) {
       nextLightingUpdate = options.framesPerLightingUpdate;

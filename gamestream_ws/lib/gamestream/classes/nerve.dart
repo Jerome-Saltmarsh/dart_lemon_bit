@@ -20,8 +20,9 @@ class Nerve {
   Nerve({
     required this.userService,
     this.admin = false,
+    int port = 8080,
   }){
-    server = Server(nerve: this);
+    server = Server(nerve: this, port: port);
     amulet = Amulet(nerve: this);
     _construct();
   }

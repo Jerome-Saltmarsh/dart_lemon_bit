@@ -10,6 +10,7 @@ void main(List<String> arguments) {
   Nerve(
     userService: getUserService(arguments),
     admin: arguments.contains('--admin'),
+    port: arguments.tryGetArgInt('--port') ?? 8080
   );
 }
 

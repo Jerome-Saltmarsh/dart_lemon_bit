@@ -25,6 +25,7 @@ ctrl + []               : move caret to code block
 * [new]: item tabs weapons amulets etc
 
 ## 11.11.2023
+* [new]: server allow port to be configured
 * [new]: optimize sort particles
 
 ## 08.11.2023

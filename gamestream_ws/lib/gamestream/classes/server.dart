@@ -13,12 +13,13 @@ class Server {
   final Nerve nerve;
   HttpServer? httpServer;
   var connectionsTotal = 0;
+  final int port;
   final connections = <Connection>[];
 
-  Server({required this.nerve});
+  Server({required this.nerve, required this.port});
 
   Future construct() async {
-    startWebsocketServer(port: 8080);
+    startWebsocketServer(port: port);
   }
 
   void handleServeCompleted(HttpServer httpServer){
