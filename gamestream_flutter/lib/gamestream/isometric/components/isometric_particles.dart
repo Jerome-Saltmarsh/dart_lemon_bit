@@ -618,7 +618,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
         continue;
       }
 
-      particle.cacheSortOrder();
       final dstX = particle.renderX;
       if (dstX < minX || dstX > maxX){
         particle.onscreen = false;
@@ -634,6 +633,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
       final x = particle.x;
       final y = particle.y;
       final z = particle.z;
+      particle.sortOrderCached = x + y + z + z;
 
       if (
         x < 0 ||

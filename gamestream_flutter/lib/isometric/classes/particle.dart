@@ -140,7 +140,5 @@ class Particle extends Position {
     vx = adj(angle, speed);
     vy = opp(angle, speed);
   }
-
-  void cacheSortOrder() => sortOrderCached = sortOrder;
 }
 
