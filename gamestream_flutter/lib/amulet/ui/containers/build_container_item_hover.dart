@@ -163,6 +163,8 @@ Widget buildContainerItemStats(AmuletItemLevel itemStats, int level, {Color? col
                   buildTableRow('range', itemStats.range),
                 if (itemStats.quantity != 0)
                   buildTableRow('quantity', itemStats.quantity),
+                if (itemStats.health != 0)
+                  buildTableRow('health', itemStats.health),
               ],
             ),
           ),

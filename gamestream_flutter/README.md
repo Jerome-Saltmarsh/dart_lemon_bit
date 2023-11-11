@@ -16,6 +16,7 @@ ctrl + []               : move caret to code block
 
 ## TODO
 * [new]: model hair
+* [fix]: barrels and crates should not be interactable
 * [fix]: persist gameobject properties
 * [fix]: ai stuttering on idle
 * [fix]: colored particle emission

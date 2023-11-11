@@ -364,6 +364,7 @@ class Amulet {
       weapons[0].amuletItem = AmuletItem.Weapon_Rusty_Old_Sword;
       weapons[1].amuletItem = AmuletItem.Weapon_Old_Bow;
       weapons[2].amuletItem = AmuletItem.Spell_Heal;
+      player.refillItemSlotsWeapons();
       player.health = player.maxHealth;
       player.writeWeapons();
       player.characterState = CharacterState.Idle;
