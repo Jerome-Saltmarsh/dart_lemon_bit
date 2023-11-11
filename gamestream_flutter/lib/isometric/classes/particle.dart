@@ -2,7 +2,6 @@ import 'package:gamestream_flutter/gamestream/isometric/classes/src.dart';
 import 'package:gamestream_flutter/packages/common/src.dart';
 import 'package:lemon_math/src.dart';
 
-
 class Particle extends Position {
   var sortOrderCached = 0.0;
   var blownByWind = true;
@@ -23,7 +22,6 @@ class Particle extends Position {
   var scaleVelocity = 0.0;
   var type = 0;
   var bounciness = 0.0;
-  /// Deactivates if this node hits a solid node
   var deactiveOnNodeCollision = true;
   var nodeCollidable = true;
   var animation = false;

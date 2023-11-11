@@ -343,7 +343,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
       final availableWeaponSlot = getEmptyWeaponSlot();
       if (availableWeaponSlot != null) {
         availableWeaponSlot.amuletItem = amuletItem;
-        refillItemSlot(itemSlot: availableWeaponSlot);
+        refillItemSlot(availableWeaponSlot);
         amuletGame.onAmuletItemAcquired(this, amuletItem);
         if (noWeaponEquipped){
           equippedWeaponIndex = weapons.indexOf(availableWeaponSlot);
@@ -1405,16 +1405,13 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   void refillItemSlots(List<AmuletItemSlot> itemSlots){
 
     for (final itemSlot in itemSlots) {
-      refillItemSlot(
-        itemSlot: itemSlot,
-      );
+      refillItemSlot(itemSlot);
     }
-    this.writeWeapons();
+
+    equipmentDirty = true;
   }
 
-  void refillItemSlot({
-    required AmuletItemSlot itemSlot,
-  }){
+  void refillItemSlot(AmuletItemSlot itemSlot){
     final amuletItem = itemSlot.amuletItem;
     if (amuletItem == null) {
       return;

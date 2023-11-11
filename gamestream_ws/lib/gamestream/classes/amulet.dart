@@ -364,10 +364,20 @@ class Amulet {
       weapons[0].amuletItem = AmuletItem.Weapon_Rusty_Old_Sword;
       weapons[1].amuletItem = AmuletItem.Weapon_Old_Bow;
       weapons[2].amuletItem = AmuletItem.Spell_Heal;
+      player.equippedHelm.clear();
+      player.equippedHandRight.clear();
+      player.equippedHandLeft.clear();
+      player.equippedBody.clear();
+      player.equippedLegs.clear();
+      player.equippedBody.amuletItem = AmuletItem.Armor_Leather_Basic;
+      player.equippedLegs.amuletItem = AmuletItem.Pants_Travellers;
+      player.refillItemSlot(player.equippedBody);
+      player.refillItemSlot(player.equippedLegs);
       player.refillItemSlotsWeapons();
       player.health = player.maxHealth;
-      player.writeWeapons();
       player.characterState = CharacterState.Idle;
       player.clearActionFrame();
+      player.equipmentDirty = true;
+      // player.writeWeapons();
   }
 }
