@@ -291,13 +291,13 @@ class IsometricDebug with IsometricComponent {
 
   Particle? getParticleNearestToMouse() {
 
-    if (particles.children.isEmpty)
+    if (particles.activated.isEmpty)
       return null;
 
-    var nearest = particles.children.first;
+    var nearest = particles.activated.first;
     var nearestDistance = mouse.getRenderDistanceSquare(nearest);
 
-    for (final particle in particles.children){
+    for (final particle in particles.activated){
       final distance = mouse.getRenderDistanceSquare(particle);
 
       if (distance >= nearestDistance)

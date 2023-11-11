@@ -145,7 +145,7 @@ class IsometricActions with IsometricComponent {
     player.position.z = 0;
     player.gameDialog.value = null;
     scene.totalProjectiles = 0;
-    particles.children.clear();
+    particles.activated.clear();
     engine.zoom = 1;
   }
 

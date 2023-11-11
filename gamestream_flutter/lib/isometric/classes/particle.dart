@@ -4,10 +4,11 @@ import 'package:lemon_math/src.dart';
 
 
 class Particle extends Position {
+  var sortOrderCached = 0.0;
   var blownByWind = true;
   var frictionAir = 0.98;
   var wind = 0;
-  var active = false;
+  var deactivating = false;
   var delay = 0;
   var vx = 0.0;
   var vy = 0.0;
@@ -34,7 +35,7 @@ class Particle extends Position {
   var flash = true;
   var emitsLight = false;
 
-  Particle({super.x, super.y, super.z, this.active = false});
+  Particle({super.x, super.y, super.z});
 
   int get direction => IsometricDirection.fromRadian(rotation);
 
@@ -44,12 +45,12 @@ class Particle extends Position {
   }
 
   void deactivate(){
-    active = false;
     duration = -1;
     durationTotal = -1;
     frame = 0;
     delay = 0;
     onscreen = false;
+    deactivating = true;
   }
 
   void setAngle({required double value, required double speed}){
@@ -105,24 +106,22 @@ class Particle extends Position {
           'x: ${x.toInt()}, '
           'y: ${y.toInt()}, '
           'z: ${z.toInt()}, '
-          'active: $active, '
+          'deactivating: $deactivating, '
           'type: ${ParticleType.getName(type)}'
           '}';
 
-  static int compare(Particle a, Particle b){
-     final aActive = a.active;
-     final bActive = b.active;
+  static int compare(Particle a, Particle b) {
 
-     if (!aActive && !bActive)
-       return 0;
+    final thisRenderOrder = a.sortOrderCached;
+    final thatRenderOrder = b.sortOrderCached;
 
-     if (aActive && !bActive)
-        return -1;
+    if (thisRenderOrder < thatRenderOrder)
+      return -1;
 
-     if (!aActive && bActive)
-       return 1;
+    if (thisRenderOrder > thatRenderOrder)
+      return 1;
 
-     return a.compareTo(b);
+    return 0;
   }
 
   void update(IsometricParticles particles){
@@ -141,5 +140,7 @@ class Particle extends Position {
     vx = adj(angle, speed);
     vy = opp(angle, speed);
   }
+
+  void cacheSortOrder() => sortOrderCached = sortOrder;
 }
 

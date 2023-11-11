@@ -2449,15 +2449,40 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void actionCharacterFollowPathToEnemy(Character character) =>
       characterActionFollowPathToTarget(character);
 
+  void setCharacterPathTargetIndex(Character character, int value){
+    final target = character.target;
+    if (target == null)
+      throw Exception();
+
+    final pathTargetIndex = scene.getIndexPosition(target);
+    character.pathTargetIndex = pathTargetIndex;
+
+    if (pathTargetIndex == -1) {
+      notifyTargetIsOutOfBounds(character);
+      return;
+    }
+  }
+
   void characterActionFollowPathToTarget(Character character) {
     final target = character.target;
     if (target == null)
       throw Exception();
 
-    character.pathTargetIndex = scene.getIndexPosition(target);
+    final pathTargetIndex = scene.getIndexPosition(target);
+    character.pathTargetIndex = pathTargetIndex;
+
+    if (pathTargetIndex == -1) {
+      notifyTargetIsOutOfBounds(character);
+      return;
+    }
+
     if (character.pathSet){
       characterActionFollowPath(character);
     }
+  }
+
+  void notifyTargetIsOutOfBounds(Character character){
+
   }
 
   void setCharacterPathTarget(Character character) {

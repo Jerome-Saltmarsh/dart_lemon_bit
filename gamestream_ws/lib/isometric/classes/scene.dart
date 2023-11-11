@@ -462,6 +462,17 @@ class Scene {
 
   int getIndex(int z, int row, int column) {
     assert (!outOfBounds(z, row, column));
+    final columns = this.columns; // cache value in cpu
+    if (
+      z < 0 ||
+      row < 0 ||
+      column < 0 ||
+      z >= height ||
+      column >= columns ||
+      row >= rows
+    ){
+      return -1;
+    }
     return (z * area) + (row * columns) + column;
   }
 

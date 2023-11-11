@@ -78,7 +78,7 @@ class IsometricEnvironment with IsometricComponent {
   }
 
   void onChangedNight(bool night){
-    final particles = this.particles.children;
+    final particles = this.particles.activated;
       if (night){
         for (final particle in particles) {
           if (particle.type == ParticleType.Butterfly) {
@@ -96,7 +96,7 @@ class IsometricEnvironment with IsometricComponent {
 
   void onChangedWindType(int windType) {
     refreshRain();
-    final children = particles.children;
+    final children = particles.activated;
     for (final particle in children) {
       particle.wind = windType;
     }

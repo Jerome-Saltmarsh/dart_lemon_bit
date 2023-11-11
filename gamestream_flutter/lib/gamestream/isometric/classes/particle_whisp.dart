@@ -22,7 +22,6 @@ class ParticleWhisp extends ParticleRoam {
   }) {
     duration = 0;
     durationTotal = -1;
-    active = true;
     vx = 0;
     vy = 0;
     vz = 0;

@@ -40,6 +40,16 @@ class ParticleType {
       Wind: 'wind',
     }[particleType] ?? 'unknown-$particleType';
 
+  static const deactivateOnNodeCollision = [
+    ParticleType.Blood,
+    ParticleType.Water_Drop,
+  ];
+
+  static const blownByWind = [
+    ParticleType.Smoke,
+    ParticleType.Myst,
+  ];
+
   static const frictionAir = {
     Water_Drop: 0.98,
     Blood: 0.98,
@@ -50,5 +60,6 @@ class ParticleType {
     Block_Grass: 0.98,
     Block_Brick: 0.98,
     Trail: 0.0,
+    Wind: 1.0,
   };
 }

@@ -10,9 +10,12 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
-* [new]: model hair
+* [new]: play tutorial on create new player
+* [new]: build a amulet_beta_0.51.exe
+* [new]: build a amulet_server_beta_0.51.exe
 
 ## TODO
+* [new]: model hair
 * [fix]: persist gameobject properties
 * [fix]: ai stuttering on idle
 * [fix]: colored particle emission
@@ -20,6 +23,9 @@ ctrl + []               : move caret to code block
 * [new]: flames emit smoke particles
 * [new]: design map 0
 * [new]: item tabs weapons amulets etc
+
+## 11.11.2023
+* [new]: optimize sort particles
 
 ## 08.11.2023
 * [new]: gameobject wooden crate

@@ -186,7 +186,8 @@ class IsometricParticles with IsometricComponent implements Updatable {
     colors.apricot_0.value,
   ];
 
-  final children = <Particle>[];
+  final activated = <Particle>[];
+  final deactivated = <Particle>[];
 
   final mystIndexes = <int>[];
   final indexesWaterDrops = <int>[];
@@ -195,22 +196,23 @@ class IsometricParticles with IsometricComponent implements Updatable {
   var nextEmissionWaterDrop = 0;
 
   Particle getInstance() {
-    final children = this.children;
-    for (final particle in children) {
-      if (!particle.active && particle is! ParticleRoam) {
-        return particle;
-      }
+    final deactivated = this.deactivated;
+
+    if (deactivated.isNotEmpty){
+       final particle = deactivated.first;
+       activateParticle(particle);
+       return particle;
     }
 
     final instance = Particle();
-    instance.active = true;
-    children.add(instance);
+    instance.deactivating = false;
+    activated.add(instance);
     return instance;
   }
 
   void clearParticles(){
     print('particles.clearParticles()');
-    children.clear();
+    activated.clear();
   }
 
   Particle spawnParticle({
@@ -231,24 +233,15 @@ class IsometricParticles with IsometricComponent implements Updatable {
     int delay = 0,
   }) {
     assert (duration > 0);
-    // assert (frictionAir >= 0 && frictionAir <= 1.0);
 
     final particle = getInstance();
     particle.type = particleType;
     particle.frictionAir = ParticleType.frictionAir[particleType] ?? 1.0;
-    particle.blownByWind = const [
-      ParticleType.Smoke,
-      ParticleType.Myst,
-    ].contains(particleType);
+    particle.blownByWind = ParticleType.blownByWind.contains(particleType);
+    particle.deactiveOnNodeCollision = ParticleType.deactivateOnNodeCollision.contains(particleType);
     particle.x = x;
     particle.y = y;
     particle.z = z;
-    particle.active = true;
-
-    particle.deactiveOnNodeCollision = const [
-       ParticleType.Blood,
-       ParticleType.Water_Drop,
-    ].contains(particleType);
 
     if (particle.deactiveOnNodeCollision){
       particle.nodeCollidable = true;
@@ -256,7 +249,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
     particle.animation = const [
       ParticleType.Lightning_Bolt,
-      ParticleType.Wind,
+      // ParticleType.Wind,
     ].contains(particleType);
     particle.emitsLight = false;
     particle.delay = delay;
@@ -546,11 +539,23 @@ class IsometricParticles with IsometricComponent implements Updatable {
     );
   }
 
-  int get countActiveParticles =>
-      children.where((element) => element.active).length;
+  int get countActiveParticles => activated.length;
 
-  int get countDeactiveParticles =>
-      children.where((element) => !element.active).length;
+  int get countDeactiveParticles => deactivated.length;
+
+  void activateParticle(Particle particle){
+      deactivated.remove(particle);
+      activated.add(particle);
+      particle.deactivating = false;
+  }
+
+  void deactivateParticle(Particle particle){
+    particle.deactivate();
+    activated.remove(particle);
+    if (particle is! ParticleRoam){
+      deactivated.add(particle);
+    }
+  }
 
   void onComponentUpdate() {
 
@@ -559,7 +564,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
     }
 
     final scene = this.scene;
-    final children = this.children;
+    final activeParticles = this.activated;
     final wind = environment.wind.value;
 
     windStrength = wind * windStrengthMultiplier;
@@ -582,10 +587,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
       nextParticleFrame = IsometricConstants.Frames_Per_Particle_Animation_Frame;
 
-      for (final particle in children) {
-        if (!particle.active)
-          continue;
-
+      for (final particle in activeParticles) {
         particle.frame++;
       }
     }
@@ -604,15 +606,19 @@ class IsometricParticles with IsometricComponent implements Updatable {
     final sceneArea = scene.area;
     final sceneColumns = scene.totalColumns;
     final nodeOrientations = scene.nodeOrientations;
-    final totalParticles = children.length;
+    var totalActiveParticles = activeParticles.length;
 
-    for (var i = 0; i < totalParticles; i++) {
-      final particle = children[i];
+    for (var i = 0; i < totalActiveParticles; i++) {
+      final particle = activeParticles[i];
 
-      if (!particle.active){
+      if (particle.deactivating){
+        deactivateParticle(particle);
+        i--;
+        totalActiveParticles--;
         continue;
       }
 
+      particle.cacheSortOrder();
       final dstX = particle.renderX;
       if (dstX < minX || dstX > maxX){
         particle.onscreen = false;
@@ -624,7 +630,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
           particle.onscreen = true;
         }
       }
-
 
       final x = particle.x;
       final y = particle.y;
@@ -680,14 +685,20 @@ class IsometricParticles with IsometricComponent implements Updatable {
       int index,
       int nodeOrientation,
   ) {
-    assert (particle.active);
-
     if (particle.delay > 0) {
       particle.delay--;
       return;
     }
 
-    if (particle.type == ParticleType.Light_Emission){
+    final particleType = particle.type;
+
+    if (particleType == ParticleType.Wind){
+       final vHorizontal = (-(1.0 - parabola(particle.duration01)) * 10) + 2.5;
+       particle.vx = vHorizontal;
+       particle.vy = -vHorizontal;
+    }
+
+    if (particleType == ParticleType.Light_Emission){
       const change = 0.125;
       if (particle.flash){
         particle.emissionIntensity += change;
@@ -705,9 +716,10 @@ class IsometricParticles with IsometricComponent implements Updatable {
       return;
     }
 
-    if (particle.duration > 0) {
+    final particleDuration = particle.duration;
+    if (particleDuration > 0) {
       particle.duration--;
-      if (particle.duration == 0){
+      if (particleDuration - 1 == 0){
         particle.deactivate();
         return;
       }
@@ -721,7 +733,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
     if (nodeCollision) {
       if (particle.deactiveOnNodeCollision){
 
-        if (particle.type == ParticleType.Water_Drop_Large){
+        if (particleType == ParticleType.Water_Drop_Large){
           final x = particle.x;
           final y = particle.y;
           final z = particle.z;
@@ -768,20 +780,42 @@ class IsometricParticles with IsometricComponent implements Updatable {
   }
 
   void sort(){
-    children.sort(Particle.compare);
+    if (activatedSorted) return;
+    activated.sort(Particle.compare);
+  }
+
+  bool get activatedSorted {
+    final activated = this.activated;
+    final length = activated.length;
+
+    if (length <= 1){
+      return true;
+    }
+
+    var sortA = activated.first.sortOrderCached;
+
+    for (var i = 1; i < length; i++){
+      final sortI = activated[i].sortOrderCached;
+      if (sortA > sortI){
+        return false;
+      }
+      sortA = sortI;
+    }
+
+    return true;
   }
 
   void spawnWhisp({
     required double x,
     required double y,
     required double z,
-  }) => children.add(ParticleWhisp(x: x, y: y, z: z));
+  }) => activated.add(ParticleWhisp(x: x, y: y, z: z));
 
   void spawnGlow({
     required double x,
     required double y,
     required double z,
-  }) => children.add(
+  }) => activated.add(
       ParticleGlow(
           x: x,
           y: y,
@@ -802,7 +836,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
       y: y,
       z: z,
     );
-    children.add(instance);
+    activated.add(instance);
     return instance;
   }
 
@@ -939,7 +973,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
     final characters = scene.characters;
     final totalCharacters = scene.totalCharacters;
-    final particles = this.children;
+    final particles = this.activated;
 
     for (var i = 0; i < totalCharacters; i++){
       final character = characters[i];

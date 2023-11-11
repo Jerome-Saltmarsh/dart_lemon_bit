@@ -17,11 +17,11 @@ void main() {
 
   test('sort-particles', () {
     final particles = <Particle>[
-      Particle(x: 10, y: 10, z: 1000, active: false),
-      Particle(x: 10, y: 10, z: 10, active: true),
-      Particle(x: 100, y: 100, z: 10, active: true),
-      Particle(x: 10, y: 10, z: 1000, active: true),
-      Particle(x: 5, y: 10, z: 5, active: false),
+      Particle(x: 10, y: 10, z: 1000),
+      Particle(x: 10, y: 10, z: 10),
+      Particle(x: 100, y: 100, z: 10),
+      Particle(x: 10, y: 10, z: 1000),
+      Particle(x: 5, y: 10, z: 5),
     ];
     particles.sort(Particle.compare);
     print(particles);

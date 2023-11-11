@@ -580,7 +580,7 @@ extension isometricDebugUI on IsometricDebug {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                buildText('total: ${particles.children.length}'),
+                buildText('total: ${particles.activated.length}'),
                 buildText('total-active: ${particles.countActiveParticles}'),
                 buildText('total-deactive: ${particles.countDeactiveParticles}'),
               ],
@@ -595,12 +595,20 @@ extension isometricDebugUI on IsometricDebug {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: particles.children.map((particle) => onPressed(
+                children: [
+                  ...particles.activated.map((particle) => onPressed(
                       action: () => selectParticle(particle),
                       child: buildText(
                           ParticleType.getName(particle.type),
-                          color: particle.active ? colors.white : colors.white70
+                          color: colors.white
+                      ))).toList(growable: false),
+                  ...particles.deactivated.map((particle) => onPressed(
+                      action: () => selectParticle(particle),
+                      child: buildText(
+                          ParticleType.getName(particle.type),
+                          color: colors.white60
                       ))).toList(growable: false)
+                ]
               ),
             ),
           ),

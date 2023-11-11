@@ -29,7 +29,6 @@ class RendererParticles extends RenderGroup {
     final dstX = particle.renderX;
     final dstY = particle.renderY;
 
-    assert(particle.active);
     assert(particle.onscreen);
 
     if (particle.delay > 0) {
@@ -170,6 +169,17 @@ class RendererParticles extends RenderGroup {
               dstY: dstY,
             );
           }
+          break;
+        case ParticleType.Wind:
+          engine.renderSprite(
+              image: images.atlas_nodes,
+              srcX: 72,
+              srcY: 2040,
+              srcWidth: 8,
+              srcHeight: 8,
+              dstX: dstX,
+              dstY: dstY,
+          );
           break;
         case ParticleType.Trail:
           final duration01 = particle.duration01;
@@ -370,7 +380,7 @@ class RendererParticles extends RenderGroup {
   @override
   void updateFunction() {
 
-    final particles = this.particles.children;
+    final particles = this.particles.activated;
     final total = this.total;
 
     while (index < total) {

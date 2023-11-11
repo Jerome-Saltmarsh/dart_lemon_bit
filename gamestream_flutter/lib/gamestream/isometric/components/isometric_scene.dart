@@ -113,7 +113,7 @@ class IsometricScene with IsometricComponent implements Updatable {
 
   void onChangedMarks(int count){
     final particles = this.particles;
-    particles.children.removeWhere((element) => element is ParticleRoam);
+    particles.activated.removeWhere((element) => element is ParticleRoam);
     particles.mystIndexes.clear();
     particles.indexesWaterDrops.clear();
     final marks = this.marks;
@@ -1467,12 +1467,11 @@ class IsometricScene with IsometricComponent implements Updatable {
   }
 
   void applyEmissionColorParticles() {
-    final particles = this.particles.children;
+    final particles = this.particles.activated;
     final length = particles.length;
     for (var i = 0; i < length; i++) {
       final particle = particles[i];
       if (
-        !particle.active ||
         !particle.emitsLight
       ) continue;
       emitLight(
@@ -2100,14 +2099,14 @@ class IsometricScene with IsometricComponent implements Updatable {
       return;
     }
 
-    nextEmissionWind = 200;
-
-    // particles.spawnParticle(
-    //     particleType: particleType,
-    //     x: x,
-    //     y: y,
-    //     z: z,
-    //     frictionAir: frictionAir,
-    // )
+    nextEmissionWind = 50;
+    particles.spawnParticle(
+        particleType: ParticleType.Wind,
+        x: player.x,
+        y: player.y,
+        z: player.z + 100,
+        duration: 50,
+        weight: 0,
+    );
   }
 }
