@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:gamestream_flutter/gamestream/isometric/enums/mode.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
@@ -69,7 +70,6 @@ class IsometricPlayer with IsometricComponent {
   late final active = Watch(false);
   late final alive = Watch(true);
   late final weaponType = Watch(0);
-  late final debugging = Watch(false, onChanged: onChangedDebugging);
 
   IsometricPlayer() {
 
@@ -152,7 +152,7 @@ class IsometricPlayer with IsometricComponent {
 
   void onChangedDebugging(bool debugging) {
     if (!debugging) {
-      actions.cameraPlayerTargetPlayer();
+      options.cameraPlayerTargetPlayer();
     }
   }
 
@@ -288,7 +288,12 @@ class IsometricPlayer with IsometricComponent {
         player.runToDestinationEnabled.value = parser.readBool();
         break;
       case NetworkResponsePlayer.Debugging:
-        player.debugging.value = parser.readBool();
+        final value = parser.readBool();
+        if (value){
+          options.mode.value = Mode.Debug;
+        } else {
+          options.mode.value = Mode.Play;
+        }
         break;
       case NetworkResponsePlayer.Cache_Cleared:
         onNetworkDone();

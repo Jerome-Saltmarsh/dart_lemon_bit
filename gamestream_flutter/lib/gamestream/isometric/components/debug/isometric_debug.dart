@@ -62,7 +62,7 @@ class IsometricDebug with IsometricComponent {
   late final selectedCollider = Watch(false, onChanged: onChangedCharacterSelected);
 
   void drawCanvas() {
-    if (!player.debugging.value) return;
+    if (!options.debugging) return;
 
     renderSelectedParticle();
     renderSelectedCollider();
@@ -205,11 +205,12 @@ class IsometricDebug with IsometricComponent {
   }
 
   void onChangedCharacterSelected(bool characterSelected){
-    if (!player.debugging.value)
+    if (!options.debugging)
       return;
 
      if (characterSelected){
-       camera.target = position;
+       this.options.cameraDebug = position;
+       this.amulet.cameraTarget = options.cameraDebug;
      } else {
        camera.target = null;
      }
@@ -250,7 +251,7 @@ class IsometricDebug with IsometricComponent {
       if (enabled){
         camera.target = null;
       } else {
-        actions.cameraPlayerTargetPlayer();
+        options.cameraPlayerTargetPlayer();
       }
   }
 

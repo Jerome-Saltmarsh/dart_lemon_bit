@@ -246,7 +246,7 @@ class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
       | changeScreenRight << 4
       | changeScreenBottom << 6;
 
-    if (options.editMode){
+    if (options.editing){
       writeByte(0);
     } else {
       writeByte(getComputerInputAsByte());

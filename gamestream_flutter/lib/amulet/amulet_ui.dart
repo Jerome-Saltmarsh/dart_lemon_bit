@@ -28,55 +28,57 @@ class AmuletUI {
 
   AmuletUI(this.amulet);
 
-  Widget buildAmuletUI() => Stack(alignment: Alignment.center, children: [
-        buildDialogTalk(),
-        Positioned(
-          bottom: 8,
-          right: 8,
-          child: AmuletWorldMap(amulet: amulet, size: 200),
-        ),
-        Positioned(
-          bottom: 4,
-          left: 0,
-          child: Container(
-            width: amulet.engine.screen.width,
-            alignment: Alignment.center,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                GSContainer(
-                  padding: const EdgeInsets.all(4),
-                  child: Column(
-                    children: [
-                      buildPlayerHealthBar(),
-                      height2,
-                      buildPlayerWeapons(),
-                    ],
+  Widget buildAmuletUI() => GSFullscreen(
+    child: Stack(alignment: Alignment.center, children: [
+          buildDialogTalk(),
+          Positioned(
+            bottom: 8,
+            right: 8,
+            child: AmuletWorldMap(amulet: amulet, size: 200),
+          ),
+          Positioned(
+            bottom: 4,
+            left: 0,
+            child: Container(
+              width: amulet.engine.screen.width,
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  GSContainer(
+                    padding: const EdgeInsets.all(4),
+                    child: Column(
+                      children: [
+                        buildPlayerHealthBar(),
+                        height2,
+                        buildPlayerWeapons(),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-        Positioned(top: 4, left: 4, child: buildPlayerStatsRow()),
-        Positioned(
-          bottom: margin1,
-          left: margin1,
-          child: buildDialogPlayerInventory(),
-        ),
-        buildPlayerAimTarget(),
-        buildPositionedAmuletItemHover(),
-        buildPositionedMessage(),
-        Positioned(
-          top: margin2,
-          child: Container(
-            width: amulet.engine.screen.width,
-            alignment: Alignment.center,
-            child: buildError(),
+          Positioned(top: 4, left: 4, child: buildPlayerStatsRow()),
+          Positioned(
+            bottom: margin1,
+            left: margin1,
+            child: buildDialogPlayerInventory(),
           ),
-        ),
-      ]);
+          buildPlayerAimTarget(),
+          buildPositionedAmuletItemHover(),
+          buildPositionedMessage(),
+          Positioned(
+            top: margin2,
+            child: Container(
+              width: amulet.engine.screen.width,
+              alignment: Alignment.center,
+              child: buildError(),
+            ),
+          ),
+        ]),
+  );
 
   Positioned buildPositionedMessage() => Positioned(
       top: 0,

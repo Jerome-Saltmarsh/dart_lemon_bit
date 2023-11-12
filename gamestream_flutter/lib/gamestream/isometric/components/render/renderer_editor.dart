@@ -48,7 +48,7 @@ class RendererEditor extends RenderGroup {
 
   @override
   int getTotal() {
-    if (!options.editMode){
+    if (!options.editing){
       return 0;
     }
 

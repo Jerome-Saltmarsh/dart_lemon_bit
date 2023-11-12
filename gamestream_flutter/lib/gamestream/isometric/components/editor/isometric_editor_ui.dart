@@ -691,8 +691,8 @@ extension IsometricEditorUI on IsometricEditor {
             message: NodeType.getName(nodeType),
           ),
           action: () {
-            if (options.playMode) {
-              options.actionSetModePlay();
+            if (options.editing) {
+              options.setModePlay();
               return;
             }
             paint(nodeType: nodeType);

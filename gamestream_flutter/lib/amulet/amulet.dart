@@ -13,6 +13,7 @@ import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_game.d
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
+import '../gamestream/isometric/enums/mode.dart';
 import 'amulet_render.dart';
 import 'dart:ui' as ui;
 
@@ -37,8 +38,7 @@ class Amulet extends IsometricGame {
   var playerWorldY = 0.0;
 
   final amuletScene = Watch<AmuletScene?>(null);
-  final cameraTargetSet = Watch(false);
-  final cameraTarget = Position();
+  Position? cameraTarget;
 
   final elementPoints = Watch(0);
   final elementFire = Watch(0);
@@ -105,7 +105,7 @@ class Amulet extends IsometricGame {
     playerInteracting.onChanged(onChangedPlayerInteracting);
     npcTextIndex.onChanged(onChangedNpcTextIndex);
     error.onChanged(onChangedError);
-    cameraTargetSet.onChanged(onChangedCameraTargetSet);
+    // cameraTargetSet.onChanged(onChangedCameraTargetSet);
     elementPoints.onChanged(onChangedElementPoints);
   }
 
@@ -138,13 +138,13 @@ class Amulet extends IsometricGame {
       }
     }
 
-    if (options.playMode) {
-      if (cameraTargetSet.value){
-        camera.target = cameraTarget;
-      } else {
-        camera.target = player.position;
-      }
-    }
+    // if (options.playMode) {
+    //   if (cameraTargetSet.value){
+    //     camera.target = cameraTarget;
+    //   } else {
+    //     camera.target = player.position;
+    //   }
+    // }
   }
 
   void clearError() {
@@ -187,7 +187,7 @@ class Amulet extends IsometricGame {
   void onKeyPressed(int key) {
     super.onKeyPressed(key);
 
-    if (editMode)
+    if (options.editing)
       return;
 
     if (key == KeyCode.Q){
@@ -372,16 +372,15 @@ class Amulet extends IsometricGame {
     }
   }
 
-  void onChangedCameraTargetSet(bool cameraTargetSet) {
-    print('amulet.onChangedCameraTargetSet("$cameraTargetSet")');
-    options.setCameraPlay(cameraTargetSet ? cameraTarget : player.position);
-  }
+  // void onChangedCameraTargetSet(bool cameraTargetSet) {
+  //   print('amulet.onChangedCameraTargetSet("$cameraTargetSet")');
+  //   options.setCameraPlay(cameraTargetSet ? cameraTarget : player.position);
+  // }
 
   void onChangedNetworkConnectionStatus(ConnectionStatus connection) {
      switch (connection){
        case ConnectionStatus.Connected:
-         options.edit.value = false;
-         cameraTargetSet.value = false;
+         options.mode.value = Mode.Play;
          break;
        default:
          break;

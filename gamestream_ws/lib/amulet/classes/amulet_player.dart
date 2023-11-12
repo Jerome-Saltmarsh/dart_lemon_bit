@@ -17,7 +17,6 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   var admin = false;
   var previousCameraTarget = false;
   Position? cameraTarget;
-
   AmuletGame amuletGame;
   var equipmentDirty = true;
   var activePowerX = 0.0;

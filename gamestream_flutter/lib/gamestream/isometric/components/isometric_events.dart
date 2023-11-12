@@ -597,8 +597,7 @@ class IsometricEvents with IsometricComponent {
         engine.zoom = 1.0;
         engine.targetZoom = 1.0;
         audio.enabledSound.value = true;
-        options.edit.value = false;
-        actions.cameraPlayerTargetPlayer();
+        options.cameraPlayerTargetPlayer();
         camera.target = options.cameraPlay;
         if (!engine.isLocalHost) {
           engine.fullScreenEnter();

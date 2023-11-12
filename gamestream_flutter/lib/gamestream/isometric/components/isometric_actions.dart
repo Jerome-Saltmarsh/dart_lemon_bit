@@ -81,10 +81,6 @@ class IsometricActions with IsometricComponent {
     }
   }
 
-  void cameraPlayerTargetPlayer(){
-    options.setCameraPlay(player.position);
-  }
-
   void spawnParticleLightEmissionAmbient({
     required double x,
     required double y,

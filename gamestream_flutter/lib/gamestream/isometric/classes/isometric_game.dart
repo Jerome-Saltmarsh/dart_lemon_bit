@@ -1,5 +1,6 @@
 
 import 'package:gamestream_flutter/gamestream/isometric/components/editor/isometric_editor_ui.dart';
+import 'package:gamestream_flutter/gamestream/isometric/enums/mode.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
@@ -11,10 +12,6 @@ import 'package:lemon_widgets/lemon_widgets.dart';
 import 'package:lemon_watch/src.dart';
 
 class IsometricGame extends Game {
-
-  bool get debugMode => player.debugging.value;
-
-  bool get editMode => options.edit.value;
 
   @override
   void drawCanvas(Canvas canvas, Size size) {
@@ -40,10 +37,9 @@ class IsometricGame extends Game {
   @override
   void onActivated() {
     options.windowOpenMenu.setFalse();
-    actions.cameraPlayerTargetPlayer();
+    options.cameraPlayerTargetPlayer();
 
     audio.musicStop();
-    // engine.onMouseMoved = io.touchController.onMouseMoved;
 
     if (!engine.isLocalHost) {
       engine.fullScreenEnter();
@@ -64,21 +60,22 @@ class IsometricGame extends Game {
           options.triggerAlarmNoMessageReceivedFromServer,
           ui.buildDialogFramesSinceUpdate,
       ),
-      WatchBuilder(options.edit, (edit) =>
-        edit ? editor.buildEditor() : customBuildUI(context)),
       Positioned(
-          top: 16,
-          left: 16,
-          child: debug.buildUI()
+        top: 0,
+        left: 0,
+        child: WatchBuilder(options.mode, (mode) =>
+            switch (mode) {
+              Mode.Play => customBuildUI(context),
+              Mode.Edit => editor.buildEditor(),
+              Mode.Debug => debug.buildUI(),
+              _ => nothing,
+            }),
       ),
+
       // Positioned(
-      //   top: 0,
-      //   left: 0,
-      //   child: Container(
-      //       width: engine.screen.width,
-      //       alignment: Alignment.center,
-      //       child: buildWatch(ui.dialog, (t) => t ?? nothing),
-      //   ),
+      //     top: 16,
+      //     left: 16,
+      //     child: debug.buildUI()
       // ),
       Positioned(
           top: 16,
@@ -109,11 +106,11 @@ class IsometricGame extends Game {
     // if (io.inputModeTouch) {
     //   io.touchController.onClick();
     // }
-    if (debugMode) {
+    if (options.debugging) {
       debug.onMouseLeftClicked();
       return;
     }
-    if (editMode) {
+    if (options.editing) {
       editor.onMouseLeftClicked();
       return;
     }
@@ -121,12 +118,12 @@ class IsometricGame extends Game {
 
   @override
   void onRightClicked() {
-    if (debugMode) {
+    if (options.debugging) {
       debug.onMouseRightClicked();
       return;
     }
 
-    if (editMode){
+    if (options.editing){
       editor.onMouseRightClicked();
       return;
     }
@@ -150,7 +147,7 @@ class IsometricGame extends Game {
       return;
     }
 
-    if (options.editMode){
+    if (options.editing){
       editor.onKeyPressed(key);
       return;
     }
@@ -166,7 +163,7 @@ class IsometricGame extends Game {
       amulet.spawnRandomEnemy();
     }
 
-    if (debugMode) {
+    if (options.debugging) {
       debug.onKeyPressed(key);
       return;
     }

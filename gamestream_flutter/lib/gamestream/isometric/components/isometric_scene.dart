@@ -981,7 +981,7 @@ class IsometricScene with IsometricComponent implements Updatable {
   }
 
   void applyEmissionEditorSelectedNode() {
-    if (!options.editMode) return;
+    if (!options.editing) return;
     if (( editor.gameObject.value == null ||  editor.gameObject.value!.emissionType == EmissionType.None)){
       emitLight(
         index:  editor.nodeSelectedIndex.value,

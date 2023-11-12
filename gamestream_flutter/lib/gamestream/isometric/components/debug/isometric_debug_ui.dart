@@ -1,4 +1,5 @@
 
+import 'package:gamestream_flutter/gamestream/isometric/enums/mode.dart';
 import 'package:gamestream_flutter/gamestream/ui/builders/build_watch.dart';
 import 'package:gamestream_flutter/gamestream/ui/builders/build_watch_bool.dart';
 import 'package:gamestream_flutter/gamestream/ui/constants/height.dart';
@@ -17,7 +18,7 @@ import 'debug_tab.dart';
 extension isometricDebugUI on IsometricDebug {
 
   Widget buildUI() =>
-      buildWatchBool(player.debugging, () =>
+      buildWatch(options.mode, (mode) => mode != Mode.Debug ? nothing :
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,

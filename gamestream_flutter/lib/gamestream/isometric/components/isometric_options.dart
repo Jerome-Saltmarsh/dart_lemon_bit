@@ -1,4 +1,5 @@
 
+import 'package:gamestream_flutter/gamestream/isometric/enums/mode.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:lemon_engine/lemon_engine.dart';
@@ -14,11 +15,13 @@ import 'package:gamestream_flutter/packages/lemon_components.dart';
 
 class IsometricOptions with IsometricComponent implements Updatable {
 
+
   var renderNorth = true;
   var renderEast = true;
   var alphaBlend = 128;
   var cameraPlay = Position();
   var cameraEdit = Position();
+  var cameraDebug = Position();
   var charactersEffectParticles = false;
   var renderWindVelocity = false;
   var renderCameraTargets = false;
@@ -39,6 +42,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
   var messageStatusDuration = 0;
   var renderResponse = true;
 
+  final mode = Watch(Mode.Play);
   final highlightIconInventory = WatchBool(false);
   final timeVisible = WatchBool(true);
   final windowOpenMenu = WatchBool(false);
@@ -51,7 +55,6 @@ class IsometricOptions with IsometricComponent implements Updatable {
   final rendersSinceUpdate = Watch(0);
   final triggerAlarmNoMessageReceivedFromServer = Watch(false);
   final gameType = Watch(GameType.Website);
-  final edit = Watch(false);
   final messageStatus = Watch('');
   final gameError = Watch<GameError?>(null);
   late final Watch<Game> game;
@@ -61,16 +64,12 @@ class IsometricOptions with IsometricComponent implements Updatable {
 
   IsometricOptions(){
     gameType.onChanged(_onChangedGameType);
-    edit.onChanged(_onChangedEdit);
+    mode.onChanged(onChangedMode);
     messageStatus.onChanged(_onChangedMessageStatus);
     gameError.onChanged(_onChangedGameError);
     rendersSinceUpdate.onChanged(_onChangedRendersSinceUpdate);
     sceneName.onChanged((t) {print('scene.name = $t');});
   }
-
-  bool get playMode => !editMode;
-
-  bool get editMode => edit.value;
 
   @override
   Future onComponentInit(sharedPreferences) async {
@@ -131,15 +130,21 @@ class IsometricOptions with IsometricComponent implements Updatable {
     game.onActivated();
   }
 
-  void toggleEditMode() => edit.value = !edit.value;
+  void toggleEditMode() {
+    if (editing){
+      setModePlay();
+    } else {
+      setModeEdit();
+    }
+  }
 
-  void _onChangedEdit(bool value) {
-    if (value) {
+  void onChangedMode(int mode) {
+    if (mode == Mode.Edit) {
       editor.cameraCenterOnNodeSelectedIndex();
       editor.cursorSetToPlayer();
       camera.target = cameraEdit;
     } else {
-      actions.cameraPlayerTargetPlayer();
+      options.cameraPlayerTargetPlayer();
       editor.deselectGameObject();
       camera.target = cameraPlay;
     }
@@ -153,12 +158,16 @@ class IsometricOptions with IsometricComponent implements Updatable {
     }
   }
 
-  void actionSetModePlay(){
-    edit.value = false;
+  void setModePlay(){
+    mode.value = Mode.Play;
   }
 
-  void actionSetModeEdit(){
-    edit.value = true;
+  void setModeEdit(){
+    mode.value = Mode.Edit;
+  }
+
+  void setModeDebug(){
+    mode.value = Mode.Debug;
   }
 
   void onChangedError(String error) {
@@ -210,13 +219,27 @@ class IsometricOptions with IsometricComponent implements Updatable {
   }
 
   void setCameraPlay(Position value){
-    if (cameraPlay == value) {
-      return;
-    }
     cameraPlay = value;
+    print('options.setCameraPlay($value)');
+  }
+
+  void setCameraDebug(Position value){
+    cameraDebug = value;
     print('options.setCameraPlay($value)');
   }
 
   void toggleRenderCameraTargets() => renderCameraTargets = !renderCameraTargets;
 
+
+  void cameraPlayerTargetPlayer(){
+    setCameraPlay(player.position);
+  }
+
+  bool get debugging => mode.value == Mode.Debug;
+
+  bool get editing => mode.value == Mode.Edit;
+
+  bool get playing => mode.value == Mode.Play;
+
+  set debugging(bool value) => mode.value = value ? Mode.Debug : Mode.Play;
 }

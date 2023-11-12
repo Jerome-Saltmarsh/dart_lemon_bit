@@ -570,7 +570,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
     this.windy = wind != 0;
     final windy = this.windy;
     final windStrength = this.windStrength;
-    final maxVelocity = 0.4 * wind;
+    final maxVelocity = wind * 1.0;
 
     if (!windy && nextMystEmission-- <= 0) {
       nextMystEmission = 30;

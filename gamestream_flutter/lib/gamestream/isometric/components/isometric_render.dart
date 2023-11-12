@@ -150,15 +150,15 @@ class IsometricRender with IsometricComponent {
       );
     }
 
-    if (options.playMode){
-      if (amulet.cameraTargetSet.value){
-        engine.color = Colors.red;
-          render.circleOutlineAtPosition(
-             position: amulet.cameraTarget,
-             radius: 16,
-          );
-      }
-    }
+    // if (options.playMode){
+    //   if (amulet.cameraTargetSet.value){
+    //     engine.color = Colors.red;
+    //       render.circleOutlineAtPosition(
+    //          position: amulet.cameraTarget,
+    //          radius: 16,
+    //       );
+    //   }
+    // }
   }
 
   void renderPlayerHeightMap() {
@@ -632,7 +632,7 @@ class IsometricRender with IsometricComponent {
   }
 
   void renderEditMode() {
-    if (options.playMode) return;
+    if (options.playing) return;
     if (editor.gameObjectSelected.value){
       engine.renderCircleOutline(
         sides: 24,
