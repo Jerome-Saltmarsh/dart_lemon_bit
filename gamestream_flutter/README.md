@@ -26,6 +26,9 @@ ctrl + []               : move caret to code block
 * [new]: design map 0
 * [new]: item tabs weapons amulets etc
 
+## 12.11.2023
+* [new]: optimize update particles
+
 ## 11.11.2023
 * [new]: server reset player button
 * [new]: server allow port to be configured

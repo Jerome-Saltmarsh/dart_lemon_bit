@@ -169,7 +169,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
   static const windStrengthMultiplier = 0.003;
 
-  var maxVelocity = 1.25;
   var windy = false;
   var windStrength = 0.0;
   var nextParticleFrame = 0;
@@ -567,9 +566,11 @@ class IsometricParticles with IsometricComponent implements Updatable {
     final activeParticles = this.activated;
     final wind = environment.wind.value;
 
-    windStrength = wind * windStrengthMultiplier;
-    windy = wind != 0;
-    maxVelocity = 0.3 * wind;
+    this.windStrength = wind * windStrengthMultiplier;
+    this.windy = wind != 0;
+    final windy = this.windy;
+    final windStrength = this.windStrength;
+    final maxVelocity = 0.4 * wind;
 
     if (!windy && nextMystEmission-- <= 0) {
       nextMystEmission = 30;
@@ -664,6 +665,12 @@ class IsometricParticles with IsometricComponent implements Updatable {
       final nodeOrientation = nodeOrientations[index];
 
       particle.nodeIndex = index;
+
+      if (windy && particle.blownByWind) {
+        particle.vx = clamp(particle.vx - windStrength, -maxVelocity, maxVelocity);
+        particle.vy = clamp(particle.vy + windStrength, -maxVelocity, maxVelocity);
+      }
+
       updateParticle(particle, scene, index, nodeOrientation);
     }
   }
@@ -704,7 +711,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
     if (particleType == ParticleType.Light_Emission){
       const change = 0.125;
-      if (particle.flash){
+      if (particle.flash) {
         particle.emissionIntensity += change;
         if (particle.emissionIntensity >= 1){
           particle.emissionIntensity = 1.0;
@@ -761,10 +768,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
     } else {
       particle.applyAirFriction();
       particle.applyGravity();
-      if (windy && particle.blownByWind) {
-        particle.vx = clamp(particle.vx - windStrength, -maxVelocity, maxVelocity);
-        particle.vy = clamp(particle.vy + windStrength, -maxVelocity, maxVelocity);
-      }
     }
 
     final bounce = nodeCollision && particle.vz < 0;
@@ -780,6 +783,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
         particle.vz = 0;
       }
     }
+
     particle.update(this);
   }
 
