@@ -38,7 +38,6 @@ class Amulet extends IsometricGame {
   var playerWorldY = 0.0;
 
   final amuletScene = Watch<AmuletScene?>(null);
-  Position? cameraTarget;
 
   final elementPoints = Watch(0);
   final elementFire = Watch(0);

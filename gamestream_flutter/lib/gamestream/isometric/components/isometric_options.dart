@@ -16,10 +16,12 @@ import 'package:gamestream_flutter/packages/lemon_components.dart';
 class IsometricOptions with IsometricComponent implements Updatable {
 
 
+
   var renderNorth = true;
   var renderEast = true;
   var alphaBlend = 128;
-  var cameraPlay = Position();
+  var cameraPlayFollowPlayer = true;
+  final cameraPlay = Position();
   var cameraEdit = Position();
   var cameraDebug = Position();
   var charactersEffectParticles = false;
@@ -139,14 +141,19 @@ class IsometricOptions with IsometricComponent implements Updatable {
   }
 
   void onChangedMode(int mode) {
-    if (mode == Mode.Edit) {
-      editor.cameraCenterOnNodeSelectedIndex();
-      editor.cursorSetToPlayer();
-      camera.target = cameraEdit;
-    } else {
-      options.cameraPlayerTargetPlayer();
-      editor.deselectGameObject();
-      camera.target = cameraPlay;
+    switch (mode){
+      case Mode.Play:
+        editor.deselectGameObject();
+        camera.target = cameraPlay;
+        break;
+      case Mode.Edit:
+        editor.cameraCenterOnNodeSelectedIndex();
+        editor.cursorSetToPlayer();
+        camera.target = cameraEdit;
+        break;
+      case Mode.Debug:
+        camera.target = cameraDebug;
+        break;
     }
   }
 
@@ -183,6 +190,10 @@ class IsometricOptions with IsometricComponent implements Updatable {
 
     game.value.update();
 
+    if (cameraPlayFollowPlayer){
+      cameraPlay.copy(player.position);
+    }
+
     if (messageStatusDuration > 0) {
       messageStatusDuration--;
       if (messageStatusDuration <= 0) {
@@ -218,22 +229,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
     operationStatus.value = status;
   }
 
-  void setCameraPlay(Position value){
-    cameraPlay = value;
-    print('options.setCameraPlay($value)');
-  }
-
-  void setCameraDebug(Position value){
-    cameraDebug = value;
-    print('options.setCameraPlay($value)');
-  }
-
   void toggleRenderCameraTargets() => renderCameraTargets = !renderCameraTargets;
-
-
-  void cameraPlayerTargetPlayer(){
-    setCameraPlay(player.position);
-  }
 
   bool get debugging => mode.value == Mode.Debug;
 

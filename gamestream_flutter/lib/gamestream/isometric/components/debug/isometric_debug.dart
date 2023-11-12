@@ -210,7 +210,7 @@ class IsometricDebug with IsometricComponent {
 
      if (characterSelected){
        this.options.cameraDebug = position;
-       this.amulet.cameraTarget = options.cameraDebug;
+       // this.amulet.cameraTarget = options.cameraDebug;
      } else {
        camera.target = null;
      }
@@ -245,14 +245,6 @@ class IsometricDebug with IsometricComponent {
       sendIsometricRequestMoveSelectedColliderToMouse();
       return;
     }
-  }
-
-  void onChangedEnabled(bool enabled){
-      if (enabled){
-        camera.target = null;
-      } else {
-        options.cameraPlayerTargetPlayer();
-      }
   }
 
   void selectParticle(Particle particle){

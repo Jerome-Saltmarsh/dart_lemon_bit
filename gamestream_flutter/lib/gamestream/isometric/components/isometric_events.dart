@@ -587,17 +587,15 @@ class IsometricEvents with IsometricComponent {
   void onChangedNetworkConnectionStatus(ConnectionStatus connection) {
     print('isometric.onChangedNetworkConnectionStatus($connection)');
     network.parser.bufferSize.value = 0;
-
-
     amulet.onChangedNetworkConnectionStatus(connection);
 
     switch (connection) {
       case ConnectionStatus.Connected:
+        options.setModePlay();
         engine.zoomOnScroll = true;
         engine.zoom = 1.0;
         engine.targetZoom = 1.0;
         audio.enabledSound.value = true;
-        options.cameraPlayerTargetPlayer();
         camera.target = options.cameraPlay;
         if (!engine.isLocalHost) {
           engine.fullScreenEnter();

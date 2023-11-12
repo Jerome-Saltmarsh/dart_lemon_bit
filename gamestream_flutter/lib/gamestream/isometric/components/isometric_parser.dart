@@ -728,10 +728,9 @@ class IsometricParser with ByteReader, IsometricComponent {
 
   void readCameraTarget() {
     final cameraTargetSet = readBool();
+    options.cameraPlayFollowPlayer = !cameraTargetSet;
     if (cameraTargetSet) {
       readIsometricPosition(options.cameraPlay);
-    } else {
-      options.cameraPlay = player.position;
     }
   }
 

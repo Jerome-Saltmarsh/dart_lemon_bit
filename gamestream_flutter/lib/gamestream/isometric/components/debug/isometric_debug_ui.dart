@@ -1,7 +1,6 @@
 
 import 'package:gamestream_flutter/gamestream/isometric/enums/mode.dart';
 import 'package:gamestream_flutter/gamestream/ui/builders/build_watch.dart';
-import 'package:gamestream_flutter/gamestream/ui/builders/build_watch_bool.dart';
 import 'package:gamestream_flutter/gamestream/ui/constants/height.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:golden_ratio/constants.dart';

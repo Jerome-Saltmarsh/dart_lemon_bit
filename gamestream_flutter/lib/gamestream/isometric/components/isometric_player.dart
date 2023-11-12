@@ -144,18 +144,6 @@ class IsometricPlayer with IsometricComponent {
     return false;
   }
 
-  // void savePositionPrevious() {
-  //   previousPosition.x = position.x;
-  //   previousPosition.y = position.y;
-  //   previousPosition.z = position.z;
-  // }
-
-  void onChangedDebugging(bool debugging) {
-    if (!debugging) {
-      options.cameraPlayerTargetPlayer();
-    }
-  }
-
   void toggleControlsCanTargetEnemies() =>
       network.sendIsometricRequest(
           NetworkRequestIsometric.Toggle_Controls_Can_Target_Enemies

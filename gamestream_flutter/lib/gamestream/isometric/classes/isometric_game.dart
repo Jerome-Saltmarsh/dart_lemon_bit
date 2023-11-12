@@ -37,8 +37,6 @@ class IsometricGame extends Game {
   @override
   void onActivated() {
     options.windowOpenMenu.setFalse();
-    options.cameraPlayerTargetPlayer();
-
     audio.musicStop();
 
     if (!engine.isLocalHost) {
