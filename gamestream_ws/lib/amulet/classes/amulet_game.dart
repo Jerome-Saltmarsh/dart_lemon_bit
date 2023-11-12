@@ -132,6 +132,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       ..runSpeed = fiendType.runSpeed
       ..experience = fiendType.experience
       ..chanceOfSetTarget = fiendType.chanceOfSetTarget
+      ..weaponType = fiendType.weaponType
+      ..weaponRange = fiendType.weaponRange
       ..characterType = fiendType.characterType;
 
   Character spawnCharacterAtIndex(int index) =>

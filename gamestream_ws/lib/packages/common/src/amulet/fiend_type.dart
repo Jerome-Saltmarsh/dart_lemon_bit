@@ -1,5 +1,6 @@
 
 import '../isometric/character_type.dart';
+import '../isometric/weapon_type.dart';
 
 enum FiendType {
   Fallen(
@@ -11,6 +12,8 @@ enum FiendType {
     experience: 1,
     runSpeed: 0.8,
     chanceOfSetTarget: 0.25,
+    weaponType: WeaponType.Sword,
+    weaponRange: 25,
   ),
   Skeleton(
     level: 2,
@@ -21,6 +24,8 @@ enum FiendType {
     experience: 2,
     runSpeed: 1.0,
     chanceOfSetTarget: 0.25,
+    weaponType: WeaponType.Bow,
+    weaponRange: 150,
   );
 
   final int level;
@@ -28,9 +33,11 @@ enum FiendType {
   final int damage;
   final int attackDuration;
   final int characterType;
+  final int weaponType;
   final int experience;
   final double runSpeed;
   final double chanceOfSetTarget;
+  final double weaponRange;
 
   const FiendType({
     required this.level,
@@ -41,5 +48,7 @@ enum FiendType {
     required this.experience,
     required this.runSpeed,
     required this.chanceOfSetTarget,
+    required this.weaponType,
+    required this.weaponRange,
   });
 }
