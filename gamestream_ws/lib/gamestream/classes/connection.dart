@@ -1140,9 +1140,9 @@ class Connection extends ByteReader {
 
   void handleNetworkRequestEditSetNode(List<String> arguments) {
 
-    final nodeType = arguments.tryGetArgInt('--type');
     final index = arguments.getArgInt('--index');
-    final orientation = arguments.getArgInt('--orientation');
+    final nodeType = arguments.tryGetArgInt('--type');
+    final orientation = arguments.tryGetArgInt('--orientation');
     final variation = arguments.tryGetArgInt('--variation');
 
     if (nodeType == NodeType.Tree_Bottom){
