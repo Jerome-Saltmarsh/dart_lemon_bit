@@ -1131,8 +1131,21 @@ class Connection extends ByteReader {
   }
 
   void handleEditorRequestSetNode(List<String> arguments) {
+
+    final nodeType = arguments.tryGetArgInt('--type');
+    final index = arguments.getArgInt('--index');
+
+    if (nodeType == NodeType.Tree_Bottom){
+      player.game.setNode(
+        nodeIndex: index + player.game.scene.area,
+        nodeType: NodeType.Tree_Top,
+        orientation: arguments.tryGetArgInt('--orientation'),
+        variation: arguments.tryGetArgInt('--variation'),
+      );
+    }
+
     player.game.setNode(
-      nodeIndex: arguments.getArgInt('--index'),
+      nodeIndex: index,
       nodeType: arguments.tryGetArgInt('--type'),
       orientation: arguments.tryGetArgInt('--orientation'),
       variation: arguments.tryGetArgInt('--variation'),

@@ -23,6 +23,7 @@ ctrl + []               : move caret to code block
 * [new]: item tabs weapons amulets etc
 
 ## 12.11.2023
+* [fix]: set tree top automatically
 * [fix]: ai stuttering on idle
 * [fix]: edit gameobject properties
 * [new]: refactor mode
