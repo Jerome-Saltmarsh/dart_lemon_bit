@@ -113,8 +113,8 @@ enum AmuletItem {
     description: 'A worn out bow',
     level1: AmuletItemLevel(
       damage: 1,
-      charges: 2,
-      cooldown: 10,
+      charges: 3,
+      cooldown: 8,
       range: 150,
       performDuration: 20,
       electricity: 0,
@@ -125,7 +125,7 @@ enum AmuletItem {
       cooldown: 9,
       range: 160,
       performDuration: 18,
-      electricity: 3,
+      electricity: 2,
     ),
     level3: AmuletItemLevel(
       damage: 5,

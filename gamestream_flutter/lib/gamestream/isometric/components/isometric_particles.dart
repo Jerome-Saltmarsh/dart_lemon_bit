@@ -618,21 +618,25 @@ class IsometricParticles with IsometricComponent implements Updatable {
         continue;
       }
 
-      final dstX = particle.renderX;
+      final x = particle.x;
+      final y = particle.y;
+      final z = particle.z;
+
+      final dstX = (x - y) * 0.5 ;
+      var onscreen = false;
+
       if (dstX < minX || dstX > maxX){
         particle.onscreen = false;
       } else {
-        final dstY = particle.renderY;
+        final dstY = ((x + y) * 0.5) - z;
         if (dstY < minY || dstY > maxY){
           particle.onscreen = false;
         } else {
           particle.onscreen = true;
+          onscreen = true;
         }
       }
 
-      final x = particle.x;
-      final y = particle.y;
-      final z = particle.z;
       particle.sortOrderCached = x + y + z + z;
 
       if (
@@ -653,7 +657,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
       final index = (indexZ * sceneArea) + (indexX * sceneColumns) + indexY;
 
-      if (nodeVisibility[index] == NodeVisibility.invisible && particle.onscreen){
+      if (onscreen && nodeVisibility[index] == NodeVisibility.invisible){
         particle.onscreen = false;
       }
 
