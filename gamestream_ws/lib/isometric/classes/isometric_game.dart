@@ -1434,31 +1434,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         angle: angle,
       );
 
-  void characterFireShotgun(Character src, double angle) {
-    src.applyForce(
-      force: 6.0,
-      angle: angle + pi,
-    );
-    src.clampVelocity(Physics.Max_Velocity);
-    for (var i = 0; i < 5; i++) {
-      spawnProjectile(
-        src: src,
-        angle: angle + giveOrTake(0.25),
-        range: src.weaponRange,
-        projectileType: ProjectileType.Bullet,
-        damage: src.weaponDamage,
-      );
-    }
-
-    dispatchAttackPerformed(
-      src.weaponType,
-      src.x + adj(angle, 60),
-      src.y + opp(angle, 60),
-      src.z + Character_Gun_Height,
-      angle,
-    );
-  }
-
   Projectile spawnProjectile({
     required Character src,
     required double range,

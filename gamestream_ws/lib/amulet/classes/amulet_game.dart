@@ -118,10 +118,24 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   Character spawnFiendTypeAtIndex({
     required FiendType fiendType,
     required int index,
-  }) => spawnCharacterAtIndex(index)
+  }) =>
+    assignFiendTypeToCharacter(
+      fiendType,
+      spawnCharacterAtIndex(index),
+    );
+
+  static Character assignFiendTypeToCharacter(
+      FiendType fiendType,
+      Character character,
+  ) =>
+    character
       ..maxHealth = fiendType.health
       ..health = fiendType.health
       ..name = fiendType.name
+      ..weaponDamage = fiendType.damage
+      ..attackDuration = fiendType.attackDuration
+      ..runSpeed = fiendType.runSpeed
+      ..experience = fiendType.experience
       ..characterType = fiendType.characterType;
 
   Character spawnCharacterAtIndex(int index) =>
@@ -393,21 +407,16 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
 
     if (src is AmuletPlayer) {
-      playerGainExperience(src, getCharacterExperienceValue(target));
+      playerGainExperience(src, target.experience);
     }
   }
 
   void playerGainExperience(AmuletPlayer player, int experience){
-    player.experience += getCharacterExperienceValue(player);
-
+    player.experience += experience;
     while (player.experience > player.experienceRequired) {
       player.gainLevel();
       player.experience -= player.experienceRequired;
     }
-  }
-
-  int getCharacterExperienceValue(Character character){
-    return 1;
   }
 
   void spawnRandomLootAtPosition(

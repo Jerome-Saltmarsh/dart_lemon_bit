@@ -152,114 +152,146 @@ class IsometricEditor with IsometricComponent {
 
   double get posZ => z * Node_Height;
 
-
   void onKeyPressed(int key) {
+
     switch (key) {
-      case KeyCode.Delete:
-        delete();
-        break;
-      case KeyCode.V:
-        sendGameObjectRequestDuplicate();
-        break;
-      case KeyCode.F:
-        paint();
-        break;
-      case KeyCode.G:
-        // if (!engine.keyPressedShiftLeft){
-        //   cameraCenterOnNodeSelectedIndex();
-        //   return;
-        // }
-        switch (editorTab.value){
-          case EditorTab.Keys:
-            moveSelectedKeyEntryToNodeSelected();
-            return;
-          case EditorTab.Objects:
-            moveSelectedGameObjectToMouse();
-            return;
-          default:
-            cameraCenterOnNodeSelectedIndex();
-            return;
-        }
-      case KeyCode.R:
-        selectPaintType();
-        break;
       case KeyCode.Arrow_Up:
         if (engine.keyPressedShiftLeft) {
-          if (gameObjectSelected.value) {
-            translate(x: 0, y: 0, z: 1);
+          if (gameObjectSelected.value && editorTab.value == EditorTab.Objects) {
+            translateSelectedGameObject(x: 0, y: 0, z: 1);
             return;
           }
           cursorZIncrease();
           return;
         }
         if (gameObjectSelected.value) {
-          translate(x: -1, y: -1, z: 0);
+          translateSelectedGameObject(x: -1, y: -1, z: 0);
           return;
         }
         cursorRowDecrease();
         return;
       case KeyCode.Arrow_Right:
-        if (gameObjectSelected.value) {
-          return translate(x: 1, y: -1, z: 0);
+        if (gameObjectSelected.value && editorTab.value == EditorTab.Objects) {
+          return translateSelectedGameObject(x: 1, y: -1, z: 0);
         }
         cursorColumnDecrease();
         break;
       case KeyCode.Arrow_Down:
         if (engine.keyPressedShiftLeft) {
-          if (gameObjectSelected.value) {
-            return translate(x: 0, y: 0, z: -1);
+          if (gameObjectSelected.value && editorTab.value == EditorTab.Objects) {
+            return translateSelectedGameObject(x: 0, y: 0, z: -1);
           }
           cursorZDecrease();
         } else {
-          if (gameObjectSelected.value) {
-            return translate(x: 1, y: 1, z: 0);
+          if (gameObjectSelected.value && editorTab.value == EditorTab.Objects) {
+            return translateSelectedGameObject(x: 1, y: 1, z: 0);
           }
           cursorRowIncrease();
         }
         break;
       case KeyCode.Arrow_Left:
-        if (gameObjectSelected.value) {
-          return translate(x: -1, y: 1, z: 0);
+        if (gameObjectSelected.value && editorTab.value == EditorTab.Objects) {
+          return translateSelectedGameObject(x: -1, y: 1, z: 0);
         }
         cursorColumnIncrease();
         break;
-      case KeyCode.Digit_1:
-        addMark(
-          index: editor.nodeSelectedIndex.value,
-          markType: MarkType.values[0],
-        );
-        break;
-      case KeyCode.Digit_2:
-        addMark(
-          index: editor.nodeSelectedIndex.value,
-          markType: MarkType.values[1],
-        );
-        break;
-      case KeyCode.Digit_3:
-        addMark(
-          index: editor.nodeSelectedIndex.value,
-          markType: MarkType.values[2],
-        );
-        break;
-      case KeyCode.Digit_4:
-        addMark(
-          index: editor.nodeSelectedIndex.value,
-          markType: MarkType.values[3],
-        );
-        break;
-      case KeyCode.Digit_5:
-        addMark(
-          index: editor.nodeSelectedIndex.value,
-          markType: MarkType.values[4],
-        );
-        break;
-      case KeyCode.Digit_6:
-        addMark(
-          index: editor.nodeSelectedIndex.value,
-          markType: MarkType.values[5],
-        );
-        break;
     }
+
+    switch (editorTab.value){
+      case EditorTab.Keys:
+        onKeyPressedEditorTabKeys(key);
+        return;
+      case EditorTab.Objects:
+        onKeyPressedEditorTabObjects(key);
+        return;
+      case EditorTab.Nodes:
+        onKeyPressedEditorTabNodes(key);
+        return;
+      case EditorTab.Marks:
+        onKeyPressedEditorMarks(key);
+        return;
+      default:
+        return;
+    }
+
+    // switch (key) {
+    //   case KeyCode.Arrow_Up:
+    //     if (engine.keyPressedShiftLeft) {
+    //       if (gameObjectSelected.value) {
+    //         translateSelectedGameObject(x: 0, y: 0, z: 1);
+    //         return;
+    //       }
+    //       cursorZIncrease();
+    //       return;
+    //     }
+    //     if (gameObjectSelected.value) {
+    //       translateSelectedGameObject(x: -1, y: -1, z: 0);
+    //       return;
+    //     }
+    //     cursorRowDecrease();
+    //     return;
+    //   case KeyCode.Arrow_Right:
+    //     if (gameObjectSelected.value) {
+    //       return translateSelectedGameObject(x: 1, y: -1, z: 0);
+    //     }
+    //     cursorColumnDecrease();
+    //     break;
+    //   case KeyCode.Arrow_Down:
+    //     if (engine.keyPressedShiftLeft) {
+    //       if (gameObjectSelected.value) {
+    //         return translateSelectedGameObject(x: 0, y: 0, z: -1);
+    //       }
+    //       cursorZDecrease();
+    //     } else {
+    //       if (gameObjectSelected.value) {
+    //         return translateSelectedGameObject(x: 1, y: 1, z: 0);
+    //       }
+    //       cursorRowIncrease();
+    //     }
+    //     break;
+    //   case KeyCode.Arrow_Left:
+    //     if (gameObjectSelected.value) {
+    //       return translateSelectedGameObject(x: -1, y: 1, z: 0);
+    //     }
+    //     cursorColumnIncrease();
+    //     break;
+    //   // case KeyCode.Digit_1:
+    //   //   addMark(
+    //   //     index: editor.nodeSelectedIndex.value,
+    //   //     markType: MarkType.values[0],
+    //   //   );
+    //   //   break;
+    //   // case KeyCode.Digit_2:
+    //   //   addMark(
+    //   //     index: editor.nodeSelectedIndex.value,
+    //   //     markType: MarkType.values[1],
+    //   //   );
+    //   //   break;
+    //   // case KeyCode.Digit_3:
+    //   //   addMark(
+    //   //     index: editor.nodeSelectedIndex.value,
+    //   //     markType: MarkType.values[2],
+    //   //   );
+    //   //   break;
+    //   // case KeyCode.Digit_4:
+    //   //   addMark(
+    //   //     index: editor.nodeSelectedIndex.value,
+    //   //     markType: MarkType.values[3],
+    //   //   );
+    //   //   break;
+    //   // case KeyCode.Digit_5:
+    //   //   addMark(
+    //   //     index: editor.nodeSelectedIndex.value,
+    //   //     markType: MarkType.values[4],
+    //   //   );
+    //   //   break;
+    //   // case KeyCode.Digit_6:
+    //   //   addMark(
+    //   //     index: editor.nodeSelectedIndex.value,
+    //   //     markType: MarkType.values[5],
+    //   //   );
+    //   //   break;
+    // }
   }
 
   void moveSelectedGameObjectToMouse() {
@@ -285,7 +317,7 @@ class IsometricEditor with IsometricComponent {
     sendGameObjectRequestDeselect();
   }
 
-  void translate({ double x = 0, double y = 0, double z = 0}) {
+  void translateSelectedGameObject({ double x = 0, double y = 0, double z = 0}) {
     assert (gameObjectSelected.value);
     return sendClientRequestGameObjectTranslate(
       tx: x,
@@ -790,4 +822,114 @@ class IsometricEditor with IsometricComponent {
           NetworkRequest.Edit,
           EditorRequest.Mark_Deselect_Index.index,
       );
+
+  void onKeyPressedEditorTabKeys(int key) {
+    switch (key){
+      case KeyCode.G:
+        moveSelectedKeyEntryToNodeSelected();
+        break;
+      default:
+        break;
+    }
+  }
+
+  void onKeyPressedEditorTabObjects(int key) {
+    switch (key){
+      case KeyCode.Arrow_Up:
+        if (engine.keyPressedShiftLeft) {
+          if (gameObjectSelected.value) {
+            translateSelectedGameObject(x: 0, y: 0, z: 1);
+            return;
+          }
+        }
+        if (gameObjectSelected.value) {
+          translateSelectedGameObject(x: -1, y: -1, z: 0);
+        }
+        break;;
+
+      case KeyCode.D:
+        sendGameObjectRequestDuplicate();
+      case KeyCode.G:
+        moveSelectedGameObjectToMouse();
+        break;
+      default:
+        break;
+    }
+  }
+
+  void onKeyPressedEditorTabNodes(int key) {
+    switch(key){
+      case KeyCode.Delete:
+        delete();
+        break;
+      case KeyCode.F:
+        paint();
+        break;
+      case KeyCode.R:
+        selectPaintType();
+        break;
+      case KeyCode.G:
+        cameraCenterOnNodeSelectedIndex();
+        break;
+      case KeyCode.Digit_1:
+        setNode(index: selectedIndex, variation: 0);
+        break;
+      case KeyCode.Digit_2:
+        setNode(index: selectedIndex, variation: 1);
+        break;
+      case KeyCode.Digit_3:
+        setNode(index: selectedIndex, variation: 2);
+        break;
+      case KeyCode.Digit_4:
+        setNode(index: selectedIndex, variation: 3);
+        break;
+      case KeyCode.Digit_5:
+        setNode(index: selectedIndex, variation: 4);
+        break;
+      default:
+        break;
+    }
+
+  }
+
+  void onKeyPressedEditorMarks(int key) {
+    switch (key){
+      case KeyCode.Digit_1:
+        addMark(
+          index: editor.nodeSelectedIndex.value,
+          markType: MarkType.values[0],
+        );
+        break;
+      case KeyCode.Digit_2:
+        addMark(
+          index: editor.nodeSelectedIndex.value,
+          markType: MarkType.values[1],
+        );
+        break;
+      case KeyCode.Digit_3:
+        addMark(
+          index: editor.nodeSelectedIndex.value,
+          markType: MarkType.values[2],
+        );
+        break;
+      case KeyCode.Digit_4:
+        addMark(
+          index: editor.nodeSelectedIndex.value,
+          markType: MarkType.values[3],
+        );
+        break;
+      case KeyCode.Digit_5:
+        addMark(
+          index: editor.nodeSelectedIndex.value,
+          markType: MarkType.values[4],
+        );
+        break;
+      case KeyCode.Digit_6:
+        addMark(
+          index: editor.nodeSelectedIndex.value,
+          markType: MarkType.values[5],
+        );
+        break;
+    }
+  }
 }

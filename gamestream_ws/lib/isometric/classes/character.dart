@@ -19,6 +19,7 @@ class Character extends Collider {
   var _health = 1;
   var _maxHealth = 1;
 
+  var experience = 0;
   var chanceOfDropConsumable = 0.25;
   var chanceOfDropLoot = 0.05;
   var spawnLootOnDeath = true;
@@ -42,9 +43,9 @@ class Character extends Collider {
 
   var invincible = false;
   var actionDuration = -1;
+  var attackDuration = 0;
   var actionFrame = -1;
   var weaponHitForce = 10.0;
-  var weaponRecoil = 0.25;
   var weaponType = WeaponType.Unarmed;
   var weaponDamage = 1;
   var weaponRange = 20.0;
@@ -608,9 +609,5 @@ class Character extends Collider {
         duration: attackDuration, // TODO
       );
     }
-  }
-
-  int get attackDuration {
-    return 20;
   }
 }
