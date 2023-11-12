@@ -1,5 +1,5 @@
 
-enum EditorRequest {
+enum NetworkRequestEdit {
    GameObject,
    Set_Node,
    Load_Scene,

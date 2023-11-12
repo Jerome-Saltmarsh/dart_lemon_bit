@@ -1223,7 +1223,7 @@ extension IsometricEditorUI on IsometricEditor {
               action: () =>
                   network.sendNetworkRequest(
                     NetworkRequest.Edit,
-                    EditorRequest.Mark_Set_Sub_Type.index,
+                    NetworkRequestEdit.Mark_Set_Sub_Type.index,
                     fiendType.index,
                   ),
               child: GSContainer(
@@ -1702,7 +1702,7 @@ extension IsometricEditorUI on IsometricEditor {
         ui.showDialogGetString(onSelected: (name) {
           network.sendNetworkRequest(
               NetworkRequest.Edit,
-              EditorRequest.Add_Key.index,
+              NetworkRequestEdit.Add_Key.index,
               name,
               editor.nodeSelectedIndex.value
           );

@@ -127,44 +127,44 @@ class Connection extends ByteReader {
     switch (clientRequest) {
 
       case NetworkRequest.Edit:
-        final isometricEditorRequestIndex = parseArg1(arguments);
+        final networkRequestEditIndex = parseArg1(arguments);
 
-        if (isometricEditorRequestIndex == null) return;
+        if (networkRequestEditIndex == null) return;
 
-        if (!isValidIndex(isometricEditorRequestIndex, EditorRequest.values)) {
+        if (!isValidIndex(networkRequestEditIndex, NetworkRequestEdit.values)) {
           return errorInvalidClientRequest();
         }
 
-        final isometricEditorRequest = EditorRequest.values[
-          isometricEditorRequestIndex
+        final networkRequestEdit = NetworkRequestEdit.values[
+          networkRequestEditIndex
         ];
 
 
         final editor = player.editor;
 
-        switch (isometricEditorRequest){
-          case EditorRequest.Add_Key:
-            handleEditorRequestAddKey(arguments);
+        switch (networkRequestEdit){
+          case NetworkRequestEdit.Add_Key:
+            handleNetworkRequestEditAddKey(arguments);
             break;
-          case EditorRequest.Delete_Key:
-            handleEditorRequestDeleteKey(arguments);
+          case NetworkRequestEdit.Delete_Key:
+            handleNetworkRequestEditDeleteKey(arguments);
             break;
-          case EditorRequest.Move_Key:
-            handleEditorRequestMoveKey(arguments);
+          case NetworkRequestEdit.Move_Key:
+            handleNetworkRequestEditMoveKey(arguments);
             break;
-          case EditorRequest.Rename_Key:
-            handleEditorRequestRenameKey(arguments);
+          case NetworkRequestEdit.Rename_Key:
+            handleNetworkRequestEditRenameKey(arguments);
             break;
-          case EditorRequest.Set_Node:
-            handleEditorRequestSetNode(arguments);
+          case NetworkRequestEdit.Set_Node:
+            handleNetworkRequestEditSetNode(arguments);
             break;
-          case EditorRequest.New_Scene:
-            handleEditorRequestNewScene(arguments);
+          case NetworkRequestEdit.New_Scene:
+            handleNetworkRequestEditNewScene(arguments);
             break;
-          case EditorRequest.GameObject:
-            handleIsometricEditorRequestGameObject(arguments);
+          case NetworkRequestEdit.GameObject:
+            handleIsometricNetworkRequestEditGameObject(arguments);
             break;
-          case EditorRequest.Load_Scene:
+          case NetworkRequestEdit.Load_Scene:
             try {
               final args = arguments.map(int.parse).toList(growable: false);
               final scene = SceneReader.readScene(
@@ -175,19 +175,19 @@ class Connection extends ByteReader {
               sendGameError(GameError.Load_Scene_Failed);
             }
             return;
-          case EditorRequest.Toggle_Game_Running:
+          case NetworkRequestEdit.Toggle_Game_Running:
             if (!isLocalMachine && game is! IsometricEditor) return;
             game.running = !game.running;
             break;
 
-          case EditorRequest.Scene_Reset:
+          case NetworkRequestEdit.Scene_Reset:
             if (!isLocalMachine && game is! IsometricEditor) return;
             game.reset();
             break;
-          case EditorRequest.Mark_Deselect_Index:
+          case NetworkRequestEdit.Mark_Deselect_Index:
             editor.selectedMarkListIndex = -1;
             break;
-          case EditorRequest.Mark_Select:
+          case NetworkRequestEdit.Mark_Select:
             if (!isLocalMachine && game is! IsometricEditor)
               return;
 
@@ -198,7 +198,7 @@ class Connection extends ByteReader {
             editor.selectedMarkListIndex = index;
             break;
 
-          case EditorRequest.Mark_Add:
+          case NetworkRequestEdit.Mark_Add:
             final markIndex = parseArg2(arguments);
             if (markIndex == null)
               return;
@@ -206,11 +206,11 @@ class Connection extends ByteReader {
             editor.addMark(markIndex);
             break;
 
-          case EditorRequest.Mark_Delete:
+          case NetworkRequestEdit.Mark_Delete:
             editor.deleteMark();
             break;
 
-          case EditorRequest.Mark_Set_Type:
+          case NetworkRequestEdit.Mark_Set_Type:
             final markType = parseArg2(arguments);
             if (markType == null)
               return;
@@ -218,7 +218,7 @@ class Connection extends ByteReader {
             player.editor.setSelectedMarkType(markType);
             break;
 
-          case EditorRequest.Mark_Set_Sub_Type:
+          case NetworkRequestEdit.Mark_Set_Sub_Type:
             final markSubType = parseArg2(arguments);
             if (markSubType == null)
               return;
@@ -226,7 +226,7 @@ class Connection extends ByteReader {
             player.editor.setSelectedMarkSubType(markSubType);
             break;
 
-          case EditorRequest.Generate_Scene:
+          case NetworkRequestEdit.Generate_Scene:
             const min = 5;
             final rows = parseArg2(arguments);
             if (rows == null) return;
@@ -255,7 +255,7 @@ class Connection extends ByteReader {
             player.z = Node_Height * altitude + 24;
             break;
 
-          case EditorRequest.Download:
+          case NetworkRequestEdit.Download:
             final sceneWriter = SceneWriter();
             final compiled = sceneWriter.compileScene(player.scene, gameObjects: true);
             player.writeByte(NetworkResponse.Scene);
@@ -270,7 +270,7 @@ class Connection extends ByteReader {
             player.writeBytes(compiled);
             break;
 
-          case EditorRequest.Scene_Set_Floor_Type:
+          case NetworkRequestEdit.Scene_Set_Floor_Type:
             final nodeType = parseArg2(arguments);
             if (nodeType == null) return;
             for (var i = 0; i < game.scene.area; i++){
@@ -278,14 +278,14 @@ class Connection extends ByteReader {
             }
             game.playersDownloadScene();
             break;
-          case EditorRequest.Clear_Spawned:
+          case NetworkRequestEdit.Clear_Spawned:
             game.clearSpawnedAI();
             break;
-          case EditorRequest.Spawn_AI:
+          case NetworkRequestEdit.Spawn_AI:
             game.clearSpawnedAI();
             break;
 
-          case EditorRequest.Save:
+          case NetworkRequestEdit.Save:
             if (game.scene.name.isEmpty){
               player.writeGameError(GameError.Save_Scene_Failed);
               return;
@@ -294,7 +294,7 @@ class Connection extends ByteReader {
             root.amulet.scenes.saveSceneToFile(game.scene);
             break;
 
-          case EditorRequest.Modify_Canvas_Size:
+          case NetworkRequestEdit.Modify_Canvas_Size:
             if (arguments.length < 3) {
               return errorInvalidClientRequest();
             }
@@ -364,7 +364,7 @@ class Connection extends ByteReader {
      return false;
   }
 
-  // void handleIsometricEditorRequestSetNode(List<String> arguments) {
+  // void handleIsometricNetworkRequestEditSetNode(List<String> arguments) {
   //   final player = _player;
   //   if (player == null) return;
   //   final game = player.game;
@@ -405,7 +405,7 @@ class Connection extends ByteReader {
   //   }
   // }
 
-  void handleIsometricEditorRequestGameObject(List<String> arguments) {
+  void handleIsometricNetworkRequestEditGameObject(List<String> arguments) {
     if (!isLocalMachine && player.game is! IsometricEditor) return;
 
     final gameObjectRequestIndex = parseArg2(arguments);
@@ -992,7 +992,7 @@ class Connection extends ByteReader {
     sink.close(closeCode, reason);
   }
 
-  void handleEditorRequestNewScene(List<String> arguments) {
+  void handleNetworkRequestEditNewScene(List<String> arguments) {
     leaveCurrentGame();
     joinGameEditorScene(generateEmptyScene());
   }
@@ -1044,7 +1044,7 @@ class Connection extends ByteReader {
   //   itemSlot.cooldownDuration = itemStats.cooldown;
   // }
 
-  void handleEditorRequestAddKey(List<String> arguments) {
+  void handleNetworkRequestEditAddKey(List<String> arguments) {
     if (arguments.length < 3){
       throw Exception('arguments.length < 3');
     }
@@ -1061,7 +1061,7 @@ class Connection extends ByteReader {
     game.notifyPlayersSceneKeysChanged();
   }
 
-  void handleEditorRequestDeleteKey(List<String> arguments) {
+  void handleNetworkRequestEditDeleteKey(List<String> arguments) {
 
     if (arguments.length < 3){
       errorInvalidClientRequest();
@@ -1075,7 +1075,7 @@ class Connection extends ByteReader {
     game.notifyPlayersSceneKeysChanged();
   }
 
-  void handleEditorRequestMoveKey(List<String> arguments) {
+  void handleNetworkRequestEditMoveKey(List<String> arguments) {
 
     final name = arguments.tryGetArgString('--name');
     final index = arguments.tryGetArgInt('--index');
@@ -1103,7 +1103,7 @@ class Connection extends ByteReader {
     game.notifyPlayersSceneKeysChanged();
   }
 
-  void handleEditorRequestRenameKey(List<String> arguments) {
+  void handleNetworkRequestEditRenameKey(List<String> arguments) {
 
     final from = arguments.tryGetArgString('--from');
     final to = arguments.tryGetArgString('--to');
@@ -1138,12 +1138,12 @@ class Connection extends ByteReader {
     game.notifyPlayersSceneKeysChanged();
   }
 
-  void handleEditorRequestSetNode(List<String> arguments) {
+  void handleNetworkRequestEditSetNode(List<String> arguments) {
 
     final nodeType = arguments.tryGetArgInt('--type');
     final index = arguments.getArgInt('--index');
     final orientation = arguments.getArgInt('--orientation');
-    final variation = arguments.getArgInt('--variation');
+    final variation = arguments.tryGetArgInt('--variation');
 
     if (nodeType == NodeType.Tree_Bottom){
       player.game.setNode(

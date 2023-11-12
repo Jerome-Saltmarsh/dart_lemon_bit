@@ -1,5 +1,6 @@
 library;
 
+export 'network_request_edit.dart';
 export 'network_request_debug.dart';
 export 'network_request_environment.dart';
 export 'network_request_inventory.dart';

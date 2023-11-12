@@ -342,7 +342,7 @@ class IsometricEditor with IsometricComponent {
 
   void paintMouse() {
     selectMouseBlock();
-    paint(selectPlayerIfPlay: false);
+    paint();
   }
 
   void selectMouseBlock() {
@@ -351,30 +351,6 @@ class IsometricEditor with IsometricComponent {
 
   void selectMouseGameObject() {
     sendGameObjectRequestSelect();
-  }
-
-  void paintTorch() {
-    paint(nodeType: NodeType.Torch);
-  }
-
-  void paintTree() {
-    paint(nodeType: NodeType.Tree_Bottom);
-  }
-
-  void paintLongGrass() {
-    paint(nodeType: NodeType.Grass_Long);
-  }
-
-  void paintBricks() {
-    paint(nodeType: NodeType.Brick);
-  }
-
-  void paintGrass() {
-    paint(nodeType: NodeType.Grass);
-  }
-
-  void paintWater() {
-    paint(nodeType: NodeType.Water);
   }
 
   void selectBlock(int z, int row, int column) {
@@ -428,7 +404,7 @@ class IsometricEditor with IsometricComponent {
     paintOrientation.value = nodeSelectedOrientation.value;
   }
 
-  void paint({int? nodeType, bool selectPlayerIfPlay = true}) {
+  void paint({int? nodeType}) {
     if (nodeType == NodeType.Empty) {
       return delete();
     }
@@ -593,7 +569,7 @@ class IsometricEditor with IsometricComponent {
   void sendGameObjectRequest(IsometricEditorGameObjectRequest gameObjectRequest,
       [dynamic message]) =>
       sendEditorRequest(
-        EditorRequest.GameObject,
+        NetworkRequestEdit.GameObject,
         '${gameObjectRequest.index} $message',
       );
 
@@ -606,7 +582,7 @@ class IsometricEditor with IsometricComponent {
     // }
     // gamestream.network.sink.add(package);
     sendEditorRequest(
-      EditorRequest.Load_Scene,
+      NetworkRequestEdit.Load_Scene,
       bytes.join(' '),
     );
   }
@@ -617,25 +593,26 @@ class IsometricEditor with IsometricComponent {
     int? orientation,
     int? variation,
   }) =>
-      sendEditorRequest(
-        EditorRequest.Set_Node,
-        '--index $index '
+      network.sendNetworkRequest(
+        NetworkRequest.Edit,
+        NetworkRequestEdit.Set_Node.index,
+        '--index $index',
         '${type != null ? '--type $type' : ''} '
         '${orientation != null ? '--orientation $orientation' : ''} '
-        '${variation != null ? '--variation $variation' : ''} '
+        '${variation != null ? '--variation $variation' : ''}'
       );
 
   void downloadScene() =>
-      sendEditorRequest(EditorRequest.Download);
+      sendEditorRequest(NetworkRequestEdit.Download);
 
   void newScene() =>
-      sendEditorRequest(EditorRequest.New_Scene);
+      sendEditorRequest(NetworkRequestEdit.New_Scene);
 
   void toggleGameRunning() =>
-      sendEditorRequest(EditorRequest.Toggle_Game_Running);
+      sendEditorRequest(NetworkRequestEdit.Toggle_Game_Running);
 
   void sendClientRequestModifyCanvasSize(NetworkRequestModifyCanvasSize request) =>
-      sendEditorRequest(EditorRequest.Modify_Canvas_Size, request.index);
+      sendEditorRequest(NetworkRequestEdit.Modify_Canvas_Size, request.index);
 
   void sendClientRequestEditGenerateScene({
     required int rows,
@@ -645,7 +622,7 @@ class IsometricEditor with IsometricComponent {
     required int frequency,
   }) =>
       sendEditorRequest(
-          EditorRequest.Generate_Scene,
+          NetworkRequestEdit.Generate_Scene,
           '$rows $columns $height $octaves $frequency'
       );
 
@@ -653,21 +630,21 @@ class IsometricEditor with IsometricComponent {
       sendClientRequestEditSceneSetFloorType(NodeType.Concrete);
 
   void sendClientRequestEditSceneSetFloorType(int nodeType) =>
-      sendEditorRequest(EditorRequest.Scene_Set_Floor_Type, nodeType);
+      sendEditorRequest(NetworkRequestEdit.Scene_Set_Floor_Type, nodeType);
 
   void editSceneReset() =>
-      sendEditorRequest(EditorRequest.Scene_Reset);
+      sendEditorRequest(NetworkRequestEdit.Scene_Reset);
 
   void editSceneClearSpawnedAI() {
-    sendEditorRequest(EditorRequest.Clear_Spawned);
+    sendEditorRequest(NetworkRequestEdit.Clear_Spawned);
   }
 
   void editSceneSpawnAI() =>
-      sendEditorRequest(EditorRequest.Spawn_AI);
+      sendEditorRequest(NetworkRequestEdit.Spawn_AI);
 
-  void saveScene() => sendEditorRequest(EditorRequest.Save);
+  void saveScene() => sendEditorRequest(NetworkRequestEdit.Save);
 
-  void sendEditorRequest(EditorRequest request, [dynamic message]) =>
+  void sendEditorRequest(NetworkRequestEdit request, [dynamic message]) =>
       network.sendNetworkRequest(
         NetworkRequest.Edit,
         '${request.index} $message',
@@ -708,27 +685,27 @@ class IsometricEditor with IsometricComponent {
   void markAdd(int value) =>
       network.sendArgs2(
         NetworkRequest.Edit,
-        EditorRequest.Mark_Add.index,
+        NetworkRequestEdit.Mark_Add.index,
         value,
       );
 
   void markDelete() =>
       network.sendNetworkRequest(
         NetworkRequest.Edit,
-        EditorRequest.Mark_Delete.index,
+        NetworkRequestEdit.Mark_Delete.index,
       );
 
   void selectMarkByIndex(int index) =>
       network.sendArgs2(
         NetworkRequest.Edit,
-        EditorRequest.Mark_Select.index,
+        NetworkRequestEdit.Mark_Select.index,
         index,
       );
 
   void onPressedMarkType(int markType) =>
       network.sendArgs2(
         NetworkRequest.Edit,
-        EditorRequest.Mark_Set_Type.index,
+        NetworkRequestEdit.Mark_Set_Type.index,
         markType,
       );
 
@@ -774,7 +751,7 @@ class IsometricEditor with IsometricComponent {
   void deleteKeyByName(String name){
       network.sendNetworkRequest(
           NetworkRequest.Edit,
-          EditorRequest.Delete_Key.index,
+          NetworkRequestEdit.Delete_Key.index,
           name,
       );
   }
@@ -793,7 +770,7 @@ class IsometricEditor with IsometricComponent {
   void moveKeyToIndex({required String name, required int index}) {
     network.sendNetworkRequest(
       NetworkRequest.Edit,
-      EditorRequest.Move_Key.index,
+      NetworkRequestEdit.Move_Key.index,
       '--name $name --index $index',
     );
   }
@@ -801,7 +778,7 @@ class IsometricEditor with IsometricComponent {
   void renameKey({required String from, required String to}){
     network.sendNetworkRequest(
       NetworkRequest.Edit,
-      EditorRequest.Rename_Key.index,
+      NetworkRequestEdit.Rename_Key.index,
       '--from $from --to $to',
     );
   }
@@ -822,7 +799,7 @@ class IsometricEditor with IsometricComponent {
   void deselectMarkIndex() =>
       network.sendRequest(
           NetworkRequest.Edit,
-          EditorRequest.Mark_Deselect_Index.index,
+          NetworkRequestEdit.Mark_Deselect_Index.index,
       );
 
   void onKeyPressedEditorTabKeys(int key) {
