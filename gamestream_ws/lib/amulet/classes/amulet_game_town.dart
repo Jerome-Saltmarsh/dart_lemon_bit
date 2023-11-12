@@ -26,7 +26,6 @@ class AmuletGameTown extends AmuletGame {
 
     spawnFiendsAtSpawnNodes();
     characters.add(AmuletNpc(
-        characterType: CharacterType.Kid,
         x: 2010,
         y: 1760,
         z: 24,
@@ -36,6 +35,7 @@ class AmuletGameTown extends AmuletGame {
         weaponDamage: 1,
         weaponRange: 200,
         weaponCooldown: 30,
+        attackDuration: 30,
         name: "Sybil",
         interact: (player, self) {
           player.talk(self, "Hello there", options: [
@@ -51,7 +51,6 @@ class AmuletGameTown extends AmuletGame {
     );
 
     npcGuard = AmuletNpc(
-      characterType: CharacterType.Kid,
       x: 2416,
       y: 1851,
       z: 24,
@@ -60,6 +59,7 @@ class AmuletGameTown extends AmuletGame {
       weaponRange: 200,
       weaponDamage: 1,
       weaponCooldown: 30,
+      attackDuration: 25,
       team: AmuletTeam.Human,
       name: "Guard",
     )

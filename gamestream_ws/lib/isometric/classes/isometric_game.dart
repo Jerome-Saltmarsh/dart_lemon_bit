@@ -635,10 +635,19 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void updateCharacterTarget(Character character){
 
-    if (character.autoTarget && character.autoTargetTimer-- <= 0){
-      character.autoTargetTimer = character.autoTargetTimerDuration;
-      character.target = findNearestEnemy(character, radius: character.autoTargetRange);
+    if (!character.autoTarget){
+      return;
     }
+
+    if (character.autoTargetTimer-- > 0){
+      return;
+    }
+
+    character.autoTargetTimer = character.autoTargetTimerDuration;
+    character.target = findNearestEnemy(
+      character,
+      radius: character.autoTargetRange,
+    );
   }
 
   void updateColliderPhysics(Collider collider) {
@@ -1246,8 +1255,10 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void updateCharacter(Character character) {
 
-    if (!character.active)
+    if (!character.active){
       return;
+    }
+
     if (character.dead) {
       if (character.animationFrame < Character.maxAnimationDeathFrames){
         character.frame++;
@@ -2181,6 +2192,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.pathStart = character.pathCurrent;
   }
 
+  // idle
+  // wander
+  // attack
   void updateCharacterAction(Character character) {
 
     if (character.busy) {

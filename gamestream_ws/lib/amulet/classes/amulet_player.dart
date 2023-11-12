@@ -1624,7 +1624,10 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
 
   bool get noWeaponEquipped => equippedWeaponIndex == -1;
 
-  void useWeaponType({required int weaponType, required int duration}) {
+  void useWeaponType({
+    required int weaponType,
+    required int duration,
+  }) {
     switch (weaponType) {
       case WeaponType.Sword:
         setCharacterStateStriking(

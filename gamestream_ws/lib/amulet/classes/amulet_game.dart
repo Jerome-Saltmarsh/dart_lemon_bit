@@ -162,39 +162,15 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       weaponCooldown: 20,
       weaponRange: 20,
       actionFrame: 15,
+      attackDuration: 25,
       doesWander: true,
       name: 'Fallen',
       runSpeed: 0.75,
     )
       ..weaponHitForce = 2;
-      // ..attackDuration = 20
-      // ..attackActionFrame = 12;
 
     characters.add(character);
     return character;
-  }
-
-  void spawnSkeletonArcherAtIndex(int index) {
-    characters.add(Character(
-      team: AmuletTeam.Monsters,
-      x: scene.getIndexX(index),
-      y: scene.getIndexY(index),
-      z: scene.getIndexZ(index),
-      health: 7,
-      weaponDamage: 1,
-      characterType: CharacterType.Skeleton,
-      weaponType: WeaponType.Bow,
-      weaponRange: 220,
-      weaponCooldown: 30,
-      actionFrame: 15,
-      doesWander: true,
-      name: 'Skeleton',
-      runSpeed: 0.75,
-    )
-      ..weaponHitForce = 2
-      // ..attackDuration = 20
-      // ..attackActionFrame = 12
-    );
   }
 
   @override

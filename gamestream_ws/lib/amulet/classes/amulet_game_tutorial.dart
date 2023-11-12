@@ -217,12 +217,12 @@ class AmuletGameTutorial extends AmuletGame {
       y: 1400,
       z: 25,
       team: AmuletTeam.Human,
-      characterType: CharacterType.Kid,
       health: 50,
       weaponType: WeaponType.Unarmed,
       weaponDamage: 1,
       weaponRange: 50,
       weaponCooldown: 50,
+      attackDuration: 30,
       invincible: true,
     )
       ..autoTarget = false

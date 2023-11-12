@@ -104,6 +104,7 @@ class Character extends Collider {
     required this.weaponDamage,
     required this.weaponRange,
     required this.weaponCooldown,
+    required this.attackDuration,
     String? name,
     this.runSpeed = 1.0,
     this.doesWander = false,

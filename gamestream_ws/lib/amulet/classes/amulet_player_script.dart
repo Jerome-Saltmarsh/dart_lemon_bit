@@ -223,7 +223,6 @@ class AmuletPlayerScript {
   void log(String text){
     print('script.log: $text');
   }
-
 }
 
 

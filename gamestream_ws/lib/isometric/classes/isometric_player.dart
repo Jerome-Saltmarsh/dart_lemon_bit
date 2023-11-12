@@ -95,6 +95,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     weaponRange: 100,
     weaponType: WeaponType.Unarmed,
     weaponDamage: 1,
+    attackDuration: 25,
   ){
     this.autoTarget = autoTargetNearbyEnemies;
     id = game.playerId++;
