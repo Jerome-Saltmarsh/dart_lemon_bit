@@ -70,9 +70,9 @@ class SceneWriter extends ByteWriter {
       writeByte(writeBits(
           gameObject.collidable,
           gameObject.collectable,
-          gameObject.enabledFixed,
-          gameObject.enabledGravity,
-          gameObject.hitbox,
+          gameObject.fixed,
+          gameObject.gravity,
+          gameObject.hitable,
           gameObject.physical,
           gameObject.interactable,
           gameObject.destroyable,

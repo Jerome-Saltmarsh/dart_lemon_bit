@@ -20,12 +20,12 @@ class AmuletGameObject extends GameObject {
       team: TeamType.Neutral,
   ) {
     this.deactivationTimer = deactivationTimer;
-    enabledFixed = false;
-    enabledGravity = true;
+    fixed = false;
+    gravity = true;
     collidable = true;
     collectable = !item.consumable;
     persistable = false;
-    hitbox = false;
+    hitable = false;
     physical = false;
   }
 

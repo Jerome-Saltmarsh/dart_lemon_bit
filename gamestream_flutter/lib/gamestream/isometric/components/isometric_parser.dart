@@ -413,13 +413,15 @@ class IsometricParser with ByteReader, IsometricComponent {
     final id = readUInt16();
     final gameObject = scene.findGameObjectById(id);
     if (gameObject == null) throw Exception('could not find gameobject with id $id');
+    final editor = this.editor;
     editor.gameObject.value = gameObject;
-    editor.gameObjectSelectedCollidable   .value = readBool();
-    editor.gameObjectSelectedFixed        .value = readBool();
-    editor.gameObjectSelectedCollectable  .value = readBool();
-    editor.gameObjectSelectedPhysical     .value = readBool();
-    editor.gameObjectSelectedPersistable  .value = readBool();
-    editor.gameObjectSelectedGravity      .value = readBool();
+    editor.gameObjectSelectedHitable.value = readBool();
+    editor.gameObjectSelectedFixed.value = readBool();
+    editor.gameObjectSelectedCollectable.value = readBool();
+    editor.gameObjectSelectedPhysical.value = readBool();
+    editor.gameObjectSelectedPersistable.value = readBool();
+    editor.gameObjectSelectedGravity.value = readBool();
+    editor.gameObjectSelectedInteractable.value = readBool();
 
     editor.gameObjectSelectedType.value          = gameObject.type;
     editor.gameObjectSelectedSubType.value       = gameObject.subType;

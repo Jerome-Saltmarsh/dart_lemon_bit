@@ -19,10 +19,10 @@ abstract class Collider extends Position {
   var radius = 0.0;
 
   var collidable = true;
-  var hitbox = true;
-  var enabledGravity = true;
+  var hitable = true;
+  var gravity = true;
   var physical = true;
-  var enabledFixed = true;
+  var fixed = true;
 
   var startPositionX = 0.0;
   var startPositionY = 0.0;
@@ -105,20 +105,20 @@ abstract class Collider extends Position {
     required double force,
     required double angle,
   }) {
-    if (enabledFixed) return;
+    if (fixed) return;
     velocityX += adj(angle, force);
     velocityY += opp(angle, force);
   }
 
   void clampVelocity(double value){
-    if (enabledFixed) return;
+    if (fixed) return;
     assert (value > 0);
     if (velocitySpeed <= value) return;
     velocitySpeed = value;
   }
 
   void updateVelocity(){
-    if (enabledFixed) return;
+    if (fixed) return;
 
 
     x += (velocityX * Amulet.Fixed_Time);
@@ -127,7 +127,7 @@ abstract class Collider extends Position {
     velocityX *= physicsFriction;
     velocityY *= physicsFriction;
 
-    if (enabledGravity) {
+    if (gravity) {
       velocityZ -= Physics.Gravity * Amulet.Fixed_Time;
       if (velocityZ < -Physics.Max_Fall_Velocity) {
         velocityZ = -Physics.Max_Fall_Velocity * Amulet.Fixed_Time;

@@ -308,7 +308,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       if (!gameObject.active) continue;
       if (!gameObject.collectable &&
           !gameObject.interactable &&
-          !gameObject.hitbox
+          !gameObject.hitable
           // !gameObject.physical
       ) continue;
 
@@ -356,7 +356,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     for (final other in characters) {
       if (!other.active) continue;
-      if (!other.hitbox) continue;
+      if (!other.hitable) continue;
       if (character.onSameTeam(other)) continue;
       // if (Collider.onSameTeamAs(character, other)) continue;
       if (!character.withinAttackRangeAndAngle(other))
@@ -383,7 +383,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     for (var i = 0; i < gameObjectsLength; i++) {
       final gameObject = gameObjects[i];
       if (!gameObject.active) continue;
-      if (!gameObject.hitbox) continue;
+      if (!gameObject.hitable) continue;
 
       if (!character.withinAttackRangeAndAngle(gameObject))
         continue;
@@ -656,7 +656,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       return;
     }
 
-    if (!collider.enabledFixed) {
+    if (!collider.fixed) {
       updateColliderSceneCollision(collider);
     }
   }
@@ -686,7 +686,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     for (var i = 0; i < gameObjectsLength; i++) {
       final gameObject = gameObjects[i];
       if (!gameObject.active) continue;
-      if (!gameObject.hitbox) continue;
+      if (!gameObject.hitable) continue;
       if (!gameObject.withinRadiusXYZ(x, y, z, radius)) continue;
       applyHit(
         angle: angleBetween(x, y, gameObject.x, gameObject.y),
@@ -699,7 +699,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     for (var i = 0; i < length; i++) {
       final character = characters[i];
-      if (!character.hitbox) continue;
+      if (!character.hitable) continue;
       if (!character.active) continue;
       if (character.dead) continue;
       if (!character.withinRadiusXYZ(x, y, z, radius)) continue;
@@ -745,7 +745,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     player.setCharacterStateSpawning();
     activate(player);
     player.physical = true;
-    player.hitbox = true;
+    player.hitable = true;
     player.health = player.maxHealth;
     clearCharacterTarget(player);
     customOnPlayerRevived(player);
@@ -942,11 +942,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     var yDiff = a.y - b.y;
 
     if (xDiff == 0 && yDiff == 0) {
-      if (!a.enabledFixed) {
+      if (!a.fixed) {
         a.x += 5;
         xDiff += 5;
       }
-      if (!b.enabledFixed) {
+      if (!b.fixed) {
         b.x -= 5;
         xDiff += 5;
       }
@@ -958,11 +958,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     final halfOverlap = overlap * 0.5;
     final targetX = xDiffNormalized * halfOverlap;
     final targetY = yDiffNormalized * halfOverlap;
-    if (!a.enabledFixed) {
+    if (!a.fixed) {
       a.x += targetX;
       a.y += targetY;
     }
-    if (!b.enabledFixed) {
+    if (!b.fixed) {
       b.x -= targetX;
       b.y -= targetY;
     }
@@ -994,7 +994,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.actionDuration = 0;
     character.frame = 0;
     character.physical = false;
-    character.hitbox = false;
+    character.hitable = false;
     character.clearPath();
     character.setDestinationToCurrentPosition();
     clearCharacterTarget(character);
@@ -1137,7 +1137,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     for (var i = 0; i < projectiles.length; i++) {
       final projectile = projectiles[i];
       if (!projectile.active) continue;
-      if (!projectile.hitbox) continue;
+      if (!projectile.hitable) continue;
       final target = projectile.target;
       if (target != null) {
         if (projectile.withinRadiusPosition(target, projectile.radius)) {
@@ -1154,7 +1154,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       for (var j = 0; j < colliders.length; j++) {
         final collider = colliders[j];
         if (!collider.active) continue;
-        if (!collider.hitbox) continue;
+        if (!collider.hitable) continue;
         final radius = collider.radius + projectileRadius;
         if ((collider.x - projectileX).abs() > radius) continue;
         if ((collider.y - projectileY).abs() > radius) continue;
@@ -1204,7 +1204,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     double? angle,
     bool friendlyFire = false,
   }) {
-    if (!target.hitbox) return;
+    if (!target.hitable) return;
     if (!target.active) return;
 
     if (angle == null){
@@ -1480,7 +1480,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
     }
     projectile.damage = damage;
-    projectile.hitbox = true;
+    projectile.hitable = true;
     projectile.active = true;
     if (target is Collider) {
       projectile.target = target;

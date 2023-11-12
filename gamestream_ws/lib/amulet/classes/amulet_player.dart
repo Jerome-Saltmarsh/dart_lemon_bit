@@ -1560,7 +1560,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     if (
       noWeaponEquipped &&
       value is GameObject &&
-      value.hitbox
+      value.hitable
     ){
       return;
     }

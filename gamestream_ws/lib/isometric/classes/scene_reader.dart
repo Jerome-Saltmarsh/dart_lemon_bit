@@ -116,9 +116,9 @@ class SceneReader extends ByteReader {
           )
             ..collidable = collidable
             ..collectable = collectable
-            ..enabledFixed = fixed
-            ..enabledGravity = gravity
-            ..hitbox = hitable
+            ..fixed = fixed
+            ..gravity = gravity
+            ..hitable = hitable
             ..physical = physical
             ..interactable = interactable
             ..destroyable = destroyable

@@ -1110,12 +1110,13 @@ extension IsometricEditorUI on IsometricEditor {
                             ItemType.getNameSubType(type, subType),
                             size: 22),
                         height8,
-                        buildWatchCollidable(),
+                        buildWatchHitable(),
                         buildWatchGravity(),
                         buildWatchFixed(),
                         buildWatchCollectable(),
                         buildWatchPhysical(),
                         buildWatchPersistable(),
+                        buildWatchInteractable(),
                         buildWatchEmission(),
                       ],
                     ))),
@@ -1442,8 +1443,7 @@ extension IsometricEditorUI on IsometricEditor {
         gameObjectSelectedFixed,
             (bool enabled) =>
             onPressed(
-              action:
-              sendGameObjectRequestToggleFixed,
+              action: sendGameObjectRequestToggleFixed,
               child: Row(
                 mainAxisAlignment:
                 MainAxisAlignment.spaceBetween,
@@ -1457,8 +1457,7 @@ extension IsometricEditorUI on IsometricEditor {
   Widget buildWatchGravity() => buildWatch(
         gameObjectSelectedGravity,
             (bool enabled) => onPressed(
-          action: () =>
-          sendGameObjectRequestToggleGravity,
+          action: sendGameObjectRequestToggleGravity,
           child: Row(
             mainAxisAlignment:
             MainAxisAlignment.spaceBetween,
@@ -1469,16 +1468,29 @@ extension IsometricEditorUI on IsometricEditor {
           ),
         ));
 
-  Widget buildWatchCollidable() => buildWatch(
-        gameObjectSelectedCollidable,
-            (bool enabled) => onPressed(
-          action: () =>
-          sendGameObjectRequestToggleStrikable,
+  Widget buildWatchInteractable() => buildWatch(
+      gameObjectSelectedInteractable,
+            (bool interactable) => onPressed(
+          action: sendGameObjectRequestToggleInteractable,
           child: Row(
             mainAxisAlignment:
             MainAxisAlignment.spaceBetween,
             children: [
-              buildText('Collidable'),
+              buildText('Interactable'),
+              buildText(interactable),
+            ],
+          ),
+        ));
+
+  Widget buildWatchHitable() => buildWatch(
+        gameObjectSelectedHitable,
+            (bool enabled) => onPressed(
+          action: sendGameObjectRequestToggleHitable,
+          child: Row(
+            mainAxisAlignment:
+            MainAxisAlignment.spaceBetween,
+            children: [
+              buildText('Hitable'),
               buildText(enabled),
             ],
           ),

@@ -496,16 +496,16 @@ class Connection extends ByteReader {
         // TODO: Handle this case.
         break;
 
-      case IsometricEditorGameObjectRequest.Toggle_Strikable:
+      case IsometricEditorGameObjectRequest.Toggle_Hitable:
         if (selectedGameObject == null) return;
-        selectedGameObject.hitbox = !selectedGameObject.hitbox;
+        selectedGameObject.hitable = !selectedGameObject.hitable;
         selectedGameObject.velocityZ = 0;
         player.writeEditorGameObjectSelected();
         break;
 
       case IsometricEditorGameObjectRequest.Toggle_Fixed:
         if (selectedGameObject == null) return;
-        selectedGameObject.enabledFixed = !selectedGameObject.enabledFixed;
+        selectedGameObject.fixed = !selectedGameObject.fixed;
         player.writeEditorGameObjectSelected();
         break;
 
@@ -517,7 +517,13 @@ class Connection extends ByteReader {
 
       case IsometricEditorGameObjectRequest.Toggle_Gravity:
         if (selectedGameObject == null) return;
-        selectedGameObject.enabledGravity = !selectedGameObject.enabledGravity;
+        selectedGameObject.gravity = !selectedGameObject.gravity;
+        player.writeEditorGameObjectSelected();
+        break;
+
+      case IsometricEditorGameObjectRequest.Toggle_Interactable:
+        if (selectedGameObject == null) return;
+        selectedGameObject.interactable = !selectedGameObject.interactable;
         player.writeEditorGameObjectSelected();
         break;
 

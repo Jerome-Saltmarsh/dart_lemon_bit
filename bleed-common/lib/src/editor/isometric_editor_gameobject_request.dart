@@ -7,12 +7,13 @@ enum IsometricEditorGameObjectRequest {
   Delete,
   Set_Type,
   Move_To_Mouse,
-  Toggle_Strikable,
+  Toggle_Hitable,
   Toggle_Fixed,
   Toggle_Collectable,
   Toggle_Physical,
   Toggle_Persistable,
   Toggle_Gravity,
+  Toggle_Interactable,
   Duplicate,
 }
 

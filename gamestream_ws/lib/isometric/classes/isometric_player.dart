@@ -627,7 +627,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       if (value.collectable){
         return TargetAction.Collect;
       }
-      if (value.physical && value.hitbox){
+      if (value.physical && value.hitable){
         return TargetAction.Attack;
       }
       return TargetAction.Run;
@@ -821,12 +821,13 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeByte(NetworkResponse.Editor);
     writeByte(NetworkResponseEditor.Editor_GameObject_Selected);
     writeUInt16(selectedGameObject.id);
-    writeBool(selectedGameObject.hitbox);
-    writeBool(selectedGameObject.enabledFixed);
+    writeBool(selectedGameObject.hitable);
+    writeBool(selectedGameObject.fixed);
     writeBool(selectedGameObject.collectable);
     writeBool(selectedGameObject.physical);
     writeBool(selectedGameObject.persistable);
-    writeBool(selectedGameObject.enabledGravity);
+    writeBool(selectedGameObject.gravity);
+    writeBool(selectedGameObject.interactable);
   }
 
   void writeEnvironmentLightning(int value){

@@ -121,9 +121,9 @@ class Character extends Collider {
     if (name != null){
       this.name = name;
     }
-    enabledFixed = false;
+    fixed = false;
     physical = true;
-    hitbox = true;
+    hitable = true;
     radius = CharacterType.getRadius(characterType);
     setDestinationToCurrentPosition();
 
@@ -260,7 +260,7 @@ class Character extends Collider {
     active = true;
     health = maxHealth;
     physical = true;
-    hitbox = true;
+    hitable = true;
     characterState = CharacterState.Spawning;
     frame = 0;
     actionDuration = duration;

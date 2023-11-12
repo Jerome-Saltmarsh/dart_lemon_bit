@@ -9,24 +9,23 @@ ctrl + shift + e        : view recent changes
 alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
-## CURRENT
-* [new]: play tutorial on create new player
-* [new]: build a amulet_beta_0.51.exe
-* [new]: build a amulet_server_beta_0.51.exe
+## BLOCK
+* [new]: scene town 
 
 ## TODO
+* [fix]: ai stuttering on idle
 * [new]: model hair
 * [new]: health cooldown experience item
 * [fix]: barrels and crates should not be interactable
 * [fix]: persist gameobject properties
-* [fix]: ai stuttering on idle
 * [fix]: colored particle emission
 * [new]: particle wind blowing 
 * [new]: flames emit smoke particles
-* [new]: design map 0
 * [new]: item tabs weapons amulets etc
 
 ## 12.11.2023
+* [new]: refactor mode
+* [new]: refactor camera
 * [new]: optimize update particles
 
 ## 11.11.2023
