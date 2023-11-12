@@ -19,7 +19,7 @@ class Scene {
   Uint8List? compiled;
 
   /// used for pathfinding to contains the the index of a previous path
-  Int32List path = Int32List(0);
+  var path = Int32List(0);
 
   static final visitHistory = Uint32List(10000);
   static final visitStack = Uint32List(10000);
@@ -175,15 +175,18 @@ class Scene {
         shapes[indexEnd] == NodeOrientation.Solid
     ) return indexStart;
 
-    // final path = this.path;
-    // for (var i = 0; i <= visitHistoryIndex; i++) {
-    //   path[visitHistory[i]] = Not_Visited;
-    // }
+    final path = this.path;
+    final visitHistoryIndex = Scene.visitHistoryIndex;
+    final visitHistory = Scene.visitHistory;
+    for (var i = 0; i <= visitHistoryIndex; i++) {
+      path[visitHistory[i]] = Not_Visited;
+    }
 
-    visitHistoryIndex = 0;
+    Scene.visitHistoryIndex = 0;
     visitStackIndex = 0;
 
-    visitHistory[visitHistoryIndex++] = indexStart;
+    visitHistory[Scene.visitHistoryIndex++] = indexStart;
+    final visitStack = Scene.visitStack;
     visitStack[visitStackIndex] = indexStart;
 
     final targetRow = getRow(indexEnd);

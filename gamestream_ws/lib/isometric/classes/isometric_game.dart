@@ -287,8 +287,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     final characters = this.characters;
 
     for (final character in characters) {
-      if (character.dead) continue;
-      if (!character.active) continue;
+      if (character.dead || !character.active) continue;
       final radius = max(Min_Radius, character.radius);
       if ((mouseX - character.x).abs() > radius) continue;
       if ((mouseY - character.y).abs() > radius) continue;
@@ -2147,6 +2146,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (!character.pathFindingEnabled)
       return;
 
+    final scene = this.scene;
     final pathChanged = character.pathTargetIndexPrevious != character.pathTargetIndex;
 
     character.pathTargetIndexPrevious = character.pathTargetIndex;
@@ -2244,6 +2244,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     if (characterConditionShouldWander(character)){
+      character.goal = CharacterGoal.Wander;
       characterActionWander(character);
       return;
     }

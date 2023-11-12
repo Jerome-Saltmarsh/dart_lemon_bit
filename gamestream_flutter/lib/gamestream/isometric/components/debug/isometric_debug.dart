@@ -2,6 +2,7 @@
 import 'dart:typed_data';
 import 'package:gamestream_flutter/gamestream/isometric/classes/particle_roam.dart';
 import 'package:gamestream_flutter/packages/common.dart';
+import 'package:gamestream_flutter/packages/lemon_components/updatable.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_watch/src.dart';
@@ -12,7 +13,7 @@ import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/debug/debug_tab.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/particle_whisp.dart';
 
-class IsometricDebug with IsometricComponent {
+class IsometricDebug with IsometricComponent implements Updatable {
   Particle? particleSelected;
 
   final tab = Watch(DebugTab.Selected);
@@ -233,6 +234,15 @@ class IsometricDebug with IsometricComponent {
 
 
   void onMouseRightClicked() {
+
+    switch (tab.value) {
+      case DebugTab.Selected:
+
+        break;
+      default:
+        break;
+    }
+
     if (engine.keyPressedShiftLeft){
       network.sendIsometricRequestDebugAttack();
       return;
@@ -301,5 +311,29 @@ class IsometricDebug with IsometricComponent {
     }
 
     return nearest;
+  }
+
+  @override
+  void onComponentUpdate() {
+    if (!options.debugging){
+      return;
+    }
+
+    final cameraDebug = options.cameraDebug;
+    switch (tab.value){
+      case DebugTab.Selected:
+        if (selectedCollider.value){
+          cameraDebug.x = position.x;
+          cameraDebug.y = position.y;
+          cameraDebug.z = position.z;
+        } else {
+          cameraDebug.x = player.x;
+          cameraDebug.y = player.y;
+          cameraDebug.z = player.z;
+        }
+        break;
+      default:
+        break;
+    }
   }
 }
