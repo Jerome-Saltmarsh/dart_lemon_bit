@@ -422,6 +422,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     editor.gameObjectSelectedPersistable.value = readBool();
     editor.gameObjectSelectedGravity.value = readBool();
     editor.gameObjectSelectedInteractable.value = readBool();
+    editor.gameObjectSelectedCollidable.value = readBool();
 
     editor.gameObjectSelectedType.value          = gameObject.type;
     editor.gameObjectSelectedSubType.value       = gameObject.subType;

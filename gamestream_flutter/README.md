@@ -24,6 +24,7 @@ ctrl + []               : move caret to code block
 * [new]: item tabs weapons amulets etc
 
 ## 12.11.2023
+* [fix]: edit gameobject properties
 * [new]: refactor mode
 * [new]: refactor camera
 * [new]: optimize update particles

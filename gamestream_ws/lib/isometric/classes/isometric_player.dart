@@ -828,6 +828,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeBool(selectedGameObject.persistable);
     writeBool(selectedGameObject.gravity);
     writeBool(selectedGameObject.interactable);
+    writeBool(selectedGameObject.collidable);
   }
 
   void writeEnvironmentLightning(int value){

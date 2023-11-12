@@ -1083,7 +1083,8 @@ extension IsometricEditorUI on IsometricEditor {
     });
   }
 
-  Widget buildColumnSelectedGameObject() => GSContainer(
+  Widget buildColumnSelectedGameObject() {
+    return GSContainer(
         width: 220,
         child: buildWatch(
             gameObjectSelectedType,
@@ -1117,10 +1118,12 @@ extension IsometricEditorUI on IsometricEditor {
                         buildWatchPhysical(),
                         buildWatchPersistable(),
                         buildWatchInteractable(),
+                        buildWatchCollidable(),
                         buildWatchEmission(),
                       ],
                     ))),
       );
+  }
 
   Widget buildColumnEditParticleEmitter() {
     return Column(
@@ -1463,6 +1466,20 @@ extension IsometricEditorUI on IsometricEditor {
             MainAxisAlignment.spaceBetween,
             children: [
               buildText('Gravity'),
+              buildText(enabled),
+            ],
+          ),
+        ));
+
+  Widget buildWatchCollidable() => buildWatch(
+        gameObjectSelectedCollidable,
+            (bool enabled) => onPressed(
+          action: sendGameObjectRequestToggleCollidable,
+          child: Row(
+            mainAxisAlignment:
+            MainAxisAlignment.spaceBetween,
+            children: [
+              buildText('Collidable'),
               buildText(enabled),
             ],
           ),

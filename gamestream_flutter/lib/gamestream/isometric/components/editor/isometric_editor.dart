@@ -37,6 +37,7 @@ class IsometricEditor with IsometricComponent {
   final gameObjectSelectedHitable = Watch(true);
   final gameObjectSelectedGravity = Watch(true);
   final gameObjectSelectedInteractable = Watch(true);
+  final gameObjectSelectedCollidable = Watch(true);
   final gameObjectSelectedFixed = Watch(true);
   final gameObjectSelectedCollectable = Watch(true);
   final gameObjectSelectedPhysical = Watch(true);
@@ -530,6 +531,9 @@ class IsometricEditor with IsometricComponent {
 
   void sendGameObjectRequestToggleGravity() =>
       sendGameObjectRequest(IsometricEditorGameObjectRequest.Toggle_Gravity);
+
+  void sendGameObjectRequestToggleCollidable() =>
+      sendGameObjectRequest(IsometricEditorGameObjectRequest.Toggle_Collidable);
 
   void sendGameObjectRequestToggleInteractable() =>
       sendGameObjectRequest(IsometricEditorGameObjectRequest.Toggle_Interactable);

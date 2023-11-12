@@ -521,6 +521,12 @@ class Connection extends ByteReader {
         player.writeEditorGameObjectSelected();
         break;
 
+      case IsometricEditorGameObjectRequest.Toggle_Collidable:
+        if (selectedGameObject == null) return;
+        selectedGameObject.collidable = !selectedGameObject.collidable;
+        player.writeEditorGameObjectSelected();
+        break;
+
       case IsometricEditorGameObjectRequest.Toggle_Interactable:
         if (selectedGameObject == null) return;
         selectedGameObject.interactable = !selectedGameObject.interactable;

@@ -14,6 +14,7 @@ enum IsometricEditorGameObjectRequest {
   Toggle_Persistable,
   Toggle_Gravity,
   Toggle_Interactable,
+  Toggle_Collidable,
   Duplicate,
 }
 
