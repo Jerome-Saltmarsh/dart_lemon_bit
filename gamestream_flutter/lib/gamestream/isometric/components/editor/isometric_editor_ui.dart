@@ -692,10 +692,10 @@ extension IsometricEditorUI on IsometricEditor {
             message: NodeType.getName(nodeType),
           ),
           action: () {
-            if (options.editing) {
-              options.setModePlay();
-              return;
-            }
+            // if (options.editing) {
+            //   options.setModePlay();
+            //   return;
+            // }
             paint(nodeType: nodeType);
           },
           color: selectedNodeType == nodeType ? colors.white : colors.white60));
