@@ -49,6 +49,19 @@ class EditorState {
     selectedMarkListIndex = scene.marks.indexOf(markValue);
   }
 
+  void setSelectedMarkSubType(int markSubType) {
+    if (_selectedMarkListIndex == -1) {
+      throw Exception('nothing selected');
+    }
+    final markValue = scene.setMarkType(
+        listIndex: _selectedMarkListIndex,
+        markType: selectedMarkType,
+        markSubType: markSubType,
+    );
+    game.sortMarksAndDispatch();
+    selectedMarkListIndex = scene.marks.indexOf(markValue);
+  }
+
   void addMark(int markValue) {
     scene.marks.add(markValue);
     game.sortMarksAndDispatch();

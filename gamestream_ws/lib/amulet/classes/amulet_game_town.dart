@@ -21,7 +21,6 @@ class AmuletGameTown extends AmuletGame {
     required super.time,
     required super.environment,
     required super.name,
-    required super.fiendTypes,
   }) : super(amuletScene: AmuletScene.Town){
 
     spawnFiendsAtSpawnNodes();

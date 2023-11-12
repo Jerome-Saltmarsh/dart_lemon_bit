@@ -1,18 +1,19 @@
 
-import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
-import 'package:gamestream_flutter/gamestream/ui.dart';
-import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
-import 'package:gamestream_flutter/packages/common.dart';
-import 'package:golden_ratio/constants.dart';
-import 'package:lemon_engine/lemon_engine.dart';
-import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
+import 'package:gamestream_flutter/gamestream/ui.dart';
+import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
+import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/packages/utils.dart';
+import 'package:golden_ratio/constants.dart';
+import 'package:lemon_engine/lemon_engine.dart';
+import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
+
 import 'editor_tab.dart';
 import 'isometric_editor.dart';
 
@@ -1214,6 +1215,25 @@ extension IsometricEditorUI on IsometricEditor {
           ),
         ],
       ),
+      WatchBuilder(selectedMarkType, (int selectedMarkType){
+        if (selectedMarkType != MarkType.Fiend) return nothing;
+
+        return WatchBuilder(selectedMarkSubType, (int selectedMarkSubType) =>
+            Row(children: FiendType.values.map((fiendType) => onPressed(
+              action: () =>
+                  network.sendNetworkRequest(
+                    NetworkRequest.Edit,
+                    EditorRequest.Mark_Set_Sub_Type.index,
+                    fiendType.index,
+                  ),
+              child: GSContainer(
+                  color: selectedMarkSubType == fiendType.index ? Colors.green : null,
+                  margin: const EdgeInsets.only(right: 4),
+                  child: buildText(fiendType.name)),
+            )
+            ).toList(growable: false)));
+
+      }),
       Container(
         height: 200,
         child: SingleChildScrollView(

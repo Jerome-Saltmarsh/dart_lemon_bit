@@ -11,3 +11,4 @@ export 'network/responses/network_response_amulet.dart';
 export 'network/responses/network_response_amulet_player.dart';
 export 'amulet_item_level.dart';
 export 'amulet_scene.dart';
+export 'fiend_type.dart';

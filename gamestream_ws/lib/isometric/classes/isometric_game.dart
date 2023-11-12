@@ -644,10 +644,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     character.autoTargetTimer = character.autoTargetTimerDuration;
-    character.target = findNearestEnemy(
-      character,
-      radius: character.autoTargetRange,
-    );
+
+    if (randomChance(character.chanceOfSetTarget)){
+      character.target = findNearestEnemy(
+        character,
+        radius: character.autoTargetRange,
+      );
+    }
   }
 
   void updateColliderPhysics(Collider collider) {

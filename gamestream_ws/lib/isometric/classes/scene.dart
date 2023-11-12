@@ -545,6 +545,7 @@ class Scene {
   int setMarkType({
     required int listIndex,
     required int markType,
+    int markSubType = 0,
   }) {
     if (listIndex < 0){
       throw Exception('invalid index');
@@ -555,7 +556,11 @@ class Scene {
 
     final markValue = marks[listIndex];
     final markIndex = MarkType.getIndex(markValue);
-    final newMarkValue = MarkType.build(index: markIndex, type: markType);
+    final newMarkValue = MarkType.build(
+        index: markIndex,
+        type: markType,
+        subType: markSubType,
+    );
     marks[listIndex] = newMarkValue;
     return newMarkValue;
   }

@@ -26,11 +26,15 @@ class MarkType {
 
   static String getTypeName(int markValue) => getName(getType(markValue));
 
-  static int build({required int index, required int type}) =>
-      index | type << 16;
+  static int build({
+    required int index,
+    required int type,
+    int subType = 0,
+  }) =>
+      index | type << 16 | subType << 24;
 
   static getName(int markType) => const {
-    Fiend: 'Fallen',
+    Fiend: 'Fiend',
     Whisp: 'Whisp',
     Myst: 'Myst',
     Glow: 'Glow',
@@ -38,10 +42,11 @@ class MarkType {
     Moth: 'Moth',
     Water_Drops: 'Water_Drops',
     Windy: 'Windy',
-  // }[markType] ?? (throw Exception('MarkType.getName($markType)'));
   }[markType] ?? 'unknown-$markType';
 
   static int getIndex(int markValue) => markValue & 0xFFFF;
 
   static int getType(int markValue) => (markValue >> 16) & 0xFF;
+
+  static int getSubType(int markValue) => (markValue >> 24) & 0xFF;
 }

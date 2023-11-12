@@ -12,7 +12,6 @@ class AmuletGameEditor extends AmuletGame {
      time: IsometricTime(),
      environment: IsometricEnvironment(enabled: false),
      name: generateRandomName(),
-     fiendTypes: [],
      amuletScene: AmuletScene.Editor,
   );
 

@@ -218,6 +218,14 @@ class Connection extends ByteReader {
             player.editor.setSelectedMarkType(markType);
             break;
 
+          case EditorRequest.Mark_Set_Sub_Type:
+            final markSubType = parseArg2(arguments);
+            if (markSubType == null)
+              return;
+
+            player.editor.setSelectedMarkSubType(markSubType);
+            break;
+
           case EditorRequest.Generate_Scene:
             const min = 5;
             final rows = parseArg2(arguments);
@@ -1134,21 +1142,23 @@ class Connection extends ByteReader {
 
     final nodeType = arguments.tryGetArgInt('--type');
     final index = arguments.getArgInt('--index');
+    final orientation = arguments.getArgInt('--orientation');
+    final variation = arguments.getArgInt('--variation');
 
     if (nodeType == NodeType.Tree_Bottom){
       player.game.setNode(
         nodeIndex: index + player.game.scene.area,
         nodeType: NodeType.Tree_Top,
-        orientation: arguments.tryGetArgInt('--orientation'),
-        variation: arguments.tryGetArgInt('--variation'),
+        orientation: orientation,
+        variation: variation,
       );
     }
 
     player.game.setNode(
       nodeIndex: index,
-      nodeType: arguments.tryGetArgInt('--type'),
-      orientation: arguments.tryGetArgInt('--orientation'),
-      variation: arguments.tryGetArgInt('--variation'),
+      nodeType: nodeType,
+      orientation: orientation,
+      variation: variation,
     );
   }
 }

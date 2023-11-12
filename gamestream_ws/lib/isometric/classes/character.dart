@@ -90,6 +90,7 @@ class Character extends Collider {
   var nextWander = 0;
   var wanderRadius = 3;
   var attackAlwaysHitsTarget = false;
+  var chanceOfSetTarget = 0.5;
 
   final path = Uint32List(20);
 

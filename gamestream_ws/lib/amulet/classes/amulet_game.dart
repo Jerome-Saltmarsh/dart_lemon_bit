@@ -6,14 +6,10 @@ import 'package:gamestream_ws/gamestream.dart';
 import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages.dart';
 
-import 'fiend_type.dart';
-
-
 class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   final Amulet amulet;
 
-  final List<FiendType> fiendTypes;
   final String name;
   final chanceOfDropItemOnGrassCut = 0.25;
   final gameObjectDeactivationTimer = 5000;
@@ -33,7 +29,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required super.time,
     required super.environment,
     required this.name,
-    required this.fiendTypes,
     required this.amuletScene,
   }) : super(gameType: GameType.Amulet) {
     spawnFiendsAtSpawnNodes();
@@ -97,9 +92,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   }
 
   void spawnFiendsAtSpawnNodes() {
-    if (fiendTypes.isEmpty){
-      return;
-    }
     final marks = scene.marks;
     final length = marks.length;
     for (var i = 0; i < length; i++) {
@@ -108,8 +100,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       if (markType != MarkType.Fiend){
         continue;
       }
+      final markSubType = MarkType.getSubType(markValue);
+      final fiendType = FiendType.values[markSubType];
+
       spawnFiendTypeAtIndex(
-          fiendType: randomItem(fiendTypes),
+          fiendType: fiendType,
           index: MarkType.getIndex(markValue),
       );
     }
@@ -136,6 +131,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       ..attackDuration = fiendType.attackDuration
       ..runSpeed = fiendType.runSpeed
       ..experience = fiendType.experience
+      ..chanceOfSetTarget = fiendType.chanceOfSetTarget
       ..characterType = fiendType.characterType;
 
   Character spawnCharacterAtIndex(int index) =>

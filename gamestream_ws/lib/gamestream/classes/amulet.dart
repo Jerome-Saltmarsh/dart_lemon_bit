@@ -8,7 +8,6 @@ import 'package:gamestream_ws/amulet/classes/amulet_game.dart';
 import 'package:gamestream_ws/amulet/classes/amulet_game_town.dart';
 import 'package:gamestream_ws/amulet/classes/amulet_game_tutorial.dart';
 import 'package:gamestream_ws/amulet/classes/amulet_player.dart';
-import 'package:gamestream_ws/amulet/classes/fiend_type.dart';
 import 'package:gamestream_ws/gamestream.dart';
 import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages/common/src/amulet/amulet_item.dart';
@@ -91,9 +90,6 @@ class Amulet {
       scene: scenes.mmoTown,
       time: amuletTime,
       environment: amuletEnvironment,
-      fiendTypes: [
-        FiendType.Fallen,
-      ],
       name: 'town',
     );
 
@@ -103,9 +99,6 @@ class Amulet {
       time: amuletTime,
       environment: amuletEnvironment,
       name: 'road 1',
-      fiendTypes: [
-        FiendType.Fallen,
-      ],
       amuletScene: AmuletScene.Road_01,
     );
 
@@ -115,10 +108,6 @@ class Amulet {
       time: amuletTime,
       environment: amuletEnvironment,
       name: 'road 2',
-      fiendTypes: [
-        FiendType.Fallen,
-        FiendType.Skeleton,
-      ],
       amuletScene: AmuletScene.Road_02,
     );
 
@@ -151,7 +140,6 @@ class Amulet {
       time: amuletTime,
       environment: amuletEnvironment,
       name: 'generated',
-      fiendTypes: [FiendType.Fallen],
       amuletScene: AmuletScene.Generated,
     );
     games.add(instance);

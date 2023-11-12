@@ -13,6 +13,7 @@ ctrl + []               : move caret to code block
 * [new]: scene town 
 
 ## TODO
+* [fix]: fix set node
 * [new]: model hair
 * [new]: health cooldown experience item
 * [fix]: barrels and crates should not be interactable
@@ -23,6 +24,7 @@ ctrl + []               : move caret to code block
 * [new]: item tabs weapons amulets etc
 
 ## 12.11.2023
+* [new]: assign fiend type to mark node fiend
 * [fix]: set tree top automatically
 * [fix]: ai stuttering on idle
 * [fix]: edit gameobject properties

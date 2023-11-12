@@ -5,7 +5,6 @@ import 'package:gamestream_ws/isometric/src.dart';
 import 'package:gamestream_ws/packages.dart';
 
 import 'amulet_player_script.dart';
-import 'fiend_type.dart';
 
 
 class AmuletGameTutorial extends AmuletGame {
@@ -49,7 +48,6 @@ class AmuletGameTutorial extends AmuletGame {
     required super.environment,
   }) : super (
       amuletScene: AmuletScene.Tutorial,
-      fiendTypes: const[],
       name: 'tutorial'
   ){
     instantiateGuide();

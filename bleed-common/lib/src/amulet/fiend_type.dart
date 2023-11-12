@@ -1,5 +1,5 @@
 
-import 'package:gamestream_ws/packages/common/src/isometric/character_type.dart';
+import '../isometric/character_type.dart';
 
 enum FiendType {
   Fallen(
@@ -9,7 +9,8 @@ enum FiendType {
     characterType: CharacterType.Fallen,
     attackDuration: 20,
     experience: 1,
-    runSpeed: 1.0,
+    runSpeed: 0.8,
+    chanceOfSetTarget: 0.25,
   ),
   Skeleton(
     level: 2,
@@ -19,6 +20,7 @@ enum FiendType {
     attackDuration: 20,
     experience: 2,
     runSpeed: 1.0,
+    chanceOfSetTarget: 0.25,
   );
 
   final int level;
@@ -28,6 +30,7 @@ enum FiendType {
   final int characterType;
   final int experience;
   final double runSpeed;
+  final double chanceOfSetTarget;
 
   const FiendType({
     required this.level,
@@ -37,5 +40,6 @@ enum FiendType {
     required this.attackDuration,
     required this.experience,
     required this.runSpeed,
+    required this.chanceOfSetTarget,
   });
 }

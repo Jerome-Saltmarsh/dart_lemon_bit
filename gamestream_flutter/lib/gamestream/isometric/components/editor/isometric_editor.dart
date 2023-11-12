@@ -26,6 +26,7 @@ class IsometricEditor with IsometricComponent {
   final selectedMarkNodeIndex = Watch(0);
   final selectedMarkListIndex = Watch(-1);
   final selectedMarkType = Watch(0);
+  final selectedMarkSubType = Watch(0);
 
   final selectedKeyEntry = Watch<MapEntry<String, int>?>(null);
 
@@ -121,6 +122,7 @@ class IsometricEditor with IsometricComponent {
       if (value != -1){
         selectedMarkNodeIndex.value = value & 0xFFFF;
         selectedMarkType.value = (value >> 16) & 0xFF;
+        selectedMarkSubType.value = (value >> 24) & 0xFF;
       } else {
         deselectMarkIndex();
       }

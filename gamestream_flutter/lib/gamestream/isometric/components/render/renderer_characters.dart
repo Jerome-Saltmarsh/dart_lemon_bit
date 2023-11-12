@@ -820,7 +820,7 @@ class RendererCharacters extends RenderGroup {
       (!renderBottom && characterDead))
       return;
 
-    const scale = 0.61;
+    const scale = 0.5;
     const anchorY = 0.6;
 
     final scene = this.scene;
@@ -881,7 +881,7 @@ class RendererCharacters extends RenderGroup {
       (!renderBottom && character.dead))
       return;
 
-    const scale = 0.61;
+    const scale = 0.5;
     const anchorY = 0.6;
 
     final row = character.renderDirection;

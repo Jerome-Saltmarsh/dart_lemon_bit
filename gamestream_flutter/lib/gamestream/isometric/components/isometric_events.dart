@@ -38,8 +38,9 @@ class IsometricEvents with IsometricComponent {
         scene.getTypeXYZSafe(x, y, z + 24) == NodeType.Rain_Landing
     )
     ){
-      audio.play(audio.footstep_mud_6, x, y, z);
+      audio.play(audio.footstep_mud_6, x, y, z, volume: 0.5);
       final amount = environment.rainType.value == RainType.Heavy ? 3 : 2;
+      final particles = this.particles;
       for (var i = 0; i < amount; i++){
         particles.spawnParticleWaterDrop(x: x, y: y, z: z, zv: 1.5);
       }
@@ -59,14 +60,14 @@ class IsometricEvents with IsometricComponent {
             x,
             y,
             z,
-            volume: 0.5,
+            volume: 0.25,
         );
         break;
       case MaterialType.Stone:
-        audio.play(audio.footstep_stone, x, y, z);
+        audio.play(audio.footstep_stone, x, y, z, volume: 0.3);
         break;
       case MaterialType.Wood:
-        audio.play(audio.footstep_wood_4, x, y, z);
+        audio.play(audio.footstep_wood_4, x, y, z, volume: 0.3);
         break;
     }
   }
