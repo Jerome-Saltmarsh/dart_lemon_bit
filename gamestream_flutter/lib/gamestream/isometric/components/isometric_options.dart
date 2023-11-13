@@ -144,17 +144,29 @@ class IsometricOptions with IsometricComponent implements Updatable {
     switch (mode){
       case Mode.Play:
         editor.deselectGameObject();
-        camera.target = cameraPlay;
+        activateCameraPlay();
         break;
       case Mode.Edit:
         editor.cameraCenterOnNodeSelectedIndex();
         editor.cursorSetToPlayer();
-        camera.target = cameraEdit;
+        activateCameraEdit();
         break;
       case Mode.Debug:
-        camera.target = cameraDebug;
+        activateCameraDebug();
         break;
     }
+  }
+
+  void activateCameraDebug() {
+    camera.target = cameraDebug;
+  }
+
+  void activateCameraEdit() {
+    camera.target = cameraEdit;
+  }
+
+  void activateCameraPlay(){
+    camera.target = cameraPlay;
   }
 
   void _onChangedMessageStatus(String value){
@@ -238,4 +250,12 @@ class IsometricOptions with IsometricComponent implements Updatable {
   bool get playing => mode.value == Mode.Play;
 
   set debugging(bool value) => mode.value = value ? Mode.Debug : Mode.Play;
+
+  void setCameraPositionToPlayer(){
+    final cameraPlay = this.cameraPlay;
+    final player = this.player;
+    cameraPlay.x = player.x;
+    cameraPlay.y = player.y;
+    cameraPlay.z = player.z;
+  }
 }

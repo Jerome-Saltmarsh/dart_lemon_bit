@@ -10,10 +10,10 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## BLOCK
+* [new]: item tabs weapons amulets etc
 * [new]: scene town 
 
 ## TODO
-* [fix]: fix set node
 * [new]: model hair
 * [new]: health cooldown experience item
 * [fix]: barrels and crates should not be interactable
@@ -21,7 +21,9 @@ ctrl + []               : move caret to code block
 * [fix]: colored particle emission
 * [new]: particle wind blowing 
 * [new]: flames emit smoke particles
-* [new]: item tabs weapons amulets etc
+
+## 13.11.2023
+* [fix]: camera center on player on start
 
 ## 12.11.2023
 * [new]: assign fiend type to mark node fiend

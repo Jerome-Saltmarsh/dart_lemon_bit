@@ -9,19 +9,22 @@ class IsometricCamera with IsometricComponent {
   var chaseStrength = 0.00075;
   var translateX = 0.0;
   var translateY = 25.0;
-  var mouseFollowSensitivity = 0.1;
+  var mouseFollowSensitivity = 0.125;
 
   Position? target;
 
   void centerOnChaseTarget() {
-    print('centerOnChaseTarget()');
     final target = this.target;
-    if (target != null){
-      centerOnV3(target);
+    if (target == null){
+      print('isometric_camera.centerOnChaseTarget() - aborted because target is null');
+      return;
     }
+    print('isometric_camera.centerOnChaseTarget()');
+    centerOnPosition(target);
   }
 
-  void centerOnV3(Position v3) => engine.cameraCenter(v3.renderX, v3.renderY);
+  void centerOnPosition(Position position) =>
+      engine.cameraCenter(position.renderX, position.renderY);
 
   void update() {
     applyMouseTranslation();

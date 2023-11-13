@@ -91,7 +91,6 @@ class IsometricEvents with IsometricComponent {
         return;
       case GameEventType.Player_Spawn_Started:
         camera.centerOnChaseTarget();
-        // audio.teleport.playXYZ(x, y, z);
         return;
       case GameEventType.Explosion:
         onGameEventExplosion(x, y, z);
@@ -401,7 +400,7 @@ class IsometricEvents with IsometricComponent {
       case PlayerEvent.Loot_Collected:
         return audio.collect_star_3();
       case PlayerEvent.Scene_Changed:
-        camera.centerOnChaseTarget();
+        // camera.centerOnChaseTarget();
         break;
       case PlayerEvent.Item_Acquired:
         readPlayerEventItemAcquired();
@@ -422,6 +421,7 @@ class IsometricEvents with IsometricComponent {
           editor.column = player.indexColumn;
           editor.z = player.indexZ;
         }
+        options.setCameraPositionToPlayer();
         camera.centerOnChaseTarget();
         io.recenterCursor();
         break;
@@ -589,6 +589,7 @@ class IsometricEvents with IsometricComponent {
     print('isometric.onChangedNetworkConnectionStatus($connection)');
     network.parser.bufferSize.value = 0;
     amulet.onChangedNetworkConnectionStatus(connection);
+    options.activateCameraPlay();
 
     switch (connection) {
       case ConnectionStatus.Connected:
