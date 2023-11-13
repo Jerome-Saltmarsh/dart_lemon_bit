@@ -82,7 +82,7 @@ class IsometricScene with IsometricComponent implements Updatable {
   var onscreenNodes = 0;
   var ambientRGB = 0;
   var interpolationLength = 6;
-  var interpolations = <double>[];
+  var interpolations = Float32List(6);
 
   final marksChangedNotifier = Watch(0);
   final interpolationEaseType = Watch(EaseType.In_Quad);
@@ -95,10 +95,7 @@ class IsometricScene with IsometricComponent implements Updatable {
   IsometricScene(){
     interpolationEaseType.onChanged(onChangedInterpolationEaseType);
     ambientRGB = getRGB(ambientColor);
-    interpolations = interpolateEaseType(
-      length: interpolationLength,
-      easeType: interpolationEaseType.value,
-    );
+    assignInterpolations();
     marksChangedNotifier.onChanged(onChangedMarks);
     shuffleNodeRandoms();
   }
@@ -157,10 +154,7 @@ class IsometricScene with IsometricComponent implements Updatable {
   }
 
   void onChangedInterpolationEaseType(EaseType easeType){
-    interpolations = interpolateEaseType(
-      length: interpolationLength,
-      easeType: EaseType.In_Out_Quad,
-    );
+    assignInterpolations();
   }
 
   void setInterpolationLength(int value){
@@ -168,10 +162,14 @@ class IsometricScene with IsometricComponent implements Updatable {
       return;
 
     interpolationLength = value;
-    interpolations = interpolateEaseType(
+    assignInterpolations();
+  }
+
+  void assignInterpolations() {
+    interpolations = Float32List.fromList(interpolateEaseType(
       length: interpolationLength,
       easeType: interpolationEaseType.value,
-    );
+    ));
   }
 
   int get ambientAlpha => _ambientAlpha;
