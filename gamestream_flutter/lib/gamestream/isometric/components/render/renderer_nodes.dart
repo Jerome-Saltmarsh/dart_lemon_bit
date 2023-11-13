@@ -1163,26 +1163,40 @@ class RendererNodes extends RenderGroup {
     required double dstX,
     required double dstY,
   }) {
+    const width = 48.0;
+    const srcX = 292.0;
+    const srcY = 1545.0;
+
+    // shadow
     renderStandardNode(
       color: color,
-      srcX: 292,
-      srcY: 1545,
+      srcX: srcX,
+      srcY: srcY,
       dstX: dstX,
       dstY: dstY,
     );
 
     renderStandardNode(
       color: colorWest,
-      srcX: 243,
-      srcY: 1545,
+      srcX: srcX + (width * 1),
+      srcY: srcY,
       dstX: dstX,
       dstY: dstY,
     );
 
     renderStandardNode(
       color: colorSouth,
-      srcX: 341,
-      srcY: 1545,
+      srcX: srcX + (width * 2),
+      srcY: srcY,
+      dstX: dstX,
+      dstY: dstY,
+    );
+
+    // top
+    renderStandardNode(
+      color: color,
+      srcX: srcX + (width * 3),
+      srcY: srcY,
       dstX: dstX,
       dstY: dstY,
     );
