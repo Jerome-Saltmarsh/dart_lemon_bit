@@ -27,6 +27,7 @@ ctrl + []               : move caret to code block
 * [new]: flames emit smoke particles
 
 ## 13.11.2023
+* [new]: render tree shadow
 * [new]: render boulder shadow
 * [fix]: camera center on player on start
 

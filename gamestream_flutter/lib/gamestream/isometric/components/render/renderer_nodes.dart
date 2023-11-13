@@ -1661,9 +1661,10 @@ class RendererNodes extends RenderGroup {
   }) {
     const anchorY = 0.72;
     const dstYShift = 32;
-    const srcX = 64.0;
-    const srcY = 1328.0;
     const srcWidth = 48.0;
+    const srcHeight = 72.0;
+    const srcX = 64.0 + (srcWidth * 9);
+    const srcY = 1328.0;
 
     final shiftRotation = treeAnimation[animationFrame % treeAnimationLength] * wind;
     final rotation = shiftRotation * 0.013;
@@ -1675,8 +1676,8 @@ class RendererNodes extends RenderGroup {
       image: atlasNodes,
       srcX: srcX,
       srcY: srcY,
-      srcWidth: Src_Width_Sprite_Tree,
-      srcHeight: Src_Height_Sprite_Tree,
+      srcWidth: srcWidth,
+      srcHeight: srcHeight,
       dstX: dstX,
       dstY: dstY + dstYShift,
       color: color,
@@ -1687,10 +1688,10 @@ class RendererNodes extends RenderGroup {
     // west
     engine.renderSpriteRotated(
       image: atlasNodes,
-      srcX: srcX + Src_Width_Sprite_Tree,
+      srcX: srcX + srcWidth,
       srcY: srcY,
-      srcWidth: Src_Width_Sprite_Tree,
-      srcHeight: Src_Height_Sprite_Tree,
+      srcWidth: srcWidth,
+      srcHeight: srcHeight,
       dstX: dstX,
       dstY: dstY + dstYShift,
       color: colorWest,
@@ -1703,8 +1704,8 @@ class RendererNodes extends RenderGroup {
       image: atlasNodes,
       srcX: srcX + srcWidth * 2,
       srcY: srcY,
-      srcWidth: Src_Width_Sprite_Tree,
-      srcHeight: Src_Height_Sprite_Tree,
+      srcWidth: srcWidth,
+      srcHeight: srcHeight,
       dstX: dstX,
       dstY: dstY + dstYShift,
       color: colorSouth,
@@ -1717,8 +1718,8 @@ class RendererNodes extends RenderGroup {
       image: atlasNodes,
       srcX: srcX + (srcWidth * 4),
       srcY: srcY,
-      srcWidth: Src_Width_Sprite_Tree,
-      srcHeight: Src_Height_Sprite_Tree,
+      srcWidth: srcWidth,
+      srcHeight: srcHeight,
       dstX: dstX,
       dstY: dstY + dstYShift,
       color: colorNorth,
@@ -1731,8 +1732,8 @@ class RendererNodes extends RenderGroup {
       image: atlasNodes,
       srcX: srcX + (srcWidth * 3),
       srcY: srcY,
-      srcWidth: Src_Width_Sprite_Tree,
-      srcHeight: Src_Height_Sprite_Tree,
+      srcWidth: srcWidth,
+      srcHeight: srcHeight,
       dstX: dstX,
       dstY: dstY + dstYShift,
       color: colorEast,
