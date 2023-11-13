@@ -14,6 +14,7 @@ enum FiendType {
     chanceOfSetTarget: 0.25,
     weaponType: WeaponType.Sword,
     weaponRange: 25,
+    quantity: 3,
   ),
   Skeleton(
     level: 2,
@@ -26,6 +27,7 @@ enum FiendType {
     chanceOfSetTarget: 0.25,
     weaponType: WeaponType.Bow,
     weaponRange: 150,
+    quantity: 2,
   );
 
   final int level;
@@ -35,6 +37,8 @@ enum FiendType {
   final int characterType;
   final int weaponType;
   final int experience;
+  /// how many fiends are spawned per mark
+  final int quantity;
   final double runSpeed;
   final double chanceOfSetTarget;
   final double weaponRange;
@@ -50,5 +54,6 @@ enum FiendType {
     required this.chanceOfSetTarget,
     required this.weaponType,
     required this.weaponRange,
+    required this.quantity,
   });
 }

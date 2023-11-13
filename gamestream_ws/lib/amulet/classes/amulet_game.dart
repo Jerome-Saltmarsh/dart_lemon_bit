@@ -102,11 +102,16 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       }
       final markSubType = MarkType.getSubType(markValue);
       final fiendType = FiendType.values[markSubType];
+      final quantity = fiendType.quantity;
 
-      spawnFiendTypeAtIndex(
+      for (var i = 0; i < quantity; i++){
+        spawnFiendTypeAtIndex(
           fiendType: fiendType,
           index: MarkType.getIndex(markValue),
-      );
+        );
+      }
+
+
     }
   }
 
