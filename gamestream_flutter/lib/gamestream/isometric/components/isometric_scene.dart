@@ -920,6 +920,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     final total =  bakeStackTorchTotal;
     final stack = bakeStackTorchIndex;
 
+    final engine = this.engine;
     const padding = Node_Size * 6;
     final screenLeft = engine.Screen_Left - padding;
     final screenTop = engine.Screen_Top - padding;
