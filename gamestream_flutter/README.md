@@ -27,6 +27,7 @@ ctrl + []               : move caret to code block
 * [new]: flames emit smoke particles
 
 ## 13.11.2023
+* [new]: render shadow wooden crate 
 * [new]: render shadow tree stump 
 * [new]: render shadow barrel 
 * [new]: render shadow tree 

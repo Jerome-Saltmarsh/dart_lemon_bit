@@ -43,62 +43,9 @@ class RendererGameObjects extends RenderGroup {
     }
 
     if (type == ItemType.Object && subType == GameObjectType.Crate_Wooden){
-
-      final gameObjectIndex = scene.getIndexPosition(gameObject);
-      final dstX = gameObject.renderX;
-      final dstY = gameObject.renderY;
-
-      const scale = goldenRatio_0618;
-      const anchorY = 0.8;
-
-      const srcX = 1.0;
-      const srcY = 601.0;
-      const width = 48.0;
-      const height = 73.0;
-      final image = images.atlas_gameobjects;
-
-      engine.renderSprite(
-        image: image,
-        srcX: srcX,
-        srcY: srcY,
-        srcWidth: width,
-        srcHeight: height,
-        dstX: dstX,
-        dstY: dstY,
-        color: scene.colorSouth(gameObjectIndex),
-        scale: scale,
-        anchorY: anchorY,
-      );
-
-      engine.renderSprite(
-        image: image,
-        srcX: srcX + width,
-        srcY: srcY,
-        srcWidth: width,
-        srcHeight: height,
-        dstX: dstX,
-        dstY: dstY,
-        color: scene.colorAbove(gameObjectIndex),
-        scale: scale,
-        anchorY: anchorY,
-      );
-
-      engine.renderSprite(
-        image: image,
-        srcX: srcX + width + width,
-        srcY: srcY,
-        srcWidth: width,
-        srcHeight: height,
-        dstX: dstX,
-        dstY: dstY,
-        color: scene.colorWest(gameObjectIndex),
-        scale: scale,
-        anchorY: anchorY,
-      );
-
+      renderCrateWooden(scene, gameObject, images, engine);
       return;
     }
-
 
     if (
       type == ItemType.Object &&
@@ -387,6 +334,84 @@ class RendererGameObjects extends RenderGroup {
     //     );
     //   render.textPosition(gameObject, formatPercentage(gameObject.healthPercentage));
     // }
+  }
+
+  void renderCrateWooden(
+      IsometricScene scene,
+      GameObject gameObject,
+      IsometricImages images,
+      LemonEngine engine,
+  ) {
+    final gameObjectIndex = scene.getIndexPosition(gameObject);
+    final dstX = gameObject.renderX;
+    final dstY = gameObject.renderY;
+
+    const scale = goldenRatio_0618;
+    const anchorY = 0.8;
+
+    const srcX = 1.0;
+    const srcY = 601.0;
+    const width = 48.0;
+    const height = 73.0;
+    final image = images.atlas_gameobjects;
+
+    // shadow
+    engine.renderSprite(
+      image: image,
+      srcX: srcX + width * 3,
+      srcY: srcY,
+      srcWidth: width,
+      srcHeight: height,
+      dstX: dstX,
+      dstY: dstY,
+      color: scene.getColor(gameObjectIndex),
+      scale: scale,
+      anchorY: anchorY,
+    );
+
+    // south
+    engine.renderSprite(
+      image: image,
+      srcX: srcX,
+      srcY: srcY,
+      srcWidth: width,
+      srcHeight: height,
+      dstX: dstX,
+      dstY: dstY,
+      color: scene.colorSouth(gameObjectIndex),
+      scale: scale,
+      anchorY: anchorY,
+    );
+
+    // top
+    engine.renderSprite(
+      image: image,
+      srcX: srcX + width,
+      srcY: srcY,
+      srcWidth: width,
+      srcHeight: height,
+      dstX: dstX,
+      dstY: dstY,
+      color: scene.colorAbove(gameObjectIndex),
+      scale: scale,
+      anchorY: anchorY,
+    );
+
+    // west
+    engine.renderSprite(
+      image: image,
+      srcX: srcX + width + width,
+      srcY: srcY,
+      srcWidth: width,
+      srcHeight: height,
+      dstX: dstX,
+      dstY: dstY,
+      color: scene.colorWest(gameObjectIndex),
+      scale: scale,
+      anchorY: anchorY,
+    );
+
+    return;
   }
 
   void renderBarrel(
