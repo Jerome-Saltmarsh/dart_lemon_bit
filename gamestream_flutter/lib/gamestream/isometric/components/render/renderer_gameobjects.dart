@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_images.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_scene.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
@@ -36,64 +38,7 @@ class RendererGameObjects extends RenderGroup {
     final scene = this.scene;
 
     if (type == ItemType.Object && subType == GameObjectType.Barrel){
-
-      final gameObjectIndex = scene.getIndexPosition(gameObject);
-      final dstX = gameObject.renderX;
-      final dstY = gameObject.renderY;
-      final sprite = images.barrelWooden;
-      const scale = goldenRatio_0381;
-      const anchorY = 0.8;
-
-      render.sprite(
-        sprite: sprite,
-        frame: sprite.getFrame(row: 0, column: 2),
-        dstX: dstX,
-        dstY: dstY,
-        color: scene.colorSouth(gameObjectIndex),
-        scale: scale,
-        anchorY: anchorY,
-      );
-
-      render.sprite(
-        sprite: sprite,
-        frame: sprite.getFrame(row: 0, column: 4),
-        dstX: dstX,
-        dstY: dstY,
-        color: scene.colorWest(gameObjectIndex),
-        scale: scale,
-        anchorY: anchorY,
-      );
-
-      render.sprite(
-          sprite: sprite,
-          frame: sprite.getFrame(row: 0, column: 0),
-          dstX: dstX,
-          dstY: dstY,
-          color: scene.colorEast(gameObjectIndex),
-          scale: scale,
-          anchorY: anchorY,
-      );
-
-      render.sprite(
-          sprite: sprite,
-          frame: sprite.getFrame(row: 0, column: 1),
-          dstX: dstX,
-          dstY: dstY,
-          color: scene.colorNorth(gameObjectIndex),
-          scale: scale,
-          anchorY: anchorY,
-      );
-
-      render.sprite(
-          sprite: sprite,
-          frame: sprite.getFrame(row: 0, column: 3),
-          dstX: dstX,
-          dstY: dstY,
-          color: scene.colorAbove(gameObjectIndex),
-          scale: scale,
-          anchorY: anchorY,
-      );
-
+      renderBarrel(scene, gameObject, images, render);
       return;
     }
 
@@ -442,6 +387,81 @@ class RendererGameObjects extends RenderGroup {
     //     );
     //   render.textPosition(gameObject, formatPercentage(gameObject.healthPercentage));
     // }
+  }
+
+  void renderBarrel(
+      IsometricScene scene,
+      GameObject gameObject,
+      IsometricImages images,
+      IsometricRender render,
+  ) {
+    final gameObjectIndex = scene.getIndexPosition(gameObject);
+    final dstX = gameObject.renderX;
+    final dstY = gameObject.renderY;
+    final sprite = images.barrelWooden;
+    const scale = goldenRatio_0381;
+    const anchorY = 0.8;
+
+    render.sprite(
+      sprite: sprite,
+      frame: sprite.getFrame(row: 0, column: 2),
+      dstX: dstX,
+      dstY: dstY,
+      color: scene.getColor(gameObjectIndex),
+      scale: scale,
+      anchorY: anchorY,
+    );
+
+    render.sprite(
+      sprite: sprite,
+      frame: sprite.getFrame(row: 0, column: 3),
+      dstX: dstX,
+      dstY: dstY,
+      color: scene.colorSouth(gameObjectIndex),
+      scale: scale,
+      anchorY: anchorY,
+    );
+
+    render.sprite(
+      sprite: sprite,
+      frame: sprite.getFrame(row: 0, column: 5),
+      dstX: dstX,
+      dstY: dstY,
+      color: scene.colorWest(gameObjectIndex),
+      scale: scale,
+      anchorY: anchorY,
+    );
+
+    render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: 0),
+        dstX: dstX,
+        dstY: dstY,
+        color: scene.colorEast(gameObjectIndex),
+        scale: scale,
+        anchorY: anchorY,
+    );
+
+    render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: 1),
+        dstX: dstX,
+        dstY: dstY,
+        color: scene.colorNorth(gameObjectIndex),
+        scale: scale,
+        anchorY: anchorY,
+    );
+
+    render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: 4),
+        dstX: dstX,
+        dstY: dstY,
+        color: scene.colorAbove(gameObjectIndex),
+        scale: scale,
+        anchorY: anchorY,
+    );
+
   }
 
   @override

@@ -465,10 +465,10 @@ class IsometricImages with IsometricComponent {
 
     loadSprite(
         name: 'sprites/isometric/gameobjects/barrel',
-        image: atlas_gameobjects,
+        image: atlas_nodes,
         mode: AnimationMode.single,
-        atlasX: 1,
-        atlasY: 443,
+        atlasX: 995,
+        atlasY: 0,
     ).then((value) => barrelWooden = value);
 
     itemTypeAtlases = {
