@@ -9,7 +9,6 @@ class NetworkResponseAmulet {
    static const Player_Equipped = 6;
    static const Player_Interacting = 7;
    static const Player_Experience = 8;
-   static const Player_Experience_Required = 9;
    static const Player_Level = 10;
    static const Player_Inventory_Open = 13;
    static const Activated_Power_Index = 15;

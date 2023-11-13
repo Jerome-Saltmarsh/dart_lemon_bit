@@ -66,8 +66,6 @@ extension AmuletParser on IsometricParser {
          break;
        case NetworkResponseAmulet.Player_Experience:
          amulet.playerExperience.value = readUInt24();
-         break;
-       case NetworkResponseAmulet.Player_Experience_Required:
          amulet.playerExperienceRequired.value = readUInt24();
          break;
        case NetworkResponseAmulet.Player_Level:

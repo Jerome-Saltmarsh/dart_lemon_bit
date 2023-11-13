@@ -283,6 +283,9 @@ class Connection extends ByteReader {
             break;
           case NetworkRequestEdit.Spawn_AI:
             game.clearSpawnedAI();
+            if (game is AmuletGame){
+              game.spawnFiendsAtSpawnNodes();
+            }
             break;
 
           case NetworkRequestEdit.Save:

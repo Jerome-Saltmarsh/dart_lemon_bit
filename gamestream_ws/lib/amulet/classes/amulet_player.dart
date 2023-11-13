@@ -76,7 +76,6 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     writeInteracting();
     writePlayerLevel();
     writePlayerExperience();
-    writePlayerExperienceRequired();
     writeGender();
     writePlayerComplexion();
   }
@@ -111,7 +110,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
 
   int get experience => _experience;
 
-  int get experienceRequired => level * 5;
+  int get experienceRequired => (level * level * 2) + (level * 10);
 
   int get level => _level;
 
@@ -220,7 +219,6 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   set level(int value){
     _level = value;
     writePlayerLevel();
-    writePlayerExperienceRequired();
   }
 
   set inventoryOpen(bool value){
@@ -1023,11 +1021,6 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Experience);
     writeUInt24(experience);
-  }
-
-  void writePlayerExperienceRequired() {
-    writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Player_Experience_Required);
     writeUInt24(experienceRequired);
   }
 
@@ -1945,9 +1938,5 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     writeByte(NetworkResponseAmulet.Player_World_Index);
     writeByte(amuletGame.worldRow);
     writeByte(amuletGame.worldColumn);
-  }
-
-  int getExperienceRequiredForLevel(int level){
-    return level * 5;
   }
 }

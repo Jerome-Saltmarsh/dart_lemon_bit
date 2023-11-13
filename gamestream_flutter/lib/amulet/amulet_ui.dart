@@ -589,10 +589,13 @@ class AmuletUI {
 
                           final percentage =
                               clamp(experience / experienceRequired, 0, 1);
-                          return Container(
-                              color: Colors.white70,
-                              width: width * percentage,
-                              height: height);
+                          return Tooltip(
+                            message: '$experience / $experienceRequired',
+                            child: Container(
+                                color: Colors.white70,
+                                width: width * percentage,
+                                height: height),
+                          );
                         })))));
   }
 

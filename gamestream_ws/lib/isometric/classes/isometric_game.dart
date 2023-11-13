@@ -1917,6 +1917,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   /// WARNING EXPENSIVE OPERATION
   void clearSpawnedAI() {
+    final characters = this.characters;
     for (var i = 0; i < characters.length; i++) {
       if (characters[i] is IsometricPlayer) continue;
       characters.removeAt(i);
