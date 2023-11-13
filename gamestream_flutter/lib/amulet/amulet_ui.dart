@@ -575,28 +575,27 @@ class AmuletUI {
     return buildBorder(
         width: 2,
         color: Colors.white70,
-        child: Container(
-            width: width,
-            height: height,
-            alignment: Alignment.centerLeft,
-            child: Container(
-                color: Colors.transparent,
-                child: buildWatch(
-                    amulet.playerExperienceRequired,
-                    (experienceRequired) =>
-                        buildWatch(amulet.playerExperience, (experience) {
-                          if (experienceRequired <= 0) return nothing;
+        child: buildWatch(
+            amulet.playerExperienceRequired,
+            (experienceRequired) =>
+                buildWatch(amulet.playerExperience, (experience) {
+                  if (experienceRequired <= 0) return nothing;
 
-                          final percentage =
-                              clamp(experience / experienceRequired, 0, 1);
-                          return Tooltip(
-                            message: '$experience / $experienceRequired',
-                            child: Container(
-                                color: Colors.white70,
-                                width: width * percentage,
-                                height: height),
-                          );
-                        })))));
+                  final percentage =
+                      clamp(experience / experienceRequired, 0, 1);
+                  return Tooltip(
+                    message: '$experience / $experienceRequired',
+                    child: Container(
+                      width: width,
+                      height: height,
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                          color: Colors.white70,
+                          width: width * percentage,
+                          height: height),
+                    ),
+                  );
+                })));
   }
 
   Widget buildPlayerStatsRow() => GSContainer(
