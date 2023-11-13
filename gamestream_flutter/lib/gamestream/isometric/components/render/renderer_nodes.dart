@@ -1216,6 +1216,18 @@ class RendererNodes extends RenderGroup {
 
     engine.renderSprite(
       image: atlasNodes,
+      srcX: 1264 + (size * 4),
+      srcY: 448,
+      srcWidth: size,
+      srcHeight: size,
+      dstX: dstX,
+      dstY: dstY,
+      color: colorNorth,
+      anchorY: anchorY,
+    );
+
+    engine.renderSprite(
+      image: atlasNodes,
       srcX: 1264,
       srcY: 448,
       srcWidth: size,

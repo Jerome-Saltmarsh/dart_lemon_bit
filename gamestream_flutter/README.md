@@ -10,12 +10,16 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## BLOCK
-* [new]: item tabs weapons amulets etc
+* [new]: map locations
 * [new]: scene town 
 
 ## TODO
+* [new]: elemental damage
+* [new]: tree shadows
+* [new]: gameobject shadows
+* [new]: item tabs weapons amulets etc
 * [new]: model hair
-* [new]: health cooldown experience item
+* [new]: model rusty sword
 * [fix]: barrels and crates should not be interactable
 * [fix]: persist gameobject properties
 * [fix]: colored particle emission
@@ -23,6 +27,7 @@ ctrl + []               : move caret to code block
 * [new]: flames emit smoke particles
 
 ## 13.11.2023
+* [new]: render boulder shadow
 * [fix]: camera center on player on start
 
 ## 12.11.2023

@@ -73,18 +73,10 @@ class IsometricImages with IsometricComponent {
   late final dstEmpty = Uint16List(0);
 
   late final Image empty;
-  late final Image sphereTop;
-  late final Image sphereNorth;
-  late final Image sphereEast;
-  late final Image sphereSouth;
-  late final Image sphereWest;
   late final Image shades;
   late final Image shadesTransparent;
   late final Image pixel;
   late final Image atlas_projectiles;
-  // late final Image zombie;
-  // late final Image zombie_shadow;
-  // late final Image character_dog;
   late final Image atlas_particles;
   late final Image atlas_helms;
   late final Image atlas_hands;
@@ -116,11 +108,6 @@ class IsometricImages with IsometricComponent {
     empty = await loadPng('empty');
     loadPng('shades').then((value) => shades = value);
     loadPng('shades_transparent').then((value) => shadesTransparent = value);
-    loadPng('sphere/top').then((value) => sphereTop = value);
-    loadPng('sphere/north').then((value) => sphereNorth = value);
-    loadPng('sphere/east').then((value) => sphereEast = value);
-    loadPng('sphere/south').then((value) => sphereSouth = value);
-    loadPng('sphere/west').then((value) => sphereWest = value);
     loadPng('square').then((value) => square = value);
     loadPng('atlas_nodes').then((value) => atlas_nodes = value);
     loadPng('atlas_characters').then((value) => atlas_characters = value);

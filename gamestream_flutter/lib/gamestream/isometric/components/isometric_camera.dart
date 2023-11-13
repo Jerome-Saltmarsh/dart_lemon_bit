@@ -6,10 +6,10 @@ import 'package:lemon_math/src.dart';
 import '../../../isometric/classes/position.dart';
 
 class IsometricCamera with IsometricComponent {
-  var chaseStrength = 0.00075;
+  var chaseStrength = 0.001;
   var translateX = 0.0;
   var translateY = 25.0;
-  var mouseFollowSensitivity = 0.125;
+  var mouseFollowSensitivity = 0.15;
 
   Position? target;
 
