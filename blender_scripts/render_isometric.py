@@ -395,7 +395,7 @@ def set_render_direction(direction):
 
 def render_unmuted_rotation_tracks():
     print('render_unmuted_rotation_tracks()')
-    hide_mesh_kid()
+    # hide_mesh_kid()
     set_render_engine_eevee()
     unmuted_camera_tracks = get_active_animation_tracks(name_object_camera)
     active_direction_tracks = get_active_animation_tracks(name_object_direction)
@@ -415,6 +415,11 @@ def render_unmuted_rotation_tracks():
 
 
 render_unmuted_rotation_tracks()
-build_sprites_from_renders()
+active_animation_tracks_render = get_active_animation_tracks('render')
+
+for track in active_animation_tracks_render:
+    if not track.mute:
+        build_sprites_from_renders()
+
 set_render_path("c:/tmp/")
 print('render sprites complete')

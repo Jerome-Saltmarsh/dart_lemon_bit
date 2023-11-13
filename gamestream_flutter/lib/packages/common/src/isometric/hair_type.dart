@@ -17,7 +17,7 @@ class HairType {
 
   static getName(int subType) => const {
       none: 'none',
-      basic_1: '01',
+      basic_1: '00',
       // basic_2: '02',
     }[subType] ?? (throw Exception());
 }

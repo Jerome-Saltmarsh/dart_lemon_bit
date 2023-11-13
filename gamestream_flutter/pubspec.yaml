@@ -71,10 +71,7 @@ flutter:
     - sprites/isometric/kid/south/body_female/shirt_blue/
     - sprites/isometric/kid/south/body_female/leather_armour/
     - sprites/isometric/kid/south/body_arms/shirt_blue/
-    - sprites/isometric/kid/south/hair_front/01/
-    - sprites/isometric/kid/south/hair_back/01/
-    - sprites/isometric/kid/south/hair_top/01/
-    - sprites/isometric/kid/south/hair_top/02/
+    - sprites/isometric/kid/south/hair/00/
     - sprites/isometric/kid/south/hands_left/gauntlets/
     - sprites/isometric/kid/south/hands_right/gauntlets/
     - sprites/isometric/kid/south/head/boy/
@@ -100,10 +97,7 @@ flutter:
     - sprites/isometric/kid/west/body_female/shirt_blue/
     - sprites/isometric/kid/west/body_female/leather_armour/
     - sprites/isometric/kid/west/body_arms/shirt_blue/
-    - sprites/isometric/kid/west/hair_front/01/
-    - sprites/isometric/kid/west/hair_back/01/
-    - sprites/isometric/kid/west/hair_top/01/
-    - sprites/isometric/kid/west/hair_top/02/
+    - sprites/isometric/kid/west/hair/00/
     - sprites/isometric/kid/west/hands_left/gauntlets/
     - sprites/isometric/kid/west/hands_right/gauntlets/
     - sprites/isometric/kid/west/head/boy/

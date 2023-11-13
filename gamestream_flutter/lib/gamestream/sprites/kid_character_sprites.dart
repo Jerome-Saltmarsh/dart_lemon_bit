@@ -18,9 +18,7 @@ class KidCharacterSprites {
   final torsoBottom = <int, CharacterSpriteGroup>{};
   final weapons = <int, CharacterSpriteGroup>{};
   final shadow = <int, CharacterSpriteGroup>{};
-  final hairFront = <int, CharacterSpriteGroup>{};
-  final hairBack = <int, CharacterSpriteGroup>{};
-  final hairTop = <int, CharacterSpriteGroup>{};
+  final hair = <int, CharacterSpriteGroup>{};
   final shoesLeft = <int, CharacterSpriteGroup>{};
   final shoesRight = <int, CharacterSpriteGroup>{};
 
@@ -39,9 +37,7 @@ class KidCharacterSprites {
     SpriteGroupType.Torso_Bottom: torsoBottom,
     SpriteGroupType.Weapons: weapons,
     SpriteGroupType.Shadow: shadow,
-    SpriteGroupType.Hair_Front: hairFront,
-    SpriteGroupType.Hair_Back: hairBack,
-    SpriteGroupType.Hair_Top: hairTop,
+    SpriteGroupType.Hair: hair,
     SpriteGroupType.Shoes_Left: shoesLeft,
     SpriteGroupType.Shoes_Right: shoesRight,
 

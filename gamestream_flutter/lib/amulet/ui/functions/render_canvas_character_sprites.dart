@@ -41,7 +41,7 @@ void renderCanvasCharacterSprites({
       ?.fromCharacterState(characterState);
   final legs = sprites.legs[legsType]
       ?.fromCharacterState(characterState);
-  final hair = sprites.hairFront[hairType]
+  final hair = sprites.hair[hairType]
       ?.fromCharacterState(characterState);
   final weapon = sprites.weapons[weaponType]
       ?.fromCharacterState(characterState);

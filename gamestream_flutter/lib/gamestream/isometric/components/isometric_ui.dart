@@ -635,12 +635,20 @@ class IsometricUI with IsometricComponent {
   }){
     this.showDialog(child: GSContainer(
       width: 150,
-      child: Column(
-        children: HairType.values
-            .map((hairType) => onPressed(
-              action: () => onSelected(hairType),
-              child: buildText(HairType.getName(hairType))))
-            .toList(growable: false),
+      height: 300,
+      child: SingleChildScrollView(
+        child: Column(
+          children: HairType.values
+              .map((hairType) {
+                return onPressed(
+                action: () {
+                  onSelected(hairType);
+                  closeDialog();
+                },
+                child: buildText(HairType.getName(hairType)));
+              })
+              .toList(growable: false),
+        ),
       ),
     ));
   }

@@ -187,9 +187,7 @@ class IsometricImages with IsometricComponent {
       kidCharacterSpritesIsometric.bodyFemale[0] = spriteGroupEmpty;
       kidCharacterSpritesIsometric.bodyArms[0] = spriteGroupEmpty;
       kidCharacterSpritesIsometric.legs[0] = spriteGroupEmpty;
-      kidCharacterSpritesIsometric.hairFront[0] = spriteGroupEmpty;
-      kidCharacterSpritesIsometric.hairBack[0] = spriteGroupEmpty;
-      kidCharacterSpritesIsometric.hairTop[0] = spriteGroupEmpty;
+      kidCharacterSpritesIsometric.hair[0] = spriteGroupEmpty;
       kidCharacterSpritesIsometric.shoesLeft[0] = spriteGroupEmpty;
       kidCharacterSpritesIsometric.shoesRight[0] = spriteGroupEmpty;
     }
@@ -386,35 +384,13 @@ class IsometricImages with IsometricComponent {
       HairType.valuesNotNone.forEach((hairType) {
 
         loadSpriteGroupFront(
-            type: SpriteGroupType.Hair_Front,
-            subType: hairType,
-            renderDirection: direction
-        );
-        loadSpriteGroupFront(
-            type: SpriteGroupType.Hair_Back,
-            subType: hairType,
-            renderDirection: direction
-        );
-        loadSpriteGroupFront(
-            type: SpriteGroupType.Hair_Top,
+            type: SpriteGroupType.Hair,
             subType: hairType,
             renderDirection: direction
         );
         loadSpriteGroupIsometric(
           direction: direction,
-          type: SpriteGroupType.Hair_Front,
-          subType: hairType,
-          skipHurt: true,
-        );
-        loadSpriteGroupIsometric(
-          direction: direction,
-          type: SpriteGroupType.Hair_Back,
-          subType: hairType,
-          skipHurt: true,
-        );
-        loadSpriteGroupIsometric(
-          direction: direction,
-          type: SpriteGroupType.Hair_Top,
+          type: SpriteGroupType.Hair,
           subType: hairType,
           skipHurt: true,
         );
