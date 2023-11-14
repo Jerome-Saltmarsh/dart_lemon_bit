@@ -336,10 +336,10 @@ class IsometricParticles with IsometricComponent implements Updatable {
         x: x,
         y: y,
         z: z,
-        zv: 0,
+        zv: 0.5,
         angle: 0,
         rotation: 0,
-        rotationV: giveOrTake(0.025),
+        rotationV: 0,
         speed: 0,
         scaleV: scaleV,
         weight: -0.15,
@@ -766,8 +766,20 @@ class IsometricParticles with IsometricComponent implements Updatable {
       particle.applyFloorFriction();
 
     } else {
-      particle.applyAirFriction();
-      particle.applyGravity();
+
+      if (!const [
+        ParticleType.Butterfly,
+        ParticleType.Whisp,
+        ParticleType.Glow,
+        ParticleType.Moth,
+        ParticleType.Confetti,
+        ParticleType.Myst,
+        ParticleType.Smoke,
+        ParticleType.Shadow,
+      ].contains(particleType)) {
+        particle.applyAirFriction();
+        particle.applyGravity();
+      }
     }
 
     final bounce = nodeCollision && particle.vz < 0;

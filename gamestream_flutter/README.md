@@ -27,6 +27,11 @@ ctrl + []               : move caret to code block
 * [new]: particle wind blowing 
 * [new]: flames emit smoke particles
 
+## 14.11.2023
+* [new]: remove arm left
+* [new]: remove arm right
+* [new]: remove body arms
+
 ## 13.11.2023
 * [new]: model hair
 * [new]: render shadow wooden crate 
