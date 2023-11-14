@@ -11,6 +11,7 @@ ctrl + []               : move caret to code block
 
 
 ## TODO
+* [new]: female torso and body
 * [fix]: render front view hair color
 * [new]: hair type 02
 * [new]: hair type 03
@@ -28,6 +29,8 @@ ctrl + []               : move caret to code block
 * [new]: flames emit smoke particles
 
 ## 14.11.2023
+* [new]: optimize update particles
+* [new]: optimize render particles
 * [new]: remove arm left
 * [new]: remove arm right
 * [new]: remove body arms

@@ -4,11 +4,8 @@ import 'package:gamestream_flutter/gamestream/isometric/components/types/sprite_
 import 'character_sprite_group.dart';
 
 class KidCharacterSprites {
-  // final armLeft = <int, CharacterSpriteGroup>{};
-  // final armRight  = <int, CharacterSpriteGroup>{};
   final bodyMale = <int, CharacterSpriteGroup>{};
   final bodyFemale = <int, CharacterSpriteGroup>{};
-  // final bodyArms = <int, CharacterSpriteGroup>{};
   final handLeft = <int, CharacterSpriteGroup>{};
   final handRight = <int, CharacterSpriteGroup>{};
   final head = <int, CharacterSpriteGroup>{};
@@ -19,8 +16,9 @@ class KidCharacterSprites {
   final weapons = <int, CharacterSpriteGroup>{};
   final shadow = <int, CharacterSpriteGroup>{};
   final hair = <int, CharacterSpriteGroup>{};
-  final shoesLeft = <int, CharacterSpriteGroup>{};
-  final shoesRight = <int, CharacterSpriteGroup>{};
+  final shoes = <int, CharacterSpriteGroup>{};
+  // final shoesLeft = <int, CharacterSpriteGroup>{};
+  // final shoesRight = <int, CharacterSpriteGroup>{};
 
   late final values = {
     // SpriteGroupType.Arms_Left: armLeft,
@@ -38,8 +36,9 @@ class KidCharacterSprites {
     SpriteGroupType.Weapons: weapons,
     SpriteGroupType.Shadow: shadow,
     SpriteGroupType.Hair: hair,
-    SpriteGroupType.Shoes_Left: shoesLeft,
-    SpriteGroupType.Shoes_Right: shoesRight,
+    SpriteGroupType.Shoes: shoes,
+    // SpriteGroupType.Shoes_Left: shoesLeft,
+    // SpriteGroupType.Shoes_Right: shoesRight,
 
   };
 }

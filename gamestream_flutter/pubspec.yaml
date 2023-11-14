@@ -79,10 +79,8 @@ flutter:
     - sprites/isometric/kid/south/weapons/bow/
     - sprites/isometric/kid/south/weapons/staff/
     - sprites/isometric/kid/south/weapons/sword/
-    - sprites/isometric/kid/south/shoes_left/iron_plates/
-    - sprites/isometric/kid/south/shoes_left/leather_boots/
-    - sprites/isometric/kid/south/shoes_right/iron_plates/
-    - sprites/isometric/kid/south/shoes_right/leather_boots/
+    - sprites/isometric/kid/south/shoes/iron_plates/
+    - sprites/isometric/kid/south/shoes/leather_boots/
     - sprites/isometric/kid/west/body_male/shirt_blue/
     - sprites/isometric/kid/west/body_male/leather_armour/
     - sprites/isometric/kid/west/body_female/shirt_blue/
@@ -102,10 +100,8 @@ flutter:
     - sprites/isometric/kid/west/weapons/bow/
     - sprites/isometric/kid/west/weapons/staff/
     - sprites/isometric/kid/west/weapons/sword/
-    - sprites/isometric/kid/west/shoes_left/iron_plates/
-    - sprites/isometric/kid/west/shoes_left/leather_boots/
-    - sprites/isometric/kid/west/shoes_right/iron_plates/
-    - sprites/isometric/kid/west/shoes_right/leather_boots/  
+    - sprites/isometric/kid/west/shoes/iron_plates/
+    - sprites/isometric/kid/west/shoes/leather_boots/
     - sprites/isometric/crystal/
     - sprites/front/kid/south/body_male/shirt_blue/
     - sprites/front/kid/south/body_male/leather_armour/
@@ -124,10 +120,7 @@ flutter:
     - sprites/front/kid/south/weapons/bow/
     - sprites/front/kid/south/weapons/staff/
     - sprites/front/kid/south/weapons/sword/
-    - sprites/front/kid/south/shoes_left/iron_plates/
-    - sprites/front/kid/south/shoes_left/leather_boots/
-    - sprites/front/kid/south/shoes_right/iron_plates/
-    - sprites/front/kid/south/shoes_right/leather_boots/
+    - sprites/front/kid/south/shoes/iron_plates/
     - sprites/front/kid/west/body_male/shirt_blue/
     - sprites/front/kid/west/body_male/leather_armour/
     - sprites/front/kid/west/body_female/leather_armour/
@@ -145,10 +138,8 @@ flutter:
     - sprites/front/kid/west/weapons/bow/
     - sprites/front/kid/west/weapons/staff/
     - sprites/front/kid/west/weapons/sword/
-    - sprites/front/kid/west/shoes_left/iron_plates/
-    - sprites/front/kid/west/shoes_left/leather_boots/
-    - sprites/front/kid/west/shoes_right/iron_plates/
-    - sprites/front/kid/west/shoes_right/leather_boots/
+    - sprites/front/kid/west/shoes/iron_plates/
+    - sprites/front/kid/west/shoes/leather_boots/
     - sprites/isometric/fallen/dead/
     - sprites/isometric/fallen/hurt/
     - sprites/isometric/fallen/idle/

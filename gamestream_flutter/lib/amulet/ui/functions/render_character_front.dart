@@ -34,10 +34,12 @@ void renderCharacterFront({
   //     ?.fromCharacterState(characterState) ?? (throw Exception());
   // final armsRight = sprites.armRight[ArmType.regular]
   //     ?.fromCharacterState(characterState) ?? (throw Exception());
-  final shoesLeft = sprites.shoesLeft[shoeType]
+  final shoes = sprites.shoes[shoeType]
       ?.fromCharacterState(characterState);
-  final shoesRight = sprites.shoesRight[shoeType]
-      ?.fromCharacterState(characterState);
+  // final shoesLeft = sprites.shoesLeft[shoeType]
+  //     ?.fromCharacterState(characterState);
+  // final shoesRight = sprites.shoesRight[shoeType]
+  //     ?.fromCharacterState(characterState);
   final legs = sprites.legs[legsType]
       ?.fromCharacterState(characterState);
   final hair = sprites.hair[hairType]
@@ -129,9 +131,9 @@ void renderCharacterFront({
   //   blendMode: BlendMode.modulate,
   // );
 
-  if (shoesLeft != null){
+  if (shoes != null){
     renderCanvasSprite(
-      sprite: shoesLeft,
+      sprite: shoes,
       canvas: canvas,
       row: row,
       column: column,
@@ -140,16 +142,16 @@ void renderCharacterFront({
     );
   }
 
-  if (shoesRight != null){
-    renderCanvasSprite(
-      sprite: shoesRight,
-      canvas: canvas,
-      row: row,
-      column: column,
-      blendMode: BlendMode.dstATop,
-      color: color,
-    );
-  }
+  // if (shoesRight != null){
+  //   renderCanvasSprite(
+  //     sprite: shoesRight,
+  //     canvas: canvas,
+  //     row: row,
+  //     column: column,
+  //     blendMode: BlendMode.dstATop,
+  //     color: color,
+  //   );
+  // }
 
   if (body != null) {
     renderCanvasSprite(

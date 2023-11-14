@@ -188,8 +188,9 @@ class IsometricImages with IsometricComponent {
       // kidCharacterSpritesIsometric.bodyArms[0] = spriteGroupEmpty;
       kidCharacterSpritesIsometric.legs[0] = spriteGroupEmpty;
       kidCharacterSpritesIsometric.hair[0] = spriteGroupEmpty;
-      kidCharacterSpritesIsometric.shoesLeft[0] = spriteGroupEmpty;
-      kidCharacterSpritesIsometric.shoesRight[0] = spriteGroupEmpty;
+      // kidCharacterSpritesIsometric.shoesLeft[0] = spriteGroupEmpty;
+      // kidCharacterSpritesIsometric.shoesRight[0] = spriteGroupEmpty;
+      kidCharacterSpritesIsometric.shoes[0] = spriteGroupEmpty;
     }
 
     for (final renderDirection in const [RenderDirection.south, RenderDirection.west]){
@@ -213,26 +214,12 @@ class IsometricImages with IsometricComponent {
       loadSpriteGroupFront(type: SpriteGroupType.Weapons, subType: WeaponType.Bow, renderDirection: renderDirection);
       loadSpriteGroupFront(type: SpriteGroupType.Weapons, subType: WeaponType.Staff, renderDirection: renderDirection);
       loadSpriteGroupFront(type: SpriteGroupType.Weapons, subType: WeaponType.Sword, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Shoes_Left, subType: ShoeType.Leather_Boots, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Shoes_Right, subType: ShoeType.Leather_Boots, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Shoes_Left, subType: ShoeType.Iron_Plates, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Shoes_Right, subType: ShoeType.Iron_Plates, renderDirection: renderDirection);
+      loadSpriteGroupFront(type: SpriteGroupType.Shoes, subType: ShoeType.Leather_Boots, renderDirection: renderDirection);
+      loadSpriteGroupFront(type: SpriteGroupType.Shoes, subType: ShoeType.Iron_Plates, renderDirection: renderDirection);
     }
 
 
     for (final direction in const[RenderDirection.south, RenderDirection.west]){
-      // loadSpriteGroupIsometric(
-      //     direction: direction,
-      //     type: SpriteGroupType.Arms_Left,
-      //     subType: ArmType.regular,
-      //     skipHurt: true,
-      // );
-      // loadSpriteGroupIsometric(
-      //     direction: direction,
-      //     type: SpriteGroupType.Arms_Right,
-      //     subType: ArmType.regular,
-      //     skipHurt: true,
-      // );
       loadSpriteGroupIsometric(
           direction: direction,
           type: SpriteGroupType.Body_Male,
@@ -251,12 +238,6 @@ class IsometricImages with IsometricComponent {
           subType: BodyType.Leather_Armour,
           skipHurt: true,
       );
-      // loadSpriteGroupIsometric(
-      //     direction: direction,
-      //     type: SpriteGroupType.Body_Arms,
-      //     subType: BodyType.Shirt_Blue,
-      //     skipHurt: true,
-      // );
       loadSpriteGroupIsometric(
         direction: direction,
         type: SpriteGroupType.Hands_Left,
@@ -346,25 +327,13 @@ class IsometricImages with IsometricComponent {
       );
       loadSpriteGroupIsometric(
         direction: direction,
-        type: SpriteGroupType.Shoes_Left,
+        type: SpriteGroupType.Shoes,
         subType: ShoeType.Leather_Boots,
         skipHurt: true,
       );
       loadSpriteGroupIsometric(
         direction: direction,
-        type: SpriteGroupType.Shoes_Right,
-        subType: ShoeType.Leather_Boots,
-        skipHurt: true,
-      );
-      loadSpriteGroupIsometric(
-        direction: direction,
-        type: SpriteGroupType.Shoes_Left,
-        subType: ShoeType.Iron_Plates,
-        skipHurt: true,
-      );
-      loadSpriteGroupIsometric(
-        direction: direction,
-        type: SpriteGroupType.Shoes_Right,
+        type: SpriteGroupType.Shoes,
         subType: ShoeType.Iron_Plates,
         skipHurt: true,
       );
