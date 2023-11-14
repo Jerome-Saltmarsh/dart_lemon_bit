@@ -188,39 +188,11 @@ class RendererCharacters extends RenderGroup {
     final spriteShoesSouth = atlasShoesSouth.fromCharacterState(characterState);
     final spriteShoesWest = atlasShoesWest.fromCharacterState(characterState);
 
-    // final Sprite spriteHandFrontSouth;
-    // final Sprite spriteHandFrontWest;
-    // final Sprite spriteHandBehindSouth;
-    // final Sprite spriteHandBehindWest;
-    // final Sprite spriteShoesFrontSouth;
-    // final Sprite spriteShoesFrontWest;
-    // final Sprite spriteShoesBehindSouth;
-    // final Sprite spriteShoesBehindWest;
-
     final palette = colors.palette;
     final colorSkin = palette[character.complexion].value;
     final colorHair = palette[character.hairColor].value;
 
     final render = this.render;
-
-    // final leftInFront = const [
-    //   InputDirection.Up_Left,
-    //   InputDirection.Left,
-    //   InputDirection.Down_Left,
-    // ].contains(direction);
-
-    // if (leftInFront) {
-    //   spriteHandFrontSouth = spriteHandsLeftSouth;
-    //   spriteHandFrontWest = spriteHandsLeftWest;
-    //   spriteHandBehindSouth = spriteHandsRightSouth;
-    //   spriteHandBehindWest = spriteHandsRightWest;
-    // } else {
-    //   spriteHandFrontSouth = spriteHandsRightSouth;
-    //   spriteHandFrontWest = spriteHandsRightSouth;
-    //   spriteHandBehindSouth = spriteHandsLeftSouth;
-    //   spriteHandBehindWest = spriteHandsLeftWest;
-    // }
-
     final renderSprite = render.sprite;
     final modulate = render.modulate;
 
@@ -314,96 +286,6 @@ class RendererCharacters extends RenderGroup {
       return;
     }
 
-    // if (spriteHandsRightSouth != spriteHandFrontSouth){
-    //   renderSprite(
-    //     sprite: spriteWeaponSouth,
-    //     frame: completingAction
-    //         ? spriteWeaponSouth.getFramePercentage(row, actionComplete)
-    //         : spriteWeaponSouth.getFrame(row: row, column: animationFrame),
-    //     color: colorSouth,
-    //     scale: scale,
-    //     dstX: dstX,
-    //     dstY: dstY,
-    //     anchorY: anchorY,
-    //   );
-    //
-    //   renderSprite(
-    //     sprite: spriteWeaponWest,
-    //     frame: completingAction
-    //         ? spriteWeaponWest.getFramePercentage(row, actionComplete)
-    //         : spriteWeaponWest.getFrame(row: row, column: animationFrame),
-    //     color: colorWest,
-    //     scale: scale,
-    //     dstX: dstX,
-    //     dstY: dstY,
-    //     anchorY: anchorY,
-    //   );
-    // }
-
-    final bodyFirst = const [
-      InputDirection.Down_Left,
-      InputDirection.Down,
-      InputDirection.Down_Right,
-      InputDirection.Right,
-    ].contains(direction);
-
-
-    // render.textPosition(character, direction, offsetY: -100);
-    // render.textPosition(character, bodyFirst, offsetY: -100);
-
-    if (bodyFirst){
-
-      modulate(
-        sprite: spriteTorsoTopSouth,
-        frame: completingAction
-            ? spriteTorsoTopSouth.getFramePercentage(row, actionComplete)
-            : spriteTorsoTopSouth.getFrame(column: animationFrame, row: row),
-        color1: colorSkin,
-        color2: colorSouth,
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
-
-      modulate(
-        sprite: spriteTorsoTopWest,
-        frame: completingAction
-            ? spriteTorsoTopWest.getFramePercentage(row, actionComplete)
-            : spriteTorsoTopWest.getFrame(column: animationFrame, row: row),
-        color1: colorSkin,
-        color2: colorWest,
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
-
-      renderSprite(
-        sprite: spriteBodySouth,
-        frame: completingAction
-            ? spriteBodySouth.getFramePercentage(row, actionComplete)
-            : spriteBodySouth.getFrame(row: row, column: animationFrame),
-        color: colorSouth,
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
-
-      renderSprite(
-        sprite: spriteBodyWest,
-        frame: completingAction
-            ? spriteBodyWest.getFramePercentage(row, actionComplete)
-            : spriteBodyWest.getFrame(row: row, column: animationFrame),
-        color: colorWest,
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
-    }
-
     renderSprite(
       sprite: spriteWeaponSouth,
       frame: completingAction
@@ -428,144 +310,62 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    // modulate(
-    //   sprite: spriteArmFrontSouth,
-    //   frame: completingAction
-    //       ? spriteArmFrontSouth.getFramePercentage(row, actionComplete)
-    //       : spriteArmFrontSouth.getFrame(row: row, column: animationFrame),
-    //   color1: colorSkin,
-    //   color2: colorSouth,
-    //   scale: scale,
-    //   dstX: dstX,
-    //   dstY: dstY,
-    //   anchorY: anchorY,
-    // );
+    modulate(
+      sprite: spriteTorsoTopSouth,
+      frame: completingAction
+          ? spriteTorsoTopSouth.getFramePercentage(row, actionComplete)
+          : spriteTorsoTopSouth.getFrame(column: animationFrame, row: row),
+      color1: colorSkin,
+      color2: colorSouth,
+      scale: scale,
+      dstX: dstX,
+      anchorY: anchorY,
+      dstY: dstY,
+    );
 
-    // modulate(
-    //   sprite: spriteArmFrontWest,
-    //   frame: completingAction
-    //       ? spriteArmFrontWest.getFramePercentage(row, actionComplete)
-    //       : spriteArmFrontWest.getFrame(row: row, column: animationFrame),
-    //   color1: colorSkin,
-    //   color2: colorWest,
-    //   scale: scale,
-    //   dstX: dstX,
-    //   dstY: dstY,
-    //   anchorY: anchorY,
-    // );
+    modulate(
+      sprite: spriteTorsoTopWest,
+      frame: completingAction
+          ? spriteTorsoTopWest.getFramePercentage(row, actionComplete)
+          : spriteTorsoTopWest.getFrame(column: animationFrame, row: row),
+      color1: colorSkin,
+      color2: colorWest,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
 
-    // renderSprite(
-    //   sprite: spriteHandFrontSouth,
-    //   frame: completingAction
-    //       ? spriteHandFrontSouth.getFramePercentage(row, actionComplete)
-    //       : spriteHandFrontSouth.getFrame(row: row, column: animationFrame),
-    //   color: colorSouth,
-    //   scale: scale,
-    //   dstX: dstX,
-    //   dstY: dstY,
-    //   anchorY: anchorY,
-    // );
+    renderSprite(
+      sprite: spriteBodySouth,
+      frame: completingAction
+          ? spriteBodySouth.getFramePercentage(row, actionComplete)
+          : spriteBodySouth.getFrame(row: row, column: animationFrame),
+      color: colorSouth,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
 
-    // renderSprite(
-    //   sprite: spriteHandFrontWest,
-    //   frame: completingAction
-    //       ? spriteHandFrontWest.getFramePercentage(row, actionComplete)
-    //       : spriteHandFrontWest.getFrame(row: row, column: animationFrame),
-    //   color: colorWest,
-    //   scale: scale,
-    //   dstX: dstX,
-    //   dstY: dstY,
-    //   anchorY: anchorY,
-    // );
-
-    if (!bodyFirst){
-
-      modulate(
-        sprite: spriteTorsoTopSouth,
-        frame: completingAction
-            ? spriteTorsoTopSouth.getFramePercentage(row, actionComplete)
-            : spriteTorsoTopSouth.getFrame(column: animationFrame, row: row),
-        color1: colorSkin,
-        color2: colorSouth,
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
-
-      modulate(
-        sprite: spriteTorsoTopWest,
-        frame: completingAction
-            ? spriteTorsoTopWest.getFramePercentage(row, actionComplete)
-            : spriteTorsoTopWest.getFrame(column: animationFrame, row: row),
-        color1: colorSkin,
-        color2: colorWest,
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
-
-      renderSprite(
-        sprite: spriteBodySouth,
-        frame: completingAction
-            ? spriteBodySouth.getFramePercentage(row, actionComplete)
-            : spriteBodySouth.getFrame(row: row, column: animationFrame),
-        color: colorSouth,
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
-
-      renderSprite(
-        sprite: spriteBodyWest,
-        frame: completingAction
-            ? spriteBodyWest.getFramePercentage(row, actionComplete)
-            : spriteBodyWest.getFrame(row: row, column: animationFrame),
-        color: colorWest,
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
-    }
-
-    // if (spriteBodyArmSouth != null){
-    //   renderSprite(
-    //     sprite: spriteBodyArmSouth,
-    //     frame: completingAction
-    //         ? spriteBodyArmSouth.getFramePercentage(row, actionComplete)
-    //         : spriteBodyArmSouth.getFrame(row: row, column: animationFrame),
-    //     color: colorSouth,
-    //     scale: scale,
-    //     dstX: dstX,
-    //     dstY: dstY,
-    //     anchorY: anchorY,
-    //   );
-    // }
-
-    // if (spriteBodyArmWest != null){
-    //   renderSprite(
-    //     sprite: spriteBodyArmWest,
-    //     frame: completingAction
-    //         ? spriteBodyArmWest.getFramePercentage(row, actionComplete)
-    //         : spriteBodyArmWest.getFrame(row: row, column: animationFrame),
-    //     color: colorWest,
-    //     scale: scale,
-    //     dstX: dstX,
-    //     dstY: dstY,
-    //     anchorY: anchorY,
-    //   );
-    // }
-
+    renderSprite(
+      sprite: spriteBodyWest,
+      frame: completingAction
+          ? spriteBodyWest.getFramePercentage(row, actionComplete)
+          : spriteBodyWest.getFrame(row: row, column: animationFrame),
+      color: colorWest,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
 
     renderSprite(
       sprite: spriteHandsLeftWest,
       frame: completingAction
           ? spriteHandsLeftWest.getFramePercentage(row, actionComplete)
           : spriteHandsLeftWest.getFrame(row: row, column: animationFrame),
-      color: colorSouth,
+      color: colorWest,
       scale: scale,
       dstX: dstX,
       dstY: dstY,
@@ -577,7 +377,7 @@ class RendererCharacters extends RenderGroup {
       frame: completingAction
           ? spriteHandsLeftSouth.getFramePercentage(row, actionComplete)
           : spriteHandsLeftSouth.getFrame(row: row, column: animationFrame),
-      color: colorWest,
+      color: colorSouth,
       scale: scale,
       dstX: dstX,
       dstY: dstY,
@@ -589,7 +389,7 @@ class RendererCharacters extends RenderGroup {
       frame: completingAction
           ? spriteHandsRightWest.getFramePercentage(row, actionComplete)
           : spriteHandsRightWest.getFrame(row: row, column: animationFrame),
-      color: colorSouth,
+      color: colorWest,
       scale: scale,
       dstX: dstX,
       dstY: dstY,
@@ -601,13 +401,12 @@ class RendererCharacters extends RenderGroup {
       frame: completingAction
           ? spriteHandsRightSouth.getFramePercentage(row, actionComplete)
           : spriteHandsRightSouth.getFrame(row: row, column: animationFrame),
-      color: colorWest,
+      color: colorSouth,
       scale: scale,
       dstX: dstX,
       dstY: dstY,
       anchorY: anchorY,
     );
-
 
     modulate(
       sprite: spriteHeadSouth,
