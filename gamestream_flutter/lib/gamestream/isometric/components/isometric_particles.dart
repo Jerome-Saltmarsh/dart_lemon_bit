@@ -696,12 +696,13 @@ class IsometricParticles with IsometricComponent implements Updatable {
       int index,
       int nodeOrientation,
   ) {
-    if (particle.delay > 0) {
+
+    final particleType = particle.type;
+
+    if (particleType == ParticleType.Fire && particle.delay > 0){
       particle.delay--;
       return;
     }
-
-    final particleType = particle.type;
 
     if (particleType == ParticleType.Wind){
        final vHorizontal = (-(1.0 - parabola(particle.duration01)) * 10) + 2.5;
@@ -776,6 +777,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
         ParticleType.Myst,
         ParticleType.Smoke,
         ParticleType.Shadow,
+        ParticleType.Trail,
       ].contains(particleType)) {
         particle.applyAirFriction();
         particle.applyGravity();
@@ -784,6 +786,10 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
     final bounce = nodeCollision && particle.vz < 0;
     particle.applyMotion();
+
+    // if (const [].contains(particleType)){
+    //   particle.applyRotationVelocity();
+    // }
 
     if (bounce) {
       if (nodeOrientation == NodeType.Water){

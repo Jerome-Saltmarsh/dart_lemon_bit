@@ -59,15 +59,15 @@ class Particle extends Position {
   void applyMotion(){
     x += vx;
     y += vy;
-    z += vz;
 
-    if (z < 0){
-      z = 0;
-    }
+    final vz = this.vz;
 
-    final rotationVelocity = this.rotationVelocity;
-    if (rotationVelocity != 0) {
-      rotation = (rotation + rotationVelocity) % pi2;
+    if (vz != 0){
+      final z = this.z + vz;
+      this.z = z;
+      if (z < 0){
+        this.z = 0;
+      }
     }
 
     final scaleVelocity = this.scaleVelocity;
@@ -78,6 +78,15 @@ class Particle extends Position {
       }
     }
   }
+
+  void applyRotationVelocity() {
+    final rotationVelocity = this.rotationVelocity;
+    if (rotationVelocity != 0) {
+      rotation = (rotation + rotationVelocity) % pi2;
+    }
+  }
+
+
 
   void applyAirFriction(){
     final frictionAir = this.frictionAir;
