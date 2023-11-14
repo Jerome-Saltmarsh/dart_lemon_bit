@@ -1,11 +1,8 @@
 import 'package:gamestream_flutter/packages/common.dart';
 
 class SpriteGroupType {
-  // static const Arms_Left = 1;
-  // static const Arms_Right = 2;
   static const Body_Male = 3;
   static const Body_Female = 4;
-  // static const Body_Arms = 5;
   static const Hands_Left = 6;
   static const Hands_Right = 7;
   static const Heads = 8;
@@ -16,16 +13,11 @@ class SpriteGroupType {
   static const Torso_Bottom = 13;
   static const Weapons = 14;
   static const Hair = 17;
-  // static const Shoes_Left = 18;
-  // static const Shoes_Right = 19;
   static const Shoes = 20;
 
   static String getName(int value)=> const {
-    // Arms_Left: 'arms_left',
-    // Arms_Right: 'arms_right',
     Body_Male: 'body_male',
     Body_Female: 'body_female',
-    // Body_Arms: 'body_arms',
     Hands_Left: 'hands_left',
     Hands_Right: 'hands_right',
     Heads: 'head',
@@ -37,16 +29,11 @@ class SpriteGroupType {
     Weapons: 'weapons',
     Hair: 'hair',
     Shoes: 'shoes',
-    // Shoes_Left: 'shoes_left',
-    // Shoes_Right: 'shoes_right',
   }[value] ?? (throw Exception('SpriteGroup.getName($value)'));
 
   static String getSubTypeName(int type, int subType) => switch (type) {
-      // Arms_Left => 'regular',
-      // Arms_Right => 'regular',
       Body_Male => BodyType.getName(subType),
       Body_Female => BodyType.getName(subType),
-      // Body_Arms => BodyType.getName(subType),
       Hands_Left => HandType.getName(subType),
       Hands_Right => HandType.getName(subType),
       Heads => HeadType.getName(subType),
@@ -58,8 +45,6 @@ class SpriteGroupType {
       Shadow => 'regular',
       Hair => HairType.getName(subType),
       Shoes => ShoeType.getName(subType),
-      // Shoes_Left => ShoeType.getName(subType),
-      // Shoes_Right => ShoeType.getName(subType),
       _ => throw Exception(
           'SpriteGroupType.getName(type: $type, subType: $subType)'
       ),
