@@ -31,14 +31,10 @@ class DialogCreateCharacterComputer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = 550.0;
-    final randomName = 'Anon${randomInt(99999, 999999)}';
-    final nameController = TextEditingController(text: randomName);
-    final textSelection = TextSelection(baseOffset: 0, extentOffset: randomName.length);
-    nameController.selection = textSelection;
     return IsometricBuilder(
       builder: (context, components) {
         final palette = components.colors.palette;
-
+        complexion.value = palette.length - 1;
         return GSContainer(
             width: width,
             height: width * goldenRatio_1381,
@@ -60,8 +56,8 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    buildControlName(nameController),
-                    buildButtonStart(components, nameController),
+                    buildControlName(),
+                    buildButtonStart(components),
                   ],
                 ),
               ],
@@ -72,7 +68,6 @@ class DialogCreateCharacterComputer extends StatelessWidget {
 
   Widget buildButtonStart(
       IsometricComponents components,
-      TextEditingController nameController,
   ) =>
       Row(
         children: [
@@ -92,7 +87,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
         ],
       );
 
-  GSKeyEventHandler buildControlName(TextEditingController nameController) =>
+  GSKeyEventHandler buildControlName() =>
       GSKeyEventHandler(
         child: Container(
             width: 200,
@@ -184,16 +179,13 @@ class DialogCreateCharacterComputer extends StatelessWidget {
   }
 
   Widget buildBackButton(IsometricComponents components) => onPressed(
-                action: () {
-                  components.website.websitePage.value = WebsitePage.User;
-                },
-                child: buildText('Back'),
-              );
-
+        action: () => components.website.websitePage.value = WebsitePage.User,
+        child: buildText('Back'),
+      );
 
   Widget buildColumnHeadType() =>
       buildWatch(headType, (activeHeadType) => buildColumn(
-          title: 'HEAD SHAPE',
+          title: 'HEAD',
           children: HeadType.values.map((value) =>
               onPressed(
                 action: () => headType.value = value,
@@ -212,7 +204,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
   Widget buildColumnBodyShape() =>
       buildWatch(gender, (activeGender) =>
           buildColumn(
-              title: 'BODY SHAPE',
+              title: 'BODY',
               children: Gender.values.map(
                     (value) => onPressed(
                     action: () => gender.value = value,
@@ -231,7 +223,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
 
   Widget buildColumnHairColor(List<Color> palette) =>
       buildWatch(hairColor, (activeHairColor) => buildColumn(
-          title: 'HAIR COLOR',
+          title: 'HAIR-COLOR',
           children: [
             buildColorWheel(
               colors: palette,
@@ -243,7 +235,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
 
   Widget buildColumnHairStyle() =>
       buildWatch(hairType, (activeHairType) => buildColumn(
-          title: 'HAIR STYLE',
+          title: 'HAIR-STYLE',
           children: HairType.values.map((type) => onPressed(
             action: () => hairType.value = type,
             child: AnimatedContainer(

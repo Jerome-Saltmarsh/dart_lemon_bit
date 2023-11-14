@@ -27,7 +27,7 @@ Widget buildColorWheel({
         duration: const Duration(milliseconds: 120),
         color: color,
         width: sizedWidth,
-        height: sizedWidth * goldenRatio_0618,
+        height: sizedWidth * goldenRatio_0381,
         alignment: Alignment.center,
       ),
     );
