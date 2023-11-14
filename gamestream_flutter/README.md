@@ -31,6 +31,7 @@ ctrl + []               : move caret to code block
 ## 14.11.2023
 * [new]: optimize update particles
 * [new]: optimize render particles
+* [new]: remove shoes left and right
 * [new]: remove arm left
 * [new]: remove arm right
 * [new]: remove body arms
