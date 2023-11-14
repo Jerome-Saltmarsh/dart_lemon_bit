@@ -3,7 +3,6 @@ import 'package:gamestream_flutter/gamestream/isometric/components/isometric_ima
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:lemon_engine/lemon_engine.dart';
-import 'package:lemon_sprite/lib.dart';
 
 class RendererCharacters extends RenderGroup {
 
@@ -189,10 +188,10 @@ class RendererCharacters extends RenderGroup {
     final spriteShoesSouth = atlasShoesSouth.fromCharacterState(characterState);
     final spriteShoesWest = atlasShoesWest.fromCharacterState(characterState);
 
-    final Sprite spriteHandFrontSouth;
-    final Sprite spriteHandFrontWest;
-    final Sprite spriteHandBehindSouth;
-    final Sprite spriteHandBehindWest;
+    // final Sprite spriteHandFrontSouth;
+    // final Sprite spriteHandFrontWest;
+    // final Sprite spriteHandBehindSouth;
+    // final Sprite spriteHandBehindWest;
     // final Sprite spriteShoesFrontSouth;
     // final Sprite spriteShoesFrontWest;
     // final Sprite spriteShoesBehindSouth;
@@ -204,35 +203,23 @@ class RendererCharacters extends RenderGroup {
 
     final render = this.render;
 
-    final leftInFront = const [
-      InputDirection.Up_Left,
-      InputDirection.Left,
-      InputDirection.Down_Left,
-    ].contains(direction);
+    // final leftInFront = const [
+    //   InputDirection.Up_Left,
+    //   InputDirection.Left,
+    //   InputDirection.Down_Left,
+    // ].contains(direction);
 
-    if (leftInFront) {
-      spriteHandFrontSouth = spriteHandsLeftSouth;
-      spriteHandFrontWest = spriteHandsLeftWest;
-      spriteHandBehindSouth = spriteHandsRightSouth;
-      spriteHandBehindWest = spriteHandsRightWest;
-      // spriteShoesSouth = spriteShoesLeftSouth;
-      // spriteShoesWest = spriteShoesLeftWest;
-      // spriteShoesBehindSouth = spriteShoesRightSouth;
-      // spriteShoesBehindWest = spriteShoesRightWest;
-    } else {
-      spriteHandFrontSouth = spriteHandsRightSouth;
-      spriteHandFrontWest = spriteHandsRightSouth;
-      spriteHandBehindSouth = spriteHandsLeftSouth;
-      spriteHandBehindWest = spriteHandsLeftWest;
-      // spriteArmFrontSouth = spriteArmRightSouth; // spriteArmRight
-      // spriteArmFrontWest = spriteArmRightSouth; // spriteArmRight
-      // spriteArmBehindSouth = spriteArmLeftSouth;
-      // spriteArmBehindWest = spriteArmLeftWest;
-      // spriteShoesFrontSouth = spriteShoesRightSouth;
-      // spriteShoesFrontWest = spriteShoesRightWest;
-      // spriteShoesBehindSouth = spriteShoesLeftSouth;
-      // spriteShoesBehindWest = spriteShoesLeftWest;
-    }
+    // if (leftInFront) {
+    //   spriteHandFrontSouth = spriteHandsLeftSouth;
+    //   spriteHandFrontWest = spriteHandsLeftWest;
+    //   spriteHandBehindSouth = spriteHandsRightSouth;
+    //   spriteHandBehindWest = spriteHandsRightWest;
+    // } else {
+    //   spriteHandFrontSouth = spriteHandsRightSouth;
+    //   spriteHandFrontWest = spriteHandsRightSouth;
+    //   spriteHandBehindSouth = spriteHandsLeftSouth;
+    //   spriteHandBehindWest = spriteHandsLeftWest;
+    // }
 
     final renderSprite = render.sprite;
     final modulate = render.modulate;
@@ -324,87 +311,34 @@ class RendererCharacters extends RenderGroup {
         dstY: dstY,
         anchorY: anchorY,
       );
-
-
-
       return;
     }
 
-    // modulate(
-    //   sprite: spriteArmBehindSouth,
-    //   frame: completingAction
-    //       ? spriteArmBehindSouth.getFramePercentage(row, actionComplete)
-    //       : spriteArmBehindSouth.getFrame(row: row, column: animationFrame),
-    //   color1: colorSkin,
-    //   color2: colorSouth,
-    //   scale: scale,
-    //   dstX: dstX,
-    //   dstY: dstY,
-    //   anchorY: anchorY,
-    // );
-
-    // modulate(
-    //   sprite: spriteArmBehindWest,
-    //   frame: completingAction
-    //       ? spriteArmBehindWest.getFramePercentage(row, actionComplete)
-    //       : spriteArmBehindWest.getFrame(row: row, column: animationFrame),
-    //   color1: colorSkin,
-    //   color2: colorWest,
-    //   scale: scale,
-    //   dstX: dstX,
-    //   dstY: dstY,
-    //   anchorY: anchorY,
-    // );
-
-    renderSprite(
-      sprite: spriteHandBehindSouth,
-      frame: completingAction
-          ? spriteHandBehindSouth.getFramePercentage(row, actionComplete)
-          : spriteHandBehindSouth.getFrame(row: row, column: animationFrame),
-      color: colorSouth,
-      scale: scale,
-      dstX: dstX,
-      dstY: dstY,
-      anchorY: anchorY,
-    );
-
-    renderSprite(
-      sprite: spriteHandBehindWest,
-      frame: completingAction
-          ? spriteHandBehindWest.getFramePercentage(row, actionComplete)
-          : spriteHandBehindWest.getFrame(row: row, column: animationFrame),
-      color: colorWest,
-      scale: scale,
-      dstX: dstX,
-      dstY: dstY,
-      anchorY: anchorY,
-    );
-
-    if (spriteHandsRightSouth != spriteHandFrontSouth){
-      renderSprite(
-        sprite: spriteWeaponSouth,
-        frame: completingAction
-            ? spriteWeaponSouth.getFramePercentage(row, actionComplete)
-            : spriteWeaponSouth.getFrame(row: row, column: animationFrame),
-        color: colorSouth,
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
-
-      renderSprite(
-        sprite: spriteWeaponWest,
-        frame: completingAction
-            ? spriteWeaponWest.getFramePercentage(row, actionComplete)
-            : spriteWeaponWest.getFrame(row: row, column: animationFrame),
-        color: colorWest,
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
-    }
+    // if (spriteHandsRightSouth != spriteHandFrontSouth){
+    //   renderSprite(
+    //     sprite: spriteWeaponSouth,
+    //     frame: completingAction
+    //         ? spriteWeaponSouth.getFramePercentage(row, actionComplete)
+    //         : spriteWeaponSouth.getFrame(row: row, column: animationFrame),
+    //     color: colorSouth,
+    //     scale: scale,
+    //     dstX: dstX,
+    //     dstY: dstY,
+    //     anchorY: anchorY,
+    //   );
+    //
+    //   renderSprite(
+    //     sprite: spriteWeaponWest,
+    //     frame: completingAction
+    //         ? spriteWeaponWest.getFramePercentage(row, actionComplete)
+    //         : spriteWeaponWest.getFrame(row: row, column: animationFrame),
+    //     color: colorWest,
+    //     scale: scale,
+    //     dstX: dstX,
+    //     dstY: dstY,
+    //     anchorY: anchorY,
+    //   );
+    // }
 
     final bodyFirst = const [
       InputDirection.Down_Left,
@@ -520,29 +454,29 @@ class RendererCharacters extends RenderGroup {
     //   anchorY: anchorY,
     // );
 
-    renderSprite(
-      sprite: spriteHandFrontSouth,
-      frame: completingAction
-          ? spriteHandFrontSouth.getFramePercentage(row, actionComplete)
-          : spriteHandFrontSouth.getFrame(row: row, column: animationFrame),
-      color: colorSouth,
-      scale: scale,
-      dstX: dstX,
-      dstY: dstY,
-      anchorY: anchorY,
-    );
+    // renderSprite(
+    //   sprite: spriteHandFrontSouth,
+    //   frame: completingAction
+    //       ? spriteHandFrontSouth.getFramePercentage(row, actionComplete)
+    //       : spriteHandFrontSouth.getFrame(row: row, column: animationFrame),
+    //   color: colorSouth,
+    //   scale: scale,
+    //   dstX: dstX,
+    //   dstY: dstY,
+    //   anchorY: anchorY,
+    // );
 
-    renderSprite(
-      sprite: spriteHandFrontWest,
-      frame: completingAction
-          ? spriteHandFrontWest.getFramePercentage(row, actionComplete)
-          : spriteHandFrontWest.getFrame(row: row, column: animationFrame),
-      color: colorWest,
-      scale: scale,
-      dstX: dstX,
-      dstY: dstY,
-      anchorY: anchorY,
-    );
+    // renderSprite(
+    //   sprite: spriteHandFrontWest,
+    //   frame: completingAction
+    //       ? spriteHandFrontWest.getFramePercentage(row, actionComplete)
+    //       : spriteHandFrontWest.getFrame(row: row, column: animationFrame),
+    //   color: colorWest,
+    //   scale: scale,
+    //   dstX: dstX,
+    //   dstY: dstY,
+    //   anchorY: anchorY,
+    // );
 
     if (!bodyFirst){
 
@@ -624,6 +558,56 @@ class RendererCharacters extends RenderGroup {
     //     anchorY: anchorY,
     //   );
     // }
+
+
+    renderSprite(
+      sprite: spriteHandsLeftWest,
+      frame: completingAction
+          ? spriteHandsLeftWest.getFramePercentage(row, actionComplete)
+          : spriteHandsLeftWest.getFrame(row: row, column: animationFrame),
+      color: colorSouth,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
+    renderSprite(
+      sprite: spriteHandsLeftSouth,
+      frame: completingAction
+          ? spriteHandsLeftSouth.getFramePercentage(row, actionComplete)
+          : spriteHandsLeftSouth.getFrame(row: row, column: animationFrame),
+      color: colorWest,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
+    renderSprite(
+      sprite: spriteHandsRightWest,
+      frame: completingAction
+          ? spriteHandsRightWest.getFramePercentage(row, actionComplete)
+          : spriteHandsRightWest.getFrame(row: row, column: animationFrame),
+      color: colorSouth,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
+    renderSprite(
+      sprite: spriteHandsRightSouth,
+      frame: completingAction
+          ? spriteHandsRightSouth.getFramePercentage(row, actionComplete)
+          : spriteHandsRightSouth.getFrame(row: row, column: animationFrame),
+      color: colorWest,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
 
     modulate(
       sprite: spriteHeadSouth,
