@@ -1,12 +1,11 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/amulet/ui/functions/render_canvas_isometric_player.dart';
+import 'package:gamestream_flutter/amulet/ui/functions/render_player_front.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
 import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:gamestream_flutter/packages/common/src/isometric/character_state.dart';
-import 'package:gamestream_flutter/website/widgets/dialog_create_character_computer.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
@@ -35,7 +34,7 @@ Widget buildContainerPlayerFront({
               top: 100,
               child: CustomCanvas(
                   paint: (canvas, size) {
-                    renderCanvasIsometricPlayer(
+                    renderPlayerFront(
                         player: player,
                         canvas: canvas,
                         row: row,
@@ -44,7 +43,7 @@ Widget buildContainerPlayerFront({
                         characterState: CharacterState.Idle,
                         color: player.scene.colorSouth(player.nodeIndex)
                     );
-                    renderCanvasIsometricPlayer(
+                    renderPlayerFront(
                         player: player,
                         canvas: canvas,
                         row: row,
@@ -70,7 +69,7 @@ Widget buildContainerPlayerFront({
               Positioned(
                 top: 0,
                 left: 8,
-                child: buildControlName(nameController),
+                child: _buildControlName(nameController),
               )
           ],
         ),
@@ -78,3 +77,24 @@ Widget buildContainerPlayerFront({
     ),
   );
 }
+
+
+Widget _buildControlName(TextEditingController nameController) =>
+    Container(
+      width: 150,
+      child: TextField(
+        cursorColor: Colors.white,
+        controller: nameController,
+        autofocus: true,
+        decoration: InputDecoration(
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.transparent), // Set the desired color here
+          ),
+          enabledBorder: InputBorder.none,
+        ),
+        style: TextStyle(
+            color: Colors.white,
+            fontSize: 25
+        ),
+      ),
+    );

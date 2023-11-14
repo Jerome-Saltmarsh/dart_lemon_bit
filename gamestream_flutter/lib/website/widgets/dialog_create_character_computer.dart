@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/amulet/ui/functions/render_canvas_character_sprites.dart';
+import 'package:gamestream_flutter/amulet/ui/functions/build_color_wheel.dart';
+import 'package:gamestream_flutter/amulet/ui/functions/render_character_front.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_components.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
 import 'package:gamestream_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
@@ -13,8 +14,6 @@ import 'package:lemon_math/src.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
-
-typedef OnStart = Function({required int complex});
 
 class DialogCreateCharacterComputer extends StatelessWidget {
 
@@ -54,7 +53,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                     GSButtonRegion(),
                   ],
                 ),
-                buildCharacterCanvas(components, palette),
+                buildCharacterCanvas(components),
                 height32,
                 buildControls(palette),
                 Expanded(child: const SizedBox()),
@@ -71,8 +70,10 @@ class DialogCreateCharacterComputer extends StatelessWidget {
     );
   }
 
-  Widget buildButtonStart(IsometricComponents components,
-          TextEditingController nameController) =>
+  Widget buildButtonStart(
+      IsometricComponents components,
+      TextEditingController nameController,
+  ) =>
       Row(
         children: [
           buildWatch(error, (error) => buildText(error, color: Colors.red)),
@@ -91,44 +92,41 @@ class DialogCreateCharacterComputer extends StatelessWidget {
         ],
       );
 
-  GSKeyEventHandler buildControlName(TextEditingController nameController) {
-    return GSKeyEventHandler(
-                    child: Container(
-                        width: 200,
-                        padding: const EdgeInsets.all(8),
-                        color: Colors.black12,
-                        child: TextField(
-                          autofocus: true,
-                          controller: nameController,
-                          decoration: InputDecoration(
-                            border: InputBorder.none
-                          ),
-                          style: TextStyle(
-                            color: Colors.orange,
-                            fontSize: 25,
-                          ),
-                        )
-                    ),
-                  );
-  }
+  GSKeyEventHandler buildControlName(TextEditingController nameController) =>
+      GSKeyEventHandler(
+        child: Container(
+            width: 200,
+            padding: const EdgeInsets.all(8),
+            color: Colors.black12,
+            child: TextField(
+              autofocus: true,
+              controller: nameController,
+              decoration: InputDecoration(border: InputBorder.none),
+              style: TextStyle(
+                color: Colors.orange,
+                fontSize: 25,
+              ),
+            )),
+      );
 
   Widget buildControls(List<Color> palette) => Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      buildColumnComplexion(complexion, palette),
-                      buildColumnHairStyle(hairType),
-                      buildColumnHairColor(hairColor, palette),
-                      buildColumnBodyShape(gender),
-                      buildColumnHeadType(headType),
-                    ],
-                  ),
-                ],
-              );
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              buildColumnComplexion(palette),
+              buildColumnHairStyle(),
+              buildColumnHairColor(palette),
+              buildColumnBodyShape(),
+              buildColumnHeadType(),
+            ],
+          ),
+        ],
+      );
 
-  Widget buildCharacterCanvas(IsometricComponents components, List<Color> palette) {
+  Widget buildCharacterCanvas(IsometricComponents components) {
+    final palette = components.colors.palette;
     return onPressed(
                 action: (){
                   row.value = (row.value + 1) % 8;
@@ -147,7 +145,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                           paint: (canvas, size) {
 
                             for (final sprite in components.images.kidCharacterSpritesFrontDirections){
-                              renderCanvasCharacterSprites(
+                              renderCharacterFront(
                                 canvas: canvas,
                                 sprites: sprite,
                                 row: row.value,
@@ -163,7 +161,8 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                                 weaponType: 0,
                                 skinColor: palette[complexion.value].value,
                                 hairColor: palette[hairColor.value].value,
-                                color: Colors.white.value,
+                                // color: setAlpha(color: components.scene.ambientColor, alpha: 0) ,
+                                color: 0,
                               );
                             }
                           },
@@ -190,234 +189,110 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                 },
                 child: buildText('Back'),
               );
+
+
+  Widget buildColumnHeadType() =>
+      buildWatch(headType, (activeHeadType) => buildColumn(
+          title: 'HEAD SHAPE',
+          children: HeadType.values.map((value) =>
+              onPressed(
+                action: () => headType.value = value,
+                child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 150),
+                    width: 80,
+                    height: 80 * goldenRatio_0618,
+                    alignment: Alignment.center,
+                    color: value == activeHeadType ? Colors.white24 : Colors.transparent,
+                    padding: const EdgeInsets.all(4),
+                    child: buildText(HeadType.getName(value))),
+              ))
+      ));
+
+
+  Widget buildColumnBodyShape() =>
+      buildWatch(gender, (activeGender) =>
+          buildColumn(
+              title: 'BODY SHAPE',
+              children: Gender.values.map(
+                    (value) => onPressed(
+                    action: () => gender.value = value,
+                    child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 150),
+                        width: 80,
+                        height: 80 * goldenRatio_0618,
+                        alignment: Alignment.center,
+                        color: activeGender == value
+                            ? Colors.white24
+                            : Colors.transparent,
+                        padding: const EdgeInsets.all(4),
+                        child:
+                        buildText(value == Gender.male ? 'Square' : 'Curved'))),
+              )));
+
+  Widget buildColumnHairColor(List<Color> palette) =>
+      buildWatch(hairColor, (activeHairColor) => buildColumn(
+          title: 'HAIR COLOR',
+          children: [
+            buildColorWheel(
+              colors: palette,
+              onPickIndex: hairColor.call,
+              currentIndex: activeHairColor,
+            )
+          ])
+      );
+
+  Widget buildColumnHairStyle() =>
+      buildWatch(hairType, (activeHairType) => buildColumn(
+          title: 'HAIR STYLE',
+          children: HairType.values.map((type) => onPressed(
+            action: () => hairType.value = type,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 150),
+              width: 80,
+              height: 80 * goldenRatio_0618,
+              alignment: Alignment.center,
+              color: type == activeHairType ? Colors.white24 : Colors.transparent,
+              padding: const EdgeInsets.all(4),
+              child: buildText(HairType.getName(type)),
+            ),
+          ))));
+
+
+  Widget buildColumnComplexion(List<Color> palette) =>
+      buildWatch(complexion, (activeComplexion) => buildColumn(
+          title: 'COMPLEXION',
+          children: [
+            buildColorWheel(
+              colors: palette,
+              onPickIndex: complexion.call,
+              currentIndex: activeComplexion,
+            )
+          ])
+      );
+
+  Widget buildColumn({
+    required String title,
+    required Iterable<Widget> children,
+  }) => Container(
+    child:   Column(
+      children: [
+        buildText(title, color: Colors.white.withOpacity(0.8)),
+        height8,
+        Container(
+          height: 200,
+          constraints: BoxConstraints(
+            minWidth: 100,
+          ),
+          padding: const EdgeInsets.all(8),
+          color: Colors.black12,
+          child: SingleChildScrollView(
+            child: Column(
+              children: children.toList(growable: false),
+            ),
+          ),
+        )
+      ],
+    ),
+  );
 }
 
-Widget buildColumnHeadType(Watch<int> headType) =>
-  buildWatch(headType, (activeHeadType) => buildColumn(
-        title: 'HEAD SHAPE',
-        children: HeadType.values.map((value) =>
-            onPressed(
-              action: () => headType.value = value,
-              child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 150),
-                  width: 80,
-                  height: 80 * goldenRatio_0618,
-                  alignment: Alignment.center,
-                  color: value == activeHeadType ? Colors.white24 : Colors.transparent,
-                  padding: const EdgeInsets.all(4),
-                  child: buildText(HeadType.getName(value))),
-            ))
-    ));
-
-
-Widget buildControlName(TextEditingController nameController) =>
-    Container(
-      width: 150,
-      child: TextField(
-        cursorColor: Colors.white,
-        controller: nameController,
-        autofocus: true,
-        decoration: InputDecoration(
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.transparent), // Set the desired color here
-          ),
-          enabledBorder: InputBorder.none,
-        ),
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 25
-        ),
-      ),
-    );
-
-Widget buildColumnBodyShape(Watch<int> gender) =>
-    buildWatch(gender, (activeGender) =>
-      buildColumn(
-        title: 'BODY SHAPE',
-        children: Gender.values.map(
-          (value) => onPressed(
-              action: () => gender.value = value,
-              child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 150),
-                  width: 80,
-                  height: 80 * goldenRatio_0618,
-                  alignment: Alignment.center,
-                  color: activeGender == value
-                      ? Colors.white24
-                      : Colors.transparent,
-                  padding: const EdgeInsets.all(4),
-                  child:
-                      buildText(value == Gender.male ? 'Square' : 'Curved'))),
-        )));
-
-Widget buildColumnHairColor(Watch<int> hairColor, List<Color> palette) =>
-    buildWatch(hairColor, (activeHairColor) => buildColumn(
-        title: 'HAIR COLOR',
-        children: [
-          buildColorWheel(
-            colors: palette,
-            onPickIndex: hairColor.call,
-            currentIndex: activeHairColor,
-          )
-        ])
-    );
-
-Widget buildColumnHairStyle(Watch<int> hairType) =>
-    buildWatch(hairType, (activeHairType) => buildColumn(
-      title: 'HAIR STYLE',
-      children: HairType.values.map((type) => onPressed(
-        action: () => hairType.value = type,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 150),
-          width: 80,
-          height: 80 * goldenRatio_0618,
-          alignment: Alignment.center,
-          color: type == activeHairType ? Colors.white24 : Colors.transparent,
-          padding: const EdgeInsets.all(4),
-          child: buildText(HairType.getName(type)),
-        ),
-      ))));
-
-
-Widget buildColumnComplexion(Watch<int> complexion, List<Color> palette) =>
-    buildWatch(complexion, (activeComplexion) => buildColumn(
-      title: 'COMPLEXION',
-      children: [
-        buildColorWheel(
-            colors: palette,
-            onPickIndex: complexion.call,
-            currentIndex: activeComplexion,
-        )
-      ])
-    );
-
-Widget buildColumn({
-  required String title,
-  required Iterable<Widget> children,
-}) => Container(
-  child:   Column(
-        children: [
-          buildText(title, color: Colors.white.withOpacity(0.8)),
-          height8,
-          Container(
-            height: 200,
-            constraints: BoxConstraints(
-              minWidth: 100,
-            ),
-            padding: const EdgeInsets.all(8),
-            color: Colors.black12,
-            child: SingleChildScrollView(
-              child: Column(
-                children: children.toList(growable: false),
-              ),
-            ),
-          )
-        ],
-      ),
-);
-
-// CustomCanvas buildCanvasPlayerCharacter(
-//     ValueNotifier<int> canvasFrame,
-//     IsometricPlayer player,
-//     KidCharacterSprites sprites,
-//     int row,
-// ) => CustomCanvas(
-//       frame: canvasFrame,
-//       paint: (canvas, size) {
-//         final column = 0;
-//         final gender = player.gender.value;
-//         final isMale = gender == Gender.male;
-//         final characterState = CharacterState.Idle;
-//         final helm = sprites.helm[player.helmType.value]
-//             ?.fromCharacterState(characterState);
-//         final head = sprites.head[gender]?.fromCharacterState(characterState);
-//         final bodySprite = isMale ? sprites.bodyMale : sprites.bodyFemale;
-//         final body = bodySprite[player.bodyType.value]
-//             ?.fromCharacterState(characterState);
-//         final torsoTop = sprites.torsoTop[gender]?.fromCharacterState(characterState);
-//         final torsoBottom = sprites.torsoBottom[gender]?.fromCharacterState(characterState);
-//         final armsLeft = sprites.armLeft[ArmType.regular]
-//             ?.fromCharacterState(characterState);
-//         final armsRight = sprites.armRight[ArmType.regular]
-//             ?.fromCharacterState(characterState);
-//         final shoesLeft = sprites.shoesLeft[player.shoeType.value]
-//             ?.fromCharacterState(characterState);
-//         final shoesRight = sprites.shoesRight[player.shoeType.value]
-//             ?.fromCharacterState(characterState);
-//         final legs = sprites.legs[player.legsType.value]
-//             ?.fromCharacterState(characterState);
-//         final hair = sprites.hairFront[player.hairType.value]
-//             ?.fromCharacterState(characterState);
-//         final skinColor = player.skinColor.value;
-//         final hairColor = player.colors.palette[player.hairColor.value].value;
-//
-//         renderCanvasSprite(
-//             sprite: torsoTop,
-//             canvas: canvas,
-//             row: row,
-//             column: column,
-//             color: skinColor);
-//         renderCanvasSprite(sprite: legs, canvas: canvas, row: row, column: column);
-//         renderCanvasSprite(
-//             sprite: armsLeft,
-//             canvas: canvas,
-//             row: row,
-//             column: column,
-//             color: skinColor);
-//         renderCanvasSprite(
-//             sprite: armsRight,
-//             canvas: canvas,
-//             row: row,
-//             column: column,
-//             color: skinColor);
-//         renderCanvasSprite(
-//             sprite: shoesLeft, canvas: canvas, row: row, column: column);
-//         renderCanvasSprite(
-//             sprite: shoesRight, canvas: canvas, row: row, column: column);
-//         renderCanvasSprite(sprite: body, canvas: canvas, row: row, column: column);
-//         renderCanvasSprite(
-//             sprite: head,
-//             canvas: canvas,
-//             row: row,
-//             column: column,
-//             color: skinColor);
-//         renderCanvasSprite(
-//             sprite: hair,
-//             canvas: canvas,
-//             row: row,
-//             column: column,
-//             color: hairColor);
-//         renderCanvasSprite(sprite: helm, canvas: canvas, row: row, column: column);
-//       });
-
-Widget buildColorWheel({
-  required List<Color> colors,
-  Function (Color color)? onPickColor,
-  Function (int index)? onPickIndex,
-  int? currentIndex,
-  double width = 50.0,
-}) => Column(
-  children: colors.map((color) {
-    final active = colors.indexOf(color) == currentIndex;
-    final sizedWidth = active ? (width * goldenRatio_1381) : width;
-    return onPressed(
-      action: () {
-        if (onPickColor != null){
-          onPickColor(color);
-        }
-        if (onPickIndex != null){
-          onPickIndex(colors.indexOf(color));
-        }
-      },
-      child: AnimatedContainer(
-        curve: Curves.easeInOutQuad,
-        key: ValueKey(color.value),
-        duration: const Duration(milliseconds: 120),
-        color: color,
-        width: sizedWidth,
-        height: sizedWidth * goldenRatio_0618,
-        alignment: Alignment.center,
-      ),
-    );
-  }).toList(growable: false),
-);

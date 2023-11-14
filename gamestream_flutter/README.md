@@ -9,16 +9,17 @@ ctrl + shift + e        : view recent changes
 alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
-## BLOCK
-* [new]: map locations
-* [new]: scene town 
 
 ## TODO
+* [fix]: render front view hair color
+* [new]: hair type 02
+* [new]: hair type 03
 * [new]: elemental damage
+* [new]: map locations
+* [new]: scene town
 * [new]: tree shadows
 * [new]: gameobject shadows
 * [new]: item tabs weapons amulets etc
-* [new]: model hair
 * [new]: model rusty sword
 * [fix]: barrels and crates should not be interactable
 * [fix]: persist gameobject properties
@@ -27,6 +28,7 @@ ctrl + []               : move caret to code block
 * [new]: flames emit smoke particles
 
 ## 13.11.2023
+* [new]: model hair
 * [new]: render shadow wooden crate 
 * [new]: render shadow tree stump 
 * [new]: render shadow barrel 

@@ -98,7 +98,6 @@ class RendererCharacters extends RenderGroup {
     final characterIndex = scene.getIndexPosition(character);
     final scale = options.characterRenderScale;
     final direction = IsometricDirection.toInputDirection(character.direction);
-    final color = character.color;
     final colorN = scene.colorNorth(characterIndex);
     final colorE = scene.colorEast(characterIndex);
     final colorS = scene.colorSouth(characterIndex);
@@ -119,8 +118,6 @@ class RendererCharacters extends RenderGroup {
 
     final images = this.images;
     final spritesShadow = images.kidCharacterSpriteGroupShadow;
-    // final spritesNorth = images.kidCharacterSpritesIsometricNorth;
-    // final spritesEast = images.kidCharacterSpritesIsometricEast;
     final spritesSouth = images.kidCharacterSpritesIsometricSouth;
     final spritesWest = images.kidCharacterSpritesIsometricWest;
 
@@ -705,7 +702,7 @@ class RendererCharacters extends RenderGroup {
       sprite: spriteHairSouth,
       frame: hairFrameSouth,
       color1: colorHair,
-      color2: color,
+      color2: colorSouth,
       scale: scale,
       dstX: dstX,
       dstY: dstY,
@@ -716,7 +713,7 @@ class RendererCharacters extends RenderGroup {
       sprite: spriteHairWest,
       frame: hairFrameWest,
       color1: colorHair,
-      color2: color,
+      color2: colorWest,
       scale: scale,
       dstX: dstX,
       dstY: dstY,
