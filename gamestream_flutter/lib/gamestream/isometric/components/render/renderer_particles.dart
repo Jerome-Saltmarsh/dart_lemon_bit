@@ -362,6 +362,8 @@ class RendererParticles extends RenderGroup {
     final particles = this.particles.activated;
     final total = this.total;
 
+    var index = this.index;
+
     while (index < total) {
       final particle = particles[index++];
 
@@ -371,8 +373,10 @@ class RendererParticles extends RenderGroup {
       this.particle = particle;
       order = particle.sortOrder;
       index--;
+      this.index = index;
       return;
     }
+    this.index = index;
   }
 
   static int getFrame(double percentage, int total) => ((1.0 - percentage) * total).round();
