@@ -27,6 +27,7 @@ void renderPlayerFront({
       hairType: player.hairType.value,
       weaponType: player.weaponType.value,
       skinColor: player.colors.palette[player.complexion.value].value,
-      hairColor: player.colors.palette[player.hairColor.value].value,
+      // hairColor: player.colors.palette[player.hairColor.value].value,
+      hairColor: player.colors.red_0.value,
       color: color,
   );

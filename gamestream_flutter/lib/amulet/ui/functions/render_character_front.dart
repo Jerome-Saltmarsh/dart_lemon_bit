@@ -2,7 +2,6 @@
 import 'package:flutter/rendering.dart';
 import 'package:gamestream_flutter/amulet/ui/functions/render_canvas_sprite.dart';
 import 'package:gamestream_flutter/gamestream/sprites/kid_character_sprites.dart';
-import 'package:gamestream_flutter/packages/common/src/isometric/arm_type.dart';
 import 'package:gamestream_flutter/packages/common/src/isometric/gender.dart';
 
 void renderCharacterFront({
@@ -28,13 +27,13 @@ void renderCharacterFront({
   final head = sprites.head[headType]?.fromCharacterState(characterState) ?? (throw Exception());
   final bodySprite = isMale ? sprites.bodyMale : sprites.bodyFemale;
   final body = bodySprite[bodyType] ?.fromCharacterState(characterState);
-  final bodyArms = sprites.bodyArms[bodyType]?.fromCharacterState(characterState);
+  // final bodyArms = sprites.bodyArms[bodyType]?.fromCharacterState(characterState);
   final torsoTop = sprites.torsoTop[gender]?.fromCharacterState(characterState) ?? (throw Exception());
   final torsoBottom = sprites.torsoBottom[gender]?.fromCharacterState(characterState) ?? (throw Exception());
-  final armsLeft = sprites.armLeft[ArmType.regular]
-      ?.fromCharacterState(characterState) ?? (throw Exception());
-  final armsRight = sprites.armRight[ArmType.regular]
-      ?.fromCharacterState(characterState) ?? (throw Exception());
+  // final armsLeft = sprites.armLeft[ArmType.regular]
+  //     ?.fromCharacterState(characterState) ?? (throw Exception());
+  // final armsRight = sprites.armRight[ArmType.regular]
+  //     ?.fromCharacterState(characterState) ?? (throw Exception());
   final shoesLeft = sprites.shoesLeft[shoeType]
       ?.fromCharacterState(characterState);
   final shoesRight = sprites.shoesRight[shoeType]
@@ -94,41 +93,41 @@ void renderCharacterFront({
   }
 
 
-  renderCanvasSprite(
-    sprite: armsLeft,
-    canvas: canvas,
-    row: row,
-    column: column,
-    color: skinColor,
-    blendMode: BlendMode.modulate,
-  );
+  // renderCanvasSprite(
+  //   sprite: armsLeft,
+  //   canvas: canvas,
+  //   row: row,
+  //   column: column,
+  //   color: skinColor,
+  //   blendMode: BlendMode.modulate,
+  // );
 
-  renderCanvasSprite(
-    sprite: armsLeft,
-    canvas: canvas,
-    row: row,
-    column: column,
-    color: color,
-    blendMode: BlendMode.modulate,
-  );
+  // renderCanvasSprite(
+  //   sprite: armsLeft,
+  //   canvas: canvas,
+  //   row: row,
+  //   column: column,
+  //   color: color,
+  //   blendMode: BlendMode.modulate,
+  // );
 
-  renderCanvasSprite(
-    sprite: armsRight,
-    canvas: canvas,
-    row: row,
-    column: column,
-    color: skinColor,
-    blendMode: BlendMode.modulate,
-  );
+  // renderCanvasSprite(
+  //   sprite: armsRight,
+  //   canvas: canvas,
+  //   row: row,
+  //   column: column,
+  //   color: skinColor,
+  //   blendMode: BlendMode.modulate,
+  // );
 
-  renderCanvasSprite(
-    sprite: armsRight,
-    canvas: canvas,
-    row: row,
-    column: column,
-    color: color,
-    blendMode: BlendMode.modulate,
-  );
+  // renderCanvasSprite(
+  //   sprite: armsRight,
+  //   canvas: canvas,
+  //   row: row,
+  //   column: column,
+  //   color: color,
+  //   blendMode: BlendMode.modulate,
+  // );
 
   if (shoesLeft != null){
     renderCanvasSprite(
@@ -163,75 +162,75 @@ void renderCharacterFront({
     );
   }
 
-  if (bodyArms != null) {
-    renderCanvasSprite(
-      sprite: bodyArms,
-      canvas: canvas,
-      row: row,
-      column: column,
-      blendMode: BlendMode.dstATop,
-      color: color,
-    );
-  }
+  // if (bodyArms != null) {
+  //   renderCanvasSprite(
+  //     sprite: bodyArms,
+  //     canvas: canvas,
+  //     row: row,
+  //     column: column,
+  //     blendMode: BlendMode.dstATop,
+  //     color: color,
+  //   );
+  // }
 
-  renderCanvasSprite(
-    sprite: head,
-    canvas: canvas,
-    row: row,
-    column: column,
-    color: skinColor,
-    blendMode: BlendMode.modulate,
-  );
+  // renderCanvasSprite(
+  //   sprite: head,
+  //   canvas: canvas,
+  //   row: row,
+  //   column: column,
+  //   color: skinColor,
+  //   blendMode: BlendMode.modulate,
+  // );
+  //
+  // renderCanvasSprite(
+  //   sprite: head,
+  //   canvas: canvas,
+  //   row: row,
+  //   column: column,
+  //   color: color,
+  //   blendMode: BlendMode.modulate,
+  // );
 
-  renderCanvasSprite(
-    sprite: head,
-    canvas: canvas,
-    row: row,
-    column: column,
-    color: color,
-    blendMode: BlendMode.modulate,
-  );
+  // if (hair != null){
+  //   renderCanvasSprite(
+  //     sprite: hair,
+  //     canvas: canvas,
+  //     row: row,
+  //     column: column,
+  //     color: hairColor,
+  //     blendMode: BlendMode.modulate,
+  //   );
+  //
+  //   renderCanvasSprite(
+  //     sprite: hair,
+  //     canvas: canvas,
+  //     row: row,
+  //     column: column,
+  //     color: color,
+  //     blendMode: BlendMode.modulate,
+  //   );
+  // }
 
-  if (hair != null){
-    renderCanvasSprite(
-      sprite: hair,
-      canvas: canvas,
-      row: row,
-      column: column,
-      color: hairColor,
-      blendMode: BlendMode.modulate,
-    );
+  // if (helm != null){
+  //   renderCanvasSprite(
+  //     sprite: helm,
+  //     canvas: canvas,
+  //     row: row,
+  //     column: column,
+  //     blendMode: BlendMode.dstATop,
+  //     color: color,
+  //   );
+  // }
 
-    renderCanvasSprite(
-      sprite: hair,
-      canvas: canvas,
-      row: row,
-      column: column,
-      color: color,
-      blendMode: BlendMode.modulate,
-    );
-  }
-
-  if (helm != null){
-    renderCanvasSprite(
-      sprite: helm,
-      canvas: canvas,
-      row: row,
-      column: column,
-      blendMode: BlendMode.dstATop,
-      color: color,
-    );
-  }
-
-  if (weapon != null){
-    renderCanvasSprite(
-      sprite: weapon,
-      canvas: canvas,
-      row: row,
-      column: column,
-      blendMode: BlendMode.dstATop,
-      color: color,
-    );
-  }
+  // if (weapon != null){
+  //   renderCanvasSprite(
+  //     sprite: weapon,
+  //     canvas: canvas,
+  //     row: row,
+  //     column: column,
+  //     blendMode: BlendMode.dstATop,
+  //     color: color,
+  //   );
+  // }
 
 }

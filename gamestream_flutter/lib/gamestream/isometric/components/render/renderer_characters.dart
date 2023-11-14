@@ -148,12 +148,12 @@ class RendererCharacters extends RenderGroup {
         ?? spritesSouth.weapons[WeaponType.Unarmed] ?? (throw Exception());
     final atlasWeaponWest = spritesWest.weapons[weaponType]
         ?? spritesWest.weapons[WeaponType.Unarmed] ?? (throw Exception());
-    final atlasBodyArmSouth = spritesSouth.bodyArms[bodyType];
-    final atlasBodyArmWest = spritesWest.bodyArms[bodyType];
-    final atlasArmLeftSouth = spritesSouth.armLeft[ArmType.regular] ?? (throw Exception());
-    final atlasArmLeftWest = spritesWest.armLeft[ArmType.regular] ?? (throw Exception());
-    final atlasArmRightSouth = spritesSouth.armRight[ArmType.regular] ?? (throw Exception());
-    final atlasArmRightWest = spritesWest.armRight[ArmType.regular] ?? (throw Exception());
+    // final atlasBodyArmSouth = spritesSouth.bodyArms[bodyType];
+    // final atlasBodyArmWest = spritesWest.bodyArms[bodyType];
+    // final atlasArmLeftSouth = spritesSouth.armLeft[ArmType.regular] ?? (throw Exception());
+    // final atlasArmLeftWest = spritesWest.armLeft[ArmType.regular] ?? (throw Exception());
+    // final atlasArmRightSouth = spritesSouth.armRight[ArmType.regular] ?? (throw Exception());
+    // final atlasArmRightWest = spritesWest.armRight[ArmType.regular] ?? (throw Exception());
     final atlasHairSouth = spritesSouth.hair[hairType] ?? (throw Exception());
     final atlasHairWest = spritesWest.hair[hairType] ?? (throw Exception());
     final atlasHeadSouth = spritesSouth.head[headType] ?? (throw Exception());
@@ -173,14 +173,14 @@ class RendererCharacters extends RenderGroup {
     final spriteHelmWest = atlasHelmWest.fromCharacterState(characterState);
     final spriteBodySouth = atlasBodySouth.fromCharacterState(characterState);
     final spriteBodyWest = atlasBodyWest.fromCharacterState(characterState);
-    final spriteBodyArmSouth = atlasBodyArmSouth?.fromCharacterState(characterState);
-    final spriteBodyArmWest = atlasBodyArmWest?.fromCharacterState(characterState);
+    // final spriteBodyArmSouth = atlasBodyArmSouth?.fromCharacterState(characterState);
+    // final spriteBodyArmWest = atlasBodyArmWest?.fromCharacterState(characterState);
     final spriteHeadSouth = atlasHeadSouth.fromCharacterState(characterState);
     final spriteHeadWest = atlasHeadWest.fromCharacterState(characterState);
-    final spriteArmLeftSouth = atlasArmLeftSouth.fromCharacterState(characterState);
-    final spriteArmLeftWest = atlasArmLeftWest.fromCharacterState(characterState);
-    final spriteArmRightSouth = atlasArmRightSouth.fromCharacterState(characterState);
-    final spriteArmRightWest = atlasArmRightWest.fromCharacterState(characterState);
+    // final spriteArmLeftSouth = atlasArmLeftSouth.fromCharacterState(characterState);
+    // final spriteArmLeftWest = atlasArmLeftWest.fromCharacterState(characterState);
+    // final spriteArmRightSouth = atlasArmRightSouth.fromCharacterState(characterState);
+    // final spriteArmRightWest = atlasArmRightWest.fromCharacterState(characterState);
     final spriteTorsoTopSouth = atlasTorsoTopSouth.fromCharacterState(characterState);
     final spriteTorsoTopWest = atlasTorsoTopWest.fromCharacterState(characterState);
     final spriteTorsoBottomSouth = atlasTorsoBottomSouth.fromCharacterState(characterState);
@@ -230,10 +230,10 @@ class RendererCharacters extends RenderGroup {
       spriteHandFrontWest = spriteHandsLeftWest;
       spriteHandBehindSouth = spriteHandsRightSouth;
       spriteHandBehindWest = spriteHandsRightWest;
-      spriteArmFrontSouth = spriteArmLeftSouth;
-      spriteArmFrontWest = spriteArmLeftWest;
-      spriteArmBehindSouth = spriteArmRightSouth;
-      spriteArmBehindWest = spriteArmRightWest;
+      // spriteArmFrontSouth = spriteArmLeftSouth;
+      // spriteArmFrontWest = spriteArmLeftWest;
+      // spriteArmBehindSouth = spriteArmRightSouth;
+      // spriteArmBehindWest = spriteArmRightWest;
       spriteShoesFrontSouth = spriteShoesLeftSouth;
       spriteShoesFrontWest = spriteShoesLeftWest;
       spriteShoesBehindSouth = spriteShoesRightSouth;
@@ -243,10 +243,10 @@ class RendererCharacters extends RenderGroup {
       spriteHandFrontWest = spriteHandsRightSouth;
       spriteHandBehindSouth = spriteHandsLeftSouth;
       spriteHandBehindWest = spriteHandsLeftWest;
-      spriteArmFrontSouth = spriteArmRightSouth; // spriteArmRight
-      spriteArmFrontWest = spriteArmRightSouth; // spriteArmRight
-      spriteArmBehindSouth = spriteArmLeftSouth;
-      spriteArmBehindWest = spriteArmLeftWest;
+      // spriteArmFrontSouth = spriteArmRightSouth; // spriteArmRight
+      // spriteArmFrontWest = spriteArmRightSouth; // spriteArmRight
+      // spriteArmBehindSouth = spriteArmLeftSouth;
+      // spriteArmBehindWest = spriteArmLeftWest;
       spriteShoesFrontSouth = spriteShoesRightSouth;
       spriteShoesFrontWest = spriteShoesRightWest;
       spriteShoesBehindSouth = spriteShoesLeftSouth;
@@ -369,31 +369,31 @@ class RendererCharacters extends RenderGroup {
       return;
     }
 
-    modulate(
-      sprite: spriteArmBehindSouth,
-      frame: completingAction
-          ? spriteArmBehindSouth.getFramePercentage(row, actionComplete)
-          : spriteArmBehindSouth.getFrame(row: row, column: animationFrame),
-      color1: colorSkin,
-      color2: colorSouth,
-      scale: scale,
-      dstX: dstX,
-      dstY: dstY,
-      anchorY: anchorY,
-    );
+    // modulate(
+    //   sprite: spriteArmBehindSouth,
+    //   frame: completingAction
+    //       ? spriteArmBehindSouth.getFramePercentage(row, actionComplete)
+    //       : spriteArmBehindSouth.getFrame(row: row, column: animationFrame),
+    //   color1: colorSkin,
+    //   color2: colorSouth,
+    //   scale: scale,
+    //   dstX: dstX,
+    //   dstY: dstY,
+    //   anchorY: anchorY,
+    // );
 
-    modulate(
-      sprite: spriteArmBehindWest,
-      frame: completingAction
-          ? spriteArmBehindWest.getFramePercentage(row, actionComplete)
-          : spriteArmBehindWest.getFrame(row: row, column: animationFrame),
-      color1: colorSkin,
-      color2: colorWest,
-      scale: scale,
-      dstX: dstX,
-      dstY: dstY,
-      anchorY: anchorY,
-    );
+    // modulate(
+    //   sprite: spriteArmBehindWest,
+    //   frame: completingAction
+    //       ? spriteArmBehindWest.getFramePercentage(row, actionComplete)
+    //       : spriteArmBehindWest.getFrame(row: row, column: animationFrame),
+    //   color1: colorSkin,
+    //   color2: colorWest,
+    //   scale: scale,
+    //   dstX: dstX,
+    //   dstY: dstY,
+    //   anchorY: anchorY,
+    // );
 
     renderSprite(
       sprite: spriteHandBehindSouth,
@@ -533,31 +533,31 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    modulate(
-      sprite: spriteArmFrontSouth,
-      frame: completingAction
-          ? spriteArmFrontSouth.getFramePercentage(row, actionComplete)
-          : spriteArmFrontSouth.getFrame(row: row, column: animationFrame),
-      color1: colorSkin,
-      color2: colorSouth,
-      scale: scale,
-      dstX: dstX,
-      dstY: dstY,
-      anchorY: anchorY,
-    );
+    // modulate(
+    //   sprite: spriteArmFrontSouth,
+    //   frame: completingAction
+    //       ? spriteArmFrontSouth.getFramePercentage(row, actionComplete)
+    //       : spriteArmFrontSouth.getFrame(row: row, column: animationFrame),
+    //   color1: colorSkin,
+    //   color2: colorSouth,
+    //   scale: scale,
+    //   dstX: dstX,
+    //   dstY: dstY,
+    //   anchorY: anchorY,
+    // );
 
-    modulate(
-      sprite: spriteArmFrontWest,
-      frame: completingAction
-          ? spriteArmFrontWest.getFramePercentage(row, actionComplete)
-          : spriteArmFrontWest.getFrame(row: row, column: animationFrame),
-      color1: colorSkin,
-      color2: colorWest,
-      scale: scale,
-      dstX: dstX,
-      dstY: dstY,
-      anchorY: anchorY,
-    );
+    // modulate(
+    //   sprite: spriteArmFrontWest,
+    //   frame: completingAction
+    //       ? spriteArmFrontWest.getFramePercentage(row, actionComplete)
+    //       : spriteArmFrontWest.getFrame(row: row, column: animationFrame),
+    //   color1: colorSkin,
+    //   color2: colorWest,
+    //   scale: scale,
+    //   dstX: dstX,
+    //   dstY: dstY,
+    //   anchorY: anchorY,
+    // );
 
     renderSprite(
       sprite: spriteHandFrontSouth,
@@ -636,33 +636,33 @@ class RendererCharacters extends RenderGroup {
       );
     }
 
-    if (spriteBodyArmSouth != null){
-      renderSprite(
-        sprite: spriteBodyArmSouth,
-        frame: completingAction
-            ? spriteBodyArmSouth.getFramePercentage(row, actionComplete)
-            : spriteBodyArmSouth.getFrame(row: row, column: animationFrame),
-        color: colorSouth,
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
-    }
+    // if (spriteBodyArmSouth != null){
+    //   renderSprite(
+    //     sprite: spriteBodyArmSouth,
+    //     frame: completingAction
+    //         ? spriteBodyArmSouth.getFramePercentage(row, actionComplete)
+    //         : spriteBodyArmSouth.getFrame(row: row, column: animationFrame),
+    //     color: colorSouth,
+    //     scale: scale,
+    //     dstX: dstX,
+    //     dstY: dstY,
+    //     anchorY: anchorY,
+    //   );
+    // }
 
-    if (spriteBodyArmWest != null){
-      renderSprite(
-        sprite: spriteBodyArmWest,
-        frame: completingAction
-            ? spriteBodyArmWest.getFramePercentage(row, actionComplete)
-            : spriteBodyArmWest.getFrame(row: row, column: animationFrame),
-        color: colorWest,
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
-    }
+    // if (spriteBodyArmWest != null){
+    //   renderSprite(
+    //     sprite: spriteBodyArmWest,
+    //     frame: completingAction
+    //         ? spriteBodyArmWest.getFramePercentage(row, actionComplete)
+    //         : spriteBodyArmWest.getFrame(row: row, column: animationFrame),
+    //     color: colorWest,
+    //     scale: scale,
+    //     dstX: dstX,
+    //     dstY: dstY,
+    //     anchorY: anchorY,
+    //   );
+    // }
 
     modulate(
       sprite: spriteHeadSouth,

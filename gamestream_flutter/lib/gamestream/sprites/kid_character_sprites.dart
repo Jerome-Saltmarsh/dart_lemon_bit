@@ -4,11 +4,11 @@ import 'package:gamestream_flutter/gamestream/isometric/components/types/sprite_
 import 'character_sprite_group.dart';
 
 class KidCharacterSprites {
-  final armLeft = <int, CharacterSpriteGroup>{};
-  final armRight  = <int, CharacterSpriteGroup>{};
+  // final armLeft = <int, CharacterSpriteGroup>{};
+  // final armRight  = <int, CharacterSpriteGroup>{};
   final bodyMale = <int, CharacterSpriteGroup>{};
   final bodyFemale = <int, CharacterSpriteGroup>{};
-  final bodyArms = <int, CharacterSpriteGroup>{};
+  // final bodyArms = <int, CharacterSpriteGroup>{};
   final handLeft = <int, CharacterSpriteGroup>{};
   final handRight = <int, CharacterSpriteGroup>{};
   final head = <int, CharacterSpriteGroup>{};
@@ -23,11 +23,11 @@ class KidCharacterSprites {
   final shoesRight = <int, CharacterSpriteGroup>{};
 
   late final values = {
-    SpriteGroupType.Arms_Left: armLeft,
-    SpriteGroupType.Arms_Right: armRight,
+    // SpriteGroupType.Arms_Left: armLeft,
+    // SpriteGroupType.Arms_Right: armRight,
     SpriteGroupType.Body_Male: bodyMale,
     SpriteGroupType.Body_Female: bodyFemale,
-    SpriteGroupType.Body_Arms: bodyArms,
+    // SpriteGroupType.Body_Arms: bodyArms,
     SpriteGroupType.Hands_Left: handLeft,
     SpriteGroupType.Hands_Right: handRight,
     SpriteGroupType.Heads: head,
