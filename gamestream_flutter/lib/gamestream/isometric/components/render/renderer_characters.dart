@@ -96,7 +96,7 @@ class RendererCharacters extends RenderGroup {
     final scene = this.scene;
     final characterIndex = scene.getIndexPosition(character);
     final scale = options.characterRenderScale;
-    final direction = IsometricDirection.toInputDirection(character.direction);
+    // final direction = IsometricDirection.toInputDirection(character.direction);
     final colorN = scene.colorNorth(characterIndex);
     final colorE = scene.colorEast(characterIndex);
     final colorS = scene.colorSouth(characterIndex);
@@ -434,17 +434,11 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    final hairFrameSouth = completingAction
-        ? spriteHairSouth.getFramePercentage(row, actionComplete)
-        : spriteHairSouth.getFrame(row: row, column: animationFrame);
-
-    final hairFrameWest = completingAction
-        ? spriteHairWest.getFramePercentage(row, actionComplete)
-        : spriteHairWest.getFrame(row: row, column: animationFrame);
-
     modulate(
       sprite: spriteHairSouth,
-      frame: hairFrameSouth,
+      frame: completingAction
+          ? spriteHairSouth.getFramePercentage(row, actionComplete)
+          : spriteHairSouth.getFrame(row: row, column: animationFrame),
       color1: colorHair,
       color2: colorSouth,
       scale: scale,
@@ -455,7 +449,9 @@ class RendererCharacters extends RenderGroup {
 
     modulate(
       sprite: spriteHairWest,
-      frame: hairFrameWest,
+      frame: completingAction
+          ? spriteHairWest.getFramePercentage(row, actionComplete)
+          : spriteHairWest.getFrame(row: row, column: animationFrame),
       color1: colorHair,
       color2: colorWest,
       scale: scale,
@@ -487,8 +483,6 @@ class RendererCharacters extends RenderGroup {
       dstY: dstY,
       anchorY: anchorY,
     );
-
-    // engine.renderText(compositor.order.toString(), dstX - 24, dstY - 24);
   }
 
   void renderCharacterFallen(Character character) {

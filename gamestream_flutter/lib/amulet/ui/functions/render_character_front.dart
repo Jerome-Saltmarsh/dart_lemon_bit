@@ -27,19 +27,10 @@ void renderCharacterFront({
   final head = sprites.head[headType]?.fromCharacterState(characterState) ?? (throw Exception());
   final bodySprite = isMale ? sprites.bodyMale : sprites.bodyFemale;
   final body = bodySprite[bodyType] ?.fromCharacterState(characterState);
-  // final bodyArms = sprites.bodyArms[bodyType]?.fromCharacterState(characterState);
   final torsoTop = sprites.torsoTop[gender]?.fromCharacterState(characterState) ?? (throw Exception());
   final torsoBottom = sprites.torsoBottom[gender]?.fromCharacterState(characterState) ?? (throw Exception());
-  // final armsLeft = sprites.armLeft[ArmType.regular]
-  //     ?.fromCharacterState(characterState) ?? (throw Exception());
-  // final armsRight = sprites.armRight[ArmType.regular]
-  //     ?.fromCharacterState(characterState) ?? (throw Exception());
   final shoes = sprites.shoes[shoeType]
       ?.fromCharacterState(characterState);
-  // final shoesLeft = sprites.shoesLeft[shoeType]
-  //     ?.fromCharacterState(characterState);
-  // final shoesRight = sprites.shoesRight[shoeType]
-  //     ?.fromCharacterState(characterState);
   final legs = sprites.legs[legsType]
       ?.fromCharacterState(characterState);
   final hair = sprites.hair[hairType]
@@ -94,43 +85,6 @@ void renderCharacterFront({
     );
   }
 
-
-  // renderCanvasSprite(
-  //   sprite: armsLeft,
-  //   canvas: canvas,
-  //   row: row,
-  //   column: column,
-  //   color: skinColor,
-  //   blendMode: BlendMode.modulate,
-  // );
-
-  // renderCanvasSprite(
-  //   sprite: armsLeft,
-  //   canvas: canvas,
-  //   row: row,
-  //   column: column,
-  //   color: color,
-  //   blendMode: BlendMode.modulate,
-  // );
-
-  // renderCanvasSprite(
-  //   sprite: armsRight,
-  //   canvas: canvas,
-  //   row: row,
-  //   column: column,
-  //   color: skinColor,
-  //   blendMode: BlendMode.modulate,
-  // );
-
-  // renderCanvasSprite(
-  //   sprite: armsRight,
-  //   canvas: canvas,
-  //   row: row,
-  //   column: column,
-  //   color: color,
-  //   blendMode: BlendMode.modulate,
-  // );
-
   if (shoes != null){
     renderCanvasSprite(
       sprite: shoes,
@@ -141,17 +95,6 @@ void renderCharacterFront({
       color: color,
     );
   }
-
-  // if (shoesRight != null){
-  //   renderCanvasSprite(
-  //     sprite: shoesRight,
-  //     canvas: canvas,
-  //     row: row,
-  //     column: column,
-  //     blendMode: BlendMode.dstATop,
-  //     color: color,
-  //   );
-  // }
 
   if (body != null) {
     renderCanvasSprite(
@@ -164,75 +107,64 @@ void renderCharacterFront({
     );
   }
 
-  // if (bodyArms != null) {
-  //   renderCanvasSprite(
-  //     sprite: bodyArms,
-  //     canvas: canvas,
-  //     row: row,
-  //     column: column,
-  //     blendMode: BlendMode.dstATop,
-  //     color: color,
-  //   );
-  // }
+  renderCanvasSprite(
+    sprite: head,
+    canvas: canvas,
+    row: row,
+    column: column,
+    color: skinColor,
+    blendMode: BlendMode.modulate,
+  );
 
-  // renderCanvasSprite(
-  //   sprite: head,
-  //   canvas: canvas,
-  //   row: row,
-  //   column: column,
-  //   color: skinColor,
-  //   blendMode: BlendMode.modulate,
-  // );
-  //
-  // renderCanvasSprite(
-  //   sprite: head,
-  //   canvas: canvas,
-  //   row: row,
-  //   column: column,
-  //   color: color,
-  //   blendMode: BlendMode.modulate,
-  // );
+  renderCanvasSprite(
+    sprite: head,
+    canvas: canvas,
+    row: row,
+    column: column,
+    color: color,
+    blendMode: BlendMode.modulate,
+  );
 
-  // if (hair != null){
-  //   renderCanvasSprite(
-  //     sprite: hair,
-  //     canvas: canvas,
-  //     row: row,
-  //     column: column,
-  //     color: hairColor,
-  //     blendMode: BlendMode.modulate,
-  //   );
-  //
-  //   renderCanvasSprite(
-  //     sprite: hair,
-  //     canvas: canvas,
-  //     row: row,
-  //     column: column,
-  //     color: color,
-  //     blendMode: BlendMode.modulate,
-  //   );
-  // }
+  if (hair != null){
+    renderCanvasSprite(
+      sprite: hair,
+      canvas: canvas,
+      row: row,
+      column: column,
+      color: hairColor,
+      blendMode: BlendMode.modulate,
+    );
 
-  // if (helm != null){
-  //   renderCanvasSprite(
-  //     sprite: helm,
-  //     canvas: canvas,
-  //     row: row,
-  //     column: column,
-  //     blendMode: BlendMode.dstATop,
-  //     color: color,
-  //   );
-  // }
+    renderCanvasSprite(
+      sprite: hair,
+      canvas: canvas,
+      row: row,
+      column: column,
+      color: color,
+      blendMode: BlendMode.modulate,
+    );
+  }
 
-  // if (weapon != null){
-  //   renderCanvasSprite(
-  //     sprite: weapon,
-  //     canvas: canvas,
-  //     row: row,
-  //     column: column,
-  //     blendMode: BlendMode.dstATop,
-  //     color: color,
-  //   );
-  // }
+  if (helm != null){
+    renderCanvasSprite(
+      sprite: helm,
+      canvas: canvas,
+      row: row,
+      column: column,
+      blendMode: BlendMode.dstATop,
+      color: color,
+    );
+  }
+
+  if (weapon != null){
+    renderCanvasSprite(
+      sprite: weapon,
+      canvas: canvas,
+      row: row,
+      column: column,
+      blendMode: BlendMode.dstATop,
+      color: color,
+    );
+  }
 
 }
