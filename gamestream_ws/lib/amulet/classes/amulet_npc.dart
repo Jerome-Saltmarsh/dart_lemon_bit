@@ -23,7 +23,7 @@ class AmuletNpc extends Character with AmuletCharacter {
     required super.attackDuration,
     super.invincible = false,
     this.interact,
-  }) : super (characterType: CharacterType.Kid){
+  }) : super (characterType: CharacterType.Human){
     clearTargetOnPerformAction = false;
     this.attackDuration = attackDuration;
   }

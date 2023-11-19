@@ -3,7 +3,7 @@ import 'package:gamestream_flutter/packages/common.dart';
 import 'package:lemon_math/src.dart';
 
 class Character extends Position {
-  var characterType = CharacterType.Kid;
+  var characterType = CharacterType.Human;
   var weaponType = WeaponType.Unarmed;
   var complexion = 0;
   var shoeType = ShoeType.None;

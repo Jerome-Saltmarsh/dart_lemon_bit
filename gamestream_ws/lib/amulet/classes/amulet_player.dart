@@ -57,7 +57,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   }) : super(game: amuletGame, health: 10, team: AmuletTeam.Human) {
     respawnDurationTotal = -1;
     controlsCanTargetEnemies = true;
-    characterType = CharacterType.Kid;
+    characterType = CharacterType.Human;
     hurtable = false;
     hurtStateBusy = false;
     regainFullHealth();

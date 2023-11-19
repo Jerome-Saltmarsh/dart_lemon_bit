@@ -169,13 +169,13 @@ directory_renders = 'C:/Users/Jerome/github/bleed/lemon_atlas/assets/renders/'
 
 direction_north_vector = (0.0, 1.0, 0)
 direction_east_vector = (0.0, -1.0, 0)
-direction_south_vector = (0, -1.0, 0)
-direction_west_vector = (0, 1.0, 0)
+direction_south_vector = (0, 1.0, 0)
+direction_west_vector = (0, -1.0, 0)
 
 direction_north_threshold = -0.7
 direction_east_threshold = -0.7
-direction_south_threshold = 0.2
-direction_west_threshold = 0.2
+direction_south_threshold = 0.0
+direction_west_threshold = 0.0
 
 
 def get_animation_tracks_rig_kid():

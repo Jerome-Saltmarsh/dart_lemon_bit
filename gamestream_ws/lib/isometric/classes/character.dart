@@ -111,8 +111,8 @@ class Character extends Collider {
     this.doesWander = false,
     this.actionFrame = -1,
     this.invincible = false,
+    super.radius = 10,
   }) : super(
-    radius: CharacterType.getRadius(characterType),
     materialType: MaterialType.Flesh,
   ) {
     maxHealth = health;
@@ -127,7 +127,6 @@ class Character extends Collider {
     fixed = false;
     physical = true;
     hitable = true;
-    radius = CharacterType.getRadius(characterType);
     setDestinationToCurrentPosition();
 
     if (doesWander) {
@@ -186,7 +185,7 @@ class Character extends Collider {
   bool get aliveAndActive => alive && active;
 
   bool get characterTypeTemplate =>
-      characterType == CharacterType.Kid;
+      characterType == CharacterType.Human;
 
   bool get dead => characterState == CharacterState.Dead;
 

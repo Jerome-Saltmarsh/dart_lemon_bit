@@ -71,8 +71,8 @@ class RendererCharacters extends RenderGroup {
     }
 
     switch (character.characterType) {
-      case CharacterType.Kid:
-        renderCharacterKid(character);
+      case CharacterType.Human:
+        renderCharacterHuman(character);
         break;
       case CharacterType.Fallen:
         renderCharacterFallen(character);
@@ -91,7 +91,7 @@ class RendererCharacters extends RenderGroup {
 
 
   /// TODO OPTIMIZE
-  void renderCharacterKid(Character character) {
+  void renderCharacterHuman(Character character) {
     const anchorY = 0.7;
     final scene = this.scene;
     final characterIndex = scene.getIndexPosition(character);

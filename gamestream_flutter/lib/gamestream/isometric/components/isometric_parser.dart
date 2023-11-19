@@ -504,7 +504,7 @@ class IsometricParser with ByteReader, IsometricComponent {
           break;
       }
 
-      if (character.characterType == CharacterType.Kid){
+      if (character.characterType == CharacterType.Human){
         readCharacterTemplate(character);
       }
 
