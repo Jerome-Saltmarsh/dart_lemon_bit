@@ -152,6 +152,7 @@ class RendererCharacters extends RenderGroup {
         ?? spritesWest.weapons[WeaponType.Unarmed] ?? (throw Exception());
     final atlasHairSouth = spritesSouth.hair[hairType] ?? (throw Exception());
     final atlasHairWest = spritesWest.hair[hairType] ?? (throw Exception());
+    final atlasHairDiffuse = spritesDiffuse.hair[hairType] ?? (throw Exception());
     final atlasHeadSouth = spritesSouth.head[headType] ?? (throw Exception());
     final atlasHeadWest = spritesWest.head[headType] ?? (throw Exception());
     final atlasHeadDiffuse = spritesDiffuse.head[headType] ?? (throw Exception());
@@ -182,6 +183,7 @@ class RendererCharacters extends RenderGroup {
     final spriteShadow = spritesShadow.fromCharacterState(characterState);
     final spriteHairSouth = atlasHairSouth.fromCharacterState(characterState);
     final spriteHairWest = atlasHairWest.fromCharacterState(characterState);
+    final spriteHairDiffuse = atlasHairDiffuse.fromCharacterState(characterState);
     final spriteShoesSouth = atlasShoesSouth.fromCharacterState(characterState);
     final spriteShoesWest = atlasShoesWest.fromCharacterState(characterState);
 
@@ -431,6 +433,18 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
+    modulate(
+      sprite: spriteHairDiffuse,
+      frame: completingAction
+          ? spriteHairDiffuse.getFramePercentage(row, actionComplete)
+          : spriteHairDiffuse.getFrame(row: row, column: animationFrame),
+      color1: colorHair,
+      color2: colorDiffuse,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
 
     modulate(
       sprite: spriteHairSouth,

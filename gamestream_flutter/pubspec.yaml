@@ -93,15 +93,16 @@ flutter:
     - sprites/isometric/kid/west/legs/leather/
     - sprites/isometric/kid/west/torso/female/
     - sprites/isometric/kid/west/torso/male/
-    - sprites/isometric/kid/diffuse/head/boy/
-    - sprites/isometric/kid/diffuse/head/girl/
-    - sprites/isometric/kid/diffuse/torso/female/
-    - sprites/isometric/kid/diffuse/torso/male/
     - sprites/isometric/kid/west/weapons/bow/
     - sprites/isometric/kid/west/weapons/staff/
     - sprites/isometric/kid/west/weapons/sword/
     - sprites/isometric/kid/west/shoes/iron_plates/
     - sprites/isometric/kid/west/shoes/leather_boots/
+    - sprites/isometric/kid/diffuse/hair/01/
+    - sprites/isometric/kid/diffuse/head/boy/
+    - sprites/isometric/kid/diffuse/head/girl/
+    - sprites/isometric/kid/diffuse/torso/female/
+    - sprites/isometric/kid/diffuse/torso/male/
     - sprites/isometric/crystal/
     - sprites/front/kid/south/body_male/shirt_blue/
     - sprites/front/kid/south/body_male/leather_armour/

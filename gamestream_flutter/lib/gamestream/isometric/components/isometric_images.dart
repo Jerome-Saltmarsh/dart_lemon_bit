@@ -235,6 +235,13 @@ class IsometricImages with IsometricComponent {
       skipHurt: true,
     );
 
+    loadSpriteGroupIsometric(
+      direction: RenderDirection.diffuse,
+      type: SpriteGroupType.Hair,
+      subType: HairType.basic_1,
+      skipHurt: true,
+    );
+
     for (final direction in const[RenderDirection.south, RenderDirection.west]){
       loadSpriteGroupIsometric(
           direction: direction,
