@@ -4,16 +4,15 @@ import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 
+import 'functions/merge_32_bit_colors.dart';
+import 'functions/merge_32_bit_colors_3.dart';
+
 class RendererCharacters extends RenderGroup {
 
   var renderBottom = true;
   var renderQueueTop = 0;
   var renderQueueBottom = 0;
   late Character character;
-
-  RendererCharacters(){
-    print('RendererCharacters()');
-  }
 
   @override
   void reset() {
@@ -586,12 +585,14 @@ class RendererCharacters extends RenderGroup {
     const scale = 0.5;
     const anchorY = 0.6;
 
+    final images = this.images;
     final row = character.renderDirection;
     final column = character.animationFrame;
     final spriteShadow = images.spriteGroupSkeletonShadow.fromCharacterState(character.state);
     final spriteWest = images.spriteGroupSkeletonWest.fromCharacterState(character.state);
     final spriteSouth = images.spriteGroupSkeletonSouth.fromCharacterState(character.state);
 
+    final scene = this.scene;
     final characterIndex = scene.getIndexPosition(character);
     final color = character.color;
     final colorN = scene.colorNorth(characterIndex);
@@ -601,13 +602,17 @@ class RendererCharacters extends RenderGroup {
     final colorWest = merge32BitsColors3(colorN, colorW, color);
     final colorSouth = merge32BitsColors3(colorS, colorE, color);
 
+    final dstX = character.renderX;
+    final dstY = character.renderY;
+    final render = this.render;
+
     render.sprite(
       sprite: spriteShadow,
       frame: spriteShadow.getFrame(row: row, column: column),
       color: color,
       scale: scale,
-      dstX: character.renderX,
-      dstY: character.renderY,
+      dstX: dstX,
+      dstY: dstY,
       anchorY: anchorY,
     );
 
@@ -616,8 +621,8 @@ class RendererCharacters extends RenderGroup {
       frame: spriteWest.getFrame(row: row, column: column),
       color: colorWest,
       scale: scale,
-      dstX: character.renderX,
-      dstY: character.renderY,
+      dstX: dstX,
+      dstY: dstY,
       anchorY: anchorY,
     );
 
@@ -626,89 +631,14 @@ class RendererCharacters extends RenderGroup {
       frame: spriteSouth.getFrame(row: row, column: column),
       color: colorSouth,
       scale: scale,
-      dstX: character.renderX,
-      dstY: character.renderY,
+      dstX: dstX,
+      dstY: dstY,
       anchorY: anchorY,
     );
   }
 }
 
 
-int mergeColors(int a, int b) {
-  // Extract the alpha, red, green, and blue components from both colors.
-  int alphaA = (a >> 24) & 0xFF;
-  int redA = (a >> 16) & 0xFF;
-  int greenA = (a >> 8) & 0xFF;
-  int blueA = a & 0xFF;
-
-  int alphaB = (b >> 24) & 0xFF;
-  int redB = (b >> 16) & 0xFF;
-  int greenB = (b >> 8) & 0xFF;
-  int blueB = b & 0xFF;
-
-  // Calculate the merged color components.
-  int mergedAlpha = (alphaA + alphaB) ~/ 2; // Average the alpha values.
-  int mergedRed = (redA + redB) ~/ 2; // Average the red values.
-  int mergedGreen = (greenA + greenB) ~/ 2; // Average the green values.
-  int mergedBlue = (blueA + blueB) ~/ 2; // Average the blue values.
-
-  // Combine the components to create the merged 32-bit color.
-  int mergedColor = (mergedAlpha << 24) | (mergedRed << 16) | (mergedGreen << 8) | mergedBlue;
-
-  return mergedColor;
-}
 
 
-int merge32BitColors(int a, int b) {
 
-  // Extract the color components from a and b.
-  int alphaA = (a >> 24) & 0xFF;
-  int redA = (a >> 16) & 0xFF;
-  int greenA = (a >> 8) & 0xFF;
-  int blueA = a & 0xFF;
-
-  int alphaB = (b >> 24) & 0xFF;
-  int redB = (b >> 16) & 0xFF;
-  int greenB = (b >> 8) & 0xFF;
-  int blueB = b & 0xFF;
-
-  // Merge the color components using your desired logic.
-  int mergedAlpha = (alphaA + alphaB) ~/ 2;
-  int mergedRed = (redA + redB) ~/ 2;
-  int mergedGreen = (greenA + greenB) ~/ 2;
-  int mergedBlue = (blueA + blueB) ~/ 2;
-
-  // Combine the merged color components to create the result color.
-  int resultColor = (mergedAlpha << 24) | (mergedRed << 16) | (mergedGreen << 8) | mergedBlue;
-
-  return resultColor;
-}
-
-
-int merge32BitsColors3(int a, int b, int c) {
-  // Extract the alpha, red, green, and blue components of each color.
-  int alphaA = (a >> 24) & 0xFF;
-  int redA = (a >> 16) & 0xFF;
-  int greenA = (a >> 8) & 0xFF;
-  int blueA = a & 0xFF;
-
-  int alphaB = (b >> 24) & 0xFF;
-  int redB = (b >> 16) & 0xFF;
-  int greenB = (b >> 8) & 0xFF;
-  int blueB = b & 0xFF;
-
-  int alphaC = (c >> 24) & 0xFF;
-  int redC = (c >> 16) & 0xFF;
-  int greenC = (c >> 8) & 0xFF;
-  int blueC = c & 0xFF;
-
-  // Merge the components into a single color.
-  int mergedColor = 0;
-
-  mergedColor |= ((alphaA + alphaB + alphaC) ~/ 3) << 24;
-  mergedColor |= ((redA + redB + redC) ~/ 3) << 16;
-  mergedColor |= ((greenA + greenB + greenC) ~/ 3) << 8;
-  mergedColor |= ((blueA + blueB + blueC) ~/ 3);
-
-  return mergedColor;
-}
