@@ -242,6 +242,27 @@ class IsometricImages with IsometricComponent {
       skipHurt: true,
     );
 
+    loadSpriteGroupIsometric(
+      direction: RenderDirection.diffuse,
+      type: SpriteGroupType.Weapons,
+      subType: WeaponType.Bow,
+      skipHurt: true,
+    );
+
+    loadSpriteGroupIsometric(
+      direction: RenderDirection.diffuse,
+      type: SpriteGroupType.Weapons,
+      subType: WeaponType.Staff,
+      skipHurt: true,
+    );
+
+    loadSpriteGroupIsometric(
+      direction: RenderDirection.diffuse,
+      type: SpriteGroupType.Weapons,
+      subType: WeaponType.Sword,
+      skipHurt: true,
+    );
+
     for (final direction in const[RenderDirection.south, RenderDirection.west]){
       loadSpriteGroupIsometric(
           direction: direction,

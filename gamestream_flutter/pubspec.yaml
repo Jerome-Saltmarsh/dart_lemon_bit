@@ -103,7 +103,9 @@ flutter:
     - sprites/isometric/kid/diffuse/head/girl/
     - sprites/isometric/kid/diffuse/torso/female/
     - sprites/isometric/kid/diffuse/torso/male/
-    - sprites/isometric/crystal/
+    - sprites/isometric/kid/diffuse/weapons/bow/
+    - sprites/isometric/kid/diffuse/weapons/staff/
+    - sprites/isometric/kid/diffuse/weapons/sword/
     - sprites/front/kid/south/body_male/shirt_blue/
     - sprites/front/kid/south/body_male/leather_armour/
     - sprites/front/kid/south/body_female/leather_armour/
@@ -151,6 +153,7 @@ flutter:
     - sprites/isometric/butterfly/
     - sprites/isometric/moth/
     - sprites/isometric/bat/
+    - sprites/isometric/crystal/
     - audio/
     - audio/ui/
     - audio/music/

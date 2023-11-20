@@ -150,6 +150,8 @@ class RendererCharacters extends RenderGroup {
         ?? spritesSouth.weapons[WeaponType.Unarmed] ?? (throw Exception());
     final atlasWeaponWest = spritesWest.weapons[weaponType]
         ?? spritesWest.weapons[WeaponType.Unarmed] ?? (throw Exception());
+    final atlasWeaponDiffuse = spritesDiffuse.weapons[weaponType]
+        ?? spritesWest.weapons[WeaponType.Unarmed] ?? (throw Exception());
     final atlasHairSouth = spritesSouth.hair[hairType] ?? (throw Exception());
     final atlasHairWest = spritesWest.hair[hairType] ?? (throw Exception());
     final atlasHairDiffuse = spritesDiffuse.hair[hairType] ?? (throw Exception());
@@ -164,6 +166,7 @@ class RendererCharacters extends RenderGroup {
 
     final spriteWeaponSouth = atlasWeaponSouth.fromCharacterState(characterState);
     final spriteWeaponWest = atlasWeaponWest.fromCharacterState(characterState);
+    final spriteWeaponDiffuse = atlasWeaponDiffuse.fromCharacterState(characterState);
     final spriteHelmSouth = atlasHelmSouth.fromCharacterState(characterState);
     final spriteHelmWest = atlasHelmWest.fromCharacterState(characterState);
     final spriteBodySouth = atlasBodySouth.fromCharacterState(characterState);
@@ -297,6 +300,18 @@ class RendererCharacters extends RenderGroup {
       );
       return;
     }
+
+    renderSprite(
+      sprite: spriteWeaponDiffuse,
+      frame: completingAction
+          ? spriteWeaponDiffuse.getFramePercentage(row, actionComplete)
+          : spriteWeaponDiffuse.getFrame(row: row, column: animationFrame),
+      color: colorDiffuse,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
 
     renderSprite(
       sprite: spriteWeaponSouth,
