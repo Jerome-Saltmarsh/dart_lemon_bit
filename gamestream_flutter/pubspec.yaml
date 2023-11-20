@@ -72,10 +72,8 @@ flutter:
     - sprites/isometric/kid/south/helms/steel/
     - sprites/isometric/kid/south/helms/wizard_hat/
     - sprites/isometric/kid/south/legs/leather/
-    - sprites/isometric/kid/south/torso_top/female/
-    - sprites/isometric/kid/south/torso_top/male/
-    - sprites/isometric/kid/south/torso_bottom/female/
-    - sprites/isometric/kid/south/torso_bottom/male/
+    - sprites/isometric/kid/south/torso/female/
+    - sprites/isometric/kid/south/torso/male/
     - sprites/isometric/kid/south/weapons/bow/
     - sprites/isometric/kid/south/weapons/staff/
     - sprites/isometric/kid/south/weapons/sword/
@@ -93,10 +91,12 @@ flutter:
     - sprites/isometric/kid/west/helms/steel/
     - sprites/isometric/kid/west/helms/wizard_hat/
     - sprites/isometric/kid/west/legs/leather/
-    - sprites/isometric/kid/west/torso_top/female/
-    - sprites/isometric/kid/west/torso_top/male/
-    - sprites/isometric/kid/west/torso_bottom/female/
-    - sprites/isometric/kid/west/torso_bottom/male/
+    - sprites/isometric/kid/west/torso/female/
+    - sprites/isometric/kid/west/torso/male/
+    - sprites/isometric/kid/diffuse/head/boy/
+    - sprites/isometric/kid/diffuse/head/girl/
+    - sprites/isometric/kid/diffuse/torso/female/
+    - sprites/isometric/kid/diffuse/torso/male/
     - sprites/isometric/kid/west/weapons/bow/
     - sprites/isometric/kid/west/weapons/staff/
     - sprites/isometric/kid/west/weapons/sword/
@@ -114,10 +114,8 @@ flutter:
     - sprites/front/kid/south/helms/steel/
     - sprites/front/kid/south/helms/wizard_hat/
     - sprites/front/kid/south/legs/leather/
-    - sprites/front/kid/south/torso_bottom/female/
-    - sprites/front/kid/south/torso_bottom/male/
-    - sprites/front/kid/south/torso_top/female/
-    - sprites/front/kid/south/torso_top/male/
+    - sprites/front/kid/south/torso/female/
+    - sprites/front/kid/south/torso/male/
     - sprites/front/kid/south/weapons/bow/
     - sprites/front/kid/south/weapons/staff/
     - sprites/front/kid/south/weapons/sword/
@@ -134,10 +132,8 @@ flutter:
     - sprites/front/kid/west/helms/steel/
     - sprites/front/kid/west/helms/wizard_hat/
     - sprites/front/kid/west/legs/leather/
-    - sprites/front/kid/west/torso_bottom/female/
-    - sprites/front/kid/west/torso_bottom/male/
-    - sprites/front/kid/west/torso_top/female/
-    - sprites/front/kid/west/torso_top/male/
+    - sprites/front/kid/west/torso/female/
+    - sprites/front/kid/west/torso/male/
     - sprites/front/kid/west/weapons/bow/
     - sprites/front/kid/west/weapons/staff/
     - sprites/front/kid/west/weapons/sword/

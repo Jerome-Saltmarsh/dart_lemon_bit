@@ -43,21 +43,6 @@ def get_render_active_children(children):
     return visible_children
 
 
-def get_render_active_children_2(value):
-    if not value:
-        raise ValueError('get_render_active_children_2(null)')
-
-    visible_children = []
-    children = value.children
-
-    if children:
-        for child in children:
-            if not child.hide_render:
-                visible_children.append(child)
-
-    return visible_children
-
-
 def set_render_engine(value):
     bpy.context.scene.render.engine = value
 
@@ -148,10 +133,7 @@ def mute_animation_tracks(object_name):
 
 # BUSINESS LOGIC
 
-direction_north = 'north'
-direction_east = 'east'
-direction_south = 'south'
-direction_west = 'west'
+directory_renders = 'C:/Users/Jerome/github/bleed/lemon_atlas/assets/renders/'
 
 name_mesh_kid = 'mesh_kid'
 name_material_cell_shade = 'cell_shade'
@@ -165,17 +147,23 @@ name_camera_track_isometric = 'isometric'
 name_rotation_track_1 = 'rotation_1'
 name_rotation_track_8 = 'rotation_8'
 
-directory_renders = 'C:/Users/Jerome/github/bleed/lemon_atlas/assets/renders/'
+direction_north = 'north'
+direction_east = 'east'
+direction_south = 'south'
+direction_west = 'west'
+direction_diffuse = 'diffuse'
 
-direction_north_vector = (0.0, 1.0, 0)
-direction_east_vector = (0.0, -1.0, 0)
-direction_south_vector = (0, 1.0, 0)
-direction_west_vector = (0, -1.0, 0)
+direction_vector_north = (1, 0.0, 0)
+direction_vector_east = (-1, 0.0, 0)
+direction_vector_south = (1, 0, 0)
+direction_vector_west = (-1, 0, 0)
+direction_vector_diffuse = (0, 0, 0)
 
-direction_north_threshold = -0.7
-direction_east_threshold = -0.7
-direction_south_threshold = 0.0
-direction_west_threshold = 0.0
+direction_threshold_north = -0.7
+direction_threshold_east = -0.7
+direction_threshold_south = -0.4
+direction_threshold_west = -0.4
+direction_threshold_diffuse = 1
 
 
 def get_animation_tracks_rig_kid():
@@ -187,13 +175,6 @@ def get_material_cell_shade():
 
 
 def unmute_rotation_track(pivot_track_name):
-    rotation_animation_tracks = get_animation_tracks(name_object_rotation)
-    if rotation_animation_tracks:
-        for animation_track in rotation_animation_tracks:
-            animation_track.mute = animation_track.name != pivot_track_name
-
-
-def unmute_object_track(obj, pivot_track_name):
     rotation_animation_tracks = get_animation_tracks(name_object_rotation)
     if rotation_animation_tracks:
         for animation_track in rotation_animation_tracks:
@@ -357,25 +338,29 @@ def assign_cell_shade_operation(operation):
 
 def map_direction_to_vector(direction):
     if direction == direction_north:
-        return direction_north_vector
+        return direction_vector_north
     if direction == direction_east:
-        return direction_east_vector
+        return direction_vector_east
     if direction == direction_south:
-        return direction_south_vector
+        return direction_vector_south
     if direction == direction_west:
-        return direction_west_vector
+        return direction_vector_west
+    if direction == direction_diffuse:
+        return direction_vector_diffuse
     raise ValueError('invalid direction')
 
 
 def map_direction_to_threshold(direction):
     if direction == direction_north:
-        return direction_north_threshold
+        return direction_threshold_north
     if direction == direction_east:
-        return direction_east_threshold
+        return direction_threshold_east
     if direction == direction_south:
-        return direction_south_threshold
+        return direction_threshold_south
     if direction == direction_west:
-        return direction_west_threshold
+        return direction_threshold_west
+    if direction == direction_diffuse:
+        return direction_threshold_diffuse
     raise ValueError('invalid direction')
 
 

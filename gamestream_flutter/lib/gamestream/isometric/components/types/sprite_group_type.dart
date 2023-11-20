@@ -9,8 +9,7 @@ class SpriteGroupType {
   static const Helms = 9;
   static const Legs = 10;
   static const Shadow = 11;
-  static const Torso_Top = 12;
-  static const Torso_Bottom = 13;
+  static const Torso = 12;
   static const Weapons = 14;
   static const Hair = 17;
   static const Shoes = 20;
@@ -24,8 +23,7 @@ class SpriteGroupType {
     Helms: 'helms',
     Legs: 'legs',
     Shadow: 'shadow',
-    Torso_Top: 'torso_top',
-    Torso_Bottom: 'torso_bottom',
+    Torso: 'torso',
     Weapons: 'weapons',
     Hair: 'hair',
     Shoes: 'shoes',
@@ -39,8 +37,7 @@ class SpriteGroupType {
       Heads => HeadType.getName(subType),
       Helms => HelmType.getName(subType),
       Legs => LegType.getName(subType),
-      Torso_Top => Gender.getName(subType),
-      Torso_Bottom => Gender.getName(subType),
+      Torso => Gender.getName(subType),
       Weapons => WeaponType.getName(subType),
       Shadow => 'regular',
       Hair => HairType.getName(subType),
@@ -58,8 +55,7 @@ class SpriteGroupType {
     Helms,
     Legs,
     Shadow,
-    Torso_Top,
-    Torso_Bottom,
+    Torso,
     Weapons,
     Hair,
     Shoes,

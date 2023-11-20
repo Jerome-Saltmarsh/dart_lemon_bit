@@ -2,6 +2,7 @@ enum RenderDirection{
   north,
   east,
   south,
-  west
+  west,
+  diffuse,
 }
 

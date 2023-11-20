@@ -27,8 +27,7 @@ void renderCharacterFront({
   final head = sprites.head[headType]?.fromCharacterState(characterState) ?? (throw Exception());
   final bodySprite = isMale ? sprites.bodyMale : sprites.bodyFemale;
   final body = bodySprite[bodyType] ?.fromCharacterState(characterState);
-  final torsoTop = sprites.torsoTop[gender]?.fromCharacterState(characterState) ?? (throw Exception());
-  final torsoBottom = sprites.torsoBottom[gender]?.fromCharacterState(characterState) ?? (throw Exception());
+  final torso = sprites.torso[gender]?.fromCharacterState(characterState) ?? (throw Exception());
   final shoes = sprites.shoes[shoeType]
       ?.fromCharacterState(characterState);
   final legs = sprites.legs[legsType]
@@ -39,7 +38,7 @@ void renderCharacterFront({
       ?.fromCharacterState(characterState);
 
   renderCanvasSprite(
-    sprite: torsoBottom,
+    sprite: torso,
     canvas: canvas,
     row: row,
     column: column,
@@ -48,25 +47,7 @@ void renderCharacterFront({
   );
 
   renderCanvasSprite(
-    sprite: torsoBottom,
-    canvas: canvas,
-    row: row,
-    column: column,
-    color: color,
-    blendMode: BlendMode.modulate,
-  );
-
-  renderCanvasSprite(
-    sprite: torsoTop,
-    canvas: canvas,
-    row: row,
-    column: column,
-    color: skinColor,
-    blendMode: BlendMode.modulate,
-  );
-
-  renderCanvasSprite(
-    sprite: torsoTop,
+    sprite: torso,
     canvas: canvas,
     row: row,
     column: column,

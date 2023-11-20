@@ -97,6 +97,7 @@ class RendererCharacters extends RenderGroup {
     final characterIndex = scene.getIndexPosition(character);
     final scale = options.characterRenderScale;
     // final direction = IsometricDirection.toInputDirection(character.direction);
+    // final color = scene.getColor(characterIndex);
     final colorN = scene.colorNorth(characterIndex);
     final colorE = scene.colorEast(characterIndex);
     final colorS = scene.colorSouth(characterIndex);
@@ -107,6 +108,7 @@ class RendererCharacters extends RenderGroup {
     // final colorEast = colorE;
     final colorSouth = merge32BitColors(colorS, colorE);
     final colorWest = merge32BitColors(colorN, colorW);
+    final colorDiffuse = merge32BitColors(colorSouth, colorWest);
     final dstX = character.renderX;
     final dstY = character.renderY;
     final characterState = character.state;
@@ -119,6 +121,7 @@ class RendererCharacters extends RenderGroup {
     final spritesShadow = images.kidCharacterSpriteGroupShadow;
     final spritesSouth = images.kidCharacterSpritesIsometricSouth;
     final spritesWest = images.kidCharacterSpritesIsometricWest;
+    final spritesDiffuse = images.kidCharacterSpritesIsometricDiffuse;
 
     final handTypeLeft = character.handTypeLeft;
     final handTypeRight = character.handTypeRight;
@@ -147,20 +150,14 @@ class RendererCharacters extends RenderGroup {
         ?? spritesSouth.weapons[WeaponType.Unarmed] ?? (throw Exception());
     final atlasWeaponWest = spritesWest.weapons[weaponType]
         ?? spritesWest.weapons[WeaponType.Unarmed] ?? (throw Exception());
-    // final atlasBodyArmSouth = spritesSouth.bodyArms[bodyType];
-    // final atlasBodyArmWest = spritesWest.bodyArms[bodyType];
-    // final atlasArmLeftSouth = spritesSouth.armLeft[ArmType.regular] ?? (throw Exception());
-    // final atlasArmLeftWest = spritesWest.armLeft[ArmType.regular] ?? (throw Exception());
-    // final atlasArmRightSouth = spritesSouth.armRight[ArmType.regular] ?? (throw Exception());
-    // final atlasArmRightWest = spritesWest.armRight[ArmType.regular] ?? (throw Exception());
     final atlasHairSouth = spritesSouth.hair[hairType] ?? (throw Exception());
     final atlasHairWest = spritesWest.hair[hairType] ?? (throw Exception());
     final atlasHeadSouth = spritesSouth.head[headType] ?? (throw Exception());
     final atlasHeadWest = spritesWest.head[headType] ?? (throw Exception());
-    final atlasTorsoTopSouth = spritesSouth.torsoTop[gender] ?? (throw Exception());
-    final atlasTorsoTopWest = spritesWest.torsoTop[gender] ?? (throw Exception());
-    final atlasTorsoBottomSouth = spritesSouth.torsoBottom[gender] ?? (throw Exception());
-    final atlasTorsoBottomWest = spritesWest.torsoBottom[gender] ?? (throw Exception());
+    final atlasHeadDiffuse = spritesDiffuse.head[headType] ?? (throw Exception());
+    final atlasTorsoSouth = spritesSouth.torso[gender] ?? (throw Exception());
+    final atlasTorsoWest = spritesWest.torso[gender] ?? (throw Exception());
+    final atlasTorsoDiffuse = spritesDiffuse.torso[gender] ?? (throw Exception());
     final atlasShoesSouth = spritesSouth.shoes[shoeType] ?? (throw Exception());
     final atlasShoesWest = spritesWest.shoes[shoeType] ?? (throw Exception());
 
@@ -172,10 +169,10 @@ class RendererCharacters extends RenderGroup {
     final spriteBodyWest = atlasBodyWest.fromCharacterState(characterState);
     final spriteHeadSouth = atlasHeadSouth.fromCharacterState(characterState);
     final spriteHeadWest = atlasHeadWest.fromCharacterState(characterState);
-    final spriteTorsoTopSouth = atlasTorsoTopSouth.fromCharacterState(characterState);
-    final spriteTorsoTopWest = atlasTorsoTopWest.fromCharacterState(characterState);
-    final spriteTorsoBottomSouth = atlasTorsoBottomSouth.fromCharacterState(characterState);
-    final spriteTorsoBottomWest = atlasTorsoBottomWest.fromCharacterState(characterState);
+    final spriteHeadDiffuse = atlasHeadDiffuse.fromCharacterState(characterState);
+    final spriteTorsoSouth = atlasTorsoSouth.fromCharacterState(characterState);
+    final spriteTorsoWest = atlasTorsoWest.fromCharacterState(characterState);
+    final spriteTorsoDiffuse = atlasTorsoDiffuse.fromCharacterState(characterState);
     final spriteLegsSouth = atlasLegsSouth.fromCharacterState(characterState);
     final spriteLegsWest = atlasLegsWest.fromCharacterState(characterState);
     final spriteHandsLeftSouth = atlasHandsLeftSouth.fromCharacterState(characterState);
@@ -211,10 +208,23 @@ class RendererCharacters extends RenderGroup {
       );
 
       modulate(
-        sprite: spriteTorsoBottomSouth,
+        sprite: spriteTorsoDiffuse,
         frame: completingAction
-            ? spriteTorsoBottomSouth.getFramePercentage(row, actionComplete)
-            : spriteTorsoBottomSouth.getFrame(column: animationFrame, row: row),
+            ? spriteTorsoDiffuse.getFramePercentage(row, actionComplete)
+            : spriteTorsoDiffuse.getFrame(column: animationFrame, row: row),
+        color1: colorSkin,
+        color2: colorDiffuse,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+
+      modulate(
+        sprite: spriteTorsoSouth,
+        frame: completingAction
+            ? spriteTorsoSouth.getFramePercentage(row, actionComplete)
+            : spriteTorsoSouth.getFrame(column: animationFrame, row: row),
         color1: colorSkin,
         color2: colorSouth,
         scale: scale,
@@ -224,10 +234,10 @@ class RendererCharacters extends RenderGroup {
       );
 
       modulate(
-        sprite: spriteTorsoBottomWest,
+        sprite: spriteTorsoWest,
         frame: completingAction
-            ? spriteTorsoBottomWest.getFramePercentage(row, actionComplete)
-            : spriteTorsoBottomWest.getFrame(column: animationFrame, row: row),
+            ? spriteTorsoWest.getFramePercentage(row, actionComplete)
+            : spriteTorsoWest.getFrame(column: animationFrame, row: row),
         color1: colorSkin,
         color2: colorWest,
         scale: scale,
@@ -310,32 +320,6 @@ class RendererCharacters extends RenderGroup {
       anchorY: anchorY,
     );
 
-    modulate(
-      sprite: spriteTorsoTopSouth,
-      frame: completingAction
-          ? spriteTorsoTopSouth.getFramePercentage(row, actionComplete)
-          : spriteTorsoTopSouth.getFrame(column: animationFrame, row: row),
-      color1: colorSkin,
-      color2: colorSouth,
-      scale: scale,
-      dstX: dstX,
-      anchorY: anchorY,
-      dstY: dstY,
-    );
-
-    modulate(
-      sprite: spriteTorsoTopWest,
-      frame: completingAction
-          ? spriteTorsoTopWest.getFramePercentage(row, actionComplete)
-          : spriteTorsoTopWest.getFrame(column: animationFrame, row: row),
-      color1: colorSkin,
-      color2: colorWest,
-      scale: scale,
-      dstX: dstX,
-      dstY: dstY,
-      anchorY: anchorY,
-    );
-
     renderSprite(
       sprite: spriteBodySouth,
       frame: completingAction
@@ -409,6 +393,19 @@ class RendererCharacters extends RenderGroup {
     );
 
     modulate(
+      sprite: spriteHeadDiffuse,
+      frame: completingAction
+          ? spriteHeadDiffuse.getFramePercentage(row, actionComplete)
+          : spriteHeadDiffuse.getFrame(row: row, column: animationFrame),
+      color1: colorSkin,
+      color2: colorDiffuse,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
+    modulate(
       sprite: spriteHeadSouth,
       frame: completingAction
           ? spriteHeadSouth.getFramePercentage(row, actionComplete)
@@ -433,6 +430,7 @@ class RendererCharacters extends RenderGroup {
       dstY: dstY,
       anchorY: anchorY,
     );
+
 
     modulate(
       sprite: spriteHairSouth,
