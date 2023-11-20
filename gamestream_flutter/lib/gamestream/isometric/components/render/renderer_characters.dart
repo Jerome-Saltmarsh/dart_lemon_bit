@@ -139,6 +139,7 @@ class RendererCharacters extends RenderGroup {
     final atlasHandsRightWest = spritesWest.handRight[handTypeRight] ?? (throw Exception());
     final atlasHelmSouth = spritesSouth.helm[helmType] ?? (throw Exception());
     final atlasHelmWest = spritesWest.helm[helmType] ?? (throw Exception());
+    final atlasHelmDiffuse = spritesDiffuse.helm[helmType] ?? (throw Exception());
     final atlasLegsSouth =  spritesSouth.legs[legType] ?? (throw Exception());
     final atlasLegsWest =  spritesWest.legs[legType] ?? (throw Exception());
     final bodySpriteSouth = gender == Gender.male ? spritesSouth.bodyMale : spritesSouth.bodyFemale;
@@ -168,6 +169,7 @@ class RendererCharacters extends RenderGroup {
     final spriteWeaponDiffuse = atlasWeaponDiffuse.fromCharacterState(characterState);
     final spriteHelmSouth = atlasHelmSouth.fromCharacterState(characterState);
     final spriteHelmWest = atlasHelmWest.fromCharacterState(characterState);
+    final spriteHelmDiffuse = atlasHelmDiffuse.fromCharacterState(characterState);
     final spriteBodySouth = atlasBodySouth.fromCharacterState(characterState);
     final spriteBodyWest = atlasBodyWest.fromCharacterState(characterState);
     final spriteHeadSouth = atlasHeadSouth.fromCharacterState(characterState);
@@ -480,6 +482,18 @@ class RendererCharacters extends RenderGroup {
           : spriteHairWest.getFrame(row: row, column: animationFrame),
       color1: colorHair,
       color2: colorWest,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
+    renderSprite(
+      sprite: spriteHelmDiffuse,
+      frame: completingAction
+          ? spriteHelmDiffuse.getFramePercentage(row, actionComplete)
+          : spriteHelmDiffuse.getFrame(row: row, column: animationFrame),
+      color: colorDiffuse,
       scale: scale,
       dstX: dstX,
       dstY: dstY,

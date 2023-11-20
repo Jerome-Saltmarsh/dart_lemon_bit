@@ -101,6 +101,8 @@ flutter:
     - sprites/isometric/kid/diffuse/hair/01/
     - sprites/isometric/kid/diffuse/head/boy/
     - sprites/isometric/kid/diffuse/head/girl/
+    - sprites/isometric/kid/diffuse/helms/steel/
+    - sprites/isometric/kid/diffuse/helms/wizard_hat/
     - sprites/isometric/kid/diffuse/torso/female/
     - sprites/isometric/kid/diffuse/torso/male/
     - sprites/isometric/kid/diffuse/weapons/bow/

@@ -244,6 +244,20 @@ class IsometricImages with IsometricComponent {
 
     loadSpriteGroupIsometric(
       direction: RenderDirection.diffuse,
+      type: SpriteGroupType.Helms,
+      subType: HelmType.Steel,
+      skipHurt: true,
+    );
+
+    loadSpriteGroupIsometric(
+      direction: RenderDirection.diffuse,
+      type: SpriteGroupType.Helms,
+      subType: HelmType.Wizard_Hat,
+      skipHurt: true,
+    );
+
+    loadSpriteGroupIsometric(
+      direction: RenderDirection.diffuse,
       type: SpriteGroupType.Weapons,
       subType: WeaponType.Bow,
       skipHurt: true,
