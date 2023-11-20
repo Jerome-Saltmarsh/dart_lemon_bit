@@ -11,14 +11,13 @@ ctrl + []               : move caret to code block
 
 
 ## TODO
-* [new]: female torso and body
 * [fix]: render front view hair color
+* [new]: single player offline
 * [new]: hair type 02
 * [new]: hair type 03
 * [new]: elemental damage
 * [new]: map locations
 * [new]: scene town
-* [new]: tree shadows
 * [new]: gameobject shadows
 * [new]: item tabs weapons amulets etc
 * [new]: model rusty sword
@@ -27,6 +26,10 @@ ctrl + []               : move caret to code block
 * [fix]: colored particle emission
 * [new]: particle wind blowing 
 * [new]: flames emit smoke particles
+
+## 20.11.2023
+* [new]: shade diffuse
+* [new]: female torso and body
 
 ## 14.11.2023
 * [new]: optimize update particles

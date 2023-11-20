@@ -35,8 +35,8 @@ enum AmuletItem {
     level1: AmuletItemLevel(
       damage: 1,
       range: 60,
-      cooldown: 4,
-      charges: 5,
+      cooldown: 1,
+      charges: 1,
       performDuration: 32,
     ),
     level2: AmuletItemLevel(
