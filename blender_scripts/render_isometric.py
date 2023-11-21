@@ -2,6 +2,9 @@ import bpy
 import os
 import subprocess
 
+object_type_armature = 'ARMATURE'
+render_engine_eevee = 'BLENDER_EEVEE'
+
 print('current_dir: ' + os.path.dirname(bpy.data.filepath))
 
 
@@ -12,20 +15,26 @@ def get_material(name):
     return material
 
 
-def get_animation_tracks(object_name):
-    animation_object = get_object(object_name)
-    if animation_object:
-        return animation_object.animation_data.nla_tracks
-    raise ValueError('get_animation_tracks("' + object_name + '") is null')
-
-
 def object_animation_tracks(obj):
-    return obj.animation_data.nla_tracks
+    if not obj:
+        raise ValueError(f'get_animation_tracks({obj})')
+
+    animation_data = obj.animation_data
+
+    if not animation_data:
+        raise ValueError(f'get_animation_tracks({obj}) animation_data is null')
+
+    nla_tracks = animation_data.nla_tracks
+
+    if not nla_tracks:
+        raise ValueError(f'get_animation_tracks({obj}) nla_tracks is null')
+
+    return nla_tracks
 
 
-def get_active_animation_tracks(object_name):
+def object_animation_tracks_active(obj):
     unmuted_tracks = []
-    animation_tracks = get_animation_tracks(object_name)
+    animation_tracks = object_animation_tracks(obj)
     for animation_track in animation_tracks:
         if not animation_track.mute:
             unmuted_tracks.append(animation_track)
@@ -48,7 +57,7 @@ def set_render_engine(value):
 
 
 def set_render_engine_eevee():
-    set_render_engine('BLENDER_EEVEE')
+    set_render_engine(render_engine_eevee)
 
 
 def set_render_false(target):
@@ -101,16 +110,20 @@ def set_render_path(value):
     bpy.context.scene.render.filepath = value
 
 
-def get_armatures():
-    return [obj for obj in bpy.context.scene.objects if obj.type == 'ARMATURE']
+def scene_armatures():
+    return find_objects_by_type(object_type_armature)
+
+
+def find_objects_by_type(object_type):
+    return [obj for obj in bpy.context.scene.objects if obj.type == object_type]
 
 
 def get_armatures_render_enabled():
-    return [armature for armature in get_armatures() if not armature.hide_render]
+    return [armature for armature in scene_armatures() if not armature.hide_render]
 
 
 def set_animation_track_muted(object_name, track_name, value):
-    animation_tracks = get_animation_tracks(object_name)
+    animation_tracks = object_animation_tracks(get_object(object_name))
     if animation_tracks:
         for animation_track in animation_tracks:
             if animation_track.name == track_name:
@@ -125,7 +138,7 @@ def set_render_frames(start, end):
 
 
 def mute_animation_tracks(object_name):
-    animation_tracks = get_animation_tracks(object_name)
+    animation_tracks = object_animation_tracks(get_object(object_name))
     if animation_tracks:
         for animation_track in animation_tracks:
             animation_track.mute = True
@@ -141,6 +154,7 @@ name_object_rotation = 'rotation'
 name_object_direction = 'direction'
 name_object_camera = 'camera'
 name_object_armature_kid = 'armature_kid'
+name_object_render = 'render'
 name_collection_exports = 'exports'
 name_camera_track_front = 'front'
 name_camera_track_isometric = 'isometric'
@@ -167,7 +181,7 @@ direction_threshold_diffuse = 1
 
 
 def get_animation_tracks_rig_kid():
-    return get_animation_tracks(name_object_armature_kid)
+    return object_animation_tracks(get_object(name_object_armature_kid))
 
 
 def get_material_cell_shade():
@@ -175,7 +189,7 @@ def get_material_cell_shade():
 
 
 def unmute_rotation_track(pivot_track_name):
-    rotation_animation_tracks = get_animation_tracks(name_object_rotation)
+    rotation_animation_tracks = object_animation_tracks(get_object(name_object_rotation))
     if rotation_animation_tracks:
         for animation_track in rotation_animation_tracks:
             animation_track.mute = animation_track.name != pivot_track_name
@@ -208,7 +222,7 @@ def get_render_directory_for_camera_track(camera_track):
 
 
 def get_character_armatures():
-    return [armature for armature in get_armatures() if armature.name.startswith('armature')]
+    return [armature for armature in scene_armatures() if armature.name.startswith('armature')]
 
 
 def enable_animation_tracks_by_name(name):
@@ -237,7 +251,7 @@ def render_camera_track_by_direction(camera_track, render_direction):
         # for rig_kid_animation_track in armature_kid_animation_tracks:
         #     rig_kid_animation_track.mute = rig_kid_animation_track.name == 'tpose'
 
-    armature_kid_animation_tracks = get_active_animation_tracks(name_object_armature_kid)
+    armature_kid_animation_tracks = object_animation_tracks_active(get_object(name_object_armature_kid))
     exports = get_collection(name_collection_exports)
 
     if not armature_kid_animation_tracks:
@@ -380,10 +394,9 @@ def set_render_direction(direction):
 
 def render_unmuted_rotation_tracks():
     print('render_unmuted_rotation_tracks()')
-    # hide_mesh_kid()
     set_render_engine_eevee()
-    unmuted_camera_tracks = get_active_animation_tracks(name_object_camera)
-    active_direction_tracks = get_active_animation_tracks(name_object_direction)
+    unmuted_camera_tracks = object_animation_tracks_active(get_object(name_object_camera))
+    active_direction_tracks = object_animation_tracks_active(get_object(name_object_direction))
 
     if not unmuted_camera_tracks:
         raise ValueError('no active camera animation tracks')
@@ -400,7 +413,7 @@ def render_unmuted_rotation_tracks():
 
 
 render_unmuted_rotation_tracks()
-active_animation_tracks_render = get_active_animation_tracks('render')
+active_animation_tracks_render = object_animation_tracks_active(get_object(name_object_render))
 
 for track in active_animation_tracks_render:
     if not track.mute:
