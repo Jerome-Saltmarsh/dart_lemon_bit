@@ -5,18 +5,14 @@ import 'package:just_audio/just_audio.dart';
 
 class AudioSingle {
   final String name;
-  late AudioSource source;
   final audioPlayer = AudioPlayer();
-
-  String get url => 'assets/audio/$name.mp3';
 
   AudioSingle({
     required this.name,
-    // this.volume = 1,
   }){
-    source = AudioSource.uri(Uri.parse(url));
-    audioPlayer.setAudioSource(source);
-    audioPlayer.processingStateStream.listen(onProcessingStateStreamChanged);
+    audioPlayer.setAsset('audio/$name.mp3').then((value) {
+      audioPlayer.processingStateStream.listen(onProcessingStateStreamChanged);
+    });
   }
 
   void onProcessingStateStreamChanged(ProcessingState state){

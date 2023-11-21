@@ -27,13 +27,13 @@ class AudioLoop {
   double get volume => audioPlayer.volume;
 
   Future load() async {
-    final d = await audioPlayer.setUrl('assets/audio/$name.mp3');
+    final d = await audioPlayer.setAsset('audio/$name.mp3');
     audioPlayer.play();
     audioPlayer.positionStream.listen(onPositionChanged);
     if (d == null) throw Exception('could not get duration for $name');
     durationInSeconds = d.inSeconds;
     duration = d;
-    audioPlayer.setLoopMode(LoopMode.one);
+    await audioPlayer.setLoopMode(LoopMode.one);
     setVolume(0);
   }
 

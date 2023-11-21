@@ -11,7 +11,6 @@ import 'package:gamestream_flutter/packages/common.dart';
 import 'package:lemon_math/src.dart';
 import '../../audio/audio_loop.dart';
 import '../../audio/audio_single.dart';
-import '../../audio/audio_tracks.dart';
 import 'package:lemon_watch/src.dart';
 
 class IsometricAudio with IsometricComponent implements Updatable {
@@ -19,9 +18,9 @@ class IsometricAudio with IsometricComponent implements Updatable {
   late final mutedMusic = Watch(false, onChanged: (bool muted){
     print('music muted: $muted');
     if (muted) {
-      audioTracks.audioPlayer.pause();
+      // audioTracks.audioPlayer.pause();
     } else {
-      audioTracks.play();
+      // audioTracks.play();
     }
   });
 
@@ -43,13 +42,13 @@ class IsometricAudio with IsometricComponent implements Updatable {
   var nextRandomSound = 0;
   var nextRandomMusic = 0;
 
-  final audioTracks = AudioTracks(
-     tracks: [
-       AudioSource.uri(Uri.parse('assets/audio/music/gamestream-track-01.mp3')),
-       AudioSource.uri(Uri.parse('assets/audio/music/gamestream-track-02.mp3')),
-       AudioSource.uri(Uri.parse('assets/audio/music/gamestream-track-03.mp3')),
-     ]
-  );
+  // final audioTracks = AudioTracks(
+  //    tracks: [
+  //      AudioSource.uri(Uri.parse('assets/audio/music/gamestream-track-01.mp3')),
+  //      AudioSource.uri(Uri.parse('assets/audio/music/gamestream-track-02.mp3')),
+  //      AudioSource.uri(Uri.parse('assets/audio/music/gamestream-track-03.mp3')),
+  //    ]
+  // );
 
   final musicNight = [
     AudioSingle(name: 'creepy-whistle'),
@@ -471,11 +470,11 @@ class IsometricAudio with IsometricComponent implements Updatable {
 
   void musicPlay(){
     if (mutedMusic.value) return;
-    audioTracks.play();
+    // audioTracks.play();
   }
 
   void musicStop(){
-    audioTracks.stop();
+    // audioTracks.stop();
   }
 
 }
