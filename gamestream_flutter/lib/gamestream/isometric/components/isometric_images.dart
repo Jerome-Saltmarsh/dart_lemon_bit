@@ -191,93 +191,27 @@ class IsometricImages with IsometricComponent {
       loadSpriteGroupFront(type: SpriteGroupType.Body_Male, subType: BodyType.Shirt_Blue, renderDirection: renderDirection);
       loadSpriteGroupFront(type: SpriteGroupType.Body_Male, subType: BodyType.Leather_Armour, renderDirection: renderDirection);
       loadSpriteGroupFront(type: SpriteGroupType.Body_Female, subType: BodyType.Leather_Armour, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Hands_Left, subType: HandType.Gauntlets, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Hands_Right, subType: HandType.Gauntlets, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Heads, subType: HeadType.boy, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Heads, subType: HeadType.girl, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Helms, subType: HelmType.Steel, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Helms, subType: HelmType.Wizard_Hat, renderDirection: renderDirection);
+      loadSpriteGroupFront(type: SpriteGroupType.Hand_Left, subType: HandType.Gauntlets, renderDirection: renderDirection);
+      loadSpriteGroupFront(type: SpriteGroupType.Hand_Right, subType: HandType.Gauntlets, renderDirection: renderDirection);
+      loadSpriteGroupFront(type: SpriteGroupType.Head, subType: HeadType.boy, renderDirection: renderDirection);
+      loadSpriteGroupFront(type: SpriteGroupType.Head, subType: HeadType.girl, renderDirection: renderDirection);
+      loadSpriteGroupFront(type: SpriteGroupType.Helm, subType: HelmType.Steel, renderDirection: renderDirection);
+      loadSpriteGroupFront(type: SpriteGroupType.Helm, subType: HelmType.Wizard_Hat, renderDirection: renderDirection);
       loadSpriteGroupFront(type: SpriteGroupType.Legs, subType: LegType.Leather, renderDirection: renderDirection);
       loadSpriteGroupFront(type: SpriteGroupType.Torso, subType: Gender.male, renderDirection: renderDirection);
       loadSpriteGroupFront(type: SpriteGroupType.Torso, subType: Gender.female, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Weapons, subType: WeaponType.Bow, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Weapons, subType: WeaponType.Staff, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Weapons, subType: WeaponType.Sword, renderDirection: renderDirection);
+      loadSpriteGroupFront(type: SpriteGroupType.Weapon, subType: WeaponType.Bow, renderDirection: renderDirection);
+      loadSpriteGroupFront(type: SpriteGroupType.Weapon, subType: WeaponType.Staff, renderDirection: renderDirection);
+      loadSpriteGroupFront(type: SpriteGroupType.Weapon, subType: WeaponType.Sword, renderDirection: renderDirection);
       loadSpriteGroupFront(type: SpriteGroupType.Shoes, subType: ShoeType.Leather_Boots, renderDirection: renderDirection);
       loadSpriteGroupFront(type: SpriteGroupType.Shoes, subType: ShoeType.Iron_Plates, renderDirection: renderDirection);
     }
 
-    loadSpriteGroupIsometric(
-      direction: RenderDirection.diffuse,
-      type: SpriteGroupType.Torso,
-      subType: Gender.male,
-      skipHurt: true,
-    );
-
-    loadSpriteGroupIsometric(
-      direction: RenderDirection.diffuse,
-      type: SpriteGroupType.Torso,
-      subType: Gender.female,
-      skipHurt: true,
-    );
-
-    loadSpriteGroupIsometric(
-      direction: RenderDirection.diffuse,
-      type: SpriteGroupType.Heads,
-      subType: Gender.male,
-      skipHurt: true,
-    );
-
-    loadSpriteGroupIsometric(
-      direction: RenderDirection.diffuse,
-      type: SpriteGroupType.Heads,
-      subType: Gender.female,
-      skipHurt: true,
-    );
-
-    loadSpriteGroupIsometric(
-      direction: RenderDirection.diffuse,
-      type: SpriteGroupType.Hair,
-      subType: HairType.basic_1,
-      skipHurt: true,
-    );
-
-    loadSpriteGroupIsometric(
-      direction: RenderDirection.diffuse,
-      type: SpriteGroupType.Helms,
-      subType: HelmType.Steel,
-      skipHurt: true,
-    );
-
-    loadSpriteGroupIsometric(
-      direction: RenderDirection.diffuse,
-      type: SpriteGroupType.Helms,
-      subType: HelmType.Wizard_Hat,
-      skipHurt: true,
-    );
-
-    loadSpriteGroupIsometric(
-      direction: RenderDirection.diffuse,
-      type: SpriteGroupType.Weapons,
-      subType: WeaponType.Bow,
-      skipHurt: true,
-    );
-
-    loadSpriteGroupIsometric(
-      direction: RenderDirection.diffuse,
-      type: SpriteGroupType.Weapons,
-      subType: WeaponType.Staff,
-      skipHurt: true,
-    );
-
-    loadSpriteGroupIsometric(
-      direction: RenderDirection.diffuse,
-      type: SpriteGroupType.Weapons,
-      subType: WeaponType.Sword,
-      skipHurt: true,
-    );
-
-    for (final direction in const[RenderDirection.south, RenderDirection.west]){
+    for (final direction in const[
+      RenderDirection.south,
+      RenderDirection.west,
+      RenderDirection.diffuse,
+    ]){
       loadSpriteGroupIsometric(
           direction: direction,
           type: SpriteGroupType.Body_Male,
@@ -297,38 +231,44 @@ class IsometricImages with IsometricComponent {
           skipHurt: true,
       );
       loadSpriteGroupIsometric(
+          direction: direction,
+          type: SpriteGroupType.Body_Female,
+          subType: BodyType.Shirt_Blue,
+          skipHurt: true,
+      );
+      loadSpriteGroupIsometric(
         direction: direction,
-        type: SpriteGroupType.Hands_Left,
+        type: SpriteGroupType.Hand_Left,
         subType: HandType.Gauntlets,
         skipHurt: true,
       );
       loadSpriteGroupIsometric(
         direction: direction,
-        type: SpriteGroupType.Hands_Right,
+        type: SpriteGroupType.Hand_Right,
         subType: HandType.Gauntlets,
         skipHurt: true,
       );
       loadSpriteGroupIsometric(
         direction: direction,
-        type: SpriteGroupType.Heads,
+        type: SpriteGroupType.Head,
         subType: HeadType.boy,
         skipHurt: true,
       );
       loadSpriteGroupIsometric(
         direction: direction,
-        type: SpriteGroupType.Heads,
+        type: SpriteGroupType.Head,
         subType: HeadType.girl,
         skipHurt: true,
       );
       loadSpriteGroupIsometric(
         direction: direction,
-        type: SpriteGroupType.Helms,
+        type: SpriteGroupType.Helm,
         subType: HelmType.Steel,
         skipHurt: true,
       );
       loadSpriteGroupIsometric(
         direction: direction,
-        type: SpriteGroupType.Helms,
+        type: SpriteGroupType.Helm,
         subType: HelmType.Wizard_Hat,
         skipHurt: true,
       );
@@ -352,21 +292,21 @@ class IsometricImages with IsometricComponent {
       );
       loadSpriteGroupIsometric(
         direction: direction,
-        type: SpriteGroupType.Weapons,
+        type: SpriteGroupType.Weapon,
         subType: WeaponType.Bow,
         skipHurt: true,
         skipStrike: true,
       );
       loadSpriteGroupIsometric(
         direction: direction,
-        type: SpriteGroupType.Weapons,
+        type: SpriteGroupType.Weapon,
         subType: WeaponType.Staff,
         skipHurt: true,
         skipFire: true,
       );
       loadSpriteGroupIsometric(
         direction: direction,
-        type: SpriteGroupType.Weapons,
+        type: SpriteGroupType.Weapon,
         subType: WeaponType.Sword,
         skipHurt: true,
         skipFire: true,
@@ -385,7 +325,6 @@ class IsometricImages with IsometricComponent {
       );
 
       HairType.valuesNotNone.forEach((hairType) {
-
         loadSpriteGroupFront(
             type: SpriteGroupType.Hair,
             subType: hairType,

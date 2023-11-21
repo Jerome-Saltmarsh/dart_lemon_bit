@@ -144,8 +144,10 @@ class RendererCharacters extends RenderGroup {
     final atlasLegsWest =  spritesWest.legs[legType] ?? (throw Exception());
     final bodySpriteSouth = gender == Gender.male ? spritesSouth.bodyMale : spritesSouth.bodyFemale;
     final bodySpriteWest = gender == Gender.male ? spritesWest.bodyMale : spritesWest.bodyFemale;
+    final bodySpriteDiffuse = gender == Gender.male ? spritesDiffuse.bodyMale : spritesDiffuse.bodyFemale;
     final atlasBodySouth = bodySpriteSouth[bodyType] ?? (throw Exception());
     final atlasBodyWest = bodySpriteWest[bodyType] ?? (throw Exception());
+    final atlasBodyDiffuse = bodySpriteDiffuse[bodyType] ?? (throw Exception());
     final atlasWeaponSouth = spritesSouth.weapons[weaponType]
         ?? spritesSouth.weapons[WeaponType.Unarmed] ?? (throw Exception());
     final atlasWeaponWest = spritesWest.weapons[weaponType]
@@ -172,6 +174,7 @@ class RendererCharacters extends RenderGroup {
     final spriteHelmDiffuse = atlasHelmDiffuse.fromCharacterState(characterState);
     final spriteBodySouth = atlasBodySouth.fromCharacterState(characterState);
     final spriteBodyWest = atlasBodyWest.fromCharacterState(characterState);
+    final spriteBodyDiffuse = atlasBodyDiffuse.fromCharacterState(characterState);
     final spriteHeadSouth = atlasHeadSouth.fromCharacterState(characterState);
     final spriteHeadWest = atlasHeadWest.fromCharacterState(characterState);
     final spriteHeadDiffuse = atlasHeadDiffuse.fromCharacterState(characterState);
@@ -332,6 +335,18 @@ class RendererCharacters extends RenderGroup {
           ? spriteWeaponWest.getFramePercentage(row, actionComplete)
           : spriteWeaponWest.getFrame(row: row, column: animationFrame),
       color: colorWest,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
+    renderSprite(
+      sprite: spriteBodyDiffuse,
+      frame: completingAction
+          ? spriteBodyDiffuse.getFramePercentage(row, actionComplete)
+          : spriteBodyDiffuse.getFrame(row: row, column: animationFrame),
+      color: colorDiffuse,
       scale: scale,
       dstX: dstX,
       dstY: dstY,
