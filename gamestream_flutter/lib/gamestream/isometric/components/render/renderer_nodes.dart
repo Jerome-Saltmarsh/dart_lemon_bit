@@ -1279,6 +1279,98 @@ class RendererNodes extends RenderGroup {
           color: scene.colorAbove(index),
         );
         break;
+      case NodeOrientation.Slope_North:
+        renderStandardNode(
+          srcX: srcX,
+          srcY: srcY + (height * 3),
+          dstX: dstX,
+          dstY: dstY,
+          color: scene.colorSouth(index),
+        );
+        renderStandardNode(
+          srcX: srcX + width,
+          srcY: srcY + (height * 3),
+          dstX: dstX,
+          dstY: dstY,
+          color: scene.colorWest(index),
+        );
+        renderStandardNode(
+          srcX: srcX + width + width,
+          srcY: srcY + (height * 3),
+          dstX: dstX,
+          dstY: dstY,
+          color: scene.colorAbove(index),
+        );
+        break;
+      case NodeOrientation.Slope_East:
+        renderStandardNode(
+          srcX: srcX,
+          srcY: srcY + (height * 4),
+          dstX: dstX,
+          dstY: dstY,
+          color: scene.colorSouth(index),
+        );
+        renderStandardNode(
+          srcX: srcX + width,
+          srcY: srcY + (height * 4),
+          dstX: dstX,
+          dstY: dstY,
+          color: scene.colorWest(index),
+        );
+        renderStandardNode(
+          srcX: srcX + width + width,
+          srcY: srcY + (height * 4),
+          dstX: dstX,
+          dstY: dstY,
+          color: scene.colorAbove(index),
+        );
+        break;
+      case NodeOrientation.Slope_South:
+        renderStandardNode(
+          srcX: srcX,
+          srcY: srcY + (height * 5),
+          dstX: dstX,
+          dstY: dstY,
+          color: scene.colorSouth(index),
+        );
+        renderStandardNode(
+          srcX: srcX + width,
+          srcY: srcY + (height * 5),
+          dstX: dstX,
+          dstY: dstY,
+          color: scene.colorWest(index),
+        );
+        renderStandardNode(
+          srcX: srcX + width + width,
+          srcY: srcY + (height * 5),
+          dstX: dstX,
+          dstY: dstY,
+          color: scene.colorAbove(index),
+        );
+        break;
+      case NodeOrientation.Slope_West:
+        renderStandardNode(
+          srcX: srcX,
+          srcY: srcY + (height * 6),
+          dstX: dstX,
+          dstY: dstY,
+          color: scene.colorSouth(index),
+        );
+        renderStandardNode(
+          srcX: srcX + width,
+          srcY: srcY + (height * 6),
+          dstX: dstX,
+          dstY: dstY,
+          color: scene.colorWest(index),
+        );
+        renderStandardNode(
+          srcX: srcX + width + width,
+          srcY: srcY + (height * 6),
+          dstX: dstX,
+          dstY: dstY,
+          color: scene.colorAbove(index),
+        );
+        break;
       default:
         renderNodeTemplateShaded(
             srcX: IsometricConstants.Sprite_Width_Padded_10,

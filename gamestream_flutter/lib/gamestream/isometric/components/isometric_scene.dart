@@ -1707,7 +1707,7 @@ class IsometricScene with IsometricComponent implements Updatable {
   // TODO EXPENSIVE
   int colorEast(int index){
     final column = getColumn(index);
-    if (column - 1 < 0){
+    if (column - 1 < 0) {
       final current = nodeColors[index];
       return merge32BitColors(current, ambientColor);
     }
