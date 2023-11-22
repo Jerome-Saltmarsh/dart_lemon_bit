@@ -18,14 +18,16 @@ ctrl + []               : move caret to code block
 * [new]: elemental damage
 * [new]: map locations
 * [new]: scene town
-* [new]: gameobject shadows
 * [new]: item tabs weapons amulets etc
 * [new]: model rusty sword
 * [fix]: barrels and crates should not be interactable
 * [fix]: persist gameobject properties
 * [fix]: colored particle emission
-* [new]: particle wind blowing 
 * [new]: flames emit smoke particles
+
+## 22.11.2023
+* [new]: build windows exe
+* [new]: wooden plank lighting
 
 ## 20.11.2023
 * [new]: shade diffuse
