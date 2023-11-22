@@ -421,7 +421,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
         scale: 0.6,
         scaleV: 0,
         rotation: randomAngle(),
-        bounciness: 0,
+        bounciness: 0.0,
       );
     }
   }

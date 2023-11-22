@@ -962,13 +962,7 @@ class RendererNodes extends RenderGroup {
         );
         return;
       case NodeType.Wooden_Plank:
-        renderNodeTemplateShaded(
-          srcX: IsometricConstants.Sprite_Width_Padded_10,
-          dstX: dstX,
-          dstY: dstY,
-          nodeOrientation: orientation,
-          color: color
-        );
+        renderWoodenPlank(orientation, dstX, dstY, scene, index, color);
         return;
       case NodeType.Torch:
         renderNodeTorch(
@@ -1153,6 +1147,146 @@ class RendererNodes extends RenderGroup {
         return;
       default:
         throw Exception('renderNode(index: ${index}, orientation: ${NodeOrientation.getName(scene.nodeOrientations[index])}');
+    }
+  }
+
+  void renderWoodenPlank(
+      int orientation,
+      double dstX,
+      double dstY,
+      IsometricScene scene,
+      int index,
+      int color,
+  ) {
+    const srcX = 944.0;
+    const srcY = 560.0;
+    const width = 48.0;
+    const height = 72.0;
+
+    switch (orientation) {
+      case NodeOrientation.Solid:
+        renderStandardNode(
+          srcX: srcX,
+          srcY: srcY,
+          dstX: dstX,
+          dstY: dstY,
+          color: scene.colorSouth(index),
+        );
+        renderStandardNode(
+          srcX: srcX + width,
+          srcY: srcY,
+          dstX: dstX,
+          dstY: dstY,
+          color: scene.colorWest(index),
+        );
+        renderStandardNode(
+          srcX: srcX + width + width,
+          srcY: srcY,
+          dstX: dstX,
+          dstY: dstY,
+          color: scene.colorAbove(index),
+        );
+        break;
+      case NodeOrientation.Half_North:
+        renderStandardNode(
+          srcX: srcX,
+          srcY: srcY + height,
+          dstX: dstX - Node_Size_Sixth,
+          dstY: dstY - Node_Size_Sixth,
+          color: scene.colorSouth(index),
+        );
+        renderStandardNode(
+          srcX: srcX + width,
+          srcY: srcY + height,
+          dstX: dstX - Node_Size_Sixth,
+          dstY: dstY - Node_Size_Sixth,
+          color: scene.colorWest(index),
+        );
+        renderStandardNode(
+          srcX: srcX + width + width,
+          srcY: srcY + height,
+          dstX: dstX - Node_Size_Sixth,
+          dstY: dstY - Node_Size_Sixth,
+          color: scene.colorAbove(index),
+        );
+        break;
+      case NodeOrientation.Half_South:
+        renderStandardNode(
+          srcX: srcX,
+          srcY: srcY + height,
+          dstX: dstX + Node_Size_Sixth,
+          dstY: dstY + Node_Size_Sixth,
+          color: scene.colorSouth(index),
+        );
+        renderStandardNode(
+          srcX: srcX + width,
+          srcY: srcY + height,
+          dstX: dstX + Node_Size_Sixth,
+          dstY: dstY + Node_Size_Sixth,
+          color: scene.colorWest(index),
+        );
+        renderStandardNode(
+          srcX: srcX + width + width,
+          srcY: srcY + height,
+          dstX: dstX + Node_Size_Sixth,
+          dstY: dstY + Node_Size_Sixth,
+          color: scene.colorAbove(index),
+        );
+        break;
+      case NodeOrientation.Half_East:
+        renderStandardNode(
+          srcX: srcX,
+          srcY: srcY + height + height,
+          dstX: dstX + Node_Size_Sixth,
+          dstY: dstY - Node_Size_Sixth,
+          color: scene.colorSouth(index),
+        );
+        renderStandardNode(
+          srcX: srcX + width,
+          srcY: srcY + height + height,
+          dstX: dstX + Node_Size_Sixth,
+          dstY: dstY - Node_Size_Sixth,
+          color: scene.colorWest(index),
+        );
+        renderStandardNode(
+          srcX: srcX + width + width,
+          srcY: srcY + height + height,
+          dstX: dstX + Node_Size_Sixth,
+          dstY: dstY - Node_Size_Sixth,
+          color: scene.colorAbove(index),
+        );
+        break;
+      case NodeOrientation.Half_West:
+        renderStandardNode(
+          srcX: srcX,
+          srcY: srcY + height + height,
+          dstX: dstX - Node_Size_Sixth,
+          dstY: dstY + Node_Size_Sixth,
+          color: scene.colorSouth(index),
+        );
+        renderStandardNode(
+          srcX: srcX + width,
+          srcY: srcY + height + height,
+          dstX: dstX - Node_Size_Sixth,
+          dstY: dstY + Node_Size_Sixth,
+          color: scene.colorWest(index),
+        );
+        renderStandardNode(
+          srcX: srcX + width + width,
+          srcY: srcY + height + height,
+          dstX: dstX - Node_Size_Sixth,
+          dstY: dstY + Node_Size_Sixth,
+          color: scene.colorAbove(index),
+        );
+        break;
+      default:
+        renderNodeTemplateShaded(
+            srcX: IsometricConstants.Sprite_Width_Padded_10,
+            dstX: dstX,
+            dstY: dstY,
+            nodeOrientation: orientation,
+            color: color
+        );
     }
   }
 
