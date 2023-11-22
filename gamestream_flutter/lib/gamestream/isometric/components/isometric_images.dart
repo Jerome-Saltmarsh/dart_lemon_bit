@@ -12,6 +12,7 @@ import 'package:gamestream_flutter/gamestream/sprites/kid_character_sprites.dart
 import 'package:lemon_sprite/lib.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:typedef/json.dart';
 
 import 'enums/render_direction.dart';
 import 'types/sprite_group_type.dart';
@@ -584,24 +585,27 @@ class IsometricImages with IsometricComponent {
       image = image ?? await loadImageAsset('$name.png');
       final json = await loadAssetJson('$name.json');
 
+      final src = parse<Float32List>(json['src']);
       final dst = parse<Float32List>(json['dst']);
-      final length = dst.length;
 
-      for (var i = 0; i < length; i += 4){
-        dst[i + 0] += atlasX;
-        dst[i + 1] += atlasY;
-        dst[i + 2] += atlasX;
-        dst[i + 3] += atlasY;
+      if (atlasX != 0 || atlasY != 0){
+        final length = dst.length;
+        for (var i = 0; i < length; i += 4){
+          dst[i + 0] += atlasX;
+          dst[i + 1] += atlasY;
+          dst[i + 2] += atlasX;
+          dst[i + 3] += atlasY;
+        }
       }
 
       return Sprite(
         image: image,
-        src: parse(json['src']),
+        src: src,
         dst: dst,
-        rows: parse(json['rows']),
-        columns: parse(json['columns']),
-        srcWidth: parse(json['width']),
-        srcHeight: parse(json['height']),
+        rows: json.getInt('rows'),
+        columns: json.getInt('columns'),
+        srcWidth: json.getDouble('width'),
+        srcHeight: json.getDouble('height'),
         mode: mode,
       );
     } catch(e) {

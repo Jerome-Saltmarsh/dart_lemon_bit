@@ -10,12 +10,12 @@ dependencies:
   flutter:
     sdk: flutter
 
+  just_audio: ^0.9.28
+  just_audio_windows: ^0.2.0
   provider: ^6.0.5
   archive: ^3.3.6
   flutter_colorpicker: ^1.0.3
   file_picker: ^5.0.1
-  just_audio: ^0.9.28
-  just_audio_windows: ^0.2.0
   universal_html: ^2.0.8
   web_socket_channel: ^2.1.0
   shelf_web_socket: ^1.0.1
@@ -56,10 +56,16 @@ flutter:
     - images/sprites/
     - images/website/
     - images/characters/
+    - sprites/
     - sprites/isometric/
     - sprites/isometric/gameobjects/
     - sprites/isometric/flame/
+    - sprites/isometric/kid/
+    - sprites/isometric/kid/diffuse/
+    - sprites/isometric/kid/diffuse/torso/
     - sprites/isometric/kid/shadow/
+    - sprites/isometric/kid/south/
+    - sprites/isometric/kid/west/
     - sprites/isometric/kid/south/body_male/shirt_blue/
     - sprites/isometric/kid/south/body_male/leather_armour/
     - sprites/isometric/kid/south/body_female/shirt_blue/

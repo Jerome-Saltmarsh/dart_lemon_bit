@@ -312,13 +312,13 @@ class IsometricParticles with IsometricComponent implements Updatable {
       zv: randomBetween(2, 3),
       angle: angle,
       speed: speed,
-      weight: 5,
+      weight: 5.0,
       duration: 200,
-      rotation: 0,
-      rotationV: 0,
+      rotation: 0.0,
+      rotationV: 0.0,
       scale: 0.6,
-      scaleV: 0,
-      bounciness: 0,
+      scaleV: 0.0,
+      bounciness: 0.0,
       // frictionAir: 0.98,
     );
   }
