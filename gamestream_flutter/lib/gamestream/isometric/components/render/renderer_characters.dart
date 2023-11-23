@@ -97,6 +97,8 @@ class RendererCharacters extends RenderGroup {
     final scale = options.characterRenderScale;
     // final direction = IsometricDirection.toInputDirection(character.direction);
     // final color = scene.getColor(characterIndex);
+    final colorL = scene.getColor(characterIndex - scene.totalColumns + 1);
+    final colorR = scene.getColor(characterIndex + scene.totalColumns - 1);
     final colorN = scene.colorNorth(characterIndex);
     final colorE = scene.colorEast(characterIndex);
     final colorS = scene.colorSouth(characterIndex);
@@ -105,8 +107,8 @@ class RendererCharacters extends RenderGroup {
     // final colorEast = merge32BitColors(color, colorE);
     // final colorNorth = colorN;
     // final colorEast = colorE;
-    final colorSouth = merge32BitColors(colorS, colorE);
-    final colorWest = merge32BitColors(colorN, colorW);
+    final colorSouth = merge32BitsColors3(colorS, colorE, colorR);
+    final colorWest = merge32BitsColors3(colorN, colorW, colorL);
     final colorDiffuse = merge32BitColors(colorSouth, colorWest);
     final dstX = character.renderX;
     final dstY = character.renderY;
