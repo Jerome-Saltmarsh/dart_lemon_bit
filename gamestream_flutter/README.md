@@ -11,8 +11,9 @@ ctrl + []               : move caret to code block
 
 
 ## TODO
-* [fix]: render front view hair color
+* [fix]: audio for windows
 * [new]: single player offline
+* [fix]: render front view hair color
 * [new]: hair type 02
 * [new]: hair type 03
 * [new]: elemental damage
