@@ -1,4 +1,5 @@
-import 'package:gamestream_ws/packages/common.dart';
+
+import 'package:gamestream_ws/packages/isometric_engine/packages/common/src/amulet/amulet_item.dart';
 
 class AmuletItemSlot {
   AmuletItem? amuletItem;

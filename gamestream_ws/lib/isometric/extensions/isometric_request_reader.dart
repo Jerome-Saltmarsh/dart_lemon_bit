@@ -1,6 +1,4 @@
-import 'package:gamestream_ws/editor/isometric_editor.dart';
 import 'package:gamestream_ws/gamestream.dart';
-import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages.dart';
 
 extension IsometricRequestReader on Connection {

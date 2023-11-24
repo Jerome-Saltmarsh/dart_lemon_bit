@@ -1,9 +1,6 @@
 import 'package:gamestream_ws/gamestream/classes/amulet.dart';
-import 'package:gamestream_ws/isometric.dart';
-import 'package:gamestream_ws/packages/common/src/amulet/amulet_item.dart';
-import 'package:gamestream_ws/packages/common/src/player_event.dart';
-import 'package:gamestream_ws/packages/common/src/types/audio_type.dart';
 
+import '../../packages.dart';
 import 'amulet_game.dart';
 import 'amulet_player.dart';
 import 'talk_option.dart';

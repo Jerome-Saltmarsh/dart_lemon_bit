@@ -82,12 +82,10 @@ class RendererCharacters extends RenderGroup {
       default:
         throw Exception('Cannot render character type: ${character.characterType}');
     }
-
   }
 
   @override
   int getTotal() => scene.totalCharacters * 2;
-
 
   /// TODO OPTIMIZE
   void renderCharacterHuman(Character character) {

@@ -1,5 +1,5 @@
-import 'package:gamestream_ws/packages/common.dart';
-import 'package:gamestream_ws/isometric.dart';
+
+import '../../packages.dart';
 
 class AmuletGameObject extends GameObject {
 

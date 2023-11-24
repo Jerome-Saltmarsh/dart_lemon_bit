@@ -1,7 +1,6 @@
 
 import 'package:gamestream_ws/amulet/enums/tutorial_objective.dart';
 import 'package:gamestream_ws/amulet/src.dart';
-import 'package:gamestream_ws/isometric/src.dart';
 import 'package:gamestream_ws/packages.dart';
 
 import 'amulet_player_script.dart';

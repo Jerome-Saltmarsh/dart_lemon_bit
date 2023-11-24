@@ -18,6 +18,10 @@ mklink /J "C:\Users\Jerome\github\bleed\gamestream_server\lib\packages\gamestrea
 
 mklink /J "C:\Users\Jerome\github\bleed\gamestream_server\lib\packages\gamestream_firestore" "C:\Users\Jerome\github\bleed\gamestream_firestore\lib"
 
+mklink /J "C:\Users\Jerome\github\bleed\isometric_engine\lib\packages\lemon_math" "C:\Users\Jerome\github\bleed\dart-lemon-math\lib"
+
+mklink /J "C:\Users\Jerome\github\bleed\gamestream_ws\lib\packages\isometric_engine" "C:\Users\Jerome\github\bleed\isometric_engine\lib"
+
 
 
 

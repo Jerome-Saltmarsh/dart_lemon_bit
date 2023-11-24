@@ -1,7 +1,6 @@
 
 
 import 'package:gamestream_ws/amulet.dart';
-import 'package:gamestream_ws/isometric.dart';
 import 'package:gamestream_ws/packages.dart';
 
 class AmuletGameEditor extends AmuletGame {

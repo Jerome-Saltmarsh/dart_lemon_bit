@@ -1,7 +1,7 @@
 
 import 'package:gamestream_ws/amulet/classes/amulet_character.dart';
-import 'package:gamestream_ws/isometric.dart';
-import 'package:gamestream_ws/packages/common/src/isometric/character_type.dart';
+
+import '../../packages.dart';
 
 import 'amulet_player.dart';
 

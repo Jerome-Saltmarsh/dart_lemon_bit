@@ -3,11 +3,10 @@ import 'dart:typed_data';
 
 import 'package:gamestream_ws/amulet.dart';
 import 'package:gamestream_ws/amulet/classes/amulet_game_editor.dart';
-import 'package:gamestream_ws/editor/isometric_editor.dart';
 import 'package:gamestream_ws/gamestream.dart';
-import 'package:gamestream_ws/isometric.dart';
+import 'package:gamestream_ws/isometric/extensions/isometric_request_reader.dart';
 import 'package:gamestream_ws/packages.dart';
-import 'package:gamestream_ws/packages/common/src/duration_auto_save.dart';
+import 'package:gamestream_ws/packages/isometric_engine/packages/common/src/duration_auto_save.dart';
 
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_byte/byte_writer.dart';

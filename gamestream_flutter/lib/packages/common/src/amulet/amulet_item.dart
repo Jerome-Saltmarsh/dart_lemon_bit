@@ -599,7 +599,7 @@ enum AmuletItem {
     required int electricity,
   }) {
     if (statsSupport(
-      stat: this.level5,
+      stat: level5,
       fire: fire,
       water: water,
       electricity: electricity,
@@ -608,7 +608,7 @@ enum AmuletItem {
     }
 
     if (statsSupport(
-      stat: this.level4,
+      stat: level4,
       fire: fire,
       water: water,
       electricity: electricity,
@@ -617,7 +617,7 @@ enum AmuletItem {
     }
 
     if (statsSupport(
-      stat: this.level3,
+      stat: level3,
       fire: fire,
       water: water,
       electricity: electricity,
@@ -626,7 +626,7 @@ enum AmuletItem {
     }
 
     if (statsSupport(
-      stat: this.level2,
+      stat: level2,
       fire: fire,
       water: water,
       electricity: electricity,
@@ -635,7 +635,7 @@ enum AmuletItem {
     }
 
     if (statsSupport(
-      stat: this.level1,
+      stat: level1,
       fire: fire,
       water: water,
       electricity: electricity,

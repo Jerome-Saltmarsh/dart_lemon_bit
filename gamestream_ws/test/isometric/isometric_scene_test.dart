@@ -1,8 +1,7 @@
 
 import 'dart:typed_data';
 
-import 'package:gamestream_ws/packages/common.dart';
-import 'package:gamestream_ws/isometric/src.dart';
+import 'package:gamestream_ws/packages/src.dart';
 import 'package:test/test.dart';
 
 void main() {

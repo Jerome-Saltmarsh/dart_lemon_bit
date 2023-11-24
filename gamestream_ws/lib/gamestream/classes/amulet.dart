@@ -9,13 +9,9 @@ import 'package:gamestream_ws/amulet/classes/amulet_game_town.dart';
 import 'package:gamestream_ws/amulet/classes/amulet_game_tutorial.dart';
 import 'package:gamestream_ws/amulet/classes/amulet_player.dart';
 import 'package:gamestream_ws/gamestream.dart';
-import 'package:gamestream_ws/isometric.dart';
-import 'package:gamestream_ws/packages/common/src/amulet/amulet_item.dart';
-import 'package:gamestream_ws/packages/common/src/amulet/amulet_scene.dart';
-import 'package:gamestream_ws/packages/common/src/duration_auto_save.dart';
-import 'package:gamestream_ws/packages/common/src/isometric/character_state.dart';
-import 'package:gamestream_ws/packages/lemon_math/src/random/give_or_take.dart';
+import 'package:gamestream_ws/packages/isometric_engine/packages/common/src/duration_auto_save.dart';
 import 'package:lemon_byte/byte_writer.dart';
+import '../../packages.dart';
 
 class Amulet {
 
@@ -30,7 +26,11 @@ class Amulet {
   final amuletTime = IsometricTime();
   final amuletEnvironment = IsometricEnvironment();
   final games = <AmuletGame>[];
-  final scenes = Scenes();
+  late final scenes = Scenes(
+    sceneDirectoryPath: isLocalMachine
+        ? '${Directory.current.path}/scenes'
+        : '/app/bin/scenes'
+  );
   var _updateTimerInitialized = false;
 
   late final Timer updateTimer;

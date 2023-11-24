@@ -1,7 +1,7 @@
 
 
 import 'package:gamestream_ws/amulet.dart';
-import 'package:gamestream_ws/isometric.dart';
+import 'package:gamestream_ws/packages/isometric_engine/classes/isometric_player.dart';
 import 'package:gamestream_ws/packages/utils/generate_uuid.dart';
 import 'package:typedef/json.dart';
 

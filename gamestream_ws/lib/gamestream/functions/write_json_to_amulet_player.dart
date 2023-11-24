@@ -1,7 +1,8 @@
 
 import 'package:gamestream_ws/amulet.dart';
-import 'package:gamestream_ws/packages/common.dart';
 import 'package:typedef/json.dart';
+
+import '../../packages.dart';
 
 void writeJsonToAmuletPlayer(Json json, AmuletPlayer player){
 
