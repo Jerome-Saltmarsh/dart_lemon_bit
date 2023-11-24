@@ -4,8 +4,8 @@ import 'dart:convert';
 
 import 'package:googleapis/firestore/v1.dart';
 import 'package:googleapis_auth/auth_io.dart' as auth;
-import 'package:typedef/json.dart';
 import 'package:uuid/v4.dart';
+import 'package:typedef/json.dart';
 
 import '../src.dart';
 

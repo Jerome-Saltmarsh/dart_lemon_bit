@@ -1,3 +1,6 @@
+[INSTALL]
+mklink /J "C:\Users\Jerome\github\bleed\gamestream_flutter\lib\packages\common" "C:\Users\Jerome\github\bleed\isometric_common\lib"
+
 [COMMANDS]
 flutter build web --web-renderer canvaskit --release
 firebase deploy

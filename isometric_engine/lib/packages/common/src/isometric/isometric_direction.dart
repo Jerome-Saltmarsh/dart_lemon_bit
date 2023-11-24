@@ -84,22 +84,30 @@ class IsometricDirection {
     const piQuarters6 = piQuarter * 6;
     const piQuarters7 = piQuarter * 7;
 
-    if (direction == IsometricDirection.South)
+    if (direction == IsometricDirection.South) {
       return piQuarters0;
-    if (direction == IsometricDirection.South_West)
+    }
+    if (direction == IsometricDirection.South_West) {
       return piQuarters1;
-    if (direction == IsometricDirection.West)
+    }
+    if (direction == IsometricDirection.West) {
       return piQuarters2;
-    if (direction == IsometricDirection.North_West)
+    }
+    if (direction == IsometricDirection.North_West) {
       return piQuarters3;
-    if (direction == IsometricDirection.North)
+    }
+    if (direction == IsometricDirection.North) {
       return piQuarters4;
-    if (direction == IsometricDirection.North_East)
+    }
+    if (direction == IsometricDirection.North_East) {
       return piQuarters5;
-    if (direction == IsometricDirection.East)
+    }
+    if (direction == IsometricDirection.East) {
       return piQuarters6;
-    if (direction == IsometricDirection.South_East)
+    }
+    if (direction == IsometricDirection.South_East) {
       return piQuarters7;
+    }
 
     throw Exception('Could not convert direction $direction to angle');
   }
