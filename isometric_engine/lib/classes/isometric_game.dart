@@ -4,7 +4,13 @@ import '../isometric_engine.dart';
 import '../consts/isometric_settings.dart';
 
 
-abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
+abstract class IsometricGame<T extends IsometricPlayer> {
+
+  var playerId = 0;
+  final List<T> players = [];
+  final jobs = <GameJob>[];
+
+  var _id = 0;
 
   Scene scene;
   IsometricEnvironment environment;
@@ -22,7 +28,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required this.scene,
     required this.time,
     required this.environment,
-    required super.gameType,
   }) {
 
     for (final gameObject in scene.gameObjects){
@@ -40,6 +45,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
+  int get maxPlayers;
+
+  bool get isFull => players.length >= maxPlayers;
+
+  int get fps => Frames_Per_Second;
+
   double get minAimTargetCursorDistance => 35;
 
   bool get running => _running;
@@ -51,6 +62,64 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       player.writeGameRunning();
     }
   }
+
+  int generateUniqueId() => _id++;
+
+
+  void writePlayerResponses() {
+    final players = this.players;
+    for (var i = 0; i < players.length; i++) {
+      final player = players[i];
+      player.writePlayerGame();
+      customWriteGame();
+    }
+  }
+
+  void addJob({
+    required num seconds,
+    required Function action,
+    bool repeat = false,
+  }) {
+    final frames = (fps * seconds).toInt();
+    for (final job in jobs) {
+      if (!job.available) continue;
+      job.remaining = frames;
+      job.duration = frames;
+      job.action = action;
+      job.repeat = repeat;
+      job.available = false;
+      return;
+    }
+    jobs.add(GameJob(frames, action, repeat: repeat));
+  }
+
+  void updateJobs() {
+    final jobs = this.jobs;
+    for (var i = 0; i < jobs.length; i++) {
+      final job = jobs[i];
+      if (job.remaining <= 0) continue;
+      job.remaining--;
+      if (job.remaining > 0) continue;
+      job.action();
+      if (job.repeat) {
+        job.remaining = job.duration;
+      } else {
+        job.action = _clearJob;
+        job.duration = 0;
+        job.remaining = 0;
+        job.available = true;
+      }
+    }
+  }
+
+  void _clearJob(){}
+
+  void removePlayer(T player){
+    if (players.remove(player)) {
+      onPlayerRemoved(player);
+    }
+  }
+
 
   void add(Collider value){
     if (value is Character){
@@ -178,7 +247,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     value.y += opp(angle, distance);
   }
 
-  @override
   void onPlayerUpdateRequestReceived({
     required T player,
     required int direction,
@@ -2014,7 +2082,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   T buildPlayer();
 
-  @override
   T createPlayer() {
     final player = buildPlayer();
     player.setDestinationToCurrentPosition();
@@ -2027,7 +2094,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     return player;
   }
 
-  @override
   void customWriteGame() {
     notifyPlayersEnvironmentChanged();
     writeLightningFlashing();
@@ -2591,10 +2657,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void onGameObjectedAdded(GameObject value) {}
 
-  @override
   void onPlayerJoined(T player) {
-    super.onPlayerJoined(player);
-    player.writeGameType();
     player.game = this;
     player.sceneDownloaded = false;
     player.downloadScene();

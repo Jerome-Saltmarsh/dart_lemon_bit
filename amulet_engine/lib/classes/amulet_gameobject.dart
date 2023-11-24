@@ -1,7 +1,6 @@
 
-import 'package:gamestream_ws/packages/amulet_engine/packages/isometric_engine/classes/gameobject.dart';
-import 'package:gamestream_ws/packages/amulet_engine/packages/isometric_engine/packages/common/src/amulet/amulet_item.dart';
-import 'package:gamestream_ws/packages/amulet_engine/packages/isometric_engine/packages/common/src/isometric/team_type.dart';
+
+import '../packages/src.dart';
 
 class AmuletGameObject extends GameObject {
 

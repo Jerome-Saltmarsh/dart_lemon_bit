@@ -1,10 +1,8 @@
 import 'package:just_audio/just_audio.dart';
-import 'package:lemon_math/src.dart';
 
 class AudioLoop {
 
   static const minVolumeDelta = 0.005;
-
 
   final String name;
   double Function() getTargetVolume;

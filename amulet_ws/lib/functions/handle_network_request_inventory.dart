@@ -1,4 +1,5 @@
-import 'package:gamestream_ws/packages.dart';
+
+import '../packages/src.dart';
 
 void handleInventoryRequest(AmuletPlayer player, List<int> arguments) {
   if (arguments.isEmpty) return;

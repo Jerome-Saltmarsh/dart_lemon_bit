@@ -24,7 +24,7 @@ import 'ui/game_isometric_minimap.dart';
 class IsometricComponents extends ComponentContainer {
   final AppleEngine engine;
   final WebsiteGame website;
-  final Amulet mmo;
+  final Amulet amulet;
   final IsometricRender render;
   final IsometricOptions options;
   final IsometricAudio audio;
@@ -88,7 +88,7 @@ class IsometricComponents extends ComponentContainer {
     required this.particles,
     required this.compositor,
     required this.website,
-    required this.mmo,
+    required this.amulet,
     required this.animation,
     required this.screen,
     required this.lighting,
@@ -127,7 +127,7 @@ class IsometricComponents extends ComponentContainer {
     components.add(options);
     components.add(compositor);
     components.add(website);
-    components.add(mmo);
+    components.add(amulet);
     components.add(isometricEditor);
     components.add(animation);
     components.add(screen);
@@ -164,7 +164,7 @@ class IsometricComponents extends ComponentContainer {
       component.events = events;
       component.parser = responseReader;
       component.website = website;
-      component.amulet = mmo;
+      component.amulet = amulet;
       component.options = options;
       component.animation = animation;
       component.images = images;

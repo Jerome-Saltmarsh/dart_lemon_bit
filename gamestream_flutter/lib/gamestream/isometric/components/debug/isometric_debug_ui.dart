@@ -162,12 +162,8 @@ extension isometricDebugUI on IsometricDebug {
               'target-position: ${player.targetPosition}\n'
               'audio-volume-flame: ${audio.audioLoopFire.volume}\n'
           )),
-          buildWatch(options.gameType, (GameType value) => buildText('game-type: ${value.name}')),
-          // buildWatch(engine.deviceType, (int deviceType) => buildText('device-type: ${DeviceType.getName(deviceType)}', onPressed: engine.toggleDeviceType)),
-          // buildWatch(io.inputMode, (int inputMode) => buildText('input-mode: ${InputMode.getName(inputMode)}', onPressed: io.actionToggleInputMode)),
           buildWatch(engine.watchMouseLeftDown, (bool mouseLeftDown) => buildText('mouse-left-down: $mouseLeftDown')),
           buildWatch(engine.mouseRightDown, (bool rightDown) => buildText('mouse-right-down: $rightDown')),
-          // watch(GameEditor.nodeSelectedIndex, (int index) => text("edit-state-node-index: $index")),
         ],
       );
 

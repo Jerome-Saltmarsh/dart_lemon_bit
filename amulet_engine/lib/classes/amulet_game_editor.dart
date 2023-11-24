@@ -1,7 +1,6 @@
 
 
-import 'package:gamestream_ws/packages/amulet_engine/functions/generate_random_name.dart';
-
+import '../functions/generate_random_name.dart';
 import '../packages/src.dart';
 import 'amulet_game.dart';
 import 'amulet_player.dart';

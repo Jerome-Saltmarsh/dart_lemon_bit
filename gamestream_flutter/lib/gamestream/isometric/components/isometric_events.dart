@@ -416,7 +416,7 @@ class IsometricEvents with IsometricComponent {
         break;
       case PlayerEvent.Player_Moved:
         print('PlayerEvent.Player_Moved');
-        if (options.gameType.value == GameType.Editor){
+        if (options.editing){
           editor.row = player.indexRow;
           editor.column = player.indexColumn;
           editor.z = player.indexZ;
@@ -590,9 +590,11 @@ class IsometricEvents with IsometricComponent {
     network.parser.bufferSize.value = 0;
     amulet.onChangedNetworkConnectionStatus(connection);
     options.activateCameraPlay();
+    io.reset();
 
     switch (connection) {
       case ConnectionStatus.Connected:
+        options.game.value = options.amulet;
         options.setModePlay();
         engine.zoomOnScroll = true;
         engine.zoom = 1.0;
@@ -605,6 +607,7 @@ class IsometricEvents with IsometricComponent {
         break;
 
       case ConnectionStatus.Done:
+        options.game.value = options.website;
         engine.cameraX = 0;
         engine.cameraY = 0;
         engine.zoom = 1.0;
@@ -616,7 +619,6 @@ class IsometricEvents with IsometricComponent {
         actions.clean();
         scene.gameObjects.clear();
         scene.editEnabled.value = false;
-        options.gameType.value = GameType.Website;
         audio.enabledSound.value = false;
         break;
       case ConnectionStatus.Failed_To_Connect:
@@ -627,6 +629,7 @@ class IsometricEvents with IsometricComponent {
         break;
       case ConnectionStatus.Error:
         ui.error.value = 'Connection Error';
+        options.game.value = options.website;
         break;
       default:
         break;

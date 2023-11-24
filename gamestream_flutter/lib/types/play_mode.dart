@@ -1,0 +1,5 @@
+
+enum PlayMode {
+  single,
+  multi
+}

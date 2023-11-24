@@ -21,12 +21,12 @@ class MMOItemImage extends StatelessWidget {
           builder: (context, isometric) {
             return MouseRegion(
                 onEnter: (_){
-                  isometric.mmo.itemHover.value = item;
+                  isometric.amulet.itemHover.value = item;
                 },
                 onExit: (_){
-                  if (isometric.mmo.itemHover.value != item)
+                  if (isometric.amulet.itemHover.value != item)
                     return;
-                  isometric.mmo.itemHover.value = null;
+                  isometric.amulet.itemHover.value = null;
                 },
                 child: ItemImage(
                   size: size,

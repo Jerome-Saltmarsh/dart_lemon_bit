@@ -1,6 +1,5 @@
 
-import 'package:gamestream_ws/packages/amulet_engine/functions/is_valid_index.dart';
-
+import '../functions/src.dart';
 import '../packages/src.dart';
 import 'amulet.dart';
 import 'amulet_character.dart';

@@ -98,7 +98,7 @@ class IsometricRender with IsometricComponent {
 
   void drawCanvas(Canvas canvas, Size size) {
 
-    if (options.gameType.value == GameType.Website) {
+    if (!network.websocket.connected) {
       images.cacheImages();
       return;
     }

@@ -1,14 +1,18 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:gamestream_ws/amulet.dart';
-import 'package:gamestream_ws/gamestream.dart';
-import 'package:gamestream_ws/isometric/extensions/isometric_request_reader.dart';
-import 'package:gamestream_ws/packages.dart';
-import 'package:gamestream_ws/packages/amulet_engine/packages/isometric_engine/packages/common/src/duration_auto_save.dart';
+import 'package:amulet_ws/extensions/handle_network_request_amulet.dart';
+import 'package:amulet_ws/functions/handle_network_request_inventory.dart';
+import 'package:amulet_ws/functions/write_json_to_amulet_player.dart';
+import 'package:typedef/json.dart';
+
+import 'root.dart';
+
+import 'package:amulet_ws/extensions/isometric_request_reader.dart';
+import 'package:amulet_ws/packages/amulet_engine/packages/isometric_engine/packages/common/src/duration_auto_save.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import '../../packages/amulet_engine/packages/isometric_engine/packages/type_def/json.dart';
+import '../../packages/src.dart';
 
 class Connection extends ByteReader {
 

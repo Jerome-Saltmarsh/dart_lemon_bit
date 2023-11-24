@@ -1,9 +1,9 @@
 
 
-import 'package:gamestream_ws/packages/amulet_engine/classes/amulet_item_slot.dart';
-import 'package:gamestream_ws/packages/amulet_engine/classes/amulet_player.dart';
-import 'package:gamestream_ws/packages/amulet_engine/packages/isometric_engine/classes/isometric_player.dart';
-import 'package:gamestream_ws/packages/utils/generate_uuid.dart';
+import 'package:amulet_ws/packages/amulet_engine/classes/amulet_item_slot.dart';
+import 'package:amulet_ws/packages/amulet_engine/classes/amulet_player.dart';
+import 'package:amulet_ws/packages/amulet_engine/packages/isometric_engine/classes/isometric_player.dart';
+import 'package:amulet_ws/packages/utils/generate_uuid.dart';
 import 'package:typedef/json.dart';
 
 Json mapIsometricPlayerToJson(IsometricPlayer player){

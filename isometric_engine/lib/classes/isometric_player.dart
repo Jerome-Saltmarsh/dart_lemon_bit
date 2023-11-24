@@ -6,7 +6,7 @@ import '../consts/isometric_settings.dart';
 import '../packages/type_def/json.dart';
 
 
-class IsometricPlayer extends Character with ByteWriter implements Player {
+class IsometricPlayer extends Character with ByteWriter {
 
   static const Cache_Length = 200;
 
@@ -25,7 +25,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   var _mouseLeftDown = false;
   var _aimTargetActionPrevious = -1;
   var _aimTargetAction = TargetAction.Run;
-  Collider? _aimTarget;
 
   var _previousCharacterState = -1;
   var weaponDurationPercentagePrevious = 0.0;
@@ -43,17 +42,14 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   var gameTimeInMinutes = 0;
   var mouseX = 0.0;
   var mouseY = 0.0;
-
   var charactersIStart = 0;
   var charactersIEnd = 0;
-
+  var controlsCanTargetEnemies = false;
   var positionCacheX = 0;
   var positionCacheY = 0;
   var positionCacheZ = 0;
-
-  late final editor = EditorState(this);
-
   var data = Json();
+
   final cacheStateB = Uint8List(Cache_Length);
   final cacheStateA = Uint32List(Cache_Length);
   final cachePositionX = Int16List(Cache_Length);
@@ -62,11 +58,12 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   final cacheTemplateA = Uint64List(Cache_Length);
   final cacheTemplateB = Uint64List(Cache_Length);
 
+  late final editor = EditorState(this);
+
   GameObject? editorSelectedGameObject;
   IsometricGame game;
   Collider? selectedCollider;
-
-  var controlsCanTargetEnemies = false;
+  Collider? _aimTarget;
 
   IsometricPlayer({
     required this.game,
@@ -337,7 +334,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeAngle(mouseAngle);
   }
 
-  @override
   void writePlayerGame() {
 
     if (!initialized) {
@@ -520,7 +516,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   void downloadScene(){
     writeGameRunning();
     writeSceneName();
-    writeGameType();
     writeGameTime();
     writePlayerTeam();
     writeEditEnabled();
@@ -1188,7 +1183,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
   double getMouseAngle() => getAngleXY(mouseSceneX, mouseSceneY);
 
-  @override
   void reportException(Object exception) {
     // TODO: implement writeError
   }
@@ -1366,5 +1360,10 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     }
     lookAtMouse();
     forceAttack = true;
+  }
+
+  void writeFPS() {
+    writeByte(NetworkResponse.FPS);
+    writeUInt16(Frames_Per_Second);
   }
 }

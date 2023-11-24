@@ -2,7 +2,7 @@
 
 // import 'dart:typed_data';
 
-// import 'package:gamestream_ws/isometric.dart';
+// import 'package:amulet_ws/isometric.dart';
 
 // Uint8List buildSceneMiniMap(Scene scene){
 //

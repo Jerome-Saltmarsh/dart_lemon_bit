@@ -316,7 +316,7 @@ class Amulet {
     }
   }
 
-  void removeGame(Game game){
+  void removeGame(AmuletGame game){
     games.remove(game);
   }
 

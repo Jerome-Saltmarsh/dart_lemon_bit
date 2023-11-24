@@ -53,7 +53,7 @@ Widget buildApp(){
       options: IsometricOptions(),
       compositor: IsometricCompositor(),
       website: WebsiteGame(),
-      mmo: Amulet(),
+      amulet: Amulet(),
       animation: IsometricAnimation(),
       screen: IsometricScreen(),
       lighting: IsometricLighting(),

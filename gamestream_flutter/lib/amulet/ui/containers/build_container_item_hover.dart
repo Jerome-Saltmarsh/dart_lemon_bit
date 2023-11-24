@@ -184,7 +184,7 @@ Widget buildStatColumn2(
           height: 32,
           color: Colors.black12,
           child: FittedBox(
-            child: buildText(amount, color: components.mmo.getAmuletElementWatch(amuletElement).value >= amount
+            child: buildText(amount, color: components.amulet.getAmuletElementWatch(amuletElement).value >= amount
                 ? Colors.green
                 : Colors.red
             ),

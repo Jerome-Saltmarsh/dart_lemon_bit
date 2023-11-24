@@ -824,7 +824,7 @@ class IsometricEditor with IsometricComponent {
         if (gameObjectSelected.value) {
           translateSelectedGameObject(x: -1, y: -1, z: 0);
         }
-        break;;
+        break;
 
       case KeyCode.D:
         sendGameObjectRequestDuplicate();

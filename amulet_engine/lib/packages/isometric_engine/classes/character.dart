@@ -5,7 +5,6 @@ import '../consts/isometric_settings.dart';
 
 class Character extends Collider {
 
-
   static const maxAnimationFrames = 32;
   static const maxAnimationDeathFrames = maxAnimationFrames - 2;
 
@@ -48,6 +47,7 @@ class Character extends Collider {
   var characterState = CharacterState.Idle;
   var frame = 0;
   var runSpeed = 1.0;
+  @override
   var name = "";
   var pathCurrent = -1;
   var pathStart = -1;
@@ -497,7 +497,7 @@ class Character extends Collider {
         return false;
       }
 
-      final thisTeam = this.team;
+      final thisTeam = team;
 
       if (thisTeam == TeamType.Alone) {
         return false;
@@ -559,7 +559,7 @@ class Character extends Collider {
     }
 
     const actionFramePercentage = 0.6;
-    this.actionFrame = (duration * actionFramePercentage).toInt();
+    actionFrame = (duration * actionFramePercentage).toInt();
     setDestinationToCurrentPosition();
     setCharacterState(
       value: randomItem(CharacterState.strikes),
@@ -600,7 +600,7 @@ class Character extends Collider {
 
     characterState = value;
     frame = 0;
-    this.actionDuration = duration;
+    actionDuration = duration;
   }
 
 

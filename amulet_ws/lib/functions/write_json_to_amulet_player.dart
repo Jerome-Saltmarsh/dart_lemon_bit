@@ -1,7 +1,7 @@
 
 import 'package:typedef/json.dart';
 
-import '../../packages.dart';
+import '../packages/src.dart';
 
 void writeJsonToAmuletPlayer(Json json, AmuletPlayer player){
 

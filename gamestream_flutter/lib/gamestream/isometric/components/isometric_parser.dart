@@ -76,9 +76,6 @@ class IsometricParser with ByteReader, IsometricComponent {
       case NetworkResponse.Game_Time:
         readNetworkResponseGameTime();
         break;
-      case NetworkResponse.Game_Type:
-        readNetworkResponseGameType();
-        break;
       case NetworkResponse.Environment:
         readNetworkResponseEnvironment();
         break;
@@ -145,14 +142,6 @@ class IsometricParser with ByteReader, IsometricComponent {
     final length = readUInt16();
     final bytes = readBytes(length);
     downloadBytes(bytes: bytes, name: '$name.scene');
-  }
-
-  void readNetworkResponseGameType() {
-    final index = readByte();
-    if (index >= GameType.values.length){
-      throw Exception('invalid game type index $index');
-    }
-    options.gameType.value = GameType.values[index];
   }
 
   void readNetworkResponseIsometric() {

@@ -1,5 +1,5 @@
-name: gamestream_ws
-description: a websocket server for gamestream
+name: amulet_ws
+description: a websocket server for amulet
 version: 1.0.0
 
 environment:

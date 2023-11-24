@@ -1,5 +1,6 @@
-import 'package:gamestream_ws/gamestream.dart';
-import 'package:gamestream_ws/packages.dart';
+import 'package:amulet_ws/classes/connection.dart';
+
+import '../packages/src.dart';
 
 extension IsometricRequestReader on Connection {
 

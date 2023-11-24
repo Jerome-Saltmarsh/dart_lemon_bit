@@ -174,14 +174,5 @@ class IsometricActions with IsometricComponent {
   void writeMessage(String value){
     options.messageStatus.value = value;
   }
-
-  void startGameByType(GameType gameType){
-    options.game.value = options.mapGameTypeToGame(gameType);
-  }
-
-  void startGameType(GameType gameType){
-    network.connectToGame(gameType);
-  }
-
 }
 

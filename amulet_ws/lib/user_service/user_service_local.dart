@@ -1,6 +1,6 @@
 
-import 'package:gamestream_ws/packages/amulet_engine/packages/isometric_engine/packages/type_def/json.dart';
-import 'package:gamestream_ws/user_service/user_service.dart';
+import 'package:amulet_ws/packages/amulet_engine/packages/isometric_engine/packages/type_def/json.dart';
+import 'package:amulet_ws/user_service/user_service.dart';
 
 class UserServiceLocal implements UserService {
 

@@ -22,25 +22,6 @@ import 'widgets/dialog_create_character_computer.dart';
 
 extension WebsiteUI on WebsiteGame {
 
-  Widget buildRowSelectGame() => Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: gameTypes.map((gameType) => onPressed(
-        action: () => actions.startGameType(gameType),
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 4),
-          child: Column(
-            children: [
-              SizedBox(
-                  width: 256,
-                  child: buildGameTypeImage(gameType)),
-              buildText(gameType.name, size: 25),
-            ],
-          ),
-        ),
-      ))
-          .toList());
-
   Widget buildPageWebsiteDesktop() =>
       WatchBuilder(websitePage, (websitePage) =>
         switch (websitePage) {

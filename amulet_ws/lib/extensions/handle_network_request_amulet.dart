@@ -1,5 +1,5 @@
-import 'package:gamestream_ws/gamestream/classes/connection.dart';
-import 'package:gamestream_ws/packages.dart';
+import '../classes/connection.dart';
+import '../packages/src.dart';
 
 extension AmuletRequestHandler on Connection {
 

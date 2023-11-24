@@ -1,7 +1,9 @@
 
+import 'package:gamestream_flutter/amulet/amulet.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/mode.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/packages/common.dart';
+import 'package:gamestream_flutter/types/play_mode.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
@@ -14,14 +16,10 @@ import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/packages/lemon_components.dart';
 
 class IsometricOptions with IsometricComponent implements Updatable {
-
-
-
   var renderNorth = true;
   var renderEast = true;
   var alphaBlend = 128;
   var cameraPlayFollowPlayer = true;
-  final cameraPlay = Position();
   var cameraEdit = Position();
   var cameraDebug = Position();
   var charactersEffectParticles = false;
@@ -44,6 +42,8 @@ class IsometricOptions with IsometricComponent implements Updatable {
   var messageStatusDuration = 0;
   var renderResponse = true;
 
+  final playMode = Watch(PlayMode.multi);
+  final cameraPlay = Position();
   final mode = Watch(Mode.Play);
   final highlightIconInventory = WatchBool(false);
   final timeVisible = WatchBool(true);
@@ -56,16 +56,12 @@ class IsometricOptions with IsometricComponent implements Updatable {
   final watchTimePassing = Watch(false);
   final rendersSinceUpdate = Watch(0);
   final triggerAlarmNoMessageReceivedFromServer = Watch(false);
-  final gameType = Watch(GameType.Website);
   final messageStatus = Watch('');
   final gameError = Watch<GameError?>(null);
   late final Watch<Game> game;
 
 
-
-
   IsometricOptions(){
-    gameType.onChanged(_onChangedGameType);
     mode.onChanged(onChangedMode);
     messageStatus.onChanged(_onChangedMessageStatus);
     gameError.onChanged(_onChangedGameError);
@@ -96,12 +92,6 @@ class IsometricOptions with IsometricComponent implements Updatable {
 
   void toggleRenderHealthbarAllies(){
     renderHealthBarAllies = !renderHealthBarAllies;
-  }
-
-  void _onChangedGameType(GameType value) {
-    print('onChangedGameType(${value.name})');
-    io.reset();
-    actions.startGameByType(value);
   }
 
   void _onChangedGameError(GameError? gameError){
@@ -199,6 +189,8 @@ class IsometricOptions with IsometricComponent implements Updatable {
   }
 
   void onComponentUpdate() {
+
+
 
     game.value.update();
 

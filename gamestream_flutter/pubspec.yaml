@@ -26,6 +26,8 @@ dependencies:
   typedef: ^1.0.12
   url_launcher: ^6.1.10
 
+  amulet_engine:
+    path: ..\amulet_engine
   lemon_sprite:
     path: ..\lemon_sprite
   lemon_widgets:

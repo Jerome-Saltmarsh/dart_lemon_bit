@@ -1,7 +1,7 @@
 
 import 'dart:typed_data';
 
-import 'package:gamestream_ws/packages/src.dart';
+import 'package:amulet_ws/packages/src.dart';
 import 'package:test/test.dart';
 
 void main() {
