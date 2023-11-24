@@ -95,13 +95,13 @@ class Character extends Collider {
     required super.y,
     required super.z,
     required super.team,
-    required int characterType,
-    required int health,
-    required int weaponType,
+    required this.characterType,
+    required this.weaponType,
     required this.weaponDamage,
     required this.weaponRange,
     required this.weaponCooldown,
     required this.attackDuration,
+    required int health,
     String? name,
     this.runSpeed = 1.0,
     this.doesWander = false,
@@ -112,10 +112,7 @@ class Character extends Collider {
     materialType: MaterialType.Flesh,
   ) {
     maxHealth = health;
-    this.weaponType = weaponType;
-    this.characterType = characterType;
     this.health = health;
-    this.team = team;
 
     if (name != null){
       this.name = name;
@@ -303,7 +300,7 @@ class Character extends Collider {
     if (!withinAttackRange(collider)){
       return false;
     }
-    final angle = this.getAngle(collider);
+    final angle = getAngle(collider);
     final angleD = angleDiff(angle, angle);
     return angleD < piQuarter; // TODO Replace constant with weaponAngleRange
   }
@@ -339,8 +336,6 @@ class Character extends Collider {
     angle = getAngleXY(x, y);
   }
 
-  double getAngleXY(double x, double y) =>
-      angleBetween(this.x, this.y, x, y);
 
   void update() {
     if (
@@ -487,13 +482,13 @@ class Character extends Collider {
   );
 
   @override
-  bool onSameTeam(dynamic that, {bool neutralMeansTrue = true}) {
+  bool onSameTeam(dynamic a, {bool neutralMeansTrue = true}) {
 
-      if (identical(this, that)) {
+      if (identical(this, a)) {
         return true;
       }
 
-      if (that is! Collider) {
+      if (a is! Collider) {
         return false;
       }
 
@@ -507,7 +502,7 @@ class Character extends Collider {
         return neutralMeansTrue;
       }
 
-      final thatTeam = that.team;
+      final thatTeam = a.team;
 
       if (thatTeam == TeamType.Alone) {
         return false;

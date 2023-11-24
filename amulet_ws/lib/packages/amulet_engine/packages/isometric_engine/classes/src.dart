@@ -1,8 +1,6 @@
 library src;
 
-export 'game.dart';
 export 'job.dart';
-export 'player.dart';
 export 'isometric_editor.dart';
 export 'character.dart';
 export 'collider.dart';
