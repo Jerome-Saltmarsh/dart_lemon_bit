@@ -95,16 +95,23 @@ class RendererCharacters extends RenderGroup {
     final scale = options.characterRenderScale;
     // final direction = IsometricDirection.toInputDirection(character.direction);
     // final color = scene.getColor(characterIndex);
-    final colorL = scene.getColor(characterIndex - scene.totalColumns + 1);
-    final colorR = scene.getColor(characterIndex + scene.totalColumns - 1);
-    final colorN = scene.colorNorth(characterIndex);
-    final colorE = scene.colorEast(characterIndex);
-    final colorS = scene.colorSouth(characterIndex);
-    final colorW = scene.colorWest(characterIndex);
-    // final colorNorth = merge32BitColors(color, colorN);
-    // final colorEast = merge32BitColors(color, colorE);
-    // final colorNorth = colorN;
-    // final colorEast = colorE;
+    final totalColumns = scene.totalColumns;
+    final colorL = scene.getColor(characterIndex - totalColumns + 1);
+    final colorR = scene.getColor(characterIndex + totalColumns - 1);
+    final colorN1 = scene.colorNorth(characterIndex);
+    final colorN2 = scene.colorNorth(characterIndex - totalColumns);
+    final colorE1 = scene.colorEast(characterIndex);
+    final colorE2 = scene.colorEast(characterIndex - 1);
+    final colorS1 = scene.colorSouth(characterIndex);
+    final colorS2 = scene.colorSouth(characterIndex + totalColumns);
+    final colorW1 = scene.colorWest(characterIndex);
+    final colorW2 = scene.colorWest(characterIndex + 1);
+
+    final colorN = merge32BitColors(colorN1, colorN2);
+    final colorE = merge32BitColors(colorE1, colorE2);
+    final colorS = merge32BitColors(colorS1, colorS2);
+    final colorW = merge32BitColors(colorW1, colorW2);
+
     final colorSouth = merge32BitsColors3(colorS, colorE, colorR);
     final colorWest = merge32BitsColors3(colorN, colorW, colorL);
     final colorDiffuse = merge32BitColors(colorSouth, colorWest);
