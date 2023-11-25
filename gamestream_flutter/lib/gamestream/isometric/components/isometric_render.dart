@@ -105,7 +105,7 @@ class IsometricRender with IsometricComponent {
       return;
     }
 
-    if (options.playModeMulti && !network.websocket.connected) {
+    if (options.playModeMulti && !options.websocket.connected) {
       images.cacheImages();
       return;
     }
@@ -195,7 +195,7 @@ class IsometricRender with IsometricComponent {
 
   void drawForeground(Canvas canvas, Size size){
 
-    if (!network.websocket.connected)
+    if (!options.websocket.connected)
       return;
 
     // renderCursor(canvas);

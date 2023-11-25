@@ -1,10 +1,10 @@
 
-import 'package:gamestream_flutter/amulet/amulet.dart';
-import 'package:gamestream_flutter/classes/single_player.dart';
+import 'package:gamestream_flutter/classes/local_server.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/mode.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/packages/common.dart';
-import 'package:gamestream_flutter/types/play_mode.dart';
+import 'package:gamestream_flutter/packages/lemon_websocket_client/websocket_client.dart';
+import 'package:gamestream_flutter/types/server_mode.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +43,8 @@ class IsometricOptions with IsometricComponent implements Updatable {
   var messageStatusDuration = 0;
   var renderResponse = true;
 
-  final playMode = Watch(PlayMode.multi);
+  late final WebsocketClient websocket;
+  final serverMode = Watch(ServerMode.remote);
   final cameraPlay = Position();
   final mode = Watch(Mode.Play);
   final highlightIconInventory = WatchBool(false);
@@ -61,7 +62,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
   final gameError = Watch<GameError?>(null);
   late final Watch<Game> game;
 
-  late final singlePlayer = SinglePlayer(
+  late final localServer = LocalServer(
     parser: parser,
     network: network,
   );
@@ -81,6 +82,16 @@ class IsometricOptions with IsometricComponent implements Updatable {
     game = Watch<Game>(website, onChanged: _onChangedGame);
     engine.durationPerUpdate.value = convertFramesPerSecondToDuration(20);
     engine.cursorType.value = CursorType.Basic;
+    websocket = WebsocketClient(
+      readString: parser.readServerResponseString,
+      readBytes: parser.parseBytes,
+      onError: network.onNetworkError,
+      onDone: network.onNetworkDone,
+    );
+
+    websocket.connectionStatus.onChanged(
+        events.onChangedNetworkConnectionStatus
+    );
   }
 
   void onMouseEnterCanvas(){
@@ -111,11 +122,11 @@ class IsometricOptions with IsometricComponent implements Updatable {
     switch (gameError) {
       case GameError.Unable_To_Join_Game:
         ui.error.value = 'unable to join game';
-        network.websocket.disconnect();
+        websocket.disconnect();
         break;
       case GameError.PlayerNotFound:
         ui.error.value = 'player character could not be found';
-        network.websocket.disconnect();
+        websocket.disconnect();
         break;
       default:
         break;
@@ -197,7 +208,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
 
     game.value.update();
 
-    singlePlayer.update();
+    localServer.update();
 
     if (cameraPlayFollowPlayer){
       cameraPlay.copy(player.position);
@@ -256,7 +267,13 @@ class IsometricOptions with IsometricComponent implements Updatable {
     cameraPlay.z = player.z;
   }
 
-  bool get playModeMulti => playMode.value == PlayMode.multi;
+  @override
+  void onComponentDispose() {
+    print('isometricNetwork.onComponentDispose()');
+    websocket.disconnect();
+  }
 
-  bool get playModeSingle => playMode.value == PlayMode.single;
+  bool get playModeMulti => serverMode.value == ServerMode.remote;
+
+  bool get playModeSingle => serverMode.value == ServerMode.local;
 }

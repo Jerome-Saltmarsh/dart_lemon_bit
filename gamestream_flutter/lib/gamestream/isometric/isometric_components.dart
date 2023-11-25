@@ -30,7 +30,7 @@ class IsometricComponents extends ComponentContainer {
   final IsometricAudio audio;
   final IsometricParticles particles;
   final IsometricCompositor compositor;
-  final IsometricNetwork network;
+  final IsometricServer network;
   final IsometricScreen screen;
   final IsometricScene scene;
   final IsometricDebug debug;

@@ -115,7 +115,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     print('read error; index: $index');
     print(values);
     ui.error.value = 'failed to parse response from server';
-    network.websocket.disconnect();
+    options.websocket.disconnect();
   }
 
   void readSortGameObjects() {

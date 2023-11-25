@@ -4,7 +4,7 @@ import 'package:gamestream_flutter/gamestream/isometric/components/isometric_com
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/packages/lemon_bits/src/byte_hex.dart';
 import 'package:gamestream_flutter/packages/lemon_components/src.dart';
-import 'package:gamestream_flutter/types/play_mode.dart';
+import 'package:gamestream_flutter/types/server_mode.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
@@ -55,10 +55,10 @@ class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
   @override
   void onComponentUpdate() {
 
-    if (options.playModeMulti && !network.websocket.connected)
+    if (options.playModeMulti && !options.websocket.connected)
       return;
 
-    if (options.playModeSingle && !options.singlePlayer.amuletLoaded){
+    if (options.playModeSingle && !options.localServer.amuletLoaded){
       return;
     }
 
@@ -301,10 +301,10 @@ class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
     final bytes = compile();
     updateSize.value = bytes.length;
 
-    if (options.playMode.value == PlayMode.multi){
-      network.websocket.send(bytes);
+    if (options.serverMode.value == ServerMode.remote){
+      options.websocket.send(bytes);
     } else {
-      options.singlePlayer.send(bytes);
+      options.localServer.send(bytes);
     }
   }
 

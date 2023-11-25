@@ -1,5 +1,0 @@
-
-enum PlayMode {
-  single,
-  multi
-}

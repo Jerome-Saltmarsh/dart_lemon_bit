@@ -208,7 +208,7 @@ class IsometricUI with IsometricComponent {
                     ...children,
                   height24,
                   onPressed(
-                    action: network.websocket.disconnect,
+                    action: options.websocket.disconnect,
                     child: buildText('DISCONNECT', size: 25),
                   ),
                   height24,

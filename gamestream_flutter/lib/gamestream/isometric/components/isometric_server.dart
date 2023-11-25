@@ -4,26 +4,16 @@ import 'package:gamestream_flutter/gamestream/network/enums/connection_region.da
 import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/packages/lemon_websocket_client.dart';
+import 'package:gamestream_flutter/types/server_mode.dart';
 
 import 'classes/send_amulet_request.dart';
 
-class IsometricNetwork with IsometricComponent {
+class IsometricServer with IsometricComponent {
 
-  late final WebsocketClient websocket;
   late final SendAmuletRequest sendAmuletRequest;
 
-  IsometricNetwork(){
+  IsometricServer(){
     sendAmuletRequest = SendAmuletRequest(this);
-  }
-
-  @override
-  Future onComponentInit(sharedPreferences) async {
-    websocket = WebsocketClient(
-      readString: parser.readServerResponseString,
-      readBytes: parser.parseBytes,
-      onError: onNetworkError,
-      onDone: onNetworkDone,
-    );
   }
 
   void onNetworkDone(){
@@ -96,12 +86,10 @@ class IsometricNetwork with IsometricComponent {
       sendNetworkRequest(NetworkRequest.Isometric, '${request.index} $message');
 
   void sendRequest(int requestType, [dynamic a, dynamic b, dynamic c, dynamic d]) =>
-    websocket.send('$requestType $a $b $c $d'.trim());
-
+      send('$requestType $a $b $c $d'.trim());
 
   void sendArgs2(int clientRequest, dynamic a, dynamic b) =>
-      websocket.send('$clientRequest $a $b');
-
+      send('$clientRequest $a $b');
 
   // FUNCTIONS
   void connectToRegion(ConnectionRegion region, String message) {
@@ -124,7 +112,7 @@ class IsometricNetwork with IsometricComponent {
   }
 
   void connectToServer(String uri, String message) {
-    websocket.connect(uri: uri, message: '${NetworkRequest.Join} $message');
+    options.websocket.connect(uri: uri, message: '${NetworkRequest.Join} $message');
   }
 
   void connectToGame(GameType gameType, [String message = '']) {
@@ -142,14 +130,24 @@ class IsometricNetwork with IsometricComponent {
   @override
   void onComponentDispose() {
     print('isometricNetwork.onComponentDispose()');
-    websocket.disconnect();
+    options.websocket.disconnect();
   }
 
   void sendNetworkRequestAmulet(NetworkRequestAmulet request, [dynamic message]) =>
       sendNetworkRequest(NetworkRequest.Amulet, '${request.index} $message');
 
   void sendNetworkRequest(int networkRequest, [dynamic arg1, dynamic arg2, dynamic arg3]) =>
-      websocket.send('${networkRequest} ${arg1 ?? ""} ${arg2 ?? ""} ${arg3 ?? ""}'.trim());
+      send('${networkRequest} ${arg1 ?? ""} ${arg2 ?? ""} ${arg3 ?? ""}'.trim());
 
+  void send(dynamic data) {
+    switch (options.serverMode.value){
+      case ServerMode.local:
+        options.localServer.send(data);
+        break;
+      case ServerMode.remote:
+        options.websocket.send(data);
+        break;
+    }
+  }
 }
 

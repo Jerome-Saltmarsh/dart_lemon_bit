@@ -48,7 +48,7 @@ Widget buildApp(){
       player: IsometricPlayer(),
       scene: IsometricScene(),
       io: IsometricIO(),
-      network: IsometricNetwork(),
+      network: IsometricServer(),
       audio: IsometricAudio(),
       options: IsometricOptions(),
       compositor: IsometricCompositor(),

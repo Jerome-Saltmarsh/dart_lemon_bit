@@ -7,16 +7,16 @@ import 'package:amulet_engine/classes/amulet.dart';
 import 'package:amulet_engine/classes/amulet_controller.dart';
 import 'package:amulet_engine/classes/amulet_player.dart';
 import 'package:gamestream_flutter/classes/amulet_scenes_flutter.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_network.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_server.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_parser.dart';
 
 
-class SinglePlayer {
+class LocalServer {
 
   var amuletLoaded = false;
 
-  final IsometricNetwork network;
-  final streamController = StreamController();
+  final IsometricServer network;
+  final streamController = StreamController.broadcast();
   final IsometricParser parser;
 
   late final AmuletPlayer player;
@@ -24,11 +24,11 @@ class SinglePlayer {
 
   late final Amulet amulet;
 
-  SinglePlayer({
+  LocalServer({
     required this.network,
     required this.parser,
   }) {
-    // network.websocket.sink = streamController.sink;
+    streamController.stream.listen(onData);
   }
 
   void update(){
@@ -43,8 +43,13 @@ class SinglePlayer {
       return;
     }
 
-    final bytes = player.compile();
-    parser.parseBytes(bytes);
+    onData(player.compile());
+  }
+
+  void onData(dynamic data){
+    if (data is Uint8List) {
+      parser.parseBytes(data);
+    }
   }
 
   void send(dynamic data) {

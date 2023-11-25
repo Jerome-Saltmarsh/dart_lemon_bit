@@ -8,7 +8,7 @@ import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/packages/common/src/duration_auto_save.dart';
 import 'package:gamestream_flutter/packages/common/src/game_type.dart';
 import 'package:gamestream_flutter/packages/lemon_websocket_client.dart';
-import 'package:gamestream_flutter/types/play_mode.dart';
+import 'package:gamestream_flutter/types/server_mode.dart';
 import 'package:gamestream_flutter/website/enums/website_page.dart';
 import 'package:gamestream_flutter/website/functions/build_website_page_select_region.dart';
 import 'package:gamestream_flutter/website/website_game.dart';
@@ -28,8 +28,8 @@ extension WebsiteUI on WebsiteGame {
 
   Widget buildWatchPlayMode() =>
       WatchBuilder(
-      options.playMode,
-      (PlayMode playMode) => playMode == PlayMode.single
+      options.serverMode,
+      (ServerMode playMode) => playMode == ServerMode.local
           ? buildGameModeSinglePlayer()
           : buildGameModeMultiPlayer());
 
@@ -38,7 +38,7 @@ extension WebsiteUI on WebsiteGame {
       children: [
         buildTogglePlayMode(),
         onPressed(
-          action: options.singlePlayer.playerJoin,
+          action: options.localServer.playerJoin,
           child: buildText('NEW CHARACTER'),
         ),
       ],
@@ -46,11 +46,11 @@ extension WebsiteUI on WebsiteGame {
   }
 
   Widget buildTogglePlayMode() {
-    return WatchBuilder(options.playMode, (activePlayMode) {
+    return WatchBuilder(options.serverMode, (activePlayMode) {
       return Row(
-        children: PlayMode.values.map((playMode) {
+        children: ServerMode.values.map((playMode) {
           return onPressed(
-            action: () => options.playMode.value = playMode,
+            action: () => options.serverMode.value = playMode,
             child: Container(
               alignment: Alignment.center,
               width: 80,
@@ -101,7 +101,7 @@ extension WebsiteUI on WebsiteGame {
   Widget buildOperationStatus(OperationStatus operationStatus) =>
       operationStatus != OperationStatus.None
           ? buildFullScreen(child: buildText(operationStatus.name.replaceAll('_', ' ')))
-          : buildWatch(network.websocket.connectionStatus, buildConnectionStatus);
+          : buildWatch(options.websocket.connectionStatus, buildConnectionStatus);
 
   Widget buildConnectionStatus(ConnectionStatus connectionStatus) =>
       switch (connectionStatus) {

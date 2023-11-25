@@ -1,10 +1,10 @@
 
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_network.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_server.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 
 class SendAmuletRequest {
 
-  final IsometricNetwork network;
+  final IsometricServer network;
 
   SendAmuletRequest(this.network);
 

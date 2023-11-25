@@ -23,7 +23,7 @@ import 'render/renderer_editor.dart';
 mixin IsometricComponent implements Component {
   late final LemonEngine engine;
   late final IsometricAnimation animation;
-  late final IsometricNetwork network;
+  late final IsometricServer network;
   late final IsometricParticles particles;
   late final IsometricPlayer player;
   late final IsometricScene scene;

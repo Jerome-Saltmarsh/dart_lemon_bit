@@ -644,13 +644,6 @@ class IsometricEvents with IsometricComponent {
     }
   }
 
-  @override
-  Future onComponentInit(sharedPreferences) async {
-    network.websocket.connectionStatus.onChanged(
-        onChangedNetworkConnectionStatus
-    );
-  }
-
   void onItemConsumed(int consumableType) {
     audio.drink.play();
   }

@@ -332,7 +332,7 @@ class AmuletController {
     sink.add(errorWriter.compile());
   }
 
-  void compileAndSendPlayerBuffer()=> sink.add(player.compile());
+  void compileAndSendPlayerBuffer() => sink.add(player.compile());
 
   Future sendServerError(dynamic error) async {
     errorWriter.writeByte(NetworkResponse.Server_Error);

@@ -13,7 +13,7 @@ export 'isometric_player.dart';
 export 'isometric_compositor.dart';
 export 'isometric_scene.dart';
 export 'isometric_particles.dart';
-export 'isometric_network.dart';
+export 'isometric_server.dart';
 export 'isometric_io.dart';
 export 'isometric_actions.dart';
 export 'isometric_events.dart';
