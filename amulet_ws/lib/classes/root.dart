@@ -40,7 +40,7 @@ class Root {
 
   Future _construct() async {
     printSystemInformation();
-    await amulet.construct();
+    await amulet.construct(initializeUpdateTimer: true);
     await server.construct();
   }
 

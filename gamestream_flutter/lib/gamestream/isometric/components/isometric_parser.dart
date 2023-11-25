@@ -310,6 +310,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     events.onChangedNodes();
     particles.clearParticles();
     io.recenterCursor();
+    scene.loaded = true;
   }
 
   // void readIsometricPlayerPosition() {

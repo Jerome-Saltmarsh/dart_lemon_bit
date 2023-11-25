@@ -55,8 +55,12 @@ class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
   @override
   void onComponentUpdate() {
 
-    if (!network.websocket.connected)
+    if (options.playModeMulti && !network.websocket.connected)
       return;
+
+    if (options.playModeSingle && !options.singlePlayer.amuletLoaded){
+      return;
+    }
 
     if (!options.gameRunning.value) {
       writeByte(NetworkRequest.Update);

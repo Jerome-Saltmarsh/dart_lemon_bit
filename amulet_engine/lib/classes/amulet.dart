@@ -73,11 +73,14 @@ class Amulet {
     required this.scenes,
   });
 
-  Future construct() async {
+  Future construct({required bool initializeUpdateTimer}) async {
     AmuletItem.values.forEach((item) => item.validate());
     await scenes.load();
-    _initializeUpdateTimer();
-    _initializeTimerAutoSave();
+
+    if (initializeUpdateTimer){
+      _initializeUpdateTimer();
+      _initializeTimerAutoSave();
+    }
     _initializeGames();
     _compileWorldMapBytes();
   }
@@ -190,6 +193,10 @@ class Amulet {
   }
 
   void _fixedUpdate(Timer timer) {
+   update();
+  }
+
+  void update(){
     frame++;
     updateWorldMap();
     updateGames();

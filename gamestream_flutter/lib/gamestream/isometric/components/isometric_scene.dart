@@ -32,6 +32,7 @@ class IsometricScene with IsometricComponent implements Updatable {
 
   final keys = <String, int>{};
   final keysChangedNotifier = Watch(0);
+  var loaded = false;
   var marks = Uint32List(0);
   var interpolationPadding = 0.0;
   var nextLightingUpdate = 0;
@@ -383,6 +384,7 @@ class IsometricScene with IsometricComponent implements Updatable {
   }
 
   void refreshMetrics(){
+    print('scene.refreshMetrics()');
     lengthRows = totalRows * Node_Size;
     lengthColumns = totalColumns * Node_Size;
     lengthZ = totalZ * Node_Height;

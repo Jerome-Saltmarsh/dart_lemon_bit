@@ -634,6 +634,10 @@ class RendererNodes extends RenderGroup {
     windType = environment.wind.value;
     final scene = this.scene;
 
+    if (!scene.loaded){
+      return;
+    }
+
     if (lightningFlashing) {
       final lightningColorMax = lerpColors(colors.white.value, 0, environment.brightness);
       final ambientBrightness = lerpColors(scene.ambientColor, 0, environment.brightness);
