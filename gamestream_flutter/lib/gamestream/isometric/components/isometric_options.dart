@@ -64,7 +64,6 @@ class IsometricOptions with IsometricComponent implements Updatable {
 
   late final localServer = LocalServer(
     parser: parser,
-    network: network,
   );
 
   IsometricOptions(){

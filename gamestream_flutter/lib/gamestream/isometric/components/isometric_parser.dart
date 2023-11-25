@@ -19,10 +19,6 @@ class IsometricParser with ByteReader, IsometricComponent {
   final bufferSize = Watch(0);
   final decoder = ZLibDecoder();
 
-  void parseString(String value){
-
-  }
-
   void parseBytes(Uint8List bytes) {
     index = 0;
     values = bytes;

@@ -1,35 +1,27 @@
 
 
-import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:amulet_engine/classes/amulet.dart';
 import 'package:amulet_engine/classes/amulet_controller.dart';
 import 'package:amulet_engine/classes/amulet_player.dart';
 import 'package:gamestream_flutter/classes/amulet_scenes_flutter.dart';
-import 'package:gamestream_flutter/gamestream/isometric/components/isometric_server.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_parser.dart';
 
 
-class LocalServer {
+class LocalServer implements Sink {
 
   var amuletLoaded = false;
 
-  final IsometricServer network;
-  final streamController = StreamController.broadcast();
   final IsometricParser parser;
 
   late final AmuletPlayer player;
   late final AmuletController controller;
-
   late final Amulet amulet;
 
   LocalServer({
-    required this.network,
     required this.parser,
-  }) {
-    streamController.stream.listen(onData);
-  }
+  });
 
   void update(){
     if (!amuletLoaded){
@@ -42,14 +34,7 @@ class LocalServer {
     if (!amuletLoaded){
       return;
     }
-
-    onData(player.compile());
-  }
-
-  void onData(dynamic data){
-    if (data is Uint8List) {
-      parser.parseBytes(data);
-    }
+    add(player.compile());
   }
 
   void send(dynamic data) {
@@ -71,7 +56,7 @@ class LocalServer {
       controller = AmuletController(
           player: player,
           isAdmin: true,
-          sink: streamController.sink,
+          sink: this,
           handleClientRequestJoin: handleClientRequestJoin,
       );
       controller.playerJoinAmuletTown();
@@ -80,12 +65,24 @@ class LocalServer {
       controller.player.health = 10;
       controller.player.active = true;
       amuletLoaded = true;
-      network.events.onConnected();
+      parser.events.onConnected();
     }
   }
 
   void handleClientRequestJoin(List<String> arguments){
 
+  }
+
+  @override
+  void add(data) {
+    if (data is Uint8List) {
+      parser.parseBytes(data);
+    }
+  }
+
+  @override
+  void close() {
+    // TODO: implement close
   }
 }
 
