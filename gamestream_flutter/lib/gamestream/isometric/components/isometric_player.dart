@@ -145,7 +145,7 @@ class IsometricPlayer with IsometricComponent {
   }
 
   void toggleControlsCanTargetEnemies() =>
-      network.sendIsometricRequest(
+      server.sendIsometricRequest(
           NetworkRequestIsometric.Toggle_Controls_Can_Target_Enemies
       );
 
@@ -284,7 +284,7 @@ class IsometricPlayer with IsometricComponent {
         }
         break;
       case NetworkResponsePlayer.Cache_Cleared:
-        onNetworkDone();
+        options.onWebsocketNetworkDone();
         break;
     }
   }
@@ -355,7 +355,7 @@ class IsometricPlayer with IsometricComponent {
       );
 
   void sendRequestSetName(String name) {
-    network.sendRequest(
+    server.sendRequest(
       NetworkRequest.Player,
       NetworkRequestPlayer.setName.index,
       name,
@@ -367,7 +367,7 @@ class IsometricPlayer with IsometricComponent {
     if (index == -1) {
       return;
     }
-    network.sendRequest(
+    server.sendRequest(
       NetworkRequest.Player,
       NetworkRequestPlayer.setComplexion.index,
       index,
@@ -378,7 +378,7 @@ class IsometricPlayer with IsometricComponent {
     if (index == -1) {
       return;
     }
-    network.sendRequest(
+    server.sendRequest(
       NetworkRequest.Player,
       NetworkRequestPlayer.setComplexion.index,
       index,
@@ -396,43 +396,38 @@ class IsometricPlayer with IsometricComponent {
   void readGender() => gender.value = parser.readByte();
 
   void setHairType(int hairType) =>
-      network.sendNetworkRequest(
+      server.sendNetworkRequest(
         NetworkRequest.Player,
         NetworkRequestPlayer.setHairType.index,
         hairType,
       );
 
   void setHairColor(int value) =>
-      network.sendNetworkRequest(
+      server.sendNetworkRequest(
         NetworkRequest.Player,
         NetworkRequestPlayer.setHairColor.index,
         value,
       );
 
   void toggleGender() =>
-      network.sendNetworkRequest(
+      server.sendNetworkRequest(
         NetworkRequest.Player,
         NetworkRequestPlayer.toggleGender.index,
       );
 
   void setGender(int gender) =>
-      network.sendNetworkRequest(
+      server.sendNetworkRequest(
         NetworkRequest.Player,
         NetworkRequestPlayer.setGender.index,
         gender,
       );
 
   void setHeadType(int value) =>
-      network.sendNetworkRequest(
+      server.sendNetworkRequest(
         NetworkRequest.Player,
         NetworkRequestPlayer.setHeadType.index,
         value,
       );
-
-  void onNetworkDone() {
-    scene.clear();
-    amulet.onNetworkDone();
-  }
 
   void updateIndexes(){
     indexColumn = position.indexColumn;

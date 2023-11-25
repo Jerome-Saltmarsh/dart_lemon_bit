@@ -303,7 +303,7 @@ class IsometricEditor with IsometricComponent {
   }
 
   void addMark({required int index, required int markType}){
-    network.sendNetworkRequest(NetworkRequest.Scene, '${NetworkRequestScene.Add_Mark.index} $index $markType');
+    server.sendNetworkRequest(NetworkRequest.Scene, '${NetworkRequestScene.Add_Mark.index} $index $markType');
   }
 
   void refreshNodeSelectedIndex() {
@@ -593,7 +593,7 @@ class IsometricEditor with IsometricComponent {
     int? orientation,
     int? variation,
   }) =>
-      network.sendNetworkRequest(
+      server.sendNetworkRequest(
         NetworkRequest.Edit,
         NetworkRequestEdit.Set_Node.index,
         '--index $index',
@@ -645,7 +645,7 @@ class IsometricEditor with IsometricComponent {
   void saveScene() => sendEditorRequest(NetworkRequestEdit.Save);
 
   void sendEditorRequest(NetworkRequestEdit request, [dynamic message]) =>
-      network.sendNetworkRequest(
+      server.sendNetworkRequest(
         NetworkRequest.Edit,
         '${request.index} $message',
       );
@@ -683,27 +683,27 @@ class IsometricEditor with IsometricComponent {
       );
 
   void markAdd(int value) =>
-      network.sendArgs2(
+      server.sendArgs2(
         NetworkRequest.Edit,
         NetworkRequestEdit.Mark_Add.index,
         value,
       );
 
   void markDelete() =>
-      network.sendNetworkRequest(
+      server.sendNetworkRequest(
         NetworkRequest.Edit,
         NetworkRequestEdit.Mark_Delete.index,
       );
 
   void selectMarkByIndex(int index) =>
-      network.sendArgs2(
+      server.sendArgs2(
         NetworkRequest.Edit,
         NetworkRequestEdit.Mark_Select.index,
         index,
       );
 
   void onPressedMarkType(int markType) =>
-      network.sendArgs2(
+      server.sendArgs2(
         NetworkRequest.Edit,
         NetworkRequestEdit.Mark_Set_Type.index,
         markType,
@@ -749,7 +749,7 @@ class IsometricEditor with IsometricComponent {
   }
 
   void deleteKeyByName(String name){
-      network.sendNetworkRequest(
+      server.sendNetworkRequest(
           NetworkRequest.Edit,
           NetworkRequestEdit.Delete_Key.index,
           name,
@@ -768,7 +768,7 @@ class IsometricEditor with IsometricComponent {
   }
 
   void moveKeyToIndex({required String name, required int index}) {
-    network.sendNetworkRequest(
+    server.sendNetworkRequest(
       NetworkRequest.Edit,
       NetworkRequestEdit.Move_Key.index,
       '--name $name --index $index',
@@ -776,7 +776,7 @@ class IsometricEditor with IsometricComponent {
   }
 
   void renameKey({required String from, required String to}){
-    network.sendNetworkRequest(
+    server.sendNetworkRequest(
       NetworkRequest.Edit,
       NetworkRequestEdit.Rename_Key.index,
       '--from $from --to $to',
@@ -797,7 +797,7 @@ class IsometricEditor with IsometricComponent {
   }
 
   void deselectMarkIndex() =>
-      network.sendRequest(
+      server.sendRequest(
           NetworkRequest.Edit,
           NetworkRequestEdit.Mark_Deselect_Index.index,
       );

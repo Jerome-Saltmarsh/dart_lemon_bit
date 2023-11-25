@@ -82,10 +82,10 @@ class IsometricOptions with IsometricComponent implements Updatable {
     engine.durationPerUpdate.value = convertFramesPerSecondToDuration(20);
     engine.cursorType.value = CursorType.Basic;
     websocket = WebsocketClient(
-      readString: parser.readServerResponseString,
-      readBytes: parser.parseBytes,
-      onError: network.onNetworkError,
-      onDone: network.onNetworkDone,
+      readString: parser.addString,
+      readBytes: parser.add,
+      onError: onWebsocketNetworkError,
+      onDone: onWebsocketNetworkDone,
     );
 
     websocket.connectionStatus.onChanged(
@@ -275,4 +275,18 @@ class IsometricOptions with IsometricComponent implements Updatable {
   bool get playModeMulti => serverMode.value == ServerMode.remote;
 
   bool get playModeSingle => serverMode.value == ServerMode.local;
+
+  void onWebsocketNetworkError(Object error, StackTrace stack) {
+    if (error.toString().contains('NotAllowedError')){
+      return;
+    }
+    print(error.toString());
+    print(stack);
+    ui.error.value = error.toString();
+  }
+
+  void onWebsocketNetworkDone() {
+    scene.clear();
+    amulet.onNetworkDone();
+  }
 }

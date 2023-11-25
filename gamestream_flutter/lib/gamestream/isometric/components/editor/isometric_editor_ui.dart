@@ -517,7 +517,7 @@ extension IsometricEditorUI on IsometricEditor {
       environment.rainType,
           (int activeRain) => buildIconWeatherControl(
         tooltip: '${RainType.getName(rain)} Rain',
-        action: () => network.sendIsometricRequestWeatherSetRain(rain),
+        action: () => server.sendIsometricRequestWeatherSetRain(rain),
         icon: amulet.ui.buildAtlasIconType(convertRainToIconType(rain)),
         isActive: rain == activeRain,
       ));
@@ -527,7 +527,7 @@ extension IsometricEditorUI on IsometricEditor {
           (int activeLightning) => buildIconWeatherControl(
         tooltip: '${LightningType.getName(lightning)} Lightning',
         action: () =>
-            network.sendIsometricRequestWeatherSetLightning(lightning),
+            server.sendIsometricRequestWeatherSetLightning(lightning),
         icon: amulet.ui.buildAtlasIconType(
             convertLightningToIconType(lightning)),
         isActive: lightning == activeLightning,
@@ -537,7 +537,7 @@ extension IsometricEditorUI on IsometricEditor {
       environment.wind,
           (int activeWindType) => buildIconWeatherControl(
         tooltip: '${WindType.getName(windType)} Wind',
-        action: () => network.sendIsometricRequestWeatherSetWind(windType),
+        action: () => server.sendIsometricRequestWeatherSetWind(windType),
         icon: amulet.ui.buildAtlasIconType(convertWindToIconType(windType)),
         isActive: windType == activeWindType,
       ));
@@ -618,7 +618,7 @@ extension IsometricEditorUI on IsometricEditor {
             child: buildButton(
               width: buttonWidth,
               color: colors.orange_0,
-              action: () => network.sendIsometricRequestTimeSetHour(i),
+              action: () => server.sendIsometricRequestTimeSetHour(i),
             ),
           ),
         );
@@ -630,7 +630,7 @@ extension IsometricEditorUI on IsometricEditor {
             child: buildButton(
               width: buttonWidth,
               color: colors.white10,
-              action: () => network.sendIsometricRequestTimeSetHour(i),
+              action: () => server.sendIsometricRequestTimeSetHour(i),
             ),
           ),
         );
@@ -1221,7 +1221,7 @@ extension IsometricEditorUI on IsometricEditor {
         return WatchBuilder(selectedMarkSubType, (int selectedMarkSubType) =>
             Row(children: FiendType.values.map((fiendType) => onPressed(
               action: () =>
-                  network.sendNetworkRequest(
+                  server.sendNetworkRequest(
                     NetworkRequest.Edit,
                     NetworkRequestEdit.Mark_Set_Sub_Type.index,
                     fiendType.index,
@@ -1700,7 +1700,7 @@ extension IsometricEditorUI on IsometricEditor {
   Widget buildButtonAddKey() => onPressed(
       action: (){
         ui.showDialogGetString(onSelected: (name) {
-          network.sendNetworkRequest(
+          server.sendNetworkRequest(
               NetworkRequest.Edit,
               NetworkRequestEdit.Add_Key.index,
               name,

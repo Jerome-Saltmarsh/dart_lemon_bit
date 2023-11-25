@@ -49,7 +49,7 @@ class User with IsometricComponent {
   }
 
   void playCharacter(String characterId) {
-    network.connectToGame(GameType.Amulet, '--userId ${userId.value} --characterId $characterId');
+    server.connectToGame(GameType.Amulet, '--userId ${userId.value} --characterId $characterId');
   }
 
   void playCharacterCustom({
@@ -60,7 +60,7 @@ class User with IsometricComponent {
     required int gender,
     required int headType,
   }) {
-    network.connectToGame(GameType.Amulet,
+    server.connectToGame(GameType.Amulet,
         '--name $name '
         '--complexion $complexion '
         '--hairType $hairType '

@@ -31,7 +31,7 @@ class IsometricGame extends Game {
   }
 
   void sendIsometricClientRequest([dynamic message]) {
-    network.sendNetworkRequest(NetworkRequest.Isometric, message);
+    server.sendNetworkRequest(NetworkRequest.Isometric, message);
   }
 
   @override
@@ -136,7 +136,7 @@ class IsometricGame extends Game {
     }
 
     if (key == KeyCode.Digit_0) {
-      network.sendIsometricRequestToggleDebugging();
+      server.sendIsometricRequestToggleDebugging();
       return;
     }
 

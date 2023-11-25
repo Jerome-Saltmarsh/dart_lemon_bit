@@ -96,7 +96,7 @@ class IsometricEvents with IsometricComponent {
         onGameEventExplosion(x, y, z);
         return;
       case GameEventType.AI_Target_Acquired:
-        final characterType = network.parser.readByte();
+        final characterType = server.parser.readByte();
         switch (characterType){
           case CharacterType.Fallen:
             audio.play(randomItem(audio.audioSingleZombieTalking), x, y, z);
@@ -189,7 +189,7 @@ class IsometricEvents with IsometricComponent {
       case GameEventType.EnemyTargeted:
         break;
       case GameEventType.Attack_Missed:
-        final attackType = network.parser.readUInt16();
+        final attackType = server.parser.readUInt16();
         switch (attackType) {
           case WeaponType.Unarmed:
             audio.play(audio.arm_swing_whoosh_11, x, y, z);
@@ -222,11 +222,11 @@ class IsometricEvents with IsometricComponent {
         break;
 
       case GameEventType.Character_Death:
-        onCharacterDeath(network.parser.readByte(), x, y, z, angle);
+        onCharacterDeath(server.parser.readByte(), x, y, z, angle);
         return;
 
       case GameEventType.Character_Hurt:
-        onGameEventCharacterHurt(network.parser.readByte(), x, y, z, angle);
+        onGameEventCharacterHurt(server.parser.readByte(), x, y, z, angle);
         return;
 
       case GameEventType.Game_Object_Destroyed:
@@ -235,7 +235,7 @@ class IsometricEvents with IsometricComponent {
             y,
             z,
             angle,
-          network.parser.readUInt16(),
+          server.parser.readUInt16(),
         );
         return;
 
@@ -341,7 +341,7 @@ class IsometricEvents with IsometricComponent {
   }
 
   void onAttackPerformed(double x, double y, double z, double angle) {
-    final attackType = network.parser.readUInt16();
+    final attackType = server.parser.readUInt16();
     final attackTypeAudio = audio.MapItemTypeAudioSinglesAttack[attackType];
 
     if (attackTypeAudio != null) {
@@ -350,7 +350,7 @@ class IsometricEvents with IsometricComponent {
   }
 
   void onMeleeAttackPerformed(double x, double y, double z, double angle) {
-    final attackType = network.parser.readUInt16();
+    final attackType = server.parser.readUInt16();
     final attackTypeAudio = audio.MapItemTypeAudioSinglesAttackMelee[attackType];
 
     if (attackTypeAudio != null) {
@@ -500,7 +500,7 @@ class IsometricEvents with IsometricComponent {
   }
 
   void readPlayerEventItemAcquired() {
-    final itemType = network.parser.readUInt16();
+    final itemType = server.parser.readUInt16();
     // todo read subtype
     if (itemType == WeaponType.Unarmed) return;
 
@@ -587,7 +587,7 @@ class IsometricEvents with IsometricComponent {
 
   void onChangedNetworkConnectionStatus(ConnectionStatus connection) {
     print('isometric.onChangedNetworkConnectionStatus($connection)');
-    network.parser.bufferSize.value = 0;
+    server.parser.bufferSize.value = 0;
     amulet.onChangedNetworkConnectionStatus(connection);
     io.reset();
 

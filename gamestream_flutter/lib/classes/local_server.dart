@@ -1,7 +1,5 @@
 
 
-import 'dart:typed_data';
-
 import 'package:amulet_engine/classes/amulet.dart';
 import 'package:amulet_engine/classes/amulet_controller.dart';
 import 'package:amulet_engine/classes/amulet_player.dart';
@@ -9,7 +7,7 @@ import 'package:gamestream_flutter/classes/amulet_scenes_flutter.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_parser.dart';
 
 
-class LocalServer implements Sink {
+class LocalServer {
 
   var amuletLoaded = false;
 
@@ -34,7 +32,7 @@ class LocalServer implements Sink {
     if (!amuletLoaded){
       return;
     }
-    add(player.compile());
+    parser.add(player.compile());
   }
 
   void send(dynamic data) {
@@ -56,7 +54,7 @@ class LocalServer implements Sink {
       controller = AmuletController(
           player: player,
           isAdmin: true,
-          sink: this,
+          sink: parser,
           handleClientRequestJoin: handleClientRequestJoin,
       );
       controller.playerJoinAmuletTown();
@@ -71,18 +69,6 @@ class LocalServer implements Sink {
 
   void handleClientRequestJoin(List<String> arguments){
 
-  }
-
-  @override
-  void add(data) {
-    if (data is Uint8List) {
-      parser.parseBytes(data);
-    }
-  }
-
-  @override
-  void close() {
-    // TODO: implement close
   }
 }
 

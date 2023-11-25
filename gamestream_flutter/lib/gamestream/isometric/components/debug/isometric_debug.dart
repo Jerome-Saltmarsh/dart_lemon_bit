@@ -221,7 +221,7 @@ class IsometricDebug with IsometricComponent implements Updatable {
     if (tab.value == DebugTab.Particles){
       selectNearestParticleToMouse();
     } else {
-      network.sendIsometricRequestDebugSelect();
+      server.sendIsometricRequestDebugSelect();
     }
   }
 
@@ -244,10 +244,10 @@ class IsometricDebug with IsometricComponent implements Updatable {
     }
 
     if (engine.keyPressedShiftLeft){
-      network.sendIsometricRequestDebugAttack();
+      server.sendIsometricRequestDebugAttack();
       return;
     }
-    network.sendIsometricRequestDebugCommand();
+    server.sendIsometricRequestDebugCommand();
   }
 
   void onKeyPressed(int key){
@@ -263,32 +263,32 @@ class IsometricDebug with IsometricComponent implements Updatable {
   }
 
   void sendIsometricRequestMoveSelectedColliderToMouse() =>
-      network.sendIsometricRequest(
+      server.sendIsometricRequest(
           NetworkRequestIsometric.Move_Selected_Collider_To_Mouse
       );
 
   void sendIsometricRequestDebugCharacterWalkToMouse() =>
-      network.sendIsometricRequest(
+      server.sendIsometricRequest(
           NetworkRequestIsometric.Debug_Character_Walk_To_Mouse
       );
 
   void sendIsometricRequestDebugCharacterToggleAutoAttackNearbyEnemies() =>
-      network.sendIsometricRequest(
+      server.sendIsometricRequest(
           NetworkRequestIsometric.Debug_Character_Toggle_Auto_Attack_Nearby_Enemies
       );
 
   void sendIsometricRequestDebugCharacterTogglePathFindingEnabled() =>
-      network.sendIsometricRequest(
+      server.sendIsometricRequest(
           NetworkRequestIsometric.Debug_Character_Toggle_Path_Finding_Enabled
       );
 
   void sendIsometricRequestDebugCharacterToggleRunToDestination() =>
-      network.sendIsometricRequest(
+      server.sendIsometricRequest(
           NetworkRequestIsometric.Debug_Character_Toggle_Run_To_Destination
       );
 
   void sendIsometricRequestDebugCharacterDebugUpdate() =>
-      network.sendIsometricRequest(
+      server.sendIsometricRequest(
           NetworkRequestIsometric.Debug_Character_Debug_Update
       );
 

@@ -190,7 +190,7 @@ class Amulet extends IsometricGame {
       return;
 
     if (key == KeyCode.Q){
-      network.sendAmuletRequest.toggleInventoryOpen();
+      amulet.toggleInventoryOpen();
       return;
     }
     if (key == KeyCode.W){
@@ -252,7 +252,7 @@ class Amulet extends IsometricGame {
     required ItemSlot src,
     required ItemSlot target,
   }) =>
-    network.sendNetworkRequest(
+    server.sendNetworkRequest(
       NetworkRequest.Inventory_Request,
       '${NetworkRequestInventory.Move.index} '
       '${src.slotType.index} '
@@ -262,7 +262,7 @@ class Amulet extends IsometricGame {
     );
 
   void useItemSlot(ItemSlot itemSlot) =>
-    network.sendNetworkRequest(
+    server.sendNetworkRequest(
       NetworkRequest.Inventory_Request,
       '${NetworkRequestInventory.Use.index} '
       '${itemSlot.slotType.index} '
@@ -270,7 +270,7 @@ class Amulet extends IsometricGame {
     );
 
   void dropItemSlot(ItemSlot itemSlot) =>
-    network.sendNetworkRequest(
+    server.sendNetworkRequest(
       NetworkRequest.Inventory_Request,
       '${NetworkRequestInventory.Drop.index} '
       '${itemSlot.slotType.index} '
@@ -278,16 +278,16 @@ class Amulet extends IsometricGame {
     );
 
   void selectWeapon(int index) =>
-      network.sendAmuletRequest.sendAmuletRequest(NetworkRequestAmulet.Select_Weapon, index);
+      sendAmuletRequest(NetworkRequestAmulet.Select_Weapon, index);
 
   void selectItem(int index) =>
-      network.sendAmuletRequest.sendAmuletRequest(NetworkRequestAmulet.Select_Item, index);
+      sendAmuletRequest(NetworkRequestAmulet.Select_Item, index);
 
   void selectTreasure(int index) =>
-      network.sendAmuletRequest.sendAmuletRequest(NetworkRequestAmulet.Select_Treasure, index);
+      sendAmuletRequest(NetworkRequestAmulet.Select_Treasure, index);
 
   void spawnRandomEnemy() =>
-      network.sendNetworkRequestAmulet(
+      server.sendNetworkRequestAmulet(
         NetworkRequestAmulet.Spawn_Random_Enemy,
       );
 
@@ -299,13 +299,13 @@ class Amulet extends IsometricGame {
       };
 
   void upgradeAmuletElement(AmuletElement amuletElement) =>
-      network.sendNetworkRequestAmulet(
+      server.sendNetworkRequestAmulet(
         NetworkRequestAmulet.Upgrade_Element,
         amuletElement.index,
       );
 
   void requestAcquireAmuletItem(AmuletItem amuletItem) {
-    network.sendNetworkRequestAmulet(
+    server.sendNetworkRequestAmulet(
       NetworkRequestAmulet.Acquire_Amulet_Item,
       '--index ${amuletItem.index}',
     );
@@ -319,13 +319,13 @@ class Amulet extends IsometricGame {
     );
 
   void toggleInventoryOpen() =>
-      network.sendNetworkRequest(
+      server.sendNetworkRequest(
           NetworkRequest.Amulet,
           NetworkRequestAmulet.Toggle_Inventory_Open.index,
       );
 
   void setInventoryOpen(bool value) =>
-      network.sendNetworkRequest(
+      server.sendNetworkRequest(
           NetworkRequest.Amulet,
           '--inventory',
           value
@@ -349,7 +349,7 @@ class Amulet extends IsometricGame {
   }
 
   void endInteraction() {
-    network.sendNetworkRequest(
+    server.sendNetworkRequest(
         NetworkRequest.Amulet,
         NetworkRequestAmulet.End_Interaction.index,
     );
@@ -406,13 +406,13 @@ class Amulet extends IsometricGame {
   }
 
   void requestGainLevel() =>
-      network.sendNetworkRequest(
+      server.sendNetworkRequest(
           NetworkRequest.Amulet,
           NetworkRequestAmulet.Gain_Level.index,
       );
 
   void requestReset() =>
-      network.sendNetworkRequest(
+      server.sendNetworkRequest(
           NetworkRequest.Amulet,
           NetworkRequestAmulet.Reset.index,
       );
@@ -524,4 +524,13 @@ class Amulet extends IsometricGame {
     // if (worldMapKey.)
     // worldMapFrame.value++;
   }
+
+  void selectTalkOption(int index) =>
+      sendAmuletRequest(NetworkRequestAmulet.Select_Talk_Option, index);
+
+  void sendAmuletRequest(NetworkRequestAmulet request, [dynamic message]) =>
+      server.sendNetworkRequest(
+          NetworkRequest.Amulet,
+          '${request.index} $message'
+      );
 }

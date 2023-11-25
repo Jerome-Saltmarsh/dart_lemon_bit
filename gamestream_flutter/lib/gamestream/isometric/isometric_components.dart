@@ -148,7 +148,7 @@ class IsometricComponents extends ComponentContainer {
       component.rendererProjectiles = rendererProjectiles;
       component.rendererGameObjects = rendererGameObjects;
       component.rendererEditor = rendererEditor;
-      component.network = network;
+      component.server = network;
       component.player = player;
       component.audio = audio;
       component.particles = particles;

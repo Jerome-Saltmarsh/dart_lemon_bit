@@ -92,7 +92,7 @@ extension isometricDebugUI on IsometricDebug {
         value: debugCharacterType,
         onChanged: (int? newValue) {
           if (newValue == null) return;
-          network.sendIsometricRequestDebugCharacterSetCharacterType(newValue);
+          server.sendIsometricRequestDebugCharacterSetCharacterType(newValue);
         },
         items: CharacterType.values.map((int characterType) => DropdownMenuItem<int>(
           value: characterType,
@@ -109,7 +109,7 @@ extension isometricDebugUI on IsometricDebug {
         value: weaponType,
         onChanged: (int? newValue) {
           if (newValue == null) return;
-          network.sendIsometricRequestDebugCharacterSetWeaponType(newValue);
+          server.sendIsometricRequestDebugCharacterSetWeaponType(newValue);
         },
         items: WeaponType.values.map((int weaponType) => DropdownMenuItem<int>(
           value: weaponType,
@@ -133,11 +133,11 @@ extension isometricDebugUI on IsometricDebug {
               'connection-duration: ${formattedConnectionDuration}\n'
           )),
           buildText('network-server-fps: $serverFPS'),
-          buildWatch(network.parser.bufferSize, (int bytes) => buildText('network-bytes: $bytes')),
-          buildWatch(network.parser.bufferSize, (int bytes) => buildText('network-bytes-per-frame: ${formatBytes(bytes)}')),
-          buildWatch(network.parser.bufferSize, (int bytes) => buildText('network-bytes-per-second: ${formatBytes(bytes * serverFPS)}')),
-          buildWatch(network.parser.bufferSize, (int bytes) => buildText('network-bytes-per-minute: ${formatBytes(bytes * serverFPS * 60)}')),
-          buildWatch(network.parser.bufferSize, (int bytes) => buildText('network-bytes-per-hour: ${formatBytes(bytes * serverFPS * 60 * 60)}')),
+          buildWatch(server.parser.bufferSize, (int bytes) => buildText('network-bytes: $bytes')),
+          buildWatch(server.parser.bufferSize, (int bytes) => buildText('network-bytes-per-frame: ${formatBytes(bytes)}')),
+          buildWatch(server.parser.bufferSize, (int bytes) => buildText('network-bytes-per-second: ${formatBytes(bytes * serverFPS)}')),
+          buildWatch(server.parser.bufferSize, (int bytes) => buildText('network-bytes-per-minute: ${formatBytes(bytes * serverFPS * 60)}')),
+          buildWatch(server.parser.bufferSize, (int bytes) => buildText('network-bytes-per-hour: ${formatBytes(bytes * serverFPS * 60 * 60)}')),
           height8,
           buildWatch(io.updateSize, (int bytes) => buildText('network-bytes-up: $bytes')),
           buildWatch(io.updateSize, (int bytes) => buildText('network-bytes-up-per-hour: ${formatBytes(bytes * serverFPS * 60 * 60)}')),
@@ -257,7 +257,7 @@ extension isometricDebugUI on IsometricDebug {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: scene.gameObjects
               .map((gameObject) => onPressed(
-                action: () => network.sendIsometricRequestSelectGameObject(gameObject),
+                action: () => server.sendIsometricRequestSelectGameObject(gameObject),
                 child: buildText(
                     '${ItemType.getName(gameObject.type)} - ${ItemType.getNameSubType(gameObject.type, gameObject.subType)}'),
               ))
@@ -758,7 +758,7 @@ extension isometricDebugUI on IsometricDebug {
 
   void selectCharacterComplexion() =>
       ui.showDialogGetColor(
-        onSelected: (index) => network.sendRequest(
+        onSelected: (index) => server.sendRequest(
           NetworkRequest.Debug,
           NetworkRequestDebug.Set_Complexion,
           index,
@@ -774,7 +774,7 @@ extension isometricDebugUI on IsometricDebug {
           buildWatch(amulet.amuletScene, (activeAmuletScene) => Column(
               children: AmuletScene.values.map((amuletScene) => onPressed(
                 action: () =>
-                    network.sendNetworkRequest(
+                    server.sendNetworkRequest(
                       NetworkRequest.Amulet,
                       NetworkRequestAmulet.Player_Change_Game.index,
                       amuletScene.index,

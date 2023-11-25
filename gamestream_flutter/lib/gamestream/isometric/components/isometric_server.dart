@@ -6,33 +6,7 @@ import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/packages/lemon_websocket_client.dart';
 import 'package:gamestream_flutter/types/server_mode.dart';
 
-import 'classes/send_amulet_request.dart';
-
 class IsometricServer with IsometricComponent {
-
-  late final SendAmuletRequest sendAmuletRequest;
-
-  IsometricServer(){
-    sendAmuletRequest = SendAmuletRequest(this);
-  }
-
-  void onNetworkDone(){
-    this.player.onNetworkDone();
-  }
-
-  void onNetworkError(Object error, StackTrace stack) {
-    if (error.toString().contains('NotAllowedError')){
-      // https://developer.chrome.com/blog/autoplay/
-      // This error appears when the game attempts to fullscreen
-      // without the user having interacted first
-      // TODO dispatch event on fullscreen failed
-      // onErrorFullscreenAuto();
-      return;
-    }
-    print(error.toString());
-    print(stack);
-    ui.error.value = error.toString();
-  }
 
   void sendIsometricRequestRevive() =>
       sendIsometricRequest(NetworkRequestIsometric.Revive);

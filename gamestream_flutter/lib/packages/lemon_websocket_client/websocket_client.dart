@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:typed_data';
 import 'package:lemon_watch/src.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -12,7 +11,7 @@ class WebsocketClient {
   Function(Uint8List values) readBytes;
 
   late WebSocketChannel webSocketChannel;
-  late StreamSink sink;
+  late Sink sink;
 
   final Function(Object error, StackTrace stack) onError;
   final Function()? onDone;

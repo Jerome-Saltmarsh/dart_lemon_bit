@@ -148,21 +148,21 @@ class IsometricEnvironment with IsometricComponent {
   }
 
   void setMystType(int mystType) =>
-      network.sendArgs2(
+      server.sendArgs2(
           NetworkRequest.Environment_Request,
           NetworkRequestEnvironment.Set_Myst,
           mystType,
       );
 
   void requestLightningFlash() {
-    network.sendNetworkRequest(
+    server.sendNetworkRequest(
       NetworkRequest.Environment_Request,
       NetworkRequestEnvironment.Lightning_Flash,
     );
   }
 
   void setLightningType(int lightningType) =>
-    network.sendArgs2(
+    server.sendArgs2(
       NetworkRequest.Environment_Request,
       NetworkRequestEnvironment.Set_Lightning,
       lightningType,

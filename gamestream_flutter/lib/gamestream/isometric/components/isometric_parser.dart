@@ -15,11 +15,12 @@ import 'package:lemon_widgets/lemon_widgets.dart';
 import 'isometric_component.dart';
 
 
-class IsometricParser with ByteReader, IsometricComponent {
+class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8List>{
   final bufferSize = Watch(0);
   final decoder = ZLibDecoder();
 
-  void parseBytes(Uint8List bytes) {
+  @override
+  void add(Uint8List bytes) {
     index = 0;
     values = bytes;
     bufferSize.value = bytes.length;
@@ -40,7 +41,7 @@ class IsometricParser with ByteReader, IsometricComponent {
     }
   }
 
-  void readServerResponseString(String response){
+  void addString(String message){
 
   }
 
@@ -737,5 +738,10 @@ class IsometricParser with ByteReader, IsometricComponent {
       default:
         throw Exception('invalid readNetworkResponseOptions()');
     }
+  }
+
+  @override
+  void close() {
+    // TODO: implement close
   }
 }

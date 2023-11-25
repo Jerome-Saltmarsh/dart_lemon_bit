@@ -172,8 +172,8 @@ class AmuletUI {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: npcOptions
                 .map((option) => onPressed(
-                    action: () => amulet.network.sendAmuletRequest
-                        .selectTalkOption(npcOptions.indexOf(option)),
+                    action: () =>
+                        amulet.selectTalkOption(npcOptions.indexOf(option)),
                     child: buildText(option)))
                 .toList(growable: false)),
       );
@@ -641,7 +641,7 @@ class AmuletUI {
     );
 
     return onPressed(
-        action: amulet.network.sendAmuletRequest.toggleInventoryOpen,
+        action: amulet.toggleInventoryOpen,
         child: Stack(
           alignment: Alignment.center,
           children: [
@@ -687,7 +687,7 @@ class AmuletUI {
                   margin: const EdgeInsets.only(left: 5),
                   child: buildDialogTitle('EQUIPPED')),
               buildButtonClose(
-                  action: amulet.network.sendAmuletRequest.toggleInventoryOpen),
+                  action: amulet.toggleInventoryOpen),
             ],
           ),
           height32,
