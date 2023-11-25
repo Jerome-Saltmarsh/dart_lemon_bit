@@ -255,4 +255,8 @@ class IsometricOptions with IsometricComponent implements Updatable {
     cameraPlay.y = player.y;
     cameraPlay.z = player.z;
   }
+
+  bool get playModeMulti => playMode.value == PlayMode.multi;
+
+  bool get playModeSingle => playMode.value == PlayMode.single;
 }

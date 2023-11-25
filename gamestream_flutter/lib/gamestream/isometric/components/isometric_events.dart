@@ -589,37 +589,15 @@ class IsometricEvents with IsometricComponent {
     print('isometric.onChangedNetworkConnectionStatus($connection)');
     network.parser.bufferSize.value = 0;
     amulet.onChangedNetworkConnectionStatus(connection);
-    options.activateCameraPlay();
     io.reset();
 
     switch (connection) {
       case ConnectionStatus.Connected:
-        options.game.value = options.amulet;
-        options.setModePlay();
-        engine.zoomOnScroll = true;
-        engine.zoom = 1.0;
-        engine.targetZoom = 1.0;
-        audio.enabledSound.value = true;
-        camera.target = options.cameraPlay;
-        if (!engine.isLocalHost) {
-          engine.fullScreenEnter();
-        }
+        onConnected();
         break;
 
       case ConnectionStatus.Done:
-        options.game.value = options.website;
-        engine.cameraX = 0;
-        engine.cameraY = 0;
-        engine.zoom = 1.0;
-        engine.drawCanvasAfterUpdate = true;
-        engine.cursorType.value = CursorType.Basic;
-        engine.fullScreenExit();
-        player.active.value = false;
-        actions.clear();
-        actions.clean();
-        scene.gameObjects.clear();
-        scene.editEnabled.value = false;
-        audio.enabledSound.value = false;
+        onConnectionDone();
         break;
       case ConnectionStatus.Failed_To_Connect:
         ui.error.value = 'Failed to connect';
@@ -633,6 +611,36 @@ class IsometricEvents with IsometricComponent {
         break;
       default:
         break;
+    }
+  }
+
+  void onConnectionDone() {
+    options.game.value = options.website;
+    engine.cameraX = 0;
+    engine.cameraY = 0;
+    engine.zoom = 1.0;
+    engine.drawCanvasAfterUpdate = true;
+    engine.cursorType.value = CursorType.Basic;
+    engine.fullScreenExit();
+    player.active.value = false;
+    actions.clear();
+    actions.clean();
+    scene.gameObjects.clear();
+    scene.editEnabled.value = false;
+    audio.enabledSound.value = false;
+  }
+
+  void onConnected() {
+    options.game.value = options.amulet;
+    options.setModePlay();
+    options.activateCameraPlay();
+    engine.zoomOnScroll = true;
+    engine.zoom = 1.0;
+    engine.targetZoom = 1.0;
+    audio.enabledSound.value = true;
+    camera.target = options.cameraPlay;
+    if (!engine.isLocalHost) {
+      engine.fullScreenEnter();
     }
   }
 

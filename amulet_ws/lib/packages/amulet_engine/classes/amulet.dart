@@ -1,9 +1,9 @@
 
 
 import 'dart:async';
-import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:archive/archive.dart';
 
 import '../packages/isometric_engine/packages/common/src/duration_auto_save.dart';
 import '../packages/src.dart';
@@ -41,16 +41,12 @@ class Amulet {
   final amuletTime = IsometricTime();
   final amuletEnvironment = IsometricEnvironment();
   final games = <AmuletGame>[];
+  final AmuletScenes scenes;
 
   final Function onFixedUpdate;
 
   final bool isLocalMachine;
 
-  late final scenes = Scenes(
-    sceneDirectoryPath: isLocalMachine
-        ? '${Directory.current.path}/scenes'
-        : '/app/bin/scenes'
-  );
   var _updateTimerInitialized = false;
 
   late final Timer updateTimer;
@@ -74,6 +70,7 @@ class Amulet {
   Amulet({
     required this.onFixedUpdate,
     required this.isLocalMachine,
+    required this.scenes,
   });
 
   Future construct() async {
@@ -104,16 +101,6 @@ class Amulet {
       }
     }
     throw Exception('amulet.getAmuletSceneGame("$scene")');
-  }
-
-  void validate() async {
-
-    final sceneDirectoryExists = await scenes.sceneDirectory.exists();
-
-    if (!sceneDirectoryExists) {
-      throw Exception('could not find scenes directory: ${scenes
-          .sceneDirectoryPath}');
-    }
   }
 
   void _initializeGames() {
@@ -345,8 +332,9 @@ class Amulet {
   }
 
   void _compileWorldMapBytes() {
+    print('amulet.compileWorldMapBytes()');
     final byteWriter = ByteWriter();
-    final compressor = ZLibCodec();
+    final compressor = ZLibEncoder();
     for (var game in worldMap) {
       final flatNodes = game.flatNodes;
       byteWriter.writeUInt24(flatNodes.length);

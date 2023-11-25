@@ -3,6 +3,7 @@ import 'dart:io';
 
 import '../packages/src.dart';
 import 'connection.dart';
+import 'scenes_ws.dart';
 import 'server.dart';
 import 'package:amulet_ws/packages/amulet_engine/classes/amulet.dart';
 import 'package:amulet_ws/user_service/user_service.dart';
@@ -24,6 +25,11 @@ class Root {
     amulet = Amulet(
       onFixedUpdate: onFixedUpdate,
       isLocalMachine: isLocalMachine,
+      scenes: AmuletScenesIO(
+          sceneDirectoryPath: isLocalMachine
+              ? '${Directory.current.path}/scenes'
+              : '/app/bin/scenes'
+      )
     );
     _construct();
   }

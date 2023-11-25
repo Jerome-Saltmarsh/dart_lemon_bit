@@ -16,4 +16,4 @@ export 'scene.dart';
 export 'scene_generator.dart';
 export 'scene_reader.dart';
 export 'scene_writer.dart';
-export 'scenes.dart';
+export '../../../classes/amulet_scenes.dart';

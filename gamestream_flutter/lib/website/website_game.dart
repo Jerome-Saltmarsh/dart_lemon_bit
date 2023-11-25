@@ -1,15 +1,14 @@
 
-import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_src_icon_type.dart';
-import 'package:gamestream_flutter/packages/common.dart';
-import 'package:gamestream_flutter/website/widgets/gs_fullscreen.dart';
-import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/functions/validate_atlases.dart';
 import 'package:gamestream_flutter/gamestream/game.dart';
-import 'package:gamestream_flutter/website/website_ui.dart';
-import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas.dart';
 import 'package:gamestream_flutter/gamestream/operation_status.dart';
 import 'package:gamestream_flutter/gamestream/ui/src.dart';
+import 'package:gamestream_flutter/packages/common.dart';
+import 'package:gamestream_flutter/website/website_ui.dart';
+import 'package:gamestream_flutter/website/widgets/gs_fullscreen.dart';
 import 'package:intl/intl.dart';
+import 'package:lemon_watch/src.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'enums/website_dialog.dart';
@@ -34,35 +33,7 @@ class WebsiteGame extends Game {
   late final visitCount = Watch(0, onChanged: onChangedVisitCount);
 
   @override
-  void onComponentReady() {
-    print('isometric.website.onComponentsInitialized()');
-    validateAtlases();
-  }
-
-  void validateAtlases(){
-
-    for (final iconType in IconType.values){
-       if (!atlasSrcIconType.containsKey(iconType)){
-         print('validation: "atlasSrcIconType does not contain $iconType"');
-       }
-    }
-
-    for (final entry in ItemType.collections.entries){
-      final type = entry.key;
-      final values = entry.value;
-      final atlas = Atlas.SrcCollection[type];
-      if (atlas == null) {
-        print('validation: "missing atlas ${ItemType.getName(type)}"');
-        continue;
-      }
-      for (final value in values){
-        if (!atlas.containsKey(value)){
-          print('validation: "missing atlas src for ${ItemType.getName(type)} ${ItemType.getNameSubType(type, value)}"');
-        }
-      }
-    }
-  }
-
+  void onComponentReady() => validateAtlases();
 
   @override
   void onActivated() {

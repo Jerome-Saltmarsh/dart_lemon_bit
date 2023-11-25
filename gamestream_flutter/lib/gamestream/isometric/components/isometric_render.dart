@@ -17,11 +17,13 @@ class IsometricRender with IsometricComponent {
 
   var renderAimTargetName = false;
   var drawCanvasEnabled = true;
+  var _initialized = false;
 
   late final List<Sprite> _flames ;
 
   @override
   void onComponentReady() {
+    _initialized = true;
     _flames = [
       images.flame0,
       images.flame1,
@@ -99,7 +101,11 @@ class IsometricRender with IsometricComponent {
 
   void drawCanvas(Canvas canvas, Size size) {
 
-    if (!network.websocket.connected) {
+    if (!_initialized){
+      return;
+    }
+
+    if (options.playModeMulti && !network.websocket.connected) {
       images.cacheImages();
       return;
     }
@@ -726,14 +732,12 @@ class IsometricRender with IsometricComponent {
   }
 
   void renderWind() {
-
     final player = this.player;
     final scene = this.scene;
     final playerIndex = player.nodeIndex;
     final playerRow = player.indexRow;
     final playerColumn = player.indexColumn;
     final playerZ = player.indexZ;
-
     final windIndexes = particles.windIndexes;
 
     if (windIndexes.isEmpty){

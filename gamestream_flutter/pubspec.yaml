@@ -53,6 +53,7 @@ flutter:
       fonts:
         - asset: fonts/REBUFFED.TTF
   assets:
+    - scenes/
     - images/
     - images/sphere/
     - images/sprites/

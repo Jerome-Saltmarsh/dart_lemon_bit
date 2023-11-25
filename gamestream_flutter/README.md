@@ -1,6 +1,8 @@
 [INSTALL]
 mklink /J "C:\Users\Jerome\github\bleed\gamestream_flutter\lib\packages\common" "C:\Users\Jerome\github\bleed\isometric_common\lib"
 
+mklink /J "C:\Users\Jerome\github\bleed\gamestream_flutter\scenes" "C:\Users\Jerome\github\bleed\amulet_ws\scenes"
+
 [COMMANDS]
 flutter build web --web-renderer canvaskit --release
 firebase deploy

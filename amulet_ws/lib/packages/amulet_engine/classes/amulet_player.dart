@@ -1960,6 +1960,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   }
 
   void writeWorldMapBytes(){
+    print("amuletPlayer.writeWorldMapBytes()");
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.World_Map_Bytes);
     writeByte(amulet.worldRows);

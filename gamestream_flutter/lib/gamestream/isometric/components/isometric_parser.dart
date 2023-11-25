@@ -1,5 +1,3 @@
-
-
 import 'dart:typed_data';
 import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:gamestream_flutter/packages/common.dart';

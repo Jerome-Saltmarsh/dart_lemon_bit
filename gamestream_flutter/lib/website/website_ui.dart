@@ -8,6 +8,7 @@ import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/packages/common/src/duration_auto_save.dart';
 import 'package:gamestream_flutter/packages/common/src/game_type.dart';
 import 'package:gamestream_flutter/packages/lemon_websocket_client.dart';
+import 'package:gamestream_flutter/types/play_mode.dart';
 import 'package:gamestream_flutter/website/enums/website_page.dart';
 import 'package:gamestream_flutter/website/functions/build_website_page_select_region.dart';
 import 'package:gamestream_flutter/website/website_game.dart';
@@ -23,16 +24,61 @@ import 'widgets/dialog_create_character_computer.dart';
 extension WebsiteUI on WebsiteGame {
 
   Widget buildPageWebsiteDesktop() =>
-      WatchBuilder(websitePage, (websitePage) =>
-        switch (websitePage) {
-          WebsitePage.User => buildWebsitePageUser(),
-          WebsitePage.New_Character => DialogCreateCharacterComputer(),
-          WebsitePage.Select_Region => buildWebsitePageSelectRegion(
-              options: options,
-              website: website,
-              engine: engine,
+      buildWatchPlayMode();
+
+  Widget buildWatchPlayMode() =>
+      WatchBuilder(
+      options.playMode,
+      (PlayMode playMode) => playMode == PlayMode.single
+          ? buildGameModeSinglePlayer()
+          : buildGameModeMultiPlayer());
+
+  Widget buildGameModeSinglePlayer(){
+    return Column(
+      children: [
+        buildTogglePlayMode(),
+        onPressed(
+          action: options.singlePlayer.playerJoin,
+          child: buildText('NEW CHARACTER'),
+        ),
+      ],
+    );
+  }
+
+  Widget buildTogglePlayMode() {
+    return WatchBuilder(options.playMode, (activePlayMode) {
+      return Row(
+        children: PlayMode.values.map((playMode) {
+          return onPressed(
+            action: () => options.playMode.value = playMode,
+            child: Container(
+              alignment: Alignment.center,
+              width: 80,
+              height: 50,
+              color: activePlayMode == playMode ? Colors.green : Colors.green.withOpacity(0.5),
+              child: buildText(
+                  playMode.name,
+              ),
             ),
-        });
+          );
+        }).toList(growable: false),
+      );
+    });
+  }
+
+  Widget buildGameModeMultiPlayer(){
+    return WatchBuilder(websitePage, (websitePage) =>
+    switch (websitePage) {
+      WebsitePage.User => buildWebsitePageUser(),
+      WebsitePage.New_Character => DialogCreateCharacterComputer(),
+      WebsitePage.Select_Region =>
+          buildWebsitePageSelectRegion(
+            options: options,
+            website: website,
+            engine: engine,
+          ),
+    });
+  }
 
   void downloadImageTest(){
     final width = 100;
@@ -118,6 +164,7 @@ extension WebsiteUI on WebsiteGame {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          buildTogglePlayMode(),
           buildText('AMULET', size: 80, family: 'REBUFFED'),
           height32,
           buildContainerAuthentication(),

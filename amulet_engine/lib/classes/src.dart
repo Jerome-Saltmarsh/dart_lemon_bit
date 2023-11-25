@@ -10,4 +10,5 @@ export 'amulet_item_slot.dart';
 export 'amulet_npc.dart';
 export 'amulet_player.dart';
 export 'amulet_player_script.dart';
+export 'amulet_scenes.dart';
 export 'talk_option.dart';

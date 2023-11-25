@@ -1,31 +1,19 @@
+
+
 import 'dart:io';
 
-import '../isometric_engine.dart';
+import 'package:amulet_ws/packages/amulet_engine/packages/isometric_engine/packages/lemon_io/src/write_string_to_file.dart';
 
+import '../packages/amulet_engine/packages/isometric_engine/classes/src.dart';
+import '../packages/amulet_engine/packages/isometric_engine/packages/lemon_io/src/filename_remove_extension.dart';
+import '../packages/amulet_engine/packages/isometric_engine/packages/lemon_io/src/get_file_system_entity_filename.dart';
 
-class Scenes {
-
-  // String get sceneDirectoryPath =>  isLocalMachine ? '${Directory.current.path}/scenes' : '/app/bin/scenes';
+class AmuletScenesIO extends AmuletScenes {
   final String sceneDirectoryPath;
   late final sceneDirectory = Directory(sceneDirectoryPath);
 
-  late Scene captureTheFlag;
-  late Scene moba;
-  late Scene mmoTown;
-  late Scene road01;
-  late Scene road02;
-  late Scene tutorial;
-  late Scene tutorial02;
+  AmuletScenesIO({required this.sceneDirectoryPath});
 
-  Scenes({required this.sceneDirectoryPath});
-
-  Future load() async {
-      mmoTown = await readSceneFromFile('mmo');
-      road01 = await readSceneFromFile('road_01');
-      road02 = await readSceneFromFile('road_02');
-      tutorial = await readSceneFromFile('tutorial');
-      tutorial02 = await readSceneFromFile('tutorial_02');
-  }
 
   Future<Scene> readSceneFromFile(String sceneName) async {
     final fileName = '$sceneDirectoryPath/$sceneName.scene';

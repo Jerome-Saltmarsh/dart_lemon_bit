@@ -1,5 +1,6 @@
-import 'dart:io';
 import 'dart:typed_data';
+
+import 'package:archive/archive.dart';
 
 import '../isometric_engine.dart';
 
@@ -145,14 +146,15 @@ class SceneReader extends ByteReader {
     final compressedNodeOrientationLength = readUInt24();
     final compressedNodeTypes = readUint8List(compressedNodeTypeLength);
     final compressedNodeOrientations = readUint8List(
-        compressedNodeOrientationLength);
-    nodeTypes = Uint8List.fromList(decoder.convert(compressedNodeTypes));
-    nodeOrientations = Uint8List.fromList(decoder.convert(compressedNodeOrientations));
+        compressedNodeOrientationLength
+    );
+    nodeTypes = Uint8List.fromList(decoder.decodeBytes(compressedNodeTypes));
+    nodeOrientations = Uint8List.fromList(decoder.decodeBytes(compressedNodeOrientations));
   }
 
   void readVariations(){
     final length = readUInt24();
     final compressedValues = readUint8List(length);
-    variations = Uint8List.fromList(decoder.convert(compressedValues));
+    variations = Uint8List.fromList(decoder.decodeBytes(compressedValues));
   }
 }
