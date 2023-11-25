@@ -1,6 +1,6 @@
 
 import 'package:amulet_ws/classes/root.dart';
-import 'package:amulet_ws/packages/utils/args.dart';
+import 'package:amulet_ws/packages/amulet_engine/utils/args.dart';
 import 'package:amulet_ws/user_service/user_service.dart';
 import 'package:amulet_ws/user_service/user_service_firebase.dart';
 import 'package:amulet_ws/user_service/user_service_http.dart';

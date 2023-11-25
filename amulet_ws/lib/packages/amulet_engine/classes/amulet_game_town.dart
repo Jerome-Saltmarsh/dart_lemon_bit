@@ -78,17 +78,6 @@ class AmuletGameTown extends AmuletGame {
   }
 
   @override
-  AmuletPlayer buildPlayer() => AmuletPlayer(
-    amuletGame: this,
-    itemLength: 6,
-    x: playerSpawnX,
-    y: playerSpawnY,
-    z: playerSpawnZ,
-  )..level = 1
-    ..experience = 0
-    ..complexion = ComplexionType.fair;
-
-  @override
   void revive(AmuletPlayer player) {
     super.revive(player);
     movePlayerToSpawnPoint(player);

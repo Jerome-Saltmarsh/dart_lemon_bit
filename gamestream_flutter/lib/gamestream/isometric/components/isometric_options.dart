@@ -1,5 +1,6 @@
 
 import 'package:gamestream_flutter/amulet/amulet.dart';
+import 'package:gamestream_flutter/classes/single_player.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/mode.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/packages/common.dart';
@@ -60,6 +61,10 @@ class IsometricOptions with IsometricComponent implements Updatable {
   final gameError = Watch<GameError?>(null);
   late final Watch<Game> game;
 
+  late final singlePlayer = SinglePlayer(
+    parser: parser,
+    network: network,
+  );
 
   IsometricOptions(){
     mode.onChanged(onChangedMode);
@@ -190,9 +195,9 @@ class IsometricOptions with IsometricComponent implements Updatable {
 
   void onComponentUpdate() {
 
-
-
     game.value.update();
+
+    singlePlayer.update();
 
     if (cameraPlayFollowPlayer){
       cameraPlay.copy(player.position);

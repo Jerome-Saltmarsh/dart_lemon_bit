@@ -43,15 +43,5 @@ class IsometricEditor extends IsometricGame {
   }
 
   @override
-  IsometricPlayer buildPlayer() => IsometricPlayer(
-      game: this,
-      x: 500,
-      y: 500,
-      z: 50,
-      health: 100,
-      team: TeamType.Alone,
-  );
-
-  @override
   int get maxPlayers => 1;
 }

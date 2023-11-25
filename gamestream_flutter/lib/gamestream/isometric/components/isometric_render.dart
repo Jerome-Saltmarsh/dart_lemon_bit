@@ -40,6 +40,7 @@ class IsometricRender with IsometricComponent {
     double anchorX = 0.5,
     double anchorY = 0.5,
   }){
+    final engine = this.engine;
     engine.setBlendModeModulate();
     this.sprite(
       sprite: sprite,

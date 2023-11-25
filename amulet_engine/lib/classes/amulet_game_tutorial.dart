@@ -110,6 +110,7 @@ class AmuletGameTutorial extends AmuletGame {
     }
 
     movePlayerToSpawnPoint(player);
+    print("player.objective(${getObjective(player)})");
 
     switch (getObjective(player)){
       case TutorialObjective.Acquire_Sword:

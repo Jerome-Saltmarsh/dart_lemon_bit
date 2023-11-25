@@ -44,7 +44,6 @@ class Server {
     print("Connection Added. Current Connections: ${connections.length}, Total Connections: $connectionsTotal");
   }
 
-
   void startWebsocketServer({required int port}){
     print("nerve.startWebsocketServer(port: $port)");
     final handler = webSocketHandler(
@@ -69,7 +68,7 @@ class Server {
   void sendResponseToClients(){
     final connections = this.connections;
     for (final connection in connections) {
-      connection.sendBufferToClient();
+      connection.controller.compileAndSendPlayerBuffer();
     }
   }
 }

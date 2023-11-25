@@ -589,12 +589,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   //   character.attack();
   // }
 
-  @override
-  AmuletPlayer buildPlayer() {
-    // TODO: implement buildPlayer
-    throw UnimplementedError();
-  }
-
   void endPlayerInteraction(AmuletPlayer player) =>
       player.endInteraction();
 
@@ -674,6 +668,84 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     player.x = 1000;
     player.y = 1000;
     player.z = 300.0;
+  }
+
+  @override
+  void onPlayerUpdateRequestReceived({
+    required AmuletPlayer player,
+    required int direction,
+    required bool mouseLeftDown,
+    required bool mouseRightDown,
+    required bool keySpaceDown,
+    required bool keyDownShift
+  }) {
+
+    if (
+    player.deadOrBusy ||
+        !player.active ||
+        player.debugging ||
+        !player.controlsEnabled
+    ) return;
+
+
+    final mouseLeftClicked = mouseLeftDown && player.mouseLeftDownDuration == 0;
+    final mouseRightClicked = mouseRightDown && player.mouseRightDownDuration == 0;
+
+    if (mouseRightDown){
+      player.mouseRightDownDuration++;
+    } else {
+      player.mouseRightDownDuration = 0;
+    }
+
+    if (mouseRightClicked){
+      if (player.activatedPowerIndex == -1){
+        player.performForceAttack();
+        return;
+      } else {
+        player.deselectActivatedPower();
+      }
+
+      return;
+    }
+
+    if (keyDownShift){
+      player.setCharacterStateIdle();
+    }
+
+    if (mouseLeftDown) {
+      player.mouseLeftDownDuration++;
+    } else {
+      player.mouseLeftDownDuration = 0;
+      player.mouseLeftDownIgnore = false;
+    }
+
+    if (mouseLeftClicked && player.activatedPowerIndex != -1) {
+      player.useActivatedPower();
+      player.mouseLeftDownIgnore = true;
+      return;
+    }
+
+    if (mouseLeftDown && !player.mouseLeftDownIgnore) {
+      final aimTarget = player.aimTarget;
+
+      if (aimTarget == null || (player.isEnemy(aimTarget) && !player.controlsCanTargetEnemies)){
+        if (keyDownShift){
+          player.performForceAttack();
+          return;
+        } else {
+          player.setDestinationToMouse();
+          player.runToDestinationEnabled = true;
+          player.pathFindingEnabled = false;
+          player.target = null;
+        }
+      } else if (mouseLeftClicked) {
+        player.target = aimTarget;
+        player.runToDestinationEnabled = true;
+        player.pathFindingEnabled = false;
+        player.mouseLeftDownIgnore = true;
+      }
+      return;
+    }
   }
 
 }

@@ -1,9 +1,0 @@
-
-class AmuletCore {
-
-
-
-  void playerStartTutorial(){
-    
-  }
-}

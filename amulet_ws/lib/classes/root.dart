@@ -45,11 +45,12 @@ class Root {
         ? "Jerome's Computer" : "Google Cloud"}");
   }
 
+  // TODO
   void applyAutoSave(_){
     print('nerve.applyAutoSave()');
     final connections = server.connections;
     for (final connection in connections){
-      final player = connection.player;
+      final player = connection.controller.player;
       performAutoSave(player);
     }
   }
@@ -61,16 +62,13 @@ class Root {
   }
 
   void onDisconnected(Connection connection) {
-    if (!connection.playerCreated){
-      return;
-    }
-    final player = connection.player;
+    final player = connection.controller.player;
     if (player.persistOnDisconnect){
       final characterJson = mapIsometricPlayerToJson(player);
       characterJson.remove('auto_save');
       persistPlayer(player, characterJson);
     }
-    connection.leaveCurrentGame();
+    connection.controller.leaveCurrentGame();
 
   }
 

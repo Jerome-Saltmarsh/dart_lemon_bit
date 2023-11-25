@@ -265,7 +265,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
 
     final mouseLeftClicked = mouseLeftDown && player.mouseLeftDownDuration == 0;
-    final mouseRightClicked = mouseRightDown && player.mouseRightDownDuration == 0;
+    // final mouseRightClicked = mouseRightDown && player.mouseRightDownDuration == 0;
 
     if (mouseRightDown){
       player.mouseRightDownDuration++;
@@ -273,18 +273,17 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       player.mouseRightDownDuration = 0;
     }
 
-    if (mouseRightClicked){
-      // if (player is AmuletPlayer){
-      //   if (player.activatedPowerIndex == -1){
-      //     player.performForceAttack();
-      //     return;
-      //   } else {
-      //     player.deselectActivatedPower();
-      //   }
-      // }
-
-      return;
-    }
+    // if (mouseRightClicked){
+    //   if (player is AmuletPlayer){
+    //     if (player.activatedPowerIndex == -1){
+    //       player.performForceAttack();
+    //       return;
+    //     } else {
+    //       player.deselectActivatedPower();
+    //     }
+    //   }
+    //   return;
+    // }
 
     if (keyDownShift){
       player.setCharacterStateIdle();
@@ -2080,19 +2079,17 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     player.writePlayerEvent(PlayerEvent.Player_Deactivated);
   }
 
-  T buildPlayer();
-
-  T createPlayer() {
-    final player = buildPlayer();
-    player.setDestinationToCurrentPosition();
-    player.sceneDownloaded = false;
-    characters.add(player);
-    customOnPlayerJoined(player);
-    player.writePlayerAlive();
-    player.writePlayerEvent(PlayerEvent.Player_Moved);
-    player.writePlayerEvent(PlayerEvent.Game_Joined);
-    return player;
-  }
+  // T createPlayer() {
+  //   final player = buildPlayer();
+  //   player.setDestinationToCurrentPosition();
+  //   player.sceneDownloaded = false;
+  //   characters.add(player);
+  //   customOnPlayerJoined(player);
+  //   player.writePlayerAlive();
+  //   player.writePlayerEvent(PlayerEvent.Player_Moved);
+  //   player.writePlayerEvent(PlayerEvent.Game_Joined);
+  //   return player;
+  // }
 
   void customWriteGame() {
     notifyPlayersEnvironmentChanged();

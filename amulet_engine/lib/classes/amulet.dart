@@ -18,6 +18,26 @@ class Amulet {
   static const Fixed_Time = 50 / Frames_Per_Second;
 
   var frame = 0;
+
+  late final amuletGameLoading = AmuletGame(
+      amulet: this,
+      scene: Scene(
+        name: 'loading',
+        types: Uint8List(0),
+        shapes: Uint8List(0),
+        variations: Uint8List(0),
+        height: 0,
+        rows: 0,
+        columns: 0,
+        gameObjects: [],
+        marks: [],
+      ),
+      time: amuletTime,
+      environment: amuletEnvironment,
+      name: 'loading',
+      amuletScene: AmuletScene.Loading,
+  );
+
   final amuletTime = IsometricTime();
   final amuletEnvironment = IsometricEnvironment();
   final games = <AmuletGame>[];
@@ -64,6 +84,14 @@ class Amulet {
     _initializeGames();
     _compileWorldMapBytes();
   }
+
+  AmuletPlayer buildPlayer() => AmuletPlayer(
+      amuletGame: amuletGameLoading,
+      itemLength: 6,
+      x: 0,
+      y: 0,
+      z: 0,
+  );
 
   AmuletGame getAmuletSceneGame(AmuletScene scene) {
     if (scene == AmuletScene.Tutorial){
@@ -260,11 +288,6 @@ class Amulet {
     }
   }
 
-  // void connectNorthSouth(AmuletGame a, AmuletGame b){
-  //   a.gameNorth = b;
-  //   b.gameSouth = a;
-  // }
-
   AmuletGameTutorial buildAmuletGameTutorial(){
     final game = AmuletGameTutorial(
       amulet: this,
@@ -287,6 +310,7 @@ class Amulet {
 
   AmuletGame addGame(AmuletGame game) {
     if (!games.contains(game)){
+      print('amulet.addGame($game)');
       games.add(game);
     }
     return game;
