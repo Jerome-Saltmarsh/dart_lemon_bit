@@ -51,10 +51,6 @@ class Connection extends ByteReader {
     print(stackTrace);
   }
 
-  // void sendBufferToClient(){
-  //   sink.add(player.compile());
-  // }
-
   void sendGameError(GameError error) {
     errorWriter.writeByte(NetworkResponse.Game_Error);
     errorWriter.writeByte(error.index);
@@ -66,8 +62,6 @@ class Connection extends ByteReader {
     errorWriter.writeString(error.toString());
     sink.add(errorWriter.compile());
   }
-
-
 
   void handleClientRequestJoin(List<String> arguments) {
 

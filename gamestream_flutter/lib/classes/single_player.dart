@@ -69,7 +69,11 @@ class SinglePlayer {
           sink: streamController.sink,
           handleClientRequestJoin: handleClientRequestJoin,
       );
-      amulet.playerStartTutorial(player);
+      controller.playerJoinAmuletTown();
+      controller.player.regainFullHealth();
+      controller.player.maxHealth =  10;
+      controller.player.health = 10;
+      controller.player.active = true;
       amuletLoaded = true;
       network.events.onConnected();
     }
