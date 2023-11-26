@@ -632,7 +632,8 @@ class IsometricImages with IsometricComponent {
 
     print('images.cacheImages()');
     imagesCached = true;
-    for (final image in images.values) {
+    final values = images.values;
+    for (final image in values) {
       engine.renderSprite(
         image: image,
         srcX: 0,

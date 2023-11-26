@@ -10,6 +10,7 @@ import 'package:gamestream_flutter/gamestream/isometric/components/isometric_par
 class LocalServer {
 
   var amuletLoaded = false;
+  var connected = false;
 
   final IsometricParser parser;
 
@@ -56,6 +57,7 @@ class LocalServer {
   }
 
   void handleClientRequestJoin(List<String> arguments){
+    connected = true;
     controller.playerJoinAmuletTown();
     controller.player.regainFullHealth();
     controller.player.maxHealth =  10;
@@ -65,6 +67,7 @@ class LocalServer {
   }
 
   void disconnect() {
+    connected = false;
     parser.options.game.value = parser.website;
     amulet.updateTimer?.cancel();
     amulet.timerRefreshUserCharacterLocks?.cancel();

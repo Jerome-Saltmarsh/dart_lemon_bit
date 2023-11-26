@@ -8,6 +8,17 @@ import 'package:gamestream_flutter/types/server_mode.dart';
 
 class IsometricServer with IsometricComponent {
 
+  ServerMode get serverMode => options.serverMode.value;
+
+  bool get connected {
+    switch (serverMode) {
+      case ServerMode.remote:
+        return options.websocket.connected;
+      case ServerMode.local:
+        return options.localServer.connected;
+    }
+  }
+
   void sendIsometricRequestRevive() =>
       sendIsometricRequest(NetworkRequestIsometric.Revive);
 
@@ -125,7 +136,7 @@ class IsometricServer with IsometricComponent {
   }
 
   void disconnect() {
-    switch (options.serverMode.value){
+    switch (serverMode){
       case ServerMode.local:
         options.localServer.disconnect();
         break;

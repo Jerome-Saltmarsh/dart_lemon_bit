@@ -105,7 +105,8 @@ class IsometricRender with IsometricComponent {
       return;
     }
 
-    if (options.playModeMulti && !options.websocket.connected) {
+    // if (options.playModeMulti && !options.websocket.connected) {
+    if (!server.connected) {
       images.cacheImages();
       return;
     }
