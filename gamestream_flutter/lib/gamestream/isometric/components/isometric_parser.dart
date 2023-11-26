@@ -112,7 +112,7 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
     print('read error; index: $index');
     print(values);
     ui.error.value = 'failed to parse response from server';
-    options.websocket.disconnect();
+    server.disconnect();
   }
 
   void readSortGameObjects() {

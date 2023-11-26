@@ -8,15 +8,31 @@ import 'package:gamestream_flutter/types/server_mode.dart';
 
 class IsometricServer with IsometricComponent {
 
+  late final WebsocketClient websocket;
+
   ServerMode get serverMode => options.serverMode.value;
 
   bool get connected {
     switch (serverMode) {
       case ServerMode.remote:
-        return options.websocket.connected;
+        return websocket.connected;
       case ServerMode.local:
         return options.localServer.connected;
     }
+  }
+
+  @override
+  Future onComponentInit(sharedPreferences) async {
+    websocket = WebsocketClient(
+      readString: parser.addString,
+      readBytes: parser.add,
+      onError: options.onWebsocketNetworkError,
+      onDone: options.onWebsocketNetworkDone,
+    );
+
+    websocket.connectionStatus.onChanged(
+        events.onChangedNetworkConnectionStatus
+    );
   }
 
   void sendIsometricRequestRevive() =>
@@ -97,7 +113,7 @@ class IsometricServer with IsometricComponent {
   }
 
   void connectToServer(String uri, String message) {
-    options.websocket.connect(uri: uri, message: '${NetworkRequest.Join} $message');
+    websocket.connect(uri: uri, message: '${NetworkRequest.Join} $message');
   }
 
   void connectToGame(GameType gameType, [String message = '']) {
@@ -115,7 +131,7 @@ class IsometricServer with IsometricComponent {
   @override
   void onComponentDispose() {
     print('isometricNetwork.onComponentDispose()');
-    options.websocket.disconnect();
+    disconnect();
   }
 
   void sendNetworkRequestAmulet(NetworkRequestAmulet request, [dynamic message]) =>
@@ -130,7 +146,7 @@ class IsometricServer with IsometricComponent {
         options.localServer.send(data);
         break;
       case ServerMode.remote:
-        options.websocket.send(data);
+        websocket.send(data);
         break;
     }
   }
@@ -141,7 +157,7 @@ class IsometricServer with IsometricComponent {
         options.localServer.disconnect();
         break;
       case ServerMode.remote:
-        options.websocket.disconnect();
+        websocket.disconnect();
         break;
     }
   }

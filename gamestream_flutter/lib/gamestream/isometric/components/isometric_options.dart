@@ -3,7 +3,6 @@ import 'package:gamestream_flutter/classes/local_server.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/mode.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/packages/common.dart';
-import 'package:gamestream_flutter/packages/lemon_websocket_client/websocket_client.dart';
 import 'package:gamestream_flutter/types/server_mode.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
@@ -61,7 +60,6 @@ class IsometricOptions with IsometricComponent implements Updatable {
   final gameError = Watch<GameError?>(null);
 
   late final Watch<Game> game;
-  late final WebsocketClient websocket;
 
   late final localServer = LocalServer(
     parser: parser,
@@ -82,16 +80,6 @@ class IsometricOptions with IsometricComponent implements Updatable {
     game = Watch<Game>(website, onChanged: _onChangedGame);
     engine.durationPerUpdate.value = convertFramesPerSecondToDuration(20);
     engine.cursorType.value = CursorType.Basic;
-    websocket = WebsocketClient(
-      readString: parser.addString,
-      readBytes: parser.add,
-      onError: onWebsocketNetworkError,
-      onDone: onWebsocketNetworkDone,
-    );
-
-    websocket.connectionStatus.onChanged(
-        events.onChangedNetworkConnectionStatus
-    );
   }
 
   void onMouseEnterCanvas(){
@@ -122,11 +110,11 @@ class IsometricOptions with IsometricComponent implements Updatable {
     switch (gameError) {
       case GameError.Unable_To_Join_Game:
         ui.error.value = 'unable to join game';
-        websocket.disconnect();
+        server.disconnect();
         break;
       case GameError.PlayerNotFound:
         ui.error.value = 'player character could not be found';
-        websocket.disconnect();
+        server.disconnect();
         break;
       default:
         break;
@@ -268,7 +256,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
   @override
   void onComponentDispose() {
     print('isometricNetwork.onComponentDispose()');
-    websocket.disconnect();
+    server.disconnect();
   }
 
   bool get playModeMulti => serverMode.value == ServerMode.remote;

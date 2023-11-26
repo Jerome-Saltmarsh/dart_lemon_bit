@@ -55,12 +55,10 @@ class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
   @override
   void onComponentUpdate() {
 
-    if (options.playModeMulti && !options.websocket.connected)
-      return;
-
-    if (options.playModeSingle && !options.localServer.amuletLoaded){
+    if (!server.connected){
       return;
     }
+
 
     if (!options.gameRunning.value) {
       writeByte(NetworkRequest.Update);
@@ -302,7 +300,7 @@ class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
     updateSize.value = bytes.length;
 
     if (options.serverMode.value == ServerMode.remote){
-      options.websocket.send(bytes);
+      server.websocket.send(bytes);
     } else {
       options.localServer.send(bytes);
     }

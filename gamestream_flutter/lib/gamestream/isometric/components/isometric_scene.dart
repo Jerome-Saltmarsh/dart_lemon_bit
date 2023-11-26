@@ -24,7 +24,6 @@ import '../../../isometric/classes/position.dart';
 import 'functions/convert_seconds_to_ambient_alpha.dart';
 import 'render/classes/bool_list.dart';
 import 'render/functions/merge_32_bit_colors.dart';
-import 'render/renderer_characters.dart';
 
 class IsometricScene with IsometricComponent implements Updatable {
 

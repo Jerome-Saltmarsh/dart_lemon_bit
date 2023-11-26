@@ -196,8 +196,9 @@ class IsometricRender with IsometricComponent {
 
   void drawForeground(Canvas canvas, Size size){
 
-    if (!options.websocket.connected)
+    if (!server.connected){
       return;
+    }
 
     // renderCursor(canvas);
     renderPlayerAimTargetNameText();
