@@ -4,7 +4,6 @@ import 'package:gamestream_flutter/gamestream/isometric/components/isometric_com
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:gamestream_flutter/packages/lemon_bits/src/byte_hex.dart';
 import 'package:gamestream_flutter/packages/lemon_components/src.dart';
-import 'package:gamestream_flutter/types/server_mode.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
@@ -298,12 +297,7 @@ class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
   void sendUpdateBuffer() {
     final bytes = compile();
     updateSize.value = bytes.length;
-
-    if (options.serverMode.value == ServerMode.remote){
-      server.websocket.send(bytes);
-    } else {
-      options.localServer.send(bytes);
-    }
+    server.send(bytes);
   }
 
   void reset() {

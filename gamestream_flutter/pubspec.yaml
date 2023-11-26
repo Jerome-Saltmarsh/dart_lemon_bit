@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  window_manager: ^0.3.7
   just_audio: ^0.9.28
   just_audio_windows: ^0.2.0
   provider: ^6.0.5

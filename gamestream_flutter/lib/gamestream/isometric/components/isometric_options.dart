@@ -1,5 +1,4 @@
 
-import 'package:gamestream_flutter/classes/local_server.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/mode.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/packages/common.dart';
@@ -60,10 +59,6 @@ class IsometricOptions with IsometricComponent implements Updatable {
   final gameError = Watch<GameError?>(null);
 
   late final Watch<Game> game;
-
-  late final localServer = LocalServer(
-    parser: parser,
-  );
 
   IsometricOptions(){
     mode.onChanged(onChangedMode);

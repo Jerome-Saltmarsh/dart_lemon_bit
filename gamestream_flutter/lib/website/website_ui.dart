@@ -38,7 +38,7 @@ extension WebsiteUI on WebsiteGame {
       children: [
         buildTogglePlayMode(),
         onPressed(
-          action: options.localServer.playerJoin,
+          action: server.localServer.playerJoin,
           child: buildText('NEW CHARACTER'),
         ),
       ],

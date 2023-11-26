@@ -1,4 +1,5 @@
 
+import 'package:gamestream_flutter/classes/local_server.dart';
 import 'package:gamestream_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:gamestream_flutter/isometric/classes/gameobject.dart';
@@ -9,6 +10,9 @@ import 'package:gamestream_flutter/types/server_mode.dart';
 class IsometricServer with IsometricComponent {
 
   late final WebsocketClient websocket;
+  late final localServer = LocalServer(
+    parser: parser,
+  );
 
   ServerMode get serverMode => options.serverMode.value;
 
@@ -17,7 +21,7 @@ class IsometricServer with IsometricComponent {
       case ServerMode.remote:
         return websocket.connected;
       case ServerMode.local:
-        return options.localServer.connected;
+        return localServer.connected;
     }
   }
 
@@ -141,9 +145,9 @@ class IsometricServer with IsometricComponent {
       send('${networkRequest} ${arg1 ?? ""} ${arg2 ?? ""} ${arg3 ?? ""}'.trim());
 
   void send(dynamic data) {
-    switch (options.serverMode.value){
+    switch (serverMode){
       case ServerMode.local:
-        options.localServer.send(data);
+        localServer.send(data);
         break;
       case ServerMode.remote:
         websocket.send(data);
@@ -154,7 +158,7 @@ class IsometricServer with IsometricComponent {
   void disconnect() {
     switch (serverMode){
       case ServerMode.local:
-        options.localServer.disconnect();
+        localServer.disconnect();
         break;
       case ServerMode.remote:
         websocket.disconnect();
