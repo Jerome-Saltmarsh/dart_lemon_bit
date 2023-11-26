@@ -123,5 +123,16 @@ class IsometricServer with IsometricComponent {
         break;
     }
   }
+
+  void disconnect() {
+    switch (options.serverMode.value){
+      case ServerMode.local:
+        options.localServer.disconnect();
+        break;
+      case ServerMode.remote:
+        options.websocket.disconnect();
+        break;
+    }
+  }
 }
 

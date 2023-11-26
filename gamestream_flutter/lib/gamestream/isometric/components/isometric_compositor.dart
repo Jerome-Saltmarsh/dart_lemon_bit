@@ -31,8 +31,6 @@ class IsometricCompositor with IsometricComponent {
     rendererProjectiles.reset();
     rendererEditor.reset();
 
-    // amulet.repaintMiniMapNotifier.value++;
-
     final nodes = rendererNodes;
     final characters = rendererCharacters;
     final projectiles = rendererProjectiles;
@@ -110,7 +108,7 @@ class IsometricCompositor with IsometricComponent {
         nextOrder = editorOrder;
       }
 
-      this.order = nextOrder.toInt();
+      // this.order = nextOrder.toInt();
       next.renderNext(engine, images);
 
       if (next.remaining) {

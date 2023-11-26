@@ -21,13 +21,6 @@ class LocalServer {
     required this.parser,
   });
 
-  void update(){
-    if (!amuletLoaded){
-      return;
-    }
-    // amulet.update();
-  }
-
   void onFixedUpdate() {
     if (!amuletLoaded){
       return;
@@ -69,6 +62,12 @@ class LocalServer {
     controller.player.health = 10;
     controller.player.active = true;
     parser.events.onConnected();
+  }
+
+  void disconnect() {
+    parser.options.game.value = parser.website;
+    amulet.updateTimer?.cancel();
+    amulet.timerRefreshUserCharacterLocks?.cancel();
   }
 }
 

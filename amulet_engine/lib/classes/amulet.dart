@@ -49,8 +49,8 @@ class Amulet {
 
   var _updateTimerInitialized = false;
 
-  late final Timer updateTimer;
-  late final Timer timerRefreshUserCharacterLocks;
+  Timer? updateTimer;
+  Timer? timerRefreshUserCharacterLocks;
 
   final tutorialTime = IsometricTime(hour: 24, enabled: false);
   final tutorialEnvironment = IsometricEnvironment(enabled: false);
@@ -174,6 +174,11 @@ class Amulet {
       return;
     }
     _updateTimerInitialized = true;
+    resumeUpdateTimer();
+  }
+  
+  void resumeUpdateTimer(){
+    updateTimer?.cancel();
     updateTimer = Timer.periodic(
       Duration(milliseconds: 1000 ~/ Frames_Per_Second),
       _fixedUpdate,

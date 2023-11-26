@@ -208,8 +208,6 @@ class IsometricOptions with IsometricComponent implements Updatable {
 
     game.value.update();
 
-    localServer.update();
-
     if (cameraPlayFollowPlayer){
       cameraPlay.copy(player.position);
     }
