@@ -25,7 +25,7 @@ class LocalServer {
     if (!amuletLoaded){
       return;
     }
-    amulet.update();
+    // amulet.update();
   }
 
   void onFixedUpdate() {
@@ -49,7 +49,7 @@ class LocalServer {
           isLocalMachine: true,
           scenes: scenes,
       );
-      await amulet.construct(initializeUpdateTimer: false);
+      await amulet.construct(initializeUpdateTimer: true);
       player = amulet.buildPlayer();
       controller = AmuletController(
           player: player,
@@ -57,18 +57,18 @@ class LocalServer {
           sink: parser,
           handleClientRequestJoin: handleClientRequestJoin,
       );
-      controller.playerJoinAmuletTown();
-      controller.player.regainFullHealth();
-      controller.player.maxHealth =  10;
-      controller.player.health = 10;
-      controller.player.active = true;
       amuletLoaded = true;
-      parser.events.onConnected();
     }
+    handleClientRequestJoin([]);
   }
 
   void handleClientRequestJoin(List<String> arguments){
-
+    controller.playerJoinAmuletTown();
+    controller.player.regainFullHealth();
+    controller.player.maxHealth =  10;
+    controller.player.health = 10;
+    controller.player.active = true;
+    parser.events.onConnected();
   }
 }
 

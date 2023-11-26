@@ -43,7 +43,6 @@ class IsometricOptions with IsometricComponent implements Updatable {
   var messageStatusDuration = 0;
   var renderResponse = true;
 
-  late final WebsocketClient websocket;
   final serverMode = Watch(ServerMode.remote);
   final cameraPlay = Position();
   final mode = Watch(Mode.Play);
@@ -60,7 +59,9 @@ class IsometricOptions with IsometricComponent implements Updatable {
   final triggerAlarmNoMessageReceivedFromServer = Watch(false);
   final messageStatus = Watch('');
   final gameError = Watch<GameError?>(null);
+
   late final Watch<Game> game;
+  late final WebsocketClient websocket;
 
   late final localServer = LocalServer(
     parser: parser,

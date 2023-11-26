@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# Read the current version from the Dart file
-current_version=$(grep -oP "(?<=const version = ').*?(?=')" bleed-common/lib/src/version.dart)
+# Read the current version from the file
+current_version=$(cat version.txt)
 
 # Increment the version number
-new_version=$(echo $current_version | awk -F. -v OFS=. '{$NF++;print}')
+new_version=$(echo $current_version | awk -F. -v OFS=. '{++$NF; print}')
 
-# Replace the old version with the new version in the Dart file
-sed -i "s/$current_version/$new_version/" bleed-common/lib/src/version.dart
+# Write the new version back to the file
+echo $new_version > version.txt
 
-echo "Version number incremented from $current_version to $new_version"
+echo "Version incremented. New version: $new_version"
 
 # Add the changes to Git
 git add -u
