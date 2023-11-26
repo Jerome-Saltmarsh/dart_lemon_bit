@@ -1,0 +1,188 @@
+name: amulet_flutter
+description: next gen cloud gaming
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  window_manager: ^0.3.7
+  just_audio: ^0.9.28
+  just_audio_windows: ^0.2.0
+  provider: ^6.0.5
+  archive: ^3.3.6
+  flutter_colorpicker: ^1.0.3
+  file_picker: ^5.0.1
+  universal_html: ^2.0.8
+  web_socket_channel: ^2.1.0
+  shelf_web_socket: ^1.0.1
+  shelf_router: ^1.1.2
+  golden_ratio: 1.0.6
+  http: ^0.13.4
+  intl: ^0.17.0
+  typedef: ^1.0.12
+  url_launcher: ^6.1.10
+
+  amulet_engine:
+    path: ..\amulet_engine
+  lemon_sprite:
+    path: ..\lemon_sprite
+  lemon_widgets:
+    path: ..\lemon_widgets
+  lemon_math:
+    path: ..\dart-lemon-math
+  lemon_byte:
+    path: C:\Users\Jerome\github\dart-lemon-byte
+  lemon_engine:
+    path: ..\dart-lemon-engine
+  gamestream_http_client:
+    path: ..\gamestream_http_client
+
+dev_dependencies:
+  test: ^1.16.0
+
+flutter:
+  fonts:
+    - family: VT323-Regular
+      fonts:
+        - asset: fonts/VT323-Regular.ttf
+    - family: REBUFFED
+      fonts:
+        - asset: fonts/REBUFFED.TTF
+  assets:
+    - scenes/
+    - images/
+    - images/sphere/
+    - images/sprites/
+    - images/website/
+    - images/characters/
+    - sprites/
+    - sprites/isometric/
+    - sprites/isometric/gameobjects/
+    - sprites/isometric/flame/
+    - sprites/isometric/kid/
+    - sprites/isometric/kid/diffuse/
+    - sprites/isometric/kid/diffuse/torso/
+    - sprites/isometric/kid/shadow/
+    - sprites/isometric/kid/south/
+    - sprites/isometric/kid/west/
+    - sprites/isometric/kid/south/body_male/shirt_blue/
+    - sprites/isometric/kid/south/body_male/leather_armour/
+    - sprites/isometric/kid/south/body_female/shirt_blue/
+    - sprites/isometric/kid/south/body_female/leather_armour/
+    - sprites/isometric/kid/south/hair/01/
+    - sprites/isometric/kid/south/hair/02/
+    - sprites/isometric/kid/south/hair/03/
+    - sprites/isometric/kid/south/hands_left/gauntlets/
+    - sprites/isometric/kid/south/hands_right/gauntlets/
+    - sprites/isometric/kid/south/head/boy/
+    - sprites/isometric/kid/south/head/girl/
+    - sprites/isometric/kid/south/helms/steel/
+    - sprites/isometric/kid/south/helms/wizard_hat/
+    - sprites/isometric/kid/south/legs/leather/
+    - sprites/isometric/kid/south/torso/female/
+    - sprites/isometric/kid/south/torso/male/
+    - sprites/isometric/kid/south/weapons/bow/
+    - sprites/isometric/kid/south/weapons/staff/
+    - sprites/isometric/kid/south/weapons/sword/
+    - sprites/isometric/kid/south/shoes/iron_plates/
+    - sprites/isometric/kid/south/shoes/leather_boots/
+    - sprites/isometric/kid/west/body_male/shirt_blue/
+    - sprites/isometric/kid/west/body_male/leather_armour/
+    - sprites/isometric/kid/west/body_female/shirt_blue/
+    - sprites/isometric/kid/west/body_female/leather_armour/
+    - sprites/isometric/kid/west/hair/01/
+    - sprites/isometric/kid/west/hair/02/
+    - sprites/isometric/kid/west/hair/03/
+    - sprites/isometric/kid/west/hands_left/gauntlets/
+    - sprites/isometric/kid/west/hands_right/gauntlets/
+    - sprites/isometric/kid/west/head/boy/
+    - sprites/isometric/kid/west/head/girl/
+    - sprites/isometric/kid/west/helms/steel/
+    - sprites/isometric/kid/west/helms/wizard_hat/
+    - sprites/isometric/kid/west/legs/leather/
+    - sprites/isometric/kid/west/torso/female/
+    - sprites/isometric/kid/west/torso/male/
+    - sprites/isometric/kid/west/weapons/bow/
+    - sprites/isometric/kid/west/weapons/staff/
+    - sprites/isometric/kid/west/weapons/sword/
+    - sprites/isometric/kid/west/shoes/iron_plates/
+    - sprites/isometric/kid/west/shoes/leather_boots/
+    - sprites/isometric/kid/diffuse/body_female/leather_armour/
+    - sprites/isometric/kid/diffuse/body_female/shirt_blue/
+    - sprites/isometric/kid/diffuse/body_male/leather_armour/
+    - sprites/isometric/kid/diffuse/body_male/shirt_blue/
+    - sprites/isometric/kid/diffuse/hair/01/
+    - sprites/isometric/kid/diffuse/hair/02/
+    - sprites/isometric/kid/diffuse/hair/03/
+    - sprites/isometric/kid/diffuse/hands_left/gauntlets/
+    - sprites/isometric/kid/diffuse/hands_right/gauntlets/
+    - sprites/isometric/kid/diffuse/head/boy/
+    - sprites/isometric/kid/diffuse/head/girl/
+    - sprites/isometric/kid/diffuse/helms/steel/
+    - sprites/isometric/kid/diffuse/helms/wizard_hat/
+    - sprites/isometric/kid/diffuse/legs/leather/
+    - sprites/isometric/kid/diffuse/shoes/iron_plates/
+    - sprites/isometric/kid/diffuse/shoes/leather_boots/
+    - sprites/isometric/kid/diffuse/torso/female/
+    - sprites/isometric/kid/diffuse/torso/male/
+    - sprites/isometric/kid/diffuse/weapons/bow/
+    - sprites/isometric/kid/diffuse/weapons/staff/
+    - sprites/isometric/kid/diffuse/weapons/sword/
+    - sprites/front/kid/south/body_male/shirt_blue/
+    - sprites/front/kid/south/body_male/leather_armour/
+    - sprites/front/kid/south/body_female/leather_armour/
+    - sprites/front/kid/south/hands_left/gauntlets/
+    - sprites/front/kid/south/hands_right/gauntlets/
+    - sprites/front/kid/south/hair/01/
+    - sprites/front/kid/south/head/boy/
+    - sprites/front/kid/south/head/girl/
+    - sprites/front/kid/south/helms/steel/
+    - sprites/front/kid/south/helms/wizard_hat/
+    - sprites/front/kid/south/legs/leather/
+    - sprites/front/kid/south/torso/female/
+    - sprites/front/kid/south/torso/male/
+    - sprites/front/kid/south/weapons/bow/
+    - sprites/front/kid/south/weapons/staff/
+    - sprites/front/kid/south/weapons/sword/
+    - sprites/front/kid/south/shoes/iron_plates/
+    - sprites/front/kid/south/shoes/leather_boots/
+    - sprites/front/kid/west/body_male/shirt_blue/
+    - sprites/front/kid/west/body_male/leather_armour/
+    - sprites/front/kid/west/body_female/leather_armour/
+    - sprites/front/kid/west/hands_left/gauntlets/
+    - sprites/front/kid/west/hands_right/gauntlets/
+    - sprites/front/kid/west/hair/01/
+    - sprites/front/kid/west/head/boy/
+    - sprites/front/kid/west/head/girl/
+    - sprites/front/kid/west/helms/steel/
+    - sprites/front/kid/west/helms/wizard_hat/
+    - sprites/front/kid/west/legs/leather/
+    - sprites/front/kid/west/torso/female/
+    - sprites/front/kid/west/torso/male/
+    - sprites/front/kid/west/weapons/bow/
+    - sprites/front/kid/west/weapons/staff/
+    - sprites/front/kid/west/weapons/sword/
+    - sprites/front/kid/west/shoes/iron_plates/
+    - sprites/front/kid/west/shoes/leather_boots/
+    - sprites/isometric/fallen/dead/
+    - sprites/isometric/fallen/hurt/
+    - sprites/isometric/fallen/idle/
+    - sprites/isometric/fallen/running/
+    - sprites/isometric/fallen/strike/
+    - sprites/isometric/skeleton/south/
+    - sprites/isometric/skeleton/west/
+    - sprites/isometric/skeleton/shadow/
+    - sprites/isometric/butterfly/
+    - sprites/isometric/moth/
+    - sprites/isometric/bat/
+    - sprites/isometric/crystal/
+    - audio/
+    - audio/ui/
+    - audio/music/
+    - audio/sounds/
+    - audio/voices/

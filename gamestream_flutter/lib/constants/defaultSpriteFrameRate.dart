@@ -1,1 +1,0 @@
-const defaultSpriteFrameRate = 5;

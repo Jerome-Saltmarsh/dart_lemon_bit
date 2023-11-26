@@ -1,0 +1,14 @@
+name: gamestream_firestore
+description: A library for accessing google firestore
+version: 1.0.1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  googleapis: ^11.0.0
+  googleapis_auth: ^1.4.0
+  typedef: ^1.0.13
+  uuid: ^4.1.0
+  crypto: ^3.0.3
+

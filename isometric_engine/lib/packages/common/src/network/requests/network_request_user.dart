@@ -1,0 +1,6 @@
+
+
+enum NetworkRequestUser {
+  getCharacters,
+  loadCharacter,
+}

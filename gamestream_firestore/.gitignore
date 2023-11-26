@@ -1,0 +1,6 @@
+.dart_tool/
+.packages
+.idea
+build/
+database/characters
+database/users

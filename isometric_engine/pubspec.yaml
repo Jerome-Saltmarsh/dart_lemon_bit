@@ -1,0 +1,12 @@
+name: isometric_engine
+description: A starting point for Dart libraries or applications.
+version: 1.0.0
+
+environment:
+  sdk: ^3.1.5
+
+dependencies:
+  fast_noise: ^1.0.1
+
+dev_dependencies:
+  lints: ^2.0.0

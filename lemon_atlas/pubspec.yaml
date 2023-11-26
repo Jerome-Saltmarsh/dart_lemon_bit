@@ -1,0 +1,30 @@
+name: lemon_atlas
+description: Packs atlases into sprites
+
+version: 1.0.1
+
+environment:
+  sdk: '>=3.0.6 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  url_launcher: ^6.1.14
+  shell: ^2.0.0
+  file_picker: ^5.3.3
+  lemon_watch: ^1.1.1
+  image: ^4.0.17
+
+  lemon_widgets:
+    path: ..\lemon_widgets
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+
+

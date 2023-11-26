@@ -1,0 +1,2 @@
+
+var nextLightning = 0;

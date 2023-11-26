@@ -1,0 +1,13 @@
+enum OperationStatus {
+  None,
+  Authenticating,
+  Creating_Account,
+  Logging_Out,
+  Opening_Secure_Payment_Session,
+  Cancelling_Subscription,
+  Updating_Account,
+  Changing_Public_Name,
+  Loading_Map,
+  Saving_Map,
+  Checking_For_Updates, Caching_Images, Deleting_Character, Loading_User, Creating_Character,
+}
