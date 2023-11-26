@@ -5,7 +5,6 @@ import 'package:gamestream_flutter/packages/common.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 
 import 'functions/merge_32_bit_colors.dart';
-import 'functions/merge_32_bit_colors_3.dart';
 
 class RendererCharacters extends RenderGroup {
 
@@ -69,6 +68,8 @@ class RendererCharacters extends RenderGroup {
       return;
     }
 
+    scene.applyColorToCharacter(character);
+
     switch (character.characterType) {
       case CharacterType.Human:
         renderCharacterHuman(character);
@@ -87,33 +88,24 @@ class RendererCharacters extends RenderGroup {
   @override
   int getTotal() => scene.totalCharacters * 2;
 
+
   /// TODO OPTIMIZE
   void renderCharacterHuman(Character character) {
     const anchorY = 0.7;
     final scene = this.scene;
-    final characterIndex = scene.getIndexPosition(character);
     final scale = options.characterRenderScale;
-    // final direction = IsometricDirection.toInputDirection(character.direction);
-    // final color = scene.getColor(characterIndex);
-    final totalColumns = scene.totalColumns;
-    final colorL = scene.getColor(characterIndex - totalColumns + 1);
-    final colorR = scene.getColor(characterIndex + totalColumns - 1);
-    final colorN1 = scene.colorNorth(characterIndex);
-    final colorN2 = scene.colorNorth(characterIndex - totalColumns);
-    final colorE1 = scene.colorEast(characterIndex);
-    final colorE2 = scene.colorEast(characterIndex - 1);
-    final colorS1 = scene.colorSouth(characterIndex);
-    final colorS2 = scene.colorSouth(characterIndex + totalColumns);
-    final colorW1 = scene.colorWest(characterIndex);
-    final colorW2 = scene.colorWest(characterIndex + 1);
 
-    final colorN = merge32BitColors(colorN1, colorN2);
-    final colorE = merge32BitColors(colorE1, colorE2);
-    final colorS = merge32BitColors(colorS1, colorS2);
-    final colorW = merge32BitColors(colorW1, colorW2);
+    // final colorN = merge32BitColors(colorN1, colorN2);
+    // final colorE = merge32BitColors(colorE1, colorE2);
+    // final colorS = merge32BitColors(colorS1, colorS2);
+    // final colorW = merge32BitColors(colorW1, colorW2);
 
-    final colorSouth = merge32BitsColors3(colorS, colorE, colorR);
-    final colorWest = merge32BitsColors3(colorN, colorW, colorL);
+    // final colorSouth = merge32BitsColors3(colorS, colorE, colorSE);
+    // final colorWest = merge32BitsColors3(colorN, colorW, colorNW);
+
+    final colorSouth = character.colorSouthEast;
+    final colorWest = character.colorNorthWest;
+
     final colorDiffuse = merge32BitColors(colorSouth, colorWest);
     final dstX = character.renderX;
     final dstY = character.renderY;
@@ -574,7 +566,6 @@ class RendererCharacters extends RenderGroup {
     const scale = 0.5;
     const anchorY = 0.6;
 
-    final scene = this.scene;
     final images = this.images;
     final row = character.renderDirection;
     final column = character.animationFrame;
@@ -582,14 +573,6 @@ class RendererCharacters extends RenderGroup {
     final spriteWest = images.spriteGroupFallenWest.fromCharacterState(characterState);
     final spriteSouth = images.spriteGroupFallenSouth.fromCharacterState(characterState);
     final spriteShadow = images.spriteGroupFallenShadow.fromCharacterState(characterState);
-    final characterIndex = scene.getIndexPosition(character);
-    final color = character.color;
-    final colorN = scene.colorNorth(characterIndex);
-    final colorE = scene.colorEast(characterIndex);
-    final colorS = scene.colorSouth(characterIndex);
-    final colorW = scene.colorWest(characterIndex);
-    final colorWest = merge32BitsColors3(colorN, colorW, color);
-    final colorSouth = merge32BitsColors3(colorS, colorE, color);
     final render = this.render;
     final dstX = character.renderX;
     final dstY = character.renderY;
@@ -597,7 +580,7 @@ class RendererCharacters extends RenderGroup {
     render.sprite(
       sprite: spriteShadow,
       frame: spriteShadow.getFrame(row: row, column: column),
-      color: color,
+      color: character.colorDiffuse,
       scale: scale,
       dstX: dstX,
       dstY: dstY,
@@ -607,7 +590,7 @@ class RendererCharacters extends RenderGroup {
     render.sprite(
       sprite: spriteWest,
       frame: spriteWest.getFrame(row: row, column: column),
-      color: colorWest,
+      color: character.colorNorthWest,
       scale: scale,
       dstX: dstX,
       dstY: dstY,
@@ -617,7 +600,7 @@ class RendererCharacters extends RenderGroup {
     render.sprite(
       sprite: spriteSouth,
       frame: spriteSouth.getFrame(row: row, column: column),
-      color: colorSouth,
+      color: character.colorSouthEast,
       scale: scale,
       dstX: dstX,
       dstY: dstY,
@@ -642,16 +625,6 @@ class RendererCharacters extends RenderGroup {
     final spriteWest = images.spriteGroupSkeletonWest.fromCharacterState(character.state);
     final spriteSouth = images.spriteGroupSkeletonSouth.fromCharacterState(character.state);
 
-    final scene = this.scene;
-    final characterIndex = scene.getIndexPosition(character);
-    final color = character.color;
-    final colorN = scene.colorNorth(characterIndex);
-    final colorE = scene.colorEast(characterIndex);
-    final colorS = scene.colorSouth(characterIndex);
-    final colorW = scene.colorWest(characterIndex);
-    final colorWest = merge32BitsColors3(colorN, colorW, color);
-    final colorSouth = merge32BitsColors3(colorS, colorE, color);
-
     final dstX = character.renderX;
     final dstY = character.renderY;
     final render = this.render;
@@ -659,7 +632,7 @@ class RendererCharacters extends RenderGroup {
     render.sprite(
       sprite: spriteShadow,
       frame: spriteShadow.getFrame(row: row, column: column),
-      color: color,
+      color: character.colorDiffuse,
       scale: scale,
       dstX: dstX,
       dstY: dstY,
@@ -669,7 +642,7 @@ class RendererCharacters extends RenderGroup {
     render.sprite(
       sprite: spriteWest,
       frame: spriteWest.getFrame(row: row, column: column),
-      color: colorWest,
+      color: character.colorNorthWest,
       scale: scale,
       dstX: dstX,
       dstY: dstY,
@@ -679,7 +652,7 @@ class RendererCharacters extends RenderGroup {
     render.sprite(
       sprite: spriteSouth,
       frame: spriteSouth.getFrame(row: row, column: column),
-      color: colorSouth,
+      color: character.colorSouthEast,
       scale: scale,
       dstX: dstX,
       dstY: dstY,

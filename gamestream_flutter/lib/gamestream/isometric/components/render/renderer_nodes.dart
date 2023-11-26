@@ -714,7 +714,7 @@ class RendererNodes extends RenderGroup {
     scene.applyEmissions();
     index = 0;
     skipPlainsAboveScreenTop();
-    render.highlightAimTargetEnemy();
+    // render.highlightAimTargetEnemy();
   }
 
   void ensureVisible2(int index){

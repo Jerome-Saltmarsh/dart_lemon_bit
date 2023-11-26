@@ -228,7 +228,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
     double scaleV = 0,
     double rotation = 0,
     double rotationV = 0,
-    bounciness = 0.5,
+    double bounciness = 0.5,
     int delay = 0,
   }) {
     assert (duration > 0);
@@ -452,12 +452,12 @@ class IsometricParticles with IsometricComponent implements Updatable {
         angle: randomAngle(),
         speed: randomBetween(0.5, 1.25),
         zv: randomBetween(2, 3),
-        weight: 10,
+        weight: 10.0,
         duration: 15,
         scale: 0.6,
-        scaleV: 0,
+        scaleV: 0.0,
         rotation: randomAngle(),
-        bounciness: 0,
+        bounciness: 0.0,
       );
     }
   }

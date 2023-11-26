@@ -115,7 +115,7 @@ class IsometricRender with IsometricComponent {
       return;
     }
 
-    highlightAimTargetEnemy();
+    // highlightAimTargetEnemy();
 
     camera.update();
     animation.update();
@@ -173,26 +173,26 @@ class IsometricRender with IsometricComponent {
     textPosition(player.position, scene.getHeightMapHeightAt(player.nodeIndex), offsetY: -20);
   }
 
-  void highlightAimTargetEnemy() {
-    if (player.aimTargetAction.value == TargetAction.Attack){
-      // player.aimTargetPosition
-      final position = player.aimTargetPosition;
-      final x = position.x;
-      final y = position.y;
-      final z = position.z;
-      for (final character in scene.characters){
-        if (character.x != x)
-          continue;
-        if (character.y != y)
-          continue;
-        if (character.z != z)
-          continue;
-
-        character.color = 0;
-        break;
-      }
-    }
-  }
+  // void highlightAimTargetEnemy() {
+  //   if (player.aimTargetAction.value == TargetAction.Attack){
+  //     // player.aimTargetPosition
+  //     final position = player.aimTargetPosition;
+  //     final x = position.x;
+  //     final y = position.y;
+  //     final z = position.z;
+  //     for (final character in scene.characters){
+  //       if (character.x != x)
+  //         continue;
+  //       if (character.y != y)
+  //         continue;
+  //       if (character.z != z)
+  //         continue;
+  //
+  //       // character.color = 0;
+  //       break;
+  //     }
+  //   }
+  // }
 
   void drawForeground(Canvas canvas, Size size){
 
@@ -310,7 +310,7 @@ class IsometricRender with IsometricComponent {
       healthBarPosition(
         position: character,
         percentage: character.health,
-        color: character.color,
+        color: character.colorDiffuse,
       );
 
   void healthBarPosition({

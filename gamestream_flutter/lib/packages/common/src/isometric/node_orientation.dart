@@ -291,5 +291,6 @@ class NodeOrientation {
          return 0;
      }
    }
+
 }
 

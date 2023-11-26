@@ -16,11 +16,9 @@ ctrl + []               : move caret to code block
 
 
 ## TODO
+* [fix]: offline for web
 * [fix]: audio for windows
-* [new]: single player offline
 * [fix]: render front view hair color
-* [new]: hair type 02
-* [new]: hair type 03
 * [new]: elemental damage
 * [new]: map locations
 * [new]: scene town
@@ -30,6 +28,9 @@ ctrl + []               : move caret to code block
 * [fix]: persist gameobject properties
 * [fix]: colored particle emission
 * [new]: flames emit smoke particles
+
+## 26.11.2023
+* [new]: single player offline
 
 ## 22.11.2023
 * [new]: build windows exe

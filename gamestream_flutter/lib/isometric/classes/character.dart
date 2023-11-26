@@ -1,3 +1,4 @@
+import 'package:gamestream_flutter/gamestream/isometric/components/render/functions/merge_32_bit_colors.dart';
 import 'package:gamestream_flutter/isometric/classes/position.dart';
 import 'package:gamestream_flutter/packages/common.dart';
 import 'package:lemon_math/src.dart';
@@ -25,7 +26,9 @@ class Character extends Position {
   /// percentage between 0 and 1
   var health = 1.0;
   /// percentage between 0 and 1
-  var color = 0;
+  // var color = 0;
+  var colorSouthEast = 0;
+  var colorNorthWest = 0;
   var actionComplete = 0.0;
   var gender = 0;
 
@@ -38,5 +41,7 @@ class Character extends Position {
   int get renderDirection => (direction - 1) % 8;
 
   double get angle => direction * piQuarter;
+
+  int get colorDiffuse => merge32BitColors(colorSouthEast, colorNorthWest);
 
 }

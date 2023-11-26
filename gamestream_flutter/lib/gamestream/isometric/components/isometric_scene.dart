@@ -748,14 +748,14 @@ class IsometricScene with IsometricComponent implements Updatable {
     nodeColors[index] = setAlpha(color: currentColor, alpha: alpha);
   }
 
-  void updateCharacterColors(){
-    final totalCharacters = this.totalCharacters;
-    final characters = this.characters;
-    for (var i = 0; i < totalCharacters; i++){
-      final character = characters[i];
-      character.color =  getRenderColorPosition(character);
-    }
-  }
+  // void updateCharacterColors(){
+  //   final totalCharacters = this.totalCharacters;
+  //   final characters = this.characters;
+  //   for (var i = 0; i < totalCharacters; i++){
+  //     final character = characters[i];
+  //     character.color =  getRenderColorPosition(character);
+  //   }
+  // }
 
   Character getCharacterInstance(){
     if (characters.length <= totalCharacters){
@@ -1422,7 +1422,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     applyEmissionColorNodes();
     applyEmissionColorParticles();
     applyEmissionColorGameObjects();
-    updateCharacterColors();
+    // updateCharacterColors();
   }
 
   void applyEmissionAmbientNodes() {
@@ -1684,6 +1684,10 @@ class IsometricScene with IsometricComponent implements Updatable {
 
   // TODO EXPENSIVE
   int colorWest(int index){
+    if (index < 0){
+      return ambientColor;
+    }
+
     final column = getColumn(index);
     if (column + 1 >= totalColumns){
       return ambientColor;
@@ -1707,6 +1711,10 @@ class IsometricScene with IsometricComponent implements Updatable {
 
   // TODO EXPENSIVE
   int colorEast(int index){
+    if (index < 0){
+      return ambientColor;
+    }
+
     final column = getColumn(index);
     if (column - 1 < 0) {
       final current = nodeColors[index];
@@ -1731,6 +1739,10 @@ class IsometricScene with IsometricComponent implements Updatable {
 
   // TODO EXPENSIVE
   int colorNorth(int index){
+    if (index < 0){
+      return ambientColor;
+    }
+
     final row = getRow(index);
     if (row - 1 < 0) {
       return nodeColors[index];
@@ -1753,8 +1765,79 @@ class IsometricScene with IsometricComponent implements Updatable {
     return nodeColors[indexNorth];
   }
 
+  int colorNorthWest(int index){
+    if (index < 0){
+      return ambientColor;
+    }
+
+    final row = getRow(index);
+    if (row - 1 < 0) {
+      return nodeColors[index];
+    }
+
+    final column = getColumn(index);
+    if (column + 1 >= totalColumns) {
+      return nodeColors[index];
+    }
+
+    final indexNorthWest = index - totalColumns + 1;
+    final orientation = nodeOrientations[indexNorthWest];
+
+    if (const [
+      NodeOrientation.Solid,
+      NodeOrientation.Half_South,
+      NodeOrientation.Half_East,
+      NodeOrientation.Corner_South_East,
+      NodeOrientation.Slope_South,
+      NodeOrientation.Slope_East,
+    ].contains(orientation)){
+      final current = nodeColors[index];
+      // return merge32BitColors(current, ambientColor);
+      return current;
+    }
+
+    return nodeColors[indexNorthWest];
+  }
+
+  int colorSouthEast(int index){
+    if (index < 0){
+      return ambientColor;
+    }
+
+    final row = getRow(index);
+    if (row - 1 < 0) {
+      return nodeColors[index];
+    }
+    final column = getColumn(index);
+
+    if (column + 1 >= totalColumns){
+      return nodeColors[index];
+    }
+
+    final indexSouthEast = index + totalColumns - 1;
+    final orientation = nodeOrientations[indexSouthEast];
+
+    if (const [
+      NodeOrientation.Solid,
+      NodeOrientation.Half_North,
+      NodeOrientation.Half_West,
+      NodeOrientation.Corner_North_West,
+      NodeOrientation.Slope_South,
+    ].contains(orientation)){
+      final current = nodeColors[index];
+      // return merge32BitColors(current, ambientColor);
+      return current;
+    }
+
+    return nodeColors[index];
+  }
+
   // TODO EXPENSIVE
   int colorSouth(int index){
+    if (index < 0){
+      return ambientColor;
+    }
+
     final row = getRow(index);
     if (row + 1 >= totalRows) {
       return nodeColors[index];
@@ -2110,4 +2193,220 @@ class IsometricScene with IsometricComponent implements Updatable {
         weight: 0,
     );
   }
+
+
+  void applyColorToCharacter(Character character){
+
+    if (outOfBoundsPosition(character)){
+      character.colorSouthEast = ambientColor;
+      character.colorNorthWest = ambientColor;
+      return;
+    }
+
+    final index = getIndexPosition(character);
+    final colorN = getColorBeamNorth(index);
+    final colorE = getColorBeamEast(index);
+    final colorS = getColorBeamSouth(index);
+    final colorW = getColorBeamWest(index);
+
+    character.colorSouthEast = merge32BitColors(colorS, colorE);
+    character.colorNorthWest = merge32BitColors(colorN, colorW);
+  }
+
+  int getColorBeamNorth(int index){
+    final row = getRow(index);
+    final totalColumns = this.totalColumns;
+    final indexNorth1 = index - totalColumns;
+    final indexNorth2 = indexNorth1 - totalColumns;
+
+    const blockNorth = const [
+      NodeOrientation.Half_North,
+      NodeOrientation.Corner_North_East,
+      NodeOrientation.Corner_North_West,
+    ];
+
+    const blockSouth = const [
+      NodeOrientation.Solid,
+      NodeOrientation.Half_South,
+      NodeOrientation.Corner_South_East,
+      NodeOrientation.Corner_South_West,
+    ];
+
+    if (
+      row - 1 < 0 ||
+      blockNorth.contains(nodeOrientations[index]) ||
+      blockSouth.contains(nodeOrientations[indexNorth1])
+    ) {
+      // return nodeColors[index];
+      return merge32BitColors(
+        nodeColors[index],
+        ambientColor,
+      );
+    }
+
+    if (
+      row - 2 < 0 ||
+      blockNorth.contains(nodeOrientations[indexNorth1]) ||
+      blockSouth.contains(nodeOrientations[indexNorth2])
+    ) {
+      // return nodeColors[indexNorth1];
+      return merge32BitColors(
+        nodeColors[indexNorth1],
+        ambientColor,
+      );
+    }
+
+    return merge32BitColors(
+      nodeColors[indexNorth1],
+      nodeColors[indexNorth2],
+    );
+  }
+
+  int getColorBeamEast(int index){
+    final column = getColumn(index);
+
+    final indexEast1 = index - 1;
+    final indexEast2 = indexEast1 - 1;
+
+    const blockEast = const [
+      NodeOrientation.Half_East,
+      NodeOrientation.Corner_North_East,
+      NodeOrientation.Corner_South_East,
+    ];
+
+    const blockWest = const [
+      NodeOrientation.Solid,
+      NodeOrientation.Half_West,
+      NodeOrientation.Corner_North_West,
+      NodeOrientation.Corner_South_West,
+    ];
+
+    if (
+      column - 1 < 0 ||
+      blockEast.contains(nodeOrientations[index]) ||
+      blockWest.contains(nodeOrientations[indexEast1])
+    ) {
+      return merge32BitColors(
+        nodeColors[index],
+        ambientColor,
+      );
+      // return nodeColors[index];
+    }
+
+    if (
+      column - 2 < 0 ||
+      blockEast.contains(nodeOrientations[indexEast1]) ||
+      blockWest.contains(nodeOrientations[indexEast2])
+    ) {
+      return merge32BitColors(
+        nodeColors[indexEast1],
+        ambientColor,
+      );
+      // return nodeColors[indexEast1];
+    }
+
+    return merge32BitColors(
+      nodeColors[indexEast1],
+      nodeColors[indexEast2],
+    );
+  }
+
+  int getColorBeamWest(int index){
+    final column = getColumn(index);
+
+    final indexWest1 = index + 1;
+    final indexWest2 = indexWest1 + 1;
+
+    const blockEast = const [
+      NodeOrientation.Half_West,
+      NodeOrientation.Corner_North_West,
+      NodeOrientation.Corner_South_West,
+    ];
+
+    const blockWest = const [
+      NodeOrientation.Solid,
+      NodeOrientation.Half_East,
+      NodeOrientation.Corner_North_East,
+      NodeOrientation.Corner_South_East,
+    ];
+
+    if (
+      column + 1 >= totalColumns ||
+      blockEast.contains(nodeOrientations[index]) ||
+      blockWest.contains(nodeOrientations[indexWest1])
+    ) {
+      // return nodeColors[index];
+      return merge32BitColors(
+        nodeColors[index],
+        ambientColor,
+      );
+    }
+
+    if (
+      column + 2 >= totalColumns ||
+      blockEast.contains(nodeOrientations[indexWest1]) ||
+      blockWest.contains(nodeOrientations[indexWest2])
+    ) {
+      return merge32BitColors(
+        nodeColors[indexWest1],
+        ambientColor,
+      );
+      // return nodeColors[indexWest1];
+    }
+
+    return merge32BitColors(
+      nodeColors[indexWest1],
+      nodeColors[indexWest2],
+    );
+  }
+
+  int getColorBeamSouth(int index){
+    final row = getRow(index);
+
+    final indexSouth1 = index + totalColumns;
+    final indexSouth2 = indexSouth1 + totalColumns;
+
+    const blockNorth = const [
+      NodeOrientation.Half_South,
+      NodeOrientation.Corner_South_East,
+      NodeOrientation.Corner_South_West,
+    ];
+
+    const blockSouth = const [
+      NodeOrientation.Solid,
+      NodeOrientation.Half_North,
+      NodeOrientation.Corner_North_East,
+      NodeOrientation.Corner_North_West,
+    ];
+
+    if (
+      row + 1 >= totalRows ||
+      blockNorth.contains(nodeOrientations[index]) ||
+      blockSouth.contains(nodeOrientations[indexSouth1])
+    ) {
+      return merge32BitColors(
+        nodeColors[index],
+        ambientColor,
+      );
+      // return nodeColors[index];
+    }
+
+    if (
+      row + 2 >= totalRows ||
+      blockNorth.contains(nodeOrientations[indexSouth1]) ||
+      blockSouth.contains(nodeOrientations[indexSouth2])
+    ) {
+      return merge32BitColors(
+        nodeColors[indexSouth1],
+        ambientColor,
+      );
+      // return nodeColors[indexSouth1];
+    }
+
+    return merge32BitColors(
+      nodeColors[indexSouth1],
+      nodeColors[indexSouth2],
+    );
+  }
+
 }
