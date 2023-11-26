@@ -109,9 +109,9 @@ class IsometricCompositor with IsometricComponent {
       }
 
       // this.order = nextOrder.toInt();
-      next.renderNext(engine, images);
+      // next.renderNext(engine, images);
 
-      if (next.remaining) {
+      if (next.renderNext(engine, images)) {
         if (next == nodes){
           continue;
         }
