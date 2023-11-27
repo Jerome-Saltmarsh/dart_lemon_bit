@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:typed_data';
 
 import '../isometric_engine.dart';
@@ -328,7 +329,7 @@ class Character extends Collider {
 
   void faceXY(double x, double y) {
     if (deadOrBusy) return;
-    angle = getAngleXY(x, y);
+    angle = getAngleXY(x, y) + pi;
   }
 
   void lookAtXY(double x, double y) {
