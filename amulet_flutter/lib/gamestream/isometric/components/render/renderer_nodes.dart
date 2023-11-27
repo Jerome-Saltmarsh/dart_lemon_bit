@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+import 'package:amulet_flutter/functions/interpolate_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_nodes_y.dart';
@@ -639,9 +640,9 @@ class RendererNodes extends RenderGroup {
     }
 
     if (lightningFlashing) {
-      final lightningColorMax = lerpColors(colors.white.value, 0, environment.brightness);
-      final ambientBrightness = lerpColors(scene.ambientColor, 0, environment.brightness);
-      lightningColor = lerpColors(ambientBrightness, lightningColorMax, environment.lightningFlashing01 * goldenRatio_0618);
+      final lightningColorMax = interpolateColors(colors.white.value, 0, environment.brightness);
+      final ambientBrightness = interpolateColors(scene.ambientColor, 0, environment.brightness);
+      lightningColor = interpolateColors(ambientBrightness, lightningColorMax, environment.lightningFlashing01 * goldenRatio_0618);
     }
 
     totalNodes = scene.totalNodes;

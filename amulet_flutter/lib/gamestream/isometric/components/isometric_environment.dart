@@ -1,8 +1,8 @@
 
+import 'package:amulet_flutter/functions/pyramid.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:amulet_flutter/packages/common.dart';
-import 'package:lemon_math/src.dart';
 import 'package:lemon_watch/src.dart';
 
 import 'isometric_audio.dart';
@@ -37,7 +37,7 @@ class IsometricEnvironment with IsometricComponent {
 
   /// 0 at night is 0
   /// 12 at day is 1
-  double get brightness => parabola(currentTimeInSeconds / Duration.secondsPerDay);
+  double get brightness => pyramid(currentTimeInSeconds / Duration.secondsPerDay);
 
   double get windLineRenderX {
     var windLineColumn = 0;

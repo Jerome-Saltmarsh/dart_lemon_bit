@@ -1,4 +1,4 @@
-
 ## Install
-
-mklink /J "C:\Users\Jerome\github\bleed\amulet_engine\lib\packages\isometric_engine" "C:\Users\Jerome\github\bleed\isometric_engine\lib"
+rmdir /s /q "C:\Users\Jerome\github\amulet\amulet_engine\lib\packages\isometric_engine" &
+mklink /J "C:\Users\Jerome\github\amulet\amulet_engine\lib\packages\isometric_engine" "C:\Users\Jerome\github\amulet\isometric_engine\lib" &
+pause

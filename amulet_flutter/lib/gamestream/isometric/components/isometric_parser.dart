@@ -7,7 +7,7 @@ import 'package:amulet_flutter/amulet/amulet_parser.dart';
 import 'package:amulet_flutter/isometric/classes/character.dart';
 import 'package:amulet_flutter/isometric/classes/position.dart';
 import 'package:amulet_flutter/isometric/classes/projectile.dart';
-import 'package:amulet_flutter/packages/lemon_bits.dart';
+import 'package:amulet_flutter/packages/lemon_bits/src.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';

@@ -1,4 +1,5 @@
 
+import 'dart:math';
 import 'dart:typed_data';
 
 import '../isometric_engine.dart';
@@ -1087,7 +1088,7 @@ class IsometricPlayer extends Character with ByteWriter {
 
   void lookAtMouse(){
     if (deadOrBusy) return;
-    angle = mouseAngle;
+    angle = mouseAngle + pi;
   }
 
   void onChangedAimTarget(){

@@ -1,4 +1,5 @@
 
+import 'package:amulet_flutter/functions/interpolate_colors.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/particle_whisp.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_particles.dart';
 import 'package:amulet_flutter/packages/common/src/particle_type.dart';

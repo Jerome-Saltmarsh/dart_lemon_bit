@@ -1,5 +1,4 @@
-
-library src;
+library;
 
 export 'degrees_to_radians.dart';
 export 'pi2.dart';

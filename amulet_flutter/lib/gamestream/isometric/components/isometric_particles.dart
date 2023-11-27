@@ -2,6 +2,7 @@
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:amulet_flutter/functions/pyramid.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/particle_flying.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/particle_glow.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/particle_roam.dart';
@@ -705,7 +706,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
     }
 
     if (particleType == ParticleType.Wind){
-       final vHorizontal = (-(1.0 - parabola(particle.duration01)) * 10) + 2.5;
+       final vHorizontal = (-(1.0 - pyramid(particle.duration01)) * 10) + 2.5;
        particle.vx = vHorizontal;
        particle.vy = -vHorizontal;
     }

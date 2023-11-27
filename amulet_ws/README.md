@@ -10,9 +10,8 @@ flutter build web --web-renderer canvaskit --release
 dart compile exe bin/server.dart -o /tmp/bleed-server
 dart compile exe bin/server.dart -o /tmp/bleed-server.exe
 
-# Symbolic Hard Link
-mklink /J common C:\Users\Jerome\github\bleed\bleed-common\lib
-mklink /J math C:\Users\Jerome\github\bleed\dart-lemon-math\lib
+# Install
+rmdir /s /q "C:\Users\Jerome\github\amulet\packages\amulet_engine" &
 
 mklink /J "C:\Users\Jerome\github\bleed\gamestream_server\lib\packages\gamestream_http_client" "C:\Users\Jerome\github\bleed\gamestream_http_client\lib"
 

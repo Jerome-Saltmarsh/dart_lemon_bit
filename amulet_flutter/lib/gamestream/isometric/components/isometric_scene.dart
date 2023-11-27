@@ -3,6 +3,14 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:amulet_engine/packages/isometric_engine/packages/lemon_math/src/functions/random_byte.dart';
+import 'package:amulet_flutter/functions/get_alpha.dart';
+import 'package:amulet_flutter/functions/get_blue.dart';
+import 'package:amulet_flutter/functions/get_green.dart';
+import 'package:amulet_flutter/functions/get_red.dart';
+import 'package:amulet_flutter/functions/get_rgb.dart';
+import 'package:amulet_flutter/functions/interpolate_byte.dart';
+import 'package:amulet_flutter/functions/set_alpha.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/particle_roam.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:amulet_flutter/gamestream/isometric/consts/map_projectile_type_to_emission_ambient.dart';
@@ -167,7 +175,7 @@ class IsometricScene with IsometricComponent implements Updatable {
   }
 
   void assignInterpolations() {
-    interpolations = Float32List.fromList(interpolateEaseType(
+    interpolations = Float32List.fromList(interpolateEase(
       length: interpolationLength,
       easeType: interpolationEaseType.value,
     ));
@@ -183,7 +191,7 @@ class IsometricScene with IsometricComponent implements Updatable {
 
     ambientResetIndex = 0;
     _ambientAlpha = clampedValue;
-    ambientColor = setAlpha(color: ambientColor, alpha: clampedValue);
+    ambientColor = setAlpha(ambientColor, clampedValue);
   }
 
   // TODO Optimize
@@ -745,7 +753,7 @@ class IsometricScene with IsometricComponent implements Updatable {
       return;
     }
     ambientStack[ambientStackIndex] = index;
-    nodeColors[index] = setAlpha(color: currentColor, alpha: alpha);
+    nodeColors[index] = setAlpha(currentColor, alpha);
   }
 
   // void updateCharacterColors(){

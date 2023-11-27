@@ -1,7 +1,10 @@
 [INSTALL]
-mklink /J "C:\Users\Jerome\github\bleed\amulet_flutter\lib\packages\common" "C:\Users\Jerome\github\bleed\isometric_common\lib"
+rmdir /s /q "C:\Users\Jerome\github\amulet\amulet_flutter\scenes" &
+mklink /J "C:\Users\Jerome\github\amulet\amulet_flutter\scenes" "C:\Users\Jerome\github\amulet\amulet_ws\scenes" &
 
-mklink /J "C:\Users\Jerome\github\bleed\amulet_flutter\scenes" "C:\Users\Jerome\github\bleed\amulet_ws\scenes"
+rmdir /s /q "C:\Users\Jerome\github\amulet\amulet_flutter\lib\packages\lemon_bits" &
+mklink /J "C:\Users\Jerome\github\amulet\amulet_flutter\lib\packages\lemon_bits" "C:\Users\Jerome\github\amulet\tools\lemon_bits\lib" &
+pause
 
 [COMMANDS]
 flutter build web --web-renderer canvaskit --release
@@ -13,7 +16,6 @@ ctrl + w                : minimal mode
 ctrl + shift + e        : view recent changes
 alt + m                 : go to declaration
 ctrl + []               : move caret to code block
-
 
 ## TODO
 * [fix]: offline for web

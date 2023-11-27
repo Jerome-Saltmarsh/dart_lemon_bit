@@ -34,16 +34,13 @@ dependencies:
   lemon_widgets:
     path: ..\lemon_widgets
   lemon_math:
-    path: ..\dart-lemon-math
+    path: ..\tools\lemon_math
   lemon_byte:
     path: C:\Users\Jerome\github\dart-lemon-byte
   lemon_engine:
     path: ..\dart-lemon-engine
   gamestream_http_client:
     path: ..\gamestream_http_client
-
-dev_dependencies:
-  test: ^1.16.0
 
 flutter:
   fonts:

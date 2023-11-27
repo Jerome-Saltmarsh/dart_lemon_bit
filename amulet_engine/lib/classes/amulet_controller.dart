@@ -859,11 +859,13 @@ class AmuletController {
 
     final gameObjectRequestIndex = parseArg2(arguments);
 
-    if (gameObjectRequestIndex == null)
+    if (gameObjectRequestIndex == null) {
       return errorInvalidClientRequest();
+    }
 
-    if (!isValidIndex(gameObjectRequestIndex, gameObjectRequests))
+    if (!isValidIndex(gameObjectRequestIndex, gameObjectRequests)) {
       return errorInvalidClientRequest();
+    }
 
     final gameObjectRequest = gameObjectRequests[gameObjectRequestIndex];
     final selectedGameObject = player.editorSelectedGameObject;
@@ -914,12 +916,15 @@ class AmuletController {
       case IsometricEditorGameObjectRequest.Add:
         final index = parseArg3(arguments);
         final type = parseArg4(arguments);
-        if (index == null)
+        if (index == null) {
           return;
-        if (type == null)
+        }
+        if (type == null) {
           return;
-        if (index < 0)
+        }
+        if (index < 0) {
           return errorInvalidClientRequest();
+        }
 
         final scene = player.game.scene;
         if (index >= scene.volume) {
@@ -1133,8 +1138,9 @@ class AmuletController {
     switch (environmentRequest) {
       case NetworkRequestEnvironment.Set_Myst:
         final mystType = parseArg2(arguments);
-        if (mystType == null)
+        if (mystType == null) {
           return;
+        }
 
         if (!isValidIndex(mystType, MystType.values)){
           return;
@@ -1144,8 +1150,9 @@ class AmuletController {
 
       case NetworkRequestEnvironment.Set_Lightning:
         final type = parseArg2(arguments);
-        if (type == null)
+        if (type == null) {
           return;
+        }
 
         if (!isValidIndex(type, LightningType.values)){
           return;
@@ -1200,7 +1207,7 @@ class AmuletController {
     final compress1 = parser.readByte();
     final compress2 = parser.readByte();
 
-    final changeMouseWorldX = compress1 & Hex00000011;
+    final changeMouseWorldX = compress1 &  0x03;
     final changeMouseWorldY = (compress1 & Hex00001100) >> 2;
     final changeScreenLeft = compress2 & Hex00000011;
     final changeScreenTop = (compress2 & Hex00001100) >> 2;
