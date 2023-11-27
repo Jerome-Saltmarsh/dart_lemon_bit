@@ -1,0 +1,3 @@
+[submodule "tools/lemon_engine"]
+	path = tools/lemon_engine
+	url = https://github.com/Jerome-Saltmarsh/dart-lemon-engine.git
