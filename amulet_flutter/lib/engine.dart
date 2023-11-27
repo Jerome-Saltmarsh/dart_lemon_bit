@@ -80,6 +80,11 @@ class AppleEngine extends LemonEngine {
 
   @override
   void onKeyPressed(int keyCode) {
+
+    if (keyCode == KeyCode.Escape){
+      components.engine.fullscreenToggle();
+    }
+
     components.options.game.value.onKeyPressed(keyCode);
   }
 }

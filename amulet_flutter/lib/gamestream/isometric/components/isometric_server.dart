@@ -1,11 +1,13 @@
 
 import 'package:amulet_flutter/classes/local_server.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
+import 'package:amulet_flutter/gamestream/isometric/enums/mode.dart';
 import 'package:amulet_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:amulet_flutter/isometric/classes/gameobject.dart';
 import 'package:amulet_flutter/packages/common.dart';
 import 'package:amulet_flutter/packages/lemon_websocket_client.dart';
 import 'package:amulet_flutter/types/server_mode.dart';
+import 'package:lemon_engine/lemon_engine.dart';
 
 class IsometricServer with IsometricComponent {
 
@@ -34,9 +36,7 @@ class IsometricServer with IsometricComponent {
       onDone: options.onWebsocketNetworkDone,
     );
 
-    websocket.connectionStatus.onChanged(
-        events.onChangedNetworkConnectionStatus
-    );
+    websocket.connectionStatus.onChanged(onChangedWebsocketConnectionStatus);
   }
 
   void sendIsometricRequestRevive() =>
@@ -156,7 +156,8 @@ class IsometricServer with IsometricComponent {
   }
 
   void disconnect() {
-    switch (serverMode){
+    clearState();
+    switch (serverMode) {
       case ServerMode.local:
         localServer.disconnect();
         break;
@@ -165,5 +166,84 @@ class IsometricServer with IsometricComponent {
         break;
     }
   }
+
+  void onChangedWebsocketConnectionStatus(ConnectionStatus connection) {
+    print('isometricServer.onChangedWebsocketConnectionStatus($connection)');
+    // server.parser.bufferSize.value = 0;
+
+    switch (connection) {
+      case ConnectionStatus.Connected:
+        onWebsocketConnected();
+        break;
+      case ConnectionStatus.Done:
+        onWebsocketConnectionDone();
+        break;
+      case ConnectionStatus.Failed_To_Connect:
+        onWebsocketFailedToConnect();
+        break;
+      case ConnectionStatus.Invalid_Connection:
+        onWebsocketInvalidConnection();
+        break;
+      case ConnectionStatus.Error:
+        onWebsocketConnectionError();
+        break;
+      default:
+        break;
+    }
+  }
+
+  void onWebsocketConnectionError() {
+    ui.error.value = 'Connection Error';
+    options.game.value = options.website;
+  }
+
+  void onWebsocketInvalidConnection() {
+    ui.error.value = 'Invalid Connection';
+  }
+
+  void onWebsocketFailedToConnect() {
+    ui.error.value = 'Failed to connect';
+  }
+
+  void onWebsocketConnected() {
+    onServerConnectionEstablished();
+  }
+
+  void onServerConnectionEstablished() {
+    options.mode.value = Mode.Play;
+    options.game.value = options.amulet;
+    options.setModePlay();
+    options.activateCameraPlay();
+    engine.zoomOnScroll = true;
+    engine.zoom = 1.0;
+    engine.targetZoom = 1.0;
+    audio.enabledSound.value = true;
+    camera.target = options.cameraPlay;
+    if (!engine.isLocalHost) {
+      engine.fullScreenEnter();
+    }
+  }
+
+  void onWebsocketConnectionDone() {
+    clearState();
+  }
+
+  void clearState(){
+    io.reset();
+    options.game.value = options.website;
+    engine.cameraX = 0;
+    engine.cameraY = 0;
+    engine.zoom = 1.0;
+    engine.drawCanvasAfterUpdate = true;
+    engine.cursorType.value = CursorType.Basic;
+    engine.fullScreenExit();
+    player.active.value = false;
+    actions.clear();
+    actions.clean();
+    scene.gameObjects.clear();
+    scene.editEnabled.value = false;
+    audio.enabledSound.value = false;
+  }
+
 }
 

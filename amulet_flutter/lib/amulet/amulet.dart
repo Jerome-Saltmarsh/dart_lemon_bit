@@ -4,7 +4,6 @@ import 'dart:ui';
 
 import 'package:amulet_flutter/amulet/amulet_ui.dart';
 import 'package:amulet_flutter/packages/common.dart';
-import 'package:amulet_flutter/packages/lemon_websocket_client/connection_status.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
@@ -13,14 +12,11 @@ import 'package:amulet_flutter/gamestream/isometric/classes/isometric_game.dart'
 import 'package:amulet_flutter/isometric/classes/position.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
-import '../gamestream/isometric/enums/mode.dart';
 import 'amulet_render.dart';
 import 'dart:ui' as ui;
 
 
 class Amulet extends IsometricGame {
-
-  // final worldMapFrame = ValueNotifier(0);
 
   var worldMapClrs = Int32List(0);
   var worldMapDsts = Float32List(0);
@@ -375,16 +371,6 @@ class Amulet extends IsometricGame {
   //   print('amulet.onChangedCameraTargetSet("$cameraTargetSet")');
   //   options.setCameraPlay(cameraTargetSet ? cameraTarget : player.position);
   // }
-
-  void onChangedNetworkConnectionStatus(ConnectionStatus connection) {
-     switch (connection){
-       case ConnectionStatus.Connected:
-         options.mode.value = Mode.Play;
-         break;
-       default:
-         break;
-     }
-  }
 
   void onNetworkDone() {
       clearAmuletScene();

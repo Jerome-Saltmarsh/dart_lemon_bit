@@ -33,8 +33,6 @@ To run this locally add the following arguments when running main.
 By assigning the database to http this tells the app to connect to the database via a http connection
 over the internet instead of directly as done by apps deploy on google cloud.
 
-
-
 [SCENE]
 Player Spawns in magestically
 

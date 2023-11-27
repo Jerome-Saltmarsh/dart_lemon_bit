@@ -2,8 +2,6 @@
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:amulet_flutter/packages/common.dart';
 import 'package:amulet_flutter/packages/common/src/isometric/node_type_material.dart';
-import 'package:amulet_flutter/packages/lemon_websocket_client.dart';
-import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
 
 class IsometricEvents with IsometricComponent {
@@ -582,65 +580,6 @@ class IsometricEvents with IsometricComponent {
 
       case GameObjectType.Credits:
         break;
-    }
-  }
-
-  void onChangedNetworkConnectionStatus(ConnectionStatus connection) {
-    print('isometric.onChangedNetworkConnectionStatus($connection)');
-    server.parser.bufferSize.value = 0;
-    amulet.onChangedNetworkConnectionStatus(connection);
-    io.reset();
-
-    switch (connection) {
-      case ConnectionStatus.Connected:
-        onConnected();
-        break;
-
-      case ConnectionStatus.Done:
-        onConnectionDone();
-        break;
-      case ConnectionStatus.Failed_To_Connect:
-        ui.error.value = 'Failed to connect';
-        break;
-      case ConnectionStatus.Invalid_Connection:
-        ui.error.value = 'Invalid Connection';
-        break;
-      case ConnectionStatus.Error:
-        ui.error.value = 'Connection Error';
-        options.game.value = options.website;
-        break;
-      default:
-        break;
-    }
-  }
-
-  void onConnectionDone() {
-    options.game.value = options.website;
-    engine.cameraX = 0;
-    engine.cameraY = 0;
-    engine.zoom = 1.0;
-    engine.drawCanvasAfterUpdate = true;
-    engine.cursorType.value = CursorType.Basic;
-    engine.fullScreenExit();
-    player.active.value = false;
-    actions.clear();
-    actions.clean();
-    scene.gameObjects.clear();
-    scene.editEnabled.value = false;
-    audio.enabledSound.value = false;
-  }
-
-  void onConnected() {
-    options.game.value = options.amulet;
-    options.setModePlay();
-    options.activateCameraPlay();
-    engine.zoomOnScroll = true;
-    engine.zoom = 1.0;
-    engine.targetZoom = 1.0;
-    audio.enabledSound.value = true;
-    camera.target = options.cameraPlay;
-    if (!engine.isLocalHost) {
-      engine.fullScreenEnter();
     }
   }
 

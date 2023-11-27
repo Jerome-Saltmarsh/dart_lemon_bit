@@ -63,7 +63,8 @@ class LocalServer {
     controller.player.maxHealth =  10;
     controller.player.health = 10;
     controller.player.active = true;
-    parser.events.onConnected();
+    amulet.resumeUpdateTimer();
+    parser.server.onServerConnectionEstablished();
   }
 
   void disconnect() {
