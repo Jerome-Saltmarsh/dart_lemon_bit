@@ -24,6 +24,15 @@ mklink /J "C:\Users\Jerome\github\bleed\amulet_ws\lib\packages\isometric_engine"
 mklink /J "C:\Users\Jerome\github\bleed\amulet_ws\lib\packages\amulet_engine" "C:\Users\Jerome\github\bleed\amulet_engine\lib"
 
 
+# IDE PROGRAM ARGUMENTS (IMPORTANT!)
+By default the application will assume that it is being deployed on google cloud.
+To run this locally add the following arguments when running main.
+
+--database http --admin
+
+By assigning the database to http this tells the app to connect to the database via a http connection
+over the internet instead of directly as done by apps deploy on google cloud.
+
 
 
 [SCENE]

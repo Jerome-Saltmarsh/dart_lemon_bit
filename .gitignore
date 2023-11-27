@@ -2,10 +2,9 @@
 .dart_tool/
 .packages
 .idea
-
 # Conventional directory for build output.
 build/
-
+packages/
 # See https://www.dartlang.org/guides/libraries/private-files
 
 # Files and directories created by pub
