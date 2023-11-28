@@ -74,8 +74,19 @@ extension WebsiteUI on WebsiteGame {
       builder: (context, setState) {
 
         if (showCreateCharacter){
-          return DialogCreateCharacterComputer(
-            createCharacter: server.createCharacter,
+          return Column(
+            children: [
+              onPressed(
+                action: () {
+                  showCreateCharacter = false;
+                  setState((){});
+                },
+                child: buildText('BACK'),
+              ),
+              DialogCreateCharacterComputer(
+                createCharacter: server.createCharacter,
+              ),
+            ],
           );
         }
 
@@ -84,11 +95,11 @@ extension WebsiteUI on WebsiteGame {
             buildBorder(child: buildText('CHARACTERS')),
             Column(
                 children: server.userServiceLocal
-                    .getCharacterNames()
-                    .map((characterName) => onPressed(
+                    .getCharacters()
+                    .map((character) => onPressed(
                       action: () =>
-                          server.userServiceLocal.loadCharacter(characterName),
-                      child: buildText(characterName)))
+                          server.userServiceLocal.loadCharacter(character),
+                      child: buildText(character.getString('name'))))
                     .toList(growable: false)
             ),
             onPressed(

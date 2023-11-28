@@ -3,13 +3,11 @@
 import 'dart:convert';
 
 import 'package:amulet_engine/classes/amulet.dart';
-import 'package:amulet_engine/packages/isometric_engine/packages/type_def/json.dart';
 import 'package:amulet_engine/src.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:amulet_engine/classes/amulet_controller.dart';
-import 'package:amulet_engine/classes/amulet_player.dart';
 import 'package:amulet_flutter/classes/amulet_scenes_flutter.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_parser.dart';
+import 'package:typedef/json.dart';
 
 import 'user_service.dart';
 
@@ -34,14 +32,19 @@ class UserServiceLocal implements UserService {
 
   void initialize(SharedPreferences sharedPreferences){
     this.sharedPreferences = sharedPreferences;
+    // sharedPreferences.clear();
   }
 
-  List<String> getCharacterNames() {
-    return sharedPreferences.getStringList(FIELD_CHARACTERS) ?? [];
-  }
+  List<Json> getCharacters() =>
+      (sharedPreferences.getStringList(FIELD_CHARACTERS) ?? [])
+        .map(jsonDecode)
+        .cast<Json>()
+        .toList(growable: true);
 
-  void saveCharacterNames(List<String> names) =>
-      sharedPreferences.setStringList(FIELD_CHARACTERS, names);
+  List<String> getCharacterNames() =>
+      getCharacters()
+        .map((character) => character.getString('name'))
+        .toList(growable: false);
 
   void onFixedUpdate() {
     if (!amuletLoaded){
@@ -105,9 +108,8 @@ class UserServiceLocal implements UserService {
     required int gender,
     required int headType,
   }) {
-    final characterNames = getCharacterNames();
-    if (characterNames.contains(name)){
-      throw Exception('character with that name already exists');
+    if (name == FIELD_CHARACTERS) {
+      throw Exception('invalid field name');
     }
 
     playerJoin().then((value) {
@@ -126,20 +128,25 @@ class UserServiceLocal implements UserService {
       parser.server.onServerConnectionEstablished();
       connected = true;
       final json = mapIsometricPlayerToJson(player);
-      final jsonString = jsonEncode(json);
-      sharedPreferences.setString(name, jsonString);
-      characterNames.add(name);
-      saveCharacterNames(characterNames);
+      final characters = getCharacters();
+      characters.add(json);
+      final characterStrings = characters.map(jsonEncode).toList(growable: false);
+      sharedPreferences.setStringList(FIELD_CHARACTERS, characterStrings);
     });
   }
 
-  void loadCharacter(String characterName) {
-    final jsonString = sharedPreferences.getString(characterName);
-    if (jsonString == null) {
-      throw Exception('data missing for $characterName');
+  Json? findCharacterByUuid(String uuid){
+    final characters = getCharacters();
+    for (final character in characters){
+      if (character.getString('uuid') == uuid) {
+        return character;
+      }
     }
-    final json = jsonDecode(jsonString);
-    writeJsonToAmuletPlayer(json, player);
+    return null;
+  }
+
+  void loadCharacter(Json character) {
+    writeJsonToAmuletPlayer(character, player);
     playerJoin().then((value) {
       controller.playerJoinGameTutorial();
       player.regainFullHealth();
