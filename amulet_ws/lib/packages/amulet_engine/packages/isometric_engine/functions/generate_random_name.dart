@@ -1,6 +1,6 @@
 
 
-import '../packages/lemon_math/src/random/random_item.dart';
+import '../packages/lemon_math/src/functions/random_item.dart';
 
 String generateRandomName() {
 

@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:amulet_engine/classes/amulet.dart';
 import 'package:amulet_engine/packages/isometric_engine/packages/type_def/json.dart';
+import 'package:amulet_engine/src.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:amulet_engine/classes/amulet_controller.dart';
 import 'package:amulet_engine/classes/amulet_player.dart';
@@ -108,16 +109,6 @@ class UserServiceLocal implements UserService {
     if (characterNames.contains(name)){
       throw Exception('character with that name already exists');
     }
-    characterNames.add(name);
-    saveCharacterNames(characterNames);
-    final json = Json();
-    json['complexion'] = complexion;
-    json['hairType'] = hairType;
-    json['hairColor'] = hairColor;
-    json['gender'] = gender;
-    json['headType'] = headType;
-    final jsonString = jsonEncode(json);
-    sharedPreferences.setString(name, jsonString);
 
     playerJoin().then((value) {
       player.name = name;
@@ -134,8 +125,28 @@ class UserServiceLocal implements UserService {
       amulet.resumeUpdateTimer();
       parser.server.onServerConnectionEstablished();
       connected = true;
+      final json = mapIsometricPlayerToJson(player);
+      final jsonString = jsonEncode(json);
+      sharedPreferences.setString(name, jsonString);
+      characterNames.add(name);
+      saveCharacterNames(characterNames);
     });
+  }
 
+  void loadCharacter(String characterName) {
+    final jsonString = sharedPreferences.getString(characterName);
+    if (jsonString == null) {
+      throw Exception('data missing for $characterName');
+    }
+    final json = jsonDecode(jsonString);
+    writeJsonToAmuletPlayer(json, player);
+    playerJoin().then((value) {
+      controller.playerJoinGameTutorial();
+      player.regainFullHealth();
+      amulet.resumeUpdateTimer();
+      parser.server.onServerConnectionEstablished();
+      connected = true;
+    });
   }
 }
 

@@ -11,6 +11,7 @@ import 'amulet_game.dart';
 import 'amulet_game_town.dart';
 import 'amulet_game_tutorial.dart';
 import 'amulet_player.dart';
+import 'amulet_scenes.dart';
 
 class Amulet {
 

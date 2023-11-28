@@ -69,7 +69,6 @@ mixin class ByteReader {
     return utf8.decode(values.sublist(start, start + length));
   }
 
-
   Uint8List readBytes(int length) {
     final bytes = Uint8List.view(Uint8List.fromList(values).buffer, index, length);
     index += length;

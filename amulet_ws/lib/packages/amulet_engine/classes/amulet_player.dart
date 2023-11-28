@@ -121,7 +121,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     final weapon = equippedWeapon;
     if (weapon == null){
        return -1;
-    };
+    }
     final item = weapon.amuletItem;
 
     if (item == null){

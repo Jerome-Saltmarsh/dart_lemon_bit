@@ -11,9 +11,8 @@ dart compile exe bin/server.dart -o /tmp/bleed-server
 dart compile exe bin/server.dart -o /tmp/bleed-server.exe
 
 # Install
-rmdir /s /q "C:\Users\Jerome\github\amulet\packages\amulet_engine" &
-
-mklink /J "C:\Users\Jerome\github\bleed\gamestream_server\lib\packages\gamestream_http_client" "C:\Users\Jerome\github\bleed\gamestream_http_client\lib"
+rmdir /s /q "C:\Users\Jerome\github\amulet\amulet_ws\lib\packages\amulet_engine" &
+mklink /J "C:\Users\Jerome\github\amulet\amulet_ws\lib\packages\amulet_engine" "C:\Users\Jerome\github\amulet\amulet_engine\lib"
 
 mklink /J "C:\Users\Jerome\github\bleed\gamestream_server\lib\packages\gamestream_firestore" "C:\Users\Jerome\github\bleed\gamestream_firestore\lib"
 

@@ -62,10 +62,6 @@ extension WebsiteUI on WebsiteGame {
       children: [
         buildTogglePlayMode(),
         buildColumnSelectSinglePlayerCharacter(),
-        onPressed(
-          action: server.userServiceLocal.playerJoin,
-          child: buildText('NEW CHARACTER'),
-        ),
       ],
     );
   }
@@ -89,7 +85,10 @@ extension WebsiteUI on WebsiteGame {
             Column(
                 children: server.userServiceLocal
                     .getCharacterNames()
-                    .map((characterName) => buildText(characterName))
+                    .map((characterName) => onPressed(
+                      action: () =>
+                          server.userServiceLocal.loadCharacter(characterName),
+                      child: buildText(characterName)))
                     .toList(growable: false)
             ),
             onPressed(

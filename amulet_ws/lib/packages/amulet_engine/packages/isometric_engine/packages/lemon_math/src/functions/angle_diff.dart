@@ -2,13 +2,7 @@ import 'dart:math';
 
 import '../constants/pi2.dart';
 
-num angleDiff(double angleA, double angleB) {
-  final diff = (angleA - angleB).abs();
-  if (diff < pi) {
-    return diff;
-  }
-  return pi2 - diff;
+double angleDiff(double radianA, double radianB) {
+  final diff = (radianB - radianA + pi) % pi2 - pi;
+  return ((diff < -pi ? diff + 2 * pi : diff) + pi) % pi2;
 }
-
-num radianDiff(double angleA, double angleB) =>
-    ((angleA - angleB) + pi) % (pi2) - pi;
