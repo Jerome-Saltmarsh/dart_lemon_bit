@@ -37,7 +37,37 @@ extension WebsiteUI on WebsiteGame {
             websitePage,
             (websitePage) => switch (websitePage) {
                   WebsitePage.Select_Character =>
-                    buildWebsitePageSelectCharacter(),
+                      WatchBuilder(options.region, (ConnectionRegion? region) {
+
+                        if (serverMode == ServerMode.remote && region == null) {
+                          return buildWebsitePageSelectRegion(
+                            options: options,
+                            website: website,
+                            engine: engine,
+                          );
+                        }
+
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            buildTogglePlayMode(),
+                            buildText('AMULET', size: 80, family: 'REBUFFED'),
+                            height32,
+                            if (serverMode == ServerMode.local)
+                               buildTableCharacters(server.userServiceLocal.getCharacters()),
+                            if (serverMode == ServerMode.remote)
+                              buildWatch(userServiceHttp.userId, (userId) {
+                                final authenticated = userId.isNotEmpty;
+                                if (authenticated) {
+                                  return buildContainerAuthenticated();
+                                }
+                                return buildContainerAuthenticate(userServiceHttp);
+                              }),
+                          ],
+                        );
+                      }
+                  ),
                   WebsitePage.New_Character => Column(
                       children: [
                         onPressed(
@@ -229,37 +259,6 @@ extension WebsiteUI on WebsiteGame {
       GameType.Moba: 'images/website/game-isometric.png',
       GameType.Amulet: 'images/website/game-isometric.png',
     }[gameType] ?? ''), fit: BoxFit.fitWidth,);
-
-  Widget buildWebsitePageSelectCharacter() {
-    return WatchBuilder(options.region, (ConnectionRegion? region) {
-
-      if (region == null) {
-        this.websitePage.value = WebsitePage.Select_Region;
-      }
-
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          buildTogglePlayMode(),
-          buildText('AMULET', size: 80, family: 'REBUFFED'),
-          height32,
-          buildPageAuthenticate(),
-        ],
-      );
-    }
-    );
-  }
-
-  Widget buildPageAuthenticate(){
-    return buildWatch(userServiceHttp.userId, (userId) {
-        final authenticated = userId.isNotEmpty;
-        if (authenticated) {
-          return buildContainerAuthenticated();
-        }
-        return buildContainerAuthenticate(userServiceHttp);
-    });
-  }
 
   Widget buildContainerAuthenticated() =>
       GSContainer(
