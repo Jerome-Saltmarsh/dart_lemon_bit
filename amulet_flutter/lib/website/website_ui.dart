@@ -73,7 +73,6 @@ extension WebsiteUI on WebsiteGame {
 
     return StatefulBuilder(
       builder: (context, setState) {
-
         if (showCreateCharacter){
           return Column(
             children: [
@@ -91,28 +90,32 @@ extension WebsiteUI on WebsiteGame {
           );
         }
 
-        return Column(
-          children: [
-            buildBorder(child: buildText('CHARACTERS')),
-            Column(
-                children: server.userServiceLocal
-                    .getCharacters()
-                    .map((character) => onPressed(
-                      action: () =>
-                          server.userServiceLocal.playCharacter(character.uuid),
-                      child: buildText(character.getString('name'))))
-                    .toList(growable: false)
-            ),
-            onPressed(
-              action: () {
-                setState.call((){
-                  showCreateCharacter = true;
-                });
-              },
-              child: buildText('NEW'),
-            ),
-          ],
+        return buildTableCharacters(
+            server.userServiceLocal
+                .getCharacters()
         );
+
+        // return Column(
+        //   children: [
+        //     buildBorder(child: buildText('CHARACTERS')),
+        //     Column(
+        //         children: server.userServiceLocal
+        //             .getCharacters()
+        //             .map((character) => onPressed(
+        //               action: () => server.playCharacter(character),
+        //               child: buildText(character.getString('name'))))
+        //             .toList(growable: false)
+        //     ),
+        //     onPressed(
+        //       action: () {
+        //         setState.call((){
+        //           showCreateCharacter = true;
+        //         });
+        //       },
+        //       child: buildText('NEW'),
+        //     ),
+        //   ],
+        // );
       }
     );
   }
@@ -277,7 +280,7 @@ extension WebsiteUI on WebsiteGame {
               ],
             ),
             height12,
-            buildContainerCharacters(),
+            buildWatch(userServiceHttp.characters, buildTableCharacters),
           ],
         ),
       );
@@ -332,7 +335,7 @@ extension WebsiteUI on WebsiteGame {
      return lockDuration.inSeconds <= durationAutoSave.inSeconds;
   }
 
-  Widget buildContainerCharacters() => GSContainer(
+  Widget buildTableCharacters(List<Json> characters) => GSContainer(
     color: Colors.transparent,
     child: Column(
         children: [
@@ -344,7 +347,7 @@ extension WebsiteUI on WebsiteGame {
               buildBorder(
                 color: Colors.orange,
                 child: onPressed(
-                  action: userServiceHttp.website.showPageNewCharacter,
+                  action: showPageNewCharacter,
                   child: Container(
                       padding: const EdgeInsets.all(4),
                       child: buildText('CREATE NEW', color: Colors.orange)),
@@ -353,10 +356,7 @@ extension WebsiteUI on WebsiteGame {
             ],
           ),
           height12,
-          buildWatch(
-              userServiceHttp.characters,
-              buildCharacters
-          ),
+          buildCharacters(characters),
         ],
       ),
   );

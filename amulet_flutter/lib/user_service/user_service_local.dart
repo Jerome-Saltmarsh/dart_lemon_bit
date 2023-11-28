@@ -24,7 +24,7 @@ class UserServiceLocal implements UserService {
   late final AmuletController controller;
   late final Amulet amulet;
 
-  static const FIELD_CHARACTERS = 'characters';
+  static const FIELD_CHARACTERS = '46700e18-b438-441b-ae2f-9139652901c5';
 
   UserServiceLocal({
     required this.parser,
