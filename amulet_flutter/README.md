@@ -20,10 +20,11 @@ ctrl + []               : move caret to code block
 ## BLOCK
 * [new]: offline character persistence
 * [fix]: render front
-* [fix]: offline for web
+* [fix]: offline support for web
 
 ## TODO
 * [fix]: audio for windows
+* [new]: mobile support
 * [new]: elemental damage
 * [new]: map locations
 * [new]: scene town

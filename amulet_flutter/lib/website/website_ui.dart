@@ -1,8 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:amulet_flutter/gamestream/isometric/components/functions/get_server_mode_text.dart';
-import 'package:amulet_flutter/user_service/character_json.dart';
-import 'package:flutter/material.dart';
 import 'package:amulet_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:amulet_flutter/gamestream/operation_status.dart';
 import 'package:amulet_flutter/gamestream/ui/src.dart';
@@ -15,6 +13,7 @@ import 'package:amulet_flutter/website/enums/website_page.dart';
 import 'package:amulet_flutter/website/functions/build_website_page_select_region.dart';
 import 'package:amulet_flutter/website/website_game.dart';
 import 'package:amulet_flutter/website/widgets/gs_button_region.dart';
+import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
@@ -27,19 +26,36 @@ import 'widgets/dialog_create_character_computer.dart';
 extension WebsiteUI on WebsiteGame {
 
   Widget buildPageWebsiteDesktop() =>
-      buildWatchPlayMode();
+      buildWatchServerMode();
 
-  Widget buildWatchPlayMode() =>
-      WatchBuilder(
-      options.serverMode,
-      (ServerMode? playMode) {
-        if (playMode == null){
+  Widget buildWatchServerMode() =>
+      WatchBuilder(options.serverMode, (ServerMode? serverMode) {
+        if (serverMode == null) {
           return buildPageSelectServerMode();
         }
-
-        return playMode == ServerMode.local
-          ? buildGameModeSinglePlayer()
-          : buildGameModeMultiPlayer();
+        return WatchBuilder(
+            websitePage,
+            (websitePage) => switch (websitePage) {
+                  WebsitePage.Select_Character =>
+                    buildWebsitePageSelectCharacter(),
+                  WebsitePage.New_Character => Column(
+                      children: [
+                        onPressed(
+                          action: () => this.websitePage.value =
+                              WebsitePage.Select_Character,
+                          child: buildText('BACK'),
+                        ),
+                        DialogCreateCharacterComputer(
+                          createCharacter: server.createCharacter,
+                        )
+                      ],
+                    ),
+                  WebsitePage.Select_Region => buildWebsitePageSelectRegion(
+                      options: options,
+                      website: website,
+                      engine: engine,
+                    ),
+                });
       });
 
   Widget buildPageSelectServerMode() => Row(
@@ -58,67 +74,67 @@ extension WebsiteUI on WebsiteGame {
        }).toList(growable: false),
      );
 
-  Widget buildGameModeSinglePlayer(){
-    return Column(
-      children: [
-        buildTogglePlayMode(),
-        buildColumnSelectSinglePlayerCharacter(),
-      ],
-    );
-  }
+  // Widget buildGameModeSinglePlayer(){
+  //   return Column(
+  //     children: [
+  //       buildTogglePlayMode(),
+  //       buildColumnSelectSinglePlayerCharacter(),
+  //     ],
+  //   );
+  // }
 
-  Widget buildColumnSelectSinglePlayerCharacter() {
-
-    var showCreateCharacter = false;
-
-    return StatefulBuilder(
-      builder: (context, setState) {
-        if (showCreateCharacter){
-          return Column(
-            children: [
-              onPressed(
-                action: () {
-                  showCreateCharacter = false;
-                  setState((){});
-                },
-                child: buildText('BACK'),
-              ),
-              DialogCreateCharacterComputer(
-                createCharacter: server.createCharacter,
-              ),
-            ],
-          );
-        }
-
-        return buildTableCharacters(
-            server.userServiceLocal
-                .getCharacters()
-        );
-
-        // return Column(
-        //   children: [
-        //     buildBorder(child: buildText('CHARACTERS')),
-        //     Column(
-        //         children: server.userServiceLocal
-        //             .getCharacters()
-        //             .map((character) => onPressed(
-        //               action: () => server.playCharacter(character),
-        //               child: buildText(character.getString('name'))))
-        //             .toList(growable: false)
-        //     ),
-        //     onPressed(
-        //       action: () {
-        //         setState.call((){
-        //           showCreateCharacter = true;
-        //         });
-        //       },
-        //       child: buildText('NEW'),
-        //     ),
-        //   ],
-        // );
-      }
-    );
-  }
+  // Widget buildColumnSelectSinglePlayerCharacter() {
+  //
+  //   var showCreateCharacter = false;
+  //
+  //   return StatefulBuilder(
+  //     builder: (context, setState) {
+  //       if (showCreateCharacter){
+  //         return Column(
+  //           children: [
+  //             onPressed(
+  //               action: () {
+  //                 showCreateCharacter = false;
+  //                 setState((){});
+  //               },
+  //               child: buildText('BACK'),
+  //             ),
+  //             DialogCreateCharacterComputer(
+  //               createCharacter: server.createCharacter,
+  //             ),
+  //           ],
+  //         );
+  //       }
+  //
+  //       return buildTableCharacters(
+  //           server.userServiceLocal
+  //               .getCharacters()
+  //       );
+  //
+  //       // return Column(
+  //       //   children: [
+  //       //     buildBorder(child: buildText('CHARACTERS')),
+  //       //     Column(
+  //       //         children: server.userServiceLocal
+  //       //             .getCharacters()
+  //       //             .map((character) => onPressed(
+  //       //               action: () => server.playCharacter(character),
+  //       //               child: buildText(character.getString('name'))))
+  //       //             .toList(growable: false)
+  //       //     ),
+  //       //     onPressed(
+  //       //       action: () {
+  //       //         setState.call((){
+  //       //           showCreateCharacter = true;
+  //       //         });
+  //       //       },
+  //       //       child: buildText('NEW'),
+  //       //     ),
+  //       //   ],
+  //       // );
+  //     }
+  //   );
+  // }
 
   Widget buildTogglePlayMode() {
     return WatchBuilder(options.serverMode, (activePlayMode) {
@@ -138,22 +154,6 @@ extension WebsiteUI on WebsiteGame {
           );
         }).toList(growable: false),
       );
-    });
-  }
-
-  Widget buildGameModeMultiPlayer() {
-    return WatchBuilder(websitePage, (websitePage) =>
-    switch (websitePage) {
-      WebsitePage.User => buildWebsitePageUser(),
-      WebsitePage.New_Character => DialogCreateCharacterComputer(
-        createCharacter: server.createCharacter,
-      ),
-      WebsitePage.Select_Region =>
-          buildWebsitePageSelectRegion(
-            options: options,
-            website: website,
-            engine: engine,
-          ),
     });
   }
 
@@ -230,7 +230,7 @@ extension WebsiteUI on WebsiteGame {
       GameType.Amulet: 'images/website/game-isometric.png',
     }[gameType] ?? ''), fit: BoxFit.fitWidth,);
 
-  Widget buildWebsitePageUser() {
+  Widget buildWebsitePageSelectCharacter() {
     return WatchBuilder(options.region, (ConnectionRegion? region) {
 
       if (region == null) {
@@ -244,14 +244,14 @@ extension WebsiteUI on WebsiteGame {
           buildTogglePlayMode(),
           buildText('AMULET', size: 80, family: 'REBUFFED'),
           height32,
-          buildContainerAuthentication(),
+          buildPageAuthenticate(),
         ],
       );
     }
     );
   }
 
-  Widget buildContainerAuthentication(){
+  Widget buildPageAuthenticate(){
     return buildWatch(userServiceHttp.userId, (userId) {
         final authenticated = userId.isNotEmpty;
         if (authenticated) {
@@ -280,10 +280,23 @@ extension WebsiteUI on WebsiteGame {
               ],
             ),
             height12,
-            buildWatch(userServiceHttp.characters, buildTableCharacters),
+            buildServerModeCharacterList(),
           ],
         ),
       );
+
+  Widget buildServerModeCharacterList(){
+    return buildWatch(options.serverMode, (serverMode) {
+      switch (serverMode){
+        case ServerMode.remote:
+          return buildWatch(userServiceHttp.characters, buildTableCharacters);
+        case ServerMode.local:
+          return buildTableCharacters(server.userServiceLocal.getCharacters());
+        default:
+          return buildText('invalid server mode');
+      }
+    });
+  }
 
   Widget buildCharacters(List<Json> characters) =>
       Container(

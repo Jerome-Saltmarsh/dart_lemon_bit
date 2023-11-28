@@ -151,13 +151,13 @@ class UserServiceHttp with IsometricComponent implements UserService {
         gender: gender,
         headType: headType,
       );
-      website.websitePage.value = WebsitePage.User;
+      website.websitePage.value = WebsitePage.Select_Character;
       return;
     }
 
 
     options.startOperation(OperationStatus.Creating_Character);
-    website.websitePage.value = WebsitePage.User;
+    website.websitePage.value = WebsitePage.Select_Character;
     try {
       final response = await GameStreamHttpClient.createCharacter(
         url: userServiceUrl.value,

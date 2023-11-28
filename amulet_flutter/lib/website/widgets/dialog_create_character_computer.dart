@@ -199,7 +199,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
   }
 
   Widget buildBackButton(IsometricComponents components) => onPressed(
-        action: () => components.website.websitePage.value = WebsitePage.User,
+        action: () => components.website.websitePage.value = WebsitePage.Select_Character,
         child: buildText('Back'),
       );
 

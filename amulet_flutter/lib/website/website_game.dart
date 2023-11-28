@@ -16,7 +16,7 @@ import 'enums/website_page.dart';
 class WebsiteGame extends Game {
 
   var imagesCached = false;
-  final websitePage = Watch(WebsitePage.User);
+  final websitePage = Watch(WebsitePage.Select_Character);
   final signInSuggestionVisible = Watch(false);
   final dialog = Watch(WebsiteDialog.Games);
   final customConnectionStrongController = TextEditingController();
@@ -60,7 +60,7 @@ class WebsiteGame extends Game {
   void toggleWebsitePage() =>
       websitePage.value =
       websitePage.value == WebsitePage.Select_Region
-          ? WebsitePage.User
+          ? WebsitePage.Select_Character
           : WebsitePage.Select_Region;
 
   void showWebsitePageRegion(){
@@ -68,7 +68,7 @@ class WebsiteGame extends Game {
   }
 
   void showWebsitePageGames(){
-    websitePage.value = WebsitePage.User;
+    websitePage.value = WebsitePage.Select_Character;
   }
 
   void openUrlYoutube() =>
