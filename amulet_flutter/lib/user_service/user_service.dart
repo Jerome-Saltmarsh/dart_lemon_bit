@@ -1,5 +1,7 @@
 
 
+import 'package:typedef/json.dart';
+
 abstract class UserService {
 
   void createNewCharacter({
@@ -10,4 +12,6 @@ abstract class UserService {
     required int gender,
     required int headType,
   });
+
+  void playCharacter(String characterUuid);
 }

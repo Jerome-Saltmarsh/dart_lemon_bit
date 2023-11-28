@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:amulet_flutter/gamestream/isometric/src.dart';
 import 'package:amulet_flutter/gamestream/operation_status.dart';
@@ -50,8 +52,11 @@ class UserServiceHttp with IsometricComponent implements UserService {
     options.operationDone();
   }
 
-  void playCharacter(String characterId) {
-    server.connectToGame(GameType.Amulet, '--userId ${userId.value} --characterId $characterId');
+  void playCharacter(String characterUuid) {
+    server.connectToGame(
+        GameType.Amulet,
+        '--userId ${userId.value} --characterId $characterUuid'
+    );
   }
 
   void playCharacterCustom({

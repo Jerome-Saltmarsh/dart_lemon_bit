@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:amulet_flutter/gamestream/isometric/components/functions/get_server_mode_text.dart';
+import 'package:amulet_flutter/user_service/character_json.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:amulet_flutter/gamestream/operation_status.dart';
@@ -98,7 +99,7 @@ extension WebsiteUI on WebsiteGame {
                     .getCharacters()
                     .map((character) => onPressed(
                       action: () =>
-                          server.userServiceLocal.loadCharacter(character),
+                          server.userServiceLocal.playCharacter(character.uuid),
                       child: buildText(character.getString('name'))))
                     .toList(growable: false)
             ),
@@ -293,8 +294,7 @@ extension WebsiteUI on WebsiteGame {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   onPressed(
-                    action: () =>
-                        userServiceHttp.playCharacter(character['uuid']),
+                    action: () => server.playCharacter(character),
                     child: Container(
                         alignment: Alignment.center,
                         width: 200,
@@ -340,14 +340,6 @@ extension WebsiteUI on WebsiteGame {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               buildText('CHARACTERS', size: 22, color: Colors.white70),
-              // width8,
-              // Tooltip(
-              //   message: 'Refresh',
-              //   child: onPressed(
-              //     action: user.refreshUser,
-              //     child: IsometricIcon(iconType: IconType.Turn_Right, scale: 0.15,),
-              //   ),
-              // ),
               width16,
               buildBorder(
                 color: Colors.orange,

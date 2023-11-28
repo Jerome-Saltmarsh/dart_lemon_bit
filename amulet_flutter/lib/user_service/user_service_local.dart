@@ -145,7 +145,11 @@ class UserServiceLocal implements UserService {
     return null;
   }
 
-  void loadCharacter(Json character) {
+  void playCharacter(String characterUuid) {
+    final character = findCharacterByUuid(characterUuid);
+    if (character == null){
+      throw Exception('character could not be found');
+    }
     writeJsonToAmuletPlayer(character, player);
     playerJoin().then((value) {
       controller.playerJoinGameTutorial();

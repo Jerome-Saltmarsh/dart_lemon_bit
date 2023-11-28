@@ -8,6 +8,7 @@ import 'package:amulet_flutter/packages/lemon_websocket_client.dart';
 import 'package:amulet_flutter/types/server_mode.dart';
 import 'package:amulet_flutter/user_service/src.dart';
 import 'package:lemon_engine/lemon_engine.dart';
+import 'package:typedef/json.dart';
 
 class IsometricServer with IsometricComponent {
 
@@ -275,6 +276,19 @@ class IsometricServer with IsometricComponent {
         gender: gender,
         headType: headType,
     );
+  }
+
+  void playCharacter(CharacterJson character) {
+    switch (serverMode){
+      case ServerMode.local:
+        userServiceLocal.playCharacter(character.uuid);
+        break;
+      case ServerMode.remote:
+        userServiceHttp.playCharacter(character.uuid);
+        break;
+      default:
+        throw Exception('no server mode selected');
+    }
   }
 }
 
