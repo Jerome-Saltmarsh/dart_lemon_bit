@@ -284,7 +284,7 @@ class IsometricPlayer with IsometricComponent {
         }
         break;
       case NetworkResponsePlayer.Cache_Cleared:
-        options.onWebsocketNetworkDone();
+        options.clearClientCache();
         break;
     }
   }

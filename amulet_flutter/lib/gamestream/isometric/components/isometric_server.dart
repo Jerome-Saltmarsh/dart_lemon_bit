@@ -36,7 +36,7 @@ class IsometricServer with IsometricComponent {
       readString: parser.addString,
       readBytes: parser.add,
       onError: options.onWebsocketNetworkError,
-      onDone: options.onWebsocketNetworkDone,
+      onDone: onWebsocketConnectionDone,
     );
 
     websocket.connectionStatus.onChanged(onChangedWebsocketConnectionStatus);
@@ -239,6 +239,7 @@ class IsometricServer with IsometricComponent {
 
   void clearState(){
     io.reset();
+    options.clearClientCache();
     options.game.value = options.website;
     engine.cameraX = 0;
     engine.cameraY = 0;
@@ -290,5 +291,6 @@ class IsometricServer with IsometricComponent {
         throw Exception('no server mode selected');
     }
   }
+
 }
 

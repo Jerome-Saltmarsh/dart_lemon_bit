@@ -80,15 +80,7 @@ class UserServiceLocal implements UserService {
   }
 
   void handleClientRequestJoin(List<String> arguments){
-    controller.playerJoinGameTutorial();
-    player.regainFullHealth();
-    player.maxHealth =  10;
-    player.health = 10;
-    player.active = true;
-    amulet.resumeUpdateTimer();
-    parser.server.onServerConnectionEstablished();
-    player.clearCache();
-    connected = true;
+
   }
 
   void disconnect() {
@@ -150,6 +142,9 @@ class UserServiceLocal implements UserService {
       throw Exception('character could not be found');
     }
     ensureInitialized().then((value) {
+      player.maxHealth =  10;
+      player.health = 10;
+      player.active = true;
       writeJsonToAmuletPlayer(character, player);
       player.clearCache();
       controller.playerJoinGameTutorial();

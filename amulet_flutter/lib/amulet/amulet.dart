@@ -355,16 +355,12 @@ class Amulet extends IsometricGame {
     }
   }
 
-  // void onChangedCameraTargetSet(bool cameraTargetSet) {
-  //   print('amulet.onChangedCameraTargetSet("$cameraTargetSet")');
-  //   options.setCameraPlay(cameraTargetSet ? cameraTarget : player.position);
-  // }
-
-  void onNetworkDone() {
-      clearAmuletScene();
-      clearEquippedWeapon();
-      clearDragging();
-      clearActivatedPowerIndex();
+  void clear() {
+    scene.clear();
+    clearAmuletScene();
+    clearEquippedWeapon();
+    clearDragging();
+    clearActivatedPowerIndex();
   }
 
   void clearAmuletScene() => amuletScene.value = null;
