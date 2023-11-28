@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/engine.dart';
-import 'package:amulet_flutter/user/user_service_http.dart';
 import 'package:amulet_flutter/website/website_game.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_environment.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_options.dart';
@@ -20,6 +19,8 @@ import 'gamestream/isometric/src.dart';
 import 'gamestream/isometric/ui/isometric_colors.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+
+import 'user_service/src.dart';
 
 Widget buildApp(){
   print('buildApp()');

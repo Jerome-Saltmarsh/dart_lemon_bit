@@ -1,3 +1,4 @@
+import 'package:amulet_flutter/website/typedefs/create_character.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/amulet/ui/functions/build_color_wheel.dart';
 import 'package:amulet_flutter/amulet/ui/functions/render_character_front.dart';
@@ -15,7 +16,12 @@ import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 
+
 class DialogCreateCharacterComputer extends StatelessWidget {
+
+  final CreateCharacter createCharacter;
+
+  DialogCreateCharacterComputer({required this.createCharacter});
 
   final nameController = TextEditingController(
       text: 'Anon${randomInt(9999, 99999).toString()}'
@@ -30,36 +36,41 @@ class DialogCreateCharacterComputer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = 550.0;
+    final width = 850.0;
     return IsometricBuilder(
       builder: (context, components) {
         final palette = components.colors.palette;
         complexion.value = palette.length - 1;
         return GSContainer(
             width: width,
-            height: width * goldenRatio_1381,
-            child: Column(
+            height: width * goldenRatio_0618,
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    buildBackButton(components),
-                    GSButtonRegion(),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     buildBackButton(components),
+                //     GSButtonRegion(),
+                //   ],
+                // ),
                 buildCharacterCanvas(components),
                 height32,
-                buildControls(palette),
-                Expanded(child: const SizedBox()),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                Column(
                   children: [
-                    buildControlName(),
-                    buildButtonStart(components),
+                    buildControls(palette),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        buildControlName(),
+                        buildButtonStart(components),
+                      ],
+                    ),
                   ],
                 ),
+                // Expanded(child: const SizedBox()),
+
               ],
             ));
       }
@@ -74,7 +85,16 @@ class DialogCreateCharacterComputer extends StatelessWidget {
           buildWatch(error, (error) => buildText(error, color: Colors.red)),
           width8,
           onPressed(
-            action: () => components.user.createNewCharacter(
+            // action: () => components.user.createNewCharacter(
+            //   name: nameController.text,
+            //   complexion: complexion.value,
+            //   hairType: hairType.value,
+            //   hairColor: hairColor.value,
+            //   gender: gender.value,
+            //   headType: headType.value,
+            // ),
+
+            action: () => createCharacter(
               name: nameController.text,
               complexion: complexion.value,
               hairType: hairType.value,

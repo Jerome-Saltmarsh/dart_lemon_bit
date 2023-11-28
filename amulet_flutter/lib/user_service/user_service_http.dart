@@ -8,8 +8,10 @@ import 'package:gamestream_http_client/src.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:typedef/json.dart';
 
+import 'user_service.dart';
 
-class UserServiceHttp with IsometricComponent {
+
+class UserServiceHttp with IsometricComponent implements UserService {
   final userJson = Watch<Json>({});
   final userId = Cache(key: 'userId', value: '');
   final username = Watch('');
@@ -112,8 +114,8 @@ class UserServiceHttp with IsometricComponent {
     options.startOperation(OperationStatus.Deleting_Character);
     try {
       final response = await GameStreamHttpClient.deleteCharacter(
-        url: user.userServiceUrl.value,
-        userId: user.userId.value,
+        url: userServiceHttp.userServiceUrl.value,
+        userId: userServiceHttp.userId.value,
         characterId: characterId,
       );
 
@@ -166,7 +168,7 @@ class UserServiceHttp with IsometricComponent {
         headType: headType,
       );
       options.operationDone();
-      user.refreshUser();
+      userServiceHttp.refreshUser();
       if (response.statusCode == 200) {
         playCharacter(response.body);
       } else {

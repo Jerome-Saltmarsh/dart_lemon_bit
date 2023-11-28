@@ -1,8 +1,8 @@
 
 
+import 'package:amulet_flutter/user_service/src.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';
-import 'package:amulet_flutter/user/user_service_http.dart';
 import 'package:amulet_flutter/website/enums/website_page.dart';
 import 'package:amulet_flutter/website/widgets/gs_textfield.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';

@@ -1,14 +1,19 @@
 
 
+import 'dart:convert';
+
 import 'package:amulet_engine/classes/amulet.dart';
+import 'package:amulet_engine/packages/isometric_engine/packages/type_def/json.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:amulet_engine/classes/amulet_controller.dart';
 import 'package:amulet_engine/classes/amulet_player.dart';
 import 'package:amulet_flutter/classes/amulet_scenes_flutter.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_parser.dart';
 
+import 'user_service.dart';
 
-class LocalServer {
+
+class UserServiceLocal implements UserService {
 
   var amuletLoaded = false;
   var connected = false;
@@ -22,7 +27,7 @@ class LocalServer {
 
   static const FIELD_CHARACTERS = 'characters';
 
-  LocalServer({
+  UserServiceLocal({
     required this.parser,
   });
 
@@ -32,12 +37,6 @@ class LocalServer {
 
   List<String> getCharacterNames() {
     return sharedPreferences.getStringList(FIELD_CHARACTERS) ?? [];
-  }
-
-  void createCharacter(String name) {
-    final characterNames = getCharacterNames();
-    characterNames.add(name);
-    saveCharacterNames(characterNames);
   }
 
   void saveCharacterNames(List<String> names) =>
@@ -54,7 +53,7 @@ class LocalServer {
      controller.onData(data);
   }
 
-  void playerJoin() async {
+  Future playerJoin() async {
     if (!amuletLoaded) {
 
       final scenes = AmuletScenesFlutter();
@@ -74,18 +73,19 @@ class LocalServer {
       );
       amuletLoaded = true;
     }
+    player.clearCache();
     handleClientRequestJoin([]);
   }
 
   void handleClientRequestJoin(List<String> arguments){
-    connected = true;
-    controller.playerJoinAmuletTown();
-    controller.player.regainFullHealth();
-    controller.player.maxHealth =  10;
-    controller.player.health = 10;
-    controller.player.active = true;
+    controller.playerJoinGameTutorial();
+    player.regainFullHealth();
+    player.maxHealth =  10;
+    player.health = 10;
+    player.active = true;
     amulet.resumeUpdateTimer();
     parser.server.onServerConnectionEstablished();
+    connected = true;
   }
 
   void disconnect() {
@@ -95,5 +95,47 @@ class LocalServer {
     amulet.timerRefreshUserCharacterLocks?.cancel();
   }
 
+  @override
+  void createNewCharacter({
+    required String name,
+    required int complexion,
+    required int hairType,
+    required int hairColor,
+    required int gender,
+    required int headType,
+  }) {
+    final characterNames = getCharacterNames();
+    if (characterNames.contains(name)){
+      throw Exception('character with that name already exists');
+    }
+    characterNames.add(name);
+    saveCharacterNames(characterNames);
+    final json = Json();
+    json['complexion'] = complexion;
+    json['hairType'] = hairType;
+    json['hairColor'] = hairColor;
+    json['gender'] = gender;
+    json['headType'] = headType;
+    final jsonString = jsonEncode(json);
+    sharedPreferences.setString(name, jsonString);
+
+    playerJoin().then((value) {
+      player.name = name;
+      player.complexion = complexion;
+      player.hairType = hairType;
+      player.hairColor = hairColor;
+      player.gender = gender;
+      player.headType = headType;
+      controller.playerJoinGameTutorial();
+      player.regainFullHealth();
+      player.maxHealth =  10;
+      player.health = 10;
+      player.active = true;
+      amulet.resumeUpdateTimer();
+      parser.server.onServerConnectionEstablished();
+      connected = true;
+    });
+
+  }
 }
 

@@ -1,5 +1,4 @@
 
-import 'package:amulet_flutter/classes/local_server.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:amulet_flutter/gamestream/isometric/enums/mode.dart';
 import 'package:amulet_flutter/gamestream/network/enums/connection_region.dart';
@@ -7,12 +6,13 @@ import 'package:amulet_flutter/isometric/classes/gameobject.dart';
 import 'package:amulet_flutter/packages/common.dart';
 import 'package:amulet_flutter/packages/lemon_websocket_client.dart';
 import 'package:amulet_flutter/types/server_mode.dart';
+import 'package:amulet_flutter/user_service/src.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 
 class IsometricServer with IsometricComponent {
 
   late final WebsocketClient websocket;
-  late final localServer = LocalServer(
+  late final userServiceLocal = UserServiceLocal(
     parser: parser,
   );
 
@@ -23,7 +23,7 @@ class IsometricServer with IsometricComponent {
       case ServerMode.remote:
         return websocket.connected;
       case ServerMode.local:
-        return localServer.connected;
+        return userServiceLocal.connected;
       default:
         return false;
     }
@@ -39,7 +39,7 @@ class IsometricServer with IsometricComponent {
     );
 
     websocket.connectionStatus.onChanged(onChangedWebsocketConnectionStatus);
-    localServer.initialize(sharedPreferences);
+    userServiceLocal.initialize(sharedPreferences);
   }
 
   void sendIsometricRequestRevive() =>
@@ -150,7 +150,7 @@ class IsometricServer with IsometricComponent {
   void send(dynamic data) {
     switch (serverMode){
       case ServerMode.local:
-        localServer.send(data);
+        userServiceLocal.send(data);
         break;
       case ServerMode.remote:
         websocket.send(data);
@@ -164,7 +164,7 @@ class IsometricServer with IsometricComponent {
     clearState();
     switch (serverMode) {
       case ServerMode.local:
-        localServer.disconnect();
+        userServiceLocal.disconnect();
         break;
       case ServerMode.remote:
         websocket.disconnect();
@@ -253,5 +253,28 @@ class IsometricServer with IsometricComponent {
     audio.enabledSound.value = false;
   }
 
+  UserService? get userService => switch (serverMode){
+    ServerMode.remote => userServiceHttp,
+    ServerMode.local => userServiceLocal,
+    _ => null
+  };
+
+  void createCharacter({
+    required String name,
+    required int complexion,
+    required int hairType,
+    required int hairColor,
+    required int gender,
+    required int headType,
+  }){
+    userService?.createNewCharacter(
+        name: name,
+        complexion: complexion,
+        hairType: hairType,
+        hairColor: hairColor,
+        gender: gender,
+        headType: headType,
+    );
+  }
 }
 

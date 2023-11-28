@@ -1175,6 +1175,7 @@ class AmuletController {
     leaveCurrentGame();
     player.game = game;
     player.amuletGame = game;
+    player.active = true;
     game.add(player);
   }
 

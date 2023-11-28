@@ -63,31 +63,40 @@ extension WebsiteUI on WebsiteGame {
         buildTogglePlayMode(),
         buildColumnSelectSinglePlayerCharacter(),
         onPressed(
-          action: server.localServer.playerJoin,
+          action: server.userServiceLocal.playerJoin,
           child: buildText('NEW CHARACTER'),
         ),
       ],
     );
   }
 
-  Widget buildColumnSelectSinglePlayerCharacter() =>
-    StatefulBuilder(
+  Widget buildColumnSelectSinglePlayerCharacter() {
+
+    var showCreateCharacter = false;
+
+    return StatefulBuilder(
       builder: (context, setState) {
+
+        if (showCreateCharacter){
+          return DialogCreateCharacterComputer(
+            createCharacter: server.createCharacter,
+          );
+        }
+
         return Column(
           children: [
             buildBorder(child: buildText('CHARACTERS')),
             Column(
-                children: server.localServer
+                children: server.userServiceLocal
                     .getCharacterNames()
                     .map((characterName) => buildText(characterName))
                     .toList(growable: false)
             ),
             onPressed(
-              action: (){
-                 ui.showDialogGetString(onSelected: (String characterName){
-                   server.localServer.createCharacter(characterName);
-                   setState.call((){});
-                 });
+              action: () {
+                setState.call((){
+                  showCreateCharacter = true;
+                });
               },
               child: buildText('NEW'),
             ),
@@ -95,6 +104,7 @@ extension WebsiteUI on WebsiteGame {
         );
       }
     );
+  }
 
   Widget buildTogglePlayMode() {
     return WatchBuilder(options.serverMode, (activePlayMode) {
@@ -117,11 +127,13 @@ extension WebsiteUI on WebsiteGame {
     });
   }
 
-  Widget buildGameModeMultiPlayer(){
+  Widget buildGameModeMultiPlayer() {
     return WatchBuilder(websitePage, (websitePage) =>
     switch (websitePage) {
       WebsitePage.User => buildWebsitePageUser(),
-      WebsitePage.New_Character => DialogCreateCharacterComputer(),
+      WebsitePage.New_Character => DialogCreateCharacterComputer(
+        createCharacter: server.createCharacter,
+      ),
       WebsitePage.Select_Region =>
           buildWebsitePageSelectRegion(
             options: options,
@@ -226,12 +238,12 @@ extension WebsiteUI on WebsiteGame {
   }
 
   Widget buildContainerAuthentication(){
-    return buildWatch(user.userId, (userId) {
+    return buildWatch(userServiceHttp.userId, (userId) {
         final authenticated = userId.isNotEmpty;
         if (authenticated) {
           return buildContainerAuthenticated();
         }
-        return buildContainerAuthenticate(user);
+        return buildContainerAuthenticate(userServiceHttp);
     });
   }
 
@@ -272,7 +284,7 @@ extension WebsiteUI on WebsiteGame {
                 children: [
                   onPressed(
                     action: () =>
-                        user.playCharacter(character['uuid']),
+                        userServiceHttp.playCharacter(character['uuid']),
                     child: Container(
                         alignment: Alignment.center,
                         width: 200,
@@ -330,7 +342,7 @@ extension WebsiteUI on WebsiteGame {
               buildBorder(
                 color: Colors.orange,
                 child: onPressed(
-                  action: user.website.showPageNewCharacter,
+                  action: userServiceHttp.website.showPageNewCharacter,
                   child: Container(
                       padding: const EdgeInsets.all(4),
                       child: buildText('CREATE NEW', color: Colors.orange)),
@@ -340,7 +352,7 @@ extension WebsiteUI on WebsiteGame {
           ),
           height12,
           buildWatch(
-              user.characters,
+              userServiceHttp.characters,
               buildCharacters
           ),
         ],
@@ -349,14 +361,14 @@ extension WebsiteUI on WebsiteGame {
 
   Widget buildControlUser() => Row(
     children: [
-      buildWatch(user.username, buildText),
+      buildWatch(userServiceHttp.username, buildText),
       width8,
       buildBorder(
         child: Container(
           color: Colors.transparent,
           padding: const EdgeInsets.all(4),
           child: onPressed(
-            action: user.logout,
+            action: userServiceHttp.logout,
             child: buildText('Logout'),
           ),
         ),
@@ -371,7 +383,7 @@ extension WebsiteUI on WebsiteGame {
         textTrue: 'CONFIRM',
         onSelected: (bool value) async {
           if (value){
-            user.deleteCharacter(character['uuid']);
+            userServiceHttp.deleteCharacter(character['uuid']);
           }
         });
   }
