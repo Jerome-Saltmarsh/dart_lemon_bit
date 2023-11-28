@@ -51,9 +51,9 @@ extension WebsiteUI on WebsiteGame {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            buildTogglePlayMode(),
                             buildText('AMULET', size: 80, family: 'REBUFFED'),
                             height32,
+                            buildTogglePlayMode(),
                             if (serverMode == ServerMode.local)
                                buildTableCharacters(server.userServiceLocal.getCharacters()),
                             if (serverMode == ServerMode.remote)
@@ -104,82 +104,20 @@ extension WebsiteUI on WebsiteGame {
        }).toList(growable: false),
      );
 
-  // Widget buildGameModeSinglePlayer(){
-  //   return Column(
-  //     children: [
-  //       buildTogglePlayMode(),
-  //       buildColumnSelectSinglePlayerCharacter(),
-  //     ],
-  //   );
-  // }
-
-  // Widget buildColumnSelectSinglePlayerCharacter() {
-  //
-  //   var showCreateCharacter = false;
-  //
-  //   return StatefulBuilder(
-  //     builder: (context, setState) {
-  //       if (showCreateCharacter){
-  //         return Column(
-  //           children: [
-  //             onPressed(
-  //               action: () {
-  //                 showCreateCharacter = false;
-  //                 setState((){});
-  //               },
-  //               child: buildText('BACK'),
-  //             ),
-  //             DialogCreateCharacterComputer(
-  //               createCharacter: server.createCharacter,
-  //             ),
-  //           ],
-  //         );
-  //       }
-  //
-  //       return buildTableCharacters(
-  //           server.userServiceLocal
-  //               .getCharacters()
-  //       );
-  //
-  //       // return Column(
-  //       //   children: [
-  //       //     buildBorder(child: buildText('CHARACTERS')),
-  //       //     Column(
-  //       //         children: server.userServiceLocal
-  //       //             .getCharacters()
-  //       //             .map((character) => onPressed(
-  //       //               action: () => server.playCharacter(character),
-  //       //               child: buildText(character.getString('name'))))
-  //       //             .toList(growable: false)
-  //       //     ),
-  //       //     onPressed(
-  //       //       action: () {
-  //       //         setState.call((){
-  //       //           showCreateCharacter = true;
-  //       //         });
-  //       //       },
-  //       //       child: buildText('NEW'),
-  //       //     ),
-  //       //   ],
-  //       // );
-  //     }
-  //   );
-  // }
-
   Widget buildTogglePlayMode() {
     return WatchBuilder(options.serverMode, (activePlayMode) {
       return Row(
-        children: ServerMode.values.map((playMode) {
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: ServerMode.values.map((serverMode) {
           return onPressed(
-            action: () => options.serverMode.value = playMode,
+            action: () => options.serverMode.value = serverMode,
             child: Container(
               alignment: Alignment.center,
               width: 80,
               height: 50,
-              color: activePlayMode == playMode ? Colors.green : Colors.green.withOpacity(0.5),
-              child: buildText(
-                  playMode.name,
-              ),
+              margin: const EdgeInsets.symmetric(horizontal: 4),
+              color: activePlayMode == serverMode ? Colors.green : Colors.green.withOpacity(0.25),
+              child: buildText(getServerModeText(serverMode)),
             ),
           );
         }).toList(growable: false),
@@ -266,6 +204,8 @@ extension WebsiteUI on WebsiteGame {
         padding: EdgeInsets.zero,
         child: Column(
           children: [
+            buildWatch(userServiceHttp.characters, buildTableCharacters),
+            height12,
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -278,8 +218,6 @@ extension WebsiteUI on WebsiteGame {
                 ),
               ],
             ),
-            height12,
-            buildServerModeCharacterList(),
           ],
         ),
       );
@@ -348,26 +286,29 @@ extension WebsiteUI on WebsiteGame {
   }
 
   Widget buildTableCharacters(List<Json> characters) => GSContainer(
-    color: Colors.transparent,
+    color: Colors.black12,
+    width: 500,
     child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               buildText('CHARACTERS', size: 22, color: Colors.white70),
               width16,
-              buildBorder(
-                color: Colors.orange,
-                child: onPressed(
-                  action: showPageNewCharacter,
-                  child: Container(
-                      padding: const EdgeInsets.all(4),
-                      child: buildText('CREATE NEW', color: Colors.orange)),
-                ),
+              onPressed(
+                action: showPageNewCharacter,
+                child: Container(
+                    color: Colors.white12,
+                  width: 200,
+                  margin: const EdgeInsets.symmetric(vertical: 4),
+                  alignment: Alignment.centerLeft,
+                    padding: const EdgeInsets.all(4),
+                    child: buildText('NEW', color: Colors.orange)),
               ),
             ],
           ),
-          height12,
           buildCharacters(characters),
         ],
       ),
