@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:amulet_engine/classes/amulet.dart';
 import 'package:amulet_engine/src.dart';
+import 'package:amulet_flutter/user_service/character_json.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:amulet_flutter/classes/amulet_scenes_flutter.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_parser.dart';
@@ -110,19 +111,12 @@ class UserServiceLocal implements UserService {
       player.hairColor = hairColor;
       player.gender = gender;
       player.headType = headType;
-      controller.playerJoinGameTutorial();
-      player.regainFullHealth();
-      player.maxHealth =  10;
-      player.health = 10;
-      player.active = true;
-      amulet.resumeUpdateTimer();
-      parser.server.onServerConnectionEstablished();
-      connected = true;
       final json = mapIsometricPlayerToJson(player);
       final characters = getCharacters();
       characters.add(json);
       final characterStrings = characters.map(jsonEncode).toList(growable: false);
       sharedPreferences.setStringList(FIELD_CHARACTERS, characterStrings);
+      playCharacter(json.uuid);
     });
   }
 
@@ -147,6 +141,7 @@ class UserServiceLocal implements UserService {
       player.active = true;
       writeJsonToAmuletPlayer(character, player);
       player.clearCache();
+      parser.amulet.clearAllState();
       controller.playerJoinGameTutorial();
       player.regainFullHealth();
       amulet.resumeUpdateTimer();

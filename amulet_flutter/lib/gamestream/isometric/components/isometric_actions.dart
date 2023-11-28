@@ -135,16 +135,6 @@ class IsometricActions with IsometricComponent {
     scene.ambientStackIndex = -1;
   }
 
-  void clear() {
-    player.position.x = 0;
-    player.position.y = 0;
-    player.position.z = 0;
-    player.gameDialog.value = null;
-    scene.totalProjectiles = 0;
-    particles.activated.clear();
-    engine.zoom = 1;
-  }
-
   int get bodyPartDuration =>  randomInt(120, 200);
 
   // PROPERTIES

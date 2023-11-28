@@ -267,9 +267,4 @@ class IsometricOptions with IsometricComponent implements Updatable {
     ui.error.value = error.toString();
   }
 
-  void clearClientCache(){
-    amulet.clear();
-  }
-
-
 }

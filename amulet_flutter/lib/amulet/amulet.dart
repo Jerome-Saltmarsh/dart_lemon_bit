@@ -3,8 +3,10 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:amulet_flutter/amulet/amulet_ui.dart';
+import 'package:amulet_flutter/gamestream/isometric/enums/node_visibility.dart';
 import 'package:amulet_flutter/packages/common.dart';
 import 'package:flutter/services.dart';
+import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/amulet/classes/item_slot.dart';
@@ -355,15 +357,40 @@ class Amulet extends IsometricGame {
     }
   }
 
-  void clear() {
-    scene.clear();
-    clearAmuletScene();
+  void clearAllState() {
+    print('amulet.clearAllState()');
+    scene.clearVisited();
+    scene.totalCharacters = 0;
+    scene.totalProjectiles = 0;
+    scene.characters.clear();
+    scene.gameObjects.clear();
+    scene.projectiles.clear();
+    scene.nodeVisibility.fillRange(0, scene.nodeVisibility.length, NodeVisibility.opaque);
+    amuletScene.value = null;
     clearEquippedWeapon();
     clearDragging();
     clearActivatedPowerIndex();
+    io.reset();
+    // options.game.value = options.website;
+    engine.cameraX = 0;
+    engine.cameraY = 0;
+    engine.zoom = 1.0;
+    engine.drawCanvasAfterUpdate = true;
+    engine.cursorType.value = CursorType.Basic;
+    // engine.fullScreenExit();
+    player.active.value = false;
+    actions.clean();
+    scene.gameObjects.clear();
+    scene.editEnabled.value = false;
+    audio.enabledSound.value = false;
+    player.position.x = 0;
+    player.position.y = 0;
+    player.position.z = 0;
+    player.gameDialog.value = null;
+    scene.totalProjectiles = 0;
+    particles.activated.clear();
+    engine.zoom = 1;
   }
-
-  void clearAmuletScene() => amuletScene.value = null;
 
   void clearActivatedPowerIndex() => activatedPowerIndex.value = -1;
 

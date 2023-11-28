@@ -162,9 +162,10 @@ class IsometricServer with IsometricComponent {
   }
 
   void disconnect() {
-    clearState();
+    options.game.value = options.website;
     switch (serverMode) {
       case ServerMode.local:
+        parser.amulet.clearAllState();
         userServiceLocal.disconnect();
         break;
       case ServerMode.remote:
@@ -234,25 +235,7 @@ class IsometricServer with IsometricComponent {
   }
 
   void onWebsocketConnectionDone() {
-    clearState();
-  }
-
-  void clearState(){
-    io.reset();
-    options.clearClientCache();
-    options.game.value = options.website;
-    engine.cameraX = 0;
-    engine.cameraY = 0;
-    engine.zoom = 1.0;
-    engine.drawCanvasAfterUpdate = true;
-    engine.cursorType.value = CursorType.Basic;
-    engine.fullScreenExit();
-    player.active.value = false;
-    actions.clear();
-    actions.clean();
-    scene.gameObjects.clear();
-    scene.editEnabled.value = false;
-    audio.enabledSound.value = false;
+     amulet.clearAllState();
   }
 
   UserService? get userService => switch (serverMode){

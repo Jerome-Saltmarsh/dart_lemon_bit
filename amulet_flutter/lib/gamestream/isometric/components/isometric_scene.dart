@@ -2145,16 +2145,6 @@ class IsometricScene with IsometricComponent implements Updatable {
     }
   }
 
-  void clear(){
-    clearVisited();
-    totalCharacters = 0;
-    totalProjectiles = 0;
-    characters.clear();
-    gameObjects.clear();
-    projectiles.clear();
-    nodeVisibility.fillRange(0, nodeVisibility.length, NodeVisibility.opaque);
-  }
-
   void applyEmissionColorGameObjects() {
     final gameObjects = this.gameObjects;
     for (final gameObject in gameObjects) {

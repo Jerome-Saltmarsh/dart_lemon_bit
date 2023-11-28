@@ -163,10 +163,6 @@ class IsometricPlayer with IsometricComponent {
 
   void onPlayerInitialized() {
     print('onPlayerInitialized()');
-    // setPosition(x: 0, y: 0, z: 0);
-    // indexZ = 0;
-    // indexRow = 0;
-    // indexColumn = 0;
     scene.characters.clear();
     scene.projectiles.clear();
     scene.gameObjects.clear();
@@ -284,7 +280,7 @@ class IsometricPlayer with IsometricComponent {
         }
         break;
       case NetworkResponsePlayer.Cache_Cleared:
-        options.clearClientCache();
+        amulet.clearAllState();
         break;
     }
   }
