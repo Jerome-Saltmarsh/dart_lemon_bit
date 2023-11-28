@@ -222,19 +222,6 @@ extension WebsiteUI on WebsiteGame {
         ),
       );
 
-  Widget buildServerModeCharacterList(){
-    return buildWatch(options.serverMode, (serverMode) {
-      switch (serverMode){
-        case ServerMode.remote:
-          return buildWatch(userServiceHttp.characters, buildTableCharacters);
-        case ServerMode.local:
-          return buildTableCharacters(server.userServiceLocal.getCharacters());
-        default:
-          return buildText('invalid server mode');
-      }
-    });
-  }
-
   Widget buildCharacters(List<Json> characters) =>
       Container(
       height: 200,

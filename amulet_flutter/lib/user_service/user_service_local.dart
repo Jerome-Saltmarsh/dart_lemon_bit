@@ -14,7 +14,7 @@ import 'user_service.dart';
 
 class UserServiceLocal implements UserService {
 
-  var amuletLoaded = false;
+  var initialized = false;
   var connected = false;
 
   final IsometricParser parser;
@@ -47,7 +47,7 @@ class UserServiceLocal implements UserService {
         .toList(growable: false);
 
   void onFixedUpdate() {
-    if (!amuletLoaded){
+    if (!initialized){
       return;
     }
     parser.add(player.compile());
@@ -57,28 +57,26 @@ class UserServiceLocal implements UserService {
      controller.onData(data);
   }
 
-  Future playerJoin() async {
-    if (!amuletLoaded) {
-
-      final scenes = AmuletScenesFlutter();
-
-      amulet = Amulet(
-          onFixedUpdate: onFixedUpdate,
-          isLocalMachine: true,
-          scenes: scenes,
-      );
-      await amulet.construct(initializeUpdateTimer: true);
-      player = amulet.buildPlayer();
-      controller = AmuletController(
-          player: player,
-          isAdmin: true,
-          sink: parser,
-          handleClientRequestJoin: handleClientRequestJoin,
-      );
-      amuletLoaded = true;
+  Future ensureInitialized() async {
+    if (initialized) {
+      return;
     }
-    player.clearCache();
-    handleClientRequestJoin([]);
+    final scenes = AmuletScenesFlutter();
+
+    amulet = Amulet(
+      onFixedUpdate: onFixedUpdate,
+      isLocalMachine: true,
+      scenes: scenes,
+    );
+    await amulet.construct(initializeUpdateTimer: true);
+    player = amulet.buildPlayer();
+    controller = AmuletController(
+      player: player,
+      isAdmin: true,
+      sink: parser,
+      handleClientRequestJoin: handleClientRequestJoin,
+    );
+    initialized = true;
   }
 
   void handleClientRequestJoin(List<String> arguments){
@@ -89,6 +87,7 @@ class UserServiceLocal implements UserService {
     player.active = true;
     amulet.resumeUpdateTimer();
     parser.server.onServerConnectionEstablished();
+    player.clearCache();
     connected = true;
   }
 
@@ -112,7 +111,7 @@ class UserServiceLocal implements UserService {
       throw Exception('invalid field name');
     }
 
-    playerJoin().then((value) {
+    ensureInitialized().then((value) {
       player.name = name;
       player.complexion = complexion;
       player.hairType = hairType;
@@ -150,8 +149,9 @@ class UserServiceLocal implements UserService {
     if (character == null){
       throw Exception('character could not be found');
     }
-    writeJsonToAmuletPlayer(character, player);
-    playerJoin().then((value) {
+    ensureInitialized().then((value) {
+      writeJsonToAmuletPlayer(character, player);
+      player.clearCache();
       controller.playerJoinGameTutorial();
       player.regainFullHealth();
       amulet.resumeUpdateTimer();
