@@ -7,7 +7,7 @@ import 'package:amulet_flutter/gamestream/game.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/debug/isometric_debug_ui.dart';
 import 'package:amulet_flutter/gamestream/isometric/enums/cursor_type.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';
-import 'package:lemon_engine/lemon_engine.dart';
+import 'package:flutter/services.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 import 'package:lemon_watch/src.dart';
 
@@ -128,19 +128,19 @@ class IsometricGame extends Game {
   }
 
   @override
-  void onKeyPressed(int key) {
+  void onKeyPressed(PhysicalKeyboardKey key) {
 
-    if (key == KeyCode.Tab) {
+    if (key == PhysicalKeyboardKey.tab) {
       options.toggleEditMode();
       return;
     }
 
-    if (key == KeyCode.Digit_0) {
+    if (key == PhysicalKeyboardKey.digit0) {
       server.sendIsometricRequestToggleDebugging();
       return;
     }
 
-    if (key == KeyCode.Escape) {
+    if (key == PhysicalKeyboardKey.escape) {
       options.windowOpenMenu.toggle();
       return;
     }
@@ -152,12 +152,12 @@ class IsometricGame extends Game {
 
     // play mode
 
-    if (key == KeyCode.Z) {
+    if (key == PhysicalKeyboardKey.keyZ) {
       actions.toggleZoom();
       return;
     }
 
-    if (key == KeyCode.M){
+    if (key == PhysicalKeyboardKey.keyM){
       amulet.spawnRandomEnemy();
     }
 

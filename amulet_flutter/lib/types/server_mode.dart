@@ -1,5 +1,5 @@
 
 enum ServerMode {
   local,
-  remote
+  remote,
 }

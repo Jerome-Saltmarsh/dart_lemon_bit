@@ -2,13 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';
-import 'package:amulet_flutter/user/user.dart';
+import 'package:amulet_flutter/user/user_service_http.dart';
 import 'package:amulet_flutter/website/enums/website_page.dart';
 import 'package:amulet_flutter/website/widgets/gs_textfield.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 import 'package:lemon_watch/src.dart';
 
-Widget buildContainerAuthenticate(User user){
+Widget buildContainerAuthenticate(UserServiceHttp user){
   final loginPage = WatchBool(true);
   return GSKeyEventHandler(
     child: GSContainer(
@@ -55,7 +55,7 @@ Widget buildContainerAuthenticate(User user){
   );
 }
 
-Widget buildContainerLogin(User user){
+Widget buildContainerLogin(UserServiceHttp user){
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -88,7 +88,7 @@ Widget buildContainerLogin(User user){
   );
 }
 
-Widget buildContainerRegister(User user){
+Widget buildContainerRegister(UserServiceHttp user){
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
 

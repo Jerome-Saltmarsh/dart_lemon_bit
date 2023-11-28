@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:amulet_flutter/gamestream/isometric/components/functions/get_server_mode_text.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:amulet_flutter/gamestream/operation_status.dart';
@@ -13,6 +14,7 @@ import 'package:amulet_flutter/website/enums/website_page.dart';
 import 'package:amulet_flutter/website/functions/build_website_page_select_region.dart';
 import 'package:amulet_flutter/website/website_game.dart';
 import 'package:amulet_flutter/website/widgets/gs_button_region.dart';
+import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
@@ -29,14 +31,37 @@ extension WebsiteUI on WebsiteGame {
   Widget buildWatchPlayMode() =>
       WatchBuilder(
       options.serverMode,
-      (ServerMode playMode) => playMode == ServerMode.local
+      (ServerMode? playMode) {
+        if (playMode == null){
+          return buildPageSelectServerMode();
+        }
+
+        return playMode == ServerMode.local
           ? buildGameModeSinglePlayer()
-          : buildGameModeMultiPlayer());
+          : buildGameModeMultiPlayer();
+      });
+
+  Widget buildPageSelectServerMode() => Row(
+       mainAxisAlignment: MainAxisAlignment.center,
+       children: ServerMode.values.map((serverMode) {
+         const width = 130.0;
+         return onPressed(
+             action: () => options.serverMode.value = serverMode,
+             child: Container(
+               margin: const EdgeInsets.symmetric(horizontal: 8),
+               color: Colors.white30,
+               width: width,
+               height: width * goldenRatio_0618,
+               alignment: Alignment.center,
+               child: buildText(getServerModeText(serverMode))));
+       }).toList(growable: false),
+     );
 
   Widget buildGameModeSinglePlayer(){
     return Column(
       children: [
         buildTogglePlayMode(),
+        buildColumnSelectSinglePlayerCharacter(),
         onPressed(
           action: server.localServer.playerJoin,
           child: buildText('NEW CHARACTER'),
@@ -44,6 +69,32 @@ extension WebsiteUI on WebsiteGame {
       ],
     );
   }
+
+  Widget buildColumnSelectSinglePlayerCharacter() =>
+    StatefulBuilder(
+      builder: (context, setState) {
+        return Column(
+          children: [
+            buildBorder(child: buildText('CHARACTERS')),
+            Column(
+                children: server.localServer
+                    .getCharacterNames()
+                    .map((characterName) => buildText(characterName))
+                    .toList(growable: false)
+            ),
+            onPressed(
+              action: (){
+                 ui.showDialogGetString(onSelected: (String characterName){
+                   server.localServer.createCharacter(characterName);
+                   setState.call((){});
+                 });
+              },
+              child: buildText('NEW'),
+            ),
+          ],
+        );
+      }
+    );
 
   Widget buildTogglePlayMode() {
     return WatchBuilder(options.serverMode, (activePlayMode) {

@@ -9,7 +9,7 @@ import 'package:lemon_watch/src.dart';
 import 'package:typedef/json.dart';
 
 
-class User with IsometricComponent {
+class UserServiceHttp with IsometricComponent {
   final userJson = Watch<Json>({});
   final userId = Cache(key: 'userId', value: '');
   final username = Watch('');
@@ -17,7 +17,7 @@ class User with IsometricComponent {
   final userServiceUrl = Watch('https://gamestream-http-osbmaezptq-uc.a.run.app');
   final characters = Watch<List<Json>>([]);
 
-  User(){
+  UserServiceHttp(){
     userId.onChanged(onChangedUserId);
     userJson.onChanged(onChangedUserJson);
   }
@@ -88,7 +88,10 @@ class User with IsometricComponent {
     }
   }
 
-  void login({required String username, required String password}) async {
+  void login({
+    required String username,
+    required String password,
+  }) async {
     options.startOperation(OperationStatus.Authenticating);
     final response = await GameStreamHttpClient.login(
       url: userServiceUrl.value,

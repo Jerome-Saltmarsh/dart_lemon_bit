@@ -4,7 +4,6 @@ import 'package:amulet_flutter/functions/validate_atlases.dart';
 import 'package:amulet_flutter/gamestream/game.dart';
 import 'package:amulet_flutter/gamestream/operation_status.dart';
 import 'package:amulet_flutter/gamestream/ui/src.dart';
-import 'package:amulet_flutter/packages/common.dart';
 import 'package:amulet_flutter/website/website_ui.dart';
 import 'package:amulet_flutter/website/widgets/gs_fullscreen.dart';
 import 'package:intl/intl.dart';
@@ -15,10 +14,6 @@ import 'enums/website_dialog.dart';
 import 'enums/website_page.dart';
 
 class WebsiteGame extends Game {
-
-  final gameTypes = [
-    GameType.Amulet,
-  ];
 
   var imagesCached = false;
   final websitePage = Watch(WebsitePage.User);
@@ -37,7 +32,6 @@ class WebsiteGame extends Game {
 
   @override
   void onActivated() {
-    // getComponent<GameAudio>().musicStop();
     engine.fullScreenExit();
   }
 

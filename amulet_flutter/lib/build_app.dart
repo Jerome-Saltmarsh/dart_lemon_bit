@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/engine.dart';
-import 'package:amulet_flutter/user/user.dart';
+import 'package:amulet_flutter/user/user_service_http.dart';
 import 'package:amulet_flutter/website/website_game.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_environment.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_options.dart';
@@ -69,7 +69,7 @@ Widget buildApp(){
       lighting: IsometricLighting(),
       colors: IsometricColors(),
       style: IsometricStyle(),
-      user: User(),
+      user: UserServiceHttp(),
       engine: engine,
   );
 

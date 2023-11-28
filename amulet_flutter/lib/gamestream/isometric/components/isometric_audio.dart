@@ -41,14 +41,6 @@ class IsometricAudio with IsometricComponent implements Updatable {
   var nextRandomSound = 0;
   var nextRandomMusic = 0;
 
-  // final audioTracks = AudioTracks(
-  //    tracks: [
-  //      AudioSource.uri(Uri.parse('assets/audio/music/gamestream-track-01.mp3')),
-  //      AudioSource.uri(Uri.parse('assets/audio/music/gamestream-track-02.mp3')),
-  //      AudioSource.uri(Uri.parse('assets/audio/music/gamestream-track-03.mp3')),
-  //    ]
-  // );
-
   final musicNight = [
     AudioSingle(name: 'creepy-whistle'),
     AudioSingle(name: 'creepy-wind'),

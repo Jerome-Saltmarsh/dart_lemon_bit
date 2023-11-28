@@ -41,7 +41,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
   var messageStatusDuration = 0;
   var renderResponse = true;
 
-  final serverMode = Watch(ServerMode.remote);
+  final serverMode = Watch<ServerMode?>(null);
   final cameraPlay = Position();
   final mode = Watch(Mode.Play);
   final highlightIconInventory = WatchBool(false);
@@ -271,4 +271,6 @@ class IsometricOptions with IsometricComponent implements Updatable {
     scene.clear();
     amulet.onNetworkDone();
   }
+
+
 }

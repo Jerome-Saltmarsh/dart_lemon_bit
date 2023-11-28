@@ -1,7 +1,7 @@
 
 import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/engine.dart';
-import 'package:amulet_flutter/user/user.dart';
+import 'package:amulet_flutter/user/user_service_http.dart';
 import 'package:amulet_flutter/website/website_game.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_environment.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_screen.dart';
@@ -56,7 +56,7 @@ class IsometricComponents extends ComponentContainer {
   final IsometricLighting lighting;
   final IsometricColors colors;
   final IsometricStyle style;
-  final User user;
+  final UserServiceHttp user;
 
   final IsometricGame isometricEditor = IsometricGame();
 

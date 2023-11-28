@@ -16,7 +16,7 @@ class IsometricServer with IsometricComponent {
     parser: parser,
   );
 
-  ServerMode get serverMode => options.serverMode.value;
+  ServerMode? get serverMode => options.serverMode.value;
 
   bool get connected {
     switch (serverMode) {
@@ -24,6 +24,8 @@ class IsometricServer with IsometricComponent {
         return websocket.connected;
       case ServerMode.local:
         return localServer.connected;
+      default:
+        return false;
     }
   }
 
@@ -37,6 +39,7 @@ class IsometricServer with IsometricComponent {
     );
 
     websocket.connectionStatus.onChanged(onChangedWebsocketConnectionStatus);
+    localServer.initialize(sharedPreferences);
   }
 
   void sendIsometricRequestRevive() =>
@@ -152,6 +155,8 @@ class IsometricServer with IsometricComponent {
       case ServerMode.remote:
         websocket.send(data);
         break;
+      default:
+        throw Exception('isometricServer.send() - serverMode is null');
     }
   }
 
@@ -164,6 +169,9 @@ class IsometricServer with IsometricComponent {
       case ServerMode.remote:
         websocket.disconnect();
         break;
+      default:
+        print('no server connected');
+        return;
     }
   }
 

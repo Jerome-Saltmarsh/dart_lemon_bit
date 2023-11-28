@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:amulet_flutter/packages/common/src/game_error.dart';
+import 'package:flutter/services.dart';
 
 import 'isometric/components/src.dart';
 
@@ -19,7 +20,7 @@ abstract class Game with IsometricComponent
 
   }
 
-  void onKeyPressed(int key) {
+  void onKeyPressed(PhysicalKeyboardKey key) {
 
   }
 

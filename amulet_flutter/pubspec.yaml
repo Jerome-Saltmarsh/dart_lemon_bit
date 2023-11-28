@@ -35,10 +35,10 @@ dependencies:
     path: ..\lemon_widgets
   lemon_math:
     path: ..\tools\lemon_math
-  lemon_byte:
-    path: C:\Users\Jerome\github\dart-lemon-byte
   lemon_engine:
-    path: ..\dart-lemon-engine
+    path: ..\tools\lemon_engine
+  lemon_byte:
+    path: ..\tools\lemon_byte
   gamestream_http_client:
     path: ..\gamestream_http_client
 

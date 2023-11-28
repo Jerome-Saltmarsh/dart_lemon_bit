@@ -17,10 +17,13 @@ ctrl + shift + e        : view recent changes
 alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
-## TODO
+## BLOCK
+* [new]: offline character persistence
+* [fix]: render front
 * [fix]: offline for web
+
+## TODO
 * [fix]: audio for windows
-* [fix]: render front view hair color
 * [new]: elemental damage
 * [new]: map locations
 * [new]: scene town
@@ -30,6 +33,9 @@ ctrl + []               : move caret to code block
 * [fix]: persist gameobject properties
 * [fix]: colored particle emission
 * [new]: flames emit smoke particles
+
+## 28.11.2023
+* [fix]: write text on windows
 
 ## 26.11.2023
 * [new]: single player offline

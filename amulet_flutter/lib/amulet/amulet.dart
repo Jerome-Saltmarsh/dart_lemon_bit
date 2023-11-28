@@ -4,7 +4,7 @@ import 'dart:ui';
 
 import 'package:amulet_flutter/amulet/amulet_ui.dart';
 import 'package:amulet_flutter/packages/common.dart';
-import 'package:lemon_engine/lemon_engine.dart';
+import 'package:flutter/services.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/amulet/classes/item_slot.dart';
@@ -179,41 +179,29 @@ class Amulet extends IsometricGame {
   Widget customBuildUI(BuildContext context) => amuletUI.buildAmuletUI();
 
   @override
-  void onKeyPressed(int key) {
+  void onKeyPressed(PhysicalKeyboardKey key) {
     super.onKeyPressed(key);
 
     if (options.editing)
       return;
 
-    if (key == KeyCode.Q){
+    if (key == PhysicalKeyboardKey.keyQ){
       amulet.toggleInventoryOpen();
       return;
     }
-    if (key == KeyCode.W){
-      selectWeapon(1);
-      return;
-    }
-    if (key == KeyCode.E){
-      selectWeapon(2);
-      return;
-    }
-    if (key == KeyCode.R){
-      selectWeapon(3);
-      return;
-    }
-    if (key == KeyCode.A){
+    if (key == PhysicalKeyboardKey.keyA){
       selectWeapon(0);
       return;
     }
-    if (key == KeyCode.S){
+    if (key == PhysicalKeyboardKey.keyS){
       selectWeapon(1);
       return;
     }
-    if (key == KeyCode.D){
+    if (key == PhysicalKeyboardKey.keyD){
       selectWeapon(2);
       return;
     }
-    if (key == KeyCode.F){
+    if (key == PhysicalKeyboardKey.keyF){
       selectWeapon(3);
       return;
     }

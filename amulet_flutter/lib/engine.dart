@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -79,12 +80,12 @@ class AppleEngine extends LemonEngine {
   }
 
   @override
-  void onKeyPressed(int keyCode) {
+  void onKeyPressed(PhysicalKeyboardKey key) {
 
-    if (keyCode == KeyCode.Escape){
+    if (key == LogicalKeyboardKey.keyT){
       components.engine.fullscreenToggle();
     }
 
-    components.options.game.value.onKeyPressed(keyCode);
+    components.options.game.value.onKeyPressed(key);
   }
 }

@@ -2,7 +2,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:amulet_flutter/packages/common.dart';
-import 'package:lemon_engine/lemon_engine.dart';
+import 'package:flutter/services.dart';
 import 'package:lemon_watch/src.dart';
 import '../../../../isometric/classes/gameobject.dart';
 import '../../enums/editor_dialog.dart';
@@ -154,10 +154,10 @@ class IsometricEditor with IsometricComponent {
 
   double get posZ => z * Node_Height;
 
-  void onKeyPressed(int key) {
+  void onKeyPressed(PhysicalKeyboardKey key) {
 
     switch (key) {
-      case KeyCode.Arrow_Up:
+      case PhysicalKeyboardKey.arrowUp:
         if (engine.keyPressedShiftLeft) {
           if (gameObjectSelected.value && editorTab.value == EditorTab.Objects) {
             translateSelectedGameObject(x: 0, y: 0, z: 1);
@@ -172,13 +172,13 @@ class IsometricEditor with IsometricComponent {
         }
         cursorRowDecrease();
         return;
-      case KeyCode.Arrow_Right:
+      case PhysicalKeyboardKey.arrowRight:
         if (gameObjectSelected.value && editorTab.value == EditorTab.Objects) {
           return translateSelectedGameObject(x: 1, y: -1, z: 0);
         }
         cursorColumnDecrease();
         break;
-      case KeyCode.Arrow_Down:
+      case PhysicalKeyboardKey.arrowDown:
         if (engine.keyPressedShiftLeft) {
           if (gameObjectSelected.value && editorTab.value == EditorTab.Objects) {
             return translateSelectedGameObject(x: 0, y: 0, z: -1);
@@ -191,7 +191,7 @@ class IsometricEditor with IsometricComponent {
           cursorRowIncrease();
         }
         break;
-      case KeyCode.Arrow_Left:
+      case PhysicalKeyboardKey.arrowLeft:
         if (gameObjectSelected.value && editorTab.value == EditorTab.Objects) {
           return translateSelectedGameObject(x: -1, y: 1, z: 0);
         }
@@ -802,9 +802,9 @@ class IsometricEditor with IsometricComponent {
           NetworkRequestEdit.Mark_Deselect_Index.index,
       );
 
-  void onKeyPressedEditorTabKeys(int key) {
+  void onKeyPressedEditorTabKeys(PhysicalKeyboardKey key) {
     switch (key){
-      case KeyCode.G:
+      case PhysicalKeyboardKey.keyG:
         moveSelectedKeyEntryToNodeSelected();
         break;
       default:
@@ -812,9 +812,9 @@ class IsometricEditor with IsometricComponent {
     }
   }
 
-  void onKeyPressedEditorTabObjects(int key) {
+  void onKeyPressedEditorTabObjects(PhysicalKeyboardKey key) {
     switch (key){
-      case KeyCode.Arrow_Up:
+      case PhysicalKeyboardKey.arrowUp:
         if (engine.keyPressedShiftLeft) {
           if (gameObjectSelected.value) {
             translateSelectedGameObject(x: 0, y: 0, z: 1);
@@ -826,9 +826,9 @@ class IsometricEditor with IsometricComponent {
         }
         break;
 
-      case KeyCode.D:
+      case PhysicalKeyboardKey.keyD:
         sendGameObjectRequestDuplicate();
-      case KeyCode.G:
+      case PhysicalKeyboardKey.keyG:
         moveSelectedGameObjectToMouse();
         break;
       default:
@@ -836,33 +836,33 @@ class IsometricEditor with IsometricComponent {
     }
   }
 
-  void onKeyPressedEditorTabNodes(int key) {
+  void onKeyPressedEditorTabNodes(PhysicalKeyboardKey key) {
     switch(key){
-      case KeyCode.Delete:
+      case PhysicalKeyboardKey.delete:
         delete();
         break;
-      case KeyCode.F:
+      case PhysicalKeyboardKey.keyF:
         paint();
         break;
-      case KeyCode.R:
+      case PhysicalKeyboardKey.keyR:
         selectPaintType();
         break;
-      case KeyCode.G:
+      case PhysicalKeyboardKey.keyG:
         cameraCenterOnNodeSelectedIndex();
         break;
-      case KeyCode.Digit_1:
+      case PhysicalKeyboardKey.digit1:
         setNode(index: selectedIndex, variation: 0);
         break;
-      case KeyCode.Digit_2:
+      case PhysicalKeyboardKey.digit2:
         setNode(index: selectedIndex, variation: 1);
         break;
-      case KeyCode.Digit_3:
+      case PhysicalKeyboardKey.digit3:
         setNode(index: selectedIndex, variation: 2);
         break;
-      case KeyCode.Digit_4:
+      case PhysicalKeyboardKey.digit4:
         setNode(index: selectedIndex, variation: 3);
         break;
-      case KeyCode.Digit_5:
+      case PhysicalKeyboardKey.digit5:
         setNode(index: selectedIndex, variation: 4);
         break;
       default:
@@ -871,39 +871,39 @@ class IsometricEditor with IsometricComponent {
 
   }
 
-  void onKeyPressedEditorMarks(int key) {
+  void onKeyPressedEditorMarks(PhysicalKeyboardKey key) {
     switch (key){
-      case KeyCode.Digit_1:
+      case PhysicalKeyboardKey.digit1:
         addMark(
           index: editor.nodeSelectedIndex.value,
           markType: MarkType.values[0],
         );
         break;
-      case KeyCode.Digit_2:
+      case PhysicalKeyboardKey.digit2:
         addMark(
           index: editor.nodeSelectedIndex.value,
           markType: MarkType.values[1],
         );
         break;
-      case KeyCode.Digit_3:
+      case PhysicalKeyboardKey.digit3:
         addMark(
           index: editor.nodeSelectedIndex.value,
           markType: MarkType.values[2],
         );
         break;
-      case KeyCode.Digit_4:
+      case PhysicalKeyboardKey.digit4:
         addMark(
           index: editor.nodeSelectedIndex.value,
           markType: MarkType.values[3],
         );
         break;
-      case KeyCode.Digit_5:
+      case PhysicalKeyboardKey.digit5:
         addMark(
           index: editor.nodeSelectedIndex.value,
           markType: MarkType.values[4],
         );
         break;
-      case KeyCode.Digit_6:
+      case PhysicalKeyboardKey.digit6:
         addMark(
           index: editor.nodeSelectedIndex.value,
           markType: MarkType.values[5],

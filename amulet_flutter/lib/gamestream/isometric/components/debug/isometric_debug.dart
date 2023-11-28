@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:amulet_flutter/gamestream/isometric/classes/particle_roam.dart';
 import 'package:amulet_flutter/packages/common.dart';
 import 'package:amulet_flutter/packages/lemon_components/updatable.dart';
-import 'package:lemon_engine/lemon_engine.dart';
+import 'package:flutter/services.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
@@ -250,8 +250,8 @@ class IsometricDebug with IsometricComponent implements Updatable {
     server.sendIsometricRequestDebugCommand();
   }
 
-  void onKeyPressed(int key){
-    if (key == KeyCode.G) {
+  void onKeyPressed(PhysicalKeyboardKey key){
+    if (key == PhysicalKeyboardKey.keyG) {
       sendIsometricRequestMoveSelectedColliderToMouse();
       return;
     }

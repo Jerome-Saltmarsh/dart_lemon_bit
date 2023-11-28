@@ -1,6 +1,7 @@
 
 
 import 'package:amulet_engine/classes/amulet.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:amulet_engine/classes/amulet_controller.dart';
 import 'package:amulet_engine/classes/amulet_player.dart';
 import 'package:amulet_flutter/classes/amulet_scenes_flutter.dart';
@@ -14,13 +15,33 @@ class LocalServer {
 
   final IsometricParser parser;
 
+  late final SharedPreferences sharedPreferences;
   late final AmuletPlayer player;
   late final AmuletController controller;
   late final Amulet amulet;
 
+  static const FIELD_CHARACTERS = 'characters';
+
   LocalServer({
     required this.parser,
   });
+
+  void initialize(SharedPreferences sharedPreferences){
+    this.sharedPreferences = sharedPreferences;
+  }
+
+  List<String> getCharacterNames() {
+    return sharedPreferences.getStringList(FIELD_CHARACTERS) ?? [];
+  }
+
+  void createCharacter(String name) {
+    final characterNames = getCharacterNames();
+    characterNames.add(name);
+    saveCharacterNames(characterNames);
+  }
+
+  void saveCharacterNames(List<String> names) =>
+      sharedPreferences.setStringList(FIELD_CHARACTERS, names);
 
   void onFixedUpdate() {
     if (!amuletLoaded){
@@ -73,5 +94,6 @@ class LocalServer {
     amulet.updateTimer?.cancel();
     amulet.timerRefreshUserCharacterLocks?.cancel();
   }
+
 }
 

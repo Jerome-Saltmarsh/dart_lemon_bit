@@ -4,8 +4,8 @@ import 'package:amulet_flutter/isometric/functions/get_render.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:amulet_flutter/packages/common.dart';
 import 'package:amulet_flutter/packages/lemon_components/src.dart';
+import 'package:flutter/services.dart';
 import 'package:lemon_byte/byte_writer.dart';
-import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'classes/touch_controller.dart';
 
@@ -149,29 +149,36 @@ class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
 
   int getInputDirectionKeyboard() {
 
-    if (engine.keyPressed(KeyCode.W)) {
-      if (engine.keyPressed(KeyCode.D)) {
+    const up = PhysicalKeyboardKey.keyW;
+    const right = PhysicalKeyboardKey.keyD;
+    const down = PhysicalKeyboardKey.keyS;
+    const left = PhysicalKeyboardKey.keyA;
+
+    final engine = this.engine;
+
+    if (engine.keyPressed(up)) {
+      if (engine.keyPressed(right)) {
         return InputDirection.Up_Right;
       }
-      if (engine.keyPressed(KeyCode.A)) {
+      if (engine.keyPressed(left)) {
         return InputDirection.Up_Left;
       }
       return InputDirection.Up;
     }
 
-    if (engine.keyPressed(KeyCode.S)) {
-      if (engine.keyPressed(KeyCode.D)) {
+    if (engine.keyPressed(down)) {
+      if (engine.keyPressed(right)) {
         return InputDirection.Down_Right;
       }
-      if (engine.keyPressed(KeyCode.A)) {
+      if (engine.keyPressed(left)) {
         return InputDirection.Down_Left;
       }
       return InputDirection.Down;
     }
-    if (engine.keyPressed(KeyCode.A)) {
+    if (engine.keyPressed(left)) {
       return InputDirection.Left;
     }
-    if (engine.keyPressed(KeyCode.D)) {
+    if (engine.keyPressed(right)) {
       return InputDirection.Right;
     }
     return InputDirection.None;
