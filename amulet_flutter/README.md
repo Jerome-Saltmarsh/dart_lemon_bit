@@ -18,6 +18,7 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## BLOCK
+* [new]: offline database delete character
 * [fix]: synchronize client server state
 * [fix]: render front
 * [fix]: offline support for web

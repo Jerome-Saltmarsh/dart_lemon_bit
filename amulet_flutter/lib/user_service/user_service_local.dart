@@ -57,6 +57,7 @@ class UserServiceLocal implements UserService {
     playerClient.position.x = playerServer.x;
     playerClient.position.y = playerServer.y;
     playerClient.position.z = playerServer.z;
+    playerServer.mouseX = playerClient.mouse.positionX;
     parser.add(playerServer.compile());
   }
 
@@ -161,6 +162,10 @@ class UserServiceLocal implements UserService {
       parser.server.onServerConnectionEstablished();
       connected = true;
     });
+  }
+
+  Future deleteCharacter(String uuid) async {
+
   }
 }
 

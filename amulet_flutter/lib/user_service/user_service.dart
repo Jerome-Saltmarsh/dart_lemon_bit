@@ -1,7 +1,4 @@
 
-
-import 'package:typedef/json.dart';
-
 abstract class UserService {
 
   void createNewCharacter({
@@ -14,4 +11,6 @@ abstract class UserService {
   });
 
   void playCharacter(String characterUuid);
+
+  Future deleteCharacter(String characterId);
 }

@@ -28,10 +28,9 @@ class IsometricServer with IsometricComponent {
 
   @override
   Future onComponentInit(sharedPreferences) async {
-
     userServiceLocal = UserServiceLocal(
-        parser: parser,
-        playerClient: player,
+      parser: parser,
+      playerClient: player,
     );
 
     websocket = WebsocketClient(
@@ -55,7 +54,8 @@ class IsometricServer with IsometricComponent {
       sendIsometricRequest(NetworkRequestIsometric.Weather_Set_Wind, value);
 
   void sendIsometricRequestWeatherSetLightning(int value) =>
-      sendIsometricRequest(NetworkRequestIsometric.Weather_Set_Lightning, value);
+      sendIsometricRequest(
+          NetworkRequestIsometric.Weather_Set_Lightning, value);
 
   void sendIsometricRequestWeatherToggleBreeze() =>
       sendIsometricRequest(NetworkRequestIsometric.Weather_Toggle_Breeze);
@@ -67,7 +67,8 @@ class IsometricServer with IsometricComponent {
       sendIsometricRequest(NetworkRequestIsometric.Editor_Load_Game, name);
 
   void sendIsometricRequestSelectGameObject(GameObject gameObject) =>
-      sendIsometricRequest(NetworkRequestIsometric.Select_GameObject, '${gameObject.id}');
+      sendIsometricRequest(
+          NetworkRequestIsometric.Select_GameObject, '${gameObject.id}');
 
   void sendIsometricRequestDebugCharacterSetCharacterType(int characterType) =>
       sendIsometricRequest(
@@ -93,10 +94,12 @@ class IsometricServer with IsometricComponent {
   void sendIsometricRequestToggleDebugging() =>
       sendIsometricRequest(NetworkRequestIsometric.Toggle_Debugging);
 
-  void sendIsometricRequest(NetworkRequestIsometric request, [dynamic message]) =>
+  void sendIsometricRequest(NetworkRequestIsometric request,
+      [dynamic message]) =>
       sendNetworkRequest(NetworkRequest.Isometric, '${request.index} $message');
 
-  void sendRequest(int requestType, [dynamic a, dynamic b, dynamic c, dynamic d]) =>
+  void sendRequest(int requestType,
+      [dynamic a, dynamic b, dynamic c, dynamic d]) =>
       send('$requestType $a $b $c $d'.trim());
 
   void sendArgs2(int clientRequest, dynamic a, dynamic b) =>
@@ -133,7 +136,7 @@ class IsometricServer with IsometricComponent {
     }
     try {
       connectToRegion(regionValue, '--gameType ${gameType.index} $message');
-    } catch(error) {
+    } catch (error) {
       print(error);
     }
   }
@@ -144,14 +147,17 @@ class IsometricServer with IsometricComponent {
     disconnect();
   }
 
-  void sendNetworkRequestAmulet(NetworkRequestAmulet request, [dynamic message]) =>
+  void sendNetworkRequestAmulet(NetworkRequestAmulet request,
+      [dynamic message]) =>
       sendNetworkRequest(NetworkRequest.Amulet, '${request.index} $message');
 
-  void sendNetworkRequest(int networkRequest, [dynamic arg1, dynamic arg2, dynamic arg3]) =>
-      send('${networkRequest} ${arg1 ?? ""} ${arg2 ?? ""} ${arg3 ?? ""}'.trim());
+  void sendNetworkRequest(int networkRequest,
+      [dynamic arg1, dynamic arg2, dynamic arg3]) =>
+      send(
+          '${networkRequest} ${arg1 ?? ""} ${arg2 ?? ""} ${arg3 ?? ""}'.trim());
 
   void send(dynamic data) {
-    switch (serverMode){
+    switch (serverMode) {
       case ServerMode.local:
         userServiceLocal.send(data);
         break;
@@ -165,9 +171,10 @@ class IsometricServer with IsometricComponent {
 
   void disconnect() {
     options.game.value = options.website;
+    parser.amulet.clearAllState();
     switch (serverMode) {
       case ServerMode.local:
-        parser.amulet.clearAllState();
+        // parser.amulet.clearAllState();
         userServiceLocal.disconnect();
         break;
       case ServerMode.remote:
@@ -237,14 +244,8 @@ class IsometricServer with IsometricComponent {
   }
 
   void onWebsocketConnectionDone() {
-     amulet.clearAllState();
+    amulet.clearAllState();
   }
-
-  UserService? get userService => switch (serverMode){
-    ServerMode.remote => userServiceHttp,
-    ServerMode.local => userServiceLocal,
-    _ => null
-  };
 
   void createCharacter({
     required String name,
@@ -253,29 +254,27 @@ class IsometricServer with IsometricComponent {
     required int hairColor,
     required int gender,
     required int headType,
-  }){
-    userService?.createNewCharacter(
+  }) =>
+      userService.createNewCharacter(
         name: name,
         complexion: complexion,
         hairType: hairType,
         hairColor: hairColor,
         gender: gender,
         headType: headType,
-    );
-  }
+      );
 
-  void playCharacter(CharacterJson character) {
-    switch (serverMode){
-      case ServerMode.local:
-        userServiceLocal.playCharacter(character.uuid);
-        break;
-      case ServerMode.remote:
-        userServiceHttp.playCharacter(character.uuid);
-        break;
-      default:
-        throw Exception('no server mode selected');
-    }
-  }
+  void playCharacter(CharacterJson character) =>
+      userService.playCharacter(character.uuid);
 
+  void deleteCharacter(String uuid) =>
+      userService.deleteCharacter(uuid);
+
+  UserService get userService =>
+      switch (serverMode) {
+        ServerMode.local => userServiceLocal,
+        ServerMode.remote => userServiceHttp,
+        _ => throw Exception('no server mode selected')
+      };
 }
 

@@ -9,6 +9,7 @@ import 'package:amulet_flutter/packages/common/src/duration_auto_save.dart';
 import 'package:amulet_flutter/packages/common/src/game_type.dart';
 import 'package:amulet_flutter/packages/lemon_websocket_client.dart';
 import 'package:amulet_flutter/types/server_mode.dart';
+import 'package:amulet_flutter/user_service/character_json.dart';
 import 'package:amulet_flutter/website/enums/website_page.dart';
 import 'package:amulet_flutter/website/functions/build_website_page_select_region.dart';
 import 'package:amulet_flutter/website/website_game.dart';
@@ -325,7 +326,7 @@ extension WebsiteUI on WebsiteGame {
         textTrue: 'CONFIRM',
         onSelected: (bool value) async {
           if (value){
-            userServiceHttp.deleteCharacter(character['uuid']);
+            server.deleteCharacter(character.uuid);
           }
         });
   }

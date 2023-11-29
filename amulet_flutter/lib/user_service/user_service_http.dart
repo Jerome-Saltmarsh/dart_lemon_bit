@@ -113,7 +113,7 @@ class UserServiceHttp with IsometricComponent implements UserService {
 
   void logout() => userId.value = '';
 
-  void deleteCharacter(String characterId) async {
+  Future deleteCharacter(String characterId) async {
     options.startOperation(OperationStatus.Deleting_Character);
     try {
       final response = await GameStreamHttpClient.deleteCharacter(
