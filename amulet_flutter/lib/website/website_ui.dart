@@ -54,7 +54,6 @@ extension WebsiteUI on WebsiteGame {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            // buildText('AMULET', size: 80, family: 'REBUFFED'),
                             buildText('AMULET', size: 120),
                             height32,
                             buildTogglePlayMode(),
@@ -65,14 +64,6 @@ extension WebsiteUI on WebsiteGame {
                                      rebuild,
                                   )
                                ),
-                               // StatefulBuilder(builder: (context, setState) =>
-                               //     buildTableCharacters(
-                               //       server.local.getCharacters(),
-                               //       (){
-                               //         setState((){});
-                               //       },
-                               //    )
-                               // ),
                             if (serverMode == ServerMode.remote)
                               buildWatch(server.remote.userId, (userId) {
                                 final authenticated = userId.isNotEmpty;
@@ -87,14 +78,14 @@ extension WebsiteUI on WebsiteGame {
                   ),
                   WebsitePage.New_Character => Column(
                       children: [
-                        onPressed(
-                          action: () => this.websitePage.value =
-                              WebsitePage.Select_Character,
+                        onPressed (
+                          action: showPageSelectCharacter,
                           child: buildText('BACK'),
                         ),
                         DialogCreateCharacterComputer(
                           createCharacter: server.activeServer.createNewCharacter,
-                        )
+                          onCreated: showPageSelectCharacter,
+                        ),
                       ],
                     ),
                   WebsitePage.Select_Region => buildWebsitePageSelectRegion(
@@ -329,6 +320,7 @@ extension WebsiteUI on WebsiteGame {
         });
   }
 
+  void showPageSelectCharacter()=> websitePage.value = WebsitePage.Select_Character;
 }
 
 

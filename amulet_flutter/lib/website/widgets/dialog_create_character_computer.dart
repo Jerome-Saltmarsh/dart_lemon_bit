@@ -19,8 +19,12 @@ import 'package:lemon_widgets/lemon_widgets.dart';
 class DialogCreateCharacterComputer extends StatelessWidget {
 
   final CreateCharacter createCharacter;
+  final Function onCreated;
 
-  DialogCreateCharacterComputer({required this.createCharacter});
+  DialogCreateCharacterComputer({
+    required this.createCharacter,
+    required this.onCreated,
+  });
 
   final nameController = TextEditingController(
       text: 'Anon${randomInt(9999, 99999).toString()}'
@@ -47,13 +51,6 @@ class DialogCreateCharacterComputer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: [
-                //     buildBackButton(components),
-                //     GSButtonRegion(),
-                //   ],
-                // ),
                 buildCharacterCanvas(components),
                 height32,
                 Column(
@@ -84,23 +81,17 @@ class DialogCreateCharacterComputer extends StatelessWidget {
           buildWatch(error, (error) => buildText(error, color: Colors.red)),
           width8,
           onPressed(
-            // action: () => components.user.createNewCharacter(
-            //   name: nameController.text,
-            //   complexion: complexion.value,
-            //   hairType: hairType.value,
-            //   hairColor: hairColor.value,
-            //   gender: gender.value,
-            //   headType: headType.value,
-            // ),
-
-            action: () => createCharacter(
+            action: () {
+              createCharacter(
               name: nameController.text,
               complexion: complexion.value,
               hairType: hairType.value,
               hairColor: hairColor.value,
               gender: gender.value,
               headType: headType.value,
-            ),
+            );
+             onCreated();
+            },
             child: buildText('START', size: 25, color: Colors.green),
           ),
         ],
