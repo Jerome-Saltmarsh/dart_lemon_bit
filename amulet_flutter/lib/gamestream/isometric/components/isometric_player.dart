@@ -280,9 +280,15 @@ class IsometricPlayer with IsometricComponent {
         }
         break;
       case NetworkResponsePlayer.Cache_Cleared:
-        amulet.clearAllState();
+        readCacheCleared();
         break;
     }
+  }
+
+  void readCacheCleared() {
+    print('isometricPlayer.readCacheCleared()');
+    scene.characters.clear();
+    scene.totalCharacters = 0;
   }
 
   void readPlayerPositionDelta() {
@@ -297,6 +303,7 @@ class IsometricPlayer with IsometricComponent {
   }
 
   void readPlayerPositionAbsolute() {
+    print('isometricPlayer.readPlayerPositionAbsolute()');
     parser.readIsometricPosition(position);
     updateIndexes();
   }

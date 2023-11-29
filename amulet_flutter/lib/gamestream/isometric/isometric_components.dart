@@ -22,6 +22,7 @@ import 'ui/game_isometric_minimap.dart';
 
 
 class IsometricComponents extends ComponentContainer {
+  var ready = false;
   final AppleEngine engine;
   final WebsiteGame website;
   final Amulet amulet;
@@ -176,6 +177,7 @@ class IsometricComponents extends ComponentContainer {
       component.engine = engine;
       component.userServiceHttp = user;
     }
+    ready = true;
   }
 }
 

@@ -371,13 +371,11 @@ class Amulet extends IsometricGame {
     clearDragging();
     clearActivatedPowerIndex();
     io.reset();
-    // options.game.value = options.website;
     engine.cameraX = 0;
     engine.cameraY = 0;
     engine.zoom = 1.0;
     engine.drawCanvasAfterUpdate = true;
     engine.cursorType.value = CursorType.Basic;
-    // engine.fullScreenExit();
     player.active.value = false;
     actions.clean();
     scene.gameObjects.clear();

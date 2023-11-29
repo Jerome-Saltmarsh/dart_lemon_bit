@@ -31,6 +31,9 @@ class AppleEngine extends LemonEngine {
 
   @override
   void onDrawCanvas(Canvas canvas, Size size) {
+    if (!components.ready){
+      return;
+    }
     components.render.drawCanvas(canvas, size);
   }
 
@@ -44,8 +47,12 @@ class AppleEngine extends LemonEngine {
      await components.init(sharedPreferences);
    }
 
+
   @override
   void onUpdate(double delta) {
+    if (!components.ready){
+      return;
+    }
     components.update(delta);
   }
 
@@ -61,26 +68,42 @@ class AppleEngine extends LemonEngine {
 
   @override
   void onMouseEnterCanvas() {
+    if (!components.ready){
+      return;
+    }
     components.options.onMouseEnterCanvas();
   }
 
   @override
   void onMouseExitCanvas() {
+    if (!components.ready){
+      return;
+    }
     components.options.onMouseExitCanvas();
   }
 
   @override
   void onLeftClicked() {
+    if (!components.ready){
+      return;
+    }
     components.options.game.value.onLeftClicked();
   }
 
   @override
   void onRightClicked() {
+    if (!components.ready){
+      return;
+    }
     components.options.game.value.onRightClicked();
   }
 
   @override
   void onKeyPressed(PhysicalKeyboardKey key) {
+
+    if (!components.ready){
+      return;
+    }
 
     if (key == LogicalKeyboardKey.keyT){
       components.engine.fullscreenToggle();

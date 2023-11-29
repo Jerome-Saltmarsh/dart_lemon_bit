@@ -115,9 +115,12 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   void _clearJob(){}
 
   void removePlayer(T player){
+    player.aimTarget = null;
+    player.target = null;
     if (players.remove(player)) {
       onPlayerRemoved(player);
     }
+    characters.remove(player);
   }
 
 
@@ -1172,8 +1175,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
 
     if (instance is T) {
-      instance.aimTarget = null;
-      instance.target = null;
+     
       removePlayer(instance);
     }
 

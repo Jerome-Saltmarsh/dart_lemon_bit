@@ -86,6 +86,11 @@ class UserServiceLocal implements UserService {
 
   void disconnect() {
     connected = false;
+    player.clearCache();
+    player.x = 0;
+    player.y = 0;
+    player.z = 0;
+    parser.amulet.clearAllState();
     parser.options.game.value = parser.website;
     amulet.updateTimer?.cancel();
     amulet.timerRefreshUserCharacterLocks?.cancel();
@@ -140,8 +145,6 @@ class UserServiceLocal implements UserService {
       player.health = 10;
       player.active = true;
       writeJsonToAmuletPlayer(character, player);
-      player.clearCache();
-      parser.amulet.clearAllState();
       controller.playerJoinGameTutorial();
       player.regainFullHealth();
       amulet.resumeUpdateTimer();

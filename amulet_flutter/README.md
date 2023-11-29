@@ -18,7 +18,7 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## BLOCK
-* [new]: offline character persistence
+* [fix]: synchronize client server state
 * [fix]: render front
 * [fix]: offline support for web
 
@@ -36,6 +36,7 @@ ctrl + []               : move caret to code block
 * [new]: flames emit smoke particles
 
 ## 28.11.2023
+* [new]: offline character persistence
 * [fix]: write text on windows
 
 ## 26.11.2023
