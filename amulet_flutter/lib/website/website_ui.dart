@@ -114,21 +114,28 @@ extension WebsiteUI on WebsiteGame {
 
   Widget buildTogglePlayMode() {
     return WatchBuilder(options.serverMode, (activePlayMode) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: ServerMode.values.map((serverMode) {
-          return onPressed(
-            action: () => options.serverMode.value = serverMode,
-            child: Container(
-              alignment: Alignment.center,
-              width: 80,
-              height: 50,
-              margin: const EdgeInsets.symmetric(horizontal: 4),
-              color: activePlayMode == serverMode ? Colors.green : Colors.green.withOpacity(0.25),
-              child: buildText(getServerModeText(serverMode)),
-            ),
-          );
-        }).toList(growable: false),
+      return Container(
+        width: 500,
+        color: Colors.black26,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: ServerMode.values.map((serverMode) {
+            return onPressed(
+              action: () => options.serverMode.value = serverMode,
+              child: Container(
+                alignment: Alignment.center,
+                width: 80,
+                height: 50,
+                margin: const EdgeInsets.symmetric(horizontal: 4),
+                color: activePlayMode == serverMode ? Colors.green : Colors.green.withOpacity(0.25),
+                child: buildText(
+                    getServerModeText(serverMode),
+                    color: activePlayMode == serverMode ? Colors.white : Colors.white60
+                  ),
+              ),
+            );
+          }).toList(growable: false),
+        ),
       );
     });
   }
@@ -186,16 +193,15 @@ extension WebsiteUI on WebsiteGame {
     }[gameType] ?? ''), fit: BoxFit.fitWidth,);
 
   Widget buildContainerAuthenticated(ServerRemote serverRemote) =>
-      GSContainer(
-        width: 400,
-        padding: EdgeInsets.zero,
-        child: Column(
-          children: [
-            buildWatch(serverRemote.characters, (characters){
-              return buildTableCharacters(characters, (){});
-            },),
-            height12,
-            Row(
+      Column(
+        children: [
+          buildWatch(serverRemote.characters, (characters) =>
+              buildTableCharacters(characters, (){})
+          ),
+          height12,
+          GSContainer(
+            width: 500,
+            child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -207,8 +213,8 @@ extension WebsiteUI on WebsiteGame {
                 ),
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       );
 
   Widget buildCharacters(List<Json> characters, Function rebuild) =>

@@ -12,7 +12,7 @@ Widget buildContainerAuthenticate(WebsiteGame website, ServerRemote serverRemote
   final loginPage = WatchBool(true);
   return GSKeyEventHandler(
     child: GSContainer(
-      width: 400,
+      width: 500,
       child: buildWatch(
           loginPage, (login) => Column(
         children: [
