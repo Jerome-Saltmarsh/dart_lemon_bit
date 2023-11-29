@@ -11,9 +11,7 @@ import 'package:amulet_flutter/user_service/src.dart';
 class IsometricServer with IsometricComponent {
 
   late final WebsocketClient websocket;
-  late final userServiceLocal = UserServiceLocal(
-    parser: parser,
-  );
+  late final UserServiceLocal userServiceLocal;
 
   ServerMode? get serverMode => options.serverMode.value;
 
@@ -30,6 +28,12 @@ class IsometricServer with IsometricComponent {
 
   @override
   Future onComponentInit(sharedPreferences) async {
+
+    userServiceLocal = UserServiceLocal(
+        parser: parser,
+        playerClient: player,
+    );
+
     websocket = WebsocketClient(
       readString: parser.addString,
       readBytes: parser.add,

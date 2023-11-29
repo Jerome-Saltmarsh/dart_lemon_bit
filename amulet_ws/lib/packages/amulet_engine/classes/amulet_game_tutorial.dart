@@ -799,7 +799,7 @@ class AmuletGameTutorial extends AmuletGame {
         .gameEventPosition(GameEventType.Teleport_Start, guide)
         // .movePositionToSceneKey(guide, keysGuideSpawn1)
         .gameEventPosition(GameEventType.Teleport_End, guide)
-        .wait(seconds: 2)
+        // .wait(seconds: 2)
         .end()
     ;
   }

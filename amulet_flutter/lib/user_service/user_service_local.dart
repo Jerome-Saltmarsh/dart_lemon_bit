@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:amulet_engine/classes/amulet.dart';
 import 'package:amulet_engine/src.dart';
 import 'package:amulet_flutter/user_service/character_json.dart';
+import 'package:amulet_flutter/gamestream/isometric/components/isometric_player.dart' as PlayerClient;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:amulet_flutter/classes/amulet_scenes_flutter.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_parser.dart';
@@ -21,7 +22,8 @@ class UserServiceLocal implements UserService {
   final IsometricParser parser;
 
   late final SharedPreferences sharedPreferences;
-  late final AmuletPlayer player;
+  late final AmuletPlayer playerServer;
+  late final PlayerClient.IsometricPlayer playerClient;
   late final AmuletController controller;
   late final Amulet amulet;
 
@@ -29,11 +31,11 @@ class UserServiceLocal implements UserService {
 
   UserServiceLocal({
     required this.parser,
+    required this.playerClient,
   });
 
   void initialize(SharedPreferences sharedPreferences){
     this.sharedPreferences = sharedPreferences;
-    // sharedPreferences.clear();
   }
 
   List<Json> getCharacters() =>
@@ -52,11 +54,10 @@ class UserServiceLocal implements UserService {
       return;
     }
 
-    final isometricPlayer = parser.player;
-    isometricPlayer.position.x = player.x;
-    isometricPlayer.position.y = player.y;
-    isometricPlayer.position.z = player.z;
-    parser.add(player.compile());
+    playerClient.position.x = playerServer.x;
+    playerClient.position.y = playerServer.y;
+    playerClient.position.z = playerServer.z;
+    parser.add(playerServer.compile());
   }
 
   void send(dynamic data) {
@@ -75,9 +76,9 @@ class UserServiceLocal implements UserService {
       scenes: scenes,
     );
     await amulet.construct(initializeUpdateTimer: true);
-    player = amulet.buildPlayer();
+    playerServer = amulet.buildPlayer();
     controller = AmuletController(
-      player: player,
+      player: playerServer,
       isAdmin: true,
       sink: parser,
       handleClientRequestJoin: handleClientRequestJoin,
@@ -91,10 +92,14 @@ class UserServiceLocal implements UserService {
 
   void disconnect() {
     connected = false;
-    player.clearCache();
-    player.x = 0;
-    player.y = 0;
-    player.z = 0;
+    playerServer.clearCache();
+    playerServer.x = 0;
+    playerServer.y = 0;
+    playerServer.z = 0;
+    playerServer.characterState = CharacterState.Idle;
+    playerServer.target = null;
+    playerServer.interacting = false;
+    playerServer.setDestinationToCurrentPosition();
     parser.amulet.clearAllState();
     parser.options.game.value = parser.website;
     amulet.updateTimer?.cancel();
@@ -115,13 +120,13 @@ class UserServiceLocal implements UserService {
     }
 
     ensureInitialized().then((value) {
-      player.name = name;
-      player.complexion = complexion;
-      player.hairType = hairType;
-      player.hairColor = hairColor;
-      player.gender = gender;
-      player.headType = headType;
-      final json = mapIsometricPlayerToJson(player);
+      playerServer.name = name;
+      playerServer.complexion = complexion;
+      playerServer.hairType = hairType;
+      playerServer.hairColor = hairColor;
+      playerServer.gender = gender;
+      playerServer.headType = headType;
+      final json = mapIsometricPlayerToJson(playerServer);
       final characters = getCharacters();
       characters.add(json);
       final characterStrings = characters.map(jsonEncode).toList(growable: false);
@@ -146,12 +151,12 @@ class UserServiceLocal implements UserService {
       throw Exception('character could not be found');
     }
     ensureInitialized().then((value) {
-      player.maxHealth =  10;
-      player.health = 10;
-      player.active = true;
-      writeJsonToAmuletPlayer(character, player);
+      playerServer.maxHealth =  10;
+      playerServer.health = 10;
+      playerServer.active = true;
+      writeJsonToAmuletPlayer(character, playerServer);
       controller.playerJoinGameTutorial();
-      player.regainFullHealth();
+      playerServer.regainFullHealth();
       amulet.resumeUpdateTimer();
       parser.server.onServerConnectionEstablished();
       connected = true;
