@@ -1,6 +1,5 @@
 
-
-import 'package:amulet_flutter/user_service/server_remote.dart';
+import 'package:amulet_flutter/server/src.dart';
 import 'package:amulet_flutter/website/website_game.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';

@@ -20,8 +20,6 @@ import 'gamestream/isometric/ui/isometric_colors.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
-import 'user_service/src.dart';
-
 Widget buildApp(){
   print('buildApp()');
 

@@ -2,6 +2,7 @@
 import 'package:amulet_engine/packages/isometric_engine/packages/common/src/network/network_request.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_parser.dart';
 import 'package:amulet_flutter/packages/lemon_cache/cache.dart';
+import 'package:amulet_flutter/server/server.dart';
 import 'package:amulet_flutter/website/enums/website_page.dart';
 import 'package:gamestream_http_client/src.dart';
 import 'package:lemon_watch/src.dart';
@@ -9,7 +10,6 @@ import 'package:typedef/json.dart';
 import 'package:amulet_engine/packages/isometric_engine/packages/common/src/game_type.dart';
 import 'package:amulet_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:amulet_flutter/packages/lemon_websocket_client.dart';
-import 'package:amulet_flutter/user_service/src.dart';
 
 import '../gamestream/operation_status.dart';
 
@@ -289,5 +289,8 @@ class ServerRemote implements Server {
         '--headType $headType'
     );
   }
+
+  @override
+  void send(data) => websocket.send(data);
 
 }

@@ -4,14 +4,12 @@ import 'dart:convert';
 
 import 'package:amulet_engine/classes/amulet.dart';
 import 'package:amulet_engine/src.dart';
-import 'package:amulet_flutter/user_service/character_json.dart';
-import 'package:amulet_flutter/gamestream/isometric/components/isometric_player.dart' as PlayerClient;
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:amulet_flutter/classes/amulet_scenes_flutter.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_parser.dart';
+import 'package:amulet_flutter/gamestream/isometric/components/isometric_player.dart' as PlayerClient;
+import 'package:amulet_flutter/server/src.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:typedef/json.dart';
-
-import 'server.dart';
 
 
 class ServerLocal implements Server {

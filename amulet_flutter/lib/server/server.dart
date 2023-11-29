@@ -17,4 +17,6 @@ abstract class Server {
   Future deleteCharacter(String characterId);
 
   void disconnect();
+
+  void send(dynamic data);
 }

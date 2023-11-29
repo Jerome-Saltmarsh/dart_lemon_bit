@@ -4,8 +4,7 @@ import 'package:amulet_flutter/gamestream/isometric/enums/mode.dart';
 import 'package:amulet_flutter/isometric/classes/gameobject.dart';
 import 'package:amulet_flutter/packages/common.dart';
 import 'package:amulet_flutter/types/server_mode.dart';
-import 'package:amulet_flutter/user_service/server_remote.dart';
-import 'package:amulet_flutter/user_service/src.dart';
+import 'package:amulet_flutter/server/src.dart';
 
 class IsometricServer with IsometricComponent {
 
@@ -110,18 +109,7 @@ class IsometricServer with IsometricComponent {
       send(
           '${networkRequest} ${arg1 ?? ""} ${arg2 ?? ""} ${arg3 ?? ""}'.trim());
 
-  void send(dynamic data) {
-    switch (serverMode) {
-      case ServerMode.local:
-        local.send(data);
-        break;
-      case ServerMode.remote:
-        remote.websocket.send(data);
-        break;
-      default:
-        throw Exception('isometricServer.send() - serverMode is null');
-    }
-  }
+  void send(dynamic data) => activeServer.send(data);
 
   void disconnect() {
     options.game.value = options.website;

@@ -1,7 +1,6 @@
 
 import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/engine.dart';
-import 'package:amulet_flutter/user_service/src.dart';
 import 'package:amulet_flutter/website/website_game.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_environment.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_screen.dart';
