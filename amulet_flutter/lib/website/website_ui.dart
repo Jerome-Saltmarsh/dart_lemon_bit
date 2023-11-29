@@ -15,6 +15,7 @@ import 'package:amulet_flutter/website/enums/website_page.dart';
 import 'package:amulet_flutter/website/functions/build_website_page_select_region.dart';
 import 'package:amulet_flutter/website/website_game.dart';
 import 'package:amulet_flutter/website/widgets/gs_button_region.dart';
+import 'package:amulet_flutter/website/widgets/src.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
@@ -58,14 +59,20 @@ extension WebsiteUI on WebsiteGame {
                             height32,
                             buildTogglePlayMode(),
                             if (serverMode == ServerMode.local)
-                               StatefulBuilder(builder: (context, setState) =>
+                               buildState(builder: (context, rebuild) =>
                                    buildTableCharacters(
                                      server.local.getCharacters(),
-                                     (){
-                                       setState((){});
-                                     },
+                                     rebuild,
                                   )
                                ),
+                               // StatefulBuilder(builder: (context, setState) =>
+                               //     buildTableCharacters(
+                               //       server.local.getCharacters(),
+                               //       (){
+                               //         setState((){});
+                               //       },
+                               //    )
+                               // ),
                             if (serverMode == ServerMode.remote)
                               buildWatch(server.remote.userId, (userId) {
                                 final authenticated = userId.isNotEmpty;
@@ -213,7 +220,7 @@ extension WebsiteUI on WebsiteGame {
         ),
       );
 
-  Widget buildCharacters(List<Json> characters, Function refresh) =>
+  Widget buildCharacters(List<Json> characters, Function rebuild) =>
       Container(
       height: 200,
       child: SingleChildScrollView(
@@ -243,7 +250,7 @@ extension WebsiteUI on WebsiteGame {
                   if (characterIsLocked(character))
                     buildText('LOCKED', color: Colors.red),
                   onPressed(
-                      action: () => showDialogDeleteCharacter(character, onDeleted: refresh),
+                      action: () => showDialogDeleteCharacter(character, onDeleted: rebuild),
                       child: buildText('delete'),
                   ),
                 ],
@@ -263,7 +270,7 @@ extension WebsiteUI on WebsiteGame {
      return lockDuration.inSeconds <= durationAutoSave.inSeconds;
   }
 
-  Widget buildTableCharacters(List<Json> characters, Function refresh) => GSContainer(
+  Widget buildTableCharacters(List<Json> characters, Function rebuild) => GSContainer(
     color: Colors.black12,
     width: 500,
     child: Column(
@@ -287,7 +294,7 @@ extension WebsiteUI on WebsiteGame {
               ),
             ],
           ),
-          buildCharacters(characters, refresh),
+          buildCharacters(characters, rebuild),
         ],
       ),
   );
