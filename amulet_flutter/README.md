@@ -18,7 +18,6 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## BLOCK
-* [new]: offline database delete character
 * [fix]: synchronize client server state
 * [fix]: render front
 * [fix]: offline support for web
@@ -35,6 +34,9 @@ ctrl + []               : move caret to code block
 * [fix]: persist gameobject properties
 * [fix]: colored particle emission
 * [new]: flames emit smoke particles
+
+## 29.11.2023
+* [new]: offline database delete character
 
 ## 28.11.2023
 * [new]: offline character persistence
