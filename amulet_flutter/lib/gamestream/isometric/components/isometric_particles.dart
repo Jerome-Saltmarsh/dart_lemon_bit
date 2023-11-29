@@ -19,155 +19,6 @@ import 'isometric_component.dart';
 
 class IsometricParticles with IsometricComponent implements Updatable {
 
-  var updateWindNodesEnabled = true;
-
-  /// a wind node
-  /// [0] enabled
-  /// [1, 2, 3, 4, 5] velocityX
-  /// [6, 7, 8, 9, 10] velocityY
-  /// [11, 12, 13, 14, 15] velocityZ
-  /// [16, 17, 18, 19, 20] accelerationX
-  /// [21, 22, 23, 24, 25] accelerationY
-  /// [26, 27, 28, 29, 30] accelerationZ
-  var windIndexes = Uint16List(0);
-
-  var windUpdateZ = 0;
-
-  void updateWindNodes(){
-    if (this.windIndexes.length != scene.nodeTypes.length){
-      this.windIndexes = Uint16List(scene.nodeTypes.length);
-    }
-    if (!updateWindNodesEnabled){
-      return;
-    }
-
-    final windIndexes = this.windIndexes;
-    final windIndexesLength = windIndexes.length;
-
-    if (windIndexesLength == 0) {
-      return;
-    }
-
-    final area = scene.area;
-    final totalColumns = scene.totalColumns;
-    final totalRows = scene.totalRows;
-    final totalZ = scene.totalZ;
-
-    final totalRowsMinusOne = totalRows - 1;
-    final totalColumnsMinusOne = totalColumns - 1;
-    final totalZMinusOne = totalZ - 1;
-
-    this.windUpdateZ = (this.windUpdateZ + 1) % totalZ;
-    final windUpdateZ = this.windUpdateZ;
-
-    for (var row = 0; row < totalRows; row++){
-      final startRow = windUpdateZ + (row * totalColumns);
-      for (var column = 0; column < totalColumns; column++){
-        final startColumn = startRow + column;
-        final windIndex = startColumn;
-        var wind = windIndexes[windIndex];
-        final windPrevious = wind;
-        final windEnabled = Wind.getEnabled(wind);
-
-        if (!windEnabled){
-          continue;
-        }
-
-        var windVelocityX = Wind.getVelocityX(wind);
-        var windVelocityY = Wind.getVelocityY(wind);
-        var windVelocityZ = Wind.getVelocityZ(wind);
-
-        if (windVelocityX != 0) {
-          final windVelocityXPositive = windVelocityX > 0;
-          final friction = windVelocityXPositive ? -1 : 1;
-          final indexDiff = windVelocityXPositive ? totalColumns : -totalColumns;
-          final nextIndex = windIndex + indexDiff;
-          wind = Wind.setVelocityX(wind, windVelocityX + friction);
-
-          if (
-            (!windVelocityXPositive && row > 0) ||
-            (windVelocityXPositive && row < totalRowsMinusOne)
-          ) {
-            final nextWind = windIndexes[nextIndex];
-            if (Wind.getEnabled(nextWind)){
-              final nextWindAccelerationX = Wind.getAccelerationX(nextWind);
-              windIndexes[nextIndex] = Wind.setAccelerationX(
-                nextWind,
-                nextWindAccelerationX + windVelocityX + friction,
-              );
-            }
-          }
-        }
-
-        if (windVelocityY != 0) {
-          final windVelocityYPositive = windVelocityY > 0;
-          final friction = windVelocityYPositive ? -1 : 1;
-          final indexDiff = windVelocityYPositive ? 1 : -1;
-          final nextIndex = windIndex + indexDiff;
-          wind = Wind.setVelocityY(wind, windVelocityY + friction);
-
-          if (
-            (!windVelocityYPositive && column > 0) ||
-            (windVelocityYPositive && column < totalColumnsMinusOne)
-          ) {
-            final nextWind = windIndexes[nextIndex];
-            if (Wind.getEnabled(nextWind)){
-              final nextWindAccelerationY = Wind.getAccelerationY(nextWind);
-              windIndexes[nextIndex] = Wind.setAccelerationY(
-                nextWind,
-                nextWindAccelerationY + windVelocityY + friction,
-              );
-            }
-          }
-        }
-
-        if (windVelocityZ != 0) {
-          final windVelocityZPositive = windVelocityZ > 0;
-          final friction = windVelocityZPositive ? -1 : 1;
-          final indexDiff = windVelocityZPositive ? area : -area;
-          final nextIndex = windIndex + indexDiff;
-          wind = Wind.setVelocityZ(wind, windVelocityZ + friction);
-
-          if (
-            (!windVelocityZPositive && windUpdateZ > 0) ||
-            (windVelocityZPositive && windUpdateZ < totalZMinusOne)
-          ) {
-            final nextWind = windIndexes[nextIndex];
-            if (Wind.getEnabled(nextWind)){
-              final nextWindAccelerationZ = Wind.getAccelerationZ(nextWind);
-              windIndexes[nextIndex] = Wind.setAccelerationZ(
-                nextWind,
-                nextWindAccelerationZ + windVelocityZ + friction,
-              );
-            }
-          }
-        }
-
-        final windAccelerationX = Wind.getAccelerationX(wind);
-        if (windAccelerationX != 0) {
-          wind = Wind.setVelocityX(wind, Wind.getVelocityX(wind) + windAccelerationX);
-          wind = Wind.setAccelerationX(wind, 0);
-        }
-
-        final windAccelerationY = Wind.getAccelerationY(wind);
-        if (windAccelerationY != 0) {
-          wind = Wind.setVelocityY(wind, Wind.getVelocityY(wind) + windAccelerationY);
-          wind = Wind.setAccelerationY(wind, 0);
-        }
-
-        final windAccelerationZ = Wind.getAccelerationZ(wind);
-        if (windAccelerationZ != 0) {
-          wind = Wind.setVelocityZ(wind, Wind.getVelocityZ(wind) + windAccelerationZ);
-          wind = Wind.setAccelerationZ(wind, 0);
-        }
-
-        if (windPrevious != wind){
-          windIndexes[windIndex] = wind;
-        }
-      }
-    }
-  }
-
   static const windStrengthMultiplier = 0.003;
 
   var windy = false;
@@ -196,14 +47,12 @@ class IsometricParticles with IsometricComponent implements Updatable {
   var nextEmissionWaterDrop = 0;
 
   Particle getInstance() {
-    final deactivated = this.deactivated;
-
     if (deactivated.isNotEmpty){
-       final particle = deactivated.first;
-       activateParticle(particle);
-       return particle;
+       final instance = deactivated.removeAt(0);
+       instance.deactivating = false;
+       activated.add(instance);
+       return instance;
     }
-
     final instance = Particle();
     instance.deactivating = false;
     activated.add(instance);
@@ -543,12 +392,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
   int get countDeactiveParticles => deactivated.length;
 
-  void activateParticle(Particle particle){
-      deactivated.remove(particle);
-      activated.add(particle);
-      particle.deactivating = false;
-  }
-
   void deactivateParticle(Particle particle){
     particle.deactivate();
     activated.remove(particle);
@@ -558,6 +401,14 @@ class IsometricParticles with IsometricComponent implements Updatable {
   }
 
   void onComponentUpdate() {
+
+    if (!server.connected){
+      return;
+    }
+
+    if (this.scene.totalNodes == 0){
+      return;
+    }
 
     if (options.charactersEffectParticles){
       applyCharactersToParticles();
@@ -920,80 +771,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
         z: z,
         duration: 20,
     );
-  }
-
-  void applyCharactersToWind() {
-    final windIndexes = this.windIndexes;
-
-    if (windIndexes.isEmpty){
-      return;
-    }
-
-    final scene = this.scene;
-    final totalCharacters = scene.totalCharacters;
-    final characters = scene.characters;
-    final getIndexPosition = scene.getIndexPosition;
-
-    for (var i = 0; i < totalCharacters; i++){
-      final character = characters[i];
-      if (character.state == CharacterState.Running) {
-        final characterIndex = getIndexPosition(character);
-        final characterDirection = character.direction;
-        var wind = windIndexes[characterIndex];
-
-        int accelerationX;
-        int accelerationY;
-
-        switch (characterDirection) {
-          case IsometricDirection.North:
-            accelerationX = -4;
-            accelerationY = 0;
-            break;
-          case IsometricDirection.North_East:
-            accelerationX = -2;
-            accelerationY = -2;
-            break;
-          case IsometricDirection.East:
-            accelerationX = 0;
-            accelerationY = -4;
-            break;
-          case IsometricDirection.South_East:
-            accelerationX = 2;
-            accelerationY = -2;
-            break;
-          case IsometricDirection.South:
-            accelerationX = -4;
-            accelerationY = 0;
-            break;
-          case IsometricDirection.South_West:
-            accelerationX = -2;
-            accelerationY = -2;
-            break;
-          case IsometricDirection.West:
-            accelerationX = 0;
-            accelerationY = 4;
-            break;
-          case IsometricDirection.North_West:
-            accelerationX = 2;
-            accelerationY = 2;
-            break;
-          default:
-            throw Exception('unsupported direction: $characterDirection');
-        }
-
-        if (accelerationX != 0) {
-           final currentAccelerationX = Wind.getAccelerationX(wind);
-           wind = Wind.setAccelerationX(wind, accelerationX + currentAccelerationX);
-        }
-
-        if (accelerationY != 0) {
-           final currentAccelerationY = Wind.getAccelerationY(wind);
-           wind = Wind.setAccelerationX(wind, accelerationY + currentAccelerationY);
-        }
-
-        windIndexes[characterIndex] = wind;
-      }
-    }
   }
 
   void applyCharactersToParticles() {

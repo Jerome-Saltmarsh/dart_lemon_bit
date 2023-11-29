@@ -106,12 +106,16 @@ class IsometricRender with IsometricComponent {
     }
 
     // if (options.playModeMulti && !options.websocket.connected) {
-    if (!server.connected) {
-      images.cacheImages();
+    // if (!server.connected) {
+    //   images.cacheImages();
+    //   return;
+    // }
+
+    if (!drawCanvasEnabled){
       return;
     }
 
-    if (!drawCanvasEnabled){
+    if (scene.totalNodes <= 0){
       return;
     }
 
@@ -121,16 +125,7 @@ class IsometricRender with IsometricComponent {
     animation.update();
     particles.onComponentUpdate();
     compositor.render3D();
-
     amulet.renderWorldMap();
-
-    if (options.renderVisibilityBeams){
-      rendererNodes.renderVisibilityBeams();
-    }
-
-    if (options.renderWindVelocity){
-      renderWind();
-    }
 
     renderEditMode();
     renderMouseTargetName();
@@ -138,9 +133,6 @@ class IsometricRender with IsometricComponent {
     if (options.renderCameraTargets){
       renderCameraTargets();
     }
-
-    // final screenCenterX = convertRenderToSceneX(engine.screenCenterWorldX, x);
-    // final screenCenterY = convertRenderToSceneY(engine.screenCenterWorldY, y);
 
     debug.drawCanvas();
     options.game.value.drawCanvas(canvas, size);
@@ -731,40 +723,5 @@ class IsometricRender with IsometricComponent {
         scene.getIndexPositionY(indexTgt),
         scene.getIndexPositionZ(indexTgt) + 16,
     );
-  }
-
-  void renderWind() {
-    final player = this.player;
-    final scene = this.scene;
-    final playerIndex = player.nodeIndex;
-    final playerRow = player.indexRow;
-    final playerColumn = player.indexColumn;
-    final playerZ = player.indexZ;
-    final windIndexes = particles.windIndexes;
-
-    if (windIndexes.isEmpty){
-      return;
-    }
-
-    final totalColumns = scene.totalColumns;
-    final totalRows = scene.totalRows;
-    const radius = 1;
-
-    for (var row = playerRow - radius; row <= playerRow + radius; row++){
-      if (row < 0 || row >= totalRows) {
-        continue;
-      }
-      for (var column = playerColumn - radius; column <= playerColumn + radius; column++){
-        if (column < 0 || column >= totalColumns) {
-          continue;
-        }
-        final index = scene.getIndexZRC(playerZ, row, column);
-        final wind = windIndexes[index];
-        final windVX = Wind.getVelocityX(wind);
-        final windVY = Wind.getVelocityY(wind);
-        final windVZ = Wind.getVelocityZ(wind);
-        render.textIndex('$windVX $windVY $windVZ', index);
-      }
-    }
   }
 }

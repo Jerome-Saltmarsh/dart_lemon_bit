@@ -360,11 +360,16 @@ class Amulet extends IsometricGame {
   void clearAllState() {
     print('amulet.clearAllState()');
     scene.clearVisited();
+    scene.totalNodes = 0;
     scene.totalCharacters = 0;
     scene.totalProjectiles = 0;
+    particles.activated.clear();
+    particles.deactivated.clear();
     scene.characters.clear();
     scene.gameObjects.clear();
     scene.projectiles.clear();
+    scene.colorStackIndex = -1;
+    scene.ambientStackIndex = -1;
     scene.nodeVisibility.fillRange(0, scene.nodeVisibility.length, NodeVisibility.opaque);
     amuletScene.value = null;
     clearEquippedWeapon();
@@ -377,7 +382,6 @@ class Amulet extends IsometricGame {
     engine.drawCanvasAfterUpdate = true;
     engine.cursorType.value = CursorType.Basic;
     player.active.value = false;
-    actions.clean();
     scene.gameObjects.clear();
     scene.editEnabled.value = false;
     audio.enabledSound.value = false;
@@ -385,8 +389,6 @@ class Amulet extends IsometricGame {
     player.position.y = 0;
     player.position.z = 0;
     player.gameDialog.value = null;
-    scene.totalProjectiles = 0;
-    particles.activated.clear();
     engine.zoom = 1;
   }
 

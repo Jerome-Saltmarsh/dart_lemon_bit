@@ -51,6 +51,11 @@ class UserServiceLocal implements UserService {
     if (!initialized){
       return;
     }
+
+    final isometricPlayer = parser.player;
+    isometricPlayer.position.x = player.x;
+    isometricPlayer.position.y = player.y;
+    isometricPlayer.position.z = player.z;
     parser.add(player.compile());
   }
 

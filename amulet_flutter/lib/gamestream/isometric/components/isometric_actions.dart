@@ -130,11 +130,6 @@ class IsometricActions with IsometricComponent {
         ..emissionIntensity = 0.5
   ;
 
-  void clean() {
-    scene.colorStackIndex = -1;
-    scene.ambientStackIndex = -1;
-  }
-
   int get bodyPartDuration =>  randomInt(120, 200);
 
   // PROPERTIES
