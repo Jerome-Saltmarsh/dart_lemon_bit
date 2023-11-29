@@ -1,6 +1,7 @@
 
 
-import 'package:amulet_flutter/user_service/src.dart';
+import 'package:amulet_flutter/user_service/server_remote.dart';
+import 'package:amulet_flutter/website/website_game.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';
 import 'package:amulet_flutter/website/enums/website_page.dart';
@@ -8,7 +9,7 @@ import 'package:amulet_flutter/website/widgets/gs_textfield.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 import 'package:lemon_watch/src.dart';
 
-Widget buildContainerAuthenticate(UserServiceHttp user){
+Widget buildContainerAuthenticate(WebsiteGame website, ServerRemote serverRemote){
   final loginPage = WatchBool(true);
   return GSKeyEventHandler(
     child: GSContainer(
@@ -36,7 +37,7 @@ Widget buildContainerAuthenticate(UserServiceHttp user){
               const Expanded(child: SizedBox()),
               onPressed(
                 action: (){
-                  user.website.websitePage.value = WebsitePage.New_Character;
+                  website.websitePage.value = WebsitePage.New_Character;
                 },
                 child: buildText('skip', color: Colors.orange, underline: true),
               ),
@@ -44,8 +45,8 @@ Widget buildContainerAuthenticate(UserServiceHttp user){
           ),
           height16,
           login
-              ? buildContainerLogin(user)
-              : buildContainerRegister(user),
+              ? buildContainerLogin(serverRemote)
+              : buildContainerRegister(serverRemote),
 
           height16,
         ],
@@ -55,7 +56,7 @@ Widget buildContainerAuthenticate(UserServiceHttp user){
   );
 }
 
-Widget buildContainerLogin(UserServiceHttp user){
+Widget buildContainerLogin(ServerRemote user){
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -88,7 +89,7 @@ Widget buildContainerLogin(UserServiceHttp user){
   );
 }
 
-Widget buildContainerRegister(UserServiceHttp user){
+Widget buildContainerRegister(ServerRemote serverRemote){
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -107,7 +108,7 @@ Widget buildContainerRegister(UserServiceHttp user){
       height16,
       onPressed(
         action: () async {
-          user.register(
+          serverRemote.register(
             username: userNameController.text,
             password: passwordController.text,
           );

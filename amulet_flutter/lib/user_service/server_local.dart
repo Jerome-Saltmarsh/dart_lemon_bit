@@ -11,17 +11,17 @@ import 'package:amulet_flutter/classes/amulet_scenes_flutter.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_parser.dart';
 import 'package:typedef/json.dart';
 
-import 'user_service.dart';
+import 'server.dart';
 
 
-class UserServiceLocal implements UserService {
+class ServerLocal implements Server {
 
   var initialized = false;
   var connected = false;
 
   final IsometricParser parser;
+  final SharedPreferences sharedPreferences;
 
-  late final SharedPreferences sharedPreferences;
   late final AmuletPlayer playerServer;
   late final PlayerClient.IsometricPlayer playerClient;
   late final AmuletController controller;
@@ -29,25 +29,17 @@ class UserServiceLocal implements UserService {
 
   static const FIELD_CHARACTERS = '46700e18-b438-441b-ae2f-9139652901c5';
 
-  UserServiceLocal({
+  ServerLocal({
     required this.parser,
     required this.playerClient,
+    required this.sharedPreferences,
   });
-
-  void initialize(SharedPreferences sharedPreferences){
-    this.sharedPreferences = sharedPreferences;
-  }
 
   List<Json> getCharacters() =>
       (sharedPreferences.getStringList(FIELD_CHARACTERS) ?? [])
         .map(jsonDecode)
         .cast<Json>()
         .toList(growable: true);
-
-  List<String> getCharacterNames() =>
-      getCharacters()
-        .map((character) => character.getString('name'))
-        .toList(growable: false);
 
   void onFixedUpdate() {
     if (!initialized){
@@ -108,14 +100,14 @@ class UserServiceLocal implements UserService {
   }
 
   @override
-  void createNewCharacter({
+  Future createNewCharacter({
     required String name,
     required int complexion,
     required int hairType,
     required int hairColor,
     required int gender,
     required int headType,
-  }) {
+  }) async {
     if (name == FIELD_CHARACTERS) {
       throw Exception('invalid field name');
     }

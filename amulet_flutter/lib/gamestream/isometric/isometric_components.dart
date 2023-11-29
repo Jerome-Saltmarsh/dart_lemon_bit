@@ -57,7 +57,7 @@ class IsometricComponents extends ComponentContainer {
   final IsometricLighting lighting;
   final IsometricColors colors;
   final IsometricStyle style;
-  final UserServiceHttp user;
+  // final UserServiceHttp user;
 
   final IsometricGame isometricEditor = IsometricGame();
 
@@ -96,7 +96,7 @@ class IsometricComponents extends ComponentContainer {
     required this.colors,
     required this.style,
     required this.engine,
-    required this.user,
+    // required this.user,
   }) {
     print('IsometricComponents()');
     engine.onError = onError;
@@ -135,7 +135,6 @@ class IsometricComponents extends ComponentContainer {
     components.add(lighting);
     components.add(colors);
     components.add(style);
-    components.add(user);
 
     for (final component in components) {
       if (component is! IsometricComponent) {
@@ -175,7 +174,6 @@ class IsometricComponents extends ComponentContainer {
       component.lighting = lighting;
       component.style = style;
       component.engine = engine;
-      component.userServiceHttp = user;
     }
     ready = true;
   }

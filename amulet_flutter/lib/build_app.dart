@@ -70,7 +70,7 @@ Widget buildApp(){
       lighting: IsometricLighting(),
       colors: IsometricColors(),
       style: IsometricStyle(),
-      user: UserServiceHttp(),
+      // user: UserServiceHttp(),
       engine: engine,
   );
 

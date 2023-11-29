@@ -10,6 +10,7 @@ import 'package:amulet_flutter/packages/common/src/game_type.dart';
 import 'package:amulet_flutter/packages/lemon_websocket_client.dart';
 import 'package:amulet_flutter/types/server_mode.dart';
 import 'package:amulet_flutter/user_service/character_json.dart';
+import 'package:amulet_flutter/user_service/server_remote.dart';
 import 'package:amulet_flutter/website/enums/website_page.dart';
 import 'package:amulet_flutter/website/functions/build_website_page_select_region.dart';
 import 'package:amulet_flutter/website/website_game.dart';
@@ -56,14 +57,14 @@ extension WebsiteUI on WebsiteGame {
                             height32,
                             buildTogglePlayMode(),
                             if (serverMode == ServerMode.local)
-                               buildTableCharacters(server.userServiceLocal.getCharacters()),
+                               buildTableCharacters(server.local.getCharacters()),
                             if (serverMode == ServerMode.remote)
-                              buildWatch(userServiceHttp.userId, (userId) {
+                              buildWatch(server.remote.userId, (userId) {
                                 final authenticated = userId.isNotEmpty;
                                 if (authenticated) {
-                                  return buildContainerAuthenticated();
+                                  return buildContainerAuthenticated(server.remote);
                                 }
-                                return buildContainerAuthenticate(userServiceHttp);
+                                return buildContainerAuthenticate(this, server.remote);
                               }),
                           ],
                         );
@@ -77,7 +78,7 @@ extension WebsiteUI on WebsiteGame {
                           child: buildText('BACK'),
                         ),
                         DialogCreateCharacterComputer(
-                          createCharacter: server.createCharacter,
+                          createCharacter: server.activeServer.createNewCharacter,
                         )
                       ],
                     ),
@@ -147,7 +148,7 @@ extension WebsiteUI on WebsiteGame {
   Widget buildOperationStatus(OperationStatus operationStatus) =>
       operationStatus != OperationStatus.None
           ? buildFullScreen(child: buildText(operationStatus.name.replaceAll('_', ' ')))
-          : buildWatch(server.websocket.connectionStatus, buildConnectionStatus);
+          : buildWatch(server.remote.websocket.connectionStatus, buildConnectionStatus);
 
   Widget buildConnectionStatus(ConnectionStatus connectionStatus) =>
       switch (connectionStatus) {
@@ -165,28 +166,7 @@ extension WebsiteUI on WebsiteGame {
           ? buildPageWebsiteDesktop()
           : buildPageWebsiteMobile();
 
-  Widget buildPageWebsiteMobile() =>
-      Container(
-        width: engine.screen.width,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            buildLogoGameStream(),
-            height16,
-            buildButtonJoinGameType(
-              gameType: GameType.Mobile_Aeon,
-              gameName: 'AEON',
-            ),
-          ],
-        ),
-      );
-
-  Widget buildButtonJoinGameType({required GameType gameType, required String gameName}) => onPressed(
-      action: () => server.connectToGame(gameType),
-      child: buildText(gameName, size: 26, color: Colors.white70),
-    );
-
-  Widget buildLogoGameStream() => buildText('GAMESTREAM.ONLINE', size: FontSize.largeX);
+  Widget buildPageWebsiteMobile() => buildText('NOT IMPLEMENTED');
 
   Widget buildPageConnectionStatus(String message) =>
       buildFullScreen(
@@ -199,13 +179,13 @@ extension WebsiteUI on WebsiteGame {
       GameType.Amulet: 'images/website/game-isometric.png',
     }[gameType] ?? ''), fit: BoxFit.fitWidth,);
 
-  Widget buildContainerAuthenticated() =>
+  Widget buildContainerAuthenticated(ServerRemote serverRemote) =>
       GSContainer(
         width: 400,
         padding: EdgeInsets.zero,
         child: Column(
           children: [
-            buildWatch(userServiceHttp.characters, buildTableCharacters),
+            buildWatch(serverRemote.characters, buildTableCharacters),
             height12,
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -215,7 +195,7 @@ extension WebsiteUI on WebsiteGame {
                 Container(
                   padding: style.containerPadding,
                     color: Colors.white12,
-                    child: buildControlUser(),
+                    child: buildControlUser(serverRemote),
                 ),
               ],
             ),
@@ -302,16 +282,16 @@ extension WebsiteUI on WebsiteGame {
       ),
   );
 
-  Widget buildControlUser() => Row(
+  Widget buildControlUser(ServerRemote serverRemote) => Row(
     children: [
-      buildWatch(userServiceHttp.username, buildText),
+      buildWatch(serverRemote.username, buildText),
       width8,
       buildBorder(
         child: Container(
           color: Colors.transparent,
           padding: const EdgeInsets.all(4),
           child: onPressed(
-            action: userServiceHttp.logout,
+            action: serverRemote.logout,
             child: buildText('Logout'),
           ),
         ),

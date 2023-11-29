@@ -1,7 +1,9 @@
 
-abstract class UserService {
+abstract class Server {
 
-  void createNewCharacter({
+  bool get connected;
+
+  Future createNewCharacter({
     required String name,
     required int complexion,
     required int hairType,
@@ -13,4 +15,6 @@ abstract class UserService {
   void playCharacter(String characterUuid);
 
   Future deleteCharacter(String characterId);
+
+  void disconnect();
 }
