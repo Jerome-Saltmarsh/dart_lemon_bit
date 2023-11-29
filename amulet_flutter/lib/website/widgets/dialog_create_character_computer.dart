@@ -8,7 +8,6 @@ import 'package:amulet_flutter/gamestream/isometric/ui/widgets/isometric_icon.da
 import 'package:amulet_flutter/gamestream/ui.dart';
 import 'package:amulet_flutter/packages/common.dart';
 import 'package:amulet_flutter/website/enums/website_page.dart';
-import 'package:amulet_flutter/website/widgets/gs_button_region.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';

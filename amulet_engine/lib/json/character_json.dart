@@ -1,4 +1,4 @@
-import 'package:typedef/json.dart';
+import '../packages/isometric_engine/packages/type_def/json.dart';
 
 typedef CharacterJson = Map<String, dynamic>;
 

@@ -111,6 +111,7 @@ class ServerLocal implements Server {
     }
 
     ensureInitialized().then((value) {
+      playerServer.uuid = generateUUID();
       playerServer.name = name;
       playerServer.complexion = complexion;
       playerServer.hairType = hairType;
@@ -120,11 +121,15 @@ class ServerLocal implements Server {
       final json = mapIsometricPlayerToJson(playerServer);
       final characters = getCharacters();
       characters.add(json);
-      final characterStrings = characters.map(jsonEncode).toList(growable: false);
-      sharedPreferences.setStringList(FIELD_CHARACTERS, characterStrings);
+      persistCharacters(characters);
       playCharacter(json.uuid);
     });
   }
+
+  void persistCharacters(List<Json> characters) => sharedPreferences.setStringList(
+        FIELD_CHARACTERS,
+        characters.map(jsonEncode).toList(growable: false),
+    );
 
   Json? findCharacterByUuid(String uuid){
     final characters = getCharacters();
@@ -155,7 +160,16 @@ class ServerLocal implements Server {
   }
 
   Future deleteCharacter(String uuid) async {
-
+    final characters = getCharacters();
+    for (var i = 0; i < characters.length; i++){
+      final character = characters[i];
+      if (character.uuid == uuid) {
+        characters.remove(character);
+        persistCharacters(characters);
+        return;
+      }
+    }
+    throw Exception('could not find character with uuid $uuid');
   }
 }
 

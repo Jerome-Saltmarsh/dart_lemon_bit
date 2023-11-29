@@ -6,7 +6,6 @@ import 'package:amulet_flutter/isometric/classes/particle.dart';
 import 'package:amulet_flutter/packages/common.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
-import 'package:lemon_math/src.dart';
 
 class RendererParticles extends RenderGroup {
 

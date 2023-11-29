@@ -33,7 +33,7 @@ class ServerRemote implements Server {
     websocket = WebsocketClient(
       readString: parser.addString,
       readBytes: parser.add,
-      onError: parser.options.onWebsocketNetworkError,
+      onError: onWebsocketNetworkError,
       onDone: onWebsocketConnectionDone,
     );
 
@@ -292,5 +292,14 @@ class ServerRemote implements Server {
 
   @override
   void send(data) => websocket.send(data);
+
+  void onWebsocketNetworkError(Object error, StackTrace stack) {
+    if (error.toString().contains('NotAllowedError')){
+      return;
+    }
+    print(error.toString());
+    print(stack);
+    parser.ui.error.value = error.toString();
+  }
 
 }

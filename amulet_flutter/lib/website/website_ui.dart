@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:amulet_engine/json/character_json.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/functions/get_server_mode_text.dart';
 import 'package:amulet_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:amulet_flutter/gamestream/operation_status.dart';
@@ -52,11 +53,19 @@ extension WebsiteUI on WebsiteGame {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            buildText('AMULET', size: 80, family: 'REBUFFED'),
+                            // buildText('AMULET', size: 80, family: 'REBUFFED'),
+                            buildText('AMULET', size: 120),
                             height32,
                             buildTogglePlayMode(),
                             if (serverMode == ServerMode.local)
-                               buildTableCharacters(server.local.getCharacters()),
+                               StatefulBuilder(builder: (context, setState) =>
+                                   buildTableCharacters(
+                                     server.local.getCharacters(),
+                                     (){
+                                       setState((){});
+                                     },
+                                  )
+                               ),
                             if (serverMode == ServerMode.remote)
                               buildWatch(server.remote.userId, (userId) {
                                 final authenticated = userId.isNotEmpty;
@@ -184,7 +193,9 @@ extension WebsiteUI on WebsiteGame {
         padding: EdgeInsets.zero,
         child: Column(
           children: [
-            buildWatch(serverRemote.characters, buildTableCharacters),
+            buildWatch(serverRemote.characters, (characters){
+              return buildTableCharacters(characters, (){});
+            },),
             height12,
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -202,7 +213,7 @@ extension WebsiteUI on WebsiteGame {
         ),
       );
 
-  Widget buildCharacters(List<Json> characters) =>
+  Widget buildCharacters(List<Json> characters, Function refresh) =>
       Container(
       height: 200,
       child: SingleChildScrollView(
@@ -232,7 +243,7 @@ extension WebsiteUI on WebsiteGame {
                   if (characterIsLocked(character))
                     buildText('LOCKED', color: Colors.red),
                   onPressed(
-                      action: () => showDialogDeleteCharacter(character),
+                      action: () => showDialogDeleteCharacter(character, onDeleted: refresh),
                       child: buildText('delete'),
                   ),
                 ],
@@ -252,7 +263,7 @@ extension WebsiteUI on WebsiteGame {
      return lockDuration.inSeconds <= durationAutoSave.inSeconds;
   }
 
-  Widget buildTableCharacters(List<Json> characters) => GSContainer(
+  Widget buildTableCharacters(List<Json> characters, Function refresh) => GSContainer(
     color: Colors.black12,
     width: 500,
     child: Column(
@@ -262,8 +273,8 @@ extension WebsiteUI on WebsiteGame {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              buildText('CHARACTERS', size: 22, color: Colors.white70),
-              width16,
+              // buildText('CHARACTERS', size: 22, color: Colors.white70),
+              // width16,
               onPressed(
                 action: showPageNewCharacter,
                 child: Container(
@@ -272,11 +283,11 @@ extension WebsiteUI on WebsiteGame {
                   margin: const EdgeInsets.symmetric(vertical: 4),
                   alignment: Alignment.centerLeft,
                     padding: const EdgeInsets.all(4),
-                    child: buildText('NEW', color: Colors.orange)),
+                    child: buildText('NEW CHARACTER', color: Colors.orange)),
               ),
             ],
           ),
-          buildCharacters(characters),
+          buildCharacters(characters, refresh),
         ],
       ),
   );
@@ -298,14 +309,15 @@ extension WebsiteUI on WebsiteGame {
     ],
   );
 
-  void showDialogDeleteCharacter(Json character) {
+  void showDialogDeleteCharacter(Json character, {Function? onDeleted}) {
     ui.showDialogGetBool(
         text: 'Are you sure you want to delete ${character['name']}?',
         textFalse: 'Cancel',
         textTrue: 'CONFIRM',
         onSelected: (bool value) async {
           if (value){
-            server.deleteCharacter(character.uuid);
+            await server.deleteCharacter(character.uuid);
+            onDeleted?.call();
           }
         });
   }

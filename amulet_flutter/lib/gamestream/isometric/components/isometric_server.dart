@@ -1,4 +1,5 @@
 
+import 'package:amulet_engine/json/src.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:amulet_flutter/gamestream/isometric/enums/mode.dart';
 import 'package:amulet_flutter/isometric/classes/gameobject.dart';
@@ -145,7 +146,7 @@ class IsometricServer with IsometricComponent {
   void playCharacter(CharacterJson character) =>
       activeServer.playCharacter(character.uuid);
 
-  void deleteCharacter(String uuid) =>
+  Future deleteCharacter(String uuid) =>
       activeServer.deleteCharacter(uuid);
 
   Server get activeServer =>
