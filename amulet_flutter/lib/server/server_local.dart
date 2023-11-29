@@ -83,9 +83,20 @@ class ServerLocal implements Server {
   void disconnect() {
     connected = false;
     playerServer.clearCache();
-    playerServer.x = 0;
+    playerServer.x = 0.0;
     playerServer.y = 0;
     playerServer.z = 0;
+    playerServer.mouseX = 0;
+    playerServer.mouseY = 0;
+    playerServer.positionCacheX = 0;
+    playerServer.positionCacheY = 0;
+    playerServer.positionCacheZ = 0;
+    playerServer.screenLeft = 0;
+    playerServer.screenTop = 0;
+    playerServer.screenRight = 0;
+    playerServer.screenBottom = 0;
+    playerServer.sceneDownloaded = false;
+    playerServer.initialized = false;
     playerServer.characterState = CharacterState.Idle;
     playerServer.target = null;
     playerServer.interacting = false;
