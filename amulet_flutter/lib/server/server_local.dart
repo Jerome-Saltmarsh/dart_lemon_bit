@@ -44,9 +44,9 @@ class ServerLocal implements Server {
       return;
     }
 
-    playerClient.position.x = playerServer.x;
-    playerClient.position.y = playerServer.y;
-    playerClient.position.z = playerServer.z;
+    // playerClient.position.x = playerServer.x;
+    // playerClient.position.y = playerServer.y;
+    // playerClient.position.z = playerServer.z;
     parser.add(playerServer.compile());
   }
 
