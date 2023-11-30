@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
-import 'package:amulet_flutter/engine.dart';
+import 'package:amulet_flutter/amulet_app.dart';
 import 'package:amulet_flutter/website/website_game.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_environment.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_options.dart';
@@ -25,14 +25,15 @@ Widget buildApp(){
 
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (!kIsWeb) {
-    windowManager.ensureInitialized().then((value) {
-      // windowManager.setTitleBarStyle(TitleBarStyle.hidden);
-      windowManager.setFullScreen(true);
-    });
-  }
+  // if (!kIsWeb) {
+  //   windowManager.ensureInitialized().then((value) {
+  //     // windowManager.setTitleBarStyle(TitleBarStyle.hidden);
+  //     windowManager.setFullScreen(true);
+  //   });
+  // }
 
-  final engine = AppleEngine();
+  final engine = AmuletApp();
+  engine.fullScreenEnter();
 
   final components = IsometricComponents(
       images: IsometricImages(),

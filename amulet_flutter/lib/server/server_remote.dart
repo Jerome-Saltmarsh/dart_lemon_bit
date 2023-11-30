@@ -151,7 +151,7 @@ class ServerRemote implements Server {
       print('connecting to custom server');
       return;
     }
-    connectToServer(convertHttpToWSS(region.url), message);
+    connectToServer(convertUrlHttpToWSS(region.url), message);
   }
 
   void connectLocalHost({int port = 8080, required String message}) {
@@ -176,7 +176,6 @@ class ServerRemote implements Server {
 
   void onChangedWebsocketConnectionStatus(ConnectionStatus connection) {
     print('isometricServer.onChangedWebsocketConnectionStatus($connection)');
-    // server.parser.bufferSize.value = 0;
 
     switch (connection) {
       case ConnectionStatus.Connected:

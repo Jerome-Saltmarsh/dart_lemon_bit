@@ -32,7 +32,7 @@ class WebsiteGame extends Game {
 
   @override
   void onActivated() {
-    engine.fullScreenExit();
+    // engine.fullScreenExit();
   }
 
   @override

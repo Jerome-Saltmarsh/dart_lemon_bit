@@ -1,6 +1,6 @@
 
 import 'package:amulet_flutter/amulet/amulet.dart';
-import 'package:amulet_flutter/engine.dart';
+import 'package:amulet_flutter/amulet_app.dart';
 import 'package:amulet_flutter/website/website_game.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_environment.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_screen.dart';
@@ -22,7 +22,7 @@ import 'ui/game_isometric_minimap.dart';
 
 class IsometricComponents extends ComponentContainer {
   var ready = false;
-  final AppleEngine engine;
+  final AmuletApp engine;
   final WebsiteGame website;
   final Amulet amulet;
   final IsometricRender render;

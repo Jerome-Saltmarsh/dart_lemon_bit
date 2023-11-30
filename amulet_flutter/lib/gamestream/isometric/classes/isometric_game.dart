@@ -38,10 +38,9 @@ class IsometricGame extends Game {
   void onActivated() {
     options.windowOpenMenu.setFalse();
     audio.musicStop();
-
-    if (!engine.isLocalHost) {
-      engine.fullScreenEnter();
-    }
+    // if (!engine.isLocalHost) {
+    //   engine.fullScreenEnter();
+    // }
   }
 
   Widget customBuildUI(BuildContext context){

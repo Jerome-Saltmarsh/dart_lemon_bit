@@ -8,11 +8,11 @@ import 'gamestream/isometric/isometric_components.dart';
 import 'gamestream/isometric/ui/isometric_colors.dart';
 import 'gamestream/isometric/ui/widgets/loading_page.dart';
 
-class AppleEngine extends LemonEngine {
+class AmuletApp extends LemonEngine {
 
   late IsometricComponents components;
 
-  AppleEngine() : super(
+  AmuletApp() : super(
     title: 'AMULET',
     themeData: ThemeData(fontFamily: 'VT323-Regular'),
     backgroundColor: IsometricColors.Black,

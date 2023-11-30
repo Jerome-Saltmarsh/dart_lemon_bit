@@ -98,8 +98,7 @@ class WebsocketClient {
     }
 
     sink.close();
-
-    this.onDone?.call();
+    onDone?.call();
   }
 
   void send(dynamic message) {
