@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:amulet_flutter/functions/validate_atlases.dart';
 import 'package:amulet_flutter/gamestream/game.dart';
 import 'package:amulet_flutter/gamestream/operation_status.dart';
-import 'package:amulet_flutter/gamestream/ui/src.dart';
 import 'package:amulet_flutter/website/website_ui.dart';
 import 'package:amulet_flutter/website/widgets/gs_fullscreen.dart';
 import 'package:intl/intl.dart';
@@ -54,14 +53,14 @@ class WebsiteGame extends Game {
 
   @override
   Widget buildUI(BuildContext context) => GSFullscreen(
-        child: buildWatch(server.remote.operationStatus, buildOperationStatus),
+        child: buildPageWebsiteDesktop(),
       );
 
-  void toggleWebsitePage() =>
-      websitePage.value =
-      websitePage.value == WebsitePage.Select_Region
-          ? WebsitePage.Select_Character
-          : WebsitePage.Select_Region;
+  // void toggleWebsitePage() =>
+  //     websitePage.value =
+  //     websitePage.value == WebsitePage.Select_Region
+  //         ? WebsitePage.Select_Character
+  //         : WebsitePage.Select_Region;
 
   void showWebsitePageRegion(){
      websitePage.value = WebsitePage.Select_Region;

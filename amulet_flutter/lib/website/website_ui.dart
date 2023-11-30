@@ -26,8 +26,9 @@ import 'widgets/dialog_create_character_computer.dart';
 extension WebsiteUI on WebsiteGame {
 
   Widget buildPageWebsiteDesktop() =>
-      WatchBuilder(options.serverMode, (ServerMode serverMode) =>
-          WatchBuilder(websitePage, (websitePage) =>
+      WatchBuilder(options.serverMode, (ServerMode serverMode) {
+
+        final page = WatchBuilder(websitePage, (websitePage) =>
             switch (websitePage) {
               WebsitePage.Select_Character =>
                   Column(
@@ -71,7 +72,26 @@ extension WebsiteUI on WebsiteGame {
                 website: website,
                 engine: engine,
               ),
-            }));
+            });
+
+        if (serverMode == ServerMode.remote){
+          return buildWatch(server.remote.operationStatus, (operationStatus){
+            return operationStatus != OperationStatus.None
+              ? buildFullScreen(child: buildText(operationStatus.name.replaceAll('_', ' ')))
+              : buildWatch(server.remote.websocket.connectionStatus, (connectionStatus){
+                return switch (connectionStatus) {
+                  ConnectionStatus.Connected =>
+                      buildPageConnectionStatus(connectionStatus.name),
+                  ConnectionStatus.Connecting =>
+                      buildPageConnectionStatus(connectionStatus.name),
+                  _ => page
+                };
+            });
+          });
+        }
+
+        return page;
+      });
 
 
 
@@ -137,28 +157,28 @@ extension WebsiteUI on WebsiteGame {
     downloadBytes(bytes: png, name: 'test.png');
   }
 
-  Widget buildOperationStatus(OperationStatus operationStatus) =>
-      operationStatus != OperationStatus.None
-          ? buildFullScreen(child: buildText(operationStatus.name.replaceAll('_', ' ')))
-          : buildWatch(server.remote.websocket.connectionStatus, buildConnectionStatus);
+  // Widget buildOperationStatus(OperationStatus operationStatus) =>
+  //     operationStatus != OperationStatus.None
+  //         ? buildFullScreen(child: buildText(operationStatus.name.replaceAll('_', ' ')))
+  //         : buildWatch(server.remote.websocket.connectionStatus, buildConnectionStatus);
 
-  Widget buildConnectionStatus(ConnectionStatus connectionStatus) =>
-      switch (connectionStatus) {
-        ConnectionStatus.Connected =>
-            buildPageConnectionStatus(connectionStatus.name),
-        ConnectionStatus.Connecting =>
-            buildPageConnectionStatus(connectionStatus.name),
-        _ => buildNotConnected()
-      };
+  // Widget buildConnectionStatus(ConnectionStatus connectionStatus) =>
+  //     switch (connectionStatus) {
+  //       ConnectionStatus.Connected =>
+  //           buildPageConnectionStatus(connectionStatus.name),
+  //       ConnectionStatus.Connecting =>
+  //           buildPageConnectionStatus(connectionStatus.name),
+  //       _ => buildNotConnected()
+  //     };
 
-  Widget buildNotConnected()  => buildWatch(engine.deviceType, buildPageWebsite);
+  // Widget buildNotConnected()  => buildWatch(engine.deviceType, buildPageWebsite);
 
-  Widget buildPageWebsite(int deviceType) =>
-      deviceType == DeviceType.Computer
-          ? buildPageWebsiteDesktop()
-          : buildPageWebsiteMobile();
+  // Widget buildPageWebsite(int deviceType) =>
+  //     deviceType == DeviceType.Computer
+  //         ? buildPageWebsiteDesktop()
+  //         : buildPageWebsiteMobile();
 
-  Widget buildPageWebsiteMobile() => buildText('NOT IMPLEMENTED');
+  // Widget buildPageWebsiteMobile() => buildText('NOT IMPLEMENTED');
 
   Widget buildPageConnectionStatus(String message) =>
       buildFullScreen(
