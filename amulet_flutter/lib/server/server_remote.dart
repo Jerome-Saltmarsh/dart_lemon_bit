@@ -17,6 +17,7 @@ class ServerRemote implements Server {
 
   late final WebsocketClient websocket;
 
+  final region = Watch<ConnectionRegion?>(ConnectionRegion.LocalHost);
   final userJson = Watch<Json>({});
   final userId = Cache(key: 'userId', value: '');
   final username = Watch('');
@@ -41,7 +42,6 @@ class ServerRemote implements Server {
   }
 
   void onChangedUserId(String value) {
-    // print('user.onChangedUserId($value)');
     refreshUser();
   }
 
@@ -165,7 +165,7 @@ class ServerRemote implements Server {
   }
 
   void connectToGame(GameType gameType, [String message = '']) {
-    final regionValue = parser.options.region.value;
+    final regionValue = region.value;
     if (regionValue == null) {
       throw Exception('region is null');
     }

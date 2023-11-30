@@ -40,7 +40,7 @@ extension WebsiteUI on WebsiteGame {
             websitePage,
             (websitePage) => switch (websitePage) {
                   WebsitePage.Select_Character =>
-                      WatchBuilder(options.region, (ConnectionRegion? region) {
+                      WatchBuilder(server.remote.region, (ConnectionRegion? region) {
 
                         if (serverMode == ServerMode.remote && region == null) {
                           return buildWebsitePageSelectRegion(

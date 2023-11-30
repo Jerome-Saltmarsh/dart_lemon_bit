@@ -10,7 +10,7 @@ class GSButtonRegion extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
     IsometricBuilder(builder: (context, components) =>
-        buildWatch(components.options.region, (region) =>
+        buildWatch(components.network.remote.region, (region) =>
             onPressed(
             action: components.website.showWebsitePageRegion,
             child: Container(

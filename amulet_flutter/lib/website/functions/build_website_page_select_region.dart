@@ -22,7 +22,7 @@ Widget buildWebsitePageSelectRegion({
     height16,
     Container(
       width: 300,
-      child: WatchBuilder(options.region, (activeRegion) {
+      child: WatchBuilder(options.server.remote.region, (activeRegion) {
         return SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -39,7 +39,7 @@ Widget buildWebsitePageSelectRegion({
                 .map((ConnectionRegion region) =>
                 onPressed(
                   action: () {
-                    options.region.value = region;
+                    website.server.remote.region.value = region;
                     website.websitePage.value = WebsitePage.Select_Character;
                   },
                   child: MouseOver(builder: (bool mouseOver) {

@@ -48,7 +48,6 @@ class IsometricOptions with IsometricComponent implements Updatable {
   final timeVisible = WatchBool(true);
   final windowOpenMenu = WatchBool(false);
   final operationStatus = Watch(OperationStatus.None);
-  final region = Watch<ConnectionRegion?>(ConnectionRegion.LocalHost);
   final serverFPS = Watch(0);
   final sceneName = Watch<String?>(null);
   final gameRunning = Watch(true);
