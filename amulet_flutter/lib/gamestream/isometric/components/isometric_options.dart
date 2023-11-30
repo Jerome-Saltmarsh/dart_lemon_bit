@@ -39,7 +39,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
   var messageStatusDuration = 0;
   var renderResponse = true;
 
-  final serverMode = Watch<ServerMode?>(null);
+  final serverMode = Watch(ServerMode.local);
   final cameraPlay = Position();
   final mode = Watch(Mode.Play);
   final highlightIconInventory = WatchBool(false);

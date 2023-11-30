@@ -34,6 +34,10 @@ ctrl + []               : move caret to code block
 * [fix]: colored particle emission
 * [new]: flames emit smoke particles
 
+## 30.11.2023
+* [fix]: refactor project dependencies
+* [fix]: refactor remote server
+
 ## 29.11.2023
 * [fix]: synchronize client server state
 * [new]: offline database delete character

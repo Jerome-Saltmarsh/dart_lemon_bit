@@ -18,7 +18,7 @@ class ServerRemote implements Server {
   late final WebsocketClient websocket;
 
   final operationStatus = Watch(OperationStatus.None);
-  final region = Watch<ConnectionRegion?>(ConnectionRegion.LocalHost);
+  final region = Watch(ConnectionRegion.LocalHost);
   final userJson = Watch<Json>({});
   final userId = Cache(key: 'userId', value: '');
   final username = Watch('');
