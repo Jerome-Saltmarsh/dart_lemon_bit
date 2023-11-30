@@ -2,7 +2,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:amulet_flutter/packages/common.dart';
+import 'package:amulet_engine/packages/common.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
 
 class IsometricMinimap with IsometricComponent {

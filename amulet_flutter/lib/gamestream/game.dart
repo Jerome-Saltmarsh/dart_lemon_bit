@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:amulet_flutter/packages/common/src/game_error.dart';
+import 'package:amulet_engine/packages/common.dart';
 import 'package:flutter/services.dart';
 
 import 'isometric/components/src.dart';

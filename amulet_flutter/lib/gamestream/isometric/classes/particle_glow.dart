@@ -2,8 +2,8 @@
 import 'package:amulet_flutter/functions/interpolate_colors.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/particle_whisp.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_particles.dart';
-import 'package:amulet_flutter/packages/common/src/particle_type.dart';
-import 'package:lemon_math/src.dart';
+import 'package:amulet_engine/packages/common.dart';
+import 'package:amulet_engine/packages/lemon_math.dart';
 
 class ParticleGlow extends ParticleWhisp {
 

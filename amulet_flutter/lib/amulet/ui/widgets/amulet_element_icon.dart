@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/amulet/maps/map_amulet_element_to_icon_type.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
-import 'package:amulet_flutter/packages/common.dart';
 
 class AmuletElementIcon extends StatelessWidget {
 

@@ -1,6 +1,4 @@
-
-
-import 'package:amulet_flutter/packages/common/src/isometric/body_type.dart';
+import 'package:amulet_engine/packages/common.dart';
 
 const atlasSrcBodyType = <int, List<double>>{
   BodyType.None: [

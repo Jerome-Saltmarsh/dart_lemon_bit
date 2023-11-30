@@ -1,5 +1,5 @@
 
-import 'package:amulet_flutter/packages/common/src/isometric/treasure_type.dart';
+import 'package:amulet_engine/packages/common.dart';
 
 const atlasSrcTreasures = <int, List<double>>{
 

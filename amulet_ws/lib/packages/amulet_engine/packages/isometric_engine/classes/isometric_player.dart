@@ -4,7 +4,6 @@ import 'dart:typed_data';
 
 import '../isometric_engine.dart';
 import '../consts/isometric_settings.dart';
-import '../packages/type_def/json.dart';
 
 
 class IsometricPlayer extends Character with ByteWriter {

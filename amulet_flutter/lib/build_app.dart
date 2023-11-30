@@ -17,20 +17,11 @@ import 'package:amulet_flutter/gamestream/isometric/ui/game_isometric_minimap.da
 import 'package:provider/provider.dart';
 import 'gamestream/isometric/src.dart';
 import 'gamestream/isometric/ui/isometric_colors.dart';
-import 'package:window_manager/window_manager.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 
 Widget buildApp(){
   print('buildApp()');
 
   WidgetsFlutterBinding.ensureInitialized();
-
-  // if (!kIsWeb) {
-  //   windowManager.ensureInitialized().then((value) {
-  //     // windowManager.setTitleBarStyle(TitleBarStyle.hidden);
-  //     windowManager.setFullScreen(true);
-  //   });
-  // }
 
   final engine = AmuletApp();
   engine.fullScreenEnter();

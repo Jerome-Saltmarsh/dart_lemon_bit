@@ -1,4 +1,4 @@
-import 'package:amulet_flutter/packages/common/src/isometric/shoe_type.dart';
+import 'package:amulet_engine/packages/common.dart';
 
 const atlasSrcShoes = <int, List<double>> {
   ShoeType.Leather_Boots: [

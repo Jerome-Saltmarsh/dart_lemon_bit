@@ -1,6 +1,6 @@
 
 import 'package:amulet_flutter/packages/lemon_components.dart';
-import 'package:lemon_math/src.dart';
+import 'package:amulet_engine/packages/lemon_math.dart';
 
 class IsometricLighting implements Updatable {
   var emissionAlphaCharacter = 125;

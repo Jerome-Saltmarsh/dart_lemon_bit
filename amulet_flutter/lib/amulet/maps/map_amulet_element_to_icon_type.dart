@@ -1,5 +1,7 @@
+export 'package:amulet_engine/packages/common.dart';
 import 'package:amulet_flutter/gamestream/ui/enums/icon_type.dart';
-import 'package:amulet_flutter/packages/common/src/amulet/amulet_element.dart';
+
+import 'map_amulet_element_to_icon_type.dart';
 
 IconType mapAmuletElementToIconType(AmuletElement amuletElement) =>
     switch (amuletElement) {

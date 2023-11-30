@@ -22,9 +22,8 @@ dependencies:
   shelf_web_socket: ^1.0.1
   shelf_router: ^1.1.2
   golden_ratio: 1.0.6
-  http: ^0.13.4
+  http: ^1.1.2
   intl: ^0.17.0
-  typedef: ^1.0.12
   url_launcher: ^6.1.10
 
   amulet_engine:
@@ -33,8 +32,6 @@ dependencies:
     path: ..\lemon_sprite
   lemon_widgets:
     path: ..\lemon_widgets
-  lemon_math:
-    path: ..\tools\lemon_math
   lemon_engine:
     path: ..\tools\lemon_engine
   lemon_byte:

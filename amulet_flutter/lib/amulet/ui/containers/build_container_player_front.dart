@@ -5,7 +5,7 @@ import 'package:amulet_flutter/gamestream/isometric/components/isometric_player.
 import 'package:amulet_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
 import 'package:amulet_flutter/gamestream/ui/enums/icon_type.dart';
 import 'package:amulet_flutter/gamestream/ui/widgets/mouse_over.dart';
-import 'package:amulet_flutter/packages/common/src/isometric/character_state.dart';
+import 'package:amulet_engine/packages/common.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 

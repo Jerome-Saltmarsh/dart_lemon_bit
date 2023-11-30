@@ -2,7 +2,7 @@
 import 'package:amulet_flutter/gamestream/isometric/enums/mode.dart';
 import 'package:amulet_flutter/gamestream/ui/builders/build_watch.dart';
 import 'package:amulet_flutter/gamestream/ui/constants/height.dart';
-import 'package:amulet_flutter/packages/common.dart';
+import 'package:amulet_engine/packages/common.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';

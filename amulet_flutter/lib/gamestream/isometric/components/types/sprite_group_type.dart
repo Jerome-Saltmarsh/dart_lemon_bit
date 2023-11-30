@@ -1,4 +1,4 @@
-import 'package:amulet_flutter/packages/common.dart';
+import 'package:amulet_engine/packages/common.dart';
 
 class SpriteGroupType {
   static const Body_Male = 3;

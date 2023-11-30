@@ -1,7 +1,6 @@
 import 'dart:math';
-
-import 'package:amulet_flutter/packages/common/src/isometric/node_size.dart';
-import 'package:lemon_math/src.dart';
+import 'package:amulet_engine/packages/common.dart';
+import 'package:amulet_engine/packages/lemon_math.dart';
 
 class Position implements Comparable<Position>{
 

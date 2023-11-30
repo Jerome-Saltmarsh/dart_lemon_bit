@@ -5,10 +5,9 @@ import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/amulet/maps/map_amulet_element_to_icon_type.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';
-import 'package:amulet_flutter/packages/common.dart';
 import 'package:amulet_flutter/website/widgets/gs_fullscreen.dart';
 import 'package:golden_ratio/constants.dart';
-import 'package:lemon_math/src.dart';
+import 'package:amulet_engine/packages/lemon_math.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 import 'ui/builders/build_item_slot.dart';

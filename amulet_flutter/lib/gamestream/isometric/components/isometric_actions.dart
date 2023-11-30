@@ -1,8 +1,8 @@
 
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:amulet_flutter/isometric/classes/particle.dart';
-import 'package:amulet_flutter/packages/common/src.dart';
-import 'package:lemon_math/src.dart';
+import 'package:amulet_engine/packages/common.dart';
+import 'package:amulet_engine/packages/lemon_math.dart';
 
 
 class IsometricActions with IsometricComponent {

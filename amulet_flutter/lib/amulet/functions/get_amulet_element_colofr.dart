@@ -3,7 +3,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:amulet_flutter/packages/common/src/amulet/amulet_element.dart';
+import 'package:amulet_engine/packages/common.dart';
 
 Color getAmuletElementColor(AmuletElement amuletElement) => const {
   AmuletElement.fire: Colors.red,

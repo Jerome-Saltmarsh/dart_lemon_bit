@@ -1,5 +1,4 @@
-
-import 'package:amulet_flutter/packages/common/src/isometric/consumable_type.dart';
+import 'package:amulet_engine/packages/common.dart';
 
 const atlasSrcConsumables = <int, List<double>>{
   ConsumableType.Potion_Red: [

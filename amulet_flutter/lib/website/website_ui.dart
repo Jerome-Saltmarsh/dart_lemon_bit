@@ -1,13 +1,11 @@
 import 'dart:typed_data';
 
+import 'package:amulet_engine/packages/common.dart';
 import 'package:amulet_engine/json/character_json.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/functions/get_server_mode_text.dart';
 import 'package:amulet_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:amulet_flutter/gamestream/operation_status.dart';
 import 'package:amulet_flutter/gamestream/ui/src.dart';
-import 'package:amulet_flutter/packages/common.dart';
-import 'package:amulet_flutter/packages/common/src/duration_auto_save.dart';
-import 'package:amulet_flutter/packages/common/src/game_type.dart';
 import 'package:amulet_flutter/packages/lemon_websocket_client.dart';
 import 'package:amulet_flutter/types/server_mode.dart';
 import 'package:amulet_flutter/server/src.dart';

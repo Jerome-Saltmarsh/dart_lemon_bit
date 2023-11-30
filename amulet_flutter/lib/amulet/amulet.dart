@@ -4,7 +4,7 @@ import 'dart:ui';
 
 import 'package:amulet_flutter/amulet/amulet_ui.dart';
 import 'package:amulet_flutter/gamestream/isometric/enums/node_visibility.dart';
-import 'package:amulet_flutter/packages/common.dart';
+import 'package:amulet_engine/packages/common.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';

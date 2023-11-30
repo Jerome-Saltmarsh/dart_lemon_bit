@@ -1,5 +1,4 @@
-
-import 'package:amulet_flutter/packages/common/src/isometric/weapon_type.dart';
+import 'package:amulet_engine/packages/common.dart';
 
 const atlasSrcWeapons = <int, List<double>>{
   WeaponType.Unarmed : AtlasSrcWeapons.Unarmed,

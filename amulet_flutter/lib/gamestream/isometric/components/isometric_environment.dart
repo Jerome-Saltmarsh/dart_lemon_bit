@@ -2,7 +2,7 @@
 import 'package:amulet_flutter/functions/pyramid.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
-import 'package:amulet_flutter/packages/common.dart';
+import 'package:amulet_engine/packages/common.dart';
 import 'package:lemon_watch/src.dart';
 
 import 'isometric_audio.dart';

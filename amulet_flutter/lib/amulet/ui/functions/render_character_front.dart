@@ -2,7 +2,7 @@
 import 'package:flutter/rendering.dart';
 import 'package:amulet_flutter/amulet/ui/functions/render_canvas_sprite.dart';
 import 'package:amulet_flutter/gamestream/sprites/kid_character_sprites.dart';
-import 'package:amulet_flutter/packages/common/src/isometric/gender.dart';
+import 'package:amulet_engine/packages/common.dart';
 
 void renderCharacterFront({
   required Canvas canvas,

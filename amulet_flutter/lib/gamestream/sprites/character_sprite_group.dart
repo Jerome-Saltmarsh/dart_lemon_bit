@@ -1,5 +1,4 @@
-
-import 'package:amulet_flutter/packages/common/src/isometric/character_state.dart';
+import 'package:amulet_engine/packages/common.dart';
 import 'package:lemon_sprite/lib.dart';
 
 

@@ -1,5 +1,6 @@
 library src;
 
+export 'node_type_material.dart';
 export 'material_type.dart';
 export 'gender.dart';
 export 'shadow_type.dart';

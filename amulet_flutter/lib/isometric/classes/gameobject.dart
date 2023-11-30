@@ -1,6 +1,6 @@
 import 'package:amulet_flutter/isometric/classes/position.dart';
-import 'package:amulet_flutter/packages/common.dart';
-import 'package:lemon_math/src.dart';
+import 'package:amulet_engine/packages/common.dart';
+import 'package:amulet_engine/packages/lemon_math.dart';
 import '../../gamestream/isometric/enums/emission_type.dart';
 
 class GameObject extends Position {

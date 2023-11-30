@@ -3,7 +3,10 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:amulet_engine/packages/isometric_engine/packages/lemon_math/src/functions/random_byte.dart';
+
+import 'package:amulet_engine/packages/common.dart';
+import 'package:amulet_engine/packages/lemon_math.dart';
+
 import 'package:amulet_flutter/functions/get_alpha.dart';
 import 'package:amulet_flutter/functions/get_blue.dart';
 import 'package:amulet_flutter/functions/get_green.dart';
@@ -22,10 +25,8 @@ import 'package:amulet_flutter/isometric/classes/character.dart';
 import 'package:amulet_flutter/isometric/classes/gameobject.dart';
 import 'package:amulet_flutter/isometric/classes/projectile.dart';
 import 'package:amulet_flutter/isometric/functions/get_render.dart';
-import 'package:amulet_flutter/packages/common.dart';
 import 'package:amulet_flutter/packages/lemon_components.dart';
 import 'package:lemon_engine/lemon_engine.dart';
-import 'package:lemon_math/src.dart';
 import 'package:lemon_watch/src.dart';
 
 import '../../../isometric/classes/position.dart';

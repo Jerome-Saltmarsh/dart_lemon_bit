@@ -1,4 +1,4 @@
-import 'package:amulet_engine/packages/isometric_engine/packages/common/src/isometric/item_type.dart';
+import 'package:amulet_engine/packages/common.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_icon_type.dart';
 import 'package:amulet_flutter/gamestream/ui/enums/icon_type.dart';

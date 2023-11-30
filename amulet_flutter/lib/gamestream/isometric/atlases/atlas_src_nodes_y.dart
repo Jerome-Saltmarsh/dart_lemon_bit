@@ -1,5 +1,4 @@
-
-import 'package:amulet_flutter/packages/common/src/isometric/node_type.dart';
+import 'package:amulet_engine/packages/common.dart';
 
 const nodeTypeSrcY = <int, double> {
   NodeType.Brick: 1760,

@@ -3,7 +3,7 @@ import 'package:amulet_engine/json/src.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:amulet_flutter/gamestream/isometric/enums/mode.dart';
 import 'package:amulet_flutter/isometric/classes/gameobject.dart';
-import 'package:amulet_flutter/packages/common.dart';
+import 'package:amulet_engine/packages/common.dart';
 import 'package:amulet_flutter/types/server_mode.dart';
 import 'package:amulet_flutter/server/src.dart';
 

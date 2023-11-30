@@ -1,5 +1,4 @@
-
-import 'package:amulet_flutter/packages/common/src/isometric/node_size.dart';
+import 'package:amulet_engine/packages/common.dart';
 
 class IsometricAnimation {
   var frame1 = 0;

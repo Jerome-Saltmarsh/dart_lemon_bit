@@ -2,8 +2,8 @@ import 'package:amulet_flutter/gamestream/isometric/components/isometric_images.
 import 'package:amulet_flutter/isometric/classes/projectile.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:lemon_engine/lemon_engine.dart';
-import 'package:lemon_math/src.dart';
-import 'package:amulet_flutter/packages/common.dart';
+import 'package:amulet_engine/packages/common.dart';
+import 'package:amulet_engine/packages/lemon_math.dart';
 
 class RendererProjectiles extends RenderGroup {
 

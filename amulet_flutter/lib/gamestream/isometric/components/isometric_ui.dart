@@ -1,7 +1,7 @@
 import 'dart:ui' as ui;
 import 'dart:ui';
 
-import 'package:amulet_flutter/packages/common.dart';
+import 'package:amulet_engine/packages/common.dart';
 import 'package:amulet_flutter/website/widgets/gs_fullscreen.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:http/http.dart';

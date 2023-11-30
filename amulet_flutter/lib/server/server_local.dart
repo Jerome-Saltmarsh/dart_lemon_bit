@@ -9,7 +9,6 @@ import 'package:amulet_flutter/gamestream/isometric/components/isometric_parser.
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_player.dart' as PlayerClient;
 import 'package:amulet_flutter/server/src.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:typedef/json.dart';
 
 
 class ServerLocal implements Server {
