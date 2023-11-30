@@ -1,1 +1,0 @@
-typedef bool Predicate<T>(T t);

@@ -7,8 +7,6 @@ import 'scenes_ws.dart';
 import 'server.dart';
 import 'package:amulet_ws/packages/amulet_engine/classes/amulet.dart';
 import 'package:amulet_ws/user_service/user_service.dart';
-import '../functions/map_isometric_player_to_json.dart';
-import 'package:typedef/json.dart';
 
 class Root {
   late final Amulet amulet;
