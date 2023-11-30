@@ -54,7 +54,7 @@ class WebsiteGame extends Game {
 
   @override
   Widget buildUI(BuildContext context) => GSFullscreen(
-        child: buildWatch(options.operationStatus, buildOperationStatus),
+        child: buildWatch(server.remote.operationStatus, buildOperationStatus),
       );
 
   void toggleWebsitePage() =>
@@ -144,7 +144,7 @@ class WebsiteGame extends Game {
 
   void checkForLatestVersion() async {
     // await saveVisitDateTime();
-    options.operationStatus.value = OperationStatus.Checking_For_Updates;
+    server.remote.operationStatus.value = OperationStatus.Checking_For_Updates;
     engine.refreshPage();
   }
 

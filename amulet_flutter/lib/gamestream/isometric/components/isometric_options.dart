@@ -47,7 +47,6 @@ class IsometricOptions with IsometricComponent implements Updatable {
   final highlightIconInventory = WatchBool(false);
   final timeVisible = WatchBool(true);
   final windowOpenMenu = WatchBool(false);
-  final operationStatus = Watch(OperationStatus.None);
   final serverFPS = Watch(0);
   final sceneName = Watch<String?>(null);
   final gameRunning = Watch(true);
@@ -220,14 +219,6 @@ class IsometricOptions with IsometricComponent implements Updatable {
 
   void toggleRenderCharacterAnimationFrame() =>
       renderCharacterAnimationFrame = !renderCharacterAnimationFrame;
-
-  void operationDone(){
-    operationStatus.value = OperationStatus.None;
-  }
-
-  void startOperation(OperationStatus status){
-    operationStatus.value = status;
-  }
 
   void toggleRenderCameraTargets() => renderCameraTargets = !renderCameraTargets;
 

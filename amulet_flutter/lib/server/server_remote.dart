@@ -17,6 +17,7 @@ class ServerRemote implements Server {
 
   late final WebsocketClient websocket;
 
+  final operationStatus = Watch(OperationStatus.None);
   final region = Watch<ConnectionRegion?>(ConnectionRegion.LocalHost);
   final userJson = Watch<Json>({});
   final userId = Cache(key: 'userId', value: '');
@@ -26,6 +27,9 @@ class ServerRemote implements Server {
   final characters = Watch<List<Json>>([]);
 
   final IsometricParser parser;
+
+  @override
+  bool get connected => websocket.connected;
 
   ServerRemote({required this.parser}){
     userId.onChanged(onChangedUserId);
@@ -56,27 +60,27 @@ class ServerRemote implements Server {
   }
 
   Future refreshUser() async {
-    parser.options.startOperation(OperationStatus.Loading_User);
+    setOperationStatus(OperationStatus.Loading_User);
     userJson.value = userId.value.isEmpty
         ? const {}
         : await GameStreamHttpClient.getUser(
       url: userServiceUrl.value,
       userId: userId.value,
     );
-    parser.options.operationDone();
+    setOperationStatusDone();
   }
 
   Future register({
     required String username,
     required String password,
   }) async {
-    parser.options.startOperation(OperationStatus.Creating_Account);
+    setOperationStatus(OperationStatus.Creating_Account);
     final response = await GameStreamHttpClient.createUser(
       url: userServiceUrl.value,
       username: username,
       password: password,
     );
-    parser.options.operationDone();
+    setOperationStatusDone();
     if (response.statusCode == 200){
       userId.value = response.body;
     } else {
@@ -88,13 +92,13 @@ class ServerRemote implements Server {
     required String username,
     required String password,
   }) async {
-    parser.options.startOperation(OperationStatus.Authenticating);
+    setOperationStatus(OperationStatus.Authenticating);
     final response = await GameStreamHttpClient.login(
       url: userServiceUrl.value,
       username: username,
       password: password,
     );
-    parser.options.operationDone();
+    setOperationStatusDone();
     if (response.statusCode == 200){
       userId.value = response.body.replaceAll('\"', '');
     } else {
@@ -105,7 +109,7 @@ class ServerRemote implements Server {
   void logout() => userId.value = '';
 
   Future deleteCharacter(String characterId) async {
-    parser.options.startOperation(OperationStatus.Deleting_Character);
+    setOperationStatus(OperationStatus.Deleting_Character);
     try {
       final response = await GameStreamHttpClient.deleteCharacter(
         url: userServiceUrl.value,
@@ -121,16 +125,11 @@ class ServerRemote implements Server {
       parser.ui.handleException(error);
     }
     await refreshUser();
-    parser.options.operationDone();
+    setOperationStatusDone();
   }
 
   @override
-  bool get connected => websocket.connected;
-
-  @override
-  void disconnect() {
-    websocket.disconnect();
-  }
+  void disconnect() => websocket.disconnect();
 
   void playCharacter(String characterUuid) {
     connectToGame(
@@ -138,7 +137,6 @@ class ServerRemote implements Server {
         '--userId ${userId.value} --characterId $characterUuid'
     );
   }
-
 
   // FUNCTIONS
   void connectToRegion(ConnectionRegion region, String message) {
@@ -244,8 +242,7 @@ class ServerRemote implements Server {
       return;
     }
 
-
-    parser.options.startOperation(OperationStatus.Creating_Character);
+    setOperationStatus(OperationStatus.Creating_Character);
     parser.website.websitePage.value = WebsitePage.Select_Character;
     try {
       final response = await GameStreamHttpClient.createCharacter(
@@ -259,7 +256,7 @@ class ServerRemote implements Server {
         gender: gender,
         headType: headType,
       );
-      parser.options.operationDone();
+      setOperationStatusDone();
       refreshUser();
       if (response.statusCode == 200) {
         playCharacter(response.body);
@@ -267,7 +264,7 @@ class ServerRemote implements Server {
         parser.ui.error.value = response.body;
       }
     } catch (error){
-      parser.options.operationDone();
+      setOperationStatusDone();
       parser.ui.handleException(error);
     }
   }
@@ -300,6 +297,14 @@ class ServerRemote implements Server {
     print(error.toString());
     print(stack);
     parser.ui.error.value = error.toString();
+  }
+
+  void setOperationStatusDone(){
+    setOperationStatus(OperationStatus.None);
+  }
+
+  void setOperationStatus(OperationStatus status){
+    operationStatus.value = status;
   }
 
 }
