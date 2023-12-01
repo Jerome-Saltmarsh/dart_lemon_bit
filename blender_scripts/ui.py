@@ -24,7 +24,7 @@ class TEXT_OT_run_specified_script(bpy.types.Operator):
     )
 
     def invoke(self, context, event):
-        bpy.utils.execfile('C:/Users/Jerome/github/bleed/blender_scripts/render_isometric.py')
+        bpy.utils.execfile('C:/Users/Jerome/github/amulet/blender_scripts/render_isometric.py')
         return {'FINISHED'}
 
 

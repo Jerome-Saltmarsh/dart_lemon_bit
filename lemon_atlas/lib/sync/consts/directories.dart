@@ -1,2 +1,2 @@
-const dirRenders = 'C:/Users/Jerome/github/bleed/lemon_atlas/assets/renders';
-const dirSprites = 'C:/Users/Jerome/github/bleed/gamestream_flutter/sprites';
+const dirRenders = 'C:/Users/Jerome/github/amulet/lemon_atlas/assets/renders';
+const dirSprites = 'C:/Users/Jerome/github/amulet/amulet_flutter/sprites';

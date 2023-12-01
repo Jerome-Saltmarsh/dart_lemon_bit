@@ -28,7 +28,7 @@ class SyncUI extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.background,
+          backgroundColor: Colors.blue,
           title: const Text('RENDERS SYNC'),
           actions: [
             onPressed(
@@ -49,7 +49,7 @@ class SyncUI extends StatelessWidget {
               action: syncAll,
               child: Container(
                 padding: const EdgeInsets.all(16.0),
-                child: buildText('AUTOSYNC'),
+                child: buildText('SYNCHRONIZE'),
               ),
             ),
           ],
