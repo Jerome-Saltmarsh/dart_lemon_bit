@@ -4,7 +4,6 @@ import 'dart:typed_data';
 
 import '../isometric_engine.dart';
 import '../consts/isometric_settings.dart';
-import 'package:amulet_ws/packages/amulet_engine/packages/typedef.dart';
 
 
 class IsometricPlayer extends Character with ByteWriter {

@@ -1,5 +1,3 @@
-// mklink /J "C:\Users\Jerome\github\bleed\isometric_engine\lib\packages\bleed_common" "C:\Users\Jerome\github\bleed\bleed-common\lib"
-
 library;
 
 export 'common/src.dart';
