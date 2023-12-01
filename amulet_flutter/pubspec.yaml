@@ -127,42 +127,29 @@ flutter:
     - sprites/isometric/kid/diffuse/weapons/bow/
     - sprites/isometric/kid/diffuse/weapons/staff/
     - sprites/isometric/kid/diffuse/weapons/sword/
-    - sprites/front/kid/south/body_male/shirt_blue/
-    - sprites/front/kid/south/body_male/leather_armour/
-    - sprites/front/kid/south/body_female/leather_armour/
-    - sprites/front/kid/south/hands_left/gauntlets/
-    - sprites/front/kid/south/hands_right/gauntlets/
-    - sprites/front/kid/south/hair/01/
-    - sprites/front/kid/south/head/boy/
-    - sprites/front/kid/south/head/girl/
-    - sprites/front/kid/south/helms/steel/
-    - sprites/front/kid/south/helms/wizard_hat/
-    - sprites/front/kid/south/legs/leather/
-    - sprites/front/kid/south/torso/female/
-    - sprites/front/kid/south/torso/male/
-    - sprites/front/kid/south/weapons/bow/
-    - sprites/front/kid/south/weapons/staff/
-    - sprites/front/kid/south/weapons/sword/
-    - sprites/front/kid/south/shoes/iron_plates/
-    - sprites/front/kid/south/shoes/leather_boots/
-    - sprites/front/kid/west/body_male/shirt_blue/
-    - sprites/front/kid/west/body_male/leather_armour/
-    - sprites/front/kid/west/body_female/leather_armour/
-    - sprites/front/kid/west/hands_left/gauntlets/
-    - sprites/front/kid/west/hands_right/gauntlets/
-    - sprites/front/kid/west/hair/01/
-    - sprites/front/kid/west/head/boy/
-    - sprites/front/kid/west/head/girl/
-    - sprites/front/kid/west/helms/steel/
-    - sprites/front/kid/west/helms/wizard_hat/
-    - sprites/front/kid/west/legs/leather/
-    - sprites/front/kid/west/torso/female/
-    - sprites/front/kid/west/torso/male/
-    - sprites/front/kid/west/weapons/bow/
-    - sprites/front/kid/west/weapons/staff/
-    - sprites/front/kid/west/weapons/sword/
-    - sprites/front/kid/west/shoes/iron_plates/
-    - sprites/front/kid/west/shoes/leather_boots/
+    - sprites/front/kid/diffuse/body_female/leather_armour/
+    - sprites/front/kid/diffuse/body_female/shirt_blue/
+    - sprites/front/kid/diffuse/body_male/leather_armour/
+    - sprites/front/kid/diffuse/body_male/shirt_blue/
+    - sprites/front/kid/diffuse/hair/01/
+    - sprites/front/kid/diffuse/hair/02/
+    - sprites/front/kid/diffuse/hair/03/
+    - sprites/front/kid/diffuse/hair/04/
+    - sprites/front/kid/diffuse/hair/04/
+    - sprites/front/kid/diffuse/hands_left/gauntlets/
+    - sprites/front/kid/diffuse/hands_right/gauntlets/
+    - sprites/front/kid/diffuse/head/boy/
+    - sprites/front/kid/diffuse/head/girl/
+    - sprites/front/kid/diffuse/helms/steel/
+    - sprites/front/kid/diffuse/helms/wizard_hat/
+    - sprites/front/kid/diffuse/legs/leather/
+    - sprites/front/kid/diffuse/shoes/iron_plates/
+    - sprites/front/kid/diffuse/shoes/leather_boots/
+    - sprites/front/kid/diffuse/torso/female/
+    - sprites/front/kid/diffuse/torso/male/
+    - sprites/front/kid/diffuse/weapons/bow/
+    - sprites/front/kid/diffuse/weapons/staff/
+    - sprites/front/kid/diffuse/weapons/sword/
     - sprites/isometric/fallen/dead/
     - sprites/isometric/fallen/hurt/
     - sprites/isometric/fallen/idle/

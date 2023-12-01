@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:amulet_engine/packages/common.dart';
-import 'package:amulet_engine/packages/lemon_math.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:amulet_flutter/packages/utils/parse.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
@@ -38,10 +37,7 @@ class IsometricImages with IsometricComponent {
     RenderDirection.diffuse: kidCharacterSpritesIsometricDiffuse,
   };
 
-  final kidCharacterSpritesFrontSouth = KidCharacterSprites();
-  final kidCharacterSpritesFrontWest = KidCharacterSprites();
-
-  late final kidCharacterSpritesFrontDirections = [kidCharacterSpritesFrontSouth, kidCharacterSpritesFrontWest];
+  final kidCharacterSpritesFrontDiffuse = KidCharacterSprites();
 
   final totalImages = Watch(0);
   final totalImagesLoaded = Watch(0);
@@ -189,25 +185,24 @@ class IsometricImages with IsometricComponent {
       kidCharacterSpritesIsometric.shoes[0] = spriteGroupEmpty;
     }
 
-    for (final renderDirection in const [RenderDirection.south, RenderDirection.west]){
-      loadSpriteGroupFront(type: SpriteGroupType.Body_Male, subType: BodyType.Shirt_Blue, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Body_Male, subType: BodyType.Leather_Armour, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Body_Female, subType: BodyType.Leather_Armour, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Hand_Left, subType: HandType.Gauntlets, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Hand_Right, subType: HandType.Gauntlets, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Head, subType: HeadType.boy, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Head, subType: HeadType.girl, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Helm, subType: HelmType.Steel, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Helm, subType: HelmType.Wizard_Hat, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Legs, subType: LegType.Leather, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Torso, subType: Gender.male, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Torso, subType: Gender.female, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Weapon, subType: WeaponType.Bow, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Weapon, subType: WeaponType.Staff, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Weapon, subType: WeaponType.Sword, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Shoes, subType: ShoeType.Leather_Boots, renderDirection: renderDirection);
-      loadSpriteGroupFront(type: SpriteGroupType.Shoes, subType: ShoeType.Iron_Plates, renderDirection: renderDirection);
-    }
+    loadSpriteGroupFront(type: SpriteGroupType.Body_Male, subType: BodyType.Shirt_Blue);
+    loadSpriteGroupFront(type: SpriteGroupType.Body_Male, subType: BodyType.Leather_Armour);
+    loadSpriteGroupFront(type: SpriteGroupType.Body_Female, subType: BodyType.Leather_Armour);
+    loadSpriteGroupFront(type: SpriteGroupType.Hand_Left, subType: HandType.Gauntlets);
+    loadSpriteGroupFront(type: SpriteGroupType.Hand_Right, subType: HandType.Gauntlets);
+    loadSpriteGroupFront(type: SpriteGroupType.Head, subType: HeadType.boy);
+    loadSpriteGroupFront(type: SpriteGroupType.Head, subType: HeadType.girl);
+    loadSpriteGroupFront(type: SpriteGroupType.Helm, subType: HelmType.Steel);
+    loadSpriteGroupFront(type: SpriteGroupType.Helm, subType: HelmType.Wizard_Hat);
+    loadSpriteGroupFront(type: SpriteGroupType.Legs, subType: LegType.Leather);
+    loadSpriteGroupFront(type: SpriteGroupType.Torso, subType: Gender.male);
+    loadSpriteGroupFront(type: SpriteGroupType.Torso, subType: Gender.female);
+    loadSpriteGroupFront(type: SpriteGroupType.Weapon, subType: WeaponType.Bow);
+    loadSpriteGroupFront(type: SpriteGroupType.Weapon, subType: WeaponType.Staff);
+    loadSpriteGroupFront(type: SpriteGroupType.Weapon, subType: WeaponType.Sword);
+    loadSpriteGroupFront(type: SpriteGroupType.Shoes, subType: ShoeType.Leather_Boots);
+    loadSpriteGroupFront(type: SpriteGroupType.Shoes, subType: ShoeType.Iron_Plates);
+
 
     for (final direction in const[
       RenderDirection.south,
@@ -330,7 +325,6 @@ class IsometricImages with IsometricComponent {
         loadSpriteGroupFront(
             type: SpriteGroupType.Hair,
             subType: hairType,
-            renderDirection: direction
         );
         loadSpriteGroupIsometric(
           direction: direction,
@@ -546,13 +540,11 @@ class IsometricImages with IsometricComponent {
   void loadSpriteGroupFront({
     required int type,
     required int subType,
-    required RenderDirection renderDirection,
   }) async {
     final typeName = SpriteGroupType.getName(type).toLowerCase();
     final subTypeName = SpriteGroupType.getSubTypeName(type, subType).toLowerCase().replaceAll(' ', '_');
-    final sprites = renderDirection == RenderDirection.south ? kidCharacterSpritesFrontSouth : kidCharacterSpritesFrontWest;
-    final kidCharacterSpriteGroup = sprites.values[type] ?? (throw Exception('images.loadSpriteGroupFront($typeName, $subTypeName)'));
-    final directory = 'sprites/front/kid/${renderDirection.name}/$typeName/$subTypeName';
+    final kidCharacterSpriteGroup = kidCharacterSpritesFrontDiffuse.values[type] ?? (throw Exception('images.loadSpriteGroupFront($typeName, $subTypeName)'));
+    final directory = 'sprites/front/kid/diffuse/$typeName/$subTypeName';
 
     kidCharacterSpriteGroup[subType] = CharacterSpriteGroup(
       idle: await loadSprite(name: '$directory/idle', mode: AnimationMode.bounce),

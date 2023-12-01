@@ -56,7 +56,6 @@ class IsometricComponents extends ComponentContainer {
   final IsometricLighting lighting;
   final IsometricColors colors;
   final IsometricStyle style;
-  // final UserServiceHttp user;
 
   final IsometricGame isometricEditor = IsometricGame();
 

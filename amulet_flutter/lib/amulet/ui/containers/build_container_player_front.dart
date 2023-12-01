@@ -39,16 +39,7 @@ Widget buildContainerPlayerFront({
                         canvas: canvas,
                         row: row,
                         column: column,
-                        sprites: player.images.kidCharacterSpritesFrontSouth,
-                        characterState: CharacterState.Idle,
-                        color: player.scene.colorSouth(player.nodeIndex)
-                    );
-                    renderPlayerFront(
-                        player: player,
-                        canvas: canvas,
-                        row: row,
-                        column: column,
-                        sprites: player.images.kidCharacterSpritesFrontWest,
+                        sprites: player.images.kidCharacterSpritesFrontDiffuse,
                         characterState: CharacterState.Idle,
                         color: player.scene.colorWest(player.nodeIndex)
                     );

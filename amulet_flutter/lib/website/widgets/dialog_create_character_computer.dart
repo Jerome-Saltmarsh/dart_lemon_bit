@@ -149,27 +149,25 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                         child: CustomCanvas(
                           paint: (canvas, size) {
 
-                            for (final sprite in components.images.kidCharacterSpritesFrontDirections){
-                              renderCharacterFront(
-                                canvas: canvas,
-                                sprites: sprite,
-                                row: row.value,
-                                column: 0,
-                                characterState: CharacterState.Idle,
-                                gender: gender.value,
-                                helmType: 0,
-                                headType: headType.value,
-                                bodyType: BodyType.Leather_Armour,
-                                shoeType: ShoeType.Leather_Boots,
-                                legsType: LegType.Leather,
-                                hairType: hairType.value,
-                                weaponType: 0,
-                                skinColor: palette[complexion.value].value,
-                                hairColor: palette[hairColor.value].value,
-                                // color: setAlpha(color: components.scene.ambientColor, alpha: 0) ,
-                                color: 0,
-                              );
-                            }
+                            renderCharacterFront(
+                              canvas: canvas,
+                              sprites: components.images.kidCharacterSpritesFrontDiffuse,
+                              row: row.value,
+                              column: 0,
+                              characterState: CharacterState.Idle,
+                              gender: gender.value,
+                              helmType: 0,
+                              headType: headType.value,
+                              bodyType: BodyType.Leather_Armour,
+                              shoeType: ShoeType.Leather_Boots,
+                              legsType: LegType.Leather,
+                              hairType: hairType.value,
+                              weaponType: 0,
+                              skinColor: palette[complexion.value].value,
+                              hairColor: palette[hairColor.value].value,
+                              // color: setAlpha(color: components.scene.ambientColor, alpha: 0) ,
+                              color: 0,
+                            );
                           },
                         ),
                       ),
