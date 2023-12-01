@@ -34,6 +34,9 @@ ctrl + []               : move caret to code block
 * [fix]: colored particle emission
 * [new]: flames emit smoke particles
 
+## 01.12.2023
+* [new]: website ui exit button 
+
 ## 30.11.2023
 * [fix]: refactor project dependencies
 * [fix]: refactor remote server

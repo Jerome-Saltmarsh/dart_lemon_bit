@@ -53,7 +53,7 @@ class WebsiteGame extends Game {
 
   @override
   Widget buildUI(BuildContext context) => GSFullscreen(
-        child: buildPageWebsiteDesktop(),
+        child: buildPageWebsiteDesktop(context),
       );
 
   // void toggleWebsitePage() =>

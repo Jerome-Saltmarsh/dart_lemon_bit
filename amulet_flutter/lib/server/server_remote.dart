@@ -163,12 +163,8 @@ class ServerRemote implements Server {
   }
 
   void connectToGame(GameType gameType, [String message = '']) {
-    final regionValue = region.value;
-    if (regionValue == null) {
-      throw Exception('region is null');
-    }
     try {
-      connectToRegion(regionValue, '--gameType ${gameType.index} $message');
+      connectToRegion(region.value, '--gameType ${gameType.index} $message');
     } catch (error) {
       print(error);
     }

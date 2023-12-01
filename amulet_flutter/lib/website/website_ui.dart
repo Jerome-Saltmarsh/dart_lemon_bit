@@ -1,5 +1,7 @@
 import 'dart:typed_data';
 
+
+import 'package:window_manager/window_manager.dart';
 import 'package:amulet_engine/json/character_json.dart';
 import 'package:amulet_engine/packages/common.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/functions/get_server_mode_text.dart';
@@ -25,34 +27,49 @@ import 'widgets/dialog_create_character_computer.dart';
 
 extension WebsiteUI on WebsiteGame {
 
-  Widget buildPageWebsiteDesktop() =>
+  Widget buildPageWebsiteDesktop(BuildContext context) =>
       WatchBuilder(options.serverMode, (ServerMode serverMode) {
 
         final page = WatchBuilder(websitePage, (websitePage) =>
             switch (websitePage) {
               WebsitePage.Select_Character =>
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                  Stack(
+                    alignment: Alignment.center,
                     children: [
-                      buildText('AMULET', size: 120),
-                      height32,
-                      buildTogglePlayMode(),
-                      if (serverMode == ServerMode.local)
-                        buildState(builder: (context, rebuild) =>
-                            buildTableCharacters(
-                              server.local.getCharacters(),
-                              rebuild,
-                            )
+                      Positioned(
+                        top: 8,
+                        right: 8,
+                        child: onPressed(
+                          action: engine.window.close,
+                          child: buildText('EXIT'),
                         ),
-                      if (serverMode == ServerMode.remote)
-                        buildWatch(server.remote.userId, (userId) {
-                          final authenticated = userId.isNotEmpty;
-                          if (authenticated) {
-                            return buildContainerAuthenticated(server.remote);
-                          }
-                          return buildContainerAuthenticate(this, server.remote);
-                        }),
+                      ),
+                      Positioned(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            buildText('AMULET', size: 120),
+                            height32,
+                            buildTogglePlayMode(),
+                            if (serverMode == ServerMode.local)
+                              buildState(builder: (context, rebuild) =>
+                                  buildTableCharacters(
+                                    server.local.getCharacters(),
+                                    rebuild,
+                                  )
+                              ),
+                            if (serverMode == ServerMode.remote)
+                              buildWatch(server.remote.userId, (userId) {
+                                final authenticated = userId.isNotEmpty;
+                                if (authenticated) {
+                                  return buildContainerAuthenticated(server.remote);
+                                }
+                                return buildContainerAuthenticate(this, server.remote);
+                              }),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
               WebsitePage.New_Character => Column(
