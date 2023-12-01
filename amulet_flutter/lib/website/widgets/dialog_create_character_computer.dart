@@ -162,6 +162,8 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                               shoeType: ShoeType.Leather_Boots,
                               legsType: LegType.Leather,
                               hairType: hairType.value,
+                              handsLeft: HandType.None,
+                              handsRight: HandType.None,
                               weaponType: 0,
                               skinColor: palette[complexion.value].value,
                               hairColor: palette[hairColor.value].value,
