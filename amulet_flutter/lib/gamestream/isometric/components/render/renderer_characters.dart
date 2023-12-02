@@ -221,44 +221,44 @@ class RendererCharacters extends RenderGroup {
         anchorY: anchorY,
       );
 
-      // modulate(
-      //   sprite: spriteTorsoDiffuse,
-      //   frame: completingAction
-      //       ? spriteTorsoDiffuse.getFramePercentage(row, actionComplete)
-      //       : spriteTorsoDiffuse.getFrame(column: animationFrame, row: row),
-      //   color1: colorSkin,
-      //   color2: colorDiffuse,
-      //   scale: scale,
-      //   dstX: dstX,
-      //   dstY: dstY,
-      //   anchorY: anchorY,
-      // );
-      //
-      // modulate(
-      //   sprite: spriteTorsoSouth,
-      //   frame: completingAction
-      //       ? spriteTorsoSouth.getFramePercentage(row, actionComplete)
-      //       : spriteTorsoSouth.getFrame(column: animationFrame, row: row),
-      //   color1: colorSkin,
-      //   color2: colorSouth,
-      //   scale: scale,
-      //   dstX: dstX,
-      //   dstY: dstY,
-      //   anchorY: anchorY,
-      // );
-      //
-      // modulate(
-      //   sprite: spriteTorsoWest,
-      //   frame: completingAction
-      //       ? spriteTorsoWest.getFramePercentage(row, actionComplete)
-      //       : spriteTorsoWest.getFrame(column: animationFrame, row: row),
-      //   color1: colorSkin,
-      //   color2: colorWest,
-      //   scale: scale,
-      //   dstX: dstX,
-      //   dstY: dstY,
-      //   anchorY: anchorY,
-      // );
+      modulate(
+        sprite: spriteTorsoDiffuse,
+        frame: completingAction
+            ? spriteTorsoDiffuse.getFramePercentage(row, actionComplete)
+            : spriteTorsoDiffuse.getFrame(column: animationFrame, row: row),
+        color1: colorSkin,
+        color2: colorDiffuse,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+
+      modulate(
+        sprite: spriteTorsoSouth,
+        frame: completingAction
+            ? spriteTorsoSouth.getFramePercentage(row, actionComplete)
+            : spriteTorsoSouth.getFrame(column: animationFrame, row: row),
+        color1: colorSkin,
+        color2: colorSouth,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+
+      modulate(
+        sprite: spriteTorsoWest,
+        frame: completingAction
+            ? spriteTorsoWest.getFramePercentage(row, actionComplete)
+            : spriteTorsoWest.getFrame(column: animationFrame, row: row),
+        color1: colorSkin,
+        color2: colorWest,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
 
       renderSprite(
         sprite: spriteLegsDiffuse,

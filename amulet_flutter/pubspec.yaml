@@ -72,8 +72,8 @@ flutter:
     - sprites/isometric/kid/south/hair/02/
     - sprites/isometric/kid/south/hair/03/
     - sprites/isometric/kid/south/hands_left/gauntlets/
-    - sprites/isometric/kid/south/hands_right/gauntlets/
     - sprites/isometric/kid/south/hands_left/leather_gloves/
+    - sprites/isometric/kid/south/hands_right/gauntlets/
     - sprites/isometric/kid/south/hands_right/leather_gloves/
     - sprites/isometric/kid/south/head/boy/
     - sprites/isometric/kid/south/head/girl/
@@ -95,8 +95,8 @@ flutter:
     - sprites/isometric/kid/west/hair/02/
     - sprites/isometric/kid/west/hair/03/
     - sprites/isometric/kid/west/hands_left/gauntlets/
-    - sprites/isometric/kid/west/hands_right/gauntlets/
     - sprites/isometric/kid/west/hands_left/leather_gloves/
+    - sprites/isometric/kid/west/hands_right/gauntlets/
     - sprites/isometric/kid/west/hands_right/leather_gloves/
     - sprites/isometric/kid/west/head/boy/
     - sprites/isometric/kid/west/head/girl/
@@ -118,7 +118,9 @@ flutter:
     - sprites/isometric/kid/diffuse/hair/02/
     - sprites/isometric/kid/diffuse/hair/03/
     - sprites/isometric/kid/diffuse/hands_left/gauntlets/
+    - sprites/isometric/kid/diffuse/hands_left/leather_gloves/
     - sprites/isometric/kid/diffuse/hands_right/gauntlets/
+    - sprites/isometric/kid/diffuse/hands_right/leather_gloves/
     - sprites/isometric/kid/diffuse/head/boy/
     - sprites/isometric/kid/diffuse/head/girl/
     - sprites/isometric/kid/diffuse/helms/steel/
