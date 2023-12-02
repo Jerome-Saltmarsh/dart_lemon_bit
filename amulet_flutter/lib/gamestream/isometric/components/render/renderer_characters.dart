@@ -1,3 +1,4 @@
+import 'package:amulet_flutter/functions/get_alpha.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_images.dart';
 import 'package:amulet_flutter/isometric/classes/character.dart';
@@ -92,20 +93,10 @@ class RendererCharacters extends RenderGroup {
   /// TODO OPTIMIZE
   void renderCharacterHuman(Character character) {
     const anchorY = 0.7;
-    // final scene = this.scene;
+
     final scale = options.characterRenderScale;
-
-    // final colorN = merge32BitColors(colorN1, colorN2);
-    // final colorE = merge32BitColors(colorE1, colorE2);
-    // final colorS = merge32BitColors(colorS1, colorS2);
-    // final colorW = merge32BitColors(colorW1, colorW2);
-
-    // final colorSouth = merge32BitsColors3(colorS, colorE, colorSE);
-    // final colorWest = merge32BitsColors3(colorN, colorW, colorNW);
-
     final colorSouth = character.colorSouthEast;
     final colorWest = character.colorNorthWest;
-
     final colorDiffuse = merge32BitColors(colorSouth, colorWest);
     final dstX = character.renderX;
     final dstY = character.renderY;
@@ -114,7 +105,6 @@ class RendererCharacters extends RenderGroup {
     final animationFrame = character.animationFrame;
     final actionComplete = character.actionComplete;
     final completingAction = actionComplete > 0;
-
     final images = this.images;
     final spritesShadow = images.kidCharacterSpriteGroupShadow;
     final spritesSouth = images.kidCharacterSpritesIsometricSouth;
@@ -208,6 +198,15 @@ class RendererCharacters extends RenderGroup {
     final modulate = render.modulate;
 
     if (renderBottom) {
+
+      // final charIndex = scene.getIndexPosition(character);
+      // render.textPosition(character,
+      //     'n: ${getAlpha(scene.colorNorth(charIndex))} '
+      //     'e: ${getAlpha(scene.colorEast(charIndex))} '
+      //     's: ${getAlpha(scene.colorSouth(charIndex))} '
+      //     'w: ${getAlpha(scene.colorWest(charIndex))}',
+      //   offsetY: 0
+      // );
 
       renderSprite(
         sprite: spriteShadow,

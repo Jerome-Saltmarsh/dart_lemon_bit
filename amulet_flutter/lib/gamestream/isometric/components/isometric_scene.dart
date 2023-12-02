@@ -2203,13 +2203,32 @@ class IsometricScene with IsometricComponent implements Updatable {
     }
 
     final index = getIndexPosition(character);
-    final colorN = getColorBeamNorth(index);
-    final colorE = getColorBeamEast(index);
-    final colorS = getColorBeamSouth(index);
-    final colorW = getColorBeamWest(index);
+    final colorN = this.colorNorth(index);
+    final colorE = this.colorEast(index);
+    final colorS = this.colorSouth(index);
+    final colorW = this.colorWest(index);
 
-    character.colorSouthEast = merge32BitColors(colorS, colorE);
-    character.colorNorthWest = merge32BitColors(colorN, colorW);
+    final colorNAlpha = getAlpha(colorN);
+    final colorEAlpha = getAlpha(colorE);
+    final colorSAlpha = getAlpha(colorS);
+    final colorWAlpha = getAlpha(colorW);
+
+    final maxSEAlpha = max(colorSAlpha, colorEAlpha);
+    final maxNWAlpha = max(colorNAlpha, colorWAlpha);
+
+    final minSEAlpha = min(colorSAlpha, colorEAlpha);
+    final minNWAlpha = min(colorNAlpha, colorWAlpha);
+
+    final southEast = merge32BitColors(colorS, colorE);
+    final northWest = merge32BitColors(colorN, colorW);
+
+    if (minSEAlpha < minNWAlpha){
+       character.colorSouthEast = setAlpha(southEast, minSEAlpha);
+       character.colorNorthWest = setAlpha(northWest, maxNWAlpha);
+    } else {
+      character.colorSouthEast = setAlpha(southEast, maxSEAlpha);
+      character.colorNorthWest = setAlpha(northWest, minNWAlpha);
+    }
   }
 
   int getColorBeamNorth(int index){

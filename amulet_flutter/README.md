@@ -18,6 +18,7 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## BLOCK
+* [new]: fix particle whisp direction
 * [new]: fix lightning color
 
 ## TODO
@@ -39,6 +40,7 @@ ctrl + []               : move caret to code block
 * [new]: flames emit smoke particles
 
 ## 02.12.2023
+* [new]: fix lighting contrast
 * [new]: optimize particle remove frame
 * [fix]: fix particle moths missing in tutorial
 * [fix]: offline support for web
