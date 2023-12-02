@@ -233,18 +233,20 @@ class IsometricImages with IsometricComponent {
           subType: BodyType.Shirt_Blue,
           skipHurt: true,
       );
-      loadSpriteGroupIsometric(
-        direction: direction,
-        type: SpriteGroupType.Hand_Left,
-        subType: HandType.Gauntlets,
-        skipHurt: true,
-      );
-      loadSpriteGroupIsometric(
-        direction: direction,
-        type: SpriteGroupType.Hand_Right,
-        subType: HandType.Gauntlets,
-        skipHurt: true,
-      );
+      for (final handType in HandType.values) {
+        loadSpriteGroupIsometric(
+          direction: direction,
+          type: SpriteGroupType.Hand_Left,
+          subType: handType,
+          skipHurt: true,
+        );
+        loadSpriteGroupIsometric(
+          direction: direction,
+          type: SpriteGroupType.Hand_Right,
+          subType: handType,
+          skipHurt: true,
+        );
+      }
       loadSpriteGroupIsometric(
         direction: direction,
         type: SpriteGroupType.Head,

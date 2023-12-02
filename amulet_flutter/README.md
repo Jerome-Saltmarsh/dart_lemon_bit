@@ -18,10 +18,11 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## BLOCK
-* [fix]: render front
+* [new]: model leather glove 
 * [fix]: offline support for web
 
 ## TODO
+* [fix]: fix particle moths missing in tutorial
 * [fix]: audio for windows
 * [new]: mobile support
 * [new]: elemental damage
@@ -35,6 +36,8 @@ ctrl + []               : move caret to code block
 * [new]: flames emit smoke particles
 
 ## 01.12.2023
+* [new]: fix model shape torso
+* [fix]: render front
 * [new]: website ui exit button 
 
 ## 30.11.2023

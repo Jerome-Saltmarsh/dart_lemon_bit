@@ -217,13 +217,25 @@ enum AmuletItem {
     description: 'Common gauntlets',
     level1: AmuletItemLevel(),
   ),
+  Leather_Gloves(
+    selectAction: AmuletItemAction.Equip,
+    quality: AmuletItemQuality.Common,
+    type: ItemType.Hand,
+    subType: HandType.Leather_Gloves,
+    description: 'Common leather gloves',
+    level1: AmuletItemLevel(
+      health: 5,
+    ),
+  ),
   Armor_Shirt_Blue_Worn(
     selectAction: AmuletItemAction.Equip,
     quality: AmuletItemQuality.Common,
     type: ItemType.Body,
     subType: BodyType.Shirt_Blue,
     description: 'An ordinary shirt',
-    level1: AmuletItemLevel(),
+    level1: AmuletItemLevel(
+      health: 10,
+    ),
   ),
   Armor_Leather_Basic(
     selectAction: AmuletItemAction.Equip,
@@ -231,7 +243,9 @@ enum AmuletItem {
     type: ItemType.Body,
     subType: BodyType.Leather_Armour,
     description: 'Common armour',
-    level1: AmuletItemLevel(),
+    level1: AmuletItemLevel(
+      health: 15
+    ),
   ),
   Shoe_Leather_Boots(
     selectAction: AmuletItemAction.Equip,

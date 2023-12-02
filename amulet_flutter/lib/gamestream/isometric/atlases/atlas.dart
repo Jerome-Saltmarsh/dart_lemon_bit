@@ -27,11 +27,6 @@ class Atlas {
     HelmType.Wizard_Hat: AtlasSrcHelm.Wizards_Hat,
   };
 
-  static const Collection_Hands = <int, List<double>>{
-    HandType.None: AtlasSrcHands.None,
-    HandType.Gauntlets: AtlasSrcHands.Gauntlet,
-  };
-
   static const Collection_Objects = <int, List<double>>{
     GameObjectType.Barrel: AtlasSrcObjects.Barrel,
     GameObjectType.Barrel_Explosive: AtlasSrcObjects.Barrel_Explosive,
@@ -75,7 +70,7 @@ class Atlas {
     ItemType.Body: atlasSrcBodyType,
     ItemType.Helm: Collection_Helm,
     ItemType.Object: Collection_Objects,
-    ItemType.Hand: Collection_Hands,
+    ItemType.Hand: atlasSrcHands,
     ItemType.Consumable: atlasSrcConsumables,
     ItemType.Treasure: atlasSrcTreasures,
     ItemType.Shoes: atlasSrcShoes,
