@@ -5,7 +5,6 @@ class IsometricConstants {
   static const Sprite_Width = 48.0;
   static const Sprite_Width_Half = 24.0;
   static const Sprite_Anchor_Y = 0.3;
-  static const Frames_Per_Particle_Animation_Frame = 3;
   static const Sprite_Height_Padded = Sprite_Height + 1;
   static const Sprite_Width_Padded = Sprite_Width + 1;
   static const Sprite_Width_Padded_1 = Sprite_Width + 1;

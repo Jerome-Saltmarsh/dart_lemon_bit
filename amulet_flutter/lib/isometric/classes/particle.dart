@@ -12,7 +12,6 @@ class Particle extends Position {
   var vx = 0.0;
   var vy = 0.0;
   var vz = 0.0;
-  var frame = 0;
   var weight = 0.0;
   var duration = 0;
   var durationTotal = 0;
@@ -45,7 +44,6 @@ class Particle extends Position {
   void deactivate(){
     duration = -1;
     durationTotal = -1;
-    frame = 0;
     delay = 0;
     onscreen = false;
     deactivating = true;

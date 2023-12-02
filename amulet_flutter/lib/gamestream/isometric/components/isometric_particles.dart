@@ -8,7 +8,6 @@ import 'package:amulet_flutter/gamestream/isometric/classes/particle_roam.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/particle_whisp.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_scene.dart';
 import 'package:amulet_flutter/gamestream/isometric/enums/node_visibility.dart';
-import 'package:amulet_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:amulet_engine/packages/common.dart';
 import 'package:amulet_engine/packages/lemon_math.dart';
 import 'package:amulet_flutter/packages/lemon_components.dart';
@@ -22,7 +21,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
   var windy = false;
   var windStrength = 0.0;
-  var nextParticleFrame = 0;
   var nodeType = 0;
 
   late final whispColors = [
@@ -196,28 +194,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
         scale: scale,
         // frictionAir: 0.99,
       );
-
-  void spawnParticleShotSmoke({
-    required double x,
-    required double y,
-    required double z,
-    required double angle,
-    required double speed,
-    int delay = 0,
-  }) => spawnParticle(
-    particleType: ParticleType.Gunshot_Smoke,
-    x: x,
-    y: y,
-    z: z,
-    angle: angle,
-    speed: speed,
-    zv: 0.32,
-    weight: 0.0,
-    duration: 120,
-    scale: 0.35 + giveOrTake(0.15),
-    scaleV: 0.0015,
-    // frictionAir: 1.0,
-  )..delay = delay;
 
   void spawnParticleRockShard(double x, double y){
     spawnParticle(
@@ -431,17 +407,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
     if (nextEmissionWaterDrop-- <= 0) {
       nextEmissionWaterDrop = 60;
       spawnWaterDropLargeAtIndexes();
-    }
-
-    nextParticleFrame--;
-
-    if (nextParticleFrame <= 0){
-
-      nextParticleFrame = IsometricConstants.Frames_Per_Particle_Animation_Frame;
-
-      for (final particle in activeParticles) {
-        particle.frame++;
-      }
     }
 
     final engine = this.engine;

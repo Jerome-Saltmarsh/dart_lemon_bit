@@ -18,26 +18,28 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## BLOCK
+* [new]: fix lightning color
 
 ## TODO
 * [new]: model hand type gauntlets
 * [new]: model body type leather armour
 * [new]: model body type shirt blue 
-* [new]: model leg type leather 
+* [new]: model leg type leather
+* [new]: model weapon rusty sword
 * [new]: tool synchronize pubspec
 * [fix]: audio for windows
-* [new]: mobile support
+* [new]: mobile touch screen support
 * [new]: elemental damage
 * [new]: map locations
 * [new]: scene town
 * [new]: item tabs weapons amulets etc
-* [new]: model rusty sword
 * [fix]: barrels and crates should not be interactable
 * [fix]: persist gameobject properties
 * [fix]: colored particle emission
 * [new]: flames emit smoke particles
 
 ## 02.12.2023
+* [new]: optimize particle remove frame
 * [fix]: fix particle moths missing in tutorial
 * [fix]: offline support for web
 * [new]: model hand type leather glove

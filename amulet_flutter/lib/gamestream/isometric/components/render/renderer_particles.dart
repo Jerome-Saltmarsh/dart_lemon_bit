@@ -260,23 +260,6 @@ class RendererParticles extends RenderGroup {
             color: scene.getRenderColorPosition(particle),
           );
           break;
-        case ParticleType.Gunshot_Smoke:
-          if (particle.frame >= 24) {
-            particle.deactivate();
-            return;
-          }
-          final frame = particle.frame <= 11 ? particle.frame : 23 - particle.frame;
-          engine.renderSprite(
-            image: images.atlas_particles,
-            dstX: dstX,
-            dstY: dstY,
-            srcX: 544,
-            srcY: 32.0 * frame,
-            srcWidth: 32,
-            srcHeight: 32,
-            scale: particle.scale,
-          );
-          break;
         case ParticleType.Block_Sand:
           engine.renderSprite(
             image: images.atlas_gameobjects,
@@ -291,19 +274,16 @@ class RendererParticles extends RenderGroup {
           );
           break;
         case ParticleType.Fire:
-          if (particle.frame > 12 ) {
-            return particle.deactivate();
-          }
-          engine.renderSprite(
-            image: images.atlas_particles,
-            dstX: dstX,
-            dstY: dstY,
-            srcX: 0,
-            srcY: 32.0 * particle.frame,
-            srcWidth: 32,
-            srcHeight: 32,
-            scale: particle.scale,
-          );
+          // engine.renderSprite(
+          //   image: images.atlas_particles,
+          //   dstX: dstX,
+          //   dstY: dstY,
+          //   srcX: 0,
+          //   srcY: 32.0 * particle.frame,
+          //   srcWidth: 32,
+          //   srcHeight: 32,
+          //   scale: particle.scale,
+          // );
           break;
         case ParticleType.Shadow:
           engine.renderSprite(

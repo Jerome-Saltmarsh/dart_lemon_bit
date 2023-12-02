@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:amulet_flutter/gamestream/isometric/classes/particle_roam.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_particles.dart';
 import 'package:amulet_engine/packages/common.dart';
@@ -59,7 +61,7 @@ class ParticleWhisp extends ParticleRoam {
 
     targetDuration++;
 
-    final angle = getAngle(targetX, targetY);
+    final angle = getAngle(targetX, targetY) + pi;
     final diff = angleDiff(angle, movementAngle);
 
     if (diff < 0){
