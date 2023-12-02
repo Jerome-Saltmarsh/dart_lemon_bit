@@ -1,5 +1,7 @@
 
 
+import 'dart:math';
+
 import 'package:amulet_flutter/gamestream/isometric/classes/particle_roam.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_particles.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_scene.dart';
@@ -179,7 +181,7 @@ class ParticleFlying extends ParticleRoam {
   }
 
   void faceTargetAndMove() {
-    rotation = getAngle(targetX, targetY);
+    rotation = getAngle(targetX, targetY) + pi;
     setSpeed(rotation, speed);
     moving = true;
   }

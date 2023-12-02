@@ -21,8 +21,10 @@ ctrl + []               : move caret to code block
 
 ## TODO
 * [new]: model hand type gauntlets
+* [new]: model body type leather armour
+* [new]: model body type shirt blue 
+* [new]: model leg type leather 
 * [new]: tool synchronize pubspec
-* [fix]: fix particle moths missing in tutorial
 * [fix]: audio for windows
 * [new]: mobile support
 * [new]: elemental damage
@@ -36,6 +38,7 @@ ctrl + []               : move caret to code block
 * [new]: flames emit smoke particles
 
 ## 02.12.2023
+* [fix]: fix particle moths missing in tutorial
 * [fix]: offline support for web
 * [new]: model hand type leather glove
 
