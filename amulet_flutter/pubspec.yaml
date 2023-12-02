@@ -44,9 +44,9 @@ flutter:
     - family: VT323-Regular
       fonts:
         - asset: fonts/VT323-Regular.ttf
-    - family: REBUFFED
-      fonts:
-        - asset: fonts/REBUFFED.TTF
+#    - family: REBUFFED
+#      fonts:
+#        - asset: fonts/REBUFFED.TTF
   assets:
     - scenes/
     - images/

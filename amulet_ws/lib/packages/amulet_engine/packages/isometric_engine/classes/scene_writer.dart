@@ -1,16 +1,13 @@
 
-import 'dart:io';
 import 'dart:typed_data';
+
+import 'package:archive/archive.dart';
 
 import '../isometric_engine.dart';
 
 class SceneWriter extends ByteWriter {
 
-  final encoder = ZLibEncoder(
-            level: ZLibOption.minLevel,
-            memLevel: ZLibOption.minMemLevel,
-            strategy: ZLibOption.strategyFixed,
-  );
+  final encoder = ZLibEncoder();
 
   Uint8List compileScene(Scene scene, {required bool gameObjects}){
     clear();
@@ -34,8 +31,8 @@ class SceneWriter extends ByteWriter {
   void writeNodes(Scene scene){
     scene.removeUnusedNodes();
 
-    final compressedNodeTypes = encoder.convert(scene.types);
-    final compressedNodeOrientations = encoder.convert(scene.shapes);
+    final compressedNodeTypes = encoder.encode(scene.types);
+    final compressedNodeOrientations = encoder.encode(scene.shapes);
     assert (!compressedNodeTypes.any((element) => element > 256));
     assert (!compressedNodeTypes.any((element) => element < 0));
 
@@ -103,7 +100,7 @@ class SceneWriter extends ByteWriter {
   }
 
   void compressAndWrite(Uint8List values){
-    final compressedValues = encoder.convert(values);
+    final compressedValues = encoder.encode(values);
     writeUInt24(compressedValues.length);
     writeUint8List(compressedValues);
   }

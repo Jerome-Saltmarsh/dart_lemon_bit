@@ -460,26 +460,25 @@ class Character extends Collider {
   @override
   double get order => dead ? super.order - 25 : super.order;
   
-  int get templateDataA => compressBytesToUInt64(
-      weaponType,
-      bodyType,
-      helmType,
-      legsType,
-      handTypeLeft,
-      handTypeRight,
-      hairType,
-      hairColor,
-    );
+  int get templateDataA => compressBytesToUInt32(
+    weaponType,
+    bodyType,
+    helmType,
+    legsType,
+  );
 
-  int get templateDataB => compressBytesToUInt64(
+  int get templateDataB => compressBytesToUInt32(
     complexion,
     shoeType,
     gender,
     headType,
-    0,
-    0,
-    0,
-    0,
+  );
+
+  int get templateDataC => compressBytesToUInt32(
+    handTypeLeft,
+    handTypeRight,
+    hairType,
+    hairColor,
   );
 
   @override

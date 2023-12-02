@@ -1,4 +1,4 @@
 library;
 
-export 'byte_reader.dart';
-export 'byte_writer.dart';
+export 'src/byte_reader.dart';
+export 'src/byte_writer.dart';

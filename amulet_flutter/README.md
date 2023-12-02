@@ -18,10 +18,10 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## BLOCK
-* [new]: model leather glove 
-* [fix]: offline support for web
 
 ## TODO
+* [new]: model hand type gauntlets
+* [new]: tool synchronize pubspec
 * [fix]: fix particle moths missing in tutorial
 * [fix]: audio for windows
 * [new]: mobile support
@@ -34,6 +34,10 @@ ctrl + []               : move caret to code block
 * [fix]: persist gameobject properties
 * [fix]: colored particle emission
 * [new]: flames emit smoke particles
+
+## 02.12.2023
+* [fix]: offline support for web
+* [new]: model hand type leather glove
 
 ## 01.12.2023
 * [new]: fix model shape torso

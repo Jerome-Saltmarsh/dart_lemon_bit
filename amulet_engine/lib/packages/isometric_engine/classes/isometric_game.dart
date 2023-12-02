@@ -2,7 +2,6 @@ import 'dart:math';
 
 import '../isometric_engine.dart';
 import '../consts/isometric_settings.dart';
-import '../packages/lemon_math/src/functions/random_chance.dart';
 
 abstract class IsometricGame<T extends IsometricPlayer> {
 

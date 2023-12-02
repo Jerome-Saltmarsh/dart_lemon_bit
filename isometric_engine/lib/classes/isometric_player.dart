@@ -55,8 +55,9 @@ class IsometricPlayer extends Character with ByteWriter {
   final cachePositionX = Int16List(Cache_Length);
   final cachePositionY = Int16List(Cache_Length);
   final cachePositionZ = Int16List(Cache_Length);
-  final cacheTemplateA = Uint64List(Cache_Length);
-  final cacheTemplateB = Uint64List(Cache_Length);
+  final cacheTemplateA = Uint32List(Cache_Length);
+  final cacheTemplateB = Uint32List(Cache_Length);
+  final cacheTemplateC = Uint32List(Cache_Length);
 
   late final editor = EditorState(this);
 
@@ -719,12 +720,14 @@ class IsometricPlayer extends Character with ByteWriter {
 
     final compressedA = character.templateDataA;
     final compressedB = character.templateDataB;
+    final compressedC = character.templateDataC;
 
     final writeA = cacheTemplateA[cacheIndex] != compressedA;
     final writeB = cacheTemplateB[cacheIndex] != compressedB;
+    final writeC = cacheTemplateC[cacheIndex] != compressedC;
 
     writeByte(
-      writeBits(writeA, writeB, false, false, false, false, false, false)
+      writeBits(writeA, writeB, writeC, false, false, false, false, false)
     );
 
     if (writeA){
@@ -733,10 +736,6 @@ class IsometricPlayer extends Character with ByteWriter {
       writeByte(character.bodyType);
       writeByte(character.helmType);
       writeByte(character.legsType);
-      writeByte(character.handTypeLeft);
-      writeByte(character.handTypeRight);
-      writeByte(character.hairType);
-      writeByte(character.hairColor);
     }
 
     if (writeB){
@@ -745,6 +744,14 @@ class IsometricPlayer extends Character with ByteWriter {
       writeByte(character.shoeType);
       writeByte(character.gender);
       writeByte(character.headType);
+    }
+
+    if (writeC){
+      cacheTemplateC[cacheIndex] = compressedC;
+      writeByte(character.handTypeLeft);
+      writeByte(character.handTypeRight);
+      writeByte(character.hairType);
+      writeByte(character.hairColor);
     }
   }
 
