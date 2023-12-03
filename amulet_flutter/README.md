@@ -18,8 +18,8 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## BLOCK
-* [new]: model body type leather armour
-* [new]: model body type shirt blue
+* [new]: model body type female leather armour
+* [new]: model body type female shirt blue
 * [new]: model leg type leather
 * [new]: model leg type iron
 * [new]: model weapon rusty sword
@@ -38,6 +38,10 @@ ctrl + []               : move caret to code block
 * [new]: flames emit smoke particles
 
 ## 03.12.2023
+* [new]: model shoe type leather
+* [new]: model shoe type iron plates
+* [new]: model body type male leather armour
+* [new]: model body type male shirt blue
 * [new]: model hand type gauntlets
 * [fix]: ai apply hit
 * [fix]: fix particle whisp direction
