@@ -18,14 +18,13 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## BLOCK
-
+* [new]: model body type leather armour
+* [new]: model body type shirt blue
+* [new]: model leg type leather
+* [new]: model leg type iron
+* [new]: model weapon rusty sword
 
 ## TODO
-* [new]: model hand type gauntlets
-* [new]: model body type leather armour
-* [new]: model body type shirt blue 
-* [new]: model leg type leather
-* [new]: model weapon rusty sword
 * [new]: tool synchronize pubspec
 * [fix]: audio for windows
 * [new]: mobile touch screen support
@@ -39,6 +38,7 @@ ctrl + []               : move caret to code block
 * [new]: flames emit smoke particles
 
 ## 03.12.2023
+* [new]: model hand type gauntlets
 * [fix]: ai apply hit
 * [fix]: fix particle whisp direction
 * [fix]: fix lightning color
