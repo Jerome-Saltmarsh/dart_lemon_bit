@@ -61,7 +61,7 @@ class ParticleWhisp extends ParticleRoam {
 
     targetDuration++;
 
-    final angle = getAngle(targetX, targetY) + pi;
+    final angle = getAngle(targetX, targetY);
     final diff = angleDiff(angle, movementAngle);
 
     if (diff < 0){

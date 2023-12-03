@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:amulet_flutter/functions/interpolate_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_nodes_y.dart';

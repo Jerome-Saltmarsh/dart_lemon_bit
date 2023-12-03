@@ -1,7 +1,6 @@
 
 import 'dart:math';
 
-import 'package:amulet_flutter/functions/pyramid.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/particle_flying.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/particle_glow.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/particle_roam.dart';

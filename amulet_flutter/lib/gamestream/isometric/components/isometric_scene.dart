@@ -7,13 +7,6 @@ import 'dart:ui';
 import 'package:amulet_engine/packages/common.dart';
 import 'package:amulet_engine/packages/lemon_math.dart';
 
-import 'package:amulet_flutter/functions/get_alpha.dart';
-import 'package:amulet_flutter/functions/get_blue.dart';
-import 'package:amulet_flutter/functions/get_green.dart';
-import 'package:amulet_flutter/functions/get_red.dart';
-import 'package:amulet_flutter/functions/get_rgb.dart';
-import 'package:amulet_flutter/functions/interpolate_byte.dart';
-import 'package:amulet_flutter/functions/set_alpha.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/particle_roam.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:amulet_flutter/gamestream/isometric/consts/map_projectile_type_to_emission_ambient.dart';
@@ -26,7 +19,6 @@ import 'package:amulet_flutter/isometric/classes/gameobject.dart';
 import 'package:amulet_flutter/isometric/classes/projectile.dart';
 import 'package:amulet_flutter/isometric/functions/get_render.dart';
 import 'package:amulet_flutter/packages/lemon_components.dart';
-import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 
 import '../../../isometric/classes/position.dart';
@@ -722,6 +714,9 @@ class IsometricScene with IsometricComponent implements Updatable {
     final interpolatedRed = interpolateByte(currentRed, colorRed, interpolation);
     final interpolatedGreen = interpolateByte(currentGreen, colorGreen, interpolation);
     final interpolatedBlue = interpolateByte(currentBlue, colorBlue, interpolation);
+    // final interpolatedRed = interpolateByteCyclic(currentRed, colorRed, interpolation);
+    // final interpolatedGreen = interpolateByteCyclic(currentGreen, colorGreen, interpolation);
+    // final interpolatedBlue = interpolateByteCyclic(currentBlue, colorBlue, interpolation);
 
     int interpolatedAlpha;
     if (currentAlpha < colorAlpha){
@@ -730,12 +725,11 @@ class IsometricScene with IsometricComponent implements Updatable {
       interpolatedAlpha = currentAlpha;
     }
 
-
-    nodeColors[index] = int32(
-      interpolatedAlpha,
-      interpolatedRed,
-      interpolatedGreen,
-      interpolatedBlue,
+    nodeColors[index] = rgba(
+      r: interpolatedRed,
+      g: interpolatedGreen,
+      b: interpolatedBlue,
+      a: interpolatedAlpha,
     );
   }
 

@@ -1,6 +1,3 @@
-import 'dart:typed_data';
-
-
 import 'package:amulet_engine/json/character_json.dart';
 import 'package:amulet_engine/packages/common.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/functions/get_server_mode_text.dart';
@@ -16,7 +13,6 @@ import 'package:amulet_flutter/website/widgets/gs_button_region.dart';
 import 'package:amulet_flutter/website/widgets/src.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
-import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 import 'package:typedef/json.dart';
@@ -154,47 +150,6 @@ extension WebsiteUI on WebsiteGame {
       );
     });
   }
-
-  void downloadImageTest(){
-    final width = 100;
-    final height = 150;
-    final colors = Uint32List(width * height);
-
-    for (var i = 0; i < colors.length; i++){
-       // colors[i] = aRGBToColor(255, 255, 0, 0);
-       colors[i] = rgba(r: 255, a: 255);
-    }
-
-    final png = writeToPng(
-      width: width,
-      height: height,
-      colors: colors,
-    );
-    downloadBytes(bytes: png, name: 'test.png');
-  }
-
-  // Widget buildOperationStatus(OperationStatus operationStatus) =>
-  //     operationStatus != OperationStatus.None
-  //         ? buildFullScreen(child: buildText(operationStatus.name.replaceAll('_', ' ')))
-  //         : buildWatch(server.remote.websocket.connectionStatus, buildConnectionStatus);
-
-  // Widget buildConnectionStatus(ConnectionStatus connectionStatus) =>
-  //     switch (connectionStatus) {
-  //       ConnectionStatus.Connected =>
-  //           buildPageConnectionStatus(connectionStatus.name),
-  //       ConnectionStatus.Connecting =>
-  //           buildPageConnectionStatus(connectionStatus.name),
-  //       _ => buildNotConnected()
-  //     };
-
-  // Widget buildNotConnected()  => buildWatch(engine.deviceType, buildPageWebsite);
-
-  // Widget buildPageWebsite(int deviceType) =>
-  //     deviceType == DeviceType.Computer
-  //         ? buildPageWebsiteDesktop()
-  //         : buildPageWebsiteMobile();
-
-  // Widget buildPageWebsiteMobile() => buildText('NOT IMPLEMENTED');
 
   Widget buildPageConnectionStatus(String message) =>
       buildFullScreen(

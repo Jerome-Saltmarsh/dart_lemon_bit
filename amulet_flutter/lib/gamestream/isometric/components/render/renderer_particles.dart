@@ -1,4 +1,4 @@
-import 'package:amulet_flutter/functions/get_alpha.dart';
+import 'package:amulet_engine/packages/isometric_engine/packages/lemon_math/src/functions/get_alpha.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/particle_flying.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_images.dart';
