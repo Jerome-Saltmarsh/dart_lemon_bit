@@ -154,6 +154,7 @@ class RendererCharacters extends RenderGroup {
     final atlasTorsoSouth = spritesSouth.torso[gender] ?? (throw Exception());
     final atlasTorsoWest = spritesWest.torso[gender] ?? (throw Exception());
     final atlasTorsoDiffuse = spritesDiffuse.torso[gender] ?? (throw Exception());
+    final atlasShoesDiffuse = spritesDiffuse.shoes[shoeType] ?? (throw Exception());
     final atlasShoesSouth = spritesSouth.shoes[shoeType] ?? (throw Exception());
     final atlasShoesWest = spritesWest.shoes[shoeType] ?? (throw Exception());
 
@@ -185,6 +186,7 @@ class RendererCharacters extends RenderGroup {
     final spriteHairSouth = atlasHairSouth.fromCharacterState(characterState);
     final spriteHairWest = atlasHairWest.fromCharacterState(characterState);
     final spriteHairDiffuse = atlasHairDiffuse.fromCharacterState(characterState);
+    final spriteShoesDiffuse = atlasShoesDiffuse.fromCharacterState(characterState);
     final spriteShoesSouth = atlasShoesSouth.fromCharacterState(characterState);
     final spriteShoesWest = atlasShoesWest.fromCharacterState(characterState);
 
@@ -288,6 +290,18 @@ class RendererCharacters extends RenderGroup {
             ? spriteLegsWest.getFramePercentage(row, actionComplete)
             : spriteLegsWest.getFrame(row: row, column: animationFrame),
         color: colorWest,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+
+      renderSprite(
+        sprite: spriteShoesDiffuse,
+        frame: completingAction
+            ? spriteShoesDiffuse.getFramePercentage(row, actionComplete)
+            : spriteShoesDiffuse.getFrame(row: row, column: animationFrame),
+        color: colorDiffuse,
         scale: scale,
         dstX: dstX,
         dstY: dstY,
