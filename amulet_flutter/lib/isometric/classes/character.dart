@@ -25,8 +25,6 @@ class Character extends Position {
   var allie = false;
   /// percentage between 0 and 1
   var health = 1.0;
-  /// percentage between 0 and 1
-  // var color = 0;
   var colorSouthEast = 0;
   var colorNorthWest = 0;
   var actionComplete = 0.0;

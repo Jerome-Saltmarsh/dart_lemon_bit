@@ -1,8 +1,6 @@
 
 import '../classes/amulet_player.dart';
-import '../packages/isometric_engine/packages/type_def/json.dart';
 import '../packages/src.dart';
-
 
 void writeJsonToAmuletPlayer(Json json, AmuletPlayer player){
 

@@ -2,7 +2,6 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import '../packages/isometric_engine/isometric_engine.dart';
-import '../packages/isometric_engine/packages/lemon_math/src/functions/random_chance.dart';
 import 'amulet.dart';
 import 'amulet_gameobject.dart';
 import 'amulet_item_slot.dart';

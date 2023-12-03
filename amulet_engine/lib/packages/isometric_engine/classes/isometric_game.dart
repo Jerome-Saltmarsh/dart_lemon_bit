@@ -1283,7 +1283,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     if (!target.hitable) return;
     if (!target.active) return;
 
-    angle ??= srcCharacter.getAngle(target);
+    angle ??= target.getAngle(srcCharacter);
 
     target.applyForce(
       force: srcCharacter.weaponHitForce,
@@ -2311,7 +2311,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   void characterGoalForceAttack(Character character) {
     character.goal = CharacterGoal.Force_Attack;
-    character.lookAtTarget();
+    character.faceTarget();
     character.attack();
     character.forceAttack = false;
   }

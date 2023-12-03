@@ -5,7 +5,6 @@ import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
 
-import '../packages/isometric_engine/packages/common/src/duration_auto_save.dart';
 import '../packages/src.dart';
 import 'amulet_game.dart';
 import 'amulet_game_town.dart';

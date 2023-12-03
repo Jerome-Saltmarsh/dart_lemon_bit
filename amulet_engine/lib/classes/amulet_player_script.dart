@@ -76,8 +76,8 @@ class AmuletPlayerScript {
       Character b,
   ) =>
       add(() {
-        a.face(b);
-        b.face(a);
+        a.facePosition(b);
+        b.facePosition(a);
       });
 
   AmuletPlayerScript puzzleSolved() =>

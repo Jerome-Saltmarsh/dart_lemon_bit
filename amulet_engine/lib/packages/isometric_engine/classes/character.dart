@@ -316,27 +316,20 @@ class Character extends Collider {
     return withinRadiusPosition(target, weaponRange);
   }
 
-  void face(Position position) => faceXY(position.x, position.y);
-
-  void lookAt(Position position) => lookAtXY(position.x, position.y);
-
-  void lookAtTarget(){
+  void faceTarget() {
     final target = this.target;
-    if (target != null) {
-       lookAt(target);
+    if (target == null) {
+      throw Exception('target is null');
     }
+    facePosition(target);
   }
+
+  void facePosition(Position position) => faceXY(position.x, position.y);
 
   void faceXY(double x, double y) {
     if (deadOrBusy) return;
-    angle = getAngleXY(x, y) + pi;
+    angle = (getAngleXY(x, y) + pi) % pi2;
   }
-
-  void lookAtXY(double x, double y) {
-    if (deadOrBusy) return;
-    angle = getAngleXY(x, y);
-  }
-
 
   void update() {
     if (
@@ -417,15 +410,6 @@ class Character extends Collider {
   void idle() {
     setCharacterStateIdle();
     setDestinationToCurrentPosition();
-  }
-
-  void faceTarget() {
-    final target = this.target;
-    if (target == null) {
-      throw Exception('target is null');
-    }
-    face(target);
-    lookAt(target);
   }
 
   void setRunDestinationToTarget(){

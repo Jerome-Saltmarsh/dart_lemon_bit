@@ -39,8 +39,9 @@ ctrl + []               : move caret to code block
 * [new]: flames emit smoke particles
 
 ## 03.12.2023
-* [new]: fix particle whisp direction
-* [new]: fix lightning color
+* [fix]: ai apply hit
+* [fix]: fix particle whisp direction
+* [fix]: fix lightning color
 
 ## 02.12.2023
 * [new]: fix lighting contrast
