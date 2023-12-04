@@ -162,15 +162,15 @@ class IsometricImages with IsometricComponent {
     );
 
     kidCharacterSpriteGroupShadow = CharacterSpriteGroup(
-      idle: await loadSprite(name: 'sprites/isometric/kid/shadow/idle', mode: AnimationMode.bounce),
-      running: await loadSprite(name: 'sprites/isometric/kid/shadow/running', mode: AnimationMode.loop),
-      change: await loadSprite(name: 'sprites/isometric/kid/shadow/change', mode: AnimationMode.bounce),
-      dead: await loadSprite(name: 'sprites/isometric/kid/shadow/dead', mode: AnimationMode.single),
-      fire: await loadSprite(name: 'sprites/isometric/kid/shadow/fire', mode: AnimationMode.single),
-      strike1: await loadSprite(name: 'sprites/isometric/kid/shadow/strike_1', mode: AnimationMode.single),
-      strike2: await loadSprite(name: 'sprites/isometric/kid/shadow/strike_2', mode: AnimationMode.single),
+      idle: await loadSprite(name: 'assets/sprites/isometric/kid/shadow/idle', mode: AnimationMode.bounce),
+      running: await loadSprite(name: 'assets/sprites/isometric/kid/shadow/running', mode: AnimationMode.loop),
+      change: await loadSprite(name: 'assets/sprites/isometric/kid/shadow/change', mode: AnimationMode.bounce),
+      dead: await loadSprite(name: 'assets/sprites/isometric/kid/shadow/dead', mode: AnimationMode.single),
+      fire: await loadSprite(name: 'assets/sprites/isometric/kid/shadow/fire', mode: AnimationMode.single),
+      strike1: await loadSprite(name: 'assets/sprites/isometric/kid/shadow/strike_1', mode: AnimationMode.single),
+      strike2: await loadSprite(name: 'assets/sprites/isometric/kid/shadow/strike_2', mode: AnimationMode.single),
       hurt: emptySprite,
-      casting: await loadSprite(name: 'sprites/isometric/kid/shadow/casting', mode: AnimationMode.single),
+      casting: await loadSprite(name: 'assets/sprites/isometric/kid/shadow/casting', mode: AnimationMode.single),
     );
 
     for (final kidCharacterSpritesIsometric in kidCharacterSpritesIsometric.values){
@@ -340,47 +340,47 @@ class IsometricImages with IsometricComponent {
     await _completerImages.future;
 
     loadSprite(
-        name: 'sprites/isometric/butterfly/butterfly',
+        name: 'assets/sprites/isometric/butterfly/butterfly',
         mode: AnimationMode.loop,
     ).then((value) => butterfly = value);
 
     loadSprite(
-        name: 'sprites/isometric/moth/moth',
+        name: 'assets/sprites/isometric/moth/moth',
         mode: AnimationMode.loop,
     ).then((value) => moth = value);
 
     loadSprite(
-        name: 'sprites/isometric/crystal',
+        name: 'assets/sprites/isometric/crystal',
         mode: AnimationMode.single,
     ).then((value) => crystal = value);
 
     loadSprite(
-        name: 'sprites/isometric/gameobjects/rock1',
+        name: 'assets/sprites/isometric/gameobjects/rock1',
         mode: AnimationMode.single,
     ).then((value) => rock1 = value);
 
     loadSprite(
-        name: 'sprites/isometric/gameobjects/tree1',
+        name: 'assets/sprites/isometric/gameobjects/tree1',
         mode: AnimationMode.single,
     ).then((value) => tree1 = value);
 
     loadSprite(
-        name: 'sprites/isometric/bat/bat',
+        name: 'assets/sprites/isometric/bat/bat',
         mode: AnimationMode.bounce,
     ).then((value) => bat = value);
 
     loadSprite(
-        name: 'sprites/isometric/crystal/south',
+        name: 'assets/sprites/isometric/crystal/south',
         mode: AnimationMode.loop,
     ).then((value) => crystalSouth = value);
 
     loadSprite(
-        name: 'sprites/isometric/crystal/west',
+        name: 'assets/sprites/isometric/crystal/west',
         mode: AnimationMode.loop,
     ).then((value) => crystalWest = value);
 
     loadSprite(
-        name: 'sprites/isometric/gameobjects/barrel',
+        name: 'assets/sprites/isometric/gameobjects/barrel',
         image: atlas_nodes,
         mode: AnimationMode.single,
         atlasX: 995,
@@ -400,100 +400,100 @@ class IsometricImages with IsometricComponent {
       ItemType.Spell: atlas_spells,
     };
 
-    final spriteFallenWestStrike = await loadSprite(name: 'sprites/isometric/fallen/strike/west', mode: AnimationMode.single);
+    final spriteFallenWestStrike = await loadSprite(name: 'assets/sprites/isometric/fallen/strike/west', mode: AnimationMode.single);
 
     spriteGroupFallenWest = CharacterSpriteGroup(
-      idle: await loadSprite(name: 'sprites/isometric/fallen/idle/west', mode: AnimationMode.bounce),
-      running: await loadSprite(name: 'sprites/isometric/fallen/running/west', mode: AnimationMode.loop),
-      dead: await loadSprite(name: 'sprites/isometric/fallen/dead/west', mode: AnimationMode.single),
+      idle: await loadSprite(name: 'assets/sprites/isometric/fallen/idle/west', mode: AnimationMode.bounce),
+      running: await loadSprite(name: 'assets/sprites/isometric/fallen/running/west', mode: AnimationMode.loop),
+      dead: await loadSprite(name: 'assets/sprites/isometric/fallen/dead/west', mode: AnimationMode.single),
       strike1: spriteFallenWestStrike,
       strike2: spriteFallenWestStrike,
-      hurt: await loadSprite(name: 'sprites/isometric/fallen/hurt/west', mode: AnimationMode.single),
+      hurt: await loadSprite(name: 'assets/sprites/isometric/fallen/hurt/west', mode: AnimationMode.single),
       fire: emptySprite,
       change: emptySprite,
       casting: emptySprite,
     );
 
-    final spriteFallenSouthStrike = await loadSprite(name: 'sprites/isometric/fallen/strike/south', mode: AnimationMode.single);
+    final spriteFallenSouthStrike = await loadSprite(name: 'assets/sprites/isometric/fallen/strike/south', mode: AnimationMode.single);
 
     spriteGroupFallenSouth = CharacterSpriteGroup(
-      idle: await loadSprite(name: 'sprites/isometric/fallen/idle/south', mode: AnimationMode.bounce),
-      running: await loadSprite(name: 'sprites/isometric/fallen/running/south', mode: AnimationMode.loop),
-      dead: await loadSprite(name: 'sprites/isometric/fallen/dead/south', mode: AnimationMode.single),
+      idle: await loadSprite(name: 'assets/sprites/isometric/fallen/idle/south', mode: AnimationMode.bounce),
+      running: await loadSprite(name: 'assets/sprites/isometric/fallen/running/south', mode: AnimationMode.loop),
+      dead: await loadSprite(name: 'assets/sprites/isometric/fallen/dead/south', mode: AnimationMode.single),
       strike1: spriteFallenSouthStrike,
       strike2: spriteFallenSouthStrike,
-      hurt: await loadSprite(name: 'sprites/isometric/fallen/hurt/south', mode: AnimationMode.single),
+      hurt: await loadSprite(name: 'assets/sprites/isometric/fallen/hurt/south', mode: AnimationMode.single),
       fire: emptySprite,
       change: emptySprite,
       casting: emptySprite,
     );
 
-    final spriteFallenShadowStrike = await loadSprite(name: 'sprites/isometric/fallen/strike/shadow', mode: AnimationMode.single);
+    final spriteFallenShadowStrike = await loadSprite(name: 'assets/sprites/isometric/fallen/strike/shadow', mode: AnimationMode.single);
 
     spriteGroupFallenShadow = CharacterSpriteGroup(
-      idle: await loadSprite(name: 'sprites/isometric/fallen/idle/shadow', mode: AnimationMode.bounce),
-      running: await loadSprite(name: 'sprites/isometric/fallen/running/shadow', mode: AnimationMode.loop),
-      dead: await loadSprite(name: 'sprites/isometric/fallen/dead/shadow', mode: AnimationMode.single),
+      idle: await loadSprite(name: 'assets/sprites/isometric/fallen/idle/shadow', mode: AnimationMode.bounce),
+      running: await loadSprite(name: 'assets/sprites/isometric/fallen/running/shadow', mode: AnimationMode.loop),
+      dead: await loadSprite(name: 'assets/sprites/isometric/fallen/dead/shadow', mode: AnimationMode.single),
       strike1: spriteFallenShadowStrike,
       strike2: spriteFallenShadowStrike,
-      hurt: await loadSprite(name: 'sprites/isometric/fallen/hurt/shadow', mode: AnimationMode.single),
+      hurt: await loadSprite(name: 'assets/sprites/isometric/fallen/hurt/shadow', mode: AnimationMode.single),
       fire: emptySprite,
       change: emptySprite,
       casting: emptySprite,
     );
 
     spriteGroupSkeletonWest = CharacterSpriteGroup(
-      idle: await loadSprite(name: 'sprites/isometric/skeleton/west/idle', mode: AnimationMode.bounce),
-      running: await loadSprite(name: 'sprites/isometric/skeleton/west/walk', mode: AnimationMode.loop),
-      dead: await loadSprite(name: 'sprites/isometric/skeleton/west/dead', mode: AnimationMode.single),
+      idle: await loadSprite(name: 'assets/sprites/isometric/skeleton/west/idle', mode: AnimationMode.bounce),
+      running: await loadSprite(name: 'assets/sprites/isometric/skeleton/west/walk', mode: AnimationMode.loop),
+      dead: await loadSprite(name: 'assets/sprites/isometric/skeleton/west/dead', mode: AnimationMode.single),
       strike1: emptySprite,
       strike2: emptySprite,
-      hurt: await loadSprite(name: 'sprites/isometric/skeleton/west/hurt', mode: AnimationMode.single),
-      fire: await loadSprite(name: 'sprites/isometric/skeleton/west/fire', mode: AnimationMode.single),
+      hurt: await loadSprite(name: 'assets/sprites/isometric/skeleton/west/hurt', mode: AnimationMode.single),
+      fire: await loadSprite(name: 'assets/sprites/isometric/skeleton/west/fire', mode: AnimationMode.single),
       change: emptySprite,
       casting: emptySprite,
     );
 
     spriteGroupSkeletonSouth = CharacterSpriteGroup(
-      idle: await loadSprite(name: 'sprites/isometric/skeleton/south/idle', mode: AnimationMode.bounce),
-      running: await loadSprite(name: 'sprites/isometric/skeleton/south/walk', mode: AnimationMode.loop),
-      dead: await loadSprite(name: 'sprites/isometric/skeleton/south/dead', mode: AnimationMode.single),
+      idle: await loadSprite(name: 'assets/sprites/isometric/skeleton/south/idle', mode: AnimationMode.bounce),
+      running: await loadSprite(name: 'assets/sprites/isometric/skeleton/south/walk', mode: AnimationMode.loop),
+      dead: await loadSprite(name: 'assets/sprites/isometric/skeleton/south/dead', mode: AnimationMode.single),
       strike1: emptySprite,
       strike2: emptySprite,
-      hurt: await loadSprite(name: 'sprites/isometric/skeleton/south/hurt', mode: AnimationMode.single),
-      fire: await loadSprite(name: 'sprites/isometric/skeleton/south/fire', mode: AnimationMode.single),
+      hurt: await loadSprite(name: 'assets/sprites/isometric/skeleton/south/hurt', mode: AnimationMode.single),
+      fire: await loadSprite(name: 'assets/sprites/isometric/skeleton/south/fire', mode: AnimationMode.single),
       change: emptySprite,
       casting: emptySprite,
     );
 
     spriteGroupSkeletonShadow = CharacterSpriteGroup(
-      idle: await loadSprite(name: 'sprites/isometric/skeleton/shadow/idle', mode: AnimationMode.bounce),
-      running: await loadSprite(name: 'sprites/isometric/skeleton/shadow/walk', mode: AnimationMode.loop),
-      dead: await loadSprite(name: 'sprites/isometric/skeleton/shadow/dead', mode: AnimationMode.single),
+      idle: await loadSprite(name: 'assets/sprites/isometric/skeleton/shadow/idle', mode: AnimationMode.bounce),
+      running: await loadSprite(name: 'assets/sprites/isometric/skeleton/shadow/walk', mode: AnimationMode.loop),
+      dead: await loadSprite(name: 'assets/sprites/isometric/skeleton/shadow/dead', mode: AnimationMode.single),
       strike1: emptySprite,
       strike2: emptySprite,
-      hurt: await loadSprite(name: 'sprites/isometric/skeleton/shadow/hurt', mode: AnimationMode.single),
-      fire: await loadSprite(name: 'sprites/isometric/skeleton/shadow/fire', mode: AnimationMode.single),
+      hurt: await loadSprite(name: 'assets/sprites/isometric/skeleton/shadow/hurt', mode: AnimationMode.single),
+      fire: await loadSprite(name: 'assets/sprites/isometric/skeleton/shadow/fire', mode: AnimationMode.single),
       change: emptySprite,
       casting: emptySprite,
     );
 
     flame0 = await loadSprite(
-        name: 'sprites/isometric/flame/wind0',
+        name: 'assets/sprites/isometric/flame/wind0',
         mode: AnimationMode.loop,
         atlasX: 664,
         atlasY: 1681,
         image: atlas_nodes,
     );
     flame1 = await loadSprite(
-        name: 'sprites/isometric/flame/wind1',
+        name: 'assets/sprites/isometric/flame/wind1',
         mode: AnimationMode.loop,
         atlasX: 664,
         atlasY: 1733,
         image: atlas_nodes,
     );
     flame2 = await loadSprite(
-        name: 'sprites/isometric/flame/wind2',
+        name: 'assets/sprites/isometric/flame/wind2',
         mode: AnimationMode.loop,
         atlasX: 664,
         atlasY: 1778,
@@ -524,7 +524,7 @@ class IsometricImages with IsometricComponent {
     }
 
     final kidCharacterSpriteGroup = kidCharacterSprites.values[type] ?? (throw Exception('images.loadSpriteGroup2($typeName, $subTypeName)'));
-    final directory = 'sprites/isometric/kid/${direction.name}/$typeName/$subTypeName';
+    final directory = 'assets/sprites/isometric/kid/${direction.name}/$typeName/$subTypeName';
 
     kidCharacterSpriteGroup[subType] = CharacterSpriteGroup(
         idle: skipIdle ? emptySprite : await loadSprite(name: '$directory/idle', mode: AnimationMode.bounce),
@@ -546,7 +546,7 @@ class IsometricImages with IsometricComponent {
     final typeName = SpriteGroupType.getName(type).toLowerCase();
     final subTypeName = SpriteGroupType.getSubTypeName(type, subType).toLowerCase().replaceAll(' ', '_');
     final kidCharacterSpriteGroup = kidCharacterSpritesFrontDiffuse.values[type] ?? (throw Exception('images.loadSpriteGroupFront($typeName, $subTypeName)'));
-    final directory = 'sprites/front/kid/diffuse/$typeName/$subTypeName';
+    final directory = 'assets/sprites/front/kid/diffuse/$typeName/$subTypeName';
 
     kidCharacterSpriteGroup[subType] = CharacterSpriteGroup(
       idle: await loadSprite(name: '$directory/idle', mode: AnimationMode.bounce),
