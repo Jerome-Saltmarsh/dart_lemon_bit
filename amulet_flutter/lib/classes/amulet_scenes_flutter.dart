@@ -5,7 +5,7 @@ class AmuletScenesFlutter extends AmuletScenes {
 
   @override
   Future<Scene> readSceneFromFile(String sceneName) async {
-    final fileName = 'scenes/$sceneName.scene';
+    final fileName = 'assets/scenes/$sceneName.scene';
     final bytes = await loadAssetBytes(fileName);
     return SceneReader.readScene(bytes)..name = sceneName;
   }

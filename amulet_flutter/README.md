@@ -1,9 +1,7 @@
 [INSTALL]
 rmdir /s /q "C:\Users\Jerome\github\amulet\amulet_flutter\scenes" &
-mklink /J "C:\Users\Jerome\github\amulet\amulet_flutter\scenes" "C:\Users\Jerome\github\amulet\amulet_ws\scenes" &
+mklink /J "C:\Users\Jerome\github\amulet\amulet_flutter\assets\scenes" "C:\Users\Jerome\github\amulet\amulet_ws\scenes" &
 
-rmdir /s /q "C:\Users\Jerome\github\amulet\amulet_flutter\lib\packages\lemon_bits" &
-mklink /J "C:\Users\Jerome\github\amulet\amulet_flutter\lib\packages\lemon_bits" "C:\Users\Jerome\github\amulet\tools\lemon_bits\lib" &
 pause
 
 [COMMANDS]
