@@ -18,6 +18,7 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## BLOCK
+* [fix]: windows cursor hand icon 
 * [new]: model body type female leather armour
 * [new]: model body type female shirt blue
 * [new]: model leg type leather
@@ -26,7 +27,6 @@ ctrl + []               : move caret to code block
 
 ## TODO
 * [new]: tool synchronize pubspec
-* [fix]: audio for windows
 * [new]: mobile touch screen support
 * [new]: elemental damage
 * [new]: map locations
@@ -36,6 +36,10 @@ ctrl + []               : move caret to code block
 * [fix]: persist gameobject properties
 * [fix]: colored particle emission
 * [new]: flames emit smoke particles
+* [fix]: audio for web
+
+## 04.12.2023
+* [fix]: audio for windows
 
 ## 03.12.2023
 * [new]: model shoe type leather

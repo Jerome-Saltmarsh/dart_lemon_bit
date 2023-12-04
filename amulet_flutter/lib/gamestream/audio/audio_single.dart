@@ -5,7 +5,6 @@ import 'package:audioplayers/audioplayers.dart';
 class AudioSingle {
   final String name;
   final audioPlayer = AudioPlayer();
-  // late final Source source;
 
   AudioSingle({
     required this.name,
@@ -21,18 +20,19 @@ class AudioSingle {
     play(volume: volume);
   }
 
-  void stop() {
-    audioPlayer.seek(const Duration()).then((value) {
-      audioPlayer.stop();
-    });
-  }
-
-  void play({double volume = 1.0}) async {
+  void play({double volume = 1.0}) {
     if (volume <= 0) return;
     final audioPlayer = this.audioPlayer;
     if (audioPlayer.volume != volume){
-      await audioPlayer.setVolume(min(volume, 1));
+      audioPlayer.setVolume(min(volume, 1)).then((value) {
+        restart();
+      });
+      return;
     }
+    restart();
+  }
+
+  void restart(){
     audioPlayer.seek(const Duration());
     audioPlayer.resume();
   }
