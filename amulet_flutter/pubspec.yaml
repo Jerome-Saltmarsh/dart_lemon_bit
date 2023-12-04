@@ -49,8 +49,8 @@ flutter:
     - assets/audio/music/
     - assets/audio/sounds/
     - assets/audio/voices/
+    - assets/images/
     - scenes/
-    - images/
     - sprites/
     - sprites/isometric/
     - sprites/isometric/gameobjects/
