@@ -42,7 +42,7 @@ flutter:
   fonts:
     - family: VT323-Regular
       fonts:
-        - asset: fonts/VT323-Regular.ttf
+        - asset: assets/fonts/VT323-Regular.ttf
   assets:
     - assets/audio/
     - assets/audio/ui/
