@@ -46,7 +46,9 @@ class ServerRemote implements Server {
   }
 
   void onChangedUserId(String value) {
-    refreshUser();
+    refreshUser().catchError((error){
+      print('failed to load user');
+    });
   }
 
   void onChangedUserJson(Json userJson) {

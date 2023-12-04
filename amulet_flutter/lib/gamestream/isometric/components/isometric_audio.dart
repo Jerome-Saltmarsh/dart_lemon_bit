@@ -14,6 +14,7 @@ import 'package:lemon_watch/src.dart';
 
 class IsometricAudio with IsometricComponent implements Updatable {
 
+
   late final mutedMusic = Watch(false, onChanged: (bool muted){
     print('music muted: $muted');
     if (muted) {
@@ -23,7 +24,7 @@ class IsometricAudio with IsometricComponent implements Updatable {
     }
   });
 
-  late final enabledSound = Watch(false, onChanged: (bool soundEnabled){
+  late final enabledSound = Watch(true, onChanged: (bool soundEnabled){
     print('sound enabled: $soundEnabled');
     if (!soundEnabled){
       for (final audioSource in audioLoops) {
@@ -31,9 +32,9 @@ class IsometricAudio with IsometricComponent implements Updatable {
         audioSource.audioPlayer.pause();
       }
     } else {
-      for (final audioSource in audioLoops) {
-        audioSource.audioPlayer.play();
-      }
+      // for (final audioSource in audioLoops) {
+      //   audioSource.audioPlayer.play();
+      // }
     }
   });
 

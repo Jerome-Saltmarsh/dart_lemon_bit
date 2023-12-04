@@ -118,7 +118,7 @@ class Amulet extends IsometricGame {
     if (value.isEmpty)
       return;
 
-    audio.errorSound15();
+    audio.errorSound15.play();
     errorTimer = 70;
   }
 
@@ -228,7 +228,7 @@ class Amulet extends IsometricGame {
   void clearItemHover() => itemHover.value = null;
 
   void onChangedPlayerInventoryOpen(bool value) {
-    audio.click_sound_8();
+    audio.click_sound_8.play();
     if (!value){
       clearItemHover();
     }

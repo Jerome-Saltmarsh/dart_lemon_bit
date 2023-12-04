@@ -1,4 +1,4 @@
-import 'package:just_audio/just_audio.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class AudioLoop {
 

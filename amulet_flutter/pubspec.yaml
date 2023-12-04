@@ -10,9 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  audioplayers: ^5.2.1
   window_manager: ^0.3.7
-  just_audio: ^0.9.28
-  just_audio_windows: ^0.2.0
   provider: ^6.0.5
   archive: ^3.3.6
   flutter_colorpicker: ^1.0.3
@@ -44,10 +43,12 @@ flutter:
     - family: VT323-Regular
       fonts:
         - asset: fonts/VT323-Regular.ttf
-#    - family: REBUFFED
-#      fonts:
-#        - asset: fonts/REBUFFED.TTF
   assets:
+    - assets/audio/
+    - assets/audio/ui/
+    - assets/audio/music/
+    - assets/audio/sounds/
+    - assets/audio/voices/
     - scenes/
     - images/
     - images/sphere/
@@ -168,8 +169,3 @@ flutter:
     - sprites/isometric/moth/
     - sprites/isometric/bat/
     - sprites/isometric/crystal/
-    - audio/
-    - audio/ui/
-    - audio/music/
-    - audio/sounds/
-    - audio/voices/

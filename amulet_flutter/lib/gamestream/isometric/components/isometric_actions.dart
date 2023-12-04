@@ -17,7 +17,7 @@ class IsometricActions with IsometricComponent {
   }
 
   void toggleZoom(){
-    audio.weaponSwap2();
+    audio.weaponSwap2.play();
     if (engine.targetZoom != Zoom_Far){
       engine.targetZoom = Zoom_Far;
     } else {
