@@ -265,7 +265,7 @@ class RendererCharacters extends RenderGroup {
         frame: completingAction
             ? spriteLegsDiffuse.getFramePercentage(row, actionComplete)
             : spriteLegsDiffuse.getFrame(row: row, column: animationFrame),
-        color: colorSouth,
+        color: colorDiffuse,
         scale: scale,
         dstX: dstX,
         dstY: dstY,

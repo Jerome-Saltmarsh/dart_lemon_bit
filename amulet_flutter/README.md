@@ -16,11 +16,10 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## BLOCK
-
-## TODO
 * [new]: model body type female leather armour
 * [new]: model body type female shirt blue
-* [new]: model leg type leather
+
+## TODO
 * [new]: model leg type iron
 * [new]: model weapon rusty sword
 * [new]: tool synchronize pubspec
@@ -36,6 +35,7 @@ ctrl + []               : move caret to code block
 * [fix]: audio for web
 
 ## 05.12.2023
+* [new]: model leg type leather
 * [fix]: windows cursor hand icon
 * [new]: diffuse shade skeleton
 * [new]: diffuse shade fallen
