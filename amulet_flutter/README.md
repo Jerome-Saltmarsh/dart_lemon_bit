@@ -16,7 +16,6 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## BLOCK
-* [new]: diffuse shade skeleton
 * [fix]: windows cursor hand icon
 
 ## TODO
@@ -38,6 +37,7 @@ ctrl + []               : move caret to code block
 * [fix]: audio for web
 
 ## 05.12.2023
+* [new]: diffuse shade skeleton
 * [new]: diffuse shade fallen
 
 ## 04.12.2023

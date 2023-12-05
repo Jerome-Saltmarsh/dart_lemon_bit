@@ -157,9 +157,10 @@ flutter:
     - assets/sprites/isometric/fallen/shadow/
     - assets/sprites/isometric/fallen/south/
     - assets/sprites/isometric/fallen/west/
+    - assets/sprites/isometric/skeleton/flat/
+    - assets/sprites/isometric/skeleton/shadow/
     - assets/sprites/isometric/skeleton/south/
     - assets/sprites/isometric/skeleton/west/
-    - assets/sprites/isometric/skeleton/shadow/
     - assets/sprites/isometric/butterfly/
     - assets/sprites/isometric/moth/
     - assets/sprites/isometric/bat/

@@ -674,6 +674,7 @@ class RendererCharacters extends RenderGroup {
     final row = character.renderDirection;
     final column = character.animationFrame;
     final spriteShadow = images.spriteGroupSkeletonShadow.fromCharacterState(character.state);
+    final spriteFlat = images.spriteGroupSkeletonFlat.fromCharacterState(character.state);
     final spriteWest = images.spriteGroupSkeletonWest.fromCharacterState(character.state);
     final spriteSouth = images.spriteGroupSkeletonSouth.fromCharacterState(character.state);
 
@@ -681,10 +682,22 @@ class RendererCharacters extends RenderGroup {
     final dstY = character.renderY;
     final render = this.render;
 
+    final colorDiffuse = character.colorDiffuse;
+
     render.sprite(
       sprite: spriteShadow,
       frame: spriteShadow.getFrame(row: row, column: column),
-      color: character.colorDiffuse,
+      color: colorDiffuse,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
+    render.sprite(
+      sprite: spriteFlat,
+      frame: spriteFlat.getFrame(row: row, column: column),
+      color: colorDiffuse,
       scale: scale,
       dstX: dstX,
       dstY: dstY,

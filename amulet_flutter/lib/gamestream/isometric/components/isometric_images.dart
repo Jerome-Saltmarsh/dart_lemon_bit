@@ -25,6 +25,7 @@ class IsometricImages with IsometricComponent {
   static const dirSprites = '$dirAssets/sprites';
   static const dirIsometric = '$dirSprites/isometric';
   static const dirFallen = '$dirIsometric/fallen';
+  static const dirSkeleton = '$dirIsometric/skeleton';
 
   var imagesCached = false;
   
@@ -54,6 +55,7 @@ class IsometricImages with IsometricComponent {
   late final CharacterSpriteGroup spriteGroupFallenSouth;
   late final CharacterSpriteGroup spriteGroupFallenShadow;
 
+  late final CharacterSpriteGroup spriteGroupSkeletonFlat;
   late final CharacterSpriteGroup spriteGroupSkeletonWest;
   late final CharacterSpriteGroup spriteGroupSkeletonSouth;
   late final CharacterSpriteGroup spriteGroupSkeletonShadow;
@@ -406,46 +408,15 @@ class IsometricImages with IsometricComponent {
       ItemType.Spell: atlas_spells,
     };
 
-    loadSpriteShadowFallen('$dirFallen/flat').then((value) => spriteGroupFallenFlat = value);
-    loadSpriteShadowFallen('$dirFallen/shadow').then((value) => spriteGroupFallenShadow = value);
-    loadSpriteShadowFallen('$dirFallen/south').then((value) => spriteGroupFallenSouth = value);
-    loadSpriteShadowFallen('$dirFallen/west').then((value) => spriteGroupFallenWest = value);
+    loadCharacterSpriteGroup('$dirFallen/flat').then((value) => spriteGroupFallenFlat = value);
+    loadCharacterSpriteGroup('$dirFallen/shadow').then((value) => spriteGroupFallenShadow = value);
+    loadCharacterSpriteGroup('$dirFallen/south').then((value) => spriteGroupFallenSouth = value);
+    loadCharacterSpriteGroup('$dirFallen/west').then((value) => spriteGroupFallenWest = value);
 
-    spriteGroupSkeletonWest = CharacterSpriteGroup(
-      idle: await loadSprite(name: 'assets/sprites/isometric/skeleton/west/idle', mode: AnimationMode.bounce),
-      running: await loadSprite(name: 'assets/sprites/isometric/skeleton/west/walk', mode: AnimationMode.loop),
-      dead: await loadSprite(name: 'assets/sprites/isometric/skeleton/west/dead', mode: AnimationMode.single),
-      strike1: emptySprite,
-      strike2: emptySprite,
-      hurt: await loadSprite(name: 'assets/sprites/isometric/skeleton/west/hurt', mode: AnimationMode.single),
-      fire: await loadSprite(name: 'assets/sprites/isometric/skeleton/west/fire', mode: AnimationMode.single),
-      change: emptySprite,
-      casting: emptySprite,
-    );
-
-    spriteGroupSkeletonSouth = CharacterSpriteGroup(
-      idle: await loadSprite(name: 'assets/sprites/isometric/skeleton/south/idle', mode: AnimationMode.bounce),
-      running: await loadSprite(name: 'assets/sprites/isometric/skeleton/south/walk', mode: AnimationMode.loop),
-      dead: await loadSprite(name: 'assets/sprites/isometric/skeleton/south/dead', mode: AnimationMode.single),
-      strike1: emptySprite,
-      strike2: emptySprite,
-      hurt: await loadSprite(name: 'assets/sprites/isometric/skeleton/south/hurt', mode: AnimationMode.single),
-      fire: await loadSprite(name: 'assets/sprites/isometric/skeleton/south/fire', mode: AnimationMode.single),
-      change: emptySprite,
-      casting: emptySprite,
-    );
-
-    spriteGroupSkeletonShadow = CharacterSpriteGroup(
-      idle: await loadSprite(name: 'assets/sprites/isometric/skeleton/shadow/idle', mode: AnimationMode.bounce),
-      running: await loadSprite(name: 'assets/sprites/isometric/skeleton/shadow/walk', mode: AnimationMode.loop),
-      dead: await loadSprite(name: 'assets/sprites/isometric/skeleton/shadow/dead', mode: AnimationMode.single),
-      strike1: emptySprite,
-      strike2: emptySprite,
-      hurt: await loadSprite(name: 'assets/sprites/isometric/skeleton/shadow/hurt', mode: AnimationMode.single),
-      fire: await loadSprite(name: 'assets/sprites/isometric/skeleton/shadow/fire', mode: AnimationMode.single),
-      change: emptySprite,
-      casting: emptySprite,
-    );
+    loadCharacterSpriteGroup('$dirSkeleton/flat').then((value) => spriteGroupSkeletonFlat = value);
+    loadCharacterSpriteGroup('$dirSkeleton/shadow').then((value) => spriteGroupSkeletonShadow = value);
+    loadCharacterSpriteGroup('$dirSkeleton/south').then((value) => spriteGroupSkeletonSouth = value);
+    loadCharacterSpriteGroup('$dirSkeleton/west').then((value) => spriteGroupSkeletonWest = value);
 
     flame0 = await loadSprite(
         name: 'assets/sprites/isometric/flame/wind0',
@@ -470,7 +441,7 @@ class IsometricImages with IsometricComponent {
     );
   }
 
-  Future<CharacterSpriteGroup> loadSpriteShadowFallen(String directory) async =>
+  Future<CharacterSpriteGroup> loadCharacterSpriteGroup(String directory) async =>
       CharacterSpriteGroup(
         idle: await loadSprite(
             name: '$directory/idle', mode: AnimationMode.bounce,
@@ -484,11 +455,15 @@ class IsometricImages with IsometricComponent {
         strike1: await loadSprite(
             name: '$directory/strike', mode: AnimationMode.single,
         ),
-        strike2: emptySprite,
+        strike2: await loadSprite(
+          name: '$directory/strike', mode: AnimationMode.single,
+        ),
         hurt: await loadSprite(
             name: '$directory/hurt', mode: AnimationMode.single,
         ),
-        fire: emptySprite,
+        fire: await loadSprite(
+          name: '$directory/fire', mode: AnimationMode.single,
+        ),
         change: emptySprite,
         casting: emptySprite,
       );

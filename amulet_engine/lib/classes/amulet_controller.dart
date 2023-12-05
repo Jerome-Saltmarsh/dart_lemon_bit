@@ -240,9 +240,7 @@ class AmuletController {
             break;
           case NetworkRequestEdit.Spawn_AI:
             game.clearSpawnedAI();
-            // if (game is AmuletGame){
-            //   game.spawnFiendsAtSpawnNodes();
-            // }
+            player.amuletGame.spawnFiendsAtSpawnNodes();
             break;
 
           case NetworkRequestEdit.Save:
