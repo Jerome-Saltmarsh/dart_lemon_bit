@@ -16,14 +16,15 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## BLOCK
-* [fix]: windows cursor hand icon 
+* [new]: diffuse shade skeleton
+* [fix]: windows cursor hand icon
+
+## TODO
 * [new]: model body type female leather armour
 * [new]: model body type female shirt blue
 * [new]: model leg type leather
 * [new]: model leg type iron
 * [new]: model weapon rusty sword
-
-## TODO
 * [new]: tool synchronize pubspec
 * [new]: mobile touch screen support
 * [new]: elemental damage
@@ -35,6 +36,9 @@ ctrl + []               : move caret to code block
 * [fix]: colored particle emission
 * [new]: flames emit smoke particles
 * [fix]: audio for web
+
+## 05.12.2023
+* [new]: diffuse shade fallen
 
 ## 04.12.2023
 * [fix]: audio for windows

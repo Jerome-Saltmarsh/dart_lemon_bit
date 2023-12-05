@@ -21,6 +21,11 @@ import 'types/sprite_group_type.dart';
 
 class IsometricImages with IsometricComponent {
 
+  static const dirAssets = 'assets';
+  static const dirSprites = '$dirAssets/sprites';
+  static const dirIsometric = '$dirSprites/isometric';
+  static const dirFallen = '$dirIsometric/fallen';
+
   var imagesCached = false;
   
   final byteDataEmpty = ByteData(0);
@@ -44,6 +49,7 @@ class IsometricImages with IsometricComponent {
   final values = <Image>[];
   final _completerImages = Completer();
 
+  late final CharacterSpriteGroup spriteGroupFallenFlat;
   late final CharacterSpriteGroup spriteGroupFallenWest;
   late final CharacterSpriteGroup spriteGroupFallenSouth;
   late final CharacterSpriteGroup spriteGroupFallenShadow;
@@ -400,47 +406,10 @@ class IsometricImages with IsometricComponent {
       ItemType.Spell: atlas_spells,
     };
 
-    final spriteFallenWestStrike = await loadSprite(name: 'assets/sprites/isometric/fallen/strike/west', mode: AnimationMode.single);
-
-    spriteGroupFallenWest = CharacterSpriteGroup(
-      idle: await loadSprite(name: 'assets/sprites/isometric/fallen/idle/west', mode: AnimationMode.bounce),
-      running: await loadSprite(name: 'assets/sprites/isometric/fallen/running/west', mode: AnimationMode.loop),
-      dead: await loadSprite(name: 'assets/sprites/isometric/fallen/dead/west', mode: AnimationMode.single),
-      strike1: spriteFallenWestStrike,
-      strike2: spriteFallenWestStrike,
-      hurt: await loadSprite(name: 'assets/sprites/isometric/fallen/hurt/west', mode: AnimationMode.single),
-      fire: emptySprite,
-      change: emptySprite,
-      casting: emptySprite,
-    );
-
-    final spriteFallenSouthStrike = await loadSprite(name: 'assets/sprites/isometric/fallen/strike/south', mode: AnimationMode.single);
-
-    spriteGroupFallenSouth = CharacterSpriteGroup(
-      idle: await loadSprite(name: 'assets/sprites/isometric/fallen/idle/south', mode: AnimationMode.bounce),
-      running: await loadSprite(name: 'assets/sprites/isometric/fallen/running/south', mode: AnimationMode.loop),
-      dead: await loadSprite(name: 'assets/sprites/isometric/fallen/dead/south', mode: AnimationMode.single),
-      strike1: spriteFallenSouthStrike,
-      strike2: spriteFallenSouthStrike,
-      hurt: await loadSprite(name: 'assets/sprites/isometric/fallen/hurt/south', mode: AnimationMode.single),
-      fire: emptySprite,
-      change: emptySprite,
-      casting: emptySprite,
-    );
-
-    final spriteFallenShadowStrike = await loadSprite(name: 'assets/sprites/isometric/fallen/strike/shadow', mode: AnimationMode.single);
-
-    spriteGroupFallenShadow = CharacterSpriteGroup(
-      idle: await loadSprite(name: 'assets/sprites/isometric/fallen/idle/shadow', mode: AnimationMode.bounce),
-      running: await loadSprite(name: 'assets/sprites/isometric/fallen/running/shadow', mode: AnimationMode.loop),
-      dead: await loadSprite(name: 'assets/sprites/isometric/fallen/dead/shadow', mode: AnimationMode.single),
-      strike1: spriteFallenShadowStrike,
-      strike2: spriteFallenShadowStrike,
-      hurt: await loadSprite(name: 'assets/sprites/isometric/fallen/hurt/shadow', mode: AnimationMode.single),
-      fire: emptySprite,
-      change: emptySprite,
-      casting: emptySprite,
-    );
+    loadSpriteShadowFallen('$dirFallen/flat').then((value) => spriteGroupFallenFlat = value);
+    loadSpriteShadowFallen('$dirFallen/shadow').then((value) => spriteGroupFallenShadow = value);
+    loadSpriteShadowFallen('$dirFallen/south').then((value) => spriteGroupFallenSouth = value);
+    loadSpriteShadowFallen('$dirFallen/west').then((value) => spriteGroupFallenWest = value);
 
     spriteGroupSkeletonWest = CharacterSpriteGroup(
       idle: await loadSprite(name: 'assets/sprites/isometric/skeleton/west/idle', mode: AnimationMode.bounce),
@@ -500,6 +469,29 @@ class IsometricImages with IsometricComponent {
         image: atlas_nodes,
     );
   }
+
+  Future<CharacterSpriteGroup> loadSpriteShadowFallen(String directory) async =>
+      CharacterSpriteGroup(
+        idle: await loadSprite(
+            name: '$directory/idle', mode: AnimationMode.bounce,
+        ),
+        running: await loadSprite(
+            name: '$directory/running', mode: AnimationMode.loop,
+        ),
+        dead: await loadSprite(
+            name: '$directory/dead', mode: AnimationMode.single,
+        ),
+        strike1: await loadSprite(
+            name: '$directory/strike', mode: AnimationMode.single,
+        ),
+        strike2: emptySprite,
+        hurt: await loadSprite(
+            name: '$directory/hurt', mode: AnimationMode.single,
+        ),
+        fire: emptySprite,
+        change: emptySprite,
+        casting: emptySprite,
+      );
 
   void loadSpriteGroupIsometric({
     required int type,

@@ -610,17 +610,29 @@ class RendererCharacters extends RenderGroup {
     final row = character.renderDirection;
     final column = character.animationFrame;
     final characterState = character.state;
+    final spriteFlat = images.spriteGroupFallenFlat.fromCharacterState(characterState);
     final spriteWest = images.spriteGroupFallenWest.fromCharacterState(characterState);
     final spriteSouth = images.spriteGroupFallenSouth.fromCharacterState(characterState);
     final spriteShadow = images.spriteGroupFallenShadow.fromCharacterState(characterState);
     final render = this.render;
     final dstX = character.renderX;
     final dstY = character.renderY;
+    final colorFlat = character.colorDiffuse;
 
     render.sprite(
       sprite: spriteShadow,
       frame: spriteShadow.getFrame(row: row, column: column),
-      color: character.colorDiffuse,
+      color: colorFlat,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
+    render.sprite(
+      sprite: spriteFlat,
+      frame: spriteFlat.getFrame(row: row, column: column),
+      color: colorFlat,
       scale: scale,
       dstX: dstX,
       dstY: dstY,

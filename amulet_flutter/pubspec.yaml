@@ -153,11 +153,10 @@ flutter:
     - assets/sprites/front/kid/diffuse/weapons/bow/
     - assets/sprites/front/kid/diffuse/weapons/staff/
     - assets/sprites/front/kid/diffuse/weapons/sword/
-    - assets/sprites/isometric/fallen/dead/
-    - assets/sprites/isometric/fallen/hurt/
-    - assets/sprites/isometric/fallen/idle/
-    - assets/sprites/isometric/fallen/running/
-    - assets/sprites/isometric/fallen/strike/
+    - assets/sprites/isometric/fallen/flat/
+    - assets/sprites/isometric/fallen/shadow/
+    - assets/sprites/isometric/fallen/south/
+    - assets/sprites/isometric/fallen/west/
     - assets/sprites/isometric/skeleton/south/
     - assets/sprites/isometric/skeleton/west/
     - assets/sprites/isometric/skeleton/shadow/
