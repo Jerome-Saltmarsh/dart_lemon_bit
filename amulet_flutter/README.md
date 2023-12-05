@@ -18,9 +18,9 @@ ctrl + []               : move caret to code block
 ## BLOCK
 * [new]: model body type female leather armour
 * [new]: model body type female shirt blue
+* [new]: model leg type iron
 
 ## TODO
-* [new]: model leg type iron
 * [new]: model weapon rusty sword
 * [new]: tool synchronize pubspec
 * [new]: mobile touch screen support
