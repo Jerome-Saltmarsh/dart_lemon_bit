@@ -39,26 +39,35 @@ class IsometricUI with IsometricComponent {
     final grab = MouseRegion(
       cursor: SystemMouseCursors.grab,
       hitTestBehavior: HitTestBehavior.translucent,
-    );;
+    );
 
     final basic = MouseRegion(
       cursor: SystemMouseCursors.basic,
       hitTestBehavior: HitTestBehavior.translucent,
-    );;
+    );
+
+    final translucent = MouseRegion(
+      cursor: SystemMouseCursors.basic,
+      hitTestBehavior: HitTestBehavior.translucent,
+    );
+
+    final gestureDetector = GestureDetector(
+       behavior: HitTestBehavior.translucent,
+    );
 
     return Stack(
       children: [
             buildWatch(cursor, (cursor){
               if (cursor == SystemMouseCursors.grab){
-                return grab;
+                engine.cursorType.value = CursorType.Click;
+                return gestureDetector;
+                // return grab;
               }
               if (cursor == SystemMouseCursors.basic){
+                engine.cursorType.value = CursorType.Basic;
                 return basic;
               }
-              return MouseRegion(
-                cursor: cursor,
-                hitTestBehavior: HitTestBehavior.translucent,
-              );
+              return translucent;
             }),
             Positioned(
               top: 0,

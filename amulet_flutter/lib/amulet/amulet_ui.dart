@@ -240,6 +240,8 @@ class AmuletUI {
     const width = 120.0;
     const height = width * goldenRatio_0381;
 
+
+
     final healthPercentageBox = buildWatch(
         amulet.player.aimTargetHealthPercentage,
         (healthPercentage) => Container(

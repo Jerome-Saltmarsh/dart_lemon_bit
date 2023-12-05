@@ -16,7 +16,6 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## BLOCK
-* [fix]: windows cursor hand icon
 
 ## TODO
 * [new]: model body type female leather armour
@@ -37,6 +36,7 @@ ctrl + []               : move caret to code block
 * [fix]: audio for web
 
 ## 05.12.2023
+* [fix]: windows cursor hand icon
 * [new]: diffuse shade skeleton
 * [new]: diffuse shade fallen
 

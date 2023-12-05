@@ -1,26 +1,25 @@
 
-import 'package:amulet_flutter/gamestream/isometric/components/editor/isometric_editor_ui.dart';
-import 'package:amulet_flutter/gamestream/isometric/enums/mode.dart';
 import 'package:amulet_engine/packages/common.dart';
-import 'package:flutter/material.dart';
 import 'package:amulet_flutter/gamestream/game.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/debug/isometric_debug_ui.dart';
-import 'package:amulet_flutter/gamestream/isometric/enums/cursor_type.dart';
+import 'package:amulet_flutter/gamestream/isometric/components/editor/isometric_editor_ui.dart';
+import 'package:amulet_flutter/gamestream/isometric/enums/mode.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lemon_widgets/lemon_widgets.dart';
 import 'package:lemon_watch/src.dart';
+import 'package:lemon_widgets/lemon_widgets.dart';
 
 class IsometricGame extends Game {
 
   @override
   void drawCanvas(Canvas canvas, Size size) {
     // drawCanvas(canvas, size);
-    updateCursorType();
+    // updateCursorType();
   }
 
   void updateCursorType() {
-    options.cursorType = mapTargetActionToCursorType(player.aimTargetAction.value);
+    // options.cursorType = mapTargetActionToCursorType(player.aimTargetAction.value);
   }
 
   void renderForeground(Canvas canvas, Size size) {
@@ -166,12 +165,12 @@ class IsometricGame extends Game {
     }
   }
 
-  /// override to customize cursor type
-  int mapTargetActionToCursorType(int targetCategory) => switch(targetCategory) {
-    TargetAction.Attack => IsometricCursorType.CrossHair_Red,
-    TargetAction.Talk => IsometricCursorType.Talk,
-    TargetAction.Collect => IsometricCursorType.Hand,
-    TargetAction.Run => IsometricCursorType.CrossHair_White,
-    _ => IsometricCursorType.CrossHair_White,
-  };
+  // override to customize cursor type
+  // int mapTargetActionToCursorType(int targetCategory) => switch(targetCategory) {
+  //   TargetAction.Attack => IsometricCursorType.CrossHair_Red,
+  //   TargetAction.Talk => IsometricCursorType.Talk,
+  //   TargetAction.Collect => IsometricCursorType.Hand,
+  //   TargetAction.Run => IsometricCursorType.CrossHair_White,
+  //   _ => IsometricCursorType.CrossHair_White,
+  // };
 }

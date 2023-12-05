@@ -35,7 +35,6 @@ class IsometricPlayer with IsometricComponent {
   final aimTargetPosition = Position();
   final targetPosition = Position();
   final position = Position();
-  final aimTargetChanged = Watch(0);
   final id = Watch(0);
   final team = Watch(0);
   final headType = Watch(0);
