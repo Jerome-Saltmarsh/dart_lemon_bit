@@ -23,6 +23,7 @@ class AmuletWorldMap extends StatelessWidget {
   var screenHeight = 0.0;
   var zoom = 1.0;
   var scrollSensitivity = 0.00025;
+  var followSensitivity = 0.001;
 
   static const zoomMin = 0.2;
   static const zoomMax = 6.0;
@@ -77,15 +78,16 @@ class AmuletWorldMap extends StatelessWidget {
           /// TODO Memory leak
           final targetOffset = Offset(targetX, targetY);
           canvas.drawImage(worldMapPicture, const Offset(0, 0), paint);
+          canvas.rotate(-piQuarter);
           // canvas.rotate(-piQuarter);
-          canvas.drawCircle(targetOffset, 1, paint);
-          canvas.drawCircle(Offset(screenCenterWorldX, screenCenterWorldY), 4, paint);
+          canvas.drawCircle(targetOffset, 2, paint);
+          // canvas.drawCircle(Offset(screenCenterWorldX, screenCenterWorldY), 4, paint);
           // canvas.drawCircle(Offset(cameraX, cameraY), 6, paint);
           textPainter.text = textSpanHello;
           textPainter.layout();
           textPainter.paint(canvas, targetOffset);
           paint.color = Colors.blue;
-          cameraFollowTarget(0.0005);
+          cameraFollowTarget(followSensitivity);
         },
       ),
     );
