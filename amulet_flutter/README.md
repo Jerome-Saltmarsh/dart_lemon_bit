@@ -26,11 +26,11 @@ ctrl + []               : move caret to code block
 * [new]: scene town
 * [fix]: barrels and crates should not be interactable
 * [fix]: persist gameobject properties
-* [fix]: colored particle emission
 * [fix]: audio for web
 * [new]: mobile touch screen support
 
 ## 06.12.2023
+* [fix]: colored particle emission
 * [new]: toggle map size
 * [fix]: inventory items slots
 * [new]: lemon sprites custom directories

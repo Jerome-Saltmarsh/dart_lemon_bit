@@ -711,25 +711,11 @@ class IsometricScene with IsometricComponent implements Updatable {
     final colorBlue = getBlue(color);
     final colorAlpha = getAlpha(color);
 
-    final interpolatedRed = interpolateByte(currentRed, colorRed, interpolation);
-    final interpolatedGreen = interpolateByte(currentGreen, colorGreen, interpolation);
-    final interpolatedBlue = interpolateByte(currentBlue, colorBlue, interpolation);
-    // final interpolatedRed = interpolateByteCyclic(currentRed, colorRed, interpolation);
-    // final interpolatedGreen = interpolateByteCyclic(currentGreen, colorGreen, interpolation);
-    // final interpolatedBlue = interpolateByteCyclic(currentBlue, colorBlue, interpolation);
-
-    int interpolatedAlpha;
-    if (currentAlpha < colorAlpha){
-      interpolatedAlpha = interpolateByte(currentAlpha, colorAlpha, interpolation);
-    } else {
-      interpolatedAlpha = currentAlpha;
-    }
-
     nodeColors[index] = rgba(
-      r: interpolatedRed,
-      g: interpolatedGreen,
-      b: interpolatedBlue,
-      a: interpolatedAlpha,
+      r: interpolateByte(currentRed, colorRed, interpolation),
+      g: interpolateByte(currentGreen, colorGreen, interpolation),
+      b: interpolateByte(currentBlue, colorBlue, interpolation),
+      a: interpolateByte(currentAlpha, colorAlpha, interpolation),
     );
   }
 

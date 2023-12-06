@@ -1,21 +1,21 @@
 
 import 'dart:typed_data';
+import 'dart:ui' as ui;
 import 'dart:ui';
 
-import 'package:amulet_flutter/amulet/amulet_ui.dart';
-import 'package:amulet_flutter/gamestream/isometric/enums/node_visibility.dart';
 import 'package:amulet_engine/packages/common.dart';
+import 'package:amulet_flutter/amulet/amulet_ui.dart';
+import 'package:amulet_flutter/amulet/classes/item_slot.dart';
+import 'package:amulet_flutter/gamestream/isometric/classes/isometric_game.dart';
+import 'package:amulet_flutter/gamestream/isometric/enums/node_visibility.dart';
+import 'package:amulet_flutter/isometric/classes/position.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
-import 'package:flutter/material.dart';
-import 'package:amulet_flutter/amulet/classes/item_slot.dart';
-import 'package:amulet_flutter/gamestream/isometric/classes/isometric_game.dart';
-import 'package:amulet_flutter/isometric/classes/position.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 import 'amulet_render.dart';
-import 'dart:ui' as ui;
 
 
 class Amulet extends IsometricGame {
@@ -489,7 +489,6 @@ class Amulet extends IsometricGame {
   }
 
   void recordWorldMapPicture(){
-
     print('amulet.recordWorldMapPicture()');
     final paint = Paint()..color = Colors.white;
     final recorder = ui.PictureRecorder();
@@ -505,7 +504,7 @@ class Amulet extends IsometricGame {
     );
 
      final picture = recorder.endRecording();
-     picture.toImage(300, 300).then((value) {
+     picture.toImage(500, 500).then((value) {
        worldMapPicture = value;
      });
   }

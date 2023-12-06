@@ -51,13 +51,13 @@ class AmuletWorldMap extends StatelessWidget {
         canvas.translate(centerX, -50);
         canvas.rotate(piQuarter);
         canvas.translate(translateX, translateY);
-
-        textPainter.text = textSpanHello;
-        textPainter.layout();
-        textPainter.paint(canvas, const Offset(0, 0));
-        canvas.drawImage(worldMapPicture, const Offset(0, 0), paint);
         /// TODO Memory leak
         canvas.drawCircle(Offset(posX, posY), 5, paint);
+        canvas.drawImage(worldMapPicture, const Offset(0, 0), paint);
+        // canvas.rotate(-piQuarter);
+        textPainter.text = textSpanHello;
+        textPainter.layout();
+        textPainter.paint(canvas, Offset(posX, posY));
         paint.color = Colors.blue;
       },
     );
