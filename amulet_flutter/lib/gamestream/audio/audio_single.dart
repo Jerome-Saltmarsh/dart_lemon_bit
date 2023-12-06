@@ -12,7 +12,7 @@ class AudioSingle {
     // AudioCache.instance.prefix = 'flutter_assets/';
     // source = AssetSource('audio/$name.mp3');
     audioPlayer.setPlayerMode(PlayerMode.lowLatency);
-    audioPlayer.setSourceAsset('audio/$name.mp3');
+    // audioPlayer.setSourceAsset('audio/$name.mp3');
   }
 
 

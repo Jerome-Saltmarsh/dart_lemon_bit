@@ -33,7 +33,18 @@ class AmuletUI {
           Positioned(
             bottom: 8,
             right: 8,
-            child: AmuletWorldMap(amulet: amulet, size: 200),
+            child: Builder(
+              builder: (context) {
+                final small = AmuletWorldMap(amulet: amulet, size: 200);
+                final large = AmuletWorldMap(amulet: amulet, size: 400);
+                return onPressed(
+                  action: amulet.worldMapLarge.toggle,
+                  child: buildWatch(amulet.worldMapLarge, (bool isLarge){
+                     return isLarge ? large : small;
+                  }),
+                );
+              }
+            ),
           ),
           Positioned(
             bottom: 4,

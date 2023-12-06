@@ -7,6 +7,11 @@ class AmuletWorldMap extends StatelessWidget {
   final Amulet amulet;
   final paint = Paint()..color = Colors.white;
   final double size;
+  final textPainter = TextPainter(
+      textAlign: TextAlign.center,
+      textDirection: TextDirection.ltr
+  );
+  final textSpanHello = const TextSpan(style: TextStyle(color: Colors.white), text: 'hello');
 
   AmuletWorldMap({
     super.key,
@@ -16,7 +21,7 @@ class AmuletWorldMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    print('amuletWorldMap.build()');
 
     final canvas = CustomCanvas(
       paint: (canvas, canvasSize) {
@@ -47,8 +52,11 @@ class AmuletWorldMap extends StatelessWidget {
         canvas.rotate(piQuarter);
         canvas.translate(translateX, translateY);
 
+        textPainter.text = textSpanHello;
+        textPainter.layout();
+        textPainter.paint(canvas, const Offset(0, 0));
         canvas.drawImage(worldMapPicture, const Offset(0, 0), paint);
-        // TODO optimize
+        /// TODO Memory leak
         canvas.drawCircle(Offset(posX, posY), 5, paint);
         paint.color = Colors.blue;
       },

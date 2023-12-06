@@ -19,9 +19,10 @@ ctrl + []               : move caret to code block
 * [new]: map locations
 
 ## TODO
+* [new]: model head type female
 * [new]: model leg type iron plates
 * [new]: model hair type 4
-* [new]: elemental damage
+* [new]: mechanic elemental damage
 * [new]: scene town
 * [fix]: barrels and crates should not be interactable
 * [fix]: persist gameobject properties
@@ -30,6 +31,7 @@ ctrl + []               : move caret to code block
 * [new]: mobile touch screen support
 
 ## 06.12.2023
+* [new]: toggle map size
 * [fix]: inventory items slots
 * [new]: lemon sprites custom directories
 

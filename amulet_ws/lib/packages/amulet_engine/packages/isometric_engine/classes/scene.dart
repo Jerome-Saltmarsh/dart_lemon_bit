@@ -9,6 +9,8 @@ class Scene {
   /// The first 2 bytes are use for the index, the other 6 store its information
   var marks = <int>[];
   var keys = <String, int>{};
+  /// map location
+  var locations = <String, int>{};
 
   Uint8List types;
   Uint8List shapes;
