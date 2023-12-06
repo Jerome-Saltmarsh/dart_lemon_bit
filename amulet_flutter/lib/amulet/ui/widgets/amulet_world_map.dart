@@ -1,3 +1,4 @@
+import 'package:amulet_flutter/isometric/functions/get_render.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:lemon_engine/lemon_engine.dart';
@@ -31,6 +32,9 @@ class AmuletWorldMap extends StatelessWidget {
           return;
         }
 
+        const zoom = 2.5;
+
+        canvas.scale(zoom, zoom);
         const mapSize = 100.0;
         final canvasWidth = canvasSize.width;
         final canvasHeight = canvasSize.height;
@@ -45,19 +49,25 @@ class AmuletWorldMap extends StatelessWidget {
         final posY = amulet.worldColumn * mapSize + (mapSize * ratioY);
         paint.color = Colors.white;
 
-        final translateX = centerX - posX;
-        final translateY = centerY - posY;
+        final playerRenderX = getRenderX(posX, posY);
+        final playerRenderY = getRenderY(posX, posY, 0);
+        // final translateX = centerX - posX;
+        // final translateY = centerY - posY;
 
-        canvas.translate(centerX, -50);
+        final cameraX = playerRenderX - (centerX / zoom);
+        final cameraY = playerRenderY - (centerY / zoom);
+        // canvas.translate(centerX, -50);
         canvas.rotate(piQuarter);
-        canvas.translate(translateX, translateY);
+        canvas.translate(-cameraX, -cameraY);
+        // canvas.translate(translateX, translateY);
         /// TODO Memory leak
-        canvas.drawCircle(Offset(posX, posY), 5, paint);
+        final renderPos = Offset(getRenderX(posX, posY), getRenderY(posX, posY, 0));
         canvas.drawImage(worldMapPicture, const Offset(0, 0), paint);
-        // canvas.rotate(-piQuarter);
+        canvas.rotate(-piQuarter);
+        canvas.drawCircle(renderPos, 1, paint);
         textPainter.text = textSpanHello;
         textPainter.layout();
-        textPainter.paint(canvas, Offset(posX, posY));
+        textPainter.paint(canvas, renderPos);
         paint.color = Colors.blue;
       },
     );

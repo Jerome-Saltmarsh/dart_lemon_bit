@@ -234,7 +234,7 @@ class IsometricRender with IsometricComponent {
   }) =>
       renderText(
         value: text.toString(),
-        x: getRenderX(x, y, z),
+        x: getRenderX(x, y),
         y: getRenderY(x, y, z),
       );
 
@@ -293,7 +293,7 @@ class IsometricRender with IsometricComponent {
       srcY: 48,
       srcWidth: 32,
       srcHeight: 32,
-      dstX: getRenderX(x, y, z),
+      dstX: getRenderX(x, y),
       dstY: getRenderY(x, y, z),
     );
   }
@@ -332,20 +332,6 @@ class IsometricRender with IsometricComponent {
     const charWidth = 4.5;
     engine.flushBuffer();
     engine.writeText(value, x - charWidth * value.length, y);
-  }
-
-  void barBlue(double x, double y, double z, double percentage) {
-    engine.renderSprite(
-      image: images.atlas_gameobjects,
-      dstX: getRenderX(x, y, z) - 26,
-      dstY: getRenderY(x, y, z) - 55,
-      srcX: 171,
-      srcY: 48,
-      srcWidth: 51.0 * percentage,
-      srcHeight: 8,
-      anchorX: 0.0,
-      color: 1,
-    );
   }
 
   void shadowBelowPosition(Position position) =>
@@ -397,9 +383,9 @@ class IsometricRender with IsometricComponent {
 
   void line(double x1, double y1, double z1, double x2, double y2, double z2) =>
       engine.renderLine(
-        getRenderX(x1, y1, z1),
+        getRenderX(x1, y1),
         getRenderY(x1, y1, z1),
-        getRenderX(x2, y2, z2),
+        getRenderX(x2, y2),
         getRenderY(x2, y2, z2),
       );
 
@@ -462,7 +448,7 @@ class IsometricRender with IsometricComponent {
   void circleFilled(double x, double y, double z, double radius) =>
     engine.renderCircleFilled(
       radius: radius,
-      x: getRenderX(x, y, z),
+      x: getRenderX(x, y),
       y: getRenderY(x, y, z),
     );
 

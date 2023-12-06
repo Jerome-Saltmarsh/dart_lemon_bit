@@ -17,6 +17,7 @@ ctrl + []               : move caret to code block
 
 ## BLOCK
 * [new]: map locations
+* [fix]: audio loops
 
 ## TODO
 * [new]: model head type female

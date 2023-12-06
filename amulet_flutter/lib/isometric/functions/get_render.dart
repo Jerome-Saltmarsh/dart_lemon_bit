@@ -9,7 +9,7 @@ double getRenderYfOfRowColumn(int row, int column) =>
 double getRenderYOfRowColumnZ(int row, int column, int z) =>
 (row + column - z) * Node_Size_Half;
 
-double getRenderX(double x, double y, double z) => (x - y) * 0.5;
+double getRenderX(double x, double y) => (x - y) * 0.5;
 
 double getRenderY(double x, double y, double z) => ((x + y) * 0.5) - z;
 
