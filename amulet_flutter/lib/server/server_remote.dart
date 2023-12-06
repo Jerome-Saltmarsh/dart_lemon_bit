@@ -20,7 +20,7 @@ class ServerRemote implements Server {
   final operationStatus = Watch(OperationStatus.None);
   final region = Watch(ConnectionRegion.LocalHost);
   final userJson = Watch<Json>({});
-  final userId = Cache(key: 'userId', value: '');
+  final userId = Watch('');
   final username = Watch('');
   final password = Watch('');
   final userServiceUrl = Watch('https://gamestream-http-osbmaezptq-uc.a.run.app');

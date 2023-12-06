@@ -71,6 +71,28 @@ class IsometricOptions with IsometricComponent implements Updatable {
     game = Watch<Game>(website, onChanged: _onChangedGame);
     engine.durationPerUpdate.value = convertFramesPerSecondToDuration(20);
     engine.cursorType.value = CursorType.Basic;
+
+    var cacheLoaded = false;
+    server.remote.userId.onChanged((t) {
+      if (t.isEmpty){
+        sharedPreferences.remove('userId');
+      } else {
+        sharedPreferences.setString('userId', t);
+      }
+    });
+    serverMode.onChanged((value){
+      if (cacheLoaded){
+        return;
+      }
+      cacheLoaded = true;
+      if (value == ServerMode.remote){
+        final userId = sharedPreferences.getString('userId');
+        if (userId != null) {
+          server.remote.userId.value = userId;
+        }
+      }
+    });
+
   }
 
   void onMouseEnterCanvas(){

@@ -30,6 +30,7 @@ ctrl + []               : move caret to code block
 * [new]: mobile touch screen support
 
 ## 06.12.2023
+* [fix]: prevent load remote user for single player
 * [fix]: colored particle emission
 * [new]: toggle map size
 * [fix]: inventory items slots
