@@ -5,14 +5,17 @@ import 'package:audioplayers/audioplayers.dart';
 class AudioSingle {
   final String name;
   final audioPlayer = AudioPlayer();
+  var loaded = false;
 
   AudioSingle({
     required this.name,
   }){
-    // AudioCache.instance.prefix = 'flutter_assets/';
-    // source = AssetSource('audio/$name.mp3');
-    audioPlayer.setPlayerMode(PlayerMode.lowLatency);
-    // audioPlayer.setSourceAsset('audio/$name.mp3');
+    audioPlayer.setPlayerMode(PlayerMode.lowLatency).then((value) {
+      audioPlayer.setSourceAsset('audio/$name.mp3').then((value){
+         loaded = true;
+      });
+    });
+
   }
 
 
@@ -21,6 +24,7 @@ class AudioSingle {
   }
 
   void play({double volume = 1.0}) {
+    if (!loaded) return;
     if (volume <= 0) return;
     final audioPlayer = this.audioPlayer;
     if (audioPlayer.volume != volume){
