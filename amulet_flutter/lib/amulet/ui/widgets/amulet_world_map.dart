@@ -14,6 +14,14 @@ class AmuletWorldMap extends StatelessWidget {
   );
   final textSpanHello = const TextSpan(style: TextStyle(color: Colors.white), text: 'hello');
 
+  var targetX = 0.0;
+  var targetY = 0.0;
+  var cameraX = 0.0;
+  var cameraY = 0.0;
+  var screenWidth = 0.0;
+  var screenHeight = 0.0;
+  var zoom = 1.0;
+
   AmuletWorldMap({
     super.key,
     required this.amulet,
@@ -32,7 +40,8 @@ class AmuletWorldMap extends StatelessWidget {
           return;
         }
 
-        const zoom = 2.5;
+        screenWidth = canvasSize.width;
+        screenHeight = canvasSize.height;
 
         canvas.scale(zoom, zoom);
         const mapSize = 100.0;
@@ -51,15 +60,11 @@ class AmuletWorldMap extends StatelessWidget {
 
         final playerRenderX = getRenderX(posX, posY);
         final playerRenderY = getRenderY(posX, posY, 0);
-        // final translateX = centerX - posX;
-        // final translateY = centerY - posY;
 
-        final cameraX = playerRenderX - (centerX / zoom);
-        final cameraY = playerRenderY - (centerY / zoom);
-        // canvas.translate(centerX, -50);
+        // final cameraX = playerRenderX - (centerX / zoom);
+        // final cameraY = playerRenderY - (centerY / zoom);
         canvas.rotate(piQuarter);
         canvas.translate(-cameraX, -cameraY);
-        // canvas.translate(translateX, translateY);
         /// TODO Memory leak
         final renderPos = Offset(getRenderX(posX, posY), getRenderY(posX, posY, 0));
         canvas.drawImage(worldMapPicture, const Offset(0, 0), paint);
@@ -69,6 +74,12 @@ class AmuletWorldMap extends StatelessWidget {
         textPainter.layout();
         textPainter.paint(canvas, renderPos);
         paint.color = Colors.blue;
+
+        cameraFollow(
+          playerRenderX,
+          playerRenderY,
+          0.001,
+        );
       },
     );
 
@@ -91,4 +102,22 @@ class AmuletWorldMap extends StatelessWidget {
       ),
     );
   }
+
+  void cameraFollow(double x, double y, [double speed = 0.00075]) {
+    final diffX = screenCenterWorldX - x;
+    final diffY = screenCenterWorldY - y;
+    cameraX -= (diffX * 75) * speed;
+    cameraY -= (diffY * 75) * speed;
+  }
+
+  double get screenCenterX => screenWidth * 0.5;
+  double get screenCenterY => screenHeight * 0.5;
+  double get screenCenterWorldX => screenToWorldX(screenCenterX);
+  double get screenCenterWorldY => screenToWorldY(screenCenterY);
+
+  double screenToWorldX(double value)  =>
+      cameraX + value / zoom;
+
+  double screenToWorldY(double value) =>
+      cameraY + value / zoom;
 }
