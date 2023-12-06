@@ -672,7 +672,7 @@ class AmuletUI {
       buildText(text, size: 28.0, color: Colors.white70);
 
   Widget buildDialogPlayerInventory() {
-    final stash = buildInventoryItems();
+    final inventoryItems = buildInventoryItems();
 
     final dialog = GSContainer(
       rounded: true,
@@ -686,12 +686,14 @@ class AmuletUI {
             children: [
               Container(
                   margin: const EdgeInsets.only(left: 5),
-                  child: buildDialogTitle('EQUIPPED')),
+                  child: buildDialogTitle('INVENTORY')),
               buildButtonClose(
                   action: amulet.toggleInventoryOpen),
             ],
           ),
           height32,
+          inventoryItems,
+          height16,
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -716,14 +718,7 @@ class AmuletUI {
       child: buildWatch(
           amulet.playerInventoryOpen,
           (inventoryOpen) => inventoryOpen
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    stash,
-                    height8,
-                    dialog,
-                  ],
-                )
+              ? dialog
               : inventoryButton),
     );
   }

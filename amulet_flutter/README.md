@@ -16,7 +16,6 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## BLOCK
-* [fix]: inventory items slots
 * [new]: map locations
 
 ## TODO
@@ -31,6 +30,7 @@ ctrl + []               : move caret to code block
 * [new]: mobile touch screen support
 
 ## 06.12.2023
+* [fix]: inventory items slots
 * [new]: lemon sprites custom directories
 
 ## 05.12.2023
