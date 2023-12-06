@@ -1,3 +1,4 @@
+
 import 'package:lemon_watch/src.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,28 +25,28 @@ class Cache<T> extends Watch<T> {
   }
 
   void _persist(T t){
-      SharedPreferences.getInstance().then((shared){
-        if (t is bool){
-          shared.setBool(key, t);
-          return;
-        }
-        if (t is int){
-          shared.setInt(key, t);
-          return;
-        }
-        if (t is String){
-          shared.setString(key, t);
-          return;
-        }
-        if (t is double){
-          shared.setDouble(key, t);
-          return;
-        }
-        if (t is List<String>){
-          shared.setStringList(key, t);
-          return;
-        }
-        throw Exception('could not cache value: $t');
-      });
+    SharedPreferences.getInstance().then((shared){
+      if (t is bool){
+        shared.setBool(key, t);
+        return;
+      }
+      if (t is int){
+        shared.setInt(key, t);
+        return;
+      }
+      if (t is String){
+        shared.setString(key, t);
+        return;
+      }
+      if (t is double){
+        shared.setDouble(key, t);
+        return;
+      }
+      if (t is List<String>){
+        shared.setStringList(key, t);
+        return;
+      }
+      throw Exception('could not cache value: $t');
+    });
   }
 }

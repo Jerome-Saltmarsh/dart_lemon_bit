@@ -1,6 +1,5 @@
 
 import 'dart:io';
-import 'dart:typed_data';
 
 Future<String> loadFileString(String filePath) async {
   final file = File(filePath);

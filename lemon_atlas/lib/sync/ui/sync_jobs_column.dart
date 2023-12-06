@@ -1,7 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:lemon_atlas/sync/classes/sync_job.dart';
-import 'package:lemon_atlas/sync/functions/run_sync_job.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 

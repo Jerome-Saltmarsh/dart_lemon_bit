@@ -16,21 +16,22 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## BLOCK
-* [new]: model leg type iron
+* [fix]: inventory items slots
+* [new]: map locations
 
 ## TODO
-* [new]: model weapon rusty sword
-* [new]: tool synchronize pubspec
-* [new]: mobile touch screen support
+* [new]: model leg type iron plates
+* [new]: model hair type 4
 * [new]: elemental damage
-* [new]: map locations
 * [new]: scene town
-* [new]: item tabs weapons amulets etc
 * [fix]: barrels and crates should not be interactable
 * [fix]: persist gameobject properties
 * [fix]: colored particle emission
-* [new]: flames emit smoke particles
 * [fix]: audio for web
+* [new]: mobile touch screen support
+
+## 06.12.2023
+* [new]: lemon sprites custom directories
 
 ## 05.12.2023
 * [new]: model body type female leather armour

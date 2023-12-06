@@ -2,12 +2,14 @@
 import 'dart:io';
 
 import 'package:lemon_atlas/sync/classes/sync_job.dart';
-import 'package:lemon_atlas/sync/consts/directories.dart';
 import 'package:lemon_atlas/sync/synchronize.dart';
 import 'package:lemon_atlas/utils/clean_url.dart';
 
-SyncJob? buildSyncJob(File file) {
-
+SyncJob? buildSyncJob({
+      required File file,
+      required String dirRenders,
+      required String dirSprites,
+}) {
   final lastModified = file.lastModifiedSync();
   final nameAbsolute = file.path.replaceAll(dirRenders, '');
   final name = removeLastDirectory(nameAbsolute);
