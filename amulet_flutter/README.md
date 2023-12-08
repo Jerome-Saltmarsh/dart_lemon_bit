@@ -16,10 +16,11 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## BLOCK
+* [new]: polish tutorial
 * [new]: map locations
-* [fix]: audio loops
 
 ## TODO
+* [new]: allow save scene for local server
 * [new]: model head type female
 * [new]: model leg type iron plates
 * [new]: model hair type 4
@@ -31,6 +32,7 @@ ctrl + []               : move caret to code block
 * [new]: mobile touch screen support
 
 ## 08.12.2023
+* [fix]: audio loops
 * [fix]: polish create character dialog layout
 
 ## 07.12.2023 [REST]

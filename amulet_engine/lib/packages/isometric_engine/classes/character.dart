@@ -318,10 +318,9 @@ class Character extends Collider {
 
   void faceTarget() {
     final target = this.target;
-    if (target == null) {
-      throw Exception('target is null');
+    if (target != null) {
+      facePosition(target);
     }
-    facePosition(target);
   }
 
   void facePosition(Position position) => faceXY(position.x, position.y);

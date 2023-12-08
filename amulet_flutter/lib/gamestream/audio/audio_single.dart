@@ -10,11 +10,14 @@ class AudioSingle {
   AudioSingle({
     required this.name,
   }){
-    audioPlayer.setPlayerMode(PlayerMode.lowLatency).then((value) {
-      audioPlayer.setSourceAsset('audio/$name.mp3').then((value){
-         loaded = true;
+    audioPlayer.setReleaseMode(ReleaseMode.stop).then((value) {
+      audioPlayer.setPlayerMode(PlayerMode.lowLatency).then((value) {
+        audioPlayer.setSourceAsset('audio/$name.mp3').then((value){
+          loaded = true;
+        });
       });
     });
+
 
   }
 

@@ -227,7 +227,7 @@ class AmuletGameTutorial extends AmuletGame {
       invincible: true,
     )
       ..autoTarget = false
-      ..complexion = 20
+      ..complexion = 0
       ..invincible = true
       ..legsType = LegType.Leather
       ..bodyType = BodyType.Leather_Armour;
@@ -367,7 +367,7 @@ class AmuletGameTutorial extends AmuletGame {
         .highlightAmuletItem(AmuletItem.Spell_Heal)
         .talk(guide,
           'one has acquired the spell of healing.'
-          'caste heal by pressing the heal icon at the bottom of the screen'
+          'press the flashing heal icon at the bottom of the screen'
         )
         .end();
   }
@@ -407,7 +407,7 @@ class AmuletGameTutorial extends AmuletGame {
             .activate(guide)
             .cameraSetTarget(guide)
             .faceEachOther(player, guide)
-            .talk(guide, 'danger lies in ones path')
+            .talk(guide, 'danger lies ahead')
             .deactivate(guide)
             .add(actionSpawnWeaponSwordAtGuide)
             .end();
@@ -632,20 +632,21 @@ class AmuletGameTutorial extends AmuletGame {
           .talk(guide,
             'congratulations.'
             'one has gained a level.'
-            'one must learn of the elements.'
-            'five types there are.'
+            'one will now learn of the elements.'
+            'three types there are.'
             'fire.'
-            'water.'
-            'wind.'
-            'earth.'
             'electricity.'
+            'water.'
+            'fire is strong against electricity.'
+            'electricity is strong against water.'
+            'water is strong against fire.'
             'the power of every item is determined by these elements.'
             'for example.'
             'the sword one doth possess is at level 1.'
             'level two requires at least 1 element of fire.'
             'hover the mouse over an item icon to see this information.'
             'one can see ones elements at the top left corner of the screen.'
-            'each level gained allows one to element to be increased.'
+            'one element point is gained per level.'
           )
           .deactivate(guide)
           .wait(seconds: 1)
@@ -783,7 +784,7 @@ class AmuletGameTutorial extends AmuletGame {
         .zoom(1.5)
         .snapCameraToPlayer()
         .wait(seconds: 1)
-        // .movePositionToSceneKey(guide, keysGuideSpawn0)
+        .movePositionToSceneKey(guide, keysGuideSpawn0)
         .cameraSetTarget(guide)
         .wait(seconds: 1)
         .gameEventPosition(GameEventType.Teleport_Start, guide)
@@ -797,9 +798,8 @@ class AmuletGameTutorial extends AmuletGame {
         )
         .wait(seconds: 1)
         .gameEventPosition(GameEventType.Teleport_Start, guide)
-        // .movePositionToSceneKey(guide, keysGuideSpawn1)
+        .movePositionToSceneKey(guide, keysGuideSpawn1)
         .gameEventPosition(GameEventType.Teleport_End, guide)
-        // .wait(seconds: 2)
         .end()
     ;
   }
@@ -816,17 +816,18 @@ class AmuletGameTutorial extends AmuletGame {
       )
       .end();
 
-  void onObjectiveSetStrikeCrystal1(AmuletPlayer player) =>
-      runScript(player)
-        .controlsDisabled()
-        .activate(guide)
-        .cameraSetTarget(guide)
-        .faceEachOther(player, guide)
-        .talk(guide,
-          'strike by hovering the mouse over a target and left clicking.'
-          'one can also attack at any time using right click.'
-        )
-        .end();
+  void onObjectiveSetStrikeCrystal1(AmuletPlayer player) {}
+  // =>
+  //     runScript(player)
+  //       .controlsDisabled()
+  //       .activate(guide)
+  //       .cameraSetTarget(guide)
+  //       .faceEachOther(player, guide)
+  //       .talk(guide,
+  //         'strike by hovering the mouse over a target and left clicking.'
+  //         'one can also attack at any time using right click.'
+  //       )
+  //       .end();
 
   GameObject spawnAtKeyCrystalGlowing(String key, bool value) =>
       value

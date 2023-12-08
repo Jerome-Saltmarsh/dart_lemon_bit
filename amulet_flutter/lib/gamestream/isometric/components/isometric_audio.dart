@@ -26,15 +26,13 @@ class IsometricAudio with IsometricComponent implements Updatable {
 
   late final enabledSound = Watch(true, onChanged: (bool soundEnabled){
     print('sound enabled: $soundEnabled');
-    if (!soundEnabled){
-      for (final audioSource in audioLoops) {
-        audioSource.setVolume(0);
-        audioSource.audioPlayer.pause();
+    for (final audioLoop in audioLoops) {
+      audioLoop.setVolume(0);
+      if (soundEnabled) {
+        audioLoop.audioPlayer.resume();
+      } else {
+        audioLoop.audioPlayer.pause();
       }
-    } else {
-      // for (final audioSource in audioLoops) {
-      //   audioSource.audioPlayer.play();
-      // }
     }
   });
 
