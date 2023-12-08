@@ -20,7 +20,6 @@ ctrl + []               : move caret to code block
 * [new]: map locations
 
 ## TODO
-* [new]: allow save scene for local server
 * [new]: model head type female
 * [new]: model leg type iron plates
 * [new]: model hair type 4
@@ -32,6 +31,7 @@ ctrl + []               : move caret to code block
 * [new]: mobile touch screen support
 
 ## 08.12.2023
+* [new]: allow save scene for local server
 * [fix]: audio loops
 * [fix]: polish create character dialog layout
 

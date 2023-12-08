@@ -204,14 +204,13 @@ extension IsometricEditorUI on IsometricEditor {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        buildButton(child: 'SAVE', action: saveScene),
         buildButton(child: 'DOWNLOAD', action: downloadScene),
         buildButton(child: 'NEW', action: newScene),
         buildButton(child: 'LOAD', action: uploadScene),
         buildButton(child: 'EDIT', action: windowEnabledScene.toggle),
         buildButton(child: 'MAP SIZE', action: windowEnabledCanvasSize.toggle),
         buildButton(child: 'GENERATE', action: windowEnabledGenerate.toggle),
-        if (engine.isLocalHost)
-          buildButton(child: 'SAVE', action: saveScene),
       ],
     );
 
