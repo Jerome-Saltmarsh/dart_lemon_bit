@@ -70,18 +70,23 @@ extension WebsiteUI on WebsiteGame {
               WebsitePage.New_Character => Stack(
                 alignment: Alignment.center,
                 children: [
-                  Positioned(
-                    top: 8,
-                    left: 8,
-                    child: onPressed (
-                      action: showPageSelectCharacter,
-                      child: buildText('<- BACK'),
-                    ),
-                  ),
                   DialogCreateCharacterComputer(
                     createCharacter: server.activeServer.createNewCharacter,
                     onCreated: showPageSelectCharacter,
                   ),
+                  Positioned(
+                    top: 8,
+                    left: 8,
+                    child: onPressed(
+                      action: showPageSelectCharacter,
+                      child: Container(
+                          color: Colors.white12,
+                          width: 100,
+                          height: 30,
+                          alignment: Alignment.center,
+                          child: buildText('<- BACK')),
+                    ),
+                  )
                 ],
               ),
               WebsitePage.Select_Region => buildWebsitePageSelectRegion(
@@ -301,7 +306,7 @@ extension WebsiteUI on WebsiteGame {
         });
   }
 
-  void showPageSelectCharacter()=> websitePage.value = WebsitePage.Select_Character;
+  void showPageSelectCharacter() => websitePage.value = WebsitePage.Select_Character;
 }
 
 

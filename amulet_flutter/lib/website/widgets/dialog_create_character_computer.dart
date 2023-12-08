@@ -181,7 +181,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                               gender: gender.value,
                               helmType: 0,
                               headType: headType.value,
-                              bodyType: BodyType.Leather_Armour,
+                              bodyType: BodyType.Shirt_Blue,
                               shoeType: ShoeType.Leather_Boots,
                               legsType: LegType.Leather,
                               hairType: hairType.value,
@@ -190,7 +190,6 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                               weaponType: 0,
                               skinColor: palette[complexion.value].value,
                               hairColor: palette[hairColor.value].value,
-                              // color: setAlpha(color: components.scene.ambientColor, alpha: 0) ,
                               color: 0,
                             );
                           },
