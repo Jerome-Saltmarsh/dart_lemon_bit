@@ -12,6 +12,8 @@ extension ListStringExtensions on List<String> {
     return this[index + 1];
   }
 
+  bool containsIndex(int index) => this.length > index;
+
   int? tryGetArgInt(String name){
     final arg = tryGetArgString(name);
     if (arg == null){

@@ -67,11 +67,16 @@ extension WebsiteUI on WebsiteGame {
                       ),
                     ],
                   ),
-              WebsitePage.New_Character => Column(
+              WebsitePage.New_Character => Stack(
+                alignment: Alignment.center,
                 children: [
-                  onPressed (
-                    action: showPageSelectCharacter,
-                    child: buildText('BACK'),
+                  Positioned(
+                    top: 8,
+                    left: 8,
+                    child: onPressed (
+                      action: showPageSelectCharacter,
+                      child: buildText('<- BACK'),
+                    ),
                   ),
                   DialogCreateCharacterComputer(
                     createCharacter: server.activeServer.createNewCharacter,

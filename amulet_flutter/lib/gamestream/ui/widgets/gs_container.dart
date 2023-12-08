@@ -11,6 +11,7 @@ class GSContainer extends StatelessWidget {
   final Color? color;
   final EdgeInsets? margin;
   final EdgeInsets? padding;
+  final Border? border;
 
   GSContainer({
     super.key,
@@ -21,13 +22,13 @@ class GSContainer extends StatelessWidget {
     this.margin,
     this.color,
     this.padding,
+    this.border,
     this.rounded = false,
   });
 
   @override
   Widget build(BuildContext context) => IsometricBuilder(
-    builder: (context, isometric) {
-      return Container(
+    builder: (context, isometric) => Container(
           width: width,
           height: height,
           alignment: alignment,
@@ -36,9 +37,9 @@ class GSContainer extends StatelessWidget {
           child: child,
           decoration: BoxDecoration(
             color: color ?? isometric.style.containerColor,
-            borderRadius: rounded ? isometric.style.containerBorderRadiusCircular : null
+            borderRadius: rounded ? isometric.style.containerBorderRadiusCircular : null,
+            border: border,
           ),
-        );
-    }
+        )
   );
 }

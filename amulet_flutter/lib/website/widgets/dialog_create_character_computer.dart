@@ -38,40 +38,55 @@ class DialogCreateCharacterComputer extends StatelessWidget {
   final error = Watch('');
 
   @override
-  Widget build(BuildContext context) {
-    final width = 850.0;
-    return IsometricBuilder(
+  Widget build(BuildContext context) => IsometricBuilder(
       builder: (context, components) {
         final palette = components.colors.palette;
         complexion.value = palette.length - 1;
-        return GSContainer(
-            width: width,
-            height: width * goldenRatio_0618,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                buildCharacterCanvas(components),
-                height32,
-                Column(
-                  children: [
-                    buildControls(palette),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+        const width = 850.0;
+        return buildBorder(
+          color: Colors.black12,
+          width: 3,
+          child: GSContainer(
+              width: width,
+              height: width * goldenRatio_0618,
+              border: Border.all(color: Colors.black12, width: 3),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      buildCharacterCanvas(components),
+                      buildControls(palette),
+                    ],
+                  ),
+                  height4,
+                  Positioned(
+                    bottom: 8,
+                    right: 8,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        buildControlName(),
+                        width4,
+                        Column(
+                          children: [
+                            buildText('NAME', color: Colors.white.withOpacity(0.8)),
+                            height8,
+                            buildControlName(),
+                          ],
+                        ),
+                        width4,
                         buildButtonStart(components),
                       ],
                     ),
-                  ],
-                ),
-                // Expanded(child: const SizedBox()),
-
-              ],
-            ));
+                  ),
+                ],
+              )),
+        );
       }
     );
-  }
 
   Widget buildButtonStart(
       IsometricComponents components,
@@ -92,7 +107,14 @@ class DialogCreateCharacterComputer extends StatelessWidget {
             );
              onCreated();
             },
-            child: buildText('START', size: 25, color: Colors.green),
+            child: buildBorder(
+                color: Colors.black12,
+                width: 4,
+                child: Container(
+                    alignment: Alignment.center,
+                    width: 64.0 * goldenRatio_1618 * goldenRatio_1618,
+                    height: 64.0,
+                    child: buildText('START', size: 25, color: Colors.green))),
           ),
         ],
       );
@@ -100,7 +122,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
   GSKeyEventHandler buildControlName() =>
       GSKeyEventHandler(
         child: Container(
-            width: 200,
+            width: 320,
             padding: const EdgeInsets.all(8),
             color: Colors.black12,
             child: TextField(
@@ -114,38 +136,39 @@ class DialogCreateCharacterComputer extends StatelessWidget {
             )),
       );
 
-  Widget buildControls(List<Color> palette) => Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildColumnComplexion(palette),
-              buildColumnHairStyle(),
-              buildColumnHairColor(palette),
-              buildColumnBodyShape(),
-              buildColumnHeadType(),
-            ],
-          ),
-        ],
-      );
+  Widget buildControls(List<Color> palette) => Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      buildColumnComplexion(palette),
+      width4,
+      buildColumnHairStyle(),
+      width4,
+      buildColumnHairColor(palette),
+      width4,
+      buildColumnBodyShape(),
+      width4,
+      buildColumnHeadType(),
+    ],
+  );
 
   Widget buildCharacterCanvas(IsometricComponents components) {
     final palette = components.colors.palette;
+    const width = 280.0;
     return onPressed(
                 action: (){
                   row.value = (row.value + 1) % 8;
                 },
                 child: Container(
-                  width: 130,
-                  height: 130 * goldenRatio_1381,
+                  width: width,
+                  height: width * goldenRatio_1381,
                   alignment: Alignment.center,
                   color: Colors.black12,
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
                       Positioned(
-                        top: 100,
+                        top: 180,
                         child: CustomCanvas(
                           paint: (canvas, size) {
 
