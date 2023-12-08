@@ -30,6 +30,11 @@ ctrl + []               : move caret to code block
 * [fix]: audio for web
 * [new]: mobile touch screen support
 
+## 08.12.2023
+* [fix]: polish create character dialog layout
+
+## 07.12.2023 [REST]
+
 ## 06.12.2023
 * [fix]: prevent load remote user for single player
 * [fix]: colored particle emission
