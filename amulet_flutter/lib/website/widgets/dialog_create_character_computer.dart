@@ -107,14 +107,14 @@ class DialogCreateCharacterComputer extends StatelessWidget {
             );
              onCreated();
             },
-            child: buildBorder(
-                color: Colors.black12,
-                width: 4,
-                child: Container(
-                    alignment: Alignment.center,
-                    width: 64.0 * goldenRatio_1618 * goldenRatio_1618,
-                    height: 64.0,
-                    child: buildText('START', size: 25, color: Colors.green))),
+            child: MouseOver(builder: (mouseOver) => buildBorder(
+                  color: mouseOver ? Colors.green : Colors.black12,
+                  width: 4,
+                  child: Container(
+                      alignment: Alignment.center,
+                      width: 64.0 * goldenRatio_1618 * goldenRatio_1618,
+                      height: 64.0,
+                      child: buildText('START', size: 34, color: Colors.green)))),
           ),
         ],
       );
