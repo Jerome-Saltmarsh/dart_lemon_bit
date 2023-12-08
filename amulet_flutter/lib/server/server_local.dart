@@ -42,10 +42,6 @@ class ServerLocal implements Server {
     if (!initialized){
       return;
     }
-
-    // playerClient.position.x = playerServer.x;
-    // playerClient.position.y = playerServer.y;
-    // playerClient.position.z = playerServer.z;
     parser.add(playerServer.compile());
   }
 
@@ -127,6 +123,9 @@ class ServerLocal implements Server {
       playerServer.hairColor = hairColor;
       playerServer.gender = gender;
       playerServer.headType = headType;
+
+      playerServer.equippedBody.amuletItem = AmuletItem.Armor_Shirt_Blue_Worn;
+      playerServer.equippedLegs.amuletItem = AmuletItem.Pants_Travellers;
       final json = mapIsometricPlayerToJson(playerServer);
       final characters = getCharacters();
       characters.add(json);

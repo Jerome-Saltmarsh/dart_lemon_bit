@@ -57,14 +57,14 @@ class IsometricEvents with IsometricComponent {
             x,
             y,
             z,
-            volume: 0.25,
+            volume: 0.1,
         );
         break;
       case MaterialType.Stone:
-        audio.play(audio.footstep_stone, x, y, z, volume: 0.3);
+        audio.play(audio.footstep_stone, x, y, z, volume: 0.1);
         break;
       case MaterialType.Wood:
-        audio.play(audio.footstep_wood_4, x, y, z, volume: 0.3);
+        audio.play(audio.footstep_wood_4, x, y, z, volume: 0.1);
         break;
     }
   }

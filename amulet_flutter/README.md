@@ -31,6 +31,7 @@ ctrl + []               : move caret to code block
 * [new]: mobile touch screen support
 
 ## 08.12.2023
+* [fix]: camera translate y on zoomed in
 * [new]: allow save scene for local server
 * [fix]: audio loops
 * [fix]: polish create character dialog layout

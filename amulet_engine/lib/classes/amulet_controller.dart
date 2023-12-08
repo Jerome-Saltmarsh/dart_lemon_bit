@@ -1284,6 +1284,4 @@ class AmuletController {
       z: 96,
     );
   }
-
-
 }

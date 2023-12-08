@@ -87,7 +87,7 @@ class AmuletGameTutorial extends AmuletGame {
       !const[GameObjectType.Crystal_Glowing_False, GameObjectType.Crystal_Glowing_True].contains(element.subType)
     );
 
-    player.equipBody(AmuletItem.Armor_Leather_Basic, force: true);
+    player.equipBody(AmuletItem.Armor_Shirt_Blue_Worn, force: true);
     player.equipLegs(AmuletItem.Pants_Travellers, force: true);
     player.equippedWeaponIndex = -1;
 
