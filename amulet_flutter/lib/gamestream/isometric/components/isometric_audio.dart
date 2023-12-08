@@ -61,6 +61,10 @@ class IsometricAudio with IsometricComponent implements Updatable {
 
   late final audioLoopFire = AudioLoop(name: 'fire', getTargetVolume: getVolumeFire, volumeFade: 1.0);
 
+  late final audioSingles = <AudioSingle>[
+
+  ];
+
   late final audioLoops = <AudioLoop> [
     AudioLoop(name: 'wind', getTargetVolume: environment.getVolumeTargetWind),
     AudioLoop(name: 'rain', getTargetVolume: getVolumeTargetRain),
@@ -211,6 +215,13 @@ class IsometricAudio with IsometricComponent implements Updatable {
   }
 
   var _nextAudioSourceUpdate = 0;
+
+  @override
+  Future onComponentInit(sharedPreferences) async {
+    for (final audioLoop in audioLoops){
+      audioLoop.load();
+    }
+  }
 
   void onComponentUpdate() {
     if (!audio.enabledSound.value) {
@@ -465,6 +476,10 @@ class IsometricAudio with IsometricComponent implements Updatable {
 
   void musicStop(){
     // audioTracks.stop();
+  }
+
+  Future load() async {
+
   }
 
 }

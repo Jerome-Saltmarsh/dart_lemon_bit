@@ -1,25 +1,18 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:audioplayers/audioplayers.dart';
 
 class AudioSingle {
+  final loader = Completer();
   final String name;
   final audioPlayer = AudioPlayer();
   var loaded = false;
+  var loading = false;
 
   AudioSingle({
     required this.name,
-  }){
-    audioPlayer.setReleaseMode(ReleaseMode.stop).then((value) {
-      audioPlayer.setPlayerMode(PlayerMode.lowLatency).then((value) {
-        audioPlayer.setSourceAsset('audio/$name.mp3').then((value){
-          loaded = true;
-        });
-      });
-    });
-
-
-  }
+  });
 
 
   void call([double volume = 1.0]){
@@ -27,7 +20,14 @@ class AudioSingle {
   }
 
   void play({double volume = 1.0}) {
-    if (!loaded) return;
+    if (!loaded) {
+      load().then((value) {
+        if (value){
+          play(volume: volume);
+        }
+      });
+      return;
+    }
     if (volume <= 0) return;
     final audioPlayer = this.audioPlayer;
     if (audioPlayer.volume != volume){
@@ -42,5 +42,24 @@ class AudioSingle {
   void restart(){
     audioPlayer.seek(const Duration());
     audioPlayer.resume();
+  }
+
+  Future load() async {
+    if (loaded){
+      return false;
+    }
+    if (loading){
+      return loader;
+    }
+    loading = true;
+    audioPlayer.setReleaseMode(ReleaseMode.stop).then((value) {
+      audioPlayer.setPlayerMode(PlayerMode.lowLatency).then((value) {
+        audioPlayer.setSourceAsset('audio/$name.mp3').then((value){
+          loaded = true;
+          loader.complete(true);
+        });
+      });
+    });
+    return loader;
   }
 }

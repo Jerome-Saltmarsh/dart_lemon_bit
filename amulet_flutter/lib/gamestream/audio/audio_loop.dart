@@ -19,8 +19,9 @@ class AudioLoop {
     required this.name,
     required this.getTargetVolume,
     this.volumeFade = 0.05,
-  }) {
-    audioPlayer.setReleaseMode(ReleaseMode.loop).then((value) {
+  });
+
+  Future load() => audioPlayer.setReleaseMode(ReleaseMode.loop).then((value) {
       audioPlayer.setPlayerMode(PlayerMode.lowLatency).then((value) {
         audioPlayer.setSourceAsset('audio/$name.mp3').then((value){
           loaded = true;
@@ -29,7 +30,6 @@ class AudioLoop {
         });
       });
     });
-  }
 
   void update(){
     final targetVolume = clamp01(getTargetVolume());
