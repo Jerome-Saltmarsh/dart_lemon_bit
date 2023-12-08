@@ -106,6 +106,11 @@ class IsometricPlayer with IsometricComponent {
   void onChangedControlsEnabled(bool value){
     print('player.onChangedControlsEnabled($value)');
     camera.enableMouseTranslation = value;
+    if (value){
+      camera.chaseStrength = 0.001;
+    } else {
+      camera.chaseStrength = 0.00035;
+    }
   }
 
   double get x => position.x;
