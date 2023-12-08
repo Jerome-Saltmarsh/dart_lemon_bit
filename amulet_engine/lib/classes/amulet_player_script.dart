@@ -51,7 +51,7 @@ class AmuletPlayerScript {
 
   AmuletPlayerScript controls(bool enabled) =>
       add(() {
-        log('controls(enabled: $enabled)');
+        // log('controls(enabled: $enabled)');
         if (enabled){
           player.clearCameraTarget();
         } else {
@@ -59,7 +59,7 @@ class AmuletPlayerScript {
           player.clearPath();
           player.setDestinationToCurrentPosition();
         }
-        player.controlsEnabled = enabled;
+        player.setControlsEnabled(enabled);
       });
 
   AmuletPlayerScript movePlayerToSceneKey(String sceneKey) =>

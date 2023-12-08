@@ -9,7 +9,7 @@ class IsometricCamera with IsometricComponent {
   var chaseStrength = 0.001;
   var translateX = 0.0;
   var translateY = 25.0;
-  var mouseFollowSensitivity = 0.15;
+  var mouseFollowSensitivity = 0.03;
   var enableMouseTranslation = true;
 
   Position? target;
@@ -40,11 +40,23 @@ class IsometricCamera with IsometricComponent {
     final translateDistance = mouseDistance * mouseFollowSensitivity;
     final mouseTranslateX = adj(mouseAngle, translateDistance);
     final mouseTranslateY = opp(mouseAngle, translateDistance);
+    final zoom = engine.zoom;
+
+    var followX = 0.0;
+    var followY = 0.0;
+
+    followX +=  target.renderX;
+    followY +=  target.renderY;
+
+    if (enableMouseTranslation){
+      followX += (translateX / zoom) + (mouseTranslateX * zoom);
+      followY += (translateY / zoom) + (mouseTranslateY * zoom);
+    }
 
     engine.cameraFollow(
-      target.renderX + translateX + mouseTranslateX,
-      target.renderY + (translateY / engine.zoom) + mouseTranslateY,
-      chaseStrength,
+      followX,
+      followY,
+      chaseStrength * zoom.clamp(0, 2.0),
     );
   }
 

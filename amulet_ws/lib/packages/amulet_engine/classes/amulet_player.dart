@@ -65,7 +65,7 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
     equipmentDirty = true;
     spawnLootOnDeath = false;
     setItemsLength(itemLength);
-
+    setControlsEnabled(true);
     writeWorldMapBytes();
     writeAmuletElements();
     writeElementPoints();

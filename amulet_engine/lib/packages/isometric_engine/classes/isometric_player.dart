@@ -1385,4 +1385,11 @@ class IsometricPlayer extends Character with ByteWriter {
     writeByte(NetworkResponse.Player);
     writeByte(NetworkResponsePlayer.Cache_Cleared);
   }
+
+  void setControlsEnabled(bool value){
+    controlsEnabled = value;
+    writeByte(NetworkResponse.Player);
+    writeByte(NetworkResponsePlayer.Controls_Enabled);
+    writeBool(value);
+  }
 }

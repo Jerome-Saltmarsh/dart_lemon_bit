@@ -25,6 +25,7 @@ class IsometricPlayer with IsometricComponent {
   var areaNodeIndex = 0;
   var characterState = 0;
 
+  final controlsEnabled = Watch(true);
   final name = Watch('');
   final runToDestinationEnabled = Watch(false);
   final arrivedAtDestination = Watch(false);
@@ -98,8 +99,14 @@ class IsometricPlayer with IsometricComponent {
         // engine.setCursorCrosshair();
       }
     });
+
+    controlsEnabled.onChanged(onChangedControlsEnabled);
   }
 
+  void onChangedControlsEnabled(bool value){
+    print('player.onChangedControlsEnabled($value)');
+    camera.enableMouseTranslation = value;
+  }
 
   double get x => position.x;
 
@@ -280,6 +287,9 @@ class IsometricPlayer with IsometricComponent {
         break;
       case NetworkResponsePlayer.Cache_Cleared:
         readCacheCleared();
+        break;
+      case NetworkResponsePlayer.Controls_Enabled:
+        controlsEnabled.value = parser.readBool();
         break;
     }
   }
