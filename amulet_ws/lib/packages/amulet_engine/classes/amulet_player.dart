@@ -1,7 +1,7 @@
 
 import '../packages/src.dart';
+import '../mixins/src.dart';
 import 'amulet.dart';
-import 'amulet_character.dart';
 import 'amulet_game.dart';
 import 'amulet_game_tutorial.dart';
 import 'amulet_item_slot.dart';
@@ -9,7 +9,7 @@ import 'amulet_npc.dart';
 import 'talk_option.dart';
 
 
-class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
+class AmuletPlayer extends IsometricPlayer with Equipment, Elemental {
 
   static const healthBase = 10;
 
@@ -26,10 +26,6 @@ class AmuletPlayer extends IsometricPlayer with AmuletCharacter {
   var npcText = '';
   var npcOptions = <TalkOption>[];
   Function? onInteractionOver;
-
-  var elementFire = 0;
-  var elementWater = 0;
-  var elementElectricity = 0;
 
   int? get equippedWeaponDamage => equippedWeaponAmuletItemLevel?.damage;
 

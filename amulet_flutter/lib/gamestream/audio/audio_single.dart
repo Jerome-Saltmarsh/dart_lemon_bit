@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:audioplayers/audioplayers.dart';
 
 class AudioSingle {
-  final loader = Completer();
+  final loader = Completer<bool>();
   final String name;
   final audioPlayer = AudioPlayer();
   var loaded = false;
@@ -13,7 +13,6 @@ class AudioSingle {
   AudioSingle({
     required this.name,
   });
-
 
   void call([double volume = 1.0]){
     play(volume: volume);
@@ -49,7 +48,7 @@ class AudioSingle {
       return false;
     }
     if (loading){
-      return loader;
+      return loader.future;
     }
     loading = true;
     audioPlayer.setReleaseMode(ReleaseMode.stop).then((value) {
@@ -60,6 +59,6 @@ class AudioSingle {
         });
       });
     });
-    return loader;
+    return loader.future;
   }
 }

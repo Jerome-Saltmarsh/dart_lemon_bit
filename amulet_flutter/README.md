@@ -16,10 +16,21 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## BLOCK
-* [new]: polish tutorial
-* [new]: map locations
+* [new]: character type wolf
+* [new]: character type zombie
+* [new]: character type vampire
+* [new]: character type ghost
+* [new]: character type skeleton swordsman
 
 ## TODO
+* [fix]: front view renders
+* [new]: polish tutorial
+* [new]: location dark castle
+* [new]: location gloomy woods
+* [new]: location forsaken swamp
+* [new]: map locations
+* [new]: enemies level 2
+* [new]: enemies level 3
 * [new]: model head type female
 * [new]: model leg type iron plates
 * [new]: model hair type 4

@@ -15,6 +15,7 @@ enum FiendType {
     weaponType: WeaponType.Sword,
     weaponRange: 25,
     quantity: 3,
+    weaponCooldown: 20,
   ),
   Skeleton(
     level: 2,
@@ -28,6 +29,7 @@ enum FiendType {
     weaponType: WeaponType.Bow,
     weaponRange: 150,
     quantity: 2,
+    weaponCooldown: 20,
   );
 
   final int level;
@@ -35,13 +37,14 @@ enum FiendType {
   final int damage;
   final int attackDuration;
   final int characterType;
-  final int weaponType;
   final int experience;
   /// how many fiends are spawned per mark
   final int quantity;
   final double runSpeed;
   final double chanceOfSetTarget;
   final double weaponRange;
+  final int weaponType;
+  final int weaponCooldown;
 
   const FiendType({
     required this.level,
@@ -55,5 +58,6 @@ enum FiendType {
     required this.weaponType,
     required this.weaponRange,
     required this.quantity,
+    required this.weaponCooldown,
   });
 }

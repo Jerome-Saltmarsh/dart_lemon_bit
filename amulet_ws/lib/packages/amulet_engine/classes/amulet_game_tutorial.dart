@@ -6,7 +6,6 @@ import 'amulet_item_slot.dart';
 import 'amulet_npc.dart';
 import 'amulet_player.dart';
 import 'amulet_player_script.dart';
-import 'talk_option.dart';
 
 
 class AmuletGameTutorial extends AmuletGame {
@@ -620,7 +619,6 @@ class AmuletGameTutorial extends AmuletGame {
       .add(() => startNextTutorialObjective(player));
   }
 
-
   void onFiends02Vanquished(AmuletPlayer player) =>
       runScript(player)
           .puzzleSolved()
@@ -640,7 +638,7 @@ class AmuletGameTutorial extends AmuletGame {
             'fire is strong against electricity.'
             'electricity is strong against water.'
             'water is strong against fire.'
-            'the power of every item is determined by these elements.'
+            'the level of equipped items is determined by these elements.'
             'for example.'
             'the sword one doth possess is at level 1.'
             'level two requires at least 1 element of fire.'
@@ -888,43 +886,8 @@ class AmuletGameTutorial extends AmuletGame {
           .faceEachOther(player, guide)
           .talk(guide,
             'one has learnt all another can teach.'
-            'is one ready to begin?',
-            options: [
-              TalkOption('Yes', (player) {
-                runScript(player)
-                    .talk(guide, 'very well.')
-                    .cameraClearTarget()
-                    .wait(seconds: 1)
-                    .deactivate(player)
-                    .add(() => player.spawnConfettiAtPosition(player))
-                    .wait(seconds: 2)
-                    .wait(seconds: 1)
-                    .add(() => player.spawnConfettiAtPosition(player))
-                    .activate(player)
-                    .end()
-                    .changeGame(amulet.amuletGameTown, sceneKey: 'player_spawn')
-                ;
-              }),
-              TalkOption('No', (player) => player.endInteraction),
-          ])
+            'now one goes to the netherplains where ones destiny awaits.',
+          )
           .end();
-      // runScript(player)
-      //     .controlsDisabled()
-      //     .movePositionToSceneKey(guide, keysSpawnBow)
-      //     .puzzleSolved()
-      //     .wait(seconds: 1)
-      //     .faceEachOther(guide, player)
-      //     .activate(guide)
-      //     .cameraSetTarget(guide)
-      //     .wait(seconds: 1)
-      //     .talk(guide, 'one has done well. the world outside awaits.')
-      //     .wait(seconds: 1)
-      //     .cameraSetTargetSceneKey(keysExit)
-      //     .wait(seconds: 1)
-      //     .playAudioType(AudioType.unlock_2)
-      //     .setNodeEmptyAtSceneKey(keysExit)
-      //     .wait(seconds: 1)
-      //     .deactivate(guide)
-      //     .end();
 }
 

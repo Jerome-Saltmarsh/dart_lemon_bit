@@ -1,6 +1,9 @@
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:amulet_engine/classes/amulet_fiend.dart';
+import 'package:amulet_engine/mixins/equipment.dart';
+
 import '../packages/isometric_engine/isometric_engine.dart';
 import 'amulet.dart';
 import 'amulet_gameobject.dart';
@@ -12,16 +15,15 @@ import 'amulet_player.dart';
 class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   final Amulet amulet;
-
   final String name;
+  final AmuletScene amuletScene;
+
   final chanceOfDropItemOnGrassCut = 0.25;
   final gameObjectDeactivationTimer = 5000;
   final lootDeactivationTimer = 5000;
-  final AmuletScene amuletScene;
+
   var cooldownTimer = 0;
-
   var flatNodes = Uint8List(0);
-
   var worldIndex = 255;
   var worldRow = 255;
   var worldColumn = 255;
@@ -114,8 +116,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
           index: MarkType.getIndex(markValue),
         );
       }
-
-
     }
   }
 
@@ -123,56 +123,25 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required FiendType fiendType,
     required int index,
   }) =>
-    assignFiendTypeToCharacter(
-      fiendType,
-      spawnCharacterAtIndex(index),
-    );
+      spawnAmuletFiendAtXYZ(
+        x: scene.getIndexX(index),
+        y: scene.getIndexY(index),
+        z: scene.getIndexZ(index),
+        fiendType: fiendType,
+      );
 
-  static Character assignFiendTypeToCharacter(
-      FiendType fiendType,
-      Character character,
-  ) =>
-    character
-      ..maxHealth = fiendType.health
-      ..health = fiendType.health
-      ..name = fiendType.name
-      ..weaponDamage = fiendType.damage
-      ..attackDuration = fiendType.attackDuration
-      ..runSpeed = fiendType.runSpeed
-      ..experience = fiendType.experience
-      ..chanceOfSetTarget = fiendType.chanceOfSetTarget
-      ..weaponType = fiendType.weaponType
-      ..weaponRange = fiendType.weaponRange
-      ..characterType = fiendType.characterType;
-
-  Character spawnCharacterAtIndex(int index) =>
-    spawnCharacterAtXYZ(
-      x: scene.getIndexX(index),
-      y: scene.getIndexY(index),
-      z: scene.getIndexZ(index),
-    );
-
-  Character spawnCharacterAtXYZ({
+  AmuletFiend spawnAmuletFiendAtXYZ({
     required double x,
     required double y,
     required double z,
+    required FiendType fiendType,
   }) {
-    final character = Character(
+    final character = AmuletFiend(
       team: AmuletTeam.Monsters,
       x: x,
       y: y,
       z: z,
-      health: 7,
-      weaponDamage: 1,
-      characterType: CharacterType.Fallen,
-      weaponType: WeaponType.Unarmed,
-      weaponCooldown: 20,
-      weaponRange: 20,
-      actionFrame: 15,
-      attackDuration: 25,
-      doesWander: true,
-      name: 'Fallen',
-      runSpeed: 0.75,
+      fiendType: fiendType,
     )
       ..weaponHitForce = 2;
 
@@ -183,7 +152,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   @override
   void customOnPlayerDead(AmuletPlayer player) {
     addJob(seconds: 5, action: () {
-      // setCharacterStateSpawning(player);
       revive(player);
     });
   }
@@ -557,14 +525,18 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     if (marks.isEmpty){
       return;
     }
-    final spawnFallens = getMarkTypes(MarkType.Fiend);
-    if (spawnFallens.isEmpty) {
+    final fiendMarks = getMarkTypes(MarkType.Fiend);
+    if (marks.isEmpty) {
       return;
     }
 
-    final markValue = randomItem(spawnFallens.toList());
+    final markValue = randomItem(fiendMarks.toList());
     final index = MarkType.getIndex(markValue);
-    spawnCharacterAtIndex(index);
+    final fiendType = MarkType.getSubType(markValue);
+    spawnFiendTypeAtIndex(
+      fiendType: FiendType.values[fiendType],
+      index: index,
+    );
   }
 
   // @override
@@ -746,6 +718,19 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       }
       return;
     }
+  }
+
+  @override
+  void applyDamageToCharacter({
+    required Character src,
+    required Character target,
+    required int amount,
+  }) {
+    if (src is Equipment){
+
+    }
+
+    super.applyDamageToCharacter(src: src, target: target, amount: amount);
   }
 
 }

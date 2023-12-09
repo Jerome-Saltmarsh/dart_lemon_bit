@@ -1,6 +1,5 @@
 library;
 
-export 'amulet_character.dart';
 export 'amulet_game.dart';
 export 'amulet_controller.dart';
 export 'amulet_game_editor.dart';
