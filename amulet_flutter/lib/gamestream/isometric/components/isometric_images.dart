@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:amulet_engine/packages/common.dart';
-import 'package:amulet_flutter/gamestream/sprites/character_sprite_groups.dart';
+import 'package:amulet_flutter/gamestream/sprites/character_shader.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:amulet_flutter/packages/utils/parse.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
@@ -52,13 +52,9 @@ class IsometricImages with IsometricComponent {
   final values = <Image>[];
   final _completerImages = Completer();
 
-  late final CharacterSpriteGroups spriteCharactersFallen;
-  late final CharacterSpriteGroups spriteCharactersSkeleton;
-
-  late final CharacterSpriteGroup spriteGroupWolfFlat;
-  late final CharacterSpriteGroup spriteGroupWolfWest;
-  late final CharacterSpriteGroup spriteGroupWolfSouth;
-  late final CharacterSpriteGroup spriteGroupWolfShadow;
+  late final CharacterShader characterShaderFallen;
+  late final CharacterShader characterShaderSkeleton;
+  late final CharacterShader characterShaderWolf;
 
   late final Sprite rock1;
   late final Sprite crystal;
@@ -408,8 +404,9 @@ class IsometricImages with IsometricComponent {
       ItemType.Spell: atlas_spells,
     };
 
-    loadCharacterSpriteGroups(dirFallen).then((value) => spriteCharactersFallen = value);
-    loadCharacterSpriteGroups(dirSkeleton).then((value) => spriteCharactersSkeleton = value);
+    loadCharacterShader(dirFallen).then((value) => characterShaderFallen = value);
+    loadCharacterShader(dirSkeleton).then((value) => characterShaderSkeleton = value);
+    loadCharacterShader(dirWolf).then((value) => characterShaderWolf = value);
 
     flame0 = await loadSprite(
         name: 'assets/sprites/isometric/flame/wind0',
@@ -579,7 +576,7 @@ class IsometricImages with IsometricComponent {
      return image;
    }
 
-   Future<CharacterSpriteGroups> loadCharacterSpriteGroups(String directory) async {
+   Future<CharacterShader> loadCharacterShader(String directory) async {
 
      var loaded = 0;
      final completer = Completer();
@@ -612,7 +609,7 @@ class IsometricImages with IsometricComponent {
        onLoadCompleted();
      });
      await completer.future;
-     return CharacterSpriteGroups(
+     return CharacterShader(
        flat: flat,
        west: west,
        south: south,

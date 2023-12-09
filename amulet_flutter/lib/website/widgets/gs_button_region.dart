@@ -23,7 +23,7 @@ class GSButtonRegion extends StatelessWidget {
                   buildBorder(
                     child: Container(
                       padding: EdgeInsets.all(8),
-                      child: buildText(formatEnumName(region?.name ?? 'select')),
+                      child: buildText(formatEnumName(region.name)),
                     ),
                   ),
                 ],

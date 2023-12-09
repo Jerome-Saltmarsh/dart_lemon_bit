@@ -54,9 +54,22 @@ flutter:
     - assets/sprites/isometric/
     - assets/sprites/isometric/gameobjects/
     - assets/sprites/isometric/flame/
-    - assets/sprites/isometric/wolf/diffuse/
+    - assets/sprites/isometric/wolf/flat/
+    - assets/sprites/isometric/wolf/shadow/
     - assets/sprites/isometric/wolf/south/
     - assets/sprites/isometric/wolf/west/
+    - assets/sprites/isometric/fallen/flat/
+    - assets/sprites/isometric/fallen/shadow/
+    - assets/sprites/isometric/fallen/south/
+    - assets/sprites/isometric/fallen/west/
+    - assets/sprites/isometric/skeleton/flat/
+    - assets/sprites/isometric/skeleton/shadow/
+    - assets/sprites/isometric/skeleton/south/
+    - assets/sprites/isometric/skeleton/west/
+    - assets/sprites/isometric/butterfly/
+    - assets/sprites/isometric/moth/
+    - assets/sprites/isometric/bat/
+    - assets/sprites/isometric/crystal/
     - assets/sprites/isometric/kid/
     - assets/sprites/isometric/kid/diffuse/
     - assets/sprites/isometric/kid/diffuse/torso/
@@ -155,15 +168,3 @@ flutter:
     - assets/sprites/front/kid/diffuse/weapons/bow/
     - assets/sprites/front/kid/diffuse/weapons/staff/
     - assets/sprites/front/kid/diffuse/weapons/sword/
-    - assets/sprites/isometric/fallen/flat/
-    - assets/sprites/isometric/fallen/shadow/
-    - assets/sprites/isometric/fallen/south/
-    - assets/sprites/isometric/fallen/west/
-    - assets/sprites/isometric/skeleton/flat/
-    - assets/sprites/isometric/skeleton/shadow/
-    - assets/sprites/isometric/skeleton/south/
-    - assets/sprites/isometric/skeleton/west/
-    - assets/sprites/isometric/butterfly/
-    - assets/sprites/isometric/moth/
-    - assets/sprites/isometric/bat/
-    - assets/sprites/isometric/crystal/

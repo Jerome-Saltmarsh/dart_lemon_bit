@@ -1,5 +1,6 @@
 import 'package:amulet_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_images.dart';
+import 'package:amulet_flutter/gamestream/sprites/character_shader.dart';
 import 'package:amulet_flutter/isometric/classes/character.dart';
 import 'package:amulet_engine/packages/common.dart';
 import 'package:lemon_engine/lemon_engine.dart';
@@ -75,10 +76,13 @@ class RendererCharacters extends RenderGroup {
         renderCharacterHuman(character);
         break;
       case CharacterType.Fallen:
-        renderCharacterFallen(character);
+        renderCharacterShader(character, images.characterShaderFallen);
         break;
       case CharacterType.Skeleton:
-        renderCharacterSkeleton(character);
+        renderCharacterShader(character, images.characterShaderSkeleton);
+        break;
+      case CharacterType.Wolf:
+        renderCharacterShader(character, images.characterShaderWolf);
         break;
       default:
         throw Exception('Cannot render character type: ${character.characterType}');
@@ -610,7 +614,7 @@ class RendererCharacters extends RenderGroup {
     final row = character.renderDirection;
     final column = character.animationFrame;
     final characterState = character.state;
-    final spriteGroupsFallen = images.spriteCharactersFallen;
+    final spriteGroupsFallen = images.characterShaderFallen;
     final spriteFlat = spriteGroupsFallen.flat.fromCharacterState(characterState);
     final spriteWest = spriteGroupsFallen.west.fromCharacterState(characterState);
     final spriteSouth = spriteGroupsFallen.south.fromCharacterState(characterState);
@@ -674,11 +678,75 @@ class RendererCharacters extends RenderGroup {
     final images = this.images;
     final row = character.renderDirection;
     final column = character.animationFrame;
-    final shaders = images.spriteCharactersSkeleton;
+    final shaders = images.characterShaderSkeleton;
     final spriteShadow = shaders.shadow.fromCharacterState(character.state);
     final spriteFlat = shaders.flat.fromCharacterState(character.state);
     final spriteWest = shaders.west.fromCharacterState(character.state);
     final spriteSouth = shaders.south.fromCharacterState(character.state);
+
+    final dstX = character.renderX;
+    final dstY = character.renderY;
+    final render = this.render;
+
+    final colorDiffuse = character.colorDiffuse;
+
+    render.sprite(
+      sprite: spriteShadow,
+      frame: spriteShadow.getFrame(row: row, column: column),
+      color: colorDiffuse,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
+    render.sprite(
+      sprite: spriteFlat,
+      frame: spriteFlat.getFrame(row: row, column: column),
+      color: colorDiffuse,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
+    render.sprite(
+      sprite: spriteWest,
+      frame: spriteWest.getFrame(row: row, column: column),
+      color: character.colorNorthWest,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
+    render.sprite(
+      sprite: spriteSouth,
+      frame: spriteSouth.getFrame(row: row, column: column),
+      color: character.colorSouthEast,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+  }
+
+  void renderCharacterShader(Character character, CharacterShader shader) {
+
+    if (
+      (renderBottom && !character.dead) ||
+      (!renderBottom && character.dead))
+      return;
+
+    const scale = 0.5;
+    const anchorY = 0.6;
+
+    final row = character.renderDirection;
+    final column = character.animationFrame;
+    final spriteShadow = shader.shadow.fromCharacterState(character.state);
+    final spriteFlat = shader.flat.fromCharacterState(character.state);
+    final spriteWest = shader.west.fromCharacterState(character.state);
+    final spriteSouth = shader.south.fromCharacterState(character.state);
 
     final dstX = character.renderX;
     final dstY = character.renderY;

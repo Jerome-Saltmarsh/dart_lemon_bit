@@ -1,13 +1,13 @@
 
 import 'character_sprite_group.dart';
 
-class CharacterSpriteGroups {
+class CharacterShader {
   final CharacterSpriteGroup flat;
   final CharacterSpriteGroup west;
   final CharacterSpriteGroup south;
   final CharacterSpriteGroup shadow;
 
-  CharacterSpriteGroups({
+  CharacterShader({
     required this.flat,
     required this.west,
     required this.south,

@@ -30,6 +30,20 @@ enum FiendType {
     weaponRange: 150,
     quantity: 2,
     weaponCooldown: 20,
+  ),
+  Wolf(
+    level: 2,
+    health: 5,
+    damage: 3,
+    characterType: CharacterType.Wolf,
+    attackDuration: 20,
+    experience: 2,
+    runSpeed: 1.25,
+    chanceOfSetTarget: 0.25,
+    weaponType: WeaponType.Unarmed,
+    weaponRange: 50,
+    quantity: 3,
+    weaponCooldown: 20,
   );
 
   final int level;
