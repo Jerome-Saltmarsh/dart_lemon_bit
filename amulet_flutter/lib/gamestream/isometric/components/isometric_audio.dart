@@ -1,4 +1,5 @@
 
+import 'dart:async';
 import 'dart:math';
 
 import 'package:amulet_flutter/isometric/functions/get_render.dart';
@@ -13,7 +14,6 @@ import '../../audio/audio_single.dart';
 import 'package:lemon_watch/src.dart';
 
 class IsometricAudio with IsometricComponent implements Updatable {
-
 
   late final mutedMusic = Watch(false, onChanged: (bool muted){
     print('music muted: $muted');
@@ -40,30 +40,30 @@ class IsometricAudio with IsometricComponent implements Updatable {
   var nextRandomSound = 0;
   var nextRandomMusic = 0;
 
-  final musicNight = [
-    AudioSingle(name: 'creepy-whistle'),
-    AudioSingle(name: 'creepy-wind'),
-    AudioSingle(name: 'spooky-tribal'),
+  late final musicNight = [
+    creepyWhistle,
+    creepyWind,
+    spookyTribal,
   ];
 
-  final soundsNight = [
-    AudioSingle(name: 'owl-1'),
-    AudioSingle(name: 'creepy-5'),
+  late final soundsNight = [
+    owl1,
+    creepy5,
   ];
 
-  final soundsDay = [
-    AudioSingle(name: 'wind-chime'),
+  late final soundsDay = [
+    windChime,
   ];
 
-  final soundsLateAfternoon = [
-    AudioSingle(name: 'gong'),
+  late final soundsLateAfternoon = [
+    gong,
   ];
 
-  late final audioLoopFire = AudioLoop(name: 'fire', getTargetVolume: getVolumeFire, volumeFade: 1.0);
-
-  late final audioSingles = <AudioSingle>[
-
-  ];
+  late final audioLoopFire = AudioLoop(
+      name: 'fire',
+      getTargetVolume: getVolumeFire,
+      volumeFade: 1.0,
+  );
 
   late final audioLoops = <AudioLoop> [
     AudioLoop(name: 'wind', getTargetVolume: environment.getVolumeTargetWind),
@@ -71,23 +71,60 @@ class IsometricAudio with IsometricComponent implements Updatable {
     AudioLoop(name: 'crickets', getTargetVolume: getVolumeTargetCrickets),
     AudioLoop(name: 'day-ambience', getTargetVolume: getVolumeTargetDayAmbience),
     AudioLoop(name: 'distant-thunder', getTargetVolume: getVolumeTargetDistanceThunder),
-    // AudioLoop(name: 'heart-beat', getTargetVolume: getVolumeHeartBeat),
     audioLoopFire,
-    // AudioLoop(name: 'fire', getTargetVolume: getVolumeFire, volumeFade: 1.0),
+  ];
+
+  late final audioSingles = <AudioSingle>[
+    owl1,
+    creepy5,
+    windChime,
+    gong,
+    creepyWhistle,
+    waterDrop,
+    unlock_2,
+    jump,
+    creepyWind,
+    spookyTribal,
+    dog_woolf_howl_4,
+    wolf_howl,
+    weaponSwap2,
+    eat,
+    reviveHeal1,
+    drink,
+    buff_1,
+    buff_10,
+    errorSound15,
+    popSounds14,
+    coins,
+    coins_24,
+    hoverOverButtonSound5,
+    thunder,
+    fire_bolt_14,
+    dagger_woosh_9,
+    metal_light_3,
+    footstep_grass_8,
+    footstep_grass_7,
+    footstep_mud_6,
+    footstep_stone,
+    footstep_wood_4,
+    bow_draw,
+    debuff_4,
+    buff_16,
+    buff_19,
+    bow_release,
+    arrow_impact,
+    arrow_flying_past_6,
   ];
 
 
-  final voiceYourTeamHasTheEnemyFlag = AudioSingle(name: 'voices/voice_your_team_has_the_enemy_flag');
-  final voiceYourTeamHasYourFlag = AudioSingle(name: 'voices/voice_your_team_has_your_flag');
-  final voiceTheEnemyFlagHasBeenDropped = AudioSingle(name: 'voices/voice_the_enemy_flag_has_been_dropped');
-  final voiceTheEnemyHasScored = AudioSingle(name: 'voices/voice_the_enemy_has_scored');
-  final voiceTheEnemyHasTheirFlag = AudioSingle(name: 'voices/voice_the_enemy_has_their_flag');
-  final voiceTheEnemyHasYourFlag = AudioSingle(name: 'voices/voice_the_enemy_has_your_flag');
-  final voiceYourFlagHasBeenDropped = AudioSingle(name: 'voices/voice_your_flag_has_been_dropped');
-  final voiceYourFlagIsAtYourBase = AudioSingle(name: 'voices/voice_your_flag_is_at_your_base');
-  final voiceYourTeamHasScoredAPoint = AudioSingle(name: 'voices/voice_your_team_has_scored_a_point');
-  final voiceTheEnemyFlagIsAtTheirBase = AudioSingle(name: 'voices/voice_the_enemy_flag_is_at_their_base');
 
+  final owl1 = AudioSingle(name: 'owl-1');
+  final creepy5 = AudioSingle(name: 'creepy-5');
+  final windChime = AudioSingle(name: 'wind-chime');
+  final gong = AudioSingle(name: 'gong');
+  final creepyWhistle = AudioSingle(name: 'creepy-whistle');
+  final creepyWind = AudioSingle(name: 'creepy-wind');
+  final spookyTribal = AudioSingle(name: 'spooky-tribal');
   final waterDrop = AudioSingle(name: 'sounds/water_drip');
   final unlock_2 = AudioSingle(name: 'sounds/unlock_2');
   final jump = AudioSingle(name: 'sounds/jump');
@@ -120,7 +157,6 @@ class IsometricAudio with IsometricComponent implements Updatable {
   final buff_19 = AudioSingle(name: 'buff-19');
   final bow_release = AudioSingle(name: 'bow-release');
   final arrow_impact = AudioSingle(name: 'arrow-impact');
-  final grenade_bounce = AudioSingle(name: 'grenade-bounce');
   final arrow_flying_past_6 = AudioSingle(name: 'arrow-flying-past-6');
   final notification_sound_10 = AudioSingle(name: 'notification-sound-10');
   final notification_sound_12 = AudioSingle(name: 'notification-sound-12');
@@ -215,13 +251,6 @@ class IsometricAudio with IsometricComponent implements Updatable {
   }
 
   var _nextAudioSourceUpdate = 0;
-
-  @override
-  Future onComponentInit(sharedPreferences) async {
-    for (final audioLoop in audioLoops){
-      audioLoop.load();
-    }
-  }
 
   void onComponentUpdate() {
     if (!audio.enabledSound.value) {
@@ -479,6 +508,27 @@ class IsometricAudio with IsometricComponent implements Updatable {
   }
 
   Future load() async {
+    print('isometricAudio.onComponentInit()');
+    final completer = Completer();
+    var total = 0;
+    var totalLoaded = 0;
+
+    final timeStarted = DateTime.now();
+    // for (final audioLoop in audioLoops){
+    //   audioLoop.load();
+    // }
+    for (final audioSingle in audioSingles){
+      total++;
+      audioSingle.load().then((value) {
+        totalLoaded++;
+        if (totalLoaded >= total){
+          completer.complete(true);
+          final ms = DateTime.now().difference(timeStarted).inMilliseconds;
+          print('audio took $ms: milliseconds to load');
+        }
+      });
+    }
+    return completer.future;
 
   }
 

@@ -131,7 +131,6 @@ class IsometricEvents with IsometricComponent {
         onSplash(x, y, z);
         return;
       case GameEventType.Item_Bounce:
-        audio.play(audio.grenade_bounce, x, y, z);
         return;
       case GameEventType.Spawn_Dust_Cloud:
         break;

@@ -48,7 +48,6 @@ flutter:
     - assets/audio/ui/
     - assets/audio/music/
     - assets/audio/sounds/
-    - assets/audio/voices/
     - assets/images/
     - assets/scenes/
     - assets/sprites/

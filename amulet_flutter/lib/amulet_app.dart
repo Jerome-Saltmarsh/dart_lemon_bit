@@ -21,6 +21,7 @@ class AmuletApp extends LemonEngine {
 
   @override
   Widget buildUI(BuildContext buildContext) {
+    components.audio.load();
     return components.ui.buildUI(buildContext);
   }
 
