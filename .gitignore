@@ -2,9 +2,11 @@
 .dart_tool/
 .packages
 .idea
+.renders
 # Conventional directory for build output.
 build/
 packages/
+resources/renders/
 # See https://www.dartlang.org/guides/libraries/private-files
 
 # Files and directories created by pub

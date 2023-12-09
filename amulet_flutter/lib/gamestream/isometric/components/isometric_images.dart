@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:amulet_engine/packages/common.dart';
+import 'package:amulet_flutter/gamestream/sprites/character_sprite_groups.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:amulet_flutter/packages/utils/parse.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
@@ -26,6 +27,7 @@ class IsometricImages with IsometricComponent {
   static const dirIsometric = '$dirSprites/isometric';
   static const dirFallen = '$dirIsometric/fallen';
   static const dirSkeleton = '$dirIsometric/skeleton';
+  static const dirWolf = '$dirIsometric/wolf';
 
   var imagesCached = false;
   
@@ -50,15 +52,21 @@ class IsometricImages with IsometricComponent {
   final values = <Image>[];
   final _completerImages = Completer();
 
-  late final CharacterSpriteGroup spriteGroupFallenFlat;
-  late final CharacterSpriteGroup spriteGroupFallenWest;
-  late final CharacterSpriteGroup spriteGroupFallenSouth;
-  late final CharacterSpriteGroup spriteGroupFallenShadow;
+  late final CharacterSpriteGroups spriteCharactersFallen;
+  // late final CharacterSpriteGroup spriteGroupFallenFlat;
+  // late final CharacterSpriteGroup spriteGroupFallenWest;
+  // late final CharacterSpriteGroup spriteGroupFallenSouth;
+  // late final CharacterSpriteGroup spriteGroupFallenShadow;
 
   late final CharacterSpriteGroup spriteGroupSkeletonFlat;
   late final CharacterSpriteGroup spriteGroupSkeletonWest;
   late final CharacterSpriteGroup spriteGroupSkeletonSouth;
   late final CharacterSpriteGroup spriteGroupSkeletonShadow;
+
+  late final CharacterSpriteGroup spriteGroupWolfFlat;
+  late final CharacterSpriteGroup spriteGroupWolfWest;
+  late final CharacterSpriteGroup spriteGroupWolfSouth;
+  late final CharacterSpriteGroup spriteGroupWolfShadow;
 
   late final Sprite rock1;
   late final Sprite crystal;
@@ -408,10 +416,11 @@ class IsometricImages with IsometricComponent {
       ItemType.Spell: atlas_spells,
     };
 
-    loadCharacterSpriteGroup('$dirFallen/flat').then((value) => spriteGroupFallenFlat = value);
-    loadCharacterSpriteGroup('$dirFallen/shadow').then((value) => spriteGroupFallenShadow = value);
-    loadCharacterSpriteGroup('$dirFallen/south').then((value) => spriteGroupFallenSouth = value);
-    loadCharacterSpriteGroup('$dirFallen/west').then((value) => spriteGroupFallenWest = value);
+    loadCharacterSpriteGroups(dirFallen).then((value) => spriteCharactersFallen = value);
+    // loadCharacterSpriteGroup('$dirFallen/flat').then((value) => spriteGroupFallenFlat = value);
+    // loadCharacterSpriteGroup('$dirFallen/shadow').then((value) => spriteGroupFallenShadow = value);
+    // loadCharacterSpriteGroup('$dirFallen/south').then((value) => spriteGroupFallenSouth = value);
+    // loadCharacterSpriteGroup('$dirFallen/west').then((value) => spriteGroupFallenWest = value);
 
     loadCharacterSpriteGroup('$dirSkeleton/flat').then((value) => spriteGroupSkeletonFlat = value);
     loadCharacterSpriteGroup('$dirSkeleton/shadow').then((value) => spriteGroupSkeletonShadow = value);
@@ -584,6 +593,47 @@ class IsometricImages with IsometricComponent {
      values.add(image);
      totalImagesLoaded.value++;
      return image;
+   }
+
+   Future<CharacterSpriteGroups> loadCharacterSpriteGroups(String directory) async {
+
+     var loaded = 0;
+     final completer = Completer();
+     late CharacterSpriteGroup flat;
+     late CharacterSpriteGroup shadow;
+     late CharacterSpriteGroup south;
+     late CharacterSpriteGroup west;
+
+     void onLoadCompleted(){
+       loaded++;
+       if (loaded >= 4){
+         completer.complete(true);
+       }
+     }
+
+     loadCharacterSpriteGroup('$directory/flat').then((value) {
+       flat = value;
+       onLoadCompleted();
+     });
+     loadCharacterSpriteGroup('$directory/shadow').then((value) {
+       shadow = value;
+       onLoadCompleted();
+     });
+     loadCharacterSpriteGroup('$directory/south').then((value) {
+       south = value;
+       onLoadCompleted();
+     });
+     loadCharacterSpriteGroup('$directory/west').then((value) {
+       west = value;
+       onLoadCompleted();
+     });
+     await completer.future;
+     return CharacterSpriteGroups(
+       flat: flat,
+       west: west,
+       south: south,
+       shadow: shadow,
+     );
    }
 
   void cacheImages() {

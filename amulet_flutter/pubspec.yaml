@@ -54,6 +54,9 @@ flutter:
     - assets/sprites/isometric/
     - assets/sprites/isometric/gameobjects/
     - assets/sprites/isometric/flame/
+    - assets/sprites/isometric/wolf/diffuse/
+    - assets/sprites/isometric/wolf/south/
+    - assets/sprites/isometric/wolf/west/
     - assets/sprites/isometric/kid/
     - assets/sprites/isometric/kid/diffuse/
     - assets/sprites/isometric/kid/diffuse/torso/
