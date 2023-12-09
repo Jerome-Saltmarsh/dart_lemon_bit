@@ -41,4 +41,7 @@ class AmuletFiend extends Character with Elemental {
 
   @override
   double get weaponRange => fiendType.weaponRange;
+
+  @override
+  String get name => fiendType.name;
 }

@@ -44,3 +44,4 @@ export 'interpolate_colors.dart';
 export 'pyramid.dart';
 export 'set_alpha.dart';
 export 'rgba.dart';
+export 'get_hue.dart';

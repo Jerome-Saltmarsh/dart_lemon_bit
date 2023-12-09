@@ -21,7 +21,6 @@ class AmuletApp extends LemonEngine {
 
   @override
   Widget buildUI(BuildContext buildContext) {
-    components.audio.load();
     return components.ui.buildUI(buildContext);
   }
 
@@ -106,7 +105,11 @@ class AmuletApp extends LemonEngine {
       return;
     }
 
-    if (key == LogicalKeyboardKey.keyT){
+    if (key == PhysicalKeyboardKey.escape){
+      components.engine.fullscreenToggle();
+    }
+
+    if (key == PhysicalKeyboardKey.enter){
       components.engine.fullscreenToggle();
     }
 

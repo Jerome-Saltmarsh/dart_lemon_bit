@@ -93,10 +93,9 @@ class IsometricPlayer with IsometricComponent {
 
     aimTargetSet.onChanged((aimTargetSet) {
       if (aimTargetSet){
-        ui.cursor.value = SystemMouseCursors.grab;
+        amulet.cursor.value = SystemMouseCursors.grab;
       } else {
-        ui.cursor.value = SystemMouseCursors.basic;
-        // engine.setCursorCrosshair();
+        amulet.cursor.value = SystemMouseCursors.basic;
       }
     });
 

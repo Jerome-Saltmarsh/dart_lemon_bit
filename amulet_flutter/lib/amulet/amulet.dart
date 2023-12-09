@@ -20,6 +20,7 @@ import 'amulet_render.dart';
 
 class Amulet extends IsometricGame {
 
+  final cursor = Watch(SystemMouseCursors.basic);
   var worldMapClrs = Int32List(0);
   var worldMapDsts = Float32List(0);
   var worldMapSrcs = Float32List(0);

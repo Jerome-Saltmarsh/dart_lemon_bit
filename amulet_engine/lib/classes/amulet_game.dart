@@ -1,11 +1,9 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:amulet_engine/classes/amulet_fiend.dart';
-import 'package:amulet_engine/mixins/equipment.dart';
-
 import '../packages/isometric_engine/isometric_engine.dart';
 import 'amulet.dart';
+import 'amulet_fiend.dart';
 import 'amulet_gameobject.dart';
 import 'amulet_item_slot.dart';
 import 'amulet_npc.dart';
@@ -720,17 +718,35 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
   }
 
-  @override
-  void applyDamageToCharacter({
-    required Character src,
-    required Character target,
-    required int amount,
-  }) {
-    if (src is Equipment){
-
-    }
-
-    super.applyDamageToCharacter(src: src, target: target, amount: amount);
-  }
-
+  // @override
+  // void applyDamageToCharacter({
+  //   required Character src,
+  //   required Character target,
+  //   required int amount,
+  // }) {
+  //   if (src is! Elemental || target is! Elemental) {
+  //     super.applyDamageToCharacter(
+  //         src: src,
+  //         target: target,
+  //         amount: amount,
+  //     );
+  //     return;
+  //   }
+  //
+  //   final srcElement = src as Elemental;
+  //   final targetElement = target as Elemental;
+  //   final srcHue = srcElement.hue;
+  //   final targetHue = targetElement.hue;
+  //   final srcSaturation = srcElement.saturation;
+  //   final targetSaturation = targetElement.saturation;
+  //
+  //   final hueDelta = srcHue - targetHue;
+  //   final saturationDelta = srcSaturation - targetHue;
+  //
+  //   // if the saturation is 120
+  //
+  //
+  //
+  //
+  // }
 }

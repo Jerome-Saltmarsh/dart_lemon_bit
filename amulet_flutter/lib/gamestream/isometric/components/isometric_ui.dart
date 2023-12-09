@@ -22,10 +22,15 @@ import 'package:lemon_widgets/lemon_widgets.dart';
 class IsometricUI with IsometricComponent {
   static const Icon_Scale = 1.5;
 
-  final dialog = Watch<Widget?>(null);
-  final gameUI = Watch<WidgetBuilder?>(null);
-  final error = Watch<String?>(null);
-  final cursor = Watch( SystemMouseCursors.basic);
+  final dialog = Watch<Widget?>(null, onChanged: (value){
+    print('isometricUI.onChangedDialog()');
+  });
+  final gameUI = Watch<WidgetBuilder?>(null, onChanged: (value){
+    print('isometricUI.onChangedGameUI($value)');
+  });
+  final error = Watch<String?>(null, onChanged: (value){
+    print('isometricUI.onChangedError()');
+  });
 
   @override
   void onComponentReady() {
@@ -34,61 +39,30 @@ class IsometricUI with IsometricComponent {
 
   Widget buildUI(BuildContext context) {
 
-    final watchGameUI = buildWatch(gameUI, (builder) => builder?.call(context) ?? nothing);
-
-    final grab = MouseRegion(
-      cursor: SystemMouseCursors.grab,
-      hitTestBehavior: HitTestBehavior.translucent,
-    );
-
-    final basic = MouseRegion(
-      cursor: SystemMouseCursors.basic,
-      hitTestBehavior: HitTestBehavior.translucent,
-    );
-
-    final translucent = MouseRegion(
-      cursor: SystemMouseCursors.basic,
-      hitTestBehavior: HitTestBehavior.translucent,
-    );
-
-    final gestureDetector = GestureDetector(
-       behavior: HitTestBehavior.translucent,
-    );
-
-    return Stack(
-      children: [
-            buildWatch(cursor, (cursor){
-              if (cursor == SystemMouseCursors.grab){
-                engine.cursorType.value = CursorType.Click;
-                return gestureDetector;
-                // return grab;
-              }
-              if (cursor == SystemMouseCursors.basic){
-                engine.cursorType.value = CursorType.Basic;
-                return basic;
-              }
-              return translucent;
-            }),
-            Positioned(
-              top: 0,
-              left: 0,
-              child: watchGameUI,
-            ),
-           Positioned(
+    return GSFullscreen(
+      child: Stack(
+        children: [
+              Positioned(
+                top: 0,
+                left: 0,
+                child: buildWatch(gameUI, (builder) => builder?.call(context) ?? nothing),
+              ),
+             Positioned(
+                 top: 0,
+                 left: 0,
+                 child: buildWatch(dialog, (dialog) => dialog == null
+                     ? nothing : GSFullscreen(
+                     alignment: Alignment.center,
+                     color: Colors.black45,
+                     child: dialog)
+                 ),
+             ),
+             Positioned(
                top: 0,
-               child: buildWatch(dialog, (dialog) => dialog == null
-                   ? nothing : GSFullscreen(
-                 child: dialog,
-                 alignment: Alignment.center,
-                 color: Colors.black38,
-               )
-               ),
-           ),
-           Positioned(
-             top: 0,
-             child: buildError(),
-           ),
-      ],
+               child: buildError(),
+             ),
+        ],
+      ),
     );
   }
 
@@ -96,6 +70,7 @@ class IsometricUI with IsometricComponent {
                  ? nothing
                  : GSFullscreen(
              alignment: Alignment.center,
+            color: Colors.black45,
              child: buildBorder(
                color: style.containerColorDark,
                child: GSContainer(

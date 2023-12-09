@@ -8,6 +8,7 @@ import 'package:amulet_flutter/gamestream/ui.dart';
 import 'package:amulet_flutter/website/widgets/gs_fullscreen.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:amulet_engine/packages/lemon_math.dart';
+import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 import 'ui/builders/build_item_slot.dart';
@@ -27,8 +28,44 @@ class AmuletUI {
 
   AmuletUI(this.amulet);
 
-  Widget buildAmuletUI() => GSFullscreen(
+  Widget buildAmuletUI() {
+
+
+    final basic = MouseRegion(
+      cursor: SystemMouseCursors.basic,
+      hitTestBehavior: HitTestBehavior.translucent,
+    );
+
+    final translucent = MouseRegion(
+      cursor: SystemMouseCursors.basic,
+      hitTestBehavior: HitTestBehavior.translucent,
+    );
+
+    final gestureDetector = GestureDetector(
+      behavior: HitTestBehavior.translucent,
+    );
+
+    return GSFullscreen(
     child: Stack(alignment: Alignment.center, children: [
+
+      Positioned(
+        top: 0,
+        left: 0,
+        child: GSFullscreen(
+          child: buildWatch(amulet.cursor, (cursor){
+            if (cursor == SystemMouseCursors.grab){
+              amulet.engine.cursorType.value = CursorType.Click;
+              return gestureDetector;
+              // return grab;
+            }
+            if (cursor == SystemMouseCursors.basic){
+              amulet.engine.cursorType.value = CursorType.Basic;
+              return basic;
+            }
+            return translucent;
+          }),
+        ),
+      ),
           buildDialogTalk(),
           Positioned(
             bottom: 8,
@@ -89,6 +126,7 @@ class AmuletUI {
           ),
         ]),
   );
+  }
 
   Positioned buildPositionedMessage() => Positioned(
       top: 0,

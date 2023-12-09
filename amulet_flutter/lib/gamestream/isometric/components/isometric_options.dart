@@ -135,6 +135,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
   }
 
   void _onChangedGame(Game game) {
+    print('options.onChangedGame($game)');
     ui.gameUI.value = game.buildUI;
     game.onActivated();
   }

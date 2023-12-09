@@ -15,31 +15,37 @@ ctrl + shift + e        : view recent changes
 alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
-## BLOCK
+## CURRENT
+* [fix]: refactor merge game website and game amulet into amulet app
+
+## ALPHA
 * [new]: character type wolf
 * [new]: character type zombie
 * [new]: character type vampire
 * [new]: character type ghost
 * [new]: character type skeleton swordsman
-
-## TODO
 * [fix]: front view renders
 * [new]: polish tutorial
+* [new]: location plains of ire
 * [new]: location dark castle
 * [new]: location gloomy woods
 * [new]: location forsaken swamp
-* [new]: map locations
-* [new]: enemies level 2
-* [new]: enemies level 3
+* [new]: location lake 
+* [new]: location mountain 
+* [new]: location town 
+* [new]: mini map location labels
 * [new]: model head type female
 * [new]: model leg type iron plates
 * [new]: model hair type 4
-* [new]: mechanic elemental damage
-* [new]: scene town
 * [fix]: barrels and crates should not be interactable
 * [fix]: persist gameobject properties
-* [fix]: audio for web
+
+## BETA
+* [new]: mechanic elemental damage
 * [new]: mobile touch screen support
+* [fix]: audio for web
+
+## RELEASE
 
 ## 08.12.2023
 * [fix]: camera translate y on zoomed in

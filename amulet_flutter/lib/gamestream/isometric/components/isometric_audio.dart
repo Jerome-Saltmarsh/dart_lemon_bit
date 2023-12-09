@@ -514,9 +514,9 @@ class IsometricAudio with IsometricComponent implements Updatable {
     var totalLoaded = 0;
 
     final timeStarted = DateTime.now();
-    // for (final audioLoop in audioLoops){
-    //   audioLoop.load();
-    // }
+    for (final audioLoop in audioLoops){
+      audioLoop.load();
+    }
     for (final audioSingle in audioSingles){
       total++;
       audioSingle.load().then((value) {

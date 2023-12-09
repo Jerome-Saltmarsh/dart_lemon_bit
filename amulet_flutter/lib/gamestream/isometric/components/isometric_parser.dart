@@ -272,6 +272,7 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
   }
 
   void readScene() {
+    options.game.value = options.amulet;
 
     print('readScene()');
     final scenePart = readByte(); /// DO NOT DELETE

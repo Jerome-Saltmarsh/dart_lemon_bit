@@ -19,6 +19,19 @@ class AudioSingle {
   }
 
   void play({double volume = 1.0}) {
+
+    var isDebug = false;
+
+    assert((){
+      isDebug = true;
+      return true;
+    }());
+
+    if (isDebug){
+      return;
+    }
+
+
     if (!loaded) {
       load().then((value) {
         if (value){
