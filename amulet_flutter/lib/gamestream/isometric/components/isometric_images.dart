@@ -53,15 +53,7 @@ class IsometricImages with IsometricComponent {
   final _completerImages = Completer();
 
   late final CharacterSpriteGroups spriteCharactersFallen;
-  // late final CharacterSpriteGroup spriteGroupFallenFlat;
-  // late final CharacterSpriteGroup spriteGroupFallenWest;
-  // late final CharacterSpriteGroup spriteGroupFallenSouth;
-  // late final CharacterSpriteGroup spriteGroupFallenShadow;
-
-  late final CharacterSpriteGroup spriteGroupSkeletonFlat;
-  late final CharacterSpriteGroup spriteGroupSkeletonWest;
-  late final CharacterSpriteGroup spriteGroupSkeletonSouth;
-  late final CharacterSpriteGroup spriteGroupSkeletonShadow;
+  late final CharacterSpriteGroups spriteCharactersSkeleton;
 
   late final CharacterSpriteGroup spriteGroupWolfFlat;
   late final CharacterSpriteGroup spriteGroupWolfWest;
@@ -417,15 +409,7 @@ class IsometricImages with IsometricComponent {
     };
 
     loadCharacterSpriteGroups(dirFallen).then((value) => spriteCharactersFallen = value);
-    // loadCharacterSpriteGroup('$dirFallen/flat').then((value) => spriteGroupFallenFlat = value);
-    // loadCharacterSpriteGroup('$dirFallen/shadow').then((value) => spriteGroupFallenShadow = value);
-    // loadCharacterSpriteGroup('$dirFallen/south').then((value) => spriteGroupFallenSouth = value);
-    // loadCharacterSpriteGroup('$dirFallen/west').then((value) => spriteGroupFallenWest = value);
-
-    loadCharacterSpriteGroup('$dirSkeleton/flat').then((value) => spriteGroupSkeletonFlat = value);
-    loadCharacterSpriteGroup('$dirSkeleton/shadow').then((value) => spriteGroupSkeletonShadow = value);
-    loadCharacterSpriteGroup('$dirSkeleton/south').then((value) => spriteGroupSkeletonSouth = value);
-    loadCharacterSpriteGroup('$dirSkeleton/west').then((value) => spriteGroupSkeletonWest = value);
+    loadCharacterSpriteGroups(dirSkeleton).then((value) => spriteCharactersSkeleton = value);
 
     flame0 = await loadSprite(
         name: 'assets/sprites/isometric/flame/wind0',
