@@ -717,36 +717,4 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       return;
     }
   }
-
-  // @override
-  // void applyDamageToCharacter({
-  //   required Character src,
-  //   required Character target,
-  //   required int amount,
-  // }) {
-  //   if (src is! Elemental || target is! Elemental) {
-  //     super.applyDamageToCharacter(
-  //         src: src,
-  //         target: target,
-  //         amount: amount,
-  //     );
-  //     return;
-  //   }
-  //
-  //   final srcElement = src as Elemental;
-  //   final targetElement = target as Elemental;
-  //   final srcHue = srcElement.hue;
-  //   final targetHue = targetElement.hue;
-  //   final srcSaturation = srcElement.saturation;
-  //   final targetSaturation = targetElement.saturation;
-  //
-  //   final hueDelta = srcHue - targetHue;
-  //   final saturationDelta = srcSaturation - targetHue;
-  //
-  //   // if the saturation is 120
-  //
-  //
-  //
-  //
-  // }
 }

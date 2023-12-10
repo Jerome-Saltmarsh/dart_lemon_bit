@@ -74,6 +74,7 @@ class AmuletGameTutorial extends AmuletGame {
        TutorialObjective.Open_Inventory => keysRoom4,
        TutorialObjective.Strike_Crystal_2 => keysRoom4,
        TutorialObjective.Leave => keysRoom4,
+       TutorialObjective.Finished => keysRoom4,
     };
 
   void refreshPlayerGameState(AmuletPlayer player) {
@@ -109,9 +110,9 @@ class AmuletGameTutorial extends AmuletGame {
     }
 
     movePlayerToSpawnPoint(player);
-    print("player.objective(${getObjective(player)})");
+    print("player.objective(${player.tutorialObjective})");
 
-    switch (getObjective(player)){
+    switch (player.tutorialObjective){
       case TutorialObjective.Acquire_Sword:
         onObjectiveSetAcquireSword(player);
         break;
@@ -205,7 +206,7 @@ class AmuletGameTutorial extends AmuletGame {
   }
 
   void movePlayerToSpawnPoint(AmuletPlayer player) {
-    scene.movePositionToKey(player, getSpawnKey(getObjective(player)));
+    scene.movePositionToKey(player, getSpawnKey(player.tutorialObjective));
     player.writePlayerMoved();
   }
 
@@ -269,7 +270,7 @@ class AmuletGameTutorial extends AmuletGame {
   }
 
   bool isObjectiveCompleted(AmuletPlayer player) =>
-    switch (getObjective(player)) {
+    switch (player.tutorialObjective) {
       TutorialObjective.Open_Inventory =>
         player.inventoryOpen,
        TutorialObjective.Equip_Bow =>
@@ -294,11 +295,7 @@ class AmuletGameTutorial extends AmuletGame {
   }
 
   void startNextTutorialObjective(AmuletPlayer player){
-     final current = getObjective(player);
-     if (current == objectives.last) {
-       amulet.playerChangeGame(player: player, target: amulet.amuletGameTown);
-       return;
-     }
+     final current = player.tutorialObjective;
 
      switch (current) {
        case TutorialObjective.Draw_Bow:
@@ -317,7 +314,7 @@ class AmuletGameTutorial extends AmuletGame {
       AmuletPlayer player,
       TutorialObjective tutorialObjective,
   ){
-    player.data['tutorial_objective'] = tutorialObjective.name;
+    player.tutorialObjective = tutorialObjective;
     player.writeClearHighlightedAmuletItem();
     player.writeOptionsSetHighlightIconInventory(false);
 
@@ -329,7 +326,6 @@ class AmuletGameTutorial extends AmuletGame {
         onObjectiveSetStrikeCrystal1(player);
         break;
       case TutorialObjective.Acquire_Heal:
-        // onObjectiveSetUseHeal(player);
         break;
       case TutorialObjective.Use_Heal:
         onObjectiveSetUseHeal(player);
@@ -352,6 +348,9 @@ class AmuletGameTutorial extends AmuletGame {
       case TutorialObjective.Leave:
         onObjectiveSetLeave(player);
         break;
+      case TutorialObjective.Finished:
+        onObjectiveFinished(player);
+        break;
     }
   }
 
@@ -372,33 +371,10 @@ class AmuletGameTutorial extends AmuletGame {
   }
 
   bool objectiveCompleted(AmuletPlayer player, TutorialObjective objective) =>
-      getObjective(player).index > objective.index;
-
-  TutorialObjective getObjective(AmuletPlayer player){
-     final data = player.data['tutorial_objective'];
-
-     if (data == null){
-       return objectives.first;
-     }
-
-     if (data is int){
-       return objectives[data];
-     }
-
-     if (data is String){
-       for (final objective in objectives){
-         if (objective.name == data){
-           return objective;
-         }
-       }
-       throw Exception('could not find objective $name');
-     }
-
-     throw Exception();
-  }
+      player.tutorialObjective.index > objective.index;
 
   void onInteractedWithGuide(AmuletPlayer player, AmuletNpc guide){
-    final objective = getObjective(player);
+    final objective = player.tutorialObjective;
     switch (objective) {
       case TutorialObjective.Acquire_Sword:
         runScript(player)
@@ -452,6 +428,9 @@ class AmuletGameTutorial extends AmuletGame {
       case TutorialObjective.Leave:
         onObjectiveSetLeave(player);
         break;
+      case TutorialObjective.Finished:
+        onObjectiveSetLeave(player);
+        break;
       default:
         break;
     }
@@ -483,7 +462,7 @@ class AmuletGameTutorial extends AmuletGame {
       src is AmuletPlayer &&
       fiends02.contains(target) &&
       !fiends02.any((element) => element.alive) &&
-      getObjective(src) == TutorialObjective.Vanquish_Fiends_02
+      src.tutorialObjective == TutorialObjective.Vanquish_Fiends_02
     ){
       onFiends02Vanquished(players.first);
     }
@@ -551,7 +530,7 @@ class AmuletGameTutorial extends AmuletGame {
   void onAmuletItemUsed(AmuletPlayer player, AmuletItem amuletItem) {
     if (
       amuletItem == AmuletItem.Spell_Heal &&
-      getObjective(player) == TutorialObjective.Use_Heal
+      player.tutorialObjective == TutorialObjective.Use_Heal
     ) {
       onSpellHealUsedForTheFirstTime(player);
     }
@@ -578,17 +557,17 @@ class AmuletGameTutorial extends AmuletGame {
   void onAmuletItemAcquired(AmuletPlayer player, AmuletItem amuletItem) {
     switch (amuletItem){
       case AmuletItem.Weapon_Rusty_Old_Sword:
-        if (getObjective(player) == TutorialObjective.Acquire_Sword){
+        if (player.tutorialObjective == TutorialObjective.Acquire_Sword){
           startNextTutorialObjective(player);
         }
         break;
       case AmuletItem.Spell_Heal:
-        if (getObjective(player) == TutorialObjective.Acquire_Heal){
+        if (player.tutorialObjective == TutorialObjective.Acquire_Heal){
           startNextTutorialObjective(player);
         }
         break;
       case AmuletItem.Weapon_Old_Bow:
-        if (getObjective(player) == TutorialObjective.Acquire_Bow){
+        if (player.tutorialObjective == TutorialObjective.Acquire_Bow){
           startNextTutorialObjective(player);
         }
         break;
@@ -700,7 +679,7 @@ class AmuletGameTutorial extends AmuletGame {
     if (
       player.weapons.contains(targetAmuletItemSlot) &&
       targetAmuletItemSlot.amuletItem == AmuletItem.Weapon_Old_Bow &&
-      getObjective(player) == TutorialObjective.Equip_Bow
+      player.tutorialObjective == TutorialObjective.Equip_Bow
     ) {
       startNextTutorialObjective(player);
     }
@@ -737,7 +716,7 @@ class AmuletGameTutorial extends AmuletGame {
 
     if (
       target == crystal1GlowingFalse &&
-      getObjective(srcCharacter) == TutorialObjective.Strike_Crystal_1
+      srcCharacter.tutorialObjective == TutorialObjective.Strike_Crystal_1
     ){
       onStruckCrystal1(player);
       return;
@@ -869,7 +848,7 @@ class AmuletGameTutorial extends AmuletGame {
       );
 
   void onStruckCrystal2(AmuletPlayer player) {
-     if (getObjective(player) != TutorialObjective.Strike_Crystal_2){
+     if (player.tutorialObjective != TutorialObjective.Strike_Crystal_2){
        return;
      }
      deactivate(crystal2GlowingFalse);
@@ -888,6 +867,19 @@ class AmuletGameTutorial extends AmuletGame {
             'one has learnt all another can teach.'
             'now one goes to the netherplains where ones destiny awaits.',
           )
+          .add(() {
+            setObjective(player, TutorialObjective.Finished);
+          })
           .end();
+
+  void onObjectiveFinished(AmuletPlayer player) {
+    player.endInteraction();
+    player.setControlsEnabled(true);
+    amulet.playerChangeGame(
+          player: player,
+          target: amulet.amuletGameTown,
+          sceneKey: 'player_spawn',
+      );
+  }
 }
 

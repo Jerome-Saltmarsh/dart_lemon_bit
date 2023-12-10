@@ -198,12 +198,6 @@ class AmuletPlayerScript {
   AmuletPlayerScript snapCameraToPlayer() =>
       add(() => player.writePlayerEvent(PlayerEvent.Player_Moved));
 
-  AmuletPlayerScript objective(String? objective) =>
-      add(() {
-        log('objective($objective)');
-        return player.objective = objective;
-      });
-
   AmuletPlayerScript dataSet(String name, dynamic value) =>
       add(() => player.data[name] = value);
 

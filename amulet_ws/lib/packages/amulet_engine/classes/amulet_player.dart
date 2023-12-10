@@ -1,4 +1,5 @@
 
+import '../enums/tutorial_objective.dart';
 import '../packages/src.dart';
 import '../mixins/src.dart';
 import 'amulet.dart';
@@ -1959,5 +1960,32 @@ class AmuletPlayer extends IsometricPlayer with Equipment, Elemental {
     writeByte(NetworkResponseAmulet.Player_World_Index);
     writeByte(amuletGame.worldRow);
     writeByte(amuletGame.worldColumn);
+  }
+
+  set tutorialObjective(TutorialObjective tutorialObjective){
+    data['tutorial_objective'] = tutorialObjective.name;
+  }
+
+  TutorialObjective get tutorialObjective {
+    final index = data['tutorial_objective'];
+
+    if (index == null) {
+      return TutorialObjective.values.first;
+    }
+
+    if (index is int) {
+      return TutorialObjective.values[index];
+    }
+
+    if (index is String) {
+      for (final objective in TutorialObjective.values) {
+        if (objective.name == index) {
+          return objective;
+        }
+      }
+      throw Exception('could not find objective $name');
+    }
+
+    throw Exception();
   }
 }

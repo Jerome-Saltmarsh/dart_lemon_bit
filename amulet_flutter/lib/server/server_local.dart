@@ -74,8 +74,9 @@ class ServerLocal implements Server {
   void handleClientRequestJoin(List<String> arguments){
 
   }
-
-  void disconnect() {
+  
+  Future disconnect() async {
+    await persistPlayerServer();
     connected = false;
     playerServer.clearCache();
     playerServer.x = 0.0;
@@ -95,11 +96,20 @@ class ServerLocal implements Server {
     playerServer.characterState = CharacterState.Idle;
     playerServer.target = null;
     playerServer.interacting = false;
+    playerServer.controlsEnabled = true;
     playerServer.setDestinationToCurrentPosition();
     parser.amulet.clearAllState();
     parser.options.game.value = parser.website;
     amulet.updateTimer?.cancel();
     amulet.timerRefreshUserCharacterLocks?.cancel();
+  }
+
+  Future persistPlayerServer(){
+    final playerJson = mapIsometricPlayerToJson(playerServer);
+    final characters = getCharacters();
+    characters.removeWhere((element) => element.uuid == playerJson.uuid);
+    characters.add(playerJson);
+    return persistCharacters(characters);
   }
 
   @override
@@ -115,7 +125,7 @@ class ServerLocal implements Server {
       throw Exception('invalid field name');
     }
 
-    ensureInitialized().then((value) {
+    ensureInitialized().then((value) async {
       playerServer.uuid = generateUUID();
       playerServer.name = name;
       playerServer.complexion = complexion;
@@ -123,21 +133,23 @@ class ServerLocal implements Server {
       playerServer.hairColor = hairColor;
       playerServer.gender = gender;
       playerServer.headType = headType;
+      playerServer.tutorialObjective = TutorialObjective.values.first;
 
       playerServer.equippedBody.amuletItem = AmuletItem.Armor_Shirt_Blue_Worn;
       playerServer.equippedLegs.amuletItem = AmuletItem.Pants_Travellers;
       final json = mapIsometricPlayerToJson(playerServer);
       final characters = getCharacters();
       characters.add(json);
-      persistCharacters(characters);
+      await persistCharacters(characters);
       playCharacter(json.uuid);
     });
   }
 
-  void persistCharacters(List<Json> characters) => sharedPreferences.setStringList(
+  Future persistCharacters(List<Json> characters) =>
+      sharedPreferences.setStringList(
         FIELD_CHARACTERS,
         characters.map(jsonEncode).toList(growable: false),
-    );
+      );
 
   Json? findCharacterByUuid(String uuid){
     final characters = getCharacters();
@@ -154,12 +166,17 @@ class ServerLocal implements Server {
     if (character == null){
       throw Exception('character could not be found');
     }
+
     ensureInitialized().then((value) {
       playerServer.maxHealth =  10;
       playerServer.health = 10;
       playerServer.active = true;
       writeJsonToAmuletPlayer(character, playerServer);
-      controller.playerJoinGameTutorial();
+      if (playerServer.tutorialObjective == TutorialObjective.Finished) {
+        controller.playerJoinAmuletTown();
+      } else {
+        controller.playerJoinGameTutorial();
+      }
       playerServer.regainFullHealth();
       amulet.resumeUpdateTimer();
       parser.server.onServerConnectionEstablished();

@@ -10,4 +10,5 @@ enum TutorialObjective {
   Draw_Bow,
   Strike_Crystal_2,
   Leave,
+  Finished,
 }

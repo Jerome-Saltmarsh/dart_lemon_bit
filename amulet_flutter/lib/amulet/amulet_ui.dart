@@ -506,22 +506,28 @@ class AmuletUI {
     );
   }
 
-  Widget buildInventoryItems() => buildInventoryContainer(
+  Widget buildInventoryItems() {
+    return buildWatch(amulet.items, (items) {
+      return buildInventoryContainer(
           child: Row(
-        children: [
-          Column(
-              children: List.generate(amulet.items.length ~/ 2,
-                  (index) => buildItemSlot(amulet.items[index], amulet: amulet),
-                  growable: false)),
-          Column(
-              children: List.generate(
-                  amulet.items.length ~/ 2,
-                  (index) => buildItemSlot(
-                      amulet.items[index + (amulet.items.length ~/ 2)],
-                      amulet: amulet),
-                  growable: false)),
-        ],
-      ));
+            children: [
+              Column(
+                  children: List.generate(items.length ~/ 2,
+                          (index) => buildItemSlot(items[index], amulet: amulet),
+                      growable: false)),
+              Column(
+                  children: List.generate(
+                      items.length ~/ 2,
+                          (index) => buildItemSlot(
+                          items[index + (items.length ~/ 2)],
+                          amulet: amulet),
+                      growable: false)),
+            ],
+          ));
+
+    });
+
+  }
 
   Widget buildInventoryContainer({required Widget child}) => Container(
         child: child,

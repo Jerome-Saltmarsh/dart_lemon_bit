@@ -9,21 +9,24 @@ flutter build web --web-renderer canvaskit --release
 firebase deploy
 
 [shortcut-keys]
-ctrl + shift + arrow    : navigate to next method:
+ctrl + shift + arrow    : navigate to next method
 ctrl + w                : minimal mode
 ctrl + shift + e        : view recent changes
 alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
-* [new]: character type spider
+* [fix]: gain experience single player
+* [fix]: creep spawn count is too high
+* [fix]: switching from tutorial to game location is wrong
 
 ## ALPHA
+* [new]: character type spider
 * [new]: spell type slow 
 * [new]: character type zombie
-* [new]: location plains of ire
+* [new]: location endless plains
 * [new]: location dark castle
-* [new]: location gloomy woods
+* [new]: location lonely woods
 * [fix]: ai roam
 * [fix]: front view renders
 * [new]: mini map location labels
@@ -49,6 +52,7 @@ ctrl + []               : move caret to code block
 * [fix]: audio for web
 
 ## 10.12.2023
+* [fix]: ui item inventory slots not appearing
 * [new]: character set target on damage
 
 ## 09.12.2023

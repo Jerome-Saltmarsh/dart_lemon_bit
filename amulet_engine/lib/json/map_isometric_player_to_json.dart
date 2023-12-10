@@ -1,19 +1,20 @@
 
 
 
+import 'character_json.dart';
 import '../classes/amulet_item_slot.dart';
 import '../classes/amulet_player.dart';
 import '../packages/isometric_engine/classes/isometric_player.dart';
-import '../packages/isometric_engine/packages/type_def/json.dart';
 import '../utils/generate_uuid.dart';
 
-Json mapIsometricPlayerToJson(IsometricPlayer player){
-  final json = Json();
+CharacterJson mapIsometricPlayerToJson(IsometricPlayer player){
+  final json = CharacterJson();
 
   if (player.uuid.isEmpty){
     player.uuid = generateUUID();
   }
-  json['uuid'] = player.uuid;
+
+  json.uuid = player.uuid;
 
   if (player is AmuletPlayer) {
 

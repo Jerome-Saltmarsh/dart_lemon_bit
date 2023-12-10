@@ -70,7 +70,7 @@ class Amulet extends IsometricGame {
   );
 
   var errorTimer = 0;
-  var items = <ItemSlot>[];
+  var items = Watch(<ItemSlot>[]);
 
   final messages = <String>[];
   final messageIndex = Watch(-1);
@@ -169,11 +169,11 @@ class Amulet extends IsometricGame {
   }
 
   void setItem({required int index, required AmuletItem? item}){
-    items[index].amuletItem.value = item;
+    items.value[index].amuletItem.value = item;
   }
 
   void setItemLength(int length){
-    items = List.generate(length, (index) => ItemSlot(
+    items.value = List.generate(length, (index) => ItemSlot(
         index: index,
         slotType: SlotType.Items,
     ));

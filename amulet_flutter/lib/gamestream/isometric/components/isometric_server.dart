@@ -112,12 +112,10 @@ class IsometricServer with IsometricComponent {
 
   void send(dynamic data) => activeServer.send(data);
 
-  void disconnect() {
-    options.game.value = options.website;
-    parser.amulet.clearAllState();
+  Future disconnect() async {
     switch (serverMode) {
       case ServerMode.local:
-        local.disconnect();
+        await local.disconnect();
         break;
       case ServerMode.remote:
         remote.disconnect();
@@ -126,6 +124,8 @@ class IsometricServer with IsometricComponent {
         print('no server connected');
         return;
     }
+    options.game.value = options.website;
+    parser.amulet.clearAllState();
   }
 
   void onServerConnectionEstablished() {

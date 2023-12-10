@@ -516,6 +516,10 @@ extension isometricDebugUI on IsometricDebug {
   Widget buildTabPlayer() =>
       buildTab(
         children: [
+          buildRowRefresh('tutorial_objective', () {
+            final position = player.position;
+            return 'x: ${position.x.toInt()}, y: ${position.y.toInt()}, z: ${position.z.toInt()}';
+          }),
           buildRowRefresh('position', () {
             final position = player.position;
             return 'x: ${position.x.toInt()}, y: ${position.y.toInt()}, z: ${position.z.toInt()}';
