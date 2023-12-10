@@ -862,6 +862,9 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       customOnCharacterKilled(target, src);
       return;
     }
+    if (target.target == null) {
+      target.target = src;
+    }
     customOnCharacterDamageApplied(target, src, damage);
     target.setCharacterStateHurt();
     dispatchGameEventCharacterHurt(target);

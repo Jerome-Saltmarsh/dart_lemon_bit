@@ -16,7 +16,6 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
-* [new]: character type wolf
 * [new]: character type spider
 
 ## ALPHA
@@ -48,6 +47,13 @@ ctrl + []               : move caret to code block
 ## RELEASE
 * [new]: mobile touch screen support
 * [fix]: audio for web
+
+## 10.12.2023
+* [new]: character set target on damage
+
+## 09.12.2023
+* [new]: character type wolf
+* [fix]: discover why game freezes on start
 
 ## 08.12.2023
 * [fix]: camera translate y on zoomed in
