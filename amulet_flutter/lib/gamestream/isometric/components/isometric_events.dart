@@ -1,7 +1,7 @@
 
-import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:amulet_engine/packages/common.dart';
 import 'package:amulet_engine/packages/lemon_math.dart';
+import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
 
 class IsometricEvents with IsometricComponent {
 
@@ -459,9 +459,9 @@ class IsometricEvents with IsometricComponent {
     switch (characterType) {
       case CharacterType.Fallen:
         return onCharacterDeathZombie(characterType, x, y, z, angle);
-      // case CharacterType.Dog:
-      //   audio.play(audio.dog_woolf_howl_4, x, y, z);
-      //   break;
+      case CharacterType.Wolf:
+        audio.play(audio.dog_woolf_howl_4, x, y, z);
+        break;
     }
   }
 
@@ -537,15 +537,9 @@ class IsometricEvents with IsometricComponent {
       );
     }
 
-
-    switch (type) {
-      case CharacterType.Fallen:
-        if (randomBool()){
-          audio.play(audio.zombie_hurt_1, x, y, z);
-        } else {
-          audio.play(audio.zombie_hurt_4, x, y, z);
-        }
-        break;
+    final hurtAudio = audio.getCharacterTypeAudioHurt(type);
+    if (hurtAudio != null) {
+      audio.play(hurtAudio, x, y, z);
     }
   }
 

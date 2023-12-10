@@ -76,13 +76,25 @@ class RendererCharacters extends RenderGroup {
         renderCharacterHuman(character);
         break;
       case CharacterType.Fallen:
-        renderCharacterShader(character, images.characterShaderFallen);
+        renderCharacterShader(
+            character: character,
+            shader: images.characterShaderFallen,
+            scale: 0.4,
+        );
         break;
       case CharacterType.Skeleton:
-        renderCharacterShader(character, images.characterShaderSkeleton);
+        renderCharacterShader(
+            character: character,
+            shader: images.characterShaderSkeleton,
+            scale: 0.5,
+        );
         break;
       case CharacterType.Wolf:
-        renderCharacterShader(character, images.characterShaderWolf);
+        renderCharacterShader(
+            character: character,
+            shader: images.characterShaderWolf,
+            scale: 0.3,
+        );
         break;
       default:
         throw Exception('Cannot render character type: ${character.characterType}');
@@ -731,14 +743,17 @@ class RendererCharacters extends RenderGroup {
     );
   }
 
-  void renderCharacterShader(Character character, CharacterShader shader) {
+  void renderCharacterShader({
+    required Character character,
+    required CharacterShader shader,
+    double scale = 1.0,
+  }) {
 
     if (
       (renderBottom && !character.dead) ||
       (!renderBottom && character.dead))
       return;
 
-    const scale = 0.5;
     const anchorY = 0.6;
 
     final row = character.renderDirection;

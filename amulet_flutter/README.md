@@ -25,6 +25,7 @@ ctrl + []               : move caret to code block
 * [new]: location plains of ire
 * [new]: location dark castle
 * [new]: location gloomy woods
+* [fix]: ai roam
 * [fix]: front view renders
 * [new]: mini map location labels
 * [new]: persist gameobject properties

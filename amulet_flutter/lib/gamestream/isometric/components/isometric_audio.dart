@@ -529,7 +529,13 @@ class IsometricAudio with IsometricComponent implements Updatable {
       });
     }
     return completer.future;
-
   }
+
+  AudioSingle? getCharacterTypeAudioHurt(int characterType) =>
+      switch (characterType) {
+        CharacterType.Fallen => randomBool() ? zombie_hurt_1 : zombie_hurt_4,
+        CharacterType.Wolf => dog_woolf_howl_4,
+        _ => null
+      };
 
 }
