@@ -16,7 +16,6 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
-* [fix]: creep spawn count is too high
 
 ## ALPHA
 * [new]: character type spider
@@ -50,6 +49,7 @@ ctrl + []               : move caret to code block
 * [fix]: audio for web
 
 ## 10.12.2023
+* [fix]: creep spawn count is too high
 * [fix]: gain experience single player
 * [fix]: item slots red on load player
 * [fix]: on complete tutorial spawn in correct destination

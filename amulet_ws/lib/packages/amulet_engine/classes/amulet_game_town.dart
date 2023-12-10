@@ -26,8 +26,6 @@ class AmuletGameTown extends AmuletGame {
     required super.environment,
     required super.name,
   }) : super(amuletScene: AmuletScene.Town){
-
-    spawnFiendsAtSpawnNodes();
     characters.add(AmuletNpc(
         x: 2010,
         y: 1760,
