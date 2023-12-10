@@ -16,6 +16,8 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
+* [fix]: ai roam
+* [new]: persist gameobject properties
 
 ## ALPHA
 * [new]: character type spider
@@ -24,10 +26,8 @@ ctrl + []               : move caret to code block
 * [new]: location endless plains
 * [new]: location dark castle
 * [new]: location lonely woods
-* [fix]: ai roam
 * [fix]: front view renders
 * [new]: mini map location labels
-* [new]: persist gameobject properties
 
 ## BETA
 * [new]: model hair type 4
@@ -49,6 +49,7 @@ ctrl + []               : move caret to code block
 * [fix]: audio for web
 
 ## 10.12.2023
+* [fix]: single player character persistence
 * [fix]: creep spawn count is too high
 * [fix]: gain experience single player
 * [fix]: item slots red on load player
