@@ -177,6 +177,7 @@ class ServerLocal implements Server {
       } else {
         controller.playerJoinGameTutorial();
       }
+      playerServer.refillItemSlotsWeapons();;
       playerServer.regainFullHealth();
       amulet.resumeUpdateTimer();
       parser.server.onServerConnectionEstablished();

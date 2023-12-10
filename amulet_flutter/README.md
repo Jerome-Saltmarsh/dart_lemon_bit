@@ -18,7 +18,6 @@ ctrl + []               : move caret to code block
 ## CURRENT
 * [fix]: gain experience single player
 * [fix]: creep spawn count is too high
-* [fix]: switching from tutorial to game location is wrong
 
 ## ALPHA
 * [new]: character type spider
@@ -52,6 +51,8 @@ ctrl + []               : move caret to code block
 * [fix]: audio for web
 
 ## 10.12.2023
+* [fix]: item slots red on load player
+* [fix]: on complete tutorial spawn in correct destination
 * [fix]: ui item inventory slots not appearing
 * [new]: character set target on damage
 

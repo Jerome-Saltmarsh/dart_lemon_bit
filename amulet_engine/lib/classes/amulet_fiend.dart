@@ -24,7 +24,7 @@ class AmuletFiend extends Character with Elemental {
 
   void onFiendTypeChanged(){
     maxHealth = fiendType.health;
-    health = fiendType.health;
+    health = maxHealth;
     name = fiendType.name;
     weaponDamage = fiendType.damage;
     attackDuration = fiendType.attackDuration;
@@ -44,4 +44,10 @@ class AmuletFiend extends Character with Elemental {
 
   @override
   String get name => fiendType.name;
+
+  @override
+  int get experience => fiendType.experience;
+
+  @override
+  int get maxHealth => fiendType.health;
 }
