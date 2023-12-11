@@ -4,41 +4,36 @@ typedef CharacterJson = Json;
 
 extension CharacterJsonExtension on CharacterJson {
 
-  int get elementFire => getInt('elementFire');
+  static const FIELD_ELEMENT_FIRE = 'elementFire';
+  static const FIELD_ELEMENT_WATER = 'elementWater';
+  static const FIELD_ELEMENT_ELECTRICITY = 'elementElectricity';
+  static const FIELD_ELEMENT_POINTS = 'elementPoints';
+  static const FIELD_UUID = 'uuid';
+  static const FIELD_NAME = 'name';
+
+  int get elementFire => getInt(FIELD_ELEMENT_FIRE);
   
-  int get elementWater => getInt('elementWater');
+  int get elementWater => getInt(FIELD_ELEMENT_WATER);
   
-  int get elementElectricity => getInt('elementElectricity');
+  int get elementElectricity => getInt(FIELD_ELEMENT_ELECTRICITY);
 
-  int get elementPoints => getInt('elementPoints');
+  int get elementPoints => getInt(FIELD_ELEMENT_POINTS);
 
-  String get uuid => getString('uuid');
+  String get uuid => getString(FIELD_UUID);
 
-  String get name => getString('name');
+  String get name => getString(FIELD_NAME);
   
-  set elementPoints(int value){
-    setInt('elementPoints', value);
-  }
+  set elementPoints(int value) => setInt(FIELD_ELEMENT_POINTS, value);
 
-  set elementFire(int value){
-    setInt('elementFire', value);
-  }
+  set elementFire(int value) => setInt(FIELD_ELEMENT_FIRE, value);
 
-  set elementWater(int value){
-    setInt('elementWater', value);
-  }
+  set elementWater(int value) => setInt(FIELD_ELEMENT_WATER, value);
 
-  set elementElectricity(int value){
-    setInt('elementElectricity', value);
-  }
+  set elementElectricity(int value) => setInt(FIELD_ELEMENT_ELECTRICITY, value);
 
-  set uuid(String value){
-    setString('uuid', value);
-  }
+  set uuid(String value) => setString(FIELD_UUID, value);
 
-  set name(String value){
-    setString('name', value);
-  }
+  set name(String value) => setString(FIELD_NAME, value);
 
   void setString(String key, String value){
     this[key] = value;

@@ -10,7 +10,12 @@ import 'amulet_npc.dart';
 import 'talk_option.dart';
 
 
-class AmuletPlayer extends IsometricPlayer with Equipment, Elemental {
+class AmuletPlayer extends IsometricPlayer with
+    Equipment,
+    Elemental,
+    Experience,
+    Level
+{
 
   static const healthBase = 10;
 
@@ -35,8 +40,6 @@ class AmuletPlayer extends IsometricPlayer with Equipment, Elemental {
 
   var _elementPoints = 0;
   var _inventoryOpen = false;
-  var _experience = 0;
-  var _level = 1;
   var _equippedWeaponIndex = -1;
   var _activatedPowerIndex = -1;
 
@@ -132,11 +135,7 @@ class AmuletPlayer extends IsometricPlayer with Equipment, Elemental {
     return item.subType;
   }
 
-  int get experience => _experience;
-
   int get experienceRequired => (level * level * 2) + (level * 10);
-
-  int get level => _level;
 
   bool get inventoryOpen => _inventoryOpen;
 
@@ -218,16 +217,18 @@ class AmuletPlayer extends IsometricPlayer with Equipment, Elemental {
 
   AmuletItemSlot? get equippedWeapon => _equippedWeaponIndex == -1 ? null : weapons[_equippedWeaponIndex];
 
+  @override
   set experience(int value){
     if (value < 0){
       value = 0;
     }
-    _experience = value;
+    super.experience = value;
     writePlayerExperience();
   }
 
-  set level(int value){
-    _level = value;
+  @override
+  set level(int value) {
+    super.level = value;
     writePlayerLevel();
   }
 

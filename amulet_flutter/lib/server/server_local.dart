@@ -105,7 +105,7 @@ class ServerLocal implements Server {
   }
 
   Future persistPlayerServer(){
-    final playerJson = mapIsometricPlayerToJson(playerServer);
+    final playerJson = writeAmuletPlayerToJson(playerServer);
     final characters = getCharacters();
     final index = characters.indexWhere((element) => element.uuid == playerJson.uuid);
     if (index != -1){
@@ -151,7 +151,7 @@ class ServerLocal implements Server {
       playerServer.equippedShoe.amuletItem = null;
       playerServer.equippedBody.amuletItem = AmuletItem.Armor_Shirt_Blue_Worn;
       playerServer.equippedLegs.amuletItem = AmuletItem.Pants_Travellers;
-      final json = mapIsometricPlayerToJson(playerServer);
+      final json = writeAmuletPlayerToJson(playerServer);
       final characters = getCharacters();
       characters.add(json);
       await persistCharacters(characters);
