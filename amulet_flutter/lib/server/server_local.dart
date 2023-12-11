@@ -186,8 +186,8 @@ class ServerLocal implements Server {
       playerServer.health = 10;
       playerServer.active = true;
       writeJsonToAmuletPlayer(character, playerServer);
-      playerServer.writeAmuletElements();
-      playerServer.writeElementPoints();
+      // playerServer.writeAmuletElements();
+      // playerServer.writeElementPoints();
       if (playerServer.tutorialObjective == TutorialObjective.Finished) {
         controller.playerJoinAmuletTown();
       } else {

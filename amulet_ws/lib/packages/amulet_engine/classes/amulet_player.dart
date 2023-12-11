@@ -28,6 +28,24 @@ class AmuletPlayer extends IsometricPlayer with Equipment, Elemental {
   var npcOptions = <TalkOption>[];
   Function? onInteractionOver;
 
+  @override
+  set elementElectricity(int value){
+    super.elementElectricity = value;
+    writeAmuletElements();
+  }
+
+  @override
+  set elementFire(int value) {
+    super.elementFire = value;
+    writeAmuletElements();
+  }
+
+  @override
+  set elementWater(int value) {
+    super.elementWater = value;
+    writeAmuletElements();
+  }
+
   int? get equippedWeaponDamage => equippedWeaponAmuletItemLevel?.damage;
 
   double? get equippedWeaponRange => equippedWeaponAmuletItemLevel?.range;
