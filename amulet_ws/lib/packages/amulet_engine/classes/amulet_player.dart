@@ -28,28 +28,6 @@ class AmuletPlayer extends IsometricPlayer with Equipment, Elemental {
   var npcOptions = <TalkOption>[];
   Function? onInteractionOver;
 
-  @override
-  set elementElectricity(int value){
-    super.elementElectricity = value;
-    writeAmuletElements();
-  }
-
-  @override
-  set elementFire(int value) {
-    super.elementFire = value;
-    writeAmuletElements();
-  }
-
-  @override
-  set elementWater(int value) {
-    super.elementWater = value;
-    writeAmuletElements();
-  }
-
-  int? get equippedWeaponDamage => equippedWeaponAmuletItemLevel?.damage;
-
-  double? get equippedWeaponRange => equippedWeaponAmuletItemLevel?.range;
-
   final weapons = List<AmuletItemSlot>.generate(4, (index) => AmuletItemSlot());
   final treasures = List<AmuletItemSlot>.generate(4, (index) => AmuletItemSlot());
 
@@ -95,10 +73,40 @@ class AmuletPlayer extends IsometricPlayer with Equipment, Elemental {
   }
 
   @override
-  void initialize() {
-    super.initialize();
-    writeEquippedWeaponIndex();
+  set aimTarget(Collider? value) {
+    if (
+    noWeaponEquipped &&
+        value is GameObject &&
+        value.hitable
+    ){
+      return;
+    }
+    super.aimTarget = value;
   }
+
+  bool get noWeaponEquipped => equippedWeaponIndex == -1;
+
+  @override
+  set elementElectricity(int value){
+    super.elementElectricity = value;
+    writeAmuletElements();
+  }
+
+  @override
+  set elementFire(int value) {
+    super.elementFire = value;
+    writeAmuletElements();
+  }
+
+  @override
+  set elementWater(int value) {
+    super.elementWater = value;
+    writeAmuletElements();
+  }
+
+  int? get equippedWeaponDamage => equippedWeaponAmuletItemLevel?.damage;
+
+  double? get equippedWeaponRange => equippedWeaponAmuletItemLevel?.range;
 
   Amulet get amulet => amuletGame.amulet;
 
@@ -145,20 +153,6 @@ class AmuletPlayer extends IsometricPlayer with Equipment, Elemental {
 
     return getLevelForAmuletItem(item);
   }
-
-
-  AmuletItemLevel? getAmuletItemLevelsForItemSlot(AmuletItemSlot itemSlot) {
-    final amuletItem = itemSlot.amuletItem;
-    if (amuletItem == null){
-      return null;
-    }
-    return getAmuletItemLevel(amuletItem);
-  }
-
-  AmuletItemLevel? getAmuletItemLevel(AmuletItem amuletItem) =>
-      amuletItem.getStatsForLevel(
-          getLevelForAmuletItem(amuletItem)
-      );
 
   AmuletItemLevel? get equippedWeaponAmuletItemLevel {
     final weapon = equippedWeapon;
@@ -279,6 +273,34 @@ class AmuletPlayer extends IsometricPlayer with Equipment, Elemental {
     writeActivatedPowerIndex(_activatedPowerIndex);
   }
 
+
+  set tutorialObjective(TutorialObjective tutorialObjective){
+    data['tutorial_objective'] = tutorialObjective.name;
+  }
+
+  TutorialObjective get tutorialObjective {
+    final index = data['tutorial_objective'];
+
+    if (index == null) {
+      return TutorialObjective.values.first;
+    }
+
+    if (index is int) {
+      return TutorialObjective.values[index];
+    }
+
+    if (index is String) {
+      for (final objective in TutorialObjective.values) {
+        if (objective.name == index) {
+          return objective;
+        }
+      }
+      throw Exception('could not find objective $name');
+    }
+
+    throw Exception();
+  }
+
   int get equippedWeaponIndex => _equippedWeaponIndex;
 
   set equippedWeaponIndex(int value){
@@ -321,6 +343,25 @@ class AmuletPlayer extends IsometricPlayer with Equipment, Elemental {
 
     writeEquippedWeaponIndex();
   }
+
+  @override
+  void initialize() {
+    super.initialize();
+    writeEquippedWeaponIndex();
+  }
+
+  AmuletItemLevel? getAmuletItemLevelsForItemSlot(AmuletItemSlot itemSlot) {
+    final amuletItem = itemSlot.amuletItem;
+    if (amuletItem == null){
+      return null;
+    }
+    return getAmuletItemLevel(amuletItem);
+  }
+
+  AmuletItemLevel? getAmuletItemLevel(AmuletItem amuletItem) =>
+      amuletItem.getStatsForLevel(
+          getLevelForAmuletItem(amuletItem)
+      );
 
   @override
   void writePlayerGame() {
@@ -1583,17 +1624,6 @@ class AmuletPlayer extends IsometricPlayer with Equipment, Elemental {
     this.cameraTarget = target;
   }
 
-  @override
-  set aimTarget(Collider? value) {
-    if (
-      noWeaponEquipped &&
-      value is GameObject &&
-      value.hitable
-    ){
-      return;
-    }
-    super.aimTarget = value;
-  }
 
   void playAudioType(AudioType audioType){
      writeByte(NetworkResponse.Amulet);
@@ -1649,8 +1679,6 @@ class AmuletPlayer extends IsometricPlayer with Equipment, Elemental {
     useWeaponType(weaponType: subType, duration: performDuration);
     reduceAmuletItemSlotCharges(equippedWeaponSlot);
   }
-
-  bool get noWeaponEquipped => equippedWeaponIndex == -1;
 
   void useWeaponType({
     required int weaponType,
@@ -1978,30 +2006,4 @@ class AmuletPlayer extends IsometricPlayer with Equipment, Elemental {
     writeByte(amuletGame.worldColumn);
   }
 
-  set tutorialObjective(TutorialObjective tutorialObjective){
-    data['tutorial_objective'] = tutorialObjective.name;
-  }
-
-  TutorialObjective get tutorialObjective {
-    final index = data['tutorial_objective'];
-
-    if (index == null) {
-      return TutorialObjective.values.first;
-    }
-
-    if (index is int) {
-      return TutorialObjective.values[index];
-    }
-
-    if (index is String) {
-      for (final objective in TutorialObjective.values) {
-        if (objective.name == index) {
-          return objective;
-        }
-      }
-      throw Exception('could not find objective $name');
-    }
-
-    throw Exception();
-  }
 }
