@@ -105,7 +105,6 @@ class Amulet extends IsometricGame {
     playerInteracting.onChanged(onChangedPlayerInteracting);
     npcTextIndex.onChanged(onChangedNpcTextIndex);
     error.onChanged(onChangedError);
-    // cameraTargetSet.onChanged(onChangedCameraTargetSet);
     elementPoints.onChanged(onChangedElementPoints);
   }
 

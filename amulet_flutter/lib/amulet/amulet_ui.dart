@@ -626,11 +626,13 @@ class AmuletUI {
           height: 40,
           child: buildText(level, color: Colors.white70, size: 22, bold: true)));
 
-  Widget buildPlayerExperienceBar({double height = 10}) {
-    final width = 186.0;
+  Widget buildPlayerExperienceBar() {
+    const width = 186.0;
+    const height = 10.0;
     return buildBorder(
         width: 2,
         color: Colors.white70,
+        radius: BorderRadius.zero,
         child: buildWatch(
             amulet.playerExperienceRequired,
             (experienceRequired) =>
@@ -645,6 +647,7 @@ class AmuletUI {
                       width: width,
                       height: height,
                       alignment: Alignment.centerLeft,
+                      color: Colors.white12,
                       child: Container(
                           color: Colors.white70,
                           width: width * percentage,
