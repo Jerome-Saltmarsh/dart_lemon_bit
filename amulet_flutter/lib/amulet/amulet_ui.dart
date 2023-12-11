@@ -661,6 +661,7 @@ class AmuletUI {
           children: [
             buildPlayerLevel(),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [

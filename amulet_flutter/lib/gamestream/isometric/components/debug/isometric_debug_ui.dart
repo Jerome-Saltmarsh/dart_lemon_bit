@@ -563,6 +563,7 @@ extension isometricDebugUI on IsometricDebug {
           ),
           buildButtonAcquireItem(),
           buildButtonGainLevel(),
+          buildButtonGainExperience(),
           buildButtonReset(),
         ],
       );
@@ -854,6 +855,11 @@ extension isometricDebugUI on IsometricDebug {
   Widget buildButtonGainLevel() => onPressed(
     action: amulet.requestGainLevel,
     child: GSContainer(child: buildText('GAIN LEVEL')),
+  );
+
+  Widget buildButtonGainExperience() => onPressed(
+    action: amulet.requestGainExperience,
+    child: GSContainer(child: buildText('GAIN EXPERIENCE')),
   );
 }
 

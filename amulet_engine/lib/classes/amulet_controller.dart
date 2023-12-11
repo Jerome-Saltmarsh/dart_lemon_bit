@@ -687,6 +687,12 @@ class AmuletController {
         }
         amuletPlayer.gainLevel();
         break;
+      case NetworkRequestAmulet.Gain_Experience:
+        if (!isAdmin) {
+          throw Exception('admin mode not enabled');
+        }
+        amuletPlayer.gainExperience(amuletPlayer.experienceRequired ~/ 4);
+        break;
       case NetworkRequestAmulet.Reset:
         if (!isAdmin) {
           throw Exception('admin mode not enabled');

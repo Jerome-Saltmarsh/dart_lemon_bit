@@ -356,17 +356,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
 
     if (src is AmuletPlayer) {
-      playerGainExperience(src, target.experience);
+      src.gainExperience(target.experience);
     }
   }
 
-  void playerGainExperience(AmuletPlayer player, int experience){
-    player.experience += experience;
-    while (player.experience > player.experienceRequired) {
-      player.gainLevel();
-      player.experience -= player.experienceRequired;
-    }
-  }
 
   void spawnRandomLootAtPosition(
       Position position,

@@ -2007,4 +2007,11 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(amuletGame.worldColumn);
   }
 
+  void gainExperience(int experience){
+    this.experience += experience;
+    while (this.experience > experienceRequired) {
+      gainLevel();
+      this.experience -= experienceRequired;
+    }
+  }
 }

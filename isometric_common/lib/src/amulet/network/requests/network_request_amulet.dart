@@ -12,5 +12,6 @@ enum NetworkRequestAmulet {
   Set_Inventory_Open,
   Player_Change_Game,
   Gain_Level,
+  Gain_Experience,
   Reset,
 }

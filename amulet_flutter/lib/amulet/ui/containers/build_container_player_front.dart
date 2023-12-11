@@ -41,7 +41,7 @@ Widget buildContainerPlayerFront({
                         column: column,
                         sprites: player.images.kidCharacterSpritesFrontDiffuse,
                         characterState: CharacterState.Idle,
-                        color: player.scene.colorWest(player.nodeIndex)
+                        color: 0
                     );
 
                   }
