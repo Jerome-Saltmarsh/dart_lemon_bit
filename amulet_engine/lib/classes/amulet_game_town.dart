@@ -68,8 +68,6 @@ class AmuletGameTown extends AmuletGame {
       ..helmType = HelmType.Steel
       ..bodyType = BodyType.Leather_Armour
       ..legsType = LegType.Leather
-      // ..attackDuration = 30
-      // ..attackActionFrame = 20
       ..complexion = ComplexionType.fair;
 
     characters.add(npcGuard);

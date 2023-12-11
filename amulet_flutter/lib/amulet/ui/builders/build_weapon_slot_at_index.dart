@@ -149,7 +149,7 @@ Widget buildWeaponSlotAtIndex(int index, {
                 child: buildItemSlot(
                     weapons[index],
                     amulet: amulet,
-                    color: Colors.transparent
+                    color: Colors.transparent,
                 )
             ),
             Positioned(

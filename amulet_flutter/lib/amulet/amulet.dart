@@ -40,9 +40,10 @@ class Amulet extends IsometricGame {
   final amuletScene = Watch<AmuletScene?>(null);
 
   final elementPoints = Watch(0);
-  final elementFire = Watch(0);
-  final elementWater = Watch(0);
-  final elementElectricity = Watch(0);
+  late final elementFire = Watch(0, onChanged: elementsChangedNotifier);
+  late final elementWater = Watch(0, onChanged: elementsChangedNotifier);
+  late final elementElectricity = Watch(0, onChanged: elementsChangedNotifier);
+  final elementsChangedNotifier = Watch(0);
 
   final elementPointsAvailable = Watch(false);
 

@@ -18,6 +18,7 @@ ctrl + []               : move caret to code block
 ## CURRENT
 * [fix]: ai roam
 * [new]: persist gameobject properties
+* [new]: ui indicate item level
 
 ## ALPHA
 * [new]: character type spider

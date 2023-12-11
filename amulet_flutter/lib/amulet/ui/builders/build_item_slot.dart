@@ -14,9 +14,13 @@ Widget buildItemSlot(ItemSlot itemSlot, {
 }) {
 
   return buildWatch(amulet.highlightedAmuletItem, (highlightedAmuletItem){
+    const size = 64.0;
     return Container(
       margin: const EdgeInsets.all(2),
       child: buildWatch(itemSlot.amuletItem, (item) {
+
+        final image = item == null ? nothing : MMOItemImage(item: item, size: size);
+
         return buildWatch(amulet.dragging, (dragging) => DragTarget(
           onWillAccept: (value) => true,
           onAccept: (value) {
@@ -24,32 +28,54 @@ Widget buildItemSlot(ItemSlot itemSlot, {
             amulet.reportItemSlotDragged(src: value, target: itemSlot);
           },
           builder: (context, data, rejectData) {
-
             final child = item == null
                 ? (onEmpty ?? nothing)
-                : Draggable(
-              data: itemSlot,
-              feedback: MMOItemImage(item: item, size: 64),
-              onDragStarted: () {
-                amulet.setInventoryOpen(true);
-                amulet.dragging.value = itemSlot;
-              },
-              onDraggableCanceled: (velocity, offset){
-                amulet.clearDragging();
-              },
-              onDragEnd: (details) {
-                if (amulet.engine.mouseOverCanvas){
-                  amulet.dropItemSlot(itemSlot);
-                }
-                amulet.clearDragging();
-              },
-              child: onPressed(
-                onRightClick: () =>
-                    amulet.dropItemSlot(itemSlot),
-                action: () => amulet.useItemSlot(itemSlot),
-                child: MMOItemImage(item: item, size: 64),
-              ),
-            );
+                : Builder(
+                  builder: (context) {
+                    return buildWatch(amulet.elementsChangedNotifier, (t) {
+                      final level = amulet.getAmuletPlayerItemLevel(item);
+
+                      return Container(
+                        width: size,
+                        height: size,
+                        child: Draggable(
+                          data: itemSlot,
+                          feedback: image,
+                          onDragStarted: () {
+                            amulet.setInventoryOpen(true);
+                            amulet.dragging.value = itemSlot;
+                          },
+                          onDraggableCanceled: (velocity, offset) {
+                            amulet.clearDragging();
+                          },
+                          onDragEnd: (details) {
+                            if (amulet.engine.mouseOverCanvas) {
+                              amulet.dropItemSlot(itemSlot);
+                            }
+                            amulet.clearDragging();
+                          },
+                          child: onPressed(
+                            onRightClick: () =>
+                                amulet.dropItemSlot(itemSlot),
+                            action: () => amulet.useItemSlot(itemSlot),
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                image,
+                                Positioned(
+                                  bottom: 8,
+                                  right: 8,
+                                  child: buildText(level),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    });
+
+                  }
+                );
 
             final isHighlighted = highlightedAmuletItem != null &&
                 highlightedAmuletItem == item;

@@ -138,9 +138,7 @@ class IsometricServer with IsometricComponent {
     engine.targetZoom = 1.0;
     audio.enabledSound.value = true;
     camera.target = options.cameraPlay;
-    // if (!engine.isLocalHost) {
-    //   engine.fullScreenEnter();
-    // }
+    engine.fullScreenEnter();
   }
 
   void playCharacter(CharacterJson character) =>
