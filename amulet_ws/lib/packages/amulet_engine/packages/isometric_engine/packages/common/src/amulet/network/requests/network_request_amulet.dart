@@ -13,5 +13,6 @@ enum NetworkRequestAmulet {
   Player_Change_Game,
   Gain_Level,
   Gain_Experience,
+  Skip_Tutorial,
   Reset,
 }

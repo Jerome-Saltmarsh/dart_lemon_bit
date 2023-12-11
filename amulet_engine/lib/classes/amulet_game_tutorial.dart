@@ -848,7 +848,8 @@ class AmuletGameTutorial extends AmuletGame {
       );
 
   void onStruckCrystal2(AmuletPlayer player) {
-     if (player.tutorialObjective != TutorialObjective.Strike_Crystal_2){
+
+     if (player.tutorialObjective.index > TutorialObjective.Strike_Crystal_2.index){
        return;
      }
      deactivate(crystal2GlowingFalse);

@@ -663,15 +663,11 @@ class AmuletUI {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    buildAmuletElements(),
-                    buildElementPoints(),
-                  ],
-                ),
+                buildAmuletElements(),
                 buildPlayerExperienceBar(),
               ],
             ),
+            buildElementPoints(),
           ],
         ),
       );
@@ -828,8 +824,10 @@ class AmuletUI {
           return nothing;
         }
         return GSContainer(
+          width: 50,
           padding: const EdgeInsets.all(4),
-          child: buildText('POINTS $elementPoints', color: Colors.green),
+          alignment: Alignment.center,
+          child: buildText('+$elementPoints', color: Colors.green),
         );
       });
 }

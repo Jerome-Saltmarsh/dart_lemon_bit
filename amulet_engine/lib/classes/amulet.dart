@@ -321,6 +321,14 @@ class Amulet {
       target: buildAmuletGameTutorial(),
     );
 
+
+  void playerChangeGameToTown(AmuletPlayer player) =>
+      playerChangeGame(
+        player: player,
+        target: amuletGameTown,
+        sceneKey: 'player_spawn',
+      );
+
   void playerChangeGame({
     required AmuletPlayer player,
     required AmuletGame target,

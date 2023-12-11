@@ -1,6 +1,8 @@
 
 import 'dart:typed_data';
 
+import 'package:amulet_engine/enums/src.dart';
+
 import 'amulet.dart';
 import 'amulet_game.dart';
 import 'amulet_player.dart';
@@ -723,8 +725,11 @@ class AmuletController {
         }
 
         break;
+      case NetworkRequestAmulet.Skip_Tutorial:
+        player.tutorialObjective = TutorialObjective.Finished;
+        amulet.playerChangeGameToTown(player);
+        break;
     }
-
   }
 
   void handleNetworkRequestDebug(List<String> arguments) {

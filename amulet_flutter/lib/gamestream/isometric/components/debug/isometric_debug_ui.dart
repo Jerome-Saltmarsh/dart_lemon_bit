@@ -552,6 +552,7 @@ extension isometricDebugUI on IsometricDebug {
                 color: colors.palette[complexion],
               )),
           ),
+
           onPressed(
             action: player.changeName,
             child: buildRowWatch('name', player.name, (value){
@@ -564,6 +565,7 @@ extension isometricDebugUI on IsometricDebug {
           buildButtonAcquireItem(),
           buildButtonGainLevel(),
           buildButtonGainExperience(),
+          buildButtonSkipTutorial(),
           buildButtonReset(),
         ],
       );
@@ -860,6 +862,11 @@ extension isometricDebugUI on IsometricDebug {
   Widget buildButtonGainExperience() => onPressed(
     action: amulet.requestGainExperience,
     child: GSContainer(child: buildText('GAIN EXPERIENCE')),
+  );
+
+  Widget buildButtonSkipTutorial() => onPressed(
+    action: amulet.requestSkipTutorial,
+    child: GSContainer(child: buildText('SKIP TUTORIAL')),
   );
 }
 

@@ -415,6 +415,12 @@ class Amulet extends IsometricGame {
           NetworkRequestAmulet.Gain_Experience.index,
       );
 
+  void requestSkipTutorial() =>
+      server.sendNetworkRequest(
+          NetworkRequest.Amulet,
+          NetworkRequestAmulet.Skip_Tutorial.index,
+      );
+
   void requestReset() =>
       server.sendNetworkRequest(
           NetworkRequest.Amulet,
