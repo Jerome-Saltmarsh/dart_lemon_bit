@@ -321,7 +321,6 @@ class Amulet {
       target: buildAmuletGameTutorial(),
     );
 
-
   void playerChangeGameToTown(AmuletPlayer player) =>
       playerChangeGame(
         player: player,
@@ -335,13 +334,11 @@ class Amulet {
     String? sceneKey,
   }){
     final currentGame = player.amuletGame;
-    if (currentGame == target){
-      return;
+    if (currentGame != target){
+      currentGame.remove(player);
+      player.setGame(target);
+      target.add(player);
     }
-    currentGame.remove(player);
-    player.setGame(target);
-    target.add(player);
-
     if (sceneKey != null){
       target.scene.movePositionToKey(player, sceneKey);
     }
@@ -366,52 +363,38 @@ class Amulet {
   }
 
   void resetPlayer(AmuletPlayer player) {
-    // final game = player.amuletGame;
-    // game.clearSpawnedAI();
-    // game.spawnFiendsAtSpawnNodes();
-    playerChangeGame(player: player, target: amuletGameTown);
-    player.setPosition(
-      x: 620 + giveOrTake(10),
-      y: 523 + giveOrTake(10),
-      z: 96,
-    );
-    player.level = 1;
-    player.experience = 0;
+    playerChangeGameToTown(player);
     final weapons = player.weapons;
-
     for (final weapon in weapons) {
-      weapon.amuletItem = null;
-      weapon.cooldown = 0;
-      weapon.cooldownDuration = 0;
+      weapon.clear();
     }
     for (final weapon in player.items) {
-      weapon.amuletItem = null;
-      weapon.cooldown = 0;
-      weapon.cooldownDuration = 0;
+      weapon.clear();
     }
-    for (final weapon in player.treasures) {
-      weapon.amuletItem = null;
-      weapon.cooldown = 0;
-      weapon.cooldownDuration = 0;
+    for (final treasure in player.treasures) {
+      treasure.clear();
     }
     weapons[0].amuletItem = AmuletItem.Weapon_Rusty_Old_Sword;
     weapons[1].amuletItem = AmuletItem.Weapon_Old_Bow;
     weapons[2].amuletItem = AmuletItem.Spell_Heal;
+    player.elementPoints = 0;
+    player.elementFire = 0;
+    player.elementWater = 0;
+    player.elementElectricity = 0;
+    player.level = 1;
+    player.experience = 0;
     player.equippedHelm.clear();
     player.equippedHandRight.clear();
     player.equippedHandLeft.clear();
     player.equippedBody.clear();
     player.equippedLegs.clear();
     player.equippedShoe.clear();
-    player.equippedBody.amuletItem = AmuletItem.Armor_Leather_Basic;
+    player.equippedBody.amuletItem = AmuletItem.Armor_Shirt_Blue_Worn;
     player.equippedLegs.amuletItem = AmuletItem.Pants_Travellers;
-    player.refillItemSlot(player.equippedBody);
-    player.refillItemSlot(player.equippedLegs);
-    player.refillItemSlotsWeapons();
     player.health = player.maxHealth;
     player.characterState = CharacterState.Idle;
-    player.clearActionFrame();
     player.equipmentDirty = true;
-    // player.writeWeapons();
+    player.refillItemSlotsWeapons();
+    player.clearActionFrame();
   }
 }
