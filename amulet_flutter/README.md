@@ -18,7 +18,6 @@ ctrl + []               : move caret to code block
 ## CURRENT
 * [fix]: ai roam
 * [new]: persist gameobject properties
-* [new]: ui indicate item level
 
 ## ALPHA
 * [new]: character type spider
@@ -48,6 +47,9 @@ ctrl + []               : move caret to code block
 ## RELEASE
 * [new]: mobile touch screen support
 * [fix]: audio for web
+
+## 11.12.2023
+* [new]: ui indicate item level
 
 ## 10.12.2023
 * [fix]: single player character persistence

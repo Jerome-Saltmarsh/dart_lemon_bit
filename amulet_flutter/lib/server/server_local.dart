@@ -107,8 +107,13 @@ class ServerLocal implements Server {
   Future persistPlayerServer(){
     final playerJson = mapIsometricPlayerToJson(playerServer);
     final characters = getCharacters();
-    characters.removeWhere((element) => element.uuid == playerJson.uuid);
-    characters.add(playerJson);
+    final index = characters.indexWhere((element) => element.uuid == playerJson.uuid);
+    if (index != -1){
+      characters.removeAt(index);
+      characters.insert(index, playerJson);
+    } else {
+      characters.add(playerJson);
+    }
     return persistCharacters(characters);
   }
 
@@ -128,13 +133,22 @@ class ServerLocal implements Server {
     ensureInitialized().then((value) async {
       playerServer.uuid = generateUUID();
       playerServer.name = name;
+      playerServer.level = 1;
+      playerServer.elementPoints = 0;
+      playerServer.elementElectricity = 0;
+      playerServer.elementFire = 0;
+      playerServer.elementWater = 0;
+      playerServer.experience = 0;
       playerServer.complexion = complexion;
       playerServer.hairType = hairType;
       playerServer.hairColor = hairColor;
       playerServer.gender = gender;
       playerServer.headType = headType;
       playerServer.tutorialObjective = TutorialObjective.values.first;
-
+      playerServer.equippedHelm.amuletItem = null;
+      playerServer.equippedHandLeft.amuletItem = null;
+      playerServer.equippedHandRight.amuletItem = null;
+      playerServer.equippedShoe.amuletItem = null;
       playerServer.equippedBody.amuletItem = AmuletItem.Armor_Shirt_Blue_Worn;
       playerServer.equippedLegs.amuletItem = AmuletItem.Pants_Travellers;
       final json = mapIsometricPlayerToJson(playerServer);
@@ -172,6 +186,8 @@ class ServerLocal implements Server {
       playerServer.health = 10;
       playerServer.active = true;
       writeJsonToAmuletPlayer(character, playerServer);
+      playerServer.writeAmuletElements();
+      playerServer.writeElementPoints();
       if (playerServer.tutorialObjective == TutorialObjective.Finished) {
         controller.playerJoinAmuletTown();
       } else {

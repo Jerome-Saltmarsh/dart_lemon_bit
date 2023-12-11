@@ -1321,8 +1321,6 @@ class AmuletPlayer extends IsometricPlayer with Equipment, Elemental {
     writeByte(NetworkResponseAmuletPlayer.Elements);
     writeByte(elementFire);
     writeByte(elementWater);
-    // writeByte(elementAir);
-    // writeByte(elementEarth);
     writeByte(elementElectricity);
   }
 

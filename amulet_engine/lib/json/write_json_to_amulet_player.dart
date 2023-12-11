@@ -1,9 +1,13 @@
 
+import 'package:amulet_engine/json/character_json.dart';
+
 import '../classes/amulet_player.dart';
 import '../packages/src.dart';
 
-void writeJsonToAmuletPlayer(Json json, AmuletPlayer player){
-
+void writeJsonToAmuletPlayer(
+    CharacterJson json,
+    AmuletPlayer player,
+){
   final equippedHelm = json['equippedHelm'] ?? 0;
   if (equippedHelm != HelmType.None) {
     player.equipHelm(AmuletItem.getHelm(equippedHelm), force: true);
@@ -68,6 +72,10 @@ void writeJsonToAmuletPlayer(Json json, AmuletPlayer player){
     }
   }
 
+  player.elementPoints = json.elementPoints;
+  player.elementElectricity = json.elementElectricity;
+  player.elementFire = json.elementFire;
+  player.elementWater = json.elementWater;
   player.data = json['data'] ?? Json();
   player.uuid = json['uuid'] ?? (throw Exception('json[uuid] is null'));
   player.complexion = json['complexion'] ?? 0;

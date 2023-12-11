@@ -27,6 +27,11 @@ CharacterJson mapIsometricPlayerToJson(IsometricPlayer player){
       });
     }
 
+    json.elementPoints = player.elementPoints;
+    json.elementElectricity = player.elementElectricity;
+    json.elementFire = player.elementFire;
+    json.elementWater = player.elementWater;
+
     json['data'] = player.data;
     json['name'] = player.name;
     json['equippedHelm'] = getSlotType(player.equippedHelm);
