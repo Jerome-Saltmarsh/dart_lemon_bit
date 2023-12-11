@@ -71,7 +71,6 @@ Widget buildAmuletItemIcon(AmuletItem item) {
   return Container(
     width: 278,
     color: Color.fromRGBO(46, 34, 47, 1),
-  // padding: const EdgeInsets.all(6),
       child: FittedBox(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,15 +89,15 @@ Widget buildAmuletItemIcon(AmuletItem item) {
               ),
             ),
             height8,
-            GSContainer(
-              padding: const EdgeInsets.all(6),
-              child: buildText(
+            if (item.description.isNotEmpty)
+              Container(
+                padding: const EdgeInsets.all(8),
+                child: buildText(
                   item.description,
                   color: Colors.white70,
                   align: TextAlign.center,
+                ),
               ),
-              color: Colors.white12,
-            ),
             if (dependency != null)
               GSContainer(
                   padding: const EdgeInsets.all(6),

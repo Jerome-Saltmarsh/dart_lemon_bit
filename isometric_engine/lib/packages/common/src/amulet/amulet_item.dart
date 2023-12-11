@@ -424,6 +424,8 @@ enum AmuletItem {
       ));
 
   final String description;
+  /// this is used by spells which required certain weapons to be equipped
+  /// for example split arrow depends on a bow
   final int? dependency;
   final AmuletItemAction selectAction;
   final int type;
