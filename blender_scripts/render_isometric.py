@@ -146,7 +146,7 @@ def mute_animation_tracks(object_name):
 
 # BUSINESS LOGIC
 
-directory_renders = 'C:/Users/Jerome/github/amulet/lemon_atlas/assets/renders/'
+directory_renders = 'C:/Users/Jerome/github/amulet/resources/renders/'
 
 name_mesh_kid = 'mesh_kid'
 name_material_cell_shade = 'cell_shade'
