@@ -1,4 +1,6 @@
 
+import 'package:amulet_engine/mixins/equipped_weapon_index.dart';
+
 import '../enums/tutorial_objective.dart';
 import '../packages/src.dart';
 import '../mixins/src.dart';
@@ -14,7 +16,9 @@ class AmuletPlayer extends IsometricPlayer with
     Equipment,
     Elemental,
     Experience,
-    Level
+    Level,
+    ElementPoints,
+    EquippedWeaponIndex
 {
 
   static const healthBase = 10;
@@ -38,9 +42,7 @@ class AmuletPlayer extends IsometricPlayer with
 
   late List<AmuletItemSlot> items;
 
-  var _elementPoints = 0;
   var _inventoryOpen = false;
-  var _equippedWeaponIndex = -1;
   var _activatedPowerIndex = -1;
 
   AmuletPlayer({
@@ -113,10 +115,9 @@ class AmuletPlayer extends IsometricPlayer with
 
   Amulet get amulet => amuletGame.amulet;
 
-  int get elementPoints => _elementPoints;
-
-  set elementPoints(int value){
-    _elementPoints = value;
+  @override
+  set elementPoints(int value) {
+    super.elementPoints = value;
     writeElementPoints();
   }
 
@@ -186,8 +187,8 @@ class AmuletPlayer extends IsometricPlayer with
     if (activatedPowerIndex != -1) {
       return weapons[activatedPowerIndex];
     }
-    if (_equippedWeaponIndex != -1){
-      return weapons[_equippedWeaponIndex];
+    if (equippedWeaponIndex != -1){
+      return weapons[equippedWeaponIndex];
     }
 
     return null;
@@ -215,7 +216,7 @@ class AmuletPlayer extends IsometricPlayer with
     return base;
   }
 
-  AmuletItemSlot? get equippedWeapon => _equippedWeaponIndex == -1 ? null : weapons[_equippedWeaponIndex];
+  AmuletItemSlot? get equippedWeapon => equippedWeaponIndex == -1 ? null : weapons[equippedWeaponIndex];
 
   @override
   set experience(int value){
@@ -302,10 +303,9 @@ class AmuletPlayer extends IsometricPlayer with
     throw Exception();
   }
 
-  int get equippedWeaponIndex => _equippedWeaponIndex;
-
+  @override
   set equippedWeaponIndex(int value){
-    if (_equippedWeaponIndex == value){
+    if (equippedWeaponIndex == value){
       return;
     }
 
@@ -314,7 +314,7 @@ class AmuletPlayer extends IsometricPlayer with
     }
 
     if (value == -1){
-      _equippedWeaponIndex = value;
+      super.equippedWeaponIndex = value;
       weaponType = equippedWeaponType;
       writeEquippedWeaponIndex();
       return;
@@ -330,11 +330,8 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
 
-    _equippedWeaponIndex = value;
+    super.equippedWeaponIndex = value;
     weaponType = equippedWeaponType;
-    // attackActionFrame = item.actionFrame;
-    // attackDuration = item.performDuration;
-
     game.dispatchGameEvent(GameEventType.Weapon_Type_Equipped,
         x,
         y,
@@ -738,7 +735,7 @@ class AmuletPlayer extends IsometricPlayer with
           final currentWeapon = equippedWeapon;
           final currentCooldown = equippedWeapon?.cooldown ?? 0;
           setWeapon(
-              index: _equippedWeaponIndex,
+              index: equippedWeaponIndex,
               amuletItem: item,
               cooldown: items[index].cooldown,
           );
