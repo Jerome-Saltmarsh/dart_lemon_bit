@@ -1,4 +1,7 @@
 
+
+import '../packages/isometric_engine/packages/lemon_math/src/functions/random_item.dart';
+
 extension ListExtensions<T> on List<T> {
 
   T? tryGet(int? index) =>
@@ -7,4 +10,6 @@ extension ListExtensions<T> on List<T> {
           index >= length
           ? null
           : this[index];
+
+  T random() => randomItem(this);
 }

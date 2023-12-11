@@ -1,6 +1,7 @@
 
 import 'dart:typed_data';
 
+import 'package:amulet_engine/editor/randomize_scene.dart';
 import 'package:amulet_engine/enums/src.dart';
 
 import 'amulet.dart';
@@ -266,6 +267,10 @@ class AmuletController {
             final request = NetworkRequestModifyCanvasSize.values[modifyCanvasSizeIndex];
             handleRequestModifyCanvasSize(request, player);
             return;
+          case NetworkRequestEdit.Randomize:
+            randomizeScene(player.scene);
+            player.game.notifyPlayersSceneChanged();
+            break;
         }
         break;
 

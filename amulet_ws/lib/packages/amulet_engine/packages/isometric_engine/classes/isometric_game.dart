@@ -2656,6 +2656,13 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
   }
 
+  void notifyPlayersSceneChanged() {
+    scene.compiled = null;
+    for (final player in players){
+      player.writeScene();
+    }
+  }
+
   void onGameObjectedAdded(GameObject value) {}
 
   void onPlayerJoined(T player) {

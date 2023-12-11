@@ -211,6 +211,7 @@ extension IsometricEditorUI on IsometricEditor {
         buildButton(child: 'EDIT', action: windowEnabledScene.toggle),
         buildButton(child: 'MAP SIZE', action: windowEnabledCanvasSize.toggle),
         buildButton(child: 'GENERATE', action: windowEnabledGenerate.toggle),
+        buildButton(child: 'RANDOMIZE', action: randomize),
       ],
     );
 

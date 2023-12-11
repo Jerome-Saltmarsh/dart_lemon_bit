@@ -911,4 +911,10 @@ class IsometricEditor with IsometricComponent {
         break;
     }
   }
+
+  void randomize() =>
+      server.sendNetworkRequest(
+          NetworkRequest.Edit,
+          NetworkRequestEdit.Randomize.index,
+      );
 }
