@@ -1756,69 +1756,52 @@ class IsometricScene with IsometricComponent implements Updatable {
 
   int colorNorthWest(int index){
     if (index < 0){
-      return ambientColor;
+      return -1;
     }
 
     final row = getRow(index);
     if (row - 1 < 0) {
-      return nodeColors[index];
+      return -1;
     }
 
     final column = getColumn(index);
-    if (column + 1 >= totalColumns) {
-      return nodeColors[index];
+    if (column + 1 >= totalColumns){
+      return -1;
     }
 
     final indexNorthWest = index - totalColumns + 1;
-    final orientation = nodeOrientations[indexNorthWest];
-
     if (const [
       NodeOrientation.Solid,
-      NodeOrientation.Half_South,
-      NodeOrientation.Half_East,
       NodeOrientation.Corner_South_East,
-      NodeOrientation.Slope_South,
-      NodeOrientation.Slope_East,
-    ].contains(orientation)){
-      final current = nodeColors[index];
-      // return merge32BitColors(current, ambientColor);
-      return current;
+    ].contains(nodeOrientations[indexNorthWest])){
+      return -1;
     }
-
     return nodeColors[indexNorthWest];
   }
 
   int colorSouthEast(int index){
     if (index < 0){
-      return ambientColor;
+      -1;
     }
-
     final row = getRow(index);
-    if (row - 1 < 0) {
-      return nodeColors[index];
+    if (row + 1 >= totalRows) {
+      return -1;
     }
-    final column = getColumn(index);
 
-    if (column + 1 >= totalColumns){
-      return nodeColors[index];
+    final column = getColumn(index);
+    if (column - 1 < 0) {
+      return -1;
     }
 
     final indexSouthEast = index + totalColumns - 1;
     final orientation = nodeOrientations[indexSouthEast];
-
     if (const [
       NodeOrientation.Solid,
-      NodeOrientation.Half_North,
-      NodeOrientation.Half_West,
       NodeOrientation.Corner_North_West,
-      NodeOrientation.Slope_South,
     ].contains(orientation)){
-      final current = nodeColors[index];
-      // return merge32BitColors(current, ambientColor);
-      return current;
+      return -1;
     }
-
-    return nodeColors[index];
+    return nodeColors[indexSouthEast];
   }
 
   // TODO EXPENSIVE
@@ -2187,14 +2170,25 @@ class IsometricScene with IsometricComponent implements Updatable {
     final colorE = this.colorEast(index);
     final colorS = this.colorSouth(index);
     final colorW = this.colorWest(index);
-
+    final colorNW = this.colorNorthWest(index);
+    final colorSE = this.colorSouthEast(index);
     final colorNAlpha = getAlpha(colorN);
     final colorEAlpha = getAlpha(colorE);
     final colorSAlpha = getAlpha(colorS);
     final colorWAlpha = getAlpha(colorW);
 
-    final maxSEAlpha = max(colorSAlpha, colorEAlpha);
-    final maxNWAlpha = max(colorNAlpha, colorWAlpha);
+    var maxSEAlpha = max(colorSAlpha, colorEAlpha);
+    var maxNWAlpha = max(colorNAlpha, colorWAlpha);
+
+    if (colorSE != -1){
+      final colorSEAlpha = getAlpha(colorSE);
+      maxSEAlpha = max(colorSEAlpha, maxSEAlpha);
+    }
+
+    if (colorNW != -1){
+      final alphaNW = getAlpha(colorNW);
+      maxNWAlpha = max(alphaNW, maxNWAlpha);
+    }
 
     final minSEAlpha = min(colorSAlpha, colorEAlpha);
     final minNWAlpha = min(colorNAlpha, colorWAlpha);
