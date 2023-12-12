@@ -8,7 +8,6 @@ class GameEventType {
   static const Character_Death          = 62;
   static const Character_Hurt           = 63;
   static const Game_Object_Destroyed    = 65;
-  static const Attack_Performed         = 66;
   static const Weapon_Type_Equipped     = 69;
   static const Node_Struck              = 70;
   static const Attack_Missed            = 71;
@@ -17,7 +16,6 @@ class GameEventType {
   static const Bullet_Deactivated       = 76;
   static const Material_Struck          = 77;
   static const Item_Bounce              = 78;
-  static const Melee_Attack_Performed   = 79;
   static const Teleport_Start           = 80;
   static const Teleport_End             = 81;
   static const Blink_Depart             = 83;
@@ -28,4 +26,5 @@ class GameEventType {
   static const Spell_Used = 89;
   static const Amulet_GameObject_Spawned = 91;
   static const Spawn_Confetti = 92;
+  static const Melee_Attack_Performed = 93;
 }

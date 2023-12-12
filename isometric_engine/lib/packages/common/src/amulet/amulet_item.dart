@@ -6,7 +6,7 @@ enum AmuletItem {
     quality: AmuletItemQuality.Rare,
     type: ItemType.Weapon,
     subType: WeaponType.Sword,
-    description: 'Teleports a short distance',
+    description: 'Teleport a short distance',
     level1: AmuletItemLevel(
       charges: 1,
       cooldown: 0,
@@ -89,7 +89,8 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     description: 'fires multiple arrows',
     level1: AmuletItemLevel(
-      damageMin: 1,
+      damageMin: 3,
+      damageMax: 6,
       fire: 0,
       charges: 3,
       cooldown: 30,
@@ -97,7 +98,19 @@ enum AmuletItem {
       quantity: 3,
     ),
     level2: AmuletItemLevel(
-      damageMin: 2,
+      damageMin: 6,
+      damageMax: 9,
+      fire: 3,
+      water: 2,
+      electricity: 1,
+      charges: 3,
+      cooldown: 30,
+      performDuration: 25,
+      quantity: 4,
+    ),
+    level3: AmuletItemLevel(
+      damageMin: 9,
+      damageMax: 12,
       fire: 3,
       water: 2,
       electricity: 1,
@@ -358,7 +371,7 @@ enum AmuletItem {
       quality: AmuletItemQuality.Mythical,
       type: ItemType.Spell,
       subType: SpellType.Blink,
-      description: 'strikes one random nearby enemy with lightning',
+      description: 'teleport a short distance',
       level1: AmuletItemLevel(
         cooldown: 30,
         range: 50,
@@ -371,14 +384,7 @@ enum AmuletItem {
         cooldown: 26,
         range: 70,
       ),
-      level4: AmuletItemLevel(
-        cooldown: 26,
-        range: 70,
-      ),
-      level5: AmuletItemLevel(
-        cooldown: 24,
-        range: 80,
-      )),
+  ),
   Spell_Heal(
       selectAction: AmuletItemAction.Caste,
       quality: AmuletItemQuality.Common,
@@ -387,39 +393,27 @@ enum AmuletItem {
       description: 'heals a small amount of health',
       level1: AmuletItemLevel(
         charges: 1,
-        cooldown: 30,
-        health: 3,
+        cooldown: 14,
+        health: 5,
         performDuration: 25,
         water: 0,
       ),
       level2: AmuletItemLevel(
         charges: 1,
-        cooldown: 30,
-        health: 6,
+        cooldown: 12,
+        health: 7,
         performDuration: 23,
         water: 3,
       ),
       level3: AmuletItemLevel(
         charges: 1,
-        cooldown: 30,
+        cooldown: 10,
         health: 10,
         performDuration: 21,
         water: 6,
+        electricity: 1,
       ),
-      level4: AmuletItemLevel(
-        charges: 1,
-        cooldown: 30,
-        health: 16,
-        performDuration: 18,
-        water: 12,
-      ),
-      level5: AmuletItemLevel(
-        charges: 1,
-        cooldown: 30,
-        health: 30,
-        performDuration: 16,
-        water: 20,
-      ));
+  );
 
   final String description;
   /// this is used by spells which required certain weapons to be equipped

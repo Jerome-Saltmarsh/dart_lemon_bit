@@ -433,19 +433,6 @@ class IsometricAudio with IsometricComponent implements Updatable {
     }
   }
 
-  late final MapItemTypeAudioSinglesAttack = <int, AudioSingle> {
-     WeaponType.Unarmed: swing_arm_11,
-     WeaponType.Knife: dagger_woosh_9,
-     WeaponType.Axe: dagger_woosh_9,
-     WeaponType.Staff: dagger_woosh_9,
-     WeaponType.Hammer: dagger_woosh_9,
-     WeaponType.Pickaxe: dagger_woosh_9,
-     WeaponType.Sword: dagger_woosh_9,
-     WeaponType.Revolver: revolver_shot_3,
-     WeaponType.Musket: assault_rifle_shot_14,
-     WeaponType.Grenade: swing_sword,
-  };
-
   late final MapItemTypeAudioSinglesAttackMelee = <int, AudioSingle> {
     WeaponType.Unarmed: swing_arm_11,
     WeaponType.Knife: dagger_woosh_9,

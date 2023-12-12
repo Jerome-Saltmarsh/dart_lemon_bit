@@ -613,6 +613,9 @@ class AmuletController {
 
         player.scene.addMark(index: index, markType: markType);
         player.game.sortMarksAndDispatch();
+        player.editor.selectedMarkListIndex = player.scene.marks.indexWhere((mark) {
+          return index == MarkType.getIndex(mark) && markType ==  MarkType.getType(mark);
+        });
         break;
     }
   }

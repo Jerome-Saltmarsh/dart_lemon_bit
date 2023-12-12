@@ -388,8 +388,13 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   void performAbilityMelee(Character character){
 
-    final target = character.target;
 
+    dispatchGameEventPosition(
+      GameEventType.Melee_Attack_Performed,
+      character,
+    );
+
+    final target = character.target;
     if (target is Collider){
       if (character.withinAttackRangeAndAngle(target)){
         applyHit(
@@ -1675,55 +1680,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
           y: y,
           z: z,
       );
-    }
-  }
-
-  void dispatchAttackPerformedCharacter(Character character) =>
-      dispatchAttackPerformed(
-        character.weaponType,
-        character.x,
-        character.y,
-        character.z,
-        character.angle,
-      );
-
-  void dispatchAttackPerformed(
-      int attackType,
-      double x,
-      double y,
-      double z,
-      double angle,
-  ) {
-    final players = this.players;
-    for (final player in players) {
-      if (!player.onScreen(x, y)) continue;
-      player.writeGameEvent(
-        type: GameEventType.Attack_Performed,
-        x: x,
-        y: y,
-        z: z,
-      );
-      player.writeUInt16(attackType);
-    }
-  }
-
-  void dispatchMeleeAttackPerformed(
-      int attackType,
-      double x,
-      double y,
-      double z,
-      double angle,
-  ) {
-    final players = this.players;
-    for (final player in players) {
-      if (!player.onScreen(x, y)) continue;
-      player.writeGameEvent(
-        type: GameEventType.Melee_Attack_Performed,
-        x: x,
-        y: y,
-        z: z,
-      );
-      player.writeUInt16(attackType);
     }
   }
 

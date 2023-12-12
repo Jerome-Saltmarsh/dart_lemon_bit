@@ -74,12 +74,6 @@ class IsometricEvents with IsometricComponent {
       case GameEventType.Footstep:
         onFootstep(x, y, z);
         return;
-      case GameEventType.Attack_Performed:
-        onAttackPerformed(x, y, z);
-        return;
-      case GameEventType.Melee_Attack_Performed:
-        onMeleeAttackPerformed(x, y, z, parser.readUInt16());
-        return;
       case GameEventType.Bullet_Deactivated:
         audio.play(audio.metal_light_3, x, y, z);
         return;
@@ -88,6 +82,9 @@ class IsometricEvents with IsometricComponent {
         return;
       case GameEventType.Explosion:
         onGameEventExplosion(x, y, z);
+        return;
+      case GameEventType.Melee_Attack_Performed:
+        audio.play(audio.swing_arm_11, x, y, z);
         return;
       case GameEventType.AI_Target_Acquired:
         final characterType = server.parser.readByte();
@@ -276,39 +273,12 @@ class IsometricEvents with IsometricComponent {
     }
   }
 
-  void onGameEventAttackPerformedBlade(double x, double y, double z, double angle) {
-    audio.play(audio.swing_sword, x, y, z);
-  }
-
   void onSplash(double x, double y, double z) {
     for (var i = 0; i < 12; i++){
       final zv = randomBetween(1.5, 5);
       particles.spawnParticleWaterDrop(x: x, y: y, z: z, zv: zv, duration: (zv * 12).toInt());
     }
     audio.play(audio.splash, x, y, z);
-  }
-
-  void onAttackPerformed(double x, double y, double z) {
-    final attackType = server.parser.readUInt16();
-    final attackTypeAudio = audio.MapItemTypeAudioSinglesAttack[attackType];
-
-    if (attackTypeAudio != null) {
-      audio.play(attackTypeAudio, x, y, z);
-    }
-  }
-
-  void onMeleeAttackPerformed(
-      double x,
-      double y,
-      double z,
-      int attackType,
-  ) {
-    final attackTypeAudio = audio.MapItemTypeAudioSinglesAttackMelee[attackType];
-
-    if (attackTypeAudio != null) {
-      audio.play(attackTypeAudio, x, y, z);
-    }
-    return;
   }
 
   void onPlayerEvent(int event) {

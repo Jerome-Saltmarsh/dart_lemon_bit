@@ -4,7 +4,7 @@ import '../isometric/weapon_type.dart';
 
 enum FiendType {
   Fallen(
-    health: 3,
+    health: 4,
     damage: 1,
     characterType: CharacterType.Fallen,
     attackDuration: 20,
@@ -30,13 +30,13 @@ enum FiendType {
     weaponCooldown: 20,
   ),
   Wolf(
-    health: 5,
+    health: 8,
     damage: 3,
     characterType: CharacterType.Wolf,
     attackDuration: 20,
     experience: 2,
     runSpeed: 1.25,
-    chanceOfSetTarget: 0.25,
+    chanceOfSetTarget: 0.3,
     weaponType: WeaponType.Unarmed,
     weaponRange: 50,
     quantity: 1,
