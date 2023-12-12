@@ -17,7 +17,7 @@ import 'debug_tab.dart';
 extension isometricDebugUI on IsometricDebug {
 
   Widget buildUI() =>
-      buildWatch(options.mode, (mode) => mode != Mode.Debug ? nothing :
+      buildWatch(options.mode, (mode) => mode != Mode.debug ? nothing :
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,

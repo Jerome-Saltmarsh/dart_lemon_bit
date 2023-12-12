@@ -620,7 +620,7 @@ class IsometricRender with IsometricComponent {
 
   void renderEditMode() {
     if (options.playing) return;
-    if (editor.gameObjectSelected.value){
+    if (editor.gameObject.value != null){
       engine.renderCircleOutline(
         sides: 24,
         radius: 30,

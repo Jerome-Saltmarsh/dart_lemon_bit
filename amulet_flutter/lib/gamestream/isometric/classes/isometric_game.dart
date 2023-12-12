@@ -61,10 +61,9 @@ class IsometricGame extends Game {
         left: 0,
         child: WatchBuilder(options.mode, (mode) =>
             switch (mode) {
-              Mode.Play => customBuildUI(context),
-              Mode.Edit => editor.buildEditor(),
-              Mode.Debug => debug.buildUI(),
-              _ => nothing,
+              Mode.play => customBuildUI(context),
+              Mode.edit => editor.buildEditor(),
+              Mode.debug => debug.buildUI(),
             }),
       ),
 

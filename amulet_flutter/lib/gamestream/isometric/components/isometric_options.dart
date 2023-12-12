@@ -41,7 +41,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
 
   final serverMode = Watch(ServerMode.local);
   final cameraPlay = Position();
-  final mode = Watch(Mode.Play);
+  final mode = Watch(Mode.play);
   final highlightIconInventory = WatchBool(false);
   final timeVisible = WatchBool(true);
   final windowOpenMenu = WatchBool(false);
@@ -148,34 +148,30 @@ class IsometricOptions with IsometricComponent implements Updatable {
     }
   }
 
-  void onChangedMode(int mode) {
+  void onChangedMode(Mode mode) {
     switch (mode){
-      case Mode.Play:
-        editor.deselectGameObject();
+      case Mode.play:
+        editor.sendGameObjectRequestDeselect();
         activateCameraPlay();
         break;
-      case Mode.Edit:
+      case Mode.edit:
         editor.cameraCenterOnNodeSelectedIndex();
         editor.cursorSetToPlayer();
         activateCameraEdit();
         break;
-      case Mode.Debug:
+      case Mode.debug:
         activateCameraDebug();
         break;
     }
   }
 
-  void activateCameraDebug() {
-    camera.target = cameraDebug;
-  }
+  void activateCameraDebug() => setCameraTarget(cameraDebug);
 
-  void activateCameraEdit() {
-    camera.target = cameraEdit;
-  }
+  void activateCameraEdit() => setCameraTarget(cameraEdit);
 
-  void activateCameraPlay(){
-    camera.target = cameraPlay;
-  }
+  void activateCameraPlay() => setCameraTarget(cameraPlay);
+
+  void setCameraTarget(Position? value) => camera.target = value;
 
   void _onChangedMessageStatus(String value){
     if (value.isEmpty){
@@ -185,17 +181,13 @@ class IsometricOptions with IsometricComponent implements Updatable {
     }
   }
 
-  void setModePlay(){
-    mode.value = Mode.Play;
-  }
+  void setModePlay() => setMode(Mode.play);
 
-  void setModeEdit(){
-    mode.value = Mode.Edit;
-  }
+  void setModeEdit() => setMode(Mode.edit);
 
-  void setModeDebug(){
-    mode.value = Mode.Debug;
-  }
+  void setModeDebug() => setMode(Mode.debug);
+
+  void setMode(Mode value) => mode.value = value;
 
   void onChangedError(String error) {
     messageStatus.value = error;
@@ -243,13 +235,15 @@ class IsometricOptions with IsometricComponent implements Updatable {
 
   void toggleRenderCameraTargets() => renderCameraTargets = !renderCameraTargets;
 
-  bool get debugging => mode.value == Mode.Debug;
+  bool get debugging => isMode(Mode.debug);
 
-  bool get editing => mode.value == Mode.Edit;
+  bool get editing => isMode(Mode.edit);
 
-  bool get playing => mode.value == Mode.Play;
+  bool get playing => isMode(Mode.play);
 
-  set debugging(bool value) => mode.value = value ? Mode.Debug : Mode.Play;
+  bool isMode(Mode value) => mode.value == value;
+
+  set debugging(bool value) => mode.value = value ? Mode.debug : Mode.play;
 
   void setCameraPositionToPlayer(){
     final cameraPlay = this.cameraPlay;

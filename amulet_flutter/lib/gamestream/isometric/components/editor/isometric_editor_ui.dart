@@ -440,8 +440,8 @@ extension IsometricEditorUI on IsometricEditor {
 
   Widget buildEditorTabGameObjects() =>
       GSContainer(
-        child: buildWatch(gameObjectSelected, (bool objectSelected){
-          if (objectSelected){
+        child: buildWatch(gameObject, (GameObject? gameObject){
+          if (gameObject != null){
             return buildColumnSelectedGameObject();
           }
           return SingleChildScrollView(

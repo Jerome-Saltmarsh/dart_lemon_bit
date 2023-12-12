@@ -284,9 +284,9 @@ class IsometricPlayer with IsometricComponent {
       case NetworkResponsePlayer.Debugging:
         final value = parser.readBool();
         if (value){
-          options.mode.value = Mode.Debug;
+          options.setModeDebug();
         } else {
-          options.mode.value = Mode.Play;
+          options.setModePlay();
         }
         break;
       case NetworkResponsePlayer.Cache_Cleared:

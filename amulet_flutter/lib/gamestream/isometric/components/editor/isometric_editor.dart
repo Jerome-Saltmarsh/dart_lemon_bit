@@ -32,7 +32,6 @@ class IsometricEditor with IsometricComponent {
 
   final selectedSceneName = Watch<String?>(null);
   final gameObject = Watch<GameObject?>(null);
-  final gameObjectSelected = Watch(false);
   final gameObjectSelectedType = Watch(0);
   final gameObjectSelectedSubType = Watch(0);
   final gameObjectSelectedHitable = Watch(true);
@@ -160,46 +159,48 @@ class IsometricEditor with IsometricComponent {
   double get posY => column * Node_Size + Node_Size_Half;
 
   double get posZ => z * Node_Height;
+  
+  bool get gameObjectSelected => gameObject.value != null;
 
   void onKeyPressed(PhysicalKeyboardKey key) {
 
     switch (key) {
       case PhysicalKeyboardKey.arrowUp:
         if (engine.keyPressedShiftLeft) {
-          if (gameObjectSelected.value && editorTab.value == EditorTab.Objects) {
+          if (gameObjectSelected && editorTab.value == EditorTab.Objects) {
             translateSelectedGameObject(x: 0, y: 0, z: 1);
             return;
           }
           cursorZIncrease();
           return;
         }
-        if (gameObjectSelected.value) {
+        if (gameObjectSelected) {
           translateSelectedGameObject(x: -1, y: -1, z: 0);
           return;
         }
         cursorRowDecrease();
         return;
       case PhysicalKeyboardKey.arrowRight:
-        if (gameObjectSelected.value && editorTab.value == EditorTab.Objects) {
+        if (gameObjectSelected && editorTab.value == EditorTab.Objects) {
           return translateSelectedGameObject(x: 1, y: -1, z: 0);
         }
         cursorColumnDecrease();
         break;
       case PhysicalKeyboardKey.arrowDown:
         if (engine.keyPressedShiftLeft) {
-          if (gameObjectSelected.value && editorTab.value == EditorTab.Objects) {
+          if (gameObjectSelected && editorTab.value == EditorTab.Objects) {
             return translateSelectedGameObject(x: 0, y: 0, z: -1);
           }
           cursorZDecrease();
         } else {
-          if (gameObjectSelected.value && editorTab.value == EditorTab.Objects) {
+          if (gameObjectSelected && editorTab.value == EditorTab.Objects) {
             return translateSelectedGameObject(x: 1, y: 1, z: 0);
           }
           cursorRowIncrease();
         }
         break;
       case PhysicalKeyboardKey.arrowLeft:
-        if (gameObjectSelected.value && editorTab.value == EditorTab.Objects) {
+        if (gameObjectSelected && editorTab.value == EditorTab.Objects) {
           return translateSelectedGameObject(x: -1, y: 1, z: 0);
         }
         cursorColumnIncrease();
@@ -226,40 +227,40 @@ class IsometricEditor with IsometricComponent {
     // switch (key) {
     //   case KeyCode.Arrow_Up:
     //     if (engine.keyPressedShiftLeft) {
-    //       if (gameObjectSelected.value) {
+    //       if (gameObjectSelected) {
     //         translateSelectedGameObject(x: 0, y: 0, z: 1);
     //         return;
     //       }
     //       cursorZIncrease();
     //       return;
     //     }
-    //     if (gameObjectSelected.value) {
+    //     if (gameObjectSelected) {
     //       translateSelectedGameObject(x: -1, y: -1, z: 0);
     //       return;
     //     }
     //     cursorRowDecrease();
     //     return;
     //   case KeyCode.Arrow_Right:
-    //     if (gameObjectSelected.value) {
+    //     if (gameObjectSelected) {
     //       return translateSelectedGameObject(x: 1, y: -1, z: 0);
     //     }
     //     cursorColumnDecrease();
     //     break;
     //   case KeyCode.Arrow_Down:
     //     if (engine.keyPressedShiftLeft) {
-    //       if (gameObjectSelected.value) {
+    //       if (gameObjectSelected) {
     //         return translateSelectedGameObject(x: 0, y: 0, z: -1);
     //       }
     //       cursorZDecrease();
     //     } else {
-    //       if (gameObjectSelected.value) {
+    //       if (gameObjectSelected) {
     //         return translateSelectedGameObject(x: 1, y: 1, z: 0);
     //       }
     //       cursorRowIncrease();
     //     }
     //     break;
     //   case KeyCode.Arrow_Left:
-    //     if (gameObjectSelected.value) {
+    //     if (gameObjectSelected) {
     //       return translateSelectedGameObject(x: -1, y: 1, z: 0);
     //     }
     //     cursorColumnIncrease();
@@ -304,7 +305,7 @@ class IsometricEditor with IsometricComponent {
   }
 
   void moveSelectedGameObjectToMouse() {
-    if (gameObjectSelected.value) {
+    if (gameObjectSelected) {
       sendGameObjectRequestMoveToMouse();
     }
   }
@@ -322,12 +323,8 @@ class IsometricEditor with IsometricComponent {
     nodeSelectedVariation.value = scene.nodeVariations[selectedIndex];
   }
 
-  void deselectGameObject() {
-    sendGameObjectRequestDeselect();
-  }
-
   void translateSelectedGameObject({ double x = 0, double y = 0, double z = 0}) {
-    assert (gameObjectSelected.value);
+    assert (gameObjectSelected);
     return sendClientRequestGameObjectTranslate(
       tx: x,
       ty: y,
@@ -364,18 +361,10 @@ class IsometricEditor with IsometricComponent {
     nodeSelectedIndex.value = scene.getIndexZRC(z, row, column);
   }
 
-  void deleteGameObjectSelected() {
-    sendGameObjectRequestDelete();
-  }
-
-  // void cameraCenterSelectedObject() =>
-  //     engine.cameraCenter(
-  //       gameObject.value!.renderX,
-  //       gameObject.value!.renderY,
-  //     );
+  void deleteGameObjectSelected() => sendGameObjectRequestDelete();
 
   void delete() {
-    if (gameObjectSelected.value) {
+    if (gameObjectSelected) {
       deleteGameObjectSelected();
       return;
     }
@@ -474,10 +463,7 @@ class IsometricEditor with IsometricComponent {
     nodeSelectedOrientation.value = scene.nodeOrientations[index];
     nodeSelectedType.value = scene.nodeTypes[index];
     nodeSelectedVariation.value = scene.nodeVariations[index];
-    gameObjectSelected.value = false;
     refreshNodeSelectedIndex();
-    deselectGameObject();
-    // deselectMarkIndex();
     cameraCenterOnNodeSelectedIndex();
   }
 
@@ -493,9 +479,7 @@ class IsometricEditor with IsometricComponent {
 
   void setTabNodes() => editorTab.value = EditorTab.Nodes;
 
-  void onChangedEditTab(EditorTab editTab) {
-    deselectGameObject();
-  }
+  void onChangedEditTab(EditorTab editTab) => sendGameObjectRequestDeselect();
 
   void setSelectedObjectedIntensity(double value) =>
       gameObject.value?.emissionIntensity = value;
@@ -793,7 +777,7 @@ class IsometricEditor with IsometricComponent {
   void onMouseRightClicked() {
     switch (editorTab.value){
       case EditorTab.Objects:
-        deselectGameObject();
+        sendGameObjectRequestDeselect();
         break;
       case EditorTab.Marks:
         deselectMarkIndex();
@@ -823,12 +807,12 @@ class IsometricEditor with IsometricComponent {
     switch (key){
       case PhysicalKeyboardKey.arrowUp:
         if (engine.keyPressedShiftLeft) {
-          if (gameObjectSelected.value) {
+          if (gameObjectSelected) {
             translateSelectedGameObject(x: 0, y: 0, z: 1);
             return;
           }
         }
-        if (gameObjectSelected.value) {
+        if (gameObjectSelected) {
           translateSelectedGameObject(x: -1, y: -1, z: 0);
         }
         break;

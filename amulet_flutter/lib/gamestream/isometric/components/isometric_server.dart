@@ -129,7 +129,7 @@ class IsometricServer with IsometricComponent {
   }
 
   void onServerConnectionEstablished() {
-    options.mode.value = Mode.Play;
+    options.mode.value = Mode.play;
     options.game.value = options.amulet;
     options.setModePlay();
     options.activateCameraPlay();

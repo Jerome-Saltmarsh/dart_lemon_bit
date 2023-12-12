@@ -408,7 +408,7 @@ class IsometricEvents with IsometricComponent {
         audio.coins_24();
         break;
       case PlayerEvent.GameObject_Deselected:
-        editor.gameObjectSelected.value = false;
+        editor.gameObject.value = null;
         break;
       case PlayerEvent.Player_Moved:
         print('PlayerEvent.Player_Moved');
