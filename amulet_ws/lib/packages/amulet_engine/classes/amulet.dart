@@ -377,6 +377,7 @@ class Amulet {
     weapons[0].amuletItem = AmuletItem.Weapon_Rusty_Old_Sword;
     weapons[1].amuletItem = AmuletItem.Weapon_Old_Bow;
     weapons[2].amuletItem = AmuletItem.Spell_Heal;
+    amuletTime.hour = 12;
     player.elementPoints = 0;
     player.elementFire = 0;
     player.elementWater = 0;

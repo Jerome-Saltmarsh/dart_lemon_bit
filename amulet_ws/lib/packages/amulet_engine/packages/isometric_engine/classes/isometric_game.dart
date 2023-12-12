@@ -316,7 +316,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
           player.setDestinationToMouse();
           player.runToDestinationEnabled = true;
           player.pathFindingEnabled = false;
-          player.target = null;
+          setCharacterTarget(player, null);
         }
       } else if (mouseLeftClicked) {
         player.target = aimTarget;
@@ -705,10 +705,10 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     character.autoTargetTimer = character.autoTargetTimerDuration;
 
     if (randomChance(character.chanceOfSetTarget)){
-      character.target = findNearestEnemy(
+      setCharacterTarget(character, findNearestEnemy(
         character,
         radius: character.autoTargetRange,
-      );
+      ));
     }
   }
 
@@ -861,7 +861,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       return;
     }
     if (target.target == null) {
-      target.target = src;
+      setCharacterTarget(target, src);
     }
     customOnCharacterDamageApplied(target, src, damage);
     target.setCharacterStateHurt();
@@ -1974,7 +1974,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   void clearCharacterTarget(Character character) {
     if (character.target == null) return;
-    character.target = null;
+    setCharacterTarget(character, null);
     character.setCharacterStateIdle();
   }
 
@@ -2694,5 +2694,20 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       }
       sceneGameObjects.add(gameObject);
     }
+  }
+
+  void setCharacterTarget(
+    Character character,
+    Position? value,
+  ) {
+    if (character.target == value){
+      return;
+    }
+    character.target = value;
+    onCharacterTargetChanged(character, value);
+  }
+
+  void onCharacterTargetChanged(Character character, Position? value) {
+
   }
 }

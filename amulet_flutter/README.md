@@ -49,6 +49,7 @@ ctrl + []               : move caret to code block
 * [fix]: audio for web
 
 ## 12.12.2023
+* [new]: ai audio on target acquired
 * [fix]: ai roam
 
 ## 11.12.2023

@@ -711,4 +711,13 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       return;
     }
   }
+
+  @override
+  void onCharacterTargetChanged(Character character, Position? value) {
+    if (character is! AmuletFiend || value == null) return;
+    dispatchGameEventPosition(GameEventType.AI_Target_Acquired, value);
+    dispatchByte(character.characterType);
+  }
 }
+
+

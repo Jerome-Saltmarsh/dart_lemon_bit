@@ -79,7 +79,7 @@ class RendererCharacters extends RenderGroup {
         renderCharacterShader(
             character: character,
             shader: images.characterShaderFallen,
-            scale: 0.4,
+            scale: 0.5,
         );
         break;
       case CharacterType.Skeleton:
@@ -602,140 +602,6 @@ class RendererCharacters extends RenderGroup {
           ? spriteHelmWest.getFramePercentage(row, actionComplete)
           : spriteHelmWest.getFrame(row: row, column: animationFrame),
       color: colorWest,
-      scale: scale,
-      dstX: dstX,
-      dstY: dstY,
-      anchorY: anchorY,
-    );
-  }
-
-  void renderCharacterFallen(Character character) {
-
-    final renderBottom = this.renderBottom;
-    final characterDead = character.dead;
-
-    if (
-      (renderBottom && !characterDead) ||
-      (!renderBottom && characterDead))
-      return;
-
-    const scale = 0.5;
-    const anchorY = 0.6;
-
-    final images = this.images;
-    final row = character.renderDirection;
-    final column = character.animationFrame;
-    final characterState = character.state;
-    final spriteGroupsFallen = images.characterShaderFallen;
-    final spriteFlat = spriteGroupsFallen.flat.fromCharacterState(characterState);
-    final spriteWest = spriteGroupsFallen.west.fromCharacterState(characterState);
-    final spriteSouth = spriteGroupsFallen.south.fromCharacterState(characterState);
-    final spriteShadow = spriteGroupsFallen.shadow.fromCharacterState(characterState);
-    final render = this.render;
-    final dstX = character.renderX;
-    final dstY = character.renderY;
-    final colorFlat = character.colorDiffuse;
-
-    render.sprite(
-      sprite: spriteShadow,
-      frame: spriteShadow.getFrame(row: row, column: column),
-      color: colorFlat,
-      scale: scale,
-      dstX: dstX,
-      dstY: dstY,
-      anchorY: anchorY,
-    );
-
-    render.sprite(
-      sprite: spriteFlat,
-      frame: spriteFlat.getFrame(row: row, column: column),
-      color: colorFlat,
-      scale: scale,
-      dstX: dstX,
-      dstY: dstY,
-      anchorY: anchorY,
-    );
-
-    render.sprite(
-      sprite: spriteWest,
-      frame: spriteWest.getFrame(row: row, column: column),
-      color: character.colorNorthWest,
-      scale: scale,
-      dstX: dstX,
-      dstY: dstY,
-      anchorY: anchorY,
-    );
-
-    render.sprite(
-      sprite: spriteSouth,
-      frame: spriteSouth.getFrame(row: row, column: column),
-      color: character.colorSouthEast,
-      scale: scale,
-      dstX: dstX,
-      dstY: dstY,
-      anchorY: anchorY,
-    );
-  }
-
-  void renderCharacterSkeleton(Character character) {
-
-    if (
-      (renderBottom && !character.dead) ||
-      (!renderBottom && character.dead))
-      return;
-
-    const scale = 0.5;
-    const anchorY = 0.6;
-
-    final images = this.images;
-    final row = character.renderDirection;
-    final column = character.animationFrame;
-    final shaders = images.characterShaderSkeleton;
-    final spriteShadow = shaders.shadow.fromCharacterState(character.state);
-    final spriteFlat = shaders.flat.fromCharacterState(character.state);
-    final spriteWest = shaders.west.fromCharacterState(character.state);
-    final spriteSouth = shaders.south.fromCharacterState(character.state);
-
-    final dstX = character.renderX;
-    final dstY = character.renderY;
-    final render = this.render;
-
-    final colorDiffuse = character.colorDiffuse;
-
-    render.sprite(
-      sprite: spriteShadow,
-      frame: spriteShadow.getFrame(row: row, column: column),
-      color: colorDiffuse,
-      scale: scale,
-      dstX: dstX,
-      dstY: dstY,
-      anchorY: anchorY,
-    );
-
-    render.sprite(
-      sprite: spriteFlat,
-      frame: spriteFlat.getFrame(row: row, column: column),
-      color: colorDiffuse,
-      scale: scale,
-      dstX: dstX,
-      dstY: dstY,
-      anchorY: anchorY,
-    );
-
-    render.sprite(
-      sprite: spriteWest,
-      frame: spriteWest.getFrame(row: row, column: column),
-      color: character.colorNorthWest,
-      scale: scale,
-      dstX: dstX,
-      dstY: dstY,
-      anchorY: anchorY,
-    );
-
-    render.sprite(
-      sprite: spriteSouth,
-      frame: spriteSouth.getFrame(row: row, column: column),
-      color: character.colorSouthEast,
       scale: scale,
       dstX: dstX,
       dstY: dstY,

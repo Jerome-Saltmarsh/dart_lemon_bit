@@ -318,6 +318,7 @@ class IsometricEditor with IsometricComponent {
     if (selectedIndex >= scene.nodeTypes.length){
       return;
     }
+
     nodeSelectedType.value = scene.nodeTypes[selectedIndex];
     nodeSelectedOrientation.value = scene.nodeOrientations[selectedIndex];
     nodeSelectedVariation.value = scene.nodeVariations[selectedIndex];
@@ -460,9 +461,6 @@ class IsometricEditor with IsometricComponent {
   }
 
   void onChangedSelectedNodeIndex(int index) {
-    nodeSelectedOrientation.value = scene.nodeOrientations[index];
-    nodeSelectedType.value = scene.nodeTypes[index];
-    nodeSelectedVariation.value = scene.nodeVariations[index];
     refreshNodeSelectedIndex();
     cameraCenterOnNodeSelectedIndex();
   }

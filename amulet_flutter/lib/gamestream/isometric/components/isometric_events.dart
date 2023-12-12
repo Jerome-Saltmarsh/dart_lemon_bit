@@ -98,6 +98,9 @@ class IsometricEvents with IsometricComponent {
           case CharacterType.Fallen:
             audio.play(randomItem(audio.audioSingleZombieTalking), x, y, z);
             break;
+          case CharacterType.Wolf:
+            audio.play(audio.dog_woolf_howl_4, x, y, z);
+            break;
         }
         break;
 
