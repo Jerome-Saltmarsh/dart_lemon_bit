@@ -151,7 +151,7 @@ class IsometricComponents extends ComponentContainer {
       component.audio = audio;
       component.particles = particles;
       component.editor = editor;
-      component.debug = debug;
+      component.debugger = debug;
       component.minimap = minimap;
       component.camera = camera;
       component.mouse = mouse;

@@ -196,78 +196,78 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
 
 
   void readSelectedCollider() {
-    debug.selectedCollider.value = readBool();
+    debugger.selectedCollider.value = readBool();
 
-    if (!debug.selectedCollider.value)
+    if (!debugger.selectedCollider.value)
       return;
 
     final selectedColliderType = readByte();
-    debug.selectedColliderType.value = selectedColliderType;
+    debugger.selectedColliderType.value = selectedColliderType;
 
     if (selectedColliderType == IsometricType.GameObject) {
-      debug.runTimeType.value = readString();
-      debug.team.value = readUInt16();
-      debug.radius.value = readUInt16();
-      debug.health.value = readUInt16();
-      debug.healthMax.value = readUInt16();
-      debug.x.value = readDouble();
-      debug.y.value = readDouble();
-      debug.z.value = readDouble();
-      debug.position.x = debug.x.value;
-      debug.position.y = debug.y.value;
-      debug.position.z = debug.z.value;
-      debug.selectedGameObjectType.value = readByte();
-      debug.selectedGameObjectSubType.value = readByte();
+      debugger.runTimeType.value = readString();
+      debugger.team.value = readUInt16();
+      debugger.radius.value = readUInt16();
+      debugger.health.value = readUInt16();
+      debugger.healthMax.value = readUInt16();
+      debugger.x.value = readDouble();
+      debugger.y.value = readDouble();
+      debugger.z.value = readDouble();
+      debugger.position.x = debugger.x.value;
+      debugger.position.y = debugger.y.value;
+      debugger.position.z = debugger.z.value;
+      debugger.selectedGameObjectType.value = readByte();
+      debugger.selectedGameObjectSubType.value = readByte();
       return;
     }
 
     if (selectedColliderType == IsometricType.Character){
-      debug.runTimeType.value = readString();
-      debug.characterAction.value = readByte();
-      debug.goal.value = readByte();
-      debug.team.value = readUInt16();
-      debug.radius.value = readUInt16();
-      debug.health.value = readUInt16();
-      debug.healthMax.value = readUInt16();
-      debug.x.value = readDouble();
-      debug.y.value = readDouble();
-      debug.z.value = readDouble();
-      debug.position.x = debug.x.value;
-      debug.position.y = debug.y.value;
-      debug.position.z = debug.z.value;
-      debug.destinationX.value = readDouble();
-      debug.destinationY.value = readDouble();
-      debug.pathIndex.value = readInt16();
-      debug.pathEnd.value = readInt16();
-      debug.pathTargetIndex.value = readInt16();
-      for (var i = 0; i < debug.pathEnd.value; i++) {
-        debug.path[i] = readUInt16();
+      debugger.runTimeType.value = readString();
+      debugger.characterAction.value = readByte();
+      debugger.goal.value = readByte();
+      debugger.team.value = readUInt16();
+      debugger.radius.value = readUInt16();
+      debugger.health.value = readUInt16();
+      debugger.healthMax.value = readUInt16();
+      debugger.x.value = readDouble();
+      debugger.y.value = readDouble();
+      debugger.z.value = readDouble();
+      debugger.position.x = debugger.x.value;
+      debugger.position.y = debugger.y.value;
+      debugger.position.z = debugger.z.value;
+      debugger.destinationX.value = readDouble();
+      debugger.destinationY.value = readDouble();
+      debugger.pathIndex.value = readInt16();
+      debugger.pathEnd.value = readInt16();
+      debugger.pathTargetIndex.value = readInt16();
+      for (var i = 0; i < debugger.pathEnd.value; i++) {
+        debugger.path[i] = readUInt16();
       }
 
-      debug.characterType.value = readByte();
-      debug.characterState.value = readByte();
-      debug.characterComplexion.value = readByte();
-      debug.characterStateDuration.value = readInt16();
-      debug.characterStateDurationRemaining.value = readUInt16();
+      debugger.characterType.value = readByte();
+      debugger.characterState.value = readByte();
+      debugger.characterComplexion.value = readByte();
+      debugger.characterStateDuration.value = readInt16();
+      debugger.characterStateDurationRemaining.value = readUInt16();
 
-      debug.weaponType.value = readUInt16();
-      debug.weaponDamage.value = readUInt16();
-      debug.weaponRange.value = readUInt16();
-      debug.weaponState.value = readByte();
-      debug.weaponStateDuration.value = readUInt16();
+      debugger.weaponType.value = readUInt16();
+      debugger.weaponDamage.value = readUInt16();
+      debugger.weaponRange.value = readUInt16();
+      debugger.weaponState.value = readByte();
+      debugger.weaponStateDuration.value = readUInt16();
 
-      debug.autoAttack.value = readBool();
-      debug.pathFindingEnabled.value = readBool();
-      debug.runToDestinationEnabled.value = readBool();
-      debug.arrivedAtDestination.value = readBool();
+      debugger.autoAttack.value = readBool();
+      debugger.pathFindingEnabled.value = readBool();
+      debugger.runToDestinationEnabled.value = readBool();
+      debugger.arrivedAtDestination.value = readBool();
 
       final characterSelectedTarget = readBool();
-      debug.targetSet.value = characterSelectedTarget;
+      debugger.targetSet.value = characterSelectedTarget;
       if (!characterSelectedTarget) return;
-      debug.targetType.value = readString();
-      debug.targetX.value = readDouble();
-      debug.targetY.value = readDouble();
-      debug.targetZ.value = readDouble();
+      debugger.targetType.value = readString();
+      debugger.targetX.value = readDouble();
+      debugger.targetY.value = readDouble();
+      debugger.targetZ.value = readDouble();
     }
   }
 

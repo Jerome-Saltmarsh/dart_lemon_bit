@@ -17,8 +17,6 @@ class IsometricOptions with IsometricComponent implements Updatable {
   var renderEast = true;
   var alphaBlend = 128;
   var cameraPlayFollowPlayer = true;
-  final cameraEdit = Position();
-  var cameraDebug = Position();
   var charactersEffectParticles = false;
   var renderWindVelocity = false;
   var renderCameraTargets = false;
@@ -39,8 +37,10 @@ class IsometricOptions with IsometricComponent implements Updatable {
   var messageStatusDuration = 0;
   var renderResponse = true;
 
-  final serverMode = Watch(ServerMode.local);
   final cameraPlay = Position();
+  final cameraEdit = Position();
+  final cameraDebug = Position();
+  final serverMode = Watch(ServerMode.local);
   final mode = Watch(Mode.play);
   final highlightIconInventory = WatchBool(false);
   final timeVisible = WatchBool(true);
@@ -226,6 +226,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
       case Mode.play:
         break;
       case Mode.debug:
+        debugger.update();
         break;
     }
   }

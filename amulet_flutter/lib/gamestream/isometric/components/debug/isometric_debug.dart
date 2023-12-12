@@ -59,18 +59,12 @@ class IsometricDebug with IsometricComponent implements Updatable {
 
   final selectedGameObjectType = Watch(-1);
   final selectedGameObjectSubType = Watch(-1);
-
-  late final selectedCollider = Watch(false, onChanged: onChangedCharacterSelected);
+  final selectedCollider = Watch(false);
 
   void drawCanvas() {
     if (!options.debugging) return;
-
     renderSelectedParticle();
     renderSelectedCollider();
-
-
-
-
   }
 
   void renderSelectedParticle() {
@@ -205,15 +199,15 @@ class IsometricDebug with IsometricComponent implements Updatable {
     }
   }
 
-  void onChangedCharacterSelected(bool characterSelected){
-    if (!options.debugging)
-      return;
-
-     if (characterSelected){
-       this.options.cameraDebug = position;
-       // this.amulet.cameraTarget = options.cameraDebug;
-     } else {
-       camera.target = null;
+  void update(){
+     switch (tab.value){
+       case DebugTab.Selected:
+         if (selectedCollider.value){
+           options.cameraDebug.copy(position);
+         }
+         break;
+       default:
+         break;
      }
   }
 

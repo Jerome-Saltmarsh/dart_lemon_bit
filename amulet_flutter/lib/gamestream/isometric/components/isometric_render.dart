@@ -134,7 +134,7 @@ class IsometricRender with IsometricComponent {
       renderCameraTargets();
     }
 
-    debug.drawCanvas();
+    debugger.drawCanvas();
     options.game.value.drawCanvas(canvas, size);
     options.rendersSinceUpdate.value++;
   }

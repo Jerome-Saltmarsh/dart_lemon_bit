@@ -63,7 +63,7 @@ class IsometricGame extends Game {
             switch (mode) {
               Mode.play => customBuildUI(context),
               Mode.edit => editor.buildEditor(),
-              Mode.debug => debug.buildUI(),
+              Mode.debug => debugger.buildUI(),
             }),
       ),
 
@@ -102,7 +102,7 @@ class IsometricGame extends Game {
     //   io.touchController.onClick();
     // }
     if (options.debugging) {
-      debug.onMouseLeftClicked();
+      debugger.onMouseLeftClicked();
       return;
     }
     if (options.editing) {
@@ -114,7 +114,7 @@ class IsometricGame extends Game {
   @override
   void onRightClicked() {
     if (options.debugging) {
-      debug.onMouseRightClicked();
+      debugger.onMouseRightClicked();
       return;
     }
 
@@ -159,7 +159,7 @@ class IsometricGame extends Game {
     }
 
     if (options.debugging) {
-      debug.onKeyPressed(key);
+      debugger.onKeyPressed(key);
       return;
     }
   }
