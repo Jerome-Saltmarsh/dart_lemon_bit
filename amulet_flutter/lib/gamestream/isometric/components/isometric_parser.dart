@@ -414,7 +414,6 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
     editor.gameObjectSelectedType.value          = gameObject.type;
     editor.gameObjectSelectedSubType.value       = gameObject.subType;
     editor.gameObjectSelected.value              = true;
-    editor.cameraCenterSelectedObject();
 
     editor.gameObjectSelectedEmission.value = gameObject.emissionType;
     editor.gameObjectSelectedEmissionIntensity.value = gameObject.emissionIntensity;

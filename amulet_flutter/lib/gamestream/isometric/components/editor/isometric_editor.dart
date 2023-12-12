@@ -75,6 +75,13 @@ class IsometricEditor with IsometricComponent {
 
   IsometricEditor(){
     selectedKeyEntry.onChanged(onChangedSelectedKeyEntryIndex);
+    gameObject.onChanged(onChangedGameObject);
+  }
+
+  void onChangedGameObject(GameObject? gameObject){
+    if (gameObject != null) {
+      options.cameraEdit = gameObject;
+    }
   }
 
   int get z => scene.convertNodeIndexToIndexZ(nodeSelectedIndex.value);
@@ -361,11 +368,11 @@ class IsometricEditor with IsometricComponent {
     sendGameObjectRequestDelete();
   }
 
-  void cameraCenterSelectedObject() =>
-      engine.cameraCenter(
-        gameObject.value!.renderX,
-        gameObject.value!.renderY,
-      );
+  // void cameraCenterSelectedObject() =>
+  //     engine.cameraCenter(
+  //       gameObject.value!.renderX,
+  //       gameObject.value!.renderY,
+  //     );
 
   void delete() {
     if (gameObjectSelected.value) {

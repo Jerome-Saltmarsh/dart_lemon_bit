@@ -16,6 +16,7 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
+* [fix]: editor camera shakes when gameobject selected
 * [new]: persist gameobject properties
 
 ## ALPHA
