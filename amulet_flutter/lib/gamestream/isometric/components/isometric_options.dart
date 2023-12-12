@@ -17,7 +17,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
   var renderEast = true;
   var alphaBlend = 128;
   var cameraPlayFollowPlayer = true;
-  var cameraEdit = Position();
+  final cameraEdit = Position();
   var cameraDebug = Position();
   var charactersEffectParticles = false;
   var renderWindVelocity = false;
@@ -217,6 +217,16 @@ class IsometricOptions with IsometricComponent implements Updatable {
       clearErrorTimer--;
       if (clearErrorTimer <= 0)
         gameError.value = null;
+    }
+
+    switch (mode.value){
+      case Mode.edit:
+        editor.update();
+        break;
+      case Mode.play:
+        break;
+      case Mode.debug:
+        break;
     }
   }
 

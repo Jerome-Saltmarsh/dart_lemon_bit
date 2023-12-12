@@ -16,7 +16,6 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
-* [fix]: editor camera shakes when gameobject selected
 * [new]: persist gameobject properties
 
 ## ALPHA
@@ -49,6 +48,7 @@ ctrl + []               : move caret to code block
 * [fix]: audio for web
 
 ## 12.12.2023
+* [fix]: editor camera shakes when gameobject selected
 * [fix]: enable audio loops
 * [new]: gameplay random damage
 * [fix]: refactor game events
