@@ -257,16 +257,19 @@ class IsometricAudio with IsometricComponent implements Updatable {
       return;
     }
 
-    if (_nextAudioSourceUpdate-- <= 0) {
-      _nextAudioSourceUpdate = 5;
-        for (final audioSource in audioLoops){
-          audioSource.update();
-        }
-    }
-
+    updateAudioLoops();
     updateRandomAmbientSounds();
     updateRandomMusic();
     updateCharacterNoises();
+  }
+
+  void updateAudioLoops() {
+    if (_nextAudioSourceUpdate-- > 0) return;
+    _nextAudioSourceUpdate = 5;
+    final loops = audioLoops;
+    for (final audioLoop in loops) {
+      audioLoop.update();
+    }
   }
 
   double getVolumeTargetRain() {
@@ -507,7 +510,8 @@ class IsometricAudio with IsometricComponent implements Updatable {
     // audioTracks.stop();
   }
 
-  Future load() async {
+  @override
+  Future onComponentInit(sharedPreferences) async {
     print('isometricAudio.onComponentInit()');
     final completer = Completer();
     var total = 0;
