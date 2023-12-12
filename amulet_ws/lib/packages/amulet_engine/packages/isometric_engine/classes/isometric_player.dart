@@ -662,14 +662,12 @@ class IsometricPlayer extends Character with ByteWriter {
     required double x,
     required double y,
     required double z,
-    required double angle,
   }){
     writeByte(NetworkResponse.Game_Event);
     writeByte(type);
     writeDouble(x);
     writeDouble(y);
     writeDouble(z);
-    writeDouble(angle * radiansToDegrees);
   }
 
   void writePlayerEventItemTypeConsumed(int itemType){
@@ -930,7 +928,6 @@ class IsometricPlayer extends Character with ByteWriter {
       x: gameObject.x,
       y: gameObject.y,
       z: gameObject.z,
-      angle: gameObject.velocityAngle,
     );
     writeUInt16(gameObject.type);
   }

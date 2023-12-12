@@ -69,25 +69,22 @@ class IsometricEvents with IsometricComponent {
     }
   }
 
-  void onGameEvent(int type, double x, double y, double z, double angle) {
+  void onGameEvent(int type, double x, double y, double z) {
     switch (type) {
       case GameEventType.Footstep:
         onFootstep(x, y, z);
         return;
       case GameEventType.Attack_Performed:
-        onAttackPerformed(x, y, z, angle);
+        onAttackPerformed(x, y, z);
         return;
       case GameEventType.Melee_Attack_Performed:
-        onMeleeAttackPerformed(x, y, z, angle);
+        onMeleeAttackPerformed(x, y, z, parser.readUInt16());
         return;
       case GameEventType.Bullet_Deactivated:
         audio.play(audio.metal_light_3, x, y, z);
         return;
       case GameEventType.Material_Struck:
         onMaterialStruck(x, y, z, parser.readByte());
-        return;
-      case GameEventType.Player_Spawn_Started:
-        camera.centerOnChaseTarget();
         return;
       case GameEventType.Explosion:
         onGameEventExplosion(x, y, z);
@@ -103,61 +100,24 @@ class IsometricEvents with IsometricComponent {
             break;
         }
         break;
-
-      case GameEventType.Node_Set:
-        onNodeSet(x, y, z);
-        return;
-      case GameEventType.GameObject_Timeout:
-        break;
       case GameEventType.Node_Struck:
         onNodeStruck(x, y, z);
-        break;
-      case GameEventType.GameObject_Spawned:
-        final type = parser.readByte();
-        final subType = parser.readByte();
-        onGameObjectSpawned(x: x, y: y, z: z, type: type, subType: subType);
         break;
       case GameEventType.Amulet_GameObject_Spawned:
         final type = parser.readByte();
         final subType = parser.readByte();
         onGameObjectSpawned(x: x, y: y, z: z, type: type, subType: subType);
         break;
-      case GameEventType.Node_Deleted:
-        audio.play(audio.hover_over_button_sound_30, x, y, z);
-        break;
       case GameEventType.Weapon_Type_Equipped:
-        final weaponType = (angle * radiansToDegrees).toInt();
+        final weaponType = parser.readByte();
         return onWeaponTypeEquipped(weaponType, x, y, z);
-      case GameEventType.Player_Spawned:
-        return;
       case GameEventType.Splash:
         onSplash(x, y, z);
         return;
       case GameEventType.Item_Bounce:
         return;
-      case GameEventType.Spawn_Dust_Cloud:
-        break;
-      case GameEventType.Player_Hit:
-        if (randomBool()) {
-          // audio.humanHurt(x, y);
-        }
-        break;
-      case GameEventType.Zombie_Target_Acquired:
-        audio.play(randomItem(audio.audioSingleZombieTalking), x, y, z);
-        break;
       case GameEventType.Character_Changing:
         audio.play(audio.change_cloths, x, y, z);
-        break;
-      case GameEventType.Zombie_Strike:
-        audio.play(randomItem(audio.audioSingleZombieBits), x, y, z);
-        if (randomBool()){
-          audio.play(randomItem(audio.audioSingleZombieTalking), x, y, z);
-        }
-        break;
-      case GameEventType.Player_Death:
-        break;
-      case GameEventType.Teleported:
-        audio.magical_impact_16();
         break;
       case GameEventType.Blue_Orb_Fired:
         audio.play(audio.sci_fi_blaster_1, x, y, z);
@@ -176,17 +136,6 @@ class IsometricEvents with IsometricComponent {
           );
         }
         break;
-      case GameEventType.Draw_Bow:
-        audio.play(audio.bow_draw, x, y, z);
-        break;
-      case GameEventType.Release_Bow:
-        audio.play(audio.bow_release, x, y, z);
-        break;
-      case GameEventType.Sword_Woosh:
-        audio.play(audio.swing_sword, x, y, z);
-        break;
-      case GameEventType.EnemyTargeted:
-        break;
       case GameEventType.Attack_Missed:
         final attackType = server.parser.readUInt16();
         switch (attackType) {
@@ -200,9 +149,6 @@ class IsometricEvents with IsometricComponent {
         break;
       case GameEventType.Arrow_Fired:
         audio.play(audio.arrow_flying_past_6, x, y, z);
-        break;
-      case GameEventType.Crate_Breaking:
-        // return audio.crateBreaking(x, y);
         break;
       case GameEventType.Teleport_Start:
         final spawnConfetti = particles.spawnParticleConfettiByType;
@@ -221,11 +167,15 @@ class IsometricEvents with IsometricComponent {
         break;
 
       case GameEventType.Character_Death:
-        onCharacterDeath(server.parser.readByte(), x, y, z, angle);
+        final angle = parser.readAngle();
+        final characterType = parser.readByte();
+        onCharacterDeath(characterType, x, y, z, angle);
         return;
 
       case GameEventType.Character_Hurt:
-        onGameEventCharacterHurt(server.parser.readByte(), x, y, z, angle);
+        final angle = parser.readAngle();
+        final characterType = parser.readByte();
+        onGameEventCharacterHurt(characterType, x, y, z, angle);
         return;
 
       case GameEventType.Game_Object_Destroyed:
@@ -233,8 +183,7 @@ class IsometricEvents with IsometricComponent {
             x,
             y,
             z,
-            angle,
-          server.parser.readUInt16(),
+            server.parser.readUInt16(),
         );
         return;
 
@@ -339,7 +288,7 @@ class IsometricEvents with IsometricComponent {
     audio.play(audio.splash, x, y, z);
   }
 
-  void onAttackPerformed(double x, double y, double z, double angle) {
+  void onAttackPerformed(double x, double y, double z) {
     final attackType = server.parser.readUInt16();
     final attackTypeAudio = audio.MapItemTypeAudioSinglesAttack[attackType];
 
@@ -348,8 +297,12 @@ class IsometricEvents with IsometricComponent {
     }
   }
 
-  void onMeleeAttackPerformed(double x, double y, double z, double angle) {
-    final attackType = server.parser.readUInt16();
+  void onMeleeAttackPerformed(
+      double x,
+      double y,
+      double z,
+      int attackType,
+  ) {
     final attackTypeAudio = audio.MapItemTypeAudioSinglesAttackMelee[attackType];
 
     if (attackTypeAudio != null) {
@@ -399,7 +352,6 @@ class IsometricEvents with IsometricComponent {
       case PlayerEvent.Loot_Collected:
         return audio.collect_star_3();
       case PlayerEvent.Scene_Changed:
-        // camera.centerOnChaseTarget();
         break;
       case PlayerEvent.Item_Acquired:
         readPlayerEventItemAcquired();
@@ -550,7 +502,6 @@ class IsometricEvents with IsometricComponent {
       double x,
       double y,
       double z,
-      double angle,
       int type,
       ){
     switch (type){
