@@ -49,6 +49,7 @@ ctrl + []               : move caret to code block
 * [fix]: audio for web
 
 ## 12.12.2023
+* [new]: gameplay random damage
 * [fix]: refactor game events
 * [new]: ai audio on target acquired
 * [fix]: ai roam

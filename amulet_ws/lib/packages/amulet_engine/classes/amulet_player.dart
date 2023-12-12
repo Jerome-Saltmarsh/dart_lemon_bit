@@ -109,7 +109,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeAmuletElements();
   }
 
-  int? get equippedWeaponDamage => equippedWeaponAmuletItemLevel?.damage;
+  int? get equippedWeaponDamage => equippedWeaponAmuletItemLevel?.damageMin;
 
   double? get equippedWeaponRange => equippedWeaponAmuletItemLevel?.range;
 
@@ -173,10 +173,16 @@ class AmuletPlayer extends IsometricPlayer with
   int get weaponCooldown => equippedWeapon?.cooldown ?? -1;
 
   @override
-  int get weaponDamage => equippedWeaponAmuletItemLevel?.damage ?? 1;
+  int get weaponDamage {
+    final level = equippedWeaponAmuletItemLevel;
+    if (level == null){
+      return -1;
+    }
+    return randomInt(level.damageMin, level.damageMax + 1);
+  }
 
   @override
-  double get weaponRange => equippedWeaponAmuletItemLevel?.range ?? 25;
+  double get weaponRange => equippedWeaponAmuletItemLevel?.range ?? -1;
 
   @override
   int get helmType => equippedHelm.amuletItem?.subType ?? HelmType.None;
@@ -1673,7 +1679,7 @@ class AmuletPlayer extends IsometricPlayer with
     }
 
     final subType = equippedWeaponAmuletItem.subType;
-    this.weaponDamage = equippedWeaponLevel.damage;
+    this.weaponDamage = equippedWeaponLevel.damageMin;
 
     useWeaponType(weaponType: subType, duration: performDuration);
     reduceAmuletItemSlotCharges(equippedWeaponSlot);

@@ -152,8 +152,8 @@ Widget buildContainerItemStats(AmuletItemLevel itemStats, int level, {Color? col
                     color: Colors.white12,
                   ),
                 height4,
-                if (itemStats.damage != 0)
-                  buildTableRow('damage', itemStats.damage),
+                if (itemStats.damageMin != 0)
+                  buildTableRow('damage', '${itemStats.damageMin} - ${itemStats.damageMax}'),
                 if (itemStats.charges != 0)
                   buildTableRow('charges', itemStats.charges),
                 if (itemStats.cooldown != 0)

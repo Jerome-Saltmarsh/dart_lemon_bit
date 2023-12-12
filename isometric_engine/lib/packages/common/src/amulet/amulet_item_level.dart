@@ -1,5 +1,6 @@
 class AmuletItemLevel {
-  final int damage;
+  final int damageMin;
+  final int damageMax;
   final int fire;
   final int water;
   final int electricity;
@@ -14,7 +15,8 @@ class AmuletItemLevel {
 
   const AmuletItemLevel({
     this.information,
-    this.damage = 0,
+    this.damageMin = 0,
+    this.damageMax = 0,
     this.quantity = 0,
     this.health = 0,
     this.range = 0,

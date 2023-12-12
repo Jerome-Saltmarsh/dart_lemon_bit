@@ -194,6 +194,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       throw Exception('stats == null');
     }
 
+    final damage = randomInt(stats.damageMin, stats.damageMax + 1);
+    final range = stats.range;
+
     switch (amuletItem) {
       case AmuletItem.Spell_Thunderbolt:
         performAbilityLightning(character);
@@ -210,19 +213,23 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       case AmuletItem.Weapon_Old_Bow:
         performAbilityArrow(
             character: character,
-            damage: stats.damage,
-            range: stats.range,
+            damage: damage,
+            range: range,
         );
         break;
       case AmuletItem.Weapon_Holy_Bow:
         performAbilityArrow(
           character: character,
-          damage: stats.damage,
-          range: stats.range,
+          damage: damage,
+          range: range,
         );
         break;
       case AmuletItem.Weapon_Staff_Of_Frozen_Lake:
-        performAbilityFrostBall(character, damage: 1, range: 50);
+        performAbilityFrostBall(
+            character,
+            damage: damage,
+            range: range,
+        );
         break;
       case AmuletItem.Spell_Heal:
         useAmuletItemSpellHeal(character);
@@ -236,8 +243,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         for (var i = 0; i < totalArrows; i++){
           spawnProjectileArrow(
               src: character,
-              damage: character.equippedWeaponDamage ?? (throw Exception()),
-              range: character.equippedWeaponRange ?? (throw Exception()),
+              damage: damage,
+              range: range,
               angle: angle,
           );
           angle += radianPerArrow;

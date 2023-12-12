@@ -23,7 +23,6 @@ class NetworkResponsePlayer {
   static const Aim_Target_Type = 21;
   static const Aim_Target_Quantity = 22;
   static const Target_Position = 23;
-  static const Weapon_Damage = 24;
   static const Id = 25;
   static const Active = 26;
   static const Team = 27;

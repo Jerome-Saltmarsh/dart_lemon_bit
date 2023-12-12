@@ -59,7 +59,6 @@ class IsometricPlayer with IsometricComponent {
   final health = Watch(0);
   final maxHealth = Watch(0);
   final healthPercentage = Watch(0.0);
-  final weaponDamage = Watch(0);
   final weaponCooldown = Watch(1.0);
   final credits = Watch(0);
   final controlsCanTargetEnemies = Watch(false);
@@ -257,9 +256,6 @@ class IsometricPlayer with IsometricComponent {
       case NetworkResponsePlayer.Target_Position:
         runningToTarget = true;
         parser.readIsometricPosition(targetPosition);
-        break;
-      case NetworkResponsePlayer.Weapon_Damage:
-        weaponDamage.value = parser.readUInt16();
         break;
       case NetworkResponsePlayer.Id:
         id.value = parser.readUInt24();

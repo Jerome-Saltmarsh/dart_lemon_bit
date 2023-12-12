@@ -9,19 +9,19 @@ enum AmuletItem {
     description: 'Teleports a short distance',
     level1: AmuletItemLevel(
       charges: 1,
-      cooldown: 20,
+      cooldown: 0,
       range: 150,
       performDuration: 16,
     ),
     level2: AmuletItemLevel(
-      charges: 2,
-      cooldown: 23,
+      charges: 1,
+      cooldown: 0,
       range: 160,
       performDuration: 16,
     ),
     level3: AmuletItemLevel(
-      charges: 2,
-      cooldown: 21,
+      charges: 1,
+      cooldown: 0,
       range: 170,
       performDuration: 16,
     ),
@@ -33,14 +33,16 @@ enum AmuletItem {
     subType: WeaponType.Sword,
     description: 'An old blunt sword',
     level1: AmuletItemLevel(
-      damage: 1,
+      damageMin: 3,
+      damageMax: 4,
       range: 60,
       cooldown: 1,
       charges: 1,
       performDuration: 32,
     ),
     level2: AmuletItemLevel(
-      damage: 2,
+      damageMin: 4,
+      damageMax: 7,
       range: 60,
       cooldown: 4,
       charges: 7,
@@ -48,7 +50,8 @@ enum AmuletItem {
       fire: 1,
     ),
     level3: AmuletItemLevel(
-      damage: 4,
+      damageMin: 6,
+      damageMax: 10,
       range: 60,
       cooldown: 4,
       charges: 7,
@@ -64,7 +67,7 @@ enum AmuletItem {
     description: 'An ancient staff of that emits a red glowing amber',
     level1: AmuletItemLevel(
         range: 100,
-        damage: 1,
+        damageMin: 1,
         fire: 10,
     ),
   ),
@@ -76,7 +79,7 @@ enum AmuletItem {
     description: 'A powerful staff that eliminates cold',
     level1: AmuletItemLevel(
         range: 100,
-        damage: 1,
+        damageMin: 1,
     ),
   ),
   Spell_Split_Arrow(
@@ -86,7 +89,7 @@ enum AmuletItem {
     quality: AmuletItemQuality.Common,
     description: 'fires multiple arrows',
     level1: AmuletItemLevel(
-      damage: 1,
+      damageMin: 1,
       fire: 0,
       charges: 3,
       cooldown: 30,
@@ -94,7 +97,7 @@ enum AmuletItem {
       quantity: 3,
     ),
     level2: AmuletItemLevel(
-      damage: 2,
+      damageMin: 2,
       fire: 3,
       water: 2,
       electricity: 1,
@@ -112,7 +115,8 @@ enum AmuletItem {
     subType: WeaponType.Bow,
     description: 'A worn out bow',
     level1: AmuletItemLevel(
-      damage: 1,
+      damageMin: 5,
+      damageMax: 10,
       charges: 3,
       cooldown: 8,
       range: 150,
@@ -120,7 +124,8 @@ enum AmuletItem {
       electricity: 0,
     ),
     level2: AmuletItemLevel(
-      damage: 2,
+      damageMin: 7,
+      damageMax: 12,
       charges: 3,
       cooldown: 9,
       range: 160,
@@ -128,20 +133,13 @@ enum AmuletItem {
       electricity: 2,
     ),
     level3: AmuletItemLevel(
-      damage: 5,
+      damageMin: 9,
+      damageMax: 14,
       charges: 4,
       cooldown: 9,
       range: 160,
       performDuration: 18,
       electricity: 6,
-    ),
-    level4: AmuletItemLevel(
-      damage: 3,
-      charges: 4,
-      cooldown: 8,
-      range: 165,
-      performDuration: 17,
-      electricity: 10,
     ),
   ),
   Weapon_Holy_Bow(
@@ -152,19 +150,19 @@ enum AmuletItem {
     description: 'A mythical bow which does a lot of damage',
     level1: AmuletItemLevel(
         range: 150,
-        damage: 5,
+        damageMin: 5,
         cooldown: 15,
         charges: 3,
     ),
     level2: AmuletItemLevel(
       range: 160,
-      damage: 8,
+      damageMin: 8,
       cooldown: 38,
       charges: 3,
     ),
     level3: AmuletItemLevel(
       range: 170,
-      damage: 12,
+      damageMin: 12,
       cooldown: 36,
       charges: 3,
     ),
@@ -331,7 +329,7 @@ enum AmuletItem {
     subType: SpellType.Thunderbolt,
     description: 'strikes random nearby enemies with lightning',
     level1: AmuletItemLevel(
-      damage: 3,
+      damageMin: 3,
       cooldown: 30,
       charges: 2,
       electricity: 0,
@@ -339,7 +337,7 @@ enum AmuletItem {
       quantity: 1,
     ),
     level2: AmuletItemLevel(
-      damage: 4,
+      damageMin: 4,
       cooldown: 28,
       charges: 2,
       electricity: 3,
@@ -347,7 +345,7 @@ enum AmuletItem {
       range: 150,
     ),
     level3: AmuletItemLevel(
-      damage: 5,
+      damageMin: 5,
       cooldown: 26,
       charges: 2,
       electricity: 6,

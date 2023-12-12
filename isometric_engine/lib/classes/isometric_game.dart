@@ -412,7 +412,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       if (!other.active) continue;
       if (!other.hitable) continue;
       if (character.onSameTeam(other)) continue;
-      // if (Collider.onSameTeamAs(character, other)) continue;
       if (!character.withinAttackRangeAndAngle(other)) {
         continue;
       }

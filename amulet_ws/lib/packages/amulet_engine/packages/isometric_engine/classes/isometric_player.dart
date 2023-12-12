@@ -311,12 +311,6 @@ class IsometricPlayer extends Character with ByteWriter {
     writeUInt16(maxHealth);
   }
 
-  void writePlayerDamage() {
-    writeByte(NetworkResponse.Player);
-    writeByte(NetworkResponsePlayer.Weapon_Damage);
-    writeUInt16(weaponDamage);
-  }
-
   void writePlayerAlive(){
     writeByte(NetworkResponse.Player);
     writeByte(NetworkResponsePlayer.Alive);
