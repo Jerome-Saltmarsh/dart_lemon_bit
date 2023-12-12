@@ -5,20 +5,20 @@ import '../consts/isometric_settings.dart';
 
 abstract class IsometricGame<T extends IsometricPlayer> {
 
-  var playerId = 0;
-  final List<T> players = [];
-  final jobs = <GameJob>[];
-
-  var _id = 0;
-
   Scene scene;
   IsometricEnvironment environment;
   IsometricTime time;
+
+  var _id = 0;
+  var attackAlwaysHitsTarget = false;
+  var playerId = 0;
   var timerUpdateAITargets = 0;
   var frame = 0;
   var gameObjectId = 0;
   var _running = true;
 
+  final List<T> players = [];
+  final jobs = <GameJob>[];
   final gameObjects = <GameObject>[];
   final characters = <Character>[];
   final projectiles = <Projectile>[];
@@ -63,7 +63,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   }
 
   int generateUniqueId() => _id++;
-
 
   void writePlayerResponses() {
     final players = this.players;
@@ -121,7 +120,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
     characters.remove(player);
   }
-
 
   void add(Collider value){
     if (value is Character){
@@ -1350,7 +1348,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     final weaponType = character.weaponType;
 
     if (WeaponType.isMelee(weaponType)) {
-      if (character.attackAlwaysHitsTarget) {
+      if (attackAlwaysHitsTarget) {
         final target = character.target;
         if (target is Collider) {
           applyHit(
@@ -2606,7 +2604,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   void customOnInteraction(Character character, Character target) {}
 
   bool characterConditionShouldWander(Character character) {
-     if (!character.doesWander || character.target != null) {
+     if (!character.roamEnabled || character.target != null) {
        return false;
      }
 
@@ -2614,17 +2612,17 @@ abstract class IsometricGame<T extends IsometricPlayer> {
        return false;
      }
 
-     return character.nextWander-- <= 0;
+     return character.roamNext-- <= 0;
   }
 
   void characterActionWander(Character character) {
     character.goal = CharacterGoal.Wander;
-    character.nextWander = randomInt(300, 500);
+    character.roamNext = randomInt(300, 500);
     character.pathTargetIndex = scene.findRandomNodeTypeAround(
       z: character.indexZ,
       row: character.indexRow,
       column: character.indexColumn,
-      radius: character.wanderRadius,
+      radius: character.roamRadius,
       type: NodeType.Empty,
     );
   }

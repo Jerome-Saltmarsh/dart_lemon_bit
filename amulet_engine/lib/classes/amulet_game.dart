@@ -143,6 +143,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     )
       ..weaponHitForce = 2;
 
+    character.roamEnabled = true;
     characters.add(character);
     return character;
   }

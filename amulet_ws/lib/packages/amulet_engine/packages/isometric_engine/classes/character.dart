@@ -13,6 +13,7 @@ class Character extends Collider {
   var _angle = 0.0;
   var _health = 1;
   var _maxHealth = 1;
+  var _goal = CharacterGoal.Idle;
 
   var experience = 0;
   var chanceOfDropConsumable = 0.25;
@@ -35,7 +36,6 @@ class Character extends Collider {
   var autoTargetRange = 300.0;
   var autoTargetTimer = 0;
   var autoTargetTimerDuration = 100;
-
   var invincible = false;
   var actionDuration = -1;
   var attackDuration = 0;
@@ -55,41 +55,26 @@ class Character extends Collider {
   var pathTargetIndex = -1;
   var pathTargetIndexPrevious = -1;
   var action = CharacterAction.Idle;
-  var _goal = CharacterGoal.Idle;
   var forceAttack = false;
-
-  int get goal => _goal;
-
-  set goal(int value){
-    if (_goal == value) {
-      return;
-    }
-
-    _goal = value;
-  }
-
   var arrivedAtDestination = false;
   var runToDestinationEnabled = true;
   var pathFindingEnabled = true;
   var runX = 0.0;
   var runY = 0.0;
   var runZ = 0.0;
-
   var helmType = HelmType.None;
   var bodyType = BodyType.None;
   var legsType = LegType.None;
   var handTypeLeft = HandType.None;
   var handTypeRight = HandType.None;
-
-  Position? target;
-
-  var doesWander = false;
-  var nextWander = 0;
-  var wanderRadius = 3;
-  var attackAlwaysHitsTarget = false;
+  var roamEnabled = false;
+  var roamNext = 0;
+  var roamRadius = 2;
   var chanceOfSetTarget = 0.5;
 
   final path = Uint32List(20);
+
+  Position? target;
 
   Character({
     required super.x,
@@ -105,7 +90,7 @@ class Character extends Collider {
     required int health,
     String? name,
     this.runSpeed = 1.0,
-    this.doesWander = false,
+    this.roamEnabled = false,
     this.actionFrame = -1,
     this.invincible = false,
     super.radius = 10,
@@ -123,9 +108,18 @@ class Character extends Collider {
     hitable = true;
     setDestinationToCurrentPosition();
 
-    if (doesWander) {
-      nextWander = randomInt(50, 300);
+    if (roamEnabled) {
+      roamNext = randomInt(50, 300);
     }
+  }
+
+  int get goal => _goal;
+
+  set goal(int value){
+    if (_goal == value) {
+      return;
+    }
+    _goal = value;
   }
 
   int get compressedAnimationFrameAndDirection =>

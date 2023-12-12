@@ -16,7 +16,6 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
-* [fix]: ai roam
 * [new]: persist gameobject properties
 
 ## ALPHA
@@ -47,6 +46,9 @@ ctrl + []               : move caret to code block
 ## RELEASE
 * [new]: mobile touch screen support
 * [fix]: audio for web
+
+## 12.12.2023
+* [fix]: ai roam
 
 ## 11.12.2023
 * [new]: ui indicate item level
