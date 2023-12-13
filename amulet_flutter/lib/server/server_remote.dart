@@ -18,7 +18,7 @@ class ServerRemote implements Server {
 
   final operationStatus = Watch(OperationStatus.None);
   final region = Watch(ConnectionRegion.LocalHost);
-  final userJson = Watch<Json>({});
+  final userJson = Watch<Json?>(null);
   final userId = Watch('');
   final username = Watch('');
   final password = Watch('');
@@ -50,7 +50,16 @@ class ServerRemote implements Server {
     });
   }
 
-  void onChangedUserJson(Json userJson) {
+  void onChangedUserJson(Json? userJson) {
+
+    if (userJson == null){
+      characters.value = [];
+      username.value = '';
+      userId.value = '';
+      password.value = '';
+      return;
+    }
+
     if (userJson.containsKey('characters')){
       characters.value = userJson.getList<Json>('characters');;
     } else {

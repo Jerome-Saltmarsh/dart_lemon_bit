@@ -137,17 +137,17 @@ extension WebsiteUI on WebsiteGame {
     return WatchBuilder(options.serverMode, (activePlayMode) {
       return Container(
         width: 500,
-        color: Colors.black26,
+        // color: Colors.black26,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: ServerMode.values.map((serverMode) {
             return onPressed(
               action: () => options.serverMode.value = serverMode,
               child: Container(
                 alignment: Alignment.center,
                 width: 80,
-                height: 50,
-                margin: const EdgeInsets.symmetric(horizontal: 4),
+                height: 30,
+                // margin: const EdgeInsets.symmetric(horizontal: 4),
                 color: activePlayMode == serverMode ? Colors.green : Colors.green.withOpacity(0.25),
                 child: buildText(
                     getServerModeText(serverMode),
