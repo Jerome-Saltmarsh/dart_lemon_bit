@@ -18,25 +18,6 @@ class GSButtonRegion extends StatelessWidget {
     required this.action,
   });
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   final tooltipController = OverlayPortalController();
-  //   return MouseOver(
-  //     onEnter: tooltipController.show,
-  //     onExit: tooltipController.hide,
-  //     builder: (mouseOver) {
-  //       return Directionality(
-  //         child: Overlay(
-  //            initialEntries: [
-  //              OverlayEntry(builder: (context){
-  //                return buildText('test');
-  //              })
-  //            ],
-  //         ),
-  //       );
-  //     }
-  //   );
-  // }
   @override
   Widget build(BuildContext context) {
     return buildWatch(region, (region) =>

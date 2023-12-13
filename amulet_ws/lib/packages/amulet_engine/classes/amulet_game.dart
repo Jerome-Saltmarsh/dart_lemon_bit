@@ -492,15 +492,15 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       case AmuletItem.Potion_Health:
         player.health += player.maxHealth ~/ 4;
         break;
-      case AmuletItem.Potion_Magic:
-        for (final weapon in player.weapons){
-          if (weapon.charges >= weapon.max) continue;
-          weapon.charges++;
-        }
-        break;
-      case AmuletItem.Potion_Experience:
-        player.experience += (player.experienceRequired * 0.1).toInt();
-        break;
+      // case AmuletItem.Potion_Magic:
+      //   for (final weapon in player.weapons){
+      //     if (weapon.charges >= weapon.max) continue;
+      //     weapon.charges++;
+      //   }
+      //   break;
+      // case AmuletItem.Potion_Experience:
+      //   player.experience += (player.experienceRequired * 0.1).toInt();
+      //   break;
       default:
         break;
     }

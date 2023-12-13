@@ -69,8 +69,8 @@ class IsometricEvents with IsometricComponent {
     }
   }
 
-  void onGameEvent(int type, double x, double y, double z) {
-    switch (type) {
+  void onGameEvent(int gameEvent, double x, double y, double z) {
+    switch (gameEvent) {
       case GameEvent.Footstep:
         onFootstep(x, y, z);
         return;

@@ -547,7 +547,6 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
     final x = readDouble();
     final y = readDouble();
     final z = readDouble();
-    // final angle = readDouble() * degreesToRadians;
     events.onGameEvent(type, x, y, z);
   }
 

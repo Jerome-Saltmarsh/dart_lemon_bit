@@ -1159,7 +1159,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
             y: projectile.y,
             z: projectile.z,
           );
-          player.writeAngle(velocityAngle);
         }
       }
     }
@@ -1267,13 +1266,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
 
     deactivateProjectile(projectile);
-
     if (projectile.type == ProjectileType.Arrow) {
       dispatchGameEvent(GameEvent.Arrow_Hit, target.x, target.y, target.z);
-    }
-    if (projectile.type == ProjectileType.Orb) {
-      // dispatchGameEvent(
-      //     GameEventType.Blue_Orb_Deactivated, target.x, target.y, target.z);
     }
   }
 
@@ -1296,11 +1290,11 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
     target.clampVelocity(Physics.Max_Velocity);
 
-    dispatchGameEventPosition(
-        GameEvent.Material_Struck,
-        target,
-    );
-    dispatchByte(target.materialType);
+    // dispatchGameEventPosition(
+    //     GameEvent.Material_Struck,
+    //     target,
+    // );
+    // dispatchByte(target.materialType);
 
     if (target is GameObject){
       if (target.healthMax > 0){
@@ -1672,11 +1666,11 @@ abstract class IsometricGame<T extends IsometricPlayer> {
           position.z,
       );
 
-  void dispatchGameEvent(int gameEventType, double x, double y, double z) {
+  void dispatchGameEvent(int gameEvent, double x, double y, double z) {
     final players = this.players;
     for (final player in players) {
       player.writeGameEvent(
-          type: gameEventType,
+          type: gameEvent,
           x: x,
           y: y,
           z: z,

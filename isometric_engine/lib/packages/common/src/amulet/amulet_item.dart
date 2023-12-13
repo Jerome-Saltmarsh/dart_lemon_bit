@@ -264,7 +264,18 @@ enum AmuletItem {
     type: ItemType.Shoes,
     subType: ShoeType.Leather_Boots,
     description: 'A common leather boots',
-    level1: AmuletItemLevel(),
+    level1: AmuletItemLevel(
+      health: 5,
+      electricity: 2,
+    ),
+    level2: AmuletItemLevel(
+      health: 10,
+      electricity: 4,
+    ),
+    level3: AmuletItemLevel(
+      health: 15,
+      electricity: 8,
+    ),
   ),
   Shoe_Iron_Plates(
     selectAction: AmuletItemAction.Equip,
@@ -272,7 +283,17 @@ enum AmuletItem {
     type: ItemType.Shoes,
     subType: ShoeType.Iron_Plates,
     description: 'Heavy boots which provide good defense',
-    level1: AmuletItemLevel(),
+    level1: AmuletItemLevel(
+      health: 5,
+      fire: 5
+    ),
+    level2: AmuletItemLevel(
+      health: 10,
+      fire: 8
+    ),
+    level3: AmuletItemLevel(
+      health: 12,
+    ),
   ),
   Shoe_Ocean_Boots(
     selectAction: AmuletItemAction.Equip,
@@ -301,24 +322,24 @@ enum AmuletItem {
       health: 5,
     ),
   ),
-  Potion_Magic(
-    selectAction: AmuletItemAction.Consume,
-    quality: AmuletItemQuality.Common,
-    type: ItemType.Consumable,
-    subType: ConsumableType.Potion_Blue,
-    consumable: true,
-    description: 'reduces cooldowns',
-    level1: AmuletItemLevel(),
-  ),
-  Potion_Experience(
-    selectAction: AmuletItemAction.Consume,
-    quality: AmuletItemQuality.Common,
-    type: ItemType.Consumable,
-    subType: ConsumableType.Potion_Yellow,
-    description: 'increases experience',
-    consumable: true,
-    level1: AmuletItemLevel(),
-  ),
+  // Potion_Magic(
+  //   selectAction: AmuletItemAction.Consume,
+  //   quality: AmuletItemQuality.Common,
+  //   type: ItemType.Consumable,
+  //   subType: ConsumableType.Potion_Blue,
+  //   consumable: true,
+  //   description: 'reduces cooldowns',
+  //   level1: AmuletItemLevel(),
+  // ),
+  // Potion_Experience(
+  //   selectAction: AmuletItemAction.Consume,
+  //   quality: AmuletItemQuality.Common,
+  //   type: ItemType.Consumable,
+  //   subType: ConsumableType.Potion_Yellow,
+  //   description: 'increases experience',
+  //   consumable: true,
+  //   level1: AmuletItemLevel(),
+  // ),
   Lost_Pendant_Of_Dreams(
     selectAction: AmuletItemAction.None,
     quality: AmuletItemQuality.Mythical,
