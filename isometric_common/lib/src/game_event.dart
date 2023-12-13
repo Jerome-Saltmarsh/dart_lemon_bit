@@ -1,4 +1,4 @@
-class GameEventType {
+class GameEvent {
   static const Arrow_Fired              = 01;
   static const Blue_Orb_Fired           = 26;
   static const Arrow_Hit                = 28;

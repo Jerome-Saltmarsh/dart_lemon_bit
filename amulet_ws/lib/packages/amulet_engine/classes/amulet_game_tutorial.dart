@@ -591,7 +591,7 @@ class AmuletGameTutorial extends AmuletGame {
       .wait(seconds: 1)
       .playAudioType(AudioType.unlock_2)
       .setNodeEmptyAtSceneKey(keysDoor02)
-      .gameEventSceneKey(GameEventType.Spawn_Confetti, keysDoor02)
+      .gameEventSceneKey(GameEvent.Spawn_Confetti, keysDoor02)
       .wait(seconds: 1)
       .deactivate(guide)
       .controlsEnabled()
@@ -631,7 +631,7 @@ class AmuletGameTutorial extends AmuletGame {
           .wait(seconds: 1)
           .playAudioType(AudioType.unlock_2)
           .setNodeEmptyAtSceneKey(keysDoor03)
-          .gameEventSceneKey(GameEventType.Spawn_Confetti, keysDoor03)
+          .gameEventSceneKey(GameEvent.Spawn_Confetti, keysDoor03)
           .wait(seconds: 1)
           .end()
           .add(() => startNextTutorialObjective(player));
@@ -735,7 +735,7 @@ class AmuletGameTutorial extends AmuletGame {
         .zoom(2)
         .deactivate(crystal1GlowingFalse)
         .activate(crystal1GlowingTrue)
-        .gameEventPosition(GameEventType.Spawn_Confetti, crystal1GlowingTrue)
+        .gameEventPosition(GameEvent.Spawn_Confetti, crystal1GlowingTrue)
         .deactivate(guide)
         .puzzleSolved()
         .controlsDisabled()
@@ -744,7 +744,7 @@ class AmuletGameTutorial extends AmuletGame {
         .wait(seconds: 2)
         .playAudioType(AudioType.unlock_2)
         .setNodeEmptyAtSceneKey(keysDoor01)
-        .gameEventSceneKey(GameEventType.Spawn_Confetti, keysDoor01)
+        .gameEventSceneKey(GameEvent.Spawn_Confetti, keysDoor01)
         .wait(seconds: 1)
         .add(() => startNextTutorialObjective(player))
         .end();
@@ -764,7 +764,7 @@ class AmuletGameTutorial extends AmuletGame {
         .movePositionToSceneKey(guide, keysGuideSpawn0)
         .cameraSetTarget(guide)
         .wait(seconds: 1)
-        .gameEventPosition(GameEventType.Teleport_Start, guide)
+        .gameEventPosition(GameEvent.Teleport_Start, guide)
         .activate(guide)
         .faceEachOther(player, guide)
         .wait(seconds: 1)
@@ -774,9 +774,9 @@ class AmuletGameTutorial extends AmuletGame {
           'move by left clicking the mouse.'
         )
         .wait(seconds: 1)
-        .gameEventPosition(GameEventType.Teleport_Start, guide)
+        .gameEventPosition(GameEvent.Teleport_Start, guide)
         .movePositionToSceneKey(guide, keysGuideSpawn1)
-        .gameEventPosition(GameEventType.Teleport_End, guide)
+        .gameEventPosition(GameEvent.Teleport_End, guide)
         .end()
     ;
   }

@@ -918,7 +918,7 @@ class IsometricPlayer extends Character with ByteWriter {
 
   void writeGameEventGameObjectDestroyed(GameObject gameObject){
     writeGameEvent(
-      type: GameEventType.Game_Object_Destroyed,
+      type: GameEvent.Game_Object_Destroyed,
       x: gameObject.x,
       y: gameObject.y,
       z: gameObject.z,

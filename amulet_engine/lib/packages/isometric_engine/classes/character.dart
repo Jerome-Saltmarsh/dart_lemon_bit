@@ -317,10 +317,11 @@ class Character extends Collider {
     }
   }
 
-  void facePosition(Position position) => faceXY(position.x, position.y);
+  void facePosition(Position position, {bool force = false}) =>
+      faceXY(position.x, position.y, force: force);
 
-  void faceXY(double x, double y) {
-    if (deadOrBusy) return;
+  void faceXY(double x, double y, {bool force = false}) {
+    if (!force && deadOrBusy) return;
     angle = (getAngleXY(x, y) + pi) % pi2;
   }
 

@@ -272,7 +272,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required double range,
   }) {
      dispatchGameEvent(
-      GameEventType.Bow_Released,
+      GameEvent.Bow_Released,
       character.x,
       character.y,
       character.z,
@@ -286,11 +286,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   }
 
   void performAbilityBlink(AmuletPlayer player){
-    dispatchGameEventPosition(GameEventType.Blink_Depart, player);
+    dispatchGameEventPosition(GameEvent.Blink_Depart, player);
     player.x = player.activePowerX;
     player.y = player.activePowerY;
     player.z = player.activePowerZ;
-    dispatchGameEventPosition(GameEventType.Blink_Arrive, player);
+    dispatchGameEventPosition(GameEvent.Blink_Arrive, player);
   }
 
   void performAbilityLightning(Character character){
@@ -303,7 +303,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       if (!character.withinRadiusPosition(otherCharacter, 300)){
         continue;
       }
-      dispatchGameEventPosition(GameEventType.Lightning_Bolt, otherCharacter);
+      dispatchGameEventPosition(GameEvent.Lightning_Bolt, otherCharacter);
       applyHit(
         srcCharacter: character,
         target: otherCharacter,
@@ -573,7 +573,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     character.health += stats.health;
 
-    dispatchGameEventPosition(GameEventType.Spell_Used, character);
+    dispatchGameEventPosition(GameEvent.Spell_Used, character);
     dispatchByte(SpellType.Heal);
   }
 
@@ -621,7 +621,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   @override
   void onGameObjectedAdded(GameObject gameObject) {
     if (gameObject is AmuletGameObject) {
-      dispatchGameEventPosition(GameEventType.Amulet_GameObject_Spawned, gameObject);
+      dispatchGameEventPosition(GameEvent.Amulet_GameObject_Spawned, gameObject);
       dispatchByte(gameObject.type);
       dispatchByte(gameObject.subType);
     }
@@ -722,7 +722,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   @override
   void onCharacterTargetChanged(Character character, Position? value) {
     if (character is! AmuletFiend || value == null) return;
-    dispatchGameEventPosition(GameEventType.AI_Target_Acquired, value);
+    dispatchGameEventPosition(GameEvent.AI_Target_Acquired, value);
     dispatchByte(character.characterType);
   }
 }

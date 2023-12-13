@@ -45,7 +45,7 @@ class ServerRemote implements Server {
   }
 
   void onChangedUserId(String value) {
-    refreshUser().catchError((error){
+    loadUser().catchError((error){
       print('failed to load user');
     });
   }
@@ -60,14 +60,18 @@ class ServerRemote implements Server {
     username.value = userJson.tryGetString('username') ?? '';
   }
 
-  Future refreshUser() async {
+  Future loadUser() async {
     setOperationStatus(OperationStatus.Loading_User);
     userJson.value = userId.value.isEmpty
         ? const {}
         : await GameStreamHttpClient.getUser(
       url: userServiceUrl.value,
       userId: userId.value,
-    );
+    ).catchError((error) async {
+        print(error);
+        parser.ui.handleException(error);
+        return Json();
+    });
     setOperationStatusDone();
   }
 
@@ -125,7 +129,7 @@ class ServerRemote implements Server {
     } catch (error) {
       parser.ui.handleException(error);
     }
-    await refreshUser();
+    await loadUser();
     setOperationStatusDone();
   }
 
@@ -253,7 +257,7 @@ class ServerRemote implements Server {
         headType: headType,
       );
       setOperationStatusDone();
-      refreshUser();
+      loadUser();
       if (response.statusCode == 200) {
         playCharacter(response.body);
       } else {

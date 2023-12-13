@@ -339,7 +339,7 @@ class AmuletPlayer extends IsometricPlayer with
     super.equippedWeaponIndex = value;
     weaponType = equippedWeaponType;
     game.dispatchGameEvent(
-        GameEventType.Weapon_Type_Equipped,
+        GameEvent.Weapon_Type_Equipped,
         x,
         y,
         z,
