@@ -115,50 +115,56 @@ extension WebsiteUI on WebsiteGame {
         return page;
       });
 
-
-
-  Widget buildPageSelectServerMode() => Row(
-       mainAxisAlignment: MainAxisAlignment.center,
-       children: ServerMode.values.map((serverMode) {
-         const width = 130.0;
-         return onPressed(
-             action: () => options.serverMode.value = serverMode,
-             child: Container(
-               margin: const EdgeInsets.symmetric(horizontal: 8),
-               color: Colors.white30,
-               width: width,
-               height: width * goldenRatio_0618,
-               alignment: Alignment.center,
-               child: buildText(getServerModeText(serverMode))));
-       }).toList(growable: false),
-     );
-
   Widget buildTogglePlayMode() {
-    return WatchBuilder(options.serverMode, (activePlayMode) {
+    return WatchBuilder(options.serverMode, (activeServerMode) {
       return Container(
         width: 500,
-        // color: Colors.black26,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: ServerMode.values.map((serverMode) {
-            return onPressed(
-              action: () => options.serverMode.value = serverMode,
-              child: Container(
-                alignment: Alignment.center,
-                width: 80,
-                height: 30,
-                // margin: const EdgeInsets.symmetric(horizontal: 4),
-                color: activePlayMode == serverMode ? Colors.green : Colors.green.withOpacity(0.25),
-                child: buildText(
-                    getServerModeText(serverMode),
-                    color: activePlayMode == serverMode ? Colors.white : Colors.white60
-                  ),
-              ),
-            );
-          }).toList(growable: false),
+          children: [...ServerMode.values.map((serverMode) {
+              return onPressed(
+                action: () => options.serverMode.value = serverMode,
+                child: Container(
+                  alignment: Alignment.center,
+                  width: 80,
+                  height: 30,
+                  color: activeServerMode == serverMode
+                      ? Colors.green
+                      : Colors.green.withOpacity(0.25),
+                  child: buildText(getServerModeText(serverMode),
+                      color: activeServerMode == serverMode
+                          ? Colors.white
+                          : Colors.white60),
+                ),
+              );
+            }).toList(growable: false),
+              if (activeServerMode == ServerMode.remote)
+              const Expanded(child: const SizedBox()),
+              if (activeServerMode == ServerMode.remote)
+                buildOnlineRow(),
+
+          ],
         ),
       );
     });
+  }
+
+  Widget buildOnlineRow(){
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        GSButtonRegion(
+          region: server.remote.region,
+          action: website.showWebsitePageRegion,
+        ),
+        width4,
+        Container(
+          color: Colors.white12,
+          child: buildControlUser(server.remote),
+        ),
+      ],
+    );
   }
 
   Widget buildPageConnectionStatus(String message) =>
@@ -173,28 +179,8 @@ extension WebsiteUI on WebsiteGame {
     }[gameType] ?? ''), fit: BoxFit.fitWidth,);
 
   Widget buildContainerAuthenticated(ServerRemote serverRemote) =>
-      Column(
-        children: [
-          buildWatch(serverRemote.characters, (characters) =>
-              buildTableCharacters(characters, (){})
-          ),
-          height12,
-          GSContainer(
-            width: 500,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GSButtonRegion(),
-                Container(
-                  padding: style.containerPadding,
-                    color: Colors.white12,
-                    child: buildControlUser(serverRemote),
-                ),
-              ],
-            ),
-          ),
-        ],
+      buildWatch(serverRemote.characters, (characters) =>
+          buildTableCharacters(characters, (){})
       );
 
   Widget buildCharacters(List<Json> characters, Function rebuild) =>
@@ -276,21 +262,15 @@ extension WebsiteUI on WebsiteGame {
       ),
   );
 
-  Widget buildControlUser(ServerRemote serverRemote) => Row(
-    children: [
-      buildWatch(serverRemote.username, buildText),
-      width8,
-      buildBorder(
-        child: Container(
-          color: Colors.transparent,
-          padding: const EdgeInsets.all(4),
-          child: onPressed(
-            action: serverRemote.logout,
-            child: buildText('Logout'),
-          ),
-        ),
-      ),
-    ],
+  Widget buildControlUser(ServerRemote serverRemote) => onPressed(
+    action: serverRemote.logout,
+    hint: 'LOGOUT',
+    child: Container(
+        height: 30,
+        alignment: Alignment.center,
+        padding: const EdgeInsets.symmetric(horizontal: 4),
+        child: buildWatch(serverRemote.username, buildText)),
+
   );
 
   void showDialogDeleteCharacter(Json character, {Function? onDeleted}) {

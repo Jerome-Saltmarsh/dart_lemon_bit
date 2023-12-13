@@ -1,33 +1,55 @@
 
 
+import 'package:amulet_flutter/gamestream/network/enums/connection_region.dart';
+import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
-import 'package:amulet_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';
 import 'package:amulet_flutter/packages/utils/format_enum_name.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 class GSButtonRegion extends StatelessWidget {
+
+  final Watch<ConnectionRegion> region;
+  final Function action;
+
+  const GSButtonRegion({
+    super.key,
+    required this.region,
+    required this.action,
+  });
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   final tooltipController = OverlayPortalController();
+  //   return MouseOver(
+  //     onEnter: tooltipController.show,
+  //     onExit: tooltipController.hide,
+  //     builder: (mouseOver) {
+  //       return Directionality(
+  //         child: Overlay(
+  //            initialEntries: [
+  //              OverlayEntry(builder: (context){
+  //                return buildText('test');
+  //              })
+  //            ],
+  //         ),
+  //       );
+  //     }
+  //   );
+  // }
   @override
-  Widget build(BuildContext context) =>
-    IsometricBuilder(builder: (context, components) =>
-        buildWatch(components.network.remote.region, (region) =>
-            onPressed(
-            action: components.website.showWebsitePageRegion,
-            child: Container(
-              color: Colors.white12,
-              padding: components.style.containerPadding,
-              child: Row(
-                children: [
-                  buildText('Region'),
-                  width8,
-                  buildBorder(
-                    child: Container(
-                      padding: EdgeInsets.all(8),
-                      child: buildText(formatEnumName(region.name)),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-        )));
+  Widget build(BuildContext context) {
+    return buildWatch(region, (region) =>
+        onPressed(
+          hint: 'REGION',
+          action: action,
+          child: Container(
+            height: 30,
+            width: 100,
+            alignment: Alignment.center,
+            color: Colors.white12,
+            child: buildText(formatEnumName(region.name)),
+          ),
+        ));
+  }
 }
