@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+import 'package:amulet_flutter/gamestream/isometric/components/render/functions/merge_32_bit_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_nodes_y.dart';
@@ -922,7 +923,7 @@ class RendererNodes extends RenderGroup {
         renderNodeTreeTop(
           dstX: dstX,
           dstY: dstY,
-          treeType: mapVariationToTreeType(nodeVariationBelow),
+          treeType: nodeVariationBelow,
           colorWest: scene.colorWest(index),
           colorSouth: scene.colorSouth(index),
           colorNorth: scene.colorNorth(index),
@@ -936,7 +937,7 @@ class RendererNodes extends RenderGroup {
         renderNodeTreeBottom(
           dstX: dstX,
           dstY: dstY,
-          treeType: mapVariationToTreeType(variation),
+          treeType: variation,
           colorNorth: scene.colorNorth(index),
           colorEast: scene.colorEast(index),
           colorSouth: scene.colorSouth(index),
@@ -1684,26 +1685,45 @@ class RendererNodes extends RenderGroup {
     required int colorSouth,
     required int colorWest,
     required int animationFrame,
-  }) =>
-      treeType == TreeType.Pine
-          ? renderTreeTopPine(
-              dstX: dstX,
-              dstY: dstY,
-              colorNorth: colorNorth,
-              colorEast: colorEast,
-              colorSouth: colorSouth,
-              colorWest: colorWest,
-              animationFrame: animationFrame,
-            )
-          : renderTreeTopOak(
-              dstX: dstX,
-              dstY: dstY,
-              colorNorth: colorNorth,
-              colorEast: colorEast,
-              colorSouth: colorSouth,
-              colorWest: colorWest,
-              animationFrame: animationFrame,
-            );
+  }) {
+    switch (treeType){
+      case TreeType.Pine:
+        renderTreeTopPine(
+            dstX: dstX,
+            dstY: dstY,
+            colorNorth: colorNorth,
+            colorEast: colorEast,
+            colorSouth: colorSouth,
+            colorWest: colorWest,
+            animationFrame: animationFrame,
+        );
+      case TreeType.Oak:
+        renderTreeTopOak(
+          dstX: dstX,
+          dstY: dstY,
+          colorNorth: colorNorth,
+          colorEast: colorEast,
+          colorSouth: colorSouth,
+          colorWest: colorWest,
+          animationFrame: animationFrame,
+        );
+        break;
+      case TreeType.Dead:
+        renderTreeTopDead(
+          dstX: dstX,
+          dstY: dstY,
+          colorNorth: colorNorth,
+          colorEast: colorEast,
+          colorSouth: colorSouth,
+          colorWest: colorWest,
+          animationFrame: animationFrame,
+        );
+        break;
+      default:
+        break;
+    }
+
+  }
 
   void renderNodeTreeBottom({
     required double dstX,
@@ -1715,29 +1735,48 @@ class RendererNodes extends RenderGroup {
     required int colorWest,
     required int color,
     required int animationFrame,
-  }) =>
-      treeType == TreeType.Pine
-          ? renderTreeBottomPine(
-              dstX: dstX,
-              dstY: dstY,
-              colorNorth: colorNorth,
-              colorEast: colorEast,
-              colorSouth: colorSouth,
-              colorWest: colorWest,
-              color: color,
-              animationFrame: animationFrame,
-            )
-          : renderTreeBottomOak(
-              dstX: dstX,
-              dstY: dstY,
-              colorNorth: colorNorth,
-              colorEast: colorEast,
-              colorWest: colorWest,
-              colorSouth: colorSouth,
-              color: color,
-
-              animationFrame: animationFrame,
-            );
+  }) {
+    switch (treeType){
+      case TreeType.Pine:
+        renderTreeBottomPine(
+          dstX: dstX,
+          dstY: dstY,
+          colorNorth: colorNorth,
+          colorEast: colorEast,
+          colorSouth: colorSouth,
+          colorWest: colorWest,
+          color: color,
+          animationFrame: animationFrame,
+        );
+        break;
+      case TreeType.Oak:
+        renderTreeBottomOak(
+          dstX: dstX,
+          dstY: dstY,
+          colorNorth: colorNorth,
+          colorEast: colorEast,
+          colorWest: colorWest,
+          colorSouth: colorSouth,
+          color: color,
+          animationFrame: animationFrame,
+        );
+        break;
+      case TreeType.Dead:
+        renderTreeBottomDead(
+          dstX: dstX,
+          dstY: dstY,
+          colorNorth: colorNorth,
+          colorEast: colorEast,
+          colorWest: colorWest,
+          colorSouth: colorSouth,
+          color: color,
+          animationFrame: animationFrame,
+        );
+        break;
+      default:
+        break;
+    }
+  }
 
   void renderTreeTopOak({
     required double dstX,
@@ -1984,6 +2023,103 @@ class RendererNodes extends RenderGroup {
       rotation: rotation,
       anchorY: anchorY,
     );
+  }
+
+  void renderTreeBottomDead({
+    required double dstX,
+    required double dstY,
+    required int colorNorth,
+    required int colorEast,
+    required int colorSouth,
+    required int colorWest,
+    required int color,
+    required int animationFrame,
+  }) {
+    final sprite = images.tree3;
+    final colorNW = merge32BitColors(colorNorth, colorWest);
+    final colorSE = merge32BitColors(colorSouth, colorEast);
+    final colorFlat = merge32BitColors(colorNW, colorSE);
+    const anchorY = 0.64;
+
+    render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: 3),
+        color: colorFlat,
+        scale: 1.0,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+    );
+
+    render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: 4),
+        color: colorSE,
+        scale: 1.0,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+    );
+
+    render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: 5),
+        color: colorNW,
+        scale: 1.0,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+    );
+
+    engine.bufferImage = images.atlas_nodes;
+  }
+
+  void renderTreeTopDead({
+    required double dstX,
+    required double dstY,
+    required int colorNorth,
+    required int colorEast,
+    required int colorSouth,
+    required int colorWest,
+    required int animationFrame,
+  }) {
+    final sprite = images.tree3;
+    final colorNW = merge32BitColors(colorNorth, colorWest);
+    final colorSE = merge32BitColors(colorSouth, colorEast);
+    final colorFlat = merge32BitColors(colorNW, colorSE);
+    const anchorY = 0.64;
+
+    render.sprite(
+        sprite: sprite,
+        frame: 0,
+        color: colorFlat,
+        scale: 1.0,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+    );
+
+    render.sprite(
+        sprite: sprite,
+        frame: 1,
+        color: colorSE,
+        scale: 1.0,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+    );
+
+    render.sprite(
+        sprite: sprite,
+        frame: 2,
+        color: colorNW,
+        scale: 1.0,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+    );
+
+    engine.bufferImage = images.atlas_nodes;
   }
 
   void renderTreeBottomPine({
@@ -4312,18 +4448,5 @@ class RendererNodes extends RenderGroup {
     this.beamTotal = beamTotal;
 
   }
-
-
-
-
 }
 
-
-
-int mapVariationToTreeType(int variation){
-  if (variation == 0) {
-    return TreeType.Oak;
-  }
-  return TreeType.Pine;
-
-}

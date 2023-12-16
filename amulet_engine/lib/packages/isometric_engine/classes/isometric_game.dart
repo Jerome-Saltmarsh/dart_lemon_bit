@@ -1145,7 +1145,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       }
       deactivateProjectile(projectile);
 
-      final velocityAngle = projectile.velocityAngle;
       final nodeType = scene.getTypeXYZ(
           projectile.x, projectile.y, projectile.z);
 
@@ -1290,11 +1289,11 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
     target.clampVelocity(Physics.Max_Velocity);
 
-    // dispatchGameEventPosition(
-    //     GameEvent.Material_Struck,
-    //     target,
-    // );
-    // dispatchByte(target.materialType);
+    dispatchGameEventPosition(
+        GameEvent.Material_Struck,
+        target,
+    );
+    dispatchByte(target.materialType);
 
     if (target is GameObject){
       if (target.healthMax > 0){

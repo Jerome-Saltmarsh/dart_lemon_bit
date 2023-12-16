@@ -234,7 +234,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       case AmuletItem.Spell_Heal:
         useAmuletItemSpellHeal(character);
         break;
-      case AmuletItem.Spell_Split_Arrow:
+      case AmuletItem.Spell_Bow_Split_Arrow:
         final totalArrows = stats.quantity;
         final radian = pi * 0.25;
         final radianPerArrow = radian / totalArrows;

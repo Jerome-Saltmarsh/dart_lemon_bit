@@ -178,7 +178,20 @@ class AmuletPlayer extends IsometricPlayer with
     if (level == null){
       return -1;
     }
-    return randomInt(level.damageMin, level.damageMax + 1);
+    var damage = randomInt(level.damageMin, level.damageMax + 1);
+    for (final itemSlot in treasures) {
+       final amuletItem = itemSlot.amuletItem;
+       if (amuletItem == null) continue;
+       switch (amuletItem) {
+         case AmuletItem.Amulet_Of_The_Ranger:
+           if (equippedWeapon?.amuletItem?.isWeaponBow ?? false){
+           }
+           break;
+         default:
+           break;
+       }
+    }
+    return damage;
   }
 
   @override

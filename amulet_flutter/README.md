@@ -16,12 +16,20 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
+* [new]: character type zombie
+* [new]: character type spider
+* [new]: character type vampire
+* [new]: character type ghost
+* [new]: character type skeleton swordsman
+* [new]: model hair type 4
 * [new]: persist gameobject properties
 
 ## ALPHA
-* [new]: character type spider
 * [new]: spell type slow 
-* [new]: character type zombie
+* [new]: spell wind strike 
+* [new]: character state spin 
+* [new]: character state respawning 
+* [new]: model tree type 3 
 * [new]: location endless plains
 * [new]: location dark castle
 * [new]: location lonely woods
@@ -29,7 +37,6 @@ ctrl + []               : move caret to code block
 * [new]: mini map location labels
 
 ## BETA
-* [new]: model hair type 4
 * [fix]: barrels and crates should not be interactable
 * [new]: model head type female
 * [new]: model leg type iron plates
@@ -38,9 +45,6 @@ ctrl + []               : move caret to code block
 * [new]: location mountain
 * [new]: location town
 * [new]: location forsaken swamp
-* [new]: character type vampire
-* [new]: character type ghost
-* [new]: character type skeleton swordsman
 * [new]: mechanic elemental damage
 
 ## RELEASE

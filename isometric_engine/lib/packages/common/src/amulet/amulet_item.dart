@@ -82,7 +82,25 @@ enum AmuletItem {
         damageMin: 1,
     ),
   ),
-  Spell_Split_Arrow(
+  Spell_Bow_Ice_Arrow(
+    selectAction: AmuletItemAction.Targeted_Enemy,
+    dependency: WeaponType.Bow,
+    type: ItemType.Spell,
+    subType: SpellType.Split_Arrow,
+    quality: AmuletItemQuality.Common,
+    description: 'fires multiple arrows',
+    level1: AmuletItemLevel(
+      damageMin: 3,
+      damageMax: 6,
+      fire: 0,
+      charges: 3,
+      cooldown: 30,
+      performDuration: 25,
+      quantity: 3,
+    ),
+  ),
+  Spell_Bow_Split_Arrow(
+    selectAction: AmuletItemAction.Directional,
     dependency: WeaponType.Bow,
     type: ItemType.Spell,
     subType: SpellType.Split_Arrow,
@@ -119,7 +137,6 @@ enum AmuletItem {
       performDuration: 25,
       quantity: 4,
     ),
-    selectAction: AmuletItemAction.Directional,
   ),
   Weapon_Old_Bow(
     selectAction: AmuletItemAction.Equip,
@@ -202,7 +219,9 @@ enum AmuletItem {
     type: ItemType.Legs,
     subType: LegType.Leather,
     description: 'Common pants made for more for comfort than combat',
-    level1: AmuletItemLevel(),
+    level1: AmuletItemLevel(
+      health: 5,
+    ),
   ),
   Pants_Squires(
     selectAction: AmuletItemAction.Equip,
@@ -210,7 +229,10 @@ enum AmuletItem {
     type: ItemType.Legs,
     subType: LegType.Leather,
     description: 'light pants which provide easy movement with some protection',
-    level1: AmuletItemLevel(),
+    level1: AmuletItemLevel(
+      health: 5,
+      fire: 5,
+    ),
   ),
   Pants_Plated(
     selectAction: AmuletItemAction.Equip,
@@ -218,7 +240,10 @@ enum AmuletItem {
     type: ItemType.Legs,
     subType: LegType.Leather,
     description: 'Quite heavy but they offer a lot of protection',
-    level1: AmuletItemLevel(),
+    level1: AmuletItemLevel(
+      health: 15,
+      fire: 10,
+    ),
   ),
   Gauntlet(
     selectAction: AmuletItemAction.Equip,
@@ -226,7 +251,9 @@ enum AmuletItem {
     type: ItemType.Hand,
     subType: HandType.Gauntlets,
     description: 'Common gauntlets',
-    level1: AmuletItemLevel(),
+    level1: AmuletItemLevel(
+      health: 5,
+    ),
   ),
   Leather_Gloves(
     selectAction: AmuletItemAction.Equip,
@@ -340,13 +367,25 @@ enum AmuletItem {
   //   consumable: true,
   //   level1: AmuletItemLevel(),
   // ),
-  Lost_Pendant_Of_Dreams(
+  Treasure_Fury_Pendent(
     selectAction: AmuletItemAction.None,
     quality: AmuletItemQuality.Mythical,
     type: ItemType.Treasure,
     subType: TreasureType.Pendant_1,
-    description: 'increases stats',
-    level1: AmuletItemLevel(),
+    description: 'faster sword attacks',
+    level1: AmuletItemLevel(
+
+    ),
+  ),
+  Amulet_Of_The_Ranger(
+    selectAction: AmuletItemAction.None,
+    quality: AmuletItemQuality.Rare,
+    type: ItemType.Treasure,
+    subType: TreasureType.Pendant_1,
+    description: 'increases arrow damage',
+    level1: AmuletItemLevel(
+
+    ),
   ),
   Sapphire_Pendant(
     selectAction: AmuletItemAction.None,
