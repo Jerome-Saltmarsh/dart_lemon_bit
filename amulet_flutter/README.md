@@ -29,7 +29,6 @@ ctrl + []               : move caret to code block
 * [new]: spell wind strike 
 * [new]: character state spin 
 * [new]: character state respawning 
-* [new]: model tree type 3 
 * [new]: location endless plains
 * [new]: location dark castle
 * [new]: location lonely woods
@@ -50,6 +49,9 @@ ctrl + []               : move caret to code block
 ## RELEASE
 * [new]: mobile touch screen support
 * [fix]: audio for web
+
+## 16.12.2023
+* [new]: model tree type 3
 
 ## 12.12.2023
 * [fix]: editor camera shakes when gameobject selected

@@ -2040,12 +2040,13 @@ class RendererNodes extends RenderGroup {
     final colorSE = merge32BitColors(colorSouth, colorEast);
     final colorFlat = merge32BitColors(colorNW, colorSE);
     const anchorY = 0.64;
+    const scale = 0.75;
 
     render.sprite(
         sprite: sprite,
         frame: sprite.getFrame(row: 0, column: 3),
         color: colorFlat,
-        scale: 1.0,
+        scale: scale,
         dstX: dstX,
         dstY: dstY,
         anchorY: anchorY,
@@ -2055,7 +2056,7 @@ class RendererNodes extends RenderGroup {
         sprite: sprite,
         frame: sprite.getFrame(row: 0, column: 4),
         color: colorSE,
-        scale: 1.0,
+        scale: scale,
         dstX: dstX,
         dstY: dstY,
         anchorY: anchorY,
@@ -2065,7 +2066,7 @@ class RendererNodes extends RenderGroup {
         sprite: sprite,
         frame: sprite.getFrame(row: 0, column: 5),
         color: colorNW,
-        scale: 1.0,
+        scale: scale,
         dstX: dstX,
         dstY: dstY,
         anchorY: anchorY,
@@ -2087,13 +2088,14 @@ class RendererNodes extends RenderGroup {
     final colorNW = merge32BitColors(colorNorth, colorWest);
     final colorSE = merge32BitColors(colorSouth, colorEast);
     final colorFlat = merge32BitColors(colorNW, colorSE);
-    const anchorY = 0.64;
+    const anchorY = 0.5;
+    const scale = 0.75;
 
     render.sprite(
         sprite: sprite,
         frame: 0,
         color: colorFlat,
-        scale: 1.0,
+        scale: scale,
         dstX: dstX,
         dstY: dstY,
         anchorY: anchorY,
@@ -2103,7 +2105,7 @@ class RendererNodes extends RenderGroup {
         sprite: sprite,
         frame: 1,
         color: colorSE,
-        scale: 1.0,
+        scale: scale,
         dstX: dstX,
         dstY: dstY,
         anchorY: anchorY,
@@ -2113,7 +2115,7 @@ class RendererNodes extends RenderGroup {
         sprite: sprite,
         frame: 2,
         color: colorNW,
-        scale: 1.0,
+        scale: scale,
         dstX: dstX,
         dstY: dstY,
         anchorY: anchorY,
