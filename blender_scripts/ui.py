@@ -13,8 +13,8 @@ def list_textname_callback(scene, context):
 
 
 class TEXT_OT_run_specified_script(bpy.types.Operator):
-    bl_idname = "text.render_sprites"
-    bl_label = "Render Sprites"
+    bl_idname = "text.render_fiends"
+    bl_label = "Render Fiends"
     bl_options = {'REGISTER'}
 
     script_name: bpy.props.EnumProperty(
@@ -24,7 +24,8 @@ class TEXT_OT_run_specified_script(bpy.types.Operator):
     )
 
     def invoke(self, context, event):
-        bpy.utils.execfile('C:/Users/Jerome/github/amulet/blender_scripts/render_isometric.py')
+        # bpy.utils.execfile('C:/Users/Jerome/github/amulet/blender_scripts/render_isometric.py')
+        bpy.utils.execfile('C:/Users/Jerome/github/amulet/blender_scripts/render_fiends.py')
         return {'FINISHED'}
 
 

@@ -46,10 +46,10 @@ class SceneWriter extends ByteWriter {
     writeUint8List(compressedNodeOrientations);
   }
 
-  void writeGameObjects(List<GameObject> gameObjects){
+  void writeGameObjects(List<GameObject> gameObjects) {
     writeByte(ScenePart.GameObjects);
     var total = 0;
-    for (final gameObject in gameObjects){
+    for (final gameObject in gameObjects) {
        if (!gameObject.persistable) continue;
        total++;
     }

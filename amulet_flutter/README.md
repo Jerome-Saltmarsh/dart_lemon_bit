@@ -19,12 +19,15 @@ ctrl + []               : move caret to code block
 * [new]: character type zombie
 * [new]: character type spider
 * [new]: character type vampire
+* [new]: character type witch
 * [new]: character type ghost
+* [new]: character type warlock
+* [new]: character type orc
 * [new]: character type skeleton swordsman
-* [new]: model hair type 4
-* [new]: persist gameobject properties
 
 ## ALPHA
+* [new]: mini map location labels
+* [new]: model hair type 4
 * [new]: spell type slow 
 * [new]: spell wind strike 
 * [new]: character state spin 
@@ -33,7 +36,6 @@ ctrl + []               : move caret to code block
 * [new]: location dark castle
 * [new]: location lonely woods
 * [fix]: front view renders
-* [new]: mini map location labels
 
 ## BETA
 * [fix]: barrels and crates should not be interactable

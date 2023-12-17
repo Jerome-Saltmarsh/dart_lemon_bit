@@ -129,23 +129,10 @@ abstract class Collider extends Position {
   /// FUNCTIONS
   bool onSameTeam(dynamic a);
 
-  // static bool onSameTeam(dynamic a, dynamic b) {
-  //   if (identical(a, b))                    return true;
-  //   if (a is! Collider || b is! Collider)   return false;
-  //   final aTeam = a.team;
-  //   if (aTeam == TeamType.Alone)            return false;
-  //   if (aTeam == TeamType.Neutral)          return true;
-  //   final bTeam = b.team;
-  //   if (bTeam == TeamType.Alone)            return false;
-  //   if (bTeam == TeamType.Neutral)          return true;
-  //   return aTeam == bTeam;
-  // }
 
   bool collidingWith(Collider that){
     if (!active) return false;
-    // if (!strikable) return false;
     if (!that.active) return false;
-    // if (!that.strikable) return false;
     if (boundsLeft > that.boundsRight) return false;
     if (boundsRight < that.boundsLeft) return false;
     if (boundsTop > that.boundsBottom) return false;

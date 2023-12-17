@@ -2040,7 +2040,7 @@ class RendererNodes extends RenderGroup {
     final colorSE = merge32BitColors(colorSouth, colorEast);
     final colorFlat = merge32BitColors(colorNW, colorSE);
     const anchorY = 0.64;
-    const scale = 0.75;
+    const scale = 0.6;
 
     render.sprite(
         sprite: sprite,
@@ -2089,7 +2089,7 @@ class RendererNodes extends RenderGroup {
     final colorSE = merge32BitColors(colorSouth, colorEast);
     final colorFlat = merge32BitColors(colorNW, colorSE);
     const anchorY = 0.5;
-    const scale = 0.75;
+    const scale = 0.6;
 
     render.sprite(
         sprite: sprite,
