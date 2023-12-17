@@ -10,12 +10,12 @@ if directory_scripts not in sys.path:
 
 from blender_utils import *
 
-name_mesh_kid = 'mesh_kid'
 name_material_cell_shade = 'cell_shade'
+name_material_cell_shade_south = 'cell_shade_south'
+name_material_cell_shade_west = 'cell_shade_west'
 name_object_rotation = 'rotation'
 name_object_direction = 'direction'
 name_object_camera = 'camera'
-name_object_armature_kid = 'armature_kid'
 name_object_render = 'render'
 name_collection_exports = 'exports'
 name_camera_track_front = 'front'
@@ -42,12 +42,16 @@ direction_threshold_west = -0.4
 direction_threshold_diffuse = 1
 
 
-def get_animation_tracks_rig_kid():
-    return object_animation_tracks(get_object(name_object_armature_kid))
-
-
 def get_material_cell_shade():
     return get_material(name_material_cell_shade)
+
+
+def get_material_cell_shade_south():
+    return get_material(name_material_cell_shade_south)
+
+
+def get_material_cell_shade_west():
+    return get_material(name_material_cell_shade_west)
 
 
 def unmute_rotation_track(pivot_track_name):
@@ -55,12 +59,6 @@ def unmute_rotation_track(pivot_track_name):
     if rotation_animation_tracks:
         for animation_track in rotation_animation_tracks:
             animation_track.mute = animation_track.name != pivot_track_name
-
-
-def hide_mesh_kid():
-    mesh_obj = try_get_object(name_mesh_kid)
-    if mesh_obj:
-        set_render_false(mesh_obj)
 
 
 def get_render_directory_for_camera_track(camera_track):
@@ -78,10 +76,26 @@ def enable_animation_tracks_by_name(name):
             animation_track.mute = animation_track.name != name
 
 
+
+def get_direction_material(direction):
+    if direction == direction_south:
+        return get_material_cell_shade_south()
+    if direction == direction_west:
+        return get_material_cell_shade_west()
+    return (get_material_cell_shade
+            ())
+
+
 def render_armature_animation_track(armature, direction, animation_track):
     print(f'render_armature_animation_track({armature.name}, {direction}, {animation_track.name})')
     render_path = f'{directory_isometric}/{armature.name}/{direction}/{animation_track.name}/'
     set_render_path(render_path)
+    material = get_direction_material(direction)
+
+    for child in armature.children:
+        child.data.materials.clear()
+        child.data.materials.append(material)
+
     render()
     render_true(armature)
 
