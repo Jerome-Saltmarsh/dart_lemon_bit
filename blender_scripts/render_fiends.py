@@ -18,6 +18,7 @@ name_object_direction = 'direction'
 name_object_camera = 'camera'
 name_object_render = 'render'
 name_collection_exports = 'exports'
+name_collection_shadow = 'shadow'
 name_camera_track_front = 'front'
 name_camera_track_isometric = 'isometric'
 name_rotation_track_1 = 'rotation_1'
@@ -27,7 +28,8 @@ direction_north = 'north'
 direction_east = 'east'
 direction_south = 'south'
 direction_west = 'west'
-direction_diffuse = 'diffuse'
+direction_flat = 'flat'
+direction_shadow = 'shadow'
 
 direction_vector_north = (1, 0.0, 0)
 direction_vector_east = (-1, 0.0, 0)
@@ -76,28 +78,42 @@ def enable_animation_tracks_by_name(name):
             animation_track.mute = animation_track.name != name
 
 
-
 def get_direction_material(direction):
     if direction == direction_south:
         return get_material_cell_shade_south()
     if direction == direction_west:
         return get_material_cell_shade_west()
-    return (get_material_cell_shade
-            ())
+    return get_material_cell_shade()
 
 
 def render_armature_animation_track(armature, direction, animation_track):
     print(f'render_armature_animation_track({armature.name}, {direction}, {animation_track.name})')
     render_path = f'{directory_isometric}/{armature.name}/{direction}/{animation_track.name}/'
     set_render_path(render_path)
+    animation_track.mute = False
     material = get_direction_material(direction)
+    collection_shadow = get_collection(name_collection_shadow)
+
+    if direction == direction_shadow:
+        set_render_engine_cycles()
+        set_render_frames(1, 1)
+        render_true(collection_shadow)
+        collection_shadow.hide_viewport = False
+    else:
+        set_render_frames(1, 64)
+        set_render_engine_eevee()
+        render_false(collection_shadow)
+        collection_shadow.hide_viewport = True
 
     for child in armature.children:
-        child.data.materials.clear()
-        child.data.materials.append(material)
+        materials = child.data.materials
+        materials.clear()
+        materials.append(material)
 
-    render()
     render_true(armature)
+    render()
+    render_false(armature)
+    animation_track.mute = True
 
 
 def render_armature_direction(armature, direction):
@@ -151,7 +167,7 @@ def map_direction_to_vector(direction):
         return direction_vector_south
     if direction == direction_west:
         return direction_vector_west
-    if direction == direction_diffuse:
+    if direction == direction_flat:
         return direction_vector_diffuse
     raise ValueError('invalid direction')
 
@@ -165,7 +181,7 @@ def map_direction_to_threshold(direction):
         return direction_threshold_south
     if direction == direction_west:
         return direction_threshold_west
-    if direction == direction_diffuse:
+    if direction == direction_flat:
         return direction_threshold_diffuse
     raise ValueError('invalid direction')
 

@@ -2,6 +2,7 @@ import bpy
 
 object_type_armature = 'ARMATURE'
 render_engine_eevee = 'BLENDER_EEVEE'
+render_engine_cycles = 'CYCLES'
 
 
 def get_material(name):
@@ -60,6 +61,10 @@ def set_render_engine(value):
 
 def set_render_engine_eevee():
     set_render_engine(render_engine_eevee)
+
+
+def set_render_engine_cycles():
+    set_render_engine(render_engine_cycles)
 
 
 def set_render_false(target):
