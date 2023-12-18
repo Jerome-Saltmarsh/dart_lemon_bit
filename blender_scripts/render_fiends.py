@@ -96,11 +96,9 @@ def render_armature_animation_track(armature, direction, animation_track):
 
     if direction == direction_shadow:
         set_render_engine_cycles()
-        set_render_frames(1, 1)
         render_true(collection_shadow)
         collection_shadow.hide_viewport = False
     else:
-        set_render_frames(1, 64)
         set_render_engine_eevee()
         render_false(collection_shadow)
         collection_shadow.hide_viewport = True

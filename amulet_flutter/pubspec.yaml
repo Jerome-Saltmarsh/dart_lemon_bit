@@ -1,3 +1,4 @@
+
 name: amulet_flutter
 description: next gen cloud gaming
 
@@ -30,7 +31,7 @@ dependencies:
   lemon_sprite:
     path: ..\lemon_sprite
   lemon_widgets:
-    path: ..\lemon_widgets
+    path: ..\tools\lemon_widgets
   lemon_engine:
     path: ..\tools\lemon_engine
   lemon_byte:
@@ -44,6 +45,7 @@ flutter:
       fonts:
         - asset: assets/fonts/VT323-Regular.ttf
   assets:
+    - assets/fonts/
     - assets/audio/
     - assets/audio/ui/
     - assets/audio/music/
@@ -168,3 +170,8 @@ flutter:
     - assets/sprites/front/kid/diffuse/weapons/bow/
     - assets/sprites/front/kid/diffuse/weapons/staff/
     - assets/sprites/front/kid/diffuse/weapons/sword/
+    - assets/sprites/isometric/zombie/
+    - assets/sprites/isometric/zombie/flat/
+    - assets/sprites/isometric/zombie/shadow/
+    - assets/sprites/isometric/zombie/south/
+    - assets/sprites/isometric/zombie/west/

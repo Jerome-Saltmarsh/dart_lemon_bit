@@ -1,0 +1,23 @@
+name: lemon_pubspec
+description: "Keeps the pubspec assets synchronized with a specified folder"
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.2.1 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  lemon_widgets:
+    path: ..\lemon_widgets
+
+  cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+
