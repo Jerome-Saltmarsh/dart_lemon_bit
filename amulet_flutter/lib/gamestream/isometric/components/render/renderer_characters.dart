@@ -96,6 +96,13 @@ class RendererCharacters extends RenderGroup {
             scale: 0.3,
         );
         break;
+      case CharacterType.Zombie:
+        renderCharacterShader(
+            character: character,
+            shader: images.characterShaderZombie,
+            scale: 0.5,
+        );
+        break;
       default:
         throw Exception('Cannot render character type: ${character.characterType}');
     }

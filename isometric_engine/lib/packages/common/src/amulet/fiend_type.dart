@@ -41,6 +41,19 @@ enum FiendType {
     weaponRange: 50,
     quantity: 1,
     weaponCooldown: 20,
+  ),
+  Zombie(
+    health: 12,
+    damage: 3,
+    characterType: CharacterType.Zombie,
+    attackDuration: 20,
+    experience: 2,
+    runSpeed: 0.5,
+    chanceOfSetTarget: 0.3,
+    weaponType: WeaponType.Unarmed,
+    weaponRange: 50,
+    quantity: 1,
+    weaponCooldown: 20,
   );
 
   final int health;

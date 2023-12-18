@@ -47,10 +47,14 @@ ctrl + []               : move caret to code block
 * [new]: location town
 * [new]: location forsaken swamp
 * [new]: mechanic elemental damage
-
-## RELEASE
 * [new]: mobile touch screen support
 * [fix]: audio for web
+
+## 18.12.2023
+* [new]: app synchronize pubspec
+
+## 17.12.2023
+* [new]: blender script render fiends
 
 ## 16.12.2023
 * [new]: model tree type 3

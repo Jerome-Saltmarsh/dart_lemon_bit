@@ -28,6 +28,7 @@ class IsometricImages with IsometricComponent {
   static const dirFallen = '$dirIsometric/fallen';
   static const dirSkeleton = '$dirIsometric/skeleton';
   static const dirWolf = '$dirIsometric/wolf';
+  static const dirZombie = '$dirIsometric/zombie';
 
   var imagesCached = false;
   
@@ -55,6 +56,7 @@ class IsometricImages with IsometricComponent {
   late final CharacterShader characterShaderFallen;
   late final CharacterShader characterShaderSkeleton;
   late final CharacterShader characterShaderWolf;
+  late final CharacterShader characterShaderZombie;
 
   late final Sprite rock1;
   late final Sprite crystal;
@@ -416,6 +418,7 @@ class IsometricImages with IsometricComponent {
     loadCharacterShader(dirFallen).then((value) => characterShaderFallen = value);
     loadCharacterShader(dirSkeleton).then((value) => characterShaderSkeleton = value);
     loadCharacterShader(dirWolf).then((value) => characterShaderWolf = value);
+    loadCharacterShader(dirZombie).then((value) => characterShaderZombie = value);
 
     flame0 = await loadSprite(
         name: 'assets/sprites/isometric/flame/wind0',
