@@ -16,7 +16,6 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
-* [new]: character type zombie
 * [new]: character type spider
 * [new]: character type vampire
 * [new]: character type witch
@@ -51,6 +50,7 @@ ctrl + []               : move caret to code block
 * [fix]: audio for web
 
 ## 18.12.2023
+* [new]: character type zombie
 * [new]: app synchronize pubspec
 
 ## 17.12.2023
