@@ -29,9 +29,12 @@ class AmuletGameWorld11 extends AmuletGame {
   }
 
   @override
-  void customOnPlayerInteractWithGameObject(AmuletPlayer player, GameObject gameObject) {
+  void customOnCharacterInteractWithGameObject(Character character, GameObject gameObject) {
+    if (character is! AmuletPlayer){
+      return;
+    }
     if (gameObject == doorway) {
-       amulet.playerChangeGame(player: player, target: amulet.amuletGameWitchesLair);
+       amulet.playerChangeGame(player: character, target: amulet.amuletGameWitchesLair);
     }
   }
 }

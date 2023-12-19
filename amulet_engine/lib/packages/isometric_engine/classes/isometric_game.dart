@@ -145,8 +145,10 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   void customInitPlayer(IsometricPlayer player) {}
 
   /// @override
-  void customOnPlayerInteractWithGameObject(T player,
-      GameObject gameObject) {}
+  void customOnCharacterInteractWithGameObject(
+      Character character,
+      GameObject gameObject,
+  ) {}
 
   /// @override
   void customDownloadScene(IsometricPlayer player) {}
@@ -2400,8 +2402,16 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     return false;
   }
 
-  bool characterConditionInteractWithTarget(Character character) =>
-      character.isAlly(character.target);
+  bool characterConditionInteractWithTarget(Character character) {
+    final target = character.target;
+    if (target is Character) {
+      return character.isAlly(character.target);
+    }
+    if (target is GameObject) {
+      return target.interactable;
+    }
+    return false;
+  }
 
   bool characterConditionCollectTarget(Character character) {
     final target = character.target;
@@ -2512,16 +2522,20 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       return;
     }
 
-    if (target is! Character) {
-      return;
+    if (target == null){
+      throw Exception();
     }
-      // throw Exception();
 
-    if (character.targetWithinRadius(IsometricSettings.Interact_Radius)){
+    if (character.withinInteractRange(target)) {
+      if (target is Character) {
         customOnInteraction(character, target);
-        character.setCharacterStateIdle();
-        character.setDestinationToCurrentPosition();
-        return;
+      }
+      if (target is GameObject) {
+        customOnCharacterInteractWithGameObject(character, target);
+      }
+      character.setCharacterStateIdle();
+      character.setDestinationToCurrentPosition();
+      return;
     }
 
     if (character.targetPerceptible || !character.pathFindingEnabled){
