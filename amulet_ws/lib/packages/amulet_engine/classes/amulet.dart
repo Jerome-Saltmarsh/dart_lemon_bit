@@ -44,9 +44,7 @@ class Amulet {
   final amuletEnvironment = IsometricEnvironment();
   final games = <AmuletGame>[];
   final AmuletScenes scenes;
-
   final Function onFixedUpdate;
-
   final bool isLocalMachine;
 
   var _updateTimerInitialized = false;
@@ -54,8 +52,8 @@ class Amulet {
   Timer? updateTimer;
   Timer? timerRefreshUserCharacterLocks;
 
-  final tutorialTime = IsometricTime(hour: 24, enabled: false);
-  final tutorialEnvironment = IsometricEnvironment(enabled: false);
+  final environmentUnderground = IsometricEnvironment(enabled: false);
+  final timeUnderground = IsometricTime(hour: 24, enabled: false);
 
   late final AmuletGame amuletGameWorld00;
   late final AmuletGame amuletGameWorld01;
@@ -141,8 +139,8 @@ class Amulet {
     amuletGameWitchesLair = AmuletGameWitchesLair(
       amulet: this,
       scene: scenes.witchesLair,
-      time: amuletTime,
-      environment: amuletEnvironment,
+      time: timeUnderground,
+      environment: environmentUnderground,
     );
 
     games.add(amuletGameWitchesLair);
@@ -285,8 +283,8 @@ class Amulet {
     final game = AmuletGameTutorial(
       amulet: this,
       scene: scenes.tutorial,
-      time: tutorialTime,
-      environment: tutorialEnvironment,
+      time: timeUnderground,
+      environment: environmentUnderground,
     );
     addGame(game);
     return game;

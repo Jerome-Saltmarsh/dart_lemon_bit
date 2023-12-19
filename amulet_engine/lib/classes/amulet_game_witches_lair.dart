@@ -4,6 +4,7 @@ import '../src.dart';
 class AmuletGameWitchesLair extends AmuletGame {
 
   late AmuletNpc npcWitch;
+  late GameObject entrance;
 
   AmuletGameWitchesLair({
     required super.amulet,
@@ -15,6 +16,8 @@ class AmuletGameWitchesLair extends AmuletGame {
     amuletScene: AmuletScene.Witches_Lair
   ) {
     final indexSpawnWitch = scene.getKey('spawn_witch');
+    final indexEntrance = scene.getKey('entrance');
+
     npcWitch = AmuletNpc(
         health: 200,
         team: AmuletTeam.Monsters,
@@ -38,5 +41,26 @@ class AmuletGameWitchesLair extends AmuletGame {
       ..helmType = HelmType.Wizard_Hat;
 
     characters.add(npcWitch);
+
+    entrance = spawnGameObjectAtIndex(
+        index: indexEntrance,
+        type: ItemType.Object,
+        subType: GameObjectType.Interactable,
+        team: TeamType.Neutral,
+    )..interactable = true;
+  }
+
+  @override
+  void customOnCharacterInteractWithGameObject(Character character, GameObject gameObject) {
+    if (character is! AmuletPlayer){
+      return;
+    }
+    if (gameObject == entrance) {
+      amulet.playerChangeGame(
+          player: character,
+          target: amulet.amuletGameWorld11,
+          sceneKey: 'spawn_player',
+      );
+    }
   }
 }

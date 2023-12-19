@@ -34,7 +34,11 @@ class AmuletGameWorld11 extends AmuletGame {
       return;
     }
     if (gameObject == doorway) {
-       amulet.playerChangeGame(player: character, target: amulet.amuletGameWitchesLair);
+       amulet.playerChangeGame(
+           player: character,
+           target: amulet.amuletGameWitchesLair,
+           sceneKey: 'spawn_player',
+       );
     }
   }
 }
