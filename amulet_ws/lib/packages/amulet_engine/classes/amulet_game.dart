@@ -235,6 +235,21 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         useAmuletItemSpellHeal(character);
         break;
       case AmuletItem.Spell_Bow_Split_Arrow:
+        final equippedWeaponSlot = character.equippedWeapon;
+        if (equippedWeaponSlot == null){
+          throw Exception('character.equippedWeaponSlot is null');
+        }
+        final weapon = equippedWeaponSlot.amuletItem;
+
+        if (weapon == null){
+          throw Exception('weapon is null');
+        }
+
+        final weaponLevel = character.getAmuletItemLevel(weapon);
+
+        if (weaponLevel == null){
+          throw Exception('weaponLevel is null');
+        }
         final totalArrows = stats.quantity;
         final radian = pi * 0.25;
         final radianPerArrow = radian / totalArrows;
@@ -243,13 +258,12 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         for (var i = 0; i < totalArrows; i++){
           spawnProjectileArrow(
               src: character,
-              damage: damage,
-              range: range,
+              damage: randomInt(weaponLevel.damageMin, weaponLevel.damageMax),
+              range: weaponLevel.range,
               angle: angle,
           );
           angle += radianPerArrow;
         }
-
         break;
       default:
         throw Exception('amulet.PerformCharacterAction($amuletItem)');
