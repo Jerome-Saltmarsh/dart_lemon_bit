@@ -17,17 +17,26 @@ class AmuletGameWitchesLair extends AmuletGame {
     final indexSpawnWitch = scene.getKey('spawn_witch');
     npcWitch = AmuletNpc(
         health: 200,
-        weaponType: 0,
         team: AmuletTeam.Monsters,
-        weaponDamage: 1,
-        weaponRange: 1,
-        weaponCooldown: 1,
+        weaponRange: 200,
+        weaponDamage: 5,
+        weaponCooldown: 15,
+        attackDuration: 30,
+        weaponType: WeaponType.Staff,
         x: scene.getIndexX(indexSpawnWitch),
         y: scene.getIndexY(indexSpawnWitch),
         z: scene.getIndexZ(indexSpawnWitch),
         name: 'WITCH',
-        attackDuration: 1,
-    );
+    )
+      ..complexion = ComplexionType.fair
+      ..bodyType = BodyType.Shirt_Blue
+      ..legsType = LegType.Leather
+      ..shoeType = ShoeType.Iron_Plates
+      ..handTypeLeft = HandType.Gauntlets
+      ..hairType = HairType.basic_2
+      ..hairColor = 17
+      ..helmType = HelmType.Wizard_Hat;
+
     characters.add(npcWitch);
   }
 }

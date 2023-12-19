@@ -6,7 +6,9 @@
 
 # Conventional directory for build output.
 build/
-
+packages/
+lib/packages/
+/packages/
 
 # Miscellaneous
 *.class

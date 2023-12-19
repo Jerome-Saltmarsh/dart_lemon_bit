@@ -37,12 +37,12 @@ class AmuletGameWorld0101 extends AmuletGame {
       y: scene.getIndexY(indexSpawnWarren),
       z: scene.getIndexZ(indexSpawnWarren),
       health: 200,
-      weaponType: WeaponType.Unarmed,
-      weaponRange: 200,
-      weaponDamage: 1,
-      weaponCooldown: 30,
-      attackDuration: 25,
       team: AmuletTeam.Human,
+      weaponType: WeaponType.Unarmed,
+      weaponCooldown: 0,
+      weaponDamage: 0,
+      weaponRange: 0,
+      attackDuration: 0,
       name: "Warren",
     )
       ..fixed = true

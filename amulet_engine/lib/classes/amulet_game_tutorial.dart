@@ -213,17 +213,17 @@ class AmuletGameTutorial extends AmuletGame {
   void instantiateGuide() {
     guide = AmuletNpc(
       name: 'Guide',
+      weaponType: 0,
+      weaponCooldown: 0,
+      weaponDamage: 0,
+      weaponRange: 0,
+      attackDuration: 0,
       interact: onInteractedWithGuide,
       x: 1000,
       y: 1400,
       z: 25,
       team: AmuletTeam.Human,
       health: 50,
-      weaponType: WeaponType.Unarmed,
-      weaponDamage: 1,
-      weaponRange: 50,
-      weaponCooldown: 50,
-      attackDuration: 30,
       invincible: true,
     )
       ..autoTarget = false

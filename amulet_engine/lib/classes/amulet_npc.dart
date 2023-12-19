@@ -3,7 +3,7 @@ import '../mixins/src.dart';
 import '../packages/src.dart';
 import 'amulet_player.dart';
 
-class AmuletNpc extends Character with Equipment, Elemental {
+class AmuletNpc extends Character with Elemental {
 
   Function(AmuletPlayer player, AmuletNpc self)? interact;
 
