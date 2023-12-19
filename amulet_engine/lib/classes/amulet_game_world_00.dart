@@ -6,7 +6,7 @@ import 'amulet_game.dart';
 import 'amulet_npc.dart';
 import 'amulet_player.dart';
 
-class AmuletGameWorld0101 extends AmuletGame {
+class AmuletGameWorld00 extends AmuletGame {
 
   static const keySpawnWarren = 'spawn_warren';
 
@@ -22,13 +22,13 @@ class AmuletGameWorld0101 extends AmuletGame {
 
   late AmuletNpc npcWarren;
 
-  AmuletGameWorld0101({
+  AmuletGameWorld00({
     required super.amulet,
     required super.scene,
     required super.time,
     required super.environment,
     required super.name,
-  }) : super(amuletScene: AmuletScene.Town){
+  }) : super(amuletScene: AmuletScene.World_00){
 
     final indexSpawnWarren = scene.getKey(keySpawnWarren);
 

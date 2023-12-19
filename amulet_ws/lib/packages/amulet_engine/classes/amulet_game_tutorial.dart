@@ -878,7 +878,7 @@ class AmuletGameTutorial extends AmuletGame {
     player.setControlsEnabled(true);
     amulet.playerChangeGame(
           player: player,
-          target: amulet.amuletGameWorld0101,
+          target: amulet.amuletGameWorld00,
           sceneKey: 'player_spawn',
       );
   }

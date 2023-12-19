@@ -8,8 +8,9 @@ import 'package:archive/archive.dart';
 
 import '../packages/src.dart';
 import 'amulet_game.dart';
-import 'amulet_game_world_01_01.dart';
+import 'amulet_game_world_00.dart';
 import 'amulet_game_tutorial.dart';
+import 'amulet_game_world_11.dart';
 import 'amulet_player.dart';
 import 'amulet_scenes.dart';
 
@@ -56,7 +57,16 @@ class Amulet {
   final tutorialTime = IsometricTime(hour: 24, enabled: false);
   final tutorialEnvironment = IsometricEnvironment(enabled: false);
 
-  late final AmuletGame amuletGameWorld0101;
+  late final AmuletGame amuletGameWorld00;
+  late final AmuletGame amuletGameWorld01;
+  late final AmuletGame amuletGameWorld02;
+  late final AmuletGame amuletGameWorld10;
+  late final AmuletGame amuletGameWorld11;
+  late final AmuletGame amuletGameWorld12;
+  late final AmuletGame amuletGameWorld20;
+  late final AmuletGame amuletGameWorld21;
+  late final AmuletGame amuletGameWorld22;
+
   late final AmuletGame amuletGameWitchesLair;
 
   static const mapSize = 100;
@@ -100,13 +110,33 @@ class Amulet {
 
   void _initializeGames() {
 
-    amuletGameWorld0101 = AmuletGameWorld0101(
+    amuletGameWorld00 = AmuletGameWorld00(
       amulet: this,
-      scene: scenes.world_01_01,
+      scene: scenes.world_00,
       time: amuletTime,
       environment: amuletEnvironment,
       name: 'world_01_01',
     );
+
+    amuletGameWorld11 = AmuletGameWorld11(amulet: this);
+
+    worldMap.add(amuletGameWorld00);
+    worldMap.add(buildEmptyField(AmuletScene.World_01));
+    worldMap.add(buildEmptyField(AmuletScene.World_02));
+    worldMap.add(buildEmptyField(AmuletScene.World_10));
+    worldMap.add(amuletGameWorld11);
+    worldMap.add(buildEmptyField(AmuletScene.World_12));
+    worldMap.add(buildEmptyField(AmuletScene.World_20));
+    worldMap.add(buildEmptyField(AmuletScene.World_21));
+    worldMap.add(buildEmptyField(AmuletScene.World_22));
+
+    for (var i = 0; i < worldMap.length; i++){
+      final game = worldMap[i];
+      game.worldIndex = i;
+      game.worldColumn = i % worldColumns;
+      game.worldRow = i ~/ worldColumns;
+      games.add(game);
+    }
 
     amuletGameWitchesLair = AmuletGameWitchesLair(
       amulet: this,
@@ -115,38 +145,23 @@ class Amulet {
       environment: amuletEnvironment,
     );
 
-    games.add(amuletGameWorld0101);
     games.add(amuletGameWitchesLair);
-    worldMap.add(amuletGameWorld0101);
-    worldMap.add(buildEmptyField());
-    worldMap.add(buildEmptyField());
-    worldMap.add(buildEmptyField());
-    worldMap.add(buildEmptyField());
-    worldMap.add(buildEmptyField());
-    worldMap.add(buildEmptyField());
-    worldMap.add(buildEmptyField());
-    worldMap.add(buildEmptyField());
 
-    for (var i = 0; i < worldMap.length; i++){
-      final game = worldMap[i];
-      game.worldIndex = i;
-      game.worldColumn = i % worldColumns;
-      game.worldRow = i ~/ worldColumns;
-    }
   }
 
-  AmuletGame buildEmptyField(){
-    final instance = AmuletGame(
+  AmuletGame buildEmptyField(AmuletScene amuletScene) =>
+    AmuletGame(
       amulet: this,
-      scene: generateEmptyScene(rows: 100, columns: 100, name: 'generated'),
+      scene: generateEmptyScene(
+          rows: 100,
+          columns: 100,
+          name: amuletScene.name,
+      ),
       time: amuletTime,
       environment: amuletEnvironment,
-      name: 'generated',
-      amuletScene: AmuletScene.Generated,
+      name: amuletScene.name,
+      amuletScene: amuletScene,
     );
-    games.add(instance);
-    return instance;
-  }
 
   void _initializeUpdateTimer() {
     if (_updateTimerInitialized) {
@@ -303,7 +318,7 @@ class Amulet {
   void playerChangeGameToTown(AmuletPlayer player) =>
       playerChangeGame(
         player: player,
-        target: amuletGameWorld0101,
+        target: amuletGameWorld00,
         sceneKey: 'player_spawn',
       );
 

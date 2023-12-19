@@ -15,8 +15,10 @@ ctrl + shift + e        : view recent changes
 alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
+## CAMPAIGN
+* [new]: quest window
+
 ## CURRENT
-* [new]: quests window
 * [new]: character type warlock
 * [new]: character type spider
 * [new]: character type vampire

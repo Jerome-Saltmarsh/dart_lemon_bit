@@ -39,6 +39,7 @@ class GameObjectType {
   static const Sphere = 42;
   static const Rock1 = 43;
   static const Tree1 = 44;
+  static const Interactable = 45;
 
   static bool isMaterialMetal(int value) => const [
       Barrel_Explosive
@@ -89,6 +90,7 @@ class GameObjectType {
       Sphere: 'Sphere',
       Rock1: 'Rock1',
       Tree1: 'Tree1',
+      Interactable: 'Interactable',
     }[value] ?? 'object-type-unknown-$value';
   }
 
@@ -132,6 +134,7 @@ class GameObjectType {
     Sphere,
     Rock1,
     Tree1,
+    Interactable,
   ];
 
 }

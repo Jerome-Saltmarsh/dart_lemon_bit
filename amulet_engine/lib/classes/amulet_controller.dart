@@ -1319,7 +1319,7 @@ class AmuletController {
   }
 
   void playerJoinAmuletTown() {
-    joinGame(amulet.amuletGameWorld0101);
+    joinGame(amulet.amuletGameWorld00);
     player.setPosition(
       x: 620 + giveOrTake(10),
       y: 523 + giveOrTake(10),
