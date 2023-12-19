@@ -333,6 +333,7 @@ class Amulet {
     }
     if (sceneKey != null){
       target.scene.movePositionToKey(player, sceneKey);
+      player.writePlayerMoved();
     }
   }
 
