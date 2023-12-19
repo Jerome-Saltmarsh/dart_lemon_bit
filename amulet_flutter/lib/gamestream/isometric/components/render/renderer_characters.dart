@@ -100,7 +100,7 @@ class RendererCharacters extends RenderGroup {
         renderCharacterShader(
             character: character,
             shader: images.characterShaderZombie,
-            scale: 0.3,
+            scale: 0.35,
         );
         break;
       default:

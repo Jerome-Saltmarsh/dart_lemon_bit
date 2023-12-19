@@ -16,11 +16,12 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CURRENT
+* [new]: quests window
+* [new]: character type warlock
 * [new]: character type spider
 * [new]: character type vampire
 * [new]: character type witch
 * [new]: character type ghost
-* [new]: character type warlock
 * [new]: character type orc
 * [new]: character type skeleton swordsman
 

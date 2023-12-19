@@ -598,6 +598,7 @@ class Scene {
     clearCompiled();
   }
 
+  /// returns the associated node index
   int getKey(String name) {
     final value = keys[name];
     if (value == null){

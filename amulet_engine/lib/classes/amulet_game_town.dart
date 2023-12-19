@@ -1,11 +1,12 @@
 
 import '../packages/src.dart';
 import 'amulet_game.dart';
-// import 'amulet_npc.dart';
+import 'amulet_npc.dart';
 import 'amulet_player.dart';
-// import 'talk_option.dart';
 
 class AmuletGameTown extends AmuletGame {
+
+  static const keySpawnWarren = 'spawn_warren';
 
   final chanceOfDropItemOnGrassCut = 0.25;
   final gameObjectDeactivationTimer = 5000;
@@ -18,6 +19,7 @@ class AmuletGameTown extends AmuletGame {
   var cooldownTimer = 0;
 
   // late AmuletNpc npcGuard;
+  late AmuletNpc npcWarren;
 
   AmuletGameTown({
     required super.amulet,
@@ -51,26 +53,33 @@ class AmuletGameTown extends AmuletGame {
     //   ..complexion = ComplexionType.fair
     // );
 
-    // npcGuard = AmuletNpc(
-    //   x: 2416,
-    //   y: 1851,
-    //   z: 24,
-    //   health: 200,
-    //   weaponType: WeaponType.Bow,
-    //   weaponRange: 200,
-    //   weaponDamage: 1,
-    //   weaponCooldown: 30,
-    //   attackDuration: 25,
-    //   team: AmuletTeam.Human,
-    //   name: "Guard",
-    // )
-    //   ..invincible = true
-    //   ..helmType = HelmType.Steel
-    //   ..bodyType = BodyType.Leather_Armour
-    //   ..legsType = LegType.Leather
-    //   ..complexion = ComplexionType.fair;
+    final indexSpawnWarren = scene.getKey(keySpawnWarren);
 
-    // characters.add(npcGuard);
+    npcWarren = AmuletNpc(
+      x: scene.getIndexX(indexSpawnWarren),
+      y: scene.getIndexY(indexSpawnWarren),
+      z: scene.getIndexZ(indexSpawnWarren),
+      health: 200,
+      weaponType: WeaponType.Unarmed,
+      weaponRange: 200,
+      weaponDamage: 1,
+      weaponCooldown: 30,
+      attackDuration: 25,
+      team: AmuletTeam.Human,
+      name: "Warren",
+    )
+      ..invincible = true
+      ..helmType = HelmType.Steel
+      ..bodyType = BodyType.Leather_Armour
+      ..legsType = LegType.Leather
+      ..interact = onInteractWithWarren
+      ..complexion = ComplexionType.fair;
+
+    characters.add(npcWarren);
+  }
+
+  void onInteractWithWarren(AmuletPlayer player, AmuletNpc warren){
+    player.talk(warren, 'hello there');
   }
 
   @override

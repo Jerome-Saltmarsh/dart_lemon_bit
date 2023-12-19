@@ -47,7 +47,6 @@ class AmuletUI {
 
     return GSFullscreen(
     child: Stack(alignment: Alignment.center, children: [
-
       Positioned(
         top: 0,
         left: 0,
@@ -66,47 +65,10 @@ class AmuletUI {
           }),
         ),
       ),
+          buildWindowQuest(),
           buildDialogTalk(),
-          Positioned(
-            bottom: 8,
-            right: 8,
-            child: Builder(
-              builder: (context) {
-                final small = AmuletWorldMap(amulet: amulet, size: 200);
-                final large = AmuletWorldMap(amulet: amulet, size: 400);
-                return onPressed(
-                  action: amulet.worldMapLarge.toggle,
-                  child: buildWatch(amulet.worldMapLarge, (bool isLarge){
-                     return isLarge ? large : small;
-                  }),
-                );
-              }
-            ),
-          ),
-          Positioned(
-            bottom: 4,
-            left: 0,
-            child: Container(
-              width: amulet.engine.screen.width,
-              alignment: Alignment.center,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  GSContainer(
-                    padding: const EdgeInsets.all(4),
-                    child: Column(
-                      children: [
-                        buildPlayerHealthBar(),
-                        height2,
-                        buildPlayerWeapons(),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          buildPositionedWorldMap(),
+          buildPositionedPlayerHealthAndWeapons(),
           Positioned(top: 4, left: 4, child: buildPlayerStatsRow()),
           Positioned(
             bottom: margin1,
@@ -126,6 +88,78 @@ class AmuletUI {
           ),
         ]),
   );
+  }
+
+  Widget buildWindowQuest() => buildWatch(amulet.windowVisibleQuests, (visible) {
+      if (!visible){
+        return nothing;
+      }
+      return Positioned(
+        top: 8,
+        child: GSContainer(
+          width: 300,
+          height: 200,
+          child: Column(
+            children: [
+              alignRight(
+                  child: onPressed(
+                      action: amulet.windowVisibleQuests.setFalse,
+                      child: buildText('X', color: Colors.orange),
+                  ),
+              ),
+              alignCenter(
+                child: buildText('SPEAK TO WARREN IN THE VILLAGE'),
+              ),
+            ],
+          ),
+        ),
+      );
+    });
+
+  Positioned buildPositionedPlayerHealthAndWeapons() {
+    return Positioned(
+          bottom: 4,
+          left: 0,
+          child: Container(
+            width: amulet.engine.screen.width,
+            alignment: Alignment.center,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                GSContainer(
+                  padding: const EdgeInsets.all(4),
+                  child: Column(
+                    children: [
+                      buildPlayerHealthBar(),
+                      height2,
+                      buildPlayerWeapons(),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+  }
+
+  Positioned buildPositionedWorldMap() {
+    return Positioned(
+          bottom: 8,
+          right: 8,
+          child: Builder(
+            builder: (context) {
+              final small = AmuletWorldMap(amulet: amulet, size: 200);
+              final large = AmuletWorldMap(amulet: amulet, size: 400);
+              return onPressed(
+                action: amulet.worldMapLarge.toggle,
+                child: buildWatch(amulet.worldMapLarge, (bool isLarge){
+                   return isLarge ? large : small;
+                }),
+              );
+            }
+          ),
+        );
   }
 
   Positioned buildPositionedMessage() => Positioned(
@@ -657,23 +691,36 @@ class AmuletUI {
                 })));
   }
 
-  Widget buildPlayerStatsRow() => GSContainer(
-        padding: EdgeInsets.zero,
-        // width: 262,
-        child: Row(
-          children: [
-            buildPlayerLevel(),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+
+  Widget buildPlayerStatsRow() => Row(
+    children: [
+      GSContainer(
+            padding: EdgeInsets.zero,
+            child: Row(
               children: [
-                buildAmuletElements(),
-                buildPlayerExperienceBar(),
+                buildPlayerLevel(),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    buildAmuletElements(),
+                    buildPlayerExperienceBar(),
+                  ],
+                ),
+                buildElementPoints(),
               ],
             ),
-            buildElementPoints(),
-          ],
+          ),
+      width4,
+      onPressed(
+        action: amulet.windowVisibleQuests.toggle,
+        child: GSContainer(
+            height: 32,
+            padding: EdgeInsets.symmetric(horizontal: 4),
+            child: buildText('QUEST'),
         ),
-      );
+      ),
+    ],
+  );
 
   Widget buildInventoryButton() {
     const scale = 1.8;

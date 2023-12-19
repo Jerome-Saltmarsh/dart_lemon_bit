@@ -12,7 +12,6 @@ import 'package:amulet_flutter/website/website_game.dart';
 import 'package:amulet_flutter/website/widgets/gs_button_region.dart';
 import 'package:amulet_flutter/website/widgets/src.dart';
 import 'package:flutter/material.dart';
-import 'package:golden_ratio/constants.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 import 'package:typedef/json.dart';

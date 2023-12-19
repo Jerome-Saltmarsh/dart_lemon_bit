@@ -4,7 +4,7 @@ import 'dart:convert';
 
 import 'package:amulet_engine/classes/amulet.dart';
 import 'package:amulet_engine/src.dart';
-import 'package:amulet_flutter/classes/amulet_scenes_flutter.dart';
+import 'package:amulet_flutter/amulet/classes/amulet_scenes_flutter.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_parser.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_player.dart' as PlayerClient;
 import 'package:amulet_flutter/server/src.dart';
@@ -144,7 +144,7 @@ class ServerLocal implements Server {
       playerServer.hairColor = hairColor;
       playerServer.gender = gender;
       playerServer.headType = headType;
-      playerServer.tutorialObjective = TutorialObjective.values.first;
+      playerServer.tutorialObjective = QuestTutorial.values.first;
       playerServer.equippedHelm.amuletItem = null;
       playerServer.equippedHandLeft.amuletItem = null;
       playerServer.equippedHandRight.amuletItem = null;
@@ -186,9 +186,7 @@ class ServerLocal implements Server {
       playerServer.health = 10;
       playerServer.active = true;
       writeJsonToAmuletPlayer(character, playerServer);
-      // playerServer.writeAmuletElements();
-      // playerServer.writeElementPoints();
-      if (playerServer.tutorialObjective == TutorialObjective.Finished) {
+      if (playerServer.tutorialObjective == QuestTutorial.Finished) {
         controller.playerJoinAmuletTown();
       } else {
         controller.playerJoinGameTutorial();

@@ -26,3 +26,10 @@ Widget alignLeft({required Widget child})=> Row(
   ],
 );
 
+Widget alignCenter({required Widget child})=>
+    Expanded(
+      child: Center(
+        child: child,
+      ),
+    );
+

@@ -2,7 +2,7 @@
 import 'dart:typed_data';
 
 import 'package:amulet_engine/editor/randomize_scene.dart';
-import 'package:amulet_engine/enums/src.dart';
+import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/quests/src.dart';
 
 import 'amulet.dart';
 import 'amulet_game.dart';
@@ -734,7 +734,7 @@ class AmuletController {
 
         break;
       case NetworkRequestAmulet.Skip_Tutorial:
-        player.tutorialObjective = TutorialObjective.Finished;
+        player.tutorialObjective = QuestTutorial.Finished;
         amulet.playerChangeGameToTown(player);
         break;
     }

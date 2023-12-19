@@ -39,6 +39,7 @@ class Amulet extends IsometricGame {
   final worldMapLarge = WatchBool(false);
   final amuletScene = Watch<AmuletScene?>(null);
 
+  final windowVisibleQuests = WatchBool(true);
   final elementPoints = Watch(0);
   late final elementFire = Watch(0, onChanged: elementsChangedNotifier);
   late final elementWater = Watch(0, onChanged: elementsChangedNotifier);

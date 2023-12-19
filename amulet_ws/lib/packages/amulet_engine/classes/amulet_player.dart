@@ -1,7 +1,7 @@
 
 import 'package:amulet_engine/mixins/equipped_weapon_index.dart';
 
-import '../enums/tutorial_objective.dart';
+import '../packages/isometric_engine/packages/common/src/amulet/quests/quest_tutorials.dart';
 import '../packages/src.dart';
 import '../mixins/src.dart';
 import 'amulet.dart';
@@ -295,23 +295,23 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
 
-  set tutorialObjective(TutorialObjective tutorialObjective){
+  set tutorialObjective(QuestTutorial tutorialObjective){
     data['tutorial_objective'] = tutorialObjective.name;
   }
 
-  TutorialObjective get tutorialObjective {
+  QuestTutorial get tutorialObjective {
     final index = data['tutorial_objective'];
 
     if (index == null) {
-      return TutorialObjective.values.first;
+      return QuestTutorial.values.first;
     }
 
     if (index is int) {
-      return TutorialObjective.values[index];
+      return QuestTutorial.values[index];
     }
 
     if (index is String) {
-      for (final objective in TutorialObjective.values) {
+      for (final objective in QuestTutorial.values) {
         if (objective.name == index) {
           return objective;
         }

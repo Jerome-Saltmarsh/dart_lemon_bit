@@ -1328,13 +1328,13 @@ extension IsometricEditorUI on IsometricEditor {
             ),
             buildWatch(nodeSelectedVariation, (variation) {
               return Row(
-                children: List.generate(4, (index) {
+                children: List.generate(5, (index) {
                   return onPressed(
                     action: () => setNode(index: selectedIndex, variation: index),
                     child: Container(
-                        width: 25,
+                        width: 18,
                         height: 50,
-                        margin: const EdgeInsets.only(right: 4),
+                        margin: const EdgeInsets.only(right: 3),
                         color: index == variation ? Colors.green : Colors.grey,
                     ),
                   );
