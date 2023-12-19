@@ -1519,7 +1519,7 @@ class IsometricScene with IsometricComponent implements Updatable {
         case NodeType.Fireplace:
           emitLight(
             index: nodeIndex,
-            value: colors.orange_0.value,
+            value: colors.orange_0.withOpacity(0.5).value,
             intensity: torchEmissionIntensityColored,
             ambient: false,
           );
@@ -1527,7 +1527,7 @@ class IsometricScene with IsometricComponent implements Updatable {
         case NodeType.Torch_Blue:
           emitLight(
             index: nodeIndex,
-            value: colors.blue_1.value,
+            value: colors.blue_1.withOpacity(0.5).value,
             intensity: torchEmissionIntensityColored,
             ambient: false,
           );
@@ -1535,7 +1535,7 @@ class IsometricScene with IsometricComponent implements Updatable {
         case NodeType.Torch_Red:
           emitLight(
             index: nodeIndex,
-            value: colors.red_1.value,
+            value: colors.red_1.withOpacity(0.5).value,
             intensity: torchEmissionIntensityColored,
             ambient: false,
           );
