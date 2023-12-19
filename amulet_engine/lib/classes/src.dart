@@ -3,7 +3,7 @@ library;
 export 'amulet_game.dart';
 export 'amulet_controller.dart';
 export 'amulet_game_editor.dart';
-export 'amulet_game_town.dart';
+export 'amulet_game_world_01_01.dart';
 export 'amulet_game_tutorial.dart';
 export 'amulet_item_slot.dart';
 export 'amulet_npc.dart';

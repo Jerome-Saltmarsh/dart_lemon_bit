@@ -3,11 +3,12 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:amulet_engine/classes/amulet_game_witches_lair.dart';
 import 'package:archive/archive.dart';
 
 import '../packages/src.dart';
 import 'amulet_game.dart';
-import 'amulet_game_town.dart';
+import 'amulet_game_world_01_01.dart';
 import 'amulet_game_tutorial.dart';
 import 'amulet_player.dart';
 import 'amulet_scenes.dart';
@@ -55,9 +56,8 @@ class Amulet {
   final tutorialTime = IsometricTime(hour: 24, enabled: false);
   final tutorialEnvironment = IsometricEnvironment(enabled: false);
 
-  late final AmuletGame amuletGameTown;
-  late final AmuletGame amuletRoad01;
-  late final AmuletGame amuletRoad02;
+  late final AmuletGame amuletGameWorld0101;
+  late final AmuletGame amuletGameWitchesLair;
 
   static const mapSize = 100;
   final worldRows = 3;
@@ -85,14 +85,6 @@ class Amulet {
     _compileWorldMapBytes();
   }
 
-  AmuletPlayer buildPlayer() => AmuletPlayer(
-      amuletGame: amuletGameLoading,
-      itemLength: 6,
-      x: 0,
-      y: 0,
-      z: 0,
-  );
-
   AmuletGame getAmuletSceneGame(AmuletScene scene) {
     if (scene == AmuletScene.Tutorial){
      return buildAmuletGameTutorial();
@@ -108,39 +100,26 @@ class Amulet {
 
   void _initializeGames() {
 
-    amuletGameTown = AmuletGameTown(
+    amuletGameWorld0101 = AmuletGameWorld0101(
       amulet: this,
-      scene: scenes.mmoTown,
+      scene: scenes.world_01_01,
       time: amuletTime,
       environment: amuletEnvironment,
-      name: 'town',
+      name: 'world_01_01',
     );
 
-    amuletRoad01 = AmuletGame(
+    amuletGameWitchesLair = AmuletGameWitchesLair(
       amulet: this,
-      scene: scenes.road01,
+      scene: scenes.witchesLair,
       time: amuletTime,
       environment: amuletEnvironment,
-      name: 'road 1',
-      amuletScene: AmuletScene.Road_01,
     );
 
-    amuletRoad02 = AmuletGame(
-      amulet: this,
-      scene: scenes.road02,
-      time: amuletTime,
-      environment: amuletEnvironment,
-      name: 'road 2',
-      amuletScene: AmuletScene.Road_02,
-    );
-
-    games.add(amuletGameTown);
-    games.add(amuletRoad01);
-    games.add(amuletRoad02);
-
-    worldMap.add(amuletGameTown);
-    worldMap.add(amuletRoad01);
-    worldMap.add(amuletRoad02);
+    games.add(amuletGameWorld0101);
+    games.add(amuletGameWitchesLair);
+    worldMap.add(amuletGameWorld0101);
+    worldMap.add(buildEmptyField());
+    worldMap.add(buildEmptyField());
     worldMap.add(buildEmptyField());
     worldMap.add(buildEmptyField());
     worldMap.add(buildEmptyField());
@@ -324,7 +303,7 @@ class Amulet {
   void playerChangeGameToTown(AmuletPlayer player) =>
       playerChangeGame(
         player: player,
-        target: amuletGameTown,
+        target: amuletGameWorld0101,
         sceneKey: 'player_spawn',
       );
 

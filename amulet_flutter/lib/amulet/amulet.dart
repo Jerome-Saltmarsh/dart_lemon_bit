@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 import 'dart:ui';
 
 import 'package:amulet_engine/packages/common.dart';
+import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/quests/quest_main.dart';
 import 'package:amulet_flutter/amulet/amulet_ui.dart';
 import 'package:amulet_flutter/amulet/classes/item_slot.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/isometric_game.dart';
@@ -38,7 +39,7 @@ class Amulet extends IsometricGame {
 
   final worldMapLarge = WatchBool(false);
   final amuletScene = Watch<AmuletScene?>(null);
-
+  final questMain = Watch(QuestMain.Speak_With_Warren);
   final windowVisibleQuests = WatchBool(true);
   final elementPoints = Watch(0);
   late final elementFire = Watch(0, onChanged: elementsChangedNotifier);

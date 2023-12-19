@@ -18,7 +18,7 @@ enum NetworkRequestEdit {
    Mark_Deselect_Index,
    Mark_Set_Type,
    Mark_Set_Sub_Type,
-   New_Scene,
+   Clear_Scene,
    Add_Key,
    Delete_Key,
    Move_Key,

@@ -610,8 +610,8 @@ class IsometricEditor with IsometricComponent {
   void downloadScene() =>
       sendEditorRequest(NetworkRequestEdit.Download);
 
-  void newScene() =>
-      sendEditorRequest(NetworkRequestEdit.New_Scene);
+  void clearScene() =>
+      sendEditorRequest(NetworkRequestEdit.Clear_Scene);
 
   void toggleGameRunning() =>
       sendEditorRequest(NetworkRequestEdit.Toggle_Game_Running);

@@ -108,7 +108,10 @@ class AmuletUI {
                   ),
               ),
               alignCenter(
-                child: buildText('SPEAK TO WARREN IN THE VILLAGE'),
+                child: buildWatch(
+                  amulet.questMain,
+                  (questMain) => buildText(questMain.instructions)
+                ),
               ),
             ],
           ),

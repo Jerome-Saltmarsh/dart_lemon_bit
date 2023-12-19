@@ -113,8 +113,8 @@ class AmuletController {
           case NetworkRequestEdit.Set_Node:
             handleNetworkRequestEditSetNode(arguments);
             break;
-          case NetworkRequestEdit.New_Scene:
-            handleNetworkRequestEditNewScene(arguments);
+          case NetworkRequestEdit.Clear_Scene:
+            handleNetworkRequestEditClearScene(arguments);
             break;
           case NetworkRequestEdit.GameObject:
             handleIsometricNetworkRequestEditGameObject(arguments);
@@ -866,9 +866,32 @@ class AmuletController {
     );
   }
 
-  void handleNetworkRequestEditNewScene(List<String> arguments) {
-    leaveCurrentGame();
-    joinGameEditorScene(generateEmptyScene());
+  void handleNetworkRequestEditClearScene(List<String> arguments) {
+    if (!isLocalMachine && player.game is! IsometricEditor) return;
+    final scene = player.game.scene;
+    final height = scene.height;
+    final rows = scene.rows;
+    final columns = scene.columns;
+
+    var index = 0;
+    for (var z = 0; z < height; z++){
+      for (var row = 0; row < rows; row++){
+        for (var column = 0; column < columns; column++){
+          if (z == 0){
+            scene.setNode(index, NodeType.Grass, NodeOrientation.Solid);
+          } else {
+            scene.setNode(index, NodeType.Empty, NodeOrientation.None);
+          }
+          index++;
+        }
+      }
+    }
+    scene.gameObjects.clear();
+    scene.marks.clear();
+    scene.locations.clear();
+    scene.keys.clear();
+    player.game.notifyPlayersSceneChanged();
+
   }
 
   void handleIsometricNetworkRequestEditGameObject(List<String> arguments) {
@@ -1296,7 +1319,7 @@ class AmuletController {
   }
 
   void playerJoinAmuletTown() {
-    joinGame(amulet.amuletGameTown);
+    joinGame(amulet.amuletGameWorld0101);
     player.setPosition(
       x: 620 + giveOrTake(10),
       y: 523 + giveOrTake(10),

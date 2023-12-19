@@ -1,10 +1,12 @@
 
+import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/quests/quest_main.dart';
+
 import '../packages/src.dart';
 import 'amulet_game.dart';
 import 'amulet_npc.dart';
 import 'amulet_player.dart';
 
-class AmuletGameTown extends AmuletGame {
+class AmuletGameWorld0101 extends AmuletGame {
 
   static const keySpawnWarren = 'spawn_warren';
 
@@ -18,40 +20,15 @@ class AmuletGameTown extends AmuletGame {
 
   var cooldownTimer = 0;
 
-  // late AmuletNpc npcGuard;
   late AmuletNpc npcWarren;
 
-  AmuletGameTown({
+  AmuletGameWorld0101({
     required super.amulet,
     required super.scene,
     required super.time,
     required super.environment,
     required super.name,
   }) : super(amuletScene: AmuletScene.Town){
-    // characters.add(AmuletNpc(
-    //     x: 2010,
-    //     y: 1760,
-    //     z: 24,
-    //     health: 50,
-    //     team: AmuletTeam.Human,
-    //     weaponType: WeaponType.Unarmed,
-    //     weaponDamage: 1,
-    //     weaponRange: 200,
-    //     weaponCooldown: 30,
-    //     attackDuration: 30,
-    //     name: "Sybil",
-    //     interact: (player, self) {
-    //       player.talk(self, "Hello there", options: [
-    //         TalkOption("Goodbye", endPlayerInteraction),
-    //         TalkOption("Buy", endPlayerInteraction),
-    //       ]);
-    //     }
-    // )..invincible = true
-    //   ..helmType = HelmType.None
-    //   ..bodyType = BodyType.Leather_Armour
-    //   ..legsType = LegType.Leather
-    //   ..complexion = ComplexionType.fair
-    // );
 
     final indexSpawnWarren = scene.getKey(keySpawnWarren);
 
@@ -68,6 +45,7 @@ class AmuletGameTown extends AmuletGame {
       team: AmuletTeam.Human,
       name: "Warren",
     )
+      ..fixed = true
       ..invincible = true
       ..helmType = HelmType.Steel
       ..bodyType = BodyType.Leather_Armour
@@ -79,7 +57,31 @@ class AmuletGameTown extends AmuletGame {
   }
 
   void onInteractWithWarren(AmuletPlayer player, AmuletNpc warren){
-    player.talk(warren, 'hello there');
+    switch (player.questMain){
+      case QuestMain.Speak_With_Warren:
+        player.talk(
+            warren,
+            'Hello stranger.'
+            'Expect but little kindness from the people of this village.'
+            'There is an evil witch who has been terrorizing us.'
+            'Her fowl minions are a constant threat.'
+            'I suspect her lair is somewhere in the spooky woods.'
+            'But I have not the courage to go there myself.',
+            onInteractionOver: (){
+              player.questMain = QuestMain.Kill_The_Witch;
+            }
+        );
+        break;
+      case QuestMain.Kill_The_Witch:
+        player.talk(warren, 'the witches lair is somewhere within the spooky woods');
+        break;
+      case QuestMain.Return_To_Warren:
+        player.talk(warren, 'you killed her! I cannot believe it. Finally we are free of her curse.');
+        break;
+      case QuestMain.Completed:
+        player.talk(warren, 'hello friend.');
+        break;
+    }
   }
 
   @override

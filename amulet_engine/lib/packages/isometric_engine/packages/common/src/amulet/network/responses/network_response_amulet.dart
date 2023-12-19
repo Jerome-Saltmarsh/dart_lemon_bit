@@ -25,4 +25,5 @@ class NetworkResponseAmulet {
    static const World_Map_Bytes = 27;
    static const Player_World_Index = 28;
    static const Player_World_Positioned = 29;
+   static const Quest_Main = 30;
 }

@@ -206,7 +206,7 @@ extension IsometricEditorUI on IsometricEditor {
       children: [
         buildButton(child: 'SAVE', action: saveScene),
         buildButton(child: 'DOWNLOAD', action: downloadScene),
-        buildButton(child: 'NEW', action: newScene),
+        buildButton(child: 'CLEAR', action: clearScene),
         buildButton(child: 'LOAD', action: uploadScene),
         buildButton(child: 'EDIT', action: windowEnabledScene.toggle),
         buildButton(child: 'MAP SIZE', action: windowEnabledCanvasSize.toggle),

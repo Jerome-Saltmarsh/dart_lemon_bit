@@ -2,6 +2,7 @@
 import 'dart:typed_data';
 
 import 'package:amulet_engine/packages/common.dart';
+import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/quests/quest_main.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_parser.dart';
 import 'package:lemon_byte/byte_reader.dart';
 
@@ -120,6 +121,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.World_Map_Bytes:
          readWorldMapBytes();
          break;
+       case NetworkResponseAmulet.Quest_Main:
+         readQuestMain();
+         break;
      }
   }
 
@@ -190,5 +194,8 @@ extension AmuletParser on IsometricParser {
 
     amulet.buildWorldMapSrcAndDst();
   }
+
+  void readQuestMain() =>
+      amulet.questMain.value = QuestMain.values[readByte()];
 }
 

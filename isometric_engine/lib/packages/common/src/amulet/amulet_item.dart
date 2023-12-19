@@ -487,8 +487,6 @@ enum AmuletItem {
   final AmuletItemLevel level1;
   final AmuletItemLevel? level2;
   final AmuletItemLevel? level3;
-  final AmuletItemLevel? level4;
-  final AmuletItemLevel? level5;
 
   const AmuletItem({
     required this.type,
@@ -500,8 +498,6 @@ enum AmuletItem {
     this.dependency,
     this.level2,
     this.level3,
-    this.level4,
-    this.level5,
     this.consumable = false,
   });
 
@@ -509,16 +505,11 @@ enum AmuletItem {
         1 => level1,
         2 => level2,
         3 => level3,
-        4 => level4,
-        5 => level5,
         _ => null
       };
 
-  int get totalLevels => level5 != null
-      ? 5
-      : level4 != null
-          ? 4
-          : level3 != null
+  int get totalLevels =>
+          level3 != null
               ? 3
               : level2 != null
                   ? 2
@@ -636,14 +627,6 @@ enum AmuletItem {
       if (lvl3Range != null && lvl3Range <= 0) {
         throw Exception('$name: "isWeapon and lvl3Range != null && lvl3Range <= 0"');
       }
-      final lvl4Range = level4?.range;
-      if (lvl4Range != null && lvl4Range <= 0) {
-        throw Exception('$name: "isWeapon and lvl4Range != null && lvl4Range <= 0"');
-      }
-      final lvl5ange = level5?.range;
-      if (lvl5ange != null && lvl5ange <= 0) {
-        throw Exception('$name: "isWeapon and lvl5ange != null && lvl5ange <= 0"');
-      }
     }
 
 
@@ -666,25 +649,7 @@ enum AmuletItem {
     required int water,
     required int electricity,
   }) {
-    if (statsSupport(
-      stat: level5,
-      fire: fire,
-      water: water,
-      electricity: electricity,
-    )) {
-      return 5;
-    }
-
-    if (statsSupport(
-      stat: level4,
-      fire: fire,
-      water: water,
-      electricity: electricity,
-    )) {
-      return 4;
-    }
-
-    if (statsSupport(
+     if (statsSupport(
       stat: level3,
       fire: fire,
       water: water,

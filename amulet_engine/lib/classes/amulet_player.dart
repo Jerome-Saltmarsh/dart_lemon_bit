@@ -1,5 +1,7 @@
 
+import 'package:amulet_engine/json/character_json.dart';
 import 'package:amulet_engine/mixins/equipped_weapon_index.dart';
+import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/quests/quest_main.dart';
 
 import '../packages/isometric_engine/packages/common/src/amulet/quests/quest_tutorials.dart';
 import '../packages/src.dart';
@@ -75,6 +77,16 @@ class AmuletPlayer extends IsometricPlayer with
     writePlayerExperience();
     writeGender();
     writePlayerComplexion();
+  }
+
+  QuestMain get questMain {
+    final questMainIndex = data.tryGetInt('quest_main') ?? 0;
+    return QuestMain.values[questMainIndex];
+  }
+
+  set questMain (QuestMain value){
+    data.setInt('quest_main', value.index);
+    writeQuestMain(value);
   }
 
   @override
@@ -529,9 +541,15 @@ class AmuletPlayer extends IsometricPlayer with
     return TargetAction.Run;
   }
 
-  void talk(Collider speaker, String text, {List<TalkOption>? options}) {
+  void talk(
+      Collider speaker,
+      String text, {
+        List<TalkOption>? options,
+        Function? onInteractionOver,
+      }) {
 
     cameraTarget = speaker;
+    this.onInteractionOver = onInteractionOver;
 
     if (text.isNotEmpty){
       interacting = true;
@@ -2022,6 +2040,12 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(NetworkResponseAmulet.Player_World_Index);
     writeByte(amuletGame.worldRow);
     writeByte(amuletGame.worldColumn);
+  }
+
+  void writeQuestMain(QuestMain value){
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Quest_Main);
+    writeByte(value.index);
   }
 
   void gainExperience(int experience){

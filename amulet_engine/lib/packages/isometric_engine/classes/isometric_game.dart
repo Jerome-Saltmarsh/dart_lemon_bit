@@ -2607,6 +2607,13 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
   }
 
+  void dispatchDownloadScene(){
+    scene.compiled = null;
+    for (final player in players){
+      player.sceneDownloaded = false;
+    }
+  }
+
   void onGameObjectedAdded(GameObject value) {}
 
   void onPlayerJoined(T player) {

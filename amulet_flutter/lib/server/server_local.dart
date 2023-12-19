@@ -61,7 +61,13 @@ class ServerLocal implements Server {
       scenes: scenes,
     );
     await amulet.construct(initializeUpdateTimer: true);
-    playerServer = amulet.buildPlayer();
+    playerServer = AmuletPlayer(
+        amuletGame: amulet.amuletGameLoading,
+        itemLength: 6,
+        x: 0,
+        y: 0,
+        z: 0,
+    );
     controller = AmuletController(
       player: playerServer,
       isAdmin: true,
