@@ -72,7 +72,6 @@ class AmuletGameWitchesLair extends AmuletGame {
     if (character is AmuletNpcWitch){
        final target = character.target;
        if (target != null) {
-          // character.itemSlotPowerActive = false;
           if (character.itemSlotPower.charges > 0){
             final itemSlotPower = character.itemSlotPower;
             final itemTypePower = itemSlotPower.amuletItem;
