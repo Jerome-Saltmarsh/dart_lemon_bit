@@ -1454,7 +1454,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   }) {
     assert (range > 0);
     assert (damage > 0);
-    dispatchGameEvent(GameEvent.Arrow_Fired, src.x, src.y, src.z);
+    // dispatchGameEvent(GameEvent.Arrow_Fired, src.x, src.y, src.z);
     spawnProjectile(
       src: src,
       range: range,
@@ -1520,6 +1520,10 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     assert (range > 0);
     assert (damage > 0);
     final projectile = getInstanceProjectile();
+
+    dispatchGameEvent(GameEvent.Projectile_Fired, src.x, src.y, src.z);
+    dispatchByte(projectileType);
+
     var finalAngle = angle;
     if (finalAngle == null) {
       if (target != null && target is Collider) {

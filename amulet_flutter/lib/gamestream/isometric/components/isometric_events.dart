@@ -74,6 +74,10 @@ class IsometricEvents with IsometricComponent {
       case GameEvent.Footstep:
         onFootstep(x, y, z);
         return;
+      case GameEvent.Projectile_Fired:
+        final projectileType = parser.readByte();
+        onProjectileFired(projectileType, x, y, z);
+        return;
       case GameEvent.Bullet_Deactivated:
         audio.play(audio.metal_light_3, x, y, z);
         return;
@@ -144,9 +148,9 @@ class IsometricEvents with IsometricComponent {
             break;
         }
         break;
-      case GameEvent.Arrow_Fired:
-        audio.play(audio.arrow_flying_past_6, x, y, z);
-        break;
+      // case GameEvent.Arrow_Fired:
+      //   audio.play(audio.arrow_flying_past_6, x, y, z);
+      //   break;
       case GameEvent.Teleport_Start:
         final spawnConfetti = particles.spawnParticleConfettiByType;
         for (var i = 0; i < 5; i++) {
@@ -219,6 +223,19 @@ class IsometricEvents with IsometricComponent {
             particles.spawnParticleConfetti(x, y, z);
             break;
         }
+        break;
+    }
+  }
+
+  void onProjectileFired(int projectileType, double x, double y, double z) {
+    switch (projectileType){
+      case ProjectileType.Arrow:
+        audio.play(audio.arrow_flying_past_6, x, y, z);
+        break;
+      case ProjectileType.Fireball:
+        audio.play(audio.fire_bolt_14, x, y, z);
+        break;
+      default:
         break;
     }
   }
@@ -516,4 +533,6 @@ class IsometricEvents with IsometricComponent {
   }) {
     audio.play(audio.change_cloths, x, y, z);
   }
+
+
 }
