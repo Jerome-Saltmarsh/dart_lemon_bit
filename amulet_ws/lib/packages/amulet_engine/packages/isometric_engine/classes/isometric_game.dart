@@ -2145,7 +2145,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
     var totalPathLength = 0;
     while (endPath != characterIndex) {
-      Scene.compiledPath[totalPathLength++] = endPath;
+      scene.compiledPath[totalPathLength++] = endPath;
       endPath = scene.path[endPath];
       if (endPath == -1){
         // TODO FIX
@@ -2158,7 +2158,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
     character.pathCurrent = length;
     for (var i = 0; i < length; i++){
-      path[i] = Scene.compiledPath[totalPathLength - length + i];
+      path[i] = scene.compiledPath[totalPathLength - length + i];
     }
 
     if (character.pathCurrent > 0){

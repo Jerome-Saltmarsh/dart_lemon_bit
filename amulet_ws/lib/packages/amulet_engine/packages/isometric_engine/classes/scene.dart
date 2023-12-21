@@ -19,14 +19,13 @@ class Scene {
   Uint8List? compiled;
 
   /// used for pathfinding to contains the the index of a previous path
+  final visitHistory = Uint32List(10000);
+  final visitStack = Uint32List(10000);
+  final compiledPath = Uint32List(10000);
+
   var path = Int32List(0);
-
-  static final visitHistory = Uint32List(10000);
-  static final visitStack = Uint32List(10000);
-  static final compiledPath = Uint32List(10000);
-
-  static var visitHistoryIndex = 0;
-  static var visitStackIndex = 0;
+  var visitHistoryIndex = 0;
+  var visitStackIndex = 0;
 
   var height = 0;
   var rows = 0;
@@ -180,17 +179,17 @@ class Scene {
     ) return indexStart;
 
     final path = this.path;
-    final visitHistoryIndex = Scene.visitHistoryIndex;
-    final visitHistory = Scene.visitHistory;
+    final visitHistoryIndex = this.visitHistoryIndex;
+    final visitHistory = this.visitHistory;
     for (var i = 0; i <= visitHistoryIndex; i++) {
       path[visitHistory[i]] = Not_Visited;
     }
 
-    Scene.visitHistoryIndex = 0;
+    this.visitHistoryIndex = 0;
     visitStackIndex = 0;
 
-    visitHistory[Scene.visitHistoryIndex++] = indexStart;
-    final visitStack = Scene.visitStack;
+    visitHistory[this.visitHistoryIndex++] = indexStart;
+    final visitStack = this.visitStack;
     visitStack[visitStackIndex] = indexStart;
 
     final targetRow = getRow(indexEnd);

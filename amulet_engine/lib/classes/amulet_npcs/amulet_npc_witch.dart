@@ -32,9 +32,9 @@ class AmuletNpcWitch extends AmuletNpc with EquippedWeapon {
   @override
   void update() {
     super.update();
-
     if (fireballTimer-- <= 0) {
       itemSlotPowerActive = !itemSlotPowerActive;
+      fireballTimer = 300;
     }
   }
 }
