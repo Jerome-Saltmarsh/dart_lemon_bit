@@ -2167,9 +2167,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     character.pathStart = character.pathCurrent;
   }
 
-  // idle
-  // wander
-  // attack
   void updateCharacterAction(Character character) {
 
     if (character.busy) {

@@ -1,9 +1,11 @@
 
+import 'package:amulet_engine/classes/amulet_npcs/amulet_npc_witch.dart';
+
 import '../src.dart';
 
 class AmuletGameWitchesLair extends AmuletGame {
 
-  late AmuletNpc npcWitch;
+  late AmuletNpcWitch npcWitch;
   late GameObject entrance;
 
   AmuletGameWitchesLair({
@@ -18,18 +20,10 @@ class AmuletGameWitchesLair extends AmuletGame {
     final indexSpawnWitch = scene.getKey('spawn_witch');
     final indexEntrance = scene.getKey('entrance');
 
-    npcWitch = AmuletNpc(
-        health: 200,
-        team: AmuletTeam.Monsters,
-        weaponRange: 50,
-        weaponDamage: 5,
-        weaponCooldown: 60,
-        attackDuration: 30,
-        weaponType: WeaponType.Staff,
+    npcWitch = AmuletNpcWitch(
         x: scene.getIndexX(indexSpawnWitch),
         y: scene.getIndexY(indexSpawnWitch),
         z: scene.getIndexZ(indexSpawnWitch),
-        name: 'WITCH',
     )
       ..complexion = ComplexionType.fair
       ..bodyType = BodyType.Shirt_Blue
@@ -71,5 +65,16 @@ class AmuletGameWitchesLair extends AmuletGame {
     if (target == npcWitch && src is AmuletPlayer){
       src.completeQuestMain(QuestMain.Kill_The_Witch);
     }
+  }
+
+  @override
+  void updateCharacterAction(Character character) {
+    if (character is AmuletNpcWitch){
+       final target = character.target;
+       if (target != null) {
+          character.itemSlotPowerActive = true;
+       }
+    }
+    super.updateCharacterAction(character);
   }
 }
