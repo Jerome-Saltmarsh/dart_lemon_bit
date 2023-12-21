@@ -23,8 +23,9 @@ class RendererProjectiles extends RenderGroup {
       case ProjectileType.Orb:
         break;
       case ProjectileType.Fireball:
-        const width = 23.0;
-        const height = 18.0;
+        const width = 18.0;
+        const height = 23.0;
+
         engine.renderSpriteRotated(
             image: images.atlas_nodes,
             srcX: 1177 + (width * (animation.frameRate3 % 6)),
@@ -33,7 +34,7 @@ class RendererProjectiles extends RenderGroup {
             srcHeight: height,
             dstX: dstX,
             dstY: dstY,
-            rotation: projectile.angle,
+            rotation: projectile.angle - piQuarter,
         );
         break;
       case ProjectileType.Bullet:
