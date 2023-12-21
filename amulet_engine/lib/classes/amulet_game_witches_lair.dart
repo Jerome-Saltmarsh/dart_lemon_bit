@@ -72,9 +72,34 @@ class AmuletGameWitchesLair extends AmuletGame {
     if (character is AmuletNpcWitch){
        final target = character.target;
        if (target != null) {
-          character.itemSlotPowerActive = true;
+          // character.itemSlotPowerActive = false;
+          if (character.itemSlotPower.charges > 0){
+            final itemSlotPower = character.itemSlotPower;
+            final itemTypePower = itemSlotPower.amuletItem;
+            if (itemTypePower != null) {
+              final powerLevel = itemTypePower.getLevel(
+                  fire: character.elementFire,
+                  water: character.elementWater,
+                  electricity: character.elementElectricity,
+              );
+              if (powerLevel != -1){
+                final powerStats = itemTypePower.getStatsForLevel(powerLevel);
+                if (powerStats != null){
+                  if (character.withinRadiusPosition(target, powerStats.range)) {
+                    character.itemSlotPowerActive = true;
+                    character.setCharacterStateCasting(
+                        duration: powerStats.performDuration,
+                    );
+                  }
+                }
+              }
+            }
+          }
+
        }
     }
     super.updateCharacterAction(character);
   }
 }
+
+

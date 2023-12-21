@@ -20,7 +20,4 @@ mixin Elemental {
   );
 
   double get saturation => (r + g + b) / 100.0;
-
-
-
 }

@@ -134,17 +134,8 @@ class AmuletPlayer extends IsometricPlayer with
 
   int get equippedWeaponType {
     final weapon = itemSlotWeapon;
-    if (weapon == null) {
-      return WeaponType.Unarmed;
-    }
-
     final item = weapon.amuletItem;
-
-    if (item == null) {
-      return WeaponType.Unarmed;
-    }
-
-    return item.subType;
+    return item?.subType ?? WeaponType.Unarmed;
   }
 
   int get experienceRequired => (level * level * 2) + (level * 10);
@@ -153,9 +144,6 @@ class AmuletPlayer extends IsometricPlayer with
 
   int get equippedWeaponLevel {
     final weapon = itemSlotWeapon;
-    if (weapon == null){
-       return -1;
-    }
     final item = weapon.amuletItem;
 
     if (item == null){
@@ -168,10 +156,6 @@ class AmuletPlayer extends IsometricPlayer with
   AmuletItemLevel? get equippedWeaponAmuletItemLevel {
     final weapon = itemSlotWeapon;
 
-    if (weapon == null) {
-      return null;
-    }
-
     final item = weapon.amuletItem;
     if (item == null){
       throw Exception('item == null');
@@ -181,7 +165,7 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   @override
-  int get weaponCooldown => itemSlotWeapon?.cooldown ?? -1;
+  int get weaponCooldown => itemSlotWeapon.cooldown;
 
   @override
   int get weaponDamage {
@@ -195,7 +179,7 @@ class AmuletPlayer extends IsometricPlayer with
        if (amuletItem == null) continue;
        switch (amuletItem) {
          case AmuletItem.Amulet_Of_The_Ranger:
-           if (itemSlotWeapon?.amuletItem?.isWeaponBow ?? false){
+           if (itemSlotWeapon.amuletItem?.isWeaponBow ?? false){
            }
            break;
          default:
@@ -773,7 +757,7 @@ class AmuletPlayer extends IsometricPlayer with
           setCharacterStateChanging();
         } else {
           final currentWeapon = itemSlotWeapon;
-          final currentCooldown = itemSlotWeapon?.cooldown ?? 0;
+          final currentCooldown = itemSlotWeapon.cooldown;
           setWeapon(
               index: equippedWeaponIndex,
               amuletItem: item,
@@ -781,7 +765,7 @@ class AmuletPlayer extends IsometricPlayer with
           );
           setItem(
               index: index,
-              item: currentWeapon?.amuletItem,
+              item: currentWeapon.amuletItem,
               cooldown: currentCooldown,
           );
           setCharacterStateChanging();
@@ -1011,7 +995,7 @@ class AmuletPlayer extends IsometricPlayer with
     // assert (equippedShoe.amuletItem?.isShoes ?? true);
 
     health = clamp(health, 0, maxHealth);
-    weaponType = itemSlotWeapon?.amuletItem?.subType ?? WeaponType.Unarmed;
+    weaponType = itemSlotWeapon.amuletItem?.subType ?? WeaponType.Unarmed;
     equipmentDirty = false;
     helmType = equippedHelm.amuletItem?.subType ?? HelmType.None;
     bodyType = equippedBody.amuletItem?.subType ?? BodyType.None;
@@ -1020,7 +1004,7 @@ class AmuletPlayer extends IsometricPlayer with
     handTypeRight = equippedHandRight.amuletItem?.subType ?? HandType.None;
     shoeType = equippedShoe.amuletItem?.subType ?? HandType.None;
 
-    if (itemSlotWeapon?.amuletItem?.selectAction != AmuletItemAction.Equip){
+    if (itemSlotWeapon.amuletItem?.selectAction != AmuletItemAction.Equip){
        equippedWeaponIndex = -1;
     }
 
@@ -1197,7 +1181,7 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   void assignWeaponTypeToEquippedWeapon() =>
-      weaponType = itemSlotWeapon?.amuletItem?.subType ?? WeaponType.Unarmed;
+      weaponType = itemSlotWeapon.amuletItem?.subType ?? WeaponType.Unarmed;
 
   void unequipHead() =>
       swapWithAvailableItemSlot(equippedHelm);
@@ -1788,7 +1772,7 @@ class AmuletPlayer extends IsometricPlayer with
     final dependency = amuletItem.dependency;
 
     if (dependency != null){
-      final equippedWeaponAmuletItem = itemSlotWeapon?.amuletItem;
+      final equippedWeaponAmuletItem = itemSlotWeapon.amuletItem;
 
       if (equippedWeaponAmuletItem == null || equippedWeaponAmuletItem.subType != dependency) {
         writeGameError(GameError.Weapon_Required);

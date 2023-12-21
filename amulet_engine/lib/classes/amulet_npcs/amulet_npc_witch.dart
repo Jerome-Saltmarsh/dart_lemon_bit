@@ -34,6 +34,8 @@ class AmuletNpcWitch extends AmuletNpc with EquippedWeapon {
     super.update();
     itemSlotWeapon.incrementCooldown();
     itemSlotPower.incrementCooldown();
+    itemSlotPowerActive = itemSlotPower.charges > 0;
+
     // itemSlotPowerActive = itemSlotPower.charges > 0;
     // final target = this.target;
     // if (target == null){
@@ -59,4 +61,8 @@ class AmuletNpcWitch extends AmuletNpc with EquippedWeapon {
     //    }
     // }
   }
+
+  @override
+  int get weaponType =>
+      itemSlotWeapon.amuletItem?.subType ?? WeaponType.Unarmed;
 }

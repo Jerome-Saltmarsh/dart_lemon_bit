@@ -227,6 +227,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       case AmuletItem.Weapon_Rusty_Old_Sword:
         performAbilityMelee(character);
         break;
+      case AmuletItem.Weapon_Staff_Wooden:
+        performAbilityMelee(character);
+        break;
       case AmuletItem.Weapon_Old_Bow:
         performAbilityArrow(
             character: character,
