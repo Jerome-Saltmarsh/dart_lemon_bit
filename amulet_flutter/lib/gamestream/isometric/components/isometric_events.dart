@@ -148,9 +148,6 @@ class IsometricEvents with IsometricComponent {
             break;
         }
         break;
-      // case GameEvent.Arrow_Fired:
-      //   audio.play(audio.arrow_flying_past_6, x, y, z);
-      //   break;
       case GameEvent.Teleport_Start:
         final spawnConfetti = particles.spawnParticleConfettiByType;
         for (var i = 0; i < 5; i++) {

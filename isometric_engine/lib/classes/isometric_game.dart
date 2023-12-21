@@ -1465,50 +1465,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     );
   }
 
-  Projectile spawnProjectileFireball({
-    required Character src,
-    required int damage,
-    required double range,
-    double? angle,
-  }) =>
-      spawnProjectile(
-        src: src,
-        range: range,
-        target: src.target,
-        angle: angle,
-        projectileType: ProjectileType.Fireball,
-        damage: damage,
-      );
-
-  Projectile spawnProjectileRocket(Character src, {
-    required int damage,
-    required double range,
-    double? angle,
-  }) =>
-      spawnProjectile(
-        src: src,
-        range: range,
-        target: src.target,
-        angle: angle,
-        projectileType: ProjectileType.Rocket,
-        damage: damage,
-      );
-
-  void spawnProjectileBullet({
-    required Character src,
-    required double range,
-    required int damage,
-    double accuracy = 0,
-    double? angle = 0,
-    Position? target,
-  })=> spawnProjectile(
-        projectileType: ProjectileType.Bullet,
-        src: src,
-        damage: damage,
-        range: range,
-        angle: angle,
-      );
-
   Projectile spawnProjectile({
     required Character src,
     required double range,
