@@ -21,9 +21,9 @@ class AmuletGameWitchesLair extends AmuletGame {
     npcWitch = AmuletNpc(
         health: 200,
         team: AmuletTeam.Monsters,
-        weaponRange: 200,
+        weaponRange: 50,
         weaponDamage: 5,
-        weaponCooldown: 15,
+        weaponCooldown: 60,
         attackDuration: 30,
         weaponType: WeaponType.Staff,
         x: scene.getIndexX(indexSpawnWitch),
@@ -61,6 +61,15 @@ class AmuletGameWitchesLair extends AmuletGame {
           target: amulet.amuletGameWorld11,
           sceneKey: 'spawn_player',
       );
+    }
+  }
+
+  @override
+  void customOnCharacterKilled(Character target, src) {
+    super.customOnCharacterKilled(target, src);
+
+    if (target == npcWitch && src is AmuletPlayer){
+      src.completeQuestMain(QuestMain.Kill_The_Witch);
     }
   }
 }

@@ -6,6 +6,7 @@ class SpellType {
   static const Split_Arrow = 3;
   static const Ice_Arrow = 4;
   static const Implode = 5;
+  static const Fireball = 6;
 
   static const values = [
     Thunderbolt,
@@ -14,6 +15,7 @@ class SpellType {
     Split_Arrow,
     Ice_Arrow,
     Implode,
+    Fireball,
   ];
 
   static getName(int subType) => const {
@@ -23,5 +25,6 @@ class SpellType {
     Split_Arrow: 'Split Arrow',
     Ice_Arrow: 'Ice_Arrow',
     Implode: 'Implode',
+    Fireball: 'Fireball',
   } [subType] ?? (throw Exception('SpellType.getName($subType)'));
 }

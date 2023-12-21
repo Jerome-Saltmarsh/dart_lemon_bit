@@ -590,4 +590,12 @@ class Character extends Collider {
       );
     }
   }
+
+  void clearActionFrame(){
+    setActionFrame(-1);
+  }
+
+  void setActionFrame(int value){
+    actionFrame = value;
+  }
 }

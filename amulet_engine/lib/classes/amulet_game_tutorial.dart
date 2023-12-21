@@ -276,7 +276,7 @@ class AmuletGameTutorial extends AmuletGame {
        QuestTutorial.Equip_Bow =>
           player.weapons.any((element) => element.amuletItem == AmuletItem.Weapon_Old_Bow),
        QuestTutorial.Draw_Bow =>
-        player.equippedWeapon?.amuletItem == AmuletItem.Weapon_Old_Bow,
+        player.itemSlotWeapon.amuletItem == AmuletItem.Weapon_Old_Bow,
        QuestTutorial.Leave => getNodeIndexV3(player) == indexLeave,
         _ => false
     };

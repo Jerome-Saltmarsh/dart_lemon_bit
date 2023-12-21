@@ -175,3 +175,5 @@ flutter:
     - assets/sprites/isometric/zombie/shadow/
     - assets/sprites/isometric/zombie/south/
     - assets/sprites/isometric/zombie/west/
+    - assets/sprites/isometric/kid/diffuse/weapons_trail/
+    - assets/sprites/isometric/kid/diffuse/weapons_trail/sword/

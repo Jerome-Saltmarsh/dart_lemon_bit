@@ -17,6 +17,7 @@ ctrl + []               : move caret to code block
 
 ## CAMPAIGN
 * [new]: quest window
+* [new]: witch caste fireball
 
 ## CURRENT
 * [new]: character type warlock

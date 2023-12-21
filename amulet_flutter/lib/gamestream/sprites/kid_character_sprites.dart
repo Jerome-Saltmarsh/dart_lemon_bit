@@ -13,6 +13,7 @@ class KidCharacterSprites {
   final legs = <int, CharacterSpriteGroup>{};
   final torso = <int, CharacterSpriteGroup>{};
   final weapons = <int, CharacterSpriteGroup>{};
+  final weaponsTrail = <int, CharacterSpriteGroup>{};
   final shadow = <int, CharacterSpriteGroup>{};
   final hair = <int, CharacterSpriteGroup>{};
   final shoes = <int, CharacterSpriteGroup>{};
@@ -27,6 +28,7 @@ class KidCharacterSprites {
     SpriteGroupType.Legs: legs,
     SpriteGroupType.Torso: torso,
     SpriteGroupType.Weapon: weapons,
+    SpriteGroupType.Weapon_Trail: weaponsTrail,
     SpriteGroupType.Shadow: shadow,
     SpriteGroupType.Hair: hair,
     SpriteGroupType.Shoes: shoes,

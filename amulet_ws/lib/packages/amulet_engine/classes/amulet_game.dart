@@ -1,6 +1,9 @@
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:amulet_engine/mixins/equipped_weapon.dart';
+
+import '../mixins/elemental.dart';
 import '../packages/isometric_engine/isometric_engine.dart';
 import 'amulet.dart';
 import 'amulet_fiend.dart';
@@ -157,38 +160,45 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   @override
   void performCharacterAction(Character character) {
-    if (character is! AmuletPlayer) {
+
+    if (character is! EquippedWeapon) {
       super.performCharacterAction(character);
       return;
     }
 
+    final equipped = character as EquippedWeapon;
     character.clearActionFrame();
-    final activeItemSlot = character.activeItemSlot;
+    final activeSlot = equipped.itemSlotActive;
+    final activeSlotAmuletItem = activeSlot.amuletItem;
 
-    if (activeItemSlot == null) {
-      return;
+    if (character is AmuletPlayer){
+      character.clearActivatedPowerIndex();
     }
 
-    character.clearActivatedPowerIndex();
-
-    final amuletItem = activeItemSlot.amuletItem;
-
-    if (amuletItem == null){
-      throw Exception('activeSlotItem == null');
+    if (activeSlotAmuletItem == null){
+      throw Exception('amuletItem == null');
     }
 
-    final level = amuletItem.getLevel(
-        fire: character.elementFire,
-        water: character.elementWater,
-        electricity: character.elementElectricity,
+    if (character is! Elemental){
+      throw Exception('character is! Elemental');
+    }
+
+    final elements = character as Elemental;
+
+    final level = activeSlotAmuletItem.getLevel(
+        fire: elements.elementFire,
+        water: elements.elementWater,
+        electricity: elements.elementElectricity,
     );
 
     if (level == -1){
-      character.writeGameError(GameError.Insufficient_Elements);
+      if (character is AmuletPlayer){
+        character.writeGameError(GameError.Insufficient_Elements);
+      }
       return;
     }
 
-    final stats = amuletItem.getStatsForLevel(level);
+    final stats = activeSlotAmuletItem.getStatsForLevel(level);
 
     if (stats == null){
       throw Exception('stats == null');
@@ -197,9 +207,16 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     final damage = randomInt(stats.damageMin, stats.damageMax + 1);
     final range = stats.range;
 
-    switch (amuletItem) {
+    switch (activeSlotAmuletItem) {
       case AmuletItem.Spell_Thunderbolt:
         performAbilityLightning(character);
+        break;
+      case AmuletItem.Spell_Fireball:
+        performSpellFireball(
+            character: character,
+            damage: damage,
+            range: range,
+        );
         break;
       case AmuletItem.Spell_Blink:
         performAbilityBlink(character);
@@ -232,23 +249,27 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         );
         break;
       case AmuletItem.Spell_Heal:
-        useAmuletItemSpellHeal(character);
+        useAmuletItemSpellHeal(character: character, stats: stats);
         break;
       case AmuletItem.Spell_Bow_Split_Arrow:
-        final equippedWeaponSlot = character.equippedWeapon;
-        if (equippedWeaponSlot == null){
-          throw Exception('character.equippedWeaponSlot is null');
-        }
+        final equippedWeaponSlot = equipped.itemSlotWeapon;
+
         final weapon = equippedWeaponSlot.amuletItem;
 
         if (weapon == null){
           throw Exception('weapon is null');
         }
 
-        final weaponLevel = character.getAmuletItemLevel(weapon);
+        final equippedWeaponLevel = weapon.getLevel(
+          fire: elements.elementFire,
+          water: elements.elementWater,
+          electricity: elements.elementElectricity,
+        );
 
-        if (weaponLevel == null){
-          throw Exception('weaponLevel is null');
+        final equippedWeaponStats = weapon.getStatsForLevel(equippedWeaponLevel);
+
+        if (equippedWeaponStats == null){
+          throw Exception('equippedWeaponStats is null');
         }
         final totalArrows = stats.quantity;
         final radian = pi * 0.25;
@@ -258,19 +279,20 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         for (var i = 0; i < totalArrows; i++){
           spawnProjectileArrow(
               src: character,
-              damage: randomInt(weaponLevel.damageMin, weaponLevel.damageMax),
-              range: weaponLevel.range,
+              damage: randomInt(equippedWeaponStats.damageMin, equippedWeaponStats.damageMax),
+              range: equippedWeaponStats.range,
               angle: angle,
           );
           angle += radianPerArrow;
         }
         break;
       default:
-        throw Exception('amulet.PerformCharacterAction($amuletItem)');
+        throw Exception('amulet.PerformCharacterAction($activeSlotAmuletItem)');
     }
   }
 
-  void performAbilityFrostBall(AmuletPlayer character, {required int damage, required double range}) {
+  void performAbilityFrostBall(
+      Character character, {required int damage, required double range}) {
      spawnProjectile(
       src: character,
       damage: damage,
@@ -279,6 +301,19 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       angle: character.angle,
     );
   }
+
+  void performSpellFireball({
+    required Character character,
+    required int damage,
+    required double range,
+  }) =>
+    spawnProjectile(
+        src: character,
+        damage: damage,
+        range: range,
+        projectileType: ProjectileType.Fireball,
+        angle: character.angle,
+    );
 
   void performAbilityArrow({
     required Character character,
@@ -299,12 +334,16 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     );
   }
 
-  void performAbilityBlink(AmuletPlayer player){
-    dispatchGameEventPosition(GameEvent.Blink_Depart, player);
-    player.x = player.activePowerX;
-    player.y = player.activePowerY;
-    player.z = player.activePowerZ;
-    dispatchGameEventPosition(GameEvent.Blink_Arrive, player);
+  void performAbilityBlink(Character character){
+    if (character is! EquippedWeapon){
+      throw Exception('character is! EquippedWeapon');
+    }
+    final equippedWeapon = character as EquippedWeapon;
+    dispatchGameEventPosition(GameEvent.Blink_Depart, character);
+    character.x = equippedWeapon.activePowerX;
+    character.y = equippedWeapon.activePowerY;
+    character.z = equippedWeapon.activePowerZ;
+    dispatchGameEventPosition(GameEvent.Blink_Arrive, character);
   }
 
   void performAbilityLightning(Character character){
@@ -577,16 +616,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   void endPlayerInteraction(AmuletPlayer player) =>
       player.endInteraction();
 
-  void useAmuletItemSpellHeal(AmuletPlayer character) {
-
-    final stats = character.getAmuletItemLevel(AmuletItem.Spell_Heal);
-    if (stats == null) {
-      character.writeGameError(GameError.Insufficient_Elements);
-      return;
-    }
-
+  void useAmuletItemSpellHeal({
+    required Character character,
+    required AmuletItemLevel stats,
+  }) {
     character.health += stats.health;
-
     dispatchGameEventPosition(GameEvent.Spell_Used, character);
     dispatchByte(SpellType.Heal);
   }

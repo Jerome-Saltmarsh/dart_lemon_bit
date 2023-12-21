@@ -23,6 +23,7 @@ class RendererProjectiles extends RenderGroup {
       case ProjectileType.Orb:
         break;
       case ProjectileType.Fireball:
+        render.circleOutlineAtPosition(position: projectile, radius: 10);
         break;
       case ProjectileType.Bullet:
         renderBullet(dstX, dstY, angle);

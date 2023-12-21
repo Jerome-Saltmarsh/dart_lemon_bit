@@ -211,6 +211,20 @@ class IsometricImages with IsometricComponent {
     loadSpriteGroupFront(type: SpriteGroupType.Shoes, subType: ShoeType.Iron_Plates);
 
 
+    loadSpriteGroupIsometric(
+      direction: RenderDirection.diffuse,
+      type: SpriteGroupType.Weapon_Trail,
+      subType: WeaponType.Sword,
+      skipHurt: true,
+      skipCasting: true,
+      skipChange: true,
+      skipDead: true,
+      skipFire: true,
+      skipIdle: true,
+      skipRunning: true,
+      skipStrike: false,
+    );
+
     for (final direction in const[
       RenderDirection.south,
       RenderDirection.west,
