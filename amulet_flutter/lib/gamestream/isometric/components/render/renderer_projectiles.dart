@@ -23,7 +23,18 @@ class RendererProjectiles extends RenderGroup {
       case ProjectileType.Orb:
         break;
       case ProjectileType.Fireball:
-        render.circleOutlineAtPosition(position: projectile, radius: 10);
+        const width = 23.0;
+        const height = 18.0;
+        engine.renderSpriteRotated(
+            image: images.atlas_nodes,
+            srcX: 1177 + (width * (animation.frameRate3 % 6)),
+            srcY: 1816,
+            srcWidth: width,
+            srcHeight: height,
+            dstX: dstX,
+            dstY: dstY,
+            rotation: projectile.angle,
+        );
         break;
       case ProjectileType.Bullet:
         renderBullet(dstX, dstY, angle);
