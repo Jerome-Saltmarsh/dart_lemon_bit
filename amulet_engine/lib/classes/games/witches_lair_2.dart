@@ -1,22 +1,22 @@
 
 import '../../src.dart';
 
-class AmuletGameWitchesLair extends AmuletGame {
+class WitchesLair2 extends AmuletGame {
 
   late AmuletNpcWitch npcWitch;
-  late GameObject entrance;
+  // late GameObject entrance;
 
-  AmuletGameWitchesLair({
+  WitchesLair2({
     required super.amulet,
     required super.scene,
     required super.time,
     required super.environment,
   }) : super (
-    name: 'Witches lair',
-    amuletScene: AmuletScene.Witches_Lair
+    name: 'Witches lair 2',
+    amuletScene: AmuletScene.Witches_Lair_2
   ) {
     final indexSpawnWitch = scene.getKey('spawn_witch');
-    final indexEntrance = scene.getKey('entrance');
+    // final indexEntrance = scene.getKey('entrance');
 
     npcWitch = AmuletNpcWitch(
         x: scene.getIndexX(indexSpawnWitch),
@@ -34,27 +34,27 @@ class AmuletGameWitchesLair extends AmuletGame {
 
     characters.add(npcWitch);
 
-    entrance = spawnGameObjectAtIndex(
-        index: indexEntrance,
-        type: ItemType.Object,
-        subType: GameObjectType.Interactable,
-        team: TeamType.Neutral,
-    )..interactable = true;
+    // entrance = spawnGameObjectAtIndex(
+    //     index: indexEntrance,
+    //     type: ItemType.Object,
+    //     subType: GameObjectType.Interactable,
+    //     team: TeamType.Neutral,
+    // )..interactable = true;
   }
 
-  @override
-  void customOnCharacterInteractWithGameObject(Character character, GameObject gameObject) {
-    if (character is! AmuletPlayer){
-      return;
-    }
-    if (gameObject == entrance) {
-      amulet.playerChangeGame(
-          player: character,
-          target: amulet.amuletGameWorld11,
-          sceneKey: 'spawn_player',
-      );
-    }
-  }
+  // @override
+  // void customOnCharacterInteractWithGameObject(Character character, GameObject gameObject) {
+  //   if (character is! AmuletPlayer){
+  //     return;
+  //   }
+  //   if (gameObject == entrance) {
+  //     amulet.playerChangeGame(
+  //         player: character,
+  //         target: amulet.amuletGameWorld11,
+  //         sceneKey: 'spawn_player',
+  //     );
+  //   }
+  // }
 
   @override
   void customOnCharacterKilled(Character target, src) {

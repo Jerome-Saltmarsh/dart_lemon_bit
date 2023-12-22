@@ -1216,7 +1216,32 @@ extension IsometricEditorUI on IsometricEditor {
           ),
         ],
       ),
-      WatchBuilder(selectedMarkType, (int selectedMarkType){
+      WatchBuilder(selectedMarkType, (int selectedMarkType) {
+        if (selectedMarkType == MarkType.Portal) {
+
+          return WatchBuilder(selectedMarkSubType, (int selectedMarkSubType){
+            return SizedBox(
+              height: 200,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: AmuletScene.values.map((amuletScene) => onPressed(
+                      action: () =>
+                          server.sendNetworkRequest(
+                            NetworkRequest.Edit,
+                            NetworkRequestEdit.Mark_Set_Sub_Type.index,
+                            amuletScene.index,
+                          ),
+                      child: GSContainer(
+                          color: selectedMarkSubType == amuletScene.index ? Colors.green : null,
+                          margin: const EdgeInsets.only(right: 4),
+                          child: buildText(amuletScene.name)))).toList(growable: false),
+                ),
+              ),
+            );
+          });
+        }
+
         if (selectedMarkType != MarkType.Fiend) return nothing;
 
         return WatchBuilder(selectedMarkSubType, (int selectedMarkSubType) =>

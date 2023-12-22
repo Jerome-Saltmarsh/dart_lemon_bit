@@ -41,6 +41,58 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     refreshFlatNodes();
   }
 
+  void spawnMarkPortals() {
+    final marks = scene.marks;
+    for (final mark in marks) {
+       if (MarkType.getType(mark) != MarkType.Portal){
+         continue;
+       }
+       final index = MarkType.getIndex(mark);
+       final subType = MarkType.getSubType(mark);
+       final amuletScene = AmuletScene.values[subType];
+
+
+       var targetIndex = -1;
+       final targetGame = amulet.getAmuletSceneGame(amuletScene);
+       final targetGameMarks = targetGame.scene.marks;
+       for (final targetMark in targetGameMarks){
+          if (MarkType.getType(targetMark) != MarkType.Portal) continue;
+          final targetMarkSubType = MarkType.getSubType(targetMark);
+          final targetScene = AmuletScene.values[targetMarkSubType];
+          if (targetScene != this.amuletScene) continue;
+          targetIndex = MarkType.getIndex(targetMark);
+       }
+
+       if (targetIndex == -1){
+         print('INVALID_PORTALS: ${amuletScene.name} does not a have a portal to ${this.amuletScene.name}');
+       } else {
+         final portal = spawnGameObjectAtIndex(
+           index: index,
+           type: ItemType.Object,
+           subType: GameObjectType.Interactable,
+           team: TeamType.Neutral,
+         );
+         portal.interactable = true;
+         portal.fixed = true;
+         portal.gravity = false;
+         portal.hitable = false;
+         portal.collectable = false;
+         portal.collidable = false;
+         portal.onInteract = (dynamic src){
+           if (src is! AmuletPlayer){
+             return;
+           }
+           amulet.playerChangeGame(
+             player: src,
+             target: targetGame,
+           );
+           targetGame.movePositionToIndex(src, targetIndex);
+           src.writePlayerMoved();
+         };
+       }
+    }
+  }
+
   void refreshFlatNodes(){
     final scene = this.scene;
     final area = scene.area;

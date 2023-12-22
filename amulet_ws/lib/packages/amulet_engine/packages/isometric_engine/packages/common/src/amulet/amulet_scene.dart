@@ -2,7 +2,8 @@
 
 enum AmuletScene {
   Tutorial,
-  Witches_Lair,
+  Witches_Lair_1,
+  Witches_Lair_2,
   World_00,
   World_01,
   World_02,

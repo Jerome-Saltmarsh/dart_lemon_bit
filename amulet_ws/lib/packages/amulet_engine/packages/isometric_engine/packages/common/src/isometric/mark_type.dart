@@ -12,6 +12,7 @@ class MarkType {
   static const Moth = 6;
   static const Water_Drops = 7;
   static const Windy = 8;
+  static const Portal = 9;
 
   static const values = [
     Fiend,
@@ -22,6 +23,7 @@ class MarkType {
     Moth,
     Water_Drops,
     Windy,
+    Portal,
   ];
 
   static String getTypeName(int markValue) => getName(getType(markValue));
@@ -42,6 +44,7 @@ class MarkType {
     Moth: 'Moth',
     Water_Drops: 'Water_Drops',
     Windy: 'Windy',
+    Portal: 'Portal',
   }[markType] ?? 'unknown-$markType';
 
   static int getIndex(int markValue) => markValue & 0xFFFF;

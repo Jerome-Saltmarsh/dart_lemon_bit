@@ -1,11 +1,11 @@
 
 import 'package:amulet_engine/classes/amulet_game.dart';
+
 import '../../packages/isomeric_engine.dart';
-import '../amulet_player.dart';
 
 class AmuletGameWorld11 extends AmuletGame {
 
-  late GameObject doorway;
+  // late GameObject doorway;
 
   AmuletGameWorld11({
     required super.amulet,
@@ -16,29 +16,29 @@ class AmuletGameWorld11 extends AmuletGame {
       environment: amulet.amuletEnvironment,
       scene: amulet.scenes.world_11,
   ) {
-    final indexCastleEntrance = scene.getKey('castle_entrance');
+    // final indexCastleEntrance = scene.getKey('castle_entrance');
 
-    doorway = spawnGameObjectAtIndex(
-        index: indexCastleEntrance,
-        type: ItemType.Object,
-        subType: GameObjectType.Interactable,
-        team: 0,
-    )
-      ..persistable = false
-      ..interactable = true;
+    // doorway = spawnGameObjectAtIndex(
+    //     index: indexCastleEntrance,
+    //     type: ItemType.Object,
+    //     subType: GameObjectType.Interactable,
+    //     team: 0,
+    // )
+    //   ..persistable = false
+    //   ..interactable = true;
   }
 
-  @override
-  void customOnCharacterInteractWithGameObject(Character character, GameObject gameObject) {
-    if (character is! AmuletPlayer){
-      return;
-    }
-    if (gameObject == doorway) {
-       amulet.playerChangeGame(
-           player: character,
-           target: amulet.amuletGameWitchesLair,
-           sceneKey: 'spawn_player',
-       );
-    }
-  }
+  // @override
+  // void customOnCharacterInteractWithGameObject(Character character, GameObject gameObject) {
+  //   if (character is! AmuletPlayer){
+  //     return;
+  //   }
+  //   if (gameObject == doorway) {
+  //      amulet.playerChangeGame(
+  //          player: character,
+  //          target: amulet.amuletGameWitchesLair1,
+  //          sceneKey: 'spawn_player',
+  //      );
+  //   }
+  // }
 }

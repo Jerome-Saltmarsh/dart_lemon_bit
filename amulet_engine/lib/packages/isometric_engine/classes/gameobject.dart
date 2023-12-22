@@ -20,6 +20,7 @@ class GameObject extends Collider {
   var health = 0;
   var healthMax = 0;
   var deactivationTimer = -1;
+  Function(dynamic src)? onInteract;
 
   @override
   int get materialType => getMaterialType(type, subType);

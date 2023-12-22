@@ -10,7 +10,8 @@ import 'amulet_game.dart';
 import 'amulet_player.dart';
 import 'amulet_scenes.dart';
 import 'games/amulet_game_tutorial.dart';
-import 'games/amulet_game_witches_lair.dart';
+import 'games/witches_lair_1.dart';
+import 'games/witches_lair_2.dart';
 import 'games/amulet_game_world_00.dart';
 import 'games/amulet_game_world_11.dart';
 
@@ -65,7 +66,8 @@ class Amulet {
   late final AmuletGame amuletGameWorld21;
   late final AmuletGame amuletGameWorld22;
 
-  late final AmuletGame amuletGameWitchesLair;
+  late final AmuletGame amuletGameWitchesLair1;
+  late final AmuletGame amuletGameWitchesLair2;
 
   static const mapSize = 100;
   final worldRows = 3;
@@ -136,14 +138,26 @@ class Amulet {
       games.add(game);
     }
 
-    amuletGameWitchesLair = AmuletGameWitchesLair(
+    amuletGameWitchesLair1 = WitchesLair1(
       amulet: this,
-      scene: scenes.witchesLair,
+      scene: scenes.witchesLair1,
       time: timeUnderground,
       environment: environmentUnderground,
     );
 
-    games.add(amuletGameWitchesLair);
+    amuletGameWitchesLair2 = WitchesLair2(
+      amulet: this,
+      scene: scenes.witchesLair2,
+      time: timeUnderground,
+      environment: environmentUnderground,
+    );
+
+    games.add(amuletGameWitchesLair1);
+    games.add(amuletGameWitchesLair2);
+
+    for (final game in games){
+      game.spawnMarkPortals();
+    }
 
   }
 

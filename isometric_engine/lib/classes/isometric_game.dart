@@ -2489,6 +2489,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       }
       if (target is GameObject) {
         customOnCharacterInteractWithGameObject(character, target);
+        target.onInteract?.call(character);
       }
       character.setCharacterStateIdle();
       character.setDestinationToCurrentPosition();
