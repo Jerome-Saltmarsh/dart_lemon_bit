@@ -86,6 +86,19 @@ class AmuletUI {
               child: buildError(),
             ),
           ),
+          Positioned(
+              top: 0,
+              left: 0,
+              child: IgnorePointer(
+                child: buildWatch(amulet.screenColor, (color) => Container(
+                      width: amulet.engine.screen.width,
+                      height: amulet.engine.screen.height,
+                      color: color,
+
+                    )
+                ),
+              )
+          )
         ]),
   );
   }

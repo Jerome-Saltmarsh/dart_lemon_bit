@@ -86,6 +86,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
              player: src,
              target: targetGame,
            );
+           src.writePlayerEvent(PlayerEvent.Portal_Used);
            targetGame.movePositionToIndex(src, targetIndex);
            src.writePlayerMoved();
          };

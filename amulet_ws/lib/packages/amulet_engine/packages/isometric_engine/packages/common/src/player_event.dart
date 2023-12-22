@@ -23,4 +23,5 @@ class PlayerEvent {
   static const Game_Joined              = 22;
   static const Spawned              = 23;
   static const Puzzle_Solved              = 24;
+  static const Portal_Used              = 25;
 }

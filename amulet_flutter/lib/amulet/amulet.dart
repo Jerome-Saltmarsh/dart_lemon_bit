@@ -3,24 +3,32 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:ui';
 
-import 'package:amulet_engine/packages/common.dart';
+import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/amulet_element.dart';
+import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/amulet_item.dart';
+import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/amulet_scene.dart';
+import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/network/requests/network_request_amulet.dart';
 import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/quests/quest_main.dart';
+import 'package:amulet_engine/packages/isometric_engine/packages/common/src/isometric/node_type.dart';
+import 'package:amulet_engine/packages/isometric_engine/packages/common/src/isometric/slot_type.dart';
+import 'package:amulet_engine/packages/isometric_engine/packages/common/src/network/network_request.dart';
+import 'package:amulet_engine/packages/isometric_engine/packages/common/src/network/requests/network_request_inventory.dart';
+import 'package:amulet_engine/packages/isometric_engine/packages/lemon_math/src/functions/pyramid.dart';
 import 'package:amulet_flutter/amulet/amulet_ui.dart';
 import 'package:amulet_flutter/amulet/classes/item_slot.dart';
-import 'package:amulet_flutter/gamestream/isometric/classes/isometric_game.dart';
-import 'package:amulet_flutter/gamestream/isometric/enums/node_visibility.dart';
-import 'package:amulet_flutter/isometric/classes/position.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
+import '../gamestream/isometric/src.dart';
 import 'amulet_render.dart';
 
 
 class Amulet extends IsometricGame {
 
+  final screenColor = Watch(Colors.transparent);
+  final screenColorI = Watch(0.0);
   final cursor = Watch(SystemMouseCursors.basic);
   var worldMapClrs = Int32List(0);
   var worldMapDsts = Float32List(0);
@@ -108,6 +116,10 @@ class Amulet extends IsometricGame {
     npcTextIndex.onChanged(onChangedNpcTextIndex);
     error.onChanged(onChangedError);
     elementPoints.onChanged(onChangedElementPoints);
+
+    screenColorI.onChanged((t) {
+      screenColor.value = Colors.black.withOpacity((1.0 - t).clamp(0, 1.0));
+    });
   }
 
   void onChangedElementPoints(int elementPoints) =>
@@ -139,13 +151,9 @@ class Amulet extends IsometricGame {
       }
     }
 
-    // if (options.playMode) {
-    //   if (cameraTargetSet.value){
-    //     camera.target = cameraTarget;
-    //   } else {
-    //     camera.target = player.position;
-    //   }
-    // }
+    if (screenColorI.value < 1){
+      screenColorI.value += 0.15;
+    }
   }
 
   void clearError() {

@@ -304,6 +304,9 @@ class IsometricEvents with IsometricComponent {
       case PlayerEvent.Puzzle_Solved:
         audio.notification_sound_10.play();
         break;
+      case PlayerEvent.Portal_Used:
+        amulet.screenColorI.value = 0;
+        break;
       case PlayerEvent.Reloading:
         switch (player.weaponType.value){
           default:
