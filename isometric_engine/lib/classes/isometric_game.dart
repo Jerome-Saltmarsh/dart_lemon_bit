@@ -495,7 +495,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       character.clampVelocity(Physics.Max_Velocity);
       attackHit = true;
       for (final player in players) {
-        if (!player.onScreen(performX, performY)) continue;
+        if (!player.withinRadiusEventDispatch(performX, performY)) continue;
         player.writeGameEvent(
           type: GameEvent.Node_Struck,
           x: performX,
@@ -513,7 +513,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
     if (!attackHit) {
       for (final player in players) {
-        if (!player.onScreen(performX, performY)) continue;
+        if (!player.withinRadiusEventDispatch(performX, performY)) continue;
         player.writeGameEvent(
           type: GameEvent.Attack_Missed,
           x: performX,
@@ -1153,7 +1153,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       if (!NodeType.isRainOrEmpty(nodeType)) {
         final players = this.players;
         for (final player in players) {
-          if (!player.onScreen(projectile.x, projectile.y)) continue;
+          if (!player.withinRadiusEventDispatchPos(projectile)) continue;
           player.writeGameEvent(
             type: GameEvent.Node_Struck,
             x: projectile.x,

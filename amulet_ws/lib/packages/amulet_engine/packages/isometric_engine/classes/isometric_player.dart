@@ -2,6 +2,9 @@
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:amulet_engine/classes/amulet_item_slot.dart';
+
+import '../../../mixins/equipped_weapon.dart';
 import '../isometric_engine.dart';
 import '../consts/isometric_settings.dart';
 
@@ -628,11 +631,29 @@ class IsometricPlayer extends Character with ByteWriter {
     return TargetAction.Run;
   }
 
-  bool onScreen(double x, double y, {double minRadius = 800}){
-    if ((this.x - x).abs() > minRadius) return false;
-    if ((this.y - y).abs() > minRadius) return false;
-    return true;
-  }
+  bool onScreenPosition(Position position) =>
+      onScreen(position.x, position.y);
+
+  bool onScreen(double x, double y) =>
+      screenLeft < x &&
+      screenRight > x &&
+      screenTop < y &&
+      screenBottom > y;
+
+  bool withinRadiusEventDispatchPos(Position position, {double minRadius = 800}) =>
+      withinRadiusEventDispatch(
+          position.x,
+          position.y,
+          minRadius: minRadius,
+      );
+
+  bool withinRadiusEventDispatch(
+      double x,
+      double y,
+      {double minRadius = 800}
+  ) =>
+      (this.x - x).abs() < minRadius &&
+      (this.y - y).abs() < minRadius;
 
   void writeProjectiles(){
     final projectiles = game.projectiles;
@@ -973,16 +994,14 @@ class IsometricPlayer extends Character with ByteWriter {
     writeByte(NetworkResponseIsometric.Selected_Collider);
     writeBool(true);
 
-    // if (selectedCollider is EquippedWeapon){
-    //   writeBool(true);
-    //   final equippedWeapon = selectedCollider as EquippedWeapon;
-    //   writeUInt16(equippedWeapon.itemSlotWeapon.charges);
-    //   writeUInt16(equippedWeapon.itemSlotWeapon.max);
-    //   writeUInt16(equippedWeapon.itemSlotWeapon.cooldown);
-    //   writeUInt16(equippedWeapon.itemSlotWeapon.cooldownDuration);
-    // } else {
-    //   writeBool(false);
-    // }
+    if (selectedCollider is EquippedWeapon){
+      writeBool(true);
+      final equippedWeapon = selectedCollider as EquippedWeapon;
+      writeAmuletItemSlot(equippedWeapon.itemSlotWeapon);
+      writeAmuletItemSlot(equippedWeapon.itemSlotPower);
+    } else {
+      writeBool(false);
+    }
 
     if (selectedCollider is GameObject) {
       final gameObject = selectedCollider;
@@ -1382,5 +1401,12 @@ class IsometricPlayer extends Character with ByteWriter {
     writeByte(NetworkResponse.Player);
     writeByte(NetworkResponsePlayer.Controls_Enabled);
     writeBool(value);
+  }
+
+  void writeAmuletItemSlot(AmuletItemSlot amuletItemSlot){
+    writeInt16(amuletItemSlot.amuletItem?.index ?? -1);
+    writeUInt16(amuletItemSlot.charges);
+    writeUInt16(amuletItemSlot.max);
+    writePercentage(amuletItemSlot.cooldownPercentage);
   }
 }

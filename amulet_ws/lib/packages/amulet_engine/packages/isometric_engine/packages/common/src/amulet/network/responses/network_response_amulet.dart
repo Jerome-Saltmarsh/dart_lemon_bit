@@ -26,4 +26,5 @@ class NetworkResponseAmulet {
    static const Player_World_Index = 28;
    static const Player_World_Positioned = 29;
    static const Quest_Main = 30;
+   static const Debug = 31;
 }

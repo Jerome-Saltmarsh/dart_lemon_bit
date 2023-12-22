@@ -369,7 +369,31 @@ class AmuletPlayer extends IsometricPlayer with
   void writePlayerGame() {
     cleanEquipment();
     writeCameraTarget();
+    // writeDebug();
     super.writePlayerGame();
+  }
+
+  void writeDebug() {
+    if (!debugging) return;
+
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Debug);
+    var total = 0;
+    final characters = game.characters;
+    for (final character in characters) {
+      if (character is EquippedWeapon && onScreenPosition(character)) {
+        total++;
+      }
+    }
+    writeUInt16(total);
+
+    for (final character in characters) {
+      if (character is EquippedWeapon && onScreenPosition(character)) {
+         writeIsometricPosition(character);
+         writeString(character.name);
+      }
+    }
+
   }
 
   void setItemsLength(int value){

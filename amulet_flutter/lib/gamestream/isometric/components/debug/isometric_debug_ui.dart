@@ -1,4 +1,5 @@
 
+import 'package:amulet_flutter/amulet/ui/builders/build_item_slot.dart';
 import 'package:amulet_flutter/gamestream/isometric/enums/mode.dart';
 import 'package:amulet_flutter/gamestream/ui/builders/build_watch.dart';
 import 'package:amulet_flutter/gamestream/ui/constants/height.dart';
@@ -404,6 +405,9 @@ extension isometricDebugUI on IsometricDebug {
             child: buildRowWatchBool(text: 'run-to-destination', watch: runToDestinationEnabled)
         ),
         buildTarget(),
+        buildText('EQUIPPED'),
+        buildItemSlot(debugger.itemSlotWeapon, amulet: amulet),
+        buildItemSlot(debugger.itemSlotPower, amulet: amulet),
       ],
     ),
   );

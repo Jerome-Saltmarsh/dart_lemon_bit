@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:amulet_flutter/amulet/classes/item_slot.dart';
 import 'package:amulet_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:amulet_engine/packages/common.dart';
 import 'package:amulet_engine/packages/lemon_math.dart';
@@ -194,12 +195,26 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
     options.gameRunning.value = readBool();
   }
 
+  void readItemSlot(ItemSlot itemSlot) {
+    final type = readInt16();
+    itemSlot.amuletItem.value = type == -1 ? null : AmuletItem.values[type];
+    itemSlot.charges.value = readUInt16();
+    itemSlot.max.value = readUInt16();
+    itemSlot.cooldownPercentage.value = readPercentage();
+  }
 
   void readSelectedCollider() {
     debugger.selectedCollider.value = readBool();
 
     if (!debugger.selectedCollider.value)
       return;
+
+
+    final isEquippedWeapon = readBool();
+    if (isEquippedWeapon) {
+      readItemSlot(debugger.itemSlotWeapon);
+      readItemSlot(debugger.itemSlotPower);
+    }
 
     final selectedColliderType = readByte();
     debugger.selectedColliderType.value = selectedColliderType;
