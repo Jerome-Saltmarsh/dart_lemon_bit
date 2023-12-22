@@ -16,8 +16,9 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## CAMPAIGN
+* [new]: scene witches lair level 1
+* [new]: scene witches lair level 2
 * [new]: quest window
-* [new]: witch caste fireball
 
 ## CURRENT
 * [new]: character type warlock
@@ -52,6 +53,9 @@ ctrl + []               : move caret to code block
 * [new]: mechanic elemental damage
 * [new]: mobile touch screen support
 * [fix]: audio for web
+
+## 22.12.2023
+* [new]: witch caste fireball
 
 ## 18.12.2023
 * [new]: character type zombie
