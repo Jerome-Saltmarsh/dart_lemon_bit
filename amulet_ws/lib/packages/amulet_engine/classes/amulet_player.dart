@@ -1342,15 +1342,14 @@ class AmuletPlayer extends IsometricPlayer with
     equipmentDirty = true;
   }
 
-  void incrementWeaponCooldowns() {
+  @override
+  void updateItemSlots() {
     final length = weapons.length;
      for (var i = 0; i < length; i++) {
        final weapon = weapons[i];
-
        if (weapon.charges >= weapon.max) {
          continue;
        }
-
        weapon.incrementCooldown();
        writePlayerWeapon(i);
      }

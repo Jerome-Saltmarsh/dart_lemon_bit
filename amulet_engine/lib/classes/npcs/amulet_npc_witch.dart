@@ -25,17 +25,8 @@ class AmuletNpcWitch extends AmuletNpc with EquippedWeapon {
     elementElectricity = 10;
     itemSlotWeapon.amuletItem = AmuletItem.Weapon_Staff_Wooden;
     itemSlotPower.amuletItem = AmuletItem.Spell_Fireball;
+    weaponType = itemSlotWeapon.amuletItem?.subType ?? WeaponType.Unarmed;
     refillItemSlot(itemSlotWeapon);
     refillItemSlot(itemSlotPower);
   }
-
-  @override
-  void update() {
-    super.update();
-    updateItemSlots();
-  }
-
-  @override
-  int get weaponType =>
-      itemSlotWeapon.amuletItem?.subType ?? WeaponType.Unarmed;
 }

@@ -93,8 +93,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
 
     cooldownTimer = Frames_Per_Second;
-    for (final player in players) {
-      player.incrementWeaponCooldowns();
+    final characters = this.characters;
+    for (final character in characters) {
+      if (character is EquippedWeapon) {
+        (character as EquippedWeapon).updateItemSlots();
+      }
     }
   }
 

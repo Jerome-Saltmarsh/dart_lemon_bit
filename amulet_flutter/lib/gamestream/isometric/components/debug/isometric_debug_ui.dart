@@ -13,6 +13,7 @@ import 'package:amulet_flutter/gamestream/isometric/components/functions/format_
 import 'package:amulet_flutter/gamestream/ui/widgets/gs_container.dart';
 import 'package:amulet_flutter/gamestream/ui/widgets/gs_refresh.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
+import '../../../../amulet/ui/builders/build_weapon_slot_at_index.dart';
 import 'debug_tab.dart';
 
 extension isometricDebugUI on IsometricDebug {
@@ -406,8 +407,18 @@ extension isometricDebugUI on IsometricDebug {
         ),
         buildTarget(),
         buildText('EQUIPPED'),
-        buildItemSlot(debugger.itemSlotWeapon, amulet: amulet),
-        buildItemSlot(debugger.itemSlotPower, amulet: amulet),
+        Row(
+          children: [
+            buildWeaponSlotAtIndex2(
+              itemSlot: debugger.itemSlotWeapon,
+              amulet: amulet,
+            ),
+            buildWeaponSlotAtIndex2(
+              itemSlot: debugger.itemSlotPower,
+              amulet: amulet,
+            ),
+          ],
+        )
       ],
     ),
   );
