@@ -3,16 +3,16 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:amulet_engine/classes/amulet_game_witches_lair.dart';
 import 'package:archive/archive.dart';
 
 import '../packages/src.dart';
 import 'amulet_game.dart';
-import 'amulet_game_world_00.dart';
-import 'amulet_game_tutorial.dart';
-import 'amulet_game_world_11.dart';
 import 'amulet_player.dart';
 import 'amulet_scenes.dart';
+import 'games/amulet_game_tutorial.dart';
+import 'games/amulet_game_witches_lair.dart';
+import 'games/amulet_game_world_00.dart';
+import 'games/amulet_game_world_11.dart';
 
 class Amulet {
 

@@ -1,7 +1,7 @@
 
 import 'package:amulet_engine/classes/amulet_game.dart';
-import '../packages/isomeric_engine.dart';
-import 'amulet_player.dart';
+import '../../packages/isomeric_engine.dart';
+import '../amulet_player.dart';
 
 class AmuletGameWorld11 extends AmuletGame {
 

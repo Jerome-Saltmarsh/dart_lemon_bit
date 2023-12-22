@@ -973,6 +973,17 @@ class IsometricPlayer extends Character with ByteWriter {
     writeByte(NetworkResponseIsometric.Selected_Collider);
     writeBool(true);
 
+    // if (selectedCollider is EquippedWeapon){
+    //   writeBool(true);
+    //   final equippedWeapon = selectedCollider as EquippedWeapon;
+    //   writeUInt16(equippedWeapon.itemSlotWeapon.charges);
+    //   writeUInt16(equippedWeapon.itemSlotWeapon.max);
+    //   writeUInt16(equippedWeapon.itemSlotWeapon.cooldown);
+    //   writeUInt16(equippedWeapon.itemSlotWeapon.cooldownDuration);
+    // } else {
+    //   writeBool(false);
+    // }
+
     if (selectedCollider is GameObject) {
       final gameObject = selectedCollider;
       writeByte(IsometricType.GameObject);

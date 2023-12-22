@@ -8,9 +8,9 @@ import '../packages/src.dart';
 import '../mixins/src.dart';
 import 'amulet.dart';
 import 'amulet_game.dart';
-import 'amulet_game_tutorial.dart';
 import 'amulet_item_slot.dart';
 import 'amulet_npc.dart';
+import 'games/amulet_game_tutorial.dart';
 import 'talk_option.dart';
 
 
@@ -153,7 +153,7 @@ class AmuletPlayer extends IsometricPlayer with
     return getLevelForAmuletItem(item);
   }
 
-  AmuletItemLevel? get equippedWeaponAmuletItemLevel {
+  AmuletItemStats? get equippedWeaponAmuletItemLevel {
     final weapon = itemSlotWeapon;
 
     final item = weapon.amuletItem;
@@ -161,7 +161,7 @@ class AmuletPlayer extends IsometricPlayer with
       throw Exception('item == null');
     }
 
-    return getAmuletItemLevel(item);
+    return getAmuletItemStats(item);
   }
 
   @override
@@ -210,22 +210,22 @@ class AmuletPlayer extends IsometricPlayer with
   @override
   int get maxHealth {
     var health = healthBase;
-    health += getAmuletItemLevelsForItemSlot(equippedHandLeft)?.health ?? 0;
-    health += getAmuletItemLevelsForItemSlot(equippedHandRight)?.health ?? 0;
-    health += getAmuletItemLevelsForItemSlot(equippedHelm)?.health ?? 0;
-    health += getAmuletItemLevelsForItemSlot(equippedBody)?.health ?? 0;
-    health += getAmuletItemLevelsForItemSlot(equippedLegs)?.health ?? 0;
+    health += getAmuletItemStatsForItemSlot(equippedHandLeft)?.health ?? 0;
+    health += getAmuletItemStatsForItemSlot(equippedHandRight)?.health ?? 0;
+    health += getAmuletItemStatsForItemSlot(equippedHelm)?.health ?? 0;
+    health += getAmuletItemStatsForItemSlot(equippedBody)?.health ?? 0;
+    health += getAmuletItemStatsForItemSlot(equippedLegs)?.health ?? 0;
     return health;
   }
 
   @override
   double get runSpeed {
     var base = 1.0;
-    base += getAmuletItemLevelsForItemSlot(equippedHandLeft)?.movement ?? 0;
-    base += getAmuletItemLevelsForItemSlot(equippedHandRight)?.movement ?? 0;
-    base += getAmuletItemLevelsForItemSlot(equippedHelm)?.movement ?? 0;
-    base += getAmuletItemLevelsForItemSlot(equippedBody)?.movement ?? 0;
-    base += getAmuletItemLevelsForItemSlot(equippedLegs)?.movement ?? 0;
+    base += getAmuletItemStatsForItemSlot(equippedHandLeft)?.movement ?? 0;
+    base += getAmuletItemStatsForItemSlot(equippedHandRight)?.movement ?? 0;
+    base += getAmuletItemStatsForItemSlot(equippedHelm)?.movement ?? 0;
+    base += getAmuletItemStatsForItemSlot(equippedBody)?.movement ?? 0;
+    base += getAmuletItemStatsForItemSlot(equippedLegs)?.movement ?? 0;
     return base;
   }
 
@@ -364,19 +364,6 @@ class AmuletPlayer extends IsometricPlayer with
     super.initialize();
     writeEquippedWeaponIndex();
   }
-
-  AmuletItemLevel? getAmuletItemLevelsForItemSlot(AmuletItemSlot itemSlot) {
-    final amuletItem = itemSlot.amuletItem;
-    if (amuletItem == null){
-      return null;
-    }
-    return getAmuletItemLevel(amuletItem);
-  }
-
-  AmuletItemLevel? getAmuletItemLevel(AmuletItem amuletItem) =>
-      amuletItem.getStatsForLevel(
-          getLevelForAmuletItem(amuletItem)
-      );
 
   @override
   void writePlayerGame() {
@@ -626,7 +613,7 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
 
-    final itemStats = getAmuletItemLevel(amuletItem);
+    final itemStats = getAmuletItemStats(amuletItem);
 
     if (itemStats == null){
       writeGameError(GameError.Insufficient_Elements);
@@ -1232,7 +1219,7 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
 
-    final activeAbilityStats = getAmuletItemLevel(activeAbility);
+    final activeAbilityStats = getAmuletItemStats(activeAbility);
 
     if (activeAbilityStats == null){
       writeGameError(GameError.Insufficient_Elements);
@@ -1492,26 +1479,6 @@ class AmuletPlayer extends IsometricPlayer with
     equipmentDirty = true;
   }
 
-  void refillItemSlot(AmuletItemSlot itemSlot){
-    final amuletItem = itemSlot.amuletItem;
-    if (amuletItem == null) {
-      return;
-    }
-    final itemStats = getAmuletItemLevelsForItemSlot(itemSlot);
-    if (itemStats == null) {
-      itemSlot.max = 0;
-      itemSlot.charges = 0;
-      itemSlot.cooldown = 0;
-      itemSlot.cooldownDuration = 0;
-      return;
-    }
-    final max = itemStats.charges;
-    itemSlot.max = max;
-    itemSlot.charges = max;
-    itemSlot.cooldown = 0;
-    itemSlot.cooldownDuration = itemStats.cooldown;
-  }
-
   int getInt(String name) {
     return data[name] as int;
   }
@@ -1682,7 +1649,7 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
 
-    final equippedWeaponLevel = getAmuletItemLevel(equippedWeaponAmuletItem);
+    final equippedWeaponLevel = getAmuletItemStats(equippedWeaponAmuletItem);
 
     if (equippedWeaponLevel == null){
       writeGameError(GameError.Insufficient_Elements);
@@ -1750,7 +1717,7 @@ class AmuletPlayer extends IsometricPlayer with
       throw Exception();
     }
 
-    final stats = getAmuletItemLevel(amuletItem);
+    final stats = getAmuletItemStats(amuletItem);
 
     if (stats == null){
       throw Exception('must have stats for activated item');
@@ -1762,7 +1729,7 @@ class AmuletPlayer extends IsometricPlayer with
 
   void onAmuletItemUsed(AmuletItem amuletItem) {
 
-    final amuletItemLevel = getAmuletItemLevel(amuletItem);
+    final amuletItemLevel = getAmuletItemStats(amuletItem);
 
     if (amuletItemLevel == null) {
       writeGameError(GameError.Insufficient_Elements);
@@ -1913,13 +1880,6 @@ class AmuletPlayer extends IsometricPlayer with
   void clearActivatedPowerIndex(){
     activatedPowerIndex = -1;
   }
-
-  int getLevelForAmuletItem(AmuletItem amuletItem) =>
-      amuletItem.getLevel(
-        fire: elementFire,
-        water: elementWater,
-        electricity: elementElectricity,
-      );
 
   writeHighlightAmuletItems(AmuletItem amuletItem){
     writeByte(NetworkResponse.Amulet);

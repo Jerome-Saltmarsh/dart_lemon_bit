@@ -1,7 +1,5 @@
 
-import 'package:amulet_engine/classes/amulet_npcs/amulet_npc_witch.dart';
-
-import '../src.dart';
+import '../../src.dart';
 
 class AmuletGameWitchesLair extends AmuletGame {
 
@@ -69,32 +67,26 @@ class AmuletGameWitchesLair extends AmuletGame {
 
   @override
   void updateCharacterAction(Character character) {
-    if (character is AmuletNpcWitch){
-       final target = character.target;
-       if (target != null) {
-          if (character.itemSlotPower.charges > 0){
-            final itemSlotPower = character.itemSlotPower;
-            final itemTypePower = itemSlotPower.amuletItem;
-            if (itemTypePower != null) {
-              final powerLevel = itemTypePower.getLevel(
-                  fire: character.elementFire,
-                  water: character.elementWater,
-                  electricity: character.elementElectricity,
+    if (character.deadInactiveOrBusy) {
+      return;
+    }
+
+    final target = character.target;
+    if (character is AmuletNpcWitch && target != null){
+       final itemSlotPower = character.itemSlotPower;
+       final powerAmuletItem = itemSlotPower.amuletItem;
+       if (powerAmuletItem != null && !itemSlotPower.chargesEmpty){
+          final powerStats = character.getAmuletItemStats(powerAmuletItem);
+          if (powerStats != null) {
+            if (character.withinRadiusPosition(target, powerStats.range)) {
+              character.activateItemSlotPower();
+              character.facePosition(target);
+              character.itemSlotPower.reduceCharges();
+              character.setCharacterStateCasting(
+                duration: 35,
               );
-              if (powerLevel != -1){
-                final powerStats = itemTypePower.getStatsForLevel(powerLevel);
-                if (powerStats != null){
-                  if (character.withinRadiusPosition(target, powerStats.range)) {
-                    character.itemSlotPowerActive = true;
-                    character.setCharacterStateCasting(
-                        duration: powerStats.performDuration,
-                    );
-                  }
-                }
-              }
             }
           }
-
        }
     }
     super.updateCharacterAction(character);

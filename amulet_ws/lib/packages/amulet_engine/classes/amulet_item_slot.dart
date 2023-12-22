@@ -55,9 +55,8 @@ class AmuletItemSlot {
   bool get chargesEmpty => charges <= 0;
 
   void reduceCharges(){
-     if (chargesEmpty){
-       return;
+     if (charges > 0){
+       charges--;
      }
-     charges--;
   }
 }

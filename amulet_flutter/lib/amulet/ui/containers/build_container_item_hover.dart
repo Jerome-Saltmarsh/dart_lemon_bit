@@ -30,7 +30,7 @@ Widget buildContainerAmuletItemHover({
             children: [
               buildAmuletItemIcon(item),
               height8,
-              buildContainerItemStats(stats1, 1),
+              buildContainerAmuletItemStats(stats1, 1),
             ],
           );
         }
@@ -53,11 +53,11 @@ Widget buildContainerAmuletItemHover({
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                buildContainerItemStats(statsCurrent, levelCurrent, color: Colors.green.shade900),
+                buildContainerAmuletItemStats(statsCurrent, levelCurrent, color: Colors.green.shade900),
                 if (statsNext != null)
                  Container(
                      margin: const EdgeInsets.only(left: 8),
-                     child: buildContainerItemStats(statsNext, levelNext, color: Colors.orange.shade900),
+                     child: buildContainerAmuletItemStats(statsNext, levelNext, color: Colors.orange.shade900),
                  ),
               ],
             ),
@@ -114,7 +114,11 @@ Widget buildAmuletItemIcon(AmuletItem item) {
     );
 }
 
-Widget buildContainerItemStats(AmuletItemLevel itemStats, int level, {Color? color}) =>
+Widget buildContainerAmuletItemStats(
+    AmuletItemStats amuletItemStats,
+    int level,
+    {Color? color}
+) =>
     IsometricBuilder(builder: (context, components) =>
         buildBorder(
           color: color ?? Colors.transparent,
@@ -135,35 +139,35 @@ Widget buildContainerItemStats(AmuletItemLevel itemStats, int level, {Color? col
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          if (itemStats.fire > 0)
-                            buildStatColumn2(AmuletElement.fire, itemStats.fire, components),
-                          if (itemStats.water > 0)
-                            buildStatColumn2(AmuletElement.water, itemStats.water, components),
-                          if (itemStats.electricity > 0)
-                            buildStatColumn2(AmuletElement.electricity, itemStats.electricity, components),
+                          if (amuletItemStats.fire > 0)
+                            buildStatColumn2(AmuletElement.fire, amuletItemStats.fire, components),
+                          if (amuletItemStats.water > 0)
+                            buildStatColumn2(AmuletElement.water, amuletItemStats.water, components),
+                          if (amuletItemStats.electricity > 0)
+                            buildStatColumn2(AmuletElement.electricity, amuletItemStats.electricity, components),
                         ])
 
                   ],
                 ),
-                if (itemStats.information != null)
+                if (amuletItemStats.information != null)
                   GSContainer(
                     padding: const EdgeInsets.all(6),
-                    child: buildText(itemStats.information, color: Colors.white70, align: TextAlign.center),
+                    child: buildText(amuletItemStats.information, color: Colors.white70, align: TextAlign.center),
                     color: Colors.white12,
                   ),
                 height4,
-                if (itemStats.damageMin != 0)
-                  buildTableRow('damage', '${itemStats.damageMin} - ${itemStats.damageMax}'),
-                if (itemStats.charges != 0)
-                  buildTableRow('charges', itemStats.charges),
-                if (itemStats.cooldown != 0)
-                  buildTableRow('cooldown', itemStats.cooldown),
-                if (itemStats.range != 0)
-                  buildTableRow('range', itemStats.range),
-                if (itemStats.quantity != 0)
-                  buildTableRow('quantity', itemStats.quantity),
-                if (itemStats.health != 0)
-                  buildTableRow('health', itemStats.health),
+                if (amuletItemStats.damageMin != 0)
+                  buildTableRow('damage', '${amuletItemStats.damageMin} - ${amuletItemStats.damageMax}'),
+                if (amuletItemStats.charges != 0)
+                  buildTableRow('charges', amuletItemStats.charges),
+                if (amuletItemStats.cooldown != 0)
+                  buildTableRow('cooldown', amuletItemStats.cooldown),
+                if (amuletItemStats.range != 0)
+                  buildTableRow('range', amuletItemStats.range),
+                if (amuletItemStats.quantity != 0)
+                  buildTableRow('quantity', amuletItemStats.quantity),
+                if (amuletItemStats.health != 0)
+                  buildTableRow('health', amuletItemStats.health),
               ],
             ),
           ),

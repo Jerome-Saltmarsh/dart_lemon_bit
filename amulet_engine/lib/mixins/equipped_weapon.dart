@@ -13,4 +13,17 @@ mixin EquippedWeapon {
   AmuletItemSlot get itemSlotActive =>
       itemSlotPowerActive ? itemSlotPower : itemSlotWeapon;
 
+
+  void updateItemSlots(){
+    itemSlotWeapon.incrementCooldown();
+    itemSlotPower.incrementCooldown();
+  }
+
+  void deactivateItemSlotPower(){
+    itemSlotPowerActive = false;
+  }
+
+  void activateItemSlotPower(){
+    itemSlotPowerActive = true;
+  }
 }

@@ -175,6 +175,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       character.clearActivatedPowerIndex();
     }
 
+    if (equipped.itemSlotPowerActive){
+      equipped.deactivateItemSlotPower();
+    }
+
     if (activeSlotAmuletItem == null){
       throw Exception('amuletItem == null');
     }
@@ -184,28 +188,28 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
 
     final elements = character as Elemental;
+    final activeSlotAmuletItemLevel = elements.getLevelForAmuletItem(activeSlotAmuletItem);
 
-    final level = activeSlotAmuletItem.getLevel(
-        fire: elements.elementFire,
-        water: elements.elementWater,
-        electricity: elements.elementElectricity,
-    );
-
-    if (level == -1){
+    if (activeSlotAmuletItemLevel == -1){
       if (character is AmuletPlayer){
         character.writeGameError(GameError.Insufficient_Elements);
       }
       return;
     }
 
-    final stats = activeSlotAmuletItem.getStatsForLevel(level);
+    final activeSlotAmuletItemStats = activeSlotAmuletItem.getStatsForLevel(
+        activeSlotAmuletItemLevel
+    );
 
-    if (stats == null){
-      throw Exception('stats == null');
+    if (activeSlotAmuletItemStats == null){
+      throw Exception('activeSlotAmuletItemStats == null');
     }
 
-    final damage = randomInt(stats.damageMin, stats.damageMax + 1);
-    final range = stats.range;
+    final damage = randomInt(
+        activeSlotAmuletItemStats.damageMin,
+        activeSlotAmuletItemStats.damageMax + 1,
+    );
+    final range = activeSlotAmuletItemStats.range;
 
     switch (activeSlotAmuletItem) {
       case AmuletItem.Spell_Thunderbolt:
@@ -252,7 +256,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         );
         break;
       case AmuletItem.Spell_Heal:
-        useAmuletItemSpellHeal(character: character, stats: stats);
+        useAmuletItemSpellHeal(character: character, stats: activeSlotAmuletItemStats);
         break;
       case AmuletItem.Spell_Bow_Split_Arrow:
         final equippedWeaponSlot = equipped.itemSlotWeapon;
@@ -274,7 +278,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         if (equippedWeaponStats == null){
           throw Exception('equippedWeaponStats is null');
         }
-        final totalArrows = stats.quantity;
+        final totalArrows = activeSlotAmuletItemStats.quantity;
         final radian = pi * 0.25;
         final radianPerArrow = radian / totalArrows;
         final initialAngle = character.angle - (radian * 0.5);
@@ -621,7 +625,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   void useAmuletItemSpellHeal({
     required Character character,
-    required AmuletItemLevel stats,
+    required AmuletItemStats stats,
   }) {
     character.health += stats.health;
     dispatchGameEventPosition(GameEvent.Spell_Used, character);

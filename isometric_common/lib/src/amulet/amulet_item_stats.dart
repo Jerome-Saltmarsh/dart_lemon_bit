@@ -1,4 +1,4 @@
-class AmuletItemLevel {
+class AmuletItemStats {
   final int damageMin;
   final int damageMax;
   final int fire;
@@ -13,7 +13,7 @@ class AmuletItemLevel {
   final String? information;
   final int performDuration;
 
-  const AmuletItemLevel({
+  const AmuletItemStats({
     this.information,
     this.damageMin = 0,
     this.damageMax = 0,

@@ -499,7 +499,7 @@ class Character extends Collider {
     if (deadInactiveOrBusy){
       return;
     }
-    actionFrame = (duration * casteActionFramePercentage).toInt();
+    setActionFrame((duration * casteActionFramePercentage).toInt());
     setDestinationToCurrentPosition();
     setCharacterState(
       value: CharacterState.Casting,
@@ -595,7 +595,7 @@ class Character extends Collider {
     setActionFrame(-1);
   }
 
-  void setActionFrame(int value){
+  void setActionFrame(int value) {
     actionFrame = value;
   }
 }

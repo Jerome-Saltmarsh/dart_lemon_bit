@@ -7,19 +7,19 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Sword,
     description: 'Teleport a short distance',
-    level1: AmuletItemLevel(
+    level1: AmuletItemStats(
       charges: 1,
       cooldown: 0,
       range: 150,
       performDuration: 16,
     ),
-    level2: AmuletItemLevel(
+    level2: AmuletItemStats(
       charges: 1,
       cooldown: 0,
       range: 160,
       performDuration: 16,
     ),
-    level3: AmuletItemLevel(
+    level3: AmuletItemStats(
       charges: 1,
       cooldown: 0,
       range: 170,
@@ -32,7 +32,7 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Sword,
     description: 'An old blunt sword',
-    level1: AmuletItemLevel(
+    level1: AmuletItemStats(
       damageMin: 3,
       damageMax: 4,
       range: 60,
@@ -40,7 +40,7 @@ enum AmuletItem {
       charges: 1,
       performDuration: 32,
     ),
-    level2: AmuletItemLevel(
+    level2: AmuletItemStats(
       damageMin: 4,
       damageMax: 7,
       range: 60,
@@ -49,7 +49,7 @@ enum AmuletItem {
       performDuration: 28,
       fire: 1,
     ),
-    level3: AmuletItemLevel(
+    level3: AmuletItemStats(
       damageMin: 6,
       damageMax: 10,
       range: 60,
@@ -65,18 +65,18 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
     description: 'An old gnarled staff',
-    level1: AmuletItemLevel(
+    level1: AmuletItemStats(
         range: 100,
         damageMin: 1,
         damageMax: 3,
     ),
-    level2: AmuletItemLevel(
+    level2: AmuletItemStats(
         range: 110,
         damageMin: 5,
         damageMax: 8,
         fire: 3,
     ),
-    level3: AmuletItemLevel(
+    level3: AmuletItemStats(
         range: 120,
         damageMin: 8,
         damageMax: 12,
@@ -89,7 +89,7 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
     description: 'A powerful staff that eliminates cold',
-    level1: AmuletItemLevel(
+    level1: AmuletItemStats(
         range: 100,
         damageMin: 1,
     ),
@@ -101,7 +101,7 @@ enum AmuletItem {
     subType: SpellType.Split_Arrow,
     quality: AmuletItemQuality.Common,
     description: 'fires multiple arrows',
-    level1: AmuletItemLevel(
+    level1: AmuletItemStats(
       damageMin: 3,
       damageMax: 6,
       fire: 0,
@@ -118,7 +118,7 @@ enum AmuletItem {
     subType: SpellType.Split_Arrow,
     quality: AmuletItemQuality.Common,
     description: 'fires multiple arrows',
-    level1: AmuletItemLevel(
+    level1: AmuletItemStats(
       damageMin: 3,
       damageMax: 6,
       fire: 0,
@@ -127,7 +127,7 @@ enum AmuletItem {
       performDuration: 25,
       quantity: 3,
     ),
-    level2: AmuletItemLevel(
+    level2: AmuletItemStats(
       damageMin: 6,
       damageMax: 9,
       fire: 3,
@@ -138,7 +138,7 @@ enum AmuletItem {
       performDuration: 25,
       quantity: 4,
     ),
-    level3: AmuletItemLevel(
+    level3: AmuletItemStats(
       damageMin: 9,
       damageMax: 12,
       fire: 3,
@@ -156,7 +156,7 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Bow,
     description: 'A worn out bow',
-    level1: AmuletItemLevel(
+    level1: AmuletItemStats(
       damageMin: 5,
       damageMax: 10,
       charges: 3,
@@ -165,7 +165,7 @@ enum AmuletItem {
       performDuration: 20,
       electricity: 0,
     ),
-    level2: AmuletItemLevel(
+    level2: AmuletItemStats(
       damageMin: 7,
       damageMax: 12,
       charges: 3,
@@ -174,7 +174,7 @@ enum AmuletItem {
       performDuration: 18,
       electricity: 2,
     ),
-    level3: AmuletItemLevel(
+    level3: AmuletItemStats(
       damageMin: 9,
       damageMax: 14,
       charges: 4,
@@ -190,19 +190,19 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Bow,
     description: 'A mythical bow which does a lot of damage',
-    level1: AmuletItemLevel(
+    level1: AmuletItemStats(
         range: 150,
         damageMin: 5,
         cooldown: 15,
         charges: 3,
     ),
-    level2: AmuletItemLevel(
+    level2: AmuletItemStats(
       range: 160,
       damageMin: 8,
       cooldown: 38,
       charges: 3,
     ),
-    level3: AmuletItemLevel(
+    level3: AmuletItemStats(
       range: 170,
       damageMin: 12,
       cooldown: 36,
@@ -215,7 +215,7 @@ enum AmuletItem {
     description: 'An ordinary helmet made of steel',
     type: ItemType.Helm,
     subType: HelmType.Steel,
-    level1: AmuletItemLevel(),
+    level1: AmuletItemStats(),
   ),
   Helm_Wizards_Hat(
     selectAction: AmuletItemAction.Equip,
@@ -223,7 +223,7 @@ enum AmuletItem {
     type: ItemType.Helm,
     subType: HelmType.Wizard_Hat,
     description: 'A hat commonly worn by students of magic school',
-    level1: AmuletItemLevel(),
+    level1: AmuletItemStats(),
   ),
   Pants_Travellers(
     selectAction: AmuletItemAction.Equip,
@@ -231,7 +231,7 @@ enum AmuletItem {
     type: ItemType.Legs,
     subType: LegType.Leather,
     description: 'Common pants made for more for comfort than combat',
-    level1: AmuletItemLevel(
+    level1: AmuletItemStats(
       health: 5,
     ),
   ),
@@ -241,7 +241,7 @@ enum AmuletItem {
     type: ItemType.Legs,
     subType: LegType.Leather,
     description: 'light pants which provide easy movement with some protection',
-    level1: AmuletItemLevel(
+    level1: AmuletItemStats(
       health: 5,
       fire: 5,
     ),
@@ -252,7 +252,7 @@ enum AmuletItem {
     type: ItemType.Legs,
     subType: LegType.Leather,
     description: 'Quite heavy but they offer a lot of protection',
-    level1: AmuletItemLevel(
+    level1: AmuletItemStats(
       health: 15,
       fire: 10,
     ),
@@ -263,7 +263,7 @@ enum AmuletItem {
     type: ItemType.Hand,
     subType: HandType.Gauntlets,
     description: 'Common gauntlets',
-    level1: AmuletItemLevel(
+    level1: AmuletItemStats(
       health: 5,
     ),
   ),
@@ -273,7 +273,7 @@ enum AmuletItem {
     type: ItemType.Hand,
     subType: HandType.Leather_Gloves,
     description: 'Common leather gloves',
-    level1: AmuletItemLevel(
+    level1: AmuletItemStats(
       health: 5,
     ),
   ),
@@ -283,7 +283,7 @@ enum AmuletItem {
     type: ItemType.Body,
     subType: BodyType.Shirt_Blue,
     description: 'An ordinary shirt',
-    level1: AmuletItemLevel(
+    level1: AmuletItemStats(
       health: 10,
     ),
   ),
@@ -293,7 +293,7 @@ enum AmuletItem {
     type: ItemType.Body,
     subType: BodyType.Leather_Armour,
     description: 'Common armour',
-    level1: AmuletItemLevel(
+    level1: AmuletItemStats(
       health: 15
     ),
   ),
@@ -303,15 +303,15 @@ enum AmuletItem {
     type: ItemType.Shoes,
     subType: ShoeType.Leather_Boots,
     description: 'A common leather boots',
-    level1: AmuletItemLevel(
+    level1: AmuletItemStats(
       health: 5,
       electricity: 2,
     ),
-    level2: AmuletItemLevel(
+    level2: AmuletItemStats(
       health: 10,
       electricity: 4,
     ),
-    level3: AmuletItemLevel(
+    level3: AmuletItemStats(
       health: 15,
       electricity: 8,
     ),
@@ -322,15 +322,15 @@ enum AmuletItem {
     type: ItemType.Shoes,
     subType: ShoeType.Iron_Plates,
     description: 'Heavy boots which provide good defense',
-    level1: AmuletItemLevel(
+    level1: AmuletItemStats(
       health: 5,
       fire: 5
     ),
-    level2: AmuletItemLevel(
+    level2: AmuletItemStats(
       health: 10,
       fire: 8
     ),
-    level3: AmuletItemLevel(
+    level3: AmuletItemStats(
       health: 12,
     ),
   ),
@@ -340,7 +340,7 @@ enum AmuletItem {
     type: ItemType.Shoes,
     subType: ShoeType.Iron_Plates,
     description: 'Commonly worn by water mages',
-    level1: AmuletItemLevel(),
+    level1: AmuletItemStats(),
   ),
   Shoe_Storm_Boots(
     selectAction: AmuletItemAction.Equip,
@@ -348,7 +348,7 @@ enum AmuletItem {
     type: ItemType.Shoes,
     subType: ShoeType.Iron_Plates,
     description: 'commonly worn by electric mages',
-    level1: AmuletItemLevel(),
+    level1: AmuletItemStats(),
   ),
   Potion_Health(
     selectAction: AmuletItemAction.Consume,
@@ -357,7 +357,7 @@ enum AmuletItem {
     subType: ConsumableType.Potion_Red,
     consumable: true,
     description: 'Replenishes health',
-    level1: AmuletItemLevel(
+    level1: AmuletItemStats(
       health: 5,
     ),
   ),
@@ -385,7 +385,7 @@ enum AmuletItem {
     type: ItemType.Treasure,
     subType: TreasureType.Pendant_1,
     description: 'faster sword attacks',
-    level1: AmuletItemLevel(
+    level1: AmuletItemStats(
 
     ),
   ),
@@ -395,7 +395,7 @@ enum AmuletItem {
     type: ItemType.Treasure,
     subType: TreasureType.Pendant_1,
     description: 'increases arrow damage',
-    level1: AmuletItemLevel(
+    level1: AmuletItemStats(
 
     ),
   ),
@@ -405,7 +405,7 @@ enum AmuletItem {
     type: ItemType.Treasure,
     subType: TreasureType.Pendant_1,
     description: 'a radian blue pendant',
-    level1: AmuletItemLevel(),
+    level1: AmuletItemStats(),
   ),
   Spell_Thunderbolt(
     selectAction: AmuletItemAction.Caste,
@@ -413,7 +413,7 @@ enum AmuletItem {
     type: ItemType.Spell,
     subType: SpellType.Thunderbolt,
     description: 'strikes random nearby enemies with lightning',
-    level1: AmuletItemLevel(
+    level1: AmuletItemStats(
       damageMin: 3,
       damageMax: 5,
       cooldown: 30,
@@ -422,7 +422,7 @@ enum AmuletItem {
       range: 100,
       quantity: 1,
     ),
-    level2: AmuletItemLevel(
+    level2: AmuletItemStats(
       damageMin: 5,
       damageMax: 10,
       cooldown: 28,
@@ -431,7 +431,7 @@ enum AmuletItem {
       fire: 1,
       range: 150,
     ),
-    level3: AmuletItemLevel(
+    level3: AmuletItemStats(
       damageMin: 12,
       damageMax: 16,
       cooldown: 26,
@@ -447,7 +447,7 @@ enum AmuletItem {
     type: ItemType.Spell,
     subType: SpellType.Fireball,
     description: 'strikes random nearby enemies with lightning',
-    level1: AmuletItemLevel(
+    level1: AmuletItemStats(
       damageMin: 3,
       damageMax: 5,
       cooldown: 5,
@@ -457,7 +457,7 @@ enum AmuletItem {
       quantity: 1,
       performDuration: 25,
     ),
-    level2: AmuletItemLevel(
+    level2: AmuletItemStats(
       damageMin: 5,
       damageMax: 10,
       cooldown: 4,
@@ -467,7 +467,7 @@ enum AmuletItem {
       range: 150,
       performDuration: 20,
     ),
-    level3: AmuletItemLevel(
+    level3: AmuletItemStats(
       damageMin: 12,
       damageMax: 16,
       cooldown: 3,
@@ -484,15 +484,15 @@ enum AmuletItem {
       type: ItemType.Spell,
       subType: SpellType.Blink,
       description: 'teleport a short distance',
-      level1: AmuletItemLevel(
+      level1: AmuletItemStats(
         cooldown: 30,
         range: 50,
       ),
-      level2: AmuletItemLevel(
+      level2: AmuletItemStats(
         cooldown: 28,
         range: 60,
       ),
-      level3: AmuletItemLevel(
+      level3: AmuletItemStats(
         cooldown: 26,
         range: 70,
       ),
@@ -503,21 +503,21 @@ enum AmuletItem {
       type: ItemType.Spell,
       subType: SpellType.Heal,
       description: 'heals a small amount of health',
-      level1: AmuletItemLevel(
+      level1: AmuletItemStats(
         charges: 1,
         cooldown: 14,
         health: 5,
         performDuration: 25,
         water: 0,
       ),
-      level2: AmuletItemLevel(
+      level2: AmuletItemStats(
         charges: 1,
         cooldown: 12,
         health: 7,
         performDuration: 23,
         water: 3,
       ),
-      level3: AmuletItemLevel(
+      level3: AmuletItemStats(
         charges: 1,
         cooldown: 10,
         health: 10,
@@ -536,9 +536,9 @@ enum AmuletItem {
   final int subType;
   final bool consumable;
   final AmuletItemQuality quality;
-  final AmuletItemLevel level1;
-  final AmuletItemLevel? level2;
-  final AmuletItemLevel? level3;
+  final AmuletItemStats level1;
+  final AmuletItemStats? level2;
+  final AmuletItemStats? level3;
 
   const AmuletItem({
     required this.type,
@@ -553,7 +553,7 @@ enum AmuletItem {
     this.consumable = false,
   });
 
-  AmuletItemLevel? getStatsForLevel(int level) => switch (level) {
+  AmuletItemStats? getStatsForLevel(int level) => switch (level) {
         1 => level1,
         2 => level2,
         3 => level3,
@@ -686,7 +686,7 @@ enum AmuletItem {
   }
 
   static bool statsSupport({
-    required AmuletItemLevel? stat,
+    required AmuletItemStats? stat,
     required int fire,
     required int water,
     required int electricity,

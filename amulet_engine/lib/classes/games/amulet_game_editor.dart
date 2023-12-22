@@ -1,8 +1,8 @@
 
 
-import '../packages/src.dart';
-import 'amulet_game.dart';
-import 'amulet_player.dart';
+import '../../packages/src.dart';
+import '../amulet_game.dart';
+import '../amulet_player.dart';
 
 class AmuletGameEditor extends AmuletGame {
   AmuletGameEditor({

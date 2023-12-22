@@ -1,10 +1,10 @@
 
 import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/quests/quest_main.dart';
 
-import '../packages/src.dart';
-import 'amulet_game.dart';
-import 'amulet_npc.dart';
-import 'amulet_player.dart';
+import '../../packages/src.dart';
+import '../amulet_game.dart';
+import '../amulet_npc.dart';
+import '../amulet_player.dart';
 
 class AmuletGameWorld00 extends AmuletGame {
 
