@@ -87,7 +87,16 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
              target: targetGame,
            );
            src.writePlayerEvent(PlayerEvent.Portal_Used);
-           targetGame.movePositionToIndex(src, targetIndex);
+           final targetScene = targetGame.scene;
+           final targetShapes = targetScene.shapes;
+           if (targetShapes[targetIndex + targetScene.columns] == NodeOrientation.None){
+             targetGame.movePositionToIndex(src, targetIndex + targetScene.columns);
+           } else if (targetShapes[targetIndex + 1] == NodeOrientation.None) {
+             targetGame.movePositionToIndex(src, targetIndex + 1);
+           } else {
+             print('INVALID_PORTALS: ${amuletScene.name} does not a have a valid port index destination');
+           }
+
            src.writePlayerMoved();
          };
        }
