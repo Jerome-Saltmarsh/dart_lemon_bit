@@ -730,6 +730,45 @@ class IsometricUI with IsometricComponent {
       )
     );
 
+  void showDialogValues<T>({
+    required String title,
+    required List<T> values,
+    required String Function(T t) toString,
+    required Function(T value) onSelected,
+    double height = 400,
+  }) => showDialog(
+      child: GSContainer(
+        width: height * goldenRatio_0618,
+        height: height,
+        child: Column(children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              buildText(title, color: Colors.white70),
+              onPressed(
+                  action: closeDialog,
+                  child: buildText('close')
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          SingleChildScrollView(
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: values
+                    .map((value) => onPressed(
+                  action: () {
+                    onSelected(value);
+                    closeDialog();
+                  },
+                    child: buildText(toString(value))))
+                    .toList(growable: false)),
+          )
+        ])
+      )
+    );
+
   void showDialog({required Widget child, Function? onClosed, Function? onOpen}){
     onOpen?.call();
     dialog.value = OnDisposed(

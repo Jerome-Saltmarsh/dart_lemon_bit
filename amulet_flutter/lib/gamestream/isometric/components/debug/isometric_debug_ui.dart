@@ -171,6 +171,20 @@ extension isometricDebugUI on IsometricDebug {
   Widget buildTabLighting() =>
       Column(
         children: [
+          onPressed(
+            action: (){
+              ui.showDialogValues(
+                title: 'Filter Quality',
+                values: FilterQuality.values,
+                toString: (v) => v.name,
+                onSelected: options.filterQuality,
+              );
+            },
+             child: buildRow(
+                 'filter-quality',
+                 buildWatch(options.filterQuality, (t) => buildText(t.name)),
+             ),
+          ),
           buildRow('ambient-color', onPressed(
             action: ui.showDialogColorPicker,
             child: Container(
@@ -200,24 +214,6 @@ extension isometricDebugUI on IsometricDebug {
             action: scene.recordBakeStack,
             child: buildText('record bake'),
           ),
-          // ColorPicker(
-          //   portraitOnly: true,
-          //   pickerColor: HSVColor.fromAHSV(
-          //     ambientAlpha / 255,
-          //     // ambientHue.toDouble(),
-          //     // ambientSaturation / 100,
-          //     // ambientValue / 100,
-          //   ).toColor(),
-          //   onColorChanged: (color){
-          //     overrideColor.value = true;
-          //     final hsvColor = HSVColor.fromColor(color);
-          //     ambientAlpha = (hsvColor.alpha * 255).round();
-          //     // ambientHue = hsvColor.hue.round();
-          //     // ambientSaturation = (hsvColor.saturation * 100).round();
-          //     // ambientValue = (hsvColor.value * 100).round();
-          //     resetNodeColorsToAmbient();
-          //   },
-          // ),
         ],
       );
 

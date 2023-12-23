@@ -57,7 +57,8 @@ class IsometricOptions with IsometricComponent implements Updatable {
   final colorFilterColor = Watch(Colors.white);
   final colorFilterBlendMode = Watch(BlendMode.modulate);
   final colorFilterDay = Watch(Colors.white);
-  final colorFilterNight = Watch(Color.fromRGBO(247, 150, 23, 1.0));
+  final colorFilterNight = Watch(Color.lerp(Color.fromRGBO(247, 150, 23, 1.0), Colors.white, 0.5));
+  final filterQuality = Watch(FilterQuality.none);
 
   late final Watch<Game> game;
 
@@ -73,7 +74,13 @@ class IsometricOptions with IsometricComponent implements Updatable {
     colorFilterBlendMode.onChanged((t) {
       engine.paint.colorFilter = ColorFilter.mode(colorFilterColor.value, t);
     });
+    filterQuality.onChanged((t) {
+      engine.paint.filterQuality = t;
+    });
   }
+
+  late final List<ColorFilter> colorFilters;
+  static const colorFiltersLength = 48;
 
   @override
   Future onComponentInit(sharedPreferences) async {
@@ -83,6 +90,13 @@ class IsometricOptions with IsometricComponent implements Updatable {
     engine.durationPerUpdate.value = convertFramesPerSecondToDuration(20);
     engine.cursorType.value = CursorType.Basic;
     engine.paint.colorFilter = ColorFilter.mode(Colors.orange, BlendMode.modulate);
+    engine.paint.filterQuality = filterQuality.value;
+
+    colorFilters = List.generate(colorFiltersLength, (index) {
+       final i = index / colorFiltersLength;
+       final color = Color.lerp(colorFilterDay.value, colorFilterNight.value, i);
+       return ColorFilter.mode(color ?? (throw Exception('invalid color')), BlendMode.modulate);
+    });
 
     var cacheLoaded = false;
     server.remote.userId.onChanged((t) {

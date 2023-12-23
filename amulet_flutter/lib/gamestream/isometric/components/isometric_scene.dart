@@ -1598,12 +1598,15 @@ class IsometricScene with IsometricComponent implements Updatable {
       ambientAlpha += lighting.rainAmbientHeavy;
     }
 
-    const colorDay = Colors.white;
-    const colorNight = Colors.orange;
-    final color = Color.lerp(colorDay, colorNight, ambientAlpha / (255 * 1.5));
-    if (color != null){
-      engine.paint.colorFilter = ColorFilter.mode(color, BlendMode.modulate);
-    }
+    final p = ambientAlpha / 255;
+    final i = ((options.colorFilters.length - 1) * p).toInt();
+    engine.paint.colorFilter = options.colorFilters[i];
+    // const colorDay = Colors.white;
+    // const colorNight = Colors.orange;
+    // final color = Color.lerp(colorDay, colorNight, ambientAlpha / (255 * 1.5));
+    // if (color != null){
+    //   engine.paint.colorFilter = ColorFilter.mode(color, BlendMode.modulate);
+    // }
   }
 
   bool isPerceptiblePosition(Position position) {
