@@ -53,14 +53,16 @@ class IsometricOptions with IsometricComponent implements Updatable {
   final triggerAlarmNoMessageReceivedFromServer = Watch(false);
   final messageStatus = Watch('');
   final gameError = Watch<GameError?>(null);
-
   final colorFilterColor = Watch(Colors.white);
   final colorFilterBlendMode = Watch(BlendMode.modulate);
   final colorFilterDay = Watch(Colors.white);
   final colorFilterNight = Watch(Color.lerp(Color.fromRGBO(247, 150, 23, 1.0), Colors.white, 0.5));
   final filterQuality = Watch(FilterQuality.none);
 
+  late final List<ColorFilter> colorFilters;
   late final Watch<Game> game;
+
+  static const colorFiltersLength = 48;
 
   IsometricOptions(){
     mode.onChanged(onChangedMode);
@@ -78,9 +80,6 @@ class IsometricOptions with IsometricComponent implements Updatable {
       engine.paint.filterQuality = t;
     });
   }
-
-  late final List<ColorFilter> colorFilters;
-  static const colorFiltersLength = 48;
 
   @override
   Future onComponentInit(sharedPreferences) async {
@@ -118,7 +117,6 @@ class IsometricOptions with IsometricComponent implements Updatable {
         }
       }
     });
-
   }
 
   void onMouseEnterCanvas(){

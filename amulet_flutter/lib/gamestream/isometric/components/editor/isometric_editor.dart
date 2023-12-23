@@ -848,6 +848,9 @@ class IsometricEditor with IsometricComponent {
       case PhysicalKeyboardKey.keyF:
         paint();
         break;
+      case PhysicalKeyboardKey.keyE:
+        copyBelow();
+        break;
       case PhysicalKeyboardKey.keyR:
         selectPaintType();
         break;
@@ -921,4 +924,16 @@ class IsometricEditor with IsometricComponent {
           NetworkRequest.Edit,
           NetworkRequestEdit.Randomize.index,
       );
+
+  void copyBelow() {
+    final indexBelow = nodeSelectedIndex.value - scene.area;
+    if (indexBelow < 0){
+      return;
+    }
+    setNode(
+      index: nodeSelectedIndex.value,
+      type: scene.nodeTypes[indexBelow],
+      orientation: scene.nodeOrientations[indexBelow],
+    );
+  }
 }
