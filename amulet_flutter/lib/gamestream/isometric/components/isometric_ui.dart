@@ -638,18 +638,16 @@ class IsometricUI with IsometricComponent {
     ));
   }
 
-  void showDialogColorPicker(){
+  void showDialogColorPicker({required ValueChanged<Color> onChanged}){
     return showDialog(child: GSContainer(
       width: 400,
-      height: 400,
+      height: 600,
       child: Column(
         children: [
           ColorPicker(
             portraitOnly: true,
             pickerColor: Colors.white,
-            onColorChanged: (color){
-
-            },
+            onColorChanged: onChanged,
           ),
           onPressed(
               action: closeDialog,
@@ -696,6 +694,38 @@ class IsometricUI with IsometricComponent {
                   ),
                 )).toList(growable: false),
               )).toList(growable: false))
+        ])
+      )
+    );
+
+  void showDialogBlendMode({
+    required Function(BlendMode value) onSelected,
+  }) => showDialog(
+      child: GSContainer(
+        width: 682,
+        child: Column(children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              buildText('select blend mode', color: Colors.white70),
+              onPressed(
+                  action: closeDialog,
+                  child: buildText('close')
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: BlendMode.values
+                  .map((blendMode) => onPressed(
+                action: () {
+                  onSelected(blendMode);
+                  closeDialog();
+                },
+                  child: buildText(blendMode.name)))
+                  .toList(growable: false))
         ])
       )
     );

@@ -179,6 +179,22 @@ extension isometricDebugUI on IsometricDebug {
                 color: Color(scene.ambientColor),
             ),
           )),
+          buildRow('color_filter_color', onPressed(
+            action: (){
+              ui.showDialogColorPicker(onChanged: options.colorFilterColor);
+            },
+            child: buildWatch(options.colorFilterColor, (color) {
+                return Container(
+                    width: 50,
+                    height: 50,
+                    color: color,
+                );
+              }
+            ),
+          )),
+          onPressed(
+            action: () => ui.showDialogBlendMode(onSelected: options.colorFilterBlendMode),
+              child: buildRow('color_filter_blend_mode', buildWatch(options.colorFilterBlendMode, (t) => buildText(t.name)))),
           buildRowRefresh('bake-stack-recording', () => scene.bakeStackRecording),
           onPressed(
             action: scene.recordBakeStack,

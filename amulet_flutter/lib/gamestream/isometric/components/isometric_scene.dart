@@ -1600,7 +1600,7 @@ class IsometricScene with IsometricComponent implements Updatable {
 
     const colorDay = Colors.white;
     const colorNight = Colors.orange;
-    final color = Color.lerp(colorDay, colorNight, ambientAlpha / 250);
+    final color = Color.lerp(colorDay, colorNight, ambientAlpha / (255 * 1.5));
     if (color != null){
       engine.paint.colorFilter = ColorFilter.mode(color, BlendMode.modulate);
     }

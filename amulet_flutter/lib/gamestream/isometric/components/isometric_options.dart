@@ -54,6 +54,11 @@ class IsometricOptions with IsometricComponent implements Updatable {
   final messageStatus = Watch('');
   final gameError = Watch<GameError?>(null);
 
+  final colorFilterColor = Watch(Colors.white);
+  final colorFilterBlendMode = Watch(BlendMode.modulate);
+  final colorFilterDay = Watch(Colors.white);
+  final colorFilterNight = Watch(Color.fromRGBO(247, 150, 23, 1.0));
+
   late final Watch<Game> game;
 
   IsometricOptions(){
@@ -62,6 +67,12 @@ class IsometricOptions with IsometricComponent implements Updatable {
     gameError.onChanged(_onChangedGameError);
     rendersSinceUpdate.onChanged(_onChangedRendersSinceUpdate);
     sceneName.onChanged((t) {print('scene.name = $t');});
+    colorFilterColor.onChanged((t) {
+      engine.paint.colorFilter = ColorFilter.mode(t, colorFilterBlendMode.value);
+    });
+    colorFilterBlendMode.onChanged((t) {
+      engine.paint.colorFilter = ColorFilter.mode(colorFilterColor.value, t);
+    });
   }
 
   @override
