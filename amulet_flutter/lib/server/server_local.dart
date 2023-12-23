@@ -192,11 +192,7 @@ class ServerLocal implements Server {
       playerServer.health = 10;
       playerServer.active = true;
       writeJsonToAmuletPlayer(character, playerServer);
-      if (playerServer.tutorialObjective == QuestTutorial.Finished) {
-        controller.playerJoinAmuletTown();
-      } else {
-        controller.playerJoinGameTutorial();
-      }
+      controller.playerJoin();
       playerServer.refillItemSlotsWeapons();;
       playerServer.regainFullHealth();
       amulet.resumeUpdateTimer();

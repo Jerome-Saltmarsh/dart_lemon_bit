@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:amulet_engine/packages/common.dart';
 import 'package:amulet_flutter/website/widgets/gs_fullscreen.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:http/http.dart';
 import 'package:lemon_engine/lemon_engine.dart';
@@ -633,6 +634,28 @@ class IsometricUI with IsometricComponent {
               })
               .toList(growable: false),
         ),
+      ),
+    ));
+  }
+
+  void showDialogColorPicker(){
+    return showDialog(child: GSContainer(
+      width: 400,
+      height: 400,
+      child: Column(
+        children: [
+          ColorPicker(
+            portraitOnly: true,
+            pickerColor: Colors.white,
+            onColorChanged: (color){
+
+            },
+          ),
+          onPressed(
+              action: closeDialog,
+              child: buildText('OKAY'),
+          ),
+        ],
       ),
     ));
   }

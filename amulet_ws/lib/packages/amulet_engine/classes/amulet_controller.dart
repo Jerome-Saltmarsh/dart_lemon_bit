@@ -1318,12 +1318,20 @@ class AmuletController {
     joinGame(amulet.buildAmuletGameTutorial());
   }
 
+  void playerJoin(){
+    if (player.tutorialObjective == QuestTutorial.Finished) {
+      playerJoinAmuletTown();
+    } else {
+      playerJoinGameTutorial();
+    }
+  }
+
   void playerJoinAmuletTown() {
-    joinGame(amulet.amuletGameWorld00);
-    player.setPosition(
-      x: 620 + giveOrTake(10),
-      y: 523 + giveOrTake(10),
-      z: 96,
-    );
+    final game = amulet.amuletGameWorld11;
+    joinGame(game);
+    game.movePositionToIndex(player, game.indexSpawnPlayer);
+    player.x += giveOrTake(5);
+    player.y += giveOrTake(5);
+    player.writePlayerMoved();
   }
 }

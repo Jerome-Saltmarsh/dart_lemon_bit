@@ -72,12 +72,15 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
            subType: GameObjectType.Interactable,
            team: TeamType.Neutral,
          );
+         portal.customName = amuletScene.name;
          portal.interactable = true;
          portal.fixed = true;
          portal.gravity = false;
          portal.hitable = false;
          portal.collectable = false;
          portal.collidable = false;
+         portal.persistable = false;
+         portal.destroyable = false;
          portal.onInteract = (dynamic src){
            if (src is! AmuletPlayer){
              return;

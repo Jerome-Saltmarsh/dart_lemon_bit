@@ -19,6 +19,7 @@ import 'package:amulet_flutter/isometric/classes/gameobject.dart';
 import 'package:amulet_flutter/isometric/classes/projectile.dart';
 import 'package:amulet_flutter/isometric/functions/get_render.dart';
 import 'package:amulet_flutter/packages/lemon_components.dart';
+import 'package:flutter/material.dart';
 import 'package:lemon_watch/src.dart';
 
 import '../../../isometric/classes/position.dart';
@@ -51,7 +52,9 @@ class IsometricScene with IsometricComponent implements Updatable {
   var bakeStackRecording = true;
   var totalActiveLights = 0;
   var ambientColor = const Color.fromRGBO(31, 1, 86, 0.5).value;
+  // var ambientColor = const Color.fromRGBO(84, 30, 71, 0.5).value;
   var ambientResetIndex = 0;
+  var colorFilter = Colors.orange;
   var ambientStack = Uint16List(0);
   var ambientStackIndex = -1;
   var colorStack = Uint16List(0);
@@ -1593,6 +1596,13 @@ class IsometricScene with IsometricComponent implements Updatable {
     }
     if (environment.rainType.value == RainType.Heavy){
       ambientAlpha += lighting.rainAmbientHeavy;
+    }
+
+    const colorDay = Colors.white;
+    const colorNight = Colors.orange;
+    final color = Color.lerp(colorDay, colorNight, ambientAlpha / 250);
+    if (color != null){
+      engine.paint.colorFilter = ColorFilter.mode(color, BlendMode.modulate);
     }
   }
 

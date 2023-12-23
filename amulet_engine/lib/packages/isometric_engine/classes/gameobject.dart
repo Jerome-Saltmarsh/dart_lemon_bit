@@ -20,6 +20,7 @@ class GameObject extends Collider {
   var health = 0;
   var healthMax = 0;
   var deactivationTimer = -1;
+  String? customName;
   Function(dynamic src)? onInteract;
 
   @override
@@ -74,7 +75,7 @@ class GameObject extends Collider {
   }
 
   @override
-  String get name => ItemType.getNameSubType(type, subType);
+  String get name => customName ?? ItemType.getNameSubType(type, subType);
 
   GameObject copy() =>
       GameObject(

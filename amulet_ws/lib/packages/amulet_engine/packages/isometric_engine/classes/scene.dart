@@ -33,6 +33,7 @@ class Scene {
   var volume = 0;
   var area = 0;
   var name = "";
+  final bool underground;
 
   late double rowLength;
   late double columnLength;
@@ -50,6 +51,7 @@ class Scene {
     required this.columns,
     required this.gameObjects,
     required this.marks,
+    this.underground = false,
   }) {
     refreshMetrics();
   }

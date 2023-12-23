@@ -71,6 +71,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
     game = Watch<Game>(website, onChanged: _onChangedGame);
     engine.durationPerUpdate.value = convertFramesPerSecondToDuration(20);
     engine.cursorType.value = CursorType.Basic;
+    engine.paint.colorFilter = ColorFilter.mode(Colors.orange, BlendMode.modulate);
 
     var cacheLoaded = false;
     server.remote.userId.onChanged((t) {

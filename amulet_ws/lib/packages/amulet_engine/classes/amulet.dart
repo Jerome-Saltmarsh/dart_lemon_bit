@@ -60,7 +60,7 @@ class Amulet {
   late final AmuletGame amuletGameWorld01;
   late final AmuletGame amuletGameWorld02;
   late final AmuletGame amuletGameWorld10;
-  late final AmuletGame amuletGameWorld11;
+  late final AmuletGameWorld11 amuletGameWorld11;
   late final AmuletGame amuletGameWorld12;
   late final AmuletGame amuletGameWorld20;
   late final AmuletGame amuletGameWorld21;

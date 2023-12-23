@@ -12,7 +12,6 @@ import 'package:amulet_engine/packages/isometric_engine/packages/common/src/isom
 import 'package:amulet_engine/packages/isometric_engine/packages/common/src/isometric/slot_type.dart';
 import 'package:amulet_engine/packages/isometric_engine/packages/common/src/network/network_request.dart';
 import 'package:amulet_engine/packages/isometric_engine/packages/common/src/network/requests/network_request_inventory.dart';
-import 'package:amulet_engine/packages/isometric_engine/packages/lemon_math/src/functions/pyramid.dart';
 import 'package:amulet_flutter/amulet/amulet_ui.dart';
 import 'package:amulet_flutter/amulet/classes/item_slot.dart';
 import 'package:flutter/material.dart';

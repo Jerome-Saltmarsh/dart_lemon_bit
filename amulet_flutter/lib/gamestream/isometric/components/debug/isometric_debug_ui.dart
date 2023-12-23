@@ -1,5 +1,4 @@
 
-import 'package:amulet_flutter/amulet/ui/builders/build_item_slot.dart';
 import 'package:amulet_flutter/gamestream/isometric/enums/mode.dart';
 import 'package:amulet_flutter/gamestream/ui/builders/build_watch.dart';
 import 'package:amulet_flutter/gamestream/ui/constants/height.dart';
@@ -172,7 +171,14 @@ extension isometricDebugUI on IsometricDebug {
   Widget buildTabLighting() =>
       Column(
         children: [
-          buildText('ambient-color'),
+          buildRow('ambient-color', onPressed(
+            action: ui.showDialogColorPicker,
+            child: Container(
+                width: 50,
+                height: 50,
+                color: Color(scene.ambientColor),
+            ),
+          )),
           buildRowRefresh('bake-stack-recording', () => scene.bakeStackRecording),
           onPressed(
             action: scene.recordBakeStack,
