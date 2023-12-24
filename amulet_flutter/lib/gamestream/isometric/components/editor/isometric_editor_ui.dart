@@ -1,4 +1,5 @@
 
+import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_nodes.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -676,27 +677,31 @@ extension IsometricEditorUI on IsometricEditor {
 
   Widget buildButtonSelectNodeType(int nodeType) {
 
+    final entry = atlasSrcNodes[nodeType];
+
+    if (entry == null){
+      return WatchBuilder(nodeSelectedType, (int selectedNodeType){
+        return buildText(NodeType.getName(nodeType), color: selectedNodeType == nodeType ? Colors.green : Colors.white);
+      });
+    }
+
     final image = engine.buildAtlasImage(
       image: images.atlas_nodes,
-      srcX: AtlasNodeX.mapNodeType(nodeType),
-      srcY: AtlasNodeY.mapNodeType(nodeType),
-      srcWidth: AtlasNodeWidth.mapNodeType(nodeType),
-      srcHeight: AtlasNodeHeight.mapNodeType(nodeType),
+      srcX: entry[0],
+      srcY: entry[1],
+      srcWidth: 48,
+      srcHeight: 48,
     );
 
     return WatchBuilder(nodeSelectedType, (int selectedNodeType) => buildButton(
-          height: 78,
-          width: 78,
+          height: 48,
+          width: 48,
           alignment: Alignment.center,
           child: Tooltip(
             child: image,
             message: NodeType.getName(nodeType),
           ),
           action: () {
-            // if (options.editing) {
-            //   options.setModePlay();
-            //   return;
-            // }
             paint(nodeType: nodeType);
           },
           color: selectedNodeType == nodeType ? colors.white : colors.white60));
@@ -759,7 +764,7 @@ extension IsometricEditorUI on IsometricEditor {
 
     final canvas = engine.buildAtlasImage(
       image: images.atlas_nodes,
-      srcX: orientation == NodeOrientation.None ? 1442.0 : 0,
+      srcX: orientation == NodeOrientation.None ? 1442.0 : 2000,
       srcY: AtlasNodeY.mapOrientation(orientation),
       srcWidth: IsometricConstants.Sprite_Width,
       srcHeight: IsometricConstants.Sprite_Height,
