@@ -3,6 +3,7 @@ import 'package:amulet_flutter/gamestream/isometric/enums/mode.dart';
 import 'package:amulet_flutter/isometric/classes/position.dart';
 import 'package:amulet_engine/packages/common.dart';
 import 'package:amulet_flutter/types/server_mode.dart';
+import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +57,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
   final colorFilterColor = Watch(Colors.white);
   final colorFilterBlendMode = Watch(BlendMode.modulate);
   final colorFilterDay = Watch(Colors.white);
-  final colorFilterNight = Watch(Color.lerp(Color.fromRGBO(247, 150, 23, 1.0), Colors.white, 0.5));
+  final colorFilterNight = Watch(Color.lerp(Color.fromRGBO(247, 150, 23, 1.0), Colors.white, goldenRatio_0381) ?? (throw Exception()));
   final filterQuality = Watch(FilterQuality.none);
 
   late final List<ColorFilter> colorFilters;
@@ -79,6 +80,21 @@ class IsometricOptions with IsometricComponent implements Updatable {
     filterQuality.onChanged((t) {
       engine.paint.filterQuality = t;
     });
+    colorFilterDay.onChanged((t) {
+      rebuildColorFilters();
+    });
+    colorFilterNight.onChanged((t) {
+      rebuildColorFilters();
+    });
+  }
+
+  void rebuildColorFilters() {
+    for (var index = 0; index < colorFilters.length; index++){
+      final i = index / colorFiltersLength;
+      final color = Color.lerp(colorFilterDay.value, colorFilterNight.value, i);
+      colorFilters[index] = ColorFilter.mode(color ?? (throw Exception('invalid color')), BlendMode.modulate);
+    }
+    scene.refreshColorFilter();
   }
 
   @override

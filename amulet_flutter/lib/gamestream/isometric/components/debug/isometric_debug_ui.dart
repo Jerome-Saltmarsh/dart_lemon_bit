@@ -186,26 +186,15 @@ extension isometricDebugUI on IsometricDebug {
              ),
           ),
           buildRow('ambient-color', onPressed(
-            action: ui.showDialogColorPicker,
+            // action: ui.showDialogColorPicker,
             child: Container(
                 width: 50,
                 height: 50,
                 color: Color(scene.ambientColor),
             ),
           )),
-          buildRow('color_filter_color', onPressed(
-            action: (){
-              ui.showDialogColorPicker(onChanged: options.colorFilterColor);
-            },
-            child: buildWatch(options.colorFilterColor, (color) {
-                return Container(
-                    width: 50,
-                    height: 50,
-                    color: color,
-                );
-              }
-            ),
-          )),
+          buildRow('color_filter_color_day', buildButtonWatchColor(options.colorFilterDay)),
+          buildRow('color_filter_color_night', buildButtonWatchColor(options.colorFilterNight)),
           onPressed(
             action: () => ui.showDialogBlendMode(onSelected: options.colorFilterBlendMode),
               child: buildRow('color_filter_blend_mode', buildWatch(options.colorFilterBlendMode, (t) => buildText(t.name)))),
@@ -215,6 +204,22 @@ extension isometricDebugUI on IsometricDebug {
             child: buildText('record bake'),
           ),
         ],
+      );
+
+  Widget buildButtonWatchColor(Watch<Color> watch) => onPressed(
+        action: () {
+          ui.showDialogColorPicker(
+            initialColor: watch.value,
+            onChanged: watch,
+          );
+        },
+        child: buildWatch(
+            watch,
+            (color) => Container(
+                  width: 50,
+                  height: 50,
+                  color: color,
+                )),
       );
 
   Widget buildTabEngine() => Column(

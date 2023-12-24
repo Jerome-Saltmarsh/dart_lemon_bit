@@ -10,7 +10,9 @@ class AmuletGameWorld11 extends AmuletGame {
 
   static const keySpawnWarren = 'spawn_warren';
   static const keySpawnPlayer = 'spawn_player';
+  static const keySpawnGuard1 = 'spawn_guard_1';
   late AmuletNpc npcWarren;
+  late AmuletNpc npcGuard1;
   var indexSpawnPlayer = -1;
 
   AmuletGameWorld11({
@@ -22,6 +24,8 @@ class AmuletGameWorld11 extends AmuletGame {
       environment: amulet.amuletEnvironment,
       scene: amulet.scenes.world_11,
   ) {
+    indexSpawnPlayer = scene.getKey(keySpawnPlayer);
+    final indexSpawnGuard1 = scene.getKey(keySpawnGuard1);
     final indexSpawnWarren = scene.getKey(keySpawnWarren);
 
     npcWarren = AmuletNpc(
@@ -45,8 +49,30 @@ class AmuletGameWorld11 extends AmuletGame {
       ..interact = onInteractWithWarren
       ..complexion = ComplexionType.fair;
 
+    npcGuard1 = AmuletNpc(
+      x: scene.getIndexX(indexSpawnGuard1),
+      y: scene.getIndexY(indexSpawnGuard1),
+      z: scene.getIndexZ(indexSpawnGuard1),
+      health: 50,
+      invincible: true,
+      team: AmuletTeam.Human,
+      weaponType: WeaponType.Bow,
+      weaponCooldown: 3,
+      weaponDamage: 3,
+      weaponRange: 120,
+      attackDuration: 30,
+      name: "Guard",
+    )
+      ..fixed = true
+      ..invincible = true
+      ..helmType = HelmType.Steel
+      ..bodyType = BodyType.Leather_Armour
+      ..legsType = LegType.Leather
+      ..handTypeLeft = HandType.Leather_Gloves
+      ..complexion = ComplexionType.fair;
+
     characters.add(npcWarren);
-    indexSpawnPlayer = scene.getKey(keySpawnPlayer);
+    characters.add(npcGuard1);
   }
 
   void onInteractWithWarren(AmuletPlayer player, AmuletNpc warren){

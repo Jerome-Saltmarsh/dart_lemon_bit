@@ -100,6 +100,12 @@ class IsometricUI with IsometricComponent {
     dialog.value = null;
   }
 
+  Widget buildButtonCloseDialog() =>
+    onPressed(
+      action: closeDialog,
+      child: buildText('OKAY'),
+    );
+
   Widget buildMapCircle({required double size}) {
     return IgnorePointer(
       child: Container(
@@ -638,25 +644,24 @@ class IsometricUI with IsometricComponent {
     ));
   }
 
-  void showDialogColorPicker({required ValueChanged<Color> onChanged}){
-    return showDialog(child: GSContainer(
+  void showDialogColorPicker({
+    required ValueChanged<Color> onChanged,
+    Color? initialColor,
+  }) =>
+    showDialog(child: GSContainer(
       width: 400,
       height: 600,
       child: Column(
         children: [
           ColorPicker(
             portraitOnly: true,
-            pickerColor: Colors.white,
+            pickerColor: initialColor ?? Colors.white,
             onColorChanged: onChanged,
           ),
-          onPressed(
-              action: closeDialog,
-              child: buildText('OKAY'),
-          ),
+          buildButtonCloseDialog(),
         ],
       ),
     ));
-  }
 
   void showDialogGetColor({
     required Function(int index) onSelected,

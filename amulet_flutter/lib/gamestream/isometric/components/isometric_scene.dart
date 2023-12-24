@@ -52,7 +52,6 @@ class IsometricScene with IsometricComponent implements Updatable {
   var bakeStackRecording = true;
   var totalActiveLights = 0;
   var ambientColor = const Color.fromRGBO(31, 1, 86, 0.5).value;
-  // var ambientColor = const Color.fromRGBO(84, 30, 71, 0.5).value;
   var ambientResetIndex = 0;
   var colorFilter = Colors.orange;
   var ambientStack = Uint16List(0);
@@ -1598,15 +1597,14 @@ class IsometricScene with IsometricComponent implements Updatable {
       ambientAlpha += lighting.rainAmbientHeavy;
     }
 
+    refreshColorFilter();
+  }
+
+  void refreshColorFilter() {
+    final colorFilters = options.colorFilters;
     final p = ambientAlpha / 255;
-    final i = ((options.colorFilters.length - 1) * p).toInt();
-    engine.paint.colorFilter = options.colorFilters[i];
-    // const colorDay = Colors.white;
-    // const colorNight = Colors.orange;
-    // final color = Color.lerp(colorDay, colorNight, ambientAlpha / (255 * 1.5));
-    // if (color != null){
-    //   engine.paint.colorFilter = ColorFilter.mode(color, BlendMode.modulate);
-    // }
+    final i = ((colorFilters.length - 1) * p).toInt();
+    engine.paint.colorFilter = colorFilters[i];
   }
 
   bool isPerceptiblePosition(Position position) {
