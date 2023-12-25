@@ -38,9 +38,7 @@ class IsometricUI with IsometricComponent {
     gameUI.value = website.buildUI;
   }
 
-  Widget buildUI(BuildContext context) {
-
-    return GSFullscreen(
+  Widget buildUI(BuildContext context) => GSFullscreen(
       child: Stack(
         children: [
               Positioned(
@@ -65,7 +63,6 @@ class IsometricUI with IsometricComponent {
         ],
       ),
     );
-  }
 
   Widget buildError() => buildWatch(error, (error) => error == null
                  ? nothing
@@ -210,9 +207,10 @@ class IsometricUI with IsometricComponent {
         ),
     );
 
+  /// old map
   Widget buildGeneratedMiniMap({required double translate}) =>
       buildWatch(scene.nodesChangedNotifier, (_) =>
-          engine.buildCanvas(paint: (Canvas canvas, Size size){
+          engine.buildCanvas(paint: (Canvas canvas, Size size) {
             const scale = 2.0;
             canvas.scale(scale, scale);
             final screenCenterX = size.width * 0.5;
@@ -228,10 +226,10 @@ class IsometricUI with IsometricComponent {
               canvas.translate(-cameraX, -cameraY);
             }
 
-            minimap.renderCanvas(canvas);
-
-            for (var i = 0; i < scene.totalCharacters; i++) {
-              final character = scene.characters[i];
+            final totalCharacters = scene.totalCharacters;
+            final characters = scene.characters;
+            for (var i = 0; i < totalCharacters; i++) {
+              final character = characters[i];
               final isPlayer = player.isCharacter(character);
               renderCanvas(
                   canvas: canvas,

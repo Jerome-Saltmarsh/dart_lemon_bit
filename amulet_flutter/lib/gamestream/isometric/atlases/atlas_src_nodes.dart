@@ -4,6 +4,6 @@ import 'package:amulet_engine/packages/isometric_engine/packages/common/src/isom
 
 /// [x, y]
 const atlasSrcNodes = <int, List<double>> {
-  NodeType.Grass: [0, 1808],
+  NodeType.Grass: [0, 96],
   NodeType.Water: [1606, 509],
 };

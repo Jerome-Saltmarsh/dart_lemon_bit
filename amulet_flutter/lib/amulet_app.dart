@@ -20,10 +20,8 @@ class AmuletApp extends LemonEngine {
   );
 
   @override
-  Widget buildUI(BuildContext buildContext) {
-    components.engine.fullScreenEnter();
-    return components.ui.buildUI(buildContext);
-  }
+  Widget buildUI(BuildContext buildContext) =>
+      components.ui.buildUI(buildContext);
 
   @override
   void onDispose() {

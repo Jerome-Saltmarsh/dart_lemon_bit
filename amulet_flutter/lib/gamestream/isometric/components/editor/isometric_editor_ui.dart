@@ -680,9 +680,12 @@ extension IsometricEditorUI on IsometricEditor {
     final entry = atlasSrcNodes[nodeType];
 
     if (entry == null){
-      return WatchBuilder(nodeSelectedType, (int selectedNodeType){
-        return buildText(NodeType.getName(nodeType), color: selectedNodeType == nodeType ? Colors.green : Colors.white);
-      });
+      return onPressed(
+        action: () => paint(nodeType: nodeType),
+        child: WatchBuilder(nodeSelectedType, (int selectedNodeType){
+          return buildText(NodeType.getName(nodeType), color: selectedNodeType == nodeType ? Colors.green : Colors.white);
+        }),
+      );
     }
 
     final image = engine.buildAtlasImage(
@@ -693,18 +696,17 @@ extension IsometricEditorUI on IsometricEditor {
       srcHeight: 48,
     );
 
-    return WatchBuilder(nodeSelectedType, (int selectedNodeType) => buildButton(
-          height: 48,
-          width: 48,
-          alignment: Alignment.center,
-          child: Tooltip(
-            child: image,
-            message: NodeType.getName(nodeType),
+    return onPressed(
+      hint: NodeType.getName(nodeType),
+      action: () => paint(nodeType: nodeType),
+      child: WatchBuilder(nodeSelectedType, (int selectedNodeType) =>
+          Container(
+              color: selectedNodeType == nodeType ? Colors.green : Colors.white,
+              child: image,
           ),
-          action: () {
-            paint(nodeType: nodeType);
-          },
-          color: selectedNodeType == nodeType ? colors.white : colors.white60));
+
+      ),
+    );
   }
 
   Widget buildColumnEditNodeOrientation(int nodeOrientation) =>
@@ -1299,10 +1301,12 @@ extension IsometricEditorUI on IsometricEditor {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: nodeTypesColumn1.map(buildButtonSelectNodeType).toList(),
               ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: nodeTypesColumn2.map(buildButtonSelectNodeType).toList(),
               ),

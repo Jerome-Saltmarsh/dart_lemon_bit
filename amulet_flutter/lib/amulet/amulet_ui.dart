@@ -159,8 +159,7 @@ class AmuletUI {
         );
   }
 
-  Positioned buildPositionedWorldMap() {
-    return Positioned(
+  Positioned buildPositionedWorldMap() => Positioned(
           bottom: 8,
           right: 8,
           child: Builder(
@@ -176,7 +175,6 @@ class AmuletUI {
             }
           ),
         );
-  }
 
   Positioned buildPositionedMessage() => Positioned(
       top: 0,

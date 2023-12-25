@@ -125,7 +125,6 @@ class IsometricRender with IsometricComponent {
     animation.update();
     particles.onComponentUpdate();
     compositor.render3D();
-    amulet.renderWorldMap();
 
     renderEditMode();
     renderMouseTargetName();

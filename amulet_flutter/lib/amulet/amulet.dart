@@ -22,6 +22,7 @@ import 'package:lemon_widgets/lemon_widgets.dart';
 
 import '../gamestream/isometric/src.dart';
 import 'amulet_render.dart';
+import 'ui/widgets/amulet_world_map.dart';
 
 
 class Amulet extends IsometricGame {
@@ -526,20 +527,19 @@ class Amulet extends IsometricGame {
     );
 
      final picture = recorder.endRecording();
-     picture.toImage(500, 500).then((value) {
-       worldMapPicture = value;
-     });
+     picture
+         .toImage(
+            (300).toInt(),
+            (300).toInt(),
+          )
+         .then((value) {
+            worldMapPicture = value;
+         });
   }
 
   void onWorldMapChanged() {
     print('amulet.onWorldMapChanged()');
     recordWorldMapPicture();
-  }
-
-  void renderWorldMap(){
-
-    // if (worldMapKey.)
-    // worldMapFrame.value++;
   }
 
   void selectTalkOption(int index) =>

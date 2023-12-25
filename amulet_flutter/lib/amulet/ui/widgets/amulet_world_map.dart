@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:amulet_engine/packages/lemon_math.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/isometric/functions/get_render.dart';
@@ -15,9 +17,9 @@ class AmuletWorldMap extends StatelessWidget {
   );
   final textSpanHello = const TextSpan(style: TextStyle(color: Colors.white), text: 'hello');
 
-  var targetX = 0.0;
-  var targetY = 0.0;
-  var cameraX = 0.0;
+  // double get cameraX => amulet.engine.cameraX / 48.0;
+  // double get cameraY => amulet.engine.cameraY / 48.0;
+  var cameraX = 100.0;
   var cameraY = 0.0;
   var screenWidth = 0.0;
   var screenHeight = 0.0;
@@ -61,33 +63,34 @@ class AmuletWorldMap extends StatelessWidget {
           screenHeight = canvasSize.height;
 
           canvas.scale(zoom, zoom);
-          const mapSize = 100.0;
-          final player = amulet.player;
-          final position = player.position;
-          final scene = amulet.scene;
-          final ratioX = position.x / scene.lengthRows;
-          final ratioY = position.y / scene.lengthColumns;
-          final posX = amulet.worldRow * mapSize + (mapSize * ratioX);
-          final posY = amulet.worldColumn * mapSize + (mapSize * ratioY);
+          // const mapSize = 100.0;
+          // final player = amulet.player;
+          // final position = player.position;
+          // final scene = amulet.scene;
+          // final ratioX = position.x / scene.lengthRows;
+          // final ratioY = position.y / scene.lengthColumns;
+          // final worldPosX = amulet.worldRow * mapSize;
+          // final worldPosY = amulet.worldColumn * mapSize;
+          // final posX = worldPosX + (mapSize * ratioX);
+          // final posY = worldPosY + (mapSize * ratioY);
           paint.color = Colors.white;
 
-          targetX = getRenderX(posX, posY);
-          targetY = getRenderY(posX, posY, 0);
-          canvas.translate(-cameraX, -cameraY);
+          // targetX = 0.0;
+          // targetY = 0.0;
+          // canvas.translate(-cameraX + screenCenterWorldX, -cameraY + screenCenterWorldY);
+          canvas.translate(-cameraX + screenCenterWorldX, -cameraY + screenCenterWorldY);
           canvas.rotate(piQuarter);
+          canvas.translate(-cameraX, -cameraY);
           /// TODO Memory leak
-          final targetOffset = Offset(targetX, targetY);
+          final targetOffset = Offset(cameraX, cameraY);
           canvas.drawImage(worldMapPicture, const Offset(0, 0), paint);
-          canvas.rotate(-piQuarter);
           // canvas.rotate(-piQuarter);
           canvas.drawCircle(targetOffset, 2, paint);
-          // canvas.drawCircle(Offset(screenCenterWorldX, screenCenterWorldY), 4, paint);
-          // canvas.drawCircle(Offset(cameraX, cameraY), 6, paint);
           textPainter.text = textSpanHello;
           textPainter.layout();
           textPainter.paint(canvas, targetOffset);
           paint.color = Colors.blue;
-          cameraFollowTarget(followSensitivity);
+          // cameraFollowTarget(followSensitivity);
         },
       ),
     );
@@ -112,12 +115,12 @@ class AmuletWorldMap extends StatelessWidget {
     );
   }
 
-  void cameraFollowTarget([double speed = 0.00075]) {
-    final diffX = screenCenterWorldX - targetX;
-    final diffY = screenCenterWorldY - targetY;
-    cameraX -= (diffX * 75) * speed;
-    cameraY -= (diffY * 75) * speed;
-  }
+  // void cameraFollowTarget([double speed = 0.00075]) {
+  //   // final diffX = screenCenterWorldX - targetX;
+  //   // final diffY = screenCenterWorldY - targetY;
+  //   cameraX -= (targetX * 75) * speed;
+  //   cameraY -= (diffY * 75) * speed;
+  // }
 
   double get screenCenterX => screenWidth * 0.5;
   double get screenCenterY => screenHeight * 0.5;
@@ -129,4 +132,54 @@ class AmuletWorldMap extends StatelessWidget {
 
   double screenToWorldY(double value) =>
       cameraY + value / zoom;
+
+
+  // void renderSpriteRotated({
+  //   required ui.Image image,
+  //   required double srcX,
+  //   required double srcY,
+  //   required double srcWidth,
+  //   required double srcHeight,
+  //   required double dstX,
+  //   required double dstY,
+  //   required double rotation,
+  //   double anchorX = 0.5,
+  //   double anchorY = 0.5,
+  //   double scale = 1.0,
+  //   int color = 1,
+  // }){
+  //   final scos = cos(rotation) * scale;
+  //   final ssin = sin(rotation) * scale;
+  //
+  //   final width = -scos * anchorX + ssin * anchorY;
+  //   final height = -ssin * anchorX - scos * anchorY;
+  //
+  //   final tx = dstX + width;
+  //   final ty = dstY + height;
+  //
+  //   final scaledHeight = srcHeight * scale * anchorY;
+  //   final scaledWidth = srcWidth * scale * anchorX;
+  //
+  //   const piHalf = pi * 0.5;
+  //
+  //   final adjX = adj(rotation - piHalf, scaledHeight);
+  //   final adjY = opp(rotation - piHalf, scaledHeight);
+  //
+  //   final adjY2 = adj(rotation - piHalf, scaledWidth);
+  //   final adjX2 = opp(rotation - piHalf, scaledWidth);
+  //
+  //   bufferImage = image;
+  //   render(
+  //     color: color,
+  //     srcLeft: srcX,
+  //     srcTop: srcY,
+  //     srcRight: srcX + srcWidth,
+  //     srcBottom: srcY + srcHeight,
+  //     scale: cos(rotation) * scale,
+  //     rotation: sin(rotation) * scale,
+  //     dstX: tx + adjX2 + adjX,
+  //     dstY: ty - adjY2 + adjY,
+  //   );
+  // }
+
 }

@@ -328,6 +328,7 @@ class NodeType {
     Glass: 'Glass',
     Torch_Blue: 'Torch_Blue',
     Torch_Red: 'Torch_Red',
+    Tree_Stump: 'Tree_Stump',
   }[type] ?? 'unknown($type)';
 
   static bool isLightSource(int type) => const [

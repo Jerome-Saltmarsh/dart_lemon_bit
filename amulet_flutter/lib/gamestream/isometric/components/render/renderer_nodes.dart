@@ -261,6 +261,19 @@ class RendererNodes extends RenderGroup {
                         dst: dst,
                         src: src,
                       );
+
+
+                      if (nodeType == NodeType.Brick){
+                        final colorSouthWest = nodeColors[nodeIndex + 1 + totalColumns];
+                        renderNodeSideSouth(
+                          srcY: 240.0,
+                          width: Node_Size_Sixth,
+                          dstX: dstX + Node_Size_Half - Cell_Size_Half,
+                          dstY: dstY - Cell_Size + Node_Size_Sixth - Cell_Size_Half,
+                          color: colorSouthWest,
+                        );
+                      }
+
                       break;
                     case NodeOrientation.Half_West:
                       renderDynamicHalfWest(
