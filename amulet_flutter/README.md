@@ -42,7 +42,6 @@ ctrl + []               : move caret to code block
 * [fix]: front view renders
 
 ## BETA
-* [fix]: barrels and crates should not be interactable
 * [new]: model head type female
 * [new]: model leg type iron plates
 * [new]: polish tutorial
@@ -55,6 +54,7 @@ ctrl + []               : move caret to code block
 * [fix]: audio for web
 
 ## 25.12.2023
+* [new]: animation hurt
 * [fix]: hair type disappears
 * [fix]: mini map location
 
