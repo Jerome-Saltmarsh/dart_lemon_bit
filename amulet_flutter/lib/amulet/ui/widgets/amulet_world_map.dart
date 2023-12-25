@@ -19,8 +19,8 @@ class AmuletWorldMap extends StatelessWidget {
 
   // double get cameraX => amulet.engine.cameraX / 48.0;
   // double get cameraY => amulet.engine.cameraY / 48.0;
-  var cameraX = 100.0;
-  var cameraY = 0.0;
+  var cameraX = 50.0;
+  var cameraY = 50.0;
   var screenWidth = 0.0;
   var screenHeight = 0.0;
   var zoom = 1.0;
@@ -62,22 +62,27 @@ class AmuletWorldMap extends StatelessWidget {
           screenWidth = canvasSize.width;
           screenHeight = canvasSize.height;
 
+
           canvas.scale(zoom, zoom);
-          // const mapSize = 100.0;
-          // final player = amulet.player;
-          // final position = player.position;
-          // final scene = amulet.scene;
-          // final ratioX = position.x / scene.lengthRows;
-          // final ratioY = position.y / scene.lengthColumns;
-          // final worldPosX = amulet.worldRow * mapSize;
-          // final worldPosY = amulet.worldColumn * mapSize;
-          // final posX = worldPosX + (mapSize * ratioX);
-          // final posY = worldPosY + (mapSize * ratioY);
+          const mapSize = 100.0;
+          final player = amulet.player;
+          final position = player.position;
+          final scene = amulet.scene;
+          final ratioX = position.x / scene.lengthRows;
+          final ratioY = position.y / scene.lengthColumns;
+          final worldPosX = amulet.worldRow * mapSize;
+          final worldPosY = amulet.worldColumn * mapSize;
+          final posX = worldPosX + (mapSize * ratioX);
+          final posY = worldPosY + (mapSize * ratioY);
           paint.color = Colors.white;
 
           // targetX = 0.0;
           // targetY = 0.0;
           // canvas.translate(-cameraX + screenCenterWorldX, -cameraY + screenCenterWorldY);
+          
+          cameraX = posX;
+          cameraY = posY;
+
           canvas.translate(-cameraX + screenCenterWorldX, -cameraY + screenCenterWorldY);
           canvas.rotate(piQuarter);
           canvas.translate(-cameraX, -cameraY);
