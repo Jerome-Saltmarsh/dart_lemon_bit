@@ -55,6 +55,7 @@ ctrl + []               : move caret to code block
 * [fix]: audio for web
 
 ## 25.12.2023
+* [fix]: hair type disappears
 * [fix]: mini map location
 
 ## 22.12.2023

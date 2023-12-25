@@ -1387,6 +1387,7 @@ class IsometricPlayer extends Character with ByteWriter {
   void clearCache() {
     cacheTemplateA.fillRange(0, cacheTemplateA.length, 0);
     cacheTemplateB.fillRange(0, cacheTemplateB.length, 0);
+    cacheTemplateC.fillRange(0, cacheTemplateC.length, 0);
     cachePositionX.fillRange(0, cachePositionX.length, 0);
     cachePositionY.fillRange(0, cachePositionY.length, 0);
     cachePositionZ.fillRange(0, cachePositionZ.length, 0);
