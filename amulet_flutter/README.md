@@ -54,6 +54,9 @@ ctrl + []               : move caret to code block
 * [new]: mobile touch screen support
 * [fix]: audio for web
 
+## 25.12.2023
+* [fix]: mini map location
+
 ## 22.12.2023
 * [new]: witch caste fireball
 

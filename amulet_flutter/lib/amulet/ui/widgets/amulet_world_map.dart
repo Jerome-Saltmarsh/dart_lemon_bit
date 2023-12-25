@@ -79,7 +79,7 @@ class AmuletWorldMap extends StatelessWidget {
           // targetX = 0.0;
           // targetY = 0.0;
           // canvas.translate(-cameraX + screenCenterWorldX, -cameraY + screenCenterWorldY);
-          
+
           cameraX = posX;
           cameraY = posY;
 
@@ -91,10 +91,10 @@ class AmuletWorldMap extends StatelessWidget {
           canvas.drawImage(worldMapPicture, const Offset(0, 0), paint);
           // canvas.rotate(-piQuarter);
           canvas.drawCircle(targetOffset, 2, paint);
-          textPainter.text = textSpanHello;
-          textPainter.layout();
-          textPainter.paint(canvas, targetOffset);
-          paint.color = Colors.blue;
+          // textPainter.text = textSpanHello;
+          // textPainter.layout();
+          // textPainter.paint(canvas, targetOffset);
+          // paint.color = Colors.blue;
           // cameraFollowTarget(followSensitivity);
         },
       ),
