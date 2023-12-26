@@ -115,13 +115,22 @@ class Amulet {
       scene: scenes.world_00,
       time: amuletTime,
       environment: amuletEnvironment,
-      name: 'world_01_01',
+      name: 'world_00',
+    );
+
+    amuletGameWorld01 = AmuletGame(
+      amulet: this,
+      scene: scenes.world_01,
+      time: amuletTime,
+      environment: amuletEnvironment,
+      name: 'world_01',
+      amuletScene: AmuletScene.World_01
     );
 
     amuletGameWorld11 = AmuletGameWorld11(amulet: this);
 
     worldMap.add(amuletGameWorld00);
-    worldMap.add(buildEmptyField(AmuletScene.World_01));
+    worldMap.add(amuletGameWorld01);
     worldMap.add(buildEmptyField(AmuletScene.World_02));
     worldMap.add(buildEmptyField(AmuletScene.World_10));
     worldMap.add(amuletGameWorld11);

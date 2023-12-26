@@ -46,6 +46,7 @@ class NodeType {
   static const Torch_Red = 89;
   static const Grass_Short = 90;
   static const Tree_Stump = 91;
+  static const Cobblestone = 92;
 
   static bool supportsOrientationSolid(int type) => const [
         Brick,
@@ -69,6 +70,7 @@ class NodeType {
         Tile,
         Boulder,
         Glass,
+        Cobblestone,
       ].contains(type);
 
   static bool supportsOrientationEmpty(int type) => const [
@@ -277,10 +279,6 @@ class NodeType {
       return supportsOrientationColumn(type);
     }
 
-    // if (orientation == NodeOrientation.Destroyed){
-    //   return supportsOrientationDestroyed(type);
-    // }
-
     return false;
   }
 
@@ -329,6 +327,7 @@ class NodeType {
     Torch_Blue: 'Torch_Blue',
     Torch_Red: 'Torch_Red',
     Tree_Stump: 'Tree_Stump',
+    Cobblestone: 'Cobblestone',
   }[type] ?? 'unknown($type)';
 
   static bool isLightSource(int type) => const [

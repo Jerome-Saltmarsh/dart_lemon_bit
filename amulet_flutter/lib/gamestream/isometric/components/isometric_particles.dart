@@ -663,7 +663,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
           z: z,
           color: randomItem(whispColors),
       )
-        ..emissionIntensity = 0.5
+        ..emissionIntensity = 0.3
         ..movementSpeed = 0.7
   );
 
