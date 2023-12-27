@@ -1156,7 +1156,9 @@ class RendererNodes extends RenderGroup {
         renderNodeWindow(
           dstX: dstX,
           dstY: dstY,
-          color: scene.nodeColors[index], // TODO Optimize
+          colorTop: scene.nodeColors[index], // TODO Optimize
+          colorSouth: scene.colorSouth(index),
+          colorWest: scene.colorWest(index),
           orientation: scene.nodeOrientations[index], // TODO Optimize
         );
         break;
@@ -3064,58 +3066,105 @@ class RendererNodes extends RenderGroup {
     }
   }
 
+  void renderNodeWindowNorthSouth({
+    required int colorWest,
+    required int colorSouth,
+    required double dstX,
+    required double dstY,
+}){
+    const srcY = 80.0 + 72;
+    renderNodeShaded(
+        srcX: 1557,
+        srcY: srcY,
+        dstX: dstX,
+        dstY: dstY,
+        color: merge32BitColors(colorWest, colorSouth),
+    );
+    renderNodeShaded(
+        srcX: 1606,
+        srcY: srcY,
+        dstX: dstX,
+        dstY: dstY,
+        color: colorWest,
+    );
+    renderNodeShaded(
+        srcX: 1655,
+        srcY: srcY,
+        dstX: dstX,
+        dstY: dstY,
+        color: colorSouth,
+    );
+  }
+
+  void renderNodeWindowEastWest({
+    required int colorWest,
+    required int colorSouth,
+    required double dstX,
+    required double dstY,
+}){
+    const srcY = 80.0;
+    renderNodeShaded(
+        srcX: 1557,
+        srcY: srcY,
+        dstX: dstX,
+        dstY: dstY,
+        color: merge32BitColors(colorWest, colorSouth),
+    );
+    renderNodeShaded(
+        srcX: 1606,
+        srcY: srcY,
+        dstX: dstX,
+        dstY: dstY,
+        color: colorWest,
+    );
+    renderNodeShaded(
+        srcX: 1655,
+        srcY: srcY,
+        dstX: dstX,
+        dstY: dstY,
+        color: colorSouth,
+    );
+  }
 
   void renderNodeWindow({
     required double dstX,
     required double dstY,
-    required int color,
+    required int colorTop,
+    required int colorSouth,
+    required int colorWest,
     required int orientation,
   }){
-    const srcX = 1508.0;
     switch (orientation) {
       case NodeOrientation.Half_North:
-        renderNodeShadedOffset(
-          srcX: srcX,
-          srcY: 80 + IsometricConstants.Sprite_Height_Padded,
-          offsetX: -8,
-          offsetY: -8,
-          dstX: dstX,
-          dstY: dstY,
-            color: color
-
+        renderNodeWindowNorthSouth(
+           colorSouth: colorSouth,
+           colorWest: colorWest,
+           dstX: dstX - 8,
+           dstY: dstY - 8
         );
         return;
       case NodeOrientation.Half_South:
-        renderNodeShadedOffset(
-          color: color,
-          srcX: srcX,
-          srcY: 80 + IsometricConstants.Sprite_Height_Padded,
-          offsetX: 8,
-          offsetY: 8,
-          dstX: dstX,
-          dstY: dstY,
+        renderNodeWindowNorthSouth(
+            colorSouth: colorSouth,
+            colorWest: colorWest,
+            dstX: dstX + 8,
+            dstY: dstY + 8
         );
         return;
       case NodeOrientation.Half_East:
-        renderNodeShadedOffset(
-          color: color,
-          srcX: srcX,
-          srcY: 80,
-          offsetX: 8,
-          offsetY: -8,
-          dstX: dstX,
-          dstY: dstY,
+        renderNodeWindowEastWest(
+            colorSouth: colorSouth,
+            colorWest: colorWest,
+            dstX: dstX + 8,
+            dstY: dstY - 8
         );
         return;
       case NodeOrientation.Half_West:
-        renderNodeShadedOffset(
-          color: color,
-          srcX: srcX,
-          srcY: 80,
-          offsetX: -8,
-          offsetY: 8,
-          dstX: dstX,
-          dstY: dstY,
+        renderNodeWindowEastWest(
+            colorSouth: colorSouth,
+            colorWest: colorWest,
+            dstX: dstX - 8,
+            dstY: dstY + 8
         );
         return;
       default:
@@ -3222,6 +3271,24 @@ class RendererNodes extends RenderGroup {
     rotation: 0,
     dstX: dstX - (IsometricConstants.Sprite_Width_Half) + offsetX,
     dstY: dstY - (IsometricConstants.Sprite_Height_Third) + offsetY,
+  );
+
+  void renderNodeShaded({
+    required double srcX,
+    required double srcY,
+    required double dstX,
+    required double dstY,
+    required int color,
+  }) => engine.render(
+    color: color,
+    srcLeft: srcX,
+    srcTop: srcY,
+    srcRight: srcX + IsometricConstants.Sprite_Width,
+    srcBottom: srcY + IsometricConstants.Sprite_Height,
+    scale: 1.0,
+    rotation: 0,
+    dstX: dstX - (IsometricConstants.Sprite_Width_Half),
+    dstY: dstY - (IsometricConstants.Sprite_Height_Third),
   );
 
   void renderColumn({

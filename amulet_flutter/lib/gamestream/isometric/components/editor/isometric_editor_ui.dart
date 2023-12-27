@@ -23,13 +23,12 @@ extension IsometricEditorUI on IsometricEditor {
 
   static const gameObjects = const [
     GameObjectType.Barrel,
-    GameObjectType.Barrel_Explosive,
     GameObjectType.Crate_Wooden,
-    GameObjectType.Sphere,
     GameObjectType.Rock1,
-    GameObjectType.Tree1,
     GameObjectType.Crystal_Glowing_False,
     GameObjectType.Crystal_Glowing_True,
+    GameObjectType.Bottle,
+    GameObjectType.Cup,
   ];
 
   static const nodeTypesColumn1 = [

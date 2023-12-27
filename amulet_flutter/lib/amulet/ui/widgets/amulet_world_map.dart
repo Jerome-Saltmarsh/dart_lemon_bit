@@ -1,8 +1,5 @@
-import 'dart:math';
-
 import 'package:amulet_engine/packages/lemon_math.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
-import 'package:amulet_flutter/isometric/functions/get_render.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/lemon_engine.dart';

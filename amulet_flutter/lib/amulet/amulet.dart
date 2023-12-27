@@ -22,7 +22,6 @@ import 'package:lemon_widgets/lemon_widgets.dart';
 
 import '../gamestream/isometric/src.dart';
 import 'amulet_render.dart';
-import 'ui/widgets/amulet_world_map.dart';
 
 
 class Amulet extends IsometricGame {

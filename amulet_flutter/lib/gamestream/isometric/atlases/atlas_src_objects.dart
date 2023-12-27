@@ -130,7 +130,7 @@ class AtlasSrcObjects {
     5,  // x
     130,    // y
     6,   // width
-    11,   // height
+    13,   // height
     1.0,  // scale
     0.8, // anchorY
   ];
@@ -243,6 +243,7 @@ class AtlasSrcObjects {
     0.5, // anchorY
   ];
 
+
   static const Van = <double>[
     102,  // x
     278,    // y
@@ -257,7 +258,7 @@ class AtlasSrcObjects {
     81,    // y
     18,   // width
     58,   // height
-    1.0,  // scale
+    0.3,  // scale
     0.9, // anchorY
   ];
 
