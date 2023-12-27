@@ -263,14 +263,22 @@ class RendererNodes extends RenderGroup {
                       );
 
 
-                      if (nodeType == NodeType.Brick){
-                        final colorSouthWest = nodeColors[nodeIndex + 1 + totalColumns];
-                        renderNodeSideSouth(
+                      if (nodeType == NodeType.Cobblestone){
+                        final colorSouthEast = nodeColors[nodeIndex - 1 + totalColumns + area];
+                        final colorNorthWest = nodeColors[nodeIndex + 1 - totalColumns + area];
+                        renderNodeSideTop(
+                          srcX: 128,
                           srcY: 240.0,
-                          width: Node_Size_Sixth,
-                          dstX: dstX + Node_Size_Half - Cell_Size_Half,
-                          dstY: dstY - Cell_Size + Node_Size_Sixth - Cell_Size_Half,
-                          color: colorSouthWest,
+                          dstX: dstX,
+                          dstY: dstY,
+                          color: colorSouthEast,
+                        );
+                        renderNodeSideTop(
+                          srcX: 177,
+                          srcY: 240.0,
+                          dstX: dstX,
+                          dstY: dstY,
+                          color: colorNorthWest,
                         );
                       }
 
@@ -449,8 +457,8 @@ class RendererNodes extends RenderGroup {
                         color: colorAbove,
                         srcX: 0,
                         srcY: srcY,
-                        dstX: dstX - Node_Size_Half,
-                        dstY: dstY - Node_Height,
+                        dstX: dstX,
+                        dstY: dstY,
                       );
                       break;
 
@@ -4243,8 +4251,8 @@ class RendererNodes extends RenderGroup {
         srcBottom: srcY + Src_Height_Side_Top,
         scale: 1.0,
         rotation: 0,
-        dstX: dstX,
-        dstY: dstY,
+        dstX: dstX - Node_Size_Half,
+        dstY: dstY - Node_Height,
     );
   }
 
