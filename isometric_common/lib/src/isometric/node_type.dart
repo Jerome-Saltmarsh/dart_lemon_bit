@@ -47,6 +47,7 @@ class NodeType {
   static const Grass_Short = 90;
   static const Tree_Stump = 91;
   static const Cobblestone = 92;
+  static const Tiles = 93;
 
   static bool supportsOrientationSolid(int type) => const [
         Brick,
@@ -117,6 +118,7 @@ class NodeType {
         Bau_Haus,
         Scaffold,
         Glass,
+        Tiles,
   ].contains(type);
 
   static bool supportsOrientationSlopeCornerInner(int type) => const [
@@ -125,6 +127,7 @@ class NodeType {
         Road,
         Metal,
         Bau_Haus,
+        Tiles,
   ].contains(type);
 
   static bool supportsOrientationSlopeCornerOuter(int type) => const [
@@ -147,6 +150,7 @@ class NodeType {
         Bau_Haus,
         Scaffold,
         Glass,
+        Cobblestone,
   ].contains(type);
 
   static bool supportsOrientationHalfVertical(int type) => const [
@@ -328,6 +332,7 @@ class NodeType {
     Torch_Red: 'Torch_Red',
     Tree_Stump: 'Tree_Stump',
     Cobblestone: 'Cobblestone',
+    Tiles: 'Tiles'
   }[type] ?? 'unknown($type)';
 
   static bool isLightSource(int type) => const [

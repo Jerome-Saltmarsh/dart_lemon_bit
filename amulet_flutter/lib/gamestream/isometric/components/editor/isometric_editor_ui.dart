@@ -48,6 +48,7 @@ extension IsometricEditorUI on IsometricEditor {
     NodeType.Road_2,
     NodeType.Scaffold,
     NodeType.Cobblestone,
+    NodeType.Tiles,
   ];
 
   static const nodeTypesColumn2 = [

@@ -1200,6 +1200,10 @@ class IsometricScene with IsometricComponent implements Updatable {
           if (const [
             NodeOrientation.Half_Vertical_Bottom,
             NodeOrientation.Half_Vertical_Center,
+            NodeOrientation.Slope_North,
+            NodeOrientation.Slope_East,
+            NodeOrientation.Slope_South,
+            NodeOrientation.Slope_West,
           ].contains(nodeOrientation)) {
             vz = 0;
           }
@@ -1207,17 +1211,21 @@ class IsometricScene with IsometricComponent implements Updatable {
 
         if (vz > 0) {
           if (const [
-            NodeOrientation.Half_Vertical_Top
-          ].contains(nodeOrientation)) {
-            continue;
-          }
-
-          if (const [
             NodeOrientation.Half_Vertical_Top,
-            NodeOrientation.Half_Vertical_Center,
+            NodeOrientation.Slope_North,
+            NodeOrientation.Slope_East,
+            NodeOrientation.Slope_South,
+            NodeOrientation.Slope_West,
           ].contains(nodeOrientation)) {
             vz = 0;
           }
+
+          // if (const [
+          //   NodeOrientation.Half_Vertical_Top,
+          //   NodeOrientation.Half_Vertical_Center,
+          // ].contains(nodeOrientation)) {
+          //   vz = 0;
+          // }
         }
       }
 

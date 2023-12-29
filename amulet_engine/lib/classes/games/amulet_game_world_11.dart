@@ -54,6 +54,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..invincible = true
       ..helmType = HelmType.Steel
       ..bodyType = BodyType.Leather_Armour
+      ..shoeType = ShoeType.Leather_Boots
       ..legsType = LegType.Leather
       ..interact = onInteractWithWarren
       ..complexion = ComplexionType.fair;
@@ -78,6 +79,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..bodyType = BodyType.Leather_Armour
       ..legsType = LegType.Leather
       ..handTypeLeft = HandType.Leather_Gloves
+      ..shoeType = ShoeType.Iron_Plates
       ..weaponType = WeaponType.Bow
       ..complexion = ComplexionType.fair;
 
@@ -102,6 +104,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..legsType = LegType.Leather
       ..handTypeLeft = HandType.Leather_Gloves
       ..weaponType = WeaponType.Bow
+      ..shoeType = ShoeType.Iron_Plates
       ..complexion = ComplexionType.fair;
 
     npcMay = AmuletNpc(
@@ -125,6 +128,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..hairColor = 30
       ..bodyType = BodyType.Shirt_Blue
       ..legsType = LegType.Leather
+      ..shoeType = ShoeType.Leather_Boots
       ..handTypeLeft = HandType.None
       ..weaponType = WeaponType.Unarmed
       ..gender = Gender.female
@@ -151,6 +155,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..hairType = 1
       ..hairColor = 20
       ..bodyType = BodyType.Leather_Armour
+      ..shoeType = ShoeType.Leather_Boots
       ..legsType = LegType.Leather
       ..handTypeLeft = HandType.None
       ..weaponType = WeaponType.Staff

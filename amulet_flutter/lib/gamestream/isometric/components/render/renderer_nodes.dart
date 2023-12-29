@@ -22,6 +22,10 @@ import 'constants/node_src.dart';
 
 class RendererNodes extends RenderGroup {
 
+  static const dstXHalfWest = - 8;
+  static const dstYHalfWest = 8;
+  static const dstXHalfEast = 8;
+  static const dstYHalfEast = - 8;
   static const treeAnimation = [0, 1, 2, 1, 0, -1, -2, -1];
   static final treeAnimationLength = treeAnimation.length;
   static const Node_Size = 48.0;
@@ -261,27 +265,6 @@ class RendererNodes extends RenderGroup {
                         dst: dst,
                         src: src,
                       );
-
-
-                      if (nodeType == NodeType.Cobblestone){
-                        final colorSouthEast = nodeColors[nodeIndex - 1 + totalColumns + area];
-                        final colorNorthWest = nodeColors[nodeIndex + 1 - totalColumns + area];
-                        renderNodeSideTop(
-                          srcX: 128,
-                          srcY: 240.0,
-                          dstX: dstX,
-                          dstY: dstY,
-                          color: colorSouthEast,
-                        );
-                        renderNodeSideTop(
-                          srcX: 177,
-                          srcY: 240.0,
-                          dstX: dstX,
-                          dstY: dstY,
-                          color: colorNorthWest,
-                        );
-                      }
-
                       break;
                     case NodeOrientation.Half_West:
                       renderDynamicHalfWest(
@@ -561,6 +544,73 @@ class RendererNodes extends RenderGroup {
                       }
                       break;
 
+                    case NodeType.Cobblestone:
+                      switch (orientations[nodeIndex]){
+                        case NodeOrientation.Solid:
+                          const srcY = 240.0;
+                          final colorSouthEast = nodeColors[nodeIndex - 1 + totalColumns + area];
+                          final colorNorthWest = nodeColors[nodeIndex + 1 - totalColumns + area];
+                          renderNodeShaded(
+                            srcX: 0,
+                            srcY: srcY,
+                            dstX: dstX,
+                            dstY: dstY,
+                            color: scene.colorAbove(nodeIndex),
+                          );
+                          renderNodeSideTop(
+                            srcX: 128,
+                            srcY: srcY,
+                            dstX: dstX,
+                            dstY: dstY,
+                            color: colorSouthEast,
+                          );
+                          renderNodeSideTop(
+                            srcX: 177,
+                            srcY: srcY,
+                            dstX: dstX,
+                            dstY: dstY,
+                            color: colorNorthWest,
+                          );
+                          break;
+                        case NodeOrientation.Half_North:
+                          renderCobblestoneHalf(
+                            srcX: 48 * 3,
+                            dstX: dstX - 8,
+                            dstY: dstY - 8,
+                            scene: scene,
+                            index: nodeIndex,
+                          );
+                          break;
+                        case NodeOrientation.Half_South:
+                          renderCobblestoneHalf(
+                            srcX: 48 * 3,
+                            dstX: dstX + 8,
+                            dstY: dstY + 8,
+                            scene: scene,
+                            index: nodeIndex,
+                          );
+                          break;
+                        case NodeOrientation.Half_West:
+                          renderCobblestoneHalf(
+                              srcX: 0,
+                              dstX: dstX + dstXHalfWest,
+                              dstY: dstY + dstYHalfWest,
+                              scene: scene,
+                              index: nodeIndex,
+                          );
+                          break;
+                        case NodeOrientation.Half_East:
+                          renderCobblestoneHalf(
+                              srcX: 0,
+                              dstX: dstX + dstXHalfEast,
+                              dstY: dstY + dstYHalfEast,
+                              scene: scene,
+                              index: nodeIndex,
+                          );
+                          break;
+                      }
+                      break;
+
                     default:
                       renderNodeIndex(
                         index: nodeIndex,
@@ -621,6 +671,53 @@ class RendererNodes extends RenderGroup {
       return;
     }
     end();
+  }
+
+  void renderCobblestoneHalfHorizontal({
+    required double dstX,
+    required double dstY,
+    required IsometricScene scene,
+    required int index,
+  }) => renderCobblestoneHalf(
+      srcX: 48.0 * 3,
+      dstX: dstX,
+      dstY: dstY,
+      scene: scene,
+      index: index,
+    );
+
+  void renderCobblestoneHalf({
+    required double srcX,
+    required double dstX,
+    required double dstY,
+    required IsometricScene scene,
+    required int index,
+  }) {
+    const srcY = 361.0;
+    // top
+    renderNodeShaded(
+      srcX: srcX,
+      srcY: srcY,
+      dstX: dstX,
+      dstY: dstY,
+      color: scene.colorAbove(index),
+    );
+    // south
+    renderNodeShaded(
+      srcX: srcX + 48.0,
+      srcY: srcY,
+      dstX: dstX,
+      dstY: dstY,
+      color: scene.colorSouth(index),
+    );
+    // west
+    renderNodeShaded(
+      srcX: srcX + (48.0 * 2),
+      srcY: srcY,
+      dstX: dstX,
+      dstY: dstY,
+      color: scene.colorWest(index),
+    );
   }
 
   void onPlainIndexChanged(){
@@ -1152,6 +1249,72 @@ class RendererNodes extends RenderGroup {
           dstY: dstY,
         );
         return;
+      case NodeType.Tiles:
+        const srcY = 288.0;
+        final colorAbove = scene.colorAbove(index);
+        switch (orientation){
+          case NodeOrientation.Slope_North:
+            renderNodeShaded(
+              srcX: 0,
+              srcY: srcY,
+              dstX: dstX,
+              dstY: dstY,
+              color: colorAbove,
+            );
+            break;
+          case NodeOrientation.Slope_East:
+            renderNodeShaded(
+              srcX: 49,
+              srcY: srcY,
+              dstX: dstX,
+              dstY: dstY,
+              color: colorAbove,
+            );
+            break;
+          case NodeOrientation.Slope_South:
+            renderNodeShaded(
+              srcX: 98,
+              srcY: srcY,
+              dstX: dstX,
+              dstY: dstY,
+              color: colorAbove,
+            );
+            break;
+          case NodeOrientation.Slope_West:
+            renderNodeShaded(
+              srcX: 147,
+              srcY: srcY,
+              dstX: dstX,
+              dstY: dstY,
+              color: colorAbove,
+            );
+            break;
+          case NodeOrientation.Slope_Inner_North_East:
+            engine.render(
+              color: colorAbove,
+              srcLeft: 73,
+              srcTop: srcY,
+              srcRight: 95,
+              srcBottom: 359,
+              scale: 1.0,
+              rotation: 0,
+              dstX: dstX,
+              dstY: dstY - (IsometricConstants.Sprite_Height_Third),
+            );
+            engine.render(
+              color: colorAbove,
+              srcLeft: 0,
+              srcTop: srcY,
+              srcRight: 24,
+              srcBottom: 359,
+              scale: 1.0,
+              rotation: 0,
+              dstX: dstX - IsometricConstants.Sprite_Width_Half,
+              dstY: dstY - IsometricConstants.Sprite_Height_Third,
+            );
+            break;
+        }
+        break;
       case NodeType.Window:
         renderNodeWindow(
           dstX: dstX,
