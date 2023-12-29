@@ -53,6 +53,10 @@ ctrl + []               : move caret to code block
 * [new]: mobile touch screen support
 * [fix]: audio for web
 
+## 29.12.2023
+* [new]: node type cobblestone
+* [new]: node type palisade
+
 ## 25.12.2023
 * [new]: animation hurt
 * [fix]: hair type disappears

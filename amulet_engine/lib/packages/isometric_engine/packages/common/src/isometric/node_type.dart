@@ -48,6 +48,7 @@ class NodeType {
   static const Tree_Stump = 91;
   static const Cobblestone = 92;
   static const Tiles = 93;
+  static const Palisade = 94;
 
   static bool supportsOrientationSolid(int type) => const [
         Brick,
@@ -151,6 +152,7 @@ class NodeType {
         Scaffold,
         Glass,
         Cobblestone,
+        Palisade,
   ].contains(type);
 
   static bool supportsOrientationHalfVertical(int type) => const [
@@ -332,7 +334,8 @@ class NodeType {
     Torch_Red: 'Torch_Red',
     Tree_Stump: 'Tree_Stump',
     Cobblestone: 'Cobblestone',
-    Tiles: 'Tiles'
+    Tiles: 'Tiles',
+    Palisade: 'Palisade',
   }[type] ?? 'unknown($type)';
 
   static bool isLightSource(int type) => const [

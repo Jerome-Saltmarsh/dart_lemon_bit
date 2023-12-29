@@ -544,7 +544,18 @@ class RendererNodes extends RenderGroup {
                       }
                       break;
 
+                    case NodeType.Palisade:
+                      renderNodeHalfShade(
+                        orientation: orientations[nodeIndex],
+                        index: nodeIndex,
+                        srcY: 433,
+                        dstX: dstX,
+                        dstY: dstY,
+                      );
+                      break;
+
                     case NodeType.Cobblestone:
+                      const srcY = 361.0;
                       switch (orientations[nodeIndex]){
                         case NodeOrientation.Solid:
                           const srcY = 240.0;
@@ -573,8 +584,9 @@ class RendererNodes extends RenderGroup {
                           );
                           break;
                         case NodeOrientation.Half_North:
-                          renderCobblestoneHalf(
+                          renderHalfShaded(
                             srcX: 48 * 3,
+                            srcY: srcY,
                             dstX: dstX - 8,
                             dstY: dstY - 8,
                             scene: scene,
@@ -582,8 +594,9 @@ class RendererNodes extends RenderGroup {
                           );
                           break;
                         case NodeOrientation.Half_South:
-                          renderCobblestoneHalf(
+                          renderHalfShaded(
                             srcX: 48 * 3,
+                            srcY: srcY,
                             dstX: dstX + 8,
                             dstY: dstY + 8,
                             scene: scene,
@@ -591,8 +604,9 @@ class RendererNodes extends RenderGroup {
                           );
                           break;
                         case NodeOrientation.Half_West:
-                          renderCobblestoneHalf(
+                          renderHalfShaded(
                               srcX: 0,
+                              srcY: srcY,
                               dstX: dstX + dstXHalfWest,
                               dstY: dstY + dstYHalfWest,
                               scene: scene,
@@ -600,8 +614,9 @@ class RendererNodes extends RenderGroup {
                           );
                           break;
                         case NodeOrientation.Half_East:
-                          renderCobblestoneHalf(
+                          renderHalfShaded(
                               srcX: 0,
+                              srcY: srcY,
                               dstX: dstX + dstXHalfEast,
                               dstY: dstY + dstYHalfEast,
                               scene: scene,
@@ -610,6 +625,7 @@ class RendererNodes extends RenderGroup {
                           break;
                       }
                       break;
+
 
                     default:
                       renderNodeIndex(
@@ -673,27 +689,14 @@ class RendererNodes extends RenderGroup {
     end();
   }
 
-  void renderCobblestoneHalfHorizontal({
-    required double dstX,
-    required double dstY,
-    required IsometricScene scene,
-    required int index,
-  }) => renderCobblestoneHalf(
-      srcX: 48.0 * 3,
-      dstX: dstX,
-      dstY: dstY,
-      scene: scene,
-      index: index,
-    );
-
-  void renderCobblestoneHalf({
+  void renderHalfShaded({
     required double srcX,
+    required double srcY,
     required double dstX,
     required double dstY,
     required IsometricScene scene,
     required int index,
   }) {
-    const srcY = 361.0;
     // top
     renderNodeShaded(
       srcX: srcX,
@@ -4700,6 +4703,57 @@ class RendererNodes extends RenderGroup {
 
     this.beamTotal = beamTotal;
 
+  }
+
+  void renderNodeHalfShade({
+    required int orientation,
+    required int index,
+    required double srcY,
+    required double dstX,
+    required double dstY,
+  }){
+    switch (orientation){
+      case NodeOrientation.Half_North:
+        renderHalfShaded(
+          srcX: 48 * 3,
+          srcY: srcY,
+          dstX: dstX - 8,
+          dstY: dstY - 8,
+          scene: scene,
+          index: index,
+        );
+        break;
+      case NodeOrientation.Half_South:
+        renderHalfShaded(
+          srcX: 48 * 3,
+          srcY: srcY,
+          dstX: dstX + 8,
+          dstY: dstY + 8,
+          scene: scene,
+          index: index,
+        );
+        break;
+      case NodeOrientation.Half_West:
+        renderHalfShaded(
+          srcX: 0,
+          srcY: srcY,
+          dstX: dstX + dstXHalfWest,
+          dstY: dstY + dstYHalfWest,
+          scene: scene,
+          index: index,
+        );
+        break;
+      case NodeOrientation.Half_East:
+        renderHalfShaded(
+          srcX: 0,
+          srcY: srcY,
+          dstX: dstX + dstXHalfEast,
+          dstY: dstY + dstYHalfEast,
+          scene: scene,
+          index: index,
+        );
+        break;
+    }
   }
 }
 
