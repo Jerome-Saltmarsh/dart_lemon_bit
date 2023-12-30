@@ -16,6 +16,7 @@ import 'isometric_component.dart';
 
 class IsometricParticles with IsometricComponent implements Updatable {
 
+  static const Flame_Duration = 50;
   static const windStrengthMultiplier = 0.003;
 
   var windy = false;
@@ -796,6 +797,34 @@ class IsometricParticles with IsometricComponent implements Updatable {
     }
     options.charactersEffectParticles = charactersEffectParticles;
   }
+
+  Particle emitFire({
+    required double x,
+    required double y,
+    required double z,
+    double scale = 1.0
+  }) =>
+      spawnParticle(
+        particleType: ParticleType.Fire,
+        x: x,
+        y: y,
+        z: z,
+        zv: 0.6,
+        angle: 0,
+        rotation: 0,
+        speed: 0,
+        weight: 0,
+        scaleV: -(1.0 / Flame_Duration),
+        duration: Flame_Duration,
+        scale: scale,
+      )
+        ..scale = 1.0
+        ..emitsLight = false
+        ..emissionColor = scene.ambientColor
+        ..deactiveOnNodeCollision = false
+        ..blownByWind = true
+        ..emissionIntensity = 0.5
+  ;
 }
 
 class WindNode {

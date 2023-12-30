@@ -37,6 +37,7 @@ class ParticleType {
       Moth: 'moth',
       Water_Drop_Large: 'Water_Drop_Large',
       Wind: 'wind',
+      Fire: 'Fire',
     }[particleType] ?? 'unknown-$particleType';
 
   static const deactivateOnNodeCollision = [

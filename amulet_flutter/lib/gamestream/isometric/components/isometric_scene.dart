@@ -38,6 +38,7 @@ class IsometricScene with IsometricComponent implements Updatable {
   var nextLightingUpdate = 0;
   var framesPerSmokeEmission = 10;
   var nextEmissionSmoke = 0;
+  var nextEmissionFire = 0;
   var nextEmissionWind = 0;
   var totalProjectiles = 0;
   var bakeStackTotal = 0;
@@ -246,6 +247,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     updateProjectiles();
     updateGameObjects();
     updateParticleSmokeEmitters();
+    updateParticleFireEmitters();
     // updateParticleWindEmitters();
 
     if (nextLightingUpdate-- <= 0) {
@@ -1493,7 +1495,7 @@ class IsometricScene with IsometricComponent implements Updatable {
         continue;
       }
       if (projectile.type == ProjectileType.Fireball) {
-        actions.spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
+        particles.emitFire(x: projectile.x, y: projectile.y, z: projectile.z);
         continue;
       }
     }
@@ -1582,12 +1584,41 @@ class IsometricScene with IsometricComponent implements Updatable {
 
     for (var i = 0; i < smokeSourcesTotal; i++){
       final index = smokeSources[i];
+      final x = getIndexPositionX(index);
+      final y = getIndexPositionY(index);
+      final z = getIndexPositionZ(index);
       particles.emitSmoke(
-        x: getIndexPositionX(index),
-        y: getIndexPositionY(index),
-        z: getIndexPositionZ(index),
+        x: x,
+        y: y,
+        z: z,
         duration: smokeDuration,
       );
+    }
+  }
+
+  void updateParticleFireEmitters(){
+    if (nextEmissionFire-- > 0){
+      return;
+    }
+
+    nextEmissionFire = 1;
+    final smokeSourcesTotal = this.smokeSourcesTotal;
+    final smokeSources = this.smokeSources;
+    final particles = this.particles;
+
+    for (var i = 0; i < smokeSourcesTotal; i++){
+      final index = smokeSources[i];
+      final x = getIndexPositionX(index);
+      final y = getIndexPositionY(index);
+      final z = getIndexPositionZ(index);
+
+      for (var j = 0; j < 2; j++){
+        particles.emitFire(
+          x: x + giveOrTake(10),
+          y: y + giveOrTake(10),
+          z: z,
+        );
+      }
     }
   }
 
@@ -2418,5 +2449,4 @@ class IsometricScene with IsometricComponent implements Updatable {
       nodeColors[indexSouth2],
     );
   }
-
 }

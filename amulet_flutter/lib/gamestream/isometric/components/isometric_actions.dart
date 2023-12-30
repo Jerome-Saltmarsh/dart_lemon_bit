@@ -1,6 +1,5 @@
 
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
-import 'package:amulet_flutter/isometric/classes/particle.dart';
 import 'package:amulet_engine/packages/common.dart';
 import 'package:amulet_engine/packages/lemon_math.dart';
 
@@ -33,7 +32,7 @@ class IsometricActions with IsometricComponent {
       final angle = piQuarter * i;
       final speed = randomBetween(0.5, 3.5);
 
-      actions.spawnParticleFire(
+      particles.emitFire(
           x: x,
           y: y,
           z: z,
@@ -43,10 +42,10 @@ class IsometricActions with IsometricComponent {
       ;
     }
 
-    spawnParticleFire(x: x, y: y, z: z)..delay = 0;
-    spawnParticleFire(x: x, y: y, z: z)..delay = 2;
-    spawnParticleFire(x: x, y: y, z: z)..delay = 4;
-    spawnParticleFire(x: x, y: y, z: z)..delay = 6;
+    particles.emitFire(x: x, y: y, z: z)..delay = 0;
+    particles.emitFire(x: x, y: y, z: z)..delay = 2;
+    particles.emitFire(x: x, y: y, z: z)..delay = 4;
+    particles.emitFire(x: x, y: y, z: z)..delay = 6;
 
     for (var i = 0; i < 7; i++) {
       particles.spawnParticle(
@@ -100,34 +99,6 @@ class IsometricActions with IsometricComponent {
         ..flash = true
         ..emissionColor = scene.ambientColor
         ..emissionIntensity = 0.0
-  ;
-
-  Particle spawnParticleFire({
-    required double x,
-    required double y,
-    required double z,
-    int duration = 100,
-    double scale = 1.0
-  }) =>
-      particles.spawnParticle(
-        particleType: ParticleType.Fire,
-        x: x,
-        y: y,
-        z: z,
-        zv: 1,
-        angle: 0,
-        rotation: 0,
-        speed: 0,
-        scaleV: 0.01,
-        weight: -1,
-        duration: duration,
-        scale: scale,
-        // frictionAir: 1.0,
-      )
-        ..emitsLight = true
-        ..emissionColor = scene.ambientColor
-        ..deactiveOnNodeCollision = false
-        ..emissionIntensity = 0.5
   ;
 
   int get bodyPartDuration =>  randomInt(120, 200);

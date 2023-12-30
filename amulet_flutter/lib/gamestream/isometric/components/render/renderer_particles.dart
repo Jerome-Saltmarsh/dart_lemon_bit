@@ -1,9 +1,11 @@
 import 'package:amulet_engine/packages/isometric_engine/packages/lemon_math/src/functions/get_alpha.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/particle_flying.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/render_group.dart';
+import 'package:amulet_flutter/gamestream/isometric/classes/src.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_images.dart';
 import 'package:amulet_flutter/isometric/classes/particle.dart';
 import 'package:amulet_engine/packages/common.dart';
+import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 
@@ -12,6 +14,18 @@ class RendererParticles extends RenderGroup {
   late Particle particle;
 
   var totalActiveParticles = 0;
+
+  final fireColors = List.generate(IsometricParticles.Flame_Duration, (index) {
+
+    final indexRed = (IsometricParticles.Flame_Duration * 0.5).toInt();
+
+    if (index < indexRed){
+      return (Color.lerp(Colors.yellow, Colors.red, index / indexRed) ?? (throw Exception())).value;
+    }
+    final total = IsometricParticles.Flame_Duration - indexRed;
+    final i = index - indexRed;
+    return (Color.lerp(Colors.red, Colors.grey, i / total) ?? (throw Exception())).value;
+  }).toList(growable: false);
 
   @override
   int getTotal() => totalActiveParticles;
@@ -274,16 +288,19 @@ class RendererParticles extends RenderGroup {
           );
           break;
         case ParticleType.Fire:
-          // engine.renderSprite(
-          //   image: images.atlas_particles,
-          //   dstX: dstX,
-          //   dstY: dstY,
-          //   srcX: 0,
-          //   srcY: 32.0 * particle.frame,
-          //   srcWidth: 32,
-          //   srcHeight: 32,
-          //   scale: particle.scale,
-          // );
+          engine.bufferBlendMode = BlendMode.modulate;
+          engine.renderSprite(
+            image: images.atlas_nodes,
+            dstX: dstX,
+            dstY: dstY,
+            srcX: 72,
+            srcY: 2040,
+            srcWidth: 8,
+            srcHeight: 8,
+            scale: particle.scale,
+            color: fireColors[((1.0 - particle.duration01) * fireColors.length).toInt()],
+          );
+          engine.setBlendModeDstATop();
           break;
         case ParticleType.Shadow:
           engine.renderSprite(
