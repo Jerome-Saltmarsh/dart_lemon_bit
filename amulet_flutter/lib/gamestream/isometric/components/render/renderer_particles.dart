@@ -15,15 +15,23 @@ class RendererParticles extends RenderGroup {
 
   final fireColors = List.generate(IsometricParticles.Flame_Duration, (index) {
 
-    final indexRed = (IsometricParticles.Flame_Duration * 0.3).toInt();
-    final indexGrey = (IsometricParticles.Flame_Duration * 0.4).toInt();
+    final indexRed = (IsometricParticles.Flame_Duration * 0.33).toInt();
+    final indexGrey = (IsometricParticles.Flame_Duration * 0.66).toInt();
 
     if (index < indexRed){
       return (Color.lerp(Colors.yellow, Colors.red, index / indexRed) ?? (throw Exception())).value;
     }
-    final total = IsometricParticles.Flame_Duration - indexRed;
-    final i = index - indexRed;
-    return (Color.lerp(Colors.red, Colors.grey, (i * 1.5) / total) ?? (throw Exception())).value;
+    if (index < indexGrey){
+      final total = IsometricParticles.Flame_Duration - indexGrey;
+      final i = index - indexRed;
+      return (Color.lerp(Colors.red, Colors.grey, i / total) ?? (throw Exception())).value;
+    }
+
+    final total = IsometricParticles.Flame_Duration - indexGrey;
+    final i = index - indexGrey;
+    return (Color.lerp(Colors.grey, Colors.black12, i / total) ?? (throw Exception())).value;
+
+
   }).toList(growable: false);
 
   @override
