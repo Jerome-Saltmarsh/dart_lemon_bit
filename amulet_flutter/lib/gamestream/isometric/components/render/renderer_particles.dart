@@ -1,9 +1,7 @@
 import 'package:amulet_engine/packages/isometric_engine/packages/lemon_math/src/functions/get_alpha.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/particle_flying.dart';
-import 'package:amulet_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/src.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_images.dart';
-import 'package:amulet_flutter/isometric/classes/particle.dart';
 import 'package:amulet_engine/packages/common.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
@@ -24,7 +22,7 @@ class RendererParticles extends RenderGroup {
     }
     final total = IsometricParticles.Flame_Duration - indexRed;
     final i = index - indexRed;
-    return (Color.lerp(Colors.red, Colors.grey, (i * 3) / total) ?? (throw Exception())).value;
+    return (Color.lerp(Colors.red, Colors.grey, (i) / total) ?? (throw Exception())).value;
   }).toList(growable: false);
 
   @override
