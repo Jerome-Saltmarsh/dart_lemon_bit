@@ -8,7 +8,6 @@ class Particle extends Position {
   var frictionAir = 0.98;
   var wind = 0;
   var deactivating = false;
-  var delay = 0;
   var vx = 0.0;
   var vy = 0.0;
   var vz = 0.0;
@@ -44,7 +43,6 @@ class Particle extends Position {
   void deactivate(){
     duration = -1;
     durationTotal = -1;
-    delay = 0;
     onscreen = false;
     deactivating = true;
   }

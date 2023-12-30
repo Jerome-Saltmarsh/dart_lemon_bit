@@ -1495,7 +1495,7 @@ class IsometricScene with IsometricComponent implements Updatable {
         continue;
       }
       if (projectile.type == ProjectileType.Fireball) {
-        particles.emitFire(x: projectile.x, y: projectile.y, z: projectile.z);
+        particles.emitFlame(x: projectile.x, y: projectile.y, z: projectile.z);
         continue;
       }
     }
@@ -1613,7 +1613,7 @@ class IsometricScene with IsometricComponent implements Updatable {
       final z = getIndexPositionZ(index);
 
       for (var j = 0; j < 2; j++){
-        particles.emitFire(
+        particles.emitFlame(
           x: x + giveOrTake(10),
           y: y + giveOrTake(10),
           z: z,

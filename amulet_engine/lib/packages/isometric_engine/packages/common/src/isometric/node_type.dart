@@ -135,7 +135,8 @@ class NodeType {
         Concrete,
         Road,
         Metal,
-        Grass
+        Grass,
+        Tiles,
   ].contains(type);
 
   static bool supportsOrientationHalf(int type) => const [

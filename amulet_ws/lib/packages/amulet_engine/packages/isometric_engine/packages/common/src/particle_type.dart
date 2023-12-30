@@ -22,7 +22,7 @@ class ParticleType {
   static const Moth = 46;
   static const Water_Drop_Large = 47;
   static const Wind = 48;
-  static const Fire = 49;
+  static const Flame = 49;
 
   static String getName(int particleType) => const {
       Smoke: 'Smoke',
@@ -37,7 +37,7 @@ class ParticleType {
       Moth: 'moth',
       Water_Drop_Large: 'Water_Drop_Large',
       Wind: 'wind',
-      Fire: 'Fire',
+      Flame: 'Flame',
     }[particleType] ?? 'unknown-$particleType';
 
   static const deactivateOnNodeCollision = [

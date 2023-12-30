@@ -13,7 +13,7 @@ class RendererParticles extends RenderGroup {
 
   var totalActiveParticles = 0;
 
-  final fireColors = List.generate(IsometricParticles.Flame_Duration, (index) {
+  final flameColors = List.generate(IsometricParticles.Flame_Duration, (index) {
 
     final indexRed = (IsometricParticles.Flame_Duration * 0.33).toInt();
     final indexGrey = (IsometricParticles.Flame_Duration * 0.66).toInt();
@@ -51,10 +51,6 @@ class RendererParticles extends RenderGroup {
     final dstY = particle.renderY;
 
     assert(particle.onscreen);
-
-    if (particle.delay > 0) {
-      return;
-    }
 
     final particleType = particle.type;
 
@@ -294,7 +290,7 @@ class RendererParticles extends RenderGroup {
             color: scene.getRenderColorPosition(particle),
           );
           break;
-        case ParticleType.Fire:
+        case ParticleType.Flame:
           engine.bufferBlendMode = BlendMode.modulate;
           engine.renderSprite(
             image: images.atlas_nodes,
@@ -305,7 +301,7 @@ class RendererParticles extends RenderGroup {
             srcWidth: 8,
             srcHeight: 8,
             scale: particle.scale,
-            color: fireColors[((1.0 - particle.duration01) * fireColors.length).toInt()],
+            color: flameColors[((1.0 - particle.duration01) * flameColors.length).toInt()],
           );
           engine.setBlendModeDstATop();
           break;

@@ -32,7 +32,7 @@ class IsometricActions with IsometricComponent {
       final angle = piQuarter * i;
       final speed = randomBetween(0.5, 3.5);
 
-      particles.emitFire(
+      particles.emitFlame(
           x: x,
           y: y,
           z: z,
@@ -42,14 +42,14 @@ class IsometricActions with IsometricComponent {
       ;
     }
 
-    particles.emitFire(x: x, y: y, z: z)..delay = 0;
-    particles.emitFire(x: x, y: y, z: z)..delay = 2;
-    particles.emitFire(x: x, y: y, z: z)..delay = 4;
-    particles.emitFire(x: x, y: y, z: z)..delay = 6;
+    particles.emitFlame(x: x, y: y, z: z);
+    particles.emitFlame(x: x, y: y, z: z);
+    particles.emitFlame(x: x, y: y, z: z);
+    particles.emitFlame(x: x, y: y, z: z);
 
     for (var i = 0; i < 7; i++) {
       particles.spawnParticle(
-        particleType: ParticleType.Fire,
+        particleType: ParticleType.Flame,
         x: x,
         y: y,
         z: z,
@@ -74,7 +74,6 @@ class IsometricActions with IsometricComponent {
           duration: 60,
       )
         ..deactiveOnNodeCollision = false
-        ..delay = i
         ..vz = 0.75
         ..setSpeed(randomAngle(), giveOrTake(3));
     }

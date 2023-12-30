@@ -1316,6 +1316,30 @@ class RendererNodes extends RenderGroup {
               dstY: dstY - IsometricConstants.Sprite_Height_Third,
             );
             break;
+          case NodeOrientation.Slope_Outer_South_West:
+            engine.render(
+              color: colorAbove,
+              srcLeft: 98,
+              srcTop: 288,
+              srcRight: 98 + 24,
+              srcBottom: 288 + 72,
+              scale: 1.0,
+              rotation: 0,
+              dstX: dstX - IsometricConstants.Sprite_Width_Half,
+              dstY: dstY - IsometricConstants.Sprite_Height_Third,
+            );
+            engine.render(
+              color: colorAbove,
+              srcLeft: 171,
+              srcTop: 288,
+              srcRight: 194,
+              srcBottom: 288 + 72,
+              scale: 1.0,
+              rotation: 0,
+              dstX: dstX,
+              dstY: dstY - (IsometricConstants.Sprite_Height_Third),
+            );
+            break;
         }
         break;
       case NodeType.Window:

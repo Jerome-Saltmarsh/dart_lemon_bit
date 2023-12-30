@@ -98,7 +98,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
       // ParticleType.Wind,
     ].contains(particleType);
     particle.emitsLight = false;
-    particle.delay = delay;
 
     if (speed > 0){
       particle.vx = adj(angle, speed);
@@ -515,11 +514,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
     final particleType = particle.type;
 
-    if (particleType == ParticleType.Fire && particle.delay > 0){
-      particle.delay--;
-      return;
-    }
-
     if (particleType == ParticleType.Wind){
        final vHorizontal = (-(1.0 - pyramid(particle.duration01)) * 10) + 2.5;
        particle.vx = vHorizontal;
@@ -798,14 +792,14 @@ class IsometricParticles with IsometricComponent implements Updatable {
     options.charactersEffectParticles = charactersEffectParticles;
   }
 
-  Particle emitFire({
+  Particle emitFlame({
     required double x,
     required double y,
     required double z,
     double scale = 1.0
   }) =>
       spawnParticle(
-        particleType: ParticleType.Fire,
+        particleType: ParticleType.Flame,
         x: x,
         y: y,
         z: z,
@@ -818,12 +812,9 @@ class IsometricParticles with IsometricComponent implements Updatable {
         duration: Flame_Duration,
         scale: scale,
       )
-        ..scale = 1.0
         ..emitsLight = false
-        ..emissionColor = scene.ambientColor
         ..deactiveOnNodeCollision = false
         ..blownByWind = true
-        ..emissionIntensity = 0.5
   ;
 }
 
