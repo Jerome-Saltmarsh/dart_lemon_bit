@@ -8,6 +8,12 @@ void randomizeScene(Scene scene){
   final nodeVariations = scene.variations;
   for (var i = 0; i < totalNodes; i++){
       final nodeType = nodeTypes[i];
+
+      if (nodeType == NodeType.Tree_Bottom){
+        nodeVariations[i] = randomInt(0, 4);
+        continue;
+      }
+
       if (nodeType != NodeType.Grass) {
         continue;
       }

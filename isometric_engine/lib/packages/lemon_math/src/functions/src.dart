@@ -45,3 +45,4 @@ export 'pyramid.dart';
 export 'set_alpha.dart';
 export 'rgba.dart';
 export 'get_hue.dart';
+export 'rotate.dart';

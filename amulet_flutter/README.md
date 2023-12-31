@@ -16,8 +16,8 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## TODO
-* [new]: node type large bricks
 * [new]: mini map location labels
+* [new]: node type large bricks
 * [new]: character state spawn
 * [new]: amulet loading page
 * [new]: scene witches lair level 1

@@ -114,11 +114,15 @@ class AmuletUI {
           height: 200,
           child: Column(
             children: [
-              alignRight(
-                  child: onPressed(
-                      action: amulet.windowVisibleQuests.setFalse,
-                      child: buildText('X', color: Colors.orange),
+              Row(
+                children: [
+                  buildText('QUEST'),
+                  fillSpace,
+                  onPressed(
+                    action: amulet.windowVisibleQuests.setFalse,
+                    child: buildText('X', color: Colors.orange),
                   ),
+                ],
               ),
               alignCenter(
                 child: buildWatch(
@@ -168,9 +172,9 @@ class AmuletUI {
               final large = AmuletWorldMap(amulet: amulet, size: 400);
               return onPressed(
                 action: amulet.worldMapLarge.toggle,
-                child: buildWatch(amulet.worldMapLarge, (bool isLarge){
-                   return isLarge ? large : small;
-                }),
+                child: buildWatch(amulet.worldMapLarge, (bool isLarge)
+                  => isLarge ? large : small
+                ),
               );
             }
           ),

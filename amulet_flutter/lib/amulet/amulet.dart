@@ -21,6 +21,7 @@ import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 import '../gamestream/isometric/src.dart';
+import 'amulet_parser.dart';
 import 'amulet_render.dart';
 
 
@@ -39,6 +40,7 @@ class Amulet extends IsometricGame {
   var worldRows = 0;
   var worldColumns = 0;
   var worldFlatMaps = <Uint8List>[];
+  final worldLocations = <MapLocation>[];
   ui.Image? worldMapPicture;
 
   var playerWorldX = 0.0;

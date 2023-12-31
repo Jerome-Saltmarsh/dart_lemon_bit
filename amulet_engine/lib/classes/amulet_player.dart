@@ -66,6 +66,7 @@ class AmuletPlayer extends IsometricPlayer with
     setItemsLength(itemLength);
     setControlsEnabled(true);
     writeWorldMapBytes();
+    writeWorldMapLocations();
     writeAmuletElements();
     writeElementPoints();
     writeActivatedPowerIndex(_activatedPowerIndex);
@@ -1994,6 +1995,13 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(amulet.worldColumns);
     writeUInt16(amulet.worldMapBytes.length);
     writeBytes(amulet.worldMapBytes);
+  }
+
+  void writeWorldMapLocations(){
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.World_Map_Locations);
+    writeUInt16(amulet.worldMapLocations.length);
+    writeBytes(amulet.worldMapLocations);
   }
 
   void writeWorldIndex(){

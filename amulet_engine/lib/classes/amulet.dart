@@ -76,6 +76,7 @@ class Amulet {
 
   /// a minimap of all the worlds collapsed scene
   var worldMapBytes = Uint8List(0);
+  var worldMapLocations = Uint8List(0);
 
   Amulet({
     required this.onFixedUpdate,
@@ -93,6 +94,7 @@ class Amulet {
     }
     _initializeGames();
     _compileWorldMapBytes();
+    compileWorldMapLocations();
   }
 
   AmuletGame getAmuletSceneGame(AmuletScene scene) {
@@ -377,6 +379,31 @@ class Amulet {
     final bytes = byteWriter.compile();
     final bytesCompressed = compressor.encode(bytes);
     worldMapBytes = Uint8List.fromList(bytesCompressed);
+  }
+
+  void compileWorldMapLocations() {
+    final compressor = ZLibEncoder();
+    final byteWriter = ByteWriter();
+     for (final game in worldMap) {
+       final scene = game.scene;
+       final keys = scene.keys;
+       for (final entry in keys.entries){
+            final key = entry.key;
+            if (key.startsWith('location')) {
+              final index = entry.value;
+              byteWriter.writeBool(true);
+              byteWriter.writeByte(game.worldRow);
+              byteWriter.writeByte(game.worldColumn);
+              byteWriter.writeString(key);
+              byteWriter.writeUInt16(scene.getRow(index));
+              byteWriter.writeUInt16(scene.getColumn(index));
+            }
+       }
+     }
+    byteWriter.writeBool(false);
+    final bytes = byteWriter.compile();
+    final bytesCompressed = compressor.encode(bytes);
+    worldMapLocations = Uint8List.fromList(bytesCompressed);
   }
 
   void resetPlayer(AmuletPlayer player) {

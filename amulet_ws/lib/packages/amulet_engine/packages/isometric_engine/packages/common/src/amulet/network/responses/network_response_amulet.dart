@@ -23,8 +23,9 @@ class NetworkResponseAmulet {
    static const Element_Upgraded = 25;
    static const Highlight_Icon_Inventory = 26;
    static const World_Map_Bytes = 27;
-   static const Player_World_Index = 28;
-   static const Player_World_Positioned = 29;
-   static const Quest_Main = 30;
-   static const Debug = 31;
+   static const World_Map_Locations = 28;
+   static const Player_World_Index = 29;
+   static const Player_World_Positioned = 30;
+   static const Quest_Main = 31;
+   static const Debug = 32;
 }

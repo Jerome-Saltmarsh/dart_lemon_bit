@@ -121,6 +121,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.World_Map_Bytes:
          readWorldMapBytes();
          break;
+       case NetworkResponseAmulet.World_Map_Locations:
+         readWorldMapLocations();
+         break;
        case NetworkResponseAmulet.Quest_Main:
          readQuestMain();
          break;
@@ -195,7 +198,44 @@ extension AmuletParser on IsometricParser {
     amulet.buildWorldMapSrcAndDst();
   }
 
+  void readWorldMapLocations() {
+    final locations = amulet.worldLocations;
+    locations.clear();
+    final compressedBytesLength = readUInt16();
+    final compressedBytes = readBytes(compressedBytesLength);
+    final bytesDecompressed = decoder.decodeBytes(compressedBytes);
+    final byteReader = ByteReader();
+    byteReader.values = bytesDecompressed;
+
+    while (byteReader.readBool()) {
+      final worldRow = byteReader.readByte();
+      final worldColumn = byteReader.readByte();
+      final name = byteReader.readString();
+      final row = byteReader.readUInt16();
+      final column = byteReader.readUInt16();
+      locations.add(
+          MapLocation(
+            x: (worldRow * 100.0) + row,
+            y: (worldColumn * 100.0) + column,
+            text: name,
+          )
+      );
+    }
+  }
+
   void readQuestMain() =>
       amulet.questMain.value = QuestMain.values[readByte()];
 }
 
+
+class MapLocation {
+  final double x;
+  final double y;
+  final String text;
+
+  MapLocation({
+    required this.x,
+    required this.y,
+    required this.text,
+  });
+}
