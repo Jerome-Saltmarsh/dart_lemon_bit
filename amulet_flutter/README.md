@@ -15,12 +15,14 @@ ctrl + shift + e        : view recent changes
 alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
-## CAMPAIGN
+## TODO
+* [new]: node type large bricks
+* [new]: mini map location labels
+* [new]: character state spawn
+* [new]: amulet loading page
 * [new]: scene witches lair level 1
 * [new]: scene witches lair level 2
 * [new]: quest window
-
-## CURRENT
 * [new]: character type warlock
 * [new]: character type spider
 * [new]: character type vampire
@@ -28,23 +30,15 @@ ctrl + []               : move caret to code block
 * [new]: character type ghost
 * [new]: character type orc
 * [new]: character type skeleton swordsman
-
-## ALPHA
-* [new]: mini map location labels
 * [new]: model hair type 4
 * [new]: spell type slow 
 * [new]: spell wind strike 
-* [new]: character state spin 
-* [new]: character state respawning 
+* [fix]: front view renders
+* [new]: model head type female
+* [new]: model leg type iron plates
 * [new]: location endless plains
 * [new]: location dark castle
 * [new]: location lonely woods
-* [fix]: front view renders
-
-## BETA
-* [new]: model head type female
-* [new]: model leg type iron plates
-* [new]: polish tutorial
 * [new]: location lake
 * [new]: location mountain
 * [new]: location town
@@ -52,6 +46,12 @@ ctrl + []               : move caret to code block
 * [new]: mechanic elemental damage
 * [new]: mobile touch screen support
 * [fix]: audio for web
+
+## 31.12.2023
+* [fix]: world map scene order
+
+## 29.12.2023
+* [new]: dynamic flame particle
 
 ## 29.12.2023
 * [new]: node type cobblestone

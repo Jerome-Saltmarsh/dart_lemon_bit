@@ -444,30 +444,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
   }
 
-  AmuletItemQuality getRandomAmuletItemQuality({
-      double chanceOfMythical = 0.005,
-      double chanceOfRare = 0.015,
-      double chanceOfMagic = 0.05,
-    }){
-
-    final value = random.nextDouble();
-
-    if (value <= chanceOfMythical) {
-      return AmuletItemQuality.Mythical;
-    }
-
-    if (value <= chanceOfRare) {
-      return AmuletItemQuality.Rare;
-    }
-
-    if (value <= chanceOfMagic) {
-      return AmuletItemQuality.Unique;
-    }
-
-    return AmuletItemQuality.Common;
-  }
-
-
   @override
   void customOnCharacterKilled(Character target, src) {
     if (target.spawnLootOnDeath) {
@@ -480,8 +456,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       }
       else
       if (randomChance(target.chanceOfDropLoot)) {
-        final amuletItemQuality = getRandomAmuletItemQuality();
-        spawnRandomLootAtPosition(target, amuletItemQuality);
+        spawnRandomLootAtPosition(target);
       }
     }
 
@@ -497,27 +472,22 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   }
 
 
-  void spawnRandomLootAtPosition(
-      Position position,
-      AmuletItemQuality quality,
-  ) =>
+  void spawnRandomLootAtPosition(Position position) =>
       spawnRandomLoot(
         x: position.x,
         y: position.y,
         z: position.z,
-        quality: quality,
       );
 
   void spawnRandomLoot({
     required double x,
     required double y,
     required double z,
-    required AmuletItemQuality quality,
   }) => spawnAmuletItem(
       x: x,
       y: y,
       z: z,
-      item: randomItem(AmuletItem.findByQuality(quality)),
+      item: randomItem(AmuletItem.values),
   );
 
   /// @deactivationTimer set to -1 to prevent amulet item from deactivating over time

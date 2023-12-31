@@ -462,11 +462,11 @@ class Amulet extends IsometricGame {
     worldMapSrcs = srcs;
 
     var i = 0;
-    for (var worldColumn = 0; worldColumn < worldColumns; worldColumn++){
-    for (var worldRow = 0; worldRow < worldRows; worldRow++){
+    for (var worldRow = 0; worldRow < worldRows; worldRow++) {
+      for (var worldColumn = 0; worldColumn < worldColumns; worldColumn++) {
         final worldFlatMap = worldFlatMaps[index];
 
-        for (var nodeIndex = 0; nodeIndex < area; nodeIndex++){
+        for (var nodeIndex = 0; nodeIndex < area; nodeIndex++) {
           final nodeType = worldFlatMap[nodeIndex];
           final nodeRow = nodeIndex ~/ size;
           final nodeColumn = nodeIndex % size;
@@ -490,7 +490,6 @@ class Amulet extends IsometricGame {
         }
 
         index++;
-
       }
     }
 

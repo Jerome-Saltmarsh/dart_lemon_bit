@@ -972,12 +972,12 @@ class RendererNodes extends RenderGroup {
         );
         break;
       case NodeType.Bricks_Red:
-        renderNodeTemplateShaded(
-            srcX: IsometricConstants.Sprite_Width_Padded_13,
-            dstX: dstX,
-            dstY: dstY,
-            nodeOrientation: orientation,
-            color: color
+        renderNodeHalfShade(
+          orientation: orientation,
+          index: index,
+          srcY: 506,
+          dstX: dstX,
+          dstY: dstY,
         );
         return;
       case NodeType.Bricks_Brown:

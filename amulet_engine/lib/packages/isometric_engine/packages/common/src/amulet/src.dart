@@ -2,7 +2,6 @@ library src;
 
 export 'amulet_element.dart';
 export 'amulet_item.dart';
-export 'amulet_item_quality.dart';
 export 'amulet_item_type.dart';
 export 'amulet_team.dart';
 export 'amulet_item_action.dart';
