@@ -16,7 +16,6 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## TODO
-* [new]: mini map location labels
 * [new]: node type large bricks
 * [new]: character state spawn
 * [new]: amulet loading page
@@ -48,6 +47,7 @@ ctrl + []               : move caret to code block
 * [fix]: audio for web
 
 ## 31.12.2023
+* [new]: mini map location labels
 * [fix]: world map scene order
 
 ## 29.12.2023

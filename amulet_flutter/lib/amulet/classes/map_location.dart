@@ -3,10 +3,6 @@ import 'package:amulet_engine/packages/isometric_engine/packages/lemon_math/src/
 import 'package:flutter/material.dart';
 
 class MapLocation {
-  // final double x;
-  // final double y;
-  // final String text;
-
   late final TextSpan textSpan;
   late final Offset offset;
 
@@ -17,7 +13,7 @@ class MapLocation {
   }) {
     textSpan = TextSpan(
       style: TextStyle(color: Colors.white),
-      text: text,
+      text: text.replaceAll('_', ' '),
     );
     offset = Offset(
       getRotationX(x, y, piQuarter),
