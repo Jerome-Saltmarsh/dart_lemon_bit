@@ -81,30 +81,18 @@ class AmuletWorldMap extends StatelessWidget {
           canvas.drawImage(worldMapPicture, const Offset(0, 0), paint);
           canvas.drawCircle(targetOffset, 2, paint);
 
-          final offsetVillage = Offset(
-              getRotationX(cameraX, cameraY, piQuarter),
-              getRotationY(cameraX, cameraY, piQuarter),
-          );
+          // final offsetVillage = Offset(
+          //     getRotationX(cameraX, cameraY, piQuarter),
+          //     getRotationY(cameraX, cameraY, piQuarter),
+          // );
           canvas.rotate(-piQuarter);
-          textPainter.text = textSpanHello;
-          textPainter.layout();
-          textPainter.paint(canvas, offsetVillage);
-          paint.color = Colors.blue;
           final worldLocations = amulet.worldLocations;
 
           for (final worldLocation in worldLocations) {
-            final textSpan = TextSpan(
-                style: TextStyle(color: Colors.white),
-                text: worldLocation.text,
-            );
-            final offset = Offset(
-              getRotationX(worldLocation.x, worldLocation.y, piQuarter),
-              getRotationY(worldLocation.x, worldLocation.y, piQuarter),
-            );
-
-            textPainter.text = textSpan;
+            textPainter.text = worldLocation.textSpan;
             textPainter.layout();
-            textPainter.paint(canvas, offset);
+            textPainter.paint(canvas, worldLocation.offset);
+            canvas.drawCircle(worldLocation.offset, 2, paint);
           }
         },
       ),

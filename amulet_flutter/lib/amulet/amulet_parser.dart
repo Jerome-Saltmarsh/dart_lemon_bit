@@ -6,6 +6,8 @@ import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amul
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_parser.dart';
 import 'package:lemon_byte/byte_reader.dart';
 
+import 'classes/map_location.dart';
+
 extension AmuletParser on IsometricParser {
 
   static final _regex = RegExp(r'[.!]');
@@ -228,14 +230,3 @@ extension AmuletParser on IsometricParser {
 }
 
 
-class MapLocation {
-  final double x;
-  final double y;
-  final String text;
-
-  MapLocation({
-    required this.x,
-    required this.y,
-    required this.text,
-  });
-}

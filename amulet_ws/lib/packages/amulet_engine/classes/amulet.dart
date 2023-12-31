@@ -389,12 +389,13 @@ class Amulet {
        final keys = scene.keys;
        for (final entry in keys.entries){
             final key = entry.key;
-            if (key.startsWith('location')) {
+            if (key.startsWith('location_primary_')) {
               final index = entry.value;
+              final text = key.replaceAll('location_primary_', '');
               byteWriter.writeBool(true);
               byteWriter.writeByte(game.worldRow);
               byteWriter.writeByte(game.worldColumn);
-              byteWriter.writeString(key);
+              byteWriter.writeString(text);
               byteWriter.writeUInt16(scene.getRow(index));
               byteWriter.writeUInt16(scene.getColumn(index));
             }

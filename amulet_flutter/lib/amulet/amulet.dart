@@ -21,8 +21,8 @@ import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 import '../gamestream/isometric/src.dart';
-import 'amulet_parser.dart';
 import 'amulet_render.dart';
+import 'classes/map_location.dart';
 
 
 class Amulet extends IsometricGame {
