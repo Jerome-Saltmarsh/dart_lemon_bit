@@ -10,7 +10,7 @@ void randomizeScene(Scene scene){
       final nodeType = nodeTypes[i];
 
       if (nodeType == NodeType.Tree_Bottom){
-        nodeVariations[i] = randomInt(0, 4);
+        nodeVariations[i] = randomInt(0, 3);
         continue;
       }
 

@@ -502,6 +502,7 @@ class Amulet extends IsometricGame {
     NodeType.Water: colors.blue_2,
     NodeType.Grass: colors.sage_2,
     NodeType.Brick: colors.grey_2,
+    NodeType.Cobblestone: colors.brown_3,
     NodeType.Tree_Top: colors.sage_3,
     NodeType.Wood: colors.brown_3,
     NodeType.Soil: colors.brown_2,

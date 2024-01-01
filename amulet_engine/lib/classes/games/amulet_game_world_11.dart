@@ -9,6 +9,7 @@ import '../amulet_player.dart';
 class AmuletGameWorld11 extends AmuletGame {
 
   static const keySpawnWarren = 'spawn_warren';
+  static const keySpawnSophie = 'spawn_sophie';
   static const keySpawnPlayer = 'spawn_player';
   static const keySpawnGuard1 = 'spawn_guard_1';
   static const keySpawnGuard2 = 'spawn_guard_2';
@@ -19,6 +20,7 @@ class AmuletGameWorld11 extends AmuletGame {
   late AmuletNpc npcGuard2;
   late AmuletNpc npcMay;
   late AmuletNpc npcTraveller;
+  late AmuletNpc npcSophie;
   var indexSpawnPlayer = -1;
 
   AmuletGameWorld11({
@@ -34,6 +36,7 @@ class AmuletGameWorld11 extends AmuletGame {
     final indexSpawnGuard1 = scene.getKey(keySpawnGuard1);
     final indexSpawnGuard2 = scene.getKey(keySpawnGuard2);
     final indexSpawnWarren = scene.getKey(keySpawnWarren);
+    final indexSpawnSophie = scene.getKey(keySpawnSophie);
     final indexSpawnMay = scene.getKey(keySpawnMay);
     final indexSpawnTraveller = scene.getKey(keySpawnTraveller);
 
@@ -135,6 +138,34 @@ class AmuletGameWorld11 extends AmuletGame {
       ..interact = onInteractWithMay
       ..complexion = ComplexionType.fair;
 
+    npcSophie = AmuletNpc(
+      x: scene.getIndexX(indexSpawnSophie),
+      y: scene.getIndexY(indexSpawnSophie),
+      z: scene.getIndexZ(indexSpawnSophie),
+      health: 50,
+      invincible: true,
+      team: AmuletTeam.Human,
+      weaponType: WeaponType.Unarmed,
+      weaponCooldown: 3,
+      weaponDamage: 3,
+      weaponRange: 120,
+      attackDuration: 30,
+      name: "Sophie",
+    )
+      ..fixed = true
+      ..invincible = true
+      ..helmType = HelmType.None
+      ..hairType = 2
+      ..hairColor = 30
+      ..bodyType = BodyType.Shirt_Blue
+      ..legsType = LegType.Leather
+      ..shoeType = ShoeType.Leather_Boots
+      ..handTypeLeft = HandType.None
+      ..weaponType = WeaponType.Unarmed
+      ..gender = Gender.female
+      ..interact = onInteractWithSophie
+      ..complexion = ComplexionType.fair;
+
     npcTraveller = AmuletNpc(
       x: scene.getIndexX(indexSpawnTraveller),
       y: scene.getIndexY(indexSpawnTraveller),
@@ -168,6 +199,7 @@ class AmuletGameWorld11 extends AmuletGame {
     characters.add(npcGuard2);
     characters.add(npcMay);
     characters.add(npcTraveller);
+    characters.add(npcSophie);
   }
 
   void onInteractWithWarren(AmuletPlayer player, AmuletNpc warren){
@@ -196,6 +228,9 @@ class AmuletGameWorld11 extends AmuletGame {
         player.talk(warren, 'hello friend.');
         break;
     }
+  }
+  void onInteractWithSophie(AmuletPlayer player, AmuletNpc npc){
+    player.talk(npc, 'hi there');
   }
 
   void onInteractWithMay(AmuletPlayer player, AmuletNpc may){

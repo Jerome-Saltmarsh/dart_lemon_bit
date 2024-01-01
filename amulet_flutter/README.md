@@ -16,9 +16,13 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## TODO
+* [new]: allie map label
+* [new]: music track 1
+* [new]: amulet loading symbol
 * [new]: node type large bricks
+* [fix]: mini map inside dungeon
 * [new]: character state spawn
-* [new]: amulet loading page
+* [new]: gameobject lantern
 * [new]: scene witches lair level 1
 * [new]: scene witches lair level 2
 * [new]: quest window
@@ -43,6 +47,7 @@ ctrl + []               : move caret to code block
 * [new]: location town
 * [new]: location forsaken swamp
 * [new]: mechanic elemental damage
+* [new]: mechanic charge power like dragonballz
 * [new]: mobile touch screen support
 * [fix]: audio for web
 
