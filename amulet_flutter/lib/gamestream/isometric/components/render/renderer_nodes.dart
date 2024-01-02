@@ -15,6 +15,7 @@ import 'package:amulet_engine/packages/common.dart';
 import 'package:amulet_engine/packages/lemon_math.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
+import 'package:lemon_sprite/lib.dart';
 
 import 'constants/node_src.dart';
 
@@ -1981,7 +1982,8 @@ class RendererNodes extends RenderGroup {
         );
         break;
       case TreeType.Dead:
-        renderTreeTopDead(
+        renderTreeSprite(
+          sprite: images.tree03,
           dstX: dstX,
           dstY: dstY,
           colorNorth: colorNorth,
@@ -1992,9 +1994,10 @@ class RendererNodes extends RenderGroup {
         );
         break;
       case TreeType.Dead02:
-        renderTreeTopDead2(
+        renderTreeSprite(
+          sprite: images.tree04,
           dstX: dstX,
-          dstY: dstY + 16,
+          dstY: dstY,
           colorNorth: colorNorth,
           colorEast: colorEast,
           colorSouth: colorSouth,
@@ -2044,16 +2047,6 @@ class RendererNodes extends RenderGroup {
         );
         break;
       case TreeType.Dead:
-        renderTreeBottomDead(
-          dstX: dstX,
-          dstY: dstY,
-          colorNorth: colorNorth,
-          colorEast: colorEast,
-          colorWest: colorWest,
-          colorSouth: colorSouth,
-          color: color,
-          animationFrame: animationFrame,
-        );
         break;
       default:
         break;
@@ -2308,56 +2301,6 @@ class RendererNodes extends RenderGroup {
     );
   }
 
-  void renderTreeBottomDead({
-    required double dstX,
-    required double dstY,
-    required int colorNorth,
-    required int colorEast,
-    required int colorSouth,
-    required int colorWest,
-    required int color,
-    required int animationFrame,
-  }) {
-    final sprite = images.tree3;
-    final colorNW = merge32BitColors(colorNorth, colorWest);
-    final colorSE = merge32BitColors(colorSouth, colorEast);
-    final colorFlat = merge32BitColors(colorNW, colorSE);
-    const anchorY = 0.64;
-    const scale = 0.6;
-
-    render.sprite(
-        sprite: sprite,
-        frame: sprite.getFrame(row: 0, column: 3),
-        color: colorFlat,
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-    );
-
-    render.sprite(
-        sprite: sprite,
-        frame: sprite.getFrame(row: 0, column: 4),
-        color: colorSE,
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-    );
-
-    render.sprite(
-        sprite: sprite,
-        frame: sprite.getFrame(row: 0, column: 5),
-        color: colorNW,
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-    );
-
-    engine.bufferImage = images.atlas_nodes;
-  }
-
   void renderTreeTopDead({
     required double dstX,
     required double dstY,
@@ -2367,7 +2310,7 @@ class RendererNodes extends RenderGroup {
     required int colorWest,
     required int animationFrame,
   }) {
-    final sprite = images.tree3;
+    final sprite = images.tree03;
     final colorNW = merge32BitColors(colorNorth, colorWest);
     final colorSE = merge32BitColors(colorSouth, colorEast);
     final colorFlat = merge32BitColors(colorNW, colorSE);
@@ -2407,7 +2350,8 @@ class RendererNodes extends RenderGroup {
     engine.bufferImage = images.atlas_nodes;
   }
 
-  void renderTreeTopDead2({
+  void renderTreeSprite({
+    required Sprite sprite,
     required double dstX,
     required double dstY,
     required int colorNorth,
@@ -2416,7 +2360,6 @@ class RendererNodes extends RenderGroup {
     required int colorWest,
     required int animationFrame,
   }) {
-    final sprite = images.tree04;
     final colorNW = merge32BitColors(colorNorth, colorWest);
     final colorSE = merge32BitColors(colorSouth, colorEast);
     final colorFlat = merge32BitColors(colorNW, colorSE);
