@@ -51,11 +51,11 @@ class IsometricColors {
   final sage_3  = Color.fromRGBO(55, 78, 74 , 1);
   final sage_4  = Color.fromRGBO(49, 54, 56 , 1);
 
-  final aqua_1 = Color.fromRGBO(143, 248, 226, 1);
+  static const aqua_1 = Color.fromRGBO(143, 248, 226, 1);
   final aqua_2 = Color.fromRGBO(48, 225, 185, 1);
   final aqua_3 = Color.fromRGBO(14, 175, 155, 1);
   final aqua_4 = Color.fromRGBO(11, 138, 143, 1);
-  final aqua_5 = Color.fromRGBO(11, 94, 101, 1);
+  static const  aqua_5 = Color.fromRGBO(11, 94, 101, 1);
 
   final blue_0 = Color.fromARGB(255, 143, 211, 255);
   final blue_1 = Color.fromARGB(255, 77, 155, 230);

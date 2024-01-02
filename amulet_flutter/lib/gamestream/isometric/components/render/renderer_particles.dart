@@ -3,6 +3,7 @@ import 'package:amulet_flutter/gamestream/isometric/classes/particle_flying.dart
 import 'package:amulet_flutter/gamestream/isometric/classes/src.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_images.dart';
 import 'package:amulet_engine/packages/common.dart';
+import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
@@ -30,6 +31,27 @@ class RendererParticles extends RenderGroup {
     final total = IsometricParticles.Flame_Duration - indexGrey;
     final i = index - indexGrey;
     return (Color.lerp(Colors.grey, Colors.black12, i / total) ?? (throw Exception())).value;
+
+
+  }).toList(growable: false);
+
+  final colorsWater = List.generate(IsometricParticles.Water_Duration, (index) {
+
+    final indexRed = (IsometricParticles.Water_Duration * 0.33).toInt();
+    final indexGrey = (IsometricParticles.Water_Duration * 0.66).toInt();
+
+    if (index < indexRed){
+      return (Color.lerp(IsometricColors.aqua_1, IsometricColors.aqua_5, index / indexRed) ?? (throw Exception())).value;
+    }
+    if (index < indexGrey){
+      final total = IsometricParticles.Water_Duration - indexGrey;
+      final i = index - indexRed;
+      return (Color.lerp(IsometricColors.aqua_5, Colors.white, i / total) ?? (throw Exception())).value;
+    }
+
+    final total = IsometricParticles.Water_Duration - indexGrey;
+    final i = index - indexGrey;
+    return (Color.lerp(Colors.white, Colors.transparent, i / total) ?? (throw Exception())).value;
 
 
   }).toList(growable: false);
@@ -302,6 +324,21 @@ class RendererParticles extends RenderGroup {
             srcHeight: 8,
             scale: particle.scale,
             color: flameColors[((1.0 - particle.duration01) * flameColors.length).toInt()],
+          );
+          engine.setBlendModeDstATop();
+          break;
+        case ParticleType.Water:
+          engine.bufferBlendMode = BlendMode.modulate;
+          engine.renderSprite(
+            image: images.atlas_nodes,
+            dstX: dstX,
+            dstY: dstY,
+            srcX: 72,
+            srcY: 2040,
+            srcWidth: 8,
+            srcHeight: 8,
+            scale: particle.scale,
+            color: colorsWater[((1.0 - particle.duration01) * colorsWater.length).toInt()],
           );
           engine.setBlendModeDstATop();
           break;

@@ -16,6 +16,7 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## TODO
+* [new]: particle effect aqua
 * [new]: allie map label
 * [new]: music track 1
 * [new]: amulet loading symbol
@@ -23,6 +24,7 @@ ctrl + []               : move caret to code block
 * [fix]: mini map inside dungeon
 * [new]: character state spawn
 * [new]: gameobject lantern
+* [new]: gameobject caravan
 * [new]: scene witches lair level 1
 * [new]: scene witches lair level 2
 * [new]: quest window

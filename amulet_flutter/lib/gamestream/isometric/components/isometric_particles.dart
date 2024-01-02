@@ -9,6 +9,7 @@ import 'package:amulet_flutter/gamestream/isometric/components/isometric_scene.d
 import 'package:amulet_flutter/gamestream/isometric/enums/node_visibility.dart';
 import 'package:amulet_engine/packages/common.dart';
 import 'package:amulet_engine/packages/lemon_math.dart';
+import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:amulet_flutter/packages/lemon_components.dart';
 
 import '../../../isometric/classes/particle.dart';
@@ -17,6 +18,7 @@ import 'isometric_component.dart';
 class IsometricParticles with IsometricComponent implements Updatable {
 
   static const Flame_Duration = 50;
+  static const Water_Duration = 50;
   static const windStrengthMultiplier = 0.003;
 
   var windy = false;
@@ -24,7 +26,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
   var nodeType = 0;
 
   late final whispColors = [
-    colors.aqua_1.value,
+    IsometricColors.aqua_1.value,
     colors.purple_0.value,
     colors.pink_0.value,
     colors.teal_0.value,
@@ -827,6 +829,31 @@ class IsometricParticles with IsometricComponent implements Updatable {
         weight: 0,
         scaleV: -(1.0 / Flame_Duration),
         duration: Flame_Duration,
+        scale: scale,
+      )
+        ..emitsLight = false
+        ..deactiveOnNodeCollision = false
+        ..blownByWind = true
+  ;
+
+  Particle emitWater({
+    required double x,
+    required double y,
+    required double z,
+    double scale = 1.0
+  }) =>
+      spawnParticle(
+        particleType: ParticleType.Water,
+        x: x,
+        y: y,
+        z: z,
+        zv: 0.6,
+        angle: 0,
+        rotation: 0,
+        speed: 0,
+        weight: 0,
+        scaleV: -(1.0 / Water_Duration),
+        duration: Water_Duration,
         scale: scale,
       )
         ..emitsLight = false

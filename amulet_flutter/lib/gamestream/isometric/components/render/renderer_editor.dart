@@ -1,4 +1,5 @@
 
+import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/editor/editor_tab.dart';
@@ -101,7 +102,7 @@ class RendererEditor extends RenderGroup {
         render.circleOutlineAtIndex(index: markIndex, radius: 100.0);
         break;
       case MarkType.Glow:
-        engine.color = colors.aqua_1;
+        engine.color = IsometricColors.aqua_1;
         render.circleOutlineAtIndex(index: markIndex, radius: 100.0);
         break;
     }
