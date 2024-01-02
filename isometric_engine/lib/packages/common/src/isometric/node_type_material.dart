@@ -24,5 +24,6 @@ const nodeTypeMaterial = {
   NodeType.Bricks_Red: MaterialType.Stone,
   NodeType.Torch_Red: MaterialType.Wood,
   NodeType.Torch_Blue: MaterialType.Wood,
+  NodeType.Cobblestone: MaterialType.Stone,
 
 };

@@ -54,6 +54,19 @@ enum FiendType {
     weaponRange: 50,
     quantity: 1,
     weaponCooldown: 20,
+  ),
+  Fallen_Armoured(
+    health: 12,
+    damage: 3,
+    characterType: CharacterType.Fallen_Armoured,
+    attackDuration: 20,
+    experience: 3,
+    runSpeed: 0.7,
+    chanceOfSetTarget: 0.35,
+    weaponType: WeaponType.Sword,
+    weaponRange: 25,
+    quantity: 2,
+    weaponCooldown: 20,
   );
 
   final int health;

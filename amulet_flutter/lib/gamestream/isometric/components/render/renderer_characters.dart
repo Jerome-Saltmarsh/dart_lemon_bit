@@ -82,6 +82,13 @@ class RendererCharacters extends RenderGroup {
             scale: 0.5,
         );
         break;
+      case CharacterType.Fallen_Armoured:
+        renderCharacterShader(
+            character: character,
+            shader: images.characterShaderFallenArmoured,
+            scale: 1.0,
+        );
+        break;
       case CharacterType.Skeleton:
         renderCharacterShader(
             character: character,

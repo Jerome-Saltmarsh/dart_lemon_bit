@@ -51,7 +51,8 @@ ctrl + []               : move caret to code block
 * [new]: mobile touch screen support
 * [fix]: audio for web
 
-## 02.01.2024
+## 02.01.2024* 
+* [new]: armoured fallen
 * [new]: render shadow wooden plank
 * [new]: particle effect on creep death and spawn
 * [new]: render shadow tree 03 and 04

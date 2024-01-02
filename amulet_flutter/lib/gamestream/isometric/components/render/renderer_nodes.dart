@@ -97,7 +97,7 @@ class RendererNodes extends RenderGroup {
 
   int get wind => environment.wind.value;
 
-  final colorTransparent = Colors.white.withOpacity(0.15);
+  static const colorTransparent = Colors.white38;
 
   @override
   void renderFunction(LemonEngine engine, IsometricImages images) {
