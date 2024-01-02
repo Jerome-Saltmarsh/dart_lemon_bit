@@ -253,6 +253,65 @@ class RendererNodes extends RenderGroup {
 
                   switch (orientations[nodeIndex]) {
                     case NodeOrientation.Solid:
+
+                      // if (nodeType == NodeType.Grass && nodeVariation == 0){
+                      //
+                      //   final clrNorth = scene.colorNorth(nodeAboveIndex);
+                      //   final clrEast = scene.colorEast(nodeAboveIndex);
+                      //   final clrSouth = scene.colorSouth(nodeAboveIndex);
+                      //   final clrWest = scene.colorWest(nodeAboveIndex);
+                      //
+                      //   final clrNorthWest = merge32BitColors(clrNorth, clrWest);
+                      //   final clrSouthEast = merge32BitColors(clrSouth, clrEast);
+                      //
+                      //   engine.renderFast(
+                      //     color: merge32BitColors(clrNorthWest, clrSouthEast),
+                      //     srcLeft: 0,
+                      //     srcTop: 96,
+                      //     srcRight: 48,
+                      //     srcBottom: 96 + 72,
+                      //     scale: 1.0,
+                      //     rotation: 0,
+                      //     dstX: dstX - Node_Size_Half,
+                      //     dstY: dstY - Node_Size_Half,
+                      //     clr: clr,
+                      //     dst: dst,
+                      //     src: src,
+                      //   );
+                      //
+                      //   engine.renderFast(
+                      //     color: clrNorthWest,
+                      //     srcLeft: 0,
+                      //     srcTop: 592,
+                      //     srcRight: 48,
+                      //     srcBottom: 592 + 72,
+                      //     scale: 1.0,
+                      //     rotation: 0,
+                      //     dstX: dstX - Node_Size_Half,
+                      //     dstY: dstY - Node_Size_Half,
+                      //     clr: clr,
+                      //     dst: dst,
+                      //     src: src,
+                      //   );
+                      //
+                      //   engine.renderFast(
+                      //     color: clrSouthEast,
+                      //     srcLeft: 0,
+                      //     srcTop: 640,
+                      //     srcRight: 48,
+                      //     srcBottom: 640 + 72,
+                      //     scale: 1.0,
+                      //     rotation: 0,
+                      //     dstX: dstX - Node_Size_Half,
+                      //     dstY: dstY - Node_Size_Half,
+                      //     clr: clr,
+                      //     dst: dst,
+                      //     src: src,
+                      //   );
+                      //   break;
+                      // }
+
+
                       renderDynamicSolid(
                         dstX: dstX,
                         dstY: dstY,

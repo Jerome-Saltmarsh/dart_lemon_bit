@@ -159,7 +159,7 @@ class AmuletPlayer extends IsometricPlayer with
 
     final item = weapon.amuletItem;
     if (item == null){
-      throw Exception('item == null');
+       return null;
     }
 
     return getAmuletItemStats(item);
