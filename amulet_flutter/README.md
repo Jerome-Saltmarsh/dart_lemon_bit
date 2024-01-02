@@ -52,8 +52,9 @@ ctrl + []               : move caret to code block
 * [fix]: audio for web
 
 ## 02.01.2024
+* [new]: render shadow wooden plank
 * [new]: particle effect on creep death and spawn
-* [new]: tree shadows
+* [new]: render shadow tree 03 and 04
 * [fix]: render tree bottom pine
 * [new]: revive player in town
 

@@ -1436,29 +1436,41 @@ class RendererNodes extends RenderGroup {
       int index,
       int color,
   ) {
-    const srcX = 944.0;
-    const srcY = 560.0;
     const width = 48.0;
     const height = 72.0;
+    const srcX = 944.0;
+    const srcX_Shadow = srcX;
+    const srcX_South = srcX + width;
+    const srcX_West = srcX + width * 2;
+    const srcX_Top = srcX + width * 3;
+    const srcY = 560.0;
+
 
     switch (orientation) {
       case NodeOrientation.Solid:
         renderStandardNode(
-          srcX: srcX,
+          srcX: srcX_Shadow,
+          srcY: srcY,
+          dstX: dstX,
+          dstY: dstY,
+          color: color,
+        );
+        renderStandardNode(
+          srcX: srcX_South,
           srcY: srcY,
           dstX: dstX,
           dstY: dstY,
           color: scene.colorSouth(index),
         );
         renderStandardNode(
-          srcX: srcX + width,
+          srcX: srcX_West,
           srcY: srcY,
           dstX: dstX,
           dstY: dstY,
           color: scene.colorWest(index),
         );
         renderStandardNode(
-          srcX: srcX + width + width,
+          srcX: srcX_Top,
           srcY: srcY,
           dstX: dstX,
           dstY: dstY,
@@ -1467,21 +1479,28 @@ class RendererNodes extends RenderGroup {
         break;
       case NodeOrientation.Half_North:
         renderStandardNode(
-          srcX: srcX,
+          srcX: srcX_Shadow,
+          srcY: srcY + height,
+          dstX: dstX - Node_Size_Sixth,
+          dstY: dstY - Node_Size_Sixth,
+          color: color,
+        );
+        renderStandardNode(
+          srcX: srcX_South,
           srcY: srcY + height,
           dstX: dstX - Node_Size_Sixth,
           dstY: dstY - Node_Size_Sixth,
           color: scene.colorSouth(index),
         );
         renderStandardNode(
-          srcX: srcX + width,
+          srcX: srcX_West,
           srcY: srcY + height,
           dstX: dstX - Node_Size_Sixth,
           dstY: dstY - Node_Size_Sixth,
           color: scene.colorWest(index),
         );
         renderStandardNode(
-          srcX: srcX + width + width,
+          srcX: srcX_Top,
           srcY: srcY + height,
           dstX: dstX - Node_Size_Sixth,
           dstY: dstY - Node_Size_Sixth,
@@ -1490,21 +1509,28 @@ class RendererNodes extends RenderGroup {
         break;
       case NodeOrientation.Half_South:
         renderStandardNode(
-          srcX: srcX,
+          srcX: srcX_Shadow,
+          srcY: srcY + height,
+          dstX: dstX + Node_Size_Sixth,
+          dstY: dstY + Node_Size_Sixth,
+          color: color,
+        );
+        renderStandardNode(
+          srcX: srcX_South,
           srcY: srcY + height,
           dstX: dstX + Node_Size_Sixth,
           dstY: dstY + Node_Size_Sixth,
           color: scene.colorSouth(index),
         );
         renderStandardNode(
-          srcX: srcX + width,
+          srcX: srcX_West,
           srcY: srcY + height,
           dstX: dstX + Node_Size_Sixth,
           dstY: dstY + Node_Size_Sixth,
           color: scene.colorWest(index),
         );
         renderStandardNode(
-          srcX: srcX + width + width,
+          srcX: srcX_Top,
           srcY: srcY + height,
           dstX: dstX + Node_Size_Sixth,
           dstY: dstY + Node_Size_Sixth,
@@ -1513,21 +1539,28 @@ class RendererNodes extends RenderGroup {
         break;
       case NodeOrientation.Half_East:
         renderStandardNode(
-          srcX: srcX,
+          srcX: srcX_Shadow,
+          srcY: srcY + height + height,
+          dstX: dstX + Node_Size_Sixth,
+          dstY: dstY - Node_Size_Sixth,
+          color: color,
+        );
+        renderStandardNode(
+          srcX: srcX_South,
           srcY: srcY + height + height,
           dstX: dstX + Node_Size_Sixth,
           dstY: dstY - Node_Size_Sixth,
           color: scene.colorSouth(index),
         );
         renderStandardNode(
-          srcX: srcX + width,
+          srcX: srcX_West,
           srcY: srcY + height + height,
           dstX: dstX + Node_Size_Sixth,
           dstY: dstY - Node_Size_Sixth,
           color: scene.colorWest(index),
         );
         renderStandardNode(
-          srcX: srcX + width + width,
+          srcX: srcX_Top,
           srcY: srcY + height + height,
           dstX: dstX + Node_Size_Sixth,
           dstY: dstY - Node_Size_Sixth,
@@ -1536,21 +1569,28 @@ class RendererNodes extends RenderGroup {
         break;
       case NodeOrientation.Half_West:
         renderStandardNode(
-          srcX: srcX,
+          srcX: srcX_Shadow,
+          srcY: srcY + height + height,
+          dstX: dstX - Node_Size_Sixth,
+          dstY: dstY + Node_Size_Sixth,
+          color: color,
+        );
+        renderStandardNode(
+          srcX: srcX_South,
           srcY: srcY + height + height,
           dstX: dstX - Node_Size_Sixth,
           dstY: dstY + Node_Size_Sixth,
           color: scene.colorSouth(index),
         );
         renderStandardNode(
-          srcX: srcX + width,
+          srcX: srcX_West,
           srcY: srcY + height + height,
           dstX: dstX - Node_Size_Sixth,
           dstY: dstY + Node_Size_Sixth,
           color: scene.colorWest(index),
         );
         renderStandardNode(
-          srcX: srcX + width + width,
+          srcX: srcX_Top,
           srcY: srcY + height + height,
           dstX: dstX - Node_Size_Sixth,
           dstY: dstY + Node_Size_Sixth,
@@ -1559,21 +1599,28 @@ class RendererNodes extends RenderGroup {
         break;
       case NodeOrientation.Slope_North:
         renderStandardNode(
-          srcX: srcX,
+          srcX: srcX_Shadow,
+          srcY: srcY + (height * 3),
+          dstX: dstX,
+          dstY: dstY,
+          color: color,
+        );
+        renderStandardNode(
+          srcX: srcX_South,
           srcY: srcY + (height * 3),
           dstX: dstX,
           dstY: dstY,
           color: scene.colorSouth(index),
         );
         renderStandardNode(
-          srcX: srcX + width,
+          srcX: srcX_West,
           srcY: srcY + (height * 3),
           dstX: dstX,
           dstY: dstY,
           color: scene.colorWest(index),
         );
         renderStandardNode(
-          srcX: srcX + width + width,
+          srcX: srcX_Top,
           srcY: srcY + (height * 3),
           dstX: dstX,
           dstY: dstY,
@@ -1582,21 +1629,28 @@ class RendererNodes extends RenderGroup {
         break;
       case NodeOrientation.Slope_East:
         renderStandardNode(
-          srcX: srcX,
+          srcX: srcX_Shadow,
+          srcY: srcY + (height * 4),
+          dstX: dstX,
+          dstY: dstY,
+          color: color,
+        );
+        renderStandardNode(
+          srcX: srcX_South,
           srcY: srcY + (height * 4),
           dstX: dstX,
           dstY: dstY,
           color: scene.colorSouth(index),
         );
         renderStandardNode(
-          srcX: srcX + width,
+          srcX: srcX_West,
           srcY: srcY + (height * 4),
           dstX: dstX,
           dstY: dstY,
           color: scene.colorWest(index),
         );
         renderStandardNode(
-          srcX: srcX + width + width,
+          srcX: srcX_Top,
           srcY: srcY + (height * 4),
           dstX: dstX,
           dstY: dstY,
@@ -1605,21 +1659,28 @@ class RendererNodes extends RenderGroup {
         break;
       case NodeOrientation.Slope_South:
         renderStandardNode(
-          srcX: srcX,
+          srcX: srcX_Shadow,
+          srcY: srcY + (height * 5),
+          dstX: dstX,
+          dstY: dstY,
+          color: color,
+        );
+        renderStandardNode(
+          srcX: srcX_South,
           srcY: srcY + (height * 5),
           dstX: dstX,
           dstY: dstY,
           color: scene.colorSouth(index),
         );
         renderStandardNode(
-          srcX: srcX + width,
+          srcX: srcX_West,
           srcY: srcY + (height * 5),
           dstX: dstX,
           dstY: dstY,
           color: scene.colorWest(index),
         );
         renderStandardNode(
-          srcX: srcX + width + width,
+          srcX: srcX_Top,
           srcY: srcY + (height * 5),
           dstX: dstX,
           dstY: dstY,
@@ -1628,21 +1689,28 @@ class RendererNodes extends RenderGroup {
         break;
       case NodeOrientation.Slope_West:
         renderStandardNode(
-          srcX: srcX,
+          srcX: srcX_Shadow,
+          srcY: srcY + (height * 6),
+          dstX: dstX,
+          dstY: dstY,
+          color: color,
+        );
+        renderStandardNode(
+          srcX: srcX_South,
           srcY: srcY + (height * 6),
           dstX: dstX,
           dstY: dstY,
           color: scene.colorSouth(index),
         );
         renderStandardNode(
-          srcX: srcX + width,
+          srcX: srcX_West,
           srcY: srcY + (height * 6),
           dstX: dstX,
           dstY: dstY,
           color: scene.colorWest(index),
         );
         renderStandardNode(
-          srcX: srcX + width + width,
+          srcX: srcX_Top,
           srcY: srcY + (height * 6),
           dstX: dstX,
           dstY: dstY,
@@ -1985,7 +2053,7 @@ class RendererNodes extends RenderGroup {
         renderTreeSprite(
           sprite: images.tree03,
           dstX: dstX,
-          dstY: dstY,
+          dstY: dstY + 16,
           colorNorth: colorNorth,
           colorEast: colorEast,
           colorSouth: colorSouth,
@@ -1997,7 +2065,7 @@ class RendererNodes extends RenderGroup {
         renderTreeSprite(
           sprite: images.tree04,
           dstX: dstX,
-          dstY: dstY,
+          dstY: dstY + 16,
           colorNorth: colorNorth,
           colorEast: colorEast,
           colorSouth: colorSouth,
