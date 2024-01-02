@@ -256,6 +256,7 @@ class IsometricEvents with IsometricComponent {
         break;
       case MaterialType.Flesh:
         audio.play(audio.material_struck_flesh, x, y, z);
+        particles.emitFlame(x: x, y: y, z: z);
         break;
       case MaterialType.Stone:
         audio.play(audio.material_struck_stone, x, y, z);
