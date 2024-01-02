@@ -1207,9 +1207,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     throw Exception();
   }
 
-  void setCharacterStateSpawning(Character character) {
-    character.setCharacterStateSpawning();
-  }
+  void setCharacterStateSpawning(Character character) =>
+      character.setCharacterStateSpawning();
 
   void checkProjectileCollision(List<Collider> colliders) {
     final projectiles = this.projectiles;

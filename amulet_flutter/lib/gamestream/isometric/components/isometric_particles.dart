@@ -792,6 +792,23 @@ class IsometricParticles with IsometricComponent implements Updatable {
     options.charactersEffectParticles = charactersEffectParticles;
   }
 
+  void emitFlames({
+    required double x,
+    required double y,
+    required double z,
+    required int count,
+    double scale = 1.0,
+    double radius = 5.0,
+  }){
+    for (var i = 0; i < count; i++){
+      emitFlame(
+        x: x + giveOrTake(radius),
+        y: y + giveOrTake(radius),
+        z: z,
+      );
+    }
+  }
+
   Particle emitFlame({
     required double x,
     required double y,

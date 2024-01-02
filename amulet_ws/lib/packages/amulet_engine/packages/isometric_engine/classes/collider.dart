@@ -199,4 +199,10 @@ abstract class Collider extends Position {
     velocityY = 0;
     velocityZ = 0;
   }
+
+  void moveToStartPosition(){
+    x = startPositionX;
+    y = startPositionY;
+    z = startPositionZ;
+  }
 }

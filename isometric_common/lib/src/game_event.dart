@@ -27,4 +27,5 @@ class GameEvent {
   static const Amulet_GameObject_Spawned = 91;
   static const Spawn_Confetti = 92;
   static const Melee_Attack_Performed = 93;
+  static const Character_Vanished = 94;
 }

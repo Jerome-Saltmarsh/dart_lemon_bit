@@ -247,9 +247,6 @@ class Character extends Collider {
       return;
     }
 
-    x = startPositionX;
-    y = startPositionY;
-    z = startPositionZ;
     active = true;
     health = maxHealth;
     physical = true;

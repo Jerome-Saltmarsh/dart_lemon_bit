@@ -462,7 +462,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     if (target.respawnDurationTotal > 0){
       addJob(seconds: target.respawnDurationTotal, action: () {
+        dispatchGameEventPosition(GameEvent.Character_Vanished, target);
         setCharacterStateSpawning(target);
+        target.moveToStartPosition();
       });
     }
 

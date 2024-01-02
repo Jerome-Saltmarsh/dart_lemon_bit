@@ -104,6 +104,14 @@ class IsometricEvents with IsometricComponent {
       case GameEvent.Node_Struck:
         onNodeStruck(x, y, z);
         break;
+      case GameEvent.Character_Vanished:
+        particles.emitFlames(
+          x: x,
+          y: y,
+          z: z,
+          count: 5,
+        );
+        break;
       case GameEvent.Amulet_GameObject_Spawned:
         final type = parser.readByte();
         final subType = parser.readByte();
