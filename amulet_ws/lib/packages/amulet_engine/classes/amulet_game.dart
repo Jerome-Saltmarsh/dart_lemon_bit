@@ -465,6 +465,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         dispatchGameEventPosition(GameEvent.Character_Vanished, target);
         setCharacterStateSpawning(target);
         target.moveToStartPosition();
+        dispatchGameEventPosition(GameEvent.Character_Vanished, target);
       });
     }
 

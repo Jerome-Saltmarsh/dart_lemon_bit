@@ -1991,10 +1991,20 @@ class RendererNodes extends RenderGroup {
           animationFrame: animationFrame,
         );
         break;
+      case TreeType.Dead02:
+        renderTreeTopDead2(
+          dstX: dstX,
+          dstY: dstY + 16,
+          colorNorth: colorNorth,
+          colorEast: colorEast,
+          colorSouth: colorSouth,
+          colorWest: colorWest,
+          animationFrame: animationFrame,
+        );
+        break;
       default:
         break;
     }
-
   }
 
   void renderNodeTreeBottom({
@@ -2387,6 +2397,66 @@ class RendererNodes extends RenderGroup {
     render.sprite(
         sprite: sprite,
         frame: 2,
+        color: colorNW,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+    );
+
+    engine.bufferImage = images.atlas_nodes;
+  }
+
+  void renderTreeTopDead2({
+    required double dstX,
+    required double dstY,
+    required int colorNorth,
+    required int colorEast,
+    required int colorSouth,
+    required int colorWest,
+    required int animationFrame,
+  }) {
+    final sprite = images.tree04;
+    final colorNW = merge32BitColors(colorNorth, colorWest);
+    final colorSE = merge32BitColors(colorSouth, colorEast);
+    final colorFlat = merge32BitColors(colorNW, colorSE);
+    const anchorY = 0.5;
+    const scale = 0.6;
+
+    // shadow
+    render.sprite(
+      sprite: sprite,
+      frame: 1,
+      color: colorFlat,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
+    render.sprite(
+        sprite: sprite,
+        frame: 0,
+        color: colorFlat,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+    );
+
+    render.sprite(
+        sprite: sprite,
+        frame: 2,
+        color: colorSE,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+    );
+
+    render.sprite(
+        sprite: sprite,
+        frame: 3,
         color: colorNW,
         scale: scale,
         dstX: dstX,
