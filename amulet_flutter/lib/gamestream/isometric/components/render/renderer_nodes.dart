@@ -2064,11 +2064,12 @@ class RendererNodes extends RenderGroup {
     final rotation = shiftRotation * 0.0066;
     final engine = this.engine;
     final atlasNodes = this.atlasNodes;
-    const anchorY = 0.82;
 
+    const anchorY = 0.82;
     const srcWidth = 48.0;
     const srcX = 64.0 + srcWidth * 8;
     const srcY = 1328.0;
+
 
     // west
     engine.renderSpriteRotated(
@@ -2087,7 +2088,7 @@ class RendererNodes extends RenderGroup {
     // south
     engine.renderSpriteRotated(
       image: atlasNodes,
-      srcX: srcX + srcWidth * 8,
+      srcX: srcX + srcWidth * 6,
       srcY: srcY,
       srcWidth: Src_Width_Sprite_Tree,
       srcHeight: Src_Height_Sprite_Tree,
@@ -2101,7 +2102,7 @@ class RendererNodes extends RenderGroup {
     // north
     engine.renderSpriteRotated(
       image: atlasNodes,
-      srcX: srcX + (srcWidth * 7),
+      srcX: srcX + (srcWidth * 8),
       srcY: srcY,
       srcWidth: Src_Width_Sprite_Tree,
       srcHeight: Src_Height_Sprite_Tree,
@@ -2115,7 +2116,7 @@ class RendererNodes extends RenderGroup {
     // east
     engine.renderSpriteRotated(
       image: atlasNodes,
-      srcX: srcX + (srcWidth * 6),
+      srcX: srcX + (srcWidth * 7),
       srcY: srcY,
       srcWidth: Src_Width_Sprite_Tree,
       srcHeight: Src_Height_Sprite_Tree,
