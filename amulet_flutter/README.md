@@ -51,6 +51,9 @@ ctrl + []               : move caret to code block
 * [new]: mobile touch screen support
 * [fix]: audio for web
 
+## 02.01.2024
+* [new]: revive player in town
+
 ## 31.12.2023
 * [new]: mini map location labels
 * [fix]: world map scene order

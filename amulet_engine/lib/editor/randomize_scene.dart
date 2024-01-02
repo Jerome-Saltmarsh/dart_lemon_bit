@@ -14,14 +14,13 @@ void randomizeScene(Scene scene){
         continue;
       }
 
-      if (nodeType != NodeType.Grass) {
+      if (nodeType == NodeType.Grass) {
+        if (randomChance(0.05)){
+          nodeVariations[i] = 2;
+        } else {
+          nodeVariations[i] = const[0, 1].random();
+        }
         continue;
-      }
-      
-      if (randomChance(0.05)){
-        nodeVariations[i] = 2;
-      } else {
-        nodeVariations[i] = const[0, 1].random();
       }
   }
 }

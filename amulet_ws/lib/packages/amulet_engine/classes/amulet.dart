@@ -341,8 +341,8 @@ class Amulet {
   void playerChangeGameToTown(AmuletPlayer player) =>
       playerChangeGame(
         player: player,
-        target: amuletGameWorld00,
-        sceneKey: 'player_spawn',
+        target: amuletGameWorld11,
+        sceneKey: 'spawn_player',
       );
 
   void playerChangeGame({
@@ -442,5 +442,17 @@ class Amulet {
     player.equipmentDirty = true;
     player.refillItemSlotsWeapons();
     player.clearActionFrame();
+  }
+
+  void revivePlayer(AmuletPlayer player) {
+      if (player.game != amuletGameWorld11){
+        playerChangeGameToTown(player);
+      } else {
+        amuletGameWorld11.movePositionToIndex(
+            player,
+            amuletGameWorld11.indexSpawnPlayer,
+        );
+      }
+
   }
 }

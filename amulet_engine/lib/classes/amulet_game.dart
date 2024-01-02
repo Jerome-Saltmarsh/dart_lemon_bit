@@ -729,9 +729,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   @override
   void revive(AmuletPlayer player) {
     super.revive(player);
-    player.x = 1000;
-    player.y = 1000;
-    player.z = 300.0;
+    amulet.revivePlayer(player);
   }
 
   @override
