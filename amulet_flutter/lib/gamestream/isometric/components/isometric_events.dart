@@ -109,7 +109,8 @@ class IsometricEvents with IsometricComponent {
           x: x,
           y: y,
           z: z,
-          count: 5,
+          count: 8,
+          radius: 10,
         );
         break;
       case GameEvent.Amulet_GameObject_Spawned:
@@ -395,6 +396,14 @@ class IsometricEvents with IsometricComponent {
   void onCharacterDeath(int characterType, double x, double y, double z, double angle) {
     audio.play(randomItem(audio.bloody_punches), x, y, z);
     audio.play(audio.heavy_punch_13, x, y, z);
+
+    particles.emitFlames(
+      x: x,
+      y: y,
+      z: z,
+      count: 8,
+      radius: 10,
+    );
 
     for (var i = 0; i < 4; i++){
       particles.spawnBlood(
