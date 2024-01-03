@@ -10,9 +10,9 @@ class LoadingPage extends StatelessWidget {
   Widget build(BuildContext context) {
 
      return IsometricBuilder(builder: (context, isometric){
-       final images = isometric.images;
-       final totalImages = buildWatch(images.totalImages, buildText);
-       final totalImagesLoaded = buildWatch(images.totalImagesLoaded, buildText);
+       // final images = isometric.images;
+       // final totalImages = buildWatch(images.totalImages, buildText);
+       // final totalImagesLoaded = buildWatch(images.totalImagesLoaded, buildText);
        return Container(
          color: IsometricColors.Black,
          alignment: Alignment.center,

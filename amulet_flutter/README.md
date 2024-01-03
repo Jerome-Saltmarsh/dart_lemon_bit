@@ -16,12 +16,12 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## TODO
+* [fix]: mini map inside dungeon
 * [new]: gameobject bucket
 * [new]: gameobject chest
 * [new]: gameobject lantern
 * [new]: allie map label
 * [new]: music track 1
-* [fix]: mini map inside dungeon
 * [new]: character state spawn
 * [new]: character type warlock
 * [new]: character type spider
