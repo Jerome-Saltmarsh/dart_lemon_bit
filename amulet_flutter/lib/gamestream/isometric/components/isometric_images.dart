@@ -60,6 +60,7 @@ class IsometricImages with IsometricComponent {
   late final CharacterShader characterShaderWolf;
   late final CharacterShader characterShaderZombie;
 
+  late final Sprite broom;
   late final Sprite woodenCart;
   late final Sprite bed;
   late final Sprite rock1;
@@ -370,6 +371,11 @@ class IsometricImages with IsometricComponent {
         name: 'assets/sprites/isometric/gameobjects/wooden_cart',
         mode: AnimationMode.single,
     ).then((value) => woodenCart = value);
+
+    loadSprite(
+        name: 'assets/sprites/isometric/gameobjects/broom',
+        mode: AnimationMode.single,
+    ).then((value) => broom = value);
 
     loadSprite(
         name: 'assets/sprites/isometric/gameobjects/bed',

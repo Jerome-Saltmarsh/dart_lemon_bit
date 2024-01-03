@@ -38,6 +38,7 @@ class GameObjectType {
   static const Crystal_Glowing_True = 41;
   static const Interactable = 45;
   static const Wooden_Cart = 46;
+  static const Broom = 47;
 
   static bool isMaterialMetal(int value) => const [
       Barrel_Explosive
@@ -87,6 +88,7 @@ class GameObjectType {
       Crystal_Glowing_True: 'Crystal Glowing',
       Interactable: 'Interactable',
       Wooden_Cart: 'Wooden_Cart',
+      Broom: 'Broom',
     }[value] ?? 'object-type-unknown-$value';
   }
 
@@ -129,6 +131,7 @@ class GameObjectType {
     Crystal_Glowing_True,
     Interactable,
     Wooden_Cart,
+    Broom,
   ];
 
 }

@@ -66,6 +66,17 @@ class RendererGameObjects extends RenderGroup {
       );
       return;
     }
+    if (type == ItemType.Object && subType == GameObjectType.Broom){
+      render.renderSpriteAutoIndexed(
+          sprite: images.broom,
+          dstX: gameObject.renderX,
+          dstY: gameObject.renderY,
+          index: scene.getIndexPosition(gameObject),
+          anchorY: 0.5,
+          scale: 0.35,
+      );
+      return;
+    }
     if (type == ItemType.Object && subType == GameObjectType.Bed){
       render.renderSpriteAutoIndexed(
           sprite: images.bed,

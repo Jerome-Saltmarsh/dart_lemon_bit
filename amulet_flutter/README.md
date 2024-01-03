@@ -16,9 +16,10 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## TODO
+* [new]: gameobject bucket
+* [new]: gameobject chest
 * [new]: gameobject lantern
 * [new]: gameobject tavern sign
-* [new]: gameobject broom
 * [new]: allie map label
 * [new]: music track 1
 * [new]: amulet loading symbol
@@ -52,7 +53,8 @@ ctrl + []               : move caret to code block
 * [new]: mobile touch screen support
 * [fix]: audio for web
 
-## 03.01.2024* 
+## 03.01.2024*
+* [new]: gameobject broom
 * [new]: render gameobject south shadow during day
 * [new]: gameobject bed
 * [new]: gameobject caravan
