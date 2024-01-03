@@ -513,7 +513,6 @@ class IsometricPlayer extends Character with ByteWriter {
 
   void downloadScene(){
     writeGameRunning();
-    writeSceneName();
     writeGameTime();
     writePlayerTeam();
     writeEditEnabled();
@@ -530,12 +529,6 @@ class IsometricPlayer extends Character with ByteWriter {
     writeByte(NetworkResponse.Isometric);
     writeByte(NetworkResponseIsometric.Game_Running);
     writeBool(game.running);
-  }
-
-  void writeSceneName() {
-    writeByte(NetworkResponse.Scene);
-    writeByte(NetworkResponseScene.Name);
-    writeString(game.scene.name);
   }
 
   void writePlayerTargetPosition(){

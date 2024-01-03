@@ -27,7 +27,7 @@ class AmuletGameWorld11 extends AmuletGame {
     required super.amulet,
   }) : super(
       amuletScene: AmuletScene.World_11,
-      name: AmuletScene.World_11.name,
+      name: 'Town',
       time: amulet.amuletTime,
       environment: amulet.amuletEnvironment,
       scene: amulet.scenes.world_11,

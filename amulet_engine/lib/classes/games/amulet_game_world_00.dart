@@ -8,6 +8,5 @@ class AmuletGameWorld00 extends AmuletGame {
     required super.scene,
     required super.time,
     required super.environment,
-    required super.name,
-  }) : super(amuletScene: AmuletScene.World_00);
+  }) : super(amuletScene: AmuletScene.World_00, name: 'Forgotten Coast');
 }

@@ -9,7 +9,7 @@ class WitchesLair1 extends AmuletGame {
     required super.time,
     required super.environment,
   }) : super (
-    name: 'Witches lair 1',
+    name: 'Witches Lair Lvl 1',
     amuletScene: AmuletScene.Witches_Lair_1
   );
 }

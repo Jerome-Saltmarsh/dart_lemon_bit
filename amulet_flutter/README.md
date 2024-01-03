@@ -16,7 +16,6 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## TODO
-* [new]: label map location
 * [new]: gameobject bucket
 * [new]: gameobject chest
 * [new]: gameobject lantern
@@ -55,6 +54,7 @@ ctrl + []               : move caret to code block
 * [fix]: audio for web
 
 ## 03.01.2024*
+* [new]: label map location
 * [new]: gameobject broom
 * [new]: render gameobject south shadow during day
 * [new]: gameobject bed

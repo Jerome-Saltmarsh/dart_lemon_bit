@@ -302,6 +302,8 @@ class IsometricUI with IsometricComponent {
               Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
+                    buildWatch(options.sceneName, (sceneName) => buildText(sceneName, color: Colors.white70, size: 22)),
+                    width16,
                     buildWatchBool(options.timeVisible, () => controlTime),
                     width32,
                     menuVisible ? buildIconCogTurned() : buildIconCog(),

@@ -1919,9 +1919,16 @@ class AmuletPlayer extends IsometricPlayer with
   @override
   void downloadScene() {
     super.downloadScene();
+    writeSceneName();
     writeEquippedWeaponIndex();
     writeOptionsSetTimeVisible(game is! AmuletGameTutorial);
     writeOptionsSetHighlightIconInventory(false);
+  }
+
+  void writeSceneName() {
+    writeByte(NetworkResponse.Scene);
+    writeByte(NetworkResponseScene.Name);
+    writeString(amuletGame.name);
   }
 
   void gainLevel(){

@@ -117,7 +117,6 @@ class Amulet {
       scene: scenes.world_00,
       time: amuletTime,
       environment: amuletEnvironment,
-      name: 'world_00',
     );
 
     amuletGameWorld01 = AmuletGame(
@@ -125,7 +124,7 @@ class Amulet {
       scene: scenes.world_01,
       time: amuletTime,
       environment: amuletEnvironment,
-      name: 'world_01',
+      name: 'Black Woods',
       amuletScene: AmuletScene.World_01
     );
 
