@@ -51,6 +51,7 @@ class IsometricScene with IsometricComponent implements Updatable {
   var totalCharacters = 0;
   var bakeStackRecording = true;
   var totalActiveLights = 0;
+  var ambientColorNight = const Color.fromRGBO(31, 1, 86, 0.25).value;
   var ambientColor = const Color.fromRGBO(31, 1, 86, 0.5).value;
   var ambientResetIndex = 0;
   var colorFilter = Colors.orange;

@@ -2428,9 +2428,14 @@ class RendererNodes extends RenderGroup {
     required int colorWest,
     required int animationFrame,
   }) {
+
+    final ambientRatio = 1.0 - (scene.ambientAlpha / 255);
+
     final colorNW = merge32BitColors(colorNorth, colorWest);
     final colorSE = merge32BitColors(colorSouth, colorEast);
     final colorFlat = merge32BitColors(colorNW, colorSE);
+    final adjustedSE = interpolateColors(colorSE, scene.ambientColorNight, ambientRatio);
+
     const anchorY = 0.5;
     const scale = 0.6;
 
@@ -2458,7 +2463,7 @@ class RendererNodes extends RenderGroup {
     render.sprite(
         sprite: sprite,
         frame: 2,
-        color: colorSE,
+        color: adjustedSE,
         scale: scale,
         dstX: dstX,
         dstY: dstY,
