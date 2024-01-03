@@ -91,7 +91,7 @@ class IsometricEvents with IsometricComponent {
         audio.play(audio.swing_arm_11, x, y, z);
         return;
       case GameEvent.AI_Target_Acquired:
-        final characterType = server.parser.readByte();
+        final characterType = parser.readByte();
         switch (characterType){
           case CharacterType.Fallen:
             audio.play(randomItem(audio.audioSingleZombieTalking), x, y, z);
@@ -147,7 +147,7 @@ class IsometricEvents with IsometricComponent {
         }
         break;
       case GameEvent.Attack_Missed:
-        final attackType = server.parser.readUInt16();
+        final attackType = parser.readUInt16();
         switch (attackType) {
           case WeaponType.Unarmed:
             audio.play(audio.arm_swing_whoosh_11, x, y, z);
@@ -190,7 +190,7 @@ class IsometricEvents with IsometricComponent {
             x,
             y,
             z,
-            server.parser.readUInt16(),
+            parser.readUInt16(),
         );
         return;
 
@@ -462,7 +462,7 @@ class IsometricEvents with IsometricComponent {
   }
 
   void readPlayerEventItemAcquired() {
-    final itemType = server.parser.readUInt16();
+    final itemType = parser.readUInt16();
     // todo read subtype
     if (itemType == WeaponType.Unarmed) return;
 

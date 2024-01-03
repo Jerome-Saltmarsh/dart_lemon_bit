@@ -835,6 +835,9 @@ class IsometricEditor with IsometricComponent {
       case PhysicalKeyboardKey.keyG:
         moveSelectedGameObjectToMouse();
         break;
+      case PhysicalKeyboardKey.delete:
+        deleteGameObjectSelected();
+        break;
       default:
         break;
     }

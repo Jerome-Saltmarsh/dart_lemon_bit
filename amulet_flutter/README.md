@@ -24,7 +24,6 @@ ctrl + []               : move caret to code block
 * [fix]: mini map inside dungeon
 * [new]: character state spawn
 * [new]: gameobject lantern
-* [new]: gameobject caravan
 * [new]: scene witches lair level 1
 * [new]: scene witches lair level 2
 * [new]: quest window
@@ -52,6 +51,10 @@ ctrl + []               : move caret to code block
 * [new]: mechanic charge power like dragonballz
 * [new]: mobile touch screen support
 * [fix]: audio for web
+
+## 03.01.2024* 
+* [new]: gameobject caravan
+* [fix]: editor delete selected gameobject
 
 ## 02.01.2024* 
 * [new]: armoured fallen

@@ -5,6 +5,7 @@ import 'package:amulet_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_images.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_render.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_scene.dart';
+import 'package:amulet_flutter/gamestream/isometric/components/render/functions/merge_32_bit_colors.dart';
 import 'package:amulet_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:amulet_flutter/isometric/classes/gameobject.dart';
 import 'package:amulet_flutter/isometric/classes/position.dart';
@@ -51,6 +52,64 @@ class RendererGameObjects extends RenderGroup {
 
     if (type == ItemType.Object && subType == GameObjectType.Crate_Wooden){
       renderCrateWooden(scene, gameObject, images, engine);
+      return;
+    }
+
+    if (type == ItemType.Object && subType == GameObjectType.Wooden_Cart){
+      final spriteWoodenCart = images.woodenCart;
+      final nodeIndex = scene.getIndexPosition(gameObject);
+      final colorNorth = scene.colorNorth(nodeIndex);
+      final colorEast = scene.colorEast(nodeIndex);
+      final colorSouth = scene.colorSouth(nodeIndex);
+      final colorWest = scene.colorWest(nodeIndex);
+      final colorNorthWest = merge32BitColors(colorNorth, colorWest);
+      final colorSouthEast = merge32BitColors(colorSouth, colorEast);
+      final colorMerged = merge32BitColors(colorNorthWest, colorSouthEast);
+      const scale = 0.75;
+      const anchorY = 0.75;
+      final dstX = gameObject.renderX;
+      final dstY = gameObject.renderY;
+
+
+      // shadow
+      render.sprite(
+        sprite: spriteWoodenCart,
+        frame: 1,
+        color: colorMerged,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+      // flat
+      render.sprite(
+          sprite: spriteWoodenCart,
+          frame: 0,
+          color: colorMerged,
+          scale: scale,
+          dstX: dstX,
+          dstY: dstY,
+          anchorY: anchorY,
+      );
+      render.sprite(
+          sprite: spriteWoodenCart,
+          frame: 2,
+          color: colorSouthEast,
+          scale: scale,
+          dstX: dstX,
+          dstY: dstY,
+          anchorY: anchorY,
+      );
+      render.sprite(
+          sprite: spriteWoodenCart,
+          frame: 3,
+          color: colorNorthWest,
+          scale: scale,
+          dstX: dstX,
+          dstY: dstY,
+          anchorY: anchorY,
+      );
+
       return;
     }
 

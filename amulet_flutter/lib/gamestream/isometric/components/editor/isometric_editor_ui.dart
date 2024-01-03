@@ -29,6 +29,7 @@ extension IsometricEditorUI on IsometricEditor {
     GameObjectType.Crystal_Glowing_True,
     GameObjectType.Bottle,
     GameObjectType.Cup,
+    GameObjectType.Wooden_Cart,
   ];
 
   static const nodeTypesColumn1 = [
@@ -1112,8 +1113,8 @@ extension IsometricEditorUI on IsometricEditor {
                             child: buildText('X'),
                           ),
                         ),
-                        Center(child: amulet.ui.buildImageGameObject(subType)),
-                        height8,
+                        // Center(child: amulet.ui.buildImageGameObject(subType)),
+                        // height8,
                         buildButtonDuplicate(),
                         height8,
                         buildText(ItemType.getName(type), size: 22),
