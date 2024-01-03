@@ -56,60 +56,18 @@ class RendererGameObjects extends RenderGroup {
     }
 
     if (type == ItemType.Object && subType == GameObjectType.Wooden_Cart){
-      final spriteWoodenCart = images.woodenCart;
       final nodeIndex = scene.getIndexPosition(gameObject);
-      final colorNorth = scene.colorNorth(nodeIndex);
-      final colorEast = scene.colorEast(nodeIndex);
-      final colorSouth = scene.colorSouth(nodeIndex);
-      final colorWest = scene.colorWest(nodeIndex);
-      final colorNorthWest = merge32BitColors(colorNorth, colorWest);
-      final colorSouthEast = merge32BitColors(colorSouth, colorEast);
-      final colorMerged = merge32BitColors(colorNorthWest, colorSouthEast);
-      const scale = 0.75;
-      const anchorY = 0.75;
-      final dstX = gameObject.renderX;
-      final dstY = gameObject.renderY;
-
-
-      // shadow
-      render.sprite(
-        sprite: spriteWoodenCart,
-        frame: 1,
-        color: colorMerged,
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
+      render.renderSpriteAuto(
+          sprite: images.woodenCart,
+          dstX: gameObject.renderX,
+          dstY: gameObject.renderY,
+          colorNorth: scene.colorNorth(nodeIndex),
+          colorEast: scene.colorEast(nodeIndex),
+          colorSouth: scene.colorSouth(nodeIndex),
+          colorWest: scene.colorWest(nodeIndex),
+          anchorY: 0.75,
+          scale: 0.6,
       );
-      // flat
-      render.sprite(
-          sprite: spriteWoodenCart,
-          frame: 0,
-          color: colorMerged,
-          scale: scale,
-          dstX: dstX,
-          dstY: dstY,
-          anchorY: anchorY,
-      );
-      render.sprite(
-          sprite: spriteWoodenCart,
-          frame: 2,
-          color: colorSouthEast,
-          scale: scale,
-          dstX: dstX,
-          dstY: dstY,
-          anchorY: anchorY,
-      );
-      render.sprite(
-          sprite: spriteWoodenCart,
-          frame: 3,
-          color: colorNorthWest,
-          scale: scale,
-          dstX: dstX,
-          dstY: dstY,
-          anchorY: anchorY,
-      );
-
       return;
     }
 
@@ -220,144 +178,6 @@ class RendererGameObjects extends RenderGroup {
       return;
     }
 
-    if (
-      type == ItemType.Object &&
-      const [
-        GameObjectType.Rock1,
-      ].contains(subType)
-    ){
-      const scale = 0.15;
-      final scene = this.scene;
-      final gameObjectIndex = scene.getIndexPosition(gameObject);
-      final dstX = gameObject.renderX;
-      final dstY = gameObject.renderY;
-      const anchorY = 0.66;
-      final sprite = images.rock1;
-
-
-      render.sprite(
-        sprite: sprite,
-        frame: sprite.getFrame(row: 0, column: SurfaceIndex.south),
-        color: scene.colorSouth(gameObjectIndex),
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
-
-      render.sprite(
-        sprite: sprite,
-        frame: sprite.getFrame(row: 0, column: SurfaceIndex.top),
-        color: scene.nodeColors[gameObjectIndex],
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
-
-      render.sprite(
-        sprite: sprite,
-        frame: sprite.getFrame(row: 0, column: SurfaceIndex.west),
-        color: scene.colorWest(gameObjectIndex),
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
-
-      render.sprite(
-        sprite: sprite,
-        frame: sprite.getFrame(row: 0, column: SurfaceIndex.north),
-        color: scene.colorNorth(gameObjectIndex),
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
-
-      render.sprite(
-        sprite: sprite,
-        frame: sprite.getFrame(row: 0, column: SurfaceIndex.east),
-        color: scene.colorEast(gameObjectIndex),
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
-
-      // engine.setBlendModeDstATop();
-      return;
-    }
-
-    if (
-      type == ItemType.Object &&
-      const [
-        GameObjectType.Tree1,
-      ].contains(subType)
-    ){
-      const scale = 0.3;
-      final scene = this.scene;
-      final gameObjectIndex = scene.getIndexPosition(gameObject);
-      final dstX = gameObject.renderX;
-      final dstY = gameObject.renderY;
-      const anchorY = 0.66;
-      final sprite = images.tree1;
-
-
-      render.sprite(
-        sprite: sprite,
-        frame: sprite.getFrame(row: 0, column: SurfaceIndex.south),
-        color: scene.colorSouth(gameObjectIndex),
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
-
-      render.sprite(
-        sprite: sprite,
-        frame: sprite.getFrame(row: 0, column: SurfaceIndex.top),
-        color: scene.nodeColors[gameObjectIndex],
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
-
-      render.sprite(
-        sprite: sprite,
-        frame: sprite.getFrame(row: 0, column: SurfaceIndex.west),
-        color: scene.colorWest(gameObjectIndex),
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
-
-      render.sprite(
-        sprite: sprite,
-        frame: sprite.getFrame(row: 0, column: SurfaceIndex.north),
-        color: scene.colorNorth(gameObjectIndex),
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
-
-      render.sprite(
-        sprite: sprite,
-        frame: sprite.getFrame(row: 0, column: SurfaceIndex.east),
-        color: scene.colorEast(gameObjectIndex),
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
-
-      // engine.setBlendModeDstATop();
-      return;
-    }
-
     final isCollectable = const [
       ItemType.Weapon,
       ItemType.Helm,
@@ -393,13 +213,6 @@ class RendererGameObjects extends RenderGroup {
       }
     );
 
-    // if (gameObject.maxHealth > 0) {
-    //   render.healthBarPosition(
-    //       position: gameObject,
-    //       percentage: gameObject.healthPercentage,
-    //     );
-    //   render.textPosition(gameObject, formatPercentage(gameObject.healthPercentage));
-    // }
   }
 
   void renderCrateWooden(

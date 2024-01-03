@@ -36,9 +36,6 @@ class GameObjectType {
   static const Grenade = 40;
   static const Crystal_Glowing_False = 12;
   static const Crystal_Glowing_True = 41;
-  static const Sphere = 42;
-  static const Rock1 = 43;
-  static const Tree1 = 44;
   static const Interactable = 45;
   static const Wooden_Cart = 46;
 
@@ -88,9 +85,6 @@ class GameObjectType {
       Flag_Spawn_Blue: 'Flag Spawn Blue',
       Grenade: 'Grenade',
       Crystal_Glowing_True: 'Crystal Glowing',
-      Sphere: 'Sphere',
-      Rock1: 'Rock1',
-      Tree1: 'Tree1',
       Interactable: 'Interactable',
       Wooden_Cart: 'Wooden_Cart',
     }[value] ?? 'object-type-unknown-$value';
@@ -133,9 +127,6 @@ class GameObjectType {
     Flag_Spawn_Blue,
     Grenade,
     Crystal_Glowing_True,
-    Sphere,
-    Rock1,
-    Tree1,
     Interactable,
     Wooden_Cart,
   ];

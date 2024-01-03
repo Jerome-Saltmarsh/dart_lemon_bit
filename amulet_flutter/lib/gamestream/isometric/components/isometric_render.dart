@@ -12,6 +12,7 @@ import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_sprite/lib.dart';
 
 import '../classes/src.dart';
+import 'render/functions/merge_32_bit_colors.dart';
 
 class IsometricRender with IsometricComponent {
 
@@ -709,4 +710,68 @@ class IsometricRender with IsometricComponent {
         scene.getIndexPositionZ(indexTgt) + 16,
     );
   }
+
+  /// renders a sprite composed of four frames
+  /// flat, shadow, south, west
+  void renderSpriteAuto({
+    required Sprite sprite,
+    required double dstX,
+    required double dstY,
+    required int colorNorth,
+    required int colorEast,
+    required int colorSouth,
+    required int colorWest,
+    double scale = 1.0,
+    double anchorY = 0.5,
+  }) {
+
+    final ambientRatio = 1.0 - (scene.ambientAlpha / 255);
+
+    final colorNW = merge32BitColors(colorNorth, colorWest);
+    final colorSE = merge32BitColors(colorSouth, colorEast);
+    final colorFlat = merge32BitColors(colorNW, colorSE);
+    final adjustedSE = interpolateColors(colorSE, scene.ambientColorNight, ambientRatio);
+
+    // shadow
+    render.sprite(
+      sprite: sprite,
+      frame: 1,
+      color: colorFlat,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
+    render.sprite(
+      sprite: sprite,
+      frame: 0,
+      color: colorFlat,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
+    render.sprite(
+      sprite: sprite,
+      frame: 2,
+      color: adjustedSE,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
+    render.sprite(
+      sprite: sprite,
+      frame: 3,
+      color: colorNW,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+  }
+
 }

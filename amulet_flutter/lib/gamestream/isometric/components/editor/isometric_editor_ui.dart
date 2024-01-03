@@ -24,7 +24,6 @@ extension IsometricEditorUI on IsometricEditor {
   static const gameObjects = const [
     GameObjectType.Barrel,
     GameObjectType.Crate_Wooden,
-    GameObjectType.Rock1,
     GameObjectType.Crystal_Glowing_False,
     GameObjectType.Crystal_Glowing_True,
     GameObjectType.Bottle,

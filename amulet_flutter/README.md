@@ -16,17 +16,17 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## TODO
-* [new]: particle effect aqua
+* [new]: gameobject lantern
+* [new]: gameobject tavern sign
+* [new]: gameobject broom
 * [new]: allie map label
 * [new]: music track 1
 * [new]: amulet loading symbol
 * [new]: node type large bricks
 * [fix]: mini map inside dungeon
 * [new]: character state spawn
-* [new]: gameobject lantern
 * [new]: scene witches lair level 1
 * [new]: scene witches lair level 2
-* [new]: quest window
 * [new]: character type warlock
 * [new]: character type spider
 * [new]: character type vampire
@@ -56,7 +56,8 @@ ctrl + []               : move caret to code block
 * [new]: gameobject caravan
 * [fix]: editor delete selected gameobject
 
-## 02.01.2024* 
+## 02.01.2024*
+* [new]: particle effect aqua
 * [new]: armoured fallen
 * [new]: render shadow wooden plank
 * [new]: particle effect on creep death and spawn
