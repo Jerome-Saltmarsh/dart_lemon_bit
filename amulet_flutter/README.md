@@ -19,36 +19,23 @@ ctrl + []               : move caret to code block
 * [new]: gameobject bucket
 * [new]: gameobject chest
 * [new]: gameobject lantern
-* [new]: gameobject tavern sign
 * [new]: allie map label
 * [new]: music track 1
 * [new]: amulet loading symbol
-* [new]: node type large bricks
 * [fix]: mini map inside dungeon
 * [new]: character state spawn
-* [new]: scene witches lair level 1
-* [new]: scene witches lair level 2
 * [new]: character type warlock
 * [new]: character type spider
 * [new]: character type vampire
 * [new]: character type witch
 * [new]: character type ghost
 * [new]: character type orc
-* [new]: character type skeleton swordsman
 * [new]: model hair type 4
 * [new]: spell type slow 
 * [new]: spell wind strike 
 * [fix]: front view renders
 * [new]: model head type female
 * [new]: model leg type iron plates
-* [new]: location endless plains
-* [new]: location dark castle
-* [new]: location lonely woods
-* [new]: location lake
-* [new]: location mountain
-* [new]: location town
-* [new]: location forsaken swamp
-* [new]: mechanic elemental damage
 * [new]: mechanic charge power like dragonballz
 * [new]: mobile touch screen support
 * [fix]: audio for web
