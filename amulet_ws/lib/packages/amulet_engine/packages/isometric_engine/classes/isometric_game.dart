@@ -361,11 +361,10 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
     final gameObjects = this.gameObjects;
     for (final gameObject in gameObjects) {
-      if (!gameObject.active) continue;
+      if (!gameObject.active || gameObject.ignorePointer) continue;
       if (!gameObject.collectable &&
           !gameObject.interactable &&
           !gameObject.hitable
-          // !gameObject.physical
       ) continue;
 
       final radius = max(Min_Radius, gameObject.radius);

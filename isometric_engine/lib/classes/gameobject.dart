@@ -26,6 +26,14 @@ class GameObject extends Collider {
   @override
   int get materialType => getMaterialType(type, subType);
 
+  bool get ignorePointer => const [
+      GameObjectType.Barrel,
+      GameObjectType.Broom,
+      GameObjectType.Bottle,
+      GameObjectType.Crate_Wooden,
+      GameObjectType.Candle,
+    ].contains(subType);
+
   static int getMaterialType(int type, int subType){
      switch (type){
        case ItemType.Object:

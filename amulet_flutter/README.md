@@ -16,6 +16,7 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## TODO
+* [new]: label map location
 * [new]: gameobject bucket
 * [new]: gameobject chest
 * [new]: gameobject lantern
