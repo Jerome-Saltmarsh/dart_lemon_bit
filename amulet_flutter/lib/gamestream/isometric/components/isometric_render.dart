@@ -711,6 +711,28 @@ class IsometricRender with IsometricComponent {
     );
   }
 
+  void renderSpriteAutoIndexed({
+    required Sprite sprite,
+    required double dstX,
+    required double dstY,
+    required int index,
+    double scale = 1.0,
+    double anchorY = 0.5,
+  }) {
+    final scene = this.scene;
+    render.renderSpriteAuto(
+      sprite: sprite,
+      dstX: dstX,
+      dstY: dstY,
+      colorNorth: scene.colorNorth(index),
+      colorEast: scene.colorEast(index),
+      colorSouth: scene.colorSouth(index),
+      colorWest: scene.colorWest(index),
+      anchorY: anchorY,
+      scale: scale,
+    );
+  }
+
   /// renders a sprite composed of four frames
   /// flat, shadow, south, west
   void renderSpriteAuto({

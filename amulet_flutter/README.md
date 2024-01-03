@@ -53,6 +53,8 @@ ctrl + []               : move caret to code block
 * [fix]: audio for web
 
 ## 03.01.2024* 
+* [new]: render gameobject south shadow during day
+* [new]: gameobject bed
 * [new]: gameobject caravan
 * [fix]: editor delete selected gameobject
 

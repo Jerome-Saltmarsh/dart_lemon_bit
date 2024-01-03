@@ -1,21 +1,20 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:amulet_flutter/gamestream/isometric/components/render/functions/merge_32_bit_colors.dart';
-import 'package:flutter/material.dart';
+import 'package:amulet_engine/packages/common.dart';
+import 'package:amulet_engine/packages/lemon_math.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_nodes_y.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_images.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_scene.dart';
+import 'package:amulet_flutter/gamestream/isometric/components/render/functions/merge_32_bit_colors.dart';
 import 'package:amulet_flutter/gamestream/isometric/enums/node_visibility.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:amulet_flutter/isometric/functions/get_render.dart';
-import 'package:amulet_engine/packages/common.dart';
-import 'package:amulet_engine/packages/lemon_math.dart';
+import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
-import 'package:lemon_sprite/lib.dart';
 
 import 'constants/node_src.dart';
 
@@ -2050,28 +2049,30 @@ class RendererNodes extends RenderGroup {
         );
         break;
       case TreeType.Dead:
-        renderTreeSprite(
+        render.renderSpriteAuto(
           sprite: images.tree03,
           dstX: dstX,
-          dstY: dstY + 16,
+          dstY: dstY - 4,
           colorNorth: colorNorth,
           colorEast: colorEast,
           colorSouth: colorSouth,
           colorWest: colorWest,
-          animationFrame: animationFrame,
+          scale: 0.8,
         );
+        engine.bufferImage = images.atlas_nodes;
         break;
       case TreeType.Dead02:
-        renderTreeSprite(
+        render.renderSpriteAuto(
           sprite: images.tree04,
           dstX: dstX,
-          dstY: dstY + 16,
+          dstY: dstY - 4,
           colorNorth: colorNorth,
           colorEast: colorEast,
           colorSouth: colorSouth,
           colorWest: colorWest,
-          animationFrame: animationFrame,
+          scale: 0.8,
         );
+        engine.bufferImage = images.atlas_nodes;
         break;
       default:
         break;
@@ -2408,71 +2409,6 @@ class RendererNodes extends RenderGroup {
     render.sprite(
         sprite: sprite,
         frame: 2,
-        color: colorNW,
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-    );
-
-    engine.bufferImage = images.atlas_nodes;
-  }
-
-  void renderTreeSprite({
-    required Sprite sprite,
-    required double dstX,
-    required double dstY,
-    required int colorNorth,
-    required int colorEast,
-    required int colorSouth,
-    required int colorWest,
-    required int animationFrame,
-  }) {
-
-    final ambientRatio = 1.0 - (scene.ambientAlpha / 255);
-
-    final colorNW = merge32BitColors(colorNorth, colorWest);
-    final colorSE = merge32BitColors(colorSouth, colorEast);
-    final colorFlat = merge32BitColors(colorNW, colorSE);
-    final adjustedSE = interpolateColors(colorSE, scene.ambientColorNight, ambientRatio);
-
-    const anchorY = 0.5;
-    const scale = 0.6;
-
-    // shadow
-    render.sprite(
-      sprite: sprite,
-      frame: 1,
-      color: colorFlat,
-      scale: scale,
-      dstX: dstX,
-      dstY: dstY,
-      anchorY: anchorY,
-    );
-
-    render.sprite(
-        sprite: sprite,
-        frame: 0,
-        color: colorFlat,
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-    );
-
-    render.sprite(
-        sprite: sprite,
-        frame: 2,
-        color: adjustedSE,
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-    );
-
-    render.sprite(
-        sprite: sprite,
-        frame: 3,
         color: colorNW,
         scale: scale,
         dstX: dstX,

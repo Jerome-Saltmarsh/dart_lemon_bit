@@ -56,17 +56,24 @@ class RendererGameObjects extends RenderGroup {
     }
 
     if (type == ItemType.Object && subType == GameObjectType.Wooden_Cart){
-      final nodeIndex = scene.getIndexPosition(gameObject);
-      render.renderSpriteAuto(
+      render.renderSpriteAutoIndexed(
           sprite: images.woodenCart,
           dstX: gameObject.renderX,
           dstY: gameObject.renderY,
-          colorNorth: scene.colorNorth(nodeIndex),
-          colorEast: scene.colorEast(nodeIndex),
-          colorSouth: scene.colorSouth(nodeIndex),
-          colorWest: scene.colorWest(nodeIndex),
+          index: scene.getIndexPosition(gameObject),
           anchorY: 0.75,
           scale: 0.6,
+      );
+      return;
+    }
+    if (type == ItemType.Object && subType == GameObjectType.Bed){
+      render.renderSpriteAutoIndexed(
+          sprite: images.bed,
+          dstX: gameObject.renderX,
+          dstY: gameObject.renderY,
+          index: scene.getIndexPosition(gameObject),
+          anchorY: 0.75,
+          scale: 0.8,
       );
       return;
     }
@@ -303,7 +310,7 @@ class RendererGameObjects extends RenderGroup {
     final dstX = gameObject.renderX;
     final dstY = gameObject.renderY;
     final sprite = images.barrelWooden;
-    const scale = goldenRatio_0381;
+    const scale = 0.3;
     const anchorY = 0.8;
 
     render.sprite(
