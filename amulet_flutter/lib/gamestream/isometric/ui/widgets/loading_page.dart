@@ -1,7 +1,7 @@
 
+import 'package:amulet_flutter/gamestream/ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
-import 'package:amulet_flutter/gamestream/ui/builders/build_watch.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 import 'isometric_builder.dart';
 
@@ -20,17 +20,19 @@ class LoadingPage extends StatelessWidget {
            mainAxisAlignment: MainAxisAlignment.center,
            crossAxisAlignment: CrossAxisAlignment.center,
            children: [
-             buildText('Loading GameStream'),
-             Row(
-               mainAxisAlignment: MainAxisAlignment.center,
-               children: [
-                 buildText('Images '),
-                 totalImagesLoaded,
-                 buildText('/'),
-                 totalImages,
-
-               ],
-             )
+             buildText('Lemon Studios', size: 25),
+             height16,
+             Image.asset('assets/images/loading-icon.png'),
+             // Row(
+             //   mainAxisAlignment: MainAxisAlignment.center,
+             //   children: [
+             //     buildText('Images '),
+             //     totalImagesLoaded,
+             //     buildText('/'),
+             //     totalImages,
+             //
+             //   ],
+             // )
            ],
          ),
        );

@@ -21,7 +21,6 @@ ctrl + []               : move caret to code block
 * [new]: gameobject lantern
 * [new]: allie map label
 * [new]: music track 1
-* [new]: amulet loading symbol
 * [fix]: mini map inside dungeon
 * [new]: character state spawn
 * [new]: character type warlock
@@ -41,6 +40,7 @@ ctrl + []               : move caret to code block
 * [fix]: audio for web
 
 ## 03.01.2024*
+* [new]: amulet loading symbol
 * [new]: label map location
 * [new]: gameobject broom
 * [new]: render gameobject south shadow during day
