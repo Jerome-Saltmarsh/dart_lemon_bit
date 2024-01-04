@@ -278,16 +278,13 @@ class IsometricImages with IsometricComponent {
         type: SpriteGroupType.Head,
         subType: HeadType.girl,
       );
-      loadSpriteGroupIsometric(
-        direction: direction,
-        type: SpriteGroupType.Helm,
-        subType: HelmType.Steel,
-      );
-      loadSpriteGroupIsometric(
-        direction: direction,
-        type: SpriteGroupType.Helm,
-        subType: HelmType.Wizard_Hat,
-      );
+      for (final headType in HelmType.values) {
+        loadSpriteGroupIsometric(
+          direction: direction,
+          type: SpriteGroupType.Helm,
+          subType: headType,
+        );
+      }
       loadSpriteGroupIsometric(
         direction: direction,
         type: SpriteGroupType.Legs,

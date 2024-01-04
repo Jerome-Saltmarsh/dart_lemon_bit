@@ -196,3 +196,6 @@ flutter:
     - assets/sprites/isometric/kid/diffuse/weapons/sword_heavy_sapphire/
     - assets/sprites/isometric/kid/south/weapons/sword_heavy_sapphire/
     - assets/sprites/isometric/kid/west/weapons/sword_heavy_sapphire/
+    - assets/sprites/isometric/kid/diffuse/helms/witches_hat/
+    - assets/sprites/isometric/kid/south/helms/witches_hat/
+    - assets/sprites/isometric/kid/west/helms/witches_hat/

@@ -21,12 +21,6 @@ class Atlas {
     LegType.Leather: AtlasSrcLegs.Red,
   };
 
-  static const Collection_Helm = <int, List<double>>{
-    HelmType.None: AtlasSrcHelm.None,
-    HelmType.Steel: AtlasSrcHelm.Steel,
-    HelmType.Wizard_Hat: AtlasSrcHelm.Wizards_Hat,
-  };
-
   static const Collection_Objects = <int, List<double>>{
     GameObjectType.Barrel: AtlasSrcObjects.Barrel,
     GameObjectType.Barrel_Explosive: AtlasSrcObjects.Barrel_Explosive,
@@ -68,7 +62,7 @@ class Atlas {
     ItemType.Weapon: atlasSrcWeapons,
     ItemType.Legs: Collection_Legs,
     ItemType.Body: atlasSrcBodyType,
-    ItemType.Helm: Collection_Helm,
+    ItemType.Helm: atlasSrcHelm,
     ItemType.Object: Collection_Objects,
     ItemType.Hand: atlasSrcHands,
     ItemType.Consumable: atlasSrcConsumables,

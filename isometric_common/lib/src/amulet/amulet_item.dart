@@ -353,6 +353,15 @@ enum AmuletItem {
     description: 'A hat commonly worn by students of magic school',
     level1: AmuletItemStats(),
   ),
+  Moth_Hat_Of_Magic(
+    levelMin: 1,
+    levelMax: 5,
+    selectAction: AmuletItemAction.Equip,
+    type: ItemType.Helm,
+    subType: HelmType.Witches_Hat,
+    description: 'an old moth eaten hat that emanates magic',
+    level1: AmuletItemStats(),
+  ),
   Pants_Travellers(
     levelMin: 1,
     levelMax: 5,
