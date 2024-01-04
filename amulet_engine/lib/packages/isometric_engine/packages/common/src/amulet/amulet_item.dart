@@ -187,21 +187,12 @@ enum AmuletItem {
     subType: WeaponType.Staff,
     description: 'An old gnarled staff',
     level1: AmuletItemStats(
-        range: 100,
+        range: 200,
         damageMin: 1,
         damageMax: 3,
-    ),
-    level2: AmuletItemStats(
-        range: 110,
-        damageMin: 5,
-        damageMax: 8,
-        fire: 3,
-    ),
-    level3: AmuletItemStats(
-        range: 120,
-        damageMin: 8,
-        damageMax: 12,
-        fire: 6,
+        cooldown: 1,
+        performDuration: 25,
+        charges: 1,
     ),
   ),
   Weapon_Staff_Of_Frozen_Lake(
@@ -354,13 +345,15 @@ enum AmuletItem {
     level1: AmuletItemStats(),
   ),
   Moth_Hat_Of_Magic(
-    levelMin: 1,
-    levelMax: 5,
+    levelMin: 5,
+    levelMax: 10,
     selectAction: AmuletItemAction.Equip,
     type: ItemType.Helm,
     subType: HelmType.Witches_Hat,
     description: 'an old moth eaten hat that emanates magic',
-    level1: AmuletItemStats(),
+    level1: AmuletItemStats(
+      health: 20,
+    ),
   ),
   Pants_Travellers(
     levelMin: 1,
@@ -381,8 +374,7 @@ enum AmuletItem {
     subType: LegType.Leather,
     description: 'light pants which provide easy movement with some protection',
     level1: AmuletItemStats(
-      health: 5,
-      fire: 5,
+      health: 10,
     ),
   ),
   Pants_Plated(
@@ -393,8 +385,7 @@ enum AmuletItem {
     subType: LegType.Leather,
     description: 'Quite heavy but they offer a lot of protection',
     level1: AmuletItemStats(
-      health: 15,
-      fire: 10,
+      health: 16,
     ),
   ),
   Gauntlet(
@@ -426,6 +417,17 @@ enum AmuletItem {
     type: ItemType.Body,
     subType: BodyType.Shirt_Blue,
     description: 'An ordinary shirt',
+    level1: AmuletItemStats(
+      health: 10,
+    ),
+  ),
+  Armor_Black_Cloak(
+    levelMin: 1,
+    levelMax: 5,
+    selectAction: AmuletItemAction.Equip,
+    type: ItemType.Body,
+    subType: BodyType.Black_Cloak,
+    description: 'A cloak that enhances magical ability',
     level1: AmuletItemStats(
       health: 10,
     ),

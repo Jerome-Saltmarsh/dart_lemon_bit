@@ -236,26 +236,18 @@ class IsometricImages with IsometricComponent {
       RenderDirection.west,
       RenderDirection.diffuse,
     ]){
-      loadSpriteGroupIsometric(
-          direction: direction,
-          type: SpriteGroupType.Body_Male,
-          subType: BodyType.Shirt_Blue,
-      );
-      loadSpriteGroupIsometric(
-          direction: direction,
-          type: SpriteGroupType.Body_Male,
-          subType: BodyType.Leather_Armour,
-      );
-      loadSpriteGroupIsometric(
+      for (final bodyType in BodyType.values) {
+        loadSpriteGroupIsometric(
           direction: direction,
           type: SpriteGroupType.Body_Female,
-          subType: BodyType.Leather_Armour,
-      );
-      loadSpriteGroupIsometric(
+          subType: bodyType,
+        );
+        loadSpriteGroupIsometric(
           direction: direction,
-          type: SpriteGroupType.Body_Female,
-          subType: BodyType.Shirt_Blue,
-      );
+          type: SpriteGroupType.Body_Male,
+          subType: bodyType,
+        );
+      }
       for (final handType in HandType.values) {
         loadSpriteGroupIsometric(
           direction: direction,
@@ -340,7 +332,6 @@ class IsometricImages with IsometricComponent {
         type: SpriteGroupType.Shoes,
         subType: ShoeType.Iron_Plates,
       );
-
       HairType.valuesNotNone.forEach((hairType) {
         loadSpriteGroupFront(
             type: SpriteGroupType.Hair,

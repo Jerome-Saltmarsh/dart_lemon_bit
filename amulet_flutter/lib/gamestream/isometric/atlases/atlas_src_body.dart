@@ -1,28 +1,7 @@
 import 'package:amulet_engine/packages/common.dart';
 
 const atlasSrcBodyType = <int, List<double>>{
-  BodyType.None: [
-    102,  // x
-    4,    // y
-    22,   // width
-    23 ,   // height
-    1,  // scale
-    0.5, // anchorY
-  ],
-  BodyType.Shirt_Blue: [
-    38,  // x
-    4,    // y
-    22,   // width
-    23,   // height
-    1,  // scale
-    0.5, // anchorY
-  ],
-  BodyType.Leather_Armour: [
-    8,  // x
-    5,    // y
-    18,   // width
-    16,   // height
-    1,  // scale
-    0.5, // anchorY
-  ],
+  BodyType.Shirt_Blue: [35, 3, 26, 26, 1, 0.5],
+  BodyType.Leather_Armour: [7, 4, 18, 26, 1, 0.5],
+  BodyType.Black_Cloak: [69, 3, 22, 26, 1, 0.5],
 };

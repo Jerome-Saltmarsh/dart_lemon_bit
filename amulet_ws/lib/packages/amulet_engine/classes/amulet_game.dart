@@ -299,9 +299,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       case AmuletItem.Weapon_Short_Sword:
         performAbilityMelee(character);
         break;
-      case AmuletItem.Weapon_Staff_Wooden:
-        performAbilityMelee(character);
-        break;
       case AmuletItem.Weapon_Old_Bow:
         performAbilityArrow(
             character: character,
@@ -318,6 +315,13 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         break;
       case AmuletItem.Weapon_Staff_Of_Frozen_Lake:
         performAbilityFrostBall(
+            character,
+            damage: damage,
+            range: range,
+        );
+        break;
+      case AmuletItem.Weapon_Staff_Wooden:
+        performAbilityFireball(
             character,
             damage: damage,
             range: range,
@@ -378,6 +382,17 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       damage: damage,
       range: range,
       projectileType: ProjectileType.FrostBall,
+      angle: character.angle,
+    );
+  }
+
+  void performAbilityFireball(
+      Character character, {required int damage, required double range}) {
+     spawnProjectile(
+      src: character,
+      damage: damage,
+      range: range,
+      projectileType: ProjectileType.Fireball,
       angle: character.angle,
     );
   }

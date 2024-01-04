@@ -853,7 +853,7 @@ class AmuletPlayer extends IsometricPlayer with
 
     if (item == null){
       clearSlot(equippedBody);
-      bodyType = BodyType.None;
+      bodyType = 0;
       return;
     }
 
@@ -1010,7 +1010,7 @@ class AmuletPlayer extends IsometricPlayer with
     weaponType = itemSlotWeapon.amuletItem?.subType ?? WeaponType.Unarmed;
     equipmentDirty = false;
     helmType = equippedHelm.amuletItem?.subType ?? HelmType.None;
-    bodyType = equippedBody.amuletItem?.subType ?? BodyType.None;
+    bodyType = equippedBody.amuletItem?.subType ?? 0;
     legsType = equippedLegs.amuletItem?.subType ?? LegType.None;
     handTypeLeft = equippedHandLeft.amuletItem?.subType ?? HandType.None;
     handTypeRight = equippedHandRight.amuletItem?.subType ?? HandType.None;

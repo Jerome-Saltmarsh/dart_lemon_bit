@@ -16,6 +16,7 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## TODO
+* [new]: model armour witches cloak
 * [new]: character state spawn
 * [new]: model weapon claymore
 * [fix]: mini map inside dungeon
