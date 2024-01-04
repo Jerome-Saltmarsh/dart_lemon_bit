@@ -322,16 +322,13 @@ class IsometricImages with IsometricComponent {
         subType: WeaponType.Sword_Heavy_Sapphire,
         skipFire: true,
       );
-      loadSpriteGroupIsometric(
-        direction: direction,
-        type: SpriteGroupType.Shoes,
-        subType: ShoeType.Leather_Boots,
-      );
-      loadSpriteGroupIsometric(
-        direction: direction,
-        type: SpriteGroupType.Shoes,
-        subType: ShoeType.Iron_Plates,
-      );
+      for (final shoeType in ShoeType.values){
+        loadSpriteGroupIsometric(
+          direction: direction,
+          type: SpriteGroupType.Shoes,
+          subType: shoeType,
+        );
+      }
       HairType.valuesNotNone.forEach((hairType) {
         loadSpriteGroupFront(
             type: SpriteGroupType.Hair,

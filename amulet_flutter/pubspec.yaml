@@ -202,3 +202,9 @@ flutter:
     - assets/sprites/isometric/kid/diffuse/body_male/black_cloak/
     - assets/sprites/isometric/kid/south/body_male/black_cloak/
     - assets/sprites/isometric/kid/west/body_male/black_cloak/
+    - assets/sprites/isometric/kid/diffuse/body_female/black_cloak/
+    - assets/sprites/isometric/kid/diffuse/shoes/black_boots/
+    - assets/sprites/isometric/kid/south/body_female/black_cloak/
+    - assets/sprites/isometric/kid/south/shoes/black_boots/
+    - assets/sprites/isometric/kid/west/body_female/black_cloak/
+    - assets/sprites/isometric/kid/west/shoes/black_boots/

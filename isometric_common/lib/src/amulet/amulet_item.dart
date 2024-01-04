@@ -399,6 +399,17 @@ enum AmuletItem {
       health: 5,
     ),
   ),
+  Black_Boots_Of_Magic(
+    levelMin: 5,
+    levelMax: 10,
+    selectAction: AmuletItemAction.Equip,
+    type: ItemType.Shoes,
+    subType: ShoeType.Black_Boots,
+    description: 'Mystical boots',
+    level1: AmuletItemStats(
+      health: 5,
+    ),
+  ),
   Leather_Gloves(
     levelMin: 1,
     levelMax: 8,
