@@ -11,7 +11,7 @@ class IsometricEvents with IsometricComponent {
 
   void onWeaponTypeEquipped(int attackType, double x, double y, double z) {
     switch (attackType) {
-      case WeaponType.Sword:
+      case WeaponType.Shortsword:
         audio.play(audio.sword_unsheathe, x, y, z);
       case WeaponType.Bow:
         audio.play(audio.bow_draw, x, y, z);
@@ -152,7 +152,7 @@ class IsometricEvents with IsometricComponent {
           case WeaponType.Unarmed:
             audio.play(audio.arm_swing_whoosh_11, x, y, z);
             break;
-          case WeaponType.Sword:
+          case WeaponType.Shortsword:
             audio.play(audio.arm_swing_whoosh_11, x, y, z);
             break;
         }
@@ -442,7 +442,7 @@ class IsometricEvents with IsometricComponent {
     if (weaponType == WeaponType.Unarmed) return;
 
     switch (weaponType) {
-      case WeaponType.Sword:
+      case WeaponType.Shortsword:
         audio.sword_unsheathe();
         break;
       case WeaponType.Bow:
@@ -459,7 +459,7 @@ class IsometricEvents with IsometricComponent {
     if (itemType == WeaponType.Unarmed) return;
 
     switch (itemType) {
-      case WeaponType.Sword:
+      case WeaponType.Shortsword:
         audio.sword_unsheathe();
         break;
       case WeaponType.Bow:

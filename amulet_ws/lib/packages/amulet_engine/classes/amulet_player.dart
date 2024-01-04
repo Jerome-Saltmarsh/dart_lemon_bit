@@ -1699,7 +1699,7 @@ class AmuletPlayer extends IsometricPlayer with
   }) {
 
     if (const[
-      WeaponType.Sword,
+      WeaponType.Shortsword,
       WeaponType.Broadsword,
       WeaponType.Staff,
     ].contains(weaponType)) {

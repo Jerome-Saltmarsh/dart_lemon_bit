@@ -418,7 +418,7 @@ class Amulet {
     for (final treasure in player.treasures) {
       treasure.clear();
     }
-    weapons[0].amuletItem = AmuletItem.Weapon_Rusty_Old_Sword;
+    weapons[0].amuletItem = AmuletItem.Weapon_Short_Sword;
     weapons[1].amuletItem = AmuletItem.Weapon_Old_Bow;
     weapons[2].amuletItem = AmuletItem.Spell_Heal;
     amuletTime.hour = 12;

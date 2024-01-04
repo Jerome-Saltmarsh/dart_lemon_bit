@@ -16,8 +16,6 @@ class Character extends Collider {
   var _goal = CharacterGoal.Idle;
 
   var experience = 0;
-  var chanceOfDropConsumable = 0.25;
-  var chanceOfDropLoot = 0.05;
   var spawnLootOnDeath = true;
   var respawnDurationTotal = 30;
   var gender = Gender.female;

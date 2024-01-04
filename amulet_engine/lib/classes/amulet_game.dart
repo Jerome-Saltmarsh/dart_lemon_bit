@@ -296,7 +296,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       case AmuletItem.Blink_Dagger:
         performAbilityBlink(character);
         break;
-      case AmuletItem.Weapon_Rusty_Old_Sword:
+      case AmuletItem.Weapon_Short_Sword:
         performAbilityMelee(character);
         break;
       case AmuletItem.Weapon_Staff_Wooden:
@@ -451,19 +451,23 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   @override
   void customOnCharacterKilled(Character target, src) {
-    if (target.spawnLootOnDeath) {
-      if (randomChance(target.chanceOfDropConsumable)) {
-        spawnAmuletItemAtPosition(
-          item: randomItem(AmuletItem.typeConsumables),
-          position: target,
-          deactivationTimer: lootDeactivationTimer,
-        );
-      }
-      else
-      if (randomChance(target.chanceOfDropLoot)) {
-        spawnRandomLootAtPosition(target);
+
+    if (target is AmuletFiend){
+      if (target.spawnLootOnDeath) {
+        if (randomChance(target.chanceOfDropConsumable)) {
+          spawnAmuletItemAtPosition(
+            item: randomItem(AmuletItem.typeConsumables),
+            position: target,
+            deactivationTimer: lootDeactivationTimer,
+          );
+        }
+        else
+        if (randomChance(target.chanceOfDropLoot)) {
+          spawnRandomLootAtFiend(target);
+        }
       }
     }
+
 
     if (target.respawnDurationTotal > 0){
       addJob(seconds: target.respawnDurationTotal, action: () {
@@ -479,13 +483,25 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
   }
 
+  void spawnRandomLootAtFiend(AmuletFiend fiend) {
 
-  void spawnRandomLootAtPosition(Position position) =>
-      spawnRandomLoot(
-        x: position.x,
-        y: position.y,
-        z: position.z,
+    final fiendType = fiend.fiendType;
+    final fiendLevel = fiendType.level;
+    
+    final values = AmuletItem.values.where((element) => fiendLevel >= element.levelMin && fiendLevel < element.levelMax);
+    
+    if (values.isEmpty){
+      return;
+    }
+
+    final item = randomItem(values);
+    spawnAmuletItem(
+        item: item,
+        x: fiend.x,
+        y: fiend.y,
+        z: fiend.z,
       );
+  }
 
   void spawnRandomLoot({
     required double x,

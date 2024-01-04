@@ -130,7 +130,7 @@ class AmuletGameTutorial extends AmuletGame {
     }
 
     if (objectiveCompleted(player, QuestTutorial.Acquire_Sword)){
-      player.setWeapon(index: 0, amuletItem: AmuletItem.Weapon_Rusty_Old_Sword);
+      player.setWeapon(index: 0, amuletItem: AmuletItem.Weapon_Short_Sword);
       player.equippedWeaponIndex = 0;
     }
 
@@ -439,7 +439,7 @@ class AmuletGameTutorial extends AmuletGame {
 
   void actionSpawnWeaponSwordAtGuide() =>
     spawnAmuletItem(
-      item: AmuletItem.Weapon_Rusty_Old_Sword,
+      item: AmuletItem.Weapon_Short_Sword,
       x: guide.x,
       y: guide.y,
       z: guide.z,
@@ -556,7 +556,7 @@ class AmuletGameTutorial extends AmuletGame {
   @override
   void onAmuletItemAcquired(AmuletPlayer player, AmuletItem amuletItem) {
     switch (amuletItem){
-      case AmuletItem.Weapon_Rusty_Old_Sword:
+      case AmuletItem.Weapon_Short_Sword:
         if (player.tutorialObjective == QuestTutorial.Acquire_Sword){
           startNextTutorialObjective(player);
         }

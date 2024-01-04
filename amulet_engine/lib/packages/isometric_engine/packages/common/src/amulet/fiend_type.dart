@@ -4,6 +4,7 @@ import '../isometric/weapon_type.dart';
 
 enum FiendType {
   Fallen(
+    level: 1,
     health: 4,
     damage: 1,
     characterType: CharacterType.Fallen,
@@ -11,12 +12,13 @@ enum FiendType {
     experience: 1,
     runSpeed: 0.7,
     chanceOfSetTarget: 0.25,
-    weaponType: WeaponType.Sword,
+    weaponType: WeaponType.Shortsword,
     weaponRange: 25,
     quantity: 2,
     weaponCooldown: 20,
   ),
   Skeleton(
+    level: 2,
     health: 5,
     damage: 1,
     characterType: CharacterType.Skeleton,
@@ -30,6 +32,7 @@ enum FiendType {
     weaponCooldown: 20,
   ),
   Wolf(
+    level: 3,
     health: 8,
     damage: 3,
     characterType: CharacterType.Wolf,
@@ -43,6 +46,7 @@ enum FiendType {
     weaponCooldown: 20,
   ),
   Zombie(
+    level: 4,
     health: 12,
     damage: 3,
     characterType: CharacterType.Zombie,
@@ -56,6 +60,7 @@ enum FiendType {
     weaponCooldown: 20,
   ),
   Fallen_Armoured(
+    level: 5,
     health: 12,
     damage: 3,
     characterType: CharacterType.Fallen_Armoured,
@@ -63,12 +68,13 @@ enum FiendType {
     experience: 3,
     runSpeed: 0.7,
     chanceOfSetTarget: 0.35,
-    weaponType: WeaponType.Sword,
+    weaponType: WeaponType.Shortsword,
     weaponRange: 25,
     quantity: 2,
     weaponCooldown: 20,
   );
 
+  final int level;
   final int health;
   final int damage;
   final int attackDuration;
@@ -94,5 +100,6 @@ enum FiendType {
     required this.weaponRange,
     required this.quantity,
     required this.weaponCooldown,
+    required this.level,
   });
 }

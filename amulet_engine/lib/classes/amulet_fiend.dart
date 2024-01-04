@@ -5,6 +5,8 @@ import 'package:amulet_engine/packages/isomeric_engine.dart';
 class AmuletFiend extends Character with Elemental {
 
   FiendType fiendType;
+  var chanceOfDropConsumable = 0.25;
+  var chanceOfDropLoot = 0.05;
 
   AmuletFiend({
     required super.x,

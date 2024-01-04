@@ -212,7 +212,7 @@ class IsometricImages with IsometricComponent {
     loadSpriteGroupFront(type: SpriteGroupType.Torso, subType: Gender.female);
     loadSpriteGroupFront(type: SpriteGroupType.Weapon, subType: WeaponType.Bow);
     loadSpriteGroupFront(type: SpriteGroupType.Weapon, subType: WeaponType.Staff);
-    loadSpriteGroupFront(type: SpriteGroupType.Weapon, subType: WeaponType.Sword);
+    loadSpriteGroupFront(type: SpriteGroupType.Weapon, subType: WeaponType.Shortsword);
     loadSpriteGroupFront(type: SpriteGroupType.Shoes, subType: ShoeType.Leather_Boots);
     loadSpriteGroupFront(type: SpriteGroupType.Shoes, subType: ShoeType.Iron_Plates);
 
@@ -220,7 +220,7 @@ class IsometricImages with IsometricComponent {
     loadSpriteGroupIsometric(
       direction: RenderDirection.diffuse,
       type: SpriteGroupType.Weapon_Trail,
-      subType: WeaponType.Sword,
+      subType: WeaponType.Shortsword,
       skipHurt: true,
       skipCasting: true,
       skipChange: true,
@@ -318,7 +318,7 @@ class IsometricImages with IsometricComponent {
       loadSpriteGroupIsometric(
         direction: direction,
         type: SpriteGroupType.Weapon,
-        subType: WeaponType.Sword,
+        subType: WeaponType.Shortsword,
         skipFire: true,
       );
       loadSpriteGroupIsometric(

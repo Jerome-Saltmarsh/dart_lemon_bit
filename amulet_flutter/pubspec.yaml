@@ -98,7 +98,6 @@ flutter:
     - assets/sprites/isometric/kid/south/torso/male/
     - assets/sprites/isometric/kid/south/weapons/bow/
     - assets/sprites/isometric/kid/south/weapons/staff/
-    - assets/sprites/isometric/kid/south/weapons/sword/
     - assets/sprites/isometric/kid/south/shoes/iron_plates/
     - assets/sprites/isometric/kid/south/shoes/leather_boots/
     - assets/sprites/isometric/kid/west/body_male/shirt_blue/
@@ -121,7 +120,6 @@ flutter:
     - assets/sprites/isometric/kid/west/torso/male/
     - assets/sprites/isometric/kid/west/weapons/bow/
     - assets/sprites/isometric/kid/west/weapons/staff/
-    - assets/sprites/isometric/kid/west/weapons/sword/
     - assets/sprites/isometric/kid/west/shoes/iron_plates/
     - assets/sprites/isometric/kid/west/shoes/leather_boots/
     - assets/sprites/isometric/kid/diffuse/body_female/leather_armour/
@@ -146,7 +144,6 @@ flutter:
     - assets/sprites/isometric/kid/diffuse/torso/male/
     - assets/sprites/isometric/kid/diffuse/weapons/bow/
     - assets/sprites/isometric/kid/diffuse/weapons/staff/
-    - assets/sprites/isometric/kid/diffuse/weapons/sword/
     - assets/sprites/front/kid/diffuse/body_female/leather_armour/
     - assets/sprites/front/kid/diffuse/body_female/shirt_blue/
     - assets/sprites/front/kid/diffuse/body_male/leather_armour/
@@ -185,3 +182,4 @@ flutter:
     - assets/sprites/isometric/kid/diffuse/weapons/broadsword/
     - assets/sprites/isometric/kid/south/weapons/broadsword/
     - assets/sprites/isometric/kid/west/weapons/broadsword/
+    - assets/sprites/isometric/kid/diffuse/weapons/shortsword/

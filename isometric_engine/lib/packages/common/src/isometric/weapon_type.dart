@@ -1,6 +1,6 @@
 class WeaponType {
   static const Unarmed = 0;
-  static const Sword = 6;
+  static const Shortsword = 6;
   static const Broadsword = 25;
   static const Bow = 7;
   static const Staff = 15;
@@ -8,7 +8,7 @@ class WeaponType {
 
   static const valuesMelee = [
     Unarmed,
-    Sword,
+    Shortsword,
     Broadsword,
     Staff,
   ];
@@ -22,7 +22,7 @@ class WeaponType {
 
   static String getName(int value) => const {
       Unarmed: 'unarmed',
-      Sword: 'Sword',
+      Shortsword: 'Shortsword',
       Broadsword: 'Broadsword',
       Bow: 'Bow',
       Staff: 'staff',
