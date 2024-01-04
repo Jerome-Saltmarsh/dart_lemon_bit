@@ -1702,6 +1702,7 @@ class AmuletPlayer extends IsometricPlayer with
       WeaponType.Shortsword,
       WeaponType.Broadsword,
       WeaponType.Staff,
+      WeaponType.Sword_Heavy_Sapphire,
     ].contains(weaponType)) {
       setCharacterStateStriking(
         duration: duration,

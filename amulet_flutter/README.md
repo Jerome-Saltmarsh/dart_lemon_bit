@@ -16,16 +16,14 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## TODO
-* [new]: model short sword
-* [new]: model longsword
-* [new]: model axe
+* [new]: character state spawn
+* [new]: model claymore
 * [fix]: mini map inside dungeon
 * [new]: allie map label
 * [new]: gameobject bucket
 * [new]: gameobject chest
 * [new]: gameobject lantern
 * [new]: music track 1
-* [new]: character state spawn
 * [new]: character state charge
 * [new]: spell type long ranged strike 
 * [new]: spell type slow 
@@ -48,9 +46,9 @@ ctrl + []               : move caret to code block
 * [new]: mobile touch screen support
 * [fix]: audio for web
 
-
 ## 04.01.2024*
 * [new]: windows application icon
+* [new]: model short sword
 * [new]: model broadsword
 
 ## 03.01.2024*

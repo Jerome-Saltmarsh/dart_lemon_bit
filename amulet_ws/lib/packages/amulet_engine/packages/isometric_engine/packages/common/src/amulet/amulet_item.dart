@@ -129,6 +129,22 @@ enum AmuletItem {
       fire: 3,
     ),
   ),
+  Weapon_Sword_Sapphire_Large(
+    levelMin: 8,
+    levelMax: 12,
+    selectAction: AmuletItemAction.Equip,
+    type: ItemType.Weapon,
+    subType: WeaponType.Sword_Heavy_Sapphire,
+    description: 'A powerful heavy sword made of sapphire',
+    level1: AmuletItemStats(
+      damageMin: 12,
+      damageMax: 20,
+      range: 100,
+      cooldown: 1,
+      charges: 1,
+      performDuration: 40,
+    ),
+  ),
   Weapon_Sharpened_Broad_Sword(
     levelMin: 4,
     levelMax: 10,

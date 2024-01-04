@@ -1,4 +1,5 @@
 
+
 name: amulet_flutter
 description: next gen cloud gaming
 
@@ -192,3 +193,6 @@ flutter:
     - assets/sprites/isometric/kid/south/weapons/broadsword/
     - assets/sprites/isometric/kid/west/weapons/broadsword/
     - assets/sprites/isometric/kid/diffuse/weapons/shortsword/
+    - assets/sprites/isometric/kid/diffuse/weapons/sword_heavy_sapphire/
+    - assets/sprites/isometric/kid/south/weapons/sword_heavy_sapphire/
+    - assets/sprites/isometric/kid/west/weapons/sword_heavy_sapphire/
