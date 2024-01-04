@@ -50,6 +50,7 @@ ctrl + []               : move caret to code block
 
 
 ## 04.01.2024*
+* [new]: windows application icon
 * [new]: model broadsword
 
 ## 03.01.2024*

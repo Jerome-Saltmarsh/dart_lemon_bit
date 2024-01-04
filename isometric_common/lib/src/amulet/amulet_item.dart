@@ -266,8 +266,8 @@ enum AmuletItem {
     subType: WeaponType.Bow,
     description: 'A worn out bow',
     level1: AmuletItemStats(
-      damageMin: 5,
-      damageMax: 10,
+      damageMin: 2,
+      damageMax: 3,
       charges: 3,
       cooldown: 8,
       range: 150,

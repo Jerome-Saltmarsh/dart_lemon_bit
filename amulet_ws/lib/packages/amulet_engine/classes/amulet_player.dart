@@ -1715,6 +1715,7 @@ class AmuletPlayer extends IsometricPlayer with
       setCharacterStateFire(
         duration: duration,
       );
+      return;
     }
 
     throw Exception(
