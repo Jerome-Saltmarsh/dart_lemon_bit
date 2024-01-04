@@ -17,7 +17,7 @@ ctrl + []               : move caret to code block
 
 ## TODO
 * [new]: character state spawn
-* [new]: model claymore
+* [new]: model weapon claymore
 * [fix]: mini map inside dungeon
 * [new]: allie map label
 * [new]: gameobject bucket
@@ -35,6 +35,8 @@ ctrl + []               : move caret to code block
 * [new]: model head type female
 * [new]: model leg type iron plates
 * [new]: mechanic charge power like dragonballz
+* [new]: official website
+* [new]: official youtube channel
 
 ## BACKLOG
 * [new]: character type warlock
@@ -47,6 +49,7 @@ ctrl + []               : move caret to code block
 * [fix]: audio for web
 
 ## 04.01.2024*
+* [new]: model weapon sapphire heavy sword
 * [new]: windows application icon
 * [new]: model short sword
 * [new]: model broadsword
