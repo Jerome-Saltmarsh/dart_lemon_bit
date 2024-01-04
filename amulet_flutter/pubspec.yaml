@@ -182,3 +182,6 @@ flutter:
     - assets/sprites/isometric/fallen_armoured/shadow/
     - assets/sprites/isometric/fallen_armoured/south/
     - assets/sprites/isometric/fallen_armoured/west/
+    - assets/sprites/isometric/kid/diffuse/weapons/broadsword/
+    - assets/sprites/isometric/kid/south/weapons/broadsword/
+    - assets/sprites/isometric/kid/west/weapons/broadsword/

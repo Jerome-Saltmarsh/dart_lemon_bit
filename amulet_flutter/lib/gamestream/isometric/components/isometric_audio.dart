@@ -162,22 +162,9 @@ class IsometricAudio with IsometricComponent implements Updatable {
   final notification_sound_12 = AudioSingle(name: 'notification-sound-12');
   final sci_fi_blaster_1 = AudioSingle(name: 'sci-fi-blaster-1');
   final sci_fi_blaster_8 = AudioSingle(name: 'sci-fi-blaster-8');
-  final shotgun_shot = AudioSingle(name: 'shotgun-shot');
-  final revolver_shot_3 = AudioSingle(name: 'revolver-shot-03');
-  final revolver_shot_6 = AudioSingle(name: 'revolver-shot-06');
-  final cock_shotgun_3 = AudioSingle(name: 'cock-shotgun-03');
   final cash_register_4 = AudioSingle(name: 'cash_register_4');
   final mag_in_03 = AudioSingle(name: 'mag-in-02');
   final sword_unsheathe = AudioSingle(name: 'sword-unsheathe');
-  final gun_pickup_01 = AudioSingle(name: 'gun-pickup-01');
-  final assault_rifle_shot = AudioSingle(name: 'assault-rifle-shot');
-  final sniper_shot_4 = AudioSingle(name: 'sniper-shot-04');
-  final assault_rifle_shot_13 = AudioSingle(name: 'assault_rifle_shot_13');
-  final assault_rifle_shot_14 = AudioSingle(name: 'assault_rifle_shot_14');
-  final assault_rifle_shot_17 = AudioSingle(name: 'assault_rifle_shot_17');
-  final revolver_shot_2 = AudioSingle(name: 'revolver-shot-02');
-  final revolver_reload_1 = AudioSingle(name: 'revolver-reload-01');
-  final reload_6 = AudioSingle(name: 'reload_06');
   final unlock = AudioSingle(name: 'unlock');
   final zombie_hurt_1 = AudioSingle(name: 'zombie-hurt-1');
   final zombie_hurt_4 = AudioSingle(name: 'zombie-hit-04');
@@ -206,15 +193,12 @@ class IsometricAudio with IsometricComponent implements Updatable {
   final swing_sword = AudioSingle(name: 'swing-sword');
   final arm_swing_whoosh_11 = AudioSingle(name: 'arm-swing-whoosh-11');
   final heavy_punch_13 = AudioSingle(name: 'heavy-punch-13');
-  final pistol_shot_20 = AudioSingle(name: 'pistol-shot-20');
-  final pistol_shot_07 = AudioSingle(name: 'pistol_shot_07');
   final grass_cut = AudioSingle(name: 'grass-cut');
   final switch_sounds_4 = AudioSingle(name: 'switch-sounds-4');
   final teleport = AudioSingle(name: 'teleport-1');
   final hover_over_button_sound_30 = AudioSingle(name: 'hover-over-button-sound-30');
   final hover_over_button_sound_43 = AudioSingle(name: 'hover-over-button-sound-43');
   final explosion_grenade_04 = AudioSingle(name: 'explosion_grenade_04');
-  final machine_gun_shot_02 = AudioSingle(name: 'machine_gun_shot_02');
 
   final zombie_deaths = [
     AudioSingle(name: 'zombie-death-02'),
@@ -435,15 +419,8 @@ class IsometricAudio with IsometricComponent implements Updatable {
 
   late final MapItemTypeAudioSinglesAttackMelee = <int, AudioSingle> {
     WeaponType.Unarmed: swing_arm_11,
-    WeaponType.Knife: dagger_woosh_9,
-    WeaponType.Axe: dagger_woosh_9,
     WeaponType.Staff: dagger_woosh_9,
-    WeaponType.Hammer: dagger_woosh_9,
-    WeaponType.Pickaxe: dagger_woosh_9,
     WeaponType.Sword: dagger_woosh_9,
-    WeaponType.Revolver: dagger_woosh_9,
-    WeaponType.Musket: dagger_woosh_9,
-    WeaponType.Grenade: dagger_woosh_9,
   };
 
   void play(

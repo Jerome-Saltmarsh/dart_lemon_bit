@@ -60,7 +60,7 @@ enum AmuletItem {
   Weapon_Broad_Sword(
     selectAction: AmuletItemAction.Equip,
     type: ItemType.Weapon,
-    subType: WeaponType.Sword,
+    subType: WeaponType.Broadsword,
     description: 'A medium length sword',
     level1: AmuletItemStats(
       damageMin: 7,

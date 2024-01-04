@@ -362,6 +362,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         }
         break;
       default:
+        final weaponType = activeSlotAmuletItem.subType;
+        if (WeaponType.valuesMelee.contains(weaponType)){
+          performAbilityMelee(character);
+          return;
+        }
         throw Exception('amulet.PerformCharacterAction($activeSlotAmuletItem)');
     }
   }

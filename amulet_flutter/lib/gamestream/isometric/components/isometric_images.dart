@@ -323,6 +323,12 @@ class IsometricImages with IsometricComponent {
       );
       loadSpriteGroupIsometric(
         direction: direction,
+        type: SpriteGroupType.Weapon,
+        subType: WeaponType.Broadsword,
+        skipFire: true,
+      );
+      loadSpriteGroupIsometric(
+        direction: direction,
         type: SpriteGroupType.Shoes,
         subType: ShoeType.Leather_Boots,
       );

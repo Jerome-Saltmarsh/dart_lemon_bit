@@ -324,10 +324,6 @@ class IsometricEvents with IsometricComponent {
         amulet.screenColorI.value = 0;
         break;
       case PlayerEvent.Reloading:
-        switch (player.weaponType.value){
-          default:
-            audio.reload_6();
-        }
         break;
       case PlayerEvent.Teleported:
         audio.magical_swoosh_18();
@@ -446,9 +442,6 @@ class IsometricEvents with IsometricComponent {
     if (weaponType == WeaponType.Unarmed) return;
 
     switch (weaponType) {
-      case WeaponType.Revolver:
-        audio.revolver_reload_1();
-        break;
       case WeaponType.Sword:
         audio.sword_unsheathe();
         break;
@@ -456,7 +449,6 @@ class IsometricEvents with IsometricComponent {
         audio.bow_draw();
         break;
       default:
-        audio.gun_pickup_01();
         break;
     }
   }
@@ -467,9 +459,6 @@ class IsometricEvents with IsometricComponent {
     if (itemType == WeaponType.Unarmed) return;
 
     switch (itemType) {
-      case WeaponType.Revolver:
-        audio.revolver_reload_1();
-        break;
       case WeaponType.Sword:
         audio.sword_unsheathe();
         break;

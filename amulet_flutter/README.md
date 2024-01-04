@@ -16,28 +16,41 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## TODO
+* [new]: model short sword
+* [new]: model longsword
+* [new]: model axe
 * [fix]: mini map inside dungeon
+* [new]: allie map label
 * [new]: gameobject bucket
 * [new]: gameobject chest
 * [new]: gameobject lantern
-* [new]: allie map label
 * [new]: music track 1
 * [new]: character state spawn
-* [new]: character type warlock
-* [new]: character type spider
-* [new]: character type vampire
-* [new]: character type witch
-* [new]: character type ghost
-* [new]: character type orc
-* [new]: model hair type 4
+* [new]: character state charge
+* [new]: spell type long ranged strike 
 * [new]: spell type slow 
+* [new]: spell type explode 
+* [new]: spell type ice storm
 * [new]: spell wind strike 
 * [fix]: front view renders
+* [new]: model hair type 4
 * [new]: model head type female
 * [new]: model leg type iron plates
 * [new]: mechanic charge power like dragonballz
+
+## BACKLOG
+* [new]: character type warlock
+* [new]: character type spider
+* [new]: character type ghost
+* [new]: character type orc
+* [new]: character type vampire
+* [new]: character type witch
 * [new]: mobile touch screen support
 * [fix]: audio for web
+
+
+## 04.01.2024*
+* [new]: model broadsword
 
 ## 03.01.2024*
 * [new]: amulet loading symbol

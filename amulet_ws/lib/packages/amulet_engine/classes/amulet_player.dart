@@ -1697,27 +1697,30 @@ class AmuletPlayer extends IsometricPlayer with
     required int weaponType,
     required int duration,
   }) {
-    switch (weaponType) {
-      case WeaponType.Sword:
-        setCharacterStateStriking(
-          duration: duration,
-        );
-        break;
-      case WeaponType.Staff:
-        setCharacterStateStriking(
-          duration: duration,
-        );
-        break;
-      case WeaponType.Bow:
-        setCharacterStateFire(
-          duration: duration,
-        );
-        break;
-      default:
-        throw Exception(
-            'amuletPlayer.attack() - weapon type not implemented ${WeaponType
-                .getName(weaponType)}');
+
+    if (const[
+      WeaponType.Sword,
+      WeaponType.Broadsword,
+      WeaponType.Staff,
+    ].contains(weaponType)) {
+      setCharacterStateStriking(
+        duration: duration,
+      );
+      return;
     }
+
+    if (const[
+      WeaponType.Bow,
+    ].contains(weaponType)){
+      setCharacterStateFire(
+        duration: duration,
+      );
+    }
+
+    throw Exception(
+        'amuletPlayer.attack() - weapon type not implemented ${WeaponType
+            .getName(weaponType)}'
+    );
   }
 
   void useActivatedPower() {

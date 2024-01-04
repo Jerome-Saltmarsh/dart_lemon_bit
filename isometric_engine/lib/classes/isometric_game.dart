@@ -1341,7 +1341,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
     final weaponType = character.weaponType;
 
-    if (WeaponType.isMelee(weaponType)) {
+    if (WeaponType.valuesMelee.contains(weaponType)) {
       if (attackAlwaysHitsTarget) {
         final target = character.target;
         if (target is Collider) {
