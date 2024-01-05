@@ -875,6 +875,12 @@ class IsometricEditor with IsometricComponent {
       case PhysicalKeyboardKey.digit5:
         setNode(index: selectedIndex, variation: 4);
         break;
+      case PhysicalKeyboardKey.digit6:
+        setNode(index: selectedIndex, variation: 5);
+        break;
+      case PhysicalKeyboardKey.digit7:
+        setNode(index: selectedIndex, variation: 6);
+        break;
       default:
         break;
     }
