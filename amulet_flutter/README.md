@@ -49,13 +49,17 @@ ctrl + []               : move caret to code block
 * [new]: mobile touch screen support
 * [fix]: audio for web
 
-## 04.01.2024*
+## 05.01.2024
+* [new]: gameobject firewood
+* [new]: variations support for node sub surfaces
+
+## 04.01.2024
 * [new]: model weapon sapphire heavy sword
 * [new]: windows application icon
 * [new]: model short sword
 * [new]: model broadsword
 
-## 03.01.2024*
+## 03.01.2024
 * [new]: amulet loading symbol
 * [new]: label map location
 * [new]: gameobject broom
@@ -64,7 +68,7 @@ ctrl + []               : move caret to code block
 * [new]: gameobject caravan
 * [fix]: editor delete selected gameobject
 
-## 02.01.2024*
+## 02.01.2024
 * [new]: particle effect aqua
 * [new]: armoured fallen
 * [new]: render shadow wooden plank

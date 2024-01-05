@@ -66,9 +66,34 @@ class RendererGameObjects extends RenderGroup {
       );
       return;
     }
+
+    if (type == ItemType.Object && subType == GameObjectType.Wooden_Cart){
+      render.renderSpriteAutoIndexed(
+          sprite: images.woodenCart,
+          dstX: gameObject.renderX,
+          dstY: gameObject.renderY,
+          index: scene.getIndexPosition(gameObject),
+          anchorY: 0.75,
+          scale: 0.6,
+      );
+      return;
+    }
+
+    if (type == ItemType.Object && subType == GameObjectType.Firewood){
+      render.renderSpriteAutoIndexed(
+          sprite: images.firewood,
+          dstX: gameObject.renderX,
+          dstY: gameObject.renderY,
+          index: scene.getIndexPosition(gameObject),
+          anchorY: 0.75,
+          scale: 1,
+      );
+      return;
+    }
+
     if (type == ItemType.Object && subType == GameObjectType.Broom){
       render.renderSpriteAutoIndexed(
-          sprite: images.broom,
+          sprite: images.firewood,
           dstX: gameObject.renderX,
           dstY: gameObject.renderY,
           index: scene.getIndexPosition(gameObject),
@@ -77,6 +102,7 @@ class RendererGameObjects extends RenderGroup {
       );
       return;
     }
+
     if (type == ItemType.Object && subType == GameObjectType.Bed){
       render.renderSpriteAutoIndexed(
           sprite: images.bed,

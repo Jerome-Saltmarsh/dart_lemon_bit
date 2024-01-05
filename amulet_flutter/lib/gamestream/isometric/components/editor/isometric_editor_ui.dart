@@ -31,6 +31,7 @@ extension IsometricEditorUI on IsometricEditor {
     GameObjectType.Wooden_Cart,
     GameObjectType.Bed,
     GameObjectType.Broom,
+    GameObjectType.Firewood,
   ];
 
   static const nodeTypesColumn1 = [

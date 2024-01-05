@@ -70,6 +70,7 @@ class IsometricImages with IsometricComponent {
   late final Sprite tree04;
   late final Sprite tree05;
   late final Sprite tree06;
+  late final Sprite firewood;
   late final Sprite flame0;
   late final Sprite flame1;
   late final Sprite flame2;
@@ -405,6 +406,11 @@ class IsometricImages with IsometricComponent {
         name: 'assets/sprites/isometric/tree_06',
         mode: AnimationMode.single,
     ).then((value) => tree06 = value);
+
+    loadSprite(
+        name: 'assets/sprites/isometric/gameobjects/firewood',
+        mode: AnimationMode.single,
+    ).then((value) => firewood = value);
 
     loadSprite(
         name: 'assets/sprites/isometric/bat/bat',
