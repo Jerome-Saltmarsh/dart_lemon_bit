@@ -105,7 +105,7 @@ class RendererGameObjects extends RenderGroup {
 
     if (type == ItemType.Object && subType == GameObjectType.Broom){
       render.renderSpriteAutoIndexed(
-          sprite: images.firewood,
+          sprite: images.broom,
           dstX: gameObject.renderX,
           dstY: gameObject.renderY,
           index: scene.getIndexPosition(gameObject),

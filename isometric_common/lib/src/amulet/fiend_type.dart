@@ -89,7 +89,7 @@ enum FiendType {
     chanceOfSetTarget: 0.5,
     weaponType: WeaponType.Shortsword,
     weaponRange: 120,
-    quantity: 2,
+    quantity: 1,
     weaponCooldown: 30,
     clearTargetOnPerformAction: false,
   );
