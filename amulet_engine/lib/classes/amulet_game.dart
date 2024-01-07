@@ -235,7 +235,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         case FiendType.Gargoyle:
           spawnProjectile(
             src: character,
-            // target: character.target,
             angle: character.angle,
             range: character.weaponRange,
             projectileType: ProjectileType.Fireball,
