@@ -2215,6 +2215,12 @@ class IsometricScene with IsometricComponent implements Updatable {
       return;
     }
 
+    final ambientRatio = 1.0 - (scene.ambientAlpha / 255);
+
+    // final colorNW = merge32BitColors(colorNorth, colorWest);
+    // final colorSE = merge32BitColors(colorSouth, colorEast);
+    // final colorFlat = merge32BitColors(colorNW, colorSE);
+
     final index = getIndexPosition(character);
     final colorN = this.colorNorth(index);
     final colorE = this.colorEast(index);
@@ -2227,12 +2233,14 @@ class IsometricScene with IsometricComponent implements Updatable {
     final colorSAlpha = getAlpha(colorS);
     final colorWAlpha = getAlpha(colorW);
 
+    // final adjustedSE = interpolateColors(colorSE, scene.ambientColorNight, ambientRatio);
+
     var maxSEAlpha = max(colorSAlpha, colorEAlpha);
     var maxNWAlpha = max(colorNAlpha, colorWAlpha);
 
     if (colorSE != -1){
       final colorSEAlpha = getAlpha(colorSE);
-      maxSEAlpha = max(colorSEAlpha, maxSEAlpha);
+      maxSEAlpha = interpolate(max(colorSEAlpha, maxSEAlpha), 255, ambientRatio * 0.25).toInt();
     }
 
     if (colorNW != -1){
@@ -2246,11 +2254,13 @@ class IsometricScene with IsometricComponent implements Updatable {
     final southEast = merge32BitColors(colorS, colorE);
     final northWest = merge32BitColors(colorN, colorW);
 
+    final adjustedSE = interpolateColors(southEast, scene.ambientColorNight, ambientRatio);
+
     if (minSEAlpha < minNWAlpha){
-       character.colorSouthEast = setAlpha(southEast, minSEAlpha);
+       character.colorSouthEast = setAlpha(adjustedSE, minSEAlpha);
        character.colorNorthWest = setAlpha(northWest, maxNWAlpha);
     } else {
-      character.colorSouthEast = setAlpha(southEast, maxSEAlpha);
+      character.colorSouthEast = setAlpha(adjustedSE, maxSEAlpha);
       character.colorNorthWest = setAlpha(northWest, minNWAlpha);
     }
   }
