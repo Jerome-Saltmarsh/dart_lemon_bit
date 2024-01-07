@@ -16,7 +16,6 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## TODO
-* [new]: character type gargoyle
 * [new]: gameobject rotation
 * [new]: node type gargoyle
 * [new]: model armour witches cloak
@@ -53,6 +52,7 @@ ctrl + []               : move caret to code block
 * [fix]: audio for web
 
 ## 07.01.2024
+* [new]: character type gargoyle
 * [new]: gameobject pumpkin
 
 ## 05.01.2024
