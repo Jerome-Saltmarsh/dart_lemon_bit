@@ -110,6 +110,14 @@ class RendererCharacters extends RenderGroup {
             scale: 0.35,
         );
         break;
+      case CharacterType.Gargoyle_01:
+        renderCharacterShader(
+            character: character,
+            shader: images.characterShaderGargoyle,
+            scale: 0.6,
+            anchorY: 0.7,
+        );
+        break;
       default:
         throw Exception('Cannot render character type: ${character.characterType}');
     }
@@ -642,14 +650,13 @@ class RendererCharacters extends RenderGroup {
     required Character character,
     required CharacterShader shader,
     double scale = 1.0,
+    double anchorY = 0.6,
   }) {
 
     if (
       (renderBottom && !character.dead) ||
       (!renderBottom && character.dead))
       return;
-
-    const anchorY = 0.6;
 
     final row = character.renderDirection;
     final column = character.animationFrame;

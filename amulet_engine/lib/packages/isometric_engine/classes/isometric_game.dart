@@ -1337,8 +1337,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   }
 
   void performCharacterAction(Character character){
-    character.actionFrame = -1;
-
     final weaponType = character.weaponType;
 
     if (WeaponType.valuesMelee.contains(weaponType)) {
@@ -1381,6 +1379,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       if (character.clearTargetOnPerformAction) {
         character.clearTarget();
       }
+      character.clearActionFrame();
     }
 
     if (
@@ -1480,19 +1479,14 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
     var finalAngle = angle;
     if (finalAngle == null) {
-      if (target != null && target is Collider) {
-        finalAngle = target.getAngle(src);
-      } else {
-        finalAngle = src.angle;
-      }
+      finalAngle = target != null ? src.getAngle(target) : src.angle;
     }
     projectile.damage = damage;
     projectile.hitable = true;
     projectile.active = true;
-    if (target is Collider) {
+    if (target is Position) {
       projectile.target = target;
     }
-    // final r = 10.0 + (src.isTemplate ? ItemType.getWeaponLength(src.weaponType) : 0);
     final r = 5.0;
     projectile.x = src.x + adj(finalAngle, r);
     projectile.y = src.y + opp(finalAngle, r);
@@ -1500,12 +1494,12 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     projectile.startPositionX = projectile.x;
     projectile.startPositionY = projectile.y;
     projectile.startPositionZ = projectile.z;
-    projectile.setVelocity(finalAngle, ProjectileType.getSpeed(projectileType));
     projectile.parent = src;
     projectile.team = src.team;
     projectile.range = range;
     projectile.type = projectileType;
     projectile.radius = ProjectileType.getRadius(projectileType);
+    projectile.setVelocity(finalAngle, ProjectileType.getSpeed(projectileType));
 
     return projectile;
   }

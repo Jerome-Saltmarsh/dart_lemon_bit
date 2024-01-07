@@ -208,3 +208,8 @@ flutter:
     - assets/sprites/isometric/kid/south/shoes/black_boots/
     - assets/sprites/isometric/kid/west/body_female/black_cloak/
     - assets/sprites/isometric/kid/west/shoes/black_boots/
+    - assets/sprites/isometric/gargoyle/
+    - assets/sprites/isometric/gargoyle/flat/
+    - assets/sprites/isometric/gargoyle/south/
+    - assets/sprites/isometric/gargoyle/west/
+    - assets/sprites/isometric/gargoyle/shadow/

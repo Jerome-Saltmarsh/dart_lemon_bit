@@ -16,6 +16,7 @@ enum FiendType {
     weaponRange: 25,
     quantity: 2,
     weaponCooldown: 20,
+    clearTargetOnPerformAction: true,
   ),
   Skeleton(
     level: 2,
@@ -30,6 +31,7 @@ enum FiendType {
     weaponRange: 150,
     quantity: 2,
     weaponCooldown: 20,
+    clearTargetOnPerformAction: true,
   ),
   Wolf(
     level: 3,
@@ -44,6 +46,7 @@ enum FiendType {
     weaponRange: 50,
     quantity: 1,
     weaponCooldown: 20,
+    clearTargetOnPerformAction: false,
   ),
   Zombie(
     level: 4,
@@ -58,6 +61,7 @@ enum FiendType {
     weaponRange: 50,
     quantity: 1,
     weaponCooldown: 20,
+    clearTargetOnPerformAction: true,
   ),
   Fallen_Armoured(
     level: 5,
@@ -72,6 +76,22 @@ enum FiendType {
     weaponRange: 25,
     quantity: 2,
     weaponCooldown: 20,
+    clearTargetOnPerformAction: true,
+  ),
+  Gargoyle(
+    level: 6,
+    health: 30,
+    damage: 4,
+    characterType: CharacterType.Gargoyle_01,
+    attackDuration: 20,
+    experience: 8,
+    runSpeed: 0.7,
+    chanceOfSetTarget: 0.5,
+    weaponType: WeaponType.Shortsword,
+    weaponRange: 120,
+    quantity: 2,
+    weaponCooldown: 30,
+    clearTargetOnPerformAction: false,
   );
 
   final int level;
@@ -87,6 +107,7 @@ enum FiendType {
   final double weaponRange;
   final int weaponType;
   final int weaponCooldown;
+  final bool clearTargetOnPerformAction;
 
   const FiendType({
     required this.health,
@@ -101,5 +122,6 @@ enum FiendType {
     required this.quantity,
     required this.weaponCooldown,
     required this.level,
+    required this.clearTargetOnPerformAction,
   });
 }

@@ -28,6 +28,7 @@ class IsometricImages with IsometricComponent {
   static const dirFallen = '$dirIsometric/fallen';
   static const dirFallenArmoured = '$dirIsometric/fallen_armoured';
   static const dirSkeleton = '$dirIsometric/skeleton';
+  static const dirGargoyle = '$dirIsometric/gargoyle';
   static const dirWolf = '$dirIsometric/wolf';
   static const dirZombie = '$dirIsometric/zombie';
 
@@ -59,6 +60,7 @@ class IsometricImages with IsometricComponent {
   late final CharacterShader characterShaderSkeleton;
   late final CharacterShader characterShaderWolf;
   late final CharacterShader characterShaderZombie;
+  late final CharacterShader characterShaderGargoyle;
 
   late final Sprite broom;
   late final Sprite woodenCart;
@@ -71,6 +73,7 @@ class IsometricImages with IsometricComponent {
   late final Sprite tree05;
   late final Sprite tree06;
   late final Sprite firewood;
+  late final Sprite pumpkin;
   late final Sprite flame0;
   late final Sprite flame1;
   late final Sprite flame2;
@@ -413,6 +416,11 @@ class IsometricImages with IsometricComponent {
     ).then((value) => firewood = value);
 
     loadSprite(
+        name: 'assets/sprites/isometric/gameobjects/pumpkin',
+        mode: AnimationMode.single,
+    ).then((value) => pumpkin = value);
+
+    loadSprite(
         name: 'assets/sprites/isometric/bat/bat',
         mode: AnimationMode.bounce,
     ).then((value) => bat = value);
@@ -451,6 +459,7 @@ class IsometricImages with IsometricComponent {
     loadCharacterShader(dirFallen).then((value) => characterShaderFallen = value);
     loadCharacterShader(dirFallenArmoured).then((value) => characterShaderFallenArmoured = value);
     loadCharacterShader(dirSkeleton).then((value) => characterShaderSkeleton = value);
+    loadCharacterShader(dirGargoyle).then((value) => characterShaderGargoyle = value);
     loadCharacterShader(dirWolf).then((value) => characterShaderWolf = value);
     loadCharacterShader(dirZombie).then((value) => characterShaderZombie = value);
 

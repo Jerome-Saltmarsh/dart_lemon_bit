@@ -212,6 +212,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       z: z,
       fiendType: fiendType,
     )
+      ..clearTargetOnPerformAction = fiendType.clearTargetOnPerformAction
       ..weaponHitForce = 2;
 
     character.roamEnabled = true;
@@ -228,6 +229,24 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   @override
   void performCharacterAction(Character character) {
+
+    if (character is AmuletFiend){
+      switch (character.fiendType){
+        case FiendType.Gargoyle:
+          spawnProjectile(
+            src: character,
+            // target: character.target,
+            angle: character.angle,
+            range: character.weaponRange,
+            projectileType: ProjectileType.Fireball,
+            damage: character.weaponDamage,
+          );
+          return;
+        default:
+          break;
+      }
+    }
+
 
     if (character is! EquippedWeapon) {
       super.performCharacterAction(character);

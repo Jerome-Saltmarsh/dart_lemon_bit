@@ -91,6 +91,18 @@ class RendererGameObjects extends RenderGroup {
       return;
     }
 
+    if (type == ItemType.Object && subType == GameObjectType.Pumpkin){
+      render.renderSpriteAutoIndexed(
+          sprite: images.pumpkin,
+          dstX: gameObject.renderX,
+          dstY: gameObject.renderY,
+          index: scene.getIndexPosition(gameObject),
+          anchorY: 0.75,
+          scale: 0.6,
+      );
+      return;
+    }
+
     if (type == ItemType.Object && subType == GameObjectType.Broom){
       render.renderSpriteAutoIndexed(
           sprite: images.firewood,

@@ -593,4 +593,5 @@ class Character extends Collider {
   void setActionFrame(int value) {
     actionFrame = value;
   }
+
 }
