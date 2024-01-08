@@ -69,7 +69,7 @@ enum FiendType {
     weaponCooldown: 20,
     clearTargetOnPerformAction: true,
     postAttackPauseDurationMin: 20,
-    postAttackPauseDurationMax: 30,
+    postAttackPauseDurationMax: 60,
   ),
   Fallen_Armoured(
     level: 5,
@@ -86,7 +86,7 @@ enum FiendType {
     weaponCooldown: 20,
     clearTargetOnPerformAction: true,
     postAttackPauseDurationMin: 20,
-    postAttackPauseDurationMax: 30,
+    postAttackPauseDurationMax: 50,
   ),
   Gargoyle(
     level: 6,
@@ -102,8 +102,8 @@ enum FiendType {
     quantity: 1,
     weaponCooldown: 30,
     clearTargetOnPerformAction: false,
-    postAttackPauseDurationMin: 20,
-    postAttackPauseDurationMax: 80,
+    postAttackPauseDurationMin: 30,
+    postAttackPauseDurationMax: 100,
   );
 
   final int level;

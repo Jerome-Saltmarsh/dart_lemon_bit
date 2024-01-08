@@ -16,6 +16,7 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## TODO
+* [fix]: ai guards running still
 * [new]: weapon crystal scepter
 * [new]: gameobject rotation
 * [new]: node type gargoyle

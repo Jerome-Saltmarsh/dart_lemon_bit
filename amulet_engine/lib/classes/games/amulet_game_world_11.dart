@@ -75,7 +75,7 @@ class AmuletGameWorld11 extends AmuletGame {
       attackDuration: 30,
       name: "Guard",
     )
-      ..fixed = true
+      ..fixed = false
       ..invincible = true
       ..helmType = HelmType.Steel
       ..bodyType = BodyType.Leather_Armour
@@ -99,7 +99,7 @@ class AmuletGameWorld11 extends AmuletGame {
       attackDuration: 30,
       name: "Guard",
     )
-      ..fixed = true
+      ..fixed = false
       ..invincible = true
       ..helmType = HelmType.Steel
       ..bodyType = BodyType.Leather_Armour
@@ -124,6 +124,7 @@ class AmuletGameWorld11 extends AmuletGame {
       name: "May",
     )
       ..fixed = true
+      ..autoTarget = false
       ..invincible = true
       ..helmType = HelmType.None
       ..hairType = 2
@@ -152,6 +153,7 @@ class AmuletGameWorld11 extends AmuletGame {
       name: "Sophie",
     )
       ..fixed = true
+      ..autoTarget = false
       ..invincible = true
       ..helmType = HelmType.None
       ..hairType = 2
@@ -184,6 +186,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..helmType = HelmType.Wizard_Hat
       ..hairType = 1
       ..hairColor = 20
+      ..autoTarget = false
       ..bodyType = BodyType.Leather_Armour
       ..shoeType = ShoeType.Leather_Boots
       ..legsType = LegType.Leather

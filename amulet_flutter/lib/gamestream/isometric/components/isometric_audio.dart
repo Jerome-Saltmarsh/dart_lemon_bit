@@ -129,6 +129,7 @@ class IsometricAudio with IsometricComponent implements Updatable {
   final unlock_2 = AudioSingle(name: 'sounds/unlock_2');
   final jump = AudioSingle(name: 'sounds/jump');
   final dog_woolf_howl_4 = AudioSingle(name: 'dog-woolf-howl-4');
+  final growl10 = AudioSingle(name: 'sounds/growl_10');
   final wolf_howl = AudioSingle(name: 'wolf-howl');
   final weaponSwap2 = AudioSingle(name: 'weapon-swap-2');
   final eat = AudioSingle(name: 'eat');
@@ -502,6 +503,15 @@ class IsometricAudio with IsometricComponent implements Updatable {
   AudioSingle? getCharacterTypeAudioHurt(int characterType) =>
       switch (characterType) {
         CharacterType.Fallen => randomBool() ? zombie_hurt_1 : zombie_hurt_4,
+        CharacterType.Gargoyle_01 => growl10,
+        CharacterType.Wolf => dog_woolf_howl_4,
+        _ => null
+      };
+
+  AudioSingle? getCharacterTypeAudioDeath(int characterType) =>
+      switch (characterType) {
+        CharacterType.Fallen => randomItem(audio.zombie_deaths),
+        CharacterType.Gargoyle_01 => growl10,
         CharacterType.Wolf => dog_woolf_howl_4,
         _ => null
       };

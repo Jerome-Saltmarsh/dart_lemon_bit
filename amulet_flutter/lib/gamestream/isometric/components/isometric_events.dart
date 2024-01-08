@@ -99,6 +99,9 @@ class IsometricEvents with IsometricComponent {
           case CharacterType.Wolf:
             audio.play(audio.dog_woolf_howl_4, x, y, z);
             break;
+          case CharacterType.Gargoyle_01:
+            audio.play(audio.growl10, x, y, z);
+            break;
         }
         break;
       case GameEvent.Node_Struck:
@@ -399,7 +402,6 @@ class IsometricEvents with IsometricComponent {
   void onCharacterDeath(int characterType, double x, double y, double z, double angle) {
     audio.play(randomItem(audio.bloody_punches), x, y, z);
     audio.play(audio.heavy_punch_13, x, y, z);
-
     particles.emitFlames(
       x: x,
       y: y,
@@ -408,21 +410,28 @@ class IsometricEvents with IsometricComponent {
       radius: 10,
     );
 
-    for (var i = 0; i < 4; i++){
-      particles.spawnBlood(
-        x: x,
-        y: y,
-        z: z,
-        angle: angle + giveOrTake(piQuarter),
-        speed: randomBetween(1.5, 2.5),
-      );
+    final audioClip = audio.getCharacterTypeAudioDeath(characterType);
+
+    if (audioClip != null){
+      audio.play(audioClip, x, y, z);
     }
 
     switch (characterType) {
-      case CharacterType.Fallen:
-        return onCharacterDeathZombie(characterType, x, y, z, angle);
-      case CharacterType.Wolf:
-        audio.play(audio.dog_woolf_howl_4, x, y, z);
+      case CharacterType.Gargoyle_01:
+        for (var i = 0; i < 5; i++){
+          particles.spawnParticleBlockBrick(x, y, z);
+        }
+        break;
+      default:
+        for (var i = 0; i < 4; i++){
+          particles.spawnBlood(
+            x: x,
+            y: y,
+            z: z,
+            angle: angle + giveOrTake(piQuarter),
+            speed: randomBetween(1.5, 2.5),
+          );
+        }
         break;
     }
   }
