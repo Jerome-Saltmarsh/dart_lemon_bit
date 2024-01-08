@@ -5,7 +5,7 @@ import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
 
-import '../packages/src.dart';
+import '../packages/isomeric_engine.dart';
 import 'amulet_game.dart';
 import 'amulet_player.dart';
 import 'amulet_scenes.dart';

@@ -33,4 +33,5 @@ doc/api/
 .flutter-plugins-dependencies
 
 amulet_ws/lib/packages
-amulet_ws/lib/packages/*
+/amulet_ws/lib/packages/
+/amulet_ws/lib/packages/*

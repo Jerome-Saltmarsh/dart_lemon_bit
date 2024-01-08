@@ -195,6 +195,11 @@ class Character extends Collider {
 
   bool get characterStateIdle => characterState == CharacterState.Idle;
 
+  bool get characterStateStriking => const [
+    CharacterState.Strike_1,
+    CharacterState.Strike_2,
+  ].contains(characterState);
+
   bool get characterStateHurt => characterState == CharacterState.Hurt;
 
   bool get characterStateChanging => characterState == CharacterState.Changing;
@@ -533,7 +538,7 @@ class Character extends Collider {
   void setCharacterStateIdle({int duration = 0}){
     if (
       deadOrInactive ||
-      characterStateIdle
+          (characterStateIdle && actionDuration >= duration)
     ) return;
 
     setDestinationToCurrentPosition();
@@ -557,7 +562,11 @@ class Character extends Collider {
     assert (value != CharacterState.Dead); // use game.setCharacterStateDead
     assert (value != CharacterState.Hurt); // use character.setCharacterStateHurt
 
-    if (characterState == value || deadInactiveOrBusy) {
+    if (deadInactiveOrBusy){
+      return;
+    }
+
+    if (characterState == value && duration <= actionDuration) {
       return;
     }
 

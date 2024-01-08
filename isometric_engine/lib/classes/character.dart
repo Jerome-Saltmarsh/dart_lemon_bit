@@ -549,6 +549,7 @@ class Character extends Collider {
       duration: 0,
     );
 
+
   void setCharacterState({
     required int value,
     required int duration,

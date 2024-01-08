@@ -227,9 +227,27 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   }
 
   @override
+  void endCharacterAction(Character character){
+     if (character is AmuletFiend){
+        if (character.characterStateStriking){
+          super.endCharacterAction(character);
+          character.setCharacterState(
+            value: CharacterState.Idle,
+            duration: 60,
+          );
+          return;
+        }
+     }
+     super.endCharacterAction(character);
+  }
+
+  @override
   void performCharacterAction(Character character) {
 
     if (character is AmuletFiend){
+      if (character.idling) {
+        return;
+      }
       switch (character.fiendType){
         case FiendType.Gargoyle:
           spawnProjectile(
@@ -244,7 +262,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
           break;
       }
     }
-
 
     if (character is! EquippedWeapon) {
       super.performCharacterAction(character);
