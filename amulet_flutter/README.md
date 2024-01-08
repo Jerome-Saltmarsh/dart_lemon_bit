@@ -15,10 +15,11 @@ ctrl + shift + e        : view recent changes
 alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
+
 ## TODO
 * [fix]: ai guards running still
 * [new]: weapon crystal scepter
-* [new]: gameobject rotation
+* [new]: feature gameobject rotation
 * [new]: node type gargoyle
 * [new]: character state spawn
 * [new]: model weapon claymore
@@ -27,7 +28,6 @@ ctrl + []               : move caret to code block
 * [new]: gameobject bucket
 * [new]: gameobject chest
 * [new]: gameobject lantern
-* [new]: music track 1
 * [new]: character state charge
 * [new]: spell type long ranged strike 
 * [new]: spell type slow 
@@ -43,6 +43,8 @@ ctrl + []               : move caret to code block
 * [new]: official youtube channel
 
 ## BACKLOG
+* [fix]: character type toad mage
+* [fix]: character type toad knight
 * [new]: character type warlock
 * [new]: character type spider
 * [new]: character type ghost
@@ -53,6 +55,7 @@ ctrl + []               : move caret to code block
 * [fix]: audio for web
 
 ## 08.01.2024
+* [new]: music track 1
 * [new]: character behavior idle after attack
 
 ## 07.01.2024

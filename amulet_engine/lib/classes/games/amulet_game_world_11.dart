@@ -83,6 +83,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..handTypeLeft = HandType.Leather_Gloves
       ..shoeType = ShoeType.Iron_Plates
       ..weaponType = WeaponType.Bow
+      ..chanceOfSetTarget = 1.0
       ..complexion = ComplexionType.fair;
 
     npcGuard2 = AmuletNpc(
@@ -107,6 +108,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..handTypeLeft = HandType.Leather_Gloves
       ..weaponType = WeaponType.Bow
       ..shoeType = ShoeType.Iron_Plates
+      ..chanceOfSetTarget = 1.0
       ..complexion = ComplexionType.fair;
 
     npcMay = AmuletNpc(

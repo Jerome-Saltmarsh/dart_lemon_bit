@@ -33,7 +33,7 @@ class Character extends Collider {
   var autoTarget = true;
   var autoTargetRange = 300.0;
   var autoTargetTimer = 0;
-  var autoTargetTimerDuration = 100;
+  var autoTargetTimerDuration = 60;
   var invincible = false;
   var actionDuration = -1;
   var attackDuration = 0;
@@ -69,6 +69,7 @@ class Character extends Collider {
   var roamNext = 0;
   var roamRadius = 2;
   var chanceOfSetTarget = 0.5;
+  var maxFollowDistance = 500.0;
 
   final path = Uint32List(20);
 
@@ -383,6 +384,9 @@ class Character extends Collider {
     arrivedAtDestination = true;
   }
 
+  void setRunDestinationToStart() =>
+      setRunDestination(startPositionX, startPositionY, startPositionZ);
+
   void clearPath(){
     pathCurrent = -1;
     pathStart = -1;
@@ -410,7 +414,7 @@ class Character extends Collider {
   }
 
   void setRunDestination(double x, double y, double z) {
-    if (!runToDestinationEnabled || deadOrBusy) {
+    if (!runToDestinationEnabled) {
       return;
     }
 

@@ -45,10 +45,10 @@ class RendererGameObjects extends RenderGroup {
       return;
     }
 
-    if (type == ItemType.Object && subType == GameObjectType.Barrel){
-      renderBarrel(scene, gameObject, images, render);
-      return;
-    }
+    // if (type == ItemType.Object && subType == GameObjectType.Barrel){
+    //   renderBarrel(scene, gameObject, images, render);
+    //   return;
+    // }
 
     if (type == ItemType.Object && subType == GameObjectType.Crate_Wooden){
       renderCrateWooden(scene, gameObject, images, engine);
@@ -67,21 +67,21 @@ class RendererGameObjects extends RenderGroup {
       return;
     }
 
-    if (type == ItemType.Object && subType == GameObjectType.Wooden_Cart){
+    if (type == ItemType.Object && subType == GameObjectType.Firewood){
       render.renderSpriteAutoIndexed(
-          sprite: images.woodenCart,
+          sprite: images.firewood,
           dstX: gameObject.renderX,
           dstY: gameObject.renderY,
           index: scene.getIndexPosition(gameObject),
           anchorY: 0.75,
-          scale: 0.6,
+          scale: 1,
       );
       return;
     }
 
-    if (type == ItemType.Object && subType == GameObjectType.Firewood){
+    if (type == ItemType.Object && subType == GameObjectType.Barrel){
       render.renderSpriteAutoIndexed(
-          sprite: images.firewood,
+          sprite: images.woodenBarrel,
           dstX: gameObject.renderX,
           dstY: gameObject.renderY,
           index: scene.getIndexPosition(gameObject),
@@ -349,80 +349,80 @@ class RendererGameObjects extends RenderGroup {
     return;
   }
 
-  void renderBarrel(
-      IsometricScene scene,
-      GameObject gameObject,
-      IsometricImages images,
-      IsometricRender render,
-  ) {
-    final gameObjectIndex = scene.getIndexPosition(gameObject);
-    final dstX = gameObject.renderX;
-    final dstY = gameObject.renderY;
-    final sprite = images.barrelWooden;
-    const scale = 0.3;
-    const anchorY = 0.8;
-
-    render.sprite(
-      sprite: sprite,
-      frame: sprite.getFrame(row: 0, column: 2),
-      dstX: dstX,
-      dstY: dstY,
-      color: scene.getColor(gameObjectIndex),
-      scale: scale,
-      anchorY: anchorY,
-    );
-
-    render.sprite(
-      sprite: sprite,
-      frame: sprite.getFrame(row: 0, column: 3),
-      dstX: dstX,
-      dstY: dstY,
-      color: scene.colorSouth(gameObjectIndex),
-      scale: scale,
-      anchorY: anchorY,
-    );
-
-    render.sprite(
-      sprite: sprite,
-      frame: sprite.getFrame(row: 0, column: 5),
-      dstX: dstX,
-      dstY: dstY,
-      color: scene.colorWest(gameObjectIndex),
-      scale: scale,
-      anchorY: anchorY,
-    );
-
-    render.sprite(
-        sprite: sprite,
-        frame: sprite.getFrame(row: 0, column: 0),
-        dstX: dstX,
-        dstY: dstY,
-        color: scene.colorEast(gameObjectIndex),
-        scale: scale,
-        anchorY: anchorY,
-    );
-
-    render.sprite(
-        sprite: sprite,
-        frame: sprite.getFrame(row: 0, column: 1),
-        dstX: dstX,
-        dstY: dstY,
-        color: scene.colorNorth(gameObjectIndex),
-        scale: scale,
-        anchorY: anchorY,
-    );
-
-    render.sprite(
-        sprite: sprite,
-        frame: sprite.getFrame(row: 0, column: 4),
-        dstX: dstX,
-        dstY: dstY,
-        color: scene.colorAbove(gameObjectIndex),
-        scale: scale,
-        anchorY: anchorY,
-    );
-
-  }
+  // void renderBarrel(
+  //     IsometricScene scene,
+  //     GameObject gameObject,
+  //     IsometricImages images,
+  //     IsometricRender render,
+  // ) {
+  //   final gameObjectIndex = scene.getIndexPosition(gameObject);
+  //   final dstX = gameObject.renderX;
+  //   final dstY = gameObject.renderY;
+  //   final sprite = images.barrelWooden;
+  //   const scale = 0.3;
+  //   const anchorY = 0.8;
+  //
+  //   render.sprite(
+  //     sprite: sprite,
+  //     frame: sprite.getFrame(row: 0, column: 2),
+  //     dstX: dstX,
+  //     dstY: dstY,
+  //     color: scene.getColor(gameObjectIndex),
+  //     scale: scale,
+  //     anchorY: anchorY,
+  //   );
+  //
+  //   render.sprite(
+  //     sprite: sprite,
+  //     frame: sprite.getFrame(row: 0, column: 3),
+  //     dstX: dstX,
+  //     dstY: dstY,
+  //     color: scene.colorSouth(gameObjectIndex),
+  //     scale: scale,
+  //     anchorY: anchorY,
+  //   );
+  //
+  //   render.sprite(
+  //     sprite: sprite,
+  //     frame: sprite.getFrame(row: 0, column: 5),
+  //     dstX: dstX,
+  //     dstY: dstY,
+  //     color: scene.colorWest(gameObjectIndex),
+  //     scale: scale,
+  //     anchorY: anchorY,
+  //   );
+  //
+  //   render.sprite(
+  //       sprite: sprite,
+  //       frame: sprite.getFrame(row: 0, column: 0),
+  //       dstX: dstX,
+  //       dstY: dstY,
+  //       color: scene.colorEast(gameObjectIndex),
+  //       scale: scale,
+  //       anchorY: anchorY,
+  //   );
+  //
+  //   render.sprite(
+  //       sprite: sprite,
+  //       frame: sprite.getFrame(row: 0, column: 1),
+  //       dstX: dstX,
+  //       dstY: dstY,
+  //       color: scene.colorNorth(gameObjectIndex),
+  //       scale: scale,
+  //       anchorY: anchorY,
+  //   );
+  //
+  //   render.sprite(
+  //       sprite: sprite,
+  //       frame: sprite.getFrame(row: 0, column: 4),
+  //       dstX: dstX,
+  //       dstY: dstY,
+  //       color: scene.colorAbove(gameObjectIndex),
+  //       scale: scale,
+  //       anchorY: anchorY,
+  //   );
+  //
+  // }
 
   @override
   void updateFunction() {

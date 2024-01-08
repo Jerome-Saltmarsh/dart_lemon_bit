@@ -205,4 +205,7 @@ abstract class Collider extends Position {
     y = startPositionY;
     z = startPositionZ;
   }
+
+  double get distanceFromStartSquared =>
+      getDistanceSquaredXYZ(startPositionX, startPositionY, startPositionZ);
 }

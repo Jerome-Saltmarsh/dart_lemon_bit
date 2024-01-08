@@ -697,12 +697,21 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   void updateCharacterTarget(Character character){
 
-    if (!character.autoTarget){
+    if (character.busy || !character.autoTarget){
       return;
     }
 
     if (character.autoTargetTimer-- > 0){
       return;
+    }
+
+    if (character.target != null && character.autoTarget){
+      if (character.distanceFromStartSquared > pow(character.maxFollowDistance, 2)){
+        character.setCharacterStateIdle(duration: 20);
+        character.clearTarget();
+        character.setRunDestinationToStart();
+        return;
+      }
     }
 
     character.autoTargetTimer = character.autoTargetTimerDuration;

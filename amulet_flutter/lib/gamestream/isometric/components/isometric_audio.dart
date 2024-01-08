@@ -65,6 +65,12 @@ class IsometricAudio with IsometricComponent implements Updatable {
       volumeFade: 1.0,
   );
 
+  late final audioLoopTrack02 = AudioLoop(
+      name: 'music/track02',
+      getTargetVolume: () => 1.0,
+      volumeFade: 1.0,
+  );
+
   late final audioLoops = <AudioLoop> [
     AudioLoop(name: 'wind', getTargetVolume: environment.getVolumeTargetWind),
     AudioLoop(name: 'rain', getTargetVolume: getVolumeTargetRain),
@@ -72,6 +78,7 @@ class IsometricAudio with IsometricComponent implements Updatable {
     AudioLoop(name: 'day-ambience', getTargetVolume: getVolumeTargetDayAmbience),
     AudioLoop(name: 'distant-thunder', getTargetVolume: getVolumeTargetDistanceThunder),
     audioLoopFire,
+    audioLoopTrack02,
   ];
 
   late final audioSingles = <AudioSingle>[
