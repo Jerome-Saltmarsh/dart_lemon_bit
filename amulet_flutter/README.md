@@ -17,7 +17,6 @@ ctrl + []               : move caret to code block
 
 ## TODO
 * [new]: weapon crystal scepter
-* [new]: character behavior pause
 * [new]: gameobject rotation
 * [new]: node type gargoyle
 * [new]: character state spawn
@@ -51,6 +50,9 @@ ctrl + []               : move caret to code block
 * [new]: character type witch
 * [new]: mobile touch screen support
 * [fix]: audio for web
+
+## 08.01.2024
+* [new]: character behavior idle after attack
 
 ## 07.01.2024
 * [new]: character type gargoyle

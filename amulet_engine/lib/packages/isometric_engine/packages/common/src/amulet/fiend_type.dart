@@ -17,6 +17,8 @@ enum FiendType {
     quantity: 2,
     weaponCooldown: 20,
     clearTargetOnPerformAction: true,
+    postAttackPauseDurationMin: 20,
+    postAttackPauseDurationMax: 50,
   ),
   Skeleton(
     level: 2,
@@ -26,12 +28,14 @@ enum FiendType {
     attackDuration: 20,
     experience: 2,
     runSpeed: 1.0,
-    chanceOfSetTarget: 0.25,
+    chanceOfSetTarget: 0.3,
     weaponType: WeaponType.Bow,
     weaponRange: 150,
     quantity: 2,
     weaponCooldown: 20,
-    clearTargetOnPerformAction: true,
+    clearTargetOnPerformAction: false,
+    postAttackPauseDurationMin: 20,
+    postAttackPauseDurationMax: 35,
   ),
   Wolf(
     level: 3,
@@ -47,6 +51,8 @@ enum FiendType {
     quantity: 1,
     weaponCooldown: 20,
     clearTargetOnPerformAction: false,
+    postAttackPauseDurationMin: 20,
+    postAttackPauseDurationMax: 40,
   ),
   Zombie(
     level: 4,
@@ -62,6 +68,8 @@ enum FiendType {
     quantity: 1,
     weaponCooldown: 20,
     clearTargetOnPerformAction: true,
+    postAttackPauseDurationMin: 20,
+    postAttackPauseDurationMax: 30,
   ),
   Fallen_Armoured(
     level: 5,
@@ -77,6 +85,8 @@ enum FiendType {
     quantity: 2,
     weaponCooldown: 20,
     clearTargetOnPerformAction: true,
+    postAttackPauseDurationMin: 20,
+    postAttackPauseDurationMax: 30,
   ),
   Gargoyle(
     level: 6,
@@ -85,13 +95,15 @@ enum FiendType {
     characterType: CharacterType.Gargoyle_01,
     attackDuration: 20,
     experience: 8,
-    runSpeed: 0.7,
+    runSpeed: 0.65,
     chanceOfSetTarget: 0.5,
     weaponType: WeaponType.Shortsword,
-    weaponRange: 120,
+    weaponRange: 130,
     quantity: 1,
     weaponCooldown: 30,
     clearTargetOnPerformAction: false,
+    postAttackPauseDurationMin: 20,
+    postAttackPauseDurationMax: 80,
   );
 
   final int level;
@@ -108,6 +120,8 @@ enum FiendType {
   final int weaponType;
   final int weaponCooldown;
   final bool clearTargetOnPerformAction;
+  final int postAttackPauseDurationMin;
+  final int postAttackPauseDurationMax;
 
   const FiendType({
     required this.health,
@@ -123,5 +137,7 @@ enum FiendType {
     required this.weaponCooldown,
     required this.level,
     required this.clearTargetOnPerformAction,
+    required this.postAttackPauseDurationMin,
+    required this.postAttackPauseDurationMax,
   });
 }
