@@ -1,6 +1,7 @@
 
-import 'package:amulet_engine/mixins/src.dart';
-import 'package:amulet_engine/packages/isomeric_engine.dart';
+
+import '../mixins/elemental.dart';
+import '../packages/isomeric_engine.dart';
 
 class AmuletFiend extends Character with Elemental {
 

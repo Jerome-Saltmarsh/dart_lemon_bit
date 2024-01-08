@@ -1,9 +1,9 @@
 
 import 'dart:typed_data';
 
-import 'package:amulet_engine/editor/randomize_scene.dart';
-import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/quests/src.dart';
 
+import '../editor/randomize_scene.dart';
+import '../packages/isometric_engine/packages/common/src/amulet/quests/quest_tutorials.dart';
 import 'amulet.dart';
 import 'amulet_game.dart';
 import 'amulet_player.dart';

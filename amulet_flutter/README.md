@@ -16,9 +16,10 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## TODO
+* [new]: weapon crystal scepter
+* [new]: character behavior pause
 * [new]: gameobject rotation
 * [new]: node type gargoyle
-* [new]: model armour witches cloak
 * [new]: character state spawn
 * [new]: model weapon claymore
 * [fix]: mini map inside dungeon
@@ -58,6 +59,7 @@ ctrl + []               : move caret to code block
 ## 05.01.2024
 * [new]: gameobject firewood
 * [new]: variations support for node sub surfaces
+* [new]: model armour witches cloak
 
 ## 04.01.2024
 * [new]: model weapon sapphire heavy sword

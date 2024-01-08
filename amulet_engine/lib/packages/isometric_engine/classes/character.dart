@@ -396,11 +396,6 @@ class Character extends Collider {
     attack();
   }
 
-  void idle() {
-    setCharacterStateIdle();
-    setDestinationToCurrentPosition();
-  }
-
   void setRunDestinationToTarget(){
     final target = this.target;
     if (target == null) {

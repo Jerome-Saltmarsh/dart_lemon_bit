@@ -60,7 +60,7 @@ class Root {
   }
 
   void performAutoSave(AmuletPlayer player) {
-    final characterJson = mapIsometricPlayerToJson(player);
+    final characterJson = writeAmuletPlayerToJson(player);
     characterJson['auto_save'] = DateTime.now().toUtc().toIso8601String();
     persistPlayer(player, characterJson);
   }
@@ -68,7 +68,7 @@ class Root {
   void onDisconnected(Connection connection) {
     final player = connection.controller.player;
     if (player.persistOnDisconnect){
-      final characterJson = mapIsometricPlayerToJson(player);
+      final characterJson = writeAmuletPlayerToJson(player);
       characterJson.remove('auto_save');
       persistPlayer(player, characterJson);
     }

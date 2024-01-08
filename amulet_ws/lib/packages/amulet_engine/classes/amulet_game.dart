@@ -1,9 +1,8 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:amulet_engine/mixins/equipped_weapon.dart';
-
 import '../mixins/elemental.dart';
+import '../mixins/equipped_weapon.dart';
 import '../packages/isometric_engine/isometric_engine.dart';
 import 'amulet.dart';
 import 'amulet_fiend.dart';

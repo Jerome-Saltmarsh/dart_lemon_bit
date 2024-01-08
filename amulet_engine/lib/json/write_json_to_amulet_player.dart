@@ -1,8 +1,7 @@
 
-import 'package:amulet_engine/json/character_json.dart';
-
 import '../classes/amulet_player.dart';
 import '../packages/src.dart';
+import 'character_json.dart';
 
 void writeJsonToAmuletPlayer(
     CharacterJson json,

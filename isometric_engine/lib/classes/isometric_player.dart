@@ -2,8 +2,7 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:amulet_engine/classes/amulet_item_slot.dart';
-
+import '../../../classes/amulet_item_slot.dart';
 import '../../../mixins/equipped_weapon.dart';
 import '../isometric_engine.dart';
 import '../consts/isometric_settings.dart';

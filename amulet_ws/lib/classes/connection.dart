@@ -18,7 +18,6 @@ class Connection extends ByteReader {
   late StreamSubscription subscription;
 
   late final AmuletController controller;
-  // late AmuletPlayer player;
   Function? onDone;
 
   Connection({
@@ -27,7 +26,13 @@ class Connection extends ByteReader {
   }){
     sink = webSocket.sink;
     controller = AmuletController(
-      player: root.amulet.buildPlayer(),
+      player: AmuletPlayer(
+        amuletGame: root.amulet.amuletGameLoading,
+        itemLength: 6,
+        x: 0,
+        y: 0,
+        z: 0,
+      ),
       isAdmin: false,
       sink: sink,
       handleClientRequestJoin: handleClientRequestJoin,

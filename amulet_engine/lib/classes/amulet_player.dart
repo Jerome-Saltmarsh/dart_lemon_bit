@@ -1,18 +1,15 @@
 
-import 'package:amulet_engine/json/character_json.dart';
-import 'package:amulet_engine/mixins/equipped_weapon_index.dart';
-import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/quests/quest_main.dart';
-
-import '../packages/isometric_engine/packages/common/src/amulet/quests/quest_tutorials.dart';
-import '../packages/src.dart';
+import '../packages/isomeric_engine.dart';
 import '../mixins/src.dart';
+import '../packages/isometric_engine/packages/common/src/amulet/quests/quest_main.dart';
+import '../json/src.dart';
+import '../packages/isometric_engine/packages/common/src/amulet/quests/quest_tutorials.dart';
 import 'amulet.dart';
 import 'amulet_game.dart';
 import 'amulet_item_slot.dart';
 import 'amulet_npc.dart';
 import 'games/amulet_game_tutorial.dart';
 import 'talk_option.dart';
-
 
 class AmuletPlayer extends IsometricPlayer with
     Equipment,

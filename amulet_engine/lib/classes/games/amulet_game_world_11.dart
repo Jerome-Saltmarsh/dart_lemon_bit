@@ -1,8 +1,7 @@
 
-import 'package:amulet_engine/classes/amulet_game.dart';
-
 import '../../packages/isomeric_engine.dart';
 import '../../packages/isometric_engine/packages/common/src/amulet/quests/quest_main.dart';
+import '../amulet_game.dart';
 import '../amulet_npc.dart';
 import '../amulet_player.dart';
 
