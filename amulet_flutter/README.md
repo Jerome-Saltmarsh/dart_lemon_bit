@@ -26,7 +26,6 @@ ctrl + []               : move caret to code block
 * [fix]: mini map inside dungeon
 * [new]: allie map label
 * [new]: gameobject bucket
-* [new]: gameobject chest
 * [new]: gameobject lantern
 * [new]: character state charge
 * [new]: spell type long ranged strike 
@@ -55,6 +54,8 @@ ctrl + []               : move caret to code block
 * [fix]: audio for web
 
 ## 08.01.2024
+* [fix]: model wooden barrel
+* [new]: gameobject wooden chest
 * [new]: music track 1
 * [new]: character behavior idle after attack
 

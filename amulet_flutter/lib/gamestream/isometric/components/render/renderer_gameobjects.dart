@@ -103,6 +103,18 @@ class RendererGameObjects extends RenderGroup {
       return;
     }
 
+    if (type == ItemType.Object && subType == GameObjectType.Wooden_Chest){
+      render.renderSpriteAutoIndexed(
+          sprite: images.woodenChest,
+          dstX: gameObject.renderX,
+          dstY: gameObject.renderY,
+          index: scene.getIndexPosition(gameObject),
+          anchorY: 0.75,
+          scale: 0.5,
+      );
+      return;
+    }
+
     if (type == ItemType.Object && subType == GameObjectType.Broom){
       render.renderSpriteAutoIndexed(
           sprite: images.broom,

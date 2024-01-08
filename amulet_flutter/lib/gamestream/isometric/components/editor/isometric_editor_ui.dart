@@ -33,6 +33,7 @@ extension IsometricEditorUI on IsometricEditor {
     GameObjectType.Broom,
     GameObjectType.Firewood,
     GameObjectType.Pumpkin,
+    GameObjectType.Wooden_Chest,
   ];
 
   static const nodeTypesColumn1 = [

@@ -75,6 +75,7 @@ class IsometricImages with IsometricComponent {
   late final Sprite firewood;
   late final Sprite woodenBarrel;
   late final Sprite pumpkin;
+  late final Sprite woodenChest;
   late final Sprite flame0;
   late final Sprite flame1;
   late final Sprite flame2;
@@ -425,6 +426,11 @@ class IsometricImages with IsometricComponent {
         name: 'assets/sprites/isometric/gameobjects/pumpkin',
         mode: AnimationMode.single,
     ).then((value) => pumpkin = value);
+
+    loadSprite(
+        name: 'assets/sprites/isometric/gameobjects/wooden_chest',
+        mode: AnimationMode.single,
+    ).then((value) => woodenChest = value);
 
     loadSprite(
         name: 'assets/sprites/isometric/bat/bat',
