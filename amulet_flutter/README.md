@@ -61,6 +61,7 @@ ctrl + []               : move caret to code block
 * [new]: character type witch
 
 ## 09.01.2024
+* [new]: leg type linen blue
 * [new]: model leg type iron plates
 
 ## 08.01.2024

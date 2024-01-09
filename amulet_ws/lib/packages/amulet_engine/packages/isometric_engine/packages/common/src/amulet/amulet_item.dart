@@ -388,6 +388,17 @@ enum AmuletItem {
       health: 16,
     ),
   ),
+  Pants_Linen_Striped(
+    levelMin: 10,
+    levelMax: 15,
+    selectAction: AmuletItemAction.Equip,
+    type: ItemType.Legs,
+    subType: LegType.Linen_Striped,
+    description: 'Light weight pants for for mobility',
+    level1: AmuletItemStats(
+      health: 16,
+    ),
+  ),
   Gauntlet(
     levelMin: 5,
     levelMax: 10,
