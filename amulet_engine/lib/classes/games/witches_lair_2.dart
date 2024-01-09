@@ -4,7 +4,6 @@ import '../../src.dart';
 class WitchesLair2 extends AmuletGame {
 
   late AmuletNpcWitch npcWitch;
-  // late GameObject entrance;
 
   WitchesLair2({
     required super.amulet,
@@ -16,7 +15,6 @@ class WitchesLair2 extends AmuletGame {
     amuletScene: AmuletScene.Witches_Lair_2
   ) {
     final indexSpawnWitch = scene.getKey('spawn_witch');
-    // final indexEntrance = scene.getKey('entrance');
 
     npcWitch = AmuletNpcWitch(
         x: scene.getIndexX(indexSpawnWitch),
@@ -33,35 +31,15 @@ class WitchesLair2 extends AmuletGame {
       ..helmType = HelmType.Wizard_Hat;
 
     characters.add(npcWitch);
-
-    // entrance = spawnGameObjectAtIndex(
-    //     index: indexEntrance,
-    //     type: ItemType.Object,
-    //     subType: GameObjectType.Interactable,
-    //     team: TeamType.Neutral,
-    // )..interactable = true;
   }
-
-  // @override
-  // void customOnCharacterInteractWithGameObject(Character character, GameObject gameObject) {
-  //   if (character is! AmuletPlayer){
-  //     return;
-  //   }
-  //   if (gameObject == entrance) {
-  //     amulet.playerChangeGame(
-  //         player: character,
-  //         target: amulet.amuletGameWorld11,
-  //         sceneKey: 'spawn_player',
-  //     );
-  //   }
-  // }
 
   @override
   void customOnCharacterKilled(Character target, src) {
     super.customOnCharacterKilled(target, src);
 
-    if (target == npcWitch && src is AmuletPlayer){
+    if (target == npcWitch && src is AmuletPlayer) {
       src.completeQuestMain(QuestMain.Kill_The_Witch);
+      src.writePlayerEvent(PlayerEvent.Game_Finished);
     }
   }
 

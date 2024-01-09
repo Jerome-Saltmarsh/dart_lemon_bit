@@ -123,10 +123,9 @@ class IsometricAudio with IsometricComponent implements Updatable {
     arrow_flying_past_6,
   ];
 
-
-
   final owl1 = AudioSingle(name: 'owl-1');
   final creepy5 = AudioSingle(name: 'creepy-5');
+  final celestialVoiceAngel = AudioSingle(name: 'music/celestial_voice_angel');
   final windChime = AudioSingle(name: 'wind-chime');
   final gong = AudioSingle(name: 'gong');
   final creepyWhistle = AudioSingle(name: 'creepy-whistle');

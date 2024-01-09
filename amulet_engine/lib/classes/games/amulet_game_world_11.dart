@@ -234,7 +234,8 @@ class AmuletGameWorld11 extends AmuletGame {
     }
   }
   void onInteractWithSophie(AmuletPlayer player, AmuletNpc npc){
-    player.talk(npc, 'hi there');
+    // player.talk(npc, 'hi there');
+    player.writePlayerEvent(PlayerEvent.Game_Finished);
   }
 
   void onInteractWithMay(AmuletPlayer player, AmuletNpc may){

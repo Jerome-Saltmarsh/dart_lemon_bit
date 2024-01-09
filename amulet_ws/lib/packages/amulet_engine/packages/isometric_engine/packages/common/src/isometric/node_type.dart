@@ -49,6 +49,7 @@ class NodeType {
   static const Cobblestone = 92;
   static const Tiles = 93;
   static const Palisade = 94;
+  static const Shadow = 95;
 
   static bool supportsOrientationSolid(int type) => const [
         Brick,
@@ -85,7 +86,8 @@ class NodeType {
         Grass_Short,
         Sunflower,
         Dust,
-        Rain_Falling
+        Rain_Falling,
+        Shadow,
   ].contains(type);
 
   static bool supportsOrientationRadial(int type) => const [
@@ -337,6 +339,7 @@ class NodeType {
     Cobblestone: 'Cobblestone',
     Tiles: 'Tiles',
     Palisade: 'Palisade',
+    Shadow: 'Shadow',
   }[type] ?? 'unknown($type)';
 
   static bool isLightSource(int type) => const [

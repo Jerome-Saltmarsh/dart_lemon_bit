@@ -121,6 +121,7 @@ class Amulet extends IsometricGame {
     screenColorI.onChanged((t) {
       screenColor.value = Colors.black.withOpacity((1.0 - t).clamp(0, 1.0));
     });
+
   }
 
   void onChangedElementPoints(int elementPoints) =>

@@ -15,52 +15,13 @@ ctrl + shift + e        : view recent changes
 alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
-[TYPES]
-    PIERCE (ARROW) -> LESS EFFECTIVE AGAINST STONE
-    SLASH (SWORD) -> LESS EFFECTIVE AGAINST STONE
-    CRUSH (HAMMER) -> MORE EFFECTIVE AGAINST STONE
-
-[ELEMENTAL]
-    FREEZE 
-    BURN
-    ZAP 
-
 ## BLOCK
-* [new]: model head type female
-* [new]: character element type effectiveness
-
-## TODO
-* [new]: spell type explode
-* [new]: spell type ice storm
-* [new]: spell type long ranged strike
-* [new]: weapon crystal scepter
-* [new]: feature gameobject rotation
-* [new]: node type gargoyle
-* [new]: character state spawn
-* [new]: model weapon claymore
-* [fix]: mini map inside dungeon
-* [new]: gameobject bucket
-* [new]: gameobject lantern
-* [new]: character state charge
-* [new]: spell type slow 
-* [new]: spell wind strike 
-* [new]: model hair type 4
-* [new]: mechanic charge power like dragonballz
-* [new]: official website
-* [new]: official youtube channel
-* [new]: allie map label
-
-## BACKLOG
-* [fix]: character type toad mage
-* [fix]: character type toad knight
-* [new]: character type warlock
-* [new]: character type spider
-* [new]: character type ghost
-* [new]: character type orc
-* [new]: character type vampire
-* [new]: character type witch
+* [new]: event on kill witch 
+* [new]: scene witches lair 01
+* [new]: scene witches lair 02
 
 ## 09.01.2024
+* [new]: design witch castle entrance
 * [new]: leg type linen blue
 * [new]: model leg type iron plates
 

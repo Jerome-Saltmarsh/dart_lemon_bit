@@ -118,6 +118,14 @@ class RendererCharacters extends RenderGroup {
             anchorY: 0.7,
         );
         break;
+      case CharacterType.Toad_Warrior:
+        renderCharacterShader(
+            character: character,
+            shader: images.characterShaderToadWarrior,
+            scale: 0.6,
+            anchorY: 0.7,
+        );
+        break;
       default:
         throw Exception('Cannot render character type: ${character.characterType}');
     }

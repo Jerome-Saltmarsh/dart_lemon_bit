@@ -7,6 +7,7 @@ class CharacterType {
    static const Zombie = 11;
    static const Fallen_Armoured = 12;
    static const Gargoyle_01 = 13;
+   static const Toad_Warrior = 14;
 
    static const values = [
      Human,
@@ -16,6 +17,7 @@ class CharacterType {
      Zombie,
      Fallen_Armoured,
      Gargoyle_01,
+     Toad_Warrior,
    ];
 
    static String getName(int value) => const {
@@ -26,5 +28,6 @@ class CharacterType {
        Zombie: 'Zombie',
        Fallen_Armoured: 'Fallen_Armoured',
        Gargoyle_01: 'Gargoyle_01',
+       Toad_Warrior: 'Toad_Warrior',
    }[value] ?? ' unknown-$value';
 }

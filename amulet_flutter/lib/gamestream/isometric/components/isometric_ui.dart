@@ -544,6 +544,33 @@ class IsometricUI with IsometricComponent {
     ));
   }
 
+  void showDialogText({
+    Function? onClosed,
+    required String text,
+  }) {
+    showDialog(
+      onOpen: engine.disableKeyEventHandler,
+      onClosed: engine.enableKeyEventHandler,
+      child: OnDisposed(
+      child: GSContainer(
+        width: 300,
+        height: 200,
+        child: Column(
+          children: [
+            buildText(text),
+            const Expanded(child: SizedBox()),
+            alignRight(
+              child: onPressed(
+                action: onClosed ?? closeDialog,
+                child: buildText('OKAY', color: Colors.orange),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ));
+  }
+
   void showDialogGetInt({
     required Function(int value) onSelected,
     String text = '',

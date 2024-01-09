@@ -219,3 +219,7 @@ flutter:
     - assets/sprites/isometric/kid/diffuse/legs/linen_striped/
     - assets/sprites/isometric/kid/south/legs/linen_striped/
     - assets/sprites/isometric/kid/west/legs/linen_striped/
+    - assets/sprites/isometric/toad_warrior/
+    - assets/sprites/isometric/toad_warrior/flat/
+    - assets/sprites/isometric/toad_warrior/south/
+    - assets/sprites/isometric/toad_warrior/west/

@@ -196,9 +196,10 @@ class Character extends Collider {
 
   bool get characterStateIdle => characterState == CharacterState.Idle;
 
-  bool get characterStateStriking => const [
+  bool get characterStateAttacking => const [
     CharacterState.Strike_1,
     CharacterState.Strike_2,
+    CharacterState.Fire,
   ].contains(characterState);
 
   bool get characterStateHurt => characterState == CharacterState.Hurt;

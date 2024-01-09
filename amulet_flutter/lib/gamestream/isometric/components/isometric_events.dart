@@ -396,6 +396,9 @@ class IsometricEvents with IsometricComponent {
       case PlayerEvent.Game_Joined:
         onGameJoined();
         break;
+      case PlayerEvent.Game_Finished:
+        onGameFinished();
+        break;
     }
   }
 
@@ -556,5 +559,10 @@ class IsometricEvents with IsometricComponent {
     audio.play(audio.change_cloths, x, y, z);
   }
 
-
+  void onGameFinished() {
+    audio.celestialVoiceAngel.play(volume: 1);
+    ui.showDialogText(
+        text: 'Congratulations! You have completed the amulet demo. Thanks very much for playing.',
+    );
+  }
 }

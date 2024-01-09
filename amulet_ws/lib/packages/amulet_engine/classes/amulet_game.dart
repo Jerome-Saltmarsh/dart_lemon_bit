@@ -229,7 +229,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   @override
   void endCharacterAction(Character character){
      if (character is AmuletFiend){
-        if (character.characterStateStriking){
+        if (character.characterStateAttacking){
           super.endCharacterAction(character);
           final fiendType = character.fiendType;
           character.setCharacterState(

@@ -1021,7 +1021,14 @@ class RendererNodes extends RenderGroup {
         );
         return;
 
-      case NodeType.Dust:
+      case NodeType.Shadow:
+        renderStandardNode(
+          srcX: 1540,
+          srcY: 232,
+          dstX: dstX,
+          dstY: dstY,
+          color: color,
+        );
         break;
       case NodeType.Sandbag:
         renderStandardNode(
