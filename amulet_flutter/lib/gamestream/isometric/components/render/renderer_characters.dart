@@ -167,7 +167,7 @@ class RendererCharacters extends RenderGroup {
     final atlasHelmSouth = spritesSouth.helm[helmType] ?? (throw Exception());
     final atlasHelmWest = spritesWest.helm[helmType] ?? (throw Exception());
     final atlasHelmDiffuse = spritesDiffuse.helm[helmType] ?? (throw Exception());
-    final atlasLegsDiffuse =  spritesDiffuse.legs[legType] ?? (throw Exception());
+    final atlasLegsDiffuse =  spritesDiffuse.legs[legType] ?? (throw Exception(LegType.getName(legType)));
     final atlasLegsSouth =  spritesSouth.legs[legType] ?? (throw Exception());
     final atlasLegsWest =  spritesWest.legs[legType] ?? (throw Exception());
     final bodySpriteSouth = gender == Gender.male ? spritesSouth.bodyMale : spritesSouth.bodyFemale;

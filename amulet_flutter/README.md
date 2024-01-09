@@ -15,31 +15,40 @@ ctrl + shift + e        : view recent changes
 alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
+[TYPES]
+    PIERCE (ARROW) -> LESS EFFECTIVE AGAINST STONE
+    SLASH (SWORD) -> LESS EFFECTIVE AGAINST STONE
+    CRUSH (HAMMER) -> MORE EFFECTIVE AGAINST STONE
+
+[ELEMENTAL]
+    FREEZE 
+    BURN
+    ZAP 
+
+## BLOCK
+* [new]: model head type female
+* [new]: character element type effectiveness
 
 ## TODO
-* [fix]: ai guards running still
+* [new]: spell type explode
+* [new]: spell type ice storm
+* [new]: spell type long ranged strike
 * [new]: weapon crystal scepter
 * [new]: feature gameobject rotation
 * [new]: node type gargoyle
 * [new]: character state spawn
 * [new]: model weapon claymore
 * [fix]: mini map inside dungeon
-* [new]: allie map label
 * [new]: gameobject bucket
 * [new]: gameobject lantern
 * [new]: character state charge
-* [new]: spell type long ranged strike 
 * [new]: spell type slow 
-* [new]: spell type explode 
-* [new]: spell type ice storm
 * [new]: spell wind strike 
-* [fix]: front view renders
 * [new]: model hair type 4
-* [new]: model head type female
-* [new]: model leg type iron plates
 * [new]: mechanic charge power like dragonballz
 * [new]: official website
 * [new]: official youtube channel
+* [new]: allie map label
 
 ## BACKLOG
 * [fix]: character type toad mage
@@ -50,10 +59,12 @@ ctrl + []               : move caret to code block
 * [new]: character type orc
 * [new]: character type vampire
 * [new]: character type witch
-* [new]: mobile touch screen support
-* [fix]: audio for web
+
+## 09.01.2024
+* [new]: model leg type iron plates
 
 ## 08.01.2024
+* [fix]: ai guards running still
 * [fix]: model wooden barrel
 * [new]: gameobject wooden chest
 * [new]: music track 1

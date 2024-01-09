@@ -1,65 +1,7 @@
+import 'package:amulet_engine/packages/isometric_engine/packages/common/src/isometric/leg_type.dart';
 
-class AtlasSrcLegs {
-  static const None = <double>[
-    106, // x
-    8, // y
-    13, // width
-    30, // height
-    1, // scale
-    0.5, // anchorY
-  ];
+const atlasSrcLegs = <int, List<double>> {
+  LegType.Leather: const [106, 8, 13, 14, 1, 0.5 ],
+  LegType.Plated: const [10, 1, 13, 30, 1, 0.5 ],
+};
 
-  static const Swat = <double>[
-    170, // x
-    8, // y
-    13, // width
-    30, // height
-    1, // scale
-    0.5, // anchorY
-  ];
-
-  static const Blue = <double>[
-    9, // x
-    9, // y
-    13, // width
-    30, // height
-    1, // scale
-    0.5, // anchorY
-  ];
-
-  static const Red = <double>[
-    139, // x
-    8, // y
-    13, // width
-    30, // height
-    1, // scale
-    0.5, // anchorY
-  ];
-
-  static const Brown = <double>[
-    42, // x
-    8, // y
-    13, // width
-    30, // height
-    1, // scale
-    0.5, // anchorY
-  ];
-
-  static const Green = <double>[
-    74, // x
-    8, // y
-    13, // width
-    30, // height
-    1, // scale
-    0.5, // anchorY
-  ];
-
-  static const White = <double>[
-    202, // x
-    8, // y
-    13, // width
-    30, // height
-    1, // scale
-    0.5, // anchorY
-  ];
-}

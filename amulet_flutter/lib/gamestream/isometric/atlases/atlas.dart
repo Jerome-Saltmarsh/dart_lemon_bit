@@ -16,11 +16,6 @@ class Atlas {
 
   static const Collection_Nothing = <int, List<double>>{};
 
-  static const Collection_Legs = <int, List<double>> {
-    LegType.None: AtlasSrcLegs.None,
-    LegType.Leather: AtlasSrcLegs.Red,
-  };
-
   static const Collection_Objects = <int, List<double>>{
     GameObjectType.Barrel: AtlasSrcObjects.Barrel,
     GameObjectType.Barrel_Explosive: AtlasSrcObjects.Barrel_Explosive,
@@ -60,8 +55,8 @@ class Atlas {
 
   static const SrcCollection = <int, Map<int, List<double>>>{
     ItemType.Weapon: atlasSrcWeapons,
-    ItemType.Legs: Collection_Legs,
-    ItemType.Body: atlasSrcBodyType,
+    ItemType.Legs: atlasSrcLegs,
+    ItemType.Body: atlasSrcBody,
     ItemType.Helm: atlasSrcHelm,
     ItemType.Object: Collection_Objects,
     ItemType.Hand: atlasSrcHands,

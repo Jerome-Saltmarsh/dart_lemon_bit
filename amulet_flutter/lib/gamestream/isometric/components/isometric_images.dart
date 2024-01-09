@@ -285,11 +285,13 @@ class IsometricImages with IsometricComponent {
           subType: headType,
         );
       }
-      loadSpriteGroupIsometric(
-        direction: direction,
-        type: SpriteGroupType.Legs,
-        subType: LegType.Leather,
-      );
+      for (final legType in LegType.values) {
+        loadSpriteGroupIsometric(
+          direction: direction,
+          type: SpriteGroupType.Legs,
+          subType: legType,
+        );
+      }
       loadSpriteGroupIsometric(
         direction: direction,
         type: SpriteGroupType.Torso,

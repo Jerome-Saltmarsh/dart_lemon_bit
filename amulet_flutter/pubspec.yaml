@@ -213,3 +213,6 @@ flutter:
     - assets/sprites/isometric/gargoyle/south/
     - assets/sprites/isometric/gargoyle/west/
     - assets/sprites/isometric/gargoyle/shadow/
+    - assets/sprites/isometric/kid/diffuse/legs/plated/
+    - assets/sprites/isometric/kid/south/legs/plated/
+    - assets/sprites/isometric/kid/west/legs/plated/

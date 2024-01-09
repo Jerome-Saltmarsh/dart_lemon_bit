@@ -382,7 +382,7 @@ enum AmuletItem {
     levelMax: 15,
     selectAction: AmuletItemAction.Equip,
     type: ItemType.Legs,
-    subType: LegType.Leather,
+    subType: LegType.Plated,
     description: 'Quite heavy but they offer a lot of protection',
     level1: AmuletItemStats(
       health: 16,
