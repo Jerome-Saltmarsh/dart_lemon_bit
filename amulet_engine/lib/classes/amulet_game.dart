@@ -329,11 +329,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         );
         break;
       case AmuletItem.Spell_Explosion:
-        dispatchGameEvent(
-            GameEvent.Explosion,
-            equipped.activePowerX,
-            equipped.activePowerY,
-            equipped.activePowerZ,
+        createExplosion(
+            x: equipped.activePowerX,
+            y: equipped.activePowerY,
+            z: equipped.activePowerZ,
+            srcCharacter: character,
         );
         break;
       case AmuletItem.Spell_Blink:

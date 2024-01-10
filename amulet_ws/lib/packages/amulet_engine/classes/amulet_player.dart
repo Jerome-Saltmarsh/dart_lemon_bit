@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:amulet_engine/classes/amulet_fiend.dart';
 
 import '../packages/isomeric_engine.dart';
@@ -1260,7 +1262,7 @@ class AmuletPlayer extends IsometricPlayer with
         activePowerY = mouseSceneY;
         activePowerZ = mouseSceneZ;
       } else {
-        final mouseAngle = getMouseAngle();
+        final mouseAngle = getMouseAngle() + pi;
         activePowerX = x + adj(mouseAngle, maxRange);
         activePowerY = y + opp(mouseAngle, maxRange);
         activePowerZ = z;

@@ -61,7 +61,6 @@ class IsometricActions with IsometricComponent {
         scaleV: 0,
         rotation: 0,
         bounciness: 0,
-        // frictionAir: 1.0,
       );
     }
 
