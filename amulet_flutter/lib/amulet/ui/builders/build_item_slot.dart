@@ -62,11 +62,11 @@ Widget buildItemSlot(ItemSlot itemSlot, {
                               alignment: Alignment.center,
                               children: [
                                 image,
-                                Positioned(
-                                  bottom: 8,
-                                  right: 8,
-                                  child: buildText(level),
-                                ),
+                                // Positioned(
+                                //   bottom: 8,
+                                //   right: 8,
+                                //   child: buildText(level),
+                                // ),
                               ],
                             ),
                           ),

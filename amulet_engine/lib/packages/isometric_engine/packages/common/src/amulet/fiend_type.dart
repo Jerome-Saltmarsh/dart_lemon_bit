@@ -20,6 +20,8 @@ enum FiendType {
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 50,
     elementFire: 1,
+    // weaknesses: [DamageType.Ice, DamageType.Arrow],
+    resists: DamageType.Fire,
   ),
   Skeleton(
     level: 2,
@@ -38,6 +40,7 @@ enum FiendType {
     postAttackPauseDurationMin: 30,
     postAttackPauseDurationMax: 80,
     elementStone: 1,
+    resists: DamageType.Wind,
   ),
   Wolf(
     level: 3,
@@ -56,6 +59,7 @@ enum FiendType {
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 40,
     elementAir: 1,
+    resists: DamageType.Wind,
   ),
   Zombie(
     level: 4,
@@ -74,6 +78,7 @@ enum FiendType {
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 60,
     elementWater: 1,
+    resists: DamageType.Sword,
   ),
   Fallen_Armoured(
     level: 5,
@@ -92,6 +97,7 @@ enum FiendType {
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 50,
     elementWater: 1,
+    resists: DamageType.Sword,
   ),
   Gargoyle(
     level: 6,
@@ -110,6 +116,7 @@ enum FiendType {
     postAttackPauseDurationMin: 30,
     postAttackPauseDurationMax: 100,
     elementStone: 1,
+    resists: DamageType.Arrow,
   ),
   Toad_Warrior(
     level: 6,
@@ -128,6 +135,7 @@ enum FiendType {
     postAttackPauseDurationMin: 30,
     postAttackPauseDurationMax: 100,
     elementWater: 1,
+    resists: DamageType.Sword,
   );
 
   final int level;
@@ -150,6 +158,7 @@ enum FiendType {
   final int elementFire;
   final int elementAir;
   final int elementStone;
+  final DamageType? resists;
 
   const FiendType({
     required this.health,
@@ -167,9 +176,18 @@ enum FiendType {
     required this.clearTargetOnPerformAction,
     required this.postAttackPauseDurationMin,
     required this.postAttackPauseDurationMax,
+    this.resists,
     this.elementWater = 0,
     this.elementFire = 0,
     this.elementAir = 0,
     this.elementStone = 0,
   });
+}
+
+enum DamageType {
+  Arrow,
+  Sword,
+  Fire,
+  Ice,
+  Wind,
 }

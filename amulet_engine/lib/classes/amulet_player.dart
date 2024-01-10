@@ -1,4 +1,6 @@
 
+import 'package:amulet_engine/classes/amulet_fiend.dart';
+
 import '../packages/isomeric_engine.dart';
 import '../mixins/src.dart';
 import '../packages/isometric_engine/packages/common/src/amulet/quests/quest_main.dart';
@@ -2059,6 +2061,7 @@ class AmuletPlayer extends IsometricPlayer with
   void onChangedAimTarget() {
     super.onChangedAimTarget();
     writeAimTargetAmuletElement();
+    writeAimTargetFiendType();
   }
 
   void writeAimTargetAmuletElement() {
@@ -2071,5 +2074,19 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(elemental.elementFire);
     writeByte(elemental.elementAir);
     writeByte(elemental.elementStone);
+  }
+
+  void writeAimTargetFiendType() {
+    final aimTarget = this.aimTarget;
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Aim_Target_Fiend_Type);
+
+    if (aimTarget is! AmuletFiend) {
+      writeBool(false);
+      return;
+    }
+
+    writeBool(true);
+    writeByte(aimTarget.fiendType.index);
   }
 }

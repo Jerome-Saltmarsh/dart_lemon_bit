@@ -127,6 +127,16 @@ extension AmuletParser on IsometricParser {
              stone: stone,
          );
          break;
+       case NetworkResponseAmulet.Aim_Target_Fiend_Type:
+         final isFiend = readBool();
+
+         if (isFiend){
+           final fiendTypeIndex = readByte();
+           amulet.aimTargetFiendType.value = FiendType.values[fiendTypeIndex];
+         } else {
+           amulet.aimTargetFiendType.value = null;
+         }
+         break;
        case NetworkResponseAmulet.Spawn_Confetti:
          final x = readDouble();
          final y = readDouble();

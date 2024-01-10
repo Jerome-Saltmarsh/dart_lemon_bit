@@ -328,6 +328,14 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
             range: range,
         );
         break;
+      case AmuletItem.Spell_Explosion:
+        dispatchGameEvent(
+            GameEvent.Explosion,
+            equipped.activePowerX,
+            equipped.activePowerY,
+            equipped.activePowerZ,
+        );
+        break;
       case AmuletItem.Spell_Blink:
         performAbilityBlink(character);
         break;
@@ -892,6 +900,15 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     if (character is! AmuletFiend || value == null) return;
     dispatchGameEventPosition(GameEvent.AI_Target_Acquired, value);
     dispatchByte(character.characterType);
+  }
+
+  @override
+  void applyDamageToCharacter({
+    required Character src,
+    required Character target,
+    required int amount,
+  }) {
+    super.applyDamageToCharacter(src: src, target: target, amount: amount);
   }
 }
 

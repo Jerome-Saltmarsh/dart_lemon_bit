@@ -1,9 +1,8 @@
 
+import 'package:amulet_engine/classes/src.dart';
+
 import '../../packages/isomeric_engine.dart';
 import '../../packages/isometric_engine/packages/common/src/amulet/quests/quest_main.dart';
-import '../amulet_game.dart';
-import '../amulet_npc.dart';
-import '../amulet_player.dart';
 
 class AmuletGameWorld11 extends AmuletGame {
 
@@ -233,9 +232,24 @@ class AmuletGameWorld11 extends AmuletGame {
         break;
     }
   }
+
   void onInteractWithSophie(AmuletPlayer player, AmuletNpc npc){
-    // player.talk(npc, 'hi there');
-    player.writePlayerEvent(PlayerEvent.Game_Finished);
+    player.talk(npc, 'how can I help you?', options: [
+      TalkOption('FINISH-GAME', (player) {
+        player.writePlayerEvent(PlayerEvent.Game_Finished);
+      }),
+      TalkOption('Learn', (player) {
+        player.talk(npc,
+            'there are four different elements. '
+            'water, fire, air and stone.'
+            'water is strong against fire.'
+            'fire against air.'
+            'and air against stone.'
+            'it would would serve one well to remember that.'
+        );
+      }),
+    ]);
+
   }
 
   void onInteractWithMay(AmuletPlayer player, AmuletNpc may){
@@ -263,14 +277,23 @@ class AmuletGameWorld11 extends AmuletGame {
     switch (player.questMain){
       case QuestMain.Speak_With_Warren:
         player.talk(
-            npc, 'Leave me.'
+            npc, 'The man who calls himself Warren seems to carry a concerned look about him'
         );
         break;
       case QuestMain.Kill_The_Witch:
-        player.talk(npc, '...');
+        player.talk(npc,
+            'It is said that the witch lives far to the north in her castle.'
+            'with her magics she can change her form.'
+            'it seems you have a formidable opponents.'
+        );
         break;
       case QuestMain.Return_To_Warren:
-        player.talk(npc, 'You defeated the Witch. I am impressed. Perhaps there is something you could help me with');
+        player.talk(npc,
+            'You defeated the Witch. I am impressed.'
+            'Perhaps there is something you could help me with.'
+            'return to me once you have spoken with Warren.'
+          ,
+        );
         break;
       case QuestMain.Completed:
         player.talk(npc, 'Our business is concluded');

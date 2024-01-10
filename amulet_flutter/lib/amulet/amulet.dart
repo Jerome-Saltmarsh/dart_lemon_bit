@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:ui';
 
+import 'package:amulet_engine/packages/common.dart';
 import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/amulet_element.dart';
 import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/amulet_item.dart';
 import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/amulet_scene.dart';
@@ -116,6 +117,7 @@ class Amulet extends IsometricGame {
   late final aimTargetElementAir = Watch(0);
   late final aimTargetElementStone = Watch(0);
   late final aimTargetElement = Watch(AmuletElement.stone);
+  late final aimTargetFiendType = Watch<FiendType?>(null);
 
   Amulet(){
     print('MmoGame()');

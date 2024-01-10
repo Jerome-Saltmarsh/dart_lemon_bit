@@ -29,4 +29,5 @@ class NetworkResponseAmulet {
    static const Quest_Main = 31;
    static const Debug = 32;
    static const Aim_Target_Element = 33;
+   static const Aim_Target_Fiend_Type = 34;
 }

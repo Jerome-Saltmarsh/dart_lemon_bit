@@ -338,8 +338,8 @@ class AmuletUI {
       );
 
   Widget buildPlayerAimTarget() {
-    const width = 120.0;
-    const height = width * goldenRatio_0381;
+    const width = 250.0;
+    const height = width * goldenRatio_0381 * goldenRatio_0381;
 
     final healthPercentageBox = buildWatch(
         amulet.player.aimTargetHealthPercentage,
@@ -355,6 +355,17 @@ class AmuletUI {
             width: 32,
             height: 32,
             child: IsometricIcon(iconType: mapAmuletElementToIconType(element)))),
+    );
+
+    final fiendType = Container(
+      margin: const EdgeInsets.symmetric(horizontal: 5),
+      child: buildWatch(amulet.aimTargetFiendType, (fiendType) {
+        final resists = fiendType?.resists;
+        if (resists == null){
+          return nothing;
+        }
+        return buildText('resists ${resists.name}', size: 15, color: Colors.white70);
+      }),
     );
 
     final name = Container(
@@ -377,11 +388,13 @@ class AmuletUI {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                element,
+                // element,
                 FittedBox(
                   child: buildWatch(amulet.player.aimTargetName,
                       (name) => buildText(name.replaceAll('_', ' '))),
                 ),
+                width4,
+                fiendType
               ],
             ),
           ),
@@ -587,7 +600,7 @@ class AmuletUI {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    buildAmuletElements(),
+                    // buildAmuletElements(),
                     buildPlayerExperienceBar(),
                   ],
                 ),

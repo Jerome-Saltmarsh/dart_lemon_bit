@@ -17,7 +17,8 @@ class Character extends Collider {
 
   var experience = 0;
   var spawnLootOnDeath = true;
-  var respawnDurationTotal = 30;
+  /// in seconds
+  var respawnDurationTotal = (60 * 3);
   var gender = Gender.female;
   var headType = HeadType.boy;
   var shoeType = ShoeType.None;
