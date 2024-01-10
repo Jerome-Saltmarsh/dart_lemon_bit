@@ -771,7 +771,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       if (!gameObject.hitable) continue;
       if (!gameObject.withinRadiusXYZ(x, y, z, radius)) continue;
       applyHit(
-        angle: angleBetween(x, y, gameObject.x, gameObject.y),
+        angle: gameObject.getAngleXY(x, y),
         target: gameObject,
         srcCharacter: srcCharacter,
         damage: damage,
@@ -786,7 +786,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       if (character.dead) continue;
       if (!character.withinRadiusXYZ(x, y, z, radius)) continue;
       applyHit(
-        angle: angleBetween(x, y, character.x, character.y),
+        angle: character.getAngleXY(x, y),
         target: character,
         srcCharacter: srcCharacter,
         damage: damage,
