@@ -19,6 +19,7 @@ enum FiendType {
     clearTargetOnPerformAction: true,
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 50,
+    elementFire: 1,
   ),
   Skeleton(
     level: 2,
@@ -36,6 +37,7 @@ enum FiendType {
     clearTargetOnPerformAction: false,
     postAttackPauseDurationMin: 30,
     postAttackPauseDurationMax: 80,
+    elementStone: 1,
   ),
   Wolf(
     level: 3,
@@ -53,6 +55,7 @@ enum FiendType {
     clearTargetOnPerformAction: false,
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 40,
+    elementAir: 1,
   ),
   Zombie(
     level: 4,
@@ -70,6 +73,7 @@ enum FiendType {
     clearTargetOnPerformAction: true,
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 60,
+    elementWater: 1,
   ),
   Fallen_Armoured(
     level: 5,
@@ -87,6 +91,7 @@ enum FiendType {
     clearTargetOnPerformAction: true,
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 50,
+    elementWater: 1,
   ),
   Gargoyle(
     level: 6,
@@ -104,6 +109,7 @@ enum FiendType {
     clearTargetOnPerformAction: false,
     postAttackPauseDurationMin: 30,
     postAttackPauseDurationMax: 100,
+    elementStone: 1,
   ),
   Toad_Warrior(
     level: 6,
@@ -121,6 +127,7 @@ enum FiendType {
     clearTargetOnPerformAction: false,
     postAttackPauseDurationMin: 30,
     postAttackPauseDurationMax: 100,
+    elementWater: 1,
   );
 
   final int level;
@@ -139,6 +146,10 @@ enum FiendType {
   final bool clearTargetOnPerformAction;
   final int postAttackPauseDurationMin;
   final int postAttackPauseDurationMax;
+  final int elementWater;
+  final int elementFire;
+  final int elementAir;
+  final int elementStone;
 
   const FiendType({
     required this.health,
@@ -156,5 +167,9 @@ enum FiendType {
     required this.clearTargetOnPerformAction,
     required this.postAttackPauseDurationMin,
     required this.postAttackPauseDurationMax,
+    this.elementWater = 0,
+    this.elementFire = 0,
+    this.elementAir = 0,
+    this.elementStone = 0,
   });
 }

@@ -380,7 +380,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         final equippedWeaponLevel = weapon.getLevel(
           fire: elements.elementFire,
           water: elements.elementWater,
-          electricity: elements.elementElectricity,
+          electricity: elements.elementAir,
         );
 
         final equippedWeaponStats = weapon.getStatsForLevel(equippedWeaponLevel);

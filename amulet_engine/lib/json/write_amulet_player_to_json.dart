@@ -25,7 +25,7 @@ CharacterJson writeAmuletPlayerToJson(AmuletPlayer player){
   }
 
   json.elementPoints = player.elementPoints;
-  json.elementElectricity = player.elementElectricity;
+  json.elementElectricity = player.elementAir;
   json.elementFire = player.elementFire;
   json.elementWater = player.elementWater;
   json['data'] = player.data;

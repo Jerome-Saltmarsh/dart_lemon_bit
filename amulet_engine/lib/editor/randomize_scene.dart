@@ -18,7 +18,7 @@ void randomizeScene(Scene scene){
         if (randomChance(0.05)){
           nodeVariations[i] = 2;
         } else {
-          nodeVariations[i] = const[0, 1].random();
+          nodeVariations[i] = const[0, 1].random;
         }
         continue;
       }

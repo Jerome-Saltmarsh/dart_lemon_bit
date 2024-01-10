@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:amulet_engine/packages/common.dart';
 import 'package:amulet_engine/packages/lemon_math.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
@@ -561,8 +563,10 @@ class IsometricEvents with IsometricComponent {
 
   void onGameFinished() {
     audio.celestialVoiceAngel.play(volume: 1);
-    ui.showDialogText(
+    Timer(Duration(seconds: 3), (){
+      ui.showDialogText(
         text: 'Congratulations! You have completed the amulet demo. Thanks very much for playing.',
-    );
+      );
+    });
   }
 }

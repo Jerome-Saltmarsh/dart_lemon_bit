@@ -8,3 +8,21 @@
     BURN
     ZAP 
     POISONED - CANNOT CAST SPELLS 
+
+the witch changes form cycling through the different elements
+    stone
+    fire
+    water
+    air
+
+in each stage she is either strong or weak against the player depending on the players 
+element
+
+the player must be strategic by attacking while the witch is in a weaker form
+
+
+
+
+
+
+

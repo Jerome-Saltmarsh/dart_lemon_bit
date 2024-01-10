@@ -54,6 +54,7 @@ class Amulet extends IsometricGame {
   late final elementFire = Watch(0, onChanged: elementsChangedNotifier);
   late final elementWater = Watch(0, onChanged: elementsChangedNotifier);
   late final elementElectricity = Watch(0, onChanged: elementsChangedNotifier);
+  late final elementStone = Watch(0, onChanged: elementsChangedNotifier);
   final elementsChangedNotifier = Watch(0);
 
   final elementPointsAvailable = Watch(false);
@@ -109,6 +110,12 @@ class Amulet extends IsometricGame {
   final playerExperience = Watch(0);
   final playerExperienceRequired = Watch(0);
   final playerInventoryOpen = Watch(false);
+
+  late final aimTargetElementWater = Watch(0);
+  late final aimTargetElementFire = Watch(0);
+  late final aimTargetElementAir = Watch(0);
+  late final aimTargetElementStone = Watch(0);
+  late final aimTargetElement = Watch(AmuletElement.stone);
 
   Amulet(){
     print('MmoGame()');
@@ -295,7 +302,8 @@ class Amulet extends IsometricGame {
       switch (amuletElement) {
         AmuletElement.fire => elementFire,
         AmuletElement.water => elementWater,
-        AmuletElement.electricity => elementElectricity,
+        AmuletElement.air => elementElectricity,
+        AmuletElement.stone => elementStone,
       };
 
   void upgradeAmuletElement(AmuletElement amuletElement) =>

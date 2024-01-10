@@ -425,7 +425,8 @@ class Amulet {
     player.elementPoints = 0;
     player.elementFire = 0;
     player.elementWater = 0;
-    player.elementElectricity = 0;
+    player.elementAir = 0;
+    player.elementStone = 0;
     player.level = 1;
     player.experience = 0;
     player.equippedHelm.clear();

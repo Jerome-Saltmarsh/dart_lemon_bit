@@ -101,8 +101,8 @@ class AmuletPlayer extends IsometricPlayer with
   bool get noWeaponEquipped => equippedWeaponIndex == -1;
 
   @override
-  set elementElectricity(int value){
-    super.elementElectricity = value;
+  set elementAir(int value){
+    super.elementAir = value;
     writeAmuletElements();
   }
 
@@ -1410,7 +1410,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(NetworkResponseAmuletPlayer.Elements);
     writeByte(elementFire);
     writeByte(elementWater);
-    writeByte(elementElectricity);
+    writeByte(elementAir);
   }
 
   void writeElementPoints() {
@@ -1432,8 +1432,11 @@ class AmuletPlayer extends IsometricPlayer with
       case AmuletElement.water:
         elementWater++;
         break;
-      case AmuletElement.electricity:
-        elementElectricity++;
+      case AmuletElement.air:
+        elementAir++;
+        break;
+      case AmuletElement.stone:
+        elementStone++;
         break;
     }
     writeAmuletElements();
@@ -2050,5 +2053,23 @@ class AmuletPlayer extends IsometricPlayer with
       return weaponUnarmed;
     }
     return weapons[_activatedPowerIndex];
+  }
+
+  @override
+  void onChangedAimTarget() {
+    super.onChangedAimTarget();
+    writeAimTargetAmuletElement();
+  }
+
+  void writeAimTargetAmuletElement() {
+    final aimTarget = this.aimTarget;
+    if (aimTarget is! Elemental) return;
+    final elemental = aimTarget as Elemental;
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Aim_Target_Element);
+    writeByte(elemental.elementWater);
+    writeByte(elemental.elementFire);
+    writeByte(elemental.elementAir);
+    writeByte(elemental.elementStone);
   }
 }

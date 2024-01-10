@@ -8,6 +8,10 @@ class CharacterType {
    static const Fallen_Armoured = 12;
    static const Gargoyle_01 = 13;
    static const Toad_Warrior = 14;
+   static const Witch_Stone = 15;
+   static const Witch_Water = 16;
+   static const Witch_Fire = 17;
+   static const Witch_Air = 18;
 
    static const values = [
      Human,

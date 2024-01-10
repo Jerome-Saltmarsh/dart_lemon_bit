@@ -7,5 +7,6 @@ IconType mapAmuletElementToIconType(AmuletElement amuletElement) =>
     switch (amuletElement) {
       AmuletElement.water => IconType.Element_Water,
       AmuletElement.fire => IconType.Element_Fire,
-      AmuletElement.electricity => IconType.Element_Electricity,
+      AmuletElement.air => IconType.Element_Air,
+      AmuletElement.stone => IconType.Element_Stone,
     };

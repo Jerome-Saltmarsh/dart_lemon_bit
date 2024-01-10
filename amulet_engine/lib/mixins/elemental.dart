@@ -2,30 +2,16 @@
 import '../src.dart';
 
 mixin Elemental {
-  // red
   var elementFire = 0;
-  // green
-  var elementElectricity = 0;
-  // blue
   var elementWater = 0;
-
-  int get r  => elementFire;
-  int get g  => elementElectricity;
-  int get b => elementWater;
-
-  int get hue => getHue(
-      r,
-      g,
-      b,
-  );
-
-  double get saturation => (r + g + b) / 100.0;
+  var elementAir = 0;
+  var elementStone = 0;
 
   int getLevelForAmuletItem(AmuletItem amuletItem) =>
       amuletItem.getLevel(
         fire: elementFire,
         water: elementWater,
-        electricity: elementElectricity,
+        electricity: elementAir,
       );
 
   void refillItemSlot(AmuletItemSlot itemSlot){

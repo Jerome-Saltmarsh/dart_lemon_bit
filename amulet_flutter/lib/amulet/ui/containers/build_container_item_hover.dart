@@ -144,7 +144,7 @@ Widget buildContainerAmuletItemStats(
                           if (amuletItemStats.water > 0)
                             buildStatColumn2(AmuletElement.water, amuletItemStats.water, components),
                           if (amuletItemStats.electricity > 0)
-                            buildStatColumn2(AmuletElement.electricity, amuletItemStats.electricity, components),
+                            buildStatColumn2(AmuletElement.air, amuletItemStats.electricity, components),
                         ])
 
                   ],

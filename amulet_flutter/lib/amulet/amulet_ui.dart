@@ -341,8 +341,6 @@ class AmuletUI {
     const width = 120.0;
     const height = width * goldenRatio_0381;
 
-
-
     final healthPercentageBox = buildWatch(
         amulet.player.aimTargetHealthPercentage,
         (healthPercentage) => Container(
@@ -350,6 +348,14 @@ class AmuletUI {
               height: height,
               color: amulet.colors.red_3,
             ));
+
+    final element = Container(
+      margin: const EdgeInsets.symmetric(horizontal: 5),
+      child: buildWatch(amulet.aimTargetElement, (element) => Container(
+            width: 32,
+            height: 32,
+            child: IsometricIcon(iconType: mapAmuletElementToIconType(element)))),
+    );
 
     final name = Container(
       alignment: Alignment.centerLeft,
@@ -368,9 +374,15 @@ class AmuletUI {
             width: width,
             height: height,
             alignment: Alignment.center,
-            child: FittedBox(
-              child: buildWatch(amulet.player.aimTargetName,
-                  (name) => buildText(name.replaceAll('_', ' '))),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                element,
+                FittedBox(
+                  child: buildWatch(amulet.player.aimTargetName,
+                      (name) => buildText(name.replaceAll('_', ' '))),
+                ),
+              ],
             ),
           ),
         ],
@@ -388,151 +400,6 @@ class AmuletUI {
           }),
         ));
   }
-
-  // Widget buildItemHoverDialog({double edgePadding = 150}) {
-  //
-  //   final upgradeFire = Watch(0);
-  //   final upgradeWater = Watch(0);
-  //   final upgradeWind = Watch(0);
-  //   final upgradeEarth = Watch(0);
-  //   final upgradeElectricity = Watch(0);
-  //
-  //
-  //   final upgradeFireWatch = WatchBuilder(upgradeFire, (cost) {
-  //       if (cost <= 0) {
-  //         return nothing;
-  //       }
-  //       return Column(
-  //         children: [
-  //           buildText('Fire'),
-  //           buildText(cost),
-  //         ],
-  //       );
-  //   });
-  //
-  //   final upgradeCostWater = WatchBuilder(upgradeWater, (cost) {
-  //       if (cost <= amulet.elementWater.value){
-  //         return nothing;
-  //       }
-  //       return Column(
-  //         children: [
-  //           buildText('Water'),
-  //           buildText(cost),
-  //         ],
-  //       );
-  //   });
-  //
-  //   final upgradeCostWind = WatchBuilder(upgradeWind, (cost) {
-  //       if (cost <= amulet.elementWind.value){
-  //         return nothing;
-  //       }
-  //       return Column(
-  //         children: [
-  //           buildText('Wind'),
-  //           buildText(cost),
-  //         ],
-  //       );
-  //   });
-  //
-  //   final upgradeCostEarth = WatchBuilder(upgradeEarth, (cost) {
-  //       if (cost <= amulet.elementEarth.value){
-  //         return nothing;
-  //       }
-  //       return Column(
-  //         children: [
-  //           buildText('Earth'),
-  //           buildText(cost),
-  //         ],
-  //       );
-  //   });
-  //
-  //   final upgradeCostElectricity = WatchBuilder(upgradeElectricity, (cost) {
-  //       if (cost <= amulet.elementElectricity.value){
-  //         return nothing;
-  //       }
-  //       return Column(
-  //         children: [
-  //           buildText('Electricity'),
-  //           buildText(cost),
-  //         ],
-  //       );
-  //   });
-  //
-  //   final upgradeRow = Row(
-  //     children: [
-  //       upgradeFireWatch,
-  //       upgradeCostWater,
-  //       upgradeCostWind,
-  //       upgradeCostEarth,
-  //       upgradeCostElectricity,
-  //     ],
-  //   );
-  //
-  //   return buildWatch(
-  //     amulet.itemHover,
-  //     (item) {
-  //
-  //
-  //       if (item == null) {
-  //         return nothing;
-  //       }
-  //
-  //       final level = amulet.getAmuletItemLevel(item);
-  //       print('amulet.itemHover($item, level: $level)');
-  //
-  //
-  //       Widget? upgradeTableRow;
-  //
-  //       final upgradeTable = AmuletItem.upgradeTable[item];
-  //       if (upgradeTable != null){
-  //          if (level <= upgradeTable.length -1){
-  //             final row = upgradeTable[level + 1];
-  //             upgradeFire.value = row[0];
-  //             upgradeWater.value = row[1];
-  //             upgradeWind.value = row[2];
-  //             upgradeEarth.value = row[3];
-  //             upgradeElectricity.value = row[4];
-  //          }
-  //       }
-  //
-  //       return GSContainer(
-  //             width: 270,
-  //             child: Column(
-  //             mainAxisAlignment: MainAxisAlignment.start,
-  //             crossAxisAlignment: CrossAxisAlignment.stretch,
-  //             children: [
-  //               FittedBox(
-  //                 child: Row(
-  //                   mainAxisAlignment: MainAxisAlignment.center,
-  //                   children: [
-  //                     buildText(item.name.replaceAll('_', ' '), size: 26, color: Colors.white.withOpacity(0.8)),
-  //                     width8,
-  //                     MMOItemImage(item: item, size: 64),
-  //                   ],
-  //                 ),
-  //               ),
-  //               height16,
-  //               buildItemRow('damage', item.damage),
-  //               buildItemRow('cooldown', item.cooldown),
-  //               buildItemRow('range', item.range),
-  //               buildItemRow('health', item.health),
-  //               buildItemRow('movement', item.movement * 10),
-  //               buildItemRow('level', level + 1),
-  //               upgradeRow,
-  //               if (item.attackType != null)
-  //                 buildItemRow('attack type', item.attackType!.name),
-  //               if (upgradeTableRow != null)
-  //                 Column(
-  //                   children: [
-  //                     buildText('level ${level + 2}'),
-  //                     upgradeTableRow,
-  //                   ],
-  //                 ),
-  //
-  //             ],
-  //           ));
-  //     });
-  // }
 
   static Widget buildItemRow(String text, dynamic value) {
     if (value == null || value == 0) return nothing;
@@ -865,7 +732,10 @@ class AmuletUI {
 
     final row = Row(
       children: [
-        icon,
+        Container(
+          padding: const EdgeInsets.all(3),
+            height: 32,
+            child: icon),
         Container(
             color: Colors.black12,
             width: 32,

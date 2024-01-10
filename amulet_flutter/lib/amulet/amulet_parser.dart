@@ -111,6 +111,22 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Element_Upgraded:
          amulet.onPlayerElementUpgraded();
          break;
+       case NetworkResponseAmulet.Aim_Target_Element:
+         final water = readByte();
+         final fire = readByte();
+         final air = readByte();
+         final stone = readByte();
+         amulet.aimTargetElementWater.value = water;
+         amulet.aimTargetElementFire.value = fire;
+         amulet.aimTargetElementAir.value = air;
+         amulet.aimTargetElementStone.value = stone;
+         amulet.aimTargetElement.value = AmuletElement.max(
+             water: water,
+             fire: fire,
+             air: air,
+             stone: stone,
+         );
+         break;
        case NetworkResponseAmulet.Spawn_Confetti:
          final x = readDouble();
          final y = readDouble();
@@ -228,5 +244,3 @@ extension AmuletParser on IsometricParser {
   void readQuestMain() =>
       amulet.questMain.value = QuestMain.values[readByte()];
 }
-
-

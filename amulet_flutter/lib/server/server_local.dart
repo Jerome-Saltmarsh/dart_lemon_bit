@@ -141,9 +141,10 @@ class ServerLocal implements Server {
       playerServer.name = name;
       playerServer.level = 1;
       playerServer.elementPoints = 0;
-      playerServer.elementElectricity = 0;
       playerServer.elementFire = 0;
       playerServer.elementWater = 0;
+      playerServer.elementAir = 0;
+      playerServer.elementStone = 0;
       playerServer.experience = 0;
       playerServer.complexion = complexion;
       playerServer.hairType = hairType;

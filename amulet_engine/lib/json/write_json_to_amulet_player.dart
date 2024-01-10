@@ -72,7 +72,7 @@ void writeJsonToAmuletPlayer(
   }
 
   player.elementPoints = json.elementPoints;
-  player.elementElectricity = json.elementElectricity;
+  player.elementAir = json.elementElectricity;
   player.elementFire = json.elementFire;
   player.elementWater = json.elementWater;
   player.data = json['data'] ?? Json();

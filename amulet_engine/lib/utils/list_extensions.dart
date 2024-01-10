@@ -11,5 +11,5 @@ extension ListExtensions<T> on List<T> {
           ? null
           : this[index];
 
-  T random() => randomItem(this);
+  T get random => randomItem(this);
 }
