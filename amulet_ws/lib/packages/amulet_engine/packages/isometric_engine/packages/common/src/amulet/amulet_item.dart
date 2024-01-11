@@ -378,7 +378,7 @@ enum AmuletItem {
     selectAction: AmuletItemAction.Equip,
     type: ItemType.Legs,
     subType: LegType.Leather,
-    description: 'light pants which provide easy movement with some protection',
+    description: 'increases attack speed with bows',
     level1: AmuletItemStats(
       health: 10,
     ),
@@ -405,17 +405,6 @@ enum AmuletItem {
       health: 16,
     ),
   ),
-  Gauntlet(
-    levelMin: 5,
-    levelMax: 10,
-    selectAction: AmuletItemAction.Equip,
-    type: ItemType.Hand,
-    subType: HandType.Gauntlets,
-    description: 'Common gauntlets',
-    level1: AmuletItemStats(
-      health: 5,
-    ),
-  ),
   Black_Boots_Of_Magic(
     levelMin: 5,
     levelMax: 10,
@@ -425,6 +414,29 @@ enum AmuletItem {
     description: 'Mystical boots',
     level1: AmuletItemStats(
       health: 5,
+    ),
+  ),
+  Gauntlet_of_the_Knight(
+    levelMin: 5,
+    levelMax: 10,
+    selectAction: AmuletItemAction.Equip,
+    type: ItemType.Hand,
+    subType: HandType.Gauntlets,
+    description: 'passively increases melee damage',
+    level1: AmuletItemStats(
+      health: 5,
+    ),
+  ),
+  Glove_Healers_Hand(
+    levelMin: 5,
+    levelMax: 10,
+    selectAction: AmuletItemAction.Equip,
+    type: ItemType.Hand,
+    subType: HandType.Leather_Gloves,
+    description: 'heals the player a small amount',
+    level1: AmuletItemStats(
+      health: 5,
+      cooldown: 10,
     ),
   ),
   Leather_Gloves(
@@ -540,37 +552,37 @@ enum AmuletItem {
       health: 5,
     ),
   ),
-  Treasure_Fury_Pendent(
-    levelMin: 1,
-    levelMax: 5,
-    selectAction: AmuletItemAction.None,
-    type: ItemType.Treasure,
-    subType: TreasureType.Pendant_1,
-    description: 'faster sword attacks',
-    level1: AmuletItemStats(
-
-    ),
-  ),
-  Amulet_Of_The_Ranger(
-    levelMin: 1,
-    levelMax: 5,
-    selectAction: AmuletItemAction.None,
-    type: ItemType.Treasure,
-    subType: TreasureType.Pendant_1,
-    description: 'increases arrow damage',
-    level1: AmuletItemStats(
-
-    ),
-  ),
-  Sapphire_Pendant(
-    levelMin: 1,
-    levelMax: 5,
-    selectAction: AmuletItemAction.None,
-    type: ItemType.Treasure,
-    subType: TreasureType.Pendant_1,
-    description: 'a radian blue pendant',
-    level1: AmuletItemStats(),
-  ),
+  // Treasure_Fury_Pendent(
+  //   levelMin: 1,
+  //   levelMax: 5,
+  //   selectAction: AmuletItemAction.None,
+  //   type: ItemType.Treasure,
+  //   subType: TreasureType.Pendant_1,
+  //   description: 'faster sword attacks',
+  //   level1: AmuletItemStats(
+  //
+  //   ),
+  // ),
+  // Amulet_Of_The_Ranger(
+  //   levelMin: 1,
+  //   levelMax: 5,
+  //   selectAction: AmuletItemAction.None,
+  //   type: ItemType.Treasure,
+  //   subType: TreasureType.Pendant_1,
+  //   description: 'increases arrow damage',
+  //   level1: AmuletItemStats(
+  //
+  //   ),
+  // ),
+  // Sapphire_Pendant(
+  //   levelMin: 1,
+  //   levelMax: 5,
+  //   selectAction: AmuletItemAction.None,
+  //   type: ItemType.Treasure,
+  //   subType: TreasureType.Pendant_1,
+  //   description: 'a radian blue pendant',
+  //   level1: AmuletItemStats(),
+  // ),
   Spell_Thunderbolt(
     levelMin: 1,
     levelMax: 5,

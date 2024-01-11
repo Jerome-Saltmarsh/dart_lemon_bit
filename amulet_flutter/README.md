@@ -15,19 +15,17 @@ ctrl + shift + e        : view recent changes
 alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
-## BLOCK
-* [new]: event on kill witch 
-* [new]: scene witches lair 01
-* [new]: scene witches lair 02
+## 11.01.2024
+* [new]: disable front view
+* [new]: disable treasures
+* [new]: submit steamworks registration
+* [new]: feature damage type resistance
+* [new]: spell type explosion
 
 ## 09.01.2024
 * [new]: design witch castle entrance
 * [new]: leg type linen blue
 * [new]: model leg type iron plates
-
-## 11.01.2024
-* [new]: submit steamworks registration
-* [new]: feature damage type resistance
 
 ## 08.01.2024
 * [fix]: ai guards running still

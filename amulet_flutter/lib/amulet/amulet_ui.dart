@@ -698,8 +698,8 @@ class AmuletUI {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               buildInventoryEquipped(),
-              buildInventoryPlayerFront(),
-              buildPlayerTreasures(),
+              // buildInventoryPlayerFront(),
+              // buildPlayerTreasures(),
             ],
           )
         ],

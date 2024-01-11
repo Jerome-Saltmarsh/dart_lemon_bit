@@ -179,14 +179,14 @@ class AmuletPlayer extends IsometricPlayer with
     for (final itemSlot in treasures) {
        final amuletItem = itemSlot.amuletItem;
        if (amuletItem == null) continue;
-       switch (amuletItem) {
-         case AmuletItem.Amulet_Of_The_Ranger:
-           if (itemSlotWeapon.amuletItem?.isWeaponBow ?? false){
-           }
-           break;
-         default:
-           break;
-       }
+       // switch (amuletItem) {
+       //   case AmuletItem.Amulet_Of_The_Ranger:
+       //     if (itemSlotWeapon.amuletItem?.isWeaponBow ?? false){
+       //     }
+       //     break;
+       //   default:
+       //     break;
+       // }
     }
     return damage;
   }
