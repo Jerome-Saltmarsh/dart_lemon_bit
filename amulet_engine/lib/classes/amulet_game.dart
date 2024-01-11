@@ -885,6 +885,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       player.mouseLeftDownIgnore = false;
     }
 
+    if (mouseLeftClicked && player.inventoryOpen){
+      player.inventoryOpen = false;
+    }
+
     if (mouseLeftClicked && player.activatedPowerIndex != -1) {
       player.useActivatedPower();
       player.mouseLeftDownIgnore = true;
