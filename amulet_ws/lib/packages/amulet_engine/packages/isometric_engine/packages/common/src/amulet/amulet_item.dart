@@ -411,7 +411,7 @@ enum AmuletItem {
     selectAction: AmuletItemAction.Equip,
     type: ItemType.Shoes,
     subType: ShoeType.Black_Boots,
-    description: 'Mystical boots',
+    description: 'reduces all cooldowns',
     level1: AmuletItemStats(
       health: 5,
     ),

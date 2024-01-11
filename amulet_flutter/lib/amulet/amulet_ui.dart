@@ -69,7 +69,7 @@ class AmuletUI {
           buildDialogTalk(),
           buildPositionedWorldMap(),
           buildPositionedPlayerHealthAndWeapons(),
-          Positioned(top: 4, left: 4, child: buildPlayerStatsRow()),
+          // Positioned(top: 4, left: 4, child: buildPlayerStatsRow()),
           Positioned(
             bottom: margin1,
             left: margin1,
@@ -153,7 +153,8 @@ class AmuletUI {
                     children: [
                       buildPlayerHealthBar(),
                       height2,
-                      buildPlayerWeapons(),
+                      // buildPlayerWeapons(),
+                      buildInventoryEquipped(),
                     ],
                   ),
                 ),
@@ -471,57 +472,65 @@ class AmuletUI {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            buildItemSlot(amulet.equippedHelm,
-                amulet: amulet,
-                onEmpty: IsometricIcon(
-                  iconType: IconType.Inventory_Helm,
-                  color: Colors.black12.value,
-                  scale: 0.3,
-                )),
             Row(
               children: [
-                buildItemSlot(amulet.equippedHandLeft,
+                buildItemSlot(amulet.equippedWeapon,
                     amulet: amulet,
                     onEmpty: IsometricIcon(
-                      iconType: IconType.Inventory_Glove_Left,
+                      iconType: IconType.Inventory_Helm,
                       color: Colors.black12.value,
-                      scale: 0.6,
+                      scale: 0.3,
                     )),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    buildItemSlot(amulet.equippedBody,
-                        amulet: amulet,
-                        onEmpty: IsometricIcon(
-                          iconType: IconType.Inventory_Armour,
-                          color: Colors.black12.value,
-                          scale: 1,
-                        )),
-                    buildItemSlot(amulet.equippedLegs,
-                        amulet: amulet,
-                        onEmpty: IsometricIcon(
-                          iconType: IconType.Inventory_Legs,
-                          color: Colors.black12.value,
-                          scale: 0.6,
-                        )),
-                  ],
-                ),
-                buildItemSlot(amulet.equippedHandRight,
+                buildItemSlot(amulet.equippedHelm,
                     amulet: amulet,
                     onEmpty: IsometricIcon(
-                      iconType: IconType.Inventory_Glove_Right,
+                      iconType: IconType.Inventory_Helm,
+                      color: Colors.black12.value,
+                      scale: 0.3,
+                    )),
+                buildItemSlot(amulet.equippedBody,
+                    amulet: amulet,
+                    onEmpty: IsometricIcon(
+                      iconType: IconType.Inventory_Armour,
+                      color: Colors.black12.value,
+                      scale: 1,
+                    )),
+                buildItemSlot(amulet.equippedShoes,
+                    amulet: amulet,
+                    onEmpty: IsometricIcon(
+                      iconType: IconType.Inventory_Shoes,
                       color: Colors.black12.value,
                       scale: 0.6,
-                    )),
+                    ))
+                // buildItemSlot(amulet.equippedHandLeft,
+                //     amulet: amulet,
+                //     onEmpty: IsometricIcon(
+                //       iconType: IconType.Inventory_Glove_Left,
+                //       color: Colors.black12.value,
+                //       scale: 0.6,
+                //     )),
+                // Column(
+                //   crossAxisAlignment: CrossAxisAlignment.center,
+                //   children: [
+                //
+                //     // buildItemSlot(amulet.equippedLegs,
+                //     //     amulet: amulet,
+                //     //     onEmpty: IsometricIcon(
+                //     //       iconType: IconType.Inventory_Legs,
+                //     //       color: Colors.black12.value,
+                //     //       scale: 0.6,
+                //     //     )),
+                //   ],
+                // ),
+                // buildItemSlot(amulet.equippedHandRight,
+                //     amulet: amulet,
+                //     onEmpty: IsometricIcon(
+                //       iconType: IconType.Inventory_Glove_Right,
+                //       color: Colors.black12.value,
+                //       scale: 0.6,
+                //     )),
               ],
             ),
-            buildItemSlot(amulet.equippedShoes,
-                amulet: amulet,
-                onEmpty: IsometricIcon(
-                  iconType: IconType.Inventory_Shoes,
-                  color: Colors.black12.value,
-                  scale: 0.6,
-                )),
           ],
         ),
       );
@@ -719,7 +728,8 @@ class AmuletUI {
           amulet.playerInventoryOpen,
           (inventoryOpen) => inventoryOpen
               ? dialog
-              : inventoryButton),
+              // : inventoryButton),
+              : nothing),
     );
   }
 

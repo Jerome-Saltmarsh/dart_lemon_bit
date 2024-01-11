@@ -101,6 +101,7 @@ class Amulet extends IsometricGame {
   final npcOptionsReads = Watch(0);
   final equippedWeaponIndex = Watch(-1);
   final activatedPowerIndex = Watch(-1);
+  final equippedWeapon = ItemSlot(slotType: SlotType.Weapons, index: 0);
   final equippedHelm = ItemSlot(slotType: SlotType.Equipped_Helm, index: 0);
   final equippedBody = ItemSlot(slotType: SlotType.Equipped_Body, index: 0);
   final equippedLegs = ItemSlot(slotType: SlotType.Equipped_Legs, index: 0);

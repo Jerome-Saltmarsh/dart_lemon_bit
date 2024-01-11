@@ -703,6 +703,21 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
   }
 
+  @override
+  void customOnCharacterInteractWithGameObject(
+      Character character,
+      GameObject gameObject,
+  ) {
+    if (
+      character is AmuletPlayer &&
+      gameObject.type == ItemType.Object &&
+      gameObject.subType == GameObjectType.Wooden_Chest
+    ){
+      character.toggleInventoryOpen();
+      character.clearTarget();
+    }
+  }
+
   List<int> getMarkTypes(int markType) =>
       scene.marks.where((markValue) => MarkType.getType(markValue) == markType).toList(growable: false);
 
