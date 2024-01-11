@@ -9,6 +9,7 @@ class SceneReader extends ByteReader {
   static final decoder = ZLibDecoder();
   static final _instance = SceneReader();
 
+  var gameObjectsId = 0;
   var totalZ = 0;
   var totalRows = 0;
   var totalColumns = 0;
@@ -38,7 +39,7 @@ class SceneReader extends ByteReader {
     values = bytes;
     readLoop();
 
-    return Scene(
+    final scene = Scene(
       name: 'test',
       types: nodeTypes,
       shapes: nodeOrientations,
@@ -49,6 +50,28 @@ class SceneReader extends ByteReader {
       variations: variations,
       marks: marks,
     )..keys = keys;
+
+    for (final mark in marks) {
+      final markType = MarkType.getType(mark);
+      if (markType == MarkType.Rune){
+        final markIndex = MarkType.getIndex(mark);
+        gameObjects.add(GameObject(
+          x: scene.getIndexX(markIndex),
+          y: scene.getIndexY(markIndex),
+          z: scene.getIndexZ(markIndex),
+          team: TeamType.Neutral,
+          type: ItemType.Object,
+          subType: GameObjectType.Rune,
+          id: gameObjectsId++,
+        )
+          ..persistable = false
+          ..fixed = true
+          ..collectable = false
+          ..interactable = true
+        );
+      }
+    }
+    return scene;
   }
 
   void readLoop() {
@@ -80,7 +103,6 @@ class SceneReader extends ByteReader {
 
   void readGameObjects() {
     gameObjects.clear();
-    var id = 0;
     final total = readUInt16();
     for (var i = 0; i < total; i++){
       final type = readByte();
@@ -107,7 +129,7 @@ class SceneReader extends ByteReader {
             z: z,
             type: type,
             subType: subType,
-            id: id++,
+            id: gameObjectsId++,
             team: team,
           )
             ..collidable = collidable

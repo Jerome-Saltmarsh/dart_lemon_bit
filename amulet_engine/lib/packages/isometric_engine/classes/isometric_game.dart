@@ -387,8 +387,10 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     return false;
   }
 
-  void performAbilityMelee(Character character){
-
+  void performAbilityMelee({
+    required Character character,
+    required DamageType damageType,
+  }){
 
     dispatchGameEventPosition(
       GameEvent.Melee_Attack_Performed,
@@ -396,12 +398,13 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     );
 
     final target = character.target;
-    if (target is Collider){
+    if (target is Collider) {
       if (character.withinAttackRangeAndAngle(target)){
         applyHit(
           target: target,
           damage: character.weaponDamage,
           srcCharacter: character,
+          damageType: damageType,
         );
         return;
       }
@@ -435,6 +438,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         target: other,
         damage: character.weaponDamage,
         srcCharacter: character,
+        damageType: DamageType.melee,
       );
       attackHit = true;
     }
@@ -462,6 +466,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         target: gameObject,
         damage: character.weaponDamage,
         srcCharacter: character,
+        damageType: DamageType.melee,
       );
       attackHit = true;
     }
@@ -471,6 +476,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         target: nearest,
         damage: character.weaponDamage,
         srcCharacter: character,
+        damageType: DamageType.melee,
       );
     }
 
@@ -776,6 +782,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         srcCharacter: srcCharacter,
         damage: damage,
         friendlyFire: true,
+        damageType: DamageType.fire,
       );
     }
 
@@ -791,6 +798,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         srcCharacter: srcCharacter,
         damage: damage,
         friendlyFire: true,
+        damageType: DamageType.fire,
       );
     }
   }
@@ -861,6 +869,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required Character src,
     required Character target,
     required int amount,
+    required DamageType damageType,
   }) {
     if (target.dead || target.invincible) return;
 
@@ -1272,6 +1281,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         srcCharacter: owner,
         target: target,
         damage: projectile.damage,
+        damageType: DamageType.projectile,
       );
     }
 
@@ -1285,6 +1295,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required Character srcCharacter,
     required Collider target,
     required int damage,
+    required DamageType damageType,
     double? angle,
     bool friendlyFire = false,
   }) {
@@ -1320,7 +1331,12 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     if (target is Character) {
       if (!friendlyFire && srcCharacter.onSameTeam(target)) return;
       if (target.dead) return;
-      applyDamageToCharacter(src: srcCharacter, target: target, amount: damage);
+      applyDamageToCharacter(
+          src: srcCharacter,
+          target: target,
+          amount: damage,
+          damageType: damageType,
+      );
       return;
     }
   }
@@ -1358,11 +1374,15 @@ abstract class IsometricGame<T extends IsometricPlayer> {
             srcCharacter: character,
             target: target,
             damage: character.weaponDamage,
+            damageType: DamageType.melee,
           );
         }
         return;
       }
-      performAbilityMelee(character);
+      performAbilityMelee(
+          character: character,
+          damageType: DamageType.melee,
+      );
       return;
     }
 

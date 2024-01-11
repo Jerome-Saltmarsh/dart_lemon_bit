@@ -1,8 +1,5 @@
 import '../../src.dart';
 
-// common
-// magical
-// rare
 
 enum AmuletItem {
   Blink_Dagger(
@@ -12,6 +9,7 @@ enum AmuletItem {
     description: 'Teleport a short distance',
     levelMin: 1,
     levelMax: 99,
+    minRunes: 3,
     level1: AmuletItemStats(
       charges: 1,
       cooldown: 0,
@@ -66,6 +64,7 @@ enum AmuletItem {
   Weapon_Short_Sword_Of_Pain(
     levelMin: 1,
     levelMax: 5,
+    minRunes: 1,
     selectAction: AmuletItemAction.Equip,
     type: ItemType.Weapon,
     subType: WeaponType.Shortsword,
@@ -82,6 +81,7 @@ enum AmuletItem {
   Weapon_Rodungs_Blade(
     levelMin: 3,
     levelMax: 5,
+    minRunes: 3,
     selectAction: AmuletItemAction.Equip,
     type: ItemType.Weapon,
     subType: WeaponType.Shortsword,
@@ -662,6 +662,27 @@ enum AmuletItem {
       performDuration: 25,
     ),
   ),
+  // the player has to travel the map and unlock runes
+  // spells can only be used once a certain amount of runes have been unlocked
+  // each time the player finds
+  Spell_Explosion_Level_2(
+    levelMin: 6,
+    levelMax: 10,
+    selectAction: AmuletItemAction.Positional,
+    type: ItemType.Spell,
+    subType: SpellType.Fireball,
+    description: 'strikes random nearby enemies with lightning',
+    level1: AmuletItemStats(
+      damageMin: 3,
+      damageMax: 5,
+      cooldown: 5,
+      charges: 2,
+      fire: 0,
+      range: 200,
+      quantity: 1,
+      performDuration: 25,
+    ),
+  ),
   Spell_Blink(
     levelMin: 1,
     levelMax: 5,
@@ -691,22 +712,22 @@ enum AmuletItem {
       description: 'heals a small amount of health',
       level1: AmuletItemStats(
         charges: 1,
-        cooldown: 14,
-        health: 5,
+        cooldown: 10,
+        health: 15,
         performDuration: 25,
         water: 0,
       ),
       level2: AmuletItemStats(
         charges: 1,
-        cooldown: 12,
-        health: 7,
+        cooldown: 10,
+        health: 25,
         performDuration: 23,
         water: 3,
       ),
       level3: AmuletItemStats(
         charges: 1,
         cooldown: 10,
-        health: 10,
+        health: 35,
         performDuration: 21,
         water: 6,
         electricity: 1,
@@ -725,6 +746,7 @@ enum AmuletItem {
   final int type;
   final int subType;
   final bool consumable;
+  final int minRunes;
   final AmuletItemStats level1;
   final AmuletItemStats? level2;
   final AmuletItemStats? level3;
@@ -741,6 +763,7 @@ enum AmuletItem {
     this.level2,
     this.level3,
     this.consumable = false,
+    this.minRunes = 0,
   });
 
   AmuletItemStats? getStatsForLevel(int level) => switch (level) {

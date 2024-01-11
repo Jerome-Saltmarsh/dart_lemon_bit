@@ -42,6 +42,7 @@ class GameObjectType {
   static const Firewood = 48;
   static const Pumpkin = 49;
   static const Wooden_Chest = 50;
+  static const Rune = 51;
 
   static bool isMaterialMetal(int value) => const [
       Barrel_Explosive
@@ -95,6 +96,7 @@ class GameObjectType {
       Firewood: 'Firewood',
       Pumpkin: 'Pumpkin',
       Wooden_Chest: 'Wooden_Chest',
+      Rune: 'Rune',
     }[value] ?? 'object-type-unknown-$value';
   }
 
@@ -141,5 +143,6 @@ class GameObjectType {
     Firewood,
     Pumpkin,
     Wooden_Chest,
+    Rune,
   ];
 }

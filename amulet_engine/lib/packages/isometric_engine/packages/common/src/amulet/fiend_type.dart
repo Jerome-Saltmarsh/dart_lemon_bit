@@ -1,4 +1,5 @@
 
+import '../../../../enums/damage_type.dart';
 import '../isometric/character_type.dart';
 import '../isometric/weapon_type.dart';
 
@@ -20,8 +21,7 @@ enum FiendType {
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 50,
     elementFire: 1,
-    // weaknesses: [DamageType.Ice, DamageType.Arrow],
-    resists: DamageType.Fire,
+    chanceOfDropLoot: 0.05,
   ),
   Skeleton(
     level: 2,
@@ -40,11 +40,12 @@ enum FiendType {
     postAttackPauseDurationMin: 30,
     postAttackPauseDurationMax: 80,
     elementStone: 1,
-    resists: DamageType.Wind,
+    resists: DamageType.fire,
+    chanceOfDropLoot: 0.05,
   ),
   Wolf(
     level: 3,
-    health: 8,
+    health: 10,
     damage: 3,
     characterType: CharacterType.Wolf,
     attackDuration: 20,
@@ -59,7 +60,8 @@ enum FiendType {
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 40,
     elementAir: 1,
-    resists: DamageType.Wind,
+    resists: DamageType.wind,
+    chanceOfDropLoot: 0.1,
   ),
   Zombie(
     level: 4,
@@ -78,7 +80,8 @@ enum FiendType {
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 60,
     elementWater: 1,
-    resists: DamageType.Sword,
+    resists: DamageType.melee,
+    chanceOfDropLoot: 0.05,
   ),
   Fallen_Armoured(
     level: 5,
@@ -97,7 +100,8 @@ enum FiendType {
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 50,
     elementWater: 1,
-    resists: DamageType.Sword,
+    resists: DamageType.melee,
+    chanceOfDropLoot: 0.1,
   ),
   Gargoyle(
     level: 6,
@@ -116,7 +120,8 @@ enum FiendType {
     postAttackPauseDurationMin: 30,
     postAttackPauseDurationMax: 100,
     elementStone: 1,
-    resists: DamageType.Arrow,
+    resists: DamageType.projectile,
+    chanceOfDropLoot: 0.33,
   ),
   Toad_Warrior(
     level: 6,
@@ -135,7 +140,8 @@ enum FiendType {
     postAttackPauseDurationMin: 30,
     postAttackPauseDurationMax: 100,
     elementWater: 1,
-    resists: DamageType.Sword,
+    resists: DamageType.melee,
+    chanceOfDropLoot: 0.33,
   );
 
   final int level;
@@ -158,6 +164,7 @@ enum FiendType {
   final int elementFire;
   final int elementAir;
   final int elementStone;
+  final double chanceOfDropLoot;
   final DamageType? resists;
 
   const FiendType({
@@ -176,18 +183,11 @@ enum FiendType {
     required this.clearTargetOnPerformAction,
     required this.postAttackPauseDurationMin,
     required this.postAttackPauseDurationMax,
+    required this.chanceOfDropLoot,
     this.resists,
     this.elementWater = 0,
     this.elementFire = 0,
     this.elementAir = 0,
     this.elementStone = 0,
   });
-}
-
-enum DamageType {
-  Arrow,
-  Sword,
-  Fire,
-  Ice,
-  Wind,
 }

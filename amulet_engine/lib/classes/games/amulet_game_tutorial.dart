@@ -697,6 +697,7 @@ class AmuletGameTutorial extends AmuletGame {
     required Character srcCharacter,
     required Collider target,
     required int damage,
+    required DamageType damageType,
     double? angle,
     bool friendlyFire = false,
   }) {
@@ -706,6 +707,7 @@ class AmuletGameTutorial extends AmuletGame {
         damage: damage,
         angle: angle,
         friendlyFire: friendlyFire,
+        damageType: damageType,
     );
 
     if (srcCharacter is! AmuletPlayer){

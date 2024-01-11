@@ -25,6 +25,10 @@ ctrl + []               : move caret to code block
 * [new]: leg type linen blue
 * [new]: model leg type iron plates
 
+## 11.01.2024
+* [new]: submit steamworks registration
+* [new]: feature damage type resistance
+
 ## 08.01.2024
 * [fix]: ai guards running still
 * [fix]: model wooden barrel

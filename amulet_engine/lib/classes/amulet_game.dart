@@ -343,7 +343,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         performAbilityBlink(character);
         break;
       case AmuletItem.Weapon_Short_Sword:
-        performAbilityMelee(character);
+        performAbilityMelee(
+          character: character,
+          damageType: DamageType.melee,
+        );
         break;
       case AmuletItem.Weapon_Old_Bow:
         performAbilityArrow(
@@ -414,7 +417,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       default:
         final weaponType = activeSlotAmuletItem.subType;
         if (WeaponType.valuesMelee.contains(weaponType)){
-          performAbilityMelee(character);
+          performAbilityMelee(
+              character: character,
+              damageType: DamageType.melee,
+          );
           return;
         }
         throw Exception('amulet.PerformCharacterAction($activeSlotAmuletItem)');
@@ -502,6 +508,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         srcCharacter: character,
         target: otherCharacter,
         damage: 3,
+        damageType: DamageType.electric
       );
       boltsRemaining--;
       if (boltsRemaining <= 0) {
@@ -515,20 +522,17 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     if (target is AmuletFiend){
       if (target.spawnLootOnDeath) {
-        if (randomChance(target.chanceOfDropConsumable)) {
-          spawnAmuletItemAtPosition(
-            item: randomItem(AmuletItem.typeConsumables),
-            position: target,
-            deactivationTimer: lootDeactivationTimer,
-          );
-        }
-        else
-        if (randomChance(target.chanceOfDropLoot)) {
+        if (randomChance(target.fiendType.chanceOfDropLoot)) {
           spawnRandomLootAtFiend(target);
+        } else if (randomChance(0.1)) {
+            spawnAmuletItemAtPosition(
+              item: randomItem(AmuletItem.typeConsumables),
+              position: target,
+              deactivationTimer: lootDeactivationTimer,
+            );
         }
       }
     }
-
 
     if (target.respawnDurationTotal > 0){
       addJob(seconds: target.respawnDurationTotal, action: () {
@@ -907,8 +911,20 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required Character src,
     required Character target,
     required int amount,
+    required DamageType damageType,
   }) {
-    super.applyDamageToCharacter(src: src, target: target, amount: amount);
+    if (target is AmuletFiend) {
+      final resists = target.fiendType.resists;
+      if (resists == damageType){
+        amount = amount ~/ 2;
+      }
+    }
+    super.applyDamageToCharacter(
+      src: src,
+      target: target,
+      amount: amount,
+      damageType: damageType,
+    );
   }
 }
 

@@ -53,6 +53,11 @@ class RendererGameObjects extends RenderGroup {
       return;
     }
 
+    if (type == ItemType.Object && subType == GameObjectType.Rune){
+      render.circleOutlineAtPosition(position: gameObject, radius: 10);
+      return;
+    }
+
     if (type == ItemType.Object && subType == GameObjectType.Wooden_Cart){
       render.renderSpriteAutoIndexed(
           sprite: images.woodenCart,
