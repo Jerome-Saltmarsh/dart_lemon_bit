@@ -32,8 +32,8 @@ class AmuletPlayer extends IsometricPlayer with
   AmuletGame amuletGame;
   var equipmentDirty = true;
 
-  var npcName = '';
   var npcText = '';
+  var npcName = '';
   var npcOptions = <TalkOption>[];
   Function? onInteractionOver;
 
@@ -84,6 +84,26 @@ class AmuletPlayer extends IsometricPlayer with
     final questMainIndex = data.tryGetInt('quest_main') ?? 0;
     return QuestMain.values[questMainIndex];
   }
+
+  AmuletItemSlot? get activeAmuletItemSlot {
+     switch (activeSlotType){
+       case SlotType.Equipped_Helm:
+         return equippedHelm;
+       case SlotType.Equipped_Body:
+         return equippedBody;
+       case SlotType.Equipped_Shoes:
+         return equippedShoe;
+       case SlotType.Equipped_Legs:
+         return equippedLegs;
+       case SlotType.Equipped_Hand_Left:
+         return equippedHandLeft;
+       case SlotType.Equipped_Hand_Right:
+         return equippedHandRight;
+       default:
+         return null;
+     }
+  }
+
 
   set questMain (QuestMain value){
     data.setInt('quest_main', value.index);
@@ -599,103 +619,103 @@ class AmuletPlayer extends IsometricPlayer with
 
   bool isValidIndexTreasure(int index) => index >= 0 && index < treasures.length;
 
-  void selectWeaponAtIndex(int index) {
-     if (deadOrBusy) {
-       return;
-     }
-
-    if (!isValidWeaponIndex(index)) {
-      writeAmuletError('Invalid weapon index $index');
-      return;
-    }
-
-    final itemSlot = weapons[index];
-    final amuletItem = itemSlot.amuletItem;
-
-    if (amuletItem == null) {
-      return;
-    }
-
-    if (itemSlot.charges <= 0) {
-      writeAmuletError('${itemSlot.amuletItem?.name} has no charges');
-      return;
-    }
-
-    final itemStats = getAmuletItemStats(amuletItem);
-
-    if (itemStats == null){
-      writeGameError(GameError.Insufficient_Elements);
-      return;
-    }
-
-    final dependency = amuletItem.dependency;
-
-    if (dependency != null && weaponType != dependency){
-      writeGameError(GameError.Weapon_Required);
-      return;
-    }
-
-    switch (amuletItem.selectAction) {
-      case AmuletItemAction.Equip:
-        // if (equippedWeaponIndex == index){
-        //   performForceAttack();
-        //   return;
-        // }
-        // equippedWeaponIndex = index;
-        deselectActivatedPower();
-        break;
-      case AmuletItemAction.Positional:
-        if (activatedPowerIndex == index){
-          deselectActivatedPower();
-          return;
-        }
-        activatedPowerIndex = index;
-        break;
-      case AmuletItemAction.Directional:
-        if (activatedPowerIndex == index){
-          deselectActivatedPower();
-          return;
-        }
-        activatedPowerIndex = index;
-        break;
-      case AmuletItemAction.Targeted_Ally:
-        if (activatedPowerIndex == index){
-          deselectActivatedPower();
-          return;
-        }
-        activatedPowerIndex = index;
-        break;
-      case AmuletItemAction.Targeted_Enemy:
-        if (activatedPowerIndex == index){
-          deselectActivatedPower();
-          return;
-        }
-        activatedPowerIndex = index;
-        break;
-      case AmuletItemAction.Caste:
-        lookAtMouse();
-        reduceAmuletItemSlotCharges(itemSlot);
-        activatedPowerIndex = index;
-        setCharacterStateCasting(
-            duration: itemStats.performDuration,
-        );
-        itemSlot.cooldown = 0;
-        itemSlot.cooldownDuration = itemStats.cooldown;
-        writePlayerWeapon(index);
-        amuletGame.onAmuletItemUsed(this, amuletItem);
-        break;
-      case AmuletItemAction.Instant:
-        reduceAmuletItemSlotCharges(itemSlot);
-        itemSlot.cooldown = 0;
-        itemSlot.cooldownDuration = itemStats.cooldown;
-        writePlayerWeapon(index);
-        break;
-      case AmuletItemAction.Consume:
-        // TODO: Handle this case.
-      case AmuletItemAction.None:
-        // TODO: Handle this case.
-    }
-  }
+  // void selectWeaponAtIndex(int index) {
+  //    if (deadOrBusy) {
+  //      return;
+  //    }
+  //
+  //   if (!isValidWeaponIndex(index)) {
+  //     writeAmuletError('Invalid weapon index $index');
+  //     return;
+  //   }
+  //
+  //   final itemSlot = weapons[index];
+  //   final amuletItem = itemSlot.amuletItem;
+  //
+  //   if (amuletItem == null) {
+  //     return;
+  //   }
+  //
+  //   if (itemSlot.charges <= 0) {
+  //     writeAmuletError('${itemSlot.amuletItem?.name} has no charges');
+  //     return;
+  //   }
+  //
+  //   final itemStats = getAmuletItemStats(amuletItem);
+  //
+  //   if (itemStats == null){
+  //     writeGameError(GameError.Insufficient_Elements);
+  //     return;
+  //   }
+  //
+  //   final dependency = amuletItem.dependency;
+  //
+  //   if (dependency != null && weaponType != dependency){
+  //     writeGameError(GameError.Weapon_Required);
+  //     return;
+  //   }
+  //
+  //   switch (amuletItem.skillType?.casteType) {
+  //     case AmuletItemAction.Equip:
+  //       // if (equippedWeaponIndex == index){
+  //       //   performForceAttack();
+  //       //   return;
+  //       // }
+  //       // equippedWeaponIndex = index;
+  //       deselectActivatedPower();
+  //       break;
+  //     case AmuletItemAction.Positional:
+  //       if (activatedPowerIndex == index){
+  //         deselectActivatedPower();
+  //         return;
+  //       }
+  //       activatedPowerIndex = index;
+  //       break;
+  //     case AmuletItemAction.Directional:
+  //       if (activatedPowerIndex == index){
+  //         deselectActivatedPower();
+  //         return;
+  //       }
+  //       activatedPowerIndex = index;
+  //       break;
+  //     case AmuletItemAction.Targeted_Ally:
+  //       if (activatedPowerIndex == index){
+  //         deselectActivatedPower();
+  //         return;
+  //       }
+  //       activatedPowerIndex = index;
+  //       break;
+  //     case AmuletItemAction.Targeted_Enemy:
+  //       if (activatedPowerIndex == index){
+  //         deselectActivatedPower();
+  //         return;
+  //       }
+  //       activatedPowerIndex = index;
+  //       break;
+  //     case AmuletItemAction.Caste:
+  //       lookAtMouse();
+  //       reduceAmuletItemSlotCharges(itemSlot);
+  //       activatedPowerIndex = index;
+  //       setCharacterStateCasting(
+  //           duration: itemStats.performDuration,
+  //       );
+  //       itemSlot.cooldown = 0;
+  //       itemSlot.cooldownDuration = itemStats.cooldown;
+  //       writePlayerWeapon(index);
+  //       amuletGame.onAmuletItemUsed(this, amuletItem);
+  //       break;
+  //     case AmuletItemAction.Instant:
+  //       reduceAmuletItemSlotCharges(itemSlot);
+  //       itemSlot.cooldown = 0;
+  //       itemSlot.cooldownDuration = itemStats.cooldown;
+  //       writePlayerWeapon(index);
+  //       break;
+  //     case AmuletItemAction.Consume:
+  //       // TODO: Handle this case.
+  //     case AmuletItemAction.None:
+  //       // TODO: Handle this case.
+  //   }
+  // }
 
   void deselectActivatedPower() {
     // performingActivePower = false;
@@ -1201,22 +1221,26 @@ class AmuletPlayer extends IsometricPlayer with
       );
     };
 
-    final activeAbility = getWeaponAtIndex(activatedPowerIndex);
+    final activeAmuletItem = activeAmuletItemSlot?.amuletItem;
 
-    if (activeAbility == null){
+    if (activeAmuletItem == null){
       return;
     }
 
-    final activeAbilityStats = getAmuletItemStats(activeAbility);
+    final activeAbilityStats = getAmuletItemStats(activeAmuletItem);
 
     if (activeAbilityStats == null){
       writeGameError(GameError.Insufficient_Elements);
       return;
     }
 
-    final powerMode = activeAbility.selectAction;
+    final skillType = activeAmuletItem.skillType;
 
-    if (powerMode == AmuletItemAction.Positional) {
+    if (skillType == null){
+      return;
+    }
+
+    if (skillType.casteType == CasteType.Positional) {
       final mouseDistance = getMouseDistance();
       final maxRange = activeAbilityStats.range;
       if (mouseDistance <= maxRange){
@@ -1723,12 +1747,8 @@ class AmuletPlayer extends IsometricPlayer with
       }
     }
 
-    switch (amuletItem.selectAction) {
-      case AmuletItemAction.Equip:
-        attack();
-        break;
-      case AmuletItemAction.Caste:
-
+    switch (amuletItem.skillType?.casteType) {
+      case CasteType.Self:
         if (amuletItemLevel.performDuration <= 0){
           throw Exception('stats.performDuration <= 0 ${amuletItem} ${amuletItemLevel}');
         }
@@ -1737,7 +1757,7 @@ class AmuletPlayer extends IsometricPlayer with
           duration: amuletItemLevel.performDuration,
         );
         break;
-      case AmuletItemAction.Targeted_Enemy:
+      case CasteType.Targeted_Enemy:
         if (target == null) {
           deselectActivatedPower();
           return;
@@ -1747,7 +1767,7 @@ class AmuletPlayer extends IsometricPlayer with
           duration: amuletItemLevel.performDuration,
         );
         break;
-      case AmuletItemAction.Targeted_Ally:
+      case CasteType.Targeted_Ally:
         if (target == null) {
           deselectActivatedPower();
           return;
@@ -1756,25 +1776,25 @@ class AmuletPlayer extends IsometricPlayer with
           duration: amuletItemLevel.performDuration,
         );
         break;
-      case AmuletItemAction.Positional:
+      case CasteType.Positional:
         useWeaponType(
           weaponType: dependency ?? amuletItem.subType,
           duration: amuletItemLevel.performDuration,
         );
         break;
-      case AmuletItemAction.Instant:
+      case CasteType.Instant:
         break;
-      case AmuletItemAction.Directional:
+      case CasteType.Directional:
         lookAtMouse();
         useWeaponType(
           weaponType: dependency ?? amuletItem.subType,
           duration: amuletItemLevel.performDuration,
         );
         break;
-      case AmuletItemAction.Consume:
-        // TODO: Handle this case.
-      case AmuletItemAction.None:
-        // TODO: Handle this case.
+      case null:
+        break;
+      case CasteType.Passive:
+        break;
     }
   }
 
@@ -1786,7 +1806,7 @@ class AmuletPlayer extends IsometricPlayer with
     switch (slotType){
 
       case SlotType.Weapons:
-        selectWeaponAtIndex(index);
+        // selectWeaponAtIndex(index);
         return;
       case SlotType.Items:
         if (index >= items.length) {
@@ -1842,6 +1862,8 @@ class AmuletPlayer extends IsometricPlayer with
 
   void activateSlotType(SlotType? slotType){
     this.activeSlotType = slotType;
+    // todo
+
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Active_Slot_Type);
     if (slotType == null) {

@@ -4,7 +4,6 @@ import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/amulet/classes/item_slot.dart';
 import 'package:amulet_flutter/amulet/ui/widgets/mmo_item_image.dart';
 import 'package:amulet_flutter/gamestream/ui/builders/build_watch.dart';
-import 'package:amulet_flutter/gamestream/ui/widgets/color_changing_container.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 Widget buildItemSlot(ItemSlot itemSlot, {
@@ -93,12 +92,18 @@ Widget buildItemSlot(ItemSlot itemSlot, {
               );
             }
 
-                    return ColorChangingContainer(
-                      size: 64.0,
-                      child: child,
-                    );
-                  },
-                ));
+            return Container(
+              width: 64.0,
+              height: 64,
+              color: Colors.white70,
+              child: child,
+            );
+            // return ColorChangingContainer(
+            //   size: 64.0,
+            //   child: child,
+            // );
+          },
+        ));
       }
       ),
     );

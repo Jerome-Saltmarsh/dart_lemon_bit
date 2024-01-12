@@ -58,22 +58,25 @@ extension AmuletRender on Amulet {
   }
 
   void renderActivatedPower({Color rangeColor = Colors.white}) {
-    if (activatedPowerIndex.value == -1)
-      return;
 
-    final activatedPower = weapons[activatedPowerIndex.value].amuletItem.value;
+    final activeSlotAmuletItem = activeAmuletItemSlot?.amuletItem.value;
 
-    if (activatedPower == null)
-      return;
-
-
-    final powerMode = activatedPower.selectAction;
-
-    if (powerMode == AmuletItemAction.Instant){
+    if (activeSlotAmuletItem == null){
       return;
     }
 
-    if (powerMode == AmuletItemAction.Positional) {
+    final skillType = activeSlotAmuletItem.skillType;
+
+    if (skillType == null){
+      return;
+    }
+    final casteType = skillType.casteType;
+
+    if (casteType == CasteType.Instant){
+      return;
+    }
+
+    if (casteType == CasteType.Positional) {
       engine.color = Colors.white;
       render.circleOutlineAtPosition(
         position: activePowerPosition,
@@ -83,8 +86,8 @@ extension AmuletRender on Amulet {
 
     engine.color = rangeColor;
 
-    final level = amulet.getAmuletPlayerItemLevel(activatedPower);
-    final stats = activatedPower.getStatsForLevel(level);
+    final level = amulet.getAmuletPlayerItemLevel(activeSlotAmuletItem);
+    final stats = activeSlotAmuletItem.getStatsForLevel(level);
 
     if (stats == null){
       return;

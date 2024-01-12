@@ -3,7 +3,6 @@ import '../../src.dart';
 
 enum AmuletItem {
   Blink_Dagger(
-    selectAction: AmuletItemAction.Positional,
     type: ItemType.Weapon,
     subType: WeaponType.Shortsword,
     description: 'Teleport a short distance',
@@ -32,7 +31,6 @@ enum AmuletItem {
   Weapon_Rusty_Short_Sword(
     levelMin: 1,
     levelMax: 5,
-    selectAction: AmuletItemAction.Equip,
     type: ItemType.Weapon,
     subType: WeaponType.Shortsword,
     description: 'A low quality short sword',
@@ -48,7 +46,6 @@ enum AmuletItem {
   Weapon_Short_Sword(
     levelMin: 1,
     levelMax: 5,
-    selectAction: AmuletItemAction.Equip,
     type: ItemType.Weapon,
     subType: WeaponType.Shortsword,
     description: 'A plain short sword',
@@ -65,7 +62,6 @@ enum AmuletItem {
     levelMin: 1,
     levelMax: 5,
     minRunes: 1,
-    selectAction: AmuletItemAction.Equip,
     type: ItemType.Weapon,
     subType: WeaponType.Shortsword,
     description: 'A particularly sharp short sword',
@@ -82,7 +78,6 @@ enum AmuletItem {
     levelMin: 3,
     levelMax: 5,
     minRunes: 3,
-    selectAction: AmuletItemAction.Equip,
     type: ItemType.Weapon,
     subType: WeaponType.Shortsword,
     description: 'Are rare blade that once belonged to a great swordsman',
@@ -98,7 +93,6 @@ enum AmuletItem {
   Weapon_Broad_Sword(
     levelMin: 4,
     levelMax: 10,
-    selectAction: AmuletItemAction.Equip,
     type: ItemType.Weapon,
     subType: WeaponType.Broadsword,
     description: 'A medium length sword',
@@ -132,7 +126,6 @@ enum AmuletItem {
   Weapon_Sword_Sapphire_Large(
     levelMin: 8,
     levelMax: 12,
-    selectAction: AmuletItemAction.Equip,
     type: ItemType.Weapon,
     subType: WeaponType.Sword_Heavy_Sapphire,
     description: 'A powerful heavy sword made of sapphire',
@@ -148,7 +141,6 @@ enum AmuletItem {
   Weapon_Sharpened_Broad_Sword(
     levelMin: 4,
     levelMax: 10,
-    selectAction: AmuletItemAction.Equip,
     type: ItemType.Weapon,
     subType: WeaponType.Broadsword,
     description: 'A high quality medium length sword',
@@ -182,7 +174,6 @@ enum AmuletItem {
   Weapon_Staff_Wooden(
     levelMin: 1,
     levelMax: 5,
-    selectAction: AmuletItemAction.Equip,
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
     description: 'An old gnarled staff',
@@ -198,7 +189,6 @@ enum AmuletItem {
   Weapon_Staff_Of_Frozen_Lake(
     levelMin: 5,
     levelMax: 10,
-    selectAction: AmuletItemAction.Equip,
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
     description: 'A powerful staff that eliminates cold',
@@ -210,7 +200,6 @@ enum AmuletItem {
   Spell_Bow_Ice_Arrow(
     levelMin: 1,
     levelMax: 5,
-    selectAction: AmuletItemAction.Targeted_Enemy,
     dependency: WeaponType.Bow,
     type: ItemType.Spell,
     subType: SpellType.Split_Arrow,
@@ -228,7 +217,6 @@ enum AmuletItem {
   Spell_Bow_Split_Arrow(
     levelMin: 1,
     levelMax: 5,
-    selectAction: AmuletItemAction.Directional,
     dependency: WeaponType.Bow,
     type: ItemType.Spell,
     subType: SpellType.Split_Arrow,
@@ -268,7 +256,6 @@ enum AmuletItem {
   Weapon_Old_Bow(
     levelMin: 1,
     levelMax: 5,
-    selectAction: AmuletItemAction.Equip,
     type: ItemType.Weapon,
     subType: WeaponType.Bow,
     description: 'A worn out bow',
@@ -303,7 +290,6 @@ enum AmuletItem {
   Weapon_Holy_Bow(
     levelMin: 5,
     levelMax: 10,
-    selectAction: AmuletItemAction.Equip,
     type: ItemType.Weapon,
     subType: WeaponType.Bow,
     description: 'A mythical bow which does a lot of damage',
@@ -335,8 +321,8 @@ enum AmuletItem {
   Helm_Steel(
     levelMin: 5,
     levelMax: 10,
-    selectAction: AmuletItemAction.Equip,
-    description: 'An ordinary helmet made of steel',
+    skillType: SkillType.Heal,
+    description: 'A strong steel helmet which provides healing.',
     type: ItemType.Helm,
     subType: HelmType.Steel,
     level1: AmuletItemStats(),
@@ -344,7 +330,7 @@ enum AmuletItem {
   Helm_Wizards_Hat(
     levelMin: 1,
     levelMax: 5,
-    selectAction: AmuletItemAction.Equip,
+    skillType: SkillType.Freeze_Area,
     type: ItemType.Helm,
     subType: HelmType.Wizard_Hat,
     description: 'A hat commonly worn by students of magic school',
@@ -353,7 +339,7 @@ enum AmuletItem {
   Moth_Hat_Of_Magic(
     levelMin: 5,
     levelMax: 10,
-    selectAction: AmuletItemAction.Equip,
+    skillType: SkillType.Freeze_Target,
     type: ItemType.Helm,
     subType: HelmType.Witches_Hat,
     description: 'an old moth eaten hat that emanates magic',
@@ -364,7 +350,6 @@ enum AmuletItem {
   Pants_Travellers(
     levelMin: 1,
     levelMax: 5,
-    selectAction: AmuletItemAction.Equip,
     type: ItemType.Legs,
     subType: LegType.Leather,
     description: 'Common pants made for more for comfort than combat',
@@ -375,7 +360,6 @@ enum AmuletItem {
   Pants_Squires(
     levelMin: 3,
     levelMax: 8,
-    selectAction: AmuletItemAction.Equip,
     type: ItemType.Legs,
     subType: LegType.Leather,
     description: 'increases attack speed with bows',
@@ -386,7 +370,6 @@ enum AmuletItem {
   Pants_Plated(
     levelMin: 10,
     levelMax: 15,
-    selectAction: AmuletItemAction.Equip,
     type: ItemType.Legs,
     subType: LegType.Plated,
     description: 'Quite heavy but they offer a lot of protection',
@@ -397,7 +380,6 @@ enum AmuletItem {
   Pants_Linen_Striped(
     levelMin: 10,
     levelMax: 15,
-    selectAction: AmuletItemAction.Equip,
     type: ItemType.Legs,
     subType: LegType.Linen_Striped,
     description: 'Light weight pants for for mobility',
@@ -408,7 +390,6 @@ enum AmuletItem {
   Black_Boots_Of_Magic(
     levelMin: 5,
     levelMax: 10,
-    selectAction: AmuletItemAction.Equip,
     type: ItemType.Shoes,
     subType: ShoeType.Black_Boots,
     description: 'reduces all cooldowns',
@@ -419,7 +400,6 @@ enum AmuletItem {
   Gauntlet_of_the_Knight(
     levelMin: 5,
     levelMax: 10,
-    selectAction: AmuletItemAction.Equip,
     type: ItemType.Hand,
     subType: HandType.Gauntlets,
     description: 'passively increases melee damage',
@@ -430,7 +410,6 @@ enum AmuletItem {
   Glove_Healers_Hand(
     levelMin: 5,
     levelMax: 10,
-    selectAction: AmuletItemAction.Equip,
     type: ItemType.Hand,
     subType: HandType.Leather_Gloves,
     description: 'heals the player a small amount',
@@ -442,7 +421,6 @@ enum AmuletItem {
   Leather_Gloves(
     levelMin: 1,
     levelMax: 8,
-    selectAction: AmuletItemAction.Equip,
     type: ItemType.Hand,
     subType: HandType.Leather_Gloves,
     description: 'Common leather gloves',
@@ -453,7 +431,6 @@ enum AmuletItem {
   Armor_Shirt_Blue_Worn(
     levelMin: 1,
     levelMax: 5,
-    selectAction: AmuletItemAction.Equip,
     type: ItemType.Body,
     subType: BodyType.Shirt_Blue,
     description: 'An ordinary shirt',
@@ -464,7 +441,6 @@ enum AmuletItem {
   Armor_Black_Cloak(
     levelMin: 1,
     levelMax: 5,
-    selectAction: AmuletItemAction.Equip,
     type: ItemType.Body,
     subType: BodyType.Black_Cloak,
     description: 'A cloak that enhances magical ability',
@@ -475,7 +451,6 @@ enum AmuletItem {
   Armor_Leather_Basic(
     levelMin: 3,
     levelMax: 6,
-    selectAction: AmuletItemAction.Equip,
     type: ItemType.Body,
     subType: BodyType.Leather_Armour,
     description: 'Common armour',
@@ -486,7 +461,6 @@ enum AmuletItem {
   Shoe_Leather_Boots(
     levelMin: 1,
     levelMax: 5,
-    selectAction: AmuletItemAction.Equip,
     type: ItemType.Shoes,
     subType: ShoeType.Leather_Boots,
     description: 'A common leather boots',
@@ -506,7 +480,6 @@ enum AmuletItem {
   Shoe_Iron_Plates(
     levelMin: 5,
     levelMax: 10,
-    selectAction: AmuletItemAction.Equip,
     type: ItemType.Shoes,
     subType: ShoeType.Iron_Plates,
     description: 'Heavy boots which provide good defense',
@@ -525,7 +498,6 @@ enum AmuletItem {
   Shoe_Ocean_Boots(
     levelMin: 5,
     levelMax: 10,
-    selectAction: AmuletItemAction.Equip,
     type: ItemType.Shoes,
     subType: ShoeType.Iron_Plates,
     description: 'Commonly worn by water mages',
@@ -534,7 +506,6 @@ enum AmuletItem {
   Shoe_Storm_Boots(
     levelMin: 10,
     levelMax: 15,
-    selectAction: AmuletItemAction.Equip,
     type: ItemType.Shoes,
     subType: ShoeType.Iron_Plates,
     description: 'commonly worn by electric mages',
@@ -543,7 +514,6 @@ enum AmuletItem {
   Potion_Health(
     levelMin: 1,
     levelMax: 5,
-    selectAction: AmuletItemAction.Consume,
     type: ItemType.Consumable,
     subType: ConsumableType.Potion_Red,
     consumable: true,
@@ -552,41 +522,9 @@ enum AmuletItem {
       health: 5,
     ),
   ),
-  // Treasure_Fury_Pendent(
-  //   levelMin: 1,
-  //   levelMax: 5,
-  //   selectAction: AmuletItemAction.None,
-  //   type: ItemType.Treasure,
-  //   subType: TreasureType.Pendant_1,
-  //   description: 'faster sword attacks',
-  //   level1: AmuletItemStats(
-  //
-  //   ),
-  // ),
-  // Amulet_Of_The_Ranger(
-  //   levelMin: 1,
-  //   levelMax: 5,
-  //   selectAction: AmuletItemAction.None,
-  //   type: ItemType.Treasure,
-  //   subType: TreasureType.Pendant_1,
-  //   description: 'increases arrow damage',
-  //   level1: AmuletItemStats(
-  //
-  //   ),
-  // ),
-  // Sapphire_Pendant(
-  //   levelMin: 1,
-  //   levelMax: 5,
-  //   selectAction: AmuletItemAction.None,
-  //   type: ItemType.Treasure,
-  //   subType: TreasureType.Pendant_1,
-  //   description: 'a radian blue pendant',
-  //   level1: AmuletItemStats(),
-  // ),
   Spell_Thunderbolt(
     levelMin: 1,
     levelMax: 5,
-    selectAction: AmuletItemAction.Caste,
     type: ItemType.Spell,
     subType: SpellType.Thunderbolt,
     description: 'strikes random nearby enemies with lightning',
@@ -621,7 +559,6 @@ enum AmuletItem {
   Spell_Fireball(
     levelMin: 1,
     levelMax: 5,
-    selectAction: AmuletItemAction.Caste,
     type: ItemType.Spell,
     subType: SpellType.Fireball,
     description: 'strikes random nearby enemies with lightning',
@@ -659,7 +596,6 @@ enum AmuletItem {
   Spell_Explosion(
     levelMin: 1,
     levelMax: 5,
-    selectAction: AmuletItemAction.Positional,
     type: ItemType.Spell,
     subType: SpellType.Fireball,
     description: 'strikes random nearby enemies with lightning',
@@ -680,7 +616,6 @@ enum AmuletItem {
   Spell_Explosion_Level_2(
     levelMin: 6,
     levelMax: 10,
-    selectAction: AmuletItemAction.Positional,
     type: ItemType.Spell,
     subType: SpellType.Fireball,
     description: 'strikes random nearby enemies with lightning',
@@ -698,7 +633,6 @@ enum AmuletItem {
   Spell_Blink(
     levelMin: 1,
     levelMax: 5,
-      selectAction: AmuletItemAction.Positional,
       type: ItemType.Spell,
       subType: SpellType.Blink,
       description: 'teleport a short distance',
@@ -718,7 +652,6 @@ enum AmuletItem {
   Spell_Heal(
     levelMin: 1,
     levelMax: 5,
-      selectAction: AmuletItemAction.Caste,
       type: ItemType.Spell,
       subType: SpellType.Heal,
       description: 'heals a small amount of health',
@@ -754,11 +687,12 @@ enum AmuletItem {
   /// this is used by spells which required certain weapons to be equipped
   /// for example split arrow depends on a bow
   final int? dependency;
-  final AmuletItemAction selectAction;
+  // final AmuletItemAction selectAction;
   final int type;
   final int subType;
   final bool consumable;
   final int minRunes;
+  final SkillType? skillType;
   final AmuletItemStats level1;
   final AmuletItemStats? level2;
   final AmuletItemStats? level3;
@@ -766,13 +700,13 @@ enum AmuletItem {
   const AmuletItem({
     required this.type,
     required this.subType,
-    required this.selectAction,
     required this.level1,
     required this.description,
     required this.levelMin,
     required this.levelMax,
     this.dependency,
     this.level2,
+    this.skillType,
     this.level3,
     this.consumable = false,
     this.minRunes = 0,
@@ -936,5 +870,28 @@ enum AmuletItem {
 
     return -1;
   }
-
 }
+
+enum SkillType {
+  Heal(casteType: CasteType.Self),
+  Fireball(casteType: CasteType.Targeted_Enemy),
+  Firestorm(casteType: CasteType.Directional),
+  Teleport(casteType: CasteType.Positional),
+  Freeze_Target(casteType: CasteType.Targeted_Enemy),
+  Freeze_Area(casteType: CasteType.Positional),
+  Invisible(casteType: CasteType.Instant),
+  Terrify(casteType: CasteType.Instant);
+  final CasteType casteType;
+  const SkillType({required this.casteType});
+}
+
+enum CasteType {
+  Passive,
+  Instant,
+  Self,
+  Positional,
+  Targeted_Enemy,
+  Targeted_Ally,
+  Directional,
+}
+

@@ -68,6 +68,26 @@ class Amulet extends IsometricGame {
 
   final highlightedAmuletItem = Watch<AmuletItem?>(null);
 
+  ItemSlot? get activeAmuletItemSlot {
+    switch (activeSlotType.value){
+      case SlotType.Equipped_Helm:
+        return equippedHelm;
+      case SlotType.Equipped_Body:
+        return equippedBody;
+      case SlotType.Equipped_Shoes:
+        return equippedShoes;
+      case SlotType.Equipped_Legs:
+        return equippedLegs;
+      case SlotType.Equipped_Hand_Left:
+        return equippedHandLeft;
+      case SlotType.Equipped_Hand_Right:
+        return equippedHandRight;
+      default:
+        return null;
+    }
+  }
+
+
   final slotContainerDefault = Container(
     color: Colors.black12,
     alignment: Alignment.center,
