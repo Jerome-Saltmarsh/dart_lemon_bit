@@ -9,4 +9,14 @@ mixin Equipment {
   final equippedHandLeft = AmuletItemSlot();
   final equippedHandRight = AmuletItemSlot();
   final equippedShoe = AmuletItemSlot();
+
+  late final equipped = [
+    equippedWeapon,
+    equippedHelm,
+    equippedBody,
+    equippedLegs,
+    equippedHandLeft,
+    equippedHandRight,
+    equippedShoe,
+  ];
 }

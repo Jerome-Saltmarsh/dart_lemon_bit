@@ -30,7 +30,8 @@ CharacterJson writeAmuletPlayerToJson(AmuletPlayer player){
   json.elementWater = player.elementWater;
   json['data'] = player.data;
   json['name'] = player.name;
-  json['equippedWeapon'] = getSlotType(player.equippedWeapon);
+  // json['equippedWeapon'] = getSlotType(player.equippedWeapon);
+  json['equippedWeapon'] = getSlotTypeName(player.equippedWeapon);
   json['equippedHelm'] = getSlotType(player.equippedHelm);
   json['equippedBody'] = getSlotType(player.equippedBody);
   json['equippedLegs'] = getSlotType(player.equippedLegs);
@@ -54,4 +55,7 @@ List<int> getSlotTypes(List<AmuletItemSlot> slots) => slots.map(getSlotType).toL
 int getSlotType(AmuletItemSlot slot) => slot.amuletItem?.subType ?? 0;
 
 List<String> getSlotTypeNames(List<AmuletItemSlot> slots) =>
-    slots.map((slotItem) => slotItem.amuletItem?.name ?? '-').toList(growable: false);
+    slots.map(getSlotTypeName).toList(growable: false);
+
+String getSlotTypeName(AmuletItemSlot amuletItemSlot) =>
+    amuletItemSlot.amuletItem?.name ?? '-';

@@ -7,12 +7,14 @@ void writeJsonToAmuletPlayer(
     CharacterJson json,
     AmuletPlayer player,
 ){
-  final equippedWeapon = json['equippedWeapon'] ?? 0;
-  if (equippedWeapon != WeaponType.Unarmed) {
-    player.equipWeapon(AmuletItem.getWeapon(equippedWeapon), force: true);
-  } else {
-    player.equipWeapon(null, force: true);
-  }
+
+  // final equippedWeapon = ;
+  // if (equippedWeapon != WeaponType.Unarmed) {
+  //
+  // } else {
+  //   player.equipWeapon(null, force: true);
+  // }
+  player.equipWeapon(AmuletItem.findByName(json['equippedWeapon']), force: true);
 
   final equippedHelm = json['equippedHelm'] ?? 0;
   if (equippedHelm != HelmType.None) {
@@ -42,27 +44,27 @@ void writeJsonToAmuletPlayer(
     player.equipShoes(null, force: true);
   }
 
-  final equippedHandLeft = json['equippedHandLeft'] ?? 0;
-  if (equippedHandLeft != HandType.None) {
-    player.equipHandLeft(AmuletItem.getHand(equippedHandLeft), force: true);
-  } else {
-    player.equipHandLeft(null, force: true);
-  }
+  // final equippedHandLeft = json['equippedHandLeft'] ?? 0;
+  // if (equippedHandLeft != HandType.None) {
+  //   player.equipHandLeft(AmuletItem.getHand(equippedHandLeft), force: true);
+  // } else {
+  //   player.equipHandLeft(null, force: true);
+  // }
+  //
+  // final equippedHandRight = json['equippedHandRight'] ?? 0;
+  // if (equippedHandRight != HandType.None) {
+  //   player.equipHandRight(AmuletItem.getHand(equippedHandRight), force: true);
+  // } else {
+  //   player.equipHandRight(null, force: true);
+  // }
 
-  final equippedHandRight = json['equippedHandRight'] ?? 0;
-  if (equippedHandRight != HandType.None) {
-    player.equipHandRight(AmuletItem.getHand(equippedHandRight), force: true);
-  } else {
-    player.equipHandRight(null, force: true);
-  }
+  player.equipHandLeft(null, force: true);
+  player.equipHandRight(null, force: true);
 
   final weaponNames = json.tryGetList<String>('weapons');
   if (weaponNames != null){
     for (var i = 0; i < weaponNames.length; i++){
-      final weaponName =  weaponNames[i];
-      player.weapons[i].amuletItem = weaponName == '-'
-          ? null
-          : AmuletItem.findByName(weaponName);
+      player.weapons[i].amuletItem = AmuletItem.findByName(weaponNames[i]);
     }
   }
 
@@ -93,6 +95,6 @@ void writeJsonToAmuletPlayer(
   player.level = json['level'] ?? 1;
   player.initialized = json['initialized'] ?? false;
   player.active = true;
-  player.writePlayerHealth();
-  player.notifyEquipmentDirty();
+  player.writePlayerHealth(); // TODO remove game logic
+  player.notifyEquipmentDirty(); // TODO remove game logic
 }

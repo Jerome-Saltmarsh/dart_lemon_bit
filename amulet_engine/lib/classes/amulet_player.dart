@@ -1356,13 +1356,13 @@ class AmuletPlayer extends IsometricPlayer with
 
   @override
   void updateItemSlots() {
-    final length = weapons.length;
+    final length = equipped.length;
      for (var i = 0; i < length; i++) {
-       final weapon = weapons[i];
-       if (weapon.charges >= weapon.max) {
+       final amuletItemSlot = equipped[i];
+       if (amuletItemSlot.charges >= amuletItemSlot.max) {
          continue;
        }
-       weapon.incrementCooldown();
+       amuletItemSlot.incrementCooldown();
        writePlayerWeapon(i);
      }
   }
@@ -1508,6 +1508,7 @@ class AmuletPlayer extends IsometricPlayer with
 
   void refillItemSlotsWeapons(){
     refillItemSlots(weapons);
+    equipped.forEach(refillItemSlot);
   }
 
   void refillItemSlots(List<AmuletItemSlot> itemSlots){
@@ -1559,6 +1560,9 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   SlotType getAmuletItemSlotType(AmuletItemSlot amuletItemSlot){
+    if (amuletItemSlot == equippedWeapon){
+      return SlotType.Equipped_Weapon;
+    }
     if (amuletItemSlot == equippedHandLeft){
       return SlotType.Equipped_Hand_Left;
     }

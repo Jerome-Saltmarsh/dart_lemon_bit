@@ -781,9 +781,11 @@ enum AmuletItem {
       typeWeapons.firstWhere((element) => element.subType == type);
 
   static AmuletItem? findByName(String name) {
-    for (final value in values) {
-      if (value.name == name) {
-        return value;
+    if (name != '-') {
+      for (final value in values) {
+        if (value.name == name) {
+          return value;
+        }
       }
     }
     return null;
