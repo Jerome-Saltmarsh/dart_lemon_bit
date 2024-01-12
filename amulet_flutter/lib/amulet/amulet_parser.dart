@@ -56,9 +56,9 @@ extension AmuletParser on IsometricParser {
          final item = type != -1 ? AmuletItem.values[type] : null;
          amulet.setTreasure(index: index, item: item);
          break;
-       case NetworkResponseAmulet.Player_Equipped_Weapon_Index:
-         amulet.equippedWeaponIndex.value = readInt16();
-         break;
+       // case NetworkResponseAmulet.Player_Equipped_Weapon_Index:
+       //   amulet.equippedWeaponIndex.value = readInt16();
+       //   break;
        case NetworkResponseAmulet.Player_Equipped:
          amulet.equippedWeapon.amuletItem.value = readMMOItem();
          amulet.equippedHelm.amuletItem.value = readMMOItem();

@@ -1,4 +1,4 @@
 
-mixin EquippedWeaponIndex {
-  var equippedWeaponIndex = -1;
-}
+// mixin EquippedWeaponIndex {
+//   var equippedWeaponIndex = -1;
+// }

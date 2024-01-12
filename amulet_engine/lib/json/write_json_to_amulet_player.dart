@@ -79,7 +79,7 @@ void writeJsonToAmuletPlayer(
   player.uuid = json['uuid'] ?? (throw Exception('json[uuid] is null'));
   player.complexion = json['complexion'] ?? 0;
   player.name = json['name'];
-  player.equippedWeaponIndex = json['equippedWeaponIndex'] ?? 0;
+  // player.equippedWeaponIndex = json['equippedWeaponIndex'] ?? 0;
   player.gender = json['gender'] ?? 0;
   player.hairType = json['hairType'] ?? 0;
   player.hairColor = json['hairColor'] ?? 0;

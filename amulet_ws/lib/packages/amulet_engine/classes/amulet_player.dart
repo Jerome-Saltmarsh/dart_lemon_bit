@@ -21,7 +21,7 @@ class AmuletPlayer extends IsometricPlayer with
     Experience,
     Level,
     ElementPoints,
-    EquippedWeaponIndex,
+    // EquippedWeaponIndex,
     EquippedWeapon
 {
 
@@ -60,7 +60,7 @@ class AmuletPlayer extends IsometricPlayer with
     hurtable = false;
     hurtStateBusy = false;
     regainFullHealth();
-    equippedWeaponIndex = 0;
+    // equippedWeaponIndex = 0;
     active = false;
     equipmentDirty = true;
     spawnLootOnDeath = false;
@@ -102,7 +102,7 @@ class AmuletPlayer extends IsometricPlayer with
     super.aimTarget = value;
   }
 
-  bool get noWeaponEquipped => equippedWeaponIndex == -1;
+  bool get noWeaponEquipped => equippedWeapon.amuletItem == null;
 
   @override
   set elementAir(int value){
@@ -214,8 +214,7 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   @override
-  AmuletItemSlot get itemSlotWeapon =>
-      equippedWeaponIndex == -1 ? weaponUnarmed : weapons[equippedWeaponIndex];
+  AmuletItemSlot get itemSlotWeapon => equippedWeapon;
 
   @override
   set experience(int value){
@@ -303,51 +302,51 @@ class AmuletPlayer extends IsometricPlayer with
     throw Exception();
   }
 
-  @override
-  set equippedWeaponIndex(int value){
-    if (equippedWeaponIndex == value){
-      return;
-    }
+  // @override
+  // set equippedWeaponIndex(int value){
+  //   if (equippedWeaponIndex == value){
+  //     return;
+  //   }
+  //
+  //   if (controlsCanTargetEnemies){
+  //     setCharacterStateChanging();
+  //   }
+  //
+  //   if (value == -1){
+  //     super.equippedWeaponIndex = value;
+  //     weaponType = equippedWeaponType;
+  //     writeEquippedWeaponIndex();
+  //     return;
+  //   }
+  //   if (!isValidWeaponIndex(value)){
+  //     return;
+  //   }
+  //   final weapon = weapons[value];
+  //
+  //   final item = weapon.amuletItem;
+  //
+  //   if (item == null || item.type != ItemType.Weapon){
+  //     return;
+  //   }
+  //
+  //   super.equippedWeaponIndex = value;
+  //   weaponType = equippedWeaponType;
+  //   game.dispatchGameEvent(
+  //       GameEvent.Weapon_Type_Equipped,
+  //       x,
+  //       y,
+  //       z,
+  //   );
+  //   game.dispatchByte(weaponType);
+  //
+  //   writeEquippedWeaponIndex();
+  // }
 
-    if (controlsCanTargetEnemies){
-      setCharacterStateChanging();
-    }
-
-    if (value == -1){
-      super.equippedWeaponIndex = value;
-      weaponType = equippedWeaponType;
-      writeEquippedWeaponIndex();
-      return;
-    }
-    if (!isValidWeaponIndex(value)){
-      return;
-    }
-    final weapon = weapons[value];
-
-    final item = weapon.amuletItem;
-
-    if (item == null || item.type != ItemType.Weapon){
-      return;
-    }
-
-    super.equippedWeaponIndex = value;
-    weaponType = equippedWeaponType;
-    game.dispatchGameEvent(
-        GameEvent.Weapon_Type_Equipped,
-        x,
-        y,
-        z,
-    );
-    game.dispatchByte(weaponType);
-
-    writeEquippedWeaponIndex();
-  }
-
-  @override
-  void initialize() {
-    super.initialize();
-    writeEquippedWeaponIndex();
-  }
+  // @override
+  // void initialize() {
+  //   super.initialize();
+  //   writeEquippedWeaponIndex();
+  // }
 
   @override
   void writePlayerGame() {
@@ -414,9 +413,9 @@ class AmuletPlayer extends IsometricPlayer with
         availableWeaponSlot.amuletItem = amuletItem;
         refillItemSlot(availableWeaponSlot);
         amuletGame.onAmuletItemAcquired(this, amuletItem);
-        if (noWeaponEquipped){
-          equippedWeaponIndex = weapons.indexOf(availableWeaponSlot);
-        }
+        // if (noWeaponEquipped){
+        //   equippedWeaponIndex = weapons.indexOf(availableWeaponSlot);
+        // }
         notifyEquipmentDirty();
         return true;
       }
@@ -637,11 +636,11 @@ class AmuletPlayer extends IsometricPlayer with
 
     switch (amuletItem.selectAction) {
       case AmuletItemAction.Equip:
-        if (equippedWeaponIndex == index){
-          performForceAttack();
-          return;
-        }
-        equippedWeaponIndex = index;
+        // if (equippedWeaponIndex == index){
+        //   performForceAttack();
+        //   return;
+        // }
+        // equippedWeaponIndex = index;
         deselectActivatedPower();
         break;
       case AmuletItemAction.Positional:
@@ -741,31 +740,13 @@ class AmuletPlayer extends IsometricPlayer with
       case ItemType.Consumable:
         throw Exception('not implemented');
       case ItemType.Weapon:
-        final emptyWeaponIndex = getEmptyWeaponIndex();
-        if (emptyWeaponIndex != -1){
-          setWeapon(
-              index: emptyWeaponIndex,
-              amuletItem: item,
-              cooldown: selected.cooldown,
-          );
-          clearItem(index);
-          setCharacterStateChanging();
-        } else {
-          final currentWeapon = itemSlotWeapon;
-          final currentCooldown = itemSlotWeapon.cooldown;
-          setWeapon(
-              index: equippedWeaponIndex,
-              amuletItem: item,
-              cooldown: items[index].cooldown,
-          );
-          setItem(
-              index: index,
-              item: currentWeapon.amuletItem,
-              cooldown: currentCooldown,
-          );
-          setCharacterStateChanging();
-        }
-        break;
+        setItem(
+          index: index,
+          item: equippedWeapon.amuletItem,
+          cooldown: equippedWeapon.cooldown,
+        );
+        equippedWeapon.amuletItem = item;
+        setCharacterStateChanging();
       case ItemType.Helm:
         swapAmuletItemSlots(equippedHelm, selected);
         break;
@@ -999,9 +980,9 @@ class AmuletPlayer extends IsometricPlayer with
     handTypeRight = equippedHandRight.amuletItem?.subType ?? HandType.None;
     shoeType = equippedShoe.amuletItem?.subType ?? HandType.None;
 
-    if (itemSlotWeapon.amuletItem?.selectAction != AmuletItemAction.Equip){
-       equippedWeaponIndex = -1;
-    }
+    // if (itemSlotWeapon.amuletItem?.selectAction != AmuletItemAction.Equip){
+    //    equippedWeaponIndex = -1;
+    // }
 
     writeEquipped();
     writePlayerHealth();
@@ -1056,11 +1037,11 @@ class AmuletPlayer extends IsometricPlayer with
     writeBool(interacting);
   }
 
-  void writeEquippedWeaponIndex() {
-    writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Player_Equipped_Weapon_Index);
-    writeInt16(equippedWeaponIndex);
-  }
+  // void writeEquippedWeaponIndex() {
+  //   writeByte(NetworkResponse.Amulet);
+  //   writeByte(NetworkResponseAmulet.Player_Equipped_Weapon_Index);
+  //   writeInt16(equippedWeaponIndex);
+  // }
 
   void writePlayerWeapon(int index) {
     writeByte(NetworkResponse.Amulet);
@@ -1647,14 +1628,14 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
 
-    final equippedWeaponSlot = weapons[equippedWeaponIndex];
+    // final equippedWeaponSlot = weapons[equippedWeaponIndex];
 
-    if (equippedWeaponSlot.chargesEmpty) {
+    if (equippedWeapon.chargesEmpty) {
       writeGameError(GameError.Insufficient_Weapon_Charges);
       return;
     }
 
-    final equippedWeaponAmuletItem = equippedWeaponSlot.amuletItem;
+    final equippedWeaponAmuletItem = equippedWeapon.amuletItem;
 
     if (equippedWeaponAmuletItem == null){
       return;
@@ -1677,7 +1658,7 @@ class AmuletPlayer extends IsometricPlayer with
     this.weaponDamage = equippedWeaponLevel.damageMin;
 
     useWeaponType(weaponType: subType, duration: performDuration);
-    reduceAmuletItemSlotCharges(equippedWeaponSlot);
+    reduceAmuletItemSlotCharges(equippedWeapon);
   }
 
   void useWeaponType({
@@ -1845,7 +1826,7 @@ class AmuletPlayer extends IsometricPlayer with
           if (emptyWeaponSlot != null){
             swapAmuletItemSlots(inventorySlot, emptyWeaponSlot);
             if (noWeaponEquipped){
-              equippedWeaponIndex = weapons.indexOf(emptyWeaponSlot);
+              // equippedWeaponIndex = weapons.indexOf(emptyWeaponSlot);
             }
           } else {
             writeGameError(GameError.Weapon_Rack_Full);
@@ -1912,7 +1893,7 @@ class AmuletPlayer extends IsometricPlayer with
   void downloadScene() {
     super.downloadScene();
     writeSceneName();
-    writeEquippedWeaponIndex();
+    // writeEquippedWeaponIndex();
     writeOptionsSetTimeVisible(game is! AmuletGameTutorial);
     writeOptionsSetHighlightIconInventory(false);
   }

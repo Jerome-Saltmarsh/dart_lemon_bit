@@ -89,7 +89,7 @@ class AmuletGameTutorial extends AmuletGame {
 
     player.equipBody(AmuletItem.Armor_Shirt_Blue_Worn, force: true);
     player.equipLegs(AmuletItem.Pants_Travellers, force: true);
-    player.equippedWeaponIndex = -1;
+    // player.equippedWeaponIndex = -1;
 
     deactivate(crystal1GlowingFalse);
     deactivate(crystal1GlowingTrue);
@@ -131,7 +131,7 @@ class AmuletGameTutorial extends AmuletGame {
 
     if (objectiveCompleted(player, QuestTutorial.Acquire_Sword)){
       player.setWeapon(index: 0, amuletItem: AmuletItem.Weapon_Short_Sword);
-      player.equippedWeaponIndex = 0;
+      // player.equippedWeaponIndex = 0;
     }
 
     if (objectiveCompleted(player, QuestTutorial.Strike_Crystal_1)){
