@@ -1847,8 +1847,9 @@ class AmuletPlayer extends IsometricPlayer with
         }
 
         if (item.isWeapon) {
-          inventorySlot.swap(equippedWeapon);
-          notifyEquipmentDirty();
+          // inventorySlot.swap(equippedWeapon);
+          // notifyEquipmentDirty();
+          swapAmuletItemSlots(inventorySlot, equippedWeapon);
         } else
         if (item.isTreasure) {
           final emptyTreasureSlot = getEmptyTreasureSlot();

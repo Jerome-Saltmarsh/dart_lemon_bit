@@ -11,7 +11,7 @@ class ItemSlot {
   final max = Watch(0);
   final chargesRemaining = Watch(false);
 
-  ItemSlot({required this.slotType, required this.index}) {
+  ItemSlot({required this.slotType, this.index = 0}) {
     charges.onChanged((charges) {
       chargesRemaining.value = charges > 0;
     });
