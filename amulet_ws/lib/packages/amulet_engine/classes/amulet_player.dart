@@ -799,6 +799,31 @@ class AmuletPlayer extends IsometricPlayer with
      npcOptions[index].action(this);
   }
 
+  void equipWeapon(AmuletItem? item, {bool force = false}){
+    if (deadOrBusy && !force) {
+      return;
+    }
+
+    if (equippedWeapon.amuletItem == item){
+      return;
+    }
+
+    if (item == null){
+      clearSlot(equippedWeapon);
+      return;
+    }
+
+    if (!item.isWeapon) {
+      throw Exception();
+    }
+
+    setSlot(
+      slot: equippedWeapon,
+      item: item,
+      cooldown: 0,
+    );
+  }
+
   void equipHelm(AmuletItem? item, {bool force = false}){
     if (deadOrBusy && !force) {
       return;

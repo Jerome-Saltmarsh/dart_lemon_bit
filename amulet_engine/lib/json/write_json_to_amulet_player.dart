@@ -7,6 +7,13 @@ void writeJsonToAmuletPlayer(
     CharacterJson json,
     AmuletPlayer player,
 ){
+  final equippedWeapon = json['equippedWeapon'] ?? 0;
+  if (equippedWeapon != WeaponType.Unarmed) {
+    player.equipWeapon(AmuletItem.getWeapon(equippedWeapon), force: true);
+  } else {
+    player.equipWeapon(null, force: true);
+  }
+
   final equippedHelm = json['equippedHelm'] ?? 0;
   if (equippedHelm != HelmType.None) {
     player.equipHelm(AmuletItem.getHelm(equippedHelm), force: true);
@@ -79,7 +86,6 @@ void writeJsonToAmuletPlayer(
   player.uuid = json['uuid'] ?? (throw Exception('json[uuid] is null'));
   player.complexion = json['complexion'] ?? 0;
   player.name = json['name'];
-  // player.equippedWeaponIndex = json['equippedWeaponIndex'] ?? 0;
   player.gender = json['gender'] ?? 0;
   player.hairType = json['hairType'] ?? 0;
   player.hairColor = json['hairColor'] ?? 0;
