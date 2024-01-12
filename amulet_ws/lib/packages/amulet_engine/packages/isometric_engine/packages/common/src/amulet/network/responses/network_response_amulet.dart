@@ -30,4 +30,5 @@ class NetworkResponseAmulet {
    static const Debug = 32;
    static const Aim_Target_Element = 33;
    static const Aim_Target_Fiend_Type = 34;
+   static const Active_Slot_Type = 35;
 }

@@ -1,4 +1,5 @@
 
+import 'dart:ffi';
 import 'dart:typed_data';
 
 import 'package:amulet_engine/packages/common.dart';
@@ -156,6 +157,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Quest_Main:
          readQuestMain();
          break;
+       case NetworkResponseAmulet.Active_Slot_Type:
+         readActiveSlotType();
+         break;
      }
   }
 
@@ -254,4 +258,12 @@ extension AmuletParser on IsometricParser {
 
   void readQuestMain() =>
       amulet.questMain.value = QuestMain.values[readByte()];
+
+  void readActiveSlotType() {
+     if (!readBool()) {
+       amulet.activeSlotType.value = null;
+       return;
+     }
+     amulet.activeSlotType.value = SlotType.values[readByte()];
+  }
 }

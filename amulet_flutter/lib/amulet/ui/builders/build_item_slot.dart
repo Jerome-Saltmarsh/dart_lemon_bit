@@ -8,12 +8,13 @@ import 'package:amulet_flutter/gamestream/ui/widgets/color_changing_container.da
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 Widget buildItemSlot(ItemSlot itemSlot, {
+
   required Amulet amulet,
   Color? color,
   Widget? onEmpty,
 }) {
 
-  return buildWatch(amulet.highlightedAmuletItem, (highlightedAmuletItem){
+  return buildWatch(amulet.activeSlotType, (activeSlotType){
     const size = 64.0;
     return Container(
       margin: const EdgeInsets.all(2),
@@ -77,8 +78,7 @@ Widget buildItemSlot(ItemSlot itemSlot, {
                   }
                 );
 
-            final isHighlighted = highlightedAmuletItem != null &&
-                highlightedAmuletItem == item;
+            final isHighlighted = activeSlotType == itemSlot.slotType;
 
             if (!isHighlighted){
               return Container(

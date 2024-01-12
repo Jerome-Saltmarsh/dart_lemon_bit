@@ -45,6 +45,7 @@ class AmuletPlayer extends IsometricPlayer with
 
   var _inventoryOpen = false;
   var _activatedPowerIndex = -1;
+  SlotType? activeSlotType;
 
   AmuletPlayer({
     required this.amuletGame,
@@ -1800,16 +1801,6 @@ class AmuletPlayer extends IsometricPlayer with
         }
 
         if (item.isWeapon) {
-          // final emptyWeaponSlot = getEmptyWeaponSlot();
-          // if (emptyWeaponSlot != null){
-          //   swapAmuletItemSlots(inventorySlot, emptyWeaponSlot);
-          //   if (noWeaponEquipped){
-          //     // equippedWeaponIndex = weapons.indexOf(emptyWeaponSlot);
-          //   }
-          // } else {
-          //   writeGameError(GameError.Weapon_Rack_Full);
-          // }
-          // swapAmuletItemSlots(inventorySlot, equippedWeapon);
           inventorySlot.swap(equippedWeapon);
           notifyEquipmentDirty();
         } else
@@ -1840,19 +1831,25 @@ class AmuletPlayer extends IsometricPlayer with
         }
 
         if (item.isConsumable){
-          // final consumableType = item.subType;
-          // consumeItem(consumableType);
-          // clearSlot(inventorySlot);
-          // writePlayerEventItemTypeConsumed(consumableType);
-          // return;
           throw Exception('not implemented');
         }
         break;
-
       default:
-        swapWithAvailableItemSlot(getItemSlot(slotType, index));
+        activateSlotType(slotType);
         break;
     }
+  }
+
+  void activateSlotType(SlotType? slotType){
+    this.activeSlotType = slotType;
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Active_Slot_Type);
+    if (slotType == null) {
+      writeFalse();
+      return;
+    }
+    writeTrue();
+    writeByte(slotType.index);
   }
 
   void clearActivatedPowerIndex(){
@@ -2036,4 +2033,8 @@ class AmuletPlayer extends IsometricPlayer with
     writeBool(true);
     writeByte(aimTarget.fiendType.index);
   }
+
+  void writeFalse() => writeBool(false);
+
+  void writeTrue() => writeBool(true);
 }
