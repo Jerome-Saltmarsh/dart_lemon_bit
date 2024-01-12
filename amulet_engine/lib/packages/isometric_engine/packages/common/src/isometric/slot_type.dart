@@ -5,6 +5,7 @@ enum SlotType {
   Items,
   Treasures,
   Weapons,
+  Equipped_Weapon,
   Equipped_Body,
   Equipped_Hand_Left,
   Equipped_Hand_Right,
@@ -19,6 +20,7 @@ enum SlotType {
     }
 
     return switch (this){
+        Equipped_Weapon => itemType == ItemType.Weapon,
         Equipped_Helm => itemType == ItemType.Helm,
         Equipped_Legs => itemType == ItemType.Legs,
         Equipped_Body => itemType == ItemType.Body,
@@ -30,7 +32,4 @@ enum SlotType {
         Items => true
       };
   }
-
-
-
 }

@@ -31,6 +31,8 @@ class ItemSlot {
         return srcItem.isWeapon || srcItem.isSpell;
       case SlotType.Treasures:
         return srcItem.isTreasure;
+      case SlotType.Equipped_Weapon:
+        return srcItem.isWeapon;
       case SlotType.Equipped_Hand_Left:
         return srcItem.isHand;
       case SlotType.Equipped_Hand_Right:

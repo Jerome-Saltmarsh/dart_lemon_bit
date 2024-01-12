@@ -104,7 +104,6 @@ class AmuletPlayer extends IsometricPlayer with
      }
   }
 
-
   set questMain (QuestMain value){
     data.setInt('quest_main', value.index);
     writeQuestMain(value);
@@ -1381,6 +1380,7 @@ class AmuletPlayer extends IsometricPlayer with
 
   AmuletItemSlot getItemObjectAtSlotType(SlotType slotType, int index) =>
     switch (slotType) {
+      SlotType.Equipped_Weapon => equippedWeapon,
       SlotType.Equipped_Hand_Left => equippedHandLeft,
       SlotType.Equipped_Hand_Right => equippedHandRight,
       SlotType.Equipped_Body => equippedBody,
@@ -1407,6 +1407,7 @@ class AmuletPlayer extends IsometricPlayer with
   AmuletItemSlot getItemSlot(SlotType slotType, int index) =>
     switch (slotType) {
       SlotType.Items => items[index],
+      SlotType.Equipped_Weapon => equippedWeapon,
       SlotType.Equipped_Helm => equippedHelm,
       SlotType.Equipped_Body => equippedBody,
       SlotType.Equipped_Legs => equippedLegs,
