@@ -1,4 +1,4 @@
-enum AmuletItemType{
+enum AmuletItemType {
   Weapon,
   Head,
   Body,

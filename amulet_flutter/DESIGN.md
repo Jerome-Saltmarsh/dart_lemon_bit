@@ -21,14 +21,12 @@ element
 the player must be strategic by attacking while the witch is in a weaker form
 
 ATTRIBUTES
-    ALCHEMY
     CUNNING
-    BRAVERY
-    WISE
+    BRAVE
     SHREWD
     MALICIOUS    
-
-
+    DECEITFUL
+    
 
 
 

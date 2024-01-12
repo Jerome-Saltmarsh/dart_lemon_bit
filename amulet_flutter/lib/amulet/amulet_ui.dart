@@ -682,7 +682,6 @@ class AmuletUI {
 
   Widget buildDialogPlayerInventory() {
     final inventoryItems = buildInventoryItems();
-
     final dialog = GSContainer(
       rounded: true,
       width: 450,
@@ -695,27 +694,27 @@ class AmuletUI {
             children: [
               Container(
                   margin: const EdgeInsets.only(left: 5),
-                  child: buildDialogTitle('INVENTORY')),
+                  child: buildDialogTitle('CHEST')),
               buildButtonClose(
                   action: amulet.toggleInventoryOpen),
             ],
           ),
           height32,
           inventoryItems,
-          height16,
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              buildInventoryEquipped(),
-              // buildInventoryPlayerFront(),
-              // buildPlayerTreasures(),
-            ],
-          )
+          // height16,
+          // Row(
+          //   crossAxisAlignment: CrossAxisAlignment.center,
+          //   children: [
+          //     buildInventoryEquipped(),
+          //     // buildInventoryPlayerFront(),
+          //     // buildPlayerTreasures(),
+          //   ],
+          // )
         ],
       ),
     );
 
-    final inventoryButton = buildInventoryButton();
+    // final inventoryButton = buildInventoryButton();
 
     return MouseRegion(
       onEnter: (_) => amulet.setInventoryOpen(true),
