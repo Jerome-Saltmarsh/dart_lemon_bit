@@ -87,17 +87,17 @@ class AmuletPlayer extends IsometricPlayer with
 
   AmuletItemSlot? get activeAmuletItemSlot {
      switch (activeSlotType){
-       case SlotType.Equipped_Helm:
+       case SlotType.Helm:
          return equippedHelm;
-       case SlotType.Equipped_Body:
+       case SlotType.Body:
          return equippedBody;
-       case SlotType.Equipped_Shoes:
+       case SlotType.Shoes:
          return equippedShoe;
-       case SlotType.Equipped_Legs:
+       case SlotType.Legs:
          return equippedLegs;
-       case SlotType.Equipped_Hand_Left:
+       case SlotType.Hand_Left:
          return equippedHandLeft;
-       case SlotType.Equipped_Hand_Right:
+       case SlotType.Hand_Right:
          return equippedHandRight;
        default:
          return null;
@@ -1380,15 +1380,15 @@ class AmuletPlayer extends IsometricPlayer with
 
   AmuletItemSlot getItemObjectAtSlotType(SlotType slotType, int index) =>
     switch (slotType) {
-      SlotType.Equipped_Weapon => equippedWeapon,
-      SlotType.Equipped_Hand_Left => equippedHandLeft,
-      SlotType.Equipped_Hand_Right => equippedHandRight,
-      SlotType.Equipped_Body => equippedBody,
-      SlotType.Equipped_Helm => equippedHelm,
-      SlotType.Equipped_Legs => equippedLegs,
-      SlotType.Equipped_Shoes => equippedShoe,
-      SlotType.Items => items[index],
-      SlotType.Treasures => treasures[index],
+      SlotType.Weapon => equippedWeapon,
+      SlotType.Hand_Left => equippedHandLeft,
+      SlotType.Hand_Right => equippedHandRight,
+      SlotType.Body => equippedBody,
+      SlotType.Helm => equippedHelm,
+      SlotType.Legs => equippedLegs,
+      SlotType.Shoes => equippedShoe,
+      SlotType.Item => items[index],
+      SlotType.Treasure => treasures[index],
       SlotType.Weapons => weapons[index]
     };
 
@@ -1406,16 +1406,16 @@ class AmuletPlayer extends IsometricPlayer with
 
   AmuletItemSlot getItemSlot(SlotType slotType, int index) =>
     switch (slotType) {
-      SlotType.Items => items[index],
-      SlotType.Equipped_Weapon => equippedWeapon,
-      SlotType.Equipped_Helm => equippedHelm,
-      SlotType.Equipped_Body => equippedBody,
-      SlotType.Equipped_Legs => equippedLegs,
-      SlotType.Equipped_Hand_Left => equippedHandLeft,
-      SlotType.Equipped_Hand_Right => equippedHandRight,
+      SlotType.Item => items[index],
+      SlotType.Weapon => equippedWeapon,
+      SlotType.Helm => equippedHelm,
+      SlotType.Body => equippedBody,
+      SlotType.Legs => equippedLegs,
+      SlotType.Hand_Left => equippedHandLeft,
+      SlotType.Hand_Right => equippedHandRight,
       SlotType.Weapons => weapons[index],
-      SlotType.Treasures => treasures[index],
-      SlotType.Equipped_Shoes => equippedShoe
+      SlotType.Treasure => treasures[index],
+      SlotType.Shoes => equippedShoe
     };
 
   void inventoryDropSlotType(SlotType slotType, int index) =>
@@ -1561,34 +1561,34 @@ class AmuletPlayer extends IsometricPlayer with
 
   SlotType getAmuletItemSlotType(AmuletItemSlot amuletItemSlot){
     if (amuletItemSlot == equippedWeapon){
-      return SlotType.Equipped_Weapon;
+      return SlotType.Weapon;
     }
     if (amuletItemSlot == equippedHandLeft){
-      return SlotType.Equipped_Hand_Left;
+      return SlotType.Hand_Left;
     }
     if (amuletItemSlot == equippedHandRight){
-      return SlotType.Equipped_Hand_Right;
+      return SlotType.Hand_Right;
     }
     if (amuletItemSlot == equippedHelm){
-      return SlotType.Equipped_Helm;
+      return SlotType.Helm;
     }
     if (amuletItemSlot == equippedBody){
-      return SlotType.Equipped_Body;
+      return SlotType.Body;
     }
     if (amuletItemSlot == equippedLegs){
-      return SlotType.Equipped_Legs;
+      return SlotType.Legs;
     }
     if (amuletItemSlot == equippedShoe){
-      return SlotType.Equipped_Shoes;
+      return SlotType.Shoes;
     }
     if (weapons.contains(amuletItemSlot)){
       return SlotType.Weapons;
     }
     if (items.contains(amuletItemSlot)){
-      return SlotType.Items;
+      return SlotType.Item;
     }
     if (treasures.contains(amuletItemSlot)){
-      return SlotType.Treasures;
+      return SlotType.Treasure;
     }
     throw Exception('amuletPlayer.getAmuletItemSlotType($amuletItemSlot)');
   }
@@ -1838,7 +1838,7 @@ class AmuletPlayer extends IsometricPlayer with
       case SlotType.Weapons:
         // selectWeaponAtIndex(index);
         return;
-      case SlotType.Items:
+      case SlotType.Item:
         if (index >= items.length) {
           return;
         }

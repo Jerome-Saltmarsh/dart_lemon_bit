@@ -2,34 +2,34 @@
 import 'item_type.dart';
 
 enum SlotType {
-  Items,
-  Treasures,
+  Item,
+  Treasure,
   Weapons,
-  Equipped_Weapon,
-  Equipped_Body,
-  Equipped_Hand_Left,
-  Equipped_Hand_Right,
-  Equipped_Helm,
-  Equipped_Legs,
-  Equipped_Shoes;
+  Weapon,
+  Body,
+  Hand_Left,
+  Hand_Right,
+  Helm,
+  Legs,
+  Shoes;
 
   bool supportsItemType(int? itemType) {
 
-    if (itemType == null){
+    if (itemType == null) {
       return true;
     }
 
     return switch (this){
-        Equipped_Weapon => itemType == ItemType.Weapon,
-        Equipped_Helm => itemType == ItemType.Helm,
-        Equipped_Legs => itemType == ItemType.Legs,
-        Equipped_Body => itemType == ItemType.Body,
-        Equipped_Hand_Left => itemType == ItemType.Hand,
-        Equipped_Hand_Right => itemType == ItemType.Hand,
-        Treasures => itemType == ItemType.Treasure,
+        Weapon => itemType == ItemType.Weapon,
+        Helm => itemType == ItemType.Helm,
+        Legs => itemType == ItemType.Legs,
+        Body => itemType == ItemType.Body,
+        Hand_Left => itemType == ItemType.Hand,
+        Hand_Right => itemType == ItemType.Hand,
+        Treasure => itemType == ItemType.Treasure,
         Weapons => const [ItemType.Weapon, ItemType.Spell].contains(itemType),
-        Equipped_Shoes => itemType == ItemType.Shoes,
-        Items => true
+        Shoes => itemType == ItemType.Shoes,
+        Item => true
       };
   }
 }

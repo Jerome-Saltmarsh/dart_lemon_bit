@@ -62,17 +62,17 @@ class Amulet extends IsometricGame {
 
   ItemSlot? get activeAmuletItemSlot {
     switch (activeSlotType.value){
-      case SlotType.Equipped_Helm:
+      case SlotType.Helm:
         return equippedHelm;
-      case SlotType.Equipped_Body:
+      case SlotType.Body:
         return equippedBody;
-      case SlotType.Equipped_Shoes:
+      case SlotType.Shoes:
         return equippedShoes;
-      case SlotType.Equipped_Legs:
+      case SlotType.Legs:
         return equippedLegs;
-      case SlotType.Equipped_Hand_Left:
+      case SlotType.Hand_Left:
         return equippedHandLeft;
-      case SlotType.Equipped_Hand_Right:
+      case SlotType.Hand_Right:
         return equippedHandRight;
       default:
         return null;
@@ -104,7 +104,7 @@ class Amulet extends IsometricGame {
   final itemHover = Watch<AmuletItem?>(null);
   final activePowerPosition = Position();
   final weapons = List<ItemSlot>.generate(4, (index) => ItemSlot(index: index, slotType: SlotType.Weapons));
-  final treasures = List<ItemSlot>.generate(4, (index) => ItemSlot(index: index, slotType: SlotType.Treasures));
+  final treasures = List<ItemSlot>.generate(4, (index) => ItemSlot(index: index, slotType: SlotType.Treasure));
   final error = Watch('');
   final playerInteracting = Watch(false);
   final npcTextIndex = Watch(-1);
@@ -114,13 +114,13 @@ class Amulet extends IsometricGame {
   final npcOptionsReads = Watch(0);
   final equippedWeaponIndex = Watch(-1);
   final activatedPowerIndex = Watch(-1);
-  final equippedWeapon = ItemSlot(slotType: SlotType.Equipped_Weapon);
-  final equippedHelm = ItemSlot(slotType: SlotType.Equipped_Helm);
-  final equippedBody = ItemSlot(slotType: SlotType.Equipped_Body);
-  final equippedLegs = ItemSlot(slotType: SlotType.Equipped_Legs);
-  final equippedHandLeft = ItemSlot(slotType: SlotType.Equipped_Hand_Left);
-  final equippedHandRight = ItemSlot(slotType: SlotType.Equipped_Hand_Right);
-  final equippedShoes = ItemSlot(slotType: SlotType.Equipped_Shoes);
+  final equippedWeapon = ItemSlot(slotType: SlotType.Weapon);
+  final equippedHelm = ItemSlot(slotType: SlotType.Helm);
+  final equippedBody = ItemSlot(slotType: SlotType.Body);
+  final equippedLegs = ItemSlot(slotType: SlotType.Legs);
+  final equippedHandLeft = ItemSlot(slotType: SlotType.Hand_Left);
+  final equippedHandRight = ItemSlot(slotType: SlotType.Hand_Right);
+  final equippedShoes = ItemSlot(slotType: SlotType.Shoes);
   final playerLevel = Watch(0);
   final playerExperience = Watch(0);
   final playerExperienceRequired = Watch(0);
@@ -210,7 +210,7 @@ class Amulet extends IsometricGame {
   void setItemLength(int length){
     items.value = List.generate(length, (index) => ItemSlot(
         index: index,
-        slotType: SlotType.Items,
+        slotType: SlotType.Item,
     ));
   }
 
