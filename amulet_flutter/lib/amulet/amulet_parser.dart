@@ -60,6 +60,7 @@ extension AmuletParser on IsometricParser {
          amulet.equippedWeaponIndex.value = readInt16();
          break;
        case NetworkResponseAmulet.Player_Equipped:
+         amulet.equippedWeapon.amuletItem.value = readMMOItem();
          amulet.equippedHelm.amuletItem.value = readMMOItem();
          amulet.equippedBody.amuletItem.value = readMMOItem();
          amulet.equippedLegs.amuletItem.value = readMMOItem();

@@ -35,6 +35,7 @@ const atlasSrcIconType = <IconType, List<double>> {
   IconType.Music_Disabled: const [1, 609, 90, 98],
   IconType.Turn_Right: const [324, 95, 107, 120],
   IconType.Inventory_Helm: const [307, 232, 84, 146],
+  IconType.Inventory_Weapon: const [167, 840, 50, 50],
   IconType.Inventory_Armour: const [402, 258, 28, 27],
   IconType.Inventory_Legs: const [286, 383, 66, 93],
   IconType.Inventory_Glove_Left: const [371, 387, 35, 115],

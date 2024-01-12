@@ -179,14 +179,6 @@ class AmuletPlayer extends IsometricPlayer with
     for (final itemSlot in treasures) {
        final amuletItem = itemSlot.amuletItem;
        if (amuletItem == null) continue;
-       // switch (amuletItem) {
-       //   case AmuletItem.Amulet_Of_The_Ranger:
-       //     if (itemSlotWeapon.amuletItem?.isWeaponBow ?? false){
-       //     }
-       //     break;
-       //   default:
-       //     break;
-       // }
     }
     return damage;
   }
@@ -198,16 +190,6 @@ class AmuletPlayer extends IsometricPlayer with
   int get helmType => equippedHelm.amuletItem?.subType ?? HelmType.None;
 
   int get activatedPowerIndex => _activatedPowerIndex;
-
-  // AmuletItemSlot get activeItemSlot {
-  //   if (activatedPowerIndex != -1) {
-  //     return weapons[activatedPowerIndex];
-  //   }
-  //   if (equippedWeaponIndex != -1){
-  //     return weapons[equippedWeaponIndex];
-  //   }
-  //   return weaponUnarmed;
-  // }
 
   @override
   int get maxHealth {
@@ -1037,6 +1019,7 @@ class AmuletPlayer extends IsometricPlayer with
   void writeEquipped(){
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Equipped);
+    writeAmuletItem(equippedWeapon.amuletItem);
     writeAmuletItem(equippedHelm.amuletItem);
     writeAmuletItem(equippedBody.amuletItem);
     writeAmuletItem(equippedLegs.amuletItem);

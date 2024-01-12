@@ -31,6 +31,7 @@ enum IconType {
   Cog,
   Cog_Turned,
   Turn_Right,
+  Inventory_Weapon,
   Inventory_Helm,
   Inventory_Armour,
   Inventory_Legs,

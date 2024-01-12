@@ -477,7 +477,7 @@ class AmuletUI {
                 buildItemSlot(amulet.equippedWeapon,
                     amulet: amulet,
                     onEmpty: IsometricIcon(
-                      iconType: IconType.Inventory_Helm,
+                      iconType: IconType.Inventory_Weapon,
                       color: Colors.black12.value,
                       scale: 0.3,
                     )),
