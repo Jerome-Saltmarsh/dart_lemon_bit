@@ -21,7 +21,6 @@ class AmuletPlayer extends IsometricPlayer with
     Experience,
     Level,
     ElementPoints,
-    // EquippedWeaponIndex,
     EquippedWeapon
 {
 
@@ -134,7 +133,8 @@ class AmuletPlayer extends IsometricPlayer with
     writeElementPoints();
   }
 
-  int get equippedWeaponType {
+  @override
+  int get weaponType {
     final weapon = itemSlotWeapon;
     final item = weapon.amuletItem;
     return item?.subType ?? WeaponType.Unarmed;
@@ -629,7 +629,7 @@ class AmuletPlayer extends IsometricPlayer with
 
     final dependency = amuletItem.dependency;
 
-    if (dependency != null && equippedWeaponType != dependency){
+    if (dependency != null && weaponType != dependency){
       writeGameError(GameError.Weapon_Required);
       return;
     }
