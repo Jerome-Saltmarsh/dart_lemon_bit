@@ -9,6 +9,26 @@ class AmuletItemSlot {
   var charges = 0;
   var max = 0;
 
+  void swap(AmuletItemSlot that){
+    final cacheAmuletItem = amuletItem;
+    final cacheCooldown = cooldown;
+    final cacheCooldownDuration = cooldownDuration;
+    final cacheCharges = charges;
+    final cacheMax = max;
+
+    amuletItem = that.amuletItem;
+    cooldown = that.cooldown;
+    cooldownDuration = that.cooldownDuration;
+    charges = that.charges;
+    max = that.max;
+
+    that.amuletItem = cacheAmuletItem;
+    that.cooldown = cacheCooldown;
+    that.cooldownDuration = cacheCooldownDuration;
+    that.charges = cacheCharges;
+    that.max = cacheMax;
+  }
+
   double get cooldownPercentage {
     final cooldownDuration = this.cooldownDuration;
     if (cooldownDuration <= 0){

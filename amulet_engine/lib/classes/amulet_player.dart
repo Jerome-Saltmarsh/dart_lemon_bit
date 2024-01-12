@@ -710,21 +710,20 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
 
-    final selected = items[index];
+    final itemSlot = items[index];
+    final amuletItem = itemSlot.amuletItem;
 
-    final item = items[index].amuletItem;
-
-    if (item == null) {
+    if (amuletItem == null) {
       return;
     }
 
     // final itemType = item.type;
     // final subType = item.subType;
 
-    if (item.isTreasure) {
-      addToEmptyTreasureSlot(selected);
-      return;
-    }
+    // if (item.isTreasure) {
+    //   addToEmptyTreasureSlot(selected);
+    //   return;
+    // }
 
     // if (itemType == ItemType.Consumable){
     //   if (subType == ConsumableType.){
@@ -736,31 +735,29 @@ class AmuletPlayer extends IsometricPlayer with
     //   return;
     // }
 
-    switch (item.type) {
+    switch (amuletItem.type) {
+      case ItemType.Treasure:
+        addToEmptyTreasureSlot(itemSlot);
+        break;
       case ItemType.Consumable:
         throw Exception('not implemented');
       case ItemType.Weapon:
-        setItem(
-          index: index,
-          item: equippedWeapon.amuletItem,
-          cooldown: equippedWeapon.cooldown,
-        );
-        equippedWeapon.amuletItem = item;
-        setCharacterStateChanging();
+        swapAmuletItemSlots(itemSlot, equippedWeapon);
+        break;
       case ItemType.Helm:
-        swapAmuletItemSlots(equippedHelm, selected);
+        swapAmuletItemSlots(equippedHelm, itemSlot);
         break;
       case ItemType.Body:
-        swapAmuletItemSlots(equippedBody, selected);
+        swapAmuletItemSlots(equippedBody, itemSlot);
         break;
       case ItemType.Legs:
-        swapAmuletItemSlots(equippedLegs, selected);
+        swapAmuletItemSlots(equippedLegs, itemSlot);
         break;
       case ItemType.Hand:
         if (equippedHandLeft.amuletItem == null){
-          swapAmuletItemSlots(equippedHandLeft, selected);
+          swapAmuletItemSlots(equippedHandLeft, itemSlot);
         } else {
-          swapAmuletItemSlots(equippedHandRight, selected);
+          swapAmuletItemSlots(equippedHandRight, itemSlot);
         }
         break;
     }
@@ -1562,26 +1559,7 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
 
-    final aCooldown = amuletItemSlotA.cooldown;
-    final bCooldown = amuletItemSlotB.cooldown;
-
-    final aCooldownDuration = amuletItemSlotA.cooldownDuration;
-    final bCooldownDuration = amuletItemSlotB.cooldownDuration;
-
-    final aCharges = amuletItemSlotA.charges;
-    final bCharges = amuletItemSlotB.charges;
-
-    amuletItemSlotA.amuletItem = bAmuletItem;
-    amuletItemSlotB.amuletItem = aAmuletItem;
-
-    amuletItemSlotA.cooldown = bCooldown;
-    amuletItemSlotB.cooldown = aCooldown;
-
-    amuletItemSlotA.cooldownDuration = bCooldownDuration;
-    amuletItemSlotB.cooldownDuration = aCooldownDuration;
-
-    amuletItemSlotA.charges = bCharges;
-    amuletItemSlotB.charges = aCharges;
+    amuletItemSlotA.swap(amuletItemSlotB);
 
     notifyEquipmentDirty();
     amuletGame.onPlayerInventoryMoved(
@@ -1822,15 +1800,18 @@ class AmuletPlayer extends IsometricPlayer with
         }
 
         if (item.isWeapon) {
-          final emptyWeaponSlot = getEmptyWeaponSlot();
-          if (emptyWeaponSlot != null){
-            swapAmuletItemSlots(inventorySlot, emptyWeaponSlot);
-            if (noWeaponEquipped){
-              // equippedWeaponIndex = weapons.indexOf(emptyWeaponSlot);
-            }
-          } else {
-            writeGameError(GameError.Weapon_Rack_Full);
-          }
+          // final emptyWeaponSlot = getEmptyWeaponSlot();
+          // if (emptyWeaponSlot != null){
+          //   swapAmuletItemSlots(inventorySlot, emptyWeaponSlot);
+          //   if (noWeaponEquipped){
+          //     // equippedWeaponIndex = weapons.indexOf(emptyWeaponSlot);
+          //   }
+          // } else {
+          //   writeGameError(GameError.Weapon_Rack_Full);
+          // }
+          // swapAmuletItemSlots(inventorySlot, equippedWeapon);
+          inventorySlot.swap(equippedWeapon);
+          notifyEquipmentDirty();
         } else
         if (item.isTreasure) {
           final emptyTreasureSlot = getEmptyTreasureSlot();
