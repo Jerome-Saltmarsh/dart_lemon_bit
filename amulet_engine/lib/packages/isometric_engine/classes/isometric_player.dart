@@ -989,7 +989,8 @@ class IsometricPlayer extends Character with ByteWriter {
     if (selectedCollider is AmuletPlayer){
       writeBool(true);
       writeAmuletItemSlot(selectedCollider.equippedWeapon);
-      writeAmuletItemSlot(selectedCollider.itemSlotPower);
+      writeAmuletItemSlot(selectedCollider.equippedWeapon); // TODO
+      // writeAmuletItemSlot(selectedCollider.activeAmuletItemSlot);
     } else {
       writeBool(false);
     }

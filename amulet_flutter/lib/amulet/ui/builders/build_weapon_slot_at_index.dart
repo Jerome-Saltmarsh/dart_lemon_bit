@@ -38,17 +38,17 @@ Widget buildWeaponSlotAtIndex(int index, {
           (equippedWeaponIndex) => equippedWeaponIndex == index ? activeBorder : notActiveBorder
   );
 
-  final backgroundActivePower = buildWatch(amulet.activatedPowerIndex, (activatedPowerIndex){
-    if (index != activatedPowerIndex)
-      return nothing;
-
-    return GSContainer(
-      color: Colors.purple.withOpacity(0.5),
-      width: size,
-      height: size,
-      rounded: true,
-    );
-  });
+  // final backgroundActivePower = buildWatch(amulet.activatedPowerIndex, (activatedPowerIndex){
+  //   if (index != activatedPowerIndex)
+  //     return nothing;
+  //
+  //   return GSContainer(
+  //     color: Colors.purple.withOpacity(0.5),
+  //     width: size,
+  //     height: size,
+  //     rounded: true,
+  //   );
+  // });
 
 
 
@@ -144,7 +144,7 @@ Widget buildWeaponSlotAtIndex(int index, {
           alignment: Alignment.center,
           children: [
             backgroundSelectedWeapon,
-            backgroundActivePower,
+            // backgroundActivePower,
             watchAmuletItem,
             Positioned(
                 child: buildItemSlot(

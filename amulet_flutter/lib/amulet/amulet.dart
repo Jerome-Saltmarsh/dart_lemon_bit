@@ -113,7 +113,6 @@ class Amulet extends IsometricGame {
   final npcOptions = <String>[];
   final npcOptionsReads = Watch(0);
   final equippedWeaponIndex = Watch(-1);
-  final activatedPowerIndex = Watch(-1);
   final equippedWeapon = ItemSlot(slotType: SlotType.Weapon);
   final equippedHelm = ItemSlot(slotType: SlotType.Helm);
   final equippedBody = ItemSlot(slotType: SlotType.Body);
@@ -425,10 +424,8 @@ class Amulet extends IsometricGame {
     engine.cursorType.value = CursorType.Basic;
     clearEquippedWeapon();
     clearDragging();
-    clearActivatedPowerIndex();
+    // clearActivatedPowerIndex();
   }
-
-  void clearActivatedPowerIndex() => activatedPowerIndex.value = -1;
 
   void clearDragging() => dragging.value = null;
 

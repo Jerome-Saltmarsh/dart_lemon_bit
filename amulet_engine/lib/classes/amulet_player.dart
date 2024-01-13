@@ -47,7 +47,6 @@ class AmuletPlayer extends IsometricPlayer with
   late List<AmuletItemSlot> items;
 
   var _inventoryOpen = false;
-  var _activatedPowerIndex = -1;
   SlotType? activeSlotType;
 
   AmuletPlayer({
@@ -73,7 +72,6 @@ class AmuletPlayer extends IsometricPlayer with
     writeWorldMapLocations();
     writeAmuletElements();
     writeElementPoints();
-    writeActivatedPowerIndex(_activatedPowerIndex);
     writeWeapons();
     writeTreasures();
     writeInteracting();
@@ -205,8 +203,6 @@ class AmuletPlayer extends IsometricPlayer with
   @override
   int get helmType => equippedHelm.amuletItem?.subType ?? HelmType.None;
 
-  int get activatedPowerIndex => _activatedPowerIndex;
-
   @override
   int get maxHealth {
     var health = healthBase;
@@ -276,17 +272,6 @@ class AmuletPlayer extends IsometricPlayer with
 
     writeInteracting();
   }
-
-  set activatedPowerIndex(int value){
-    if (_activatedPowerIndex == value) {
-      return;
-    }
-
-    // itemSlotPowerActive = value != -1;
-    _activatedPowerIndex = value;
-    writeActivatedPowerIndex(_activatedPowerIndex);
-  }
-
 
   set tutorialObjective(QuestTutorial tutorialObjective){
     data['tutorial_objective'] = tutorialObjective.name;
@@ -607,104 +592,6 @@ class AmuletPlayer extends IsometricPlayer with
   bool isValidItemIndex(int index) => index >= 0 && index < items.length;
 
   bool isValidIndexTreasure(int index) => index >= 0 && index < treasures.length;
-
-  // void selectWeaponAtIndex(int index) {
-  //    if (deadOrBusy) {
-  //      return;
-  //    }
-  //
-  //   if (!isValidWeaponIndex(index)) {
-  //     writeAmuletError('Invalid weapon index $index');
-  //     return;
-  //   }
-  //
-  //   final itemSlot = weapons[index];
-  //   final amuletItem = itemSlot.amuletItem;
-  //
-  //   if (amuletItem == null) {
-  //     return;
-  //   }
-  //
-  //   if (itemSlot.charges <= 0) {
-  //     writeAmuletError('${itemSlot.amuletItem?.name} has no charges');
-  //     return;
-  //   }
-  //
-  //   final itemStats = getAmuletItemStats(amuletItem);
-  //
-  //   if (itemStats == null){
-  //     writeGameError(GameError.Insufficient_Elements);
-  //     return;
-  //   }
-  //
-  //   final dependency = amuletItem.dependency;
-  //
-  //   if (dependency != null && weaponType != dependency){
-  //     writeGameError(GameError.Weapon_Required);
-  //     return;
-  //   }
-  //
-  //   switch (amuletItem.skillType?.casteType) {
-  //     case AmuletItemAction.Equip:
-  //       // if (equippedWeaponIndex == index){
-  //       //   performForceAttack();
-  //       //   return;
-  //       // }
-  //       // equippedWeaponIndex = index;
-  //       deselectActivatedPower();
-  //       break;
-  //     case AmuletItemAction.Positional:
-  //       if (activatedPowerIndex == index){
-  //         deselectActivatedPower();
-  //         return;
-  //       }
-  //       activatedPowerIndex = index;
-  //       break;
-  //     case AmuletItemAction.Directional:
-  //       if (activatedPowerIndex == index){
-  //         deselectActivatedPower();
-  //         return;
-  //       }
-  //       activatedPowerIndex = index;
-  //       break;
-  //     case AmuletItemAction.Targeted_Ally:
-  //       if (activatedPowerIndex == index){
-  //         deselectActivatedPower();
-  //         return;
-  //       }
-  //       activatedPowerIndex = index;
-  //       break;
-  //     case AmuletItemAction.Targeted_Enemy:
-  //       if (activatedPowerIndex == index){
-  //         deselectActivatedPower();
-  //         return;
-  //       }
-  //       activatedPowerIndex = index;
-  //       break;
-  //     case AmuletItemAction.Caste:
-  //       lookAtMouse();
-  //       reduceAmuletItemSlotCharges(itemSlot);
-  //       activatedPowerIndex = index;
-  //       setCharacterStateCasting(
-  //           duration: itemStats.performDuration,
-  //       );
-  //       itemSlot.cooldown = 0;
-  //       itemSlot.cooldownDuration = itemStats.cooldown;
-  //       writePlayerWeapon(index);
-  //       amuletGame.onAmuletItemUsed(this, amuletItem);
-  //       break;
-  //     case AmuletItemAction.Instant:
-  //       reduceAmuletItemSlotCharges(itemSlot);
-  //       itemSlot.cooldown = 0;
-  //       itemSlot.cooldownDuration = itemStats.cooldown;
-  //       writePlayerWeapon(index);
-  //       break;
-  //     case AmuletItemAction.Consume:
-  //       // TODO: Handle this case.
-  //     case AmuletItemAction.None:
-  //       // TODO: Handle this case.
-  //   }
-  // }
 
   void deactivateSlotType() => setActiveSlotType(null);
 
@@ -1192,12 +1079,6 @@ class AmuletPlayer extends IsometricPlayer with
     setCharacterStateChanging();
   }
 
-  void writeActivatedPowerIndex(int activatedPowerIndex) {
-    writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Activated_Power_Index);
-    writeInt8(activatedPowerIndex);
-  }
-
   void assignWeaponTypeToEquippedWeapon() =>
       weaponType = equippedWeapon.amuletItem?.subType ?? WeaponType.Unarmed;
 
@@ -1218,44 +1099,22 @@ class AmuletPlayer extends IsometricPlayer with
   @override
   void update() {
     super.update();
-    updateThisActivatedPowerIndex();
+    updateActiveAbility();
   }
 
-  void updateThisActivatedPowerIndex() {
-    updateActiveAbility(
-        activatedPowerIndex: this._activatedPowerIndex,
-        weapons: this.weapons,
-    );
-  }
 
-  void updateActiveAbility({
-    required int activatedPowerIndex,
-    required List<AmuletItemSlot> weapons,
-  }) {
+  void updateActiveAbility() {
 
-    if (activatedPowerIndex < 0){
+    if (activeAmuletItemSlot == null){
       return;
     }
 
-    if (activatedPowerIndex >= weapons.length){
-      throw Exception(
-          '_activatedPowerIndex: $activatedPowerIndex'
-          ' >= weapons.length: ${weapons.length}'
-      );
-    };
 
     final activeAmuletItem = activeAmuletItemSlot?.amuletItem;
 
     if (activeAmuletItem == null){
       return;
     }
-
-    // final activeAbilityStats = getAmuletItemStats(activeAmuletItem);
-
-    // if (activeAbilityStats == null){
-    //   writeGameError(GameError.Insufficient_Elements);
-    //   return;
-    // }
 
     final skillType = activeAmuletItem.skillType;
 
@@ -1461,7 +1320,7 @@ class AmuletPlayer extends IsometricPlayer with
   @override
   void clearAction() {
     super.clearAction();
-    activatedPowerIndex = - 1;
+    deactivateSlotType();
   }
 
 
@@ -1718,20 +1577,16 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   void useActivatedPower() {
-
-    if (deadInactiveOrBusy){
+    if (deadInactiveOrBusy) {
       return;
     }
 
-    if (activatedPowerIndex < 0) {
+    final amuletItemSlot = this.activeAmuletItemSlot;
+
+    if (amuletItemSlot == null){
       return;
     }
 
-    if (activatedPowerIndex >= weapons.length) {
-      throw Exception('invalid weapon index: $activatedPowerIndex');
-    }
-
-    final amuletItemSlot = weapons[activatedPowerIndex];
     final amuletItem = amuletItemSlot.amuletItem;
 
     if (amuletItem == null) {
@@ -1743,13 +1598,6 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   void onAmuletItemUsed(AmuletItem amuletItem) {
-
-    // final amuletItemLevel = getAmuletItemStats(amuletItem);
-
-    // if (amuletItemLevel == null) {
-    //   writeGameError(GameError.Insufficient_Elements);
-    //   return;
-    // }
 
     final dependency = amuletItem.dependency;
 
@@ -2018,14 +1866,6 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
     questMain = QuestMain.values[quest.index + 1];
-  }
-
-  @override
-  AmuletItemSlot get itemSlotPower {
-    if (_activatedPowerIndex == -1){
-      return weaponUnarmed;
-    }
-    return weapons[_activatedPowerIndex];
   }
 
   @override

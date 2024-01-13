@@ -11,7 +11,6 @@ class NetworkResponseAmulet {
    static const Player_Experience = 8;
    static const Player_Level = 10;
    static const Player_Inventory_Open = 13;
-   static const Activated_Power_Index = 15;
    static const Active_Power_Position = 16;
    static const Error = 17;
    static const Amulet_Scene = 18;

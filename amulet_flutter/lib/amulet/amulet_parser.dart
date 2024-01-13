@@ -78,9 +78,6 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Inventory_Open:
          amulet.playerInventoryOpen.value = readBool();
          break;
-       case NetworkResponseAmulet.Activated_Power_Index:
-         amulet.activatedPowerIndex.value = readInt8();
-         break;
        case NetworkResponseAmulet.Active_Power_Position:
          readIsometricPosition(amulet.activePowerPosition);
          break;
