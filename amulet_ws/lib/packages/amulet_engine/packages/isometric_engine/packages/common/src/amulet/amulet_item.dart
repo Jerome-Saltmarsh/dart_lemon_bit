@@ -127,6 +127,9 @@ enum AmuletItem {
     subType: HelmType.Witches_Hat,
     description: 'an old moth eaten hat that emanates magic',
     performDuration: 25,
+    range: 200,
+    damageMin: 5,
+    damageMax: 5,
   ),
   Pants_Travellers(
     levelMin: 1,
@@ -358,8 +361,10 @@ enum AmuletItem {
 
 enum SkillType {
   Strike(casteType: CasteType.Self),
+  Arrow(casteType: CasteType.Self),
   Heal(casteType: CasteType.Self),
   Fireball(casteType: CasteType.Targeted_Enemy, range: 150),
+  Explode(casteType: CasteType.Positional, range: 150),
   Firestorm(casteType: CasteType.Directional),
   Teleport(casteType: CasteType.Positional, range: 200),
   Freeze_Target(casteType: CasteType.Targeted_Enemy, range: 180),

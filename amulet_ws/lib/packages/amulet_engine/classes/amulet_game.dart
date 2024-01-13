@@ -283,55 +283,116 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       character.clearActivatedPowerIndex();
     }
 
-    switch (amuletItem) {
-      case AmuletItem.Weapon_Short_Sword:
+    final skillType = amuletItem.skillType;
+
+    if (skillType == null){
+      throw Exception('skill type is null: $amuletItem');
+    }
+
+    final damage = getAmuletItemDamage(amuletItem);
+
+    switch (skillType){
+      case SkillType.Strike:
         performAbilityMelee(
-            character: character,
-            damageType: DamageType.melee,
-            range: amuletItem.range ?? (throw Exception()),
-            damage: getAmuletItemDamage(amuletItem),
+          character: character,
+          damageType: DamageType.melee,
+          range: amuletItem.range ?? (throw Exception()),
+          damage: damage,
         );
         break;
-      case AmuletItem.Weapon_Staff_Wooden:
-        createExplosion(
-            x: character.activePowerX,
-            y: character.activePowerY,
-            z: character.activePowerZ,
-            srcCharacter: character,
-        );
-        break;
-      case AmuletItem.Weapon_Old_Bow:
-        performAbilityArrow(
-            character: character,
-            damage: getAmuletItemDamage(amuletItem),
-            range: amuletItem.range ?? (throw Exception('range is null')),
-        );
-        break;
-      case AmuletItem.Weapon_Holy_Bow:
+      case SkillType.Arrow:
         performAbilityArrow(
           character: character,
-          damage: getAmuletItemDamage(amuletItem),
+          damage: damage,
           range: amuletItem.range ?? (throw Exception('range is null')),
         );
         break;
-      case AmuletItem.Moth_Hat_Of_Magic:
+      case SkillType.Fireball:
         performAbilityFireball(
-            character,
-            damage: getAmuletItemDamage(amuletItem),
-            range: amuletItem.range ?? (throw Exception()),
+          character,
+          damage: damage,
+          range: amuletItem.range ?? (throw Exception()),
         );
         break;
-      default:
-        // final weaponType = amuletItem.subType;
-        // if (WeaponType.valuesMelee.contains(weaponType)){
-        //   performAbilityMelee(
-        //       character: character,
-        //       damageType: DamageType.melee,
-        //   );
-        //   return;
-        // }
-        throw Exception('amulet.PerformCharacterAction($amuletItem)');
+      case SkillType.Explode:
+        createExplosion(
+          x: character.activePowerX,
+          y: character.activePowerY,
+          z: character.activePowerZ,
+          srcCharacter: character,
+        );
+        break;
+      case SkillType.Heal:
+        performAbilityHeal(
+            character: character,
+            target: character,
+            amount: damage,
+        );
+        break;
+      case SkillType.Teleport:
+        performAbilityBlink(character);
+        break;
+      case SkillType.Freeze_Target:
+        throw Exception('not implemented');
+      case SkillType.Freeze_Area:
+        throw Exception('not implemented');
+      case SkillType.Firestorm:
+        throw Exception('not implemented');
+      case SkillType.Invisible:
+        throw Exception('not implemented');
+      case SkillType.Terrify:
+        throw Exception('not implemented');
     }
+
+    // switch (amuletItem) {
+    //   case AmuletItem.Weapon_Short_Sword:
+    //     performAbilityMelee(
+    //         character: character,
+    //         damageType: DamageType.melee,
+    //         range: amuletItem.range ?? (throw Exception()),
+    //         damage: getAmuletItemDamage(amuletItem),
+    //     );
+    //     break;
+    //   case AmuletItem.Weapon_Staff_Wooden:
+    //     createExplosion(
+    //         x: character.activePowerX,
+    //         y: character.activePowerY,
+    //         z: character.activePowerZ,
+    //         srcCharacter: character,
+    //     );
+    //     break;
+    //   case AmuletItem.Weapon_Old_Bow:
+    //     performAbilityArrow(
+    //         character: character,
+    //         damage: getAmuletItemDamage(amuletItem),
+    //         range: amuletItem.range ?? (throw Exception('range is null')),
+    //     );
+    //     break;
+    //   case AmuletItem.Weapon_Holy_Bow:
+    //     performAbilityArrow(
+    //       character: character,
+    //       damage: getAmuletItemDamage(amuletItem),
+    //       range: amuletItem.range ?? (throw Exception('range is null')),
+    //     );
+    //     break;
+    //   case AmuletItem.Moth_Hat_Of_Magic:
+    //     performAbilityFireball(
+    //         character,
+    //         damage: getAmuletItemDamage(amuletItem),
+    //         range: amuletItem.range ?? (throw Exception()),
+    //     );
+    //     break;
+    //   default:
+    //     // final weaponType = amuletItem.subType;
+    //     // if (WeaponType.valuesMelee.contains(weaponType)){
+    //     //   performAbilityMelee(
+    //     //       character: character,
+    //     //       damageType: DamageType.melee,
+    //     //   );
+    //     //   return;
+    //     // }
+    //     throw Exception('amulet.PerformCharacterAction($amuletItem)');
+    // }
   }
 
   void performAbilityFrostBall(
@@ -343,6 +404,18 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       projectileType: ProjectileType.FrostBall,
       angle: character.angle,
     );
+  }
+
+  void performAbilityHeal({
+    required Character character,
+    required Character target,
+    required int amount,
+  }){
+    target.health += amount;
+    dispatchGameEventPosition(GameEvent.Character_Caste_Healed, character);
+    if (character != target) {
+      dispatchGameEventPosition(GameEvent.Character_Healed, target);
+    }
   }
 
   void performAbilityFireball(

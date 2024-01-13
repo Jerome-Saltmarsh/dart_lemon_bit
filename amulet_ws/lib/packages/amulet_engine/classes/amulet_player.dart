@@ -1785,9 +1785,6 @@ class AmuletPlayer extends IsometricPlayer with
         );
         break;
       case CasteType.Targeted_Ally:
-        if (performDuration == null){
-          throw Exception('performDuration == null: ${amuletItem}');
-        }
         if (target == null) {
           deactivateSlotType();
           return;
@@ -1797,9 +1794,6 @@ class AmuletPlayer extends IsometricPlayer with
         );
         break;
       case CasteType.Positional:
-        if (performDuration == null){
-          throw Exception('performDuration == null: ${amuletItem}');
-        }
         useWeaponType(
           weaponType: dependency ?? amuletItem.subType,
           duration: performDuration,
