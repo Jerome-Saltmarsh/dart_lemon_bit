@@ -20,11 +20,14 @@ class AmuletPlayer extends IsometricPlayer with
     Elemental,
     Experience,
     Level,
-    ElementPoints,
-    EquippedWeapon
+    ElementPoints
 {
 
   static const healthBase = 10;
+
+  var activePowerX = 0.0;
+  var activePowerY = 0.0;
+  var activePowerZ = 0.0;
 
   var admin = false;
   var previousCameraTarget = false;
@@ -141,10 +144,6 @@ class AmuletPlayer extends IsometricPlayer with
     writeAmuletElements();
   }
 
-  int? get equippedWeaponDamage => equippedWeaponAmuletItemLevel?.damageMin;
-
-  double? get equippedWeaponRange => equippedWeaponAmuletItemLevel?.range;
-
   Amulet get amulet => amuletGame.amulet;
 
   @override
@@ -164,47 +163,44 @@ class AmuletPlayer extends IsometricPlayer with
 
   bool get inventoryOpen => _inventoryOpen;
 
-  int get equippedWeaponLevel {
-    final weapon = itemSlotWeapon;
-    final item = weapon.amuletItem;
-
-    if (item == null){
-      throw Exception('item == null');
-    }
-
-    return getLevelForAmuletItem(item);
-  }
-
-  AmuletItemStats? get equippedWeaponAmuletItemLevel {
-    final weapon = itemSlotWeapon;
-
-    final item = weapon.amuletItem;
-    if (item == null){
-       return null;
-    }
-
-    return getAmuletItemStats(item);
-  }
+  // int get equippedWeaponLevel {
+  //   final weapon = itemSlotWeapon;
+  //   final item = weapon.amuletItem;
+  //
+  //   if (item == null){
+  //     throw Exception('item == null');
+  //   }
+  //
+  //   return getLevelForAmuletItem(item);
+  // }
 
   @override
   int get weaponCooldown => itemSlotWeapon.cooldown;
 
   @override
   int get weaponDamage {
-    final level = equippedWeaponAmuletItemLevel;
-    if (level == null){
-      return -1;
+
+    final amuletItem = equippedWeapon.amuletItem;
+
+    if (amuletItem == null) {
+      return 0;
     }
-    var damage = randomInt(level.damageMin, level.damageMax + 1);
-    for (final itemSlot in treasures) {
-       final amuletItem = itemSlot.amuletItem;
-       if (amuletItem == null) continue;
+
+    final damageMin = amuletItem.damageMin;
+    final damageMax = amuletItem.damageMax;
+
+    if (damageMin == null){
+      throw Exception('${amuletItem.name} damageMin is null');
     }
-    return damage;
+    if (damageMax == null){
+      throw Exception('${amuletItem.name} damageMax is null');
+    }
+
+    return randomInt(damageMin, damageMax + 1);
   }
 
   @override
-  double get weaponRange => equippedWeaponAmuletItemLevel?.range ?? -1;
+  double get weaponRange => equippedWeapon.amuletItem?.range ?? 0;
 
   @override
   int get helmType => equippedHelm.amuletItem?.subType ?? HelmType.None;
@@ -214,22 +210,22 @@ class AmuletPlayer extends IsometricPlayer with
   @override
   int get maxHealth {
     var health = healthBase;
-    health += getAmuletItemStatsForItemSlot(equippedHandLeft)?.health ?? 0;
-    health += getAmuletItemStatsForItemSlot(equippedHandRight)?.health ?? 0;
-    health += getAmuletItemStatsForItemSlot(equippedHelm)?.health ?? 0;
-    health += getAmuletItemStatsForItemSlot(equippedBody)?.health ?? 0;
-    health += getAmuletItemStatsForItemSlot(equippedLegs)?.health ?? 0;
+    // health += getAmuletItemStatsForItemSlot(equippedHandLeft)?.health ?? 0;
+    // health += getAmuletItemStatsForItemSlot(equippedHandRight)?.health ?? 0;
+    // health += getAmuletItemStatsForItemSlot(equippedHelm)?.health ?? 0;
+    // health += getAmuletItemStatsForItemSlot(equippedBody)?.health ?? 0;
+    // health += getAmuletItemStatsForItemSlot(equippedLegs)?.health ?? 0;
     return health;
   }
 
   @override
   double get runSpeed {
     var base = 1.0;
-    base += getAmuletItemStatsForItemSlot(equippedHandLeft)?.movement ?? 0;
-    base += getAmuletItemStatsForItemSlot(equippedHandRight)?.movement ?? 0;
-    base += getAmuletItemStatsForItemSlot(equippedHelm)?.movement ?? 0;
-    base += getAmuletItemStatsForItemSlot(equippedBody)?.movement ?? 0;
-    base += getAmuletItemStatsForItemSlot(equippedLegs)?.movement ?? 0;
+    // base += getAmuletItemStatsForItemSlot(equippedHandLeft)?.movement ?? 0;
+    // base += getAmuletItemStatsForItemSlot(equippedHandRight)?.movement ?? 0;
+    // base += getAmuletItemStatsForItemSlot(equippedHelm)?.movement ?? 0;
+    // base += getAmuletItemStatsForItemSlot(equippedBody)?.movement ?? 0;
+    // base += getAmuletItemStatsForItemSlot(equippedLegs)?.movement ?? 0;
     return base;
   }
 
@@ -289,7 +285,7 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
 
-    itemSlotPowerActive = value != -1;
+    // itemSlotPowerActive = value != -1;
     _activatedPowerIndex = value;
     writeActivatedPowerIndex(_activatedPowerIndex);
   }
@@ -384,14 +380,14 @@ class AmuletPlayer extends IsometricPlayer with
     var total = 0;
     final characters = game.characters;
     for (final character in characters) {
-      if (character is EquippedWeapon && onScreenPosition(character)) {
+      if (character is AmuletPlayer && onScreenPosition(character)) {
         total++;
       }
     }
     writeUInt16(total);
 
     for (final character in characters) {
-      if (character is EquippedWeapon && onScreenPosition(character)) {
+      if (character is AmuletPlayer && onScreenPosition(character)) {
          writeIsometricPosition(character);
          writeString(character.name);
       }
@@ -1260,12 +1256,12 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
 
-    final activeAbilityStats = getAmuletItemStats(activeAmuletItem);
+    // final activeAbilityStats = getAmuletItemStats(activeAmuletItem);
 
-    if (activeAbilityStats == null){
-      writeGameError(GameError.Insufficient_Elements);
-      return;
-    }
+    // if (activeAbilityStats == null){
+    //   writeGameError(GameError.Insufficient_Elements);
+    //   return;
+    // }
 
     final skillType = activeAmuletItem.skillType;
 
@@ -1275,7 +1271,7 @@ class AmuletPlayer extends IsometricPlayer with
 
     if (skillType.casteType == CasteType.Positional) {
       final mouseDistance = getMouseDistance();
-      final maxRange = activeAbilityStats.range;
+      final maxRange = skillType.range ?? (throw Exception());
       if (mouseDistance <= maxRange){
         activePowerX = mouseSceneX;
         activePowerY = mouseSceneY;
@@ -1363,7 +1359,6 @@ class AmuletPlayer extends IsometricPlayer with
     equipmentDirty = true;
   }
 
-  @override
   void updateItemSlots() {
     final length = equipped.length;
      for (var i = 0; i < length; i++) {
@@ -1670,37 +1665,30 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
 
-    // final equippedWeaponSlot = weapons[equippedWeaponIndex];
-
     if (equippedWeapon.chargesEmpty) {
       writeGameError(GameError.Insufficient_Weapon_Charges);
       return;
     }
 
-    final equippedWeaponAmuletItem = equippedWeapon.amuletItem;
+    final amuletItem = equippedWeapon.amuletItem;
 
-    if (equippedWeaponAmuletItem == null){
+    if (amuletItem == null){
       return;
     }
 
-    final equippedWeaponLevel = getAmuletItemStats(equippedWeaponAmuletItem);
+    final performDuration = amuletItem.performDuration;
 
-    if (equippedWeaponLevel == null){
-      writeGameError(GameError.Insufficient_Elements);
-      return;
+    if (performDuration == null){
+      throw Exception('performDuration is null: $amuletItem');
     }
 
-    final performDuration = equippedWeaponLevel.performDuration;
+    final subType = amuletItem.subType;
+    this.weaponDamage = AmuletGame.getAmuletItemDamage(amuletItem);
 
-    if (performDuration <= 0){
-      throw Exception('performDuration <= 0');
-    }
-
-    final subType = equippedWeaponAmuletItem.subType;
-    this.weaponDamage = equippedWeaponLevel.damageMin;
-
-    useWeaponType(weaponType: subType, duration: performDuration);
-    reduceAmuletItemSlotCharges(equippedWeapon);
+    useWeaponType(
+      weaponType: subType,
+      duration: performDuration,
+    );
   }
 
   void useWeaponType({
@@ -1756,24 +1744,18 @@ class AmuletPlayer extends IsometricPlayer with
       throw Exception();
     }
 
-    final stats = getAmuletItemStats(amuletItem);
-
-    if (stats == null){
-      throw Exception('must have stats for activated item');
-    }
-
-    amuletItemSlot.cooldown = stats.cooldown;
+    amuletItemSlot.cooldown = amuletItem.cooldown ?? 0;
     onAmuletItemUsed(amuletItem);
   }
 
   void onAmuletItemUsed(AmuletItem amuletItem) {
 
-    final amuletItemLevel = getAmuletItemStats(amuletItem);
+    // final amuletItemLevel = getAmuletItemStats(amuletItem);
 
-    if (amuletItemLevel == null) {
-      writeGameError(GameError.Insufficient_Elements);
-      return;
-    }
+    // if (amuletItemLevel == null) {
+    //   writeGameError(GameError.Insufficient_Elements);
+    //   return;
+    // }
 
     final dependency = amuletItem.dependency;
 
@@ -1786,14 +1768,16 @@ class AmuletPlayer extends IsometricPlayer with
       }
     }
 
+    final performDuration = amuletItem.performDuration;
+
+    if (performDuration == null){
+      throw Exception('performDuration == null: ${amuletItem}');
+    }
+
     switch (amuletItem.skillType?.casteType) {
       case CasteType.Self:
-        if (amuletItemLevel.performDuration <= 0){
-          throw Exception('stats.performDuration <= 0 ${amuletItem} ${amuletItemLevel}');
-        }
-
         setCharacterStateCasting(
-          duration: amuletItemLevel.performDuration,
+          duration: performDuration,
         );
         break;
       case CasteType.Targeted_Enemy:
@@ -1803,22 +1787,28 @@ class AmuletPlayer extends IsometricPlayer with
         }
         useWeaponType(
           weaponType: dependency ?? amuletItem.subType,
-          duration: amuletItemLevel.performDuration,
+          duration: performDuration,
         );
         break;
       case CasteType.Targeted_Ally:
+        if (performDuration == null){
+          throw Exception('performDuration == null: ${amuletItem}');
+        }
         if (target == null) {
           deactivateSlotType();
           return;
         }
         setCharacterStateCasting(
-          duration: amuletItemLevel.performDuration,
+          duration: performDuration,
         );
         break;
       case CasteType.Positional:
+        if (performDuration == null){
+          throw Exception('performDuration == null: ${amuletItem}');
+        }
         useWeaponType(
           weaponType: dependency ?? amuletItem.subType,
-          duration: amuletItemLevel.performDuration,
+          duration: performDuration,
         );
         break;
       case CasteType.Instant:
@@ -1827,7 +1817,7 @@ class AmuletPlayer extends IsometricPlayer with
         lookAtMouse();
         useWeaponType(
           weaponType: dependency ?? amuletItem.subType,
-          duration: amuletItemLevel.performDuration,
+          duration: performDuration,
         );
         break;
       case null:
@@ -1901,7 +1891,8 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   void clearActivatedPowerIndex(){
-    activatedPowerIndex = -1;
+    // activatedPowerIndex = -1;
+    deactivateSlotType();
   }
 
   writeHighlightAmuletItems(AmuletItem amuletItem){

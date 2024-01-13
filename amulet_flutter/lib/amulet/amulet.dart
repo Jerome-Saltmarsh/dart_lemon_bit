@@ -335,12 +335,12 @@ class Amulet extends IsometricGame {
     );
   }
 
-  int getAmuletPlayerItemLevel(AmuletItem amuletItem) =>
-      amuletItem.getLevel(
-        fire: elementFire.value,
-        water: elementWater.value,
-        electricity: elementElectricity.value,
-    );
+  // int getAmuletPlayerItemLevel(AmuletItem amuletItem) =>
+  //     amuletItem.getLevel(
+  //       fire: elementFire.value,
+  //       water: elementWater.value,
+  //       electricity: elementElectricity.value,
+  //   );
 
   void toggleInventoryOpen() =>
       server.sendNetworkRequest(

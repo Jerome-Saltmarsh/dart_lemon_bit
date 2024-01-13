@@ -24,7 +24,7 @@ class AmuletGameObject extends GameObject {
     fixed = false;
     gravity = true;
     collidable = true;
-    collectable = !item.consumable;
+    collectable = item == AmuletItem.Potion_Health;
     persistable = false;
     hitable = false;
     physical = false;

@@ -33,7 +33,7 @@ Widget buildItemSlot(ItemSlot itemSlot, {
                 : Builder(
                   builder: (context) {
                     return buildWatch(amulet.elementsChangedNotifier, (t) {
-                      final level = amulet.getAmuletPlayerItemLevel(item);
+                      // final level = amulet.getAmuletPlayerItemLevel(item);
 
                       return Container(
                         width: size,

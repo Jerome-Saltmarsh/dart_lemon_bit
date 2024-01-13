@@ -4,7 +4,6 @@ import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/amulet/ui/widgets/amulet_element_icon.dart';
 import 'package:amulet_flutter/amulet/ui/widgets/mmo_item_image.dart';
 import 'package:amulet_flutter/gamestream/isometric/isometric_components.dart';
-import 'package:amulet_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 import 'package:amulet_engine/packages/common.dart';
@@ -15,57 +14,58 @@ Widget buildContainerAmuletItemHover({
   double edgePadding = 150,
 }) => buildWatchNullable(
       amulet.itemHover, (item) {
-        final levelCurrent = amulet.getAmuletPlayerItemLevel(item);
-        final skillType = item.skillType;
+        // final levelCurrent = amulet.getAmuletPlayerItemLevel(item);
+        // final skillType = item.skillType;
+        return buildAmuletItemIcon(item);
 
-        if (levelCurrent == -1){
-          final stats1 = item.getStatsForLevel(1);
-
-          if (stats1 == null){
-            throw Exception('stats1 == null');
-          }
-
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildAmuletItemIcon(item),
-              height8,
-              if (skillType != null)
-                buildText('Skill - $skillType'),
-              buildContainerAmuletItemStats(stats1, 1),
-            ],
-          );
-        }
-
-        final statsCurrent = item.getStatsForLevel(levelCurrent);
-
-        if (statsCurrent == null){
-          throw Exception('invalid amulet item level: $levelCurrent, item: $item');
-        }
-
-        final levelNext = levelCurrent + 1;
-        final statsNext = item.getStatsForLevel(levelNext);
-
-
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            buildAmuletItemIcon(item),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                buildContainerAmuletItemStats(statsCurrent, levelCurrent, color: Colors.green.shade900),
-                if (statsNext != null)
-                 Container(
-                     margin: const EdgeInsets.only(left: 8),
-                     child: buildContainerAmuletItemStats(statsNext, levelNext, color: Colors.orange.shade900),
-                 ),
-              ],
-            ),
-          ],
-        );
+        // if (levelCurrent == -1){
+        //   final stats1 = item.getStatsForLevel(1);
+        //
+        //   if (stats1 == null){
+        //     throw Exception('stats1 == null');
+        //   }
+        //
+        //   return Column(
+        //     mainAxisAlignment: MainAxisAlignment.start,
+        //     crossAxisAlignment: CrossAxisAlignment.start,
+        //     children: [
+        //       buildAmuletItemIcon(item),
+        //       height8,
+        //       if (skillType != null)
+        //         buildText('Skill - $skillType'),
+        //       buildContainerAmuletItemStats(stats1, 1),
+        //     ],
+        //   );
+        // }
+        //
+        // final statsCurrent = item.getStatsForLevel(levelCurrent);
+        //
+        // if (statsCurrent == null){
+        //   throw Exception('invalid amulet item level: $levelCurrent, item: $item');
+        // }
+        //
+        // final levelNext = levelCurrent + 1;
+        // final statsNext = item.getStatsForLevel(levelNext);
+        //
+        //
+        // return Column(
+        //   mainAxisAlignment: MainAxisAlignment.start,
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   children: [
+        //     buildAmuletItemIcon(item),
+        //     Row(
+        //       crossAxisAlignment: CrossAxisAlignment.start,
+        //       children: [
+        //         buildContainerAmuletItemStats(statsCurrent, levelCurrent, color: Colors.green.shade900),
+        //         if (statsNext != null)
+        //          Container(
+        //              margin: const EdgeInsets.only(left: 8),
+        //              child: buildContainerAmuletItemStats(statsNext, levelNext, color: Colors.orange.shade900),
+        //          ),
+        //       ],
+        //     ),
+        //   ],
+        // );
       });
 
 
@@ -129,64 +129,64 @@ Widget buildAmuletItemIcon(AmuletItem item) {
     );
 }
 
-Widget buildContainerAmuletItemStats(
-    AmuletItemStats amuletItemStats,
-    int level,
-    {Color? color}
-) =>
-    IsometricBuilder(builder: (context, components) =>
-        buildBorder(
-          color: color ?? Colors.transparent,
-          width: 2,
-          child: GSContainer(
-            width: 276,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  children: [
-                    GSContainer(
-                      height: 32,
-                      color: color ?? Colors.white,
-                      child: buildText('LVL $level'), padding: const EdgeInsets.all(4),
-                    ),
-                    const Expanded(child: SizedBox()),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          if (amuletItemStats.fire > 0)
-                            buildStatColumn2(AmuletElement.fire, amuletItemStats.fire, components),
-                          if (amuletItemStats.water > 0)
-                            buildStatColumn2(AmuletElement.water, amuletItemStats.water, components),
-                          if (amuletItemStats.electricity > 0)
-                            buildStatColumn2(AmuletElement.air, amuletItemStats.electricity, components),
-                        ])
-
-                  ],
-                ),
-                if (amuletItemStats.information != null)
-                  GSContainer(
-                    padding: const EdgeInsets.all(6),
-                    child: buildText(amuletItemStats.information, color: Colors.white70, align: TextAlign.center),
-                    color: Colors.white12,
-                  ),
-                height4,
-                if (amuletItemStats.damageMin != 0)
-                  buildTableRow('damage', '${amuletItemStats.damageMin} - ${amuletItemStats.damageMax}'),
-                if (amuletItemStats.charges != 0)
-                  buildTableRow('charges', amuletItemStats.charges),
-                if (amuletItemStats.cooldown != 0)
-                  buildTableRow('cooldown', amuletItemStats.cooldown),
-                if (amuletItemStats.range != 0)
-                  buildTableRow('range', amuletItemStats.range),
-                if (amuletItemStats.quantity != 0)
-                  buildTableRow('quantity', amuletItemStats.quantity),
-                if (amuletItemStats.health != 0)
-                  buildTableRow('health', amuletItemStats.health),
-              ],
-            ),
-          ),
-        ));
+// Widget buildContainerAmuletItemStats(
+//     AmuletItemStats amuletItemStats,
+//     int level,
+//     {Color? color}
+// ) =>
+//     IsometricBuilder(builder: (context, components) =>
+//         buildBorder(
+//           color: color ?? Colors.transparent,
+//           width: 2,
+//           child: GSContainer(
+//             width: 276,
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.stretch,
+//               children: [
+//                 Row(
+//                   children: [
+//                     GSContainer(
+//                       height: 32,
+//                       color: color ?? Colors.white,
+//                       child: buildText('LVL $level'), padding: const EdgeInsets.all(4),
+//                     ),
+//                     const Expanded(child: SizedBox()),
+//                     Row(
+//                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                         children: [
+//                           if (amuletItemStats.fire > 0)
+//                             buildStatColumn2(AmuletElement.fire, amuletItemStats.fire, components),
+//                           if (amuletItemStats.water > 0)
+//                             buildStatColumn2(AmuletElement.water, amuletItemStats.water, components),
+//                           if (amuletItemStats.electricity > 0)
+//                             buildStatColumn2(AmuletElement.air, amuletItemStats.electricity, components),
+//                         ])
+//
+//                   ],
+//                 ),
+//                 if (amuletItemStats.information != null)
+//                   GSContainer(
+//                     padding: const EdgeInsets.all(6),
+//                     child: buildText(amuletItemStats.information, color: Colors.white70, align: TextAlign.center),
+//                     color: Colors.white12,
+//                   ),
+//                 height4,
+//                 if (amuletItemStats.damageMin != 0)
+//                   buildTableRow('damage', '${amuletItemStats.damageMin} - ${amuletItemStats.damageMax}'),
+//                 if (amuletItemStats.charges != 0)
+//                   buildTableRow('charges', amuletItemStats.charges),
+//                 if (amuletItemStats.cooldown != 0)
+//                   buildTableRow('cooldown', amuletItemStats.cooldown),
+//                 if (amuletItemStats.range != 0)
+//                   buildTableRow('range', amuletItemStats.range),
+//                 if (amuletItemStats.quantity != 0)
+//                   buildTableRow('quantity', amuletItemStats.quantity),
+//                 if (amuletItemStats.health != 0)
+//                   buildTableRow('health', amuletItemStats.health),
+//               ],
+//             ),
+//           ),
+//         ));
 
 Widget buildStatColumn2(
     AmuletElement amuletElement,

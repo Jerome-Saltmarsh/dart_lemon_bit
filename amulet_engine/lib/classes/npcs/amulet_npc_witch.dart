@@ -2,12 +2,12 @@
 
 import 'package:amulet_engine/utils/src.dart';
 
-import '../../mixins/src.dart';
+// import '../../mixins/src.dart';
 import '../../packages/isomeric_engine.dart';
 import '../amulet_npc.dart';
 
 
-class AmuletNpcWitch extends AmuletNpc with EquippedWeapon {
+class AmuletNpcWitch extends AmuletNpc {
 
   static const level = 12;
 
@@ -30,11 +30,11 @@ class AmuletNpcWitch extends AmuletNpc with EquippedWeapon {
     elementAir = 0;
     elementStone = 0;
     changeElement(AmuletElement.values.random);
-    itemSlotWeapon.amuletItem = AmuletItem.Weapon_Staff_Wooden;
-    itemSlotPower.amuletItem = AmuletItem.Spell_Fireball;
-    weaponType = itemSlotWeapon.amuletItem?.subType ?? WeaponType.Unarmed;
-    refillItemSlot(itemSlotWeapon);
-    refillItemSlot(itemSlotPower);
+    // itemSlotWeapon.amuletItem = AmuletItem.Weapon_Staff_Wooden;
+    // itemSlotPower.amuletItem = AmuletItem.Weapon_Staff_Wooden;
+    // weaponType = itemSlotWeapon.amuletItem?.subType ?? WeaponType.Unarmed;
+    // refillItemSlot(itemSlotWeapon);
+    // refillItemSlot(itemSlotPower);
   }
 
   void changeElement(AmuletElement element){

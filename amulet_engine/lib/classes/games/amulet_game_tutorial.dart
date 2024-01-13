@@ -146,11 +146,11 @@ class AmuletGameTutorial extends AmuletGame {
       );
     }
 
-    if (objectiveCompleted(player, QuestTutorial.Acquire_Heal)){
-      player.setWeapon(index: 1, amuletItem: AmuletItem.Spell_Heal);
-    } else {
-      actionInstantiateFiend01();
-    }
+    // if (objectiveCompleted(player, QuestTutorial.Acquire_Heal)){
+    //   player.setWeapon(index: 1, amuletItem: AmuletItem.Spell_Heal);
+    // } else {
+    //   actionInstantiateFiend01();
+    // }
 
     if (objectiveCompleted(player, QuestTutorial.Use_Heal)){
       setNodeEmpty(getSceneKey(keysDoor02));
@@ -362,7 +362,7 @@ class AmuletGameTutorial extends AmuletGame {
         .wait(seconds: 1)
         .cameraSetTarget(guide)
         .faceEachOther(player, guide)
-        .highlightAmuletItem(AmuletItem.Spell_Heal)
+        // .highlightAmuletItem(AmuletItem.Spell_Heal)
         .talk(guide,
           'one has acquired the spell of healing.'
           'press the flashing heal icon at the bottom of the screen'
@@ -400,7 +400,7 @@ class AmuletGameTutorial extends AmuletGame {
             .controlsDisabled()
             .cameraSetTarget(guide)
             .faceEachOther(player, guide)
-            .add(() => player.writeHighlightAmuletItems(AmuletItem.Spell_Heal))
+            // .add(() => player.writeHighlightAmuletItems(AmuletItem.Spell_Heal))
             .talk(guide, 'caste heal by pressing the heal icon at the bottom of the screen.')
             .end();
         break;
@@ -474,7 +474,7 @@ class AmuletGameTutorial extends AmuletGame {
 
   void actionSpawnAmuletItemSpellHeal(Character target) {
     spawnAmuletItem(
-        item: AmuletItem.Spell_Heal,
+        item: AmuletItem.Glove_Healers_Hand,
         x: target.x,
         y: target.y,
         z: target.z,
@@ -529,7 +529,7 @@ class AmuletGameTutorial extends AmuletGame {
   @override
   void onAmuletItemUsed(AmuletPlayer player, AmuletItem amuletItem) {
     if (
-      amuletItem == AmuletItem.Spell_Heal &&
+      amuletItem == AmuletItem.Glove_Healers_Hand &&
       player.tutorialObjective == QuestTutorial.Use_Heal
     ) {
       onSpellHealUsedForTheFirstTime(player);
@@ -561,7 +561,7 @@ class AmuletGameTutorial extends AmuletGame {
           startNextTutorialObjective(player);
         }
         break;
-      case AmuletItem.Spell_Heal:
+      case AmuletItem.Glove_Healers_Hand:
         if (player.tutorialObjective == QuestTutorial.Acquire_Heal){
           startNextTutorialObjective(player);
         }

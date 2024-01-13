@@ -85,7 +85,6 @@ class Amulet {
   });
 
   Future construct({required bool initializeUpdateTimer}) async {
-    AmuletItem.values.forEach((item) => item.validate());
     await scenes.load();
 
     if (initializeUpdateTimer){
@@ -420,7 +419,7 @@ class Amulet {
     }
     weapons[0].amuletItem = AmuletItem.Weapon_Short_Sword;
     weapons[1].amuletItem = AmuletItem.Weapon_Old_Bow;
-    weapons[2].amuletItem = AmuletItem.Spell_Heal;
+    // weapons[2].amuletItem = AmuletItem.Spell_Heal;
     amuletTime.hour = 12;
     player.elementPoints = 0;
     player.elementFire = 0;

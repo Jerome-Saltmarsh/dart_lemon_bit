@@ -51,21 +51,21 @@ class WitchesLair2 extends AmuletGame {
 
     final target = character.target;
     if (character is AmuletNpcWitch && target != null){
-       final itemSlotPower = character.itemSlotPower;
-       final powerAmuletItem = itemSlotPower.amuletItem;
-       if (powerAmuletItem != null && !itemSlotPower.chargesEmpty){
-          final powerStats = character.getAmuletItemStats(powerAmuletItem);
-          if (powerStats != null) {
-            if (character.withinRadiusPosition(target, powerStats.range)) {
-              character.activateItemSlotPower();
-              character.facePosition(target);
-              character.itemSlotPower.reduceCharges();
-              character.setCharacterStateCasting(
-                duration: 35,
-              );
-            }
-          }
-       }
+       // final itemSlotPower = character.itemSlotPower;
+       // final powerAmuletItem = itemSlotPower.amuletItem;
+       // if (powerAmuletItem != null && !itemSlotPower.chargesEmpty){
+       //    final powerStats = character.getAmuletItemStats(powerAmuletItem);
+       //    if (powerStats != null) {
+       //      if (character.withinRadiusPosition(target, powerStats.range)) {
+       //        character.activateItemSlotPower();
+       //        character.facePosition(target);
+       //        character.itemSlotPower.reduceCharges();
+       //        character.setCharacterStateCasting(
+       //          duration: 35,
+       //        );
+       //      }
+       //    }
+       // }
     }
     super.updateCharacterAction(character);
   }

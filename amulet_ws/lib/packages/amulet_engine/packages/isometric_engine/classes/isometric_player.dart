@@ -2,11 +2,11 @@
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:amulet_engine/classes/amulet_player.dart';
+
 import '../../../classes/amulet_item_slot.dart';
-import '../../../mixins/equipped_weapon.dart';
 import '../isometric_engine.dart';
 import '../consts/isometric_settings.dart';
-
 
 class IsometricPlayer extends Character with ByteWriter {
 
@@ -986,11 +986,10 @@ class IsometricPlayer extends Character with ByteWriter {
     writeByte(NetworkResponseIsometric.Selected_Collider);
     writeBool(true);
 
-    if (selectedCollider is EquippedWeapon){
+    if (selectedCollider is AmuletPlayer){
       writeBool(true);
-      final equippedWeapon = selectedCollider as EquippedWeapon;
-      writeAmuletItemSlot(equippedWeapon.itemSlotWeapon);
-      writeAmuletItemSlot(equippedWeapon.itemSlotPower);
+      writeAmuletItemSlot(selectedCollider.itemSlotWeapon);
+      writeAmuletItemSlot(selectedCollider.itemSlotPower);
     } else {
       writeBool(false);
     }

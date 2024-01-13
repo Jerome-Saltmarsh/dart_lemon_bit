@@ -37,14 +37,14 @@ extension AmuletRender on Amulet {
   }
 
   void renderPlayerItemRange(AmuletItem item) {
-    final level = amulet.getAmuletPlayerItemLevel(item);
-    final stats = item.getStatsForLevel(level);
+    // final level = amulet.getAmuletPlayerItemLevel(item);
+    // final stats = item.getStatsForLevel(level);
 
-    if (stats == null){
-      return;
-    }
+    // if (stats == null){
+    //   return;
+    // }
 
-    final range = stats.range;
+    final range = item.range ?? 0;
 
     if (range <= 0) return;
     engine.color = Colors.white;
