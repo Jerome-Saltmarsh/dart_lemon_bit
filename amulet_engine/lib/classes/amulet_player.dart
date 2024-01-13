@@ -424,15 +424,12 @@ class AmuletPlayer extends IsometricPlayer with
     clearPath();
 
     if (amuletItem.isWeapon || amuletItem.isSpell){
-      final availableWeaponSlot = getEmptyWeaponSlot();
-      if (availableWeaponSlot != null) {
-        availableWeaponSlot.amuletItem = amuletItem;
-        refillItemSlot(availableWeaponSlot);
-        amuletGame.onAmuletItemAcquired(this, amuletItem);
-        // if (noWeaponEquipped){
-        //   equippedWeaponIndex = weapons.indexOf(availableWeaponSlot);
-        // }
-        notifyEquipmentDirty();
+      if (equippedWeapon.amuletItem == null) {
+        equipWeapon(amuletItem);
+        // availableWeaponSlot.amuletItem = amuletItem;
+        // refillItemSlot(availableWeaponSlot);
+        // amuletGame.onAmuletItemAcquired(this, amuletItem);
+        // notifyEquipmentDirty();
         return true;
       }
     }
