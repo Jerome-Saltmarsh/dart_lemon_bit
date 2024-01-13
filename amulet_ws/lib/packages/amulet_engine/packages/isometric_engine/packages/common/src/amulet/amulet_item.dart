@@ -876,15 +876,24 @@ enum AmuletItem {
 
 enum SkillType {
   Heal(casteType: CasteType.Self),
-  Fireball(casteType: CasteType.Targeted_Enemy),
+  Fireball(casteType: CasteType.Targeted_Enemy, range: 150),
   Firestorm(casteType: CasteType.Directional),
-  Teleport(casteType: CasteType.Positional),
-  Freeze_Target(casteType: CasteType.Targeted_Enemy),
-  Freeze_Area(casteType: CasteType.Positional),
+  Teleport(casteType: CasteType.Positional, range: 200),
+  Freeze_Target(casteType: CasteType.Targeted_Enemy, range: 180),
+  Freeze_Area(casteType: CasteType.Positional, range: 180, radius: 50),
   Invisible(casteType: CasteType.Instant),
-  Terrify(casteType: CasteType.Instant);
+  Terrify(casteType: CasteType.Instant, radius: 100);
+
   final CasteType casteType;
-  const SkillType({required this.casteType});
+  final double? range;
+  final double? radius;
+
+  const SkillType({
+    required this.casteType,
+    this.range,
+    this.radius,
+  });
+
 }
 
 enum CasteType {
