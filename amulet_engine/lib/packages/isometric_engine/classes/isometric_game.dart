@@ -391,6 +391,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required Character character,
     required DamageType damageType,
     required double range,
+    required int damage,
   }){
 
     dispatchGameEventPosition(
@@ -403,7 +404,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       if (character.withinRadiusPosition(target, range)){
         applyHit(
           target: target,
-          damage: character.weaponDamage,
+          damage: damage,
           srcCharacter: character,
           damageType: damageType,
         );
@@ -436,7 +437,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
       applyHit(
         target: other,
-        damage: character.weaponDamage,
+        damage: damage,
         srcCharacter: character,
         damageType: DamageType.melee,
       );
@@ -464,7 +465,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
       applyHit(
         target: gameObject,
-        damage: character.weaponDamage,
+        damage: damage,
         srcCharacter: character,
         damageType: DamageType.melee,
       );
@@ -474,7 +475,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     if (nearest != null) {
       applyHit(
         target: nearest,
-        damage: character.weaponDamage,
+        damage: damage,
         srcCharacter: character,
         damageType: DamageType.melee,
       );
@@ -1383,6 +1384,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
           character: character,
           damageType: DamageType.melee,
           range: character.weaponRange,
+          damage: character.weaponDamage,
       );
       return;
     }

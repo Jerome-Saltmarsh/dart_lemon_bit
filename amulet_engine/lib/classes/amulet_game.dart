@@ -289,6 +289,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
             character: character,
             damageType: DamageType.melee,
             range: amuletItem.range ?? (throw Exception()),
+            damage: getAmuletItemDamage(amuletItem),
         );
         break;
       case AmuletItem.Weapon_Staff_Wooden:
