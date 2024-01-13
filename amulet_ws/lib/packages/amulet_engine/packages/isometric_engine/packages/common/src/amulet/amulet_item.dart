@@ -374,7 +374,7 @@ enum SkillType {
   Strike(casteType: CasteType.Self),
   Arrow(casteType: CasteType.Self),
   Heal(casteType: CasteType.Self),
-  Fireball(casteType: CasteType.Targeted_Enemy),
+  Fireball(casteType: CasteType.Directional),
   Explode(casteType: CasteType.Positional),
   Firestorm(casteType: CasteType.Directional),
   Teleport(casteType: CasteType.Positional),

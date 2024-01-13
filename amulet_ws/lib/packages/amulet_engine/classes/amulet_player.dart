@@ -1642,8 +1642,11 @@ class AmuletPlayer extends IsometricPlayer with
         );
         break;
       case CasteType.Positional:
-        useWeaponType(
-          weaponType: dependency ?? amuletItem.subType,
+        // useWeaponType(
+        //   weaponType: dependency ?? amuletItem.subType,
+        //   duration: performDuration,
+        // );
+        setCharacterStateCasting(
           duration: performDuration,
         );
         break;
@@ -1651,10 +1654,13 @@ class AmuletPlayer extends IsometricPlayer with
         break;
       case CasteType.Directional:
         lookAtMouse();
-        useWeaponType(
-          weaponType: dependency ?? amuletItem.subType,
+        setCharacterStateCasting(
           duration: performDuration,
         );
+        // useWeaponType(
+        //   weaponType: dependency ?? amuletItem.subType,
+        //   duration: performDuration,
+        // );
         break;
       case null:
         break;
