@@ -97,9 +97,9 @@ class AmuletGameTutorial extends AmuletGame {
     deactivate(crystal2GlowingFalse);
     deactivate(crystal2GlowingTrue);
 
-    for (final weapon in player.weapons){
-      weapon.amuletItem = null;
-    }
+    // for (final weapon in player.weapons){
+    //   weapon.amuletItem = null;
+    // }
 
     for (final item in player.items){
       item.amuletItem = null;
@@ -130,7 +130,7 @@ class AmuletGameTutorial extends AmuletGame {
     }
 
     if (objectiveCompleted(player, QuestTutorial.Acquire_Sword)){
-      player.setWeapon(index: 0, amuletItem: AmuletItem.Weapon_Short_Sword);
+      // player.setWeapon(index: 0, amuletItem: AmuletItem.Weapon_Short_Sword);
       // player.equippedWeaponIndex = 0;
     }
 
@@ -183,7 +183,7 @@ class AmuletGameTutorial extends AmuletGame {
         deactivationTimer: -1,
       );
     } else {
-      player.setWeapon(index: 2, amuletItem: AmuletItem.Weapon_Old_Bow);
+      // player.setWeapon(index: 2, amuletItem: AmuletItem.Weapon_Old_Bow);
     }
 
     if (objectiveCompleted(player, QuestTutorial.Strike_Crystal_2)) {
@@ -273,8 +273,8 @@ class AmuletGameTutorial extends AmuletGame {
     switch (player.tutorialObjective) {
       QuestTutorial.Open_Inventory =>
         player.inventoryOpen,
-       QuestTutorial.Equip_Bow =>
-          player.weapons.any((element) => element.amuletItem == AmuletItem.Weapon_Old_Bow),
+       // QuestTutorial.Equip_Bow =>
+       //    player.weapons.any((element) => element.amuletItem == AmuletItem.Weapon_Old_Bow),
        QuestTutorial.Draw_Bow =>
         player.equippedWeapon.amuletItem == AmuletItem.Weapon_Old_Bow,
        QuestTutorial.Leave => getNodeIndexV3(player) == indexLeave,
@@ -518,9 +518,9 @@ class AmuletGameTutorial extends AmuletGame {
   }
 
   void actionInitializeNewPlayer(AmuletPlayer player) {
-    for (final weapon in player.weapons){
-      weapon.amuletItem = null;
-    }
+    // for (final weapon in player.weapons){
+    //   weapon.amuletItem = null;
+    // }
     // player.equippedWeaponIndex = -1;
     // player.healthBase = 15;
     player.health = player.maxHealth;
@@ -639,14 +639,14 @@ class AmuletGameTutorial extends AmuletGame {
   void onObjectiveSetOpenInventory(AmuletPlayer player) => runScript(player)
         .controlsDisabled()
         .add(() {
-          for (final weapon in player.weapons){
-            if (weapon.amuletItem == AmuletItem.Weapon_Old_Bow){
-              player.swapAmuletItemSlots(
-                  weapon,
-                  player.getEmptyItemSlot(),
-              );
-            }
-          }
+          // for (final weapon in player.weapons){
+          //   if (weapon.amuletItem == AmuletItem.Weapon_Old_Bow){
+          //     player.swapAmuletItemSlots(
+          //         weapon,
+          //         player.getEmptyItemSlot(),
+          //     );
+          //   }
+          // }
         })
         .movePositionToSceneKey(guide, keysSpawnBow)
         .cameraSetTarget(guide)
@@ -677,7 +677,7 @@ class AmuletGameTutorial extends AmuletGame {
       AmuletItemSlot targetAmuletItemSlot,
   ) {
     if (
-      player.weapons.contains(targetAmuletItemSlot) &&
+      // player.weapons.contains(targetAmuletItemSlot) &&
       targetAmuletItemSlot.amuletItem == AmuletItem.Weapon_Old_Bow &&
       player.tutorialObjective == QuestTutorial.Equip_Bow
     ) {

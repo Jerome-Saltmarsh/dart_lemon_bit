@@ -7,7 +7,7 @@ import 'package:lemon_widgets/lemon_widgets.dart';
 import '../../classes/item_slot.dart';
 import 'build_item_slot.dart';
 
-Widget buildWeaponSlotAtIndex(int index, {
+Widget buildWeaponSlotAtIndex(ItemSlot itemSlotWeapon, {
   required Amulet amulet,
   double size = 64,
 }) {
@@ -33,10 +33,10 @@ Widget buildWeaponSlotAtIndex(int index, {
     // rounded: true,
   );
 
-  final backgroundSelectedWeapon = buildWatch(
-      amulet.equippedWeaponIndex,
-          (equippedWeaponIndex) => equippedWeaponIndex == index ? activeBorder : notActiveBorder
-  );
+  // final backgroundSelectedWeapon = buildWatch(
+  //     amulet.equippedWeaponIndex,
+  //         (equippedWeaponIndex) => equippedWeaponIndex == index ? activeBorder : notActiveBorder
+  // );
 
   // final backgroundActivePower = buildWatch(amulet.activatedPowerIndex, (activatedPowerIndex){
   //   if (index != activatedPowerIndex)
@@ -53,8 +53,8 @@ Widget buildWeaponSlotAtIndex(int index, {
 
 
 
-  final weapons = amulet.weapons;
-  final itemSlotWeapon = weapons[index];
+  // final weapons = amulet.weapons;
+  // final itemSlotWeapon = weapons[index];
 
   final chargeColorFull = Colors.blue;
   final chargeColorEmpty = chargeColorFull.withOpacity(0.2);
@@ -143,24 +143,24 @@ Widget buildWeaponSlotAtIndex(int index, {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            backgroundSelectedWeapon,
+            // backgroundSelectedWeapon,
             // backgroundActivePower,
             watchAmuletItem,
             Positioned(
                 child: buildItemSlot(
-                    weapons[index],
+                    itemSlotWeapon,
                     amulet: amulet,
                     color: Colors.transparent,
                 )
             ),
-            Positioned(
-                top: 8,
-                left: 8,
-                child: buildText(
-                  const['A', 'S', 'D', 'F'][index],
-                  color: Colors.white70,
-                )
-            ),
+            // Positioned(
+            //     top: 8,
+            //     left: 8,
+            //     child: buildText(
+            //       const['A', 'S', 'D', 'F'][index],
+            //       color: Colors.white70,
+            //     )
+            // ),
           ],
         ),
       ),

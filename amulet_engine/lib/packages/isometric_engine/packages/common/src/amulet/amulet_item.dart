@@ -1,6 +1,5 @@
 import '../../src.dart';
 
-
 enum AmuletItem {
   Weapon_Rusty_Short_Sword(
     levelMin: 1,
@@ -118,6 +117,7 @@ enum AmuletItem {
     type: ItemType.Helm,
     subType: HelmType.Steel,
     performDuration: 25,
+    health: 6,
   ),
   Helm_Wizards_Hat(
     levelMin: 1,
@@ -127,6 +127,7 @@ enum AmuletItem {
     subType: HelmType.Wizard_Hat,
     description: 'A hat commonly worn by students of magic school',
     performDuration: 25,
+    health: 2,
   ),
   Moth_Hat_Of_Magic(
     levelMin: 5,
@@ -270,6 +271,7 @@ enum AmuletItem {
   final int? cooldown;
   final int? charges;
   final int? performDuration;
+  final int? health;
 
   const AmuletItem({
     required this.type,
@@ -286,6 +288,7 @@ enum AmuletItem {
     this.cooldown,
     this.charges,
     this.performDuration,
+    this.health,
   });
 
   bool get isWeaponStaff => isWeapon && subType == WeaponType.Staff;

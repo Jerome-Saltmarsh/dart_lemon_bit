@@ -407,18 +407,14 @@ class Amulet {
 
   void resetPlayer(AmuletPlayer player) {
     playerChangeGameToTown(player);
-    final weapons = player.weapons;
-    for (final weapon in weapons) {
-      weapon.clear();
-    }
-    for (final weapon in player.items) {
-      weapon.clear();
+    for (final item in player.items) {
+      item.clear();
     }
     for (final treasure in player.treasures) {
       treasure.clear();
     }
-    weapons[0].amuletItem = AmuletItem.Weapon_Short_Sword;
-    weapons[1].amuletItem = AmuletItem.Weapon_Old_Bow;
+    // weapons[0].amuletItem = AmuletItem.Weapon_Short_Sword;
+    // weapons[1].amuletItem = AmuletItem.Weapon_Old_Bow;
     // weapons[2].amuletItem = AmuletItem.Spell_Heal;
     amuletTime.hour = 12;
     player.elementPoints = 0;
@@ -434,6 +430,7 @@ class Amulet {
     player.equippedBody.clear();
     player.equippedLegs.clear();
     player.equippedShoe.clear();
+    player.equippedWeapon.amuletItem = null;
     player.equippedBody.amuletItem = AmuletItem.Armor_Shirt_Blue_Worn;
     player.equippedLegs.amuletItem = AmuletItem.Pants_Travellers;
     player.health = player.maxHealth;

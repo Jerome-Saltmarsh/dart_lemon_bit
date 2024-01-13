@@ -38,7 +38,7 @@ CharacterJson writeAmuletPlayerToJson(AmuletPlayer player){
   json['equippedShoe'] = getSlotType(player.equippedShoe);
   json['equippedHandLeft'] = getSlotType(player.equippedHandLeft);
   json['equippedHandRight'] = getSlotType(player.equippedHandRight);
-  json['weapons'] = getSlotTypeNames(player.weapons);
+  // json['weapons'] = getSlotTypeNames(player.weapons);
   json['items'] = getSlotTypeNames(player.items);
   json['complexion'] = player.complexion;
   json['gender'] = player.gender;

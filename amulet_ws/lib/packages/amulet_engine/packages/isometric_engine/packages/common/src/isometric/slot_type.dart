@@ -4,7 +4,7 @@ import 'item_type.dart';
 enum SlotType {
   Item,
   Treasure,
-  Weapons,
+  // Weapons,
   Weapon,
   Body,
   Hand_Left,
@@ -27,7 +27,7 @@ enum SlotType {
         Hand_Left => itemType == ItemType.Hand,
         Hand_Right => itemType == ItemType.Hand,
         Treasure => itemType == ItemType.Treasure,
-        Weapons => const [ItemType.Weapon, ItemType.Spell].contains(itemType),
+        // Weapons => const [ItemType.Weapon, ItemType.Spell].contains(itemType),
         Shoes => itemType == ItemType.Shoes,
         Item => true
       };

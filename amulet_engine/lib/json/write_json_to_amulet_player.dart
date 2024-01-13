@@ -61,12 +61,12 @@ void writeJsonToAmuletPlayer(
   player.equipHandLeft(null, force: true);
   player.equipHandRight(null, force: true);
 
-  final weaponNames = json.tryGetList<String>('weapons');
-  if (weaponNames != null){
-    for (var i = 0; i < weaponNames.length; i++){
-      player.weapons[i].amuletItem = AmuletItem.findByName(weaponNames[i]);
-    }
-  }
+  // final weaponNames = json.tryGetList<String>('weapons');
+  // if (weaponNames != null){
+  //   for (var i = 0; i < weaponNames.length; i++){
+  //     player.weapons[i].amuletItem = AmuletItem.findByName(weaponNames[i]);
+  //   }
+  // }
 
   final itemNames = json.tryGetList<String>('items');
   if (itemNames != null){

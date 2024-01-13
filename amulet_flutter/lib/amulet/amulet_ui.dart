@@ -12,7 +12,6 @@ import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 import 'ui/builders/build_item_slot.dart';
-import 'ui/builders/build_weapon_slot_at_index.dart';
 import 'ui/containers/build_container_item_hover.dart';
 import 'ui/containers/build_container_player_front.dart';
 import 'ui/widgets/amulet_world_map.dart';
@@ -316,12 +315,12 @@ class AmuletUI {
         ));
   }
 
-  Widget buildPlayerWeapons() => Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: List.generate(amulet.weapons.length,
-            (index) => buildWeaponSlotAtIndex(index, amulet: amulet)),
-      );
+  // Widget buildPlayerWeapons() => Row(
+  //       mainAxisAlignment: MainAxisAlignment.start,
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: List.generate(amulet.weapons.length,
+  //           (index) => buildWeaponSlotAtIndex(index, amulet: amulet)),
+  //     );
 
   Widget buildPlayerTreasures() => buildInventoryContainer(
         child: Column(

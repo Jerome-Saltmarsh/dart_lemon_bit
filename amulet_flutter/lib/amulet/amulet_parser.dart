@@ -169,27 +169,27 @@ extension AmuletParser on IsometricParser {
     final type = readInt16();
 
     if (type == -1){
-      amulet.setWeapon(
-        index: index,
-        item: null,
-        cooldownPercentage: 0,
-        charges: 0,
-        max: 0,
-      );
+      // amulet.setWeapon(
+      //   index: index,
+      //   item: null,
+      //   cooldownPercentage: 0,
+      //   charges: 0,
+      //   max: 0,
+      // );
       return;
     }
 
-    final cooldownPercentage = readPercentage();
-    final charges = readUInt16();
-    final max = readUInt16();
-    final item = AmuletItem.values[type];
-    amulet.setWeapon(
-      index: index,
-      item: item,
-      cooldownPercentage: cooldownPercentage,
-      charges: charges,
-      max: max,
-    );
+    // final cooldownPercentage = readPercentage();
+    // final charges = readUInt16();
+    // final max = readUInt16();
+    // final item = AmuletItem.values[type];
+    // amulet.setWeapon(
+    //   index: index,
+    //   item: item,
+    //   cooldownPercentage: cooldownPercentage,
+    //   charges: charges,
+    //   max: max,
+    // );
   }
 
   void onPlayAudioType(AudioType audioType) {

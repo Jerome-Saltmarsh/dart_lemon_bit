@@ -1,6 +1,5 @@
 
 import 'dart:typed_data';
-import 'package:amulet_flutter/amulet/classes/item_slot.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/particle_roam.dart';
 import 'package:amulet_engine/packages/common.dart';
 import 'package:amulet_engine/packages/lemon_math.dart';
@@ -62,8 +61,8 @@ class IsometricDebug with IsometricComponent implements Updatable {
   final selectedGameObjectSubType = Watch(-1);
   final selectedCollider = Watch(false);
 
-  final itemSlotWeapon = ItemSlot(slotType: SlotType.Weapons, index: 0);
-  final itemSlotPower = ItemSlot(slotType: SlotType.Weapons, index: 0);
+  // final itemSlotWeapon = ItemSlot(slotType: SlotType.Weapons, index: 0);
+  // final itemSlotPower = ItemSlot(slotType: SlotType.Weapons, index: 0);
 
   void drawCanvas() {
     if (!options.debugging) return;

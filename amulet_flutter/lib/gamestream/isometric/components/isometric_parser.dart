@@ -209,12 +209,11 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
     if (!debugger.selectedCollider.value)
       return;
 
-
-    final isEquippedWeapon = readBool();
-    if (isEquippedWeapon) {
-      readItemSlot(debugger.itemSlotWeapon);
-      readItemSlot(debugger.itemSlotPower);
-    }
+    // final isEquippedWeapon = readBool();
+    // if (isEquippedWeapon) {
+    //   readItemSlot(debugger.itemSlotWeapon);
+    //   readItemSlot(debugger.itemSlotPower);
+    // }
 
     final selectedColliderType = readByte();
     debugger.selectedColliderType.value = selectedColliderType;
