@@ -674,7 +674,7 @@ class AmuletController {
           player.writeAmuletError('invalid slot type index: $slotTypeIndex');
           return;
         }
-        player.activateSlotType(slotType);
+        player.setActiveSlotType(slotType);
         break;
       case NetworkRequestAmulet.Select_Talk_Option:
         final index = parseArg2(arguments);

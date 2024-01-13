@@ -716,9 +716,18 @@ class AmuletPlayer extends IsometricPlayer with
   //   }
   // }
 
-  void deselectActivatedPower() {
-    // performingActivePower = false;
-    activatedPowerIndex = -1;
+  void deactivateSlotType() => setActiveSlotType(null);
+
+  void setActiveSlotType(SlotType? value) {
+    activeSlotType = value;
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Active_Slot_Type);
+    if (value == null) {
+      writeFalse();
+      return;
+    }
+    writeTrue();
+    writeByte(value.index);
   }
 
   void selectItem(int index) {
@@ -1789,7 +1798,7 @@ class AmuletPlayer extends IsometricPlayer with
         break;
       case CasteType.Targeted_Enemy:
         if (target == null) {
-          deselectActivatedPower();
+          deactivateSlotType();
           return;
         }
         useWeaponType(
@@ -1799,7 +1808,7 @@ class AmuletPlayer extends IsometricPlayer with
         break;
       case CasteType.Targeted_Ally:
         if (target == null) {
-          deselectActivatedPower();
+          deactivateSlotType();
           return;
         }
         setCharacterStateCasting(
@@ -1886,23 +1895,9 @@ class AmuletPlayer extends IsometricPlayer with
         }
         break;
       default:
-        activateSlotType(slotType);
+        setActiveSlotType(slotType);
         break;
     }
-  }
-
-  void activateSlotType(SlotType? slotType){
-    this.activeSlotType = slotType;
-    // todo
-
-    writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Active_Slot_Type);
-    if (slotType == null) {
-      writeFalse();
-      return;
-    }
-    writeTrue();
-    writeByte(slotType.index);
   }
 
   void clearActivatedPowerIndex(){

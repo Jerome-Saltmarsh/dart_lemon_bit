@@ -847,12 +847,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   }) {
 
     if (
-    player.deadOrBusy ||
-        !player.active ||
-        player.debugging ||
-        !player.controlsEnabled
+      player.deadOrBusy ||
+      !player.active ||
+      player.debugging ||
+      !player.controlsEnabled
     ) return;
-
 
     final mouseLeftClicked = mouseLeftDown && player.mouseLeftDownDuration == 0;
     final mouseRightClicked = mouseRightDown && player.mouseRightDownDuration == 0;
@@ -864,13 +863,12 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
 
     if (mouseRightClicked){
-      if (player.activatedPowerIndex == -1){
+      if (player.activeAmuletItemSlot == null){
         player.performForceAttack();
         return;
       } else {
-        player.deselectActivatedPower();
+        player.deactivateSlotType();
       }
-
       return;
     }
 
