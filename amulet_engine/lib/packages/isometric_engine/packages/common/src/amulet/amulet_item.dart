@@ -266,6 +266,7 @@ enum AmuletItem {
   final int? damageMin;
   final int? damageMax;
   final double? range;
+  final double? radius;
   final int? cooldown;
   final int? charges;
   final int? performDuration;
@@ -281,6 +282,7 @@ enum AmuletItem {
     this.damageMin,
     this.damageMax,
     this.range,
+    this.radius,
     this.cooldown,
     this.charges,
     this.performDuration,
@@ -372,23 +374,19 @@ enum SkillType {
   Strike(casteType: CasteType.Self),
   Arrow(casteType: CasteType.Self),
   Heal(casteType: CasteType.Self),
-  Fireball(casteType: CasteType.Targeted_Enemy, range: 150),
-  Explode(casteType: CasteType.Positional, range: 150),
+  Fireball(casteType: CasteType.Targeted_Enemy),
+  Explode(casteType: CasteType.Positional),
   Firestorm(casteType: CasteType.Directional),
-  Teleport(casteType: CasteType.Positional, range: 200),
-  Freeze_Target(casteType: CasteType.Targeted_Enemy, range: 180),
-  Freeze_Area(casteType: CasteType.Positional, range: 180, radius: 50),
+  Teleport(casteType: CasteType.Positional),
+  Freeze_Target(casteType: CasteType.Targeted_Enemy),
+  Freeze_Area(casteType: CasteType.Positional),
   Invisible(casteType: CasteType.Instant),
-  Terrify(casteType: CasteType.Instant, radius: 100);
+  Terrify(casteType: CasteType.Instant);
 
   final CasteType casteType;
-  final double? range;
-  final double? radius;
 
   const SkillType({
     required this.casteType,
-    this.range,
-    this.radius,
   });
 
 }

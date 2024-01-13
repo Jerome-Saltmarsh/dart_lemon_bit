@@ -1124,7 +1124,7 @@ class AmuletPlayer extends IsometricPlayer with
 
     if (skillType.casteType == CasteType.Positional) {
       final mouseDistance = getMouseDistance();
-      final maxRange = skillType.range ?? (throw Exception());
+      final maxRange = activeAmuletItem.range ?? (throw Exception());
       if (mouseDistance <= maxRange){
         activePowerX = mouseSceneX;
         activePowerY = mouseSceneY;

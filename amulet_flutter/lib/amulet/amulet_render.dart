@@ -71,7 +71,7 @@ extension AmuletRender on Amulet {
       return;
     }
 
-    final radius = skillType.radius;
+    final radius = activeSlotAmuletItem.radius;
 
     if (radius != null) {
       engine.color = Colors.white;
@@ -81,7 +81,7 @@ extension AmuletRender on Amulet {
       );
     }
 
-    final range = skillType.range;
+    final range = activeSlotAmuletItem.range;
     if (range != null) {
       engine.color = rangeColor;
       renderCircleAroundPlayer(radius: range);
