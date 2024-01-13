@@ -1665,10 +1665,10 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
 
-    if (equippedWeapon.chargesEmpty) {
-      writeGameError(GameError.Insufficient_Weapon_Charges);
-      return;
-    }
+    // if (equippedWeapon.chargesEmpty) {
+    //   writeGameError(GameError.Insufficient_Weapon_Charges);
+    //   return;
+    // }
 
     final amuletItem = equippedWeapon.amuletItem;
 
