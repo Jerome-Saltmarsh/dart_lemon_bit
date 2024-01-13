@@ -198,7 +198,7 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   @override
-  double get weaponRange => equippedWeapon.amuletItem?.range ?? 0;
+  double get weaponRange => (activeAmuletItemSlot ?? equippedWeapon).amuletItem?.range ?? 0;
 
   @override
   int get helmType => equippedHelm.amuletItem?.subType ?? HelmType.None;

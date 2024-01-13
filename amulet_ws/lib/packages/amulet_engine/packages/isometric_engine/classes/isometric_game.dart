@@ -399,6 +399,16 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       character,
     );
 
+    if (damage <= 0) {
+      dispatchAttackMissed(
+        character.x,
+        character.y,
+        character.z,
+        character,
+      );
+      return;
+    }
+
     final target = character.target;
     if (target is Collider) {
       if (character.withinRadiusPosition(target, range)){
@@ -518,16 +528,30 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
 
     if (!attackHit) {
-      for (final player in players) {
-        if (!player.withinRadiusEventDispatch(performX, performY)) continue;
-        player.writeGameEvent(
-          type: GameEvent.Attack_Missed,
-          x: performX,
-          y: performY,
-          z: performZ,
-        );
-        player.writeUInt16(character.weaponType);
-      }
+      dispatchAttackMissed(
+          performX,
+          performY,
+          performZ,
+          character,
+      );
+    }
+  }
+
+  void dispatchAttackMissed(
+      double performX,
+      double performY,
+      double performZ,
+      Character character,
+  ) {
+    for (final player in players) {
+      if (!player.withinRadiusEventDispatch(performX, performY)) continue;
+      player.writeGameEvent(
+        type: GameEvent.Attack_Missed,
+        x: performX,
+        y: performY,
+        z: performZ,
+      );
+      player.writeUInt16(character.weaponType);
     }
   }
 
