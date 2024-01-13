@@ -1,7 +1,7 @@
 
 enum NetworkRequestAmulet {
   End_Interaction,
-  Select_Weapon,
+  Select_Item_Type,
   Select_Item,
   Select_Treasure,
   Select_Talk_Option,

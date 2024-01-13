@@ -17,11 +17,6 @@ class IsometricAudio with IsometricComponent implements Updatable {
 
   late final mutedMusic = Watch(false, onChanged: (bool muted){
     print('music muted: $muted');
-    if (muted) {
-      // audioTracks.audioPlayer.pause();
-    } else {
-      // audioTracks.play();
-    }
   });
 
   late final enabledSound = Watch(true, onChanged: (bool soundEnabled){
@@ -67,7 +62,13 @@ class IsometricAudio with IsometricComponent implements Updatable {
 
   late final audioLoopTrack02 = AudioLoop(
       name: 'music/track02',
-      getTargetVolume: () => 1.0,
+      getTargetVolume: getVolumeMusic,
+      volumeFade: 1.0,
+  );
+
+  late final audioLoopTrack04 = AudioLoop(
+      name: 'music/track_04',
+      getTargetVolume: getVolumeMusic,
       volumeFade: 1.0,
   );
 
@@ -78,7 +79,8 @@ class IsometricAudio with IsometricComponent implements Updatable {
     AudioLoop(name: 'day-ambience', getTargetVolume: getVolumeTargetDayAmbience),
     AudioLoop(name: 'distant-thunder', getTargetVolume: getVolumeTargetDistanceThunder),
     audioLoopFire,
-    audioLoopTrack02,
+    // audioLoopTrack02,
+    audioLoopTrack04,
   ];
 
   late final audioSingles = <AudioSingle>[
@@ -522,4 +524,5 @@ class IsometricAudio with IsometricComponent implements Updatable {
         _ => null
       };
 
+  double getVolumeMusic() => mutedMusic.value ? 0 : 1;
 }

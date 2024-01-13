@@ -19,7 +19,7 @@ class ItemSlot {
 
   bool get isEmpty => amuletItem.value != null;
 
-  bool acceptsDragFrom(ItemSlot src){
+  bool acceptsDragFrom(ItemSlot src) {
 
     final srcItem = src.amuletItem.value;
 

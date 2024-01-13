@@ -228,20 +228,20 @@ class Amulet extends IsometricGame {
       amulet.toggleInventoryOpen();
       return;
     }
-    if (key == PhysicalKeyboardKey.keyA){
-      selectWeapon(0);
+    if (key == PhysicalKeyboardKey.keyA) {
+      selectSlotType(SlotType.Weapon);
       return;
     }
-    if (key == PhysicalKeyboardKey.keyS){
-      selectWeapon(1);
+    if (key == PhysicalKeyboardKey.keyS) {
+      selectSlotType(SlotType.Helm);
       return;
     }
-    if (key == PhysicalKeyboardKey.keyD){
-      selectWeapon(2);
+    if (key == PhysicalKeyboardKey.keyD) {
+      selectSlotType(SlotType.Body);
       return;
     }
-    if (key == PhysicalKeyboardKey.keyF){
-      selectWeapon(3);
+    if (key == PhysicalKeyboardKey.keyF) {
+      selectSlotType(SlotType.Shoes);
       return;
     }
   }
@@ -300,8 +300,8 @@ class Amulet extends IsometricGame {
       '${itemSlot.index}'
     );
 
-  void selectWeapon(int index) =>
-      sendAmuletRequest(NetworkRequestAmulet.Select_Weapon, index);
+  void selectSlotType(SlotType slotType) =>
+      sendAmuletRequest(NetworkRequestAmulet.Select_Item_Type, slotType.index);
 
   void selectItem(int index) =>
       sendAmuletRequest(NetworkRequestAmulet.Select_Item, index);

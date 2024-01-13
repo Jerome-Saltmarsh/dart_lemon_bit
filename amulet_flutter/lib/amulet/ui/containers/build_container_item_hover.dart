@@ -16,6 +16,7 @@ Widget buildContainerAmuletItemHover({
 }) => buildWatchNullable(
       amulet.itemHover, (item) {
         final levelCurrent = amulet.getAmuletPlayerItemLevel(item);
+        final skillType = item.skillType;
 
         if (levelCurrent == -1){
           final stats1 = item.getStatsForLevel(1);
@@ -30,6 +31,8 @@ Widget buildContainerAmuletItemHover({
             children: [
               buildAmuletItemIcon(item),
               height8,
+              if (skillType != null)
+                buildText('Skill - $skillType'),
               buildContainerAmuletItemStats(stats1, 1),
             ],
           );
@@ -44,12 +47,12 @@ Widget buildContainerAmuletItemHover({
         final levelNext = levelCurrent + 1;
         final statsNext = item.getStatsForLevel(levelNext);
 
+
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             buildAmuletItemIcon(item),
-            height8,
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -68,9 +71,11 @@ Widget buildContainerAmuletItemHover({
 
 Widget buildAmuletItemIcon(AmuletItem item) {
   final dependency = item.dependency;
-  return Container(
+
+  final skillType = item.skillType;
+
+  return GSContainer(
     width: 278,
-    color: Color.fromRGBO(46, 34, 47, 1),
       child: FittedBox(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,6 +113,16 @@ Widget buildAmuletItemIcon(AmuletItem item) {
                     italic: true,
                   ),
               ),
+            if (skillType != null)
+              Container(
+                margin: const EdgeInsets.only(top: 8),
+                child: Row(
+                  children: [
+                    buildText('Skill'),
+                    buildText(skillType.name),
+                  ],
+                ),
+              )
           ],
         ),
       ),

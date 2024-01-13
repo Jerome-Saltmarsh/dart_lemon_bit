@@ -666,10 +666,15 @@ class AmuletController {
         if (index == null) return;
         player.selectTreasure(index);
         break;
-      case NetworkRequestAmulet.Select_Weapon:
-        final index = parseArg2(arguments);
-        if (index == null) return;
-        // player.selectWeaponAtIndex(index);
+      case NetworkRequestAmulet.Select_Item_Type:
+        final slotTypeIndex = parseArg2(arguments);
+        if (slotTypeIndex == null) return;
+        final slotType = SlotType.values.tryGet(slotTypeIndex);
+        if (slotType == null){
+          player.writeAmuletError('invalid slot type index: $slotTypeIndex');
+          return;
+        }
+        player.activateSlotType(slotType);
         break;
       case NetworkRequestAmulet.Select_Talk_Option:
         final index = parseArg2(arguments);

@@ -339,7 +339,7 @@ enum AmuletItem {
   Moth_Hat_Of_Magic(
     levelMin: 5,
     levelMax: 10,
-    skillType: SkillType.Freeze_Target,
+    skillType: SkillType.Fireball,
     type: ItemType.Helm,
     subType: HelmType.Witches_Hat,
     description: 'an old moth eaten hat that emanates magic',
