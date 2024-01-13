@@ -154,7 +154,7 @@ class AmuletPlayer extends IsometricPlayer with
 
   @override
   int get weaponType {
-    final weapon = itemSlotWeapon;
+    final weapon = equippedWeapon;
     final item = weapon.amuletItem;
     return item?.subType ?? WeaponType.Unarmed;
   }
@@ -175,7 +175,7 @@ class AmuletPlayer extends IsometricPlayer with
   // }
 
   @override
-  int get weaponCooldown => itemSlotWeapon.cooldown;
+  int get weaponCooldown => equippedWeapon.cooldown;
 
   @override
   int get weaponDamage {
@@ -228,9 +228,6 @@ class AmuletPlayer extends IsometricPlayer with
     // base += getAmuletItemStatsForItemSlot(equippedLegs)?.movement ?? 0;
     return base;
   }
-
-  @override
-  AmuletItemSlot get itemSlotWeapon => equippedWeapon;
 
   @override
   set experience(int value){
@@ -1015,7 +1012,7 @@ class AmuletPlayer extends IsometricPlayer with
     // assert (equippedShoe.amuletItem?.isShoes ?? true);
 
     health = clamp(health, 0, maxHealth);
-    weaponType = itemSlotWeapon.amuletItem?.subType ?? WeaponType.Unarmed;
+    weaponType = equippedWeapon.amuletItem?.subType ?? WeaponType.Unarmed;
     equipmentDirty = false;
     helmType = equippedHelm.amuletItem?.subType ?? HelmType.None;
     bodyType = equippedBody.amuletItem?.subType ?? 0;
@@ -1202,7 +1199,7 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   void assignWeaponTypeToEquippedWeapon() =>
-      weaponType = itemSlotWeapon.amuletItem?.subType ?? WeaponType.Unarmed;
+      weaponType = equippedWeapon.amuletItem?.subType ?? WeaponType.Unarmed;
 
   void unequipHead() =>
       swapWithAvailableItemSlot(equippedHelm);
@@ -1757,7 +1754,7 @@ class AmuletPlayer extends IsometricPlayer with
     final dependency = amuletItem.dependency;
 
     if (dependency != null){
-      final equippedWeaponAmuletItem = itemSlotWeapon.amuletItem;
+      final equippedWeaponAmuletItem = equippedWeapon.amuletItem;
 
       if (equippedWeaponAmuletItem == null || equippedWeaponAmuletItem.subType != dependency) {
         writeGameError(GameError.Weapon_Required);

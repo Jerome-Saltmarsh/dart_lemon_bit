@@ -288,6 +288,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         performAbilityMelee(
             character: character,
             damageType: DamageType.melee,
+            range: amuletItem.range ?? (throw Exception()),
         );
         break;
       case AmuletItem.Weapon_Staff_Wooden:
@@ -312,15 +313,22 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
           range: amuletItem.range ?? (throw Exception('range is null')),
         );
         break;
+      case AmuletItem.Moth_Hat_Of_Magic:
+        performAbilityFireball(
+            character,
+            damage: getAmuletItemDamage(amuletItem),
+            range: amuletItem.range ?? (throw Exception()),
+        );
+        break;
       default:
-        final weaponType = amuletItem.subType;
-        if (WeaponType.valuesMelee.contains(weaponType)){
-          performAbilityMelee(
-              character: character,
-              damageType: DamageType.melee,
-          );
-          return;
-        }
+        // final weaponType = amuletItem.subType;
+        // if (WeaponType.valuesMelee.contains(weaponType)){
+        //   performAbilityMelee(
+        //       character: character,
+        //       damageType: DamageType.melee,
+        //   );
+        //   return;
+        // }
         throw Exception('amulet.PerformCharacterAction($amuletItem)');
     }
   }

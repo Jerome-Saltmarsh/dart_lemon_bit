@@ -390,6 +390,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   void performAbilityMelee({
     required Character character,
     required DamageType damageType,
+    required double range,
   }){
 
     dispatchGameEventPosition(
@@ -399,7 +400,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
     final target = character.target;
     if (target is Collider) {
-      if (character.withinAttackRangeAndAngle(target)){
+      if (character.withinRadiusPosition(target, range)){
         applyHit(
           target: target,
           damage: character.weaponDamage,
@@ -411,9 +412,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
 
     final angle = character.angle;
-    final attackRadius = character.weaponRange;
     var attackHit = false;
-    var nearestDistance = attackRadius;
+    var nearestDistance = range;
     Collider? nearest;
     final areaOfEffect = isMeleeAOE(character.weaponType);
 
@@ -421,7 +421,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       if (!other.active) continue;
       if (!other.hitable) continue;
       if (character.onSameTeam(other)) continue;
-      if (!character.withinAttackRangeAndAngle(other)) {
+      if (!character.withinRadiusPosition(other, range)) {
         continue;
       }
 
@@ -449,7 +449,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       if (!gameObject.active) continue;
       if (!gameObject.hitable) continue;
 
-      if (!character.withinAttackRangeAndAngle(gameObject)) {
+      if (!character.withinRadiusPosition(gameObject, range)) {
         continue;
       }
 
@@ -480,7 +480,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       );
     }
 
-    final attackRadiusHalf = attackRadius * 0.5;
+    final attackRadiusHalf = range * 0.5;
     final performX = character.x + adj(angle, attackRadiusHalf);
     final performY = character.y + opp(angle, attackRadiusHalf);
     final performZ = character.z;
@@ -1382,6 +1382,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       performAbilityMelee(
           character: character,
           damageType: DamageType.melee,
+          range: character.weaponRange,
       );
       return;
     }
