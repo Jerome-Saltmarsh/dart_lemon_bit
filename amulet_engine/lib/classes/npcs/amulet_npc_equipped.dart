@@ -21,5 +21,5 @@ class AmuletNpcEquipped extends AmuletNpc {
   }) : super (weaponType: 0);
 
   @override
-  int get weaponType => weaponSlot.amuletItem?.type ?? WeaponType.Unarmed;
+  int get weaponType => weaponSlot.amuletItem?.subType ?? WeaponType.Unarmed;
 }

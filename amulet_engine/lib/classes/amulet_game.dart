@@ -592,7 +592,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       x: x,
       y: y,
       z: z,
-      item: item,
+      amuletItem: item,
       id: generateId(),
       frameSpawned: frame,
       deactivationTimer: deactivationTimer ?? gameObjectDeactivationTimer,
@@ -616,7 +616,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     ) return;
 
 
-    if (character.acquireAmuletItem(gameObject.item)) {
+    if (character.acquireAmuletItem(gameObject.amuletItem)) {
       super.onCharacterCollectedGameObject(character, gameObject);
     }
   }
@@ -645,7 +645,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       return;
     }
 
-    final amuletItem = gameObject.item;
+    final amuletItem = gameObject.amuletItem;
     if (amuletItem == AmuletItem.Potion_Health){
       player.writePlayerEventItemTypeConsumed(amuletItem.subType);
       player.health += player.maxHealth ~/ 4;
@@ -668,14 +668,25 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       Character character,
       GameObject gameObject,
   ) {
-    if (
-      character is AmuletPlayer &&
-      gameObject.type == ItemType.Object &&
-      gameObject.subType == GameObjectType.Wooden_Chest
-    ){
-      character.toggleInventoryOpen();
-      character.clearTarget();
+    if (character is AmuletPlayer && gameObject is AmuletGameObject) {
+      onAmuletPlayerInteractWithAmuletGameObject(character, gameObject);
     }
+    // if (
+    //   character is AmuletPlayer &&
+    //   gameObject.type == ItemType.Object &&
+    //   gameObject.subType == GameObjectType.Wooden_Chest
+    // ){
+    //   character.toggleInventoryOpen();
+    //   character.clearTarget();
+    // }
+  }
+
+  void onAmuletPlayerInteractWithAmuletGameObject(
+      AmuletPlayer player,
+      AmuletGameObject gameObject,
+  ){
+     player.acquireAmuletItem(gameObject.amuletItem);
+     deactivate(gameObject);
   }
 
   List<int> getMarkTypes(int markType) =>
@@ -700,34 +711,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     );
   }
 
-  // @override
-  // void characterAttack(Character character) {
-  //   if (character is AmuletPlayer){
-  //     final equippedWeaponIndex = character.equippedWeaponIndex;
-  //
-  //     if (equippedWeaponIndex == -1){
-  //       return;
-  //     }
-  //
-  //     final weapons = character.weapons;
-  //     final equippedWeapon = weapons[equippedWeaponIndex];
-  //
-  //     if (equippedWeapon.chargesEmpty) {
-  //       character.writeGameError(GameError.Insufficient_Weapon_Charges);
-  //       return;
-  //     }
-  //
-  //     character.reduceAmuletItemSlotCharges(equippedWeapon);
-  //   }
-  //   character.attack();
-  // }
-
   void endPlayerInteraction(AmuletPlayer player) =>
       player.endInteraction();
 
   void useAmuletItemSpellHeal({
     required Character character,
-    // required AmuletItemStats stats,
   }) {
     character.health += 10;
     dispatchGameEventPosition(GameEvent.Spell_Used, character);

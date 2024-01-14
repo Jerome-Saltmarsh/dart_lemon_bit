@@ -9,6 +9,8 @@ class GameObject extends Collider {
   var subType = -1;
   var quantity = 0;
   var interactable = false;
+  /// collectable means that the player automatically picks this item up by colliding with it
+  /// this is used for health potions
   var collectable = false;
   var persistable = false;
   var destroyable = false;

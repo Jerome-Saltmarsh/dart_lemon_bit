@@ -2238,10 +2238,10 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       return;
     }
 
-    if (characterConditionCollectTarget(character)){
-      characterGoalCollectTarget(character);
-      return;
-    }
+    // if (characterConditionCollectTarget(character)){
+    //   characterGoalCollectTarget(character);
+    //   return;
+    // }
 
     if (characterConditionFollowPath(character)){
       characterActionFollowPath(character);

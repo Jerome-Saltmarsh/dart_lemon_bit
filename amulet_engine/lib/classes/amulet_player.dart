@@ -389,28 +389,41 @@ class AmuletPlayer extends IsometricPlayer with
     setDestinationToCurrentPosition();
     clearPath();
 
-    if (amuletItem.isWeapon || amuletItem.isSpell){
-      if (equippedWeapon.amuletItem == null) {
+    switch (amuletItem.type) {
+      case ItemType.Weapon:
         equipWeapon(amuletItem);
-        // availableWeaponSlot.amuletItem = amuletItem;
-        // refillItemSlot(availableWeaponSlot);
-        // amuletGame.onAmuletItemAcquired(this, amuletItem);
-        // notifyEquipmentDirty();
         return true;
-      }
+      case ItemType.Helm:
+        equipHelm(amuletItem);
+        return true;
+      case ItemType.Body:
+        equipBody(amuletItem);
+        return true;
+      case ItemType.Legs:
+        equipLegs(amuletItem);
+        return true;
+      case ItemType.Shoes:
+        equipBody(amuletItem);
+        return true;
     }
 
-    final emptyItemSlot = tryGetEmptyItemSlot();
-    if (emptyItemSlot == null) {
-      reportInventoryFull();
-      return false;
-    }
-
-    emptyItemSlot.amuletItem = amuletItem;
-    emptyItemSlot.cooldown = 0;
-    amuletGame.onAmuletItemAcquired(this, amuletItem);
-    notifyEquipmentDirty();
-    return true;
+    return false;
+    // if (amuletItem.isWeapon){
+    //   equipWeapon(amuletItem);
+    //   return true;
+    // }
+    //
+    // final emptyItemSlot = tryGetEmptyItemSlot();
+    // if (emptyItemSlot == null) {
+    //   reportInventoryFull();
+    //   return false;
+    // }
+    //
+    // emptyItemSlot.amuletItem = amuletItem;
+    // emptyItemSlot.cooldown = 0;
+    // amuletGame.onAmuletItemAcquired(this, amuletItem);
+    // notifyEquipmentDirty();
+    // return true;
   }
 
   int getEmptyItemIndex()=> getEmptyIndex(items);
@@ -693,27 +706,27 @@ class AmuletPlayer extends IsometricPlayer with
     );
   }
 
-  void equipHelm(AmuletItem? item, {bool force = false}){
+  void equipHelm(AmuletItem? amuletItem, {bool force = false}){
     if (deadOrBusy && !force) {
       return;
     }
 
-    if (equippedHelm.amuletItem == item){
+    if (equippedHelm.amuletItem == amuletItem){
       return;
     }
 
-    if (item == null){
+    if (amuletItem == null){
       clearSlot(equippedHelm);
       return;
     }
 
-    if (!item.isHelm) {
+    if (!amuletItem.isHelm) {
       throw Exception();
     }
 
     setSlot(
       slot: equippedHelm,
-      item: item,
+      item: amuletItem,
       cooldown: 0,
     );
   }
@@ -1181,6 +1194,11 @@ class AmuletPlayer extends IsometricPlayer with
     required AmuletItem? item,
     required int cooldown,
   }) {
+    final currentlyEquipped = slot.amuletItem;
+    if (currentlyEquipped != null) {
+      dropItemSlotItem(slot);
+    }
+
     slot.amuletItem = item;
     slot.cooldown = cooldown;
     notifyEquipmentDirty();
