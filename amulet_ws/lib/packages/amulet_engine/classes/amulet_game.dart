@@ -533,9 +533,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       });
     }
 
-    if (src is AmuletPlayer) {
-      src.gainExperience(target.experience);
-    }
+    // if (src is AmuletPlayer) {
+    //   src.gainExperience(target.experience);
+    // }
   }
 
   void spawnRandomLootAtFiend(AmuletFiend fiend, {
