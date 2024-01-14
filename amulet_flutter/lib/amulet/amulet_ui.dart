@@ -250,21 +250,44 @@ class AmuletUI {
   }
 
 
-  Widget buildRow(String column1, Widget column2, Widget column3) {
-    return Row(
-      children: [
-        Container(width: 100, child: buildText(column1)),
-        width4,
-        Container(width: 100, child: column2),
-        width4,
-        Container(width: 100, child: column3),
-      ],
+  Widget buildRow(String column1, Widget? column2, Widget? column3) {
+    const width1 = 80.0;
+    const width = 130.0;
+    return Container(
+      margin: const EdgeInsets.only(bottom: 4),
+      child: Row(
+        children: [
+          if (column1.isEmpty)
+            const SizedBox(width: width1),
+          if (column1.isNotEmpty)
+          Container(
+              alignment: Alignment.centerLeft,
+              color: Colors.black12,
+              padding: const EdgeInsets.all(2),
+              margin: const EdgeInsets.only(right: 2),
+              width: width1, child: buildText(column1, color: Colors.white70)),
+          width4,
+          Container(width: width, child: column2),
+          width4,
+          Container(width: width, child: column3),
+        ],
+      ),
     );
   }
 
-  Widget buildRowText(String column1, String column2, String column3) {
-    return buildRow(column1, buildText(column2), buildText(column3));
-  }
+  Widget buildRowText(
+      String column1,
+      dynamic column2,
+      dynamic column3,
+      {
+        Color column2Color = Colors.white70,
+        Color column3Color = Colors.white70,
+      }) =>
+        buildRow(
+          column1,
+          buildText(column2, color: column2Color),
+          buildText(column3, color: column3Color),
+        );
 
   Widget buildContainerCompareItems(AmuletItem current, AmuletItem target) => Container(
       color: amulet.style.containerColor,
@@ -272,12 +295,43 @@ class AmuletUI {
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildRowText('', 'current', ''),
-            buildRow('', AmuletItemImage(amuletItem: current), AmuletItemImage(amuletItem: target)),
-            buildRowText('', current.label, target.label),
-            buildRowText('damage', '${current.damageMin} - ${current.damageMax}', '${target.damageMin} - ${target.damageMax}'),
+            buildRow('', buildText('current', color: Colors.white54, italic: true), null),
+            buildRow('',  AmuletItemImage(amuletItem: current),  AmuletItemImage(amuletItem: target)),
+            buildRow('',  buildText(current.label, color: mapItemQualityToColor(current.quality)),  buildText(target.label, color: mapItemQualityToColor(target.quality))),
+            // buildRowText('damage', '${current.damageMin} - ${current.damageMax}', '${target.damageMin} - ${target.damageMax}'),
+            buildRowText('value', current.quality.name, target.quality.name),
+            buildRowText('skill', current.skillType?.name, target.skillType?.name),
+            buildRowText('min dmg', current.damageMin, target.damageMin,
+              column2Color: compareIntGreater(current.damageMin, target.damageMin),
+              column3Color: compareIntGreater(target.damageMin, current.damageMin),
+            ),
+            buildRowText('max dmg', current.damageMax, target.damageMax),
+            buildRowText('duration', current.performDuration, target.performDuration),
+
+            // buildRowText('caste', current.skillType?.casteType.name, target.skillType?.casteType.name),
           ]),
     );
+
+  static Color compareIntGreater(int? a, int? b){
+    if (a == b){
+      return Colors.white;
+    }
+
+    if (a == null && b != null){
+      return Colors.red;
+    }
+
+    if (a != null && b == null){
+      return Colors.green;
+    }
+
+    if (a != null && b != null && a > b){
+      return Colors.green;
+    }
+
+    return Colors.red;
+
+  }
 
   Widget buildContainerItemType(itemType) {
         if (itemType == null){
