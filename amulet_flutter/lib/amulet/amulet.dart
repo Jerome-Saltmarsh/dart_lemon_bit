@@ -103,7 +103,6 @@ class Amulet extends IsometricGame {
   final messageIndex = Watch(-1);
   final itemHover = Watch<AmuletItem?>(null);
   final activePowerPosition = Position();
-  // final weapons = List<ItemSlot>.generate(4, (index) => ItemSlot(index: index, slotType: SlotType.Weapons));
   final treasures = List<ItemSlot>.generate(4, (index) => ItemSlot(index: index, slotType: SlotType.Treasure));
   final error = Watch('');
   final playerInteracting = Watch(false);

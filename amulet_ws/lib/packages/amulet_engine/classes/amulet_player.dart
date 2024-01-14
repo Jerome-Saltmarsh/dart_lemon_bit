@@ -1264,6 +1264,7 @@ class AmuletPlayer extends IsometricPlayer with
 
     spawnAmuletItem(amuletItem);
     itemSlot.clear();
+    writePlayerEvent(PlayerEvent.Item_Dropped);
     notifyEquipmentDirty();
   }
 

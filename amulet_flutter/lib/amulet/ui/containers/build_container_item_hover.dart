@@ -14,8 +14,6 @@ Widget buildContainerAmuletItemHover({
   double edgePadding = 150,
 }) => buildWatchNullable(
       amulet.itemHover, (item) {
-        // final levelCurrent = amulet.getAmuletPlayerItemLevel(item);
-        // final skillType = item.skillType;
         return buildAmuletItemIcon(item);
 
         // if (levelCurrent == -1){
