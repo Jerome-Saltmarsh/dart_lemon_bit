@@ -218,6 +218,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   @override
   void customOnPlayerDead(AmuletPlayer player) {
+    player.deathCount++;
     addJob(seconds: 5, action: () {
       revive(player);
     });
@@ -814,9 +815,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       player.mouseLeftDownIgnore = false;
     }
 
-    if (mouseLeftClicked && player.inventoryOpen){
-      player.inventoryOpen = false;
-    }
+    // if (mouseLeftClicked && player.inventoryOpen){
+    //   player.inventoryOpen = false;
+    // }
 
     if (mouseLeftClicked && player.activeAmuletItemSlot != null) {
       player.useActivatedPower();

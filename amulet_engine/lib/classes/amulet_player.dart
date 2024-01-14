@@ -22,7 +22,7 @@ class AmuletPlayer extends IsometricPlayer with
     Level,
     ElementPoints
 {
-
+  static const Data_Key_Dead_Count = 'dead';
   static const healthBase = 10;
 
   var activePowerX = 0.0;
@@ -80,6 +80,10 @@ class AmuletPlayer extends IsometricPlayer with
     writeGender();
     writePlayerComplexion();
   }
+
+  int get deathCount => data.tryGetInt(Data_Key_Dead_Count) ?? 0;
+
+  set deathCount(int value) => data.setInt(Data_Key_Dead_Count, value);
 
   QuestMain get questMain {
     final questMainIndex = data.tryGetInt('quest_main') ?? 0;

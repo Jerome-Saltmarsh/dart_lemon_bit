@@ -42,7 +42,7 @@ Widget buildItemSlot(ItemSlot itemSlot, {
                           data: itemSlot,
                           feedback: image,
                           onDragStarted: () {
-                            amulet.setInventoryOpen(true);
+                            // amulet.setInventoryOpen(true);
                             amulet.dragging.value = itemSlot;
                           },
                           onDraggableCanceled: (velocity, offset) {
