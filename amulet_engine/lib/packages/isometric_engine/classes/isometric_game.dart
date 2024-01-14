@@ -2238,11 +2238,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       return;
     }
 
-    // if (characterConditionCollectTarget(character)){
-    //   characterGoalCollectTarget(character);
-    //   return;
-    // }
-
     if (characterConditionFollowPath(character)){
       characterActionFollowPath(character);
       return;
@@ -2280,41 +2275,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   void characterRunToTarget(Character character){
     character.runStraightToTarget();
-  }
-
-  void characterGoalCollectTarget(Character character){
-    character.goal = CharacterGoal.Collect_Target;
-
-    if (characterConditionCollectTargetGameObject(character)){
-      characterActionCollectTargetGameObject(character);
-      return;
-    }
-
-    if (characterConditionRunTowardsCollectTarget(character)){
-      characterActionRunTowardsTarget(character);
-      return;
-    }
-
-    if (characterConditionFollowPathToCollectTarget(character)){
-      characterActionFollowPathToTarget(character);
-      return;
-    }
-
-    character.action = CharacterAction.Stuck;
-  }
-
-  void characterActionCollectTargetGameObject(Character character){
-    final target = character.target;
-
-    assert (target is GameObject);
-    if (target is! GameObject) {
-      return;
-    }
-
-    character.action = CharacterAction.Collect_Target;
-    onCharacterCollectedGameObject(character, target);
-    characterActionIdle(character);
-    clearCharacterTarget(character);
   }
 
   void onCharacterCollectedGameObject(Character character, GameObject gameObject){

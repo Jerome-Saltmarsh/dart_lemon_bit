@@ -605,23 +605,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   }
 
   @override
-  void onCharacterCollectedGameObject(
-    Character character,
-    GameObject gameObject,
-  ) {
-
-    if (
-      character is! AmuletPlayer ||
-      gameObject is! AmuletGameObject
-    ) return;
-
-
-    if (character.acquireAmuletItem(gameObject.amuletItem)) {
-      super.onCharacterCollectedGameObject(character, gameObject);
-    }
-  }
-
-  @override
   void customOnNodeDestroyed(int nodeType, int nodeIndex, int nodeOrientation) {
     switch (nodeType){
       case NodeType.Grass_Long:
