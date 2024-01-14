@@ -431,7 +431,7 @@ class Amulet {
     player.equippedLegs.clear();
     player.equippedShoe.clear();
     player.equippedWeapon.amuletItem = null;
-    player.equippedBody.amuletItem = AmuletItem.Armor_Shirt_Blue_Worn;
+    player.equippedBody.amuletItem = AmuletItem.Body_Shirt_1_5_Common;
     player.equippedLegs.amuletItem = null;
     player.health = player.maxHealth;
     player.characterState = CharacterState.Idle;

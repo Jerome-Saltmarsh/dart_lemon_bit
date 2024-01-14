@@ -87,7 +87,7 @@ class AmuletGameTutorial extends AmuletGame {
       !const[GameObjectType.Crystal_Glowing_False, GameObjectType.Crystal_Glowing_True].contains(element.subType)
     );
 
-    player.equipBody(AmuletItem.Armor_Shirt_Blue_Worn, force: true);
+    // player.equipBody(AmuletItem.Armor_Shirt_Blue_Worn, force: true);
     // player.equipLegs(AmuletItem.Pants_Travellers, force: true);
     // player.equippedWeaponIndex = -1;
 
@@ -178,7 +178,7 @@ class AmuletGameTutorial extends AmuletGame {
 
     if (!objectiveCompleted(player, QuestTutorial.Acquire_Bow)){
       spawnAmuletItemAtIndex(
-        item: AmuletItem.Weapon_Old_Bow,
+        item: AmuletItem.Weapon_Bow_1_5_Common,
         index: getSceneKey(keysSpawnBow),
         deactivationTimer: -1,
       );
@@ -276,7 +276,7 @@ class AmuletGameTutorial extends AmuletGame {
        // QuestTutorial.Equip_Bow =>
        //    player.weapons.any((element) => element.amuletItem == AmuletItem.Weapon_Old_Bow),
        QuestTutorial.Draw_Bow =>
-        player.equippedWeapon.amuletItem == AmuletItem.Weapon_Old_Bow,
+        player.equippedWeapon.amuletItem == AmuletItem.Weapon_Bow_1_5_Common,
        QuestTutorial.Leave => getNodeIndexV3(player) == indexLeave,
         _ => false
     };
@@ -439,7 +439,7 @@ class AmuletGameTutorial extends AmuletGame {
 
   void actionSpawnWeaponSwordAtGuide() =>
     spawnAmuletItem(
-      item: AmuletItem.Weapon_Short_Sword,
+      item: AmuletItem.Weapon_Bow_1_5_Common,
       x: guide.x,
       y: guide.y,
       z: guide.z,
@@ -513,7 +513,6 @@ class AmuletGameTutorial extends AmuletGame {
     )
       ..maxHealth = 3
       ..health = 3
-      ..spawnLootOnDeath = false
       ..respawnDurationTotal = -1;
   }
 
@@ -545,7 +544,6 @@ class AmuletGameTutorial extends AmuletGame {
         fiendType: FiendType.Fallen,
         index: fiend02Index,
       )
-        ..spawnLootOnDeath = false
         ..respawnDurationTotal = -1
         ..x += giveOrTake(shiftRadius)
         ..y += giveOrTake(shiftRadius)
@@ -556,7 +554,7 @@ class AmuletGameTutorial extends AmuletGame {
   @override
   void onAmuletItemAcquired(AmuletPlayer player, AmuletItem amuletItem) {
     switch (amuletItem){
-      case AmuletItem.Weapon_Short_Sword:
+      case AmuletItem.Weapon_Bow_1_5_Common:
         if (player.tutorialObjective == QuestTutorial.Acquire_Sword){
           startNextTutorialObjective(player);
         }
@@ -566,7 +564,7 @@ class AmuletGameTutorial extends AmuletGame {
       //     startNextTutorialObjective(player);
       //   }
       //   break;
-      case AmuletItem.Weapon_Old_Bow:
+      case AmuletItem.Weapon_Bow_1_5_Common:
         if (player.tutorialObjective == QuestTutorial.Acquire_Bow){
           startNextTutorialObjective(player);
         }
@@ -665,7 +663,7 @@ class AmuletGameTutorial extends AmuletGame {
   void onObjectiveSetEquipBow(AmuletPlayer player) =>
     runScript(player)
       .faceEachOther(player, guide)
-      .highlightAmuletItem(AmuletItem.Weapon_Old_Bow)
+      .highlightAmuletItem(AmuletItem.Weapon_Bow_1_5_Common)
       .talk(guide,
         'add the bow to the weapons rack by clicking the bow icon in the inventory.',
       );
@@ -678,7 +676,7 @@ class AmuletGameTutorial extends AmuletGame {
   ) {
     if (
       // player.weapons.contains(targetAmuletItemSlot) &&
-      targetAmuletItemSlot.amuletItem == AmuletItem.Weapon_Old_Bow &&
+      targetAmuletItemSlot.amuletItem == AmuletItem.Weapon_Bow_1_5_Common &&
       player.tutorialObjective == QuestTutorial.Equip_Bow
     ) {
       startNextTutorialObjective(player);
@@ -788,7 +786,7 @@ class AmuletGameTutorial extends AmuletGame {
       .controlsDisabled()
       .cameraSetTarget(guide)
       .faceEachOther(player, guide)
-      .highlightAmuletItem(AmuletItem.Weapon_Old_Bow)
+      .highlightAmuletItem(AmuletItem.Weapon_Bow_1_5_Common)
       .talk(guide,
         'excellent.'
         'draw the bow by clicking the bow icon at the bottom of the screen'

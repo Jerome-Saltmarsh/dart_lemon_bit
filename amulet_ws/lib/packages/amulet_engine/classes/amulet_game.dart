@@ -498,17 +498,30 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   void customOnCharacterKilled(Character target, src) {
 
     if (target is AmuletFiend){
-      if (target.spawnLootOnDeath) {
-        if (randomChance(target.fiendType.chanceOfDropLoot)) {
-          spawnRandomLootAtFiend(target);
-        } else if (randomChance(0.1)) {
-            spawnAmuletItemAtPosition(
-              item: randomItem(AmuletItem.typeConsumables),
-              position: target,
-              deactivationTimer: lootDeactivationTimer,
-            );
-        }
+      if (randomChance(target.fiendType.chanceOfDropLegendary)) {
+        spawnRandomLootAtFiend(target, itemQuality: ItemQuality.Legendary);
+        return;
       }
+
+      if (randomChance(target.fiendType.chanceOfDropRare)) {
+        spawnRandomLootAtFiend(target, itemQuality: ItemQuality.Rare);
+        return;
+      }
+
+      if (randomChance(target.fiendType.chanceOfDropCommon)) {
+        spawnRandomLootAtFiend(target, itemQuality: ItemQuality.Common);
+        return;
+      }
+
+      if (randomChance(target.fiendType.chanceOfDropPotion)) {
+        spawnAmuletItemAtPosition(
+          item: randomItem(AmuletItem.typeConsumables),
+          position: target,
+          deactivationTimer: lootDeactivationTimer,
+        );
+        return;
+      }
+
     }
 
     if (target.respawnDurationTotal > 0){
@@ -525,20 +538,25 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
   }
 
-  void spawnRandomLootAtFiend(AmuletFiend fiend) {
+  void spawnRandomLootAtFiend(AmuletFiend fiend, {
+    required ItemQuality itemQuality,
+  }) {
 
     final fiendType = fiend.fiendType;
     final fiendLevel = fiendType.level;
     
-    final values = AmuletItem.values.where((element) => fiendLevel >= element.levelMin && fiendLevel < element.levelMax);
+    final values = AmuletItem.values.where((element) =>
+      fiendLevel >= element.levelMin &&
+      fiendLevel < element.levelMax &&
+      element.quality == itemQuality
+    );
     
     if (values.isEmpty){
       return;
     }
 
-    final item = randomItem(values);
     spawnAmuletItem(
-        item: item,
+        item: randomItem(values),
         x: fiend.x,
         y: fiend.y,
         z: fiend.z,

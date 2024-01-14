@@ -66,7 +66,6 @@ class AmuletPlayer extends IsometricPlayer with
     // equippedWeaponIndex = 0;
     active = false;
     equipmentDirty = true;
-    spawnLootOnDeath = false;
     setItemsLength(itemLength);
     setControlsEnabled(true);
     writeWorldMapBytes();
