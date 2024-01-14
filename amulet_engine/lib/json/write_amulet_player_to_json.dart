@@ -17,28 +17,22 @@ CharacterJson writeAmuletPlayerToJson(AmuletPlayer player){
 
   final items = [];
 
-  for (final item in player.items){
-    items.add({
-      'type': item.amuletItem?.type ?? 0,
-      'sub_type': item.amuletItem?.subType ?? 0,
-    });
+  for (final item in player.items) {
+    items.add(getSlotTypeName(item));
   }
 
   json.elementPoints = player.elementPoints;
   json.elementElectricity = player.elementAir;
   json.elementFire = player.elementFire;
   json.elementWater = player.elementWater;
+  json.weapon = getSlotTypeName(player.equippedWeapon);
+  json.helm = getSlotTypeName(player.equippedHelm);
+  json.body = getSlotTypeName(player.equippedBody);
+  json.shoes = getSlotTypeName(player.equippedShoe);
   json['data'] = player.data;
   json['name'] = player.name;
-  // json['equippedWeapon'] = getSlotType(player.equippedWeapon);
-  json['equippedWeapon'] = getSlotTypeName(player.equippedWeapon);
-  json['equippedHelm'] = getSlotType(player.equippedHelm);
-  json['equippedBody'] = getSlotType(player.equippedBody);
-  json['equippedLegs'] = getSlotType(player.equippedLegs);
-  json['equippedShoe'] = getSlotType(player.equippedShoe);
   json['equippedHandLeft'] = getSlotType(player.equippedHandLeft);
   json['equippedHandRight'] = getSlotType(player.equippedHandRight);
-  // json['weapons'] = getSlotTypeNames(player.weapons);
   json['items'] = getSlotTypeNames(player.items);
   json['complexion'] = player.complexion;
   json['gender'] = player.gender;

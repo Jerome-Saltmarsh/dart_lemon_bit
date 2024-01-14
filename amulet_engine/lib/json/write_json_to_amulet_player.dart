@@ -7,66 +7,13 @@ void writeJsonToAmuletPlayer(
     CharacterJson json,
     AmuletPlayer player,
 ){
-
-  // final equippedWeapon = ;
-  // if (equippedWeapon != WeaponType.Unarmed) {
-  //
-  // } else {
-  //   player.equipWeapon(null, force: true);
-  // }
-  player.equipWeapon(AmuletItem.findByName(json['equippedWeapon']), force: true);
-
-  final equippedHelm = json['equippedHelm'] ?? 0;
-  if (equippedHelm != HelmType.None) {
-    player.equipHelm(AmuletItem.getHelm(equippedHelm), force: true);
-  } else {
-    player.equipHelm(null, force: true);
-  }
-
-  final equippedBody = json['equippedBody'] ?? 0;
-  if (equippedBody != BodyType.None){
-    player.equipBody(AmuletItem.getBody(equippedBody), force: true);
-  } else {
-    player.equipBody(null, force: true);
-  }
-
-  final equippedLegs = json['equippedLegs'] ?? 0;
-  if (equippedLegs != LegType.None){
-    player.equipLegs(AmuletItem.getLegs(equippedLegs), force: true);
-  } else {
-    player.equipLegs(null, force: true);
-  }
-
-  final equippedShoe = json['equippedShoe'] ?? 0;
-  if (equippedShoe != BodyType.None) {
-    player.equipShoes(AmuletItem.getShoe(equippedShoe), force: true);
-  } else {
-    player.equipShoes(null, force: true);
-  }
-
-  // final equippedHandLeft = json['equippedHandLeft'] ?? 0;
-  // if (equippedHandLeft != HandType.None) {
-  //   player.equipHandLeft(AmuletItem.getHand(equippedHandLeft), force: true);
-  // } else {
-  //   player.equipHandLeft(null, force: true);
-  // }
-  //
-  // final equippedHandRight = json['equippedHandRight'] ?? 0;
-  // if (equippedHandRight != HandType.None) {
-  //   player.equipHandRight(AmuletItem.getHand(equippedHandRight), force: true);
-  // } else {
-  //   player.equipHandRight(null, force: true);
-  // }
+  player.equipWeapon(AmuletItem.findByName(json.weapon), force: true);
+  player.equipHelm(AmuletItem.findByName(json.helm), force: true);
+  player.equipBody(AmuletItem.findByName(json.body), force: true);
+  player.equipShoes(AmuletItem.findByName(json.shoes), force: true);
 
   player.equipHandLeft(null, force: true);
   player.equipHandRight(null, force: true);
-
-  // final weaponNames = json.tryGetList<String>('weapons');
-  // if (weaponNames != null){
-  //   for (var i = 0; i < weaponNames.length; i++){
-  //     player.weapons[i].amuletItem = AmuletItem.findByName(weaponNames[i]);
-  //   }
-  // }
 
   final itemNames = json.tryGetList<String>('items');
   if (itemNames != null){

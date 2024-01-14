@@ -88,7 +88,7 @@ class AmuletGameTutorial extends AmuletGame {
     );
 
     player.equipBody(AmuletItem.Armor_Shirt_Blue_Worn, force: true);
-    player.equipLegs(AmuletItem.Pants_Travellers, force: true);
+    // player.equipLegs(AmuletItem.Pants_Travellers, force: true);
     // player.equippedWeaponIndex = -1;
 
     deactivate(crystal1GlowingFalse);
@@ -473,13 +473,13 @@ class AmuletGameTutorial extends AmuletGame {
   }
 
   void actionSpawnAmuletItemSpellHeal(Character target) {
-    spawnAmuletItem(
-        item: AmuletItem.Glove_Healers_Hand,
-        x: target.x,
-        y: target.y,
-        z: target.z,
-        deactivationTimer: -1,
-    );
+    // spawnAmuletItem(
+    //     item: AmuletItem.Glove_Healers_Hand,
+    //     x: target.x,
+    //     y: target.y,
+    //     z: target.z,
+    //     deactivationTimer: -1,
+    // );
   }
 
   @override
@@ -528,12 +528,12 @@ class AmuletGameTutorial extends AmuletGame {
 
   @override
   void onAmuletItemUsed(AmuletPlayer player, AmuletItem amuletItem) {
-    if (
-      amuletItem == AmuletItem.Glove_Healers_Hand &&
-      player.tutorialObjective == QuestTutorial.Use_Heal
-    ) {
-      onSpellHealUsedForTheFirstTime(player);
-    }
+    // if (
+    //   amuletItem == AmuletItem.Glove_Healers_Hand &&
+    //   player.tutorialObjective == QuestTutorial.Use_Heal
+    // ) {
+    //   onSpellHealUsedForTheFirstTime(player);
+    // }
   }
 
   void spawnFiends02() {
@@ -561,11 +561,11 @@ class AmuletGameTutorial extends AmuletGame {
           startNextTutorialObjective(player);
         }
         break;
-      case AmuletItem.Glove_Healers_Hand:
-        if (player.tutorialObjective == QuestTutorial.Acquire_Heal){
-          startNextTutorialObjective(player);
-        }
-        break;
+      // case AmuletItem.Glove_Healers_Hand:
+      //   if (player.tutorialObjective == QuestTutorial.Acquire_Heal){
+      //     startNextTutorialObjective(player);
+      //   }
+      //   break;
       case AmuletItem.Weapon_Old_Bow:
         if (player.tutorialObjective == QuestTutorial.Acquire_Bow){
           startNextTutorialObjective(player);

@@ -10,6 +10,18 @@ extension CharacterJsonExtension on CharacterJson {
   static const FIELD_ELEMENT_POINTS = 'elementPoints';
   static const FIELD_UUID = 'uuid';
   static const FIELD_NAME = 'name';
+  static const FIELD_WEAPON = 'weapon';
+  static const FIELD_HELM = 'helm';
+  static const FIELD_BODY = 'body';
+  static const FIELD_SHOES = 'shoes';
+
+  String get weapon => tryGetString(FIELD_WEAPON) ?? '-';
+
+  String get helm => tryGetString(FIELD_HELM) ?? '-';
+
+  String get body => tryGetString(FIELD_BODY) ?? '-';
+
+  String get shoes => tryGetString(FIELD_SHOES) ?? '-';
 
   int get elementFire => getInt(FIELD_ELEMENT_FIRE);
   
@@ -22,7 +34,15 @@ extension CharacterJsonExtension on CharacterJson {
   String get uuid => getString(FIELD_UUID);
 
   String get name => getString(FIELD_NAME);
-  
+
+  set weapon(String value) => setString(FIELD_WEAPON, value);
+
+  set helm(String value) => setString(FIELD_HELM, value);
+
+  set body(String value) => setString(FIELD_BODY, value);
+
+  set shoes(String value) => setString(FIELD_SHOES, value);
+
   set elementPoints(int value) => setInt(FIELD_ELEMENT_POINTS, value);
 
   set elementFire(int value) => setInt(FIELD_ELEMENT_FIRE, value);

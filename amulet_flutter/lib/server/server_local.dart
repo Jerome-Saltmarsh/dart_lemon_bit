@@ -157,7 +157,7 @@ class ServerLocal implements Server {
       playerServer.equippedHandRight.amuletItem = null;
       playerServer.equippedShoe.amuletItem = null;
       playerServer.equippedBody.amuletItem = AmuletItem.Armor_Shirt_Blue_Worn;
-      playerServer.equippedLegs.amuletItem = AmuletItem.Pants_Travellers;
+      playerServer.equippedLegs.amuletItem = null;
       final json = writeAmuletPlayerToJson(playerServer);
       final characters = getCharacters();
       characters.add(json);

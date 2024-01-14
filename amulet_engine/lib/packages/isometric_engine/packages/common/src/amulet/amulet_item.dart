@@ -1,9 +1,10 @@
 import '../../src.dart';
+import 'package:collection/collection.dart';
 
 enum AmuletItem {
   Weapon_Rusty_Short_Sword(
     levelMin: 1,
-    levelMax: 5,
+    levelMax: 3,
     type: ItemType.Weapon,
     subType: WeaponType.Shortsword,
     skillType: SkillType.Strike,
@@ -12,6 +13,7 @@ enum AmuletItem {
     damageMax: 3,
     range: 40,
     performDuration: 25,
+    quality: ItemQuality.Common,
   ),
   Weapon_Short_Sword(
     levelMin: 1,
@@ -24,9 +26,10 @@ enum AmuletItem {
     damageMin: 0,
     damageMax: 3,
     range: 40,
+    quality: ItemQuality.Common,
   ),
   Weapon_Short_Sword_Of_Pain(
-    levelMin: 1,
+    levelMin: 2,
     levelMax: 5,
     type: ItemType.Weapon,
     subType: WeaponType.Shortsword,
@@ -36,6 +39,7 @@ enum AmuletItem {
     range: 40,
     damageMin: 2,
     damageMax: 5,
+    quality: ItemQuality.Rare,
   ),
   Weapon_Broad_Sword(
     levelMin: 4,
@@ -48,6 +52,7 @@ enum AmuletItem {
     range: 40,
     damageMin: 2,
     damageMax: 5,
+    quality: ItemQuality.Common,
   ),
   Weapon_Sword_Sapphire_Large(
     levelMin: 8,
@@ -60,6 +65,7 @@ enum AmuletItem {
     range: 40,
     damageMin: 2,
     damageMax: 5,
+    quality: ItemQuality.Rare,
   ),
   Weapon_Sharpened_Broad_Sword(
     levelMin: 4,
@@ -72,6 +78,7 @@ enum AmuletItem {
     range: 40,
     damageMin: 2,
     damageMax: 5,
+    quality: ItemQuality.Rare,
   ),
   Weapon_Staff_Wooden(
     levelMin: 1,
@@ -84,6 +91,7 @@ enum AmuletItem {
     range: 40,
     damageMin: 2,
     damageMax: 5,
+    quality: ItemQuality.Common,
   ),
   Weapon_Old_Bow(
     levelMin: 1,
@@ -93,9 +101,23 @@ enum AmuletItem {
     skillType: SkillType.Arrow,
     description: 'A worn out bow',
     performDuration: 25,
-    range: 40,
+    range: 100,
     damageMin: 2,
     damageMax: 5,
+    quality: ItemQuality.Common,
+  ),
+  Weapon_Bow_Composite(
+    levelMin: 5,
+    levelMax: 10,
+    type: ItemType.Weapon,
+    subType: WeaponType.Bow,
+    skillType: SkillType.Arrow,
+    description: 'A decently powerful bow with medium range',
+    performDuration: 25,
+    range: 80,
+    damageMin: 2,
+    damageMax: 5,
+    quality: ItemQuality.Common,
   ),
   Weapon_Holy_Bow(
     levelMin: 5,
@@ -105,9 +127,10 @@ enum AmuletItem {
     skillType: SkillType.Arrow,
     description: 'A mythical bow which does a lot of damage',
     performDuration: 25,
-    range: 40,
-    damageMin: 2,
-    damageMax: 5,
+    range: 120,
+    damageMin: 20,
+    damageMax: 25,
+    quality: ItemQuality.Legendary,
   ),
   Helm_Steel(
     levelMin: 5,
@@ -118,6 +141,7 @@ enum AmuletItem {
     subType: HelmType.Steel,
     performDuration: 25,
     health: 6,
+    quality: ItemQuality.Common,
   ),
   Helm_Wizards_Hat(
     levelMin: 1,
@@ -128,8 +152,9 @@ enum AmuletItem {
     description: 'A hat commonly worn by students of magic school',
     performDuration: 25,
     health: 2,
+    quality: ItemQuality.Common,
   ),
-  Moth_Hat_Of_Magic(
+  Helm_Moth_Hat_Of_Magic(
     levelMin: 5,
     levelMax: 10,
     skillType: SkillType.Fireball,
@@ -140,70 +165,25 @@ enum AmuletItem {
     range: 200,
     damageMin: 5,
     damageMax: 5,
+    quality: ItemQuality.Rare,
   ),
-  Pants_Travellers(
-    levelMin: 1,
-    levelMax: 5,
-    type: ItemType.Legs,
-    subType: LegType.Leather,
-    description: 'Common pants made for more for comfort than combat',
+  Helm_Hunters_Cap_Of_The_Moon(
+    levelMin: 5,
+    levelMax: 10,
+    type: ItemType.Helm,
+    subType: HelmType.Steel,
+    description: 'an incredibly rare and powerful hat useful for hunting',
     performDuration: 25,
+    quality: ItemQuality.Legendary,
   ),
-  Pants_Squires(
-    levelMin: 3,
-    levelMax: 8,
-    type: ItemType.Legs,
-    subType: LegType.Leather,
-    description: 'increases attack speed with bows',
-    performDuration: 25,
-  ),
-  Pants_Plated(
-    levelMin: 10,
-    levelMax: 15,
-    type: ItemType.Legs,
-    subType: LegType.Plated,
-    description: 'Quite heavy but they offer a lot of protection',
-    performDuration: 25,
-  ),
-  Pants_Linen_Striped(
-    levelMin: 10,
-    levelMax: 15,
-    type: ItemType.Legs,
-    subType: LegType.Linen_Striped,
-    description: 'Light weight pants for for mobility',
-    performDuration: 25,
-  ),
-  Black_Boots_Of_Magic(
+  Boots_Black_Boots_Of_Magic(
     levelMin: 5,
     levelMax: 10,
     type: ItemType.Shoes,
     subType: ShoeType.Black_Boots,
     description: 'reduces all cooldowns',
     performDuration: 25,
-  ),
-  Gauntlet_of_the_Knight(
-    levelMin: 5,
-    levelMax: 10,
-    type: ItemType.Hand,
-    subType: HandType.Gauntlets,
-    description: 'passively increases melee damage',
-    performDuration: 25,
-  ),
-  Glove_Healers_Hand(
-    levelMin: 5,
-    levelMax: 10,
-    type: ItemType.Hand,
-    subType: HandType.Leather_Gloves,
-    description: 'heals the player a small amount',
-    performDuration: 25,
-  ),
-  Leather_Gloves(
-    levelMin: 1,
-    levelMax: 8,
-    type: ItemType.Hand,
-    subType: HandType.Leather_Gloves,
-    description: 'Common leather gloves',
-    performDuration: 25,
+    quality: ItemQuality.Rare,
   ),
   Armor_Shirt_Blue_Worn(
     levelMin: 1,
@@ -212,6 +192,7 @@ enum AmuletItem {
     subType: BodyType.Shirt_Blue,
     description: 'An ordinary shirt',
     performDuration: 25,
+    quality: ItemQuality.Common,
   ),
   Armor_Black_Cloak(
     levelMin: 1,
@@ -220,6 +201,7 @@ enum AmuletItem {
     subType: BodyType.Black_Cloak,
     description: 'A cloak that enhances magical ability',
     performDuration: 25,
+    quality: ItemQuality.Common,
   ),
   Armor_Leather_Basic(
     levelMin: 3,
@@ -228,6 +210,7 @@ enum AmuletItem {
     subType: BodyType.Leather_Armour,
     description: 'Common armour',
     performDuration: 25,
+    quality: ItemQuality.Common,
   ),
   Shoe_Leather_Boots(
     levelMin: 1,
@@ -236,6 +219,7 @@ enum AmuletItem {
     subType: ShoeType.Leather_Boots,
     description: 'A common leather boots',
     performDuration: 25,
+    quality: ItemQuality.Common,
   ),
   Shoe_Iron_Plates(
     levelMin: 5,
@@ -244,6 +228,7 @@ enum AmuletItem {
     subType: ShoeType.Iron_Plates,
     description: 'Heavy boots which provide good defense',
     performDuration: 25,
+    quality: ItemQuality.Common,
   ),
   Potion_Health(
     type: ItemType.Consumable,
@@ -251,6 +236,7 @@ enum AmuletItem {
     description: 'heals a small amount of health',
     levelMin: 0,
     levelMax: 99,
+    quality: ItemQuality.Common,
   );
 
   /// the minimum level of a fiend that can drop this item
@@ -272,6 +258,7 @@ enum AmuletItem {
   final int? charges;
   final int? performDuration;
   final int? health;
+  final ItemQuality quality;
 
   const AmuletItem({
     required this.type,
@@ -279,6 +266,7 @@ enum AmuletItem {
     required this.description,
     required this.levelMin,
     required this.levelMax,
+    required this.quality,
     this.dependency,
     this.skillType,
     this.damageMin,
@@ -336,34 +324,26 @@ enum AmuletItem {
   static final typeConsumables =
       values.where((element) => element.isConsumable).toList(growable: false);
 
-  static AmuletItem getBody(int type) =>
-      typeBodies.firstWhere((element) => element.subType == type);
+  static AmuletItem? getBody(int type) =>
+      typeBodies.firstWhereOrNull((element) => element.subType == type);
 
-  static AmuletItem getShoe(int type) =>
-      typeShoes.firstWhere((element) => element.subType == type);
+  static AmuletItem? getShoe(int type) =>
+      typeShoes.firstWhereOrNull((element) => element.subType == type);
 
-  static AmuletItem getWeapon(int type) =>
-      typeWeapons.firstWhere((element) => element.subType == type);
+  static AmuletItem? getWeapon(int type) =>
+      typeWeapons.firstWhereOrNull((element) => element.subType == type);
 
-  static AmuletItem? findByName(String name) {
-    if (name != '-') {
-      for (final value in values) {
-        if (value.name == name) {
-          return value;
-        }
-      }
-    }
-    return null;
-  }
+  static AmuletItem? findByName(String name) =>
+      values.firstWhereOrNull((element) => element.name == name);
 
-  static AmuletItem getHand(int type) =>
-      typeHands.firstWhere((element) => element.subType == type);
+  static AmuletItem? getHand(int type) =>
+      typeHands.firstWhereOrNull((element) => element.subType == type);
 
-  static AmuletItem getHelm(int type) =>
-      typeHelms.firstWhere((element) => element.subType == type);
+  static AmuletItem? getHelm(int type) =>
+      typeHelms.firstWhereOrNull((element) => element.subType == type);
 
-  static AmuletItem getLegs(int type) =>
-      typeLegs.firstWhere((element) => element.subType == type);
+  static AmuletItem? getLegs(int type) =>
+      typeLegs.firstWhereOrNull((element) => element.subType == type);
 
   static AmuletItem get({
     required int type,
@@ -404,3 +384,8 @@ enum CasteType {
   Directional,
 }
 
+enum ItemQuality {
+  Legendary,
+  Rare,
+  Common,
+}

@@ -21,7 +21,7 @@ enum FiendType {
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 50,
     elementFire: 1,
-    chanceOfDropLoot: 0.05,
+    chanceOfDropLoot: 0.2,
   ),
   Skeleton(
     level: 2,
