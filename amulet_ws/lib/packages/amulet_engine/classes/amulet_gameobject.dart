@@ -32,7 +32,7 @@ class AmuletGameObject extends GameObject {
   }
 
   @override
-  String get name => amuletItem.name;
+  String get name => amuletItem.label;
 
   @override
   bool onSameTeam(a) {

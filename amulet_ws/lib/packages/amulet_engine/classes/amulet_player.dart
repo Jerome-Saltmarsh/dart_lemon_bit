@@ -72,7 +72,6 @@ class AmuletPlayer extends IsometricPlayer with
     writeWorldMapLocations();
     writeAmuletElements();
     writeElementPoints();
-    // writeWeapons();
     writeTreasures();
     writeInteracting();
     writePlayerLevel();

@@ -15,6 +15,7 @@ import 'ui/builders/build_item_slot.dart';
 import 'ui/containers/build_container_item_hover.dart';
 import 'ui/containers/build_container_player_front.dart';
 import 'ui/widgets/amulet_world_map.dart';
+import 'ui/widgets/mmo_item_image.dart';
 
 class AmuletUI {
   static const itemImageSize = 64.0;
@@ -76,6 +77,7 @@ class AmuletUI {
           ),
           buildPlayerAimTarget(),
           buildPositionedAmuletItemHover(),
+          buildPositionedAmuletItemInformation(),
           buildPositionedMessage(),
           Positioned(
             top: margin2,
@@ -229,6 +231,86 @@ class AmuletUI {
                 ));
       });
 
+
+
+  Widget buildPositionedAmuletItemInformation() {
+
+    return Positioned(
+        top: 8,
+        left: 8,
+        child: buildWatch(amulet.aimTargetItemType, (target) {
+          if (target == null){
+            return nothing;
+          }
+          return buildWatch(amulet.aimTargetItemTypeCurrent, (current) =>
+            current == null ? nothing : buildContainerCompareItems(current, target));
+        }
+        ),
+      );
+  }
+
+
+  Widget buildRow(String column1, Widget column2, Widget column3) {
+    return Row(
+      children: [
+        Container(width: 100, child: buildText(column1)),
+        width4,
+        Container(width: 100, child: column2),
+        width4,
+        Container(width: 100, child: column3),
+      ],
+    );
+  }
+
+  Widget buildRowText(String column1, String column2, String column3) {
+    return buildRow(column1, buildText(column2), buildText(column3));
+  }
+
+  Widget buildContainerCompareItems(AmuletItem current, AmuletItem target) => Container(
+      color: amulet.style.containerColor,
+      padding: const EdgeInsets.all(16),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildRowText('', 'current', ''),
+            buildRow('', AmuletItemImage(amuletItem: current), AmuletItemImage(amuletItem: target)),
+            buildRowText('', current.label, target.label),
+            buildRowText('damage', '${current.damageMin} - ${current.damageMax}', '${target.damageMin} - ${target.damageMax}'),
+          ]),
+    );
+
+  Widget buildContainerItemType(itemType) {
+        if (itemType == null){
+          return Positioned(child: nothing);
+        }
+
+        final damageMin = itemType.damageMin;
+        final damageMax = itemType.damageMax;
+
+        return Positioned(
+            top: margin1,
+            left: 50,
+            child: Container(
+              width: 200,
+              height: 200,
+              color: amulet.style.containerColor,
+              child: Column(
+                children: [
+                  buildText(itemType.label),
+                  if (damageMin != null && damageMax != null)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        buildText('Damage'),
+                        buildText('$damageMin - $damageMax'),
+                      ],
+                    )
+                ],
+              ),
+            ) ,
+          );
+      }
+
   Widget buildError() {
     final color = Colors.red.withOpacity(0.7);
     return IgnorePointer(
@@ -314,28 +396,6 @@ class AmuletUI {
                 }),
         ));
   }
-
-  // Widget buildPlayerWeapons() => Row(
-  //       mainAxisAlignment: MainAxisAlignment.start,
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: List.generate(amulet.weapons.length,
-  //           (index) => buildWeaponSlotAtIndex(index, amulet: amulet)),
-  //     );
-
-  Widget buildPlayerTreasures() => buildInventoryContainer(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: List.generate(
-                amulet.treasures.length,
-                (i) => buildItemSlot(amulet.treasures[i],
-                    amulet: amulet,
-                    onEmpty: IsometricIcon(
-                      iconType: IconType.Inventory_Treasure,
-                      color: Colors.black12.value,
-                      scale: 1,
-                    )))),
-      );
 
   Widget buildPlayerAimTarget() {
     const width = 250.0;

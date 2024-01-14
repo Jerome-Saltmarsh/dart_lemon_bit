@@ -59,6 +59,7 @@ class Amulet extends IsometricGame {
   final emptyItemSlot = buildText('-');
 
   final aimTargetItemType = Watch<AmuletItem?>(null);
+  final aimTargetItemTypeCurrent = Watch<AmuletItem?>(null);
   final highlightedAmuletItem = Watch<AmuletItem?>(null);
 
   ItemSlot? get activeAmuletItemSlot {
@@ -144,6 +145,25 @@ class Amulet extends IsometricGame {
       screenColor.value = Colors.black.withOpacity((1.0 - t).clamp(0, 1.0));
     });
 
+    aimTargetItemType.onChanged((itemType) {
+      aimTargetItemTypeCurrent.value = getEquippedItemSlot(itemType?.type)?.amuletItem.value;
+    });
+  }
+
+
+  ItemSlot? getEquippedItemSlot(int? value){
+    switch (value) {
+      case ItemType.Weapon:
+        return equippedWeapon;
+      case ItemType.Helm:
+        return equippedHelm;
+      case ItemType.Body:
+        return equippedBody;
+      case ItemType.Shoes:
+        return equippedShoes;
+      default:
+        return null;
+    }
   }
 
   void onChangedElementPoints(int elementPoints) =>

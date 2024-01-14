@@ -15,55 +15,6 @@ Widget buildContainerAmuletItemHover({
 }) => buildWatchNullable(
       amulet.itemHover, (item) {
         return buildAmuletItemIcon(item);
-
-        // if (levelCurrent == -1){
-        //   final stats1 = item.getStatsForLevel(1);
-        //
-        //   if (stats1 == null){
-        //     throw Exception('stats1 == null');
-        //   }
-        //
-        //   return Column(
-        //     mainAxisAlignment: MainAxisAlignment.start,
-        //     crossAxisAlignment: CrossAxisAlignment.start,
-        //     children: [
-        //       buildAmuletItemIcon(item),
-        //       height8,
-        //       if (skillType != null)
-        //         buildText('Skill - $skillType'),
-        //       buildContainerAmuletItemStats(stats1, 1),
-        //     ],
-        //   );
-        // }
-        //
-        // final statsCurrent = item.getStatsForLevel(levelCurrent);
-        //
-        // if (statsCurrent == null){
-        //   throw Exception('invalid amulet item level: $levelCurrent, item: $item');
-        // }
-        //
-        // final levelNext = levelCurrent + 1;
-        // final statsNext = item.getStatsForLevel(levelNext);
-        //
-        //
-        // return Column(
-        //   mainAxisAlignment: MainAxisAlignment.start,
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: [
-        //     buildAmuletItemIcon(item),
-        //     Row(
-        //       crossAxisAlignment: CrossAxisAlignment.start,
-        //       children: [
-        //         buildContainerAmuletItemStats(statsCurrent, levelCurrent, color: Colors.green.shade900),
-        //         if (statsNext != null)
-        //          Container(
-        //              margin: const EdgeInsets.only(left: 8),
-        //              child: buildContainerAmuletItemStats(statsNext, levelNext, color: Colors.orange.shade900),
-        //          ),
-        //       ],
-        //     ),
-        //   ],
-        // );
       });
 
 
