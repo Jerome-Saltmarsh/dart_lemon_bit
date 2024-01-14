@@ -103,7 +103,7 @@ class Amulet extends IsometricGame {
 
   final messages = <String>[];
   final messageIndex = Watch(-1);
-  final itemHover = Watch<AmuletItem?>(null);
+  // final itemHover = Watch<AmuletItem?>(null);
   final activePowerPosition = Position();
   final treasures = List<ItemSlot>.generate(4, (index) => ItemSlot(index: index, slotType: SlotType.Treasure));
   final error = Watch('');
@@ -282,7 +282,7 @@ class Amulet extends IsometricGame {
 
   void onAnyChanged(int value) => clearItemHover();
 
-  void clearItemHover() => itemHover.value = null;
+  void clearItemHover() => aimTargetItemTypeCurrent.value = null;
 
   void onChangedPlayerInventoryOpen(bool value) {
     audio.click_sound_8.play();

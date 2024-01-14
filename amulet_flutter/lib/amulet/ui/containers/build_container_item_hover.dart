@@ -11,10 +11,9 @@ import 'package:amulet_engine/packages/common.dart';
 
 Widget buildContainerAmuletItemHover({
   required Amulet amulet,
-  double edgePadding = 150,
 }) => buildWatchNullable(
-      amulet.itemHover, (item) {
-        return buildAmuletItemIcon(item);
+      amulet.aimTargetItemTypeCurrent, (item) {
+        return amulet.amuletUI.buildContainerCompareItems(item, null);
       });
 
 

@@ -76,7 +76,7 @@ class AmuletUI {
             child: buildDialogPlayerInventory(),
           ),
           buildPlayerAimTarget(),
-          buildPositionedAmuletItemHover(),
+          // buildPositionedAmuletItemHover(),
           buildPositionedAmuletItemInformation(),
           buildPositionedMessage(),
           Positioned(
@@ -220,29 +220,16 @@ class AmuletUI {
         );
       }));
 
-  Widget buildPositionedAmuletItemHover() => Builder(builder: (context) {
-        final child = buildContainerAmuletItemHover(amulet: amulet);
-        return buildWatch(
-            amulet.playerInventoryOpen,
-            (inventoryOpen) => Positioned(
-                  top: margin1,
-                  left: inventoryOpen ? margin4 + 50 : null,
-                  child: child,
-                ));
-      });
-
-
+  Widget buildPositionedAmuletItemHover()
+  => buildContainerAmuletItemHover(amulet: amulet);
 
   Widget buildPositionedAmuletItemInformation() {
 
     return Positioned(
         top: 8,
         left: 8,
-        child: buildWatch(amulet.aimTargetItemType, (target) {
-          if (target == null){
-            return nothing;
-          }
-          return buildWatch(amulet.aimTargetItemTypeCurrent, (current) =>
+        child: buildWatch(amulet.aimTargetItemTypeCurrent, (current) {
+          return buildWatch(amulet.aimTargetItemType, (target) =>
             current == null ? nothing : buildContainerCompareItems(current, target));
         }
         ),
@@ -250,7 +237,7 @@ class AmuletUI {
   }
 
 
-  Widget buildRow(String column1, Widget? column2, Widget? column3) {
+  Widget buildRow(String column1, Widget column2, Widget? column3) {
     const width1 = 80.0;
     const width = 130.0;
     return Container(
@@ -268,7 +255,9 @@ class AmuletUI {
               width: width1, child: buildText(column1, color: Colors.white70)),
           width4,
           Container(width: width, child: column2),
+          if (column3 != null)
           width4,
+          if (column3 != null)
           Container(width: width, child: column3),
         ],
       ),
@@ -313,22 +302,26 @@ class AmuletUI {
         );
   }
 
-  Widget buildContainerCompareItems(AmuletItem current, AmuletItem target) => Container(
+  Widget buildContainerCompareItems(AmuletItem current, AmuletItem? target) =>
+      Container(
       color: amulet.style.containerColor,
       padding: const EdgeInsets.all(16),
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             buildRow('', buildText('current', color: Colors.white54, italic: true), null),
-            buildRow('',  AmuletItemImage(amuletItem: current),  AmuletItemImage(amuletItem: target)),
-            buildRow('',  buildText(current.label, color: mapItemQualityToColor(current.quality)),  buildText(target.label, color: mapItemQualityToColor(target.quality))),
-            buildRowText('value', current.quality.name, target.quality.name),
-            buildRowText('skill', current.skillType?.name, target.skillType?.name),
-            buildRowInt('min dmg', current.damageMin, target.damageMin),
-            buildRowInt('max dmg', current.damageMax, target.damageMax),
-            buildRowInt('range', current.range?.toInt(), target.range?.toInt()),
-            buildRowInt('radius', current.radius?.toInt(), target.radius?.toInt()),
-            buildRowIntReverse('duration', current.performDuration, target.performDuration),
+            buildRow('',  AmuletItemImage(amuletItem: current), target == null ? nothing : AmuletItemImage(amuletItem: target)),
+            buildRow('',
+                buildText(current.label, color: mapItemQualityToColor(current.quality)),
+                target == null ? null : buildText(target.label, color: mapItemQualityToColor(target.quality)),
+            ),
+            buildRowText('value', current.quality.name, target?.quality.name),
+            buildRowText('skill', current.skillType?.name, target?.skillType?.name),
+            buildRowInt('min dmg', current.damageMin, target?.damageMin),
+            buildRowInt('max dmg', current.damageMax, target?.damageMax),
+            buildRowInt('range', current.range?.toInt(), target?.range?.toInt()),
+            buildRowInt('radius', current.radius?.toInt(), target?.radius?.toInt()),
+            buildRowIntReverse('duration', current.performDuration, target?.performDuration),
           ]),
     );
 

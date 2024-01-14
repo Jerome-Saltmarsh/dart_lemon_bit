@@ -384,7 +384,7 @@ class IsometricEvents with IsometricComponent {
         break;
       case PlayerEvent.Item_Dropped:
         audio.popSounds14();
-        amulet.itemHover.value = null;
+        amulet.aimTargetItemTypeCurrent.value = null;
         break;
       case PlayerEvent.Item_Sold:
         audio.coins_24();

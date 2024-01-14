@@ -31,7 +31,7 @@ extension AmuletRender on Amulet {
   }
 
   void renderPlayerHoverItemRange() {
-    final item = itemHover.value;
+    final item = aimTargetItemTypeCurrent.value;
     if (item == null) return;
     renderPlayerItemRange(item);
   }
