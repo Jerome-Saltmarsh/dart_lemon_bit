@@ -285,6 +285,16 @@ class AmuletUI {
         column3Color: compareIntGreater(column3, column2),
       );
 
+  Widget buildRowIntReverse(
+      String column1,
+      int? column2,
+      int? column3,
+      ) =>
+      buildRowText(column1, column2, column3,
+        column2Color: compareIntGreater(column3, column2),
+        column3Color: compareIntGreater(column2, column3),
+      );
+
   Widget buildRowText(
       String column1,
       dynamic column2,
@@ -292,12 +302,16 @@ class AmuletUI {
       {
         Color column2Color = Colors.white70,
         Color column3Color = Colors.white70,
-      }) =>
-        buildRow(
+      }) {
+    if (column2 == null && column3 == null){
+      return nothing;
+    }
+    return buildRow(
           column1,
           buildText(column2, color: column2Color),
           buildText(column3, color: column3Color),
         );
+  }
 
   Widget buildContainerCompareItems(AmuletItem current, AmuletItem target) => Container(
       color: amulet.style.containerColor,
@@ -308,14 +322,13 @@ class AmuletUI {
             buildRow('', buildText('current', color: Colors.white54, italic: true), null),
             buildRow('',  AmuletItemImage(amuletItem: current),  AmuletItemImage(amuletItem: target)),
             buildRow('',  buildText(current.label, color: mapItemQualityToColor(current.quality)),  buildText(target.label, color: mapItemQualityToColor(target.quality))),
-            // buildRowText('damage', '${current.damageMin} - ${current.damageMax}', '${target.damageMin} - ${target.damageMax}'),
             buildRowText('value', current.quality.name, target.quality.name),
             buildRowText('skill', current.skillType?.name, target.skillType?.name),
             buildRowInt('min dmg', current.damageMin, target.damageMin),
             buildRowInt('max dmg', current.damageMax, target.damageMax),
-            buildRowText('duration', current.performDuration, target.performDuration),
-
-            // buildRowText('caste', current.skillType?.casteType.name, target.skillType?.casteType.name),
+            buildRowInt('range', current.range?.toInt(), target.range?.toInt()),
+            buildRowInt('radius', current.radius?.toInt(), target.radius?.toInt()),
+            buildRowIntReverse('duration', current.performDuration, target.performDuration),
           ]),
     );
 
