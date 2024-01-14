@@ -275,6 +275,16 @@ class AmuletUI {
     );
   }
 
+  Widget buildRowInt(
+      String column1,
+      int? column2,
+      int? column3,
+      ) =>
+      buildRowText(column1, column2, column3,
+        column2Color: compareIntGreater(column2, column3),
+        column3Color: compareIntGreater(column3, column2),
+      );
+
   Widget buildRowText(
       String column1,
       dynamic column2,
@@ -301,11 +311,8 @@ class AmuletUI {
             // buildRowText('damage', '${current.damageMin} - ${current.damageMax}', '${target.damageMin} - ${target.damageMax}'),
             buildRowText('value', current.quality.name, target.quality.name),
             buildRowText('skill', current.skillType?.name, target.skillType?.name),
-            buildRowText('min dmg', current.damageMin, target.damageMin,
-              column2Color: compareIntGreater(current.damageMin, target.damageMin),
-              column3Color: compareIntGreater(target.damageMin, current.damageMin),
-            ),
-            buildRowText('max dmg', current.damageMax, target.damageMax),
+            buildRowInt('min dmg', current.damageMin, target.damageMin),
+            buildRowInt('max dmg', current.damageMax, target.damageMax),
             buildRowText('duration', current.performDuration, target.performDuration),
 
             // buildRowText('caste', current.skillType?.casteType.name, target.skillType?.casteType.name),
