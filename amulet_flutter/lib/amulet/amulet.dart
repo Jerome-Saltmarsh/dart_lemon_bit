@@ -58,6 +58,7 @@ class Amulet extends IsometricGame {
   final dragging = Watch<ItemSlot?>(null);
   final emptyItemSlot = buildText('-');
 
+  final aimTargetItemType = Watch<AmuletItem?>(null);
   final highlightedAmuletItem = Watch<AmuletItem?>(null);
 
   ItemSlot? get activeAmuletItemSlot {

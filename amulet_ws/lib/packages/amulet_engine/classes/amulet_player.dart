@@ -2,6 +2,7 @@
 import 'dart:math';
 
 import 'package:amulet_engine/classes/amulet_fiend.dart';
+import 'package:amulet_engine/classes/amulet_gameobject.dart';
 
 import '../packages/isomeric_engine.dart';
 import '../mixins/src.dart';
@@ -1885,6 +1886,7 @@ class AmuletPlayer extends IsometricPlayer with
     super.onChangedAimTarget();
     writeAimTargetAmuletElement();
     writeAimTargetFiendType();
+    writeAimTargetItemType();
   }
 
   void writeAimTargetAmuletElement() {
@@ -1916,4 +1918,19 @@ class AmuletPlayer extends IsometricPlayer with
   void writeFalse() => writeBool(false);
 
   void writeTrue() => writeBool(true);
+
+  void writeAimTargetItemType() {
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Aim_Target_Item_Type);
+
+     if (aimTarget is! AmuletGameObject){
+       writeFalse();
+       return;
+     }
+
+    writeTrue();
+    final gameObject = aimTarget as AmuletGameObject;
+    writeAmuletItem(gameObject.amuletItem);
+  }
+
 }

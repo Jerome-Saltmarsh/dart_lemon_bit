@@ -5,7 +5,6 @@ class NetworkResponseAmulet {
    static const Player_Weapon = 2;
    static const Player_Item = 3;
    static const Player_Treasure = 4;
-   // static const Player_Equipped_Weapon_Index = 5;
    static const Player_Equipped = 6;
    static const Player_Interacting = 7;
    static const Player_Experience = 8;
@@ -30,4 +29,5 @@ class NetworkResponseAmulet {
    static const Aim_Target_Element = 33;
    static const Aim_Target_Fiend_Type = 34;
    static const Active_Slot_Type = 35;
+   static const Aim_Target_Item_Type = 36;
 }

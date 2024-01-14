@@ -1,10 +1,8 @@
 
 import 'dart:typed_data';
 
-import 'package:amulet_engine/packages/common.dart';
-import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/quests/quest_main.dart';
+import 'package:amulet_engine/src.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_parser.dart';
-import 'package:lemon_byte/byte_reader.dart';
 
 import 'classes/map_location.dart';
 
@@ -156,6 +154,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Active_Slot_Type:
          readActiveSlotType();
          break;
+       case NetworkResponseAmulet.Aim_Target_Item_Type:
+         readAimTargetItemType();
+         break;
      }
   }
 
@@ -261,5 +262,13 @@ extension AmuletParser on IsometricParser {
        return;
      }
      amulet.activeSlotType.value = SlotType.values[readByte()];
+  }
+
+  void readAimTargetItemType() =>
+      amulet.aimTargetItemType.value = readBool() ? readAmuletItem() : null;
+
+  AmuletItem? readAmuletItem() {
+     final index = readInt16();
+     return AmuletItem.values.tryGet(index);
   }
 }

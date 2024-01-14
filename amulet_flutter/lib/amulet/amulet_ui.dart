@@ -349,14 +349,6 @@ class AmuletUI {
               color: amulet.colors.red_3,
             ));
 
-    final element = Container(
-      margin: const EdgeInsets.symmetric(horizontal: 5),
-      child: buildWatch(amulet.aimTargetElement, (element) => Container(
-            width: 32,
-            height: 32,
-            child: IsometricIcon(iconType: mapAmuletElementToIconType(element)))),
-    );
-
     final fiendType = Container(
       margin: const EdgeInsets.symmetric(horizontal: 5),
       child: buildWatch(amulet.aimTargetFiendType, (fiendType) {
@@ -389,10 +381,14 @@ class AmuletUI {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // element,
-                FittedBox(
-                  child: buildWatch(amulet.player.aimTargetName,
-                      (name) => buildText(name.replaceAll('_', ' '))),
-                ),
+                buildWatch(amulet.aimTargetItemType, (amuletItem) {
+                  return FittedBox(
+                    child: buildWatch(amulet.player.aimTargetName,
+                            (name) => buildText(name.replaceAll('_', ' '),
+                              color: amuletItem == null ? Colors.white : mapItemQualityToColor(amuletItem.quality)
+                            )),
+                  );
+                }),
                 width4,
                 fiendType
               ],
@@ -789,5 +785,16 @@ class AmuletUI {
           child: buildText('+$elementPoints', color: Colors.green),
         );
       });
+
+  static Color mapItemQualityToColor(ItemQuality itemQuality){
+    switch (itemQuality){
+      case ItemQuality.Common:
+        return Colors.white;
+      case ItemQuality.Rare:
+        return Colors.blue;
+      case ItemQuality.Legendary:
+        return Colors.orange;
+    }
+  }
 }
 
