@@ -360,6 +360,16 @@ class AmuletUI {
       }),
     );
 
+    final itemQuality = Container(
+      margin: const EdgeInsets.symmetric(horizontal: 5),
+      child: buildWatch(amulet.aimTargetItemType, (itemType) {
+        if (itemType == null){
+          return nothing;
+        }
+        return buildText(itemType.quality.name, size: 15, color: Colors.white70);
+      }),
+    );
+
     final name = Container(
       alignment: Alignment.centerLeft,
       height: height,
@@ -380,7 +390,6 @@ class AmuletUI {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // element,
                 buildWatch(amulet.aimTargetItemType, (amuletItem) {
                   return FittedBox(
                     child: buildWatch(amulet.player.aimTargetName,
@@ -390,7 +399,8 @@ class AmuletUI {
                   );
                 }),
                 width4,
-                fiendType
+                fiendType,
+                itemQuality,
               ],
             ),
           ),
