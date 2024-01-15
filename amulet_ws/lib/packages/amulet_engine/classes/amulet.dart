@@ -296,6 +296,7 @@ class Amulet {
     final games = this.games;
     for (var i = 0; i < games.length; i++) {
       final game = games[i];
+      if (game.players.isEmpty) continue;
       game.updateJobs();
       game.update();
       game.writePlayerResponses();

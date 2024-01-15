@@ -406,7 +406,7 @@ class AmuletPlayer extends IsometricPlayer with
         equipLegs(amuletItem);
         return true;
       case ItemType.Shoes:
-        equipBody(amuletItem);
+        equipShoes(amuletItem);
         return true;
     }
 
