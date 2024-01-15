@@ -30,6 +30,7 @@ class AmuletPlayer extends IsometricPlayer with
   var baseMagic = 10;
   var baseRegenMagic = 1;
   var baseRegenHealth = 1;
+  var baseRunSpeed = 1.0;
 
   var activePowerX = 0.0;
   var activePowerY = 0.0;
@@ -41,6 +42,7 @@ class AmuletPlayer extends IsometricPlayer with
 
   var cacheRegenMagic = 0;
   var cacheRegenHealth = 0;
+  var cacheRunSpeed = 0.0;
 
   var npcText = '';
   var npcName = '';
@@ -226,12 +228,6 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   @override
-  double get runSpeed {
-    var base = 1.0;
-    return base;
-  }
-
-  @override
   set experience(int value){
     if (value < 0){
       value = 0;
@@ -312,6 +308,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeCameraTarget();
     writeRegenMagic();
     writeRegenHealth();
+    writeRunSpeed();
     super.writePlayerGame();
   }
 
@@ -329,6 +326,14 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Regen_Health);
     writeUInt16(regenHealth);
+  }
+
+  void writeRunSpeed() {
+    if (cacheRunSpeed == runSpeed) return;
+    cacheRunSpeed = runSpeed;
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Player_Run_Speed);
+    writeUInt16((runSpeed * 10).toInt());
   }
 
   void writeDebug() {
@@ -1699,6 +1704,15 @@ class AmuletPlayer extends IsometricPlayer with
      var total = baseRegenHealth;
      for (final item in equipped){
         total += item.amuletItem?.regenHealth ?? 0;
+     }
+     return total;
+  }
+
+  @override
+  double get runSpeed {
+     var total = baseRunSpeed;
+     for (final item in equipped){
+        total += item.amuletItem?.runSpeed ?? 0;
      }
      return total;
   }

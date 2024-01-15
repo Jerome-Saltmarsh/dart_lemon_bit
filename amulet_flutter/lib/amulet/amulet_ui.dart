@@ -972,7 +972,14 @@ class AmuletUI {
             children: [
               buildRowTitle('Health Regen'),
               width8,
-              buildWatch(amulet.playerRegenMagic, buildRowValue),
+              buildWatch(amulet.playerRegenHealth, buildRowValue),
+            ],
+          ),
+          Row(
+            children: [
+              buildRowTitle('Run Speed'),
+              width8,
+              buildWatch(amulet.playerRunSpeed, buildRowValue),
             ],
           ),
         ],

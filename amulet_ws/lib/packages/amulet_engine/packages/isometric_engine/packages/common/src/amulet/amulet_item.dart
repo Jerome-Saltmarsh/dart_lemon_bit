@@ -345,6 +345,7 @@ enum AmuletItem {
     performDuration: 25,
     quality: ItemQuality.Rare,
     defense: 2,
+    runSpeed: 0.125,
   ),
   Consumable_Potion_Health(
     label: 'a common tonic',
@@ -383,6 +384,7 @@ enum AmuletItem {
   final int? regenMagic;
   final int? regenHealth;
   final int? magicCost;
+  final double? runSpeed;
 
   const AmuletItem({
     required this.type,
@@ -408,6 +410,7 @@ enum AmuletItem {
     this.performDuration,
     this.health,
     this.magicCost,
+    this.runSpeed,
   });
 
   bool get isWeapon => type == ItemType.Weapon;

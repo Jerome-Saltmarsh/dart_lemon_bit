@@ -157,6 +157,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Regen_Health:
          readPlayerRegenHealth();
          break;
+       case NetworkResponseAmulet.Player_Run_Speed:
+         readPlayerRunSpeed();
+         break;
      }
   }
 
@@ -283,5 +286,9 @@ extension AmuletParser on IsometricParser {
 
   void readPlayerRegenHealth() {
     amulet.playerRegenHealth.value = readUInt16();
+  }
+
+  void readPlayerRunSpeed() {
+    amulet.playerRunSpeed.value = readUInt16();
   }
 }
