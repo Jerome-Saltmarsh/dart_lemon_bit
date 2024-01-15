@@ -10,6 +10,7 @@ import 'package:golden_ratio/constants.dart';
 import 'package:amulet_engine/packages/lemon_math.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
+import 'package:lemon_watch/src.dart';
 
 import 'ui/builders/build_item_slot.dart';
 import 'ui/containers/build_container_item_hover.dart';
@@ -76,6 +77,11 @@ class AmuletUI {
             child: buildDialogPlayerInventory(),
           ),
           buildPlayerAimTarget(),
+          Positioned(
+              bottom: 8,
+              left: 8,
+              child: buildWindowPlayerAttributes(),
+          ),
           // buildPositionedAmuletItemHover(),
           buildPositionedAmuletItemInformation(),
           buildPositionedMessage(),
@@ -699,23 +705,20 @@ class AmuletUI {
     const height = 16.0;
 
     return IgnorePointer(
-      child: buildWatch(amulet.playerMagicPercentage, (percentage) {
-        // if (percentage == 0) {
-        //   return nothing;
-        // }
-        return Container(
+      child: buildWatch(amulet.playerMagicPercentage, (percentage) =>
+        Container(
           width: width,
           height: height,
           color: Colors.black26,
           padding: const EdgeInsets.all(2),
           alignment: Alignment.center,
-          child: Container(
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 100),
             width: width * percentage,
             height: height,
             color: Colors.blue,
           ),
-        );
-      }),
+        )),
     );
   }
 
@@ -756,7 +759,6 @@ class AmuletUI {
                   );
                 })));
   }
-
 
   Widget buildPlayerStatsRow() => Row(
     children: [
@@ -960,5 +962,53 @@ class AmuletUI {
         return Colors.orange;
     }
   }
+
+  Widget buildWindowPlayerAttributes() => GSContainer(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              buildRowTitle('Health'),
+              width8,
+              buildWatch(amulet.player.health, buildRowValue),
+              width2,
+              buildRowValue('/'),
+              width2,
+              buildWatch(amulet.player.maxHealth, buildRowValue),
+            ],
+          ),
+          Row(
+            children: [
+              buildRowTitle('Magic'),
+              width8,
+              buildWatch(amulet.playerMagic, buildRowValue),
+              width2,
+              buildRowValue('/'),
+              width2,
+              buildWatch(amulet.playerMagicMax, buildRowValue),
+            ],
+          ),
+          Row(
+            children: [
+              buildRowTitle('Magic Regen'),
+              width8,
+              buildWatch(amulet.playerRegenMagic, buildRowValue),
+            ],
+          ),
+          Row(
+            children: [
+              buildRowTitle('Health Regen'),
+              width8,
+              buildWatch(amulet.playerRegenMagic, buildRowValue),
+            ],
+          ),
+        ],
+      ),
+    );
+
+  Widget buildRowValue(dynamic value) => buildText(value, color: Colors.white70);
+
+  Widget buildRowTitle(dynamic value) => buildText(value, color: Colors.orange);
 }
 

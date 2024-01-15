@@ -151,6 +151,12 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Magic:
          readPlayerMagic();
          break;
+       case NetworkResponseAmulet.Player_Regen_Magic:
+         readPlayerRegenMagic();
+         break;
+       case NetworkResponseAmulet.Player_Regen_Health:
+         readPlayerRegenHealth();
+         break;
      }
   }
 
@@ -269,5 +275,13 @@ extension AmuletParser on IsometricParser {
   void readPlayerMagic() {
     amulet.playerMagicMax.value = readUInt16();
     amulet.playerMagic.value = readUInt16();
+  }
+
+  void readPlayerRegenMagic() {
+    amulet.playerRegenMagic.value = readUInt16();
+  }
+
+  void readPlayerRegenHealth() {
+    amulet.playerRegenHealth.value = readUInt16();
   }
 }

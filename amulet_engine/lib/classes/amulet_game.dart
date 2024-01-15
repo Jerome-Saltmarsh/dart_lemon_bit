@@ -154,10 +154,15 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
 
     cooldownTimer = Frames_Per_Second;
+    onSecondElapsed();
+  }
+
+  void onSecondElapsed(){
+
     final characters = this.characters;
     for (final character in characters) {
       if (character is AmuletPlayer) {
-        character.updateItemSlots();
+        character.regenHealthAndMagic();
       }
     }
   }

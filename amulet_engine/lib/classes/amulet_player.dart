@@ -28,6 +28,8 @@ class AmuletPlayer extends IsometricPlayer with
 
   var baseHealth = 10;
   var baseMagic = 10;
+  var baseRegenMagic = 1;
+  var baseRegenHealth = 1;
 
   var activePowerX = 0.0;
   var activePowerY = 0.0;
@@ -36,6 +38,9 @@ class AmuletPlayer extends IsometricPlayer with
   var admin = false;
   var previousCameraTarget = false;
   var equipmentDirty = true;
+
+  var cacheRegenMagic = 0;
+  var cacheRegenHealth = 0;
 
   var npcText = '';
   var npcName = '';
@@ -82,9 +87,7 @@ class AmuletPlayer extends IsometricPlayer with
 
   @override
   set magic(int value) {
-    if (value < 0) {
-      value = 0;
-    }
+    value = value.clamp(0, maxMagic);
     super.magic = value;
     writePlayerMagic();
   }
@@ -307,7 +310,25 @@ class AmuletPlayer extends IsometricPlayer with
   void writePlayerGame() {
     cleanEquipment();
     writeCameraTarget();
+    writeRegenMagic();
+    writeRegenHealth();
     super.writePlayerGame();
+  }
+
+  void writeRegenMagic() {
+    if (cacheRegenMagic == regenMagic) return;
+    cacheRegenMagic = regenMagic;
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Player_Regen_Magic);
+    writeUInt16(regenMagic);
+  }
+
+  void writeRegenHealth() {
+    if (cacheRegenHealth == regenHealth) return;
+    cacheRegenHealth = regenHealth;
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Player_Regen_Health);
+    writeUInt16(regenHealth);
   }
 
   void writeDebug() {
@@ -1347,7 +1368,7 @@ class AmuletPlayer extends IsometricPlayer with
 
     final performDuration = amuletItem.performDuration;
 
-    if (performDuration == null){
+    if (performDuration == null) {
       throw Exception('performDuration == null: ${amuletItem}');
     }
 
@@ -1649,7 +1670,28 @@ class AmuletPlayer extends IsometricPlayer with
   void writePlayerMagic() {
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Magic);
-    writeInt16(maxMagic);
-    writeInt16(magic);
+    writeUInt16(maxMagic);
+    writeUInt16(magic);
+  }
+
+  void regenHealthAndMagic() {
+     health += regenHealth;
+     magic += regenMagic;
+  }
+
+  int get regenMagic {
+     var total = baseRegenMagic;
+     for (final item in equipped){
+        total += item.amuletItem?.regenMagic ?? 0;
+     }
+     return total;
+  }
+
+  int get regenHealth {
+     var total = baseRegenHealth;
+     for (final item in equipped){
+        total += item.amuletItem?.regenHealth ?? 0;
+     }
+     return total;
   }
 }

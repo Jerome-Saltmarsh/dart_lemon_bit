@@ -146,7 +146,7 @@ enum AmuletItem {
     subType: WeaponType.Bow,
     skillType: SkillType.Arrow,
     performDuration: 25,
-    range: 100,
+    range: 125,
     damageMin: 2,
     damageMax: 5,
     quality: ItemQuality.Common,
@@ -160,7 +160,7 @@ enum AmuletItem {
     subType: WeaponType.Bow,
     skillType: SkillType.Arrow,
     performDuration: 25,
-    range: 120,
+    range: 135,
     damageMin: 3,
     damageMax: 8,
     quality: ItemQuality.Rare,
@@ -173,7 +173,7 @@ enum AmuletItem {
     subType: WeaponType.Bow,
     skillType: SkillType.Arrow,
     performDuration: 32,
-    range: 120,
+    range: 150,
     damageMin: 5,
     damageMax: 12,
     quality: ItemQuality.Legendary,
@@ -189,6 +189,7 @@ enum AmuletItem {
     performDuration: 25,
     defense: 5,
     quality: ItemQuality.Common,
+    regenHealth: 1,
   ),
   Helm_Wizard_1_5_Common(
     label: 'Common Pointed Hat',
@@ -200,6 +201,7 @@ enum AmuletItem {
     performDuration: 25,
     defense: 2,
     quality: ItemQuality.Common,
+    regenMagic: 1,
   ),
   Helm_Rogue_1_5_Common(
     label: 'Steel Helm',
@@ -369,7 +371,9 @@ enum AmuletItem {
   final ItemQuality quality;
   final String label;
   final int defense;
-  final int magic;
+  final int? magic;
+  final int? regenMagic;
+  final int? regenHealth;
 
   const AmuletItem({
     required this.type,
@@ -379,7 +383,9 @@ enum AmuletItem {
     required this.quality,
     required this.label,
     this.defense = 0,
-    this.magic = 0,
+    this.magic,
+    this.regenMagic,
+    this.regenHealth,
     this.description,
     this.dependency,
     this.skillType,

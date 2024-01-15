@@ -30,4 +30,6 @@ class NetworkResponseAmulet {
    static const Active_Slot_Type = 35;
    static const Aim_Target_Item_Type = 36;
    static const Player_Magic = 37;
+   static const Player_Regen_Magic = 38;
+   static const Player_Regen_Health = 39;
 }
