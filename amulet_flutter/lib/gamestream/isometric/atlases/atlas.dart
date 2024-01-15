@@ -61,7 +61,6 @@ class Atlas {
     ItemType.Object: Collection_Objects,
     ItemType.Hand: atlasSrcHands,
     ItemType.Consumable: atlasSrcConsumables,
-    ItemType.Treasure: atlasSrcTreasures,
     ItemType.Shoes: atlasSrcShoes,
     ItemType.Spell: atlasSrcSpells,
   };

@@ -411,12 +411,6 @@ class Amulet {
     for (final item in player.items) {
       item.clear();
     }
-    for (final treasure in player.treasures) {
-      treasure.clear();
-    }
-    // weapons[0].amuletItem = AmuletItem.Weapon_Short_Sword;
-    // weapons[1].amuletItem = AmuletItem.Weapon_Old_Bow;
-    // weapons[2].amuletItem = AmuletItem.Spell_Heal;
     amuletTime.hour = 12;
     player.elementPoints = 0;
     player.elementFire = 0;
@@ -437,6 +431,7 @@ class Amulet {
     player.health = player.maxHealth;
     player.characterState = CharacterState.Idle;
     player.equipmentDirty = true;
+    player.controlsEnabled = true;
     player.refillItemSlotsWeapons();
     player.clearActionFrame();
   }

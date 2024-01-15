@@ -16,6 +16,15 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## TODO
+[new] spell type invisible
+[new] spell type freeze ring
+[new] spell type frost bolt
+[new] spell type frost storm
+[new] spell type raise allie
+[new] amulet slot cooldown
+[new] fireplaces heal
+
+## 15.01.2024
 [fix] improve character creation ui
 [new] remove gender from character creation
 

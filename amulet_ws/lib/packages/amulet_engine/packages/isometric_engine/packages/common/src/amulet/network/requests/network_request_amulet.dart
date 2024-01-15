@@ -3,7 +3,6 @@ enum NetworkRequestAmulet {
   End_Interaction,
   Select_Item_Type,
   Select_Item,
-  Select_Treasure,
   Select_Talk_Option,
   Toggle_Inventory_Open,
   Spawn_Random_Enemy,

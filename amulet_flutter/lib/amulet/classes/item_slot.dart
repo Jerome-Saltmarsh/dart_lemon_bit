@@ -27,10 +27,6 @@ class ItemSlot {
       return false;
 
     switch (slotType){
-      // case SlotType.Weapons:
-      //   return srcItem.isWeapon || srcItem.isSpell;
-      case SlotType.Treasure:
-        return srcItem.isTreasure;
       case SlotType.Weapon:
         return srcItem.isWeapon;
       case SlotType.Hand_Left:

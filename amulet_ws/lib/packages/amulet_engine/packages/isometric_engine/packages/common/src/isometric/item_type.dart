@@ -8,7 +8,6 @@ class ItemType {
   static const Object = 5;
   static const Consumable = 6;
   static const Hand = 7;
-  static const Treasure = 8;
   static const Shoes = 9;
   static const Spell = 10;
 
@@ -20,7 +19,6 @@ class ItemType {
     Hand: HandType.values,
     Object: GameObjectType.values,
     Consumable: ConsumableType.values,
-    Treasure: TreasureType.values,
     Spell: SpellType.values,
   };
 
@@ -44,7 +42,6 @@ class ItemType {
       Hand => HandType.getName(subType),
       Weapon => WeaponType.getName(subType),
       Consumable => ConsumableType.getName(subType),
-      Treasure => TreasureType.getName(subType),
       Shoes => ShoeType.getName(subType),
       Spell => SpellType.getName(subType),
       _ => throw Exception('GameObjectType.getNameSubType(type: $type, subType: $subType)')
@@ -63,7 +60,6 @@ class ItemType {
     Helm,
     Object,
     Consumable,
-    Treasure,
     Shoes,
   ];
 }

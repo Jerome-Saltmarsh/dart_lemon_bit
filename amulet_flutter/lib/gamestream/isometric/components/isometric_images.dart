@@ -468,7 +468,6 @@ class IsometricImages with IsometricComponent {
       ItemType.Shoes: atlas_shoes,
       ItemType.Consumable: atlas_consumables,
       ItemType.Hand: atlas_hands,
-      ItemType.Treasure: atlas_treasures,
       ItemType.Spell: atlas_spells,
     };
 

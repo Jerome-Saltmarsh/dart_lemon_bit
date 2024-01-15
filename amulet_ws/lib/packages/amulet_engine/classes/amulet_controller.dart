@@ -661,11 +661,6 @@ class AmuletController {
         if (index == null) return;
         player.selectItem(index);
         break;
-      case NetworkRequestAmulet.Select_Treasure:
-        final index = parseArg2(arguments);
-        if (index == null) return;
-        player.selectTreasure(index);
-        break;
       case NetworkRequestAmulet.Select_Item_Type:
         final slotTypeIndex = parseArg2(arguments);
         if (slotTypeIndex == null) return;

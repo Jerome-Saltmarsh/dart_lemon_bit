@@ -283,8 +283,6 @@ enum AmuletItem {
 
   bool get isLegs => type == ItemType.Legs;
 
-  bool get isTreasure => type == ItemType.Treasure;
-
   static final typeBodies =
       values.where((element) => element.isBody).toList(growable: false);
 

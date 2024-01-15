@@ -103,9 +103,7 @@ class Amulet extends IsometricGame {
 
   final messages = <String>[];
   final messageIndex = Watch(-1);
-  // final itemHover = Watch<AmuletItem?>(null);
   final activePowerPosition = Position();
-  final treasures = List<ItemSlot>.generate(4, (index) => ItemSlot(index: index, slotType: SlotType.Treasure));
   final error = Watch('');
   final playerInteracting = Watch(false);
   final npcTextIndex = Watch(-1);
@@ -202,24 +200,6 @@ class Amulet extends IsometricGame {
 
   void clearError() {
     error.value = '';
-  }
-
-  // void setWeapon({
-  //   required int index,
-  //   required AmuletItem? item,
-  //   required double cooldownPercentage,
-  //   required int charges,
-  //   required int max,
-  // }){
-  //   final slot = weapons[index];
-  //   slot.amuletItem.value = item;
-  //   slot.cooldownPercentage.value = cooldownPercentage;
-  //   slot.charges.value = charges;
-  //   slot.max.value = max;
-  // }
-
-  void setTreasure({required int index, required AmuletItem? item}){
-    treasures[index].amuletItem.value = item;
   }
 
   void setItem({required int index, required AmuletItem? item}){
@@ -325,9 +305,6 @@ class Amulet extends IsometricGame {
 
   void selectItem(int index) =>
       sendAmuletRequest(NetworkRequestAmulet.Select_Item, index);
-
-  void selectTreasure(int index) =>
-      sendAmuletRequest(NetworkRequestAmulet.Select_Treasure, index);
 
   void spawnRandomEnemy() =>
       server.sendNetworkRequestAmulet(
