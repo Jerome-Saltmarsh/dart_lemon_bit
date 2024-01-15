@@ -160,6 +160,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Run_Speed:
          readPlayerRunSpeed();
          break;
+       case NetworkResponseAmulet.Player_Weapon_Damage:
+         readPlayerWeaponDamage();
+         break;
      }
   }
 
@@ -291,4 +294,10 @@ extension AmuletParser on IsometricParser {
   void readPlayerRunSpeed() {
     amulet.playerRunSpeed.value = readUInt16();
   }
+
+  void readPlayerWeaponDamage() {
+    amulet.playerWeaponDamageMin.value = readUInt16();
+    amulet.playerWeaponDamageMax.value = readUInt16();
+  }
+
 }

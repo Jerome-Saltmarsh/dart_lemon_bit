@@ -982,6 +982,17 @@ class AmuletUI {
               buildWatch(amulet.playerRunSpeed, buildRowValue),
             ],
           ),
+          Row(
+            children: [
+              buildRowTitle('Damage'),
+              width8,
+              buildWatch(amulet.playerWeaponDamageMin, buildRowValue),
+              width2,
+              buildRowValue('-'),
+              width2,
+              buildWatch(amulet.playerWeaponDamageMax, buildRowValue),
+            ],
+          ),
         ],
       ),
     );

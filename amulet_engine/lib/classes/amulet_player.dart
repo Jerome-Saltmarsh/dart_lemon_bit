@@ -43,6 +43,8 @@ class AmuletPlayer extends IsometricPlayer with
   var cacheRegenMagic = 0;
   var cacheRegenHealth = 0;
   var cacheRunSpeed = 0.0;
+  var cacheWeaponDamageMin = 0;
+  var cacheWeaponDamageMax = 0;
 
   var npcText = '';
   var npcName = '';
@@ -182,26 +184,7 @@ class AmuletPlayer extends IsometricPlayer with
   int get weaponCooldown => equippedWeapon.cooldown;
 
   @override
-  int get weaponDamage {
-
-    final amuletItem = equippedWeapon.amuletItem;
-
-    if (amuletItem == null) {
-      return 0;
-    }
-
-    final damageMin = amuletItem.damageMin;
-    final damageMax = amuletItem.damageMax;
-
-    if (damageMin == null){
-      throw Exception('${amuletItem.name} damageMin is null');
-    }
-    if (damageMax == null){
-      throw Exception('${amuletItem.name} damageMax is null');
-    }
-
-    return randomInt(damageMin, damageMax + 1);
-  }
+  int get weaponDamage => randomInt(weaponDamageMin, weaponDamageMax + 1);
 
   @override
   double get weaponRange => (activeAmuletItemSlot ?? equippedWeapon).amuletItem?.range ?? 0;
@@ -309,6 +292,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeRegenMagic();
     writeRegenHealth();
     writeRunSpeed();
+    writeWeaponDamage();
     super.writePlayerGame();
   }
 
@@ -334,6 +318,27 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Run_Speed);
     writeUInt16((runSpeed * 10).toInt());
+  }
+
+  void writeWeaponDamage() {
+    if (
+      cacheWeaponDamageMin == weaponDamageMin &&
+      cacheWeaponDamageMax == weaponDamageMax
+    ) return;
+    cacheWeaponDamageMin = cacheWeaponDamageMin;
+    cacheWeaponDamageMax = cacheWeaponDamageMax;
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Player_Weapon_Damage);
+    writeUInt16(weaponDamageMin);
+    writeUInt16(weaponDamageMax);
+  }
+
+  int get weaponDamageMin {
+    return equippedWeapon.amuletItem?.damageMin ?? 0;
+  }
+
+  int get weaponDamageMax {
+    return equippedWeapon.amuletItem?.damageMax ?? 0;
   }
 
   void writeDebug() {

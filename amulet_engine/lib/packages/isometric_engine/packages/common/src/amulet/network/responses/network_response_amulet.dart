@@ -33,4 +33,5 @@ class NetworkResponseAmulet {
    static const Player_Regen_Magic = 38;
    static const Player_Regen_Health = 39;
    static const Player_Run_Speed = 40;
+   static const Player_Weapon_Damage = 41;
 }
