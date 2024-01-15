@@ -1,5 +1,6 @@
 import 'package:amulet_engine/json/character_json.dart';
 import 'package:amulet_engine/packages/common.dart';
+import 'package:amulet_flutter/amulet/ui/widgets/mmo_item_image.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/functions/get_server_mode_text.dart';
 import 'package:amulet_flutter/gamestream/operation_status.dart';
 import 'package:amulet_flutter/gamestream/ui/src.dart';
@@ -182,13 +183,18 @@ extension WebsiteUI on WebsiteGame {
           buildTableCharacters(characters, (){})
       );
 
-  Widget buildCharacters(List<Json> characters, Function rebuild) =>
+  Widget buildCharacters(List<CharacterJson> characters, Function rebuild) =>
       Container(
       height: 200,
       child: SingleChildScrollView(
         child: Column(
             children: characters
                 .map((character) {
+
+                  final weapon = AmuletItem.findByName(character.weapon);
+                  final helm = AmuletItem.findByName(character.helm);
+                  final armour = AmuletItem.findByName(character.body);
+                  final shoes = AmuletItem.findByName(character.shoes);
 
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -205,7 +211,14 @@ extension WebsiteUI on WebsiteGame {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             buildText(character['name'], size: 22),
-                            buildText('lvl ${character['level']}', size: 22, color: Colors.white70),
+                            if (weapon != null)
+                              AmuletItemImage(amuletItem: weapon),
+                            if (helm != null)
+                              AmuletItemImage(amuletItem: helm),
+                            if (armour != null)
+                              AmuletItemImage(amuletItem: armour),
+                            if (shoes != null)
+                              AmuletItemImage(amuletItem: shoes),
                           ],
                         )),
                   ),
@@ -242,8 +255,6 @@ extension WebsiteUI on WebsiteGame {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // buildText('CHARACTERS', size: 22, color: Colors.white70),
-              // width16,
               onPressed(
                 action: showPageNewCharacter,
                 child: Container(
