@@ -39,6 +39,9 @@ class Amulet extends IsometricGame {
   var playerWorldX = 0.0;
   var playerWorldY = 0.0;
 
+  final playerMagic = Watch(0);
+  final playerMagicMax = Watch(0);
+  final playerMagicPercentage = Watch(0.0);
   final activeSlotType = Watch<SlotType?>(null);
   final worldMapLarge = WatchBool(false);
   final amuletScene = Watch<AmuletScene?>(null);
@@ -80,7 +83,6 @@ class Amulet extends IsometricGame {
         return null;
     }
   }
-
 
   final slotContainerDefault = Container(
     color: Colors.black12,
@@ -146,6 +148,21 @@ class Amulet extends IsometricGame {
     aimTargetItemType.onChanged((itemType) {
       aimTargetItemTypeCurrent.value = getEquippedItemSlot(itemType?.type)?.amuletItem.value;
     });
+
+    playerMagic.onChanged(refreshPlayerMagicPercentage);
+    playerMagicMax.onChanged(refreshPlayerMagicPercentage);
+  }
+
+  void refreshPlayerMagicPercentage(int _){
+    final value = playerMagic.value;
+    final max = playerMagicMax.value;
+    if (max <= 0){
+      playerMagicPercentage.value = 0;
+    }
+    if (value >= max){
+      playerMagicPercentage.value = 1;
+    }
+    playerMagicPercentage.value = value / max;
   }
 
 

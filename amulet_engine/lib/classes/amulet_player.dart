@@ -21,10 +21,13 @@ class AmuletPlayer extends IsometricPlayer with
     Elemental,
     Experience,
     Level,
-    ElementPoints
+    ElementPoints,
+    Magic
 {
   static const Data_Key_Dead_Count = 'dead';
-  static const healthBase = 10;
+
+  var baseHealth = 10;
+  var baseMagic = 10;
 
   var activePowerX = 0.0;
   var activePowerY = 0.0;
@@ -32,16 +35,16 @@ class AmuletPlayer extends IsometricPlayer with
 
   var admin = false;
   var previousCameraTarget = false;
-  Position? cameraTarget;
-  AmuletGame amuletGame;
   var equipmentDirty = true;
 
   var npcText = '';
   var npcName = '';
   var npcOptions = <TalkOption>[];
-  Function? onInteractionOver;
-
   final weaponUnarmed = AmuletItemSlot();
+
+  Function? onInteractionOver;
+  Position? cameraTarget;
+  AmuletGame amuletGame;
 
   late List<AmuletItemSlot> items;
 
@@ -61,6 +64,7 @@ class AmuletPlayer extends IsometricPlayer with
     hurtable = false;
     hurtStateBusy = false;
     regainFullHealth();
+    regainFullMagic();
     active = false;
     equipmentDirty = true;
     setItemsLength(itemLength);
@@ -74,6 +78,15 @@ class AmuletPlayer extends IsometricPlayer with
     writePlayerExperience();
     writeGender();
     writePlayerComplexion();
+  }
+
+  @override
+  set magic(int value) {
+    if (value < 0) {
+      value = 0;
+    }
+    super.magic = value;
+    writePlayerMagic();
   }
 
   int get deathCount => data.tryGetInt(Data_Key_Dead_Count) ?? 0;
@@ -193,11 +206,20 @@ class AmuletPlayer extends IsometricPlayer with
 
   @override
   int get maxHealth {
-    var health = healthBase;
+    var health = baseHealth;
     for (final item in equipped){
       health += item.amuletItem?.defense ?? 0;
     }
     return health;
+  }
+
+  @override
+  int get maxMagic {
+    var amount = baseMagic;
+    for (final item in equipped){
+      amount += item.amuletItem?.magic ?? 0;
+    }
+    return amount;
   }
 
   @override
@@ -1329,6 +1351,8 @@ class AmuletPlayer extends IsometricPlayer with
       throw Exception('performDuration == null: ${amuletItem}');
     }
 
+    magic -= 5;
+
     switch (amuletItem.skillType?.casteType) {
       case CasteType.Self:
         setCharacterStateCasting(
@@ -1470,6 +1494,10 @@ class AmuletPlayer extends IsometricPlayer with
 
   void regainFullHealth() {
     health = maxHealth;
+  }
+
+  void regainFullMagic(){
+    magic = maxMagic;
   }
 
   void spawnConfettiAtPosition(Position position) =>
@@ -1618,4 +1646,10 @@ class AmuletPlayer extends IsometricPlayer with
     writeAmuletItem(gameObject.amuletItem);
   }
 
+  void writePlayerMagic() {
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Player_Magic);
+    writeInt16(maxMagic);
+    writeInt16(magic);
+  }
 }

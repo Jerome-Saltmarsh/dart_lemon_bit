@@ -148,6 +148,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Aim_Target_Item_Type:
          readAimTargetItemType();
          break;
+       case NetworkResponseAmulet.Player_Magic:
+         readPlayerMagic();
+         break;
      }
   }
 
@@ -261,5 +264,10 @@ extension AmuletParser on IsometricParser {
   AmuletItem? readAmuletItem() {
      final index = readInt16();
      return AmuletItem.values.tryGet(index);
+  }
+
+  void readPlayerMagic() {
+    amulet.playerMagicMax.value = readUInt16();
+    amulet.playerMagic.value = readUInt16();
   }
 }

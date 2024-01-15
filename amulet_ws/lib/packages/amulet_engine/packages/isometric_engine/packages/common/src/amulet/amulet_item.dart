@@ -369,6 +369,7 @@ enum AmuletItem {
   final ItemQuality quality;
   final String label;
   final int defense;
+  final int magic;
 
   const AmuletItem({
     required this.type,
@@ -378,6 +379,7 @@ enum AmuletItem {
     required this.quality,
     required this.label,
     this.defense = 0,
+    this.magic = 0,
     this.description,
     this.dependency,
     this.skillType,

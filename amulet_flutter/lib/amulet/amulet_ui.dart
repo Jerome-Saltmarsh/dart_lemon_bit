@@ -154,6 +154,8 @@ class AmuletUI {
                     children: [
                       buildPlayerHealthBar(),
                       height2,
+                      buildPlayerMagicBar(),
+                      height2,
                       // buildPlayerWeapons(),
                       buildInventoryEquipped(),
                     ],
@@ -686,6 +688,31 @@ class AmuletUI {
             width: width * healthPercentage,
             height: height,
             color: Color.lerp(Colors.red, Colors.green, healthPercentage),
+          ),
+        );
+      }),
+    );
+  }
+
+  Widget buildPlayerMagicBar() {
+    const width = 282.0;
+    const height = 16.0;
+
+    return IgnorePointer(
+      child: buildWatch(amulet.playerMagicPercentage, (percentage) {
+        // if (percentage == 0) {
+        //   return nothing;
+        // }
+        return Container(
+          width: width,
+          height: height,
+          color: Colors.black26,
+          padding: const EdgeInsets.all(2),
+          alignment: Alignment.center,
+          child: Container(
+            width: width * percentage,
+            height: height,
+            color: Colors.blue,
           ),
         );
       }),
