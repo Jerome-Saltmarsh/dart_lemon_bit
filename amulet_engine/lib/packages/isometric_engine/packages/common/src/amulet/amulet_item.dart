@@ -202,7 +202,7 @@ enum AmuletItem {
     defense: 2,
     quality: ItemQuality.Common,
     regenMagic: 1,
-    magicCost: 3,
+    skillMagicCost: 3,
   ),
   Helm_Rogue_1_5_Common(
     label: 'Steel Helm',
@@ -215,7 +215,7 @@ enum AmuletItem {
     performDuration: 25,
     defense: 3,
     quality: ItemQuality.Common,
-    magicCost: 4,
+    skillMagicCost: 4,
   ),
   Armor_Neutral_1_5_Common(
     label: 'Shirt',
@@ -236,7 +236,7 @@ enum AmuletItem {
     defense: 10,
     skillType: SkillType.Might,
     skillLevel: 1,
-    magicCost: 6,
+    skillMagicCost: 6,
     regenHealth: 1,
   ),
   Armor_Warrior_1_5_Rare(
@@ -322,8 +322,9 @@ enum AmuletItem {
     type: ItemType.Shoes,
     subType: ShoeType.Leather_Boots,
     performDuration: 25,
-    quality: ItemQuality.Rare,
-    defense: 3,
+    quality: ItemQuality.Common,
+    defense: 5,
+    runSpeed: -0.125,
   ),
   Shoes_Wizard_1_5_Common(
     label: 'Common Silk Boots',
@@ -332,8 +333,12 @@ enum AmuletItem {
     levelMax: 5,
     type: ItemType.Shoes,
     subType: ShoeType.Leather_Boots,
-    quality: ItemQuality.Rare,
+    quality: ItemQuality.Common,
     defense: 1,
+    magic: 5,
+    skillType: SkillType.Teleport,
+    skillLevel: 1,
+    skillMagicCost: 6,
   ),
   Shoes_Rogue_1_5_Common(
     label: 'Leather Boots',
@@ -343,7 +348,7 @@ enum AmuletItem {
     type: ItemType.Shoes,
     subType: ShoeType.Leather_Boots,
     performDuration: 25,
-    quality: ItemQuality.Rare,
+    quality: ItemQuality.Common,
     defense: 2,
     runSpeed: 0.125,
   ),
@@ -383,7 +388,7 @@ enum AmuletItem {
   final int? magic;
   final int? regenMagic;
   final int? regenHealth;
-  final int? magicCost;
+  final int? skillMagicCost;
   final double? runSpeed;
 
   const AmuletItem({
@@ -409,7 +414,7 @@ enum AmuletItem {
     this.charges,
     this.performDuration,
     this.health,
-    this.magicCost,
+    this.skillMagicCost,
     this.runSpeed,
   });
 
