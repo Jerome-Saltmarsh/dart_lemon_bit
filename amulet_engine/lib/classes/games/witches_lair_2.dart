@@ -28,7 +28,7 @@ class WitchesLair2 extends AmuletGame {
       ..handTypeLeft = HandType.Gauntlets
       ..hairType = HairType.basic_2
       ..hairColor = 17
-      ..helmType = HelmType.Wizard_Hat;
+      ..helmType = HelmType.Pointed_Hat;
 
     characters.add(npcWitch);
   }

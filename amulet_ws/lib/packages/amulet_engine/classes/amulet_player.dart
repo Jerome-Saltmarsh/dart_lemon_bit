@@ -195,7 +195,7 @@ class AmuletPlayer extends IsometricPlayer with
   int get maxHealth {
     var health = healthBase;
     for (final item in equipped){
-      health += item.amuletItem?.health ?? 0;
+      health += item.amuletItem?.defense ?? 0;
     }
     return health;
   }

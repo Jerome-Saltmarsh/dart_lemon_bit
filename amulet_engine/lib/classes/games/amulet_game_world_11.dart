@@ -53,7 +53,7 @@ class AmuletGameWorld11 extends AmuletGame {
     )
       ..fixed = true
       ..invincible = true
-      ..helmType = HelmType.Steel
+      ..helmType = HelmType.Steel_Helm
       ..bodyType = BodyType.Leather_Armour
       ..shoeType = ShoeType.Leather_Boots
       ..legsType = LegType.Leather
@@ -76,7 +76,7 @@ class AmuletGameWorld11 extends AmuletGame {
     )
       ..fixed = false
       ..invincible = true
-      ..helmType = HelmType.Steel
+      ..helmType = HelmType.Leather_Cap
       ..bodyType = BodyType.Leather_Armour
       ..legsType = LegType.Leather
       ..handTypeLeft = HandType.Leather_Gloves
@@ -101,7 +101,7 @@ class AmuletGameWorld11 extends AmuletGame {
     )
       ..fixed = false
       ..invincible = true
-      ..helmType = HelmType.Steel
+      ..helmType = HelmType.Steel_Helm
       ..bodyType = BodyType.Leather_Armour
       ..legsType = LegType.Leather
       ..handTypeLeft = HandType.Leather_Gloves
@@ -184,7 +184,7 @@ class AmuletGameWorld11 extends AmuletGame {
     )
       ..fixed = true
       ..invincible = true
-      ..helmType = HelmType.Wizard_Hat
+      ..helmType = HelmType.Pointed_Hat
       ..hairType = 1
       ..hairColor = 20
       ..autoTarget = false

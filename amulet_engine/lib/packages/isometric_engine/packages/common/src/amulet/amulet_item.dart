@@ -5,15 +5,51 @@ import 'package:collection/collection.dart';
   // warrior
     // tunic
     // leather
+    // scale
+    // splint
+    // banded
     // chainmail
     // platemail
+    // brigandine
  // wizard
+    // cowl
     // robes
     // garb
+    // attire
  // rogue
-    // hood
     // cloak
+    // mantle
+    // shroud
 
+// helm
+  // warrior
+    // leather cap
+    // steel helm
+    // great helm
+  // wizard
+    // pointed hat
+    // circlet
+    // crest
+    // diadem
+    // turban
+  // rogue
+    // hood
+    // cape
+    // veil
+
+// shoes
+  // warrior
+    // boots
+    // grieves
+    // sabatons
+  // wizard
+    // slippers
+    // striders
+    // soles
+  // rogue
+    // treads
+    // footwraps
+    // shoes
 
 enum AmuletItem {
   Weapon_Sword_1_5_Common(
@@ -94,14 +130,15 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
     skillType: SkillType.Fireball,
+    skillLevel: 1,
     performDuration: 35,
-    range: 50,
+    range: 80,
     damageMin: 3,
     damageMax: 7,
-    quality: ItemQuality.Rare,
+    quality: ItemQuality.Legendary,
   ),
   Weapon_Bow_1_5_Common(
-    label: 'Wooden Short Bow',
+    label: 'Common Short Bow',
     description: 'A worn out bow',
     levelMin: 1,
     levelMax: 5,
@@ -115,7 +152,7 @@ enum AmuletItem {
     quality: ItemQuality.Common,
   ),
   Weapon_Bow_1_5_Rare(
-    label: 'Rangers Bow',
+    label: 'Rare Short Bow',
     description: 'This bow was crafted from a stronger wood',
     levelMin: 1,
     levelMax: 5,
@@ -129,8 +166,7 @@ enum AmuletItem {
     quality: ItemQuality.Rare,
   ),
   Weapon_Bow_1_5_Legendary(
-    label: 'Hollow Bow',
-    description: 'A mythical item lost hundreds of years ago',
+    label: 'Legendary Short Bow',
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Weapon,
@@ -139,98 +175,43 @@ enum AmuletItem {
     performDuration: 32,
     range: 120,
     damageMin: 5,
-    damageMax: 10,
+    damageMax: 12,
     quality: ItemQuality.Legendary,
   ),
   Helm_Warrior_1_5_Common(
-    label: 'Steel Helm',
-    description: 'A strong steel helmet which provides healing.',
-    levelMin: 5,
-    levelMax: 10,
-    skillType: SkillType.Heal,
+    label: 'Common Helm',
+    levelMin: 1,
+    levelMax: 5,
+    skillType: SkillType.Might,
+    skillLevel: 1,
     type: ItemType.Helm,
-    subType: HelmType.Steel,
+    subType: HelmType.Leather_Cap,
     performDuration: 25,
-    health: 6,
+    defense: 5,
     quality: ItemQuality.Common,
   ),
   Helm_Wizard_1_5_Common(
-    label: 'Steel Helm',
-    description: 'A strong steel helmet which provides healing.',
-    levelMin: 5,
-    levelMax: 10,
+    label: 'Common Pointed Hat',
+    levelMin: 1,
+    levelMax: 5,
     skillType: SkillType.Heal,
     type: ItemType.Helm,
-    subType: HelmType.Steel,
+    subType: HelmType.Pointed_Hat,
     performDuration: 25,
-    health: 6,
+    defense: 2,
     quality: ItemQuality.Common,
   ),
   Helm_Rogue_1_5_Common(
     label: 'Steel Helm',
-    description: 'A strong steel helmet which provides healing.',
-    levelMin: 5,
-    levelMax: 10,
-    skillType: SkillType.Heal,
+    levelMin: 1,
+    levelMax: 5,
+    skillType: SkillType.Invisible,
+    skillLevel: 1,
     type: ItemType.Helm,
-    subType: HelmType.Steel,
+    subType: HelmType.Hood,
     performDuration: 25,
-    health: 6,
+    defense: 3,
     quality: ItemQuality.Common,
-  ),
-  Armor_Warrior_1_5_Common(
-    label: 'Common Tunic',
-    description: 'An ordinary shirt',
-    levelMin: 1,
-    levelMax: 5,
-    type: ItemType.Body,
-    subType: BodyType.Tunic,
-    quality: ItemQuality.Common,
-  ),
-  Armor_Warrior_1_5_Rare(
-    label: 'Rare Tunic',
-    description: 'A well crafted tunic',
-    levelMin: 1,
-    levelMax: 5,
-    type: ItemType.Body,
-    subType: BodyType.Tunic,
-    quality: ItemQuality.Rare,
-  ),
-  Armor_Warrior_1_5_Legendary(
-    label: 'Legendary Tunic',
-    description: 'a very expensive tunic',
-    levelMin: 1,
-    levelMax: 5,
-    type: ItemType.Body,
-    subType: BodyType.Shirt_Blue,
-    quality: ItemQuality.Legendary,
-  ),
-  Armor_Wizard_1_5_Common(
-    label: 'Robes',
-    description: 'An ordinary shirt',
-    levelMin: 1,
-    levelMax: 5,
-    type: ItemType.Body,
-    subType: BodyType.Tunic,
-    quality: ItemQuality.Common,
-  ),
-  Armor_Wizard_1_5_Rare(
-    label: 'Rare Robes',
-    description: 'A well crafted tunic',
-    levelMin: 1,
-    levelMax: 5,
-    type: ItemType.Body,
-    subType: BodyType.Tunic,
-    quality: ItemQuality.Rare,
-  ),
-  Armor_Wizard_1_5_Legendary(
-    label: 'Legendary Robes',
-    description: 'a very expensive tunic',
-    levelMin: 1,
-    levelMax: 5,
-    type: ItemType.Body,
-    subType: BodyType.Shirt_Blue,
-    quality: ItemQuality.Legendary,
   ),
   Armor_Neutral_1_5_Common(
     label: 'Shirt',
@@ -239,63 +220,121 @@ enum AmuletItem {
     type: ItemType.Body,
     subType: BodyType.Shirt_Blue,
     quality: ItemQuality.Common,
+    defense: 1,
   ),
-  Armor_Rogue_1_5_Common(
-    label: 'Robes',
-    description: 'An ordinary shirt',
+  Armor_Warrior_1_5_Common(
+    label: 'Common Tunic',
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Body,
     subType: BodyType.Tunic,
     quality: ItemQuality.Common,
+    defense: 10,
+    skillType: SkillType.Might,
+    skillLevel: 1,
   ),
-  Armor_Rogue_1_5_Rare(
-    label: 'Rare Robes',
-    description: 'A well crafted tunic',
+  Armor_Warrior_1_5_Rare(
+    label: 'Rare Tunic',
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Body,
     subType: BodyType.Tunic,
     quality: ItemQuality.Rare,
+    defense: 15,
   ),
-  Armor_Rogue_1_5_Legendary(
-    label: 'Legendary Robes',
-    description: 'a very expensive tunic',
+  Armor_Warrior_1_5_Legendary(
+    label: 'Legendary Tunic',
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Body,
-    subType: BodyType.Shirt_Blue,
+    subType: BodyType.Tunic,
     quality: ItemQuality.Legendary,
+    defense: 20,
+  ),
+  Armor_Wizard_1_5_Common(
+    label: 'Common Cowl',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Body,
+    subType: BodyType.Cowl,
+    quality: ItemQuality.Common,
+    defense: 5,
+  ),
+  Armor_Wizard_1_5_Rare(
+    label: 'Rare Cowl',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Body,
+    subType: BodyType.Cowl,
+    quality: ItemQuality.Rare,
+    defense: 8,
+  ),
+  Armor_Wizard_1_5_Legendary(
+    label: 'Legendary Cowl',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Body,
+    subType: BodyType.Cowl,
+    quality: ItemQuality.Legendary,
+    defense: 10,
+  ),
+  Armor_Rogue_1_5_Common(
+    label: 'Common Cloak',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Body,
+    subType: BodyType.Cloak,
+    quality: ItemQuality.Common,
+    defense: 7,
+  ),
+  Armor_Rogue_1_5_Rare(
+    label: 'Rare Cloak',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Body,
+    subType: BodyType.Cloak,
+    quality: ItemQuality.Rare,
+    defense: 9,
+  ),
+  Armor_Rogue_1_5_Legendary(
+    label: 'Legendary Cloak',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Body,
+    subType: BodyType.Cloak,
+    quality: ItemQuality.Legendary,
+    defense: 12,
   ),
   Shoes_Warrior_1_5_Common(
-    label: 'Leather Boots',
-    description: 'made of common leather',
-    levelMin: 5,
-    levelMax: 10,
+    label: 'Common Leather Boots',
+    levelMin: 1,
+    levelMax: 5,
     type: ItemType.Shoes,
     subType: ShoeType.Leather_Boots,
     performDuration: 25,
     quality: ItemQuality.Rare,
+    defense: 3,
   ),
   Shoes_Wizard_1_5_Common(
-    label: 'Leather Boots',
+    label: 'Common Silk Boots',
     description: 'made of common leather',
-    levelMin: 5,
-    levelMax: 10,
+    levelMin: 1,
+    levelMax: 5,
     type: ItemType.Shoes,
     subType: ShoeType.Leather_Boots,
-    performDuration: 25,
     quality: ItemQuality.Rare,
+    defense: 1,
   ),
   Shoes_Rogue_1_5_Common(
     label: 'Leather Boots',
     description: 'made of common leather',
-    levelMin: 5,
-    levelMax: 10,
+    levelMin: 1,
+    levelMax: 5,
     type: ItemType.Shoes,
     subType: ShoeType.Leather_Boots,
     performDuration: 25,
     quality: ItemQuality.Rare,
+    defense: 2,
   ),
   Consumable_Potion_Health(
     label: 'a common tonic',
@@ -318,6 +357,7 @@ enum AmuletItem {
   final int type;
   final int subType;
   final SkillType? skillType;
+  final int? skillLevel;
   final int? damageMin;
   final int? damageMax;
   final double? range;
@@ -328,6 +368,7 @@ enum AmuletItem {
   final int? health;
   final ItemQuality quality;
   final String label;
+  final int defense;
 
   const AmuletItem({
     required this.type,
@@ -336,9 +377,11 @@ enum AmuletItem {
     required this.levelMax,
     required this.quality,
     required this.label,
+    this.defense = 0,
     this.description,
     this.dependency,
     this.skillType,
+    this.skillLevel,
     this.damageMin,
     this.damageMax,
     this.range,
@@ -368,17 +411,28 @@ enum AmuletItem {
 }
 
 enum SkillType {
+  // Warrior
+    // Offensive
   Strike(casteType: CasteType.Self),
-  Arrow(casteType: CasteType.Self),
-  Heal(casteType: CasteType.Self),
+  Sweep(casteType: CasteType.Self),
+  Might(casteType: CasteType.Instant),
+    // Defensive
+  Terrify(casteType: CasteType.Instant),
+  // Wizard
+    // Offensive
   Fireball(casteType: CasteType.Directional),
   Explode(casteType: CasteType.Positional),
   Firestorm(casteType: CasteType.Directional),
-  Teleport(casteType: CasteType.Positional),
+    // Defensive
   Freeze_Target(casteType: CasteType.Targeted_Enemy),
   Freeze_Area(casteType: CasteType.Positional),
-  Invisible(casteType: CasteType.Instant),
-  Terrify(casteType: CasteType.Instant);
+  Heal(casteType: CasteType.Self),
+  Teleport(casteType: CasteType.Positional),
+  // Rogue
+    // Offensive
+  Arrow(casteType: CasteType.Self),
+    // Defensive
+  Invisible(casteType: CasteType.Instant);
 
   final CasteType casteType;
 

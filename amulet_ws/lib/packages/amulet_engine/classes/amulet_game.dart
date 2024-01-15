@@ -343,6 +343,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         throw Exception('not implemented');
       case SkillType.Terrify:
         throw Exception('not implemented');
+      default:
+        throw Exception('not implemented');
     }
 
     // switch (amuletItem) {
