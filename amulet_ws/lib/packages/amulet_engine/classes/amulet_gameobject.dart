@@ -28,7 +28,7 @@ class AmuletGameObject extends GameObject {
     persistable = false;
     hitable = false;
     physical = false;
-    collectable = amuletItem == AmuletItem.Potion_Health;
+    collectable = amuletItem == AmuletItem.Consumable_Potion_Health;
   }
 
   @override

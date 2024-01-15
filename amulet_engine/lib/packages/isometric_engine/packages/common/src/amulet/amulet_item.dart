@@ -209,7 +209,7 @@ enum AmuletItem {
     performDuration: 25,
     quality: ItemQuality.Common,
   ),
-  Potion_Health(
+  Consumable_Potion_Health(
     label: 'a common tonic',
     description: 'heals a small amount of health',
     type: ItemType.Consumable,
@@ -261,15 +261,7 @@ enum AmuletItem {
     this.health,
   });
 
-  bool get isWeaponStaff => isWeapon && subType == WeaponType.Staff;
-
-  bool get isWeaponSword => isWeapon && subType == WeaponType.Shortsword;
-
-  bool get isWeaponBow => isWeapon && subType == WeaponType.Bow;
-
   bool get isWeapon => type == ItemType.Weapon;
-
-  bool get isSpell => type == ItemType.Spell;
 
   bool get isShoes => type == ItemType.Shoes;
 
@@ -283,54 +275,8 @@ enum AmuletItem {
 
   bool get isLegs => type == ItemType.Legs;
 
-  static final typeBodies =
-      values.where((element) => element.isBody).toList(growable: false);
-
-  static final typeHelms =
-      values.where((element) => element.isHelm).toList(growable: false);
-
-  static final typeShoes =
-      values.where((element) => element.isShoes).toList(growable: false);
-
-  static final typeWeapons =
-      values.where((element) => element.isWeapon).toList(growable: false);
-
-  static final typeHands =
-      values.where((element) => element.isHand).toList(growable: false);
-
-  static final typeLegs =
-      values.where((element) => element.isLegs).toList(growable: false);
-
-  static final typeConsumables =
-      values.where((element) => element.isConsumable).toList(growable: false);
-
-  static AmuletItem? getBody(int type) =>
-      typeBodies.firstWhereOrNull((element) => element.subType == type);
-
-  static AmuletItem? getShoe(int type) =>
-      typeShoes.firstWhereOrNull((element) => element.subType == type);
-
-  static AmuletItem? getWeapon(int type) =>
-      typeWeapons.firstWhereOrNull((element) => element.subType == type);
-
   static AmuletItem? findByName(String name) =>
       values.firstWhereOrNull((element) => element.name == name);
-
-  static AmuletItem? getHand(int type) =>
-      typeHands.firstWhereOrNull((element) => element.subType == type);
-
-  static AmuletItem? getHelm(int type) =>
-      typeHelms.firstWhereOrNull((element) => element.subType == type);
-
-  static AmuletItem? getLegs(int type) =>
-      typeLegs.firstWhereOrNull((element) => element.subType == type);
-
-  static AmuletItem get({
-    required int type,
-    required int subType,
-  }) =>
-      values.firstWhere(
-          (element) => element.type == type && element.subType == subType);
 }
 
 enum SkillType {

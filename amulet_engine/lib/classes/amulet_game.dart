@@ -515,7 +515,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
       if (randomChance(target.fiendType.chanceOfDropPotion)) {
         spawnAmuletItemAtPosition(
-          item: randomItem(AmuletItem.typeConsumables),
+          item: AmuletItem.Consumable_Potion_Health,
           position: target,
           deactivationTimer: lootDeactivationTimer,
         );
@@ -637,7 +637,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   void spawnRandomConsumableAtIndex(int nodeIndex) {
     spawnAmuletItemAtIndex(
         index: nodeIndex,
-        item: randomItem(AmuletItem.typeConsumables),
+        item: AmuletItem.Consumable_Potion_Health,
     );
   }
 
@@ -648,7 +648,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
 
     final amuletItem = gameObject.amuletItem;
-    if (amuletItem == AmuletItem.Potion_Health){
+    if (amuletItem == AmuletItem.Consumable_Potion_Health){
       player.writePlayerEventItemTypeConsumed(amuletItem.subType);
       player.health += player.maxHealth ~/ 4;
       deactivate(gameObject);
