@@ -352,6 +352,16 @@ enum AmuletItem {
     defense: 2,
     runSpeed: 0.125,
   ),
+  Consumable_Potion_Magic(
+    label: 'a common tonic',
+    description: 'heals a small amount of health',
+    type: ItemType.Consumable,
+    subType: ConsumableType.Potion_Blue,
+    levelMin: 0,
+    levelMax: 99,
+    quality: ItemQuality.Common,
+    magic: 20,
+  ),
   Consumable_Potion_Health(
     label: 'a common tonic',
     description: 'heals a small amount of health',
@@ -360,6 +370,7 @@ enum AmuletItem {
     levelMin: 0,
     levelMax: 99,
     quality: ItemQuality.Common,
+    health: 20,
   );
 
   /// the minimum level of a fiend that can drop this item
@@ -434,6 +445,10 @@ enum AmuletItem {
 
   static AmuletItem? findByName(String name) =>
       values.firstWhereOrNull((element) => element.name == name);
+  
+  static final Consumables = values
+      .where((element) => element.isConsumable)
+      .toList(growable: false);
 }
 
 enum SkillType {

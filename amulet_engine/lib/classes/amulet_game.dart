@@ -1,5 +1,7 @@
 import 'dart:typed_data';
 
+import 'package:amulet_engine/src.dart';
+
 import '../packages/isometric_engine/isometric_engine.dart';
 import 'amulet.dart';
 import 'amulet_fiend.dart';
@@ -522,7 +524,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
       if (randomChance(target.fiendType.chanceOfDropPotion)) {
         spawnAmuletItemAtPosition(
-          item: AmuletItem.Consumable_Potion_Health,
+          item: AmuletItem.Consumables.random,
           position: target,
           deactivationTimer: lootDeactivationTimer,
         );
@@ -644,7 +646,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   void spawnRandomConsumableAtIndex(int nodeIndex) {
     spawnAmuletItemAtIndex(
         index: nodeIndex,
-        item: AmuletItem.Consumable_Potion_Health,
+        item: AmuletItem.Consumables.random,
     );
   }
 
@@ -655,9 +657,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
 
     final amuletItem = gameObject.amuletItem;
-    if (amuletItem == AmuletItem.Consumable_Potion_Health){
+    if (amuletItem.isConsumable){
       player.writePlayerEventItemTypeConsumed(amuletItem.subType);
-      player.health += player.maxHealth ~/ 4;
+      player.health += amuletItem.health ?? 0;
+      player.magic += amuletItem.magic ?? 0;
       deactivate(gameObject);
     }
   }

@@ -1,8 +1,8 @@
-import 'package:amulet_flutter/gamestream/isometric/atlases/atlas.dart';
-import 'package:flutter/material.dart';
-import 'package:amulet_flutter/gamestream/isometric/ui/widgets/item_image.dart';
-import 'package:amulet_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
 import 'package:amulet_engine/packages/common.dart';
+import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_amulet_item.dart';
+import 'package:amulet_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
+import 'package:amulet_flutter/gamestream/isometric/ui/widgets/item_image.dart';
+import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 
 class MMOItemImage extends StatelessWidget {
@@ -51,13 +51,13 @@ class AmuletItemImage extends StatelessWidget {
   Widget build(BuildContext context) =>
         IsometricBuilder(
           builder: (context, isometric) {
-            final src = Atlas.getSrc(amuletItem.type, amuletItem.subType);
+            final src = atlasSrcAmuletItem[amuletItem] ?? const [0, 0, 32, 32];
             return isometric.engine.buildAtlasImage(
-              image: isometric.rendererGameObjects.getImageForGameObjectType(amuletItem.type),
-              srcX: src[Atlas.SrcX],
-              srcY: src[Atlas.SrcY],
-              srcWidth: src[Atlas.SrcWidth],
-              srcHeight: src[Atlas.SrcHeight],
+              image: isometric.images.atlas_amulet_items,
+              srcX: src[0],
+              srcY: src[1],
+              srcWidth: 32,
+              srcHeight: 32,
               scale: 1.0,
             );
           }

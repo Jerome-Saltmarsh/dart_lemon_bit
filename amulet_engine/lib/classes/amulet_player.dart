@@ -335,7 +335,6 @@ class AmuletPlayer extends IsometricPlayer with
     writeUInt16(weaponDamageMin);
     writeUInt16(weaponDamageMax);
     writeUInt16(weaponRange.toInt());
-
   }
 
   int get weaponDamageMin {
