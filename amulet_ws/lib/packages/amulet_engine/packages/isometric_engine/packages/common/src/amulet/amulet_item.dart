@@ -1,6 +1,20 @@
 import '../../src.dart';
 import 'package:collection/collection.dart';
 
+// armour
+  // warrior
+    // tunic
+    // leather
+    // chainmail
+    // platemail
+ // wizard
+    // robes
+    // garb
+ // rogue
+    // hood
+    // cloak
+
+
 enum AmuletItem {
   Weapon_Sword_1_5_Common(
       label: 'Short Sword',
@@ -128,7 +142,7 @@ enum AmuletItem {
     damageMax: 10,
     quality: ItemQuality.Legendary,
   ),
-  Helm_Steel_1_5_Common(
+  Helm_Warrior_1_5_Common(
     label: 'Steel Helm',
     description: 'A strong steel helmet which provides healing.',
     levelMin: 5,
@@ -141,28 +155,119 @@ enum AmuletItem {
     quality: ItemQuality.Common,
   ),
   Helm_Wizard_1_5_Common(
-    label: 'Pointed Hat',
-    description: 'A hat commonly worn by students of magic school',
-    levelMin: 1,
-    levelMax: 5,
-    skillType: SkillType.Freeze_Area,
-    type: ItemType.Helm,
-    subType: HelmType.Wizard_Hat,
-    performDuration: 25,
-    health: 2,
-    quality: ItemQuality.Common,
-  ),
-  Helm_Cap_1_5_Common(
-    label: 'Leather Cap',
-    description: 'its quite light but provides decent protection',
+    label: 'Steel Helm',
+    description: 'A strong steel helmet which provides healing.',
     levelMin: 5,
     levelMax: 10,
+    skillType: SkillType.Heal,
     type: ItemType.Helm,
     subType: HelmType.Steel,
     performDuration: 25,
+    health: 6,
+    quality: ItemQuality.Common,
+  ),
+  Helm_Rogue_1_5_Common(
+    label: 'Steel Helm',
+    description: 'A strong steel helmet which provides healing.',
+    levelMin: 5,
+    levelMax: 10,
+    skillType: SkillType.Heal,
+    type: ItemType.Helm,
+    subType: HelmType.Steel,
+    performDuration: 25,
+    health: 6,
+    quality: ItemQuality.Common,
+  ),
+  Armor_Warrior_1_5_Common(
+    label: 'Common Tunic',
+    description: 'An ordinary shirt',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Body,
+    subType: BodyType.Tunic,
+    quality: ItemQuality.Common,
+  ),
+  Armor_Warrior_1_5_Rare(
+    label: 'Rare Tunic',
+    description: 'A well crafted tunic',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Body,
+    subType: BodyType.Tunic,
+    quality: ItemQuality.Rare,
+  ),
+  Armor_Warrior_1_5_Legendary(
+    label: 'Legendary Tunic',
+    description: 'a very expensive tunic',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Body,
+    subType: BodyType.Shirt_Blue,
     quality: ItemQuality.Legendary,
   ),
-  Shoes_Leather_1_5_Common(
+  Armor_Wizard_1_5_Common(
+    label: 'Robes',
+    description: 'An ordinary shirt',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Body,
+    subType: BodyType.Tunic,
+    quality: ItemQuality.Common,
+  ),
+  Armor_Wizard_1_5_Rare(
+    label: 'Rare Robes',
+    description: 'A well crafted tunic',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Body,
+    subType: BodyType.Tunic,
+    quality: ItemQuality.Rare,
+  ),
+  Armor_Wizard_1_5_Legendary(
+    label: 'Legendary Robes',
+    description: 'a very expensive tunic',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Body,
+    subType: BodyType.Shirt_Blue,
+    quality: ItemQuality.Legendary,
+  ),
+  Armor_Neutral_1_5_Common(
+    label: 'Shirt',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Body,
+    subType: BodyType.Shirt_Blue,
+    quality: ItemQuality.Common,
+  ),
+  Armor_Rogue_1_5_Common(
+    label: 'Robes',
+    description: 'An ordinary shirt',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Body,
+    subType: BodyType.Tunic,
+    quality: ItemQuality.Common,
+  ),
+  Armor_Rogue_1_5_Rare(
+    label: 'Rare Robes',
+    description: 'A well crafted tunic',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Body,
+    subType: BodyType.Tunic,
+    quality: ItemQuality.Rare,
+  ),
+  Armor_Rogue_1_5_Legendary(
+    label: 'Legendary Robes',
+    description: 'a very expensive tunic',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Body,
+    subType: BodyType.Shirt_Blue,
+    quality: ItemQuality.Legendary,
+  ),
+  Shoes_Warrior_1_5_Common(
     label: 'Leather Boots',
     description: 'made of common leather',
     levelMin: 5,
@@ -172,42 +277,25 @@ enum AmuletItem {
     performDuration: 25,
     quality: ItemQuality.Rare,
   ),
-  Body_Shirt_1_5_Common(
-    label: 'Blue Shirt',
-    description: 'An ordinary shirt',
-    levelMin: 1,
-    levelMax: 5,
-    type: ItemType.Body,
-    subType: BodyType.Shirt_Blue,
-    quality: ItemQuality.Common,
-  ),
-  Body_Shirt_1_5_Rare(
-    label: 'Tailored Shirt',
-    description: 'An ordinary shirt',
-    levelMin: 1,
-    levelMax: 5,
-    type: ItemType.Body,
-    subType: BodyType.Shirt_Blue,
-    quality: ItemQuality.Rare,
-  ),
-  Body_Shirt_1_5_Legendary(
-    label: 'Myers Shirt',
-    description: 'An ordinary shirt',
-    levelMin: 1,
-    levelMax: 5,
-    type: ItemType.Body,
-    subType: BodyType.Shirt_Blue,
-    quality: ItemQuality.Legendary,
-  ),
-  Shoes_Leather_Boots(
+  Shoes_Wizard_1_5_Common(
     label: 'Leather Boots',
-    description: 'A common leather boots',
-    levelMin: 1,
-    levelMax: 5,
+    description: 'made of common leather',
+    levelMin: 5,
+    levelMax: 10,
     type: ItemType.Shoes,
     subType: ShoeType.Leather_Boots,
     performDuration: 25,
-    quality: ItemQuality.Common,
+    quality: ItemQuality.Rare,
+  ),
+  Shoes_Rogue_1_5_Common(
+    label: 'Leather Boots',
+    description: 'made of common leather',
+    levelMin: 5,
+    levelMax: 10,
+    type: ItemType.Shoes,
+    subType: ShoeType.Leather_Boots,
+    performDuration: 25,
+    quality: ItemQuality.Rare,
   ),
   Consumable_Potion_Health(
     label: 'a common tonic',
@@ -223,7 +311,7 @@ enum AmuletItem {
   final int levelMin;
   /// the maximum level of fiends that can drop this item
   final int levelMax;
-  final String description;
+  final String? description;
   /// this is used by spells which required certain weapons to be equipped
   /// for example split arrow depends on a bow
   final int? dependency;
@@ -244,11 +332,11 @@ enum AmuletItem {
   const AmuletItem({
     required this.type,
     required this.subType,
-    required this.description,
     required this.levelMin,
     required this.levelMax,
     required this.quality,
     required this.label,
+    this.description,
     this.dependency,
     this.skillType,
     this.damageMin,

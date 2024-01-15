@@ -21,6 +21,7 @@ Widget buildAmuletItemIcon(AmuletItem item) {
   final dependency = item.dependency;
 
   final skillType = item.skillType;
+  final description = item.description;
 
   return GSContainer(
     width: 278,
@@ -42,11 +43,11 @@ Widget buildAmuletItemIcon(AmuletItem item) {
               ),
             ),
             height8,
-            if (item.description.isNotEmpty)
+            if (description != null)
               Container(
                 padding: const EdgeInsets.all(8),
                 child: buildText(
-                  item.description,
+                  description,
                   color: Colors.white70,
                   align: TextAlign.center,
                 ),
