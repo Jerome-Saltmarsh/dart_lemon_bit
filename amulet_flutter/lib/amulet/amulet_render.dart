@@ -59,7 +59,7 @@ extension AmuletRender on Amulet {
 
   void renderActivatedPower({Color rangeColor = Colors.white}) {
 
-    final activeSlotAmuletItem = activeAmuletItemSlot?.amuletItem.value;
+    final activeSlotAmuletItem = activeAmuletItemSlot?.value;
 
     if (activeSlotAmuletItem == null) {
       return;

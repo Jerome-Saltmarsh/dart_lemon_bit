@@ -4,6 +4,8 @@ import 'package:amulet_flutter/gamestream/isometric/ui/widgets/isometric_builder
 import 'package:amulet_flutter/gamestream/isometric/ui/widgets/item_image.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
+import 'package:lemon_watch/src.dart';
+import 'package:lemon_widgets/lemon_widgets.dart';
 
 class MMOItemImage extends StatelessWidget {
   final double size;
@@ -38,6 +40,18 @@ class MMOItemImage extends StatelessWidget {
             );
           }
         );
+}
+
+class WatchAmuletItem extends StatelessWidget {
+  final Watch<AmuletItem?> watch;
+
+  WatchAmuletItem(this.watch);
+
+  @override
+  Widget build(BuildContext context) =>
+      WatchBuilder(watch,
+              (t) => t == null ? nothing : AmuletItemImage(amuletItem: t)
+      );
 }
 
 class AmuletItemImage extends StatelessWidget {

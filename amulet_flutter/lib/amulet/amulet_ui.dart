@@ -161,7 +161,6 @@ class AmuletUI {
                       height2,
                       buildPlayerMagicBar(),
                       height2,
-                      // buildPlayerWeapons(),
                       buildInventoryEquipped(),
                     ],
                   ),
@@ -606,6 +605,7 @@ class AmuletUI {
         padding: const EdgeInsets.all(2),
       );
 
+
   Widget buildInventoryEquipped() => buildInventoryContainer(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -613,34 +613,10 @@ class AmuletUI {
           children: [
             Row(
               children: [
-                buildItemSlot(amulet.equippedWeapon,
-                    amulet: amulet,
-                    onEmpty: IsometricIcon(
-                      iconType: IconType.Inventory_Weapon,
-                      color: Colors.black12.value,
-                      scale: 0.3,
-                    )),
-                buildItemSlot(amulet.equippedHelm,
-                    amulet: amulet,
-                    onEmpty: IsometricIcon(
-                      iconType: IconType.Inventory_Helm,
-                      color: Colors.black12.value,
-                      scale: 0.3,
-                    )),
-                buildItemSlot(amulet.equippedBody,
-                    amulet: amulet,
-                    onEmpty: IsometricIcon(
-                      iconType: IconType.Inventory_Armour,
-                      color: Colors.black12.value,
-                      scale: 1,
-                    )),
-                buildItemSlot(amulet.equippedShoes,
-                    amulet: amulet,
-                    onEmpty: IsometricIcon(
-                      iconType: IconType.Inventory_Shoes,
-                      color: Colors.black12.value,
-                      scale: 0.6,
-                    ))
+                WatchAmuletItem(amulet.equippedWeapon),
+                WatchAmuletItem(amulet.equippedHelm),
+                WatchAmuletItem(amulet.equippedBody),
+                WatchAmuletItem(amulet.equippedShoes),
               ],
             ),
           ],

@@ -49,13 +49,13 @@ extension AmuletParser on IsometricParser {
          readPlayerWeapon();
          break;
        case NetworkResponseAmulet.Player_Equipped:
-         amulet.equippedWeapon.amuletItem.value = readMMOItem();
-         amulet.equippedHelm.amuletItem.value = readMMOItem();
-         amulet.equippedBody.amuletItem.value = readMMOItem();
-         amulet.equippedLegs.amuletItem.value = readMMOItem();
-         amulet.equippedHandLeft.amuletItem.value = readMMOItem();
-         amulet.equippedHandRight.amuletItem.value = readMMOItem();
-         amulet.equippedShoes.amuletItem.value = readMMOItem();
+         amulet.equippedWeapon.value = readAmuletItem();
+         amulet.equippedHelm.value = readAmuletItem();
+         amulet.equippedBody.value = readAmuletItem();
+         amulet.equippedLegs.value = readAmuletItem();
+         amulet.equippedHandLeft.value = readAmuletItem();
+         amulet.equippedHandRight.value = readAmuletItem();
+         amulet.equippedShoes.value = readAmuletItem();
          break;
        case NetworkResponseAmulet.Player_Experience:
          amulet.playerExperience.value = readUInt24();

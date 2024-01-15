@@ -2,13 +2,9 @@ import 'dart:typed_data';
 
 import 'package:amulet_engine/src.dart';
 
-import '../packages/isometric_engine/isometric_engine.dart';
 import 'amulet.dart';
 import 'amulet_fiend.dart';
 import 'amulet_gameobject.dart';
-import 'amulet_item_slot.dart';
-import 'amulet_npc.dart';
-import 'amulet_player.dart';
 
 
 class AmuletGame extends IsometricGame<AmuletPlayer> {

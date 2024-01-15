@@ -75,7 +75,7 @@ class Amulet extends IsometricGame {
   final aimTargetItemTypeCurrent = Watch<AmuletItem?>(null);
   final highlightedAmuletItem = Watch<AmuletItem?>(null);
 
-  ItemSlot? get activeAmuletItemSlot {
+  Watch<AmuletItem?>? get activeAmuletItemSlot {
     switch (activeSlotType.value){
       case SlotType.Helm:
         return equippedHelm;
@@ -123,14 +123,13 @@ class Amulet extends IsometricGame {
   final npcName = Watch('');
   final npcOptions = <String>[];
   final npcOptionsReads = Watch(0);
-  final equippedWeaponIndex = Watch(-1);
-  final equippedWeapon = ItemSlot(slotType: SlotType.Weapon);
-  final equippedHelm = ItemSlot(slotType: SlotType.Helm);
-  final equippedBody = ItemSlot(slotType: SlotType.Body);
-  final equippedLegs = ItemSlot(slotType: SlotType.Legs);
-  final equippedHandLeft = ItemSlot(slotType: SlotType.Hand_Left);
-  final equippedHandRight = ItemSlot(slotType: SlotType.Hand_Right);
-  final equippedShoes = ItemSlot(slotType: SlotType.Shoes);
+  final equippedWeapon = Watch<AmuletItem?>(null);
+  final equippedHelm = Watch<AmuletItem?>(null);
+  final equippedBody = Watch<AmuletItem?>(null);
+  final equippedLegs = Watch<AmuletItem?>(null);
+  final equippedShoes =  Watch<AmuletItem?>(null);
+  final equippedHandLeft =  Watch<AmuletItem?>(null);
+  final equippedHandRight =  Watch<AmuletItem?>(null);
   final playerLevel = Watch(0);
   final playerExperience = Watch(0);
   final playerExperienceRequired = Watch(0);
@@ -156,7 +155,7 @@ class Amulet extends IsometricGame {
     });
 
     aimTargetItemType.onChanged((itemType) {
-      aimTargetItemTypeCurrent.value = getEquippedItemSlot(itemType?.type)?.amuletItem.value;
+      // aimTargetItemTypeCurrent.value = getEquippedItemSlot(itemType?.type)?.amuletItem.value;
     });
 
     playerMagic.onChanged(refreshPlayerMagicPercentage);
@@ -175,21 +174,20 @@ class Amulet extends IsometricGame {
     playerMagicPercentage.value = value / max;
   }
 
-
-  ItemSlot? getEquippedItemSlot(int? value){
-    switch (value) {
-      case ItemType.Weapon:
-        return equippedWeapon;
-      case ItemType.Helm:
-        return equippedHelm;
-      case ItemType.Body:
-        return equippedBody;
-      case ItemType.Shoes:
-        return equippedShoes;
-      default:
-        return null;
-    }
-  }
+  // ItemSlot? getEquippedItemSlot(int? value){
+  //   switch (value) {
+  //     case ItemType.Weapon:
+  //       return equippedWeapon;
+  //     case ItemType.Helm:
+  //       return equippedHelm;
+  //     case ItemType.Body:
+  //       return equippedBody;
+  //     case ItemType.Shoes:
+  //       return equippedShoes;
+  //     default:
+  //       return null;
+  //   }
+  // }
 
   void onChangedElementPoints(int elementPoints) =>
       elementPointsAvailable.value = elementPoints > 0;
@@ -447,14 +445,10 @@ class Amulet extends IsometricGame {
     engine.zoom = 1.0;
     engine.drawCanvasAfterUpdate = true;
     engine.cursorType.value = CursorType.Basic;
-    clearEquippedWeapon();
     clearDragging();
-    // clearActivatedPowerIndex();
   }
 
   void clearDragging() => dragging.value = null;
-
-  void clearEquippedWeapon() => equippedWeaponIndex.value = -1;
 
   void clearHighlightAmuletItem(){
     highlightedAmuletItem.value = null;
