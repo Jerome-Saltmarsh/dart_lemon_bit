@@ -316,7 +316,7 @@ class AmuletUI {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             buildRow('', buildText('current', color: Colors.white54, italic: true), null),
-            buildRow('',  AmuletItemImage(amuletItem: current), target == null ? nothing : AmuletItemImage(amuletItem: target)),
+            buildRow('',  AmuletItemImage(amuletItem: current, scale: 1.0), target == null ? nothing : AmuletItemImage(amuletItem: target, scale: 1.0)),
             buildRow('',
                 buildText(current.label, color: mapItemQualityToColor(current.quality)),
                 target == null ? null : buildText(target.label, color: mapItemQualityToColor(target.quality)),
@@ -614,8 +614,11 @@ class AmuletUI {
             Row(
               children: [
                 WatchAmuletItem(amulet.equippedWeapon),
+                width6,
                 WatchAmuletItem(amulet.equippedHelm),
+                width6,
                 WatchAmuletItem(amulet.equippedBody),
+                width6,
                 WatchAmuletItem(amulet.equippedShoes),
               ],
             ),

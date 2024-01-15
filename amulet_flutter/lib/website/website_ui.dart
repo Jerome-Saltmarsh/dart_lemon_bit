@@ -212,13 +212,13 @@ extension WebsiteUI on WebsiteGame {
                           children: [
                             buildText(character['name'], size: 22),
                             if (weapon != null)
-                              AmuletItemImage(amuletItem: weapon),
+                              AmuletItemImage(amuletItem: weapon, scale: 1.0),
                             if (helm != null)
-                              AmuletItemImage(amuletItem: helm),
+                              AmuletItemImage(amuletItem: helm, scale: 1.0),
                             if (armour != null)
-                              AmuletItemImage(amuletItem: armour),
+                              AmuletItemImage(amuletItem: armour, scale: 1.0),
                             if (shoes != null)
-                              AmuletItemImage(amuletItem: shoes),
+                              AmuletItemImage(amuletItem: shoes, scale: 1.0),
                           ],
                         )),
                   ),

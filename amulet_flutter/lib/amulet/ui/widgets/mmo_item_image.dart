@@ -48,17 +48,31 @@ class WatchAmuletItem extends StatelessWidget {
   WatchAmuletItem(this.watch);
 
   @override
-  Widget build(BuildContext context) =>
-      WatchBuilder(watch,
-              (t) => t == null ? nothing : AmuletItemImage(amuletItem: t)
-      );
+  Widget build(BuildContext context) {
+    const size = 50.0;
+    return Container(
+      alignment: Alignment.center,
+      color: Colors.white12,
+      padding: const EdgeInsets.all(2),
+      child: Container(
+          alignment: Alignment.center,
+          color: Colors.black12,
+          padding: const EdgeInsets.all(2),
+          child: WatchBuilder(watch,
+                  (t) => t == null ? nothing : AmuletItemImage(amuletItem: t, scale: size / 32,)
+          ),
+        ),
+    );
+  }
 }
 
 class AmuletItemImage extends StatelessWidget {
+  final double scale;
   final AmuletItem amuletItem;
 
   AmuletItemImage({
     required this.amuletItem,
+    required this.scale,
   });
 
   @override
@@ -72,7 +86,7 @@ class AmuletItemImage extends StatelessWidget {
               srcY: src[1],
               srcWidth: 32,
               srcHeight: 32,
-              scale: 1.0,
+              scale: scale,
             );
           }
         );
