@@ -10,6 +10,7 @@ class ItemType {
   static const Hand = 7;
   static const Shoes = 9;
   static const Spell = 10;
+  static const Amulet_Item = 11;
 
   static const collections = {
     Weapon: WeaponType.values,
@@ -32,6 +33,7 @@ class ItemType {
       Consumable: 'Consumable',
       Shoes: 'Shoes',
       Spell: 'Spell',
+      Amulet_Item: 'Amulet_Item',
   }[value] ?? 'gameobject-type-unknown-$value';
 
   static String getNameSubType(int type, int subType) => switch (type) {

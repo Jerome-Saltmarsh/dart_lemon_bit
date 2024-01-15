@@ -16,8 +16,8 @@ class AmuletGameObject extends GameObject {
     required this.frameSpawned,
     required int deactivationTimer
   }) : super(
-      type: amuletItem.type,
-      subType: amuletItem.subType,
+      type: ItemType.Amulet_Item,
+      subType: amuletItem.index,
       team: TeamType.Neutral,
   ) {
     this.deactivationTimer = deactivationTimer;
@@ -28,7 +28,7 @@ class AmuletGameObject extends GameObject {
     persistable = false;
     hitable = false;
     physical = false;
-    collectable = amuletItem == AmuletItem.Consumable_Potion_Health;
+    collectable = AmuletItem.Consumables.contains(amuletItem);
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas.dart';
+import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_amulet_item.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_images.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_scene.dart';
@@ -249,32 +250,23 @@ class RendererGameObjects extends RenderGroup {
       return;
     }
 
-    final isCollectable = const [
-      ItemType.Weapon,
-      ItemType.Helm,
-      ItemType.Body,
-      ItemType.Legs,
-      ItemType.Consumable,
-      ItemType.Spell,
-    ].contains(type);
+    final isCollectable = type == ItemType.Amulet_Item;
 
     if (isCollectable){
       renderBouncingGameObjectShadow(gameObject);
     }
 
-    final image = getImageForGameObjectType(type);
-    final src = Atlas.getSrc(type, subType);
+    final src = atlasSrcAmuletItem[AmuletItem.values[subType]] ?? const[0, 0];
 
     engine.renderSprite(
-      image: image,
+      image: images.atlas_amulet_items,
       dstX: gameObject.renderX,
       dstY: isCollectable ? getRenderYBouncing(gameObject) : gameObject.renderY,
-      srcX: src[Atlas.SrcX],
-      srcY: src[Atlas.SrcY],
-      anchorY: src[Atlas.SrcAnchorY],
-      srcWidth: src[Atlas.SrcWidth],
-      srcHeight: src[Atlas.SrcHeight],
-      scale: src[Atlas.SrcScale],
+      srcX: src[0],
+      srcY: src[1],
+      srcWidth: 32,
+      srcHeight: 32,
+      scale: 1.0,
       color: switch (gameObject.emissionType){
          EmissionType.None => scene.getRenderColorPosition(gameObject),
          EmissionType.Ambient => scene.getRenderColorPosition(gameObject),

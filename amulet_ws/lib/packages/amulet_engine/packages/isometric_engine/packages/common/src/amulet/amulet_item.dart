@@ -381,6 +381,7 @@ enum AmuletItem {
   /// this is used by spells which required certain weapons to be equipped
   /// for example split arrow depends on a bow
   final int? dependency;
+  /// see item_type.dart in commons
   final int type;
   final int subType;
   final SkillType? skillType;
@@ -445,7 +446,7 @@ enum AmuletItem {
 
   static AmuletItem? findByName(String name) =>
       values.firstWhereOrNull((element) => element.name == name);
-  
+
   static final Consumables = values
       .where((element) => element.isConsumable)
       .toList(growable: false);

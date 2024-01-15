@@ -898,7 +898,7 @@ class IsometricPlayer extends Character with ByteWriter {
     writeUInt16(gameObject.id);
     writeBool(gameObject.active);
     writeByte(gameObject.type);
-    writeByte(gameObject.subType);
+    writeUInt16(gameObject.subType);
     writeUInt16(gameObject.health);
     writeUInt16(gameObject.healthMax);
     writeIsometricPosition(gameObject);
