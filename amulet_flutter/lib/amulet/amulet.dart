@@ -48,6 +48,7 @@ class Amulet extends IsometricGame {
 
   final playerWeaponDamageMin = Watch(0);
   final playerWeaponDamageMax = Watch(0);
+  final playerWeaponRange = Watch(0);
 
   final playerRunSpeed = Watch(0);
 

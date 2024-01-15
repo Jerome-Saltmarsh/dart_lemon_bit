@@ -45,6 +45,7 @@ class AmuletPlayer extends IsometricPlayer with
   var cacheRunSpeed = 0.0;
   var cacheWeaponDamageMin = 0;
   var cacheWeaponDamageMax = 0;
+  var cacheWeaponRange = 0;
 
   var npcText = '';
   var npcName = '';
@@ -293,6 +294,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeRegenHealth();
     writeRunSpeed();
     writeWeaponDamage();
+
     super.writePlayerGame();
   }
 
@@ -323,7 +325,8 @@ class AmuletPlayer extends IsometricPlayer with
   void writeWeaponDamage() {
     if (
       cacheWeaponDamageMin == weaponDamageMin &&
-      cacheWeaponDamageMax == weaponDamageMax
+      cacheWeaponDamageMax == weaponDamageMax &&
+      cacheWeaponRange == weaponRange
     ) return;
     cacheWeaponDamageMin = cacheWeaponDamageMin;
     cacheWeaponDamageMax = cacheWeaponDamageMax;
@@ -331,6 +334,8 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(NetworkResponseAmulet.Player_Weapon_Damage);
     writeUInt16(weaponDamageMin);
     writeUInt16(weaponDamageMax);
+    writeUInt16(weaponRange.toInt());
+
   }
 
   int get weaponDamageMin {

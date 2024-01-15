@@ -298,6 +298,6 @@ extension AmuletParser on IsometricParser {
   void readPlayerWeaponDamage() {
     amulet.playerWeaponDamageMin.value = readUInt16();
     amulet.playerWeaponDamageMax.value = readUInt16();
+    amulet.playerWeaponRange.value = readUInt16();
   }
-
 }

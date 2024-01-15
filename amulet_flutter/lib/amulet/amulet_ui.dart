@@ -942,7 +942,6 @@ class AmuletUI {
           Row(
             children: [
               buildRowTitle('Health'),
-              width8,
               buildWatch(amulet.player.health, buildRowValue),
               width2,
               buildRowValue('/'),
@@ -953,7 +952,6 @@ class AmuletUI {
           Row(
             children: [
               buildRowTitle('Magic'),
-              width8,
               buildWatch(amulet.playerMagic, buildRowValue),
               width2,
               buildRowValue('/'),
@@ -964,33 +962,35 @@ class AmuletUI {
           Row(
             children: [
               buildRowTitle('Magic Regen'),
-              width8,
               buildWatch(amulet.playerRegenMagic, buildRowValue),
             ],
           ),
           Row(
             children: [
               buildRowTitle('Health Regen'),
-              width8,
               buildWatch(amulet.playerRegenHealth, buildRowValue),
             ],
           ),
           Row(
             children: [
               buildRowTitle('Run Speed'),
-              width8,
               buildWatch(amulet.playerRunSpeed, buildRowValue),
             ],
           ),
           Row(
             children: [
               buildRowTitle('Damage'),
-              width8,
               buildWatch(amulet.playerWeaponDamageMin, buildRowValue),
               width2,
               buildRowValue('-'),
               width2,
               buildWatch(amulet.playerWeaponDamageMax, buildRowValue),
+            ],
+          ),
+          Row(
+            children: [
+              buildRowTitle('Range'),
+              buildWatch(amulet.playerWeaponRange, buildRowValue),
             ],
           ),
         ],
@@ -999,6 +999,9 @@ class AmuletUI {
 
   Widget buildRowValue(dynamic value) => buildText(value, color: Colors.white70);
 
-  Widget buildRowTitle(dynamic value) => buildText(value, color: Colors.orange);
+  Widget buildRowTitle(dynamic value) => Container(
+      margin: const EdgeInsets.only(right: 8),
+      child: buildText(value, color: Colors.orange),
+  );
 }
 
