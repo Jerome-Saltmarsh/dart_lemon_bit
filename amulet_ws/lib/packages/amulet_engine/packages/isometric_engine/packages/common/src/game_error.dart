@@ -79,7 +79,8 @@ enum GameError {
   Weapon_Rack_Full,
   Insufficient_Weapon_Charges,
   No_Weapon_Equipped,
-  Weapon_Required;
+  Weapon_Required,
+  Insufficient_Magic;
 
   static GameError fromIndex(int index) {
     if (index < 0) throw Exception('$index < 0');

@@ -10,7 +10,6 @@ import 'package:golden_ratio/constants.dart';
 import 'package:amulet_engine/packages/lemon_math.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
-import 'package:lemon_watch/src.dart';
 
 import 'ui/builders/build_item_slot.dart';
 import 'ui/containers/build_container_item_hover.dart';
@@ -642,33 +641,6 @@ class AmuletUI {
                       color: Colors.black12.value,
                       scale: 0.6,
                     ))
-                // buildItemSlot(amulet.equippedHandLeft,
-                //     amulet: amulet,
-                //     onEmpty: IsometricIcon(
-                //       iconType: IconType.Inventory_Glove_Left,
-                //       color: Colors.black12.value,
-                //       scale: 0.6,
-                //     )),
-                // Column(
-                //   crossAxisAlignment: CrossAxisAlignment.center,
-                //   children: [
-                //
-                //     // buildItemSlot(amulet.equippedLegs,
-                //     //     amulet: amulet,
-                //     //     onEmpty: IsometricIcon(
-                //     //       iconType: IconType.Inventory_Legs,
-                //     //       color: Colors.black12.value,
-                //     //       scale: 0.6,
-                //     //     )),
-                //   ],
-                // ),
-                // buildItemSlot(amulet.equippedHandRight,
-                //     amulet: amulet,
-                //     onEmpty: IsometricIcon(
-                //       iconType: IconType.Inventory_Glove_Right,
-                //       color: Colors.black12.value,
-                //       scale: 0.6,
-                //     )),
               ],
             ),
           ],

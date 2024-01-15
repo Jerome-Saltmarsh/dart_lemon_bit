@@ -1372,7 +1372,15 @@ class AmuletPlayer extends IsometricPlayer with
       throw Exception('performDuration == null: ${amuletItem}');
     }
 
-    magic -= 5;
+    final magicCost = amuletItem.magicCost;
+
+    if (magicCost != null) {
+      if (magicCost > magic){
+        writeGameError(GameError.Insufficient_Magic);
+      }
+      magic -= magicCost;
+    }
+
 
     switch (amuletItem.skillType?.casteType) {
       case CasteType.Self:

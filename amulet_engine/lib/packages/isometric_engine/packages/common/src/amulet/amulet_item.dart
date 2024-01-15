@@ -202,6 +202,7 @@ enum AmuletItem {
     defense: 2,
     quality: ItemQuality.Common,
     regenMagic: 1,
+    magicCost: 3,
   ),
   Helm_Rogue_1_5_Common(
     label: 'Steel Helm',
@@ -214,6 +215,7 @@ enum AmuletItem {
     performDuration: 25,
     defense: 3,
     quality: ItemQuality.Common,
+    magicCost: 4,
   ),
   Armor_Neutral_1_5_Common(
     label: 'Shirt',
@@ -234,6 +236,8 @@ enum AmuletItem {
     defense: 10,
     skillType: SkillType.Might,
     skillLevel: 1,
+    magicCost: 6,
+    regenHealth: 1,
   ),
   Armor_Warrior_1_5_Rare(
     label: 'Rare Tunic',
@@ -261,6 +265,8 @@ enum AmuletItem {
     subType: BodyType.Cowl,
     quality: ItemQuality.Common,
     defense: 5,
+    regenMagic: 1,
+    magic: 5,
   ),
   Armor_Wizard_1_5_Rare(
     label: 'Rare Cowl',
@@ -270,6 +276,7 @@ enum AmuletItem {
     subType: BodyType.Cowl,
     quality: ItemQuality.Rare,
     defense: 8,
+    magic: 10,
   ),
   Armor_Wizard_1_5_Legendary(
     label: 'Legendary Cowl',
@@ -279,6 +286,7 @@ enum AmuletItem {
     subType: BodyType.Cowl,
     quality: ItemQuality.Legendary,
     defense: 10,
+    magic: 15,
   ),
   Armor_Rogue_1_5_Common(
     label: 'Common Cloak',
@@ -374,6 +382,7 @@ enum AmuletItem {
   final int? magic;
   final int? regenMagic;
   final int? regenHealth;
+  final int? magicCost;
 
   const AmuletItem({
     required this.type,
@@ -398,6 +407,7 @@ enum AmuletItem {
     this.charges,
     this.performDuration,
     this.health,
+    this.magicCost,
   });
 
   bool get isWeapon => type == ItemType.Weapon;
