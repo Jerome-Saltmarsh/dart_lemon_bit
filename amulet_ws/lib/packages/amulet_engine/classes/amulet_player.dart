@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:amulet_engine/classes/amulet_fiend.dart';
 import 'package:amulet_engine/classes/amulet_gameobject.dart';
 
+import '../maps/map_item_type_to_slot_type.dart';
 import '../packages/isomeric_engine.dart';
 import '../mixins/src.dart';
 import '../packages/isometric_engine/packages/common/src/amulet/quests/quest_main.dart';
@@ -1418,5 +1419,9 @@ class AmuletPlayer extends IsometricPlayer with
         total += item.amuletItem?.runSpeed ?? 0;
      }
      return total;
+  }
+
+  void selectItemType(int itemType) {
+    setActiveSlotType(mapItemTypeToSlotType(itemType));
   }
 }

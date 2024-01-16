@@ -9,6 +9,7 @@ import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
+import 'package:lemon_watch/src.dart';
 import 'ui/containers/build_container_item_hover.dart';
 import 'ui/containers/build_container_player_front.dart';
 import 'ui/widgets/src.dart';
@@ -157,7 +158,7 @@ class AmuletUI {
                       height2,
                       buildPlayerMagicBar(),
                       height2,
-                      buildInventoryEquipped(),
+                      buildEquippedAmuletItems(),
                     ],
                   ),
                 ),
@@ -602,26 +603,22 @@ class AmuletUI {
       );
 
 
-  Widget buildInventoryEquipped() => buildInventoryContainer(
+  Widget buildEquippedAmuletItems() =>
+      Container(
+        padding: const EdgeInsets.all(2),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Row(
               children: [
-                onPressed(
-                  action: () {
-
-                  },
-                  onRightClick: amulet.dropItemTypeWeapon,
-                  child: WatchAmuletItem(amulet.equippedWeapon),
-                ),
+                buildWatchAmuletItem(amulet.equippedWeapon),
                 width6,
-                WatchAmuletItem(amulet.equippedHelm),
+                buildWatchAmuletItem(amulet.equippedHelm),
                 width6,
-                WatchAmuletItem(amulet.equippedBody),
+                buildWatchAmuletItem(amulet.equippedBody),
                 width6,
-                WatchAmuletItem(amulet.equippedShoes),
+                buildWatchAmuletItem(amulet.equippedShoes),
               ],
             ),
           ],
@@ -828,5 +825,29 @@ class AmuletUI {
       margin: const EdgeInsets.only(right: 8),
       child: buildText(value, color: Colors.orange),
   );
+
+  Widget buildWatchAmuletItem(Watch<AmuletItem?> watch) =>
+    buildWatch(watch, (amuletItem) {
+      const size = 50.0;
+      return onPressed(
+        action: amuletItem == null
+            ? null
+            : () => amulet.selectAmuletItem(amuletItem),
+        onRightClick: amuletItem == null
+            ? null
+            : () => amulet.dropAmuletItem(amuletItem),
+        child: Container(
+          alignment: Alignment.center,
+          color: Colors.white12,
+          padding: const EdgeInsets.all(2),
+          child: Container(
+            alignment: Alignment.center,
+            color: Colors.black12,
+            padding: const EdgeInsets.all(2),
+            child: amuletItem == null ? nothing : AmuletItemImage(amuletItem: amuletItem, scale: size / 32,),
+          ),
+        ),
+      );
+    });
 }
 

@@ -246,42 +246,26 @@ class Amulet extends IsometricGame {
     }
   }
 
-  // void reportItemSlotDragged({
-  //   required ItemSlot src,
-  //   required ItemSlot target,
-  // }) =>
-  //   server.sendNetworkRequest(
-  //     NetworkRequest.Inventory_Request,
-  //     '${NetworkRequestInventory.Move.index} '
-  //     '${src.slotType.index} '
-  //     '${src.index} '
-  //     '${target.slotType.index} '
-  //     '${target.index}'
-  //   );
+  void dropItemTypeWeapon() =>
+      dropItemType(ItemType.Weapon);
 
-  // void useItemSlot(ItemSlot itemSlot) =>
-  //   server.sendNetworkRequest(
-  //     NetworkRequest.Inventory_Request,
-  //     '${NetworkRequestInventory.Use.index} '
-  //     '${itemSlot.slotType.index} '
-  //     '${itemSlot.index}'
-  //   );
+  void dropAmuletItem(AmuletItem amuletItem) =>
+      dropItemType(amuletItem.type);
 
-  // void dropItemSlot(ItemSlot itemSlot) =>
-  //   server.sendNetworkRequest(
-  //     NetworkRequest.Inventory_Request,
-  //     '${NetworkRequestInventory.Drop.index} '
-  //     '${itemSlot.slotType.index} '
-  //     '${itemSlot.index}'
-  //   );
-
-  void dropItemTypeWeapon() => dropItemType(ItemType.Weapon);
-
-  void dropItemType(int value) => server.sendNetworkRequestAmulet(
+  void dropItemType(int value) =>
+      server.sendNetworkRequestAmulet(
         NetworkRequestAmulet.Drop_Item_Type,
         value,
-    );
+      );
 
+  void selectAmuletItem(AmuletItem amuletItem) =>
+      selectItemType(amuletItem.type);
+
+  void selectItemType(int itemType) =>
+      server.sendNetworkRequestAmulet(
+        NetworkRequestAmulet.Select_Item_Type,
+        itemType,
+      );
 
 
   void selectSlotType(SlotType slotType) =>

@@ -648,20 +648,15 @@ class AmuletController {
       case NetworkRequestAmulet.End_Interaction:
         player.endInteraction();
         break;
-      case NetworkRequestAmulet.Select_Item_Type:
-        final slotTypeIndex = parseArg2(arguments);
-        if (slotTypeIndex == null) return;
-        final slotType = SlotType.values.tryGet(slotTypeIndex);
-        if (slotType == null){
-          player.writeAmuletError('invalid slot type index: $slotTypeIndex');
-          return;
-        }
-        player.setActiveSlotType(slotType);
-        break;
       case NetworkRequestAmulet.Drop_Item_Type:
         final itemType = parseArg2(arguments);
         if (itemType == null) return;
         player.dropItemType(itemType);
+        break;
+      case NetworkRequestAmulet.Select_Item_Type:
+        final itemType = parseArg2(arguments);
+        if (itemType == null) return;
+        player.selectItemType(itemType);
         break;
       case NetworkRequestAmulet.Select_Talk_Option:
         final index = parseArg2(arguments);

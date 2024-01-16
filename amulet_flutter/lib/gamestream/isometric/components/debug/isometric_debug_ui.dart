@@ -508,10 +508,6 @@ extension isometricDebugUI on IsometricDebug {
       ],
     );
 
-
-
-
-
   String get formattedConnectionDuration {
     final duration = server.remote.websocket.connectionDuration;
     if (duration == null) return 'not connected';
@@ -527,7 +523,10 @@ extension isometricDebugUI on IsometricDebug {
     final bytesPerSecond = (bytes / seconds).round();
     final bytesPerMinute = bytesPerSecond * 60;
     final bytesPerHour = bytesPerMinute * 60;
-    return 'per second: $bytesPerSecond, per minute: $bytesPerMinute, per hour: $bytesPerHour';
+    return
+        'per second: $bytesPerSecond, '
+        'per minute: $bytesPerMinute, '
+        'per hour: $bytesPerHour';
   }
 
   String formatAverageBytePerSecond(int bytes){
@@ -566,7 +565,6 @@ extension isometricDebugUI on IsometricDebug {
             action: player.toggleGender,
             child: buildRowMapped('gender', player.gender, Gender.getName)
           ),
-          // buildRowMapped('legs type', player.legsType, LegType.getName),
           buildRowMapped('body type', player.armorType, ArmorType.getName),
           onPressed(
             action: () => ui.showDialogGetHairType(onSelected: player.setHairType),
@@ -581,7 +579,6 @@ extension isometricDebugUI on IsometricDebug {
             )),
           ),
           buildRowMapped('helm type', player.helmType, HelmType.getName),
-          // buildRowMapped('hand type left', player.handTypeLeft, HandType.getName),
           onPressed(
             action: player.showDialogChangeComplexion,
             child: buildRowWatch('complexion', player.complexion, (complexion) => Container(
