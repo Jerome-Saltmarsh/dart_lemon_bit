@@ -3,6 +3,7 @@
 
 
 
+
 name: amulet_flutter
 description: next gen cloud gaming
 
@@ -191,3 +192,6 @@ flutter:
     - assets/sprites/isometric/kid/diffuse/helms/steel_cap/
     - assets/sprites/isometric/kid/south/helms/steel_cap/
     - assets/sprites/isometric/kid/west/helms/steel_cap/
+    - assets/sprites/isometric/kid/diffuse/armor/leather/
+    - assets/sprites/isometric/kid/south/armor/leather/
+    - assets/sprites/isometric/kid/west/armor/leather/

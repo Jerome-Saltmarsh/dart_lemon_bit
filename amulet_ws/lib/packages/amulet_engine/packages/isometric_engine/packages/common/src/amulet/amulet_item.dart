@@ -225,7 +225,7 @@ enum AmuletItem {
     skillMagicCost: 4,
   ),
   Armor_Neutral_1_5_Common(
-    label: 'tunic',
+    label: 'Tunic',
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Armor,
@@ -234,7 +234,7 @@ enum AmuletItem {
     defense: 1,
   ),
   Armor_Warrior_1_5_Common(
-    label: 'Common Tunic',
+    label: 'Leather Armor',
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Armor,
@@ -247,7 +247,7 @@ enum AmuletItem {
     regenHealth: 1,
   ),
   Armor_Warrior_1_5_Rare(
-    label: 'Rare Tunic',
+    label: 'Rare Leather Armor',
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Armor,
@@ -257,7 +257,7 @@ enum AmuletItem {
     regenHealth: 1,
   ),
   Armor_Warrior_1_5_Legendary(
-    label: 'Legendary Tunic',
+    label: 'Legendary Leather Armor',
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Armor,
