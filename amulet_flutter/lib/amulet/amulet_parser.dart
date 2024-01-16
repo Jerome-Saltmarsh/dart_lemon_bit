@@ -147,6 +147,18 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Weapon_Damage:
          readPlayerWeaponDamage();
          break;
+       case NetworkResponseAmulet.Message:
+         amulet.clearMessage();
+         amulet.messages.addAll(readString().split('.').map((e) => e.trim()).toList(growable: false));
+         amulet.messages.removeWhere((element) => element.isEmpty);
+         amulet.messageIndex.value = 0;
+         break;
+       case NetworkResponseAmulet.End_Interaction:
+         amulet.playerInteracting.value = false;
+         break;
+       case NetworkResponseAmulet.Camera_Target:
+         readCameraTarget();
+         break;
      }
   }
 

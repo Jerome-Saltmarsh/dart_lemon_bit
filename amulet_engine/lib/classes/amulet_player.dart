@@ -450,8 +450,8 @@ class AmuletPlayer extends IsometricPlayer with
     npcName = '';
     npcText = '';
     npcOptions.clear();
-    writeByte(NetworkResponse.Amulet_Player);
-    writeByte(NetworkResponseAmuletPlayer.End_Interaction);
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.End_Interaction);
     clearTarget();
   }
 
@@ -1072,10 +1072,9 @@ class AmuletPlayer extends IsometricPlayer with
     deactivateSlotType();
   }
 
-
   void writeMessage(String message){
-    writeByte(NetworkResponse.Amulet_Player);
-    writeByte(NetworkResponseAmuletPlayer.Message);
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Message);
     writeString(message);
   }
 
@@ -1136,8 +1135,8 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
 
-    writeByte(NetworkResponse.Amulet_Player);
-    writeByte(NetworkResponseAmuletPlayer.Camera_Target);
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Camera_Target);
 
     if (cameraTarget == null){
       previousCameraTarget = false;

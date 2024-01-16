@@ -1,6 +1,5 @@
 
 
-import '../mixins/elemental.dart';
 import '../packages/isomeric_engine.dart';
 
 class AmuletFiend extends Character {
