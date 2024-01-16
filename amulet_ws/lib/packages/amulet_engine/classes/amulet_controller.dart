@@ -638,9 +638,9 @@ class AmuletController {
       errorInvalidClientRequest();
       return;
     }
-    final mmoRequest = NetworkRequestAmulet.values[requestIndex];
+    final networkRequestAmulet = NetworkRequestAmulet.values[requestIndex];
 
-    switch (mmoRequest){
+    switch (networkRequestAmulet){
       case NetworkRequestAmulet.Spawn_Random_Enemy:
         amuletGame.spawnRandomEnemy();
         break;
@@ -655,11 +655,6 @@ class AmuletController {
         break;
       case NetworkRequestAmulet.End_Interaction:
         player.endInteraction();
-        break;
-      case NetworkRequestAmulet.Select_Item:
-        final index = parseArg2(arguments);
-        if (index == null) return;
-        player.selectItem(index);
         break;
       case NetworkRequestAmulet.Select_Item_Type:
         final slotTypeIndex = parseArg2(arguments);
@@ -684,16 +679,6 @@ class AmuletController {
       case NetworkRequestAmulet.Toggle_Inventory_Open:
         player.toggleInventoryOpen();
         break;
-      // case NetworkRequestAmulet.Upgrade_Element:
-      //   final index = parseArg2(arguments);
-      //   if (index == null) return;
-      //   if (!isValidIndex(index, AmuletElement.values)){
-      //     errorInvalidClientRequest();
-      //     return;
-      //   }
-      //   final amuletElement = AmuletElement.values[index];
-      //   player.upgradeAmuletElement(amuletElement);
-      //   break;
       case NetworkRequestAmulet.Set_Inventory_Open:
         throw Exception('not implemented');
       case NetworkRequestAmulet.Gain_Level:

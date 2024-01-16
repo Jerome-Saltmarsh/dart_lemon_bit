@@ -12,19 +12,6 @@ void writeJsonToAmuletPlayer(
   player.equipBody(AmuletItem.findByName(json.body), force: true);
   player.equipShoes(AmuletItem.findByName(json.shoes), force: true);
 
-
-  final itemNames = json.tryGetList<String>('items');
-  if (itemNames != null){
-    for (var i = 0; i < itemNames.length; i++){
-      final itemName =  itemNames[i];
-      if (itemName != '-'){
-        player.items[i].amuletItem = AmuletItem.findByName(itemName);
-      } else {
-        player.items[i].amuletItem = null;
-      }
-    }
-  }
-
   player.data = json['data'] ?? Json();
   player.uuid = json['uuid'] ?? (throw Exception('json[uuid] is null'));
   player.complexion = json['complexion'] ?? 0;

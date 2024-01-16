@@ -103,8 +103,6 @@ class Amulet extends IsometricGame {
   );
 
   var errorTimer = 0;
-  var items = Watch(<ItemSlot>[]);
-
   final messages = <String>[];
   final messageIndex = Watch(-1);
   final activePowerPosition = Position();
@@ -198,17 +196,6 @@ class Amulet extends IsometricGame {
 
   void clearError() {
     error.value = '';
-  }
-
-  void setItem({required int index, required AmuletItem? item}){
-    items.value[index].amuletItem.value = item;
-  }
-
-  void setItemLength(int length){
-    items.value = List.generate(length, (index) => ItemSlot(
-        index: index,
-        slotType: SlotType.Item,
-    ));
   }
 
   @override
@@ -309,9 +296,6 @@ class Amulet extends IsometricGame {
 
   void selectSlotType(SlotType slotType) =>
       sendAmuletRequest(NetworkRequestAmulet.Select_Item_Type, slotType.index);
-
-  void selectItem(int index) =>
-      sendAmuletRequest(NetworkRequestAmulet.Select_Item, index);
 
   void spawnRandomEnemy() =>
       server.sendNetworkRequestAmulet(

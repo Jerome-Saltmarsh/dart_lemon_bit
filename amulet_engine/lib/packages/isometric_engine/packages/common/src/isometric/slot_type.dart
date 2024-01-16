@@ -2,7 +2,6 @@
 import 'item_type.dart';
 
 enum SlotType {
-  Item,
   Weapon,
   Body,
   Helm,
@@ -19,7 +18,6 @@ enum SlotType {
         Helm => itemType == ItemType.Helm,
         Body => itemType == ItemType.Armor,
         Shoes => itemType == ItemType.Shoes,
-        Item => true
       };
   }
 }

@@ -97,14 +97,6 @@ class AmuletGameTutorial extends AmuletGame {
     deactivate(crystal2GlowingFalse);
     deactivate(crystal2GlowingTrue);
 
-    // for (final weapon in player.weapons){
-    //   weapon.amuletItem = null;
-    // }
-
-    for (final item in player.items){
-      item.amuletItem = null;
-    }
-
     if (player.readOnce('tutorial_initialized')) {
       actionInitializeNewPlayer(player);
     }

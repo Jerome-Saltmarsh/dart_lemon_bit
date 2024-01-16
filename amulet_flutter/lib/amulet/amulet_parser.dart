@@ -32,18 +32,9 @@ extension AmuletParser on IsometricParser {
          }
          amulet.npcOptionsReads.value++;
          break;
-       case NetworkResponseAmulet.Player_Item_Length:
-         amulet.setItemLength(readUInt16());
-         break;
        case NetworkResponseAmulet.Player_World_Index:
          amulet.worldRow = readByte();
          amulet.worldColumn = readByte();
-         break;
-       case NetworkResponseAmulet.Player_Item:
-         final index = readUInt16();
-         final type = readInt16();
-         final item = type != -1 ? AmuletItem.values[type] : null;
-         amulet.setItem(index: index, item: item);
          break;
        case NetworkResponseAmulet.Player_Weapon:
          readPlayerWeapon();
