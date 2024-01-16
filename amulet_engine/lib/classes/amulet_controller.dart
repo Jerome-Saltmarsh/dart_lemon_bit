@@ -671,6 +671,11 @@ class AmuletController {
         }
         player.setActiveSlotType(slotType);
         break;
+      case NetworkRequestAmulet.Drop_Item_Type:
+        final itemType = parseArg2(arguments);
+        if (itemType == null) return;
+        player.dropItemType(itemType);
+        break;
       case NetworkRequestAmulet.Select_Talk_Option:
         final index = parseArg2(arguments);
         if (index == null) return;
@@ -1165,7 +1170,7 @@ class AmuletController {
       case NetworkRequestInventory.Drop:
         final slotTypeIndex = arguments[2];
         final srcIndex = arguments[3];
-        player.inventoryDropSlotType(SlotType.values[slotTypeIndex], srcIndex);
+        player.dropSlotTypeAtIndex(SlotType.values[slotTypeIndex], srcIndex);
         break;
     }
   }

@@ -1,6 +1,5 @@
 import 'package:amulet_engine/json/character_json.dart';
 import 'package:amulet_engine/packages/common.dart';
-import 'package:amulet_flutter/amulet/ui/widgets/mmo_item_image.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/functions/get_server_mode_text.dart';
 import 'package:amulet_flutter/gamestream/operation_status.dart';
 import 'package:amulet_flutter/gamestream/ui/src.dart';
@@ -17,6 +16,7 @@ import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 import 'package:typedef/json.dart';
 
+import '../amulet/src.dart';
 import 'functions/build_website_page_new_user.dart';
 import 'widgets/dialog_create_character_computer.dart';
 

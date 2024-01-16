@@ -298,6 +298,15 @@ class Amulet extends IsometricGame {
       '${itemSlot.index}'
     );
 
+  void dropItemTypeWeapon() => dropItemType(ItemType.Weapon);
+
+  void dropItemType(int value) => server.sendNetworkRequestAmulet(
+        NetworkRequestAmulet.Drop_Item_Type,
+        value,
+    );
+
+
+
   void selectSlotType(SlotType slotType) =>
       sendAmuletRequest(NetworkRequestAmulet.Select_Item_Type, slotType.index);
 

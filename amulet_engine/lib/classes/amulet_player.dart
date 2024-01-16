@@ -1023,45 +1023,29 @@ class AmuletPlayer extends IsometricPlayer with
       SlotType.Weapon => equippedWeapon,
       SlotType.Helm => equippedHelm,
       SlotType.Body => equippedArmor,
-      // SlotType.Legs => equippedLegs,
-      // SlotType.Hand_Left => equippedHandLeft,
-      // SlotType.Hand_Right => equippedHandRight,
       SlotType.Shoes => equippedShoes
     };
 
-  void inventoryDropSlotType(SlotType slotType, int index) =>
+  void dropItemType(int itemType){
+      final slot = getEquippedItemSlot(itemType: itemType);
+      if (slot == null){
+        return;
+      }
+      dropItemSlotItem(slot);
+  }
+
+
+  AmuletItemSlot? getEquippedItemSlot({required int itemType}) =>
+      switch (itemType){
+        ItemType.Weapon => equippedWeapon,
+        ItemType.Helm => equippedHelm,
+        ItemType.Armor => equippedArmor,
+        ItemType.Shoes => equippedShoes,
+        _ => null
+    };
+
+  void dropSlotTypeAtIndex(SlotType slotType, int index) =>
       dropItemSlotItem(getItemSlot(slotType, index));
-
-  // void writeElementPoints() {
-  //   writeByte(NetworkResponse.Amulet_Player);
-  //   writeByte(NetworkResponseAmuletPlayer.Element_Points);
-  //   writeUInt16(elementPoints);
-  // }
-
-  // void upgradeAmuletElement(AmuletElement amuletElement) {
-  //   if (elementPoints <= 0){
-  //     writeGameError(GameError.Insufficient_Element_Points);
-  //     return;
-  //   }
-  //   elementPoints--;
-  //   switch (amuletElement) {
-  //     case AmuletElement.fire:
-  //       elementFire++;
-  //       break;
-  //     case AmuletElement.water:
-  //       elementWater++;
-  //       break;
-  //     case AmuletElement.air:
-  //       elementAir++;
-  //       break;
-  //     case AmuletElement.stone:
-  //       elementStone++;
-  //       break;
-  //   }
-  //   writeAmuletElements();
-  //   writeElementUpgraded();
-  //   spawnConfettiAtPosition(this);
-  // }
 
   @override
   void clearAction() {

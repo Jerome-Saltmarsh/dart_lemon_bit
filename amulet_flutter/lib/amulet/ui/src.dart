@@ -1,4 +1,4 @@
 
 library src;
 
-export 'widgets/mmo_item_image.dart';
+export 'widgets/src.dart';

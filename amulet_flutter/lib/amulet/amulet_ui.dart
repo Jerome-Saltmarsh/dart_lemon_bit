@@ -1,5 +1,6 @@
 
 import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/amulet_item.dart';
+import 'package:amulet_engine/packages/isometric_engine/packages/common/src/isometric/item_type.dart';
 import 'package:amulet_engine/packages/isometric_engine/packages/common/src/isometric/target_action.dart';
 import 'package:flutter/material.dart';
 
@@ -14,8 +15,7 @@ import 'package:lemon_widgets/lemon_widgets.dart';
 
 import 'ui/containers/build_container_item_hover.dart';
 import 'ui/containers/build_container_player_front.dart';
-import 'ui/widgets/amulet_world_map.dart';
-import 'ui/widgets/mmo_item_image.dart';
+import 'ui/widgets/src.dart';
 
 class AmuletUI {
   static const itemImageSize = 64.0;
@@ -613,7 +613,13 @@ class AmuletUI {
           children: [
             Row(
               children: [
-                WatchAmuletItem(amulet.equippedWeapon),
+                onPressed(
+                  action: () {
+
+                  },
+                  onRightClick: amulet.dropItemTypeWeapon,
+                  child: WatchAmuletItem(amulet.equippedWeapon),
+                ),
                 width6,
                 WatchAmuletItem(amulet.equippedHelm),
                 width6,

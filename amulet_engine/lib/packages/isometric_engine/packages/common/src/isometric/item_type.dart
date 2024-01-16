@@ -45,7 +45,6 @@ class ItemType {
 
   static const values = [
     Weapon,
-    // Legs,
     Armor,
     Helm,
     Object,
