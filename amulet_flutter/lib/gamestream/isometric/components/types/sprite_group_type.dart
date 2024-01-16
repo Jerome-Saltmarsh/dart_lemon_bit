@@ -1,6 +1,7 @@
 import 'package:amulet_engine/packages/common.dart';
 
 class SpriteGroupType {
+  static const Armor = 2;
   static const Body_Male = 3;
   static const Body_Female = 4;
   static const Hand_Left = 6;
@@ -16,6 +17,7 @@ class SpriteGroupType {
   static const Shoes = 20;
 
   static String getName(int value)=> const {
+    Armor: 'armor',
     Body_Male: 'body_male',
     Body_Female: 'body_female',
     Hand_Left: 'hands_left',
@@ -32,8 +34,9 @@ class SpriteGroupType {
   }[value] ?? (throw Exception('SpriteGroup.getName($value)'));
 
   static String getSubTypeName(int type, int subType) => switch (type) {
-      Body_Male => BodyType.getName(subType),
-      Body_Female => BodyType.getName(subType),
+      Armor => ArmorType.getName(subType),
+      Body_Male => ArmorType.getName(subType),
+      Body_Female => ArmorType.getName(subType),
       Hand_Left => HandType.getName(subType),
       Hand_Right => HandType.getName(subType),
       Head => HeadType.getName(subType),

@@ -55,19 +55,27 @@ class Atlas {
 
   static const SrcCollection = <int, Map<int, List<double>>>{
     ItemType.Weapon: atlasSrcWeapons,
-    ItemType.Legs: atlasSrcLegs,
-    ItemType.Body: atlasSrcBody,
     ItemType.Helm: atlasSrcHelm,
+    ItemType.Armor: atlasSrcArmor,
+    ItemType.Legs: atlasSrcLegs,
+    ItemType.Shoes: atlasSrcShoes,
     ItemType.Object: Collection_Objects,
     ItemType.Hand: atlasSrcHands,
     ItemType.Consumable: atlasSrcConsumables,
-    ItemType.Shoes: atlasSrcShoes,
     ItemType.Spell: atlasSrcSpells,
   };
 
-  static List<double> getSrc(int type, int subType) =>
-      SrcCollection[type]?[subType] ??
+  static List<double> getSrc(int type, int subType) {
+
+    if (type == ItemType.Amulet_Item){
+      return atlasSrcAmuletItem[AmuletItem.values[subType]] ?? (throw Exception(
+          'Atlas.getSrc(type: ${ItemType.getName(type)}, subType: ${ItemType.getNameSubType(type, subType)})'
+      ));
+    }
+
+    return SrcCollection[type]?[subType] ??
       (throw Exception(
           'Atlas.getSrc(type: ${ItemType.getName(type)}, subType: ${ItemType.getNameSubType(type, subType)})'
       ));
+  }
 }

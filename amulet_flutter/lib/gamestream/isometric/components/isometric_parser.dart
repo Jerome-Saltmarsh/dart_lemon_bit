@@ -590,7 +590,7 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
 
     if (readA) {
       character.weaponType = readByte();
-      character.bodyType = readByte();
+      character.armorType = readByte();
       character.helmType = readByte();
       character.legType = readByte();
     }

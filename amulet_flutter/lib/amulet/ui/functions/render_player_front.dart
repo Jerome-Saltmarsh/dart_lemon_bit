@@ -21,7 +21,7 @@ void renderPlayerFront({
       gender: player.gender.value,
       helmType: player.helmType.value,
       headType: player.headType.value,
-      bodyType: player.bodyType.value,
+      armorType: player.bodyType.value,
       shoeType: player.shoeType.value,
       legsType: player.legsType.value,
       hairType: player.hairType.value,

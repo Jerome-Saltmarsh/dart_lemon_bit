@@ -223,3 +223,9 @@ flutter:
     - assets/sprites/isometric/toad_warrior/flat/
     - assets/sprites/isometric/toad_warrior/south/
     - assets/sprites/isometric/toad_warrior/west/
+    - assets/sprites/isometric/kid/diffuse/armor/
+    - assets/sprites/isometric/kid/south/armor/
+    - assets/sprites/isometric/kid/west/armor/
+    - assets/sprites/isometric/kid/diffuse/armor/tunic/
+    - assets/sprites/isometric/kid/south/armor/tunic/
+    - assets/sprites/isometric/kid/west/armor/tunic/

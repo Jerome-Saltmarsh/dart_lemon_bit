@@ -21,7 +21,7 @@ enum SlotType {
         Weapon => itemType == ItemType.Weapon,
         Helm => itemType == ItemType.Helm,
         Legs => itemType == ItemType.Legs,
-        Body => itemType == ItemType.Body,
+        Body => itemType == ItemType.Armor,
         Hand_Left => itemType == ItemType.Hand,
         Hand_Right => itemType == ItemType.Hand,
         Shoes => itemType == ItemType.Shoes,

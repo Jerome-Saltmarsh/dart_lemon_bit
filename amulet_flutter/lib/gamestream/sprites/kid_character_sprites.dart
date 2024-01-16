@@ -4,6 +4,7 @@ import 'package:amulet_flutter/gamestream/isometric/components/types/sprite_grou
 import 'character_sprite_group.dart';
 
 class KidCharacterSprites {
+  final armor = <int, CharacterSpriteGroup>{};
   final bodyMale = <int, CharacterSpriteGroup>{};
   final bodyFemale = <int, CharacterSpriteGroup>{};
   final handLeft = <int, CharacterSpriteGroup>{};
@@ -19,6 +20,7 @@ class KidCharacterSprites {
   final shoes = <int, CharacterSpriteGroup>{};
 
   late final values = {
+    SpriteGroupType.Armor: armor,
     SpriteGroupType.Body_Male: bodyMale,
     SpriteGroupType.Body_Female: bodyFemale,
     SpriteGroupType.Hand_Left: handLeft,

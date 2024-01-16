@@ -160,7 +160,7 @@ class RendererCharacters extends RenderGroup {
     final helmType = character.helmType;
     final legType = character.legType;
     final gender = character.gender;
-    final bodyType = character.bodyType;
+    final armorType = character.armorType;
     final weaponType = character.weaponType;
     final headType = character.headType;
     final hairType = character.hairType;
@@ -178,12 +178,12 @@ class RendererCharacters extends RenderGroup {
     final atlasLegsDiffuse =  spritesDiffuse.legs[legType] ?? (throw Exception(LegType.getName(legType)));
     final atlasLegsSouth =  spritesSouth.legs[legType] ?? (throw Exception());
     final atlasLegsWest =  spritesWest.legs[legType] ?? (throw Exception());
-    final bodySpriteSouth = gender == Gender.male ? spritesSouth.bodyMale : spritesSouth.bodyFemale;
-    final bodySpriteWest = gender == Gender.male ? spritesWest.bodyMale : spritesWest.bodyFemale;
-    final bodySpriteDiffuse = gender == Gender.male ? spritesDiffuse.bodyMale : spritesDiffuse.bodyFemale;
-    final atlasBodySouth = bodySpriteSouth[bodyType] ?? (throw Exception());
-    final atlasBodyWest = bodySpriteWest[bodyType] ?? (throw Exception());
-    final atlasBodyDiffuse = bodySpriteDiffuse[bodyType] ?? (throw Exception());
+    final armorSpriteSouth = spritesSouth.armor;
+    final armorSpriteWest = spritesWest.armor;
+    final armorSpriteDiffuse = spritesDiffuse.armor;
+    final atlasArmorSouth = armorSpriteSouth[armorType] ?? (throw Exception());
+    final atlasArmorWest = armorSpriteWest[armorType] ?? (throw Exception());
+    final atlasArmorDiffuse = armorSpriteDiffuse[armorType] ?? (throw Exception());
     final atlasWeaponSouth = spritesSouth.weapons[weaponType]
         ?? spritesSouth.weapons[WeaponType.Unarmed] ?? (throw Exception());
     final atlasWeaponWest = spritesWest.weapons[weaponType]
@@ -211,9 +211,9 @@ class RendererCharacters extends RenderGroup {
     final spriteHelmSouth = atlasHelmSouth.fromCharacterState(characterState);
     final spriteHelmWest = atlasHelmWest.fromCharacterState(characterState);
     final spriteHelmDiffuse = atlasHelmDiffuse.fromCharacterState(characterState);
-    final spriteBodySouth = atlasBodySouth.fromCharacterState(characterState);
-    final spriteBodyWest = atlasBodyWest.fromCharacterState(characterState);
-    final spriteBodyDiffuse = atlasBodyDiffuse.fromCharacterState(characterState);
+    final spriteBodySouth = atlasArmorSouth.fromCharacterState(characterState);
+    final spriteBodyWest = atlasArmorWest.fromCharacterState(characterState);
+    final spriteBodyDiffuse = atlasArmorDiffuse.fromCharacterState(characterState);
     final spriteHeadSouth = atlasHeadSouth.fromCharacterState(characterState);
     final spriteHeadWest = atlasHeadWest.fromCharacterState(characterState);
     final spriteHeadDiffuse = atlasHeadDiffuse.fromCharacterState(characterState);

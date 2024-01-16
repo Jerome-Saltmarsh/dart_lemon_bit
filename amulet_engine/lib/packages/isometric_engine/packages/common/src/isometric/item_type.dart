@@ -3,7 +3,7 @@ import '../src.dart';
 class ItemType {
   static const Weapon = 1;
   static const Helm = 2;
-  static const Body = 3;
+  static const Armor = 3;
   static const Legs = 4;
   static const Object = 5;
   static const Consumable = 6;
@@ -15,7 +15,7 @@ class ItemType {
   static const collections = {
     Weapon: WeaponType.values,
     Helm: HelmType.values,
-    Body: BodyType.values,
+    Armor: ArmorType.values,
     Legs: LegType.values,
     Hand: HandType.values,
     Object: GameObjectType.values,
@@ -27,7 +27,7 @@ class ItemType {
       Helm: 'Helm',
       Weapon: 'Weapon',
       Legs: 'Legs',
-      Body: 'Body',
+      Armor: 'Armor',
       Hand: 'Hands',
       Object: 'Object',
       Consumable: 'Consumable',
@@ -38,7 +38,7 @@ class ItemType {
 
   static String getNameSubType(int type, int subType) => switch (type) {
       Helm => HelmType.getName(subType),
-      Body => BodyType.getName(subType),
+      Armor => ArmorType.getName(subType),
       Legs => LegType.getName(subType),
       Object => GameObjectType.getName(subType),
       Hand => HandType.getName(subType),
@@ -58,7 +58,7 @@ class ItemType {
   static const values = [
     Weapon,
     Legs,
-    Body,
+    Armor,
     Helm,
     Object,
     Consumable,

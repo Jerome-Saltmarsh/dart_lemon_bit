@@ -13,7 +13,7 @@ void renderCharacterFront({
   required int gender,
   required int helmType,
   required int headType,
-  required int bodyType,
+  required int armorType,
   required int shoeType,
   required int legsType,
   required int hairType,
@@ -28,7 +28,7 @@ void renderCharacterFront({
   final helm = sprites.helm[helmType]?.fromCharacterState(characterState);
   final head = sprites.head[headType]?.fromCharacterState(characterState) ?? (throw Exception());
   final bodySprite = isMale ? sprites.bodyMale : sprites.bodyFemale;
-  final body = bodySprite[bodyType] ?.fromCharacterState(characterState);
+  final body = bodySprite[armorType] ?.fromCharacterState(characterState);
   final torso = sprites.torso[gender]?.fromCharacterState(characterState) ?? (throw Exception());
   final shoes = sprites.shoes[shoeType]
       ?.fromCharacterState(characterState);

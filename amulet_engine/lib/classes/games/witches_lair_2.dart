@@ -22,7 +22,7 @@ class WitchesLair2 extends AmuletGame {
         z: scene.getIndexZ(indexSpawnWitch),
     )
       ..complexion = ComplexionType.fair
-      ..bodyType = BodyType.Shirt_Blue
+      ..bodyType = ArmorType.Tunic
       ..legsType = LegType.Leather
       ..shoeType = ShoeType.Iron_Plates
       ..handTypeLeft = HandType.Gauntlets

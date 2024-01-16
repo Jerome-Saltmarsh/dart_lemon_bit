@@ -389,7 +389,7 @@ class AmuletPlayer extends IsometricPlayer with
       case ItemType.Helm:
         equipHelm(amuletItem);
         return true;
-      case ItemType.Body:
+      case ItemType.Armor:
         equipBody(amuletItem);
         return true;
       case ItemType.Legs:
@@ -539,7 +539,7 @@ class AmuletPlayer extends IsometricPlayer with
       case ItemType.Helm:
         swapAmuletItemSlots(equippedHelm, itemSlot);
         break;
-      case ItemType.Body:
+      case ItemType.Armor:
         swapAmuletItemSlots(equippedBody, itemSlot);
         break;
       case ItemType.Legs:

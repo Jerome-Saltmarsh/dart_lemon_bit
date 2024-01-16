@@ -210,9 +210,9 @@ class IsometricImages with IsometricComponent {
       kidCharacterSpritesIsometric.shoes[0] = spriteGroupEmpty;
     }
 
-    loadSpriteGroupFront(type: SpriteGroupType.Body_Male, subType: BodyType.Shirt_Blue);
-    loadSpriteGroupFront(type: SpriteGroupType.Body_Male, subType: BodyType.Leather_Armour);
-    loadSpriteGroupFront(type: SpriteGroupType.Body_Female, subType: BodyType.Leather_Armour);
+    loadSpriteGroupFront(type: SpriteGroupType.Armor, subType: ArmorType.Tunic);
+    // loadSpriteGroupFront(type: SpriteGroupType.Body_Male, subType: ArmorType.Leather_Armour);
+    // loadSpriteGroupFront(type: SpriteGroupType.Body_Female, subType: ArmorType.Leather_Armour);
     loadSpriteGroupFront(type: SpriteGroupType.Hand_Left, subType: HandType.Gauntlets);
     loadSpriteGroupFront(type: SpriteGroupType.Hand_Right, subType: HandType.Gauntlets);
     loadSpriteGroupFront(type: SpriteGroupType.Head, subType: HeadType.boy);
@@ -248,7 +248,12 @@ class IsometricImages with IsometricComponent {
       RenderDirection.west,
       RenderDirection.diffuse,
     ]){
-      for (final bodyType in BodyType.values) {
+      for (final bodyType in ArmorType.values) {
+        loadSpriteGroupIsometric(
+          direction: direction,
+          type: SpriteGroupType.Armor,
+          subType: bodyType,
+        );
         loadSpriteGroupIsometric(
           direction: direction,
           type: SpriteGroupType.Body_Female,
@@ -465,7 +470,7 @@ class IsometricImages with IsometricComponent {
       ItemType.Weapon: atlas_weapons,
       ItemType.Object: atlas_gameobjects,
       ItemType.Helm: atlas_helms,
-      ItemType.Body: atlas_body,
+      ItemType.Armor: atlas_body,
       ItemType.Legs: atlas_legs,
       ItemType.Shoes: atlas_shoes,
       ItemType.Consumable: atlas_consumables,

@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:amulet_flutter/gamestream/isometric/atlases/atlas.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_amulet_item.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_images.dart';
@@ -250,32 +249,33 @@ class RendererGameObjects extends RenderGroup {
       return;
     }
 
-    final isCollectable = type == ItemType.Amulet_Item;
+    final isAmuletItem = type == ItemType.Amulet_Item;
 
-    if (isCollectable){
+    if (isAmuletItem){
       renderBouncingGameObjectShadow(gameObject);
+
+      final src = atlasSrcAmuletItem[AmuletItem.values[subType]] ?? const[0, 0];
+
+      engine.renderSprite(
+          image: images.atlas_amulet_items,
+          dstX: gameObject.renderX,
+          dstY: isAmuletItem ? getRenderYBouncing(gameObject) : gameObject.renderY,
+          srcX: src[0],
+          srcY: src[1],
+          srcWidth: 32,
+          srcHeight: 32,
+          scale: 1.0,
+          color: switch (gameObject.emissionType){
+            EmissionType.None => scene.getRenderColorPosition(gameObject),
+            EmissionType.Ambient => scene.getRenderColorPosition(gameObject),
+            EmissionType.Color => gameObject.emissionColor,
+            EmissionType.Zero => 0,
+            _ => throw Exception()
+          }
+      );
+      return;
     }
-
-    final src = atlasSrcAmuletItem[AmuletItem.values[subType]] ?? const[0, 0];
-
-    engine.renderSprite(
-      image: images.atlas_amulet_items,
-      dstX: gameObject.renderX,
-      dstY: isCollectable ? getRenderYBouncing(gameObject) : gameObject.renderY,
-      srcX: src[0],
-      srcY: src[1],
-      srcWidth: 32,
-      srcHeight: 32,
-      scale: 1.0,
-      color: switch (gameObject.emissionType){
-         EmissionType.None => scene.getRenderColorPosition(gameObject),
-         EmissionType.Ambient => scene.getRenderColorPosition(gameObject),
-         EmissionType.Color => gameObject.emissionColor,
-         EmissionType.Zero => 0,
-         _ => throw Exception()
-      }
-    );
-
+    // throw Exception('rendererGameObjects.')
   }
 
   void renderCrateWooden(

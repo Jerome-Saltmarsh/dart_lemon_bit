@@ -230,7 +230,7 @@ class AmuletGameTutorial extends AmuletGame {
       ..complexion = 0
       ..invincible = true
       ..legsType = LegType.Leather
-      ..bodyType = BodyType.Leather_Armour;
+      ..bodyType = ArmorType.Leather;
 
     add(guide);
     deactivate(guide);

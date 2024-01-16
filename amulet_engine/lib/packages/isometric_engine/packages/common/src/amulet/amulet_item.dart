@@ -2,17 +2,13 @@ import '../../src.dart';
 import 'package:collection/collection.dart';
 
 // armour
-  // warrior
+  // neutral
     // tunic
+  // warrior
     // leather
-    // scale
-    // splint
-    // banded
     // chainmail
     // platemail
-    // brigandine
  // wizard
-    // cowl
     // robes
     // garb
     // attire
@@ -23,19 +19,17 @@ import 'package:collection/collection.dart';
 
 // helm
   // warrior
+    // light cap
     // leather cap
     // steel helm
-    // great helm
   // wizard
     // pointed hat
-    // circlet
+    // cowl
     // crest
-    // diadem
-    // turban
   // rogue
+    // feathered cap
     // hood
     // cape
-    // veil
 
 // shoes
   // warrior
@@ -50,6 +44,18 @@ import 'package:collection/collection.dart';
     // treads
     // footwraps
     // shoes
+
+
+// stash
+  // scalemail
+  // splint
+  // banded
+  // brigandine
+  // veil
+  // diadem
+  // turban
+  // circlet
+  // great helm
 
 enum AmuletItem {
   Weapon_Sword_1_5_Common(
@@ -218,11 +224,11 @@ enum AmuletItem {
     skillMagicCost: 4,
   ),
   Armor_Neutral_1_5_Common(
-    label: 'Shirt',
+    label: 'tunic',
     levelMin: 1,
     levelMax: 5,
-    type: ItemType.Body,
-    subType: BodyType.Shirt_Blue,
+    type: ItemType.Armor,
+    subType: ArmorType.Tunic,
     quality: ItemQuality.Common,
     defense: 1,
   ),
@@ -230,8 +236,8 @@ enum AmuletItem {
     label: 'Common Tunic',
     levelMin: 1,
     levelMax: 5,
-    type: ItemType.Body,
-    subType: BodyType.Tunic,
+    type: ItemType.Armor,
+    subType: ArmorType.Leather,
     quality: ItemQuality.Common,
     defense: 10,
     skillType: SkillType.Might,
@@ -243,26 +249,28 @@ enum AmuletItem {
     label: 'Rare Tunic',
     levelMin: 1,
     levelMax: 5,
-    type: ItemType.Body,
-    subType: BodyType.Tunic,
+    type: ItemType.Armor,
+    subType: ArmorType.Leather,
     quality: ItemQuality.Rare,
     defense: 15,
+    regenHealth: 1,
   ),
   Armor_Warrior_1_5_Legendary(
     label: 'Legendary Tunic',
     levelMin: 1,
     levelMax: 5,
-    type: ItemType.Body,
-    subType: BodyType.Tunic,
+    type: ItemType.Armor,
+    subType: ArmorType.Leather,
     quality: ItemQuality.Legendary,
     defense: 20,
+    regenHealth: 2,
   ),
   Armor_Wizard_1_5_Common(
     label: 'Common Cowl',
     levelMin: 1,
     levelMax: 5,
-    type: ItemType.Body,
-    subType: BodyType.Cowl,
+    type: ItemType.Armor,
+    subType: ArmorType.Robe,
     quality: ItemQuality.Common,
     defense: 5,
     regenMagic: 1,
@@ -272,8 +280,8 @@ enum AmuletItem {
     label: 'Rare Cowl',
     levelMin: 1,
     levelMax: 5,
-    type: ItemType.Body,
-    subType: BodyType.Cowl,
+    type: ItemType.Armor,
+    subType: ArmorType.Robe,
     quality: ItemQuality.Rare,
     defense: 8,
     magic: 10,
@@ -282,8 +290,8 @@ enum AmuletItem {
     label: 'Legendary Cowl',
     levelMin: 1,
     levelMax: 5,
-    type: ItemType.Body,
-    subType: BodyType.Cowl,
+    type: ItemType.Armor,
+    subType: ArmorType.Robe,
     quality: ItemQuality.Legendary,
     defense: 10,
     magic: 15,
@@ -292,8 +300,8 @@ enum AmuletItem {
     label: 'Common Cloak',
     levelMin: 1,
     levelMax: 5,
-    type: ItemType.Body,
-    subType: BodyType.Cloak,
+    type: ItemType.Armor,
+    subType: ArmorType.Cloak,
     quality: ItemQuality.Common,
     defense: 7,
   ),
@@ -301,8 +309,8 @@ enum AmuletItem {
     label: 'Rare Cloak',
     levelMin: 1,
     levelMax: 5,
-    type: ItemType.Body,
-    subType: BodyType.Cloak,
+    type: ItemType.Armor,
+    subType: ArmorType.Cloak,
     quality: ItemQuality.Rare,
     defense: 9,
   ),
@@ -310,8 +318,8 @@ enum AmuletItem {
     label: 'Legendary Cloak',
     levelMin: 1,
     levelMax: 5,
-    type: ItemType.Body,
-    subType: BodyType.Cloak,
+    type: ItemType.Armor,
+    subType: ArmorType.Cloak,
     quality: ItemQuality.Legendary,
     defense: 12,
   ),
@@ -440,7 +448,7 @@ enum AmuletItem {
 
   bool get isConsumable => type == ItemType.Consumable;
 
-  bool get isBody => type == ItemType.Body;
+  bool get isBody => type == ItemType.Armor;
 
   bool get isLegs => type == ItemType.Legs;
 
