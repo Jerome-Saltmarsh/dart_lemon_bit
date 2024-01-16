@@ -256,34 +256,34 @@ class Amulet extends IsometricGame {
     }
   }
 
-  void reportItemSlotDragged({
-    required ItemSlot src,
-    required ItemSlot target,
-  }) =>
-    server.sendNetworkRequest(
-      NetworkRequest.Inventory_Request,
-      '${NetworkRequestInventory.Move.index} '
-      '${src.slotType.index} '
-      '${src.index} '
-      '${target.slotType.index} '
-      '${target.index}'
-    );
+  // void reportItemSlotDragged({
+  //   required ItemSlot src,
+  //   required ItemSlot target,
+  // }) =>
+  //   server.sendNetworkRequest(
+  //     NetworkRequest.Inventory_Request,
+  //     '${NetworkRequestInventory.Move.index} '
+  //     '${src.slotType.index} '
+  //     '${src.index} '
+  //     '${target.slotType.index} '
+  //     '${target.index}'
+  //   );
 
-  void useItemSlot(ItemSlot itemSlot) =>
-    server.sendNetworkRequest(
-      NetworkRequest.Inventory_Request,
-      '${NetworkRequestInventory.Use.index} '
-      '${itemSlot.slotType.index} '
-      '${itemSlot.index}'
-    );
+  // void useItemSlot(ItemSlot itemSlot) =>
+  //   server.sendNetworkRequest(
+  //     NetworkRequest.Inventory_Request,
+  //     '${NetworkRequestInventory.Use.index} '
+  //     '${itemSlot.slotType.index} '
+  //     '${itemSlot.index}'
+  //   );
 
-  void dropItemSlot(ItemSlot itemSlot) =>
-    server.sendNetworkRequest(
-      NetworkRequest.Inventory_Request,
-      '${NetworkRequestInventory.Drop.index} '
-      '${itemSlot.slotType.index} '
-      '${itemSlot.index}'
-    );
+  // void dropItemSlot(ItemSlot itemSlot) =>
+  //   server.sendNetworkRequest(
+  //     NetworkRequest.Inventory_Request,
+  //     '${NetworkRequestInventory.Drop.index} '
+  //     '${itemSlot.slotType.index} '
+  //     '${itemSlot.index}'
+  //   );
 
   void dropItemTypeWeapon() => dropItemType(ItemType.Weapon);
 
