@@ -460,10 +460,10 @@ class IsometricImages with IsometricComponent {
       ItemType.Object: atlas_gameobjects,
       ItemType.Helm: atlas_helms,
       ItemType.Armor: atlas_body,
-      ItemType.Legs: atlas_legs,
+      // ItemType.Legs: atlas_legs,
       ItemType.Shoes: atlas_shoes,
       ItemType.Consumable: atlas_consumables,
-      ItemType.Hand: atlas_hands,
+      // ItemType.Hand: atlas_hands,
       ItemType.Spell: atlas_spells,
     };
 

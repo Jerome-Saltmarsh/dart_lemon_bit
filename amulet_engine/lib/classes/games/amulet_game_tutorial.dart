@@ -229,7 +229,7 @@ class AmuletGameTutorial extends AmuletGame {
       ..autoTarget = false
       ..complexion = 0
       ..invincible = true
-      ..legsType = LegType.Leather
+      // ..legsType = LegType.Leather
       ..bodyType = ArmorType.Leather;
 
     add(guide);
@@ -564,11 +564,11 @@ class AmuletGameTutorial extends AmuletGame {
       //     startNextTutorialObjective(player);
       //   }
       //   break;
-      case AmuletItem.Weapon_Bow_1_5_Common:
-        if (player.tutorialObjective == QuestTutorial.Acquire_Bow){
-          startNextTutorialObjective(player);
-        }
-        break;
+      // case AmuletItem.Weapon_Bow_1_5_Common:
+      //   if (player.tutorialObjective == QuestTutorial.Acquire_Bow){
+      //     startNextTutorialObjective(player);
+      //   }
+      //   break;
       default:
         break;
     }

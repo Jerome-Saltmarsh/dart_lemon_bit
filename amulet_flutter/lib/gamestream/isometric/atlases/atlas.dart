@@ -1,12 +1,10 @@
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_spells.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/src.dart';
 import 'package:amulet_engine/packages/common.dart';
-import 'atlas_src_hands.dart';
 import 'atlas_src_shoes.dart';
 
 
 class Atlas {
-
   static const SrcX = 0;
   static const SrcY = 1;
   static const SrcWidth = 2;
@@ -57,10 +55,10 @@ class Atlas {
     ItemType.Weapon: atlasSrcWeapons,
     ItemType.Helm: atlasSrcHelm,
     ItemType.Armor: atlasSrcArmor,
-    ItemType.Legs: atlasSrcLegs,
+    // ItemType.Legs: atlasSrcLegs,
     ItemType.Shoes: atlasSrcShoes,
     ItemType.Object: Collection_Objects,
-    ItemType.Hand: atlasSrcHands,
+    // ItemType.Hand: atlasSrcHands,
     ItemType.Consumable: atlasSrcConsumables,
     ItemType.Spell: atlasSrcSpells,
   };

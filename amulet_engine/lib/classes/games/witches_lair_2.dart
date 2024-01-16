@@ -23,9 +23,9 @@ class WitchesLair2 extends AmuletGame {
     )
       ..complexion = ComplexionType.fair
       ..bodyType = ArmorType.Tunic
-      ..legsType = LegType.Leather
+      // ..legsType = LegType.Leather
       ..shoeType = ShoeType.Iron_Plates
-      ..handTypeLeft = HandType.Gauntlets
+      // ..handTypeLeft = HandType.Gauntlets
       ..hairType = HairType.basic_2
       ..hairColor = 17
       ..helmType = HelmType.Pointed_Hat;

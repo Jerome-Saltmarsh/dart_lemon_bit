@@ -56,7 +56,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..helmType = HelmType.Steel_Helm
       ..bodyType = ArmorType.Leather
       ..shoeType = ShoeType.Leather_Boots
-      ..legsType = LegType.Leather
+      // ..legsType = LegType.Leather
       ..interact = onInteractWithWarren
       ..complexion = ComplexionType.fair;
 
@@ -78,8 +78,8 @@ class AmuletGameWorld11 extends AmuletGame {
       ..invincible = true
       ..helmType = HelmType.Leather_Cap
       ..bodyType = ArmorType.Leather
-      ..legsType = LegType.Leather
-      ..handTypeLeft = HandType.Leather_Gloves
+      // ..legsType = LegType.Leather
+      // ..handTypeLeft = HandType.Leather_Gloves
       ..shoeType = ShoeType.Iron_Plates
       ..weaponType = WeaponType.Bow
       ..chanceOfSetTarget = 1.0
@@ -103,8 +103,8 @@ class AmuletGameWorld11 extends AmuletGame {
       ..invincible = true
       ..helmType = HelmType.Steel_Helm
       ..bodyType = ArmorType.Leather
-      ..legsType = LegType.Leather
-      ..handTypeLeft = HandType.Leather_Gloves
+      // ..legsType = LegType.Leather
+      // ..handTypeLeft = HandType.Leather_Gloves
       ..weaponType = WeaponType.Bow
       ..shoeType = ShoeType.Iron_Plates
       ..chanceOfSetTarget = 1.0
@@ -131,9 +131,9 @@ class AmuletGameWorld11 extends AmuletGame {
       ..hairType = 2
       ..hairColor = 30
       ..bodyType = ArmorType.Tunic
-      ..legsType = LegType.Leather
+      // ..legsType = LegType.Leather
       ..shoeType = ShoeType.Leather_Boots
-      ..handTypeLeft = HandType.None
+      // ..handTypeLeft = HandType.None
       ..weaponType = WeaponType.Unarmed
       ..gender = Gender.female
       ..interact = onInteractWithMay
@@ -160,9 +160,9 @@ class AmuletGameWorld11 extends AmuletGame {
       ..hairType = 2
       ..hairColor = 30
       ..bodyType = ArmorType.Tunic
-      ..legsType = LegType.Leather
+      // ..legsType = LegType.Leather
       ..shoeType = ShoeType.Leather_Boots
-      ..handTypeLeft = HandType.None
+      // ..handTypeLeft = HandType.None
       ..weaponType = WeaponType.Unarmed
       ..gender = Gender.female
       ..interact = onInteractWithSophie
@@ -190,8 +190,8 @@ class AmuletGameWorld11 extends AmuletGame {
       ..autoTarget = false
       ..bodyType = ArmorType.Leather
       ..shoeType = ShoeType.Leather_Boots
-      ..legsType = LegType.Leather
-      ..handTypeLeft = HandType.None
+      // ..legsType = LegType.Leather
+      // ..handTypeLeft = HandType.None
       ..weaponType = WeaponType.Staff
       ..gender = Gender.male
       ..interact = onInteractWithTraveller

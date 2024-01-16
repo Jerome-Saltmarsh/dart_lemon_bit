@@ -83,12 +83,12 @@ class Amulet extends IsometricGame {
         return equippedBody;
       case SlotType.Shoes:
         return equippedShoes;
-      case SlotType.Legs:
-        return equippedLegs;
-      case SlotType.Hand_Left:
-        return equippedHandLeft;
-      case SlotType.Hand_Right:
-        return equippedHandRight;
+      // case SlotType.Legs:
+      //   return equippedLegs;
+      // case SlotType.Hand_Left:
+      //   return equippedHandLeft;
+      // case SlotType.Hand_Right:
+      //   return equippedHandRight;
       default:
         return null;
     }

@@ -153,11 +153,11 @@ class ServerLocal implements Server {
       playerServer.headType = headType;
       playerServer.tutorialObjective = QuestTutorial.values.first;
       playerServer.equippedHelm.amuletItem = null;
-      playerServer.equippedHandLeft.amuletItem = null;
-      playerServer.equippedHandRight.amuletItem = null;
-      playerServer.equippedShoe.amuletItem = null;
-      playerServer.equippedBody.amuletItem = AmuletItem.Armor_Neutral_1_5_Common;
-      playerServer.equippedLegs.amuletItem = null;
+      // playerServer.equippedHandLeft.amuletItem = null;
+      // playerServer.equippedHandRight.amuletItem = null;
+      playerServer.equippedShoes.amuletItem = null;
+      playerServer.equippedArmor.amuletItem = null;
+      // playerServer.equippedLegs.amuletItem = null;
       final json = writeAmuletPlayerToJson(playerServer);
       final characters = getCharacters();
       characters.add(json);

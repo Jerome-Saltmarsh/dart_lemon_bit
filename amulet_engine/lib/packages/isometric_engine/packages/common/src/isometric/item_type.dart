@@ -4,20 +4,20 @@ class ItemType {
   static const Weapon = 1;
   static const Helm = 2;
   static const Armor = 3;
-  static const Legs = 4;
+  static const Shoes = 4;
+  // static const Legs = 4;
   static const Object = 5;
   static const Consumable = 6;
-  static const Hand = 7;
-  static const Shoes = 9;
-  static const Spell = 10;
-  static const Amulet_Item = 11;
+  // static const Hand = 7;
+  static const Spell = 7;
+  static const Amulet_Item = 8;
 
   static const collections = {
     Weapon: WeaponType.values,
     Helm: HelmType.values,
     Armor: ArmorType.values,
-    Legs: LegType.values,
-    Hand: HandType.values,
+    // Legs: LegType.values,
+    // Hand: HandType.values,
     Object: GameObjectType.values,
     Consumable: ConsumableType.values,
     Spell: SpellType.values,
@@ -26,9 +26,9 @@ class ItemType {
   static String getName(int value) => const {
       Helm: 'Helm',
       Weapon: 'Weapon',
-      Legs: 'Legs',
+      // Legs: 'Legs',
       Armor: 'Armor',
-      Hand: 'Hands',
+      // Hand: 'Hands',
       Object: 'Object',
       Consumable: 'Consumable',
       Shoes: 'Shoes',
@@ -39,9 +39,9 @@ class ItemType {
   static String getNameSubType(int type, int subType) => switch (type) {
       Helm => HelmType.getName(subType),
       Armor => ArmorType.getName(subType),
-      Legs => LegType.getName(subType),
+      // Legs => LegType.getName(subType),
       Object => GameObjectType.getName(subType),
-      Hand => HandType.getName(subType),
+      // Hand => HandType.getName(subType),
       Weapon => WeaponType.getName(subType),
       Consumable => ConsumableType.getName(subType),
       Shoes => ShoeType.getName(subType),
@@ -57,7 +57,7 @@ class ItemType {
 
   static const values = [
     Weapon,
-    Legs,
+    // Legs,
     Armor,
     Helm,
     Object,

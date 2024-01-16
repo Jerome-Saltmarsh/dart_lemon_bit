@@ -12,8 +12,8 @@ void writeJsonToAmuletPlayer(
   player.equipBody(AmuletItem.findByName(json.body), force: true);
   player.equipShoes(AmuletItem.findByName(json.shoes), force: true);
 
-  player.equipHandLeft(null, force: true);
-  player.equipHandRight(null, force: true);
+  // player.equipHandLeft(null, force: true);
+  // player.equipHandRight(null, force: true);
 
   final itemNames = json.tryGetList<String>('items');
   if (itemNames != null){

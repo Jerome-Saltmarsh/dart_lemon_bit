@@ -29,16 +29,16 @@ class ItemSlot {
     switch (slotType){
       case SlotType.Weapon:
         return srcItem.isWeapon;
-      case SlotType.Hand_Left:
-        return srcItem.isHand;
-      case SlotType.Hand_Right:
-        return srcItem.isHand;
+      // case SlotType.Hand_Left:
+      //   return srcItem.isHand;
+      // case SlotType.Hand_Right:
+      //   return srcItem.isHand;
       case SlotType.Helm:
         return srcItem.isHelm;
       case SlotType.Body:
         return srcItem.isBody;
-      case SlotType.Legs:
-        return srcItem.isLegs;
+      // case SlotType.Legs:
+      //   return srcItem.isLegs;
       case SlotType.Shoes:
         return srcItem.isShoes;
       case SlotType.Item:

@@ -195,15 +195,15 @@ class IsometricPlayer with IsometricComponent {
       case NetworkResponsePlayer.BodyType:
         readBodyType();
         break;
-      case NetworkResponsePlayer.LegsType:
-        readLegsType();
-        break;
-      case NetworkResponsePlayer.HandTypeLeft:
-        readHandTypeLeft();
-        break;
-      case NetworkResponsePlayer.HandTypeRight:
-        readHandTypeRight();
-        break;
+      // case NetworkResponsePlayer.LegsType:
+      //   readLegsType();
+      //   break;
+      // case NetworkResponsePlayer.HandTypeLeft:
+      //   readHandTypeLeft();
+      //   break;
+      // case NetworkResponsePlayer.HandTypeRight:
+      //   readHandTypeRight();
+      //   break;
       case NetworkResponsePlayer.HairType:
         readHairType();
         break;
@@ -316,17 +316,17 @@ class IsometricPlayer with IsometricComponent {
     updateIndexes();
   }
 
-  void readHandTypeRight() {
-    handTypeRight.value = parser.readByte();
-  }
+  // void readHandTypeRight() {
+  //   handTypeRight.value = parser.readByte();
+  // }
 
-  void readHandTypeLeft() {
-    handTypeLeft.value = parser.readByte();
-  }
+  // void readHandTypeLeft() {
+  //   handTypeLeft.value = parser.readByte();
+  // }
 
-  void readLegsType() {
-    legsType.value = parser.readByte();
-  }
+  // void readLegsType() {
+  //   legsType.value = parser.readByte();
+  // }
 
   void readBodyType() {
     bodyType.value = parser.readByte();

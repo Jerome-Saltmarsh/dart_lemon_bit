@@ -5,10 +5,10 @@ enum SlotType {
   Item,
   Weapon,
   Body,
-  Hand_Left,
-  Hand_Right,
+  // Hand_Left,
+  // Hand_Right,
   Helm,
-  Legs,
+  // Legs,
   Shoes;
 
   bool supportsItemType(int? itemType) {
@@ -20,10 +20,10 @@ enum SlotType {
     return switch (this){
         Weapon => itemType == ItemType.Weapon,
         Helm => itemType == ItemType.Helm,
-        Legs => itemType == ItemType.Legs,
+        // Legs => itemType == ItemType.Legs,
         Body => itemType == ItemType.Armor,
-        Hand_Left => itemType == ItemType.Hand,
-        Hand_Right => itemType == ItemType.Hand,
+        // Hand_Left => itemType == ItemType.Hand,
+        // Hand_Right => itemType == ItemType.Hand,
         Shoes => itemType == ItemType.Shoes,
         Item => true
       };

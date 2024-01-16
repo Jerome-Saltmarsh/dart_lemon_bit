@@ -160,7 +160,7 @@ class RendererCharacters extends RenderGroup {
     final helmType = character.helmType;
     final legType = character.legType;
     final gender = character.gender;
-    final armorType = character.armorType;
+    final armorType = character.armorType == 0 ? ArmorType.Tunic : character.armorType;
     final weaponType = character.weaponType;
     final headType = character.headType;
     final hairType = character.hairType;

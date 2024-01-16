@@ -62,9 +62,9 @@ class Character extends Collider {
   var runZ = 0.0;
   var helmType = HelmType.None;
   var bodyType = ArmorType.None;
-  var legsType = LegType.None;
-  var handTypeLeft = HandType.None;
-  var handTypeRight = HandType.None;
+  // var legsType = LegType.None;
+  // var handTypeLeft = HandType.None;
+  // var handTypeRight = HandType.None;
   var roamEnabled = false;
   var roamNext = 0;
   var roamRadius = 2;
@@ -442,7 +442,7 @@ class Character extends Collider {
     weaponType,
     bodyType,
     helmType,
-    legsType,
+    0, // TODO this was legsType
   );
 
   int get templateDataB => compressBytesToUInt32(
@@ -453,8 +453,8 @@ class Character extends Collider {
   );
 
   int get templateDataC => compressBytesToUInt32(
-    handTypeLeft,
-    handTypeRight,
+    0, // TODO this was handTypeLeft
+    0, // TODO this was handTypeRight,
     hairType,
     hairColor,
   );

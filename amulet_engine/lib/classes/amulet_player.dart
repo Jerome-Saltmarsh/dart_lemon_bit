@@ -111,15 +111,15 @@ class AmuletPlayer extends IsometricPlayer with
        case SlotType.Helm:
          return equippedHelm;
        case SlotType.Body:
-         return equippedBody;
+         return equippedArmor;
        case SlotType.Shoes:
-         return equippedShoe;
-       case SlotType.Legs:
-         return equippedLegs;
-       case SlotType.Hand_Left:
-         return equippedHandLeft;
-       case SlotType.Hand_Right:
-         return equippedHandRight;
+         return equippedShoes;
+       // case SlotType.Legs:
+       //   return equippedLegs;
+       // case SlotType.Hand_Left:
+       //   return equippedHandLeft;
+       // case SlotType.Hand_Right:
+       //   return equippedHandRight;
        default:
          return null;
      }
@@ -392,9 +392,9 @@ class AmuletPlayer extends IsometricPlayer with
       case ItemType.Armor:
         equipBody(amuletItem);
         return true;
-      case ItemType.Legs:
-        equipLegs(amuletItem);
-        return true;
+      // case ItemType.Legs:
+      //   equipLegs(amuletItem);
+      //   return true;
       case ItemType.Shoes:
         equipShoes(amuletItem);
         return true;
@@ -540,18 +540,18 @@ class AmuletPlayer extends IsometricPlayer with
         swapAmuletItemSlots(equippedHelm, itemSlot);
         break;
       case ItemType.Armor:
-        swapAmuletItemSlots(equippedBody, itemSlot);
+        swapAmuletItemSlots(equippedArmor, itemSlot);
         break;
-      case ItemType.Legs:
-        swapAmuletItemSlots(equippedLegs, itemSlot);
-        break;
-      case ItemType.Hand:
-        if (equippedHandLeft.amuletItem == null){
-          swapAmuletItemSlots(equippedHandLeft, itemSlot);
-        } else {
-          swapAmuletItemSlots(equippedHandRight, itemSlot);
-        }
-        break;
+      // case ItemType.Legs:
+      //   swapAmuletItemSlots(equippedLegs, itemSlot);
+      //   break;
+      // case ItemType.Hand:
+      //   if (equippedHandLeft.amuletItem == null){
+      //     swapAmuletItemSlots(equippedHandLeft, itemSlot);
+      //   } else {
+      //     swapAmuletItemSlots(equippedHandRight, itemSlot);
+      //   }
+      //   break;
     }
   }
 
@@ -618,12 +618,12 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
 
-    if (equippedBody == item) {
+    if (equippedArmor == item) {
       return;
     }
 
     if (item == null){
-      clearSlot(equippedBody);
+      clearSlot(equippedArmor);
       bodyType = 0;
       return;
     }
@@ -633,7 +633,7 @@ class AmuletPlayer extends IsometricPlayer with
     }
 
     setSlot(
-      slot: equippedBody,
+      slot: equippedArmor,
       item: item,
       cooldown: 0,
     );
@@ -641,100 +641,100 @@ class AmuletPlayer extends IsometricPlayer with
     bodyType = item.subType;
   }
 
-  void equipLegs(AmuletItem? item, {bool force = false}){
-    if (deadOrBusy && !force) {
-      return;
-    }
+  // void equipLegs(AmuletItem? item, {bool force = false}){
+  //   if (deadOrBusy && !force) {
+  //     return;
+  //   }
+  //
+  //   if (equippedLegs.amuletItem == item) {
+  //     return;
+  //   }
+  //
+  //   if (item == null){
+  //     clearSlot(equippedLegs);
+  //     legsType = LegType.None;
+  //     return;
+  //   }
+  //
+  //   if (!item.isLegs) {
+  //     throw Exception();
+  //   }
+  //
+  //   setSlot(
+  //       slot: equippedLegs,
+  //       item: item,
+  //       cooldown: 0,
+  //   );
+  //   legsType = item.subType;
+  // }
 
-    if (equippedLegs.amuletItem == item) {
-      return;
-    }
+  // void equipHandLeft(AmuletItem? item, {bool force = false}){
+  //   if (deadOrBusy && !force) {
+  //     return;
+  //   }
+  //
+  //   if (equippedHandLeft.amuletItem == item) {
+  //     return;
+  //   }
+  //
+  //   if (item == null){
+  //     clearSlot(equippedHandLeft);
+  //     handTypeLeft = HandType.None;
+  //     return;
+  //   }
+  //
+  //   if (!item.isHand) {
+  //     throw Exception();
+  //   }
+  //
+  //   setSlot(
+  //     slot: equippedHandLeft,
+  //     item: item,
+  //     cooldown: 0,
+  //   );
+  //
+  //   handTypeLeft = item.subType;
+  // }
 
-    if (item == null){
-      clearSlot(equippedLegs);
-      legsType = LegType.None;
-      return;
-    }
-
-    if (!item.isLegs) {
-      throw Exception();
-    }
-
-    setSlot(
-        slot: equippedLegs,
-        item: item,
-        cooldown: 0,
-    );
-    legsType = item.subType;
-  }
-
-  void equipHandLeft(AmuletItem? item, {bool force = false}){
-    if (deadOrBusy && !force) {
-      return;
-    }
-
-    if (equippedHandLeft.amuletItem == item) {
-      return;
-    }
-
-    if (item == null){
-      clearSlot(equippedHandLeft);
-      handTypeLeft = HandType.None;
-      return;
-    }
-
-    if (!item.isHand) {
-      throw Exception();
-    }
-
-    setSlot(
-      slot: equippedHandLeft,
-      item: item,
-      cooldown: 0,
-    );
-
-    handTypeLeft = item.subType;
-  }
-
-  void equipHandRight(AmuletItem? item, {bool force = false}){
-    if (deadOrBusy && !force) {
-      return;
-    }
-
-    if (equippedHandRight.amuletItem == item) {
-      return;
-    }
-
-    if (item == null){
-      clearSlot(equippedHandRight);
-      handTypeRight = HandType.None;
-      return;
-    }
-
-    if (!item.isHand) {
-      throw Exception();
-    }
-
-    setSlot(
-      slot: equippedHandRight,
-      item: item,
-      cooldown: 0,
-    );
-
-    handTypeRight = item.subType;
-  }
+  // void equipHandRight(AmuletItem? item, {bool force = false}){
+  //   if (deadOrBusy && !force) {
+  //     return;
+  //   }
+  //
+  //   // if (equippedHandRight.amuletItem == item) {
+  //   //   return;
+  //   // }
+  //
+  //   // if (item == null){
+  //   //   clearSlot(equippedHandRight);
+  //   //   handTypeRight = HandType.None;
+  //   //   return;
+  //   // }
+  //
+  //   if (!item.isHand) {
+  //     throw Exception();
+  //   }
+  //
+  //   setSlot(
+  //     slot: equippedHandRight,
+  //     item: item,
+  //     cooldown: 0,
+  //   );
+  //
+  //   handTypeRight = item.subType;
+  // }
 
   void equipShoes(AmuletItem? item, {bool force = false}){
     if (deadOrBusy && !force) {
       return;
     }
 
-    if (equippedShoe.amuletItem == item) {
+    if (equippedShoes.amuletItem == item) {
       return;
     }
 
     if (item == null){
-      clearSlot(equippedShoe);
+      clearSlot(equippedShoes);
       shoeType = ShoeType.None;
       return;
     }
@@ -744,7 +744,7 @@ class AmuletPlayer extends IsometricPlayer with
     }
 
     setSlot(
-      slot: equippedShoe,
+      slot: equippedShoes,
       item: item,
       cooldown: 0,
     );
@@ -761,11 +761,11 @@ class AmuletPlayer extends IsometricPlayer with
     weaponType = equippedWeapon.amuletItem?.subType ?? WeaponType.Unarmed;
     equipmentDirty = false;
     helmType = equippedHelm.amuletItem?.subType ?? HelmType.None;
-    bodyType = equippedBody.amuletItem?.subType ?? 0;
-    legsType = equippedLegs.amuletItem?.subType ?? LegType.None;
-    handTypeLeft = equippedHandLeft.amuletItem?.subType ?? HandType.None;
-    handTypeRight = equippedHandRight.amuletItem?.subType ?? HandType.None;
-    shoeType = equippedShoe.amuletItem?.subType ?? HandType.None;
+    bodyType = equippedArmor.amuletItem?.subType ?? 0;
+    // legsType = equippedLegs.amuletItem?.subType ?? LegType.None;
+    // handTypeLeft = equippedHandLeft.amuletItem?.subType ?? HandType.None;
+    // handTypeRight = equippedHandRight.amuletItem?.subType ?? HandType.None;
+    shoeType = equippedShoes.amuletItem?.subType ?? HandType.None;
 
     writeEquipped();
     writePlayerHealth();
@@ -783,11 +783,11 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(NetworkResponseAmulet.Player_Equipped);
     writeAmuletItem(equippedWeapon.amuletItem);
     writeAmuletItem(equippedHelm.amuletItem);
-    writeAmuletItem(equippedBody.amuletItem);
-    writeAmuletItem(equippedLegs.amuletItem);
-    writeAmuletItem(equippedHandLeft.amuletItem);
-    writeAmuletItem(equippedHandRight.amuletItem);
-    writeAmuletItem(equippedShoe.amuletItem);
+    writeAmuletItem(equippedArmor.amuletItem);
+    // writeAmuletItem(equippedLegs.amuletItem);
+    // writeAmuletItem(equippedHandLeft.amuletItem);
+    // writeAmuletItem(equippedHandRight.amuletItem);
+    writeAmuletItem(equippedShoes.amuletItem);
   }
 
   void writeAmuletItem(AmuletItem? value){
@@ -890,13 +890,13 @@ class AmuletPlayer extends IsometricPlayer with
   void unequipHead() =>
       swapWithAvailableItemSlot(equippedHelm);
 
-  void unequipBody() => swapWithAvailableItemSlot(equippedBody);
+  void unequipBody() => swapWithAvailableItemSlot(equippedArmor);
 
-  void unequipLegs() => swapWithAvailableItemSlot(equippedLegs);
+  // void unequipLegs() => swapWithAvailableItemSlot(equippedLegs);
 
-  void unequipHandLeft() => swapWithAvailableItemSlot(equippedHandLeft);
+  // void unequipHandLeft() => swapWithAvailableItemSlot(equippedHandLeft);
 
-  void unequipHandRight() => swapWithAvailableItemSlot(equippedHandRight);
+  // void unequipHandRight() => swapWithAvailableItemSlot(equippedHandRight);
 
   void reportInventoryFull() =>
       writeAmuletError('Inventory is full');
@@ -1024,12 +1024,12 @@ class AmuletPlayer extends IsometricPlayer with
   AmuletItemSlot getItemObjectAtSlotType(SlotType slotType, int index) =>
     switch (slotType) {
       SlotType.Weapon => equippedWeapon,
-      SlotType.Hand_Left => equippedHandLeft,
-      SlotType.Hand_Right => equippedHandRight,
-      SlotType.Body => equippedBody,
+      // SlotType.Hand_Left => equippedHandLeft,
+      // SlotType.Hand_Right => equippedHandRight,
+      SlotType.Body => equippedArmor,
       SlotType.Helm => equippedHelm,
-      SlotType.Legs => equippedLegs,
-      SlotType.Shoes => equippedShoe,
+      // SlotType.Legs => equippedLegs,
+      SlotType.Shoes => equippedShoes,
       SlotType.Item => items[index],
     };
 
@@ -1051,11 +1051,11 @@ class AmuletPlayer extends IsometricPlayer with
       SlotType.Item => items[index],
       SlotType.Weapon => equippedWeapon,
       SlotType.Helm => equippedHelm,
-      SlotType.Body => equippedBody,
-      SlotType.Legs => equippedLegs,
-      SlotType.Hand_Left => equippedHandLeft,
-      SlotType.Hand_Right => equippedHandRight,
-      SlotType.Shoes => equippedShoe
+      SlotType.Body => equippedArmor,
+      // SlotType.Legs => equippedLegs,
+      // SlotType.Hand_Left => equippedHandLeft,
+      // SlotType.Hand_Right => equippedHandRight,
+      SlotType.Shoes => equippedShoes
     };
 
   void inventoryDropSlotType(SlotType slotType, int index) =>
@@ -1202,22 +1202,22 @@ class AmuletPlayer extends IsometricPlayer with
     if (amuletItemSlot == equippedWeapon){
       return SlotType.Weapon;
     }
-    if (amuletItemSlot == equippedHandLeft){
-      return SlotType.Hand_Left;
-    }
-    if (amuletItemSlot == equippedHandRight){
-      return SlotType.Hand_Right;
-    }
+    // if (amuletItemSlot == equippedHandLeft){
+    //   return SlotType.Hand_Left;
+    // }
+    // if (amuletItemSlot == equippedHandRight){
+    //   return SlotType.Hand_Right;
+    // }
     if (amuletItemSlot == equippedHelm){
       return SlotType.Helm;
     }
-    if (amuletItemSlot == equippedBody){
+    if (amuletItemSlot == equippedArmor){
       return SlotType.Body;
     }
-    if (amuletItemSlot == equippedLegs){
-      return SlotType.Legs;
-    }
-    if (amuletItemSlot == equippedShoe){
+    // if (amuletItemSlot == equippedLegs){
+    //   return SlotType.Legs;
+    // }
+    if (amuletItemSlot == equippedShoes){
       return SlotType.Shoes;
     }
     if (items.contains(amuletItemSlot)){
@@ -1466,22 +1466,22 @@ class AmuletPlayer extends IsometricPlayer with
         if (item.isHelm){
           swapAmuletItemSlots(inventorySlot, equippedHelm);
         } else
-        if (item.isLegs){
-          swapAmuletItemSlots(inventorySlot, equippedLegs);
-        } else
+        // if (item.isLegs){
+        //   swapAmuletItemSlots(inventorySlot, equippedLegs);
+        // } else
         if (item.isBody){
-          swapAmuletItemSlots(inventorySlot, equippedBody);
+          swapAmuletItemSlots(inventorySlot, equippedArmor);
         } else
         if (item.isShoes){
-          swapAmuletItemSlots(inventorySlot, equippedShoe);
+          swapAmuletItemSlots(inventorySlot, equippedShoes);
         }
-        if (item.isHand){
-          if (equippedHandLeft.amuletItem == null){
-            swapAmuletItemSlots(inventorySlot, equippedHandLeft);
-          } else {
-            swapAmuletItemSlots(inventorySlot, equippedHandRight);
-          }
-        }
+        // if (item.isHand){
+        //   if (equippedHandLeft.amuletItem == null){
+        //     swapAmuletItemSlots(inventorySlot, equippedHandLeft);
+        //   } else {
+        //     swapAmuletItemSlots(inventorySlot, equippedHandRight);
+        //   }
+        // }
 
         if (item.isConsumable){
           throw Exception('not implemented');
