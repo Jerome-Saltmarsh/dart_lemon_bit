@@ -243,26 +243,6 @@ class IsometricEvents with IsometricComponent {
           );
         }
         break;
-
-      case GameEvent.Spell_Used:
-        final spellType = parser.readByte();
-        switch (spellType){
-          case SpellType.Heal:
-            audio.buff_1.play();
-            for (var i = 0; i < 6; i++) {
-              particles.emitWater(
-                  x: x + giveOrTake(10),
-                  y: y + giveOrTake(10),
-                  z: z,
-              );
-            }
-            break;
-          case SpellType.Blink:
-            audio.dagger_woosh_9.play();
-            particles.spawnParticleConfetti(x, y, z);
-            break;
-        }
-        break;
     }
   }
 

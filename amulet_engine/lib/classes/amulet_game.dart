@@ -722,14 +722,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   void endPlayerInteraction(AmuletPlayer player) =>
       player.endInteraction();
 
-  void useAmuletItemSpellHeal({
-    required Character character,
-  }) {
-    character.health += 10;
-    dispatchGameEventPosition(GameEvent.Spell_Used, character);
-    dispatchByte(SpellType.Heal);
-  }
-
   void onAmuletItemUsed(AmuletPlayer amuletPlayer, AmuletItem amuletItem) {}
 
   void onAmuletItemAcquired(AmuletPlayer amuletPlayer, AmuletItem amuletItem) {}

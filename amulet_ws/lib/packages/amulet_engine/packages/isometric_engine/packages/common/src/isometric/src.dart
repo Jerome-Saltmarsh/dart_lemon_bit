@@ -41,6 +41,5 @@ export 'character_goal.dart';
 export 'slot_type.dart';
 export 'myst_type.dart';
 export 'mark_type.dart';
-export 'leg_type.dart';
 export 'helm_type.dart';
 export 'tree_type.dart';

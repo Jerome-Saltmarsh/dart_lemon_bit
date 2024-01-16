@@ -5,47 +5,35 @@ class ItemType {
   static const Helm = 2;
   static const Armor = 3;
   static const Shoes = 4;
-  // static const Legs = 4;
   static const Object = 5;
   static const Consumable = 6;
-  // static const Hand = 7;
-  static const Spell = 7;
   static const Amulet_Item = 8;
 
   static const collections = {
     Weapon: WeaponType.values,
     Helm: HelmType.values,
     Armor: ArmorType.values,
-    // Legs: LegType.values,
-    // Hand: HandType.values,
     Object: GameObjectType.values,
     Consumable: ConsumableType.values,
-    Spell: SpellType.values,
   };
 
   static String getName(int value) => const {
       Helm: 'Helm',
       Weapon: 'Weapon',
-      // Legs: 'Legs',
       Armor: 'Armor',
-      // Hand: 'Hands',
       Object: 'Object',
       Consumable: 'Consumable',
       Shoes: 'Shoes',
-      Spell: 'Spell',
       Amulet_Item: 'Amulet_Item',
   }[value] ?? 'gameobject-type-unknown-$value';
 
   static String getNameSubType(int type, int subType) => switch (type) {
       Helm => HelmType.getName(subType),
       Armor => ArmorType.getName(subType),
-      // Legs => LegType.getName(subType),
       Object => GameObjectType.getName(subType),
-      // Hand => HandType.getName(subType),
       Weapon => WeaponType.getName(subType),
       Consumable => ConsumableType.getName(subType),
       Shoes => ShoeType.getName(subType),
-      Spell => SpellType.getName(subType),
       _ => throw Exception('GameObjectType.getNameSubType(type: $type, subType: $subType)')
     };
 
