@@ -1,6 +1,5 @@
 import 'package:amulet_flutter/gamestream/isometric/atlases/src.dart';
 import 'package:amulet_engine/packages/common.dart';
-import 'atlas_src_shoes.dart';
 
 
 class Atlas {
@@ -50,15 +49,6 @@ class Atlas {
     GameObjectType.Grenade: AtlasSrcObjects.Grenade,
   };
 
-  static const SrcCollection = <int, Map<int, List<double>>>{
-    ItemType.Weapon: atlasSrcWeapons,
-    ItemType.Helm: atlasSrcHelm,
-    ItemType.Armor: atlasSrcArmor,
-    ItemType.Shoes: atlasSrcShoes,
-    ItemType.Object: Collection_Objects,
-    ItemType.Consumable: atlasSrcConsumables,
-  };
-
   static List<double> getSrc(int type, int subType) {
 
     if (type == ItemType.Amulet_Item){
@@ -67,9 +57,14 @@ class Atlas {
       ));
     }
 
-    return SrcCollection[type]?[subType] ??
-      (throw Exception(
+    if (type == ItemType.Object){
+      return Collection_Objects[subType] ?? (throw Exception(
           'Atlas.getSrc(type: ${ItemType.getName(type)}, subType: ${ItemType.getNameSubType(type, subType)})'
       ));
+    }
+
+    throw Exception(
+        'Atlas.getSrc(type: ${ItemType.getName(type)}, subType: ${ItemType.getNameSubType(type, subType)})'
+    );
   }
 }
