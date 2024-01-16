@@ -184,14 +184,12 @@ class AmuletGameWorld11 extends AmuletGame {
     )
       ..fixed = true
       ..invincible = true
-      ..helmType = HelmType.Pointed_Hat
+      ..helmType = HelmType.Pointed_Hat_Black
       ..hairType = 1
       ..hairColor = 20
       ..autoTarget = false
       ..armorType = ArmorType.Leather
       ..shoeType = ShoeType.Leather_Boots
-      // ..legsType = LegType.Leather
-      // ..handTypeLeft = HandType.None
       ..weaponType = WeaponType.Staff
       ..gender = Gender.male
       ..interact = onInteractWithTraveller

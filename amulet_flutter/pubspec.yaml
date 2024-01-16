@@ -1,5 +1,8 @@
 
 
+
+
+
 name: amulet_flutter
 description: next gen cloud gaming
 
@@ -93,8 +96,6 @@ flutter:
     - assets/sprites/isometric/kid/south/hair/03/
     - assets/sprites/isometric/kid/south/head/boy/
     - assets/sprites/isometric/kid/south/head/girl/
-    - assets/sprites/isometric/kid/south/helms/steel/
-    - assets/sprites/isometric/kid/south/helms/wizard_hat/
     - assets/sprites/isometric/kid/south/torso/female/
     - assets/sprites/isometric/kid/south/torso/male/
     - assets/sprites/isometric/kid/south/weapons/bow/
@@ -106,8 +107,6 @@ flutter:
     - assets/sprites/isometric/kid/west/hair/03/
     - assets/sprites/isometric/kid/west/head/boy/
     - assets/sprites/isometric/kid/west/head/girl/
-    - assets/sprites/isometric/kid/west/helms/steel/
-    - assets/sprites/isometric/kid/west/helms/wizard_hat/
     - assets/sprites/isometric/kid/west/torso/female/
     - assets/sprites/isometric/kid/west/torso/male/
     - assets/sprites/isometric/kid/west/weapons/bow/
@@ -119,8 +118,6 @@ flutter:
     - assets/sprites/isometric/kid/diffuse/hair/03/
     - assets/sprites/isometric/kid/diffuse/head/boy/
     - assets/sprites/isometric/kid/diffuse/head/girl/
-    - assets/sprites/isometric/kid/diffuse/helms/steel/
-    - assets/sprites/isometric/kid/diffuse/helms/wizard_hat/
     - assets/sprites/isometric/kid/diffuse/shoes/iron_plates/
     - assets/sprites/isometric/kid/diffuse/shoes/leather_boots/
     - assets/sprites/isometric/kid/diffuse/torso/female/
@@ -167,9 +164,6 @@ flutter:
     - assets/sprites/isometric/kid/diffuse/weapons/sword_heavy_sapphire/
     - assets/sprites/isometric/kid/south/weapons/sword_heavy_sapphire/
     - assets/sprites/isometric/kid/west/weapons/sword_heavy_sapphire/
-    - assets/sprites/isometric/kid/diffuse/helms/witches_hat/
-    - assets/sprites/isometric/kid/south/helms/witches_hat/
-    - assets/sprites/isometric/kid/west/helms/witches_hat/
     - assets/sprites/isometric/kid/diffuse/shoes/black_boots/
     - assets/sprites/isometric/kid/south/shoes/black_boots/
     - assets/sprites/isometric/kid/west/shoes/black_boots/
@@ -188,3 +182,12 @@ flutter:
     - assets/sprites/isometric/kid/diffuse/armor/tunic/
     - assets/sprites/isometric/kid/south/armor/tunic/
     - assets/sprites/isometric/kid/west/armor/tunic/
+    - assets/sprites/isometric/kid/diffuse/helms/pointed_hat_black/
+    - assets/sprites/isometric/kid/diffuse/helms/pointed_hat_purple/
+    - assets/sprites/isometric/kid/south/helms/pointed_hat_black/
+    - assets/sprites/isometric/kid/south/helms/pointed_hat_purple/
+    - assets/sprites/isometric/kid/west/helms/pointed_hat_black/
+    - assets/sprites/isometric/kid/west/helms/pointed_hat_purple/
+    - assets/sprites/isometric/kid/diffuse/helms/steel_cap/
+    - assets/sprites/isometric/kid/south/helms/steel_cap/
+    - assets/sprites/isometric/kid/west/helms/steel_cap/

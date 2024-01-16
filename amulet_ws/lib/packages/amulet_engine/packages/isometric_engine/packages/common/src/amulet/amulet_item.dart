@@ -3,7 +3,7 @@ import 'package:collection/collection.dart';
 
 // armour
   // neutral
-    // tunic
+    // tunic [x]
   // warrior
     // leather
     // chainmail
@@ -19,13 +19,13 @@ import 'package:collection/collection.dart';
 
 // helm
   // warrior
-    // light cap
     // leather cap
+    // steel cap [x]
     // steel helm
   // wizard
-    // pointed hat
+    // pointed hat purple [x]
+    // pointed hat black [x]
     // cowl
-    // crest
   // rogue
     // feathered cap
     // hood
@@ -56,6 +56,7 @@ import 'package:collection/collection.dart';
   // turban
   // circlet
   // great helm
+  // crest
 
 enum AmuletItem {
   Weapon_Sword_1_5_Common(
@@ -203,7 +204,7 @@ enum AmuletItem {
     levelMax: 5,
     skillType: SkillType.Heal,
     type: ItemType.Helm,
-    subType: HelmType.Pointed_Hat,
+    subType: HelmType.Pointed_Hat_Purple,
     performDuration: 25,
     defense: 2,
     quality: ItemQuality.Common,
