@@ -1,8 +1,7 @@
 
-import 'package:flutter/rendering.dart';
 import 'package:amulet_flutter/amulet/ui/functions/render_canvas_sprite.dart';
 import 'package:amulet_flutter/gamestream/sprites/kid_character_sprites.dart';
-import 'package:amulet_engine/packages/common.dart';
+import 'package:flutter/rendering.dart';
 
 void renderCharacterFront({
   required Canvas canvas,
@@ -24,11 +23,9 @@ void renderCharacterFront({
   required int hairColor,
   required int color,
 }) {
-  final isMale = gender == Gender.male;
   final helm = sprites.helm[helmType]?.fromCharacterState(characterState);
   final head = sprites.head[headType]?.fromCharacterState(characterState) ?? (throw Exception());
-  final bodySprite = isMale ? sprites.bodyMale : sprites.bodyFemale;
-  final body = bodySprite[armorType] ?.fromCharacterState(characterState);
+  final armor = sprites.armor[armorType] ?.fromCharacterState(characterState);
   final torso = sprites.torso[gender]?.fromCharacterState(characterState) ?? (throw Exception());
   final shoes = sprites.shoes[shoeType]
       ?.fromCharacterState(characterState);
@@ -83,9 +80,9 @@ void renderCharacterFront({
     );
   }
 
-  if (body != null) {
+  if (armor != null) {
     renderCanvasSprite(
-      sprite: body,
+      sprite: armor,
       canvas: canvas,
       row: row,
       column: column,

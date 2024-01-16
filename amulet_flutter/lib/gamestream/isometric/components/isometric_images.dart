@@ -203,8 +203,7 @@ class IsometricImages with IsometricComponent {
       kidCharacterSpritesIsometric.handRight[0] = spriteGroupEmpty;
       kidCharacterSpritesIsometric.weapons[0] = spriteGroupEmpty;
       kidCharacterSpritesIsometric.helm[0] = spriteGroupEmpty;
-      kidCharacterSpritesIsometric.bodyMale[0] = spriteGroupEmpty;
-      kidCharacterSpritesIsometric.bodyFemale[0] = spriteGroupEmpty;
+      kidCharacterSpritesIsometric.armor[0] = spriteGroupEmpty;
       kidCharacterSpritesIsometric.legs[0] = spriteGroupEmpty;
       kidCharacterSpritesIsometric.hair[0] = spriteGroupEmpty;
       kidCharacterSpritesIsometric.shoes[0] = spriteGroupEmpty;
@@ -248,21 +247,11 @@ class IsometricImages with IsometricComponent {
       RenderDirection.west,
       RenderDirection.diffuse,
     ]){
-      for (final bodyType in ArmorType.values) {
+      for (final armorType in ArmorType.values) {
         loadSpriteGroupIsometric(
           direction: direction,
           type: SpriteGroupType.Armor,
-          subType: bodyType,
-        );
-        loadSpriteGroupIsometric(
-          direction: direction,
-          type: SpriteGroupType.Body_Female,
-          subType: bodyType,
-        );
-        loadSpriteGroupIsometric(
-          direction: direction,
-          type: SpriteGroupType.Body_Male,
-          subType: bodyType,
+          subType: armorType,
         );
       }
       for (final handType in HandType.values) {

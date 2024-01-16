@@ -5,8 +5,6 @@ import 'character_sprite_group.dart';
 
 class KidCharacterSprites {
   final armor = <int, CharacterSpriteGroup>{};
-  final bodyMale = <int, CharacterSpriteGroup>{};
-  final bodyFemale = <int, CharacterSpriteGroup>{};
   final handLeft = <int, CharacterSpriteGroup>{};
   final handRight = <int, CharacterSpriteGroup>{};
   final head = <int, CharacterSpriteGroup>{};
@@ -21,8 +19,6 @@ class KidCharacterSprites {
 
   late final values = {
     SpriteGroupType.Armor: armor,
-    SpriteGroupType.Body_Male: bodyMale,
-    SpriteGroupType.Body_Female: bodyFemale,
     SpriteGroupType.Hand_Left: handLeft,
     SpriteGroupType.Hand_Right: handRight,
     SpriteGroupType.Head: head,

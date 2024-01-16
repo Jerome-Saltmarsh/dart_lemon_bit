@@ -2,8 +2,6 @@ import 'package:amulet_engine/packages/common.dart';
 
 class SpriteGroupType {
   static const Armor = 2;
-  static const Body_Male = 3;
-  static const Body_Female = 4;
   static const Hand_Left = 6;
   static const Hand_Right = 7;
   static const Head = 8;
@@ -18,8 +16,6 @@ class SpriteGroupType {
 
   static String getName(int value)=> const {
     Armor: 'armor',
-    Body_Male: 'body_male',
-    Body_Female: 'body_female',
     Hand_Left: 'hands_left',
     Hand_Right: 'hands_right',
     Head: 'head',
@@ -35,8 +31,6 @@ class SpriteGroupType {
 
   static String getSubTypeName(int type, int subType) => switch (type) {
       Armor => ArmorType.getName(subType),
-      Body_Male => ArmorType.getName(subType),
-      Body_Female => ArmorType.getName(subType),
       Hand_Left => HandType.getName(subType),
       Hand_Right => HandType.getName(subType),
       Head => HeadType.getName(subType),
@@ -52,17 +46,4 @@ class SpriteGroupType {
           'SpriteGroupType.getName(type: $type, subType: $subType)'
       ),
     };
-  // static const values = [
-  //   Body_Male,
-  //   Hand_Left,
-  //   Hand_Right,
-  //   Head,
-  //   Helm,
-  //   Legs,
-  //   Shadow,
-  //   Torso,
-  //   Weapon,
-  //   Hair,
-  //   Shoes,
-  // ];
 }
