@@ -227,9 +227,9 @@ class IsometricPlayer extends Character with ByteWriter {
   }
 
   @override
-  set bodyType(int value) {
-    super.bodyType = value;
-    writeBodyType();
+  set armorType(int value) {
+    super.armorType = value;
+    writeArmorType();
   }
 
   // @override
@@ -738,7 +738,7 @@ class IsometricPlayer extends Character with ByteWriter {
     if (writeA){
       cacheTemplateA[cacheIndex] = compressedA;
       writeByte(character.weaponType);
-      writeByte(character.bodyType);
+      writeByte(character.armorType);
       writeByte(character.helmType);
       writeByte(0);  // writeByte(character.legsType);
     }
@@ -1186,16 +1186,6 @@ class IsometricPlayer extends Character with ByteWriter {
     if (!active) return;
 
     game.updatePlayerAimTarget(this);
-
-    // if (idling && !weaponStateBusy) {
-    //   final diff = IsometricDirection.getDifference(
-    //       lookDirection, direction);
-    //   if (diff >= 2) {
-    //     angle += piQuarter;
-    //   } else if (diff <= -3) {
-    //     angle -= piQuarter;
-    //   }
-    // }
   }
 
   double getMouseDistance() => this.getDistanceXYZ(mouseSceneX, mouseSceneY, mouseSceneZ);
@@ -1218,35 +1208,17 @@ class IsometricPlayer extends Character with ByteWriter {
     writeByte(helmType);
   }
 
-  void writeBodyType() {
+  void writeArmorType() {
     writeByte(NetworkResponse.Player);
-    writeByte(NetworkResponsePlayer.BodyType);
-    writeByte(bodyType);
+    writeByte(NetworkResponsePlayer.ArmorType);
+    writeByte(armorType);
   }
-
-  // void writeLegsType() {
-  //   writeByte(NetworkResponse.Player);
-  //   writeByte(NetworkResponsePlayer.LegsType);
-  //   writeByte(legsType);
-  // }
-
-  // void writeHandTypeLeft() {
-  //   writeByte(NetworkResponse.Player);
-  //   writeByte(NetworkResponsePlayer.HandTypeLeft);
-  //   writeByte(handTypeLeft);
-  // }
 
   void writeWeaponType() {
     writeByte(NetworkResponse.Player);
     writeByte(NetworkResponsePlayer.WeaponType);
     writeByte(weaponType);
   }
-
-  // void writeHandTypeRight() {
-  //   writeByte(NetworkResponse.Player);
-  //   writeByte(NetworkResponsePlayer.HandTypeRight);
-  //   writeByte(handTypeRight);
-  // }
 
   void downloadSceneMarks() {
     writeByte(NetworkResponse.Scene);

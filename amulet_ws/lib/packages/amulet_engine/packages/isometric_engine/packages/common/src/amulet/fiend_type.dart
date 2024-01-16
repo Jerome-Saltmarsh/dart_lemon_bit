@@ -20,7 +20,6 @@ enum FiendType {
     clearTargetOnPerformAction: true,
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 50,
-    elementFire: 1,
     chanceOfDropCommon: 0.25,
     chanceOfDropRare: 0.05,
     chanceOfDropLegendary: 0.025,
@@ -42,7 +41,6 @@ enum FiendType {
     clearTargetOnPerformAction: false,
     postAttackPauseDurationMin: 30,
     postAttackPauseDurationMax: 80,
-    elementStone: 1,
     resists: DamageType.fire,
     chanceOfDropCommon: 0.25,
     chanceOfDropRare: 0.05,
@@ -65,7 +63,6 @@ enum FiendType {
     clearTargetOnPerformAction: false,
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 40,
-    elementAir: 1,
     resists: DamageType.wind,
     chanceOfDropCommon: 0.25,
     chanceOfDropRare: 0.05,
@@ -88,7 +85,6 @@ enum FiendType {
     clearTargetOnPerformAction: true,
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 60,
-    elementWater: 1,
     resists: DamageType.melee,
     chanceOfDropCommon: 0.25,
     chanceOfDropRare: 0.05,
@@ -111,7 +107,6 @@ enum FiendType {
     clearTargetOnPerformAction: true,
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 50,
-    elementWater: 1,
     resists: DamageType.melee,
     chanceOfDropCommon: 0.25,
     chanceOfDropRare: 0.05,
@@ -134,7 +129,6 @@ enum FiendType {
     clearTargetOnPerformAction: false,
     postAttackPauseDurationMin: 30,
     postAttackPauseDurationMax: 100,
-    elementStone: 1,
     resists: DamageType.projectile,
     chanceOfDropCommon: 0.25,
     chanceOfDropRare: 0.05,
@@ -157,7 +151,6 @@ enum FiendType {
     clearTargetOnPerformAction: false,
     postAttackPauseDurationMin: 30,
     postAttackPauseDurationMax: 100,
-    elementWater: 1,
     resists: DamageType.melee,
     chanceOfDropCommon: 0.25,
     chanceOfDropRare: 0.05,
@@ -181,10 +174,6 @@ enum FiendType {
   final bool clearTargetOnPerformAction;
   final int postAttackPauseDurationMin;
   final int postAttackPauseDurationMax;
-  final int elementWater;
-  final int elementFire;
-  final int elementAir;
-  final int elementStone;
   final double chanceOfDropLegendary;
   final double chanceOfDropRare;
   final double chanceOfDropCommon;
@@ -212,9 +201,5 @@ enum FiendType {
     required this.chanceOfDropLegendary,
     required this.chanceOfDropPotion,
     this.resists,
-    this.elementWater = 0,
-    this.elementFire = 0,
-    this.elementAir = 0,
-    this.elementStone = 0,
   });
 }

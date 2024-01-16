@@ -25,7 +25,7 @@ class NetworkResponseAmulet {
    static const Player_World_Positioned = 30;
    static const Quest_Main = 31;
    static const Debug = 32;
-   static const Aim_Target_Element = 33;
+   // static const Aim_Target_Element = 33;
    static const Aim_Target_Fiend_Type = 34;
    static const Active_Slot_Type = 35;
    static const Aim_Target_Item_Type = 36;

@@ -57,14 +57,6 @@ class Amulet extends IsometricGame {
   final amuletScene = Watch<AmuletScene?>(null);
   final questMain = Watch(QuestMain.Speak_With_Warren);
   final windowVisibleQuests = WatchBool(true);
-  final elementPoints = Watch(0);
-  late final elementFire = Watch(0, onChanged: elementsChangedNotifier);
-  late final elementWater = Watch(0, onChanged: elementsChangedNotifier);
-  late final elementElectricity = Watch(0, onChanged: elementsChangedNotifier);
-  late final elementStone = Watch(0, onChanged: elementsChangedNotifier);
-  final elementsChangedNotifier = Watch(0);
-
-  final elementPointsAvailable = Watch(false);
 
   late final AmuletUI amuletUI;
 
@@ -135,11 +127,11 @@ class Amulet extends IsometricGame {
   final playerExperienceRequired = Watch(0);
   final playerInventoryOpen = Watch(false);
 
-  late final aimTargetElementWater = Watch(0);
-  late final aimTargetElementFire = Watch(0);
-  late final aimTargetElementAir = Watch(0);
-  late final aimTargetElementStone = Watch(0);
-  late final aimTargetElement = Watch(AmuletElement.stone);
+  // late final aimTargetElementWater = Watch(0);
+  // late final aimTargetElementFire = Watch(0);
+  // late final aimTargetElementAir = Watch(0);
+  // late final aimTargetElementStone = Watch(0);
+  // late final aimTargetElement = Watch(AmuletElement.stone);
   late final aimTargetFiendType = Watch<FiendType?>(null);
 
   Amulet(){
@@ -148,7 +140,6 @@ class Amulet extends IsometricGame {
     playerInteracting.onChanged(onChangedPlayerInteracting);
     npcTextIndex.onChanged(onChangedNpcTextIndex);
     error.onChanged(onChangedError);
-    elementPoints.onChanged(onChangedElementPoints);
 
     screenColorI.onChanged((t) {
       screenColor.value = Colors.black.withOpacity((1.0 - t).clamp(0, 1.0));
@@ -173,24 +164,6 @@ class Amulet extends IsometricGame {
     }
     playerMagicPercentage.value = value / max;
   }
-
-  // ItemSlot? getEquippedItemSlot(int? value){
-  //   switch (value) {
-  //     case ItemType.Weapon:
-  //       return equippedWeapon;
-  //     case ItemType.Helm:
-  //       return equippedHelm;
-  //     case ItemType.Body:
-  //       return equippedBody;
-  //     case ItemType.Shoes:
-  //       return equippedShoes;
-  //     default:
-  //       return null;
-  //   }
-  // }
-
-  void onChangedElementPoints(int elementPoints) =>
-      elementPointsAvailable.value = elementPoints > 0;
 
   @override
   void onComponentReady() {
@@ -334,20 +307,6 @@ class Amulet extends IsometricGame {
   void spawnRandomEnemy() =>
       server.sendNetworkRequestAmulet(
         NetworkRequestAmulet.Spawn_Random_Enemy,
-      );
-
-  Watch<int> getAmuletElementWatch(AmuletElement amuletElement) =>
-      switch (amuletElement) {
-        AmuletElement.fire => elementFire,
-        AmuletElement.water => elementWater,
-        AmuletElement.air => elementElectricity,
-        AmuletElement.stone => elementStone,
-      };
-
-  void upgradeAmuletElement(AmuletElement amuletElement) =>
-      server.sendNetworkRequestAmulet(
-        NetworkRequestAmulet.Upgrade_Element,
-        amuletElement.index,
       );
 
   void requestAcquireAmuletItem(AmuletItem amuletItem) {

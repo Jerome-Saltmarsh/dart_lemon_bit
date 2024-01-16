@@ -18,10 +18,8 @@ import 'talk_option.dart';
 
 class AmuletPlayer extends IsometricPlayer with
     Equipment,
-    Elemental,
     Experience,
     Level,
-    ElementPoints,
     Magic
 {
   static const Data_Key_Dead_Count = 'dead';
@@ -81,8 +79,8 @@ class AmuletPlayer extends IsometricPlayer with
     setControlsEnabled(true);
     writeWorldMapBytes();
     writeWorldMapLocations();
-    writeAmuletElements();
-    writeElementPoints();
+    // writeAmuletElements();
+    // writeElementPoints();
     writeInteracting();
     writePlayerLevel();
     writePlayerExperience();
@@ -144,31 +142,7 @@ class AmuletPlayer extends IsometricPlayer with
 
   bool get noWeaponEquipped => equippedWeapon.amuletItem == null;
 
-  @override
-  set elementAir(int value){
-    super.elementAir = value;
-    writeAmuletElements();
-  }
-
-  @override
-  set elementFire(int value) {
-    super.elementFire = value;
-    writeAmuletElements();
-  }
-
-  @override
-  set elementWater(int value) {
-    super.elementWater = value;
-    writeAmuletElements();
-  }
-
   Amulet get amulet => amuletGame.amulet;
-
-  @override
-  set elementPoints(int value) {
-    super.elementPoints = value;
-    writeElementPoints();
-  }
 
   @override
   int get weaponType {
@@ -624,7 +598,7 @@ class AmuletPlayer extends IsometricPlayer with
 
     if (item == null){
       clearSlot(equippedArmor);
-      bodyType = 0;
+      armorType = 0;
       return;
     }
 
@@ -638,7 +612,7 @@ class AmuletPlayer extends IsometricPlayer with
       cooldown: 0,
     );
 
-    bodyType = item.subType;
+    armorType = item.subType;
   }
 
   // void equipLegs(AmuletItem? item, {bool force = false}){
@@ -761,7 +735,7 @@ class AmuletPlayer extends IsometricPlayer with
     weaponType = equippedWeapon.amuletItem?.subType ?? WeaponType.Unarmed;
     equipmentDirty = false;
     helmType = equippedHelm.amuletItem?.subType ?? HelmType.None;
-    bodyType = equippedArmor.amuletItem?.subType ?? 0;
+    armorType = equippedArmor.amuletItem?.subType ?? 0;
     // legsType = equippedLegs.amuletItem?.subType ?? LegType.None;
     // handTypeLeft = equippedHandLeft.amuletItem?.subType ?? HandType.None;
     // handTypeRight = equippedHandRight.amuletItem?.subType ?? HandType.None;
@@ -1061,44 +1035,36 @@ class AmuletPlayer extends IsometricPlayer with
   void inventoryDropSlotType(SlotType slotType, int index) =>
       dropItemSlotItem(getItemSlot(slotType, index));
 
-  void writeAmuletElements() {
-    writeByte(NetworkResponse.Amulet_Player);
-    writeByte(NetworkResponseAmuletPlayer.Elements);
-    writeByte(elementFire);
-    writeByte(elementWater);
-    writeByte(elementAir);
-  }
+  // void writeElementPoints() {
+  //   writeByte(NetworkResponse.Amulet_Player);
+  //   writeByte(NetworkResponseAmuletPlayer.Element_Points);
+  //   writeUInt16(elementPoints);
+  // }
 
-  void writeElementPoints() {
-    writeByte(NetworkResponse.Amulet_Player);
-    writeByte(NetworkResponseAmuletPlayer.Element_Points);
-    writeUInt16(elementPoints);
-  }
-
-  void upgradeAmuletElement(AmuletElement amuletElement) {
-    if (elementPoints <= 0){
-      writeGameError(GameError.Insufficient_Element_Points);
-      return;
-    }
-    elementPoints--;
-    switch (amuletElement) {
-      case AmuletElement.fire:
-        elementFire++;
-        break;
-      case AmuletElement.water:
-        elementWater++;
-        break;
-      case AmuletElement.air:
-        elementAir++;
-        break;
-      case AmuletElement.stone:
-        elementStone++;
-        break;
-    }
-    writeAmuletElements();
-    writeElementUpgraded();
-    spawnConfettiAtPosition(this);
-  }
+  // void upgradeAmuletElement(AmuletElement amuletElement) {
+  //   if (elementPoints <= 0){
+  //     writeGameError(GameError.Insufficient_Element_Points);
+  //     return;
+  //   }
+  //   elementPoints--;
+  //   switch (amuletElement) {
+  //     case AmuletElement.fire:
+  //       elementFire++;
+  //       break;
+  //     case AmuletElement.water:
+  //       elementWater++;
+  //       break;
+  //     case AmuletElement.air:
+  //       elementAir++;
+  //       break;
+  //     case AmuletElement.stone:
+  //       elementStone++;
+  //       break;
+  //   }
+  //   writeAmuletElements();
+  //   writeElementUpgraded();
+  //   spawnConfettiAtPosition(this);
+  // }
 
   @override
   void clearAction() {
@@ -1146,18 +1112,18 @@ class AmuletPlayer extends IsometricPlayer with
     return false;
   }
 
-  void refillItemSlotsWeapons(){
-    equipped.forEach(refillItemSlot);
-  }
+  // void refillItemSlotsWeapons(){
+  //   equipped.forEach(refillItemSlot);
+  // }
 
-  void refillItemSlots(List<AmuletItemSlot> itemSlots){
-
-    for (final itemSlot in itemSlots) {
-      refillItemSlot(itemSlot);
-    }
-
-    equipmentDirty = true;
-  }
+  // void refillItemSlots(List<AmuletItemSlot> itemSlots){
+  //
+  //   for (final itemSlot in itemSlots) {
+  //     refillItemSlot(itemSlot);
+  //   }
+  //
+  //   equipmentDirty = true;
+  // }
 
   int getInt(String name) {
     return data[name] as int;
@@ -1524,7 +1490,7 @@ class AmuletPlayer extends IsometricPlayer with
 
   void gainLevel(){
     level++;
-    elementPoints++;
+    // elementPoints++;
     regainFullHealth();
     writePlayerLevelGained();
     amuletGame.onPlayerLevelGained(this);
@@ -1640,22 +1606,22 @@ class AmuletPlayer extends IsometricPlayer with
   @override
   void onChangedAimTarget() {
     super.onChangedAimTarget();
-    writeAimTargetAmuletElement();
+    // writeAimTargetAmuletElement();
     writeAimTargetFiendType();
     writeAimTargetItemType();
   }
 
-  void writeAimTargetAmuletElement() {
-    final aimTarget = this.aimTarget;
-    if (aimTarget is! Elemental) return;
-    final elemental = aimTarget as Elemental;
-    writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Aim_Target_Element);
-    writeByte(elemental.elementWater);
-    writeByte(elemental.elementFire);
-    writeByte(elemental.elementAir);
-    writeByte(elemental.elementStone);
-  }
+  // void writeAimTargetAmuletElement() {
+  //   final aimTarget = this.aimTarget;
+  //   if (aimTarget is! Elemental) return;
+  //   final elemental = aimTarget as Elemental;
+  //   writeByte(NetworkResponse.Amulet);
+  //   writeByte(NetworkResponseAmulet.Aim_Target_Element);
+  //   writeByte(elemental.elementWater);
+  //   writeByte(elemental.elementFire);
+  //   writeByte(elemental.elementAir);
+  //   writeByte(elemental.elementStone);
+  // }
 
   void writeAimTargetFiendType() {
     final aimTarget = this.aimTarget;

@@ -197,7 +197,7 @@ class AmuletGameTutorial extends AmuletGame {
       );
     }
 
-    player.refillItemSlotsWeapons();
+    // player.refillItemSlotsWeapons();
     player.writeGameObjects();
   }
 
@@ -230,7 +230,7 @@ class AmuletGameTutorial extends AmuletGame {
       ..complexion = 0
       ..invincible = true
       // ..legsType = LegType.Leather
-      ..bodyType = ArmorType.Leather;
+      ..armorType = ArmorType.Leather;
 
     add(guide);
     deactivate(guide);
@@ -559,16 +559,6 @@ class AmuletGameTutorial extends AmuletGame {
           startNextTutorialObjective(player);
         }
         break;
-      // case AmuletItem.Glove_Healers_Hand:
-      //   if (player.tutorialObjective == QuestTutorial.Acquire_Heal){
-      //     startNextTutorialObjective(player);
-      //   }
-      //   break;
-      // case AmuletItem.Weapon_Bow_1_5_Common:
-      //   if (player.tutorialObjective == QuestTutorial.Acquire_Bow){
-      //     startNextTutorialObjective(player);
-      //   }
-      //   break;
       default:
         break;
     }

@@ -3,7 +3,7 @@
 import '../mixins/elemental.dart';
 import '../packages/isomeric_engine.dart';
 
-class AmuletFiend extends Character with Elemental {
+class AmuletFiend extends Character {
 
   FiendType fiendType;
 
@@ -52,15 +52,4 @@ class AmuletFiend extends Character with Elemental {
   @override
   int get maxHealth => fiendType.health;
 
-  @override
-  int get elementWater => fiendType.elementWater;
-
-  @override
-  int get elementFire => fiendType.elementFire;
-
-  @override
-  int get elementAir => fiendType.elementAir;
-
-  @override
-  int get elementStone => fiendType.elementStone;
 }

@@ -690,14 +690,14 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
   void readNetworkResponseAmuletPlayer() {
     final amulet = this.amulet;
     switch (readByte()) {
-      case NetworkResponseAmuletPlayer.Elements:
-        amulet.elementFire.value = readByte();
-        amulet.elementWater.value = readByte();
-        amulet.elementElectricity.value = readByte();
-        break;
-      case NetworkResponseAmuletPlayer.Element_Points:
-        amulet.elementPoints.value = readUInt16();
-        break;
+      // case NetworkResponseAmuletPlayer.Elements:
+      //   amulet.elementFire.value = readByte();
+      //   amulet.elementWater.value = readByte();
+      //   amulet.elementElectricity.value = readByte();
+      //   break;
+      // case NetworkResponseAmuletPlayer.Element_Points:
+      //   amulet.elementPoints.value = readUInt16();
+      //   break;
       case NetworkResponseAmuletPlayer.Message:
         amulet.clearMessage();
         amulet.messages.addAll(readString().split('.').map((e) => e.trim()).toList(growable: false));

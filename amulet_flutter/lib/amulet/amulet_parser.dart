@@ -98,22 +98,6 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Element_Upgraded:
          amulet.onPlayerElementUpgraded();
          break;
-       case NetworkResponseAmulet.Aim_Target_Element:
-         final water = readByte();
-         final fire = readByte();
-         final air = readByte();
-         final stone = readByte();
-         amulet.aimTargetElementWater.value = water;
-         amulet.aimTargetElementFire.value = fire;
-         amulet.aimTargetElementAir.value = air;
-         amulet.aimTargetElementStone.value = stone;
-         amulet.aimTargetElement.value = AmuletElement.max(
-             water: water,
-             fire: fire,
-             air: air,
-             stone: stone,
-         );
-         break;
        case NetworkResponseAmulet.Aim_Target_Fiend_Type:
          final isFiend = readBool();
 

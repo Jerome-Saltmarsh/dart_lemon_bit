@@ -54,7 +54,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..fixed = true
       ..invincible = true
       ..helmType = HelmType.Steel_Helm
-      ..bodyType = ArmorType.Leather
+      ..armorType = ArmorType.Leather
       ..shoeType = ShoeType.Leather_Boots
       // ..legsType = LegType.Leather
       ..interact = onInteractWithWarren
@@ -77,7 +77,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..fixed = false
       ..invincible = true
       ..helmType = HelmType.Leather_Cap
-      ..bodyType = ArmorType.Leather
+      ..armorType = ArmorType.Leather
       // ..legsType = LegType.Leather
       // ..handTypeLeft = HandType.Leather_Gloves
       ..shoeType = ShoeType.Iron_Plates
@@ -102,7 +102,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..fixed = false
       ..invincible = true
       ..helmType = HelmType.Steel_Helm
-      ..bodyType = ArmorType.Leather
+      ..armorType = ArmorType.Leather
       // ..legsType = LegType.Leather
       // ..handTypeLeft = HandType.Leather_Gloves
       ..weaponType = WeaponType.Bow
@@ -130,7 +130,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..helmType = HelmType.None
       ..hairType = 2
       ..hairColor = 30
-      ..bodyType = ArmorType.Tunic
+      ..armorType = ArmorType.Tunic
       // ..legsType = LegType.Leather
       ..shoeType = ShoeType.Leather_Boots
       // ..handTypeLeft = HandType.None
@@ -159,7 +159,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..helmType = HelmType.None
       ..hairType = 2
       ..hairColor = 30
-      ..bodyType = ArmorType.Tunic
+      ..armorType = ArmorType.Tunic
       // ..legsType = LegType.Leather
       ..shoeType = ShoeType.Leather_Boots
       // ..handTypeLeft = HandType.None
@@ -188,7 +188,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..hairType = 1
       ..hairColor = 20
       ..autoTarget = false
-      ..bodyType = ArmorType.Leather
+      ..armorType = ArmorType.Leather
       ..shoeType = ShoeType.Leather_Boots
       // ..legsType = LegType.Leather
       // ..handTypeLeft = HandType.None

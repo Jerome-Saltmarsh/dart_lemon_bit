@@ -412,27 +412,23 @@ class Amulet {
       item.clear();
     }
     amuletTime.hour = 12;
-    player.elementPoints = 0;
-    player.elementFire = 0;
-    player.elementWater = 0;
-    player.elementAir = 0;
-    player.elementStone = 0;
+    // player.elementPoints = 0;
+    // player.elementFire = 0;
+    // player.elementWater = 0;
+    // player.elementAir = 0;
+    // player.elementStone = 0;
     player.level = 1;
     player.experience = 0;
     player.equippedHelm.clear();
-    // player.equippedHandRight.clear();
-    // player.equippedHandLeft.clear();
     player.equippedArmor.clear();
-    // player.equippedLegs.clear();
     player.equippedShoes.clear();
     player.equippedWeapon.amuletItem = null;
     player.equippedArmor.amuletItem = AmuletItem.Armor_Warrior_1_5_Common;
-    // player.equippedLegs.amuletItem = null;
     player.health = player.maxHealth;
     player.characterState = CharacterState.Idle;
     player.equipmentDirty = true;
     player.controlsEnabled = true;
-    player.refillItemSlotsWeapons();
+    // player.refillItemSlotsWeapons();
     player.clearActionFrame();
   }
 

@@ -567,7 +567,7 @@ extension isometricDebugUI on IsometricDebug {
             child: buildRowMapped('gender', player.gender, Gender.getName)
           ),
           buildRowMapped('legs type', player.legsType, LegType.getName),
-          buildRowMapped('body type', player.bodyType, ArmorType.getName),
+          buildRowMapped('body type', player.armorType, ArmorType.getName),
           onPressed(
             action: () => ui.showDialogGetHairType(onSelected: player.setHairType),
             child: buildRowMapped('hair type', player.hairType, HairType.getName)

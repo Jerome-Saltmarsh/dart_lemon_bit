@@ -43,7 +43,7 @@ class IsometricPlayer with IsometricComponent {
   final hairColor = Watch(0);
   final shoeType = Watch(0);
   final gender = Watch(0);
-  final bodyType = Watch(0);
+  final armorType = Watch(0);
   final legsType = Watch(0);
   final handTypeLeft = Watch(0);
   final handTypeRight = Watch(0);
@@ -192,18 +192,9 @@ class IsometricPlayer with IsometricComponent {
       case NetworkResponsePlayer.HeadType:
         readHeadType();
         break;
-      case NetworkResponsePlayer.BodyType:
-        readBodyType();
+      case NetworkResponsePlayer.ArmorType:
+        readArmorType();
         break;
-      // case NetworkResponsePlayer.LegsType:
-      //   readLegsType();
-      //   break;
-      // case NetworkResponsePlayer.HandTypeLeft:
-      //   readHandTypeLeft();
-      //   break;
-      // case NetworkResponsePlayer.HandTypeRight:
-      //   readHandTypeRight();
-      //   break;
       case NetworkResponsePlayer.HairType:
         readHairType();
         break;
@@ -311,25 +302,13 @@ class IsometricPlayer with IsometricComponent {
   }
 
   void readPlayerPositionAbsolute() {
-    print('isometricPlayer.readPlayerPositionAbsolute()');
+    // print('isometricPlayer.readPlayerPositionAbsolute()');
     parser.readIsometricPosition(position);
     updateIndexes();
   }
 
-  // void readHandTypeRight() {
-  //   handTypeRight.value = parser.readByte();
-  // }
-
-  // void readHandTypeLeft() {
-  //   handTypeLeft.value = parser.readByte();
-  // }
-
-  // void readLegsType() {
-  //   legsType.value = parser.readByte();
-  // }
-
-  void readBodyType() {
-    bodyType.value = parser.readByte();
+  void readArmorType() {
+    armorType.value = parser.readByte();
   }
 
   void readHeadType() {
@@ -396,9 +375,7 @@ class IsometricPlayer with IsometricComponent {
     );
   }
 
-  void readHairType() {
-    hairType.value = parser.readByte();
-  }
+  void readHairType() => hairType.value = parser.readByte();
 
   void readHairColor() => hairColor.value = parser.readByte();
 

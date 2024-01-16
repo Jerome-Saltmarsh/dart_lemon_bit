@@ -679,16 +679,16 @@ class AmuletController {
       case NetworkRequestAmulet.Toggle_Inventory_Open:
         player.toggleInventoryOpen();
         break;
-      case NetworkRequestAmulet.Upgrade_Element:
-        final index = parseArg2(arguments);
-        if (index == null) return;
-        if (!isValidIndex(index, AmuletElement.values)){
-          errorInvalidClientRequest();
-          return;
-        }
-        final amuletElement = AmuletElement.values[index];
-        player.upgradeAmuletElement(amuletElement);
-        break;
+      // case NetworkRequestAmulet.Upgrade_Element:
+      //   final index = parseArg2(arguments);
+      //   if (index == null) return;
+      //   if (!isValidIndex(index, AmuletElement.values)){
+      //     errorInvalidClientRequest();
+      //     return;
+      //   }
+      //   final amuletElement = AmuletElement.values[index];
+      //   player.upgradeAmuletElement(amuletElement);
+      //   break;
       case NetworkRequestAmulet.Set_Inventory_Open:
         throw Exception('not implemented');
       case NetworkRequestAmulet.Gain_Level:

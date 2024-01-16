@@ -1,8 +1,9 @@
 
+import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/amulet_item.dart';
+import 'package:amulet_engine/packages/isometric_engine/packages/common/src/isometric/target_action.dart';
 import 'package:flutter/material.dart';
 
 import 'package:amulet_flutter/amulet/amulet.dart';
-import 'package:amulet_flutter/amulet/maps/map_amulet_element_to_icon_type.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';
 import 'package:amulet_flutter/website/widgets/gs_fullscreen.dart';
@@ -11,7 +12,6 @@ import 'package:amulet_engine/packages/lemon_math.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
-import 'ui/builders/build_item_slot.dart';
 import 'ui/containers/build_container_item_hover.dart';
 import 'ui/containers/build_container_player_front.dart';
 import 'ui/widgets/amulet_world_map.dart';
@@ -70,11 +70,11 @@ class AmuletUI {
           buildPositionedWorldMap(),
           buildPositionedPlayerHealthAndWeapons(),
           // Positioned(top: 4, left: 4, child: buildPlayerStatsRow()),
-          Positioned(
-            bottom: margin1,
-            left: margin1,
-            child: buildDialogPlayerInventory(),
-          ),
+          // Positioned(
+          //   bottom: margin1,
+          //   left: margin1,
+          //   child: buildDialogPlayerInventory(),
+          // ),
           buildPlayerAimTarget(),
           Positioned(
               bottom: 8,
@@ -577,28 +577,28 @@ class AmuletUI {
     );
   }
 
-  Widget buildInventoryItems() {
-    return buildWatch(amulet.items, (items) {
-      return buildInventoryContainer(
-          child: Row(
-            children: [
-              Column(
-                  children: List.generate(items.length ~/ 2,
-                          (index) => buildItemSlot(items[index], amulet: amulet),
-                      growable: false)),
-              Column(
-                  children: List.generate(
-                      items.length ~/ 2,
-                          (index) => buildItemSlot(
-                          items[index + (items.length ~/ 2)],
-                          amulet: amulet),
-                      growable: false)),
-            ],
-          ));
-
-    });
-
-  }
+  // Widget buildInventoryItems() {
+  //   return buildWatch(amulet.items, (items) {
+  //     return buildInventoryContainer(
+  //         child: Row(
+  //           children: [
+  //             Column(
+  //                 children: List.generate(items.length ~/ 2,
+  //                         (index) => buildItemSlot(items[index], amulet: amulet),
+  //                     growable: false)),
+  //             Column(
+  //                 children: List.generate(
+  //                     items.length ~/ 2,
+  //                         (index) => buildItemSlot(
+  //                         items[index + (items.length ~/ 2)],
+  //                         amulet: amulet),
+  //                     growable: false)),
+  //           ],
+  //         ));
+  //
+  //   });
+  //
+  // }
 
   Widget buildInventoryContainer({required Widget child}) => Container(
         child: child,
@@ -711,36 +711,6 @@ class AmuletUI {
                 })));
   }
 
-  Widget buildPlayerStatsRow() => Row(
-    children: [
-      GSContainer(
-            padding: EdgeInsets.zero,
-            child: Row(
-              children: [
-                buildPlayerLevel(),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // buildAmuletElements(),
-                    buildPlayerExperienceBar(),
-                  ],
-                ),
-                buildElementPoints(),
-              ],
-            ),
-          ),
-      width4,
-      onPressed(
-        action: amulet.windowVisibleQuests.toggle,
-        child: GSContainer(
-            height: 32,
-            padding: EdgeInsets.symmetric(horizontal: 4),
-            child: buildText('QUEST'),
-        ),
-      ),
-    ],
-  );
-
   Widget buildInventoryButton() {
     const scale = 1.8;
     final iconOpen = IsometricIcon(
@@ -792,57 +762,57 @@ class AmuletUI {
   Widget buildDialogTitle(String text) =>
       buildText(text, size: 28.0, color: Colors.white70);
 
-  Widget buildDialogPlayerInventory() {
-    final inventoryItems = buildInventoryItems();
-    final dialog = GSContainer(
-      rounded: true,
-      width: 450,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                  margin: const EdgeInsets.only(left: 5),
-                  child: buildDialogTitle('CHEST')),
-              buildButtonClose(
-                  action: amulet.toggleInventoryOpen),
-            ],
-          ),
-          height32,
-          inventoryItems,
-          // height16,
-          // Row(
-          //   crossAxisAlignment: CrossAxisAlignment.center,
-          //   children: [
-          //     buildInventoryEquipped(),
-          //     // buildInventoryPlayerFront(),
-          //     // buildPlayerTreasures(),
-          //   ],
-          // )
-        ],
-      ),
-    );
-
-    // final inventoryButton = buildInventoryButton();
-
-    return MouseRegion(
-      onEnter: (_) => amulet.setInventoryOpen(true),
-      onExit: (_) {
-        if (amulet.dragging.value == null) {
-          amulet.setInventoryOpen(false);
-        }
-      },
-      child: buildWatch(
-          amulet.playerInventoryOpen,
-          (inventoryOpen) => inventoryOpen
-              ? dialog
-              // : inventoryButton),
-              : nothing),
-    );
-  }
+  // Widget buildDialogPlayerInventory() {
+  //   final inventoryItems = buildInventoryItems();
+  //   final dialog = GSContainer(
+  //     rounded: true,
+  //     width: 450,
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.start,
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         Row(
+  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //           children: [
+  //             Container(
+  //                 margin: const EdgeInsets.only(left: 5),
+  //                 child: buildDialogTitle('CHEST')),
+  //             buildButtonClose(
+  //                 action: amulet.toggleInventoryOpen),
+  //           ],
+  //         ),
+  //         height32,
+  //         inventoryItems,
+  //         // height16,
+  //         // Row(
+  //         //   crossAxisAlignment: CrossAxisAlignment.center,
+  //         //   children: [
+  //         //     buildInventoryEquipped(),
+  //         //     // buildInventoryPlayerFront(),
+  //         //     // buildPlayerTreasures(),
+  //         //   ],
+  //         // )
+  //       ],
+  //     ),
+  //   );
+  //
+  //   // final inventoryButton = buildInventoryButton();
+  //
+  //   return MouseRegion(
+  //     onEnter: (_) => amulet.setInventoryOpen(true),
+  //     onExit: (_) {
+  //       if (amulet.dragging.value == null) {
+  //         amulet.setInventoryOpen(false);
+  //       }
+  //     },
+  //     child: buildWatch(
+  //         amulet.playerInventoryOpen,
+  //         (inventoryOpen) => inventoryOpen
+  //             ? dialog
+  //             // : inventoryButton),
+  //             : nothing),
+  //   );
+  // }
 
   Widget buildInventoryPlayerFront() => Container(
         width: 180 * goldenRatio_0618,
@@ -853,55 +823,6 @@ class AmuletUI {
           borderColor: Colors.transparent,
         ),
       );
-
-  Widget buildAmuletElements() => Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children:
-          AmuletElement.values.map(buildAmuletElement).toList(growable: false));
-
-  Widget buildAmuletElement(AmuletElement amuletElement) {
-    final icon =
-        IsometricIcon(iconType: mapAmuletElementToIconType(amuletElement));
-    final watchAmuletElement = amulet.getAmuletElementWatch(amuletElement);
-
-    final row = Row(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(3),
-            height: 32,
-            child: icon),
-        Container(
-            color: Colors.black12,
-            width: 32,
-            height: 32,
-            alignment: Alignment.center,
-            child: buildWatch(watchAmuletElement,
-                (t) => buildText(t, color: Colors.white70))),
-      ],
-    );
-
-    return buildWatch(
-        amulet.elementPointsAvailable,
-        (elementPointsAvailable) => onPressed(
-              action: elementPointsAvailable
-                  ? () => amulet.upgradeAmuletElement(amuletElement)
-                  : null,
-              child: row,
-            ));
-  }
-
-  Widget buildElementPoints() =>
-      buildWatch(amulet.elementPoints, (elementPoints) {
-        if (elementPoints <= 0) {
-          return nothing;
-        }
-        return GSContainer(
-          width: 50,
-          padding: const EdgeInsets.all(4),
-          alignment: Alignment.center,
-          child: buildText('+$elementPoints', color: Colors.green),
-        );
-      });
 
   static Color mapItemQualityToColor(ItemQuality itemQuality){
     switch (itemQuality){
