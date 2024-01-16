@@ -210,13 +210,10 @@ class IsometricImages with IsometricComponent {
     }
 
     loadSpriteGroupFront(type: SpriteGroupType.Armor, subType: ArmorType.Tunic);
-    loadSpriteGroupFront(type: SpriteGroupType.Hand_Left, subType: HandType.Gauntlets);
-    loadSpriteGroupFront(type: SpriteGroupType.Hand_Right, subType: HandType.Gauntlets);
     loadSpriteGroupFront(type: SpriteGroupType.Head, subType: HeadType.boy);
     loadSpriteGroupFront(type: SpriteGroupType.Head, subType: HeadType.girl);
     loadSpriteGroupFront(type: SpriteGroupType.Helm, subType: HelmType.Steel_Helm);
     loadSpriteGroupFront(type: SpriteGroupType.Helm, subType: HelmType.Pointed_Hat_Purple);
-    // loadSpriteGroupFront(type: SpriteGroupType.Legs, subType: LegType.Leather);
     loadSpriteGroupFront(type: SpriteGroupType.Torso, subType: Gender.male);
     loadSpriteGroupFront(type: SpriteGroupType.Torso, subType: Gender.female);
     loadSpriteGroupFront(type: SpriteGroupType.Weapon, subType: WeaponType.Bow);
@@ -252,18 +249,18 @@ class IsometricImages with IsometricComponent {
           subType: armorType,
         );
       }
-      for (final handType in HandType.values) {
-        loadSpriteGroupIsometric(
-          direction: direction,
-          type: SpriteGroupType.Hand_Left,
-          subType: handType,
-        );
-        loadSpriteGroupIsometric(
-          direction: direction,
-          type: SpriteGroupType.Hand_Right,
-          subType: handType,
-        );
-      }
+      // for (final handType in HandType.values) {
+      //   loadSpriteGroupIsometric(
+      //     direction: direction,
+      //     type: SpriteGroupType.Hand_Left,
+      //     subType: handType,
+      //   );
+      //   loadSpriteGroupIsometric(
+      //     direction: direction,
+      //     type: SpriteGroupType.Hand_Right,
+      //     subType: handType,
+      //   );
+      // }
       loadSpriteGroupIsometric(
         direction: direction,
         type: SpriteGroupType.Head,

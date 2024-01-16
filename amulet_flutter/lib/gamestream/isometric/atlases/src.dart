@@ -10,4 +10,3 @@ export 'atlas_src_weapons.dart';
 export 'atlas_src_armor.dart';
 export 'atlas_src_consumables.dart';
 export 'atlas_src_treasures.dart';
-export 'atlas_src_legs.dart';

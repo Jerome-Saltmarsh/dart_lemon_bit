@@ -23,13 +23,9 @@ void renderPlayerFront({
       headType: player.headType.value,
       armorType: player.armorType.value,
       shoeType: player.shoeType.value,
-      // legsType: player.legsType.value,
       hairType: player.hairType.value,
-      handsLeft: player.handTypeLeft.value,
-      handsRight: player.handTypeRight.value,
       weaponType: player.weaponType.value,
       skinColor: player.colors.palette[player.complexion.value].value,
-      // hairColor: player.colors.palette[player.hairColor.value].value,
       hairColor: player.colors.red_0.value,
       color: color,
   );

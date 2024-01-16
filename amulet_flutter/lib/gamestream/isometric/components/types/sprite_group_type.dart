@@ -31,8 +31,8 @@ class SpriteGroupType {
 
   static String getSubTypeName(int type, int subType) => switch (type) {
       Armor => ArmorType.getName(subType),
-      Hand_Left => HandType.getName(subType),
-      Hand_Right => HandType.getName(subType),
+      // Hand_Left => HandType.getName(subType),
+      // Hand_Right => HandType.getName(subType),
       Head => HeadType.getName(subType),
       Helm => HelmType.getName(subType),
       // Legs => LegType.getName(subType),
