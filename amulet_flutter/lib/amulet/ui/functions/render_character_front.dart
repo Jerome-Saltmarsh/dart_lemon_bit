@@ -14,7 +14,7 @@ void renderCharacterFront({
   required int headType,
   required int armorType,
   required int shoeType,
-  required int legsType,
+  // required int legsType,
   required int hairType,
   required int handsLeft,
   required int handsRight,
@@ -29,8 +29,8 @@ void renderCharacterFront({
   final torso = sprites.torso[gender]?.fromCharacterState(characterState) ?? (throw Exception());
   final shoes = sprites.shoes[shoeType]
       ?.fromCharacterState(characterState);
-  final legs = sprites.legs[legsType]
-      ?.fromCharacterState(characterState);
+  // final legs = sprites.legs[legsType]
+  //     ?.fromCharacterState(characterState);
   final hair = sprites.hair[hairType]
       ?.fromCharacterState(characterState);
   final spriteHandsLeft = sprites.handLeft[handsLeft]
@@ -58,16 +58,16 @@ void renderCharacterFront({
     blendMode: BlendMode.modulate,
   );
 
-  if (legs != null){
-    renderCanvasSprite(
-      sprite: legs,
-      canvas: canvas,
-      row: row,
-      column: column,
-      blendMode: BlendMode.dstATop,
-      color: color,
-    );
-  }
+  // if (legs != null){
+  //   renderCanvasSprite(
+  //     sprite: legs,
+  //     canvas: canvas,
+  //     row: row,
+  //     column: column,
+  //     blendMode: BlendMode.dstATop,
+  //     color: color,
+  //   );
+  // }
 
   if (shoes != null){
     renderCanvasSprite(

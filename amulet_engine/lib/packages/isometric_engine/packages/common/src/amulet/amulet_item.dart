@@ -5,7 +5,7 @@ import 'package:collection/collection.dart';
   // neutral
     // tunic [x]
   // warrior
-    // leather
+    // leather [x]
     // chainmail
     // platemail
  // wizard

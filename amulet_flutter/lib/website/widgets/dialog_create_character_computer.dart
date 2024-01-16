@@ -173,7 +173,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                               headType: headType.value,
                               armorType: ArmorType.Tunic,
                               shoeType: ShoeType.Leather_Boots,
-                              legsType: LegType.Leather,
+                              // legsType: LegType.Leather,
                               hairType: hairType.value,
                               handsLeft: HandType.None,
                               handsRight: HandType.None,

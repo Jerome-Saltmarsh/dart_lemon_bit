@@ -23,7 +23,7 @@ void renderPlayerFront({
       headType: player.headType.value,
       armorType: player.armorType.value,
       shoeType: player.shoeType.value,
-      legsType: player.legsType.value,
+      // legsType: player.legsType.value,
       hairType: player.hairType.value,
       handsLeft: player.handTypeLeft.value,
       handsRight: player.handTypeRight.value,

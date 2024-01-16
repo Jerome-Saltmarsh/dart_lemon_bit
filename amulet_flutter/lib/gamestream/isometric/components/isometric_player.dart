@@ -44,7 +44,7 @@ class IsometricPlayer with IsometricComponent {
   final shoeType = Watch(0);
   final gender = Watch(0);
   final armorType = Watch(0);
-  final legsType = Watch(0);
+  // final legsType = Watch(0);
   final handTypeLeft = Watch(0);
   final handTypeRight = Watch(0);
   final complexion = Watch(0);
@@ -85,9 +85,9 @@ class IsometricPlayer with IsometricComponent {
        healthPercentage.value = health.value / maxHealth;
     });
 
-    legsType.onChanged((t) {
-      print('player.legsType(${LegType.getName(t)})');
-    });
+    // legsType.onChanged((t) {
+    //   print('player.legsType(${LegType.getName(t)})');
+    // });
 
     aimTargetSet.onChanged((aimTargetSet) {
       if (aimTargetSet){

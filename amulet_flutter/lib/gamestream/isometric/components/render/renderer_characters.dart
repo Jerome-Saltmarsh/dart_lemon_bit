@@ -175,9 +175,9 @@ class RendererCharacters extends RenderGroup {
     final atlasHelmSouth = spritesSouth.helm[helmType] ?? (throw Exception());
     final atlasHelmWest = spritesWest.helm[helmType] ?? (throw Exception());
     final atlasHelmDiffuse = spritesDiffuse.helm[helmType] ?? (throw Exception());
-    final atlasLegsDiffuse =  spritesDiffuse.legs[legType] ?? (throw Exception(LegType.getName(legType)));
-    final atlasLegsSouth =  spritesSouth.legs[legType] ?? (throw Exception());
-    final atlasLegsWest =  spritesWest.legs[legType] ?? (throw Exception());
+    // final atlasLegsDiffuse =  spritesDiffuse.legs[legType] ?? (throw Exception(LegType.getName(legType)));
+    // final atlasLegsSouth =  spritesSouth.legs[legType] ?? (throw Exception());
+    // final atlasLegsWest =  spritesWest.legs[legType] ?? (throw Exception());
     final armorSpriteSouth = spritesSouth.armor;
     final armorSpriteWest = spritesWest.armor;
     final armorSpriteDiffuse = spritesDiffuse.armor;
@@ -220,9 +220,9 @@ class RendererCharacters extends RenderGroup {
     final spriteTorsoSouth = atlasTorsoSouth.fromCharacterState(characterState);
     final spriteTorsoWest = atlasTorsoWest.fromCharacterState(characterState);
     final spriteTorsoDiffuse = atlasTorsoDiffuse.fromCharacterState(characterState);
-    final spriteLegsDiffuse = atlasLegsDiffuse.fromCharacterState(characterState);
-    final spriteLegsSouth = atlasLegsSouth.fromCharacterState(characterState);
-    final spriteLegsWest = atlasLegsWest.fromCharacterState(characterState);
+    // final spriteLegsDiffuse = atlasLegsDiffuse.fromCharacterState(characterState);
+    // final spriteLegsSouth = atlasLegsSouth.fromCharacterState(characterState);
+    // final spriteLegsWest = atlasLegsWest.fromCharacterState(characterState);
     final spriteHandsLeftSouth = atlasHandsLeftSouth.fromCharacterState(characterState);
     final spriteHandsLeftWest = atlasHandsLeftWest.fromCharacterState(characterState);
     final spriteHandsLeftDiffuse = atlasHandsLeftDiffuse.fromCharacterState(characterState);
@@ -309,41 +309,41 @@ class RendererCharacters extends RenderGroup {
         anchorY: anchorY,
       );
 
-      renderSprite(
-        sprite: spriteLegsDiffuse,
-        frame: completingAction
-            ? spriteLegsDiffuse.getFramePercentage(row, actionComplete)
-            : spriteLegsDiffuse.getFrame(row: row, column: animationFrame),
-        color: colorDiffuse,
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
+      // renderSprite(
+      //   sprite: spriteLegsDiffuse,
+      //   frame: completingAction
+      //       ? spriteLegsDiffuse.getFramePercentage(row, actionComplete)
+      //       : spriteLegsDiffuse.getFrame(row: row, column: animationFrame),
+      //   color: colorDiffuse,
+      //   scale: scale,
+      //   dstX: dstX,
+      //   dstY: dstY,
+      //   anchorY: anchorY,
+      // );
 
-      renderSprite(
-        sprite: spriteLegsSouth,
-        frame: completingAction
-            ? spriteLegsSouth.getFramePercentage(row, actionComplete)
-            : spriteLegsSouth.getFrame(row: row, column: animationFrame),
-        color: colorSouth,
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
+      // renderSprite(
+      //   sprite: spriteLegsSouth,
+      //   frame: completingAction
+      //       ? spriteLegsSouth.getFramePercentage(row, actionComplete)
+      //       : spriteLegsSouth.getFrame(row: row, column: animationFrame),
+      //   color: colorSouth,
+      //   scale: scale,
+      //   dstX: dstX,
+      //   dstY: dstY,
+      //   anchorY: anchorY,
+      // );
 
-      renderSprite(
-        sprite: spriteLegsWest,
-        frame: completingAction
-            ? spriteLegsWest.getFramePercentage(row, actionComplete)
-            : spriteLegsWest.getFrame(row: row, column: animationFrame),
-        color: colorWest,
-        scale: scale,
-        dstX: dstX,
-        dstY: dstY,
-        anchorY: anchorY,
-      );
+      // renderSprite(
+      //   sprite: spriteLegsWest,
+      //   frame: completingAction
+      //       ? spriteLegsWest.getFramePercentage(row, actionComplete)
+      //       : spriteLegsWest.getFrame(row: row, column: animationFrame),
+      //   color: colorWest,
+      //   scale: scale,
+      //   dstX: dstX,
+      //   dstY: dstY,
+      //   anchorY: anchorY,
+      // );
 
       renderSprite(
         sprite: spriteShoesDiffuse,

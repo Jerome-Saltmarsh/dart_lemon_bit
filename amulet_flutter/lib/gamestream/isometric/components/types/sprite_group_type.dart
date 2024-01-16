@@ -6,7 +6,7 @@ class SpriteGroupType {
   static const Hand_Right = 7;
   static const Head = 8;
   static const Helm = 9;
-  static const Legs = 10;
+  // static const Legs = 10;
   static const Shadow = 11;
   static const Torso = 12;
   static const Weapon = 14;
@@ -20,7 +20,7 @@ class SpriteGroupType {
     Hand_Right: 'hands_right',
     Head: 'head',
     Helm: 'helms',
-    Legs: 'legs',
+    // Legs: 'legs',
     Shadow: 'shadow',
     Torso: 'torso',
     Weapon: 'weapons',
@@ -35,7 +35,7 @@ class SpriteGroupType {
       Hand_Right => HandType.getName(subType),
       Head => HeadType.getName(subType),
       Helm => HelmType.getName(subType),
-      Legs => LegType.getName(subType),
+      // Legs => LegType.getName(subType),
       Torso => Gender.getName(subType),
       Weapon => WeaponType.getName(subType),
       Weapon_Trail => WeaponType.getName(subType),

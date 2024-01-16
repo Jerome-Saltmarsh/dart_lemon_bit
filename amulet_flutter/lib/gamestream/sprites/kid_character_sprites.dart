@@ -9,7 +9,7 @@ class KidCharacterSprites {
   final handRight = <int, CharacterSpriteGroup>{};
   final head = <int, CharacterSpriteGroup>{};
   final helm = <int, CharacterSpriteGroup>{};
-  final legs = <int, CharacterSpriteGroup>{};
+  // final legs = <int, CharacterSpriteGroup>{};
   final torso = <int, CharacterSpriteGroup>{};
   final weapons = <int, CharacterSpriteGroup>{};
   final weaponsTrail = <int, CharacterSpriteGroup>{};
@@ -23,7 +23,7 @@ class KidCharacterSprites {
     SpriteGroupType.Hand_Right: handRight,
     SpriteGroupType.Head: head,
     SpriteGroupType.Helm: helm,
-    SpriteGroupType.Legs: legs,
+    // SpriteGroupType.Legs: legs,
     SpriteGroupType.Torso: torso,
     SpriteGroupType.Weapon: weapons,
     SpriteGroupType.Weapon_Trail: weaponsTrail,
