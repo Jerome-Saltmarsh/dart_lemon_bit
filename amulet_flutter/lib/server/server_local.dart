@@ -139,8 +139,6 @@ class ServerLocal implements Server {
     ensureInitialized().then((value) async {
       playerServer.uuid = generateUUID();
       playerServer.name = name;
-      playerServer.level = 1;
-      playerServer.experience = 0;
       playerServer.complexion = complexion;
       playerServer.hairType = hairType;
       playerServer.hairColor = hairColor;

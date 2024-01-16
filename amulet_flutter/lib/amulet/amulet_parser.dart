@@ -48,16 +48,6 @@ extension AmuletParser on IsometricParser {
          amulet.equippedHandRight.value = readAmuletItem();
          amulet.equippedShoes.value = readAmuletItem();
          break;
-       case NetworkResponseAmulet.Player_Experience:
-         amulet.playerExperience.value = readUInt24();
-         amulet.playerExperienceRequired.value = readUInt24();
-         break;
-       case NetworkResponseAmulet.Player_Level:
-         amulet.playerLevel.value = readByte();
-         break;
-       case NetworkResponseAmulet.Player_Inventory_Open:
-         amulet.playerInventoryOpen.value = readBool();
-         break;
        case NetworkResponseAmulet.Active_Power_Position:
          readIsometricPosition(amulet.activePowerPosition);
          break;
@@ -82,12 +72,6 @@ extension AmuletParser on IsometricParser {
          break;
        case NetworkResponseAmulet.Highlight_Amulet_Item_Clear:
          amulet.clearHighlightAmuletItem();
-         break;
-       case NetworkResponseAmulet.Player_Level_Gained:
-         amulet.onPlayerLevelGained();
-         break;
-       case NetworkResponseAmulet.Element_Upgraded:
-         amulet.onPlayerElementUpgraded();
          break;
        case NetworkResponseAmulet.Aim_Target_Fiend_Type:
          final isFiend = readBool();

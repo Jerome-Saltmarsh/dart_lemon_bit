@@ -621,22 +621,18 @@ class AmuletController {
     final player = this.player;
     final amuletPlayer = player;
     final amuletGame = player.amuletGame;
-
-    final inventoryOpen = arguments.getArgBool('--inventory');
-    if (inventoryOpen != null) {
-      player.inventoryOpen = inventoryOpen;
-      return;
-    }
-
     final requestIndex = parseArg1(arguments);
+
     if (requestIndex == null) return;
+
     if (!isValidIndex(requestIndex, NetworkRequestAmulet.values)){
       errorInvalidClientRequest();
       return;
     }
+
     final networkRequestAmulet = NetworkRequestAmulet.values[requestIndex];
 
-    switch (networkRequestAmulet){
+    switch (networkRequestAmulet) {
       case NetworkRequestAmulet.Spawn_Random_Enemy:
         amuletGame.spawnRandomEnemy();
         break;
@@ -671,23 +667,6 @@ class AmuletController {
         final index = parseArg2(arguments);
         if (index == null) return;
         player.selectNpcTalkOption(index);
-        break;
-      case NetworkRequestAmulet.Toggle_Inventory_Open:
-        player.toggleInventoryOpen();
-        break;
-      case NetworkRequestAmulet.Set_Inventory_Open:
-        throw Exception('not implemented');
-      case NetworkRequestAmulet.Gain_Level:
-        if (!isAdmin) {
-          throw Exception('admin mode not enabled');
-        }
-        amuletPlayer.gainLevel();
-        break;
-      case NetworkRequestAmulet.Gain_Experience:
-        if (!isAdmin) {
-          throw Exception('admin mode not enabled');
-        }
-        amuletPlayer.gainExperience(amuletPlayer.experienceRequired ~/ 4);
         break;
       case NetworkRequestAmulet.Reset:
         if (!isAdmin) {

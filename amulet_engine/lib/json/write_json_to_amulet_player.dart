@@ -19,8 +19,6 @@ void writeJsonToAmuletPlayer(
   player.gender = json['gender'] ?? 0;
   player.hairType = json['hairType'] ?? 0;
   player.hairColor = json['hairColor'] ?? 0;
-  player.experience = json['experience'] ?? 0;
-  player.level = json['level'] ?? 1;
   player.initialized = json['initialized'] ?? false;
   player.active = true;
   player.writePlayerHealth(); // TODO remove game logic

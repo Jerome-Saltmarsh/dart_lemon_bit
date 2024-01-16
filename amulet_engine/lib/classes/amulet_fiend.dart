@@ -29,7 +29,6 @@ class AmuletFiend extends Character {
     weaponDamage = fiendType.damage;
     attackDuration = fiendType.attackDuration;
     runSpeed = fiendType.runSpeed;
-    experience = fiendType.experience;
     chanceOfSetTarget = fiendType.chanceOfSetTarget;
     weaponType = fiendType.weaponType;
     weaponRange = fiendType.weaponRange;

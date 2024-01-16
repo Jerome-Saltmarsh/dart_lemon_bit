@@ -1,15 +1,11 @@
 
 import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/amulet_item.dart';
-import 'package:amulet_engine/packages/isometric_engine/packages/common/src/isometric/item_type.dart';
 import 'package:amulet_engine/packages/isometric_engine/packages/common/src/isometric/target_action.dart';
-import 'package:flutter/material.dart';
-
 import 'package:amulet_flutter/amulet/amulet.dart';
-import 'package:amulet_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';
 import 'package:amulet_flutter/website/widgets/gs_fullscreen.dart';
+import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
-import 'package:amulet_engine/packages/lemon_math.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
@@ -677,83 +673,6 @@ class AmuletUI {
           ),
         )),
     );
-  }
-
-  Widget buildPlayerLevel() => buildWatch(amulet.playerLevel,
-      (level) => Container(
-          alignment: Alignment.center,
-          width: 40,
-          height: 40,
-          child: buildText(level, color: Colors.white70, size: 22, bold: true)));
-
-  Widget buildPlayerExperienceBar() {
-    const width = 186.0;
-    const height = 10.0;
-    return buildBorder(
-        width: 2,
-        color: Colors.white70,
-        radius: BorderRadius.zero,
-        child: buildWatch(
-            amulet.playerExperienceRequired,
-            (experienceRequired) =>
-                buildWatch(amulet.playerExperience, (experience) {
-                  if (experienceRequired <= 0) return nothing;
-
-                  final percentage =
-                      clamp(experience / experienceRequired, 0, 1);
-                  return Tooltip(
-                    message: '$experience / $experienceRequired',
-                    child: Container(
-                      width: width,
-                      height: height,
-                      alignment: Alignment.centerLeft,
-                      color: Colors.white12,
-                      child: Container(
-                          color: Colors.white70,
-                          width: width * percentage,
-                          height: height),
-                    ),
-                  );
-                })));
-  }
-
-  Widget buildInventoryButton() {
-    const scale = 1.8;
-    final iconOpen = IsometricIcon(
-      iconType: IconType.Inventory_Open,
-      scale: scale,
-    );
-    final iconClosed = IsometricIcon(
-      iconType: IconType.Inventory_Closed,
-      scale: scale,
-    );
-    final watchInventoryOpen = buildWatch(amulet.playerInventoryOpen,
-        (inventoryOpen) => inventoryOpen ? iconOpen : iconClosed);
-
-    final flashingTrue =
-        ColorChangingContainer(size: itemImageSize, child: watchInventoryOpen);
-    final flashingFalse = GSContainer(
-      width: itemImageSize,
-      height: itemImageSize,
-      child: watchInventoryOpen,
-    );
-
-    return onPressed(
-        action: amulet.toggleInventoryOpen,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            buildWatch(
-                amulet.options.highlightIconInventory,
-                (highlightIconInventory) =>
-                    highlightIconInventory ? flashingTrue : flashingFalse),
-            Positioned(
-              top: 8,
-              left: 8,
-              child: buildText('Q', color: Colors.white70),
-            ),
-          ],
-        ));
   }
 
   Widget buildButtonClose({required Function action}) => onPressed(

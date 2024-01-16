@@ -726,18 +726,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   void onAmuletItemAcquired(AmuletPlayer amuletPlayer, AmuletItem amuletItem) {}
 
-  void onPlayerLevelGained(AmuletPlayer player) {
-
-    final players = this.players;
-
-    for (final otherPlayer in players){
-      if (!player.onSameTeam(otherPlayer)) {
-        continue;
-      }
-      otherPlayer.spawnConfettiAtPosition(player);
-    }
-  }
-
   void onPlayerInventoryMoved(
       AmuletPlayer player,
       AmuletItemSlot srcAmuletItemSlot,

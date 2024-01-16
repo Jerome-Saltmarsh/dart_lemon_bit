@@ -409,8 +409,6 @@ class Amulet {
   void resetPlayer(AmuletPlayer player) {
     playerChangeGameToTown(player);
     amuletTime.hour = 12;
-    player.level = 1;
-    player.experience = 0;
     player.equippedHelm.clear();
     player.equippedArmor.clear();
     player.equippedShoes.clear();

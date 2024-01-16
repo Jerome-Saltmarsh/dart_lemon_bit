@@ -120,21 +120,11 @@ class Amulet extends IsometricGame {
   final equippedShoes =  Watch<AmuletItem?>(null);
   final equippedHandLeft =  Watch<AmuletItem?>(null);
   final equippedHandRight =  Watch<AmuletItem?>(null);
-  final playerLevel = Watch(0);
-  final playerExperience = Watch(0);
-  final playerExperienceRequired = Watch(0);
-  final playerInventoryOpen = Watch(false);
 
-  // late final aimTargetElementWater = Watch(0);
-  // late final aimTargetElementFire = Watch(0);
-  // late final aimTargetElementAir = Watch(0);
-  // late final aimTargetElementStone = Watch(0);
-  // late final aimTargetElement = Watch(AmuletElement.stone);
   late final aimTargetFiendType = Watch<FiendType?>(null);
 
   Amulet(){
-    print('MmoGame()');
-    playerInventoryOpen.onChanged(onChangedPlayerInventoryOpen);
+    print('Amulet()');
     playerInteracting.onChanged(onChangedPlayerInteracting);
     npcTextIndex.onChanged(onChangedNpcTextIndex);
     error.onChanged(onChangedError);
@@ -309,26 +299,6 @@ class Amulet extends IsometricGame {
     );
   }
 
-  // int getAmuletPlayerItemLevel(AmuletItem amuletItem) =>
-  //     amuletItem.getLevel(
-  //       fire: elementFire.value,
-  //       water: elementWater.value,
-  //       electricity: elementElectricity.value,
-  //   );
-
-  void toggleInventoryOpen() =>
-      server.sendNetworkRequest(
-          NetworkRequest.Amulet,
-          NetworkRequestAmulet.Toggle_Inventory_Open.index,
-      );
-
-  void setInventoryOpen(bool value) =>
-      server.sendNetworkRequest(
-          NetworkRequest.Amulet,
-          '--inventory',
-          value
-      );
-
   void messageNext(){
     if (messageIndex.value + 1 >= messages.length){
       clearMessage();
@@ -406,18 +376,6 @@ class Amulet extends IsometricGame {
     highlightedAmuletItem.value = null;
   }
 
-  void requestGainLevel() =>
-      server.sendNetworkRequest(
-          NetworkRequest.Amulet,
-          NetworkRequestAmulet.Gain_Level.index,
-      );
-
-  void requestGainExperience() =>
-      server.sendNetworkRequest(
-          NetworkRequest.Amulet,
-          NetworkRequestAmulet.Gain_Experience.index,
-      );
-
   void requestSkipTutorial() =>
       server.sendNetworkRequest(
           NetworkRequest.Amulet,
@@ -429,14 +387,6 @@ class Amulet extends IsometricGame {
           NetworkRequest.Amulet,
           NetworkRequestAmulet.Reset.index,
       );
-
-  void onPlayerLevelGained() {
-    audio.buff_10.play();
-  }
-
-  void onPlayerElementUpgraded() {
-    audio.buff_1.play();
-  }
 
   void buildWorldMapSrcAndDst(){
     print('amulet.buildWorldMapSrcAndDst()');

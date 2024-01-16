@@ -18,8 +18,6 @@ import 'talk_option.dart';
 
 class AmuletPlayer extends IsometricPlayer with
     Equipment,
-    Experience,
-    Level,
     Magic
 {
   static const Data_Key_Dead_Count = 'dead';
@@ -54,7 +52,6 @@ class AmuletPlayer extends IsometricPlayer with
   Position? cameraTarget;
   AmuletGame amuletGame;
 
-  var _inventoryOpen = false;
   SlotType? activeSlotType;
 
   AmuletPlayer({
@@ -77,8 +74,6 @@ class AmuletPlayer extends IsometricPlayer with
     writeWorldMapBytes();
     writeWorldMapLocations();
     writeInteracting();
-    writePlayerLevel();
-    writePlayerExperience();
     writeGender();
     writePlayerComplexion();
   }
@@ -146,10 +141,6 @@ class AmuletPlayer extends IsometricPlayer with
     return item?.subType ?? WeaponType.Unarmed;
   }
 
-  int get experienceRequired => (level * level * 2) + (level * 10);
-
-  bool get inventoryOpen => _inventoryOpen;
-
   @override
   int get weaponCooldown => equippedWeapon.cooldown;
 
@@ -178,27 +169,6 @@ class AmuletPlayer extends IsometricPlayer with
       amount += item.amuletItem?.magic ?? 0;
     }
     return amount;
-  }
-
-  @override
-  set experience(int value){
-    if (value < 0){
-      value = 0;
-    }
-    super.experience = value;
-    writePlayerExperience();
-  }
-
-  @override
-  set level(int value) {
-    super.level = value;
-    writePlayerLevel();
-  }
-
-  set inventoryOpen(bool value){
-    _inventoryOpen = value;
-    writePlayerInventoryOpen();
-    amuletGame.onPlayerInventoryOpenChanged(this, value);
   }
 
   @override
@@ -709,25 +679,6 @@ class AmuletPlayer extends IsometricPlayer with
     }
   }
 
-  void writePlayerExperience() {
-    writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Player_Experience);
-    writeUInt24(experience);
-    writeUInt24(experienceRequired);
-  }
-
-  void writePlayerLevel() {
-    writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Player_Level);
-    writeByte(level);
-  }
-
-  void writePlayerInventoryOpen() {
-    writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Player_Inventory_Open);
-    writeBool(inventoryOpen);
-  }
-
   static AmuletItemSlot getEmptySlot(List<AmuletItemSlot> items) =>
       tryGetEmptySlot(items) ??
           (throw Exception('AmuletPlayer.getEmptySlot($items)'));
@@ -745,11 +696,6 @@ class AmuletPlayer extends IsometricPlayer with
   void setCharacterStateChanging({int duration = 15}) {
     super.setCharacterStateChanging(duration: duration);
     writePlayerEvent(PlayerEvent.Character_State_Changing);
-  }
-
-  void toggleInventoryOpen() {
-    inventoryOpen = !inventoryOpen;
-    setCharacterStateChanging();
   }
 
   void assignWeaponTypeToEquippedWeapon() =>
@@ -1291,19 +1237,6 @@ class AmuletPlayer extends IsometricPlayer with
     writeString(amuletGame.name);
   }
 
-  void gainLevel(){
-    level++;
-    // elementPoints++;
-    regainFullHealth();
-    writePlayerLevelGained();
-    amuletGame.onPlayerLevelGained(this);
-  }
-
-  void writePlayerLevelGained() {
-    writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Player_Level_Gained);
-  }
-
   void regainFullHealth() {
     health = maxHealth;
   }
@@ -1386,14 +1319,6 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Quest_Main);
     writeByte(value.index);
-  }
-
-  void gainExperience(int experience){
-    this.experience += experience;
-    while (this.experience > experienceRequired) {
-      gainLevel();
-      this.experience -= experienceRequired;
-    }
   }
 
   void completeQuestMain(QuestMain quest) {

@@ -15,7 +15,6 @@ class Character extends Collider {
   var _maxHealth = 1;
   var _goal = CharacterGoal.Idle;
 
-  var experience = 0;
   /// in seconds
   var respawnDurationTotal = (60 * 3);
   var gender = Gender.female;
