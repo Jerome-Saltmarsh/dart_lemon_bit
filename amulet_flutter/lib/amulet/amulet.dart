@@ -130,6 +130,14 @@ class Amulet extends IsometricGame {
 
     playerMagic.onChanged(refreshPlayerMagicPercentage);
     playerMagicMax.onChanged(refreshPlayerMagicPercentage);
+    verifySrcs();
+  }
+
+  void verifySrcs(){
+     for (final amuletItem in AmuletItem.values){
+       if (atlasSrcAmuletItem.containsKey(amuletItem)) continue;
+       print('verification_warning: atlasSrcAmuletItem[${amuletItem.name}]');
+     }
   }
 
   void refreshPlayerMagicPercentage(int _){
