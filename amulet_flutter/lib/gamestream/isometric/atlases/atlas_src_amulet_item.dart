@@ -25,7 +25,10 @@ const _armor_chainmail = [srcx_armor, 128.0];
 const _armor_platemail = [srcx_armor, 64.0];
 const _armor_robe = [srcx_armor, 64.0];
 const _armor_cloak = [srcx_armor, 64.0];
-const _shoes_boots = [srcx_shoes, 64.0];
+const _armor_mantle = [srcx_armor, 160.0];
+const _armor_shroud = [srcx_armor, 192.0];
+const _shoes_boots = [srcx_shoes, 0.0];
+const _shoes_boots_capped = [srcx_shoes, 32.0];
 
 const atlasSrcAmuletItem = <AmuletItem, List<double>> {
   AmuletItem.Weapon_Staff_1_Common: _weapons_staff_wooden,
@@ -62,15 +65,21 @@ const atlasSrcAmuletItem = <AmuletItem, List<double>> {
   AmuletItem.Armor_Rogue_1_Cloak_Common: _armor_cloak,
   AmuletItem.Armor_Rogue_1_Cloak_Rare: _armor_cloak,
   AmuletItem.Armor_Rogue_1_Cloak_Legendary: _armor_cloak,
+  AmuletItem.Armor_Rogue_2_Mantle_Common: _armor_mantle,
+  AmuletItem.Armor_Rogue_2_Mantle_Rare: _armor_mantle,
+  AmuletItem.Armor_Rogue_2_Mantle_Legendary: _armor_mantle,
+  AmuletItem.Armor_Rogue_3_Shroud_Common: _armor_shroud,
+  AmuletItem.Armor_Rogue_3_Shroud_Rare: _armor_shroud,
+  AmuletItem.Armor_Rogue_3_Shroud_Legendary: _armor_shroud,
   AmuletItem.Shoes_Warrior_1_Boots_Common: _shoes_boots,
   AmuletItem.Shoes_Wizard_1_Slippers_Common: _shoes_boots,
   AmuletItem.Shoes_Rogue_1_Treads_Common: _shoes_boots,
   AmuletItem.Shoes_Warrior_2_Grieves_Common: _shoes_boots,
-  AmuletItem.Shoes_Wizard_2_Footwraps_Common: _shoes_boots,
-  AmuletItem.Shoes_Rogue_2_Striders_Common: _shoes_boots,
-  AmuletItem.Shoes_Warrior_3_Sabatons_Common: _shoes_boots,
-  AmuletItem.Shoes_Wizard_3_Soles_Common: _shoes_boots,
-  AmuletItem.Shoes_Rogue_3_Satin_Boots_Common: _shoes_boots,
+  AmuletItem.Shoes_Wizard_2_Footwraps_Common: _shoes_boots_capped,
+  AmuletItem.Shoes_Rogue_2_Striders_Common: _shoes_boots_capped,
+  AmuletItem.Shoes_Warrior_3_Sabatons_Common: _shoes_boots_capped,
+  AmuletItem.Shoes_Wizard_3_Soles_Common: _shoes_boots_capped,
+  AmuletItem.Shoes_Rogue_3_Satin_Boots_Common: _shoes_boots_capped,
   AmuletItem.Consumable_Potion_Health: [srcx_consumable, 32],
   AmuletItem.Consumable_Potion_Magic: [srcx_consumable, 64],
 };
