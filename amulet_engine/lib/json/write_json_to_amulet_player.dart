@@ -7,10 +7,10 @@ void writeJsonToAmuletPlayer(
     CharacterJson json,
     AmuletPlayer player,
 ){
-  player.equipWeapon(AmuletItem.findByName(json.weapon), force: true);
-  player.equipHelm(AmuletItem.findByName(json.helm), force: true);
-  player.equipBody(AmuletItem.findByName(json.body), force: true);
-  player.equipShoes(AmuletItem.findByName(json.shoes), force: true);
+  player.equippedWeapon = AmuletItem.findByName(json.weapon);
+  player.equippedHelm = AmuletItem.findByName(json.helm);
+  player.equippedArmor = AmuletItem.findByName(json.armor);
+  player.equippedShoes = AmuletItem.findByName(json.shoes);
 
   player.data = json['data'] ?? Json();
   player.uuid = json['uuid'] ?? (throw Exception('json[uuid] is null'));

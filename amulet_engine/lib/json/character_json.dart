@@ -8,14 +8,14 @@ extension CharacterJsonExtension on CharacterJson {
   static const FIELD_NAME = 'name';
   static const FIELD_WEAPON = 'weapon';
   static const FIELD_HELM = 'helm';
-  static const FIELD_BODY = 'body';
+  static const FIELD_ARMOR = 'body';
   static const FIELD_SHOES = 'shoes';
 
   String get weapon => tryGetString(FIELD_WEAPON) ?? '-';
 
   String get helm => tryGetString(FIELD_HELM) ?? '-';
 
-  String get body => tryGetString(FIELD_BODY) ?? '-';
+  String get armor => tryGetString(FIELD_ARMOR) ?? '-';
 
   String get shoes => tryGetString(FIELD_SHOES) ?? '-';
 
@@ -27,7 +27,7 @@ extension CharacterJsonExtension on CharacterJson {
 
   set helm(String value) => setString(FIELD_HELM, value);
 
-  set body(String value) => setString(FIELD_BODY, value);
+  set armor(String value) => setString(FIELD_ARMOR, value);
 
   set shoes(String value) => setString(FIELD_SHOES, value);
 

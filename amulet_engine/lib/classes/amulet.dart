@@ -409,16 +409,12 @@ class Amulet {
   void resetPlayer(AmuletPlayer player) {
     playerChangeGameToTown(player);
     amuletTime.hour = 12;
-    player.equippedHelm.clear();
-    player.equippedArmor.clear();
-    player.equippedShoes.clear();
-    player.equippedWeapon.amuletItem = null;
-    player.equippedArmor.amuletItem = AmuletItem.Armor_Warrior_1_5_Common;
+    player.equippedWeapon = null;
+    player.equippedArmor = null;
     player.health = player.maxHealth;
     player.characterState = CharacterState.Idle;
     player.equipmentDirty = true;
     player.controlsEnabled = true;
-    // player.refillItemSlotsWeapons();
     player.clearActionFrame();
   }
 

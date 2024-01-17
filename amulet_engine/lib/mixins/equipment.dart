@@ -1,11 +1,11 @@
 
-import '../classes/amulet_item_slot.dart';
+import '../packages/isometric_engine/packages/common/src/amulet/amulet_item.dart';
 
 mixin Equipment {
-  final equippedWeapon = AmuletItemSlot();
-  final equippedHelm = AmuletItemSlot();
-  final equippedArmor = AmuletItemSlot();
-  final equippedShoes = AmuletItemSlot();
+  AmuletItem? equippedWeapon;
+  AmuletItem? equippedHelm;
+  AmuletItem? equippedArmor;
+  AmuletItem? equippedShoes;
 
   late final equipped = [
     equippedWeapon,

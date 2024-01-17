@@ -2,7 +2,6 @@
 import '../../packages/isometric_engine/packages/common/src/amulet/quests/quest_tutorials.dart';
 import '../../packages/src.dart';
 import '../amulet_game.dart';
-import '../amulet_item_slot.dart';
 import '../amulet_npc.dart';
 import '../amulet_player.dart';
 import '../amulet_player_script.dart';
@@ -258,7 +257,7 @@ class AmuletGameTutorial extends AmuletGame {
   bool isObjectiveCompleted(AmuletPlayer player) =>
     switch (player.tutorialObjective) {
        QuestTutorial.Draw_Bow =>
-        player.equippedWeapon.amuletItem == AmuletItem.Weapon_Bow_1_5_Common,
+        player.equippedWeapon == AmuletItem.Weapon_Bow_1_5_Common,
        QuestTutorial.Leave => getNodeIndexV3(player) == indexLeave,
         _ => false
     };
@@ -604,21 +603,6 @@ class AmuletGameTutorial extends AmuletGame {
       .talk(guide,
         'add the bow to the weapons rack by clicking the bow icon in the inventory.',
       );
-
-  @override
-  void onPlayerInventoryMoved(
-      AmuletPlayer player,
-      AmuletItemSlot srcAmuletItemSlot,
-      AmuletItemSlot targetAmuletItemSlot,
-  ) {
-    if (
-      // player.weapons.contains(targetAmuletItemSlot) &&
-      targetAmuletItemSlot.amuletItem == AmuletItem.Weapon_Bow_1_5_Common &&
-      player.tutorialObjective == QuestTutorial.Equip_Bow
-    ) {
-      startNextTutorialObjective(player);
-    }
-  }
 
   AmuletPlayerScript runScript(AmuletPlayer player){
     final instance = AmuletPlayerScript(player);

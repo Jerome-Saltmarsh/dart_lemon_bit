@@ -2,7 +2,6 @@
 
 
 import 'character_json.dart';
-import '../classes/amulet_item_slot.dart';
 import '../classes/amulet_player.dart';
 import '../utils/generate_uuid.dart';
 
@@ -14,10 +13,10 @@ CharacterJson writeAmuletPlayerToJson(AmuletPlayer player){
   }
 
   json.uuid = player.uuid;
-  json.weapon = getSlotTypeName(player.equippedWeapon);
-  json.helm = getSlotTypeName(player.equippedHelm);
-  json.body = getSlotTypeName(player.equippedArmor);
-  json.shoes = getSlotTypeName(player.equippedShoes);
+  json.weapon = player.equippedWeapon?.name ?? '-';
+  json.helm = player.equippedHelm?.name ?? '-';
+  json.armor = player.equippedArmor?.name ?? '-';
+  json.shoes = player.equippedShoes?.name ?? '-';
   json['data'] = player.data;
   json['name'] = player.name;
   json['complexion'] = player.complexion;
@@ -27,13 +26,3 @@ CharacterJson writeAmuletPlayerToJson(AmuletPlayer player){
   json['initialized'] = player.initialized;
   return json;
 }
-
-List<int> getSlotTypes(List<AmuletItemSlot> slots) => slots.map(getSlotType).toList(growable: false);
-
-int getSlotType(AmuletItemSlot slot) => slot.amuletItem?.subType ?? 0;
-
-List<String> getSlotTypeNames(List<AmuletItemSlot> slots) =>
-    slots.map(getSlotTypeName).toList(growable: false);
-
-String getSlotTypeName(AmuletItemSlot amuletItemSlot) =>
-    amuletItemSlot.amuletItem?.name ?? '-';

@@ -45,9 +45,6 @@ class AmuletFiend extends Character {
   String get name => fiendType.name;
 
   @override
-  int get experience => fiendType.experience;
-
-  @override
   int get maxHealth => fiendType.health;
 
 }

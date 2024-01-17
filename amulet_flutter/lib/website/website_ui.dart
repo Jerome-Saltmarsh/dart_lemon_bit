@@ -193,7 +193,7 @@ extension WebsiteUI on WebsiteGame {
 
                   final weapon = AmuletItem.findByName(character.weapon);
                   final helm = AmuletItem.findByName(character.helm);
-                  final armour = AmuletItem.findByName(character.body);
+                  final armour = AmuletItem.findByName(character.armor);
                   final shoes = AmuletItem.findByName(character.shoes);
 
               return Row(

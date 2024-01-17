@@ -14,6 +14,8 @@ const _helms_leather_cap = const [srcx_helm, 0.0];
 const _helms_steel_cap = const [srcx_helm, 128.0];
 const _helms_steel_helm = const [srcx_helm, 160.0];
 const _armor_leather = const [srcx_armor, 32.0];
+const _armor_chainmail = const [srcx_armor, 128.0];
+const _armor_platemail = const [srcx_armor, 64.0];
 
 const atlasSrcAmuletItem = <AmuletItem, List<double>> {
   AmuletItem.Weapon_Staff_1_5_Common: [srcx_weapon_staff, 0],
@@ -35,8 +37,8 @@ const atlasSrcAmuletItem = <AmuletItem, List<double>> {
   AmuletItem.Armor_Rogue_1_5_Rare: [srcx_armor, 32],
   AmuletItem.Armor_Rogue_1_5_Legendary: [srcx_armor, 32],
   AmuletItem.Armor_Warrior_1_5_Common: _armor_leather,
-  AmuletItem.Armor_Warrior_1_5_Rare: _armor_leather,
-  AmuletItem.Armor_Warrior_1_5_Legendary: _armor_leather,
+  AmuletItem.Armor_Warrior_1_5_Rare: _armor_chainmail,
+  AmuletItem.Armor_Warrior_1_5_Legendary: _armor_platemail,
   AmuletItem.Armor_Wizard_1_5_Common: [srcx_armor, 96],
   AmuletItem.Armor_Wizard_1_5_Rare: [srcx_armor, 96],
   AmuletItem.Armor_Wizard_1_5_Legendary: [srcx_armor, 96],

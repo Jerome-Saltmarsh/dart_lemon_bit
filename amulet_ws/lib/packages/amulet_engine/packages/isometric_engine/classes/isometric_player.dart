@@ -2,9 +2,6 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:amulet_engine/classes/amulet_player.dart';
-
-import '../../../classes/amulet_item_slot.dart';
 import '../isometric_engine.dart';
 import '../consts/isometric_settings.dart';
 
@@ -985,15 +982,15 @@ class IsometricPlayer extends Character with ByteWriter {
     writeByte(NetworkResponse.Isometric);
     writeByte(NetworkResponseIsometric.Selected_Collider);
     writeBool(true);
-
-    if (selectedCollider is AmuletPlayer){
-      writeBool(true);
-      writeAmuletItemSlot(selectedCollider.equippedWeapon);
-      writeAmuletItemSlot(selectedCollider.equippedWeapon); // TODO
-      // writeAmuletItemSlot(selectedCollider.activeAmuletItemSlot);
-    } else {
-      writeBool(false);
-    }
+    writeBool(false); // selectedCollider is AmuletPlayer
+    // if (selectedCollider is AmuletPlayer){
+    //   writeBool(true);
+    //   // writeAmuletItemSlot(selectedCollider.equippedWeapon);
+    //   // writeAmuletItemSlot(selectedCollider.equippedWeapon); // TODO
+    //   // writeAmuletItemSlot(selectedCollider.activeAmuletItemSlot);
+    // } else {
+    //   writeBool(false);
+    // }
 
     if (selectedCollider is GameObject) {
       final gameObject = selectedCollider;
@@ -1368,10 +1365,10 @@ class IsometricPlayer extends Character with ByteWriter {
     writeBool(value);
   }
 
-  void writeAmuletItemSlot(AmuletItemSlot amuletItemSlot){
-    writeInt16(amuletItemSlot.amuletItem?.index ?? -1);
-    writeUInt16(amuletItemSlot.charges);
-    writeUInt16(amuletItemSlot.max);
-    writePercentage(amuletItemSlot.cooldownPercentage);
-  }
+  // void writeAmuletItemSlot(AmuletItemSlot amuletItemSlot){
+  //   writeInt16(amuletItemSlot.amuletItem?.index ?? -1);
+  //   writeUInt16(amuletItemSlot.charges);
+  //   writeUInt16(amuletItemSlot.max);
+  //   writePercentage(amuletItemSlot.cooldownPercentage);
+  // }
 }

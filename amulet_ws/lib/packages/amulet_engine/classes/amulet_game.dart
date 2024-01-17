@@ -276,8 +276,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     character.clearActionFrame();
     final activeAmuletItemSlot = character.activeAmuletItemSlot;
-    final activeSlot = activeAmuletItemSlot ?? character.equippedWeapon;
-    final amuletItem = activeSlot.amuletItem;
+    final amuletItem = activeAmuletItemSlot ?? character.equippedWeapon;
 
     if (amuletItem == null){
       throw Exception('amuletItem == null');
@@ -693,8 +692,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       AmuletPlayer player,
       AmuletGameObject gameObject,
   ){
-     player.acquireAmuletItem(gameObject.amuletItem);
-     deactivate(gameObject);
+     if (player.acquireAmuletItem(gameObject.amuletItem)){
+       deactivate(gameObject);
+     }
   }
 
   List<int> getMarkTypes(int markType) =>
@@ -726,11 +726,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   void onAmuletItemAcquired(AmuletPlayer amuletPlayer, AmuletItem amuletItem) {}
 
-  void onPlayerInventoryMoved(
-      AmuletPlayer player,
-      AmuletItemSlot srcAmuletItemSlot,
-      AmuletItemSlot targetAmuletItemSlot,
-  ) {}
+  // void onPlayerInventoryMoved(
+  //     AmuletPlayer player,
+  //     AmuletItemSlot srcAmuletItemSlot,
+  //     AmuletItemSlot targetAmuletItemSlot,
+  // ) {}
 
   void onPlayerInventoryOpenChanged(AmuletPlayer player, bool value) { }
 
