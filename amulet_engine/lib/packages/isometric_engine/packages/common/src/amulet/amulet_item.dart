@@ -9,7 +9,7 @@ import 'package:collection/collection.dart';
     // chainmail [x]
     // platemail [x]
  // wizard
-    // robes
+    // robes [ ]
     // garb
     // attire
  // rogue
@@ -56,6 +56,9 @@ import 'package:collection/collection.dart';
   // circlet
   // great helm
   // crest
+  // broom (weapon type wizard)
+  // wand (weapon type wizard)
+  // dagger (weapon type rogue)
 
 enum AmuletItem {
   Weapon_Sword_1_Common(
@@ -408,7 +411,7 @@ enum AmuletItem {
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Armor,
-    subType: ArmorType.Robe,
+    subType: ArmorType.Robes,
     quality: ItemQuality.Common,
     defense: 5,
     regenMagic: 1,
@@ -419,7 +422,7 @@ enum AmuletItem {
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Armor,
-    subType: ArmorType.Robe,
+    subType: ArmorType.Robes,
     quality: ItemQuality.Rare,
     defense: 8,
     magic: 10,
@@ -429,7 +432,7 @@ enum AmuletItem {
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Armor,
-    subType: ArmorType.Robe,
+    subType: ArmorType.Robes,
     quality: ItemQuality.Legendary,
     defense: 10,
     magic: 15,
