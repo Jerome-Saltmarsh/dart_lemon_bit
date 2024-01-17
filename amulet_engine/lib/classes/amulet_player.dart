@@ -214,6 +214,39 @@ class AmuletPlayer extends IsometricPlayer with
     throw Exception();
   }
 
+  int get weaponDamageMin {
+    return equippedWeapon?.damageMin ?? 0;
+  }
+
+  int get weaponDamageMax {
+    return equippedWeapon?.damageMax ?? 0;
+  }
+
+  int get regenMagic {
+    var total = baseRegenMagic;
+    for (final item in equipped){
+      total += item?.regenMagic ?? 0;
+    }
+    return total;
+  }
+
+  int get regenHealth {
+    var total = baseRegenHealth;
+    for (final item in equipped){
+      total += item?.regenHealth ?? 0;
+    }
+    return total;
+  }
+
+  @override
+  double get runSpeed {
+    var total = baseRunSpeed;
+    for (final item in equipped){
+      total += item?.runSpeed ?? 0;
+    }
+    return total;
+  }
+
   @override
   void writePlayerGame() {
     cleanEquipment();
@@ -222,7 +255,6 @@ class AmuletPlayer extends IsometricPlayer with
     writeRegenHealth();
     writeRunSpeed();
     writeWeaponDamage();
-
     super.writePlayerGame();
   }
 
@@ -263,14 +295,6 @@ class AmuletPlayer extends IsometricPlayer with
     writeUInt16(weaponDamageMin);
     writeUInt16(weaponDamageMax);
     writeUInt16(weaponRange.toInt());
-  }
-
-  int get weaponDamageMin {
-    return equippedWeapon?.damageMin ?? 0;
-  }
-
-  int get weaponDamageMax {
-    return equippedWeapon?.damageMax ?? 0;
   }
 
   void writeDebug() {
@@ -459,34 +483,11 @@ class AmuletPlayer extends IsometricPlayer with
     }
   }
 
-  // static AmuletItemSlot getEmptySlot(List<AmuletItemSlot> items) =>
-  //     tryGetEmptySlot(items) ??
-  //         (throw Exception('AmuletPlayer.getEmptySlot($items)'));
-
-  // static AmuletItemSlot? tryGetEmptySlot(List<AmuletItemSlot> items){
-  //   for (final item in items) {
-  //     if (item.amuletItem == null) {
-  //       return item;
-  //     }
-  //   }
-  //   return null;
-  // }
-
   @override
   void setCharacterStateChanging({int duration = 15}) {
     super.setCharacterStateChanging(duration: duration);
     writePlayerEvent(PlayerEvent.Character_State_Changing);
   }
-
-  void assignWeaponTypeToEquippedWeapon() =>
-      weaponType = equippedWeapon?.subType ?? WeaponType.Unarmed;
-
-  void unequipHelm() => dropItemType(ItemType.Helm);
-
-  void unequipArmor() => dropItemType(ItemType.Armor);
-
-  void reportInventoryFull() =>
-      writeAmuletError('Inventory is full');
 
   @override
   void update() {
@@ -494,13 +495,11 @@ class AmuletPlayer extends IsometricPlayer with
     updateActiveAbility();
   }
 
-
   void updateActiveAbility() {
 
     if (activeAmuletItemSlot == null){
       return;
     }
-
 
     final activeAmuletItem = activeAmuletItemSlot;
 
@@ -538,11 +537,6 @@ class AmuletPlayer extends IsometricPlayer with
     writeDouble(activePowerY);
     writeDouble(activePowerZ);
   }
-
-  // void clearSlot(AmuletItemSlot slot){
-  //   slot.clear();
-  //   notifyEquipmentDirty();
-  // }
 
   void equipAmuletItem({
     required AmuletItem value,
@@ -582,17 +576,6 @@ class AmuletPlayer extends IsometricPlayer with
     equipmentDirty = true;
   }
 
-  // void updateItemSlots() {
-  //   final length = equipped.length;
-  //    for (var i = 0; i < length; i++) {
-  //      final amuletItemSlot = equipped[i];
-  //      if (amuletItemSlot.charges >= amuletItemSlot.max) {
-  //        continue;
-  //      }
-  //      amuletItemSlot.incrementCooldown();
-  //    }
-  // }
-
   @override
   void reportException(Object exception) {
     writeAmuletError(exception.toString());
@@ -604,39 +587,6 @@ class AmuletPlayer extends IsometricPlayer with
     writeString(error);
   }
 
-  // AmuletItemSlot getItemObjectAtSlotType(SlotType slotType, int index) =>
-  //   switch (slotType) {
-  //     SlotType.Weapon => equippedWeapon,
-  //     SlotType.Body => equippedArmor,
-  //     SlotType.Helm => equippedHelm,
-  //     SlotType.Shoes => equippedShoes,
-  //   };
-
-  // void dropItemSlotItem(AmuletItemSlot itemSlot){
-  //   final amuletItem = itemSlot.amuletItem;
-  //
-  //   if (amuletItem == null){
-  //     return;
-  //   }
-  //
-  //   spawnAmuletItem(amuletItem);
-  //   itemSlot.clear();
-  //   writePlayerEvent(PlayerEvent.Item_Dropped);
-  //   notifyEquipmentDirty();
-  // }
-
-  // AmuletItemSlot getItemSlot(SlotType slotType, int index) =>
-  //   switch (slotType) {
-  //     SlotType.Weapon => equippedWeapon,
-  //     SlotType.Helm => equippedHelm,
-  //     SlotType.Body => equippedArmor,
-  //     SlotType.Shoes => equippedShoes
-  //   };
-
-  void dropAmuletItem(AmuletItem amuletItem){
-
-  }
-
   void dropItemType(int itemType){
       final equippedAmuletItem = getEquippedAmuletItem(itemType: itemType);
       if (equippedAmuletItem == null){
@@ -644,7 +594,6 @@ class AmuletPlayer extends IsometricPlayer with
       }
 
       spawnAmuletItem(equippedAmuletItem);
-
       switch (equippedAmuletItem.type) {
         case ItemType.Weapon:
           equippedWeapon = null;
@@ -718,22 +667,7 @@ class AmuletPlayer extends IsometricPlayer with
     return false;
   }
 
-  // void refillItemSlotsWeapons(){
-  //   equipped.forEach(refillItemSlot);
-  // }
-
-  // void refillItemSlots(List<AmuletItemSlot> itemSlots){
-  //
-  //   for (final itemSlot in itemSlots) {
-  //     refillItemSlot(itemSlot);
-  //   }
-  //
-  //   equipmentDirty = true;
-  // }
-
-  int getInt(String name) {
-    return data[name] as int;
-  }
+  int getInt(String name) => data[name] as int;
 
   void writeCameraTarget() {
     final cameraTarget = this.cameraTarget;
@@ -783,7 +717,6 @@ class AmuletPlayer extends IsometricPlayer with
   void setCameraTarget(Position? target) {
     this.cameraTarget = target;
   }
-
 
   void playAudioType(AudioType audioType){
      writeByte(NetworkResponse.Amulet);
@@ -1080,22 +1013,9 @@ class AmuletPlayer extends IsometricPlayer with
   @override
   void onChangedAimTarget() {
     super.onChangedAimTarget();
-    // writeAimTargetAmuletElement();
     writeAimTargetFiendType();
     writeAimTargetItemType();
   }
-
-  // void writeAimTargetAmuletElement() {
-  //   final aimTarget = this.aimTarget;
-  //   if (aimTarget is! Elemental) return;
-  //   final elemental = aimTarget as Elemental;
-  //   writeByte(NetworkResponse.Amulet);
-  //   writeByte(NetworkResponseAmulet.Aim_Target_Element);
-  //   writeByte(elemental.elementWater);
-  //   writeByte(elemental.elementFire);
-  //   writeByte(elemental.elementAir);
-  //   writeByte(elemental.elementStone);
-  // }
 
   void writeAimTargetFiendType() {
     final aimTarget = this.aimTarget;
@@ -1141,32 +1061,6 @@ class AmuletPlayer extends IsometricPlayer with
      magic += regenMagic;
   }
 
-  int get regenMagic {
-     var total = baseRegenMagic;
-     for (final item in equipped){
-        total += item?.regenMagic ?? 0;
-     }
-     return total;
-  }
-
-  int get regenHealth {
-     var total = baseRegenHealth;
-     for (final item in equipped){
-        total += item?.regenHealth ?? 0;
-     }
-     return total;
-  }
-
-  @override
-  double get runSpeed {
-     var total = baseRunSpeed;
-     for (final item in equipped){
-        total += item?.runSpeed ?? 0;
-     }
-     return total;
-  }
-
-  void selectItemType(int itemType) {
-    setActiveSlotType(mapItemTypeToSlotType(itemType));
-  }
+  void selectItemType(int itemType) =>
+      setActiveSlotType(mapItemTypeToSlotType(itemType));
 }
