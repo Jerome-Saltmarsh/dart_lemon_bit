@@ -42,10 +42,7 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Equipped:
          amulet.equippedWeapon.value = readAmuletItem();
          amulet.equippedHelm.value = readAmuletItem();
-         amulet.equippedBody.value = readAmuletItem();
-         amulet.equippedLegs.value = readAmuletItem();
-         amulet.equippedHandLeft.value = readAmuletItem();
-         amulet.equippedHandRight.value = readAmuletItem();
+         amulet.equippedArmor.value = readAmuletItem();
          amulet.equippedShoes.value = readAmuletItem();
          break;
        case NetworkResponseAmulet.Active_Power_Position:

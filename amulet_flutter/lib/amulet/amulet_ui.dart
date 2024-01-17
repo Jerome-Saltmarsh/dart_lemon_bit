@@ -616,7 +616,7 @@ class AmuletUI {
                 width6,
                 buildWatchAmuletItem(amulet.equippedHelm),
                 width6,
-                buildWatchAmuletItem(amulet.equippedBody),
+                buildWatchAmuletItem(amulet.equippedArmor),
                 width6,
                 buildWatchAmuletItem(amulet.equippedShoes),
               ],

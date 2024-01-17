@@ -198,3 +198,6 @@ flutter:
     - assets/sprites/isometric/kid/diffuse/armor/chainmail/
     - assets/sprites/isometric/kid/south/armor/chainmail/
     - assets/sprites/isometric/kid/west/armor/chainmail/
+    - assets/sprites/isometric/kid/diffuse/armor/platemail/
+    - assets/sprites/isometric/kid/south/armor/platemail/
+    - assets/sprites/isometric/kid/west/armor/platemail/

@@ -31,8 +31,8 @@ class ItemSlot {
         return srcItem.isWeapon;
       case SlotType.Helm:
         return srcItem.isHelm;
-      case SlotType.Body:
-        return srcItem.isBody;
+      case SlotType.Armor:
+        return srcItem.isArmor;
       case SlotType.Shoes:
         return srcItem.isShoes;
     }

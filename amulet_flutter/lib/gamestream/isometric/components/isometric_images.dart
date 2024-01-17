@@ -204,7 +204,6 @@ class IsometricImages with IsometricComponent {
       kidCharacterSpritesIsometric.weapons[0] = spriteGroupEmpty;
       kidCharacterSpritesIsometric.helm[0] = spriteGroupEmpty;
       kidCharacterSpritesIsometric.armor[0] = spriteGroupEmpty;
-      // kidCharacterSpritesIsometric.legs[0] = spriteGroupEmpty;
       kidCharacterSpritesIsometric.hair[0] = spriteGroupEmpty;
       kidCharacterSpritesIsometric.shoes[0] = spriteGroupEmpty;
     }
@@ -219,8 +218,7 @@ class IsometricImages with IsometricComponent {
     loadSpriteGroupFront(type: SpriteGroupType.Weapon, subType: WeaponType.Bow);
     loadSpriteGroupFront(type: SpriteGroupType.Weapon, subType: WeaponType.Staff);
     loadSpriteGroupFront(type: SpriteGroupType.Weapon, subType: WeaponType.Shortsword);
-    loadSpriteGroupFront(type: SpriteGroupType.Shoes, subType: ShoeType.Leather_Boots);
-    loadSpriteGroupFront(type: SpriteGroupType.Shoes, subType: ShoeType.Iron_Plates);
+    loadSpriteGroupFront(type: SpriteGroupType.Shoes, subType: ShoeType.Boots);
 
 
     loadSpriteGroupIsometric(

@@ -55,7 +55,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..invincible = true
       ..helmType = HelmType.Steel_Helm
       ..armorType = ArmorType.Leather
-      ..shoeType = ShoeType.Leather_Boots
+      ..shoeType = ShoeType.Boots
       // ..legsType = LegType.Leather
       ..interact = onInteractWithWarren
       ..complexion = ComplexionType.fair;
@@ -80,7 +80,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..armorType = ArmorType.Leather
       // ..legsType = LegType.Leather
       // ..handTypeLeft = HandType.Leather_Gloves
-      ..shoeType = ShoeType.Iron_Plates
+      ..shoeType = ShoeType.Grieves
       ..weaponType = WeaponType.Bow
       ..chanceOfSetTarget = 1.0
       ..complexion = ComplexionType.fair;
@@ -106,7 +106,7 @@ class AmuletGameWorld11 extends AmuletGame {
       // ..legsType = LegType.Leather
       // ..handTypeLeft = HandType.Leather_Gloves
       ..weaponType = WeaponType.Bow
-      ..shoeType = ShoeType.Iron_Plates
+      ..shoeType = ShoeType.Grieves
       ..chanceOfSetTarget = 1.0
       ..complexion = ComplexionType.fair;
 
@@ -132,7 +132,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..hairColor = 30
       ..armorType = ArmorType.Tunic
       // ..legsType = LegType.Leather
-      ..shoeType = ShoeType.Leather_Boots
+      ..shoeType = ShoeType.Boots
       // ..handTypeLeft = HandType.None
       ..weaponType = WeaponType.Unarmed
       ..gender = Gender.female
@@ -161,7 +161,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..hairColor = 30
       ..armorType = ArmorType.Tunic
       // ..legsType = LegType.Leather
-      ..shoeType = ShoeType.Leather_Boots
+      ..shoeType = ShoeType.Boots
       // ..handTypeLeft = HandType.None
       ..weaponType = WeaponType.Unarmed
       ..gender = Gender.female
@@ -189,7 +189,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..hairColor = 20
       ..autoTarget = false
       ..armorType = ArmorType.Leather
-      ..shoeType = ShoeType.Leather_Boots
+      ..shoeType = ShoeType.Boots
       ..weaponType = WeaponType.Staff
       ..gender = Gender.male
       ..interact = onInteractWithTraveller

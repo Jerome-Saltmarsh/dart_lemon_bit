@@ -30,13 +30,6 @@ class GameObject extends Collider {
 
   bool get ignorePointer =>
       type == ItemType.Object && subType != GameObjectType.Interactable;
-    //   const [
-    //     GameObjectType.Barrel,
-    //     GameObjectType.Broom,
-    //     GameObjectType.Bottle,
-    //     GameObjectType.Crate_Wooden,
-    //     GameObjectType.Candle,
-    // ].contains(subType);
 
   static int getMaterialType(int type, int subType){
      switch (type){

@@ -1,7 +1,7 @@
 
 enum SlotType {
   Weapon,
-  Body,
+  Armor,
   Helm,
   Shoes,
 }

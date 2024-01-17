@@ -71,16 +71,10 @@ class Amulet extends IsometricGame {
     switch (activeSlotType.value){
       case SlotType.Helm:
         return equippedHelm;
-      case SlotType.Body:
-        return equippedBody;
+      case SlotType.Armor:
+        return equippedArmor;
       case SlotType.Shoes:
         return equippedShoes;
-      // case SlotType.Legs:
-      //   return equippedLegs;
-      // case SlotType.Hand_Left:
-      //   return equippedHandLeft;
-      // case SlotType.Hand_Right:
-      //   return equippedHandRight;
       default:
         return null;
     }
@@ -115,11 +109,8 @@ class Amulet extends IsometricGame {
   final npcOptionsReads = Watch(0);
   final equippedWeapon = Watch<AmuletItem?>(null);
   final equippedHelm = Watch<AmuletItem?>(null);
-  final equippedBody = Watch<AmuletItem?>(null);
-  final equippedLegs = Watch<AmuletItem?>(null);
+  final equippedArmor = Watch<AmuletItem?>(null);
   final equippedShoes =  Watch<AmuletItem?>(null);
-  final equippedHandLeft =  Watch<AmuletItem?>(null);
-  final equippedHandRight =  Watch<AmuletItem?>(null);
 
   late final aimTargetFiendType = Watch<FiendType?>(null);
 
@@ -212,7 +203,7 @@ class Amulet extends IsometricGame {
       return;
     }
     if (key == PhysicalKeyboardKey.keyD) {
-      selectSlotType(SlotType.Body);
+      selectSlotType(SlotType.Armor);
       return;
     }
     if (key == PhysicalKeyboardKey.keyF) {

@@ -97,7 +97,7 @@ class AmuletPlayer extends IsometricPlayer with
      switch (activeSlotType){
        case SlotType.Helm:
          return equippedHelm;
-       case SlotType.Body:
+       case SlotType.Armor:
          return equippedArmor;
        case SlotType.Shoes:
          return equippedShoes;
