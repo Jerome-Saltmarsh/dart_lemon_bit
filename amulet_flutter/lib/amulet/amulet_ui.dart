@@ -880,12 +880,14 @@ class AmuletUI {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            AmuletItemImage(amuletItem: amuletItem, scale: 1.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                buildText(amuletItem.label),
-                AmuletItemImage(amuletItem: amuletItem, scale: 1.0),
+                buildText(amuletItem.quality.name, color: mapItemQualityToColor(amuletItem.quality)),
+                width4,
+                buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
               ],
             ),
             if (damageMin != null)
