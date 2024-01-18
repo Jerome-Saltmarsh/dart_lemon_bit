@@ -17,7 +17,6 @@ class AmuletNpcWitch extends AmuletNpc {
     weaponType: WeaponType.Staff,
     weaponRange: 50,
     weaponDamage: 5,
-    weaponCooldown: 30,
     team: AmuletTeam.Monsters,
     name: 'Witch',
     attackDuration: 20,

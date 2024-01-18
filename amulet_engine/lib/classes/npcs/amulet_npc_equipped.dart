@@ -11,7 +11,6 @@ class AmuletNpcEquipped extends AmuletNpc {
       required super.team,
       required super.weaponDamage,
       required super.weaponRange,
-      required super.weaponCooldown,
       required super.x,
       required super.y,
       required super.z,

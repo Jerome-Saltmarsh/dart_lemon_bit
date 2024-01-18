@@ -75,7 +75,6 @@ class IsometricPlayer extends Character with ByteWriter {
     bool autoTargetNearbyEnemies = false,
   }) : super(
     characterType: CharacterType.Human,
-    weaponCooldown: 20,
     weaponRange: 100,
     weaponType: WeaponType.Unarmed,
     weaponDamage: 1,

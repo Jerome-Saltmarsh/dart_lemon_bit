@@ -131,9 +131,6 @@ class AmuletPlayer extends IsometricPlayer with
   int get weaponType => equippedWeapon?.subType ?? WeaponType.Unarmed;
 
   @override
-  int get weaponCooldown => equippedWeapon?.cooldown ?? 0;
-
-  @override
   int get weaponDamage => randomInt(weaponDamageMin, weaponDamageMax + 1);
 
   @override
@@ -146,7 +143,7 @@ class AmuletPlayer extends IsometricPlayer with
   int get maxHealth {
     var health = baseHealth;
     for (final item in equipped){
-      health += item?.defense ?? 0;
+      health += item?.maxHealth ?? 0;
     }
     return health;
   }
@@ -155,7 +152,7 @@ class AmuletPlayer extends IsometricPlayer with
   int get maxMagic {
     var amount = baseMagic;
     for (final item in equipped){
-      amount += item?.magic ?? 0;
+      amount += item?.maxMagic ?? 0;
     }
     return amount;
   }
@@ -802,16 +799,16 @@ class AmuletPlayer extends IsometricPlayer with
 
   void onAmuletItemUsed(AmuletItem amuletItem) {
 
-    final dependency = amuletItem.dependency;
-
-    if (dependency != null) {
-      final equippedWeaponAmuletItem = equippedWeapon;
-
-      if (equippedWeaponAmuletItem == null || equippedWeaponAmuletItem.subType != dependency) {
-        writeGameError(GameError.Weapon_Required);
-        return;
-      }
-    }
+    // final dependency = amuletItem.dependency;
+    //
+    // if (dependency != null) {
+    //   final equippedWeaponAmuletItem = equippedWeapon;
+    //
+    //   if (equippedWeaponAmuletItem == null || equippedWeaponAmuletItem.subType != dependency) {
+    //     writeGameError(GameError.Weapon_Required);
+    //     return;
+    //   }
+    // }
 
     final performDuration = amuletItem.performDuration;
 
@@ -841,9 +838,13 @@ class AmuletPlayer extends IsometricPlayer with
           return;
         }
         useWeaponType(
-          weaponType: dependency ?? amuletItem.subType,
+          weaponType: amuletItem.subType,
           duration: performDuration,
         );
+        // useWeaponType(
+        //   weaponType: dependency ?? amuletItem.subType,
+        //   duration: performDuration,
+        // );
         break;
       case CasteType.Targeted_Ally:
         if (target == null) {

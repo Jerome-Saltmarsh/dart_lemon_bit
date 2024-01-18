@@ -41,7 +41,6 @@ class Character extends Collider {
   var weaponType = WeaponType.Unarmed;
   var weaponDamage = 1;
   var weaponRange = 20.0;
-  var weaponCooldown = 0;
   var characterState = CharacterState.Idle;
   var frame = 0;
   var runSpeed = 1.0;
@@ -80,7 +79,6 @@ class Character extends Collider {
     required this.weaponType,
     required this.weaponDamage,
     required this.weaponRange,
-    required this.weaponCooldown,
     required this.attackDuration,
     required int health,
     String? name,

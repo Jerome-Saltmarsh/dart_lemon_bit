@@ -17,7 +17,6 @@ class AmuletFiend extends Character {
     weaponType: fiendType.weaponType,
     weaponDamage: fiendType.damage,
     weaponRange: fiendType.weaponRange,
-    weaponCooldown: fiendType.weaponCooldown,
     attackDuration: fiendType.attackDuration,
     health: fiendType.health,
   );

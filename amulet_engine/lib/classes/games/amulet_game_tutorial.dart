@@ -199,7 +199,6 @@ class AmuletGameTutorial extends AmuletGame {
     guide = AmuletNpc(
       name: 'Guide',
       weaponType: 0,
-      weaponCooldown: 0,
       weaponDamage: 0,
       weaponRange: 0,
       attackDuration: 0,

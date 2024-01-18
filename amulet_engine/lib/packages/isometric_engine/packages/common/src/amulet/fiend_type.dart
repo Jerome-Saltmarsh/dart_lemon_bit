@@ -16,7 +16,6 @@ enum FiendType {
     weaponType: WeaponType.Shortsword,
     weaponRange: 25,
     quantity: 2,
-    weaponCooldown: 20,
     clearTargetOnPerformAction: true,
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 50,
@@ -37,7 +36,6 @@ enum FiendType {
     weaponType: WeaponType.Bow,
     weaponRange: 150,
     quantity: 2,
-    weaponCooldown: 20,
     clearTargetOnPerformAction: false,
     postAttackPauseDurationMin: 30,
     postAttackPauseDurationMax: 80,
@@ -59,7 +57,6 @@ enum FiendType {
     weaponType: WeaponType.Unarmed,
     weaponRange: 50,
     quantity: 1,
-    weaponCooldown: 20,
     clearTargetOnPerformAction: false,
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 40,
@@ -81,7 +78,6 @@ enum FiendType {
     weaponType: WeaponType.Unarmed,
     weaponRange: 50,
     quantity: 1,
-    weaponCooldown: 20,
     clearTargetOnPerformAction: true,
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 60,
@@ -103,7 +99,6 @@ enum FiendType {
     weaponType: WeaponType.Shortsword,
     weaponRange: 25,
     quantity: 2,
-    weaponCooldown: 20,
     clearTargetOnPerformAction: true,
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 50,
@@ -125,7 +120,6 @@ enum FiendType {
     weaponType: WeaponType.Shortsword,
     weaponRange: 130,
     quantity: 1,
-    weaponCooldown: 30,
     clearTargetOnPerformAction: false,
     postAttackPauseDurationMin: 30,
     postAttackPauseDurationMax: 100,
@@ -147,7 +141,6 @@ enum FiendType {
     weaponType: WeaponType.Shortsword,
     weaponRange: 130,
     quantity: 1,
-    weaponCooldown: 30,
     clearTargetOnPerformAction: false,
     postAttackPauseDurationMin: 30,
     postAttackPauseDurationMax: 100,
@@ -170,7 +163,6 @@ enum FiendType {
   final double chanceOfSetTarget;
   final double weaponRange;
   final int weaponType;
-  final int weaponCooldown;
   final bool clearTargetOnPerformAction;
   final int postAttackPauseDurationMin;
   final int postAttackPauseDurationMax;
@@ -191,7 +183,6 @@ enum FiendType {
     required this.weaponType,
     required this.weaponRange,
     required this.quantity,
-    required this.weaponCooldown,
     required this.level,
     required this.clearTargetOnPerformAction,
     required this.postAttackPauseDurationMin,

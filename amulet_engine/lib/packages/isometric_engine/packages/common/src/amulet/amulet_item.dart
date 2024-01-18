@@ -196,7 +196,7 @@ enum AmuletItem {
     type: ItemType.Helm,
     subType: HelmType.Leather_Cap,
     performDuration: 25,
-    defense: 5,
+    maxHealth: 5,
     quality: ItemQuality.Common,
     regenHealth: 1,
   ),
@@ -208,7 +208,7 @@ enum AmuletItem {
     type: ItemType.Helm,
     subType: HelmType.Pointed_Hat_Purple,
     performDuration: 25,
-    defense: 2,
+    maxHealth: 2,
     quality: ItemQuality.Common,
     regenMagic: 1,
     skillMagicCost: 3,
@@ -222,7 +222,7 @@ enum AmuletItem {
     type: ItemType.Helm,
     subType: HelmType.Feather_Cap,
     performDuration: 25,
-    defense: 3,
+    maxHealth: 3,
     quality: ItemQuality.Common,
     skillMagicCost: 4,
   ),
@@ -235,7 +235,7 @@ enum AmuletItem {
     type: ItemType.Helm,
     subType: HelmType.Steel_Cap,
     performDuration: 25,
-    defense: 5,
+    maxHealth: 5,
     quality: ItemQuality.Common,
     regenHealth: 1,
   ),
@@ -248,7 +248,7 @@ enum AmuletItem {
     type: ItemType.Helm,
     subType: HelmType.Pointed_Hat_Black,
     performDuration: 25,
-    defense: 5,
+    maxHealth: 5,
     quality: ItemQuality.Common,
     regenHealth: 1,
   ),
@@ -261,7 +261,7 @@ enum AmuletItem {
     type: ItemType.Helm,
     subType: HelmType.Cape,
     performDuration: 25,
-    defense: 5,
+    maxHealth: 5,
     quality: ItemQuality.Common,
     regenHealth: 1,
   ),
@@ -274,7 +274,7 @@ enum AmuletItem {
     type: ItemType.Helm,
     subType: HelmType.Steel_Helm,
     performDuration: 25,
-    defense: 5,
+    maxHealth: 5,
     quality: ItemQuality.Common,
     regenHealth: 1,
   ),
@@ -287,7 +287,7 @@ enum AmuletItem {
     type: ItemType.Helm,
     subType: HelmType.Cowl,
     performDuration: 25,
-    defense: 5,
+    maxHealth: 5,
     quality: ItemQuality.Common,
     regenHealth: 1,
   ),
@@ -300,7 +300,7 @@ enum AmuletItem {
     type: ItemType.Helm,
     subType: HelmType.Cape,
     performDuration: 25,
-    defense: 5,
+    maxHealth: 5,
     quality: ItemQuality.Common,
     regenHealth: 1,
   ),
@@ -311,7 +311,7 @@ enum AmuletItem {
     type: ItemType.Armor,
     subType: ArmorType.Tunic,
     quality: ItemQuality.Common,
-    defense: 1,
+    maxHealth: 1,
   ),
   Armor_Warrior_1_Leather_Common(
     label: 'Leather',
@@ -320,7 +320,7 @@ enum AmuletItem {
     type: ItemType.Armor,
     subType: ArmorType.Leather,
     quality: ItemQuality.Common,
-    defense: 10,
+    maxHealth: 10,
     skillType: SkillType.Might,
     skillLevel: 1,
     skillMagicCost: 6,
@@ -333,7 +333,7 @@ enum AmuletItem {
     type: ItemType.Armor,
     subType: ArmorType.Leather,
     quality: ItemQuality.Rare,
-    defense: 15,
+    maxHealth: 15,
     regenHealth: 1,
   ),
   Armor_Warrior_1_Leather_Legendary(
@@ -343,7 +343,7 @@ enum AmuletItem {
     type: ItemType.Armor,
     subType: ArmorType.Leather,
     quality: ItemQuality.Legendary,
-    defense: 20,
+    maxHealth: 20,
     regenHealth: 2,
   ),
   Armor_Warrior_2_Chainmail_Common(
@@ -353,7 +353,7 @@ enum AmuletItem {
     type: ItemType.Armor,
     subType: ArmorType.Chainmail,
     quality: ItemQuality.Common,
-    defense: 20,
+    maxHealth: 20,
     regenHealth: 2,
   ),
   Armor_Warrior_2_Chainmail_Rare(
@@ -363,7 +363,7 @@ enum AmuletItem {
     type: ItemType.Armor,
     subType: ArmorType.Chainmail,
     quality: ItemQuality.Rare,
-    defense: 30,
+    maxHealth: 30,
     regenHealth: 2,
   ),
   Armor_Warrior_2_Chainmail_Legendary(
@@ -373,7 +373,7 @@ enum AmuletItem {
     type: ItemType.Armor,
     subType: ArmorType.Chainmail,
     quality: ItemQuality.Legendary,
-    defense: 40,
+    maxHealth: 40,
     regenHealth: 3,
   ),
   Armor_Warrior_3_Platemail_Common(
@@ -383,7 +383,7 @@ enum AmuletItem {
     type: ItemType.Armor,
     subType: ArmorType.Platemail,
     quality: ItemQuality.Common,
-    defense: 30,
+    maxHealth: 30,
     regenHealth: 3,
   ),
   Armor_Warrior_3_Platemail_Rare(
@@ -393,7 +393,7 @@ enum AmuletItem {
     type: ItemType.Armor,
     subType: ArmorType.Platemail,
     quality: ItemQuality.Rare,
-    defense: 30,
+    maxHealth: 30,
     regenHealth: 3,
   ),
   Armor_Warrior_3_Platemail_Legendary(
@@ -403,7 +403,7 @@ enum AmuletItem {
     type: ItemType.Armor,
     subType: ArmorType.Platemail,
     quality: ItemQuality.Legendary,
-    defense: 30,
+    maxHealth: 30,
     regenHealth: 3,
   ),
   Armor_Wizard_1_Robe_Common(
@@ -413,9 +413,9 @@ enum AmuletItem {
     type: ItemType.Armor,
     subType: ArmorType.Robes,
     quality: ItemQuality.Common,
-    defense: 5,
+    maxHealth: 5,
     regenMagic: 1,
-    magic: 5,
+    maxMagic: 5,
   ),
   Armor_Wizard_1_Robe_Rare(
     label: 'Robe',
@@ -424,8 +424,8 @@ enum AmuletItem {
     type: ItemType.Armor,
     subType: ArmorType.Robes,
     quality: ItemQuality.Rare,
-    defense: 8,
-    magic: 10,
+    maxHealth: 8,
+    maxMagic: 10,
   ),
   Armor_Wizard_1_Robe_Legendary(
     label: 'Robe',
@@ -434,8 +434,8 @@ enum AmuletItem {
     type: ItemType.Armor,
     subType: ArmorType.Robes,
     quality: ItemQuality.Legendary,
-    defense: 10,
-    magic: 15,
+    maxHealth: 10,
+    maxMagic: 15,
   ),
   Armor_Rogue_1_Cloak_Common(
     label: 'Cloak',
@@ -444,7 +444,7 @@ enum AmuletItem {
     type: ItemType.Armor,
     subType: ArmorType.Cloak,
     quality: ItemQuality.Common,
-    defense: 7,
+    maxHealth: 7,
   ),
   Armor_Rogue_1_Cloak_Rare(
     label: 'Cloak',
@@ -453,7 +453,7 @@ enum AmuletItem {
     type: ItemType.Armor,
     subType: ArmorType.Cloak,
     quality: ItemQuality.Rare,
-    defense: 9,
+    maxHealth: 9,
   ),
   Armor_Rogue_1_Cloak_Legendary(
     label: 'Cloak',
@@ -462,7 +462,7 @@ enum AmuletItem {
     type: ItemType.Armor,
     subType: ArmorType.Cloak,
     quality: ItemQuality.Legendary,
-    defense: 12,
+    maxHealth: 12,
   ),
   Armor_Rogue_2_Mantle_Common(
     label: 'Mantle',
@@ -471,7 +471,7 @@ enum AmuletItem {
     type: ItemType.Armor,
     subType: ArmorType.Mantle,
     quality: ItemQuality.Common,
-    defense: 9,
+    maxHealth: 9,
   ),
   Armor_Rogue_2_Mantle_Rare(
     label: 'Mantle',
@@ -480,7 +480,7 @@ enum AmuletItem {
     type: ItemType.Armor,
     subType: ArmorType.Mantle,
     quality: ItemQuality.Rare,
-    defense: 9,
+    maxHealth: 9,
   ),
   Armor_Rogue_2_Mantle_Legendary(
     label: 'Mantle',
@@ -489,7 +489,7 @@ enum AmuletItem {
     type: ItemType.Armor,
     subType: ArmorType.Mantle,
     quality: ItemQuality.Legendary,
-    defense: 9,
+    maxHealth: 9,
   ),
   Armor_Rogue_3_Shroud_Common(
     label: 'Shroud',
@@ -498,7 +498,7 @@ enum AmuletItem {
     type: ItemType.Armor,
     subType: ArmorType.Shroud,
     quality: ItemQuality.Common,
-    defense: 9,
+    maxHealth: 9,
   ),
   Armor_Rogue_3_Shroud_Rare(
     label: 'Shroud',
@@ -507,7 +507,7 @@ enum AmuletItem {
     type: ItemType.Armor,
     subType: ArmorType.Shroud,
     quality: ItemQuality.Rare,
-    defense: 9,
+    maxHealth: 9,
   ),
   Armor_Rogue_3_Shroud_Legendary(
     label: 'Shroud',
@@ -516,7 +516,7 @@ enum AmuletItem {
     type: ItemType.Armor,
     subType: ArmorType.Shroud,
     quality: ItemQuality.Legendary,
-    defense: 9,
+    maxHealth: 9,
   ),
   Shoes_Warrior_1_Leather_Boots_Common(
     label: 'Leather Boots',
@@ -526,7 +526,7 @@ enum AmuletItem {
     subType: ShoeType.Leather_Boots,
     performDuration: 25,
     quality: ItemQuality.Common,
-    defense: 5,
+    maxHealth: 5,
     runSpeed: -0.125,
   ),
   Shoes_Wizard_1_Black_Slippers_Common(
@@ -536,8 +536,8 @@ enum AmuletItem {
     type: ItemType.Shoes,
     subType: ShoeType.Black_Slippers,
     quality: ItemQuality.Common,
-    defense: 1,
-    magic: 5,
+    maxHealth: 1,
+    maxMagic: 5,
     skillType: SkillType.Teleport,
     skillLevel: 1,
     skillMagicCost: 6,
@@ -549,8 +549,8 @@ enum AmuletItem {
     type: ItemType.Shoes,
     subType: ShoeType.Treads,
     quality: ItemQuality.Common,
-    defense: 1,
-    magic: 5,
+    maxHealth: 1,
+    maxMagic: 5,
     skillType: SkillType.Teleport,
     skillLevel: 1,
     skillMagicCost: 6,
@@ -563,7 +563,7 @@ enum AmuletItem {
     subType: ShoeType.Grieves,
     performDuration: 25,
     quality: ItemQuality.Common,
-    defense: 5,
+    maxHealth: 5,
     runSpeed: -0.125,
   ),
   Shoes_Wizard_2_Footwraps_Common(
@@ -573,8 +573,8 @@ enum AmuletItem {
     type: ItemType.Shoes,
     subType: ShoeType.Footwraps,
     quality: ItemQuality.Common,
-    defense: 1,
-    magic: 5,
+    maxHealth: 1,
+    maxMagic: 5,
     skillType: SkillType.Teleport,
     skillLevel: 1,
     skillMagicCost: 6,
@@ -586,8 +586,8 @@ enum AmuletItem {
     type: ItemType.Shoes,
     subType: ShoeType.Striders,
     quality: ItemQuality.Common,
-    defense: 1,
-    magic: 5,
+    maxHealth: 1,
+    maxMagic: 5,
     skillType: SkillType.Teleport,
     skillLevel: 1,
     skillMagicCost: 6,
@@ -600,7 +600,7 @@ enum AmuletItem {
     subType: ShoeType.Sabatons,
     performDuration: 25,
     quality: ItemQuality.Common,
-    defense: 5,
+    maxHealth: 5,
     runSpeed: -0.125,
   ),
   Shoes_Wizard_3_Soles_Common(
@@ -610,8 +610,8 @@ enum AmuletItem {
     type: ItemType.Shoes,
     subType: ShoeType.Soles,
     quality: ItemQuality.Common,
-    defense: 1,
-    magic: 5,
+    maxHealth: 1,
+    maxMagic: 5,
     skillType: SkillType.Teleport,
     skillLevel: 1,
     skillMagicCost: 6,
@@ -623,8 +623,8 @@ enum AmuletItem {
     type: ItemType.Shoes,
     subType: ShoeType.Satin_Boots,
     quality: ItemQuality.Common,
-    defense: 1,
-    magic: 5,
+    maxHealth: 1,
+    maxMagic: 5,
     skillType: SkillType.Teleport,
     skillLevel: 1,
     skillMagicCost: 6,
@@ -637,7 +637,7 @@ enum AmuletItem {
     levelMin: 0,
     levelMax: 99,
     quality: ItemQuality.Common,
-    magic: 20,
+    maxMagic: 20,
   ),
   Consumable_Potion_Health(
     label: 'a common tonic',
@@ -655,9 +655,6 @@ enum AmuletItem {
   /// the maximum level of fiends that can drop this item
   final int levelMax;
   final String? description;
-  /// this is used by spells which required certain weapons to be equipped
-  /// for example split arrow depends on a bow
-  final int? dependency;
   /// see item_type.dart in commons
   final int type;
   final int subType;
@@ -667,14 +664,12 @@ enum AmuletItem {
   final int? damageMax;
   final double? range;
   final double? radius;
-  final int? cooldown;
-  final int? charges;
   final int? performDuration;
   final int? health;
   final ItemQuality quality;
   final String label;
-  final int defense;
-  final int? magic;
+  final int? maxHealth;
+  final int? maxMagic;
   final int? regenMagic;
   final int? regenHealth;
   final int? skillMagicCost;
@@ -687,20 +682,17 @@ enum AmuletItem {
     required this.levelMax,
     required this.quality,
     required this.label,
-    this.defense = 0,
-    this.magic,
+    this.maxHealth = 0,
+    this.maxMagic,
     this.regenMagic,
     this.regenHealth,
     this.description,
-    this.dependency,
     this.skillType,
     this.skillLevel,
     this.damageMin,
     this.damageMax,
     this.range,
     this.radius,
-    this.cooldown,
-    this.charges,
     this.performDuration,
     this.health,
     this.skillMagicCost,
