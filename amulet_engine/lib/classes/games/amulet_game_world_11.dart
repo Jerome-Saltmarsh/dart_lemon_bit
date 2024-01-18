@@ -55,7 +55,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..invincible = true
       ..helmType = HelmType.Steel_Helm
       ..armorType = ArmorType.Leather
-      ..shoeType = ShoeType.Boots
+      ..shoeType = ShoeType.Leather_Boots
       // ..legsType = LegType.Leather
       ..interact = onInteractWithWarren
       ..complexion = ComplexionType.fair;
@@ -132,7 +132,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..hairColor = 30
       ..armorType = ArmorType.Tunic
       // ..legsType = LegType.Leather
-      ..shoeType = ShoeType.Boots
+      ..shoeType = ShoeType.Leather_Boots
       // ..handTypeLeft = HandType.None
       ..weaponType = WeaponType.Unarmed
       ..gender = Gender.female
@@ -161,7 +161,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..hairColor = 30
       ..armorType = ArmorType.Tunic
       // ..legsType = LegType.Leather
-      ..shoeType = ShoeType.Boots
+      ..shoeType = ShoeType.Leather_Boots
       // ..handTypeLeft = HandType.None
       ..weaponType = WeaponType.Unarmed
       ..gender = Gender.female
@@ -189,7 +189,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..hairColor = 20
       ..autoTarget = false
       ..armorType = ArmorType.Leather
-      ..shoeType = ShoeType.Boots
+      ..shoeType = ShoeType.Leather_Boots
       ..weaponType = WeaponType.Staff
       ..gender = Gender.male
       ..interact = onInteractWithTraveller

@@ -3,7 +3,7 @@
 class ShoeType {
   static const None = 0;
   // warrior
-  static const Boots = 1;
+  static const Leather_Boots = 1;
   static const Grieves = 2;
   static const Sabatons = 3;
   // wizard
@@ -17,7 +17,7 @@ class ShoeType {
 
   static String getName(int value) => const {
     None: 'None',
-    Boots: 'Boots',
+    Leather_Boots: 'Leather_Boots',
     Grieves: 'Grieves',
     Sabatons: 'Sabatons',
     Slippers: 'Slippers',
@@ -29,7 +29,7 @@ class ShoeType {
   }[value] ?? (throw Exception('ShoeType.getName($value)'));
 
   static const values = [
-    Boots,
+    Leather_Boots,
     Grieves,
     Sabatons,
     Slippers,

@@ -172,7 +172,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                               helmType: 0,
                               headType: headType.value,
                               armorType: ArmorType.Tunic,
-                              shoeType: ShoeType.Boots,
+                              shoeType: ShoeType.Leather_Boots,
                               hairType: hairType.value,
                               weaponType: 0,
                               skinColor: palette[complexion.value].value,

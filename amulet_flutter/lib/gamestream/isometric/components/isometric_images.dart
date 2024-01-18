@@ -218,7 +218,7 @@ class IsometricImages with IsometricComponent {
     loadSpriteGroupFront(type: SpriteGroupType.Weapon, subType: WeaponType.Bow);
     loadSpriteGroupFront(type: SpriteGroupType.Weapon, subType: WeaponType.Staff);
     loadSpriteGroupFront(type: SpriteGroupType.Weapon, subType: WeaponType.Shortsword);
-    loadSpriteGroupFront(type: SpriteGroupType.Shoes, subType: ShoeType.Boots);
+    loadSpriteGroupFront(type: SpriteGroupType.Shoes, subType: ShoeType.Leather_Boots);
 
 
     loadSpriteGroupIsometric(

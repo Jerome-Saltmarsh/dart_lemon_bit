@@ -33,7 +33,7 @@ import 'package:collection/collection.dart';
 
 // shoes
   // warrior
-    // boots
+    // leather boots [x]
     // grieves
     // sabatons
   // wizard
@@ -523,7 +523,7 @@ enum AmuletItem {
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Shoes,
-    subType: ShoeType.Boots,
+    subType: ShoeType.Leather_Boots,
     performDuration: 25,
     quality: ItemQuality.Common,
     defense: 5,
