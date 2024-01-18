@@ -6,6 +6,7 @@ const srcx_weapon_bow = 96.0;
 const srcx_consumable = 128.0;
 const srcx_helm = 160.0;
 const srcx_armor = 192.0;
+const srcx_armor_rogue = 256.0;
 const srcx_shoes = 224.0;
 
 const _weapons_staff_wooden = [srcx_weapon_staff, 0.0];
@@ -24,7 +25,7 @@ const _armor_leather = [srcx_armor, 32.0];
 const _armor_chainmail = [srcx_armor, 128.0];
 const _armor_platemail = [srcx_armor, 64.0];
 const _armor_robe = [srcx_armor, 224.0];
-const _armor_cloak = [srcx_armor, 64.0];
+const _armor_cloak = [srcx_armor_rogue, 0.0];
 const _armor_mantle = [srcx_armor, 160.0];
 const _armor_shroud = [srcx_armor, 192.0];
 const _shoes_boots = [srcx_shoes, 0.0];

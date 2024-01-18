@@ -204,3 +204,6 @@ flutter:
     - assets/sprites/isometric/kid/diffuse/armor/robes/
     - assets/sprites/isometric/kid/south/armor/robes/
     - assets/sprites/isometric/kid/west/armor/robes/
+    - assets/sprites/isometric/kid/diffuse/armor/cloak/
+    - assets/sprites/isometric/kid/south/armor/cloak/
+    - assets/sprites/isometric/kid/west/armor/cloak/

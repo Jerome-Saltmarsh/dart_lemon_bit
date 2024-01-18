@@ -9,11 +9,11 @@ import 'package:collection/collection.dart';
     // chainmail [x]
     // platemail [x]
  // wizard
-    // robes [ ]
+    // robes [x]
     // garb
     // attire
  // rogue
-    // cloak
+    // cloak [x]
     // mantle
     // shroud
 

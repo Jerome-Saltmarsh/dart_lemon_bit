@@ -1,3 +1,9 @@
+[CLASSES]
+ROGUE
+MAGE
+KNIGHT
+HEALER
+
 [FEATURES]
 [new] item slots for amulets and potions
 [new] potion of attack
