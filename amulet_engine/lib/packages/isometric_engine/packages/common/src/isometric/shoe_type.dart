@@ -7,7 +7,7 @@ class ShoeType {
   static const Grieves = 2;
   static const Sabatons = 3;
   // wizard
-  static const Slippers = 4;
+  static const Black_Slippers = 4;
   static const Footwraps = 5;
   static const Soles = 6;
   // rogue
@@ -20,7 +20,7 @@ class ShoeType {
     Leather_Boots: 'Leather_Boots',
     Grieves: 'Grieves',
     Sabatons: 'Sabatons',
-    Slippers: 'Slippers',
+    Black_Slippers: 'Black_Slippers',
     Footwraps: 'Footwraps',
     Soles: 'Soles',
     Treads: 'Treads',
@@ -32,7 +32,7 @@ class ShoeType {
     Leather_Boots,
     Grieves,
     Sabatons,
-    Slippers,
+    Black_Slippers,
     Footwraps,
     Soles,
     Treads,

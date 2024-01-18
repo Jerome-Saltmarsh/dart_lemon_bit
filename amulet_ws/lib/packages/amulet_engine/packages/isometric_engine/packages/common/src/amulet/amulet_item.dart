@@ -37,7 +37,7 @@ import 'package:collection/collection.dart';
     // grieves [x]
     // sabatons
   // wizard
-    // slippers
+    // black_slippers [x]
     // footwraps
     // soles
   // rogue
@@ -529,12 +529,12 @@ enum AmuletItem {
     defense: 5,
     runSpeed: -0.125,
   ),
-  Shoes_Wizard_1_Slippers_Common(
-    label: 'Slippers',
+  Shoes_Wizard_1_Black_Slippers_Common(
+    label: 'Black Slippers',
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Shoes,
-    subType: ShoeType.Slippers,
+    subType: ShoeType.Black_Slippers,
     quality: ItemQuality.Common,
     defense: 1,
     magic: 5,

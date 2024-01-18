@@ -29,6 +29,7 @@ const _armor_cloak = [srcx_armor_rogue, 0.0];
 const _armor_mantle = [srcx_armor, 160.0];
 const _armor_shroud = [srcx_armor, 192.0];
 const _shoes_leather_boots = [srcx_shoes, 0.0];
+const _shoes_black_slippers = [srcx_shoes, 64.0];
 const _shoes_grieves = [srcx_shoes, 32.0];
 
 const atlasSrcAmuletItem = <AmuletItem, List<double>> {
@@ -73,7 +74,7 @@ const atlasSrcAmuletItem = <AmuletItem, List<double>> {
   AmuletItem.Armor_Rogue_3_Shroud_Rare: _armor_shroud,
   AmuletItem.Armor_Rogue_3_Shroud_Legendary: _armor_shroud,
   AmuletItem.Shoes_Warrior_1_Leather_Boots_Common: _shoes_leather_boots,
-  AmuletItem.Shoes_Wizard_1_Slippers_Common: _shoes_leather_boots,
+  AmuletItem.Shoes_Wizard_1_Black_Slippers_Common: _shoes_black_slippers,
   AmuletItem.Shoes_Rogue_1_Treads_Common: _shoes_leather_boots,
   AmuletItem.Shoes_Warrior_2_Grieves_Common: _shoes_grieves,
   AmuletItem.Shoes_Wizard_2_Footwraps_Common: _shoes_grieves,

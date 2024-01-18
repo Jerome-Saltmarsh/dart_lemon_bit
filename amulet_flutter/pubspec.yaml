@@ -4,6 +4,7 @@
 
 
 
+
 name: amulet_flutter
 description: next gen cloud gaming
 
@@ -162,9 +163,6 @@ flutter:
     - assets/sprites/isometric/kid/diffuse/weapons/sword_heavy_sapphire/
     - assets/sprites/isometric/kid/south/weapons/sword_heavy_sapphire/
     - assets/sprites/isometric/kid/west/weapons/sword_heavy_sapphire/
-    - assets/sprites/isometric/kid/diffuse/shoes/black_boots/
-    - assets/sprites/isometric/kid/south/shoes/black_boots/
-    - assets/sprites/isometric/kid/west/shoes/black_boots/
     - assets/sprites/isometric/gargoyle/
     - assets/sprites/isometric/gargoyle/flat/
     - assets/sprites/isometric/gargoyle/south/
@@ -213,3 +211,6 @@ flutter:
     - assets/sprites/isometric/kid/diffuse/shoes/grieves/
     - assets/sprites/isometric/kid/south/shoes/grieves/
     - assets/sprites/isometric/kid/west/shoes/grieves/
+    - assets/sprites/isometric/kid/diffuse/shoes/black_slippers/
+    - assets/sprites/isometric/kid/south/shoes/black_slippers/
+    - assets/sprites/isometric/kid/west/shoes/black_slippers/
