@@ -438,6 +438,7 @@ class AmuletPlayer extends IsometricPlayer with
 
     writeEquipped();
     writePlayerHealth();
+    writePlayerMagic();
   }
 
   void writeEquipped(){
