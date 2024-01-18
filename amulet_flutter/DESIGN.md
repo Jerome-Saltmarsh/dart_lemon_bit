@@ -1,8 +1,8 @@
 [CLASSES]
-ROGUE
-MAGE
-KNIGHT
-HEALER
+ROGUE  | THIEF  | SCOUT 
+MAGE   | WIZARD 
+KNIGHT | WARRIOR
+HEALER | ALCHEMIST
 
 [FEATURES]
 [new] item slots for amulets and potions

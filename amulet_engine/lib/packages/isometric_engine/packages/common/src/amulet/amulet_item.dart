@@ -19,7 +19,7 @@ import 'package:collection/collection.dart';
 
 // helm
   // warrior
-    // leather cap
+    // leather cap [x]
     // steel cap [x]
     // steel helm
   // wizard
