@@ -101,7 +101,6 @@ flutter:
     - assets/sprites/isometric/kid/south/torso/male/
     - assets/sprites/isometric/kid/south/weapons/bow/
     - assets/sprites/isometric/kid/south/weapons/staff/
-    - assets/sprites/isometric/kid/south/shoes/iron_plates/
     - assets/sprites/isometric/kid/south/shoes/leather_boots/
     - assets/sprites/isometric/kid/west/hair/01/
     - assets/sprites/isometric/kid/west/hair/02/
@@ -112,14 +111,12 @@ flutter:
     - assets/sprites/isometric/kid/west/torso/male/
     - assets/sprites/isometric/kid/west/weapons/bow/
     - assets/sprites/isometric/kid/west/weapons/staff/
-    - assets/sprites/isometric/kid/west/shoes/iron_plates/
     - assets/sprites/isometric/kid/west/shoes/leather_boots/
     - assets/sprites/isometric/kid/diffuse/hair/01/
     - assets/sprites/isometric/kid/diffuse/hair/02/
     - assets/sprites/isometric/kid/diffuse/hair/03/
     - assets/sprites/isometric/kid/diffuse/head/boy/
     - assets/sprites/isometric/kid/diffuse/head/girl/
-    - assets/sprites/isometric/kid/diffuse/shoes/iron_plates/
     - assets/sprites/isometric/kid/diffuse/shoes/leather_boots/
     - assets/sprites/isometric/kid/diffuse/torso/female/
     - assets/sprites/isometric/kid/diffuse/torso/male/
@@ -213,3 +210,6 @@ flutter:
     - assets/sprites/isometric/kid/diffuse/helms/feather_cap/
     - assets/sprites/isometric/kid/south/helms/feather_cap/
     - assets/sprites/isometric/kid/west/helms/feather_cap/
+    - assets/sprites/isometric/kid/diffuse/shoes/grieves/
+    - assets/sprites/isometric/kid/south/shoes/grieves/
+    - assets/sprites/isometric/kid/west/shoes/grieves/

@@ -34,7 +34,7 @@ import 'package:collection/collection.dart';
 // shoes
   // warrior
     // leather boots [x]
-    // grieves
+    // grieves [x]
     // sabatons
   // wizard
     // slippers
@@ -377,7 +377,7 @@ enum AmuletItem {
     regenHealth: 3,
   ),
   Armor_Warrior_3_Platemail_Common(
-    label: 'Scalemail',
+    label: 'Platemail',
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Armor,
@@ -387,7 +387,7 @@ enum AmuletItem {
     regenHealth: 3,
   ),
   Armor_Warrior_3_Platemail_Rare(
-    label: 'Scalemail',
+    label: 'Platemail',
     levelMin: 5,
     levelMax: 10,
     type: ItemType.Armor,
@@ -397,7 +397,7 @@ enum AmuletItem {
     regenHealth: 3,
   ),
   Armor_Warrior_3_Platemail_Legendary(
-    label: 'Scalemail',
+    label: 'Platemail',
     levelMin: 5,
     levelMax: 10,
     type: ItemType.Armor,
@@ -518,8 +518,8 @@ enum AmuletItem {
     quality: ItemQuality.Legendary,
     defense: 9,
   ),
-  Shoes_Warrior_1_Boots_Common(
-    label: 'Boots',
+  Shoes_Warrior_1_Leather_Boots_Common(
+    label: 'Leather Boots',
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Shoes,
