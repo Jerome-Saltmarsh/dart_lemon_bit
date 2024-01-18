@@ -1058,6 +1058,7 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   void regenHealthAndMagic() {
+     if (dead) return;
      health += regenHealth;
      magic += regenMagic;
   }

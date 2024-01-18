@@ -7,7 +7,7 @@ enum FiendType {
   Fallen(
     level: 1,
     health: 4,
-    damage: 1,
+    damage: 2,
     characterType: CharacterType.Fallen,
     attackDuration: 20,
     experience: 1,
@@ -21,7 +21,7 @@ enum FiendType {
     postAttackPauseDurationMax: 50,
     chanceOfDropCommon: 0.25,
     chanceOfDropRare: 0.05,
-    chanceOfDropLegendary: 0.025,
+    chanceOfDropLegendary: 0.01,
     chanceOfDropPotion: 0.15,
   ),
   Skeleton(

@@ -155,8 +155,16 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     onSecondElapsed();
   }
 
+  var secondsPerRegen = 5;
+  var nextRegen = 0;
+
   void onSecondElapsed(){
 
+    nextRegen--;
+    if (nextRegen > 0) {
+      return;
+    }
+    nextRegen = secondsPerRegen;
     final characters = this.characters;
     for (final character in characters) {
       if (character is AmuletPlayer) {
