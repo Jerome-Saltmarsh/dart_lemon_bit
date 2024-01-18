@@ -8,11 +8,11 @@ class HelmType {
   // Wizard
   static const Pointed_Hat_Purple = 4;
   static const Pointed_Hat_Black = 5;
-  static const Circlet = 6;
+  static const Cowl = 6;
   // ROGUE
-  static const Hood = 7;
-  static const Cape = 8;
-  static const Veil = 9;
+  static const Feather_Cap = 7;
+  static const Hood = 8;
+  static const Cape = 9;
 
   static const values = [
     Leather_Cap,
@@ -20,10 +20,10 @@ class HelmType {
     Steel_Helm,
     Pointed_Hat_Purple,
     Pointed_Hat_Black,
-    Circlet,
+    Cowl,
+    Feather_Cap,
     Hood,
     Cape,
-    Veil,
   ];
 
   static String getName(int value) => const {
@@ -33,9 +33,9 @@ class HelmType {
     Steel_Helm: 'Steel_Helm',
     Pointed_Hat_Purple: 'Pointed_Hat_Purple',
     Pointed_Hat_Black: 'Pointed_Hat_Black',
-    Circlet: 'Circlet',
+    Cowl: 'Cowl',
     Hood: 'Hood',
     Cape: 'Cape',
-    Veil: 'Veil',
+    Feather_Cap: 'Feather_Cap',
   }[value] ?? (throw Exception());
 }

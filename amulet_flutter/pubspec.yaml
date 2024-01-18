@@ -210,3 +210,6 @@ flutter:
     - assets/sprites/isometric/kid/diffuse/helms/leather_cap/
     - assets/sprites/isometric/kid/south/helms/leather_cap/
     - assets/sprites/isometric/kid/west/helms/leather_cap/
+    - assets/sprites/isometric/kid/diffuse/helms/feather_cap/
+    - assets/sprites/isometric/kid/south/helms/feather_cap/
+    - assets/sprites/isometric/kid/west/helms/feather_cap/

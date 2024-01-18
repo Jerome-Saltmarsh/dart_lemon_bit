@@ -27,7 +27,7 @@ import 'package:collection/collection.dart';
     // pointed hat black [x]
     // cowl
   // rogue
-    // feathered cap
+    // feather cap [x]
     // hood
     // cape
 
@@ -214,13 +214,13 @@ enum AmuletItem {
     skillMagicCost: 3,
   ),
   Helm_Rogue_1_Hood_Common(
-    label: 'Hood',
+    label: 'Feather Cap',
     levelMin: 1,
     levelMax: 5,
     skillType: SkillType.Invisible,
     skillLevel: 1,
     type: ItemType.Helm,
-    subType: HelmType.Hood,
+    subType: HelmType.Feather_Cap,
     performDuration: 25,
     defense: 3,
     quality: ItemQuality.Common,
@@ -285,7 +285,7 @@ enum AmuletItem {
     skillType: SkillType.Might,
     skillLevel: 1,
     type: ItemType.Helm,
-    subType: HelmType.Circlet,
+    subType: HelmType.Cowl,
     performDuration: 25,
     defense: 5,
     quality: ItemQuality.Common,
@@ -298,7 +298,7 @@ enum AmuletItem {
     skillType: SkillType.Might,
     skillLevel: 1,
     type: ItemType.Helm,
-    subType: HelmType.Veil,
+    subType: HelmType.Cape,
     performDuration: 25,
     defense: 5,
     quality: ItemQuality.Common,

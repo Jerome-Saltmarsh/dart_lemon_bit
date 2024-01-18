@@ -16,7 +16,7 @@ const _helms_pointed_hat_purple = [srcx_helm, 32.0];
 const _helms_pointed_hat_black = [srcx_helm, 64.0];
 const _helms_leather_cap = [srcx_helm, 0.0];
 const _helms_steel_cap = [srcx_helm, 128.0];
-const _helms_feathered_cap = [srcx_helm, 96.0];
+const _helms_feather_cap = [srcx_helm, 96.0];
 const _helms_steel_helm = [srcx_helm, 160.0];
 const _helms_circlet = [srcx_helm, 192.0];
 const _helms_veil = [srcx_helm, 224.0];
@@ -43,10 +43,10 @@ const atlasSrcAmuletItem = <AmuletItem, List<double>> {
   AmuletItem.Weapon_Bow_1_Legendary: _weapons_bow_short,
   AmuletItem.Helm_Warrior_1_Leather_Cap_Common: _helms_leather_cap,
   AmuletItem.Helm_Wizard_1_Pointed_Hat_Purple_Common: _helms_pointed_hat_purple,
-  AmuletItem.Helm_Rogue_1_Hood_Common: [srcx_helm, 64],
+  AmuletItem.Helm_Rogue_1_Hood_Common: _helms_feather_cap,
   AmuletItem.Helm_Warrior_2_Steel_Cap_Common: _helms_steel_cap,
   AmuletItem.Helm_Wizard_2_Pointed_Hat_Black_Common: _helms_pointed_hat_black,
-  AmuletItem.Helm_Rogue_2_Cape_Common: _helms_feathered_cap,
+  AmuletItem.Helm_Rogue_2_Cape_Common: _helms_feather_cap,
   AmuletItem.Helm_Warrior_3_Steel_Helm_Common: _helms_steel_helm,
   AmuletItem.Helm_Wizard_3_Circlet_Common: _helms_circlet,
   AmuletItem.Helm_Rogue_3_Veil_Common: _helms_veil,
