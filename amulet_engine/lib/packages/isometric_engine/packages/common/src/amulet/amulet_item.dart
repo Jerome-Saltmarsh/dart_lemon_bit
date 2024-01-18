@@ -41,7 +41,7 @@ import 'package:collection/collection.dart';
     // footwraps
     // soles
   // rogue
-    // treads
+    // treads [x]
     // striders
     // satin_boots
 
