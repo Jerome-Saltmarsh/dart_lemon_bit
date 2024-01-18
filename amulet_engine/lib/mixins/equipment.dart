@@ -6,11 +6,4 @@ mixin Equipment {
   AmuletItem? equippedHelm;
   AmuletItem? equippedArmor;
   AmuletItem? equippedShoes;
-
-  late final equipped = [
-    equippedWeapon,
-    equippedHelm,
-    equippedArmor,
-    equippedShoes,
-  ];
 }

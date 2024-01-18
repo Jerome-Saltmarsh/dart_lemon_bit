@@ -142,18 +142,20 @@ class AmuletPlayer extends IsometricPlayer with
   @override
   int get maxHealth {
     var health = baseHealth;
-    for (final item in equipped){
-      health += item?.maxHealth ?? 0;
-    }
+    health += equippedWeapon?.maxHealth ?? 0;
+    health += equippedHelm?.maxHealth ?? 0;
+    health += equippedArmor?.maxHealth ?? 0;
+    health += equippedShoes?.maxHealth ?? 0;
     return health;
   }
 
   @override
   int get maxMagic {
     var amount = baseMagic;
-    for (final item in equipped){
-      amount += item?.maxMagic ?? 0;
-    }
+    amount += equippedWeapon?.maxMagic ?? 0;
+    amount += equippedHelm?.maxMagic ?? 0;
+    amount += equippedArmor?.maxMagic ?? 0;
+    amount += equippedShoes?.maxMagic ?? 0;
     return amount;
   }
 
@@ -221,26 +223,29 @@ class AmuletPlayer extends IsometricPlayer with
 
   int get regenMagic {
     var total = baseRegenMagic;
-    for (final item in equipped){
-      total += item?.regenMagic ?? 0;
-    }
+    total += equippedWeapon?.regenMagic ?? 0;
+    total += equippedHelm?.regenMagic ?? 0;
+    total += equippedArmor?.regenMagic ?? 0;
+    total += equippedShoes?.regenMagic ?? 0;
     return total;
   }
 
   int get regenHealth {
     var total = baseRegenHealth;
-    for (final item in equipped){
-      total += item?.regenHealth ?? 0;
-    }
+    total += equippedWeapon?.regenHealth ?? 0;
+    total += equippedHelm?.regenHealth ?? 0;
+    total += equippedArmor?.regenHealth ?? 0;
+    total += equippedShoes?.regenHealth ?? 0;
     return total;
   }
 
   @override
   double get runSpeed {
     var total = baseRunSpeed;
-    for (final item in equipped){
-      total += item?.runSpeed ?? 0;
-    }
+    total += equippedWeapon?.runSpeed ?? 0;
+    total += equippedHelm?.runSpeed ?? 0;
+    total += equippedArmor?.runSpeed ?? 0;
+    total += equippedShoes?.runSpeed ?? 0;
     return total;
   }
 
