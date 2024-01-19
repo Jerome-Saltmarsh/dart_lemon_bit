@@ -434,11 +434,29 @@ class AmuletPlayer extends IsometricPlayer with
     helmType = equippedHelm?.subType ?? HelmType.None;
     armorType = equippedArmor?.subType ?? 0;
     shoeType = equippedShoes?.subType ?? ShoeType.None;
-
+    checkAssignedSkills();
     writeEquipped();
     writePlayerHealth();
     writePlayerMagic();
     writeSkillTypes();
+  }
+
+  void checkAssignedSkills() {
+
+    if (!skillTypeUnlocked(skillTypeLeft)) {
+      skillTypeLeft = SkillType.Attack;
+    }
+
+    if (!skillTypeUnlocked(skillTypeRight)) {
+      for (var i = SkillType.values.length - 1; i >= 0; i--) {
+        final skillType = SkillType.values[i];
+        if (skillTypeUnlocked(skillType)) {
+          skillTypeRight = skillType;
+          return;
+        }
+      }
+    }
+    skillTypeRight = SkillType.Attack;
   }
 
   void writeEquipped(){
