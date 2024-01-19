@@ -708,10 +708,11 @@ enum SkillType {
   Freeze_Area(casteType: CasteType.Positional, magicCost: 5, range: 120, radius: 50, damage: 2),
   Heal(casteType: CasteType.Self, magicCost: 3, range: 0, ),
   Teleport(casteType: CasteType.Positional, magicCost: 4, range: 180,),
-  Split_Shot(casteType: CasteType.Self, magicCost: 2, range: 120,),
+  Split_Shot(casteType: CasteType.Self, magicCost: 2, range: 120, weaponClass: WeaponClass.Bow),
   Invisible(casteType: CasteType.Instant, magicCost: 5, range: 0);
 
   final CasteType casteType;
+  final WeaponClass? weaponClass;
   final int magicCost;
   final double range;
   final double radius;
@@ -723,6 +724,7 @@ enum SkillType {
     required this.range,
     this.radius = 0,
     this.damage = 0,
+    this.weaponClass,
   });
 
 }
@@ -752,5 +754,20 @@ enum ClassType {
 enum WeaponClass {
   Sword,
   Staff,
-  Bow,
+  Bow;
+
+  static WeaponClass fromWeaponType(int weaponType){
+    if (WeaponType.isBow(weaponType)){
+      return WeaponClass.Bow;
+    }
+    if (WeaponType.isSword(weaponType)){
+      return WeaponClass.Sword;
+    }
+    if (WeaponType.isStaff(weaponType)){
+      return WeaponClass.Staff;
+    }
+    throw Exception(
+        'amuletPlayer.getWeaponTypeWeaponClass(weaponType: $weaponType)'
+    );
+  }
 }

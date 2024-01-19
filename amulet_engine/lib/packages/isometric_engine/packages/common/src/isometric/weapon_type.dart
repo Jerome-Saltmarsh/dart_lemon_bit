@@ -7,20 +7,28 @@ class WeaponType {
   static const Staff = 15;
 
   static const valuesMelee = [
-    Unarmed,
-    Shortsword,
-    Broadsword,
-    Sword_Heavy_Sapphire,
-    Staff,
+    ...valuesSwords,
+    ...valuesStaffs,
   ];
 
   static const valuesBows = [
     Bow,
   ];
 
+  static const valuesSwords = [
+    Shortsword,
+    Broadsword,
+    Sword_Heavy_Sapphire,
+  ];
+
+  static const valuesStaffs = [
+    Staff
+  ];
+
   static const values = [
     Unarmed,
-    ...valuesMelee,
+    ...valuesStaffs,
+    ...valuesSwords,
     ...valuesBows,
   ];
 
@@ -32,4 +40,10 @@ class WeaponType {
       Bow: 'Bow',
       Staff: 'staff',
     }[value] ?? 'weapon-type-unknown-$value';
+
+  static bool isBow(int weaponType) => valuesBows.contains(weaponType);
+
+  static bool isSword(int weaponType) => valuesSwords.contains(weaponType);
+
+  static bool isStaff(int weaponType) => valuesStaffs.contains(weaponType);
 }

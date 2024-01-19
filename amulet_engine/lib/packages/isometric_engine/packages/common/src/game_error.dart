@@ -80,6 +80,9 @@ enum GameError {
   Insufficient_Weapon_Charges,
   No_Weapon_Equipped,
   Weapon_Required,
+  Bow_Required_For_Skill,
+  Sword_Required_For_Skill,
+  Staff_Required_For_Skill,
   Insufficient_Magic;
 
   static GameError fromIndex(int index) {

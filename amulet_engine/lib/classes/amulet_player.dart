@@ -1095,11 +1095,30 @@ class AmuletPlayer extends IsometricPlayer with
 
   void performSkillType(){
     final skillType = skillActive;
+
+    final weaponClass = skillType.weaponClass;
+    if (weaponClass != null && equippedWeaponClass != weaponClass){
+      switch (weaponClass){
+        case WeaponClass.Staff:
+          writeGameError(GameError.Staff_Required_For_Skill);
+          return;
+        case WeaponClass.Sword:
+          writeGameError(GameError.Sword_Required_For_Skill);
+          return;
+        case WeaponClass.Bow:
+          writeGameError(GameError.Bow_Required_For_Skill);
+          return;
+      }
+    }
+
     final magicCost = getSkillTypeMagicCost(skillType);
     if (magicCost > magic) {
       writeGameError(GameError.Insufficient_Magic);
       return;
     }
+
+
+
     magic -= magicCost;
     performForceAttack();
   }
@@ -1182,5 +1201,13 @@ class AmuletPlayer extends IsometricPlayer with
       range: range,
       angle: angle + spread,
     );
+  }
+
+  WeaponClass? get equippedWeaponClass {
+      final weaponType = equippedWeapon?.subType;
+      if (weaponType == null){
+        return null;
+      }
+      return WeaponClass.fromWeaponType(weaponType);
   }
 }
