@@ -901,6 +901,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeOptionsSetTimeVisible(game is! AmuletGameTutorial);
     writeOptionsSetHighlightIconInventory(false);
     writeSkillsLeftRight();
+    writeSkillTypes();
   }
 
   void writeSceneName() {
@@ -1231,6 +1232,9 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   bool skillTypeUnlocked(SkillType skillType){
+    if (skillType == SkillType.Attack){
+      return true;
+    }
     if (equippedWeapon?.skillType == skillType){
       return true;
     }

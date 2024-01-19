@@ -906,29 +906,25 @@ class AmuletUI {
       ],
     );
 
-  Widget buildControlSkillTypeRight() {
-    return onPressed(
+  Widget buildControlSkillTypeRight() => onPressed(
           action: () => amulet.ui.showDialogValues(
-            title: 'Skill Type',
+            title: 'Skills',
             values: amulet.playerSkillTypes,
             toString: (skillType) => skillType.name,
             onSelected: (skillType) => amulet.selectSkillTypeRight(skillType),
           ),
           child: buildWatch(amulet.playerSkillRight, buildSkillTypeIcon),
         );
-  }
 
-  Widget buildControlSkillTypeLeft() {
-    return onPressed(
+  Widget buildControlSkillTypeLeft() => onPressed(
              action: () => amulet.ui.showDialogValues(
-                 title: 'Skill Type',
-                 values: SkillType.values,
+                 title: 'Skills',
+                 values: amulet.playerSkillTypes,
                  toString: (skillType) => skillType.name,
                  onSelected: (skillType) => amulet.selectSkillTypeLeft(skillType),
              ),
              child: buildWatch(amulet.playerSkillLeft, buildSkillTypeIcon),
          );
-  }
 
   Widget buildSkillTypeIcon(SkillType skillType) =>
       Container(
