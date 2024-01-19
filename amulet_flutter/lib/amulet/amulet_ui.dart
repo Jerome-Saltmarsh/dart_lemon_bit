@@ -813,6 +813,8 @@ class AmuletUI {
               buildWatch(amulet.playerWeaponRange, buildRowValue),
             ],
           ),
+          // height16,
+          // buildEquippedAmuletItems(),
         ],
       ),
     );
