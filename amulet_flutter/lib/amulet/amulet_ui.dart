@@ -144,6 +144,7 @@ class AmuletUI {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 buildControlSkillTypeLeft(),
+                width4,
                 GSContainer(
                   padding: const EdgeInsets.all(4),
                   child: Column(
@@ -156,6 +157,7 @@ class AmuletUI {
                     ],
                   ),
                 ),
+                width4,
                 buildControlSkillTypeRight(),
               ],
             ),
@@ -952,9 +954,11 @@ class AmuletUI {
 
   Widget buildSkillTypeIcon(SkillType skillType) =>
       Container(
+        width: 100,
+        height: 100,
         alignment: Alignment.center,
         padding: const EdgeInsets.all(4),
-        color: Colors.grey,
+        color: amulet.style.containerColor,
         child: buildText(skillType.name),
       );
 }
