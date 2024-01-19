@@ -341,7 +341,7 @@ class IsometricPlayer extends Character with ByteWriter {
       initialize();
     }
 
-    if (!sceneDownloaded){
+    if (!sceneDownloaded) {
       downloadScene();
     }
 
@@ -350,10 +350,8 @@ class IsometricPlayer extends Character with ByteWriter {
     writePlayerAimTargetPosition();
     writePlayerAimTargetAction();
     writePlayerDestination();
-
     writePlayerCharacterState();
     writeSelectedCollider();
-
     writeProjectiles();
     writeCharacters();
     writeEditorGameObjectSelected();

@@ -383,15 +383,12 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     player.aimTarget = closestCollider;
   }
 
-  bool isMeleeAOE(int weaponType){
-    return false;
-  }
-
   void performAbilityMelee({
     required Character character,
     required DamageType damageType,
     required double range,
     required int damage,
+    required bool areaOfEffect,
   }){
 
     dispatchGameEventPosition(
@@ -426,7 +423,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     var attackHit = false;
     var nearestDistance = range;
     Collider? nearest;
-    final areaOfEffect = isMeleeAOE(character.weaponType);
 
     for (final other in characters) {
       if (!other.active) continue;
@@ -1388,49 +1384,11 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     character.update();
   }
 
-  void performCharacterAction(Character character){
-    final weaponType = character.weaponType;
-
-    if (WeaponType.valuesMelee.contains(weaponType)) {
-      if (attackAlwaysHitsTarget) {
-        final target = character.target;
-        if (target is Collider) {
-          applyHit(
-            srcCharacter: character,
-            target: target,
-            damage: character.weaponDamage,
-            damageType: DamageType.melee,
-          );
-        }
-        return;
-      }
-      performAbilityMelee(
-          character: character,
-          damageType: DamageType.melee,
-          range: character.weaponRange,
-          damage: character.weaponDamage,
-      );
-      return;
-    }
-
-    if (weaponType == WeaponType.Bow) {
-      dispatchGameEvent(
-        GameEvent.Bow_Released,
-        character.x,
-        character.y,
-        character.z,
-      );
-      spawnProjectileArrow(
-        src: character,
-        damage: character.weaponDamage,
-        range: character.weaponRange,
-        angle: character.angle,
-      );
-      return;
-    }
-  }
-
   void updateCharacterState(Character character) {
+
+    if (character.shouldPerformStart){
+      performCharacterStart(character);
+    }
 
     if (character.shouldPerformAction) {
       performCharacterAction(character);
@@ -1440,11 +1398,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       character.clearActionFrame();
     }
 
-    if (
-      character.actionDuration > 0 &&
-      character.frame >= character.actionDuration
-    ) {
-      endCharacterAction(character);
+    if (character.shouldPerformEnd) {
+      performCharacterEnd(character);
     }
 
     if (character.running) {
@@ -1475,7 +1430,53 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     character.frame++;
   }
 
-  void endCharacterAction(Character character) {
+  void performCharacterStart(Character character){
+
+  }
+
+  void performCharacterAction(Character character){
+    final weaponType = character.weaponType;
+    if (WeaponType.valuesMelee.contains(weaponType)) {
+      if (attackAlwaysHitsTarget) {
+        final target = character.target;
+        if (target is Collider) {
+          applyHit(
+            srcCharacter: character,
+            target: target,
+            damage: character.weaponDamage,
+            damageType: DamageType.melee,
+          );
+        }
+        return;
+      }
+      performAbilityMelee(
+        character: character,
+        damageType: DamageType.melee,
+        range: character.weaponRange,
+        damage: character.weaponDamage,
+        areaOfEffect: false,
+      );
+      return;
+    }
+
+    if (weaponType == WeaponType.Bow) {
+      dispatchGameEvent(
+        GameEvent.Bow_Released,
+        character.x,
+        character.y,
+        character.z,
+      );
+      spawnProjectileArrow(
+        src: character,
+        damage: character.weaponDamage,
+        range: character.weaponRange,
+        angle: character.angle,
+      );
+      return;
+    }
+  }
+
+  void performCharacterEnd(Character character) {
     if (character.dead) {
       return;
     }

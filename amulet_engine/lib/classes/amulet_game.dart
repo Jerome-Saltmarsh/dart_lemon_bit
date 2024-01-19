@@ -236,10 +236,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   }
 
   @override
-  void endCharacterAction(Character character){
+  void performCharacterEnd(Character character){
      if (character is AmuletFiend){
         if (character.characterStateAttacking){
-          super.endCharacterAction(character);
+          super.performCharacterEnd(character);
           final fiendType = character.fiendType;
           character.setCharacterState(
             value: CharacterState.Idle,
@@ -251,7 +251,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
           return;
         }
      }
-     super.endCharacterAction(character);
+     super.performCharacterEnd(character);
   }
 
   @override
@@ -288,8 +288,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   void performCharacterActionAmuletPlayer(AmuletPlayer player){
     final skillType = player.skillActive;
-    final damage = getPlayerSkillDamage(skillType, player);
-    final range = getPlayerSkillRange(skillType, player);
+    final damage = player.getSkillTypeDamage(skillType);
+    final range = player.getSkillTypeRange(skillType);
     final equippedWeapon = player.equippedWeapon;
     player.clearActiveSkill();
     player.clearActionFrame();
@@ -305,6 +305,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
             damageType: DamageType.melee,
             range: range,
             damage: damage,
+            areaOfEffect: false,
           );
           return;
         }
@@ -318,12 +319,16 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         }
         throw Exception();
       case SkillType.Mighty_Swing:
-        performAbilityMelee(
-          character: player,
-          damageType: DamageType.melee,
-          range: range,
-          damage: damage,
-        );
+        if (player.equippedWeaponMelee) {
+          performAbilityMelee(
+            character: player,
+            damageType: DamageType.melee,
+            range: range,
+            damage: damage,
+            areaOfEffect: true,
+          );
+          return;
+        }
         break;
       case SkillType.Arrow:
         performAbilityArrow(
@@ -355,7 +360,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         );
         break;
       case SkillType.Teleport:
-        performAbilityBlink(player);
+        performAbilityTeleport(player);
         break;
       case SkillType.Freeze_Target:
         throw Exception('not implemented');
@@ -438,7 +443,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     );
   }
 
-  void performAbilityBlink(AmuletPlayer character){
+  void performAbilityTeleport(AmuletPlayer character){
     dispatchGameEventPosition(GameEvent.Blink_Depart, character);
     character.x = character.activePowerX;
     character.y = character.activePowerY;
@@ -772,12 +777,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     if (mouseRightClicked) {
       player.performSkillRight();
-      // if (player.activeAmuletItemSlot == null){
-      //   player.performForceAttack();
-      //   return;
-      // } else {
-      //   player.deactivateSlotType();
-      // }
       return;
     }
 
@@ -853,19 +852,29 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     );
   }
 
-  int getPlayerSkillDamage(SkillType skillType, AmuletPlayer player){
-    return 1;
-  }
-
-  double getPlayerSkillRange(SkillType skillType, AmuletPlayer player){
-    return 100.0;
-  }
-
   static int getAmuletItemDamage(AmuletItem amuletItem){
     final min = amuletItem.damageMin;
     final max = amuletItem.damageMax;
     if (min == null || max == null) return 0;
     return randomInt(min, max + 1);
+  }
+
+  @override
+  void performCharacterStart(Character character) {
+    super.performCharacterStart(character);
+
+    if (character is AmuletPlayer) {
+      dispatchAmuletEvent(character, AmuletEvent.Skill_Started);
+    }
+  }
+
+  void dispatchAmuletEvent(Position position, int amuletEvent){
+    for (final player in players) {
+      player.writeAmuletEvent(
+        position: position,
+        amuletEvent: amuletEvent,
+      );
+    }
   }
 }
 

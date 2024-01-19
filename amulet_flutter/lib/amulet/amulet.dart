@@ -492,4 +492,13 @@ class Amulet extends IsometricGame {
           NetworkRequest.Amulet,
           '${request.index} $message'
       );
+
+  void onAmuletEvent({
+    required double x,
+    required double y,
+    required double z,
+    required int amuletEvent,
+  }) {
+
+  }
 }

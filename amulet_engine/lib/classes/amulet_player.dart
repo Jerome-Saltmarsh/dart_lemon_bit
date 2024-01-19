@@ -494,30 +494,15 @@ class AmuletPlayer extends IsometricPlayer with
   @override
   void update() {
     super.update();
-    updateActiveAbility();
+    updateActiveSkillTypePosition();
   }
 
-  void updateActiveAbility() {
+  void updateActiveSkillTypePosition() {
 
-    if (activeAmuletItemSlot == null){
-      return;
-    }
-
-    final activeAmuletItem = activeAmuletItemSlot;
-
-    if (activeAmuletItem == null){
-      return;
-    }
-
-    final skillType = activeAmuletItem.skillType;
-
-    if (skillType == null){
-      return;
-    }
-
+    final skillType = skillActive;
     if (skillType.casteType == CasteType.Positional) {
       final mouseDistance = getMouseDistance();
-      final maxRange = activeAmuletItem.range ?? (throw Exception());
+      final maxRange = getSkillTypeRange(skillType);
       if (mouseDistance <= maxRange){
         activePowerX = mouseSceneX;
         activePowerY = mouseSceneY;
@@ -914,6 +899,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeSceneName();
     writeOptionsSetTimeVisible(game is! AmuletGameTutorial);
     writeOptionsSetHighlightIconInventory(false);
+    writeSkillsLeftRight();
   }
 
   void writeSceneName() {
@@ -1113,5 +1099,23 @@ class AmuletPlayer extends IsometricPlayer with
 
   void selectSkillTypeRight(SkillType value) {
     skillTypeRight = value;
+  }
+
+  void writeAmuletEvent({
+    required Position position,
+    required int amuletEvent,
+  }){
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Amulet_Event);
+    writePosition(position);
+    writeByte(amuletEvent);
+  }
+
+  int getSkillTypeDamage(SkillType skillType){
+    return 1;
+  }
+
+  double getSkillTypeRange(SkillType skillType){
+    return 100.0;
   }
 }

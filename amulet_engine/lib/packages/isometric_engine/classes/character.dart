@@ -136,6 +136,10 @@ class Character extends Collider {
 
   bool get shouldPerformAction => actionFrame > 0 && frame == actionFrame;
 
+  bool get shouldPerformStart => actionFrame > 0 && frame == 0;
+
+  bool get shouldPerformEnd =>  actionDuration > 0 && frame >= actionDuration;
+
   bool get pathSet => pathTargetIndex >= 0 && pathCurrent >= 0;
 
   bool get targetWithinCollectRange {
