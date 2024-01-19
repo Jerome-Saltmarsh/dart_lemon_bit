@@ -296,7 +296,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     final range = player.getSkillTypeRange(skillType);
     final radius = player.getSkillTypeRadius(skillType);
     final equippedWeapon = player.equippedWeapon;
-    // player.clearActiveSkill();
     player.clearActionFrame();
 
     switch (skillType) {
@@ -335,12 +334,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
           return;
         }
         break;
-      case SkillType.Arrow:
-        performAbilityArrow(
-          character: player,
-          damage: damage,
-          range: range,
-        );
+      case SkillType.Split_Shot:
+        player.performSkillTypeSplitShot();
         break;
       case SkillType.Fireball:
         performAbilityFireball(

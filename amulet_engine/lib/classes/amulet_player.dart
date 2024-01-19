@@ -1135,7 +1135,10 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   int getSkillTypeDamage(SkillType skillType) {
-    if (skillType == SkillType.Attack){
+    if (const [
+      SkillType.Attack,
+      SkillType.Split_Shot,
+    ].contains(skillType)){
       final weapon = equippedWeapon;
       if (weapon == null){
         return 0;
@@ -1155,5 +1158,29 @@ class AmuletPlayer extends IsometricPlayer with
 
   int getSkillTypeMagicCost(SkillType skillType){
     return skillType.magicCost;
+  }
+
+  void performSkillTypeSplitShot() {
+    final damage = getSkillTypeDamage(SkillType.Split_Shot);
+    final range = getSkillTypeRange(SkillType.Split_Shot);
+    final spread = piEighth;
+    amuletGame.spawnProjectileArrow(
+      src: this,
+      damage: damage,
+      range: range,
+      angle: angle,
+    );
+    amuletGame.spawnProjectileArrow(
+      src: this,
+      damage: damage,
+      range: range,
+      angle: angle - spread,
+    );
+    amuletGame.spawnProjectileArrow(
+      src: this,
+      damage: damage,
+      range: range,
+      angle: angle + spread,
+    );
   }
 }

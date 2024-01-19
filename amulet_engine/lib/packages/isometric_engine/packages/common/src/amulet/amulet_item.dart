@@ -151,7 +151,7 @@ enum AmuletItem {
     levelMax: 5,
     type: ItemType.Weapon,
     subType: WeaponType.Bow,
-    skillType: SkillType.Arrow,
+    skillType: SkillType.Split_Shot,
     performDuration: 25,
     range: 125,
     damageMin: 2,
@@ -165,7 +165,7 @@ enum AmuletItem {
     levelMax: 5,
     type: ItemType.Weapon,
     subType: WeaponType.Bow,
-    skillType: SkillType.Arrow,
+    skillType: SkillType.Split_Shot,
     performDuration: 25,
     range: 135,
     damageMin: 3,
@@ -178,7 +178,7 @@ enum AmuletItem {
     levelMax: 5,
     type: ItemType.Weapon,
     subType: WeaponType.Bow,
-    skillType: SkillType.Arrow,
+    skillType: SkillType.Split_Shot,
     performDuration: 32,
     range: 150,
     damageMin: 5,
@@ -708,9 +708,8 @@ enum SkillType {
   Freeze_Area(casteType: CasteType.Positional, magicCost: 5, range: 120, radius: 50, damage: 2),
   Heal(casteType: CasteType.Self, magicCost: 3, range: 0, ),
   Teleport(casteType: CasteType.Positional, magicCost: 4, range: 180,),
-  Arrow(casteType: CasteType.Self, magicCost: 2, range: 120,),
+  Split_Shot(casteType: CasteType.Self, magicCost: 2, range: 120,),
   Invisible(casteType: CasteType.Instant, magicCost: 5, range: 0);
-  // Sandstorm // blinds enemies and does damage
 
   final CasteType casteType;
   final int magicCost;
@@ -748,4 +747,10 @@ enum ClassType {
   Warrior,
   Wizard,
   Rogue,
+}
+
+enum WeaponClass {
+  Sword,
+  Staff,
+  Bow,
 }
