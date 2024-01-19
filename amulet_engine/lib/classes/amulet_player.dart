@@ -1077,21 +1077,30 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   void performSkillLeft(){
-    performSkillType(skillTypeLeft);
+    setSkillActiveLeft(true);
+    performSkillType();
   }
 
   void performSkillRight(){
-    performSkillType(skillTypeRight);
+    setSkillActiveLeft(false);
+    performSkillType();
   }
 
-  void performSkillType(SkillType skillType){
+  void setSkillActiveLeft(bool value){
+    if (deadOrBusy) {
+      return;
+    }
+    skillActiveLeft = value;
+  }
+
+  void performSkillType(){
+    final skillType = skillActive;
     final magicCost = getSkillTypeMagicCost(skillType);
     if (magicCost > magic) {
       writeGameError(GameError.Insufficient_Magic);
       return;
     }
     magic -= magicCost;
-    skillActive = skillTypeRight;
     performForceAttack();
   }
 
@@ -1105,7 +1114,7 @@ class AmuletPlayer extends IsometricPlayer with
     return subType != null && WeaponType.valuesBows.contains(subType);
   }
 
-  void clearActiveSkill() => skillActive = skillTypeLeft;
+  void clearActiveSkill() => setSkillActiveLeft(true);
 
   void selectSkillTypeLeft(SkillType value) {
     skillTypeLeft = value;

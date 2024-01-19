@@ -251,6 +251,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
           return;
         }
      }
+
+     if (character is AmuletPlayer) {
+       character.clearActiveSkill();
+     }
      super.performCharacterEnd(character);
   }
 
@@ -292,7 +296,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     final range = player.getSkillTypeRange(skillType);
     final radius = player.getSkillTypeRadius(skillType);
     final equippedWeapon = player.equippedWeapon;
-    player.clearActiveSkill();
+    // player.clearActiveSkill();
     player.clearActionFrame();
 
     switch (skillType) {

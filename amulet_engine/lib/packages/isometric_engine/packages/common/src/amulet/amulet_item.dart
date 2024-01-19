@@ -710,6 +710,7 @@ enum SkillType {
   Teleport(casteType: CasteType.Positional, magicCost: 4, range: 180,),
   Arrow(casteType: CasteType.Self, magicCost: 2, range: 120,),
   Invisible(casteType: CasteType.Instant, magicCost: 5, range: 0);
+  // Sandstorm // blinds enemies and does damage
 
   final CasteType casteType;
   final int magicCost;
