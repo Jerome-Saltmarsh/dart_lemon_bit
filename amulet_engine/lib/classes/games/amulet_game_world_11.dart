@@ -1,8 +1,11 @@
 
-import 'package:amulet_engine/classes/src.dart';
 
 import '../../packages/isomeric_engine.dart';
 import '../../packages/isometric_engine/packages/common/src/amulet/quests/quest_main.dart';
+import '../amulet_game.dart';
+import '../amulet_npc.dart';
+import '../amulet_player.dart';
+import '../talk_option.dart';
 
 class AmuletGameWorld11 extends AmuletGame {
 
@@ -52,7 +55,7 @@ class AmuletGameWorld11 extends AmuletGame {
     )
       ..fixed = true
       ..invincible = true
-      ..helmType = HelmType.Steel_Helm
+      ..helmType = HelmType.Full_Helm
       ..armorType = ArmorType.Leather
       ..shoeType = ShoeType.Leather_Boots
       // ..legsType = LegType.Leather
@@ -98,7 +101,7 @@ class AmuletGameWorld11 extends AmuletGame {
     )
       ..fixed = false
       ..invincible = true
-      ..helmType = HelmType.Steel_Helm
+      ..helmType = HelmType.Full_Helm
       ..armorType = ArmorType.Leather
       // ..legsType = LegType.Leather
       // ..handTypeLeft = HandType.Leather_Gloves

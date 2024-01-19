@@ -4,7 +4,7 @@ class HelmType {
   // Warrior
   static const Leather_Cap = 1;
   static const Steel_Cap = 2;
-  static const Steel_Helm = 3;
+  static const Full_Helm = 3;
   // Wizard
   static const Pointed_Hat_Purple = 4;
   static const Pointed_Hat_Black = 5;
@@ -17,7 +17,7 @@ class HelmType {
   static const values = [
     Leather_Cap,
     Steel_Cap,
-    Steel_Helm,
+    Full_Helm,
     Pointed_Hat_Purple,
     Pointed_Hat_Black,
     Cowl,
@@ -30,7 +30,7 @@ class HelmType {
     None: 'none',
     Leather_Cap: 'Leather_Cap',
     Steel_Cap: 'Steel_Cap',
-    Steel_Helm: 'Steel_Helm',
+    Full_Helm: 'Full_Helm',
     Pointed_Hat_Purple: 'Pointed_Hat_Purple',
     Pointed_Hat_Black: 'Pointed_Hat_Black',
     Cowl: 'Cowl',

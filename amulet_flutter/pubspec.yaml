@@ -218,3 +218,6 @@ flutter:
     - assets/sprites/isometric/kid/diffuse/shoes/treads/
     - assets/sprites/isometric/kid/south/shoes/treads/
     - assets/sprites/isometric/kid/west/shoes/treads/
+    - assets/sprites/isometric/kid/diffuse/helms/full_helm/
+    - assets/sprites/isometric/kid/south/helms/full_helm/
+    - assets/sprites/isometric/kid/west/helms/full_helm/

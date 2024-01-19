@@ -16,16 +16,7 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 ## TODO
-[new] model head type cowl
-[new] model body type cowl
-[new] model body type tunic
-[new] spell type invisible
-[new] spell type freeze ring
-[new] spell type frost bolt
-[new] spell type frost storm
-[new] spell type raise allie
-[new] amulet slot cooldown
-[new] fireplaces heal
+[ ] render full helm
 
 ## 15.01.2024
 [fix] improve character creation ui

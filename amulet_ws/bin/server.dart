@@ -1,10 +1,10 @@
 
 import 'package:amulet_ws/classes/root.dart';
+import 'package:amulet_ws/packages/amulet_engine/src.dart';
 import 'package:amulet_ws/user_service/user_service.dart';
 import 'package:amulet_ws/user_service/user_service_firebase.dart';
 import 'package:amulet_ws/user_service/user_service_http.dart';
 import 'package:amulet_ws/user_service/user_service_local.dart';
-import 'package:amulet_ws/packages/amulet_engine/utils/src.dart';
 
 void main(List<String> arguments) {
   Root(

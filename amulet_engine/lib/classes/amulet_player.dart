@@ -1,9 +1,6 @@
 
 import 'dart:math';
 
-import 'package:amulet_engine/classes/amulet_fiend.dart';
-import 'package:amulet_engine/classes/amulet_gameobject.dart';
-
 import '../maps/map_item_type_to_slot_type.dart';
 import '../packages/isomeric_engine.dart';
 import '../mixins/src.dart';
@@ -11,7 +8,9 @@ import '../packages/isometric_engine/packages/common/src/amulet/quests/quest_mai
 import '../json/src.dart';
 import '../packages/isometric_engine/packages/common/src/amulet/quests/quest_tutorials.dart';
 import 'amulet.dart';
+import 'amulet_fiend.dart';
 import 'amulet_game.dart';
+import 'amulet_gameobject.dart';
 import 'amulet_npc.dart';
 import 'games/amulet_game_tutorial.dart';
 import 'talk_option.dart';

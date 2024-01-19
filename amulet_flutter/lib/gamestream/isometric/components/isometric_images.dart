@@ -211,7 +211,7 @@ class IsometricImages with IsometricComponent {
     loadSpriteGroupFront(type: SpriteGroupType.Armor, subType: ArmorType.Tunic);
     loadSpriteGroupFront(type: SpriteGroupType.Head, subType: HeadType.boy);
     loadSpriteGroupFront(type: SpriteGroupType.Head, subType: HeadType.girl);
-    loadSpriteGroupFront(type: SpriteGroupType.Helm, subType: HelmType.Steel_Helm);
+    loadSpriteGroupFront(type: SpriteGroupType.Helm, subType: HelmType.Full_Helm);
     loadSpriteGroupFront(type: SpriteGroupType.Helm, subType: HelmType.Pointed_Hat_Purple);
     loadSpriteGroupFront(type: SpriteGroupType.Torso, subType: Gender.male);
     loadSpriteGroupFront(type: SpriteGroupType.Torso, subType: Gender.female);

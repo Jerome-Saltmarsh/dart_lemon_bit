@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
-import 'package:amulet_engine/src.dart';
 
+import '../../src.dart';
 import 'amulet.dart';
 import 'amulet_fiend.dart';
 import 'amulet_gameobject.dart';

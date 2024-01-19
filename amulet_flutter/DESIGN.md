@@ -1,3 +1,24 @@
+
+SKILLS
+    KNIGHT
+        MIGHT
+            increases the attack damage of melee attacks
+        SHIELD
+            temporarily resistances against attacks
+    WIZARD
+        HEAL
+            heals health
+        FIREBALL
+            launches a fireball that explodes on impact
+        TELEPORT
+            shifts a short distance 
+    ROGUE
+        MULTISHOT
+            fires multiple arrows with a single shot
+        SNEAK
+            turn invisible to escape enemies
+            enemies attacked while invisible receive double damage
+        
 [CLASSES]
 ROGUE  | THIEF  | SCOUT 
 MAGE   | WIZARD 

@@ -2,7 +2,14 @@
 
 import 'dart:io';
 
-import '../packages/amulet_engine/src.dart';
+import 'package:amulet_ws/packages/amulet_engine/classes/amulet_scenes.dart';
+import 'package:amulet_ws/packages/amulet_engine/packages/isometric_engine/classes/scene.dart';
+import 'package:amulet_ws/packages/amulet_engine/packages/isometric_engine/classes/scene_reader.dart';
+import 'package:amulet_ws/packages/amulet_engine/packages/isometric_engine/classes/scene_writer.dart';
+import 'package:amulet_ws/packages/amulet_engine/packages/isometric_engine/packages/lemon_io/src/write_string_to_file.dart';
+
+import '../packages/amulet_engine/packages/isometric_engine/packages/lemon_io/src/filename_remove_extension.dart';
+import '../packages/amulet_engine/packages/isometric_engine/packages/lemon_io/src/get_file_system_entity_filename.dart';
 
 class AmuletScenesIO extends AmuletScenes {
   final String sceneDirectoryPath;

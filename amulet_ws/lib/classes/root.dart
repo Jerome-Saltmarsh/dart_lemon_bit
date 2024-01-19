@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:amulet_ws/packages/amulet_engine/classes/amulet.dart';
+
 import '../packages/src.dart';
 import 'connection.dart';
 import 'scenes_ws.dart';
 import 'server.dart';
-import 'package:amulet_ws/packages/amulet_engine/classes/amulet.dart';
 import 'package:amulet_ws/user_service/user_service.dart';
 
 class Root {

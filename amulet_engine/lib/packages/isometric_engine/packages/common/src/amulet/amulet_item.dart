@@ -21,7 +21,7 @@ import 'package:collection/collection.dart';
   // warrior
     // leather cap [x]
     // steel cap [x]
-    // steel helm
+    // full helm [x]
   // wizard
     // pointed hat purple [x]
     // pointed hat black [x]
@@ -265,14 +265,14 @@ enum AmuletItem {
     quality: ItemQuality.Common,
     regenHealth: 1,
   ),
-  Helm_Warrior_3_Steel_Helm_Common(
-    label: 'Steel Helm',
+  Helm_Warrior_3_Full_Helm_Common(
+    label: 'Full Helm',
     levelMin: 1,
     levelMax: 5,
     skillType: SkillType.Might,
     skillLevel: 1,
     type: ItemType.Helm,
-    subType: HelmType.Steel_Helm,
+    subType: HelmType.Full_Helm,
     performDuration: 25,
     maxHealth: 5,
     quality: ItemQuality.Common,
