@@ -42,6 +42,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Amulet_Event:
          readAmuletEvent();
          break;
+       case NetworkResponseAmulet.Player_Skill_Types:
+         readPlayerSkillTypes();
+         break;
        case NetworkResponseAmulet.Player_Skills_Left_Right:
          readPlayerSkillsLeftRight();
          break;
@@ -288,5 +291,15 @@ extension AmuletParser on IsometricParser {
     final z = readDouble();
     final amuletEvent = readByte();
     amulet.onAmuletEvent(x: x, y: y, z: z, amuletEvent: amuletEvent);
+  }
+
+  void readPlayerSkillTypes() {
+    amulet.playerSkillTypes.clear();
+    for (var i = 0; i < SkillType.values.length; i++){
+      if (readBool()) {
+        amulet.playerSkillTypes.add(SkillType.values[i]);
+      }
+    }
+    amulet.playerSkillTypesNotifier.value++;
   }
 }

@@ -438,6 +438,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeEquipped();
     writePlayerHealth();
     writePlayerMagic();
+    writeSkillTypes();
   }
 
   void writeEquipped(){
@@ -1168,6 +1169,16 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   double getSkillTypeRange(SkillType skillType){
+    if (const [
+      SkillType.Attack,
+      SkillType.Split_Shot,
+    ].contains(skillType)){
+      final weapon = equippedWeapon;
+      if (weapon == null){
+        return 0;
+      }
+      return weapon.range ?? 0;
+    }
     return skillType.range;
   }
 
@@ -1210,4 +1221,29 @@ class AmuletPlayer extends IsometricPlayer with
       }
       return WeaponClass.fromWeaponType(weaponType);
   }
+
+  void writeSkillTypes() {
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Player_Skill_Types);
+    for (final skillType in SkillType.values){
+      writeBool(skillTypeUnlocked(skillType));
+    }
+  }
+
+  bool skillTypeUnlocked(SkillType skillType){
+    if (equippedWeapon?.skillType == skillType){
+      return true;
+    }
+    if (equippedHelm?.skillType == skillType){
+      return true;
+    }
+    if (equippedArmor?.skillType == skillType){
+      return true;
+    }
+    if (equippedShoes?.skillType == skillType){
+      return true;
+    }
+    return false;
+  }
+
 }

@@ -910,7 +910,7 @@ class AmuletUI {
     return onPressed(
           action: () => amulet.ui.showDialogValues(
             title: 'Skill Type',
-            values: SkillType.values,
+            values: amulet.playerSkillTypes,
             toString: (skillType) => skillType.name,
             onSelected: (skillType) => amulet.selectSkillTypeRight(skillType),
           ),

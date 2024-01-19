@@ -306,6 +306,7 @@ enum AmuletItem {
     maxHealth: 10,
     skillMagicCost: 6,
     regenHealth: 1,
+    skillType: SkillType.Mighty_Swing,
   ),
   Armor_Warrior_1_Leather_Rare(
     label: 'Leather',
@@ -316,6 +317,7 @@ enum AmuletItem {
     quality: ItemQuality.Rare,
     maxHealth: 15,
     regenHealth: 1,
+    skillType: SkillType.Mighty_Swing,
   ),
   Armor_Warrior_1_Leather_Legendary(
     label: 'Leather',
@@ -326,6 +328,7 @@ enum AmuletItem {
     quality: ItemQuality.Legendary,
     maxHealth: 20,
     regenHealth: 2,
+    skillType: SkillType.Mighty_Swing,
   ),
   Armor_Warrior_2_Chainmail_Common(
     label: 'Chainmail',
@@ -702,11 +705,12 @@ enum SkillType {
   Mighty_Swing(casteType: CasteType.Instant, magicCost: 5, range: 0),
   Terrify(casteType: CasteType.Instant, magicCost: 3, range: 100),
   Fireball(casteType: CasteType.Directional, magicCost: 2, range: 150, damage: 5),
-  Explode(casteType: CasteType.Positional, magicCost: 6, range: 200, damage: 10),
-  Firestorm(casteType: CasteType.Directional, magicCost: 7, range: 120, damage: 15),
-  Freeze_Target(casteType: CasteType.Targeted_Enemy, magicCost: 4, range: 120, damage: 3),
-  Freeze_Area(casteType: CasteType.Positional, magicCost: 5, range: 120, radius: 50, damage: 2),
+  Explode(casteType: CasteType.Positional, magicCost: 6, range: 200, damage: 10, weaponClass: WeaponClass.Staff),
+  Firestorm(casteType: CasteType.Directional, magicCost: 7, range: 120, damage: 15, weaponClass: WeaponClass.Staff),
+  Freeze_Target(casteType: CasteType.Targeted_Enemy, magicCost: 4, range: 120, damage: 3, weaponClass: WeaponClass.Staff),
+  Freeze_Area(casteType: CasteType.Positional, magicCost: 5, range: 120, radius: 50, damage: 2, weaponClass: WeaponClass.Staff),
   Heal(casteType: CasteType.Self, magicCost: 3, range: 0, ),
+  Greater_Heal(casteType: CasteType.Self, magicCost: 5, range: 0, ),
   Teleport(casteType: CasteType.Positional, magicCost: 4, range: 180,),
   Split_Shot(casteType: CasteType.Self, magicCost: 2, range: 120, weaponClass: WeaponClass.Bow),
   Invisible(casteType: CasteType.Instant, magicCost: 5, range: 0);

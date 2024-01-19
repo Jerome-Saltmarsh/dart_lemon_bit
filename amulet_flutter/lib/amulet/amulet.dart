@@ -69,6 +69,8 @@ class Amulet extends IsometricGame {
   final aimTargetItemType = Watch<AmuletItem?>(null);
   final aimTargetItemTypeCurrent = Watch<AmuletItem?>(null);
   final highlightedAmuletItem = Watch<AmuletItem?>(null);
+  final playerSkillTypes = <SkillType>[];
+  final playerSkillTypesNotifier = Watch(0);
 
   Watch<AmuletItem?>? get activeAmuletItemSlot {
     switch (activeSlotType.value){
