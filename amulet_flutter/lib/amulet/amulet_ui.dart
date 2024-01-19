@@ -74,7 +74,6 @@ class AmuletUI {
           ),
           buildPositionedWatchAimTargetItemType(),
           buildPositionedMessage(),
-          buildPositionedSkillLeftRight(),
           Positioned(
             top: margin2,
             child: Container(
@@ -144,6 +143,7 @@ class AmuletUI {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                buildControlSkillTypeLeft(),
                 GSContainer(
                   padding: const EdgeInsets.all(4),
                   child: Column(
@@ -156,6 +156,7 @@ class AmuletUI {
                     ],
                   ),
                 ),
+                buildControlSkillTypeRight(),
               ],
             ),
           ),
@@ -925,30 +926,29 @@ class AmuletUI {
       ],
     );
 
-  Widget buildPositionedSkillLeftRight() => Positioned(
-       left: 8,
-        top: 200,
-        child: Row(children: [
-           onPressed(
-               action: () => amulet.ui.showDialogValues(
-                   title: 'Skill Type',
-                   values: SkillType.values,
-                   toString: (skillType) => skillType.name,
-                   onSelected: (skillType) => amulet.selectSkillTypeLeft(skillType),
-               ),
-               child: buildWatch(amulet.playerSkillLeft, buildSkillTypeIcon),
-           ),
-          onPressed(
-            action: () => amulet.ui.showDialogValues(
-              title: 'Skill Type',
-              values: SkillType.values,
-              toString: (skillType) => skillType.name,
-              onSelected: (skillType) => amulet.selectSkillTypeRight(skillType),
-            ),
-            child: buildWatch(amulet.playerSkillRight, buildSkillTypeIcon),
+  Widget buildControlSkillTypeRight() {
+    return onPressed(
+          action: () => amulet.ui.showDialogValues(
+            title: 'Skill Type',
+            values: SkillType.values,
+            toString: (skillType) => skillType.name,
+            onSelected: (skillType) => amulet.selectSkillTypeRight(skillType),
           ),
-        ],),
-    );
+          child: buildWatch(amulet.playerSkillRight, buildSkillTypeIcon),
+        );
+  }
+
+  Widget buildControlSkillTypeLeft() {
+    return onPressed(
+             action: () => amulet.ui.showDialogValues(
+                 title: 'Skill Type',
+                 values: SkillType.values,
+                 toString: (skillType) => skillType.name,
+                 onSelected: (skillType) => amulet.selectSkillTypeLeft(skillType),
+             ),
+             child: buildWatch(amulet.playerSkillLeft, buildSkillTypeIcon),
+         );
+  }
 
   Widget buildSkillTypeIcon(SkillType skillType) =>
       Container(
