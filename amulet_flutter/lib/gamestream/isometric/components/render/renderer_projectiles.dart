@@ -53,19 +53,6 @@ class RendererProjectiles extends RenderGroup {
             dstY: dstY,
         );
         break;
-      case ProjectileType.Rocket:
-        engine.renderSpriteRotated(
-          image: images.atlas_consumables,
-          srcX: 201,
-          srcY: 109,
-          srcWidth: 16,
-          srcHeight: 7,
-          dstX: projectile.renderX,
-          dstY: projectile.renderY,
-          rotation: projectile.angle - piQuarter + piHalf,
-          scale: 1,
-        );
-        break;
       default:
         return;
     }

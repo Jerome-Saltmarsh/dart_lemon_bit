@@ -290,6 +290,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     final skillType = player.skillActive;
     final damage = player.getSkillTypeDamage(skillType);
     final range = player.getSkillTypeRange(skillType);
+    final radius = player.getSkillTypeRadius(skillType);
     final equippedWeapon = player.equippedWeapon;
     player.clearActiveSkill();
     player.clearActionFrame();
@@ -350,6 +351,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
           y: player.castePositionY,
           z: player.castePositionZ,
           srcCharacter: player,
+          radius: radius,
+          damage: damage,
         );
         break;
       case SkillType.Heal:

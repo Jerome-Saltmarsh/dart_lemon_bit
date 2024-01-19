@@ -775,8 +775,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required double y,
     required double z,
     required Character srcCharacter,
-    double radius = 100.0,
-    int damage = 25,
+    required double radius,
+    required int damage,
   }) {
     if (!scene.inboundsXYZ(x, y, z)) return;
     dispatchGameEvent(GameEvent.Explosion, x, y, z);
@@ -1138,16 +1138,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     assert (projectile.active);
     switch (projectile.type) {
       case ProjectileType.Orb:
-        break;
-      case ProjectileType.Rocket:
-        final owner = projectile.parent;
-        if (owner == null) return;
-        createExplosion(
-          x: projectile.x,
-          y: projectile.y,
-          z: projectile.z,
-          srcCharacter: owner,
-        );
         break;
       case ProjectileType.Bullet:
         dispatchGameEvent(

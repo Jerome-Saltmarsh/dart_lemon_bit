@@ -697,44 +697,32 @@ enum AmuletItem {
       .toList(growable: false);
 }
 
-extension SkillTypeExtensions on SkillType {
-  String get description {
-    return const {
-      SkillType.Attack: 'Perform ',
-      SkillType.Mighty_Swing: 'Does additional damage and area of effect for melee attack',
-    }[this] ?? (throw Exception());
-  }
-}
-
 enum SkillType {
-  Attack(casteType: CasteType.Self, magicCost: 0),
-  // Warrior
-    // Offensive
-  Mighty_Swing(casteType: CasteType.Instant, magicCost: 5),
-    // Defensive
-  Terrify(casteType: CasteType.Instant, magicCost: 3),
-  // Wizard
-    // Offensive
-  Fireball(casteType: CasteType.Directional, magicCost: 2),
-  Explode(casteType: CasteType.Positional, magicCost: 6),
-  Firestorm(casteType: CasteType.Directional, magicCost: 7),
-    // Defensive
-  Freeze_Target(casteType: CasteType.Targeted_Enemy, magicCost: 4),
-  Freeze_Area(casteType: CasteType.Positional, magicCost: 5),
-  Heal(casteType: CasteType.Self, magicCost: 3),
-  Teleport(casteType: CasteType.Positional, magicCost: 4),
-  // Rogue
-    // Offensive
-  Arrow(casteType: CasteType.Self, magicCost: 2),
-    // Defensive
-  Invisible(casteType: CasteType.Instant, magicCost: 5);
+  Attack(casteType: CasteType.Self, magicCost: 0, range: 0),
+  Mighty_Swing(casteType: CasteType.Instant, magicCost: 5, range: 0),
+  Terrify(casteType: CasteType.Instant, magicCost: 3, range: 100),
+  Fireball(casteType: CasteType.Directional, magicCost: 2, range: 150, damage: 5),
+  Explode(casteType: CasteType.Positional, magicCost: 6, range: 200, damage: 10),
+  Firestorm(casteType: CasteType.Directional, magicCost: 7, range: 120, damage: 15),
+  Freeze_Target(casteType: CasteType.Targeted_Enemy, magicCost: 4, range: 120, damage: 3),
+  Freeze_Area(casteType: CasteType.Positional, magicCost: 5, range: 120, radius: 50, damage: 2),
+  Heal(casteType: CasteType.Self, magicCost: 3, range: 0, ),
+  Teleport(casteType: CasteType.Positional, magicCost: 4, range: 180,),
+  Arrow(casteType: CasteType.Self, magicCost: 2, range: 120,),
+  Invisible(casteType: CasteType.Instant, magicCost: 5, range: 0);
 
   final CasteType casteType;
   final int magicCost;
+  final double range;
+  final double radius;
+  final int damage;
 
   const SkillType({
     required this.casteType,
     required this.magicCost,
+    required this.range,
+    this.radius = 0,
+    this.damage = 0,
   });
 
 }

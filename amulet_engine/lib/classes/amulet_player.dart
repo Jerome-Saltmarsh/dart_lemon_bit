@@ -1125,12 +1125,23 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(amuletEvent);
   }
 
-  int getSkillTypeDamage(SkillType skillType){
-    return 1;
+  int getSkillTypeDamage(SkillType skillType) {
+    if (skillType == SkillType.Attack){
+      final weapon = equippedWeapon;
+      if (weapon == null){
+        return 0;
+      }
+      return randomInt(weapon.damageMin ?? 0, weapon.damageMax ?? 0);
+    }
+    return skillType.damage;
   }
 
   double getSkillTypeRange(SkillType skillType){
-    return 100.0;
+    return skillType.range;
+  }
+
+  double getSkillTypeRadius(SkillType skillType){
+    return skillType.radius;
   }
 
   int getSkillTypeMagicCost(SkillType skillType){
