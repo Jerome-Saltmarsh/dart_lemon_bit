@@ -28,9 +28,9 @@ class AmuletPlayer extends IsometricPlayer with
   var baseRegenHealth = 1;
   var baseRunSpeed = 1.0;
 
-  var activePowerX = 0.0;
-  var activePowerY = 0.0;
-  var activePowerZ = 0.0;
+  var castePositionX = 0.0;
+  var castePositionY = 0.0;
+  var castePositionZ = 0.0;
 
   var admin = false;
   var previousCameraTarget = false;
@@ -491,38 +491,38 @@ class AmuletPlayer extends IsometricPlayer with
     writePlayerEvent(PlayerEvent.Character_State_Changing);
   }
 
-  @override
-  void update() {
-    super.update();
-    updateActiveSkillTypePosition();
-  }
+  // @override
+  // void update() {
+  //   super.update();
+  //   updateActiveSkillTypePosition();
+  // }
 
-  void updateActiveSkillTypePosition() {
+  void updateCastePosition() {
 
     final skillType = skillActive;
     if (skillType.casteType == CasteType.Positional) {
       final mouseDistance = getMouseDistance();
       final maxRange = getSkillTypeRange(skillType);
       if (mouseDistance <= maxRange){
-        activePowerX = mouseSceneX;
-        activePowerY = mouseSceneY;
-        activePowerZ = mouseSceneZ;
+        castePositionX = mouseSceneX;
+        castePositionY = mouseSceneY;
+        castePositionZ = mouseSceneZ;
       } else {
         final mouseAngle = getMouseAngle() + pi;
-        activePowerX = x + adj(mouseAngle, maxRange);
-        activePowerY = y + opp(mouseAngle, maxRange);
-        activePowerZ = z;
+        castePositionX = x + adj(mouseAngle, maxRange);
+        castePositionY = y + opp(mouseAngle, maxRange);
+        castePositionZ = z;
       }
-      writeActivePowerPosition();
+      // writeActivePowerPosition();
     }
   }
 
   void writeActivePowerPosition() {
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Active_Power_Position);
-    writeDouble(activePowerX);
-    writeDouble(activePowerY);
-    writeDouble(activePowerZ);
+    writeDouble(castePositionX);
+    writeDouble(castePositionY);
+    writeDouble(castePositionZ);
   }
 
   void equipAmuletItem({

@@ -346,9 +346,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         break;
       case SkillType.Explode:
         createExplosion(
-          x: player.activePowerX,
-          y: player.activePowerY,
-          z: player.activePowerZ,
+          x: player.castePositionX,
+          y: player.castePositionY,
+          z: player.castePositionZ,
           srcCharacter: player,
         );
         break;
@@ -445,9 +445,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   void performAbilityTeleport(AmuletPlayer character){
     dispatchGameEventPosition(GameEvent.Blink_Depart, character);
-    character.x = character.activePowerX;
-    character.y = character.activePowerY;
-    character.z = character.activePowerZ;
+    character.x = character.castePositionX;
+    character.y = character.castePositionY;
+    character.z = character.castePositionZ;
     dispatchGameEventPosition(GameEvent.Blink_Arrive, character);
   }
 
@@ -864,6 +864,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     super.performCharacterStart(character);
 
     if (character is AmuletPlayer) {
+      character.updateCastePosition();
       dispatchAmuletEvent(character, AmuletEvent.Skill_Started);
     }
   }
