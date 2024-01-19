@@ -68,7 +68,6 @@ enum AmuletItem {
       levelMax: 5,
       type: ItemType.Weapon,
       subType: WeaponType.Shortsword,
-      skillType: SkillType.Strike,
       performDuration: 25,
       range: 40,
       damageMin: 0,
@@ -82,7 +81,7 @@ enum AmuletItem {
     levelMax: 5,
     type: ItemType.Weapon,
     subType: WeaponType.Shortsword,
-    skillType: SkillType.Strike,
+    skillType: SkillType.Attack,
     performDuration: 25,
     damageMin: 2,
     damageMax: 7,
@@ -96,7 +95,7 @@ enum AmuletItem {
     levelMax: 5,
     type: ItemType.Weapon,
     subType: WeaponType.Shortsword,
-    skillType: SkillType.Strike,
+    skillType: SkillType.Attack,
     performDuration: 22,
     damageMin: 3,
     damageMax: 9,
@@ -139,7 +138,6 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
     skillType: SkillType.Fireball,
-    skillLevel: 1,
     performDuration: 35,
     range: 80,
     damageMin: 3,
@@ -191,8 +189,6 @@ enum AmuletItem {
     label: 'Leather Cap',
     levelMin: 1,
     levelMax: 5,
-    skillType: SkillType.Might,
-    skillLevel: 1,
     type: ItemType.Helm,
     subType: HelmType.Leather_Cap,
     performDuration: 25,
@@ -218,7 +214,6 @@ enum AmuletItem {
     levelMin: 1,
     levelMax: 5,
     skillType: SkillType.Invisible,
-    skillLevel: 1,
     type: ItemType.Helm,
     subType: HelmType.Feather_Cap,
     performDuration: 25,
@@ -230,8 +225,6 @@ enum AmuletItem {
     label: 'Steel Cap',
     levelMin: 1,
     levelMax: 5,
-    skillType: SkillType.Might,
-    skillLevel: 1,
     type: ItemType.Helm,
     subType: HelmType.Steel_Cap,
     performDuration: 25,
@@ -243,8 +236,6 @@ enum AmuletItem {
     label: 'Pointed Hat',
     levelMin: 2,
     levelMax: 5,
-    skillType: SkillType.Might,
-    skillLevel: 1,
     type: ItemType.Helm,
     subType: HelmType.Pointed_Hat_Black,
     performDuration: 25,
@@ -256,8 +247,6 @@ enum AmuletItem {
     label: 'Cape',
     levelMin: 1,
     levelMax: 5,
-    skillType: SkillType.Might,
-    skillLevel: 1,
     type: ItemType.Helm,
     subType: HelmType.Cape,
     performDuration: 25,
@@ -269,8 +258,6 @@ enum AmuletItem {
     label: 'Full Helm',
     levelMin: 1,
     levelMax: 5,
-    skillType: SkillType.Might,
-    skillLevel: 1,
     type: ItemType.Helm,
     subType: HelmType.Full_Helm,
     performDuration: 25,
@@ -282,8 +269,6 @@ enum AmuletItem {
     label: 'Circlet',
     levelMin: 1,
     levelMax: 5,
-    skillType: SkillType.Might,
-    skillLevel: 1,
     type: ItemType.Helm,
     subType: HelmType.Cowl,
     performDuration: 25,
@@ -295,8 +280,6 @@ enum AmuletItem {
     label: 'Veil',
     levelMin: 1,
     levelMax: 5,
-    skillType: SkillType.Might,
-    skillLevel: 1,
     type: ItemType.Helm,
     subType: HelmType.Cape,
     performDuration: 25,
@@ -321,8 +304,6 @@ enum AmuletItem {
     subType: ArmorType.Leather,
     quality: ItemQuality.Common,
     maxHealth: 10,
-    skillType: SkillType.Might,
-    skillLevel: 1,
     skillMagicCost: 6,
     regenHealth: 1,
   ),
@@ -539,7 +520,6 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    skillLevel: 1,
     skillMagicCost: 6,
   ),
   Shoes_Rogue_1_Treads_Common(
@@ -552,7 +532,6 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    skillLevel: 1,
     skillMagicCost: 6,
   ),
   Shoes_Warrior_2_Grieves_Common(
@@ -576,7 +555,6 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    skillLevel: 1,
     skillMagicCost: 6,
   ),
   Shoes_Rogue_2_Striders_Common(
@@ -589,7 +567,6 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    skillLevel: 1,
     skillMagicCost: 6,
   ),
   Shoes_Warrior_3_Sabatons_Common(
@@ -613,7 +590,6 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    skillLevel: 1,
     skillMagicCost: 6,
   ),
   Shoes_Rogue_3_Satin_Boots_Common(
@@ -626,7 +602,6 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    skillLevel: 1,
     skillMagicCost: 6,
   ),
   Consumable_Potion_Magic(
@@ -659,7 +634,6 @@ enum AmuletItem {
   final int type;
   final int subType;
   final SkillType? skillType;
-  final int? skillLevel;
   final int? damageMin;
   final int? damageMax;
   final double? range;
@@ -675,6 +649,10 @@ enum AmuletItem {
   final int? skillMagicCost;
   final double? runSpeed;
 
+  final int pointsKnight;
+  final int pointsWizard;
+  final int pointsRogue;
+
   const AmuletItem({
     required this.type,
     required this.subType,
@@ -688,7 +666,6 @@ enum AmuletItem {
     this.regenHealth,
     this.description,
     this.skillType,
-    this.skillLevel,
     this.damageMin,
     this.damageMax,
     this.range,
@@ -697,6 +674,9 @@ enum AmuletItem {
     this.health,
     this.skillMagicCost,
     this.runSpeed,
+    this.pointsKnight = 0,
+    this.pointsWizard = 0,
+    this.pointsRogue = 0,
   });
 
   bool get isWeapon => type == ItemType.Weapon;
@@ -717,12 +697,20 @@ enum AmuletItem {
       .toList(growable: false);
 }
 
+extension SkillTypeExtensions on SkillType {
+  String get description {
+    return const {
+      SkillType.Attack: 'Perform ',
+      SkillType.Mighty_Swing: 'Does additional damage and area of effect for melee attack',
+    }[this] ?? (throw Exception());
+  }
+}
+
 enum SkillType {
+  Attack(casteType: CasteType.Self),
   // Warrior
     // Offensive
-  Strike(casteType: CasteType.Self),
-  Sweep(casteType: CasteType.Self),
-  Might(casteType: CasteType.Instant),
+  Mighty_Swing(casteType: CasteType.Instant),
     // Defensive
   Terrify(casteType: CasteType.Instant),
   // Wizard
@@ -763,4 +751,10 @@ enum ItemQuality {
   Legendary,
   Rare,
   Common,
+}
+
+enum ClassType {
+  Warrior,
+  Wizard,
+  Rogue,
 }

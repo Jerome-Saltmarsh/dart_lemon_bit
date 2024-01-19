@@ -39,6 +39,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Weapon:
          readPlayerWeapon();
          break;
+       case NetworkResponseAmulet.Player_Skills_Left_Right:
+         readPlayerSkillsLeftRight();
+         break;
        case NetworkResponseAmulet.Player_Equipped:
          amulet.equippedWeapon.value = readAmuletItem();
          amulet.equippedHelm.value = readAmuletItem();
@@ -268,4 +271,11 @@ extension AmuletParser on IsometricParser {
     amulet.playerWeaponDamageMax.value = readUInt16();
     amulet.playerWeaponRange.value = readUInt16();
   }
+
+  void readPlayerSkillsLeftRight() {
+    amulet.playerSkillLeft.value = readSkillType();
+    amulet.playerSkillRight.value = readSkillType();
+  }
+
+  SkillType readSkillType() => SkillType.values[readByte()];
 }

@@ -72,10 +72,9 @@ class AmuletUI {
               left: 8,
               child: buildWindowPlayerAttributes(),
           ),
-          // buildPositionedAmuletItemHover(),
-          // buildPositionedAmuletItemInformation(),
           buildPositionedWatchAimTargetItemType(),
           buildPositionedMessage(),
+          buildPositionedSkillLeftRight(),
           Positioned(
             top: margin2,
             child: Container(
@@ -866,7 +865,6 @@ class AmuletUI {
       final regenHealth = amuletItem.regenHealth;
       final regenMagic = amuletItem.regenMagic;
       final runSpeed = amuletItem.runSpeed;
-      final skillLevel = amuletItem.skillLevel;
       final skillType = amuletItem.skillType;
       final skillMagicCost = amuletItem.skillMagicCost;
       final range = amuletItem.range;
@@ -912,8 +910,6 @@ class AmuletUI {
               buildRowTitleValue('run speed', runSpeed),
             if (skillType != null)
               buildRowTitleValue('skill', skillType.name),
-            if (skillLevel != null)
-              buildRowTitleValue('skill level', skillLevel),
             if (skillMagicCost != null)
               buildRowTitleValue('skill cost', skillMagicCost),
           ],
@@ -928,6 +924,25 @@ class AmuletUI {
         buildRowTitle(title), buildRowValue(value),
       ],
     );
+
+  Widget buildPositionedSkillLeftRight() {
+    return Positioned(
+       left: 8,
+        top: 200,
+        child: Row(children: [
+           buildWatch(amulet.playerSkillLeft, buildSkillTypeIcon),
+           buildWatch(amulet.playerSkillRight, buildSkillTypeIcon),
+        ],),
+    );
+  }
+
+  Widget buildSkillTypeIcon(SkillType skillType) =>
+      Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.all(4),
+        color: Colors.grey,
+        child: buildText(skillType.name),
+      );
 }
 
 String formatFramesToSeconds(int frames){

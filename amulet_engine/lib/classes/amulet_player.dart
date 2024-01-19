@@ -16,7 +16,8 @@ import 'games/amulet_game_tutorial.dart';
 import 'talk_option.dart';
 
 class AmuletPlayer extends IsometricPlayer with
-    Equipment,
+    Equipped,
+    Skilled,
     Magic
 {
   static const Data_Key_Dead_Count = 'dead';
@@ -49,7 +50,6 @@ class AmuletPlayer extends IsometricPlayer with
   Function? onInteractionOver;
   Position? cameraTarget;
   AmuletGame amuletGame;
-
   SlotType? activeSlotType;
 
   AmuletPlayer({
@@ -1070,4 +1070,40 @@ class AmuletPlayer extends IsometricPlayer with
 
   void selectItemType(int itemType) =>
       setActiveSlotType(mapItemTypeToSlotType(itemType));
+
+  @override
+  set skillLeft(SkillType value) {
+    super.skillLeft = value;
+    writeSkillsLeftRight();
+  }
+
+  @override
+  set skillRight(SkillType value) {
+    super.skillRight = value;
+    writeSkillsLeftRight();
+  }
+
+  void writeSkillsLeftRight(){
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Player_Skills_Left_Right);
+    writeByte(skillLeft.index);
+    writeByte(skillRight.index);
+  }
+
+  void performSkillRight(){
+    skillActive = skillRight;
+    performForceAttack();
+  }
+
+  bool get equippedWeaponMelee {
+    final subType = equippedWeapon?.subType;
+    return subType != null && WeaponType.valuesMelee.contains(subType);
+  }
+
+  bool get equippedWeaponBow {
+    final subType = equippedWeapon?.subType;
+    return subType != null && WeaponType.valuesBows.contains(subType);
+  }
+
+  void clearActiveSkill() => skillActive = skillLeft;
 }
