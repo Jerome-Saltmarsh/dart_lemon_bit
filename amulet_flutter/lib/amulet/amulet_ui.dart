@@ -571,34 +571,10 @@ class AmuletUI {
     );
   }
 
-  // Widget buildInventoryItems() {
-  //   return buildWatch(amulet.items, (items) {
-  //     return buildInventoryContainer(
-  //         child: Row(
-  //           children: [
-  //             Column(
-  //                 children: List.generate(items.length ~/ 2,
-  //                         (index) => buildItemSlot(items[index], amulet: amulet),
-  //                     growable: false)),
-  //             Column(
-  //                 children: List.generate(
-  //                     items.length ~/ 2,
-  //                         (index) => buildItemSlot(
-  //                         items[index + (items.length ~/ 2)],
-  //                         amulet: amulet),
-  //                     growable: false)),
-  //           ],
-  //         ));
-  //
-  //   });
-  //
-  // }
-
   Widget buildInventoryContainer({required Widget child}) => Container(
         child: child,
         padding: const EdgeInsets.all(2),
       );
-
 
   Widget buildEquippedAmuletItems() =>
       Container(
@@ -623,7 +599,7 @@ class AmuletUI {
       );
 
   Widget buildPlayerHealthBar() {
-    const width = 282.0;
+    const width = 256.0;
     const height = 16.0;
 
     return IgnorePointer(
@@ -648,7 +624,7 @@ class AmuletUI {
   }
 
   Widget buildPlayerMagicBar() {
-    const width = 282.0;
+    const width = 256.0;
     const height = 16.0;
 
     return IgnorePointer(
