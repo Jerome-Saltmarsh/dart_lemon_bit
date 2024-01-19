@@ -707,32 +707,34 @@ extension SkillTypeExtensions on SkillType {
 }
 
 enum SkillType {
-  Attack(casteType: CasteType.Self),
+  Attack(casteType: CasteType.Self, magicCost: 0),
   // Warrior
     // Offensive
-  Mighty_Swing(casteType: CasteType.Instant),
+  Mighty_Swing(casteType: CasteType.Instant, magicCost: 5),
     // Defensive
-  Terrify(casteType: CasteType.Instant),
+  Terrify(casteType: CasteType.Instant, magicCost: 3),
   // Wizard
     // Offensive
-  Fireball(casteType: CasteType.Directional),
-  Explode(casteType: CasteType.Positional),
-  Firestorm(casteType: CasteType.Directional),
+  Fireball(casteType: CasteType.Directional, magicCost: 2),
+  Explode(casteType: CasteType.Positional, magicCost: 6),
+  Firestorm(casteType: CasteType.Directional, magicCost: 7),
     // Defensive
-  Freeze_Target(casteType: CasteType.Targeted_Enemy),
-  Freeze_Area(casteType: CasteType.Positional),
-  Heal(casteType: CasteType.Self),
-  Teleport(casteType: CasteType.Positional),
+  Freeze_Target(casteType: CasteType.Targeted_Enemy, magicCost: 4),
+  Freeze_Area(casteType: CasteType.Positional, magicCost: 5),
+  Heal(casteType: CasteType.Self, magicCost: 3),
+  Teleport(casteType: CasteType.Positional, magicCost: 4),
   // Rogue
     // Offensive
-  Arrow(casteType: CasteType.Self),
+  Arrow(casteType: CasteType.Self, magicCost: 2),
     // Defensive
-  Invisible(casteType: CasteType.Instant);
+  Invisible(casteType: CasteType.Instant, magicCost: 5);
 
   final CasteType casteType;
+  final int magicCost;
 
   const SkillType({
     required this.casteType,
+    required this.magicCost,
   });
 
 }

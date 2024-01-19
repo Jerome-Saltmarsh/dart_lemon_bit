@@ -791,10 +791,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       player.mouseLeftDownIgnore = false;
     }
 
-    // if (mouseLeftClicked && player.inventoryOpen){
-    //   player.inventoryOpen = false;
-    // }
-
     if (mouseLeftClicked && player.activeAmuletItemSlot != null) {
       player.useActivatedPower();
       player.mouseLeftDownIgnore = true;
@@ -806,7 +802,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
       if (aimTarget == null || (player.isEnemy(aimTarget) && !player.controlsCanTargetEnemies)){
         if (keyDownShift){
-          player.performForceAttack();
+          player.performSkillLeft();
           return;
         } else {
           player.setDestinationToMouse();

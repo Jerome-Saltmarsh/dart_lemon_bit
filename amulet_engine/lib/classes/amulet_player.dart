@@ -133,7 +133,7 @@ class AmuletPlayer extends IsometricPlayer with
   int get weaponDamage => randomInt(weaponDamageMin, weaponDamageMax + 1);
 
   @override
-  double get weaponRange => (activeAmuletItemSlot ?? equippedWeapon)?.range ?? 0;
+  double get weaponRange => getSkillTypeRange(skillActive);
 
   @override
   int get helmType => equippedHelm?.subType ?? HelmType.None;
@@ -1076,7 +1076,21 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(skillTypeRight.index);
   }
 
+  void performSkillLeft(){
+    performSkillType(skillTypeLeft);
+  }
+
   void performSkillRight(){
+    performSkillType(skillTypeRight);
+  }
+
+  void performSkillType(SkillType skillType){
+    final magicCost = getSkillTypeMagicCost(skillType);
+    if (magicCost > magic) {
+      writeGameError(GameError.Insufficient_Magic);
+      return;
+    }
+    magic -= magicCost;
     skillActive = skillTypeRight;
     performForceAttack();
   }
@@ -1117,5 +1131,9 @@ class AmuletPlayer extends IsometricPlayer with
 
   double getSkillTypeRange(SkillType skillType){
     return 100.0;
+  }
+
+  int getSkillTypeMagicCost(SkillType skillType){
+    return skillType.magicCost;
   }
 }
