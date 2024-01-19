@@ -663,6 +663,24 @@ class AmuletController {
         if (index == null) return;
         player.selectNpcTalkOption(index);
         break;
+      case NetworkRequestAmulet.Select_Skill_Type_Left:
+        final skillTypeIndex = parseArg2(arguments);
+        if (skillTypeIndex == null) return;
+        final skillType = SkillType.values.tryGet(skillTypeIndex);
+        if (skillType == null){
+          return;
+        }
+        player.selectSkillTypeLeft(skillType);
+        break;
+      case NetworkRequestAmulet.Select_Skill_Type_Right:
+        final skillTypeIndex = parseArg2(arguments);
+        if (skillTypeIndex == null) return;
+        final skillType = SkillType.values.tryGet(skillTypeIndex);
+        if (skillType == null){
+          return;
+        }
+        player.selectSkillTypeRight(skillType);
+        break;
       case NetworkRequestAmulet.Reset:
         if (!isAdmin) {
           throw Exception('admin mode not enabled');

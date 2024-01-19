@@ -475,6 +475,18 @@ class Amulet extends IsometricGame {
   void selectTalkOption(int index) =>
       sendAmuletRequest(NetworkRequestAmulet.Select_Talk_Option, index);
 
+  void selectSkillTypeLeft(SkillType value) =>
+      sendAmuletRequest(
+          NetworkRequestAmulet.Select_Skill_Type_Left,
+          value.index,
+      );
+
+  void selectSkillTypeRight(SkillType value) =>
+      sendAmuletRequest(
+          NetworkRequestAmulet.Select_Skill_Type_Right,
+          value.index,
+      );
+
   void sendAmuletRequest(NetworkRequestAmulet request, [dynamic message]) =>
       server.sendNetworkRequest(
           NetworkRequest.Amulet,

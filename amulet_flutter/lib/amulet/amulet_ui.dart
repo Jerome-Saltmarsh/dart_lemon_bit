@@ -925,16 +925,30 @@ class AmuletUI {
       ],
     );
 
-  Widget buildPositionedSkillLeftRight() {
-    return Positioned(
+  Widget buildPositionedSkillLeftRight() => Positioned(
        left: 8,
         top: 200,
         child: Row(children: [
-           buildWatch(amulet.playerSkillLeft, buildSkillTypeIcon),
-           buildWatch(amulet.playerSkillRight, buildSkillTypeIcon),
+           onPressed(
+               action: () => amulet.ui.showDialogValues(
+                   title: 'Skill Type',
+                   values: SkillType.values,
+                   toString: (skillType) => skillType.name,
+                   onSelected: (skillType) => amulet.selectSkillTypeLeft(skillType),
+               ),
+               child: buildWatch(amulet.playerSkillLeft, buildSkillTypeIcon),
+           ),
+          onPressed(
+            action: () => amulet.ui.showDialogValues(
+              title: 'Skill Type',
+              values: SkillType.values,
+              toString: (skillType) => skillType.name,
+              onSelected: (skillType) => amulet.selectSkillTypeRight(skillType),
+            ),
+            child: buildWatch(amulet.playerSkillRight, buildSkillTypeIcon),
+          ),
         ],),
     );
-  }
 
   Widget buildSkillTypeIcon(SkillType skillType) =>
       Container(

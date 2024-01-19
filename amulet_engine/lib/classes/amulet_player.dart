@@ -1072,26 +1072,26 @@ class AmuletPlayer extends IsometricPlayer with
       setActiveSlotType(mapItemTypeToSlotType(itemType));
 
   @override
-  set skillLeft(SkillType value) {
-    super.skillLeft = value;
+  set skillTypeLeft(SkillType value) {
+    super.skillTypeLeft = value;
     writeSkillsLeftRight();
   }
 
   @override
-  set skillRight(SkillType value) {
-    super.skillRight = value;
+  set skillTypeRight(SkillType value) {
+    super.skillTypeRight = value;
     writeSkillsLeftRight();
   }
 
   void writeSkillsLeftRight(){
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Skills_Left_Right);
-    writeByte(skillLeft.index);
-    writeByte(skillRight.index);
+    writeByte(skillTypeLeft.index);
+    writeByte(skillTypeRight.index);
   }
 
   void performSkillRight(){
-    skillActive = skillRight;
+    skillActive = skillTypeRight;
     performForceAttack();
   }
 
@@ -1105,5 +1105,13 @@ class AmuletPlayer extends IsometricPlayer with
     return subType != null && WeaponType.valuesBows.contains(subType);
   }
 
-  void clearActiveSkill() => skillActive = skillLeft;
+  void clearActiveSkill() => skillActive = skillTypeLeft;
+
+  void selectSkillTypeLeft(SkillType value) {
+    skillTypeLeft = value;
+  }
+
+  void selectSkillTypeRight(SkillType value) {
+    skillTypeRight = value;
+  }
 }
