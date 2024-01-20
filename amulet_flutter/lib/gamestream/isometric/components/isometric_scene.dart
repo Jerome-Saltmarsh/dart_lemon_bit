@@ -1487,7 +1487,7 @@ class IsometricScene with IsometricComponent implements Updatable {
   }
 
   var characterColdEmissionNext = 0;
-  var characterColdEmissionRate = 3;
+  var characterColdEmissionRate = 2;
 
   void updateCharacters(){
 
@@ -1502,8 +1502,8 @@ class IsometricScene with IsometricComponent implements Updatable {
       final character = characters[i];
       if (character.isStatusCold) {
         particles.emitIce(
-            x: character.x,
-            y: character.y,
+            x: character.x + giveOrTake(5),
+            y: character.y + giveOrTake(5),
             z: character.z,
         );
       }
@@ -2251,10 +2251,6 @@ class IsometricScene with IsometricComponent implements Updatable {
 
     var ambientRatio = 1.0 - (scene.ambientAlpha / 255);
 
-    if (character.isStatusCold){
-       ambientRatio = 1.0 - ambientRatio;
-    }
-
     final index = getIndexPosition(character);
     final colorN = this.colorNorth(index);
     final colorE = this.colorEast(index);
@@ -2276,7 +2272,11 @@ class IsometricScene with IsometricComponent implements Updatable {
 
     if (colorSE != -1){
       final colorSEAlpha = getAlpha(colorSE);
-      maxSEAlpha = interpolate(max(colorSEAlpha, maxSEAlpha), 255, ambientRatio * 0.25).toInt();
+      maxSEAlpha = interpolate(
+          max(colorSEAlpha, maxSEAlpha),
+          255,
+          ambientRatio * 0.25
+      ).toInt();
     }
 
     if (colorNW != -1){
@@ -2284,8 +2284,9 @@ class IsometricScene with IsometricComponent implements Updatable {
       maxNWAlpha = max(alphaNW, maxNWAlpha);
     }
 
-    final minSEAlpha = min(colorSAlpha, colorEAlpha);
-    final minNWAlpha = min(colorNAlpha, colorWAlpha);
+
+    var minSEAlpha = min(colorSAlpha, colorEAlpha);
+    var minNWAlpha = min(colorNAlpha, colorWAlpha);
 
     final southEast = merge32BitColors(colorS, colorE);
     final northWest = merge32BitColors(colorN, colorW);
@@ -2293,17 +2294,23 @@ class IsometricScene with IsometricComponent implements Updatable {
     var adjustedSE = interpolateColors(southEast, scene.ambientColorNight, ambientRatio);
     var adjustedNW = interpolateColors(northWest, scene.ambientColorNight, ambientRatio);
 
-    if (character.isStatusCold) {
-      adjustedSE = interpolateColors(adjustedSE, Palette.blue_2.value, 0.5);
-      adjustedNW = interpolateColors(adjustedNW, Palette.blue_2.value, 0.5);
-    }
-
     if (minSEAlpha < minNWAlpha){
        character.colorSouthEast = setAlpha(adjustedSE, minSEAlpha);
        character.colorNorthWest = setAlpha(adjustedNW, maxNWAlpha);
     } else {
       character.colorSouthEast = setAlpha(adjustedSE, maxSEAlpha);
       character.colorNorthWest = setAlpha(adjustedNW, minNWAlpha);
+    }
+
+    if (character.isStatusCold) {
+      final alphaSouthEast = getAlpha(character.colorSouthEast);
+      final alphaNorthWest = getAlpha(character.colorNorthWest);
+
+      final alphaSouthEastInverse = (255 - alphaSouthEast) / 255;
+      final alphaNorthWestInverse = (255 - alphaNorthWest) / 255;
+
+      character.colorSouthEast = interpolateColors(character.colorSouthEast, Palette.blue_2.value, alphaSouthEastInverse);
+      character.colorNorthWest = interpolateColors(character.colorNorthWest, Palette.blue_2.value, alphaNorthWestInverse);
     }
   }
 

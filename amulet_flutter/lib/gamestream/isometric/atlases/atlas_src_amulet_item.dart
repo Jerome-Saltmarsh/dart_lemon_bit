@@ -10,6 +10,8 @@ const srcx_armor_rogue = 256.0;
 const srcx_shoes = 224.0;
 
 const _weapons_staff_wooden = [srcx_weapon_staff, 0.0];
+const _weapons_staff_ice = [srcx_weapon_staff, 32.0];
+const _weapons_staff_fire = [srcx_weapon_staff, 64.0];
 const _weapons_sword_short = [srcx_weapon_sword, 0.0];
 const _weapons_bow_short = [srcx_weapon_bow, 0.0];
 const _helms_pointed_hat_purple = [srcx_helm, 32.0];
@@ -35,8 +37,8 @@ const _shoes_treads = [srcx_shoes, 96.0];
 
 const atlasSrcAmuletItem = <AmuletItem, List<double>> {
   AmuletItem.Weapon_Staff_1_Common: _weapons_staff_wooden,
-  AmuletItem.Weapon_Staff_1_Of_Fire: _weapons_staff_wooden,
-  AmuletItem.Weapon_Staff_1_Of_Frost: _weapons_staff_wooden,
+  AmuletItem.Weapon_Staff_1_Of_Fire: _weapons_staff_fire,
+  AmuletItem.Weapon_Staff_1_Of_Frost: _weapons_staff_ice,
   AmuletItem.Weapon_Staff_1_Legendary: _weapons_staff_wooden,
   AmuletItem.Weapon_Sword_1_Common: _weapons_sword_short,
   AmuletItem.Weapon_Sword_1_Rare: _weapons_sword_short,
