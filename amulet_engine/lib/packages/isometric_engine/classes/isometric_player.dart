@@ -49,8 +49,14 @@ class IsometricPlayer extends Character with ByteWriter {
   var positionCacheZ = 0;
   var data = Json();
 
+  final cacheCharacterType = Uint8List(Cache_Length);
+  final cacheCharacterState = Uint8List(Cache_Length);
+  final cacheCharacterTeam = Uint8List(Cache_Length);
+  final cacheCharacterHealthPerc = Uint8List(Cache_Length);
+
+  // final cacheStateA = Uint32List(Cache_Length);
   final cacheStateB = Uint8List(Cache_Length);
-  final cacheStateA = Uint32List(Cache_Length);
+  final cacheStateC = Uint8List(Cache_Length);
   final cachePositionX = Int16List(Cache_Length);
   final cachePositionY = Int16List(Cache_Length);
   final cachePositionZ = Int16List(Cache_Length);
@@ -393,7 +399,7 @@ class IsometricPlayer extends Character with ByteWriter {
     final cachePositionY = this.cachePositionY;
     final cachePositionZ = this.cachePositionZ;
 
-    final cacheStateA = this.cacheStateA;
+    // final cacheStateA = this.cacheStateA;
     final cacheStateB = this.cacheStateB;
 
     var cacheIndex = 0;
@@ -434,25 +440,54 @@ class IsometricPlayer extends Character with ByteWriter {
       final diffYChangeType = ChangeType.fromDiff(diffY);
       final diffZChangeType = ChangeType.fromDiff(diffZ);
 
-      final compressedState = character.compressedState;
+      // final compressedState = character.compressedState;
       final compressedFrameAndDirection = character.compressedAnimationFrameAndDirection;
 
-      final stateAChanged = compressedState != cacheStateA[cacheIndex];
+      // final stateAChanged = compressedState != cacheStateA[cacheIndex];
+      final changedCharacterType = character.characterType != cacheCharacterType[cacheIndex];
+      final changedCharacterState = character.characterState != cacheCharacterState[cacheIndex];
+      final changedCharacterTeam = character.team != cacheCharacterTeam[cacheIndex];
+      final changedCharacterHealthPerc = character.healthPercentageByte != cacheCharacterHealthPerc[cacheIndex];
+
+      final compressionLevelA = writeBits(
+          changedCharacterType,
+          changedCharacterState,
+          changedCharacterTeam,
+          changedCharacterHealthPerc,
+          false,
+          false,
+          false,
+          false,
+      );
+
       final stateBChanged = compressedFrameAndDirection != cacheStateB[cacheIndex];
 
-      final compressionLevel = writeBits(stateAChanged, stateBChanged, false, false, false, false, false, false)
+      final compressionLevel = writeBits(false, stateBChanged, false, false, false, false, false, false)
          | (diffXChangeType << 2)
          | (diffYChangeType << 4)
          | (diffZChangeType << 6);
 
+      writeByte(compressionLevelA);
       writeByte(compressionLevel);
 
-      if (stateAChanged){
+      if (changedCharacterType) {
         writeByte(character.characterType);
+        cacheCharacterType[cacheIndex] = character.characterType;
+      }
+
+      if (changedCharacterState){
         writeByte(character.characterState);
+        cacheCharacterState[cacheIndex] = character.characterState;
+      }
+
+      if (changedCharacterTeam){
         writeByte(character.team);
-        writePercentage(character.healthPercentage);
-        cacheStateA[cacheIndex] = compressedState;
+        cacheCharacterTeam[cacheIndex] = character.team;
+      }
+
+      if (changedCharacterHealthPerc) {
+        writeByte(character.healthPercentageByte);
+        cacheCharacterHealthPerc[cacheIndex] = character.healthPercentageByte;
       }
 
       if (stateBChanged) {
@@ -1349,8 +1384,11 @@ class IsometricPlayer extends Character with ByteWriter {
     cachePositionX.fillRange(0, cachePositionX.length, 0);
     cachePositionY.fillRange(0, cachePositionY.length, 0);
     cachePositionZ.fillRange(0, cachePositionZ.length, 0);
-    cacheStateA.fillRange(0, cacheStateA.length, 0);
     cacheStateB.fillRange(0, cacheStateB.length, 0);
+    cacheCharacterType.fillRange(0, cacheCharacterType.length, 0);
+    cacheCharacterState.fillRange(0, cacheCharacterState.length, 0);
+    cacheCharacterTeam.fillRange(0, cacheCharacterTeam.length, 0);
+    cacheCharacterHealthPerc.fillRange(0, cacheCharacterHealthPerc.length, 0);
     writeByte(NetworkResponse.Player);
     writeByte(NetworkResponsePlayer.Cache_Cleared);
   }

@@ -4,6 +4,8 @@ import 'dart:typed_data';
 import '../isometric_engine.dart';
 import '../consts/isometric_settings.dart';
 
+
+
 class Character extends Collider {
 
   static const maxAnimationFrames = 32;
@@ -14,6 +16,12 @@ class Character extends Collider {
   var _health = 1;
   var _maxHealth = 1;
   var _goal = CharacterGoal.Idle;
+
+  /// 0 cold
+  /// 1 frozen
+  /// 2 stunned
+  /// 3 blind
+  var status = 0;
 
   /// in seconds
   var respawnDurationTotal = (60 * 3);
@@ -217,6 +225,8 @@ class Character extends Collider {
   bool get targetSet => target != null;
 
   double get healthPercentage => (health / maxHealth).clamp(0, 1.0);
+
+  int get healthPercentageByte => (healthPercentage * 255).toInt();
 
   double get angle => _angle;
 
