@@ -16,28 +16,7 @@ class RendererParticles extends RenderGroup {
 
   var totalActiveParticles = 0;
 
-  // final flameColors = List.generate(IsometricParticles.Flame_Duration, (index) {
-  //
-  //   final indexRed = (IsometricParticles.Flame_Duration * 0.33).toInt();
-  //   final indexGrey = (IsometricParticles.Flame_Duration * 0.66).toInt();
-  //
-  //   if (index < indexRed){
-  //     return (Color.lerp(Colors.yellow, Colors.red, index / indexRed) ?? (throw Exception())).value;
-  //   }
-  //   if (index < indexGrey){
-  //     final total = IsometricParticles.Flame_Duration - indexGrey;
-  //     final i = index - indexRed;
-  //     return (Color.lerp(Colors.red, Colors.grey, i / total) ?? (throw Exception())).value;
-  //   }
-  //
-  //   final total = IsometricParticles.Flame_Duration - indexGrey;
-  //   final i = index - indexGrey;
-  //   return (Color.lerp(Colors.grey, Colors.black12, i / total) ?? (throw Exception())).value;
-  //
-  //
-  // }).toList(growable: false);
-
-  final flameColors = generateColorInterpolation4(
+  final colorsFlame = generateColorInterpolation4(
       length: IsometricParticles.Flame_Duration,
       colorA: Colors.yellow,
       colorB: Colors.red,
@@ -45,7 +24,7 @@ class RendererParticles extends RenderGroup {
       colorD: Colors.black12,
   );
 
-  final iceColors = generateColorInterpolation4(
+  final colorsIce = generateColorInterpolation4(
     length: IsometricParticles.Water_Duration,
     colorA: Palette.blue_4.withOpacity(0.5),
     colorB: Palette.blue_2,
@@ -53,26 +32,13 @@ class RendererParticles extends RenderGroup {
     colorD: Colors.white10,
   );
 
-  final colorsWater = List.generate(IsometricParticles.Water_Duration, (index) {
-
-    final indexRed = (IsometricParticles.Water_Duration * 0.33).toInt();
-    final indexGrey = (IsometricParticles.Water_Duration * 0.66).toInt();
-
-    if (index < indexRed){
-      return (Color.lerp(IsometricColors.aqua_1, IsometricColors.aqua_5, index / indexRed) ?? (throw Exception())).value;
-    }
-    if (index < indexGrey){
-      final total = IsometricParticles.Water_Duration - indexGrey;
-      final i = index - indexRed;
-      return (Color.lerp(IsometricColors.aqua_5, Colors.white, i / total) ?? (throw Exception())).value;
-    }
-
-    final total = IsometricParticles.Water_Duration - indexGrey;
-    final i = index - indexGrey;
-    return (Color.lerp(Colors.white, Colors.transparent, i / total) ?? (throw Exception())).value;
-
-
-  }).toList(growable: false);
+  final colorsWater = generateColorInterpolation4(
+    length: IsometricParticles.Water_Duration,
+    colorA: Palette.aqua_1.withOpacity(0.5),
+    colorB: Palette.aqua_5,
+    colorC: Palette.white,
+    colorD: Colors.transparent,
+  );
 
   @override
   int getTotal() => totalActiveParticles;
@@ -331,34 +297,28 @@ class RendererParticles extends RenderGroup {
           );
           break;
         case ParticleType.Flame:
-          engine.bufferBlendMode = BlendMode.modulate;
-          engine.renderSprite(
-            image: images.atlas_nodes,
+          renderModulateSquare(
             dstX: dstX,
             dstY: dstY,
-            srcX: 72,
-            srcY: 2040,
-            srcWidth: 8,
-            srcHeight: 8,
+            color: colorsFlame[((1.0 - particle.duration01) * colorsWater.length).toInt()].value,
             scale: particle.scale,
-            color: flameColors[((1.0 - particle.duration01) * flameColors.length).toInt()].value,
           );
-          engine.setBlendModeDstATop();
           break;
         case ParticleType.Water:
-          engine.bufferBlendMode = BlendMode.modulate;
-          engine.renderSprite(
-            image: images.atlas_nodes,
+          renderModulateSquare(
             dstX: dstX,
             dstY: dstY,
-            srcX: 72,
-            srcY: 2040,
-            srcWidth: 8,
-            srcHeight: 8,
+            color: colorsWater[((1.0 - particle.duration01) * colorsWater.length).toInt()].value,
             scale: particle.scale,
-            color: colorsWater[((1.0 - particle.duration01) * colorsWater.length).toInt()],
           );
-          engine.setBlendModeDstATop();
+          break;
+        case ParticleType.Ice:
+          renderModulateSquare(
+             dstX: dstX,
+             dstY: dstY,
+             color: colorsIce[((1.0 - particle.duration01) * colorsWater.length).toInt()].value,
+             scale: particle.scale,
+          );
           break;
         case ParticleType.Shadow:
           engine.renderSprite(
@@ -435,4 +395,26 @@ class RendererParticles extends RenderGroup {
   }
 
   static int getFrame(double percentage, int total) => ((1.0 - percentage) * total).round();
+
+  void renderModulateSquare({
+    required double dstX,
+    required double dstY,
+    required double scale,
+    required int color,
+  }){
+    final engine = this.engine;
+    engine.bufferBlendMode = BlendMode.modulate;
+    engine.renderSprite(
+      image: images.atlas_nodes,
+      dstX: dstX,
+      dstY: dstY,
+      srcX: 72,
+      srcY: 2040,
+      srcWidth: 8,
+      srcHeight: 8,
+      scale: scale,
+      color: color,
+    );
+    engine.setBlendModeDstATop();
+  }
 }
