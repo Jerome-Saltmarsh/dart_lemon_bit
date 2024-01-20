@@ -99,26 +99,15 @@ class IsometricImages with IsometricComponent {
   late final Image pixel;
   late final Image atlas_projectiles;
   late final Image atlas_particles;
-  late final Image atlas_helms;
-  late final Image atlas_hands;
-  late final Image atlas_body;
-  late final Image atlas_legs;
-  late final Image atlas_shoes;
   late final Image atlas_gameobjects;
   late final Image atlas_nodes;
-  late final Image atlas_characters;
   late final Image atlas_icons;
-  late final Image atlas_consumables;
-  late final Image atlas_treasures;
-  late final Image atlas_weapons;
-  late final Image atlas_spells;
   late final Image atlas_amulet_items;
   late final Image square;
   late final Image template_spinning;
 
   late final Sprite emptySprite;
 
-  late final Map<int, Image> itemTypeAtlases;
 
   @override
   Future onComponentInit(SharedPreferences sharedPreferences) async {
@@ -129,21 +118,11 @@ class IsometricImages with IsometricComponent {
     loadPng('shades_transparent').then((value) => shadesTransparent = value);
     loadPng('square').then((value) => square = value);
     loadPng('atlas_nodes').then((value) => atlas_nodes = value);
-    loadPng('atlas_characters').then((value) => atlas_characters = value);
     loadPng('atlas_gameobjects').then((value) => atlas_gameobjects = value);
     loadPng('atlas_particles').then((value) => atlas_particles = value);
     loadPng('atlas_projectiles').then((value) => atlas_projectiles = value);
-    loadPng('atlas_weapons').then((value) => atlas_weapons = value);
     loadPng('atlas_icons').then((value) => atlas_icons = value);
-    loadPng('atlas_consumables').then((value) => atlas_consumables = value);
-    loadPng('atlas_treasures').then((value) => atlas_treasures = value);
-    loadPng('atlas_spells').then((value) => atlas_spells = value);
     loadPng('atlas_amulet_items').then((value) => atlas_amulet_items = value);
-    loadPng('atlas_helms').then((value) => atlas_helms = value);
-    loadPng('atlas_hands').then((value) => atlas_hands = value);
-    loadPng('atlas_body').then((value) => atlas_body = value);
-    loadPng('atlas_legs').then((value) => atlas_legs = value);
-    loadPng('atlas_shoes').then((value) => atlas_shoes = value);
 
     emptySprite = Sprite(
         image: empty,
@@ -447,15 +426,6 @@ class IsometricImages with IsometricComponent {
         atlasX: 995,
         atlasY: 0,
     ).then((value) => barrelWooden = value);
-
-    itemTypeAtlases = {
-      ItemType.Weapon: atlas_weapons,
-      ItemType.Object: atlas_gameobjects,
-      ItemType.Helm: atlas_helms,
-      ItemType.Armor: atlas_body,
-      ItemType.Shoes: atlas_shoes,
-      ItemType.Consumable: atlas_consumables,
-    };
 
     loadCharacterShader(dirFallen).then((value) => characterShaderFallen = value);
     loadCharacterShader(dirFallenArmoured).then((value) => characterShaderFallenArmoured = value);

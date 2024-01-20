@@ -352,84 +352,7 @@ class RendererGameObjects extends RenderGroup {
       scale: scale,
       anchorY: anchorY,
     );
-
-    return;
   }
-
-  // void renderBarrel(
-  //     IsometricScene scene,
-  //     GameObject gameObject,
-  //     IsometricImages images,
-  //     IsometricRender render,
-  // ) {
-  //   final gameObjectIndex = scene.getIndexPosition(gameObject);
-  //   final dstX = gameObject.renderX;
-  //   final dstY = gameObject.renderY;
-  //   final sprite = images.barrelWooden;
-  //   const scale = 0.3;
-  //   const anchorY = 0.8;
-  //
-  //   render.sprite(
-  //     sprite: sprite,
-  //     frame: sprite.getFrame(row: 0, column: 2),
-  //     dstX: dstX,
-  //     dstY: dstY,
-  //     color: scene.getColor(gameObjectIndex),
-  //     scale: scale,
-  //     anchorY: anchorY,
-  //   );
-  //
-  //   render.sprite(
-  //     sprite: sprite,
-  //     frame: sprite.getFrame(row: 0, column: 3),
-  //     dstX: dstX,
-  //     dstY: dstY,
-  //     color: scene.colorSouth(gameObjectIndex),
-  //     scale: scale,
-  //     anchorY: anchorY,
-  //   );
-  //
-  //   render.sprite(
-  //     sprite: sprite,
-  //     frame: sprite.getFrame(row: 0, column: 5),
-  //     dstX: dstX,
-  //     dstY: dstY,
-  //     color: scene.colorWest(gameObjectIndex),
-  //     scale: scale,
-  //     anchorY: anchorY,
-  //   );
-  //
-  //   render.sprite(
-  //       sprite: sprite,
-  //       frame: sprite.getFrame(row: 0, column: 0),
-  //       dstX: dstX,
-  //       dstY: dstY,
-  //       color: scene.colorEast(gameObjectIndex),
-  //       scale: scale,
-  //       anchorY: anchorY,
-  //   );
-  //
-  //   render.sprite(
-  //       sprite: sprite,
-  //       frame: sprite.getFrame(row: 0, column: 1),
-  //       dstX: dstX,
-  //       dstY: dstY,
-  //       color: scene.colorNorth(gameObjectIndex),
-  //       scale: scale,
-  //       anchorY: anchorY,
-  //   );
-  //
-  //   render.sprite(
-  //       sprite: sprite,
-  //       frame: sprite.getFrame(row: 0, column: 4),
-  //       dstX: dstX,
-  //       dstY: dstY,
-  //       color: scene.colorAbove(gameObjectIndex),
-  //       scale: scale,
-  //       anchorY: anchorY,
-  //   );
-  //
-  // }
 
   @override
   void updateFunction() {
@@ -458,11 +381,4 @@ class RendererGameObjects extends RenderGroup {
         scale: shadowScale + (shadowScaleHeight * animation.frameWaterHeight.toDouble())
     );
   }
-
-  Image getImageForGameObjectType(int type) =>
-      images.itemTypeAtlases[type] ?? (
-          throw Exception(
-              'getImageForGameObjectType(type: ${ItemType.getName(type)}})'
-          )
-      );
 }
