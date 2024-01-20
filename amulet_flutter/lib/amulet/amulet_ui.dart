@@ -537,13 +537,15 @@ class AmuletUI {
     return Positioned(
         top: 16,
         left: 0,
-        child: Container(
-          width: amulet.engine.screen.width,
-          alignment: Alignment.center,
-          child: buildWatch(amulet.player.aimTargetSet, (t) {
-            if (!t) return nothing;
-            return name;
-          }),
+        child: IgnorePointer(
+          child: Container(
+            width: amulet.engine.screen.width,
+            alignment: Alignment.center,
+            child: buildWatch(amulet.player.aimTargetSet, (t) {
+              if (!t) return nothing;
+              return name;
+            }),
+          ),
         ));
   }
 
