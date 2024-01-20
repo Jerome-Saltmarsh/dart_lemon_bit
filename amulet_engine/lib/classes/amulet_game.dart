@@ -344,6 +344,13 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
           range: range,
         );
         break;
+      case SkillType.Frostball:
+        performAbilityFrostBall(
+          character: player,
+          damage: damage,
+          range: range,
+        );
+        break;
       case SkillType.Explode:
         createExplosion(
           x: player.castePositionX,
@@ -379,8 +386,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
   }
 
-  void performAbilityFrostBall(
-      Character character, {required int damage, required double range}) {
+  void performAbilityFrostBall({
+    required Character character,
+    required int damage,
+    required double range,
+  }) {
      spawnProjectile(
       src: character,
       damage: damage,

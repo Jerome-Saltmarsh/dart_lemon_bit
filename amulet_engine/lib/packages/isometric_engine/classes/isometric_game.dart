@@ -1136,20 +1136,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   void deactivateProjectile(Projectile projectile) {
     assert (projectile.active);
-    switch (projectile.type) {
-      case ProjectileType.Orb:
-        break;
-      case ProjectileType.Bullet:
-        dispatchGameEvent(
-          GameEvent.Bullet_Deactivated,
-          projectile.x,
-          projectile.y,
-          projectile.z,
-        );
-        break;
-      default:
-        break;
-    }
     projectile.active = false;
     projectile.parent = null;
     projectile.target = null;
@@ -1474,23 +1460,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     character.clearAction();
   }
 
-  Projectile spawnProjectileOrb({
-    required Character src,
-    required int damage,
-    required double range,
-  }) {
-    dispatchGameEventPosition(GameEvent.Blue_Orb_Fired, src);
-    return spawnProjectile(
-      src: src,
-      range: range,
-      target: src.target,
-      projectileType: ProjectileType.Orb,
-      angle: src.target != null ? null : (src is IsometricPlayer ? src
-          .angle : src.angle),
-      damage: damage,
-    );
-  }
-
   void spawnProjectileArrow({
     required Character src,
     required int damage,
@@ -1500,7 +1469,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   }) {
     assert (range > 0);
     assert (damage > 0);
-    // dispatchGameEvent(GameEvent.Arrow_Fired, src.x, src.y, src.z);
     spawnProjectile(
       src: src,
       range: range,

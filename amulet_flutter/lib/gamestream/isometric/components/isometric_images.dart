@@ -105,9 +105,7 @@ class IsometricImages with IsometricComponent {
   late final Image atlas_amulet_items;
   late final Image square;
   late final Image template_spinning;
-
   late final Sprite emptySprite;
-
 
   @override
   Future onComponentInit(SharedPreferences sharedPreferences) async {
@@ -226,18 +224,6 @@ class IsometricImages with IsometricComponent {
           subType: armorType,
         );
       }
-      // for (final handType in HandType.values) {
-      //   loadSpriteGroupIsometric(
-      //     direction: direction,
-      //     type: SpriteGroupType.Hand_Left,
-      //     subType: handType,
-      //   );
-      //   loadSpriteGroupIsometric(
-      //     direction: direction,
-      //     type: SpriteGroupType.Hand_Right,
-      //     subType: handType,
-      //   );
-      // }
       loadSpriteGroupIsometric(
         direction: direction,
         type: SpriteGroupType.Head,

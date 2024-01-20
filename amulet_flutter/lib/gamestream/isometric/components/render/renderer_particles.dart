@@ -8,32 +8,50 @@ import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 
+import '../../functions/generate_colors.dart';
+
 class RendererParticles extends RenderGroup {
 
   late Particle particle;
 
   var totalActiveParticles = 0;
 
-  final flameColors = List.generate(IsometricParticles.Flame_Duration, (index) {
+  // final flameColors = List.generate(IsometricParticles.Flame_Duration, (index) {
+  //
+  //   final indexRed = (IsometricParticles.Flame_Duration * 0.33).toInt();
+  //   final indexGrey = (IsometricParticles.Flame_Duration * 0.66).toInt();
+  //
+  //   if (index < indexRed){
+  //     return (Color.lerp(Colors.yellow, Colors.red, index / indexRed) ?? (throw Exception())).value;
+  //   }
+  //   if (index < indexGrey){
+  //     final total = IsometricParticles.Flame_Duration - indexGrey;
+  //     final i = index - indexRed;
+  //     return (Color.lerp(Colors.red, Colors.grey, i / total) ?? (throw Exception())).value;
+  //   }
+  //
+  //   final total = IsometricParticles.Flame_Duration - indexGrey;
+  //   final i = index - indexGrey;
+  //   return (Color.lerp(Colors.grey, Colors.black12, i / total) ?? (throw Exception())).value;
+  //
+  //
+  // }).toList(growable: false);
 
-    final indexRed = (IsometricParticles.Flame_Duration * 0.33).toInt();
-    final indexGrey = (IsometricParticles.Flame_Duration * 0.66).toInt();
+  final flameColors = generateColorInterpolation4(
+      length: IsometricParticles.Flame_Duration,
+      colorA: Colors.yellow,
+      colorB: Colors.red,
+      colorC: Colors.grey,
+      colorD: Colors.black12,
+  );
 
-    if (index < indexRed){
-      return (Color.lerp(Colors.yellow, Colors.red, index / indexRed) ?? (throw Exception())).value;
-    }
-    if (index < indexGrey){
-      final total = IsometricParticles.Flame_Duration - indexGrey;
-      final i = index - indexRed;
-      return (Color.lerp(Colors.red, Colors.grey, i / total) ?? (throw Exception())).value;
-    }
-
-    final total = IsometricParticles.Flame_Duration - indexGrey;
-    final i = index - indexGrey;
-    return (Color.lerp(Colors.grey, Colors.black12, i / total) ?? (throw Exception())).value;
-
-
-  }).toList(growable: false);
+  final iceColors = generateColorInterpolation4(
+    length: IsometricParticles.Water_Duration,
+    colorA: Palette.blue_4.withOpacity(0.5),
+    colorB: Palette.blue_2,
+    colorC: Palette.blue_0,
+    colorD: Colors.white10,
+  );
 
   final colorsWater = List.generate(IsometricParticles.Water_Duration, (index) {
 
@@ -323,7 +341,7 @@ class RendererParticles extends RenderGroup {
             srcWidth: 8,
             srcHeight: 8,
             scale: particle.scale,
-            color: flameColors[((1.0 - particle.duration01) * flameColors.length).toInt()],
+            color: flameColors[((1.0 - particle.duration01) * flameColors.length).toInt()].value,
           );
           engine.setBlendModeDstATop();
           break;

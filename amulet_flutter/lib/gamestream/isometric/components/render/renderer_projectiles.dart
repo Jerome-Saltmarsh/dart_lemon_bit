@@ -20,12 +20,9 @@ class RendererProjectiles extends RenderGroup {
       case ProjectileType.Arrow:
         renderArrow(dstX, dstY, angle);
         return;
-      case ProjectileType.Orb:
-        break;
       case ProjectileType.Fireball:
         const width = 18.0;
         const height = 23.0;
-
         engine.renderSpriteRotated(
             image: images.atlas_nodes,
             srcX: 1177 + (width * (animation.frameRate3 % 6)),
@@ -36,11 +33,6 @@ class RendererProjectiles extends RenderGroup {
             dstY: dstY,
             rotation: projectile.angle - piQuarter,
         );
-        break;
-      case ProjectileType.Bullet:
-        renderBullet(dstX, dstY, angle);
-        break;
-      case ProjectileType.Wave:
         break;
       case ProjectileType.FrostBall:
         engine.renderSprite(
@@ -67,22 +59,6 @@ class RendererProjectiles extends RenderGroup {
   @override
   int getTotal() {
     return scene.totalProjectiles;
-  }
-
-  void renderBullet(double x, double y, double rotation) {
-    engine.renderSpriteRotated(
-      image: images.atlas_gameobjects,
-      srcX: 87,
-      srcY: 48,
-      srcWidth: 2,
-      srcHeight: 32,
-      dstX: x,
-      dstY: y,
-      rotation: rotation - piQuarter,
-      scale: 1,
-      anchorX: 0.5,
-      anchorY: 0.5,
-    );
   }
 
   void renderArrow(double x, double y, double rotation) {

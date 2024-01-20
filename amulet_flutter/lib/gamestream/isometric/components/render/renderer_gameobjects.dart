@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_amulet_item.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_images.dart';
