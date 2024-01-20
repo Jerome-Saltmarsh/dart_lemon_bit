@@ -306,7 +306,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         if (player.equippedWeaponMelee) {
           performAbilityMelee(
             character: player,
-            damageType: DamageType.melee,
+            damageType: DamageType.Melee,
             range: range,
             damage: damage,
             areaOfEffect: false,
@@ -326,7 +326,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         if (player.equippedWeaponMelee) {
           performAbilityMelee(
             character: player,
-            damageType: DamageType.melee,
+            damageType: DamageType.Melee,
             range: range,
             damage: damage,
             areaOfEffect: true,
@@ -463,34 +463,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     dispatchGameEventPosition(GameEvent.Blink_Arrive, character);
   }
 
-  void performAbilityLightning(Character character){
-    var boltsRemaining = 3;
-    final characters = this.characters;
-    for (final otherCharacter in characters){
-      if (!character.active || !character.isEnemy(otherCharacter)) {
-        continue;
-      }
-      if (!character.withinRadiusPosition(otherCharacter, 300)){
-        continue;
-      }
-      dispatchGameEventPosition(GameEvent.Lightning_Bolt, otherCharacter);
-      applyHit(
-        srcCharacter: character,
-        target: otherCharacter,
-        damage: 3,
-        damageType: DamageType.electric
-      );
-      boltsRemaining--;
-      if (boltsRemaining <= 0) {
-        return;
-      }
-    }
-  }
-
   @override
   void customOnCharacterKilled(Character target, src) {
 
-    if (target is AmuletFiend){
+    if (target is AmuletFiend) {
       if (randomChance(target.fiendType.chanceOfDropLegendary)) {
         spawnRandomLootAtFiend(target, itemQuality: ItemQuality.Legendary);
         return;
@@ -525,10 +501,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         dispatchGameEventPosition(GameEvent.Character_Vanished, target);
       });
     }
-
-    // if (src is AmuletPlayer) {
-    //   src.gainExperience(target.experience);
-    // }
   }
 
   void spawnRandomLootAtFiend(AmuletFiend fiend, {
@@ -846,10 +818,12 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required int amount,
     required DamageType damageType,
   }) {
-    if (target is AmuletFiend) {
-      final resists = target.fiendType.resists;
-      if (resists == damageType){
-        amount = amount ~/ 2;
+
+    if (characterResistsDamageType(target, damageType)) {
+      amount = amount ~/ 2;
+    } else {
+      if (damageType == DamageType.Ice){
+        target.statusColdDuration += 120;
       }
     }
     super.applyDamageToCharacter(
@@ -858,6 +832,13 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       amount: amount,
       damageType: damageType,
     );
+  }
+
+  bool characterResistsDamageType(Character character, DamageType damageType){
+    if (character is AmuletFiend) {
+      return character.fiendType.resists == damageType;
+    }
+    return false;
   }
 
   static int getAmuletItemDamage(AmuletItem amuletItem){

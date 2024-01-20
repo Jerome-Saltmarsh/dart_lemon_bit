@@ -17,11 +17,14 @@ class Character extends Collider {
   var _maxHealth = 1;
   var _goal = CharacterGoal.Idle;
 
+
   /// 0 cold
   /// 1 frozen
   /// 2 stunned
   /// 3 blind
-  var status = 0;
+  var statusColdDuration = 0;
+
+  bool get isStatusCold => statusColdDuration > 0;
 
   /// in seconds
   var respawnDurationTotal = (60 * 3);
@@ -336,6 +339,11 @@ class Character extends Collider {
   }
 
   void update() {
+
+    if (statusColdDuration > 0){
+      statusColdDuration--;
+    }
+
     if (
       runToDestinationEnabled &&
       !arrivedAtDestination &&

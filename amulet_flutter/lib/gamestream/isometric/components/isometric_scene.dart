@@ -246,10 +246,10 @@ class IsometricScene with IsometricComponent implements Updatable {
 
     jobBatchResetNodeColorsToAmbient();
     updateProjectiles();
+    updateCharacters();
     updateGameObjects();
     updateParticleSmokeEmitters();
     updateParticleFireEmitters();
-    // updateParticleWindEmitters();
 
     if (nextLightingUpdate-- <= 0) {
       nextLightingUpdate = options.framesPerLightingUpdate;
@@ -1482,6 +1482,30 @@ class IsometricScene with IsometricComponent implements Updatable {
         intensity: particle.emissionIntensity,
         ambient: false,
       );
+    }
+  }
+
+  var characterColdEmissionNext = 0;
+  var characterColdEmissionRate = 3;
+
+  void updateCharacters(){
+
+    if (characterColdEmissionNext-- >= 0){
+      return;
+    }
+    characterColdEmissionNext = characterColdEmissionRate;
+
+    final totalCharacters = this.totalCharacters;
+    final characters = this.characters;
+    for (var i = 0; i < totalCharacters; i++){
+      final character = characters[i];
+      if (character.isStatusCold) {
+        particles.emitIce(
+            x: character.x,
+            y: character.y,
+            z: character.z,
+        );
+      }
     }
   }
 

@@ -709,7 +709,7 @@ enum SkillType {
   Attack(casteType: CasteType.Self, magicCost: 0, range: 0),
   Mighty_Swing(casteType: CasteType.Instant, magicCost: 5, range: 0),
   Terrify(casteType: CasteType.Instant, magicCost: 3, range: 100),
-  Frostball(casteType: CasteType.Directional, magicCost: 3, range: 150, damage: 5),
+  Frostball(casteType: CasteType.Directional, magicCost: 3, range: 150, damage: 2),
   Fireball(casteType: CasteType.Directional, magicCost: 2, range: 150, damage: 5),
   Explode(casteType: CasteType.Positional, magicCost: 6, range: 200, damage: 10, weaponClass: WeaponClass.Staff),
   Firestorm(casteType: CasteType.Directional, magicCost: 7, range: 120, damage: 15, weaponClass: WeaponClass.Staff),

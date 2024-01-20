@@ -445,7 +445,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         target: other,
         damage: damage,
         srcCharacter: character,
-        damageType: DamageType.melee,
+        damageType: DamageType.Melee,
       );
       attackHit = true;
     }
@@ -473,7 +473,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         target: gameObject,
         damage: damage,
         srcCharacter: character,
-        damageType: DamageType.melee,
+        damageType: DamageType.Melee,
       );
       attackHit = true;
     }
@@ -483,7 +483,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         target: nearest,
         damage: damage,
         srcCharacter: character,
-        damageType: DamageType.melee,
+        damageType: DamageType.Melee,
       );
     }
 
@@ -803,7 +803,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         srcCharacter: srcCharacter,
         damage: damage,
         friendlyFire: true,
-        damageType: DamageType.fire,
+        damageType: DamageType.Fire,
       );
     }
 
@@ -819,7 +819,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         srcCharacter: srcCharacter,
         damage: damage,
         friendlyFire: true,
-        damageType: DamageType.fire,
+        damageType: DamageType.Fire,
       );
     }
   }
@@ -898,6 +898,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     target.health -= damage;
 
     if (target.health <= 0) {
+      target.statusColdDuration = 0;
       target.facePosition(src, force: true);
       setCharacterStateDead(target);
       customOnCharacterKilled(target, src);
@@ -1278,7 +1279,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         srcCharacter: owner,
         target: target,
         damage: projectile.damage,
-        damageType: DamageType.projectile,
+        damageType: projectile.damageType,
       );
     }
 
@@ -1420,14 +1421,14 @@ abstract class IsometricGame<T extends IsometricPlayer> {
             srcCharacter: character,
             target: target,
             damage: character.weaponDamage,
-            damageType: DamageType.melee,
+            damageType: DamageType.Melee,
           );
         }
         return;
       }
       performAbilityMelee(
         character: character,
-        damageType: DamageType.melee,
+        damageType: DamageType.Melee,
         range: character.weaponRange,
         damage: character.weaponDamage,
         areaOfEffect: false,

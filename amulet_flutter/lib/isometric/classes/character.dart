@@ -4,6 +4,7 @@ import 'package:amulet_engine/packages/common.dart';
 import 'package:amulet_engine/packages/lemon_math.dart';
 
 class Character extends Position {
+  var isStatusCold = false;
   var characterType = CharacterType.Human;
   var weaponType = WeaponType.Unarmed;
   var complexion = 0;

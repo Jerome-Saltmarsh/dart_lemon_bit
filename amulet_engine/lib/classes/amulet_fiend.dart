@@ -46,4 +46,6 @@ class AmuletFiend extends Character {
   @override
   int get maxHealth => fiendType.health;
 
+  @override
+  double get runSpeed => super.runSpeed * (isStatusCold ? 0.5 : 1.0);
 }

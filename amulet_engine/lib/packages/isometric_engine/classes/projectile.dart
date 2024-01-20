@@ -7,8 +7,11 @@ class Projectile extends Collider {
   var type = 0; // ProjectileType.dart
   var friendlyFire = false;
   var damage = 0;
+
   Position? target;
   Character? parent;
+
+  DamageType get damageType => DamageType.fromProjectileType(type);
 
   Projectile({
     required super.team,
