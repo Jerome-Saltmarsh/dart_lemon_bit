@@ -12,6 +12,7 @@ import 'package:amulet_flutter/gamestream/isometric/consts/map_projectile_type_t
 import 'package:amulet_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:amulet_flutter/gamestream/isometric/enums/node_visibility.dart';
 import 'package:amulet_flutter/gamestream/isometric/functions/src.dart';
+import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:amulet_flutter/isometric/classes/character.dart';
 import 'package:amulet_flutter/isometric/classes/gameobject.dart';
@@ -2248,11 +2249,11 @@ class IsometricScene with IsometricComponent implements Updatable {
       return;
     }
 
-    final ambientRatio = 1.0 - (scene.ambientAlpha / 255);
+    var ambientRatio = 1.0 - (scene.ambientAlpha / 255);
 
-    // final colorNW = merge32BitColors(colorNorth, colorWest);
-    // final colorSE = merge32BitColors(colorSouth, colorEast);
-    // final colorFlat = merge32BitColors(colorNW, colorSE);
+    if (character.isStatusCold){
+       ambientRatio = 1.0 - ambientRatio;
+    }
 
     final index = getIndexPosition(character);
     final colorN = this.colorNorth(index);
@@ -2261,6 +2262,8 @@ class IsometricScene with IsometricComponent implements Updatable {
     final colorW = this.colorWest(index);
     final colorNW = this.colorNorthWest(index);
     final colorSE = this.colorSouthEast(index);
+
+
     final colorNAlpha = getAlpha(colorN);
     final colorEAlpha = getAlpha(colorE);
     final colorSAlpha = getAlpha(colorS);
@@ -2287,14 +2290,20 @@ class IsometricScene with IsometricComponent implements Updatable {
     final southEast = merge32BitColors(colorS, colorE);
     final northWest = merge32BitColors(colorN, colorW);
 
-    final adjustedSE = interpolateColors(southEast, scene.ambientColorNight, ambientRatio);
+    var adjustedSE = interpolateColors(southEast, scene.ambientColorNight, ambientRatio);
+    var adjustedNW = interpolateColors(northWest, scene.ambientColorNight, ambientRatio);
+
+    if (character.isStatusCold) {
+      adjustedSE = interpolateColors(adjustedSE, Palette.blue_2.value, 0.5);
+      adjustedNW = interpolateColors(adjustedNW, Palette.blue_2.value, 0.5);
+    }
 
     if (minSEAlpha < minNWAlpha){
        character.colorSouthEast = setAlpha(adjustedSE, minSEAlpha);
-       character.colorNorthWest = setAlpha(northWest, maxNWAlpha);
+       character.colorNorthWest = setAlpha(adjustedNW, maxNWAlpha);
     } else {
       character.colorSouthEast = setAlpha(adjustedSE, maxSEAlpha);
-      character.colorNorthWest = setAlpha(northWest, minNWAlpha);
+      character.colorNorthWest = setAlpha(adjustedNW, minNWAlpha);
     }
   }
 
