@@ -732,7 +732,8 @@ class AmuletUI {
     }
   }
 
-  Widget buildWindowPlayerAttributes() => GSContainer(
+  Widget buildWindowPlayerAttributes() {
+    return GSContainer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -796,6 +797,14 @@ class AmuletUI {
         ],
       ),
     );
+    //
+    // return buildWatch(amulet.aimTargetItemType, (aimTargetItem){
+    //    if (aimTargetItem == null){
+    //      return nothing;
+    //    }
+    //    return window;
+    // });
+  }
 
   Widget buildRowValue(dynamic value) => buildText(value, color: Colors.white70);
 

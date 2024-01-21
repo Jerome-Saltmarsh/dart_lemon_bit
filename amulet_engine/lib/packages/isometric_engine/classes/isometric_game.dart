@@ -408,14 +408,16 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
     final target = character.target;
     if (target is Collider) {
-      if (character.withinRadiusPosition(target, range)){
+      if (character.withinStrikeRadius(target, range)){
         applyHit(
           target: target,
           damage: damage,
           srcCharacter: character,
           damageType: damageType,
         );
-        return;
+        if (!areaOfEffect){
+          return;
+        }
       }
     }
 
@@ -2310,7 +2312,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
     if (!character.pathFindingEnabled) {
       if (character.isEnemy(target)) {
-        return !character.withinAttackRange(target);
+        return !character.withinWeaponRange(target);
       }
       if (character.isAlly(target)){
         return !character.withinInteractRange(target);
@@ -2320,7 +2322,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
     if (scene.isPerceptible(character, target)) {
       if (character.isEnemy(target)) {
-        return !character.withinAttackRange(target);
+        return !character.withinWeaponRange(target);
       }
       if (character.isAlly(target)){
         return !character.withinInteractRange(target);

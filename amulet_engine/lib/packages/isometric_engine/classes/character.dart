@@ -162,7 +162,7 @@ class Character extends Collider {
     if (target == null){
       return throw Exception('target == null');
     }
-    return withinAttackRange(target);
+    return withinWeaponRange(target);
   }
 
   bool get isPlayer => false;
@@ -293,7 +293,7 @@ class Character extends Collider {
   }
 
   bool withinAttackRangeAndAngle(Collider collider){
-    if (!withinAttackRange(collider)){
+    if (!withinWeaponRange(collider)){
       return false;
     }
     final angle = getAngle(collider);
@@ -301,14 +301,16 @@ class Character extends Collider {
     return angleD < piQuarter; // TODO Replace constant with weaponAngleRange
   }
 
-  bool withinAttackRange(Position target){
+  bool withinWeaponRange(Position target) => withinStrikeRadius(target, weaponRange);
+
+  bool withinStrikeRadius(Position target, double radius){
     if ((target.z - z).abs() > Character_Height) {
       return false;
     }
     if (target is Collider) {
-      return withinRadiusPosition(target, weaponRange + target.radius);
+      return withinRadiusPosition(target, radius + target.radius);
     }
-    return withinRadiusPosition(target, weaponRange);
+    return withinRadiusPosition(target, radius);
   }
 
   void faceTarget() {

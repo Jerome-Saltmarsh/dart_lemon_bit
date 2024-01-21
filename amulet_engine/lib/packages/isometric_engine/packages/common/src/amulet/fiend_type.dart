@@ -2,6 +2,7 @@
 import '../../../../enums/damage_type.dart';
 import '../isometric/character_type.dart';
 import '../isometric/weapon_type.dart';
+import 'amulet_item.dart';
 
 enum FiendType {
   Fallen(
@@ -23,6 +24,7 @@ enum FiendType {
     chanceOfDropRare: 0.05,
     chanceOfDropLegendary: 0.01,
     chanceOfDropPotion: 0.15,
+    skillType: SkillType.Strike,
   ),
   Skeleton(
     level: 2,
@@ -44,6 +46,7 @@ enum FiendType {
     chanceOfDropRare: 0.05,
     chanceOfDropLegendary: 0.025,
     chanceOfDropPotion: 0.15,
+    skillType: SkillType.Shoot_Arrow,
   ),
   Wolf(
     level: 3,
@@ -65,6 +68,7 @@ enum FiendType {
     chanceOfDropRare: 0.05,
     chanceOfDropLegendary: 0.025,
     chanceOfDropPotion: 0.15,
+    skillType: SkillType.Strike,
   ),
   Zombie(
     level: 4,
@@ -86,6 +90,7 @@ enum FiendType {
     chanceOfDropRare: 0.05,
     chanceOfDropLegendary: 0.025,
     chanceOfDropPotion: 0.15,
+    skillType: SkillType.Strike,
   ),
   Fallen_Armoured(
     level: 5,
@@ -107,6 +112,7 @@ enum FiendType {
     chanceOfDropRare: 0.05,
     chanceOfDropLegendary: 0.025,
     chanceOfDropPotion: 0.15,
+    skillType: SkillType.Strike,
   ),
   Gargoyle(
     level: 6,
@@ -128,6 +134,7 @@ enum FiendType {
     chanceOfDropRare: 0.05,
     chanceOfDropLegendary: 0.025,
     chanceOfDropPotion: 0.15,
+    skillType: SkillType.Fireball,
   ),
   Toad_Warrior(
     level: 6,
@@ -149,6 +156,7 @@ enum FiendType {
     chanceOfDropRare: 0.05,
     chanceOfDropLegendary: 0.025,
     chanceOfDropPotion: 0.15,
+    skillType: SkillType.Strike,
   );
 
   final int level;
@@ -162,6 +170,7 @@ enum FiendType {
   final double runSpeed;
   final double chanceOfSetTarget;
   final double weaponRange;
+  final double skillRadius;
   final int weaponType;
   final bool clearTargetOnPerformAction;
   final int postAttackPauseDurationMin;
@@ -171,6 +180,7 @@ enum FiendType {
   final double chanceOfDropCommon;
   final double chanceOfDropPotion;
   final DamageType? resists;
+  final SkillType skillType;
 
   const FiendType({
     required this.health,
@@ -191,6 +201,8 @@ enum FiendType {
     required this.chanceOfDropRare,
     required this.chanceOfDropLegendary,
     required this.chanceOfDropPotion,
+    required this.skillType,
     this.resists,
+    this.skillRadius = 0,
   });
 }

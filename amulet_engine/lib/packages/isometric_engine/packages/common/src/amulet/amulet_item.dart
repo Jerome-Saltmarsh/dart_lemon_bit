@@ -81,7 +81,7 @@ enum AmuletItem {
     levelMax: 5,
     type: ItemType.Weapon,
     subType: WeaponType.Shortsword,
-    skillType: SkillType.Attack,
+    skillType: SkillType.Strike,
     performDuration: 25,
     damageMin: 2,
     damageMax: 7,
@@ -95,7 +95,7 @@ enum AmuletItem {
     levelMax: 5,
     type: ItemType.Weapon,
     subType: WeaponType.Shortsword,
-    skillType: SkillType.Attack,
+    skillType: SkillType.Strike,
     performDuration: 22,
     damageMin: 3,
     damageMax: 9,
@@ -225,7 +225,7 @@ enum AmuletItem {
     label: 'Feather Cap',
     levelMin: 1,
     levelMax: 5,
-    skillType: SkillType.Invisible,
+    skillType: SkillType.Split_Shot,
     type: ItemType.Helm,
     subType: HelmType.Feather_Cap,
     performDuration: 25,
@@ -705,9 +705,16 @@ enum AmuletItem {
       .toList(growable: false);
 }
 
+enum AttackClass {
+  Strike, // sword, staff,
+  Fire, // bow
+  Caste, // staff
+}
+
 enum SkillType {
-  Attack(casteType: CasteType.Self, magicCost: 0, range: 0),
-  Mighty_Swing(casteType: CasteType.Instant, magicCost: 5, range: 0),
+  Strike(casteType: CasteType.Self, magicCost: 0, range: 0),
+  Shoot_Arrow(casteType: CasteType.Self, magicCost: 0, range: 0),
+  Mighty_Swing(casteType: CasteType.Instant, magicCost: 5, range: 0, weaponClass: WeaponClass.Sword),
   Terrify(casteType: CasteType.Instant, magicCost: 3, range: 100),
   Frostball(casteType: CasteType.Directional, magicCost: 3, range: 150, damage: 2),
   Fireball(casteType: CasteType.Directional, magicCost: 2, range: 150, damage: 5),
@@ -718,8 +725,8 @@ enum SkillType {
   Heal(casteType: CasteType.Self, magicCost: 3, range: 0, ),
   Greater_Heal(casteType: CasteType.Self, magicCost: 5, range: 0, ),
   Teleport(casteType: CasteType.Positional, magicCost: 4, range: 180,),
-  Split_Shot(casteType: CasteType.Self, magicCost: 2, range: 120, weaponClass: WeaponClass.Bow),
-  Invisible(casteType: CasteType.Instant, magicCost: 5, range: 0);
+  Entangle(casteType: CasteType.Self, magicCost: 2, range: 120, weaponClass: WeaponClass.Bow),
+  Split_Shot(casteType: CasteType.Self, magicCost: 2, range: 120, weaponClass: WeaponClass.Bow);
 
   final CasteType casteType;
   final WeaponClass? weaponClass;

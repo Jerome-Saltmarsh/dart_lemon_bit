@@ -260,12 +260,19 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   @override
   void performCharacterAction(Character character) {
+    character.clearActionFrame();
     if (character is AmuletFiend){
-      performCharacterActionAmuletFiend(character);
+      characterPerformSkillType(
+        character: character,
+        skillType: character.fiendType.skillType,
+      );
       return;
     }
     if (character is AmuletPlayer) {
-      performCharacterActionAmuletPlayer(character);
+      characterPerformSkillType(
+        character: character,
+        skillType: character.skillActive,
+      );
       return;
     }
     super.performCharacterAction(character);
@@ -285,99 +292,57 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
           damage: amuletFiend.weaponDamage,
         );
         return;
+      case FiendType.Fallen:
+        spawnProjectile(
+          src: amuletFiend,
+          angle: amuletFiend.angle,
+          range: amuletFiend.weaponRange,
+          projectileType: ProjectileType.Fireball,
+          damage: amuletFiend.weaponDamage,
+        );
+        return;
       default:
         break;
     }
   }
 
-  void performCharacterActionAmuletPlayer(AmuletPlayer player){
-    final skillType = player.skillActive;
-    final damage = player.getSkillTypeDamage(skillType);
-    final range = player.getSkillTypeRange(skillType);
-    final radius = player.getSkillTypeRadius(skillType);
-    final equippedWeapon = player.equippedWeapon;
-    player.clearActionFrame();
-
+  void characterPerformSkillType({
+    required Character character,
+    required SkillType skillType,
+  }){
     switch (skillType) {
-      case SkillType.Attack:
-        if (equippedWeapon == null){
-          throw Exception('equippedWeapon == null');
-        }
-        if (player.equippedWeaponMelee) {
-          performAbilityMelee(
-            character: player,
-            damageType: DamageType.Melee,
-            range: range,
-            damage: damage,
-            areaOfEffect: false,
-          );
-          return;
-        }
-        if (player.equippedWeaponBow) {
-          performAbilityArrow(
-            character: player,
-            damage: damage,
-            range: range,
-          );
-          return;
-        }
-        throw Exception();
-      case SkillType.Mighty_Swing:
-        if (player.equippedWeaponMelee) {
-          performAbilityMelee(
-            character: player,
-            damageType: DamageType.Melee,
-            range: range,
-            damage: damage,
-            areaOfEffect: true,
-          );
-          return;
-        }
+      case SkillType.Strike:
+        characterPerformSkillTypeStrike(character);
         break;
+      case SkillType.Shoot_Arrow:
+        characterPerformSkillTypeShootArrow(character);
+        return;
+      case SkillType.Mighty_Swing:
+        characterPerformSkillTypeMightySwing(character);
+        return;
       case SkillType.Split_Shot:
-        player.performSkillTypeSplitShot();
+        characterPerformSkillTypeSplitShot(character);
         break;
       case SkillType.Fireball:
-        performAbilityFireball(
-          player,
-          damage: damage,
-          range: range,
-        );
+        characterPerformSkillTypeFireball(character);
         break;
       case SkillType.Frostball:
-        performAbilityFrostBall(
-          character: player,
-          damage: damage,
-          range: range,
-        );
+        characterPerformSkillTypeFrostBall(character);
         break;
       case SkillType.Explode:
-        createExplosion(
-          x: player.castePositionX,
-          y: player.castePositionY,
-          z: player.castePositionZ,
-          srcCharacter: player,
-          radius: radius,
-          damage: damage,
-        );
+        characterPerformSkillTypeExplode(character);
         break;
       case SkillType.Heal:
-        performAbilityHeal(
-          character: player,
-          target: player,
-          amount: damage,
-        );
+        characterPerformSkillTypeHeal(character);
         break;
       case SkillType.Teleport:
-        performAbilityTeleport(player);
+        characterPerformSkillTypeTeleport(character);
         break;
       case SkillType.Freeze_Target:
         throw Exception('not implemented');
       case SkillType.Freeze_Area:
         throw Exception('not implemented');
       case SkillType.Firestorm:
-        throw Exception('not implemented');
-      case SkillType.Invisible:
         throw Exception('not implemented');
       case SkillType.Terrify:
         throw Exception('not implemented');
@@ -386,34 +351,207 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
   }
 
-  void performAbilityFrostBall({
+  double getCharacterSkillTypeRange({
     required Character character,
-    required int damage,
-    required double range,
-  }) {
-     spawnProjectile(
+    required SkillType skillType,
+  }){
+      if (character is AmuletPlayer) {
+        return character.getSkillTypeRange(skillType);
+      }
+      if (character is AmuletFiend) {
+        return character.fiendType.weaponRange;
+      }
+      return 0;
+  }
+
+  int getCharacterSkillTypeDamage({
+    required Character character,
+    required SkillType skillType,
+  }){
+      if (character is AmuletPlayer) {
+        return character.getSkillTypeDamage(skillType);
+      }
+      if (character is AmuletFiend) {
+        return character.fiendType.damage;
+      }
+      return 0;
+  }
+
+  double getCharacterSkillTypeRadius({
+    required Character character,
+    required SkillType skillType,
+  }){
+      if (character is AmuletPlayer) {
+        return character.getSkillTypeRadius(skillType);
+      }
+      if (character is AmuletFiend) {
+        return character.fiendType.skillRadius;
+      }
+      return 0;
+  }
+
+  void characterPerformSkillTypeStrike(Character character) =>
+      performAbilityMelee(
+        character: character,
+        damageType: DamageType.Melee,
+        areaOfEffect: false,
+        range: getCharacterSkillTypeRange(
+            character: character,
+            skillType: SkillType.Strike,
+        ),
+        damage: getCharacterSkillTypeDamage(
+            character: character,
+            skillType: SkillType.Strike,
+        ),
+      );
+
+  void characterPerformSkillTypeMightySwing(Character character) =>
+      performAbilityMelee(
+        character: character,
+        damageType: DamageType.Melee,
+        areaOfEffect: true,
+        range: getCharacterSkillTypeRange(
+            character: character,
+            skillType: SkillType.Mighty_Swing,
+        ),
+        damage: getCharacterSkillTypeDamage(
+            character: character,
+            skillType: SkillType.Mighty_Swing,
+        ),
+      );
+
+  void characterPerformSkillTypeShootArrow(Character character) =>
+      performAbilityArrow(
+        character: character,
+        damage: getCharacterSkillTypeDamage(
+          character: character,
+          skillType: SkillType.Shoot_Arrow,
+        ),
+        range: getCharacterSkillTypeRange(
+          character: character,
+          skillType: SkillType.Shoot_Arrow,
+        ),
+      );
+
+  void characterPerformSkillTypeSplitShot(Character character) {
+    final damage = getCharacterSkillTypeDamage(
+        character: character,
+        skillType: SkillType.Split_Shot,
+    );
+    final range = getCharacterSkillTypeRange(
+        character: character,
+        skillType: SkillType.Split_Shot,
+    );
+    final spread = piEighth;
+    final angle = character.angle;
+
+    dispatchGameEvent(
+      GameEvent.Bow_Released,
+      character.x,
+      character.y,
+      character.z,
+    );
+    spawnProjectileArrow(
       src: character,
       damage: damage,
       range: range,
+      angle: angle,
+    );
+    spawnProjectileArrow(
+      src: character,
+      damage: damage,
+      range: range,
+      angle: angle - spread,
+    );
+    spawnProjectileArrow(
+      src: character,
+      damage: damage,
+      range: range,
+      angle: angle + spread,
+    );
+  }
+
+  void characterPerformSkillTypeFireball(Character character) {
+    spawnProjectile(
+      src: character,
+      damage: getCharacterSkillTypeDamage(
+        character: character,
+        skillType: SkillType.Fireball,
+      ),
+      range: getCharacterSkillTypeRange(
+        character: character,
+        skillType: SkillType.Fireball,
+      ),
+      projectileType: ProjectileType.Fireball,
+      angle: character.angle,
+    );
+  }
+
+  void characterPerformSkillTypeFrostBall(Character character) {
+    spawnProjectile(
+      src: character,
+      damage: getCharacterSkillTypeDamage(
+        character: character,
+        skillType: SkillType.Frostball,
+      ),
+      range: getCharacterSkillTypeRange(
+        character: character,
+        skillType: SkillType.Frostball,
+      ),
       projectileType: ProjectileType.FrostBall,
       angle: character.angle,
     );
   }
 
-  void performAbilityHeal({
-    required Character character,
-    required Character target,
-    required int amount,
-  }){
-    target.health += amount;
-    dispatchGameEventPosition(GameEvent.Character_Caste_Healed, character);
-    if (character != target) {
-      dispatchGameEventPosition(GameEvent.Character_Healed, target);
+  void characterPerformSkillTypeExplode(Character character) {
+
+    if (character is AmuletPlayer){
+      createExplosion(
+        x: character.castePositionX,
+        y: character.castePositionY,
+        z: character.castePositionZ,
+        srcCharacter: character,
+        radius: getCharacterSkillTypeRadius(
+          character: character,
+          skillType: SkillType.Explode,
+        ),
+        damage: getCharacterSkillTypeDamage(
+            character: character,
+            skillType: SkillType.Explode,
+        ),
+      );
+      return;
     }
+
+    throw Exception('fiend cannot perform ${SkillType.Explode}');
   }
 
-  void performAbilityFireball(
-      Character character, {required int damage, required double range}) {
+  void characterPerformSkillTypeHeal(Character character) {
+    character.health += 10; // TODO
+    dispatchGameEventPosition(GameEvent.Character_Caste_Healed, character);
+    // if (character != target) {
+    //   dispatchGameEventPosition(GameEvent.Character_Healed, target);
+    // }
+  }
+
+  void characterPerformSkillTypeTeleport(Character character) {
+
+    if (character is AmuletPlayer){
+      dispatchGameEventPosition(GameEvent.Blink_Depart, character);
+      character.x = character.castePositionX;
+      character.y = character.castePositionY;
+      character.z = character.castePositionZ;
+      dispatchGameEventPosition(GameEvent.Blink_Arrive, character);
+      return;
+    }
+    throw Exception('fiend cannot perform ${SkillType.Teleport}');
+  }
+
+  void performAbilityFireball({
+    required Character character,
+    required int damage,
+    required double range,
+  }) {
      spawnProjectile(
       src: character,
       damage: damage,
@@ -453,14 +591,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       range: range,
       angle: character.angle,
     );
-  }
-
-  void performAbilityTeleport(AmuletPlayer character){
-    dispatchGameEventPosition(GameEvent.Blink_Depart, character);
-    character.x = character.castePositionX;
-    character.y = character.castePositionY;
-    character.z = character.castePositionZ;
-    dispatchGameEventPosition(GameEvent.Blink_Arrive, character);
   }
 
   @override

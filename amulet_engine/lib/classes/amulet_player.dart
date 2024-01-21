@@ -124,6 +124,14 @@ class AmuletPlayer extends IsometricPlayer with
 
   bool get noWeaponEquipped => equippedWeapon == null;
 
+  int get randomWeaponDamage {
+    final weapon = equippedWeapon;
+    if (weapon == null){
+      return 0;
+    }
+    return randomInt(weapon.damageMin ?? 0, weapon.damageMax ?? 0);
+  }
+
   Amulet get amulet => amuletGame.amulet;
 
   @override
@@ -444,7 +452,12 @@ class AmuletPlayer extends IsometricPlayer with
   void checkAssignedSkills() {
 
     if (!skillTypeUnlocked(skillTypeLeft)) {
-      skillTypeLeft = SkillType.Attack;
+      if (equippedWeaponBow) {
+        skillTypeLeft = SkillType.Shoot_Arrow;
+      } else
+      if (equippedWeaponMelee) {
+        skillTypeLeft = SkillType.Strike;
+      }
     }
 
     if (!skillTypeUnlocked(skillTypeRight)) {
@@ -456,7 +469,13 @@ class AmuletPlayer extends IsometricPlayer with
         }
       }
     }
-    skillTypeRight = SkillType.Attack;
+
+    if (equippedWeaponBow) {
+      skillTypeRight = SkillType.Shoot_Arrow;
+    } else
+    if (equippedWeaponMelee) {
+      skillTypeRight = SkillType.Strike;
+    }
   }
 
   void writeEquipped(){
@@ -1175,21 +1194,23 @@ class AmuletPlayer extends IsometricPlayer with
 
   int getSkillTypeDamage(SkillType skillType) {
     if (const [
-      SkillType.Attack,
+      SkillType.Strike,
       SkillType.Split_Shot,
     ].contains(skillType)){
-      final weapon = equippedWeapon;
-      if (weapon == null){
-        return 0;
-      }
-      return randomInt(weapon.damageMin ?? 0, weapon.damageMax ?? 0);
+      return randomWeaponDamage;
     }
-    return skillType.damage;
+
+    switch (skillType) {
+      case SkillType.Mighty_Swing:
+        return randomWeaponDamage * 2;
+      default:
+        return skillType.damage;
+    }
   }
 
   double getSkillTypeRange(SkillType skillType){
     if (const [
-      SkillType.Attack,
+      SkillType.Strike,
       SkillType.Split_Shot,
     ].contains(skillType)){
       final weapon = equippedWeapon;
@@ -1250,9 +1271,6 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   bool skillTypeUnlocked(SkillType skillType){
-    if (skillType == SkillType.Attack){
-      return true;
-    }
     if (equippedWeapon?.skillType == skillType){
       return true;
     }
