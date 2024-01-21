@@ -56,8 +56,6 @@ class IsometricPlayer extends Character with ByteWriter {
   final cacheCharacterDirection = Uint8List(Cache_Length);
   final cacheCharacterFrame = Uint8List(Cache_Length);
 
-  // final cacheStateB = Uint8List(Cache_Length);
-  final cacheStateC = Uint8List(Cache_Length);
   final cachePositionX = Int16List(Cache_Length);
   final cachePositionY = Int16List(Cache_Length);
   final cachePositionZ = Int16List(Cache_Length);
@@ -440,14 +438,16 @@ class IsometricPlayer extends Character with ByteWriter {
       final diffYChangeType = ChangeType.fromDiff(diffY);
       final diffZChangeType = ChangeType.fromDiff(diffZ);
 
-      final compressedFrameAndDirection = character.compressedAnimationFrameAndDirection;
-
       final changedCharacterType = character.characterType != cacheCharacterType[cacheIndex];
       final changedCharacterState = character.characterState != cacheCharacterState[cacheIndex];
       final changedTeam = character.team != cacheCharacterTeam[cacheIndex];
       final changedHealthPercByte = character.healthPercentageByte != cacheCharacterHealthPerc[cacheIndex];
       final changedDirection = character.direction != cacheCharacterDirection[cacheIndex];
       final changedFrame = character.animationFrame != cacheCharacterFrame[cacheIndex];
+      final changedPosition =
+          diffXChangeType != ChangeType.None ||
+          diffYChangeType != ChangeType.None ||
+          diffZChangeType != ChangeType.None ;
 
       final compressionA = writeBits(
           changedCharacterType,
@@ -457,18 +457,9 @@ class IsometricPlayer extends Character with ByteWriter {
           character.isStatusCold,
           changedDirection,
           changedFrame,
-          false,
+          changedPosition,
       );
-
-      // final stateBChanged = compressedFrameAndDirection != cacheStateB[cacheIndex];
-
-      final compressionB = writeBits(false, false, false, false, false, false, false, false)
-         | (diffXChangeType << 2)
-         | (diffYChangeType << 4)
-         | (diffZChangeType << 6);
-
       writeByte(compressionA);
-      writeByte(compressionB);
 
       if (changedCharacterType) {
         writeByte(character.characterType);
@@ -500,39 +491,42 @@ class IsometricPlayer extends Character with ByteWriter {
         cacheCharacterFrame[cacheIndex] = character.animationFrame;
       }
 
-      // if (stateBChanged) {
-      //   writeByte(compressedFrameAndDirection);
-      //   cacheStateB[cacheIndex] = compressedFrameAndDirection;
-      // }
+      if (changedPosition) {
+        final compressionB =
+          diffXChangeType << 2 |
+          diffYChangeType << 4 |
+          diffZChangeType << 6 ;
+        writeByte(compressionB);
 
-      if (diffXChangeType == ChangeType.One) {
-        cachePositionX[cacheIndex]++;
-      } else if (diffXChangeType == ChangeType.Delta) {
-        writeInt8(diffX);
-        cachePositionX[cacheIndex] = characterX;
-      } else if (diffXChangeType == ChangeType.Absolute) {
-        writeInt16(characterX);
-        cachePositionX[cacheIndex] = characterX;
-      }
+        if (diffXChangeType == ChangeType.One) {
+          cachePositionX[cacheIndex]++;
+        } else if (diffXChangeType == ChangeType.Delta) {
+          writeInt8(diffX);
+          cachePositionX[cacheIndex] = characterX;
+        } else if (diffXChangeType == ChangeType.Absolute) {
+          writeInt16(characterX);
+          cachePositionX[cacheIndex] = characterX;
+        }
 
-      if (diffYChangeType == ChangeType.One) {
-        cachePositionY[cacheIndex]++;
-      } else if (diffYChangeType == ChangeType.Delta) {
-        writeInt8(diffY);
-        cachePositionY[cacheIndex] = characterY;
-      } else if (diffYChangeType == ChangeType.Absolute) {
-        writeInt16(characterY);
-        cachePositionY[cacheIndex] = characterY;
-      }
+        if (diffYChangeType == ChangeType.One) {
+          cachePositionY[cacheIndex]++;
+        } else if (diffYChangeType == ChangeType.Delta) {
+          writeInt8(diffY);
+          cachePositionY[cacheIndex] = characterY;
+        } else if (diffYChangeType == ChangeType.Absolute) {
+          writeInt16(characterY);
+          cachePositionY[cacheIndex] = characterY;
+        }
 
-      if (diffZChangeType == ChangeType.One) {
-        cachePositionZ[cacheIndex]++;
-      } else if (diffZChangeType == ChangeType.Delta) {
-        writeInt8(diffZ);
-        cachePositionZ[cacheIndex] = characterZ;
-      } else if (diffZChangeType == ChangeType.Absolute) {
-        writeInt16(characterZ);
-        cachePositionZ[cacheIndex] = characterZ;
+        if (diffZChangeType == ChangeType.One) {
+          cachePositionZ[cacheIndex]++;
+        } else if (diffZChangeType == ChangeType.Delta) {
+          writeInt8(diffZ);
+          cachePositionZ[cacheIndex] = characterZ;
+        } else if (diffZChangeType == ChangeType.Absolute) {
+          writeInt16(characterZ);
+          cachePositionZ[cacheIndex] = characterZ;
+        }
       }
 
       if (character.characterTypeTemplate) {

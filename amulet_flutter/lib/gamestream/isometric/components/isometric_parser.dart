@@ -433,13 +433,13 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
   }
 
   void readNetworkResponseCharacters(){
+    final scene = this.scene;
     scene.totalCharacters = 0;
 
     while (true) {
 
       final compressionA = readByte();
       if (compressionA == CHARACTER_END) break;
-      final compressionB = readByte();
       final character = scene.getCharacterInstance();
       final readCharacterType = readBitFromByte(compressionA, 0);
       final readCharacterState = readBitFromByte(compressionA, 1);
@@ -448,9 +448,7 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
       character.isStatusCold = readBitFromByte(compressionA, 4);
       final readDirection = readBitFromByte(compressionA, 5);
       final readFrame = readBitFromByte(compressionA, 6);
-      final changeTypeX = (compressionB & Hex00001100) >> 2;
-      final changeTypeY =  (compressionB & Hex00110000) >> 4;
-      final changeTypeZ = (compressionB & Hex11000000) >> 6;
+      final readPosition = readBitFromByte(compressionA, 7);
 
       if (readCharacterType) {
         character.characterType = readByte();
@@ -476,46 +474,52 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
         character.animationFrame = readByte();
       }
 
-      switch (changeTypeX) {
-        case ChangeType.None:
-          break;
-        case ChangeType.One:
-          character.x++;
-          break;
-        case ChangeType.Delta:
-          character.x += readInt8();
-          break;
-        case ChangeType.Absolute:
-          character.x = readInt16().toDouble();
-          break;
-      }
+      if (readPosition){
+        final compressionB = readByte();
+        final changeTypeX = (compressionB & Hex00001100) >> 2;
+        final changeTypeY =  (compressionB & Hex00110000) >> 4;
+        final changeTypeZ = (compressionB & Hex11000000) >> 6;
+        switch (changeTypeX) {
+          case ChangeType.None:
+            break;
+          case ChangeType.One:
+            character.x++;
+            break;
+          case ChangeType.Delta:
+            character.x += readInt8();
+            break;
+          case ChangeType.Absolute:
+            character.x = readInt16().toDouble();
+            break;
+        }
 
-      switch (changeTypeY) {
-        case ChangeType.None:
-          break;
-        case ChangeType.One:
-          character.y++;
-          break;
-        case ChangeType.Delta:
-          character.y += readInt8();
-          break;
-        case ChangeType.Absolute:
-          character.y = readInt16().toDouble();
-          break;
-      }
+        switch (changeTypeY) {
+          case ChangeType.None:
+            break;
+          case ChangeType.One:
+            character.y++;
+            break;
+          case ChangeType.Delta:
+            character.y += readInt8();
+            break;
+          case ChangeType.Absolute:
+            character.y = readInt16().toDouble();
+            break;
+        }
 
-      switch (changeTypeZ) {
-        case ChangeType.None:
-          break;
-        case ChangeType.One:
-          character.z++;
-          break;
-        case ChangeType.Delta:
-          character.z += readInt8();
-          break;
-        case ChangeType.Absolute:
-          character.z = readInt16().toDouble();
-          break;
+        switch (changeTypeZ) {
+          case ChangeType.None:
+            break;
+          case ChangeType.One:
+            character.z++;
+            break;
+          case ChangeType.Delta:
+            character.z += readInt8();
+            break;
+          case ChangeType.Absolute:
+            character.z = readInt16().toDouble();
+            break;
+        }
       }
 
       if (character.characterType == CharacterType.Human){
@@ -527,7 +531,6 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
       } else {
         character.actionComplete = 0;
       }
-
 
       scene.totalCharacters++;
     }

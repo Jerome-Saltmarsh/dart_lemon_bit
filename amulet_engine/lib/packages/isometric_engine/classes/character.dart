@@ -126,24 +126,12 @@ class Character extends Collider {
     _goal = value;
   }
 
-  int get compressedAnimationFrameAndDirection =>
-      animationFrame | direction << 5;
-
   int get framesPerAnimation => characterStateChanging ? 1 : 3;
 
-  int get animationFrame {
-    return (frame ~/ framesPerAnimation) % maxAnimationFrames;
-  }
+  int get animationFrame => (frame ~/ framesPerAnimation) % maxAnimationFrames;
 
   double get actionCompletionPercentage =>
       actionDuration <= 0 ? 0 : frame / actionDuration;
-
-  int get compressedState => compressBytesToUInt32(
-    characterType,
-    characterState,
-    team,
-    (healthPercentage * 255).toInt(),
-  );
 
   bool get shouldPerformAction => actionFrame > 0 && frame == actionFrame;
 
