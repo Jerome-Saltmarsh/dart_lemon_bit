@@ -70,7 +70,7 @@ class AmuletUI {
           Positioned(
               bottom: 8,
               left: 8,
-              child: buildWindowPlayerAttributes(),
+              child: buildWindowPlayerStats(),
           ),
           buildPositionedWatchAimTargetItemType(),
           buildPositionedMessage(),
@@ -732,7 +732,7 @@ class AmuletUI {
     }
   }
 
-  Widget buildWindowPlayerAttributes() {
+  Widget buildWindowPlayerStats() {
 
     final windowClosed = onPressed(
       action: amulet.windowVisiblePlayerStats.setTrue,
@@ -742,17 +742,20 @@ class AmuletUI {
     );
 
     final windowOpen = GSContainer(
+      width: 160,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          alignRight(
-              child: onPressed(
-                action: amulet.windowVisiblePlayerStats.setFalse,
-                child: buildText('x'),
-              )
+          Align(
+            child: onPressed(
+              action: amulet.windowVisiblePlayerStats.setFalse,
+              child: buildText('x'),
+            ),
+            alignment: Alignment.centerRight,
           ),
           buildWatch(amulet.player.name, (t) => buildText(t, color: Colors.orange, bold: true)),
           Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               buildRowTitle('Health'),
               buildWatch(amulet.player.health, buildRowValue),

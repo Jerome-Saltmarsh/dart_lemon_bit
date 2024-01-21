@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'expanded.dart';
 
 Widget align({required Widget child, required Alignment alignment}){
   switch (alignment){
@@ -13,9 +14,9 @@ Widget align({required Widget child, required Alignment alignment}){
 }
 
 Widget alignRight({required Widget child})=> Row(
-  mainAxisAlignment: MainAxisAlignment.end,
   children: [
-    child
+    expanded,
+    child,
   ],
 );
 
