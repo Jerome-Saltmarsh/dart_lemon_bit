@@ -1,7 +1,6 @@
 
 import '../../../../enums/damage_type.dart';
 import '../isometric/character_type.dart';
-import '../isometric/weapon_type.dart';
 import 'amulet_item.dart';
 
 enum FiendType {
@@ -13,7 +12,6 @@ enum FiendType {
     attackDuration: 20,
     runSpeed: 0.7,
     chanceOfSetTarget: 0.25,
-    weaponType: WeaponType.Shortsword,
     weaponRange: 25,
     quantity: 2,
     clearTargetOnPerformAction: true,
@@ -33,7 +31,6 @@ enum FiendType {
     attackDuration: 20,
     runSpeed: 1.0,
     chanceOfSetTarget: 0.3,
-    weaponType: WeaponType.Bow,
     weaponRange: 150,
     quantity: 2,
     clearTargetOnPerformAction: false,
@@ -54,7 +51,6 @@ enum FiendType {
     attackDuration: 20,
     runSpeed: 1.25,
     chanceOfSetTarget: 0.3,
-    weaponType: WeaponType.Unarmed,
     weaponRange: 50,
     quantity: 1,
     clearTargetOnPerformAction: false,
@@ -75,7 +71,6 @@ enum FiendType {
     attackDuration: 20,
     runSpeed: 0.5,
     chanceOfSetTarget: 0.3,
-    weaponType: WeaponType.Unarmed,
     weaponRange: 50,
     quantity: 1,
     clearTargetOnPerformAction: true,
@@ -96,7 +91,6 @@ enum FiendType {
     attackDuration: 20,
     runSpeed: 0.7,
     chanceOfSetTarget: 0.35,
-    weaponType: WeaponType.Shortsword,
     weaponRange: 25,
     quantity: 2,
     clearTargetOnPerformAction: true,
@@ -117,7 +111,6 @@ enum FiendType {
     attackDuration: 20,
     runSpeed: 0.65,
     chanceOfSetTarget: 0.5,
-    weaponType: WeaponType.Shortsword,
     weaponRange: 130,
     quantity: 1,
     clearTargetOnPerformAction: false,
@@ -138,7 +131,6 @@ enum FiendType {
     attackDuration: 20,
     runSpeed: 0.65,
     chanceOfSetTarget: 0.5,
-    weaponType: WeaponType.Shortsword,
     weaponRange: 130,
     quantity: 1,
     clearTargetOnPerformAction: false,
@@ -163,7 +155,6 @@ enum FiendType {
   final double chanceOfSetTarget;
   final double weaponRange;
   final double skillRadius;
-  final int weaponType;
   final bool clearTargetOnPerformAction;
   final int postAttackPauseDurationMin;
   final int postAttackPauseDurationMax;
@@ -181,7 +172,7 @@ enum FiendType {
     required this.attackDuration,
     required this.runSpeed,
     required this.chanceOfSetTarget,
-    required this.weaponType,
+    // required this.weaponType,
     required this.weaponRange,
     required this.quantity,
     required this.level,

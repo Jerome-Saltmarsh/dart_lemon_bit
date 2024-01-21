@@ -14,7 +14,7 @@ class AmuletFiend extends Character {
     required this.fiendType,
   }) : super (
     characterType: fiendType.characterType,
-    weaponType: fiendType.weaponType,
+    weaponType: WeaponType.Unarmed,
     weaponDamage: fiendType.damage,
     weaponRange: fiendType.weaponRange,
     attackDuration: fiendType.attackDuration,
@@ -29,7 +29,7 @@ class AmuletFiend extends Character {
     attackDuration = fiendType.attackDuration;
     runSpeed = fiendType.runSpeed;
     chanceOfSetTarget = fiendType.chanceOfSetTarget;
-    weaponType = fiendType.weaponType;
+    // weaponType = fiendType.weaponType;
     weaponRange = fiendType.weaponRange;
     characterType = fiendType.characterType;
   }
