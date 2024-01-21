@@ -1,6 +1,6 @@
 
+import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:amulet_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
 
 class GSContainer extends StatelessWidget {
   final Widget? child;
@@ -27,19 +27,18 @@ class GSContainer extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => IsometricBuilder(
-    builder: (context, isometric) => Container(
-          width: width,
-          height: height,
-          alignment: alignment,
-          padding: padding ?? isometric.style.containerPadding,
-          margin: margin,
-          child: child,
-          decoration: BoxDecoration(
-            color: color ?? isometric.style.containerColor,
-            borderRadius: rounded ? isometric.style.containerBorderRadiusCircular : null,
-            border: border,
-          ),
-        )
-  );
+  Widget build(BuildContext context) =>
+      Container(
+        width: width,
+        height: height,
+        alignment: alignment,
+        padding: padding ?? const EdgeInsets.all(16),
+        margin: margin,
+        child: child,
+        decoration: BoxDecoration(
+          color: color ?? Palette.brownDark,
+          borderRadius: rounded ? const BorderRadius.all(Radius.circular(4)) : null,
+          border: border,
+        ),
+      );
 }
