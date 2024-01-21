@@ -446,7 +446,8 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
       final readTeam = readBitFromByte(compressionA, 2);
       final readHealth = readBitFromByte(compressionA, 3);
       character.isStatusCold = readBitFromByte(compressionA, 4);
-      final stateBChanged = readBitFromByte(compressionB, 1);
+      final readDirection = readBitFromByte(compressionA, 5);
+      final readFrame = readBitFromByte(compressionA, 6);
       final changeTypeX = (compressionB & Hex00001100) >> 2;
       final changeTypeY =  (compressionB & Hex00110000) >> 4;
       final changeTypeZ = (compressionB & Hex11000000) >> 6;
@@ -467,11 +468,12 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
         character.health = readPercentage();
       }
 
-      if (stateBChanged){
-        final animationAndFrameDirection = readByte();
-        character.direction = (animationAndFrameDirection & Hex11100000) >> 5;
-        assert (character.direction >= 0 && character.direction <= 7);
-        character.animationFrame = (animationAndFrameDirection & Hex00011111);
+      if (readDirection) {
+        character.direction = readByte();
+      }
+
+      if (readFrame) {
+        character.animationFrame = readByte();
       }
 
       switch (changeTypeX) {
