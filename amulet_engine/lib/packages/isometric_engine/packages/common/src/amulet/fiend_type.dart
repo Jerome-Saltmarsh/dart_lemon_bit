@@ -11,7 +11,6 @@ enum FiendType {
     damage: 2,
     characterType: CharacterType.Fallen,
     attackDuration: 20,
-    experience: 1,
     runSpeed: 0.7,
     chanceOfSetTarget: 0.25,
     weaponType: WeaponType.Shortsword,
@@ -32,7 +31,6 @@ enum FiendType {
     damage: 1,
     characterType: CharacterType.Skeleton,
     attackDuration: 20,
-    experience: 2,
     runSpeed: 1.0,
     chanceOfSetTarget: 0.3,
     weaponType: WeaponType.Bow,
@@ -54,7 +52,6 @@ enum FiendType {
     damage: 3,
     characterType: CharacterType.Wolf,
     attackDuration: 20,
-    experience: 2,
     runSpeed: 1.25,
     chanceOfSetTarget: 0.3,
     weaponType: WeaponType.Unarmed,
@@ -76,7 +73,6 @@ enum FiendType {
     damage: 3,
     characterType: CharacterType.Zombie,
     attackDuration: 20,
-    experience: 2,
     runSpeed: 0.5,
     chanceOfSetTarget: 0.3,
     weaponType: WeaponType.Unarmed,
@@ -98,7 +94,6 @@ enum FiendType {
     damage: 3,
     characterType: CharacterType.Fallen_Armoured,
     attackDuration: 20,
-    experience: 3,
     runSpeed: 0.7,
     chanceOfSetTarget: 0.35,
     weaponType: WeaponType.Shortsword,
@@ -120,7 +115,6 @@ enum FiendType {
     damage: 4,
     characterType: CharacterType.Gargoyle_01,
     attackDuration: 20,
-    experience: 8,
     runSpeed: 0.65,
     chanceOfSetTarget: 0.5,
     weaponType: WeaponType.Shortsword,
@@ -142,7 +136,6 @@ enum FiendType {
     damage: 4,
     characterType: CharacterType.Toad_Warrior,
     attackDuration: 20,
-    experience: 8,
     runSpeed: 0.65,
     chanceOfSetTarget: 0.5,
     weaponType: WeaponType.Shortsword,
@@ -164,7 +157,6 @@ enum FiendType {
   final int damage;
   final int attackDuration;
   final int characterType;
-  final int experience;
   /// how many fiends are spawned per mark
   final int quantity;
   final double runSpeed;
@@ -187,7 +179,6 @@ enum FiendType {
     required this.damage,
     required this.characterType,
     required this.attackDuration,
-    required this.experience,
     required this.runSpeed,
     required this.chanceOfSetTarget,
     required this.weaponType,

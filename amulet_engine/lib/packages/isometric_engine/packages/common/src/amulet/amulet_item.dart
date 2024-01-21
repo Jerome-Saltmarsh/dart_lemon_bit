@@ -1,6 +1,20 @@
 import '../../src.dart';
 import 'package:collection/collection.dart';
 
+// weapon
+    // bow
+      // short [x]
+      // composite
+      // reflex
+    // sword
+      // short [x]
+      // broad
+      // long
+    // staff
+      // wooden [x]
+      // glass
+      // crystal
+
 // armour
  // neutral
     // tunic [x]
@@ -63,7 +77,6 @@ import 'package:collection/collection.dart';
 enum AmuletItem {
   Weapon_Sword_1_Common(
       label: 'Short Sword',
-      description: 'A particularly sharp short sword',
       levelMin: 1,
       levelMax: 5,
       type: ItemType.Weapon,
@@ -76,7 +89,6 @@ enum AmuletItem {
   ),
   Weapon_Sword_1_Rare(
     label: "a basic short sword",
-    description: 'An extra short sword',
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Weapon,
@@ -90,7 +102,6 @@ enum AmuletItem {
   ),
   Weapon_Sword_1_Legendary(
     label: "Short Blade of Glen",
-    description: 'An extra short sword',
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Weapon,
@@ -104,7 +115,6 @@ enum AmuletItem {
   ),
   Weapon_Staff_1_Common(
     label: 'Wooden Staff',
-    description: 'a faint heat emanates from within',
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Weapon,
@@ -144,7 +154,6 @@ enum AmuletItem {
   ),
   Weapon_Staff_1_Legendary(
     label: 'Wooden Staff',
-    description: 'a faint heat emanates from within',
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Weapon,
@@ -158,7 +167,6 @@ enum AmuletItem {
   ),
   Weapon_Bow_1_Common(
     label: 'Common Short Bow',
-    description: 'A worn out bow',
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Weapon,
@@ -172,7 +180,6 @@ enum AmuletItem {
   ),
   Weapon_Bow_1_Rare(
     label: 'Rare Short Bow',
-    description: 'This bow was crafted from a stronger wood',
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Weapon,
@@ -668,9 +675,9 @@ enum AmuletItem {
     required this.type,
     required this.subType,
     required this.levelMin,
-    required this.levelMax,
     required this.quality,
     required this.label,
+    this.levelMax = 99,
     this.maxHealth = 0,
     this.maxMagic,
     this.regenMagic,

@@ -60,6 +60,7 @@ class Amulet extends IsometricGame {
   final amuletScene = Watch<AmuletScene?>(null);
   final questMain = Watch(QuestMain.Speak_With_Warren);
   final windowVisibleQuests = WatchBool(true);
+  final windowVisiblePlayerStats = WatchBool(true);
 
   late final AmuletUI amuletUI;
 

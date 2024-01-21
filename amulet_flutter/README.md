@@ -15,9 +15,18 @@ ctrl + shift + e        : view recent changes
 alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
+[NEW]
+[new] model armour leather
+[new] model armour chainmail
+[new] model armour platemail
+
+[FIX]
+[fix] skill teleport validate destination
+[fix] screen freezes on startup
+[fix] duplicate item on drop
 
 ## 20.01.2024
-[x] render full helm
+[new] render full helm
 
 ## 15.01.2024
 [fix] improve character creation ui

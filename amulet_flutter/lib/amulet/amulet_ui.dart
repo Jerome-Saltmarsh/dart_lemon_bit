@@ -733,10 +733,24 @@ class AmuletUI {
   }
 
   Widget buildWindowPlayerAttributes() {
-    return GSContainer(
+
+    final windowClosed = onPressed(
+      action: amulet.windowVisiblePlayerStats.setTrue,
+      child: GSContainer(
+          child: buildText('stats'),
+      ),
+    );
+
+    final windowOpen = GSContainer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          alignRight(
+              child: onPressed(
+                action: amulet.windowVisiblePlayerStats.setFalse,
+                child: buildText('x'),
+              )
+          ),
           buildWatch(amulet.player.name, (t) => buildText(t, color: Colors.orange, bold: true)),
           Row(
             children: [
@@ -797,13 +811,10 @@ class AmuletUI {
         ],
       ),
     );
-    //
-    // return buildWatch(amulet.aimTargetItemType, (aimTargetItem){
-    //    if (aimTargetItem == null){
-    //      return nothing;
-    //    }
-    //    return window;
-    // });
+
+    return buildWatch(amulet.windowVisiblePlayerStats,
+        (visible) => visible ? windowOpen : windowClosed
+    );
   }
 
   Widget buildRowValue(dynamic value) => buildText(value, color: Colors.white70);
@@ -953,3 +964,5 @@ String formatFramesToSeconds(int frames){
   return '${(frames / fps).toStringAsFixed(2)} seconds';
 }
 
+Widget buildWatchVisible(Watch<bool> watch, Widget child) =>
+    buildWatch(watch, (t) => t ? child : nothing);
