@@ -213,7 +213,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required FiendType fiendType,
   }) {
     final character = AmuletFiend(
-      team: AmuletTeam.Monsters,
+      team: TeamType.Evil,
       x: x,
       y: y,
       z: z,

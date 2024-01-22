@@ -206,7 +206,7 @@ class AmuletGameTutorial extends AmuletGame {
       x: 1000,
       y: 1400,
       z: 25,
-      team: AmuletTeam.Human,
+      team: TeamType.Good,
       health: 50,
       invincible: true,
     )

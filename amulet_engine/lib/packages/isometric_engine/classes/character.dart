@@ -609,4 +609,6 @@ class Character extends Collider {
     actionFrame = value;
   }
 
+  int get characterTypeAndTeam => characterType | team << 6;
+
 }

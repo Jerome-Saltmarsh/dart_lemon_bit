@@ -49,9 +49,8 @@ class IsometricPlayer extends Character with ByteWriter {
   var positionCacheZ = 0;
   var data = Json();
 
-  final cacheCharacterType = Uint8List(Cache_Length);
+  final cacheCharacterTypeAndTeam = Uint8List(Cache_Length);
   final cacheCharacterState = Uint8List(Cache_Length);
-  final cacheCharacterTeam = Uint8List(Cache_Length);
   final cacheCharacterHealthPerc = Uint8List(Cache_Length);
   final cacheCharacterDirection = Uint8List(Cache_Length);
   final cacheCharacterFrame = Uint8List(Cache_Length);
@@ -398,8 +397,6 @@ class IsometricPlayer extends Character with ByteWriter {
     final cachePositionY = this.cachePositionY;
     final cachePositionZ = this.cachePositionZ;
 
-    // final cacheStateB = this.cacheStateB;
-
     var cacheIndex = 0;
 
     for (var i = 0; i < charactersLength; i++) {
@@ -438,9 +435,8 @@ class IsometricPlayer extends Character with ByteWriter {
       final diffYChangeType = ChangeType.fromDiff(diffY);
       final diffZChangeType = ChangeType.fromDiff(diffZ);
 
-      final changedCharacterType = character.characterType != cacheCharacterType[cacheIndex];
+      final changedCharacterTypeTeam = character.characterTypeAndTeam != cacheCharacterTypeAndTeam[cacheIndex];
       final changedCharacterState = character.characterState != cacheCharacterState[cacheIndex];
-      final changedTeam = character.team != cacheCharacterTeam[cacheIndex];
       final changedHealthPercByte = character.healthPercentageByte != cacheCharacterHealthPerc[cacheIndex];
       final changedDirection = character.direction != cacheCharacterDirection[cacheIndex];
       final changedFrame = character.animationFrame != cacheCharacterFrame[cacheIndex];
@@ -450,9 +446,9 @@ class IsometricPlayer extends Character with ByteWriter {
           diffZChangeType != ChangeType.None ;
 
       final compressionA = writeBits(
-          changedCharacterType,
+          changedCharacterTypeTeam,
           changedCharacterState,
-          changedTeam,
+          false,
           changedHealthPercByte,
           character.isStatusCold,
           changedDirection,
@@ -461,19 +457,14 @@ class IsometricPlayer extends Character with ByteWriter {
       );
       writeByte(compressionA);
 
-      if (changedCharacterType) {
-        writeByte(character.characterType);
-        cacheCharacterType[cacheIndex] = character.characterType;
+      if (changedCharacterTypeTeam) {
+        writeByte(character.characterTypeAndTeam);
+        cacheCharacterTypeAndTeam[cacheIndex] = character.characterTypeAndTeam;
       }
 
       if (changedCharacterState){
         writeByte(character.characterState);
         cacheCharacterState[cacheIndex] = character.characterState;
-      }
-
-      if (changedTeam){
-        writeByte(character.team);
-        cacheCharacterTeam[cacheIndex] = character.team;
       }
 
       if (changedHealthPercByte) {
@@ -1388,9 +1379,8 @@ class IsometricPlayer extends Character with ByteWriter {
     cachePositionX.fillRange(0, cachePositionX.length, 0);
     cachePositionY.fillRange(0, cachePositionY.length, 0);
     cachePositionZ.fillRange(0, cachePositionZ.length, 0);
-    cacheCharacterType.fillRange(0, cacheCharacterType.length, 0);
+    cacheCharacterTypeAndTeam.fillRange(0, cacheCharacterTypeAndTeam.length, 0);
     cacheCharacterState.fillRange(0, cacheCharacterState.length, 0);
-    cacheCharacterTeam.fillRange(0, cacheCharacterTeam.length, 0);
     cacheCharacterHealthPerc.fillRange(0, cacheCharacterHealthPerc.length, 0);
     cacheCharacterDirection.fillRange(0, cacheCharacterDirection.length, 0);
     cacheCharacterFrame.fillRange(0, cacheCharacterFrame.length, 0);
