@@ -326,12 +326,6 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
     scene.loaded = true;
   }
 
-  // void readIsometricPlayerPosition() {
-  //   final position = player.position;
-  //   readIsometricPosition(position);
-  //   player.updateIndexes();
-  // }
-
   void readPlayerAimTarget() {
     final aimTargetSet = readBool();
     player.aimTargetSet.value = aimTargetSet;

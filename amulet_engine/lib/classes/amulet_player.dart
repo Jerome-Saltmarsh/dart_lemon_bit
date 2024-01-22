@@ -1194,6 +1194,7 @@ class AmuletPlayer extends IsometricPlayer with
 
   int getSkillTypeDamage(SkillType skillType) {
     if (const [
+      SkillType.Shoot_Arrow,
       SkillType.Strike,
       SkillType.Split_Shot,
     ].contains(skillType)){
@@ -1210,6 +1211,7 @@ class AmuletPlayer extends IsometricPlayer with
 
   double getSkillTypeRange(SkillType skillType){
     if (const [
+      SkillType.Shoot_Arrow,
       SkillType.Strike,
       SkillType.Split_Shot,
     ].contains(skillType)){

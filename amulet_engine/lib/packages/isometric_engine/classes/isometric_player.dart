@@ -7,7 +7,7 @@ import '../consts/isometric_settings.dart';
 
 class IsometricPlayer extends Character with ByteWriter {
 
-  static const Cache_Length = 200;
+  static const Cache_Length = 250;
 
   var editEnabled = true;
   var controlsEnabled = true;
