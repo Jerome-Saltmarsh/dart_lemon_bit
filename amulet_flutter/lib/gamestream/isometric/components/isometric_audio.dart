@@ -500,12 +500,12 @@ class IsometricAudio with IsometricComponent implements Updatable {
         totalLoaded++;
         if (totalLoaded >= total){
           completer.complete(true);
-          final ms = DateTime.now().difference(timeStarted).inMilliseconds;
-          print('audio took $ms: milliseconds to load');
+          // final ms = DateTime.now().difference(timeStarted).inMilliseconds;
+          // print('audio took $ms: milliseconds to load');
         }
       });
     }
-    return completer.future;
+    // return completer.future;
   }
 
   AudioSingle? getCharacterTypeAudioHurt(int characterType) =>

@@ -51,10 +51,27 @@ class IsometricImages with IsometricComponent {
 
   final kidCharacterSpritesFrontDiffuse = KidCharacterSprites();
 
+  final totalImagesLoadedPercentage = Watch(0.0);
   final totalImages = Watch(0);
   final totalImagesLoaded = Watch(0);
   final values = <Image>[];
   final _completerImages = Completer();
+
+  IsometricImages(){
+    totalImagesLoaded.onChanged(updateLoadedPerc);
+    totalImages.onChanged(updateLoadedPerc);
+  }
+
+  void updateLoadedPerc (_)=> totalImagesLoadedPercentage.value = getImageLoadPercentage();
+
+  double getImageLoadPercentage(){
+    final total = totalImages.value;
+    if (total <= 0){
+      return 0;
+    }
+    final loaded = totalImagesLoaded.value;
+    return loaded / total;
+  }
 
   late final CharacterShader characterShaderFallen;
   late final CharacterShader characterShaderFallenArmoured;
@@ -197,7 +214,6 @@ class IsometricImages with IsometricComponent {
     loadSpriteGroupFront(type: SpriteGroupType.Weapon, subType: WeaponType.Shortsword);
     loadSpriteGroupFront(type: SpriteGroupType.Shoes, subType: ShoeType.Leather_Boots);
 
-
     loadSpriteGroupIsometric(
       direction: RenderDirection.diffuse,
       type: SpriteGroupType.Weapon_Trail,
@@ -241,13 +257,6 @@ class IsometricImages with IsometricComponent {
           subType: headType,
         );
       }
-      // for (final legType in LegType.values) {
-      //   loadSpriteGroupIsometric(
-      //     direction: direction,
-      //     type: SpriteGroupType.Legs,
-      //     subType: legType,
-      //   );
-      // }
       loadSpriteGroupIsometric(
         direction: direction,
         type: SpriteGroupType.Torso,
@@ -307,8 +316,6 @@ class IsometricImages with IsometricComponent {
         );
       });
     }
-
-    await _completerImages.future;
 
     loadSprite(
         name: 'assets/sprites/isometric/butterfly/butterfly',
@@ -421,27 +428,29 @@ class IsometricImages with IsometricComponent {
     loadCharacterShader(dirZombie).then((value) => characterShaderZombie = value);
     loadCharacterShader(dirToadWarrior).then((value) => characterShaderToadWarrior = value);
 
-    flame0 = await loadSprite(
+    loadSprite(
         name: 'assets/sprites/isometric/flame/wind0',
         mode: AnimationMode.loop,
         atlasX: 664,
         atlasY: 1681,
         image: atlas_nodes,
-    );
-    flame1 = await loadSprite(
+    ).then((value) => flame0 = value);
+    loadSprite(
         name: 'assets/sprites/isometric/flame/wind1',
         mode: AnimationMode.loop,
         atlasX: 664,
         atlasY: 1733,
         image: atlas_nodes,
-    );
-    flame2 = await loadSprite(
+    ).then((value) => flame1 = value);
+    loadSprite(
         name: 'assets/sprites/isometric/flame/wind2',
         mode: AnimationMode.loop,
         atlasX: 664,
         atlasY: 1778,
         image: atlas_nodes,
-    );
+    ).then((value) => flame2 = value);
+
+    await _completerImages.future;
   }
 
   Future<CharacterSpriteGroup> loadCharacterSpriteGroup(String directory) async =>
@@ -547,6 +556,7 @@ class IsometricImages with IsometricComponent {
   }) async {
 
     try {
+      totalImages.value++;
       image = image ?? await loadImageAsset('$name.png');
       final json = await loadAssetJson('$name.json');
 
@@ -563,6 +573,7 @@ class IsometricImages with IsometricComponent {
         }
       }
 
+      totalImagesLoaded.value++;
       return Sprite(
         image: image,
         src: src,
@@ -574,7 +585,7 @@ class IsometricImages with IsometricComponent {
         mode: mode,
       );
     } catch(e) {
-      // print(e);
+      totalImagesLoaded.value++;
       return emptySprite;
     }
   }
