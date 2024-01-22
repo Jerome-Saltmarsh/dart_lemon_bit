@@ -432,6 +432,8 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
     editor.gameObjectSelectedEmissionIntensity.value = gameObject.emissionIntensity;
   }
 
+  var bytesSaved = 0;
+
   void readNetworkResponseCharacters(){
     final scene = this.scene;
     scene.totalCharacters = 0;
@@ -443,11 +445,11 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
       final character = scene.getCharacterInstance();
       final readCharacterTypeAndTeam = readBitFromByte(compressionA, 0);
       final readCharacterState = readBitFromByte(compressionA, 1);
-      final readTeam = readBitFromByte(compressionA, 2);
-      final readHealth = readBitFromByte(compressionA, 3);
-      character.isStatusCold = readBitFromByte(compressionA, 4);
-      final readDirection = readBitFromByte(compressionA, 5);
-      final readFrame = readBitFromByte(compressionA, 6);
+      final readHealth = readBitFromByte(compressionA, 2);
+      character.isStatusCold = readBitFromByte(compressionA, 3);
+      final readDirection = readBitFromByte(compressionA, 4);
+      final readFrameChanged = readBitFromByte(compressionA, 5);
+      final readFrameChangedByOne = readBitFromByte(compressionA, 6);
       final readPosition = readBitFromByte(compressionA, 7);
 
       if (readCharacterTypeAndTeam) {
@@ -462,10 +464,6 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
         character.state = readByte();
       }
 
-      // if (readTeam) {
-      //   character.team = readByte();
-      // }
-
       if (readHealth) {
         character.health = readPercentage();
       }
@@ -474,8 +472,13 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
         character.direction = readByte();
       }
 
-      if (readFrame) {
-        character.animationFrame = readByte();
+      if (readFrameChanged) {
+        if (readFrameChangedByOne){
+          bytesSaved++;
+          character.animationFrame++;
+        } else {
+          character.animationFrame = readByte();
+        }
       }
 
       if (readPosition){
