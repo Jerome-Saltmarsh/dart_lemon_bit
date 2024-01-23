@@ -168,10 +168,6 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
         readPlayerAimTarget();
         break;
 
-      // case NetworkResponseIsometric.Player_Accuracy:
-      //   player.accuracy.value = readPercentage();
-      //   break;
-
       case NetworkResponseIsometric.Player_Weapon_Duration_Percentage:
         player.weaponCooldown.value = readPercentage();
         break;
@@ -180,13 +176,13 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
         scene.gameObjects.clear();
         break;
 
-      // case NetworkResponseIsometric.Player_Initialized:
-      //   player.onPlayerInitialized();
-      //   break;
-
       case NetworkResponseIsometric.Player_Controls:
         player.controlsCanTargetEnemies.value = readBool();
         player.controlsRunInDirectionEnabled.value = readBool();
+        break;
+
+      case NetworkResponseIsometric.Seconds_Per_Frame:
+        options.secondsPerFrame.value = readUInt16();
         break;
     }
   }

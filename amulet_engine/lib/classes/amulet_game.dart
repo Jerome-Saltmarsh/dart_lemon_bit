@@ -278,34 +278,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     super.performCharacterAction(character);
   }
 
-  void performCharacterActionAmuletFiend(AmuletFiend amuletFiend) {
-    if (amuletFiend.idling) {
-      return;
-    }
-    switch (amuletFiend.fiendType){
-      case FiendType.Gargoyle:
-        spawnProjectile(
-          src: amuletFiend,
-          angle: amuletFiend.angle,
-          range: amuletFiend.weaponRange,
-          projectileType: ProjectileType.Fireball,
-          damage: amuletFiend.weaponDamage,
-        );
-        return;
-      case FiendType.Fallen:
-        spawnProjectile(
-          src: amuletFiend,
-          angle: amuletFiend.angle,
-          range: amuletFiend.weaponRange,
-          projectileType: ProjectileType.Fireball,
-          damage: amuletFiend.weaponDamage,
-        );
-        return;
-      default:
-        break;
-    }
-  }
-
   void characterPerformSkillType({
     required Character character,
     required SkillType skillType,

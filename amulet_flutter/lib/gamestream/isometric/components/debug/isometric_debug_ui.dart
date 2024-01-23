@@ -655,6 +655,18 @@ extension isometricDebugUI on IsometricDebug {
       buildTab(
         children: [
           buildRowToggle(
+            text: 'seconds per frame',
+            action: () {
+              ui.showDialogGetInt(onSelected: (value) =>
+                  amulet.server.sendNetworkRequest(
+                    NetworkRequest.Isometric,
+                    NetworkRequestIsometric.Set_Seconds_Per_Frame.index,
+                    value,
+                  ));
+            },
+            value: () => options.secondsPerFrame.value,
+          ),
+          buildRowToggle(
             text: 'render_north',
             action: () => options.renderNorth = !options.renderNorth,
             value: () => options.renderNorth,

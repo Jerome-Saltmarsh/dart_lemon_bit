@@ -470,8 +470,13 @@ class AmuletController {
         game.setHourMinutes(hour, 0);
         break;
 
+      case NetworkRequestIsometric.Set_Seconds_Per_Frame:
+        final secondsPerFrame = parseArg2(arguments);
+        if (secondsPerFrame == null) return;
+        game.setSecondsPerFrame(secondsPerFrame);
+        break;
+
       case NetworkRequestIsometric.Editor_Load_Game:
-      // _player = engine.joinGameEditor(name: arguments[2]);
         break;
 
       case NetworkRequestIsometric.Move_Selected_Collider_To_Mouse:

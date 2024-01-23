@@ -29,17 +29,13 @@ class IsometricGame extends Game {
   void update() {
   }
 
-  void sendIsometricClientRequest([dynamic message]) {
-    server.sendNetworkRequest(NetworkRequest.Isometric, message);
-  }
+  void sendIsometricClientRequest([dynamic message]) =>
+      server.sendNetworkRequest(NetworkRequest.Isometric, message);
 
   @override
   void onActivated() {
     options.windowOpenMenu.setFalse();
     audio.musicStop();
-    // if (!engine.isLocalHost) {
-    //   engine.fullScreenEnter();
-    // }
   }
 
   Widget customBuildUI(BuildContext context){

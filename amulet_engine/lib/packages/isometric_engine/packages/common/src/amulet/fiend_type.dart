@@ -4,7 +4,7 @@ import '../isometric/character_type.dart';
 import 'amulet_item.dart';
 
 enum FiendType {
-  Fallen(
+  Goblin(
     level: 1,
     health: 4,
     damage: 2,

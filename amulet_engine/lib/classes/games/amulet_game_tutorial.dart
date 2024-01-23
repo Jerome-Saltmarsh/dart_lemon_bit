@@ -478,7 +478,7 @@ class AmuletGameTutorial extends AmuletGame {
 
   void actionInstantiateFiend01() {
     fiend01 = spawnFiendTypeAtIndex(
-        fiendType: FiendType.Fallen,
+        fiendType: FiendType.Goblin,
         index: getSceneKey(keysFiend01),
     )
       ..maxHealth = 3
@@ -511,7 +511,7 @@ class AmuletGameTutorial extends AmuletGame {
       const shiftRadius = 10;
       fiends02.add(
       spawnFiendTypeAtIndex(
-        fiendType: FiendType.Fallen,
+        fiendType: FiendType.Goblin,
         index: fiend02Index,
       )
         ..respawnDurationTotal = -1

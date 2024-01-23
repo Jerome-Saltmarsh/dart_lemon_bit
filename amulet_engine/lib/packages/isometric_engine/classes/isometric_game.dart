@@ -611,6 +611,16 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
   }
 
+  void setSecondsPerFrame(int value){
+    if (value < 0){
+      return;
+    }
+    time.secondsPerFrame = value;
+    dispatchByte(NetworkResponse.Isometric);
+    dispatchByte(NetworkResponseIsometric.Seconds_Per_Frame);
+    dispatchUInt16(value);
+  }
+
   void setHourMinutes(int hour, int minutes) {
     time.time = (hour * 60 * 60) + (minutes * 60);
     playersWriteWeather();
@@ -1621,6 +1631,13 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     final players = this.players;
     for (final player in players) {
       player.writeByte(byte);
+    }
+  }
+
+  void dispatchUInt16(int value){
+    final players = this.players;
+    for (final player in players) {
+      player.writeUInt16(value);
     }
   }
 
