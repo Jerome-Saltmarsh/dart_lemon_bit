@@ -39,7 +39,8 @@ class LoadingPage extends StatelessWidget {
                      alignment: Alignment.centerLeft,
                      width: 100,
                      child: buildWatch(images.totalImagesLoadedPercentage, (perc) {
-                       return Container(
+                       return AnimatedContainer(
+                         duration: const Duration(milliseconds: 200),
                          height: 10,
                          width: 100 * perc,
                          color: Colors.white,

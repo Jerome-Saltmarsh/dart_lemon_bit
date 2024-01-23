@@ -9,11 +9,12 @@ void renderCanvasSprite({
   required int column,
   required BlendMode blendMode,
   required int color,
+  required int animationMode,
   double scale = 1.0,
 }) => spriteExternal(
     canvas: canvas,
     sprite: sprite,
-    frame: sprite.getFrame(row: row, column: column),
+    frame: sprite.getFrame(row: row, column: column, mode: animationMode),
     color: color,
     scale: scale,
     dstX: 0,

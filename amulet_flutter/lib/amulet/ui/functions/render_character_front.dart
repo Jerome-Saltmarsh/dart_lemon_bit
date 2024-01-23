@@ -2,6 +2,7 @@
 import 'package:amulet_flutter/amulet/ui/functions/render_canvas_sprite.dart';
 import 'package:amulet_flutter/gamestream/sprites/kid_character_sprites.dart';
 import 'package:flutter/rendering.dart';
+import 'package:lemon_sprite/lib.dart';
 
 void renderCharacterFront({
   required Canvas canvas,
@@ -14,10 +15,7 @@ void renderCharacterFront({
   required int headType,
   required int armorType,
   required int shoeType,
-  // required int legsType,
   required int hairType,
-  // required int handsLeft,
-  // required int handsRight,
   required int weaponType,
   required int skinColor,
   required int hairColor,
@@ -29,14 +27,8 @@ void renderCharacterFront({
   final torso = sprites.torso[gender]?.fromCharacterState(characterState) ?? (throw Exception());
   final shoes = sprites.shoes[shoeType]
       ?.fromCharacterState(characterState);
-  // final legs = sprites.legs[legsType]
-  //     ?.fromCharacterState(characterState);
   final hair = sprites.hair[hairType]
       ?.fromCharacterState(characterState);
-  // final spriteHandsLeft = sprites.handLeft[handsLeft]
-  //     ?.fromCharacterState(characterState);
-  // final spriteHandsRight = sprites.handRight[handsRight]
-  //     ?.fromCharacterState(characterState);
   final weapon = sprites.weapons[weaponType]
       ?.fromCharacterState(characterState);
 
@@ -47,6 +39,7 @@ void renderCharacterFront({
     column: column,
     color: skinColor,
     blendMode: BlendMode.modulate,
+    animationMode: AnimationMode.single,
   );
 
   renderCanvasSprite(
@@ -56,18 +49,9 @@ void renderCharacterFront({
     column: column,
     color: color,
     blendMode: BlendMode.modulate,
+    animationMode: AnimationMode.single,
   );
 
-  // if (legs != null){
-  //   renderCanvasSprite(
-  //     sprite: legs,
-  //     canvas: canvas,
-  //     row: row,
-  //     column: column,
-  //     blendMode: BlendMode.dstATop,
-  //     color: color,
-  //   );
-  // }
 
   if (shoes != null){
     renderCanvasSprite(
@@ -77,6 +61,7 @@ void renderCharacterFront({
       column: column,
       blendMode: BlendMode.dstATop,
       color: color,
+      animationMode: AnimationMode.single,
     );
   }
 
@@ -88,30 +73,9 @@ void renderCharacterFront({
       column: column,
       blendMode: BlendMode.dstATop,
       color: color,
+      animationMode: AnimationMode.single,
     );
   }
-
-  // if (spriteHandsLeft != null){
-  //   renderCanvasSprite(
-  //     sprite: spriteHandsLeft,
-  //     canvas: canvas,
-  //     row: row,
-  //     column: column,
-  //     blendMode: BlendMode.dstATop,
-  //     color: color,
-  //   );
-  // }
-
-  // if (spriteHandsRight != null){
-  //   renderCanvasSprite(
-  //     sprite: spriteHandsRight,
-  //     canvas: canvas,
-  //     row: row,
-  //     column: column,
-  //     blendMode: BlendMode.dstATop,
-  //     color: color,
-  //   );
-  // }
 
   renderCanvasSprite(
     sprite: head,
@@ -120,6 +84,7 @@ void renderCharacterFront({
     column: column,
     color: skinColor,
     blendMode: BlendMode.modulate,
+    animationMode: AnimationMode.single,
   );
 
   renderCanvasSprite(
@@ -129,6 +94,7 @@ void renderCharacterFront({
     column: column,
     color: color,
     blendMode: BlendMode.modulate,
+    animationMode: AnimationMode.single,
   );
 
   if (hair != null){
@@ -139,6 +105,7 @@ void renderCharacterFront({
       column: column,
       color: hairColor,
       blendMode: BlendMode.modulate,
+      animationMode: AnimationMode.single,
     );
 
     renderCanvasSprite(
@@ -148,6 +115,7 @@ void renderCharacterFront({
       column: column,
       color: color,
       blendMode: BlendMode.modulate,
+      animationMode: AnimationMode.single,
     );
   }
 
@@ -159,6 +127,7 @@ void renderCharacterFront({
       column: column,
       blendMode: BlendMode.dstATop,
       color: color,
+      animationMode: AnimationMode.single,
     );
   }
 
@@ -170,6 +139,7 @@ void renderCharacterFront({
       column: column,
       blendMode: BlendMode.dstATop,
       color: color,
+      animationMode: AnimationMode.single,
     );
   }
 

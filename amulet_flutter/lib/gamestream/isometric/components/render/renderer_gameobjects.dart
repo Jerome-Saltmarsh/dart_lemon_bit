@@ -8,6 +8,7 @@ import 'package:amulet_flutter/isometric/classes/position.dart';
 import 'package:amulet_engine/packages/common.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
+import 'package:lemon_sprite/lib.dart';
 
 class SurfaceIndex {
   static const east = 0;
@@ -163,7 +164,7 @@ class RendererGameObjects extends RenderGroup {
 
       render.sprite(
           sprite: sprite,
-          frame: sprite.getFrame(row: 0, column: 0),
+          frame: sprite.getFrame(row: 0, column: 0, mode: AnimationMode.single),
           color: color,
           scale: scale,
           dstX: dstX,
@@ -173,7 +174,7 @@ class RendererGameObjects extends RenderGroup {
 
       render.sprite(
           sprite: sprite,
-          frame: sprite.getFrame(row: 0, column: 1),
+          frame: sprite.getFrame(row: 0, column: 1, mode: AnimationMode.single),
           color: color,
           scale: scale,
           dstX: dstX,
@@ -183,7 +184,7 @@ class RendererGameObjects extends RenderGroup {
 
       render.sprite(
           sprite: sprite,
-          frame: sprite.getFrame(row: 0, column: 2),
+          frame: sprite.getFrame(row: 0, column: 2, mode: AnimationMode.single),
           color: color,
           scale: scale,
           dstX: dstX,
@@ -193,7 +194,7 @@ class RendererGameObjects extends RenderGroup {
 
       render.sprite(
           sprite: sprite,
-          frame: sprite.getFrame(row: 0, column: 3),
+          frame: sprite.getFrame(row: 0, column: 3, mode: AnimationMode.single),
           color: color,
           scale: scale,
           dstX: dstX,
@@ -204,7 +205,7 @@ class RendererGameObjects extends RenderGroup {
       if (subType == GameObjectType.Crystal_Glowing_False){
         render.sprite(
           sprite: sprite,
-          frame: sprite.getFrame(row: 0, column: 0),
+          frame: sprite.getFrame(row: 0, column: 0, mode: AnimationMode.single),
           color: scene.colorEast(gameObjectIndex),
           scale: scale,
           dstX: dstX,
@@ -214,7 +215,7 @@ class RendererGameObjects extends RenderGroup {
 
         render.sprite(
           sprite: sprite,
-          frame: sprite.getFrame(row: 0, column: 1),
+          frame: sprite.getFrame(row: 0, column: 1, mode: AnimationMode.single),
           color: scene.colorNorth(gameObjectIndex),
           scale: scale,
           dstX: dstX,
@@ -224,7 +225,7 @@ class RendererGameObjects extends RenderGroup {
 
         render.sprite(
           sprite: sprite,
-          frame: sprite.getFrame(row: 0, column: 2),
+          frame: sprite.getFrame(row: 0, column: 2, mode: AnimationMode.single),
           color: scene.colorSouth(gameObjectIndex),
           scale: scale,
           dstX: dstX,
@@ -234,7 +235,7 @@ class RendererGameObjects extends RenderGroup {
 
         render.sprite(
           sprite: sprite,
-          frame: sprite.getFrame(row: 0, column: 3),
+          frame: sprite.getFrame(row: 0, column: 3, mode: AnimationMode.single),
           color: scene.colorWest(gameObjectIndex),
           scale: scale,
           dstX: dstX,

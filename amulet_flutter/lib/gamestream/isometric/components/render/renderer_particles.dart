@@ -7,6 +7,7 @@ import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
+import 'package:lemon_sprite/lib.dart';
 
 import '../../functions/generate_colors.dart';
 
@@ -151,6 +152,7 @@ class RendererParticles extends RenderGroup {
               frame: sprite.getFrame(
                   row: IsometricDirection.toInputDirection(direction),
                   column: particle.moving ? animation.frame1 % 2 : 0,
+                  mode: AnimationMode.loop,
               ),
               color: scene.getColor(particle.nodeIndex), // TODO Optimize
               scale: 0.2,
@@ -168,6 +170,7 @@ class RendererParticles extends RenderGroup {
               frame: sprite.getFrame(
                   row: IsometricDirection.toInputDirection(direction),
                   column: particle.moving ? animation.frame1 % 2 : 0,
+                  mode: AnimationMode.loop,
               ),
               color: scene.getColor(particle.nodeIndex), // TODO Optimize
               scale: 0.1,
@@ -185,6 +188,7 @@ class RendererParticles extends RenderGroup {
               frame: sprite.getFrame(
                 row: IsometricDirection.toInputDirection(direction),
                 column: particle.moving ? animation.frame1: 0,
+                mode: AnimationMode.loop,
               ),
               color: scene.getColor(particle.nodeIndex),
               scale: 0.2,
