@@ -203,10 +203,10 @@ class Amulet extends IsometricGame {
     if (options.editing)
       return;
 
-    // if (key == PhysicalKeyboardKey.keyQ){
-    //   amulet.toggleInventoryOpen();
-    //   return;
-    // }
+    if (key == PhysicalKeyboardKey.keyQ) {
+      amulet.windowVisiblePlayerStats.toggle();
+      return;
+    }
 
     if (key == PhysicalKeyboardKey.keyA) {
       selectSlotType(SlotType.Weapon);

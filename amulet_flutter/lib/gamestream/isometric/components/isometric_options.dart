@@ -37,6 +37,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
   var clearErrorTimer = -1;
   var messageStatusDuration = 0;
   var renderResponse = true;
+  var developMode = false;
 
   final cameraPlay = Position();
   final cameraEdit = Position();
@@ -106,6 +107,12 @@ class IsometricOptions with IsometricComponent implements Updatable {
     engine.cursorType.value = CursorType.Basic;
     engine.paint.colorFilter = ColorFilter.mode(Colors.orange, BlendMode.modulate);
     engine.paint.filterQuality = filterQuality.value;
+
+    assert((){
+      print('options.developMode: true');
+      developMode = true;
+      return true;
+    }());
 
     colorFilters = List.generate(colorFiltersLength, (index) {
        final i = index / colorFiltersLength;
@@ -313,4 +320,5 @@ class IsometricOptions with IsometricComponent implements Updatable {
   bool get playModeMulti => serverMode.value == ServerMode.remote;
 
   bool get playModeSingle => serverMode.value == ServerMode.local;
+
 }

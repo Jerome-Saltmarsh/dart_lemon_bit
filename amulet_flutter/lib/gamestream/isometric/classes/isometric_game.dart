@@ -127,14 +127,16 @@ class IsometricGame extends Game {
   @override
   void onKeyPressed(PhysicalKeyboardKey key) {
 
-    if (key == PhysicalKeyboardKey.tab) {
-      options.toggleEditMode();
-      return;
-    }
+    if (options.developMode){
+      if (key == PhysicalKeyboardKey.tab) {
+        options.toggleEditMode();
+        return;
+      }
 
-    if (key == PhysicalKeyboardKey.digit0) {
-      server.sendIsometricRequestToggleDebugging();
-      return;
+      if (key == PhysicalKeyboardKey.digit0) {
+        server.sendIsometricRequestToggleDebugging();
+        return;
+      }
     }
 
     if (key == PhysicalKeyboardKey.escape) {
@@ -154,22 +156,13 @@ class IsometricGame extends Game {
       return;
     }
 
-    if (key == PhysicalKeyboardKey.keyM){
-      amulet.spawnRandomEnemy();
-    }
+    // if (key == PhysicalKeyboardKey.keyM){
+    //   amulet.spawnRandomEnemy();
+    // }
 
     if (options.debugging) {
       debugger.onKeyPressed(key);
       return;
     }
   }
-
-  // override to customize cursor type
-  // int mapTargetActionToCursorType(int targetCategory) => switch(targetCategory) {
-  //   TargetAction.Attack => IsometricCursorType.CrossHair_Red,
-  //   TargetAction.Talk => IsometricCursorType.Talk,
-  //   TargetAction.Collect => IsometricCursorType.Hand,
-  //   TargetAction.Run => IsometricCursorType.CrossHair_White,
-  //   _ => IsometricCursorType.CrossHair_White,
-  // };
 }

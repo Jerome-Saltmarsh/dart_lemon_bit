@@ -26,6 +26,7 @@ ctrl + []               : move caret to code block
 [fix] duplicate item on drop
 
 ## 23.01.2024
+[new] disable edit and debug mode outside develop mode
 [new] shift animation mode from sprite load to sprite play
 
 ## 20.01.2024
