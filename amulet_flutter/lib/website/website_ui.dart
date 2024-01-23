@@ -22,8 +22,8 @@ import 'widgets/dialog_create_character_computer.dart';
 
 extension WebsiteUI on WebsiteGame {
 
-  Widget buildPageWebsiteDesktop(BuildContext context) =>
-      WatchBuilder(options.serverMode, (ServerMode serverMode) {
+  Widget buildPageWebsiteDesktop(BuildContext context) {
+    return WatchBuilder(options.serverMode, (ServerMode serverMode) {
 
         final page = WatchBuilder(websitePage, (websitePage) =>
             switch (websitePage) {
@@ -114,6 +114,7 @@ extension WebsiteUI on WebsiteGame {
 
         return page;
       });
+  }
 
   Widget buildTogglePlayMode() {
     return WatchBuilder(options.serverMode, (activeServerMode) {

@@ -49,15 +49,12 @@ class WebsiteGame extends Game {
   }
 
   @override
-  Widget buildUI(BuildContext context) => GSFullscreen(
+  Widget buildUI(BuildContext context) {
+    engine.fullScreenEnter();
+    return GSFullscreen(
         child: buildPageWebsiteDesktop(context),
       );
-
-  // void toggleWebsitePage() =>
-  //     websitePage.value =
-  //     websitePage.value == WebsitePage.Select_Region
-  //         ? WebsitePage.Select_Character
-  //         : WebsitePage.Select_Region;
+  }
 
   void showWebsitePageRegion(){
      websitePage.value = WebsitePage.Select_Region;

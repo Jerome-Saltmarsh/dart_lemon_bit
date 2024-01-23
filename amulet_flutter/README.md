@@ -25,6 +25,9 @@ ctrl + []               : move caret to code block
 [fix] screen freezes on startup
 [fix] duplicate item on drop
 
+## 23.01.2024
+[new] shift animation mode from sprite load to sprite play
+
 ## 20.01.2024
 [new] render full helm
 

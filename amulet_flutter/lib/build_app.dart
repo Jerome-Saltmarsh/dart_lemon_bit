@@ -24,7 +24,7 @@ Widget buildApp(){
   WidgetsFlutterBinding.ensureInitialized();
 
   final engine = AmuletApp();
-  engine.fullScreenEnter();
+  // engine.fullScreenEnter();
 
   final components = IsometricComponents(
       images: IsometricImages(),
