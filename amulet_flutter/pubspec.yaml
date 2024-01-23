@@ -221,3 +221,8 @@ flutter:
     - assets/sprites/isometric/kid/diffuse/helms/full_helm/
     - assets/sprites/isometric/kid/south/helms/full_helm/
     - assets/sprites/isometric/kid/west/helms/full_helm/
+    - assets/sprites/isometric/goblin/
+    - assets/sprites/isometric/goblin/flat/
+    - assets/sprites/isometric/goblin/south/
+    - assets/sprites/isometric/goblin/west/
+    - assets/sprites/isometric/goblin/shadow/

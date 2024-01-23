@@ -25,6 +25,10 @@ ctrl + []               : move caret to code block
 [fix] screen freezes on startup
 [fix] duplicate item on drop
 
+[fix] remodel fallen 
+[fix] front view render
+[fix] disable tutorial
+
 ## 23.01.2024
 [fix] skeleton attack animation
 [new] modify seconds per frame

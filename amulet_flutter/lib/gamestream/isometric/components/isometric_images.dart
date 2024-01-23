@@ -25,6 +25,7 @@ class IsometricImages with IsometricComponent {
   static const dirAssets = 'assets';
   static const dirSprites = '$dirAssets/sprites';
   static const dirIsometric = '$dirSprites/isometric';
+  static const dirGoblin = '$dirIsometric/goblin';
   static const dirFallen = '$dirIsometric/fallen';
   static const dirFallenArmoured = '$dirIsometric/fallen_armoured';
   static const dirSkeleton = '$dirIsometric/skeleton';
@@ -378,7 +379,7 @@ class IsometricImages with IsometricComponent {
         atlasY: 0,
     ).then((value) => barrelWooden = value);
 
-    loadCharacterShader(dirFallen).then((value) => characterShaderFallen = value);
+    loadCharacterShader(dirGoblin).then((value) => characterShaderFallen = value);
     loadCharacterShader(dirFallenArmoured).then((value) => characterShaderFallenArmoured = value);
     loadCharacterShader(dirSkeleton).then((value) => characterShaderSkeleton = value);
     loadCharacterShader(dirGargoyle).then((value) => characterShaderGargoyle = value);
