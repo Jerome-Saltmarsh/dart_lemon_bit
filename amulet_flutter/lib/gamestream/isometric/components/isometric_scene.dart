@@ -189,6 +189,8 @@ class IsometricScene with IsometricComponent implements Updatable {
     ambientResetIndex = 0;
     _ambientAlpha = clampedValue;
     ambientColor = setAlpha(ambientColor, clampedValue);
+
+
   }
 
   // TODO Optimize
@@ -245,7 +247,8 @@ class IsometricScene with IsometricComponent implements Updatable {
   void onComponentUpdate(){
     interpolationPadding = ((scene.interpolationLength + 1) * Node_Size) / engine.zoom;
 
-    jobBatchResetNodeColorsToAmbient();
+    updateNodeColorsToAmbient();
+    // jobBatchResetNodeColorsToAmbient();
     updateProjectiles();
     updateCharacters();
     updateGameObjects();
@@ -258,17 +261,28 @@ class IsometricScene with IsometricComponent implements Updatable {
     }
   }
 
-  void jobBatchResetNodeColorsToAmbient() {
+  // void jobBatchResetNodeColorsToAmbient() {
+  //
+  //   if (ambientResetIndex >= totalNodes)
+  //     return;
+  //
+  //   const ambientResetBatchSize = 10000;
+  //   final targetEnd = ambientResetIndex + ambientResetBatchSize;
+  //   final end = min(targetEnd, totalNodes);
+  //   nodeColors.fillRange(ambientResetIndex, end, ambientColor);
+  //   ambientResetIndex += ambientResetBatchSize;
+  //
+  //
+  // }
 
-    if (ambientResetIndex >= totalNodes)
-      return;
-
-    const ambientResetBatchSize = 5000;
-    final targetEnd = ambientResetIndex + ambientResetBatchSize;
-    final end = min(targetEnd, totalNodes);
-    nodeColors.fillRange(ambientResetIndex, end, ambientColor);
-    ambientResetIndex += ambientResetBatchSize;
+  void updateNodeColorsToAmbient() {
+    if (nodeColors.isEmpty) return;
+    if (updateAmbientColorValue == ambientColor) return;
+    nodeColors.fillRange(ambientResetIndex, nodeColors.length, ambientColor);
+    updateAmbientColorValue = ambientColor;
   }
+
+  var updateAmbientColorValue = 0;
 
   // TODO OPTIMIZE
   void generateHeightMap() {
