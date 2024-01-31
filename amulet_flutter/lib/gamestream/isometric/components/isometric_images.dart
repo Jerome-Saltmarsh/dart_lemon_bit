@@ -9,7 +9,7 @@ import 'package:lemon_watch/src.dart';
 import 'package:amulet_flutter/packages/utils/parse.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:amulet_flutter/gamestream/sprites/character_sprite_group.dart';
-import 'package:amulet_flutter/gamestream/sprites/kid_character_sprites.dart';
+import 'package:amulet_flutter/gamestream/sprites/human_character_sprites.dart';
 import 'package:lemon_sprite/lib.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';

@@ -1,7 +1,7 @@
 import 'package:amulet_flutter/website/typedefs/create_character.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/amulet/ui/functions/build_color_wheel.dart';
-import 'package:amulet_flutter/amulet/ui/functions/render_character_front.dart';
+import 'package:amulet_flutter/amulet/ui/functions/render_character_sprites.dart';
 import 'package:amulet_flutter/gamestream/isometric/isometric_components.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
@@ -162,9 +162,9 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                         child: CustomCanvas(
                           paint: (canvas, size) {
 
-                            renderCharacterFront(
+                            renderCharacterSprites(
                               canvas: canvas,
-                              sprites: components.images.kidCharacterSpritesFrontDiffuse,
+                              sprites: components.images.kidCharacterSpritesIsometricDiffuse,
                               row: row.value,
                               column: 0,
                               characterState: CharacterState.Idle,

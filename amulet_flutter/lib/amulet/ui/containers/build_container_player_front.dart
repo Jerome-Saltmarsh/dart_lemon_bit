@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:amulet_flutter/amulet/ui/functions/render_player_front.dart';
+import 'package:amulet_flutter/amulet/ui/functions/render_player_character_sprites.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_player.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
 import 'package:amulet_flutter/gamestream/ui/enums/icon_type.dart';
@@ -34,12 +34,12 @@ Widget buildContainerPlayerFront({
               top: 100,
               child: CustomCanvas(
                   paint: (canvas, size) {
-                    renderPlayerFront(
+                    renderPlayerCharacterSprites(
                         player: player,
                         canvas: canvas,
                         row: row,
                         column: column,
-                        sprites: player.images.kidCharacterSpritesFrontDiffuse,
+                        sprites: player.images.kidCharacterSpritesIsometricDiffuse,
                         characterState: CharacterState.Idle,
                         color: 0
                     );

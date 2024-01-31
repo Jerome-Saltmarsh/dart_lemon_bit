@@ -1,10 +1,10 @@
 
 import 'package:amulet_flutter/amulet/ui/functions/render_canvas_sprite.dart';
-import 'package:amulet_flutter/gamestream/sprites/kid_character_sprites.dart';
+import 'package:amulet_flutter/gamestream/sprites/human_character_sprites.dart';
 import 'package:flutter/rendering.dart';
 import 'package:lemon_sprite/lib.dart';
 
-void renderCharacterFront({
+void renderCharacterSprites({
   required Canvas canvas,
   required HumanCharacterSprites sprites,
   required int row,
@@ -53,7 +53,7 @@ void renderCharacterFront({
   );
 
 
-  if (shoes != null){
+  if (shoes != null) {
     renderCanvasSprite(
       sprite: shoes,
       canvas: canvas,

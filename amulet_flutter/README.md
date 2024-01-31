@@ -19,9 +19,10 @@ ctrl + []               : move caret to code block
 [fix] particle speed
 
 [RELEASE]
-[fix] front view render
-[fix] front view render
 [fix] disable tutorial
+
+## 01.02.2024
+[fix] front view render
 
 ## 31.01.2024
 [new] removed duplicate particle update

@@ -1,10 +1,10 @@
 
 import 'package:flutter/material.dart';
-import 'package:amulet_flutter/amulet/ui/functions/render_character_front.dart';
+import 'package:amulet_flutter/amulet/ui/functions/render_character_sprites.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_player.dart';
-import 'package:amulet_flutter/gamestream/sprites/kid_character_sprites.dart';
+import 'package:amulet_flutter/gamestream/sprites/human_character_sprites.dart';
 
-void renderPlayerFront({
+void renderPlayerCharacterSprites({
   required IsometricPlayer player,
   required HumanCharacterSprites sprites,
   required Canvas canvas,
@@ -12,7 +12,7 @@ void renderPlayerFront({
   required int column,
   required int characterState,
   required int color,
-}) => renderCharacterFront(
+}) => renderCharacterSprites(
       canvas: canvas,
       sprites: sprites,
       row: row,
