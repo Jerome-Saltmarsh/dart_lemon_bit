@@ -59,6 +59,7 @@ class ServerLocal implements Server {
       onFixedUpdate: onFixedUpdate,
       isLocalMachine: true,
       scenes: scenes,
+      fps: 45,
     );
     await amulet.construct(initializeUpdateTimer: true);
     playerServer = AmuletPlayer(

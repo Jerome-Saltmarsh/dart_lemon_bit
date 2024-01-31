@@ -25,11 +25,12 @@ ctrl + []               : move caret to code block
 [fix] screen freezes on startup
 [fix] duplicate item on drop
 
-[fix] remodel fallen 
+[RELEASE]
 [fix] front view render
 [fix] disable tutorial
 
 ## 23.01.2024
+[fix] remodel fallen as goblin
 [fix] skeleton attack animation
 [new] modify seconds per frame
 [new] disable edit and debug mode outside develop mode

@@ -17,9 +17,7 @@ import 'games/amulet_game_world_11.dart';
 
 class Amulet {
 
-  static const Frames_Per_Second = 45;
-  static const Fixed_Time = 50 / Frames_Per_Second;
-
+  var fps = 45;
   var frame = 0;
 
   late final amuletGameLoading = AmuletGame(
@@ -52,6 +50,7 @@ class Amulet {
 
   Timer? updateTimer;
   Timer? timerRefreshUserCharacterLocks;
+  Duration? updateTimerDuration;
 
   final environmentUnderground = IsometricEnvironment(enabled: false);
   final timeUnderground = IsometricTime(hour: 24, enabled: false);
@@ -82,6 +81,7 @@ class Amulet {
     required this.onFixedUpdate,
     required this.isLocalMachine,
     required this.scenes,
+    this.fps = 45,
   });
 
   Future construct({required bool initializeUpdateTimer}) async {
@@ -192,12 +192,17 @@ class Amulet {
     resumeUpdateTimer();
   }
   
-  void resumeUpdateTimer(){
+  void resumeUpdateTimer() => setFps(fps);
+
+  void setFps(int value){
+     fps = value;
+     setUpdateTimerDuration(Duration(milliseconds: 1000 ~/ fps));
+  }
+
+  void setUpdateTimerDuration(Duration duration){
     updateTimer?.cancel();
-    updateTimer = Timer.periodic(
-      Duration(milliseconds: 1000 ~/ Frames_Per_Second),
-      _fixedUpdate,
-    );
+    updateTimerDuration = duration;
+    updateTimer = Timer.periodic(duration, _fixedUpdate);
   }
 
   void _initializeTimerAutoSave() {

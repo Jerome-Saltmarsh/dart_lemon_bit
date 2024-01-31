@@ -123,8 +123,6 @@ class IsometricRender with IsometricComponent {
     // highlightAimTargetEnemy();
 
     camera.update();
-    animation.update();
-    particles.onComponentUpdate();
     compositor.render3D();
 
     renderEditMode();

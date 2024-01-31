@@ -1,6 +1,7 @@
 import 'package:amulet_engine/packages/common.dart';
+import 'package:amulet_flutter/packages/lemon_components/updatable.dart';
 
-class IsometricAnimation {
+class IsometricAnimation implements Updatable {
   var frame1 = 0;
   var frameWater = 0;
   var frameWaterHeight = 0;
@@ -21,7 +22,8 @@ class IsometricAnimation {
   var frameRate5 = 0;
   var rendersPerFrame = 3;
 
-  void update() {
+  @override
+  void onComponentUpdate() {
     frameRate1++;
 
     if (frameRate1 % 2 == 0){
@@ -73,6 +75,5 @@ class IsometricAnimation {
     if (frame16 >= 16) {
       frame16 = 0;
     }
-
   }
 }

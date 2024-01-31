@@ -376,6 +376,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
     }
   }
 
+  @override
   void onComponentUpdate() {
 
     if (!server.connected){
