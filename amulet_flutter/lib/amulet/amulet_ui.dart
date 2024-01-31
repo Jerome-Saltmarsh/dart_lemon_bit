@@ -621,7 +621,7 @@ class AmuletUI {
           height: height,
           color: Colors.black26,
           padding: const EdgeInsets.all(2),
-          alignment: Alignment.center,
+          alignment: Alignment.centerLeft,
           child: Container(
             width: width * healthPercentage,
             height: height,
@@ -643,7 +643,7 @@ class AmuletUI {
           height: height,
           color: Colors.black26,
           padding: const EdgeInsets.all(2),
-          alignment: Alignment.center,
+          alignment: Alignment.centerLeft,
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 100),
             width: width * percentage,
