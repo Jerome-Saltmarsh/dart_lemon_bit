@@ -145,11 +145,13 @@ class ServerLocal implements Server {
       playerServer.hairColor = hairColor;
       playerServer.gender = gender;
       playerServer.headType = headType;
-      playerServer.tutorialObjective = QuestTutorial.values.first;
+      playerServer.tutorialObjective = QuestTutorial.values.last;
       playerServer.equippedWeapon = null;
       playerServer.equippedHelm = null;
       playerServer.equippedShoes = null;
       playerServer.equippedArmor = null;
+      playerServer.skillTypeLeft = SkillType.Strike;
+      playerServer.skillTypeRight = SkillType.Strike;
       final json = writeAmuletPlayerToJson(playerServer);
       final characters = getCharacters();
       characters.add(json);

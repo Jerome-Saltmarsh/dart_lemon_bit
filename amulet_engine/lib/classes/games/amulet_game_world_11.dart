@@ -51,14 +51,13 @@ class AmuletGameWorld11 extends AmuletGame {
       weaponDamage: 0,
       weaponRange: 0,
       attackDuration: 0,
-      name: "Warren",
+      name: "Gareth",
     )
       ..fixed = true
       ..invincible = true
       ..helmType = HelmType.Full_Helm
       ..armorType = ArmorType.Leather
       ..shoeType = ShoeType.Leather_Boots
-      // ..legsType = LegType.Leather
       ..interact = onInteractWithWarren
       ..complexion = ComplexionType.fair;
 
@@ -79,8 +78,6 @@ class AmuletGameWorld11 extends AmuletGame {
       ..invincible = true
       ..helmType = HelmType.Leather_Cap
       ..armorType = ArmorType.Leather
-      // ..legsType = LegType.Leather
-      // ..handTypeLeft = HandType.Leather_Gloves
       ..shoeType = ShoeType.Grieves
       ..weaponType = WeaponType.Bow
       ..chanceOfSetTarget = 1.0
@@ -103,8 +100,6 @@ class AmuletGameWorld11 extends AmuletGame {
       ..invincible = true
       ..helmType = HelmType.Full_Helm
       ..armorType = ArmorType.Leather
-      // ..legsType = LegType.Leather
-      // ..handTypeLeft = HandType.Leather_Gloves
       ..weaponType = WeaponType.Bow
       ..shoeType = ShoeType.Grieves
       ..chanceOfSetTarget = 1.0
@@ -130,9 +125,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..hairType = 2
       ..hairColor = 30
       ..armorType = ArmorType.Tunic
-      // ..legsType = LegType.Leather
       ..shoeType = ShoeType.Leather_Boots
-      // ..handTypeLeft = HandType.None
       ..weaponType = WeaponType.Unarmed
       ..gender = Gender.female
       ..interact = onInteractWithMay
@@ -158,9 +151,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..hairType = 2
       ..hairColor = 30
       ..armorType = ArmorType.Tunic
-      // ..legsType = LegType.Leather
       ..shoeType = ShoeType.Leather_Boots
-      // ..handTypeLeft = HandType.None
       ..weaponType = WeaponType.Unarmed
       ..gender = Gender.female
       ..interact = onInteractWithSophie
@@ -206,11 +197,10 @@ class AmuletGameWorld11 extends AmuletGame {
         player.talk(
             warren,
               'Hello stranger.'
-              'Expect but little kindness from the people of this village.'
-              'There is an evil witch who has been terrorizing us.'
-              'Her fowl minions are a constant threat.'
-              'I suspect her lair is somewhere in the spooky woods.'
-              'But I have not the courage to go there myself.',
+              'The names Gareth I am the lord of this gloomy old town'
+              'The evil witch Magatha has made the forsaken castle in the north her home.'
+              'Since then Her fowl minions have poured out into the country side.'
+              'We would be eternally grateful if you aided us.',
             onInteractionOver: (){
               player.questMain = QuestMain.Kill_The_Witch;
             }

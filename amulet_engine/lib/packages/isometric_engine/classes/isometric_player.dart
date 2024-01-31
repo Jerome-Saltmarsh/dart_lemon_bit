@@ -1407,11 +1407,4 @@ class IsometricPlayer extends Character with ByteWriter {
     writeByte(NetworkResponsePlayer.Controls_Enabled);
     writeBool(value);
   }
-
-  // void writeAmuletItemSlot(AmuletItemSlot amuletItemSlot){
-  //   writeInt16(amuletItemSlot.amuletItem?.index ?? -1);
-  //   writeUInt16(amuletItemSlot.charges);
-  //   writeUInt16(amuletItemSlot.max);
-  //   writePercentage(amuletItemSlot.cooldownPercentage);
-  // }
 }
