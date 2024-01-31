@@ -15,19 +15,16 @@ ctrl + shift + e        : view recent changes
 alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
-[NEW]
-[new] model armour leather
-[new] model armour chainmail
-[new] model armour platemail
-
-[FIX]
-[fix] skill teleport validate destination
-[fix] screen freezes on startup
-[fix] duplicate item on drop
+[CURRENT]
+[fix] particle speed
 
 [RELEASE]
 [fix] front view render
+[fix] front view render
 [fix] disable tutorial
+
+## 31.01.2024
+[new] removed duplicate particle update
 
 ## 23.01.2024
 [fix] remodel fallen as goblin

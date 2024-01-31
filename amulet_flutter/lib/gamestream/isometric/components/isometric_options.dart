@@ -104,7 +104,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
     print('uri-base-host: ${Uri.base.host}');
     print('region-detected: ${detectConnectionRegion()}');
     game = Watch<Game>(website, onChanged: _onChangedGame);
-    engine.durationPerUpdate.value = convertFramesPerSecondToDuration(20);
+    engine.durationPerUpdate.value = convertFramesPerSecondToDuration(45);
     engine.cursorType.value = CursorType.Basic;
     engine.paint.colorFilter = ColorFilter.mode(Colors.orange, BlendMode.modulate);
     engine.paint.filterQuality = filterQuality.value;

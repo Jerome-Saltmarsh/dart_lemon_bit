@@ -17,7 +17,7 @@ import 'isometric_component.dart';
 
 class IsometricParticles with IsometricComponent implements Updatable {
 
-  static const Flame_Duration = 50;
+  static const Flame_Duration = 30;
   static const Water_Duration = 50;
   static const windStrengthMultiplier = 0.003;
 
@@ -823,7 +823,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
         x: x,
         y: y,
         z: z,
-        zv: 0.6,
+        zv: 1.2,
         angle: 0,
         rotation: 0,
         speed: 0,

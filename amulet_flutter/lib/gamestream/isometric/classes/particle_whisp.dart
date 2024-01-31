@@ -5,7 +5,7 @@ import 'package:amulet_engine/packages/lemon_math.dart';
 
 class ParticleWhisp extends ParticleRoam {
 
-  var movementSpeed = 0.2;
+  var movementSpeed = 0.4;
   var movementAngle = 0.0;
   var rotationSpeed = 0.0085;
   var targetDuration = 0;

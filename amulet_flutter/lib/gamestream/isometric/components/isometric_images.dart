@@ -38,11 +38,11 @@ class IsometricImages with IsometricComponent {
   
   final byteDataEmpty = ByteData(0);
   late final CharacterSpriteGroup kidCharacterSpriteGroupShadow;
-  final kidCharacterSpritesIsometricNorth = KidCharacterSprites();
-  final kidCharacterSpritesIsometricEast = KidCharacterSprites();
-  final kidCharacterSpritesIsometricSouth = KidCharacterSprites();
-  final kidCharacterSpritesIsometricWest = KidCharacterSprites();
-  final kidCharacterSpritesIsometricDiffuse = KidCharacterSprites();
+  final kidCharacterSpritesIsometricNorth = HumanCharacterSprites();
+  final kidCharacterSpritesIsometricEast = HumanCharacterSprites();
+  final kidCharacterSpritesIsometricSouth = HumanCharacterSprites();
+  final kidCharacterSpritesIsometricWest = HumanCharacterSprites();
+  final kidCharacterSpritesIsometricDiffuse = HumanCharacterSprites();
 
   late final kidCharacterSpritesIsometric = {
     RenderDirection.south: kidCharacterSpritesIsometricSouth,
@@ -50,7 +50,7 @@ class IsometricImages with IsometricComponent {
     RenderDirection.diffuse: kidCharacterSpritesIsometricDiffuse,
   };
 
-  final kidCharacterSpritesFrontDiffuse = KidCharacterSprites();
+  final kidCharacterSpritesFrontDiffuse = HumanCharacterSprites();
 
   final totalImagesLoadedPercentage = Watch(0.0);
   final totalImages = Watch(0);
@@ -192,8 +192,6 @@ class IsometricImages with IsometricComponent {
     );
 
     for (final kidCharacterSpritesIsometric in kidCharacterSpritesIsometric.values){
-      kidCharacterSpritesIsometric.handLeft[0] = spriteGroupEmpty;
-      kidCharacterSpritesIsometric.handRight[0] = spriteGroupEmpty;
       kidCharacterSpritesIsometric.weapons[0] = spriteGroupEmpty;
       kidCharacterSpritesIsometric.helm[0] = spriteGroupEmpty;
       kidCharacterSpritesIsometric.armor[0] = spriteGroupEmpty;
@@ -212,20 +210,6 @@ class IsometricImages with IsometricComponent {
     loadSpriteGroupFront(type: SpriteGroupType.Weapon, subType: WeaponType.Staff);
     loadSpriteGroupFront(type: SpriteGroupType.Weapon, subType: WeaponType.Shortsword);
     loadSpriteGroupFront(type: SpriteGroupType.Shoes, subType: ShoeType.Leather_Boots);
-
-    loadSpriteGroupIsometric(
-      direction: RenderDirection.diffuse,
-      type: SpriteGroupType.Weapon_Trail,
-      subType: WeaponType.Shortsword,
-      skipHurt: true,
-      skipCasting: true,
-      skipChange: true,
-      skipDead: true,
-      skipFire: true,
-      skipIdle: true,
-      skipRunning: true,
-      skipStrike: false,
-    );
 
     for (final direction in const[
       RenderDirection.south,

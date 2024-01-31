@@ -6,7 +6,7 @@ import 'package:lemon_sprite/lib.dart';
 
 void renderCharacterFront({
   required Canvas canvas,
-  required KidCharacterSprites sprites,
+  required HumanCharacterSprites sprites,
   required int row,
   required int column,
   required int characterState,

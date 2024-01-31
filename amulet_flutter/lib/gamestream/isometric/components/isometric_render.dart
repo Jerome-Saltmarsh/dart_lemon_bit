@@ -120,11 +120,8 @@ class IsometricRender with IsometricComponent {
       return;
     }
 
-    // highlightAimTargetEnemy();
-
     camera.update();
     compositor.render3D();
-
     renderEditMode();
     renderMouseTargetName();
 

@@ -304,7 +304,7 @@ class RendererParticles extends RenderGroup {
           renderModulateSquare(
             dstX: dstX,
             dstY: dstY,
-            color: colorsFlame[((1.0 - particle.duration01) * colorsWater.length).toInt()].value,
+            color: colorsFlame[((1.0 - particle.duration01) * colorsFlame.length).toInt()].value,
             scale: particle.scale,
           );
           break;
@@ -320,7 +320,7 @@ class RendererParticles extends RenderGroup {
           renderModulateSquare(
              dstX: dstX,
              dstY: dstY,
-             color: colorsIce[((1.0 - particle.duration01) * colorsWater.length).toInt()].value,
+             color: colorsIce[((1.0 - particle.duration01) * colorsIce.length).toInt()].value,
              scale: particle.scale,
           );
           break;

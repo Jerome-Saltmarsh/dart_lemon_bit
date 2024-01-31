@@ -21,16 +21,15 @@ class FlyMode {
 /// taking-off
 class ParticleFlying extends ParticleRoam {
 
-  var speed = 1.5;
+  var speed = 3.0;
   var moving = false;
   var roamDuration = 0;
   var mode = FlyMode.flying;
   var shadowScale = 1.0;
 
   static const changeTargetRadius = 5.0;
-  static const verticalSpeed = 1.5;
-  static const verticalSpeedBat = 0.3;
-  static const speedBat = 1.5;
+  static const verticalSpeed = 3.0;
+  static const verticalSpeedBat = 0.6;
 
   ParticleFlying({required super.x, required super.y, required super.z}) {
     type = ParticleType.Butterfly;

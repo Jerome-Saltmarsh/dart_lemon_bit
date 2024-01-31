@@ -6,7 +6,7 @@ import 'package:amulet_flutter/gamestream/sprites/kid_character_sprites.dart';
 
 void renderPlayerFront({
   required IsometricPlayer player,
-  required KidCharacterSprites sprites,
+  required HumanCharacterSprites sprites,
   required Canvas canvas,
   required int row,
   required int column,
