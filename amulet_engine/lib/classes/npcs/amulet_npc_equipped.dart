@@ -4,14 +4,13 @@ import '../src.dart';
 
 class AmuletNpcEquipped extends AmuletNpc {
 
-  final weaponSlot = AmuletItemSlot();
+  AmuletItem? weaponSlot;
 
   AmuletNpcEquipped({
       required super.health,
       required super.team,
       required super.weaponDamage,
       required super.weaponRange,
-      required super.weaponCooldown,
       required super.x,
       required super.y,
       required super.z,
@@ -21,5 +20,5 @@ class AmuletNpcEquipped extends AmuletNpc {
   }) : super (weaponType: 0);
 
   @override
-  int get weaponType => weaponSlot.amuletItem?.type ?? WeaponType.Unarmed;
+  int get weaponType => weaponSlot?.subType ?? WeaponType.Unarmed;
 }

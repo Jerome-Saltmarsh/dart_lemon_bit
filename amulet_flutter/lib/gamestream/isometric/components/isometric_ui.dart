@@ -37,7 +37,7 @@ class IsometricUI with IsometricComponent {
   void onComponentReady() {
     gameUI.value = website.buildUI;
     print('isometric_ui.onComponentReady()');
-    engine.fullScreenEnter();
+    // engine.fullScreenEnter();
   }
 
   Widget buildUI(BuildContext context) => GSFullscreen(

@@ -15,6 +15,33 @@ ctrl + shift + e        : view recent changes
 alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
+[NEW]
+[new] model armour leather
+[new] model armour chainmail
+[new] model armour platemail
+
+[FIX]
+[fix] skill teleport validate destination
+[fix] screen freezes on startup
+[fix] duplicate item on drop
+
+[fix] remodel fallen 
+[fix] front view render
+[fix] disable tutorial
+
+## 23.01.2024
+[fix] skeleton attack animation
+[new] modify seconds per frame
+[new] disable edit and debug mode outside develop mode
+[new] shift animation mode from sprite load to sprite play
+
+## 20.01.2024
+[new] render full helm
+
+## 15.01.2024
+[fix] improve character creation ui
+[new] remove gender from character creation
+
 ## 11.01.2024
 * [new]: disable front view
 * [new]: disable treasures

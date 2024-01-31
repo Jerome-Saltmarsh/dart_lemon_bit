@@ -22,13 +22,11 @@ class WitchesLair2 extends AmuletGame {
         z: scene.getIndexZ(indexSpawnWitch),
     )
       ..complexion = ComplexionType.fair
-      ..bodyType = BodyType.Shirt_Blue
-      ..legsType = LegType.Leather
-      ..shoeType = ShoeType.Iron_Plates
-      ..handTypeLeft = HandType.Gauntlets
+      ..armorType = ArmorType.Tunic
+      ..shoeType = ShoeType.Grieves
       ..hairType = HairType.basic_2
       ..hairColor = 17
-      ..helmType = HelmType.Wizard_Hat;
+      ..helmType = HelmType.Pointed_Hat_Black;
 
     characters.add(npcWitch);
   }
@@ -51,21 +49,21 @@ class WitchesLair2 extends AmuletGame {
 
     final target = character.target;
     if (character is AmuletNpcWitch && target != null){
-       final itemSlotPower = character.itemSlotPower;
-       final powerAmuletItem = itemSlotPower.amuletItem;
-       if (powerAmuletItem != null && !itemSlotPower.chargesEmpty){
-          final powerStats = character.getAmuletItemStats(powerAmuletItem);
-          if (powerStats != null) {
-            if (character.withinRadiusPosition(target, powerStats.range)) {
-              character.activateItemSlotPower();
-              character.facePosition(target);
-              character.itemSlotPower.reduceCharges();
-              character.setCharacterStateCasting(
-                duration: 35,
-              );
-            }
-          }
-       }
+       // final itemSlotPower = character.itemSlotPower;
+       // final powerAmuletItem = itemSlotPower.amuletItem;
+       // if (powerAmuletItem != null && !itemSlotPower.chargesEmpty){
+       //    final powerStats = character.getAmuletItemStats(powerAmuletItem);
+       //    if (powerStats != null) {
+       //      if (character.withinRadiusPosition(target, powerStats.range)) {
+       //        character.activateItemSlotPower();
+       //        character.facePosition(target);
+       //        character.itemSlotPower.reduceCharges();
+       //        character.setCharacterStateCasting(
+       //          duration: 35,
+       //        );
+       //      }
+       //    }
+       // }
     }
     super.updateCharacterAction(character);
   }

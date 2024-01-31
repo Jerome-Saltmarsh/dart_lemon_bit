@@ -5,33 +5,34 @@ import '../packages/src.dart';
 class AmuletGameObject extends GameObject {
 
   final int frameSpawned;
-  final AmuletItem item;
+  final AmuletItem amuletItem;
 
   AmuletGameObject({
     required super.x,
     required super.y,
     required super.z,
     required super.id,
-    required this.item,
+    required this.amuletItem,
     required this.frameSpawned,
     required int deactivationTimer
   }) : super(
-      type: item.type,
-      subType: item.subType,
+      type: ItemType.Amulet_Item,
+      subType: amuletItem.index,
       team: TeamType.Neutral,
   ) {
     this.deactivationTimer = deactivationTimer;
     fixed = false;
     gravity = true;
     collidable = true;
-    collectable = !item.consumable;
+    interactable = true;
     persistable = false;
     hitable = false;
     physical = false;
+    collectable = AmuletItem.Consumables.contains(amuletItem);
   }
 
   @override
-  String get name => item.name;
+  String get name => amuletItem.label;
 
   @override
   bool onSameTeam(a) {

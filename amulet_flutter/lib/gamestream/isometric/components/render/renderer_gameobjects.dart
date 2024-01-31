@@ -1,6 +1,4 @@
-import 'dart:ui';
-
-import 'package:amulet_flutter/gamestream/isometric/atlases/atlas.dart';
+import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_amulet_item.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_images.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_scene.dart';
@@ -10,6 +8,7 @@ import 'package:amulet_flutter/isometric/classes/position.dart';
 import 'package:amulet_engine/packages/common.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
+import 'package:lemon_sprite/lib.dart';
 
 class SurfaceIndex {
   static const east = 0;
@@ -165,7 +164,7 @@ class RendererGameObjects extends RenderGroup {
 
       render.sprite(
           sprite: sprite,
-          frame: sprite.getFrame(row: 0, column: 0),
+          frame: sprite.getFrame(row: 0, column: 0, mode: AnimationMode.single),
           color: color,
           scale: scale,
           dstX: dstX,
@@ -175,7 +174,7 @@ class RendererGameObjects extends RenderGroup {
 
       render.sprite(
           sprite: sprite,
-          frame: sprite.getFrame(row: 0, column: 1),
+          frame: sprite.getFrame(row: 0, column: 1, mode: AnimationMode.single),
           color: color,
           scale: scale,
           dstX: dstX,
@@ -185,7 +184,7 @@ class RendererGameObjects extends RenderGroup {
 
       render.sprite(
           sprite: sprite,
-          frame: sprite.getFrame(row: 0, column: 2),
+          frame: sprite.getFrame(row: 0, column: 2, mode: AnimationMode.single),
           color: color,
           scale: scale,
           dstX: dstX,
@@ -195,7 +194,7 @@ class RendererGameObjects extends RenderGroup {
 
       render.sprite(
           sprite: sprite,
-          frame: sprite.getFrame(row: 0, column: 3),
+          frame: sprite.getFrame(row: 0, column: 3, mode: AnimationMode.single),
           color: color,
           scale: scale,
           dstX: dstX,
@@ -206,7 +205,7 @@ class RendererGameObjects extends RenderGroup {
       if (subType == GameObjectType.Crystal_Glowing_False){
         render.sprite(
           sprite: sprite,
-          frame: sprite.getFrame(row: 0, column: 0),
+          frame: sprite.getFrame(row: 0, column: 0, mode: AnimationMode.single),
           color: scene.colorEast(gameObjectIndex),
           scale: scale,
           dstX: dstX,
@@ -216,7 +215,7 @@ class RendererGameObjects extends RenderGroup {
 
         render.sprite(
           sprite: sprite,
-          frame: sprite.getFrame(row: 0, column: 1),
+          frame: sprite.getFrame(row: 0, column: 1, mode: AnimationMode.single),
           color: scene.colorNorth(gameObjectIndex),
           scale: scale,
           dstX: dstX,
@@ -226,7 +225,7 @@ class RendererGameObjects extends RenderGroup {
 
         render.sprite(
           sprite: sprite,
-          frame: sprite.getFrame(row: 0, column: 2),
+          frame: sprite.getFrame(row: 0, column: 2, mode: AnimationMode.single),
           color: scene.colorSouth(gameObjectIndex),
           scale: scale,
           dstX: dstX,
@@ -236,7 +235,7 @@ class RendererGameObjects extends RenderGroup {
 
         render.sprite(
           sprite: sprite,
-          frame: sprite.getFrame(row: 0, column: 3),
+          frame: sprite.getFrame(row: 0, column: 3, mode: AnimationMode.single),
           color: scene.colorWest(gameObjectIndex),
           scale: scale,
           dstX: dstX,
@@ -249,41 +248,33 @@ class RendererGameObjects extends RenderGroup {
       return;
     }
 
-    final isCollectable = const [
-      ItemType.Weapon,
-      ItemType.Helm,
-      ItemType.Body,
-      ItemType.Legs,
-      ItemType.Consumable,
-      ItemType.Spell,
-    ].contains(type);
+    final isAmuletItem = type == ItemType.Amulet_Item;
 
-    if (isCollectable){
+    if (isAmuletItem){
       renderBouncingGameObjectShadow(gameObject);
+
+      final src = atlasSrcAmuletItem[AmuletItem.values[subType]] ?? const[0, 0];
+
+      engine.renderSprite(
+          image: images.atlas_amulet_items,
+          dstX: gameObject.renderX,
+          dstY: isAmuletItem ? getRenderYBouncing(gameObject) : gameObject.renderY,
+          srcX: src[0],
+          srcY: src[1],
+          srcWidth: 32,
+          srcHeight: 32,
+          scale: 1.0,
+          color: switch (gameObject.emissionType){
+            EmissionType.None => scene.getRenderColorPosition(gameObject),
+            EmissionType.Ambient => scene.getRenderColorPosition(gameObject),
+            EmissionType.Color => gameObject.emissionColor,
+            EmissionType.Zero => 0,
+            _ => throw Exception()
+          }
+      );
+      return;
     }
-
-    final image = getImageForGameObjectType(type);
-    final src = Atlas.getSrc(type, subType);
-
-    engine.renderSprite(
-      image: image,
-      dstX: gameObject.renderX,
-      dstY: isCollectable ? getRenderYBouncing(gameObject) : gameObject.renderY,
-      srcX: src[Atlas.SrcX],
-      srcY: src[Atlas.SrcY],
-      anchorY: src[Atlas.SrcAnchorY],
-      srcWidth: src[Atlas.SrcWidth],
-      srcHeight: src[Atlas.SrcHeight],
-      scale: src[Atlas.SrcScale],
-      color: switch (gameObject.emissionType){
-         EmissionType.None => scene.getRenderColorPosition(gameObject),
-         EmissionType.Ambient => scene.getRenderColorPosition(gameObject),
-         EmissionType.Color => gameObject.emissionColor,
-         EmissionType.Zero => 0,
-         _ => throw Exception()
-      }
-    );
-
+    // throw Exception('rendererGameObjects.')
   }
 
   void renderCrateWooden(
@@ -360,84 +351,7 @@ class RendererGameObjects extends RenderGroup {
       scale: scale,
       anchorY: anchorY,
     );
-
-    return;
   }
-
-  // void renderBarrel(
-  //     IsometricScene scene,
-  //     GameObject gameObject,
-  //     IsometricImages images,
-  //     IsometricRender render,
-  // ) {
-  //   final gameObjectIndex = scene.getIndexPosition(gameObject);
-  //   final dstX = gameObject.renderX;
-  //   final dstY = gameObject.renderY;
-  //   final sprite = images.barrelWooden;
-  //   const scale = 0.3;
-  //   const anchorY = 0.8;
-  //
-  //   render.sprite(
-  //     sprite: sprite,
-  //     frame: sprite.getFrame(row: 0, column: 2),
-  //     dstX: dstX,
-  //     dstY: dstY,
-  //     color: scene.getColor(gameObjectIndex),
-  //     scale: scale,
-  //     anchorY: anchorY,
-  //   );
-  //
-  //   render.sprite(
-  //     sprite: sprite,
-  //     frame: sprite.getFrame(row: 0, column: 3),
-  //     dstX: dstX,
-  //     dstY: dstY,
-  //     color: scene.colorSouth(gameObjectIndex),
-  //     scale: scale,
-  //     anchorY: anchorY,
-  //   );
-  //
-  //   render.sprite(
-  //     sprite: sprite,
-  //     frame: sprite.getFrame(row: 0, column: 5),
-  //     dstX: dstX,
-  //     dstY: dstY,
-  //     color: scene.colorWest(gameObjectIndex),
-  //     scale: scale,
-  //     anchorY: anchorY,
-  //   );
-  //
-  //   render.sprite(
-  //       sprite: sprite,
-  //       frame: sprite.getFrame(row: 0, column: 0),
-  //       dstX: dstX,
-  //       dstY: dstY,
-  //       color: scene.colorEast(gameObjectIndex),
-  //       scale: scale,
-  //       anchorY: anchorY,
-  //   );
-  //
-  //   render.sprite(
-  //       sprite: sprite,
-  //       frame: sprite.getFrame(row: 0, column: 1),
-  //       dstX: dstX,
-  //       dstY: dstY,
-  //       color: scene.colorNorth(gameObjectIndex),
-  //       scale: scale,
-  //       anchorY: anchorY,
-  //   );
-  //
-  //   render.sprite(
-  //       sprite: sprite,
-  //       frame: sprite.getFrame(row: 0, column: 4),
-  //       dstX: dstX,
-  //       dstY: dstY,
-  //       color: scene.colorAbove(gameObjectIndex),
-  //       scale: scale,
-  //       anchorY: anchorY,
-  //   );
-  //
-  // }
 
   @override
   void updateFunction() {
@@ -466,11 +380,4 @@ class RendererGameObjects extends RenderGroup {
         scale: shadowScale + (shadowScaleHeight * animation.frameWaterHeight.toDouble())
     );
   }
-
-  Image getImageForGameObjectType(int type) =>
-      images.itemTypeAtlases[type] ?? (
-          throw Exception(
-              'getImageForGameObjectType(type: ${ItemType.getName(type)}})'
-          )
-      );
 }

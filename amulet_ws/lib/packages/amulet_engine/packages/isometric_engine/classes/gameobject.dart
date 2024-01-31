@@ -9,6 +9,8 @@ class GameObject extends Collider {
   var subType = -1;
   var quantity = 0;
   var interactable = false;
+  /// collectable means that the player automatically picks this item up by colliding with it
+  /// this is used for health potions
   var collectable = false;
   var persistable = false;
   var destroyable = false;
@@ -26,13 +28,8 @@ class GameObject extends Collider {
   @override
   int get materialType => getMaterialType(type, subType);
 
-  bool get ignorePointer => const [
-      GameObjectType.Barrel,
-      GameObjectType.Broom,
-      GameObjectType.Bottle,
-      GameObjectType.Crate_Wooden,
-      GameObjectType.Candle,
-    ].contains(subType);
+  bool get ignorePointer =>
+      type == ItemType.Object && subType != GameObjectType.Interactable;
 
   static int getMaterialType(int type, int subType){
      switch (type){

@@ -16,13 +16,14 @@ import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 import 'package:typedef/json.dart';
 
+import '../amulet/src.dart';
 import 'functions/build_website_page_new_user.dart';
 import 'widgets/dialog_create_character_computer.dart';
 
 extension WebsiteUI on WebsiteGame {
 
-  Widget buildPageWebsiteDesktop(BuildContext context) =>
-      WatchBuilder(options.serverMode, (ServerMode serverMode) {
+  Widget buildPageWebsiteDesktop(BuildContext context) {
+    return WatchBuilder(options.serverMode, (ServerMode serverMode) {
 
         final page = WatchBuilder(websitePage, (websitePage) =>
             switch (websitePage) {
@@ -113,6 +114,7 @@ extension WebsiteUI on WebsiteGame {
 
         return page;
       });
+  }
 
   Widget buildTogglePlayMode() {
     return WatchBuilder(options.serverMode, (activeServerMode) {
@@ -182,13 +184,18 @@ extension WebsiteUI on WebsiteGame {
           buildTableCharacters(characters, (){})
       );
 
-  Widget buildCharacters(List<Json> characters, Function rebuild) =>
+  Widget buildCharacters(List<CharacterJson> characters, Function rebuild) =>
       Container(
       height: 200,
       child: SingleChildScrollView(
         child: Column(
             children: characters
                 .map((character) {
+
+                  final weapon = AmuletItem.findByName(character.weapon);
+                  final helm = AmuletItem.findByName(character.helm);
+                  final armour = AmuletItem.findByName(character.armor);
+                  final shoes = AmuletItem.findByName(character.shoes);
 
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -205,7 +212,14 @@ extension WebsiteUI on WebsiteGame {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             buildText(character['name'], size: 22),
-                            buildText('lvl ${character['level']}', size: 22, color: Colors.white70),
+                            if (weapon != null)
+                              AmuletItemImage(amuletItem: weapon, scale: 1.0),
+                            if (helm != null)
+                              AmuletItemImage(amuletItem: helm, scale: 1.0),
+                            if (armour != null)
+                              AmuletItemImage(amuletItem: armour, scale: 1.0),
+                            if (shoes != null)
+                              AmuletItemImage(amuletItem: shoes, scale: 1.0),
                           ],
                         )),
                   ),
@@ -242,8 +256,6 @@ extension WebsiteUI on WebsiteGame {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // buildText('CHARACTERS', size: 22, color: Colors.white70),
-              // width16,
               onPressed(
                 action: showPageNewCharacter,
                 child: Container(

@@ -27,26 +27,14 @@ class ItemSlot {
       return false;
 
     switch (slotType){
-      case SlotType.Weapons:
-        return srcItem.isWeapon || srcItem.isSpell;
-      case SlotType.Treasure:
-        return srcItem.isTreasure;
       case SlotType.Weapon:
         return srcItem.isWeapon;
-      case SlotType.Hand_Left:
-        return srcItem.isHand;
-      case SlotType.Hand_Right:
-        return srcItem.isHand;
       case SlotType.Helm:
         return srcItem.isHelm;
-      case SlotType.Body:
-        return srcItem.isBody;
-      case SlotType.Legs:
-        return srcItem.isLegs;
+      case SlotType.Armor:
+        return srcItem.isArmor;
       case SlotType.Shoes:
         return srcItem.isShoes;
-      case SlotType.Item:
-        return true;
     }
   }
 }

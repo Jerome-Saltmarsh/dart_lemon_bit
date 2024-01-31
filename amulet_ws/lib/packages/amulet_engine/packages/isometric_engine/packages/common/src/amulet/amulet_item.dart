@@ -1,897 +1,750 @@
 import '../../src.dart';
+import 'package:collection/collection.dart';
 
+// armour
+ // neutral
+    // tunic [x]
+ // knight
+    // leather [x]
+    // chainmail [x]
+    // platemail [x]
+ // wizard
+    // robes [x]
+    // garb
+    // attire
+ // rogue
+    // cloak [x]
+    // mantle
+    // shroud
+
+// helm
+  // warrior
+    // leather cap [x]
+    // steel cap [x]
+    // steel helm
+  // wizard
+    // pointed hat purple [x]
+    // pointed hat black [x]
+    // cowl
+  // rogue
+    // feather cap [x]
+    // hood
+    // cape
+
+// shoes
+  // warrior
+    // leather boots [x]
+    // grieves [x]
+    // sabatons
+  // wizard
+    // black_slippers [x]
+    // footwraps
+    // soles
+  // rogue
+    // treads [x]
+    // striders
+    // satin_boots
+
+// stash
+  // scalemail
+  // splint
+  // banded
+  // brigandine
+  // veil
+  // diadem
+  // turban
+  // circlet
+  // great helm
+  // crest
+  // broom (weapon type wizard)
+  // wand (weapon type wizard)
+  // dagger (weapon type rogue)
 
 enum AmuletItem {
-  Blink_Dagger(
-    type: ItemType.Weapon,
-    subType: WeaponType.Shortsword,
-    description: 'Teleport a short distance',
-    levelMin: 1,
-    levelMax: 99,
-    minRunes: 3,
-    level1: AmuletItemStats(
-      charges: 1,
-      cooldown: 0,
-      range: 150,
-      performDuration: 16,
-    ),
-    level2: AmuletItemStats(
-      charges: 1,
-      cooldown: 0,
-      range: 160,
-      performDuration: 16,
-    ),
-    level3: AmuletItemStats(
-      charges: 1,
-      cooldown: 0,
-      range: 170,
-      performDuration: 16,
-    ),
-  ),
-  Weapon_Rusty_Short_Sword(
-    levelMin: 1,
-    levelMax: 5,
-    type: ItemType.Weapon,
-    subType: WeaponType.Shortsword,
-    description: 'A low quality short sword',
-    level1: AmuletItemStats(
-      damageMin: 1,
-      damageMax: 3,
-      range: 45,
-      cooldown: 1,
-      charges: 1,
-      performDuration: 32,
-    ),
-  ),
-  Weapon_Short_Sword(
-    levelMin: 1,
-    levelMax: 5,
-    type: ItemType.Weapon,
-    subType: WeaponType.Shortsword,
-    description: 'A plain short sword',
-    level1: AmuletItemStats(
-      damageMin: 2,
-      damageMax: 4,
-      range: 50,
-      cooldown: 1,
-      charges: 1,
-      performDuration: 32,
-    ),
-  ),
-  Weapon_Short_Sword_Of_Pain(
-    levelMin: 1,
-    levelMax: 5,
-    minRunes: 1,
-    type: ItemType.Weapon,
-    subType: WeaponType.Shortsword,
-    description: 'A particularly sharp short sword',
-    level1: AmuletItemStats(
-      damageMin: 3,
+  Weapon_Sword_1_Common(
+      label: 'Short Sword',
+      description: 'A particularly sharp short sword',
+      levelMin: 1,
+      levelMax: 5,
+      type: ItemType.Weapon,
+      subType: WeaponType.Shortsword,
+      skillType: SkillType.Strike,
+      performDuration: 25,
+      range: 40,
+      damageMin: 0,
       damageMax: 5,
-      range: 50,
-      cooldown: 1,
-      charges: 1,
-      performDuration: 32,
-    ),
+      quality: ItemQuality.Common,
   ),
-  Weapon_Rodungs_Blade(
-    levelMin: 3,
+  Weapon_Sword_1_Rare(
+    label: "a basic short sword",
+    description: 'An extra short sword',
+    levelMin: 1,
     levelMax: 5,
-    minRunes: 3,
     type: ItemType.Weapon,
     subType: WeaponType.Shortsword,
-    description: 'Are rare blade that once belonged to a great swordsman',
-    level1: AmuletItemStats(
-      damageMin: 6,
-      damageMax: 8,
-      range: 50,
-      cooldown: 1,
-      charges: 1,
-      performDuration: 20,
-    ),
+    skillType: SkillType.Strike,
+    performDuration: 25,
+    damageMin: 2,
+    damageMax: 7,
+    range: 45,
+    quality: ItemQuality.Rare,
   ),
-  Weapon_Broad_Sword(
-    levelMin: 4,
-    levelMax: 10,
+  Weapon_Sword_1_Legendary(
+    label: "Short Blade of Glen",
+    description: 'An extra short sword',
+    levelMin: 1,
+    levelMax: 5,
     type: ItemType.Weapon,
-    subType: WeaponType.Broadsword,
-    description: 'A medium length sword',
-    level1: AmuletItemStats(
-      damageMin: 7,
-      damageMax: 10,
-      range: 70,
-      cooldown: 1,
-      charges: 1,
-      performDuration: 32,
-    ),
-    level2: AmuletItemStats(
-      damageMin: 9,
-      damageMax: 12,
-      range: 70,
-      cooldown: 4,
-      charges: 7,
-      performDuration: 28,
-      fire: 1,
-    ),
-    level3: AmuletItemStats(
-      damageMin: 11,
-      damageMax: 14,
-      range: 70,
-      cooldown: 4,
-      charges: 7,
-      performDuration: 26,
-      fire: 3,
-    ),
+    subType: WeaponType.Shortsword,
+    skillType: SkillType.Strike,
+    performDuration: 22,
+    damageMin: 3,
+    damageMax: 9,
+    range: 45,
+    quality: ItemQuality.Legendary,
   ),
-  Weapon_Sword_Sapphire_Large(
-    levelMin: 8,
-    levelMax: 12,
-    type: ItemType.Weapon,
-    subType: WeaponType.Sword_Heavy_Sapphire,
-    description: 'A powerful heavy sword made of sapphire',
-    level1: AmuletItemStats(
-      damageMin: 12,
-      damageMax: 20,
-      range: 100,
-      cooldown: 1,
-      charges: 1,
-      performDuration: 40,
-    ),
-  ),
-  Weapon_Sharpened_Broad_Sword(
-    levelMin: 4,
-    levelMax: 10,
-    type: ItemType.Weapon,
-    subType: WeaponType.Broadsword,
-    description: 'A high quality medium length sword',
-    level1: AmuletItemStats(
-      damageMin: 8,
-      damageMax: 12,
-      range: 70,
-      cooldown: 1,
-      charges: 1,
-      performDuration: 30,
-    ),
-    level2: AmuletItemStats(
-      damageMin: 9,
-      damageMax: 12,
-      range: 70,
-      cooldown: 4,
-      charges: 7,
-      performDuration: 28,
-      fire: 1,
-    ),
-    level3: AmuletItemStats(
-      damageMin: 11,
-      damageMax: 14,
-      range: 70,
-      cooldown: 4,
-      charges: 7,
-      performDuration: 26,
-      fire: 3,
-    ),
-  ),
-  Weapon_Staff_Wooden(
+  Weapon_Staff_1_Common(
+    label: 'Wooden Staff',
+    description: 'a faint heat emanates from within',
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
-    description: 'An old gnarled staff',
-    level1: AmuletItemStats(
-        range: 200,
-        damageMin: 1,
-        damageMax: 3,
-        cooldown: 1,
-        performDuration: 25,
-        charges: 1,
-    ),
-  ),
-  Weapon_Staff_Of_Frozen_Lake(
-    levelMin: 5,
-    levelMax: 10,
-    type: ItemType.Weapon,
-    subType: WeaponType.Staff,
-    description: 'A powerful staff that eliminates cold',
-    level1: AmuletItemStats(
-        range: 100,
-        damageMin: 1,
-    ),
-  ),
-  Spell_Bow_Ice_Arrow(
-    levelMin: 1,
-    levelMax: 5,
-    dependency: WeaponType.Bow,
-    type: ItemType.Spell,
-    subType: SpellType.Split_Arrow,
-    description: 'fires multiple arrows',
-    level1: AmuletItemStats(
-      damageMin: 3,
-      damageMax: 6,
-      fire: 0,
-      charges: 3,
-      cooldown: 30,
-      performDuration: 25,
-      quantity: 3,
-    ),
-  ),
-  Spell_Bow_Split_Arrow(
-    levelMin: 1,
-    levelMax: 5,
-    dependency: WeaponType.Bow,
-    type: ItemType.Spell,
-    subType: SpellType.Split_Arrow,
-    description: 'fires multiple arrows',
-    level1: AmuletItemStats(
-      damageMin: 3,
-      damageMax: 6,
-      fire: 0,
-      charges: 3,
-      cooldown: 30,
-      performDuration: 25,
-      quantity: 3,
-    ),
-    level2: AmuletItemStats(
-      damageMin: 6,
-      damageMax: 9,
-      fire: 3,
-      water: 2,
-      electricity: 1,
-      charges: 3,
-      cooldown: 30,
-      performDuration: 25,
-      quantity: 4,
-    ),
-    level3: AmuletItemStats(
-      damageMin: 9,
-      damageMax: 12,
-      fire: 3,
-      water: 2,
-      electricity: 1,
-      charges: 3,
-      cooldown: 30,
-      performDuration: 25,
-      quantity: 4,
-    ),
-  ),
-  Weapon_Old_Bow(
-    levelMin: 1,
-    levelMax: 5,
-    type: ItemType.Weapon,
-    subType: WeaponType.Bow,
-    description: 'A worn out bow',
-    level1: AmuletItemStats(
-      damageMin: 2,
-      damageMax: 3,
-      charges: 3,
-      cooldown: 8,
-      range: 150,
-      performDuration: 20,
-      electricity: 0,
-    ),
-    level2: AmuletItemStats(
-      damageMin: 7,
-      damageMax: 12,
-      charges: 3,
-      cooldown: 9,
-      range: 160,
-      performDuration: 18,
-      electricity: 2,
-    ),
-    level3: AmuletItemStats(
-      damageMin: 9,
-      damageMax: 14,
-      charges: 4,
-      cooldown: 9,
-      range: 160,
-      performDuration: 18,
-      electricity: 6,
-    ),
-  ),
-  Weapon_Holy_Bow(
-    levelMin: 5,
-    levelMax: 10,
-    type: ItemType.Weapon,
-    subType: WeaponType.Bow,
-    description: 'A mythical bow which does a lot of damage',
-    level1: AmuletItemStats(
-        range: 150,
-        damageMin: 5,
-        damageMax: 10,
-        cooldown: 15,
-        charges: 3,
-        performDuration: 15,
-    ),
-    level2: AmuletItemStats(
-      range: 160,
-      damageMin: 1,
-      damageMax: 15,
-      cooldown: 38,
-      charges: 5,
-      performDuration: 13,
-    ),
-    level3: AmuletItemStats(
-      range: 200,
-      damageMin: 22,
-      damageMax: 30,
-      cooldown: 10,
-      charges: 10,
-      performDuration: 11,
-    ),
-  ),
-  Helm_Steel(
-    levelMin: 5,
-    levelMax: 10,
-    skillType: SkillType.Heal,
-    description: 'A strong steel helmet which provides healing.',
-    type: ItemType.Helm,
-    subType: HelmType.Steel,
-    level1: AmuletItemStats(),
-  ),
-  Helm_Wizards_Hat(
-    levelMin: 1,
-    levelMax: 5,
-    skillType: SkillType.Freeze_Area,
-    type: ItemType.Helm,
-    subType: HelmType.Wizard_Hat,
-    description: 'A hat commonly worn by students of magic school',
-    level1: AmuletItemStats(),
-  ),
-  Moth_Hat_Of_Magic(
-    levelMin: 5,
-    levelMax: 10,
     skillType: SkillType.Fireball,
+    performDuration: 35,
+    range: 40,
+    damageMin: 2,
+    damageMax: 5,
+    quality: ItemQuality.Common,
+  ),
+  Weapon_Staff_1_Rare(
+    label: 'Wooden Staff',
+    description: 'a faint heat emanates from within',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Weapon,
+    subType: WeaponType.Staff,
+    skillType: SkillType.Fireball,
+    performDuration: 35,
+    range: 50,
+    damageMin: 3,
+    damageMax: 7,
+    quality: ItemQuality.Rare,
+  ),
+  Weapon_Staff_1_Legendary(
+    label: 'Wooden Staff',
+    description: 'a faint heat emanates from within',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Weapon,
+    subType: WeaponType.Staff,
+    skillType: SkillType.Fireball,
+    skillLevel: 1,
+    performDuration: 35,
+    range: 80,
+    damageMin: 3,
+    damageMax: 7,
+    quality: ItemQuality.Legendary,
+  ),
+  Weapon_Bow_1_Common(
+    label: 'Common Short Bow',
+    description: 'A worn out bow',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Weapon,
+    subType: WeaponType.Bow,
+    skillType: SkillType.Arrow,
+    performDuration: 25,
+    range: 125,
+    damageMin: 2,
+    damageMax: 5,
+    quality: ItemQuality.Common,
+  ),
+  Weapon_Bow_1_Rare(
+    label: 'Rare Short Bow',
+    description: 'This bow was crafted from a stronger wood',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Weapon,
+    subType: WeaponType.Bow,
+    skillType: SkillType.Arrow,
+    performDuration: 25,
+    range: 135,
+    damageMin: 3,
+    damageMax: 8,
+    quality: ItemQuality.Rare,
+  ),
+  Weapon_Bow_1_Legendary(
+    label: 'Legendary Short Bow',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Weapon,
+    subType: WeaponType.Bow,
+    skillType: SkillType.Arrow,
+    performDuration: 32,
+    range: 150,
+    damageMin: 5,
+    damageMax: 12,
+    quality: ItemQuality.Legendary,
+  ),
+  Helm_Warrior_1_Leather_Cap_Common(
+    label: 'Leather Cap',
+    levelMin: 1,
+    levelMax: 5,
+    skillType: SkillType.Might,
+    skillLevel: 1,
     type: ItemType.Helm,
-    subType: HelmType.Witches_Hat,
-    description: 'an old moth eaten hat that emanates magic',
-    level1: AmuletItemStats(
-      health: 20,
-    ),
+    subType: HelmType.Leather_Cap,
+    performDuration: 25,
+    maxHealth: 5,
+    quality: ItemQuality.Common,
+    regenHealth: 1,
   ),
-  Pants_Travellers(
+  Helm_Wizard_1_Pointed_Hat_Purple_Common(
+    label: 'Crooked Hat',
     levelMin: 1,
     levelMax: 5,
-    type: ItemType.Legs,
-    subType: LegType.Leather,
-    description: 'Common pants made for more for comfort than combat',
-    level1: AmuletItemStats(
-      health: 5,
-    ),
+    skillType: SkillType.Heal,
+    type: ItemType.Helm,
+    subType: HelmType.Pointed_Hat_Purple,
+    performDuration: 25,
+    maxHealth: 2,
+    quality: ItemQuality.Common,
+    regenMagic: 1,
+    skillMagicCost: 3,
   ),
-  Pants_Squires(
-    levelMin: 3,
-    levelMax: 8,
-    type: ItemType.Legs,
-    subType: LegType.Leather,
-    description: 'increases attack speed with bows',
-    level1: AmuletItemStats(
-      health: 10,
-    ),
-  ),
-  Pants_Plated(
-    levelMin: 10,
-    levelMax: 15,
-    type: ItemType.Legs,
-    subType: LegType.Plated,
-    description: 'Quite heavy but they offer a lot of protection',
-    level1: AmuletItemStats(
-      health: 16,
-    ),
-  ),
-  Pants_Linen_Striped(
-    levelMin: 10,
-    levelMax: 15,
-    type: ItemType.Legs,
-    subType: LegType.Linen_Striped,
-    description: 'Light weight pants for for mobility',
-    level1: AmuletItemStats(
-      health: 16,
-    ),
-  ),
-  Black_Boots_Of_Magic(
-    levelMin: 5,
-    levelMax: 10,
-    type: ItemType.Shoes,
-    subType: ShoeType.Black_Boots,
-    description: 'reduces all cooldowns',
-    level1: AmuletItemStats(
-      health: 5,
-    ),
-  ),
-  Gauntlet_of_the_Knight(
-    levelMin: 5,
-    levelMax: 10,
-    type: ItemType.Hand,
-    subType: HandType.Gauntlets,
-    description: 'passively increases melee damage',
-    level1: AmuletItemStats(
-      health: 5,
-    ),
-  ),
-  Glove_Healers_Hand(
-    levelMin: 5,
-    levelMax: 10,
-    type: ItemType.Hand,
-    subType: HandType.Leather_Gloves,
-    description: 'heals the player a small amount',
-    level1: AmuletItemStats(
-      health: 5,
-      cooldown: 10,
-    ),
-  ),
-  Leather_Gloves(
-    levelMin: 1,
-    levelMax: 8,
-    type: ItemType.Hand,
-    subType: HandType.Leather_Gloves,
-    description: 'Common leather gloves',
-    level1: AmuletItemStats(
-      health: 5,
-    ),
-  ),
-  Armor_Shirt_Blue_Worn(
+  Helm_Rogue_1_Hood_Common(
+    label: 'Feather Cap',
     levelMin: 1,
     levelMax: 5,
-    type: ItemType.Body,
-    subType: BodyType.Shirt_Blue,
-    description: 'An ordinary shirt',
-    level1: AmuletItemStats(
-      health: 10,
-    ),
+    skillType: SkillType.Invisible,
+    skillLevel: 1,
+    type: ItemType.Helm,
+    subType: HelmType.Feather_Cap,
+    performDuration: 25,
+    maxHealth: 3,
+    quality: ItemQuality.Common,
+    skillMagicCost: 4,
   ),
-  Armor_Black_Cloak(
+  Helm_Warrior_2_Steel_Cap_Common(
+    label: 'Steel Cap',
     levelMin: 1,
     levelMax: 5,
-    type: ItemType.Body,
-    subType: BodyType.Black_Cloak,
-    description: 'A cloak that enhances magical ability',
-    level1: AmuletItemStats(
-      health: 10,
-    ),
+    skillType: SkillType.Might,
+    skillLevel: 1,
+    type: ItemType.Helm,
+    subType: HelmType.Steel_Cap,
+    performDuration: 25,
+    maxHealth: 5,
+    quality: ItemQuality.Common,
+    regenHealth: 1,
   ),
-  Armor_Leather_Basic(
-    levelMin: 3,
-    levelMax: 6,
-    type: ItemType.Body,
-    subType: BodyType.Leather_Armour,
-    description: 'Common armour',
-    level1: AmuletItemStats(
-      health: 15
-    ),
+  Helm_Wizard_2_Pointed_Hat_Black_Common(
+    label: 'Pointed Hat',
+    levelMin: 2,
+    levelMax: 5,
+    skillType: SkillType.Might,
+    skillLevel: 1,
+    type: ItemType.Helm,
+    subType: HelmType.Pointed_Hat_Black,
+    performDuration: 25,
+    maxMagic: 5,
+    quality: ItemQuality.Common,
+    regenMagic: 1,
   ),
-  Shoe_Leather_Boots(
+  Helm_Rogue_2_Cape_Common(
+    label: 'Cape',
+    levelMin: 1,
+    levelMax: 5,
+    skillType: SkillType.Might,
+    skillLevel: 1,
+    type: ItemType.Helm,
+    subType: HelmType.Cape,
+    performDuration: 25,
+    maxHealth: 5,
+    quality: ItemQuality.Common,
+    regenHealth: 1,
+  ),
+  Helm_Warrior_3_Steel_Helm_Common(
+    label: 'Steel Helm',
+    levelMin: 1,
+    levelMax: 5,
+    skillType: SkillType.Might,
+    skillLevel: 1,
+    type: ItemType.Helm,
+    subType: HelmType.Steel_Helm,
+    performDuration: 25,
+    maxHealth: 5,
+    quality: ItemQuality.Common,
+    regenHealth: 1,
+  ),
+  Helm_Wizard_3_Circlet_Common(
+    label: 'Circlet',
+    levelMin: 1,
+    levelMax: 5,
+    skillType: SkillType.Might,
+    skillLevel: 1,
+    type: ItemType.Helm,
+    subType: HelmType.Cowl,
+    performDuration: 25,
+    maxHealth: 5,
+    quality: ItemQuality.Common,
+    regenHealth: 1,
+  ),
+  Helm_Rogue_3_Veil_Common(
+    label: 'Veil',
+    levelMin: 1,
+    levelMax: 5,
+    skillType: SkillType.Might,
+    skillLevel: 1,
+    type: ItemType.Helm,
+    subType: HelmType.Cape,
+    performDuration: 25,
+    maxHealth: 5,
+    quality: ItemQuality.Common,
+    regenHealth: 1,
+  ),
+  Armor_Neutral_1_Common_Tunic(
+    label: 'Common',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Armor,
+    subType: ArmorType.Tunic,
+    quality: ItemQuality.Common,
+    maxHealth: 1,
+  ),
+  Armor_Warrior_1_Leather_Common(
+    label: 'Leather',
+    levelMin: 1,
+    levelMax: 3,
+    type: ItemType.Armor,
+    subType: ArmorType.Leather,
+    quality: ItemQuality.Common,
+    maxHealth: 10,
+    skillType: SkillType.Might,
+    skillLevel: 1,
+    skillMagicCost: 6,
+    regenHealth: 1,
+  ),
+  Armor_Warrior_1_Leather_Rare(
+    label: 'Leather',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Armor,
+    subType: ArmorType.Leather,
+    quality: ItemQuality.Rare,
+    maxHealth: 15,
+    regenHealth: 1,
+  ),
+  Armor_Warrior_1_Leather_Legendary(
+    label: 'Leather',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Armor,
+    subType: ArmorType.Leather,
+    quality: ItemQuality.Legendary,
+    maxHealth: 20,
+    regenHealth: 2,
+  ),
+  Armor_Warrior_2_Chainmail_Common(
+    label: 'Chainmail',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Armor,
+    subType: ArmorType.Chainmail,
+    quality: ItemQuality.Common,
+    maxHealth: 20,
+    regenHealth: 2,
+  ),
+  Armor_Warrior_2_Chainmail_Rare(
+    label: 'Chainmail',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Armor,
+    subType: ArmorType.Chainmail,
+    quality: ItemQuality.Rare,
+    maxHealth: 30,
+    regenHealth: 2,
+  ),
+  Armor_Warrior_2_Chainmail_Legendary(
+    label: 'Chainmail',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Armor,
+    subType: ArmorType.Chainmail,
+    quality: ItemQuality.Legendary,
+    maxHealth: 40,
+    regenHealth: 3,
+  ),
+  Armor_Warrior_3_Platemail_Common(
+    label: 'Platemail',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Armor,
+    subType: ArmorType.Platemail,
+    quality: ItemQuality.Common,
+    maxHealth: 30,
+    regenHealth: 3,
+  ),
+  Armor_Warrior_3_Platemail_Rare(
+    label: 'Platemail',
+    levelMin: 5,
+    levelMax: 10,
+    type: ItemType.Armor,
+    subType: ArmorType.Platemail,
+    quality: ItemQuality.Rare,
+    maxHealth: 30,
+    regenHealth: 3,
+  ),
+  Armor_Warrior_3_Platemail_Legendary(
+    label: 'Platemail',
+    levelMin: 5,
+    levelMax: 10,
+    type: ItemType.Armor,
+    subType: ArmorType.Platemail,
+    quality: ItemQuality.Legendary,
+    maxHealth: 30,
+    regenHealth: 3,
+  ),
+  Armor_Wizard_1_Robe_Common(
+    label: 'Robe',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Armor,
+    subType: ArmorType.Robes,
+    quality: ItemQuality.Common,
+    maxHealth: 5,
+    regenMagic: 1,
+    maxMagic: 5,
+  ),
+  Armor_Wizard_1_Robe_Rare(
+    label: 'Robe',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Armor,
+    subType: ArmorType.Robes,
+    quality: ItemQuality.Rare,
+    maxHealth: 8,
+    maxMagic: 10,
+  ),
+  Armor_Wizard_1_Robe_Legendary(
+    label: 'Robe',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Armor,
+    subType: ArmorType.Robes,
+    quality: ItemQuality.Legendary,
+    maxHealth: 10,
+    maxMagic: 15,
+  ),
+  Armor_Rogue_1_Cloak_Common(
+    label: 'Cloak',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Armor,
+    subType: ArmorType.Cloak,
+    quality: ItemQuality.Common,
+    maxHealth: 7,
+  ),
+  Armor_Rogue_1_Cloak_Rare(
+    label: 'Cloak',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Armor,
+    subType: ArmorType.Cloak,
+    quality: ItemQuality.Rare,
+    maxHealth: 9,
+  ),
+  Armor_Rogue_1_Cloak_Legendary(
+    label: 'Cloak',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Armor,
+    subType: ArmorType.Cloak,
+    quality: ItemQuality.Legendary,
+    maxHealth: 12,
+  ),
+  Armor_Rogue_2_Mantle_Common(
+    label: 'Mantle',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Armor,
+    subType: ArmorType.Mantle,
+    quality: ItemQuality.Common,
+    maxHealth: 9,
+  ),
+  Armor_Rogue_2_Mantle_Rare(
+    label: 'Mantle',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Armor,
+    subType: ArmorType.Mantle,
+    quality: ItemQuality.Rare,
+    maxHealth: 9,
+  ),
+  Armor_Rogue_2_Mantle_Legendary(
+    label: 'Mantle',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Armor,
+    subType: ArmorType.Mantle,
+    quality: ItemQuality.Legendary,
+    maxHealth: 9,
+  ),
+  Armor_Rogue_3_Shroud_Common(
+    label: 'Shroud',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Armor,
+    subType: ArmorType.Shroud,
+    quality: ItemQuality.Common,
+    maxHealth: 9,
+  ),
+  Armor_Rogue_3_Shroud_Rare(
+    label: 'Shroud',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Armor,
+    subType: ArmorType.Shroud,
+    quality: ItemQuality.Rare,
+    maxHealth: 9,
+  ),
+  Armor_Rogue_3_Shroud_Legendary(
+    label: 'Shroud',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Armor,
+    subType: ArmorType.Shroud,
+    quality: ItemQuality.Legendary,
+    maxHealth: 9,
+  ),
+  Shoes_Warrior_1_Leather_Boots_Common(
+    label: 'Leather Boots',
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Shoes,
     subType: ShoeType.Leather_Boots,
-    description: 'A common leather boots',
-    level1: AmuletItemStats(
-      health: 5,
-      electricity: 2,
-    ),
-    level2: AmuletItemStats(
-      health: 10,
-      electricity: 4,
-    ),
-    level3: AmuletItemStats(
-      health: 15,
-      electricity: 8,
-    ),
+    performDuration: 25,
+    quality: ItemQuality.Common,
+    maxHealth: 5,
+    runSpeed: -0.125,
   ),
-  Shoe_Iron_Plates(
-    levelMin: 5,
-    levelMax: 10,
-    type: ItemType.Shoes,
-    subType: ShoeType.Iron_Plates,
-    description: 'Heavy boots which provide good defense',
-    level1: AmuletItemStats(
-      health: 5,
-      fire: 5
-    ),
-    level2: AmuletItemStats(
-      health: 10,
-      fire: 8
-    ),
-    level3: AmuletItemStats(
-      health: 12,
-    ),
-  ),
-  Shoe_Ocean_Boots(
-    levelMin: 5,
-    levelMax: 10,
-    type: ItemType.Shoes,
-    subType: ShoeType.Iron_Plates,
-    description: 'Commonly worn by water mages',
-    level1: AmuletItemStats(),
-  ),
-  Shoe_Storm_Boots(
-    levelMin: 10,
-    levelMax: 15,
-    type: ItemType.Shoes,
-    subType: ShoeType.Iron_Plates,
-    description: 'commonly worn by electric mages',
-    level1: AmuletItemStats(),
-  ),
-  Potion_Health(
+  Shoes_Wizard_1_Black_Slippers_Common(
+    label: 'Black Slippers',
     levelMin: 1,
     levelMax: 5,
+    type: ItemType.Shoes,
+    subType: ShoeType.Black_Slippers,
+    quality: ItemQuality.Common,
+    maxHealth: 1,
+    maxMagic: 5,
+    skillType: SkillType.Teleport,
+    skillLevel: 1,
+    skillMagicCost: 6,
+  ),
+  Shoes_Rogue_1_Treads_Common(
+    label: 'Treads',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Shoes,
+    subType: ShoeType.Treads,
+    quality: ItemQuality.Common,
+    maxHealth: 1,
+    maxMagic: 5,
+    skillType: SkillType.Teleport,
+    skillLevel: 1,
+    skillMagicCost: 6,
+  ),
+  Shoes_Warrior_2_Grieves_Common(
+    label: 'Grieves',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Shoes,
+    subType: ShoeType.Grieves,
+    performDuration: 25,
+    quality: ItemQuality.Common,
+    maxHealth: 5,
+    runSpeed: -0.125,
+  ),
+  Shoes_Wizard_2_Footwraps_Common(
+    label: 'Footwraps',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Shoes,
+    subType: ShoeType.Footwraps,
+    quality: ItemQuality.Common,
+    maxHealth: 1,
+    maxMagic: 5,
+    skillType: SkillType.Teleport,
+    skillLevel: 1,
+    skillMagicCost: 6,
+  ),
+  Shoes_Rogue_2_Striders_Common(
+    label: 'Striders',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Shoes,
+    subType: ShoeType.Striders,
+    quality: ItemQuality.Common,
+    maxHealth: 1,
+    maxMagic: 5,
+    skillType: SkillType.Teleport,
+    skillLevel: 1,
+    skillMagicCost: 6,
+  ),
+  Shoes_Warrior_3_Sabatons_Common(
+    label: 'Sabatons',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Shoes,
+    subType: ShoeType.Sabatons,
+    performDuration: 25,
+    quality: ItemQuality.Common,
+    maxHealth: 5,
+    runSpeed: -0.125,
+  ),
+  Shoes_Wizard_3_Soles_Common(
+    label: 'Soles',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Shoes,
+    subType: ShoeType.Soles,
+    quality: ItemQuality.Common,
+    maxHealth: 1,
+    maxMagic: 5,
+    skillType: SkillType.Teleport,
+    skillLevel: 1,
+    skillMagicCost: 6,
+  ),
+  Shoes_Rogue_3_Satin_Boots_Common(
+    label: 'Satin_Boots',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Shoes,
+    subType: ShoeType.Satin_Boots,
+    quality: ItemQuality.Common,
+    maxHealth: 1,
+    maxMagic: 5,
+    skillType: SkillType.Teleport,
+    skillLevel: 1,
+    skillMagicCost: 6,
+  ),
+  Consumable_Potion_Magic(
+    label: 'a common tonic',
+    description: 'heals a small amount of health',
+    type: ItemType.Consumable,
+    subType: ConsumableType.Potion_Blue,
+    levelMin: 0,
+    levelMax: 99,
+    quality: ItemQuality.Common,
+    maxMagic: 20,
+  ),
+  Consumable_Potion_Health(
+    label: 'a common tonic',
+    description: 'heals a small amount of health',
     type: ItemType.Consumable,
     subType: ConsumableType.Potion_Red,
-    consumable: true,
-    description: 'Replenishes health',
-    level1: AmuletItemStats(
-      health: 5,
-    ),
-  ),
-  Spell_Thunderbolt(
-    levelMin: 1,
-    levelMax: 5,
-    type: ItemType.Spell,
-    subType: SpellType.Thunderbolt,
-    description: 'strikes random nearby enemies with lightning',
-    level1: AmuletItemStats(
-      damageMin: 3,
-      damageMax: 5,
-      cooldown: 30,
-      charges: 2,
-      electricity: 0,
-      range: 100,
-      quantity: 1,
-    ),
-    level2: AmuletItemStats(
-      damageMin: 5,
-      damageMax: 10,
-      cooldown: 28,
-      charges: 2,
-      electricity: 3,
-      fire: 1,
-      range: 150,
-    ),
-    level3: AmuletItemStats(
-      damageMin: 12,
-      damageMax: 16,
-      cooldown: 26,
-      charges: 2,
-      electricity: 6,
-      fire: 2,
-      range: 200,
-    ),
-  ),
-  Spell_Fireball(
-    levelMin: 1,
-    levelMax: 5,
-    type: ItemType.Spell,
-    subType: SpellType.Fireball,
-    description: 'strikes random nearby enemies with lightning',
-    level1: AmuletItemStats(
-      damageMin: 3,
-      damageMax: 5,
-      cooldown: 5,
-      charges: 2,
-      fire: 0,
-      range: 100,
-      quantity: 1,
-      performDuration: 25,
-    ),
-    level2: AmuletItemStats(
-      damageMin: 5,
-      damageMax: 10,
-      cooldown: 4,
-      charges: 2,
-      electricity: 3,
-      fire: 1,
-      range: 150,
-      performDuration: 20,
-    ),
-    level3: AmuletItemStats(
-      damageMin: 12,
-      damageMax: 16,
-      cooldown: 3,
-      charges: 2,
-      electricity: 6,
-      fire: 2,
-      range: 200,
-      performDuration: 15,
-    ),
-  ),
-  Spell_Explosion(
-    levelMin: 1,
-    levelMax: 5,
-    type: ItemType.Spell,
-    subType: SpellType.Fireball,
-    description: 'strikes random nearby enemies with lightning',
-    level1: AmuletItemStats(
-      damageMin: 3,
-      damageMax: 5,
-      cooldown: 5,
-      charges: 2,
-      fire: 0,
-      range: 200,
-      quantity: 1,
-      performDuration: 25,
-    ),
-  ),
-  // the player has to travel the map and unlock runes
-  // spells can only be used once a certain amount of runes have been unlocked
-  // each time the player finds
-  Spell_Explosion_Level_2(
-    levelMin: 6,
-    levelMax: 10,
-    type: ItemType.Spell,
-    subType: SpellType.Fireball,
-    description: 'strikes random nearby enemies with lightning',
-    level1: AmuletItemStats(
-      damageMin: 3,
-      damageMax: 5,
-      cooldown: 5,
-      charges: 2,
-      fire: 0,
-      range: 200,
-      quantity: 1,
-      performDuration: 25,
-    ),
-  ),
-  Spell_Blink(
-    levelMin: 1,
-    levelMax: 5,
-      type: ItemType.Spell,
-      subType: SpellType.Blink,
-      description: 'teleport a short distance',
-      level1: AmuletItemStats(
-        cooldown: 30,
-        range: 50,
-      ),
-      level2: AmuletItemStats(
-        cooldown: 28,
-        range: 60,
-      ),
-      level3: AmuletItemStats(
-        cooldown: 26,
-        range: 70,
-      ),
-  ),
-  Spell_Heal(
-    levelMin: 1,
-    levelMax: 5,
-      type: ItemType.Spell,
-      subType: SpellType.Heal,
-      description: 'heals a small amount of health',
-      level1: AmuletItemStats(
-        charges: 1,
-        cooldown: 10,
-        health: 15,
-        performDuration: 25,
-        water: 0,
-      ),
-      level2: AmuletItemStats(
-        charges: 1,
-        cooldown: 10,
-        health: 25,
-        performDuration: 23,
-        water: 3,
-      ),
-      level3: AmuletItemStats(
-        charges: 1,
-        cooldown: 10,
-        health: 35,
-        performDuration: 21,
-        water: 6,
-        electricity: 1,
-      ),
+    levelMin: 0,
+    levelMax: 99,
+    quality: ItemQuality.Common,
+    health: 20,
   );
 
   /// the minimum level of a fiend that can drop this item
   final int levelMin;
   /// the maximum level of fiends that can drop this item
   final int levelMax;
-  final String description;
-  /// this is used by spells which required certain weapons to be equipped
-  /// for example split arrow depends on a bow
-  final int? dependency;
-  // final AmuletItemAction selectAction;
+  final String? description;
+  /// see item_type.dart in commons
   final int type;
   final int subType;
-  final bool consumable;
-  final int minRunes;
   final SkillType? skillType;
-  final AmuletItemStats level1;
-  final AmuletItemStats? level2;
-  final AmuletItemStats? level3;
+  final int? skillLevel;
+  final int? damageMin;
+  final int? damageMax;
+  final double? range;
+  final double? radius;
+  final int? performDuration;
+  final int? health;
+  final ItemQuality quality;
+  final String label;
+  final int? maxHealth;
+  final int? maxMagic;
+  final int? regenMagic;
+  final int? regenHealth;
+  final int? skillMagicCost;
+  final double? runSpeed;
 
   const AmuletItem({
     required this.type,
     required this.subType,
-    required this.level1,
-    required this.description,
     required this.levelMin,
     required this.levelMax,
-    this.dependency,
-    this.level2,
+    required this.quality,
+    required this.label,
+    this.maxHealth = 0,
+    this.maxMagic,
+    this.regenMagic,
+    this.regenHealth,
+    this.description,
     this.skillType,
-    this.level3,
-    this.consumable = false,
-    this.minRunes = 0,
+    this.skillLevel,
+    this.damageMin,
+    this.damageMax,
+    this.range,
+    this.radius,
+    this.performDuration,
+    this.health,
+    this.skillMagicCost,
+    this.runSpeed,
   });
 
-  AmuletItemStats? getStatsForLevel(int level) => switch (level) {
-        1 => level1,
-        2 => level2,
-        3 => level3,
-        _ => null
-      };
-
-  int get totalLevels =>
-          level3 != null
-              ? 3
-              : level2 != null
-                  ? 2
-                  : 1;
-
-  bool get isWeaponStaff => isWeapon && subType == WeaponType.Staff;
-
-  bool get isWeaponSword => isWeapon && subType == WeaponType.Shortsword;
-
-  bool get isWeaponBow => isWeapon && subType == WeaponType.Bow;
-
   bool get isWeapon => type == ItemType.Weapon;
-
-  bool get isSpell => type == ItemType.Spell;
 
   bool get isShoes => type == ItemType.Shoes;
 
   bool get isHelm => type == ItemType.Helm;
 
-  bool get isHand => type == ItemType.Hand;
-
   bool get isConsumable => type == ItemType.Consumable;
 
-  bool get isBody => type == ItemType.Body;
+  bool get isArmor => type == ItemType.Armor;
 
-  bool get isLegs => type == ItemType.Legs;
+  static AmuletItem? findByName(String name) =>
+      values.firstWhereOrNull((element) => element.name == name);
 
-  bool get isTreasure => type == ItemType.Treasure;
-
-  static final typeBodies =
-      values.where((element) => element.isBody).toList(growable: false);
-
-  static final typeHelms =
-      values.where((element) => element.isHelm).toList(growable: false);
-
-  static final typeShoes =
-      values.where((element) => element.isShoes).toList(growable: false);
-
-  static final typeWeapons =
-      values.where((element) => element.isWeapon).toList(growable: false);
-
-  static final typeHands =
-      values.where((element) => element.isHand).toList(growable: false);
-
-  static final typeLegs =
-      values.where((element) => element.isLegs).toList(growable: false);
-
-  static final typeConsumables =
-      values.where((element) => element.isConsumable).toList(growable: false);
-
-  static AmuletItem getBody(int type) =>
-      typeBodies.firstWhere((element) => element.subType == type);
-
-  static AmuletItem getShoe(int type) =>
-      typeShoes.firstWhere((element) => element.subType == type);
-
-  static AmuletItem getWeapon(int type) =>
-      typeWeapons.firstWhere((element) => element.subType == type);
-
-  static AmuletItem? findByName(String name) {
-    if (name != '-') {
-      for (final value in values) {
-        if (value.name == name) {
-          return value;
-        }
-      }
-    }
-    return null;
-  }
-
-  static AmuletItem getHand(int type) =>
-      typeHands.firstWhere((element) => element.subType == type);
-
-  static AmuletItem getHelm(int type) =>
-      typeHelms.firstWhere((element) => element.subType == type);
-
-  static AmuletItem getLegs(int type) =>
-      typeLegs.firstWhere((element) => element.subType == type);
-
-  static AmuletItem get({
-    required int type,
-    required int subType,
-  }) =>
-      values.firstWhere(
-          (element) => element.type == type && element.subType == subType);
-
-  void validate() {
-
-    if (isWeapon) {
-      if (level1.range <= 0) {
-        throw Exception('$name: "isWeapon && level1.range <= 0"');
-      }
-      final lvl2Range = level2?.range;
-      if (lvl2Range != null && lvl2Range <= 0) {
-        throw Exception('$name: "isWeapon and lvl2Range != null && lvl2Range <= 0"');
-      }
-      final lvl3Range = level3?.range;
-      if (lvl3Range != null && lvl3Range <= 0) {
-        throw Exception('$name: "isWeapon and lvl3Range != null && lvl3Range <= 0"');
-      }
-    }
-
-
-
-  }
-
-  static bool statsSupport({
-    required AmuletItemStats? stat,
-    required int fire,
-    required int water,
-    required int electricity,
-  }) =>
-      stat != null &&
-      stat.fire <= fire &&
-      stat.water <= water &&
-      stat.electricity <= electricity;
-
-  int getLevel({
-    required int fire,
-    required int water,
-    required int electricity,
-  }) {
-     if (statsSupport(
-      stat: level3,
-      fire: fire,
-      water: water,
-      electricity: electricity,
-    )) {
-      return 3;
-    }
-
-    if (statsSupport(
-      stat: level2,
-      fire: fire,
-      water: water,
-      electricity: electricity,
-    )) {
-      return 2;
-    }
-
-    if (statsSupport(
-      stat: level1,
-      fire: fire,
-      water: water,
-      electricity: electricity,
-    )) {
-      return 1;
-    }
-
-    return -1;
-  }
+  static final Consumables = values
+      .where((element) => element.isConsumable)
+      .toList(growable: false);
 }
 
 enum SkillType {
-  Heal(casteType: CasteType.Self),
-  Fireball(casteType: CasteType.Targeted_Enemy, range: 150),
+  // Warrior
+    // Offensive
+  Strike(casteType: CasteType.Self),
+  Sweep(casteType: CasteType.Self),
+  Might(casteType: CasteType.Instant),
+    // Defensive
+  Terrify(casteType: CasteType.Instant),
+  // Wizard
+    // Offensive
+  Fireball(casteType: CasteType.Directional),
+  Explode(casteType: CasteType.Positional),
   Firestorm(casteType: CasteType.Directional),
-  Teleport(casteType: CasteType.Positional, range: 200),
-  Freeze_Target(casteType: CasteType.Targeted_Enemy, range: 180),
-  Freeze_Area(casteType: CasteType.Positional, range: 180, radius: 50),
-  Invisible(casteType: CasteType.Instant),
-  Terrify(casteType: CasteType.Instant, radius: 100);
+    // Defensive
+  Freeze_Target(casteType: CasteType.Targeted_Enemy),
+  Freeze_Area(casteType: CasteType.Positional),
+  Heal(casteType: CasteType.Self),
+  Teleport(casteType: CasteType.Positional),
+  // Rogue
+    // Offensive
+  Arrow(casteType: CasteType.Self),
+    // Defensive
+  Invisible(casteType: CasteType.Instant);
 
   final CasteType casteType;
-  final double? range;
-  final double? radius;
 
   const SkillType({
     required this.casteType,
-    this.range,
-    this.radius,
   });
 
 }
@@ -906,3 +759,8 @@ enum CasteType {
   Directional,
 }
 
+enum ItemQuality {
+  Legendary,
+  Rare,
+  Common,
+}

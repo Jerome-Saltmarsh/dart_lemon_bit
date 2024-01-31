@@ -25,6 +25,7 @@ class IsometricImages with IsometricComponent {
   static const dirAssets = 'assets';
   static const dirSprites = '$dirAssets/sprites';
   static const dirIsometric = '$dirSprites/isometric';
+  static const dirGoblin = '$dirIsometric/goblin';
   static const dirFallen = '$dirIsometric/fallen';
   static const dirFallenArmoured = '$dirIsometric/fallen_armoured';
   static const dirSkeleton = '$dirIsometric/skeleton';
@@ -51,10 +52,27 @@ class IsometricImages with IsometricComponent {
 
   final kidCharacterSpritesFrontDiffuse = KidCharacterSprites();
 
+  final totalImagesLoadedPercentage = Watch(0.0);
   final totalImages = Watch(0);
   final totalImagesLoaded = Watch(0);
   final values = <Image>[];
   final _completerImages = Completer();
+
+  IsometricImages(){
+    totalImagesLoaded.onChanged(updateLoadedPerc);
+    totalImages.onChanged(updateLoadedPerc);
+  }
+
+  void updateLoadedPerc (_)=> totalImagesLoadedPercentage.value = getImageLoadPercentage();
+
+  double getImageLoadPercentage(){
+    final total = totalImages.value;
+    if (total <= 0){
+      return 0;
+    }
+    final loaded = totalImagesLoaded.value;
+    return loaded / total;
+  }
 
   late final CharacterShader characterShaderFallen;
   late final CharacterShader characterShaderFallenArmoured;
@@ -99,25 +117,13 @@ class IsometricImages with IsometricComponent {
   late final Image pixel;
   late final Image atlas_projectiles;
   late final Image atlas_particles;
-  late final Image atlas_helms;
-  late final Image atlas_hands;
-  late final Image atlas_body;
-  late final Image atlas_legs;
-  late final Image atlas_shoes;
   late final Image atlas_gameobjects;
   late final Image atlas_nodes;
-  late final Image atlas_characters;
   late final Image atlas_icons;
-  late final Image atlas_consumables;
-  late final Image atlas_treasures;
-  late final Image atlas_weapons;
-  late final Image atlas_spells;
+  late final Image atlas_amulet_items;
   late final Image square;
   late final Image template_spinning;
-
   late final Sprite emptySprite;
-
-  late final Map<int, Image> itemTypeAtlases;
 
   @override
   Future onComponentInit(SharedPreferences sharedPreferences) async {
@@ -128,20 +134,11 @@ class IsometricImages with IsometricComponent {
     loadPng('shades_transparent').then((value) => shadesTransparent = value);
     loadPng('square').then((value) => square = value);
     loadPng('atlas_nodes').then((value) => atlas_nodes = value);
-    loadPng('atlas_characters').then((value) => atlas_characters = value);
     loadPng('atlas_gameobjects').then((value) => atlas_gameobjects = value);
     loadPng('atlas_particles').then((value) => atlas_particles = value);
     loadPng('atlas_projectiles').then((value) => atlas_projectiles = value);
-    loadPng('atlas_weapons').then((value) => atlas_weapons = value);
     loadPng('atlas_icons').then((value) => atlas_icons = value);
-    loadPng('atlas_consumables').then((value) => atlas_consumables = value);
-    loadPng('atlas_treasures').then((value) => atlas_treasures = value);
-    loadPng('atlas_spells').then((value) => atlas_spells = value);
-    loadPng('atlas_helms').then((value) => atlas_helms = value);
-    loadPng('atlas_hands').then((value) => atlas_hands = value);
-    loadPng('atlas_body').then((value) => atlas_body = value);
-    loadPng('atlas_legs').then((value) => atlas_legs = value);
-    loadPng('atlas_shoes').then((value) => atlas_shoes = value);
+    loadPng('atlas_amulet_items').then((value) => atlas_amulet_items = value);
 
     emptySprite = Sprite(
         image: empty,
@@ -149,7 +146,6 @@ class IsometricImages with IsometricComponent {
         dst: Float32List(0),
         rows: 0,
         columns: 0,
-        mode: 0,
         srcWidth: 0,
         srcHeight: 0,
     );
@@ -169,7 +165,6 @@ class IsometricImages with IsometricComponent {
         srcHeight: 0,
         rows: 0,
         columns: 0,
-        mode: AnimationMode.single,
     );
 
     spriteGroupEmpty = CharacterSpriteGroup(
@@ -185,15 +180,15 @@ class IsometricImages with IsometricComponent {
     );
 
     kidCharacterSpriteGroupShadow = CharacterSpriteGroup(
-      idle: await loadSprite(name: 'assets/sprites/isometric/kid/shadow/idle', mode: AnimationMode.bounce),
-      running: await loadSprite(name: 'assets/sprites/isometric/kid/shadow/running', mode: AnimationMode.loop),
-      change: await loadSprite(name: 'assets/sprites/isometric/kid/shadow/change', mode: AnimationMode.bounce),
-      dead: await loadSprite(name: 'assets/sprites/isometric/kid/shadow/dead', mode: AnimationMode.single),
-      fire: await loadSprite(name: 'assets/sprites/isometric/kid/shadow/fire', mode: AnimationMode.single),
-      strike1: await loadSprite(name: 'assets/sprites/isometric/kid/shadow/strike_1', mode: AnimationMode.single),
-      strike2: await loadSprite(name: 'assets/sprites/isometric/kid/shadow/strike_2', mode: AnimationMode.single),
+      idle: await loadSprite(name: 'assets/sprites/isometric/kid/shadow/idle'),
+      running: await loadSprite(name: 'assets/sprites/isometric/kid/shadow/running'),
+      change: await loadSprite(name: 'assets/sprites/isometric/kid/shadow/change'),
+      dead: await loadSprite(name: 'assets/sprites/isometric/kid/shadow/dead'),
+      fire: await loadSprite(name: 'assets/sprites/isometric/kid/shadow/fire'),
+      strike1: await loadSprite(name: 'assets/sprites/isometric/kid/shadow/strike_1'),
+      strike2: await loadSprite(name: 'assets/sprites/isometric/kid/shadow/strike_2'),
       hurt: emptySprite,
-      casting: await loadSprite(name: 'assets/sprites/isometric/kid/shadow/casting', mode: AnimationMode.single),
+      casting: await loadSprite(name: 'assets/sprites/isometric/kid/shadow/casting'),
     );
 
     for (final kidCharacterSpritesIsometric in kidCharacterSpritesIsometric.values){
@@ -201,31 +196,22 @@ class IsometricImages with IsometricComponent {
       kidCharacterSpritesIsometric.handRight[0] = spriteGroupEmpty;
       kidCharacterSpritesIsometric.weapons[0] = spriteGroupEmpty;
       kidCharacterSpritesIsometric.helm[0] = spriteGroupEmpty;
-      kidCharacterSpritesIsometric.bodyMale[0] = spriteGroupEmpty;
-      kidCharacterSpritesIsometric.bodyFemale[0] = spriteGroupEmpty;
-      kidCharacterSpritesIsometric.legs[0] = spriteGroupEmpty;
+      kidCharacterSpritesIsometric.armor[0] = spriteGroupEmpty;
       kidCharacterSpritesIsometric.hair[0] = spriteGroupEmpty;
       kidCharacterSpritesIsometric.shoes[0] = spriteGroupEmpty;
     }
 
-    loadSpriteGroupFront(type: SpriteGroupType.Body_Male, subType: BodyType.Shirt_Blue);
-    loadSpriteGroupFront(type: SpriteGroupType.Body_Male, subType: BodyType.Leather_Armour);
-    loadSpriteGroupFront(type: SpriteGroupType.Body_Female, subType: BodyType.Leather_Armour);
-    loadSpriteGroupFront(type: SpriteGroupType.Hand_Left, subType: HandType.Gauntlets);
-    loadSpriteGroupFront(type: SpriteGroupType.Hand_Right, subType: HandType.Gauntlets);
+    loadSpriteGroupFront(type: SpriteGroupType.Armor, subType: ArmorType.Tunic);
     loadSpriteGroupFront(type: SpriteGroupType.Head, subType: HeadType.boy);
     loadSpriteGroupFront(type: SpriteGroupType.Head, subType: HeadType.girl);
-    loadSpriteGroupFront(type: SpriteGroupType.Helm, subType: HelmType.Steel);
-    loadSpriteGroupFront(type: SpriteGroupType.Helm, subType: HelmType.Wizard_Hat);
-    loadSpriteGroupFront(type: SpriteGroupType.Legs, subType: LegType.Leather);
+    loadSpriteGroupFront(type: SpriteGroupType.Helm, subType: HelmType.Full_Helm);
+    loadSpriteGroupFront(type: SpriteGroupType.Helm, subType: HelmType.Pointed_Hat_Purple);
     loadSpriteGroupFront(type: SpriteGroupType.Torso, subType: Gender.male);
     loadSpriteGroupFront(type: SpriteGroupType.Torso, subType: Gender.female);
     loadSpriteGroupFront(type: SpriteGroupType.Weapon, subType: WeaponType.Bow);
     loadSpriteGroupFront(type: SpriteGroupType.Weapon, subType: WeaponType.Staff);
     loadSpriteGroupFront(type: SpriteGroupType.Weapon, subType: WeaponType.Shortsword);
     loadSpriteGroupFront(type: SpriteGroupType.Shoes, subType: ShoeType.Leather_Boots);
-    loadSpriteGroupFront(type: SpriteGroupType.Shoes, subType: ShoeType.Iron_Plates);
-
 
     loadSpriteGroupIsometric(
       direction: RenderDirection.diffuse,
@@ -246,28 +232,11 @@ class IsometricImages with IsometricComponent {
       RenderDirection.west,
       RenderDirection.diffuse,
     ]){
-      for (final bodyType in BodyType.values) {
+      for (final armorType in ArmorType.values) {
         loadSpriteGroupIsometric(
           direction: direction,
-          type: SpriteGroupType.Body_Female,
-          subType: bodyType,
-        );
-        loadSpriteGroupIsometric(
-          direction: direction,
-          type: SpriteGroupType.Body_Male,
-          subType: bodyType,
-        );
-      }
-      for (final handType in HandType.values) {
-        loadSpriteGroupIsometric(
-          direction: direction,
-          type: SpriteGroupType.Hand_Left,
-          subType: handType,
-        );
-        loadSpriteGroupIsometric(
-          direction: direction,
-          type: SpriteGroupType.Hand_Right,
-          subType: handType,
+          type: SpriteGroupType.Armor,
+          subType: armorType,
         );
       }
       loadSpriteGroupIsometric(
@@ -285,13 +254,6 @@ class IsometricImages with IsometricComponent {
           direction: direction,
           type: SpriteGroupType.Helm,
           subType: headType,
-        );
-      }
-      for (final legType in LegType.values) {
-        loadSpriteGroupIsometric(
-          direction: direction,
-          type: SpriteGroupType.Legs,
-          subType: legType,
         );
       }
       loadSpriteGroupIsometric(
@@ -354,125 +316,70 @@ class IsometricImages with IsometricComponent {
       });
     }
 
-    await _completerImages.future;
+    loadSprite(name: 'assets/sprites/isometric/butterfly/butterfly')
+        .then((value) => butterfly = value);
 
-    loadSprite(
-        name: 'assets/sprites/isometric/butterfly/butterfly',
-        mode: AnimationMode.loop,
-    ).then((value) => butterfly = value);
+    loadSprite(name: 'assets/sprites/isometric/moth/moth')
+        .then((value) => moth = value);
 
-    loadSprite(
-        name: 'assets/sprites/isometric/moth/moth',
-        mode: AnimationMode.loop,
-    ).then((value) => moth = value);
+    loadSprite(name: 'assets/sprites/isometric/crystal')
+        .then((value) => crystal = value);
 
-    loadSprite(
-        name: 'assets/sprites/isometric/crystal',
-        mode: AnimationMode.single,
-    ).then((value) => crystal = value);
+    loadSprite(name: 'assets/sprites/isometric/gameobjects/rock1')
+        .then((value) => rock1 = value);
 
-    loadSprite(
-        name: 'assets/sprites/isometric/gameobjects/rock1',
-        mode: AnimationMode.single,
-    ).then((value) => rock1 = value);
+    loadSprite(name: 'assets/sprites/isometric/gameobjects/wooden_cart')
+        .then((value) => woodenCart = value);
 
-    loadSprite(
-        name: 'assets/sprites/isometric/gameobjects/wooden_cart',
-        mode: AnimationMode.single,
-    ).then((value) => woodenCart = value);
+    loadSprite(name: 'assets/sprites/isometric/gameobjects/broom')
+        .then((value) => broom = value);
 
-    loadSprite(
-        name: 'assets/sprites/isometric/gameobjects/broom',
-        mode: AnimationMode.single,
-    ).then((value) => broom = value);
+    loadSprite(name: 'assets/sprites/isometric/gameobjects/bed')
+        .then((value) => bed = value);
 
-    loadSprite(
-        name: 'assets/sprites/isometric/gameobjects/bed',
-        mode: AnimationMode.single,
-    ).then((value) => bed = value);
+    loadSprite(name: 'assets/sprites/isometric/gameobjects/tree1')
+        .then((value) => tree1 = value);
 
-    loadSprite(
-        name: 'assets/sprites/isometric/gameobjects/tree1',
-        mode: AnimationMode.single,
-    ).then((value) => tree1 = value);
+    loadSprite(name: 'assets/sprites/isometric/tree_03')
+        .then((value) => tree03 = value);
 
-    loadSprite(
-        name: 'assets/sprites/isometric/tree_03',
-        mode: AnimationMode.single,
-    ).then((value) => tree03 = value);
+    loadSprite(name: 'assets/sprites/isometric/tree_04')
+        .then((value) => tree04 = value);
 
-    loadSprite(
-        name: 'assets/sprites/isometric/tree_04',
-        mode: AnimationMode.single,
-    ).then((value) => tree04 = value);
+    loadSprite(name: 'assets/sprites/isometric/tree_05')
+        .then((value) => tree05 = value);
 
-    loadSprite(
-        name: 'assets/sprites/isometric/tree_05',
-        mode: AnimationMode.single,
-    ).then((value) => tree05 = value);
+    loadSprite(name: 'assets/sprites/isometric/tree_06')
+        .then((value) => tree06 = value);
 
-    loadSprite(
-        name: 'assets/sprites/isometric/tree_06',
-        mode: AnimationMode.single,
-    ).then((value) => tree06 = value);
+    loadSprite(name: 'assets/sprites/isometric/gameobjects/firewood')
+        .then((value) => firewood = value);
 
-    loadSprite(
-        name: 'assets/sprites/isometric/gameobjects/firewood',
-        mode: AnimationMode.single,
-    ).then((value) => firewood = value);
+    loadSprite(name: 'assets/sprites/isometric/gameobjects/wooden_barrel')
+        .then((value) => woodenBarrel = value);
 
-    loadSprite(
-        name: 'assets/sprites/isometric/gameobjects/wooden_barrel',
-        mode: AnimationMode.single,
-    ).then((value) => woodenBarrel = value);
+    loadSprite(name: 'assets/sprites/isometric/gameobjects/pumpkin')
+        .then((value) => pumpkin = value);
 
-    loadSprite(
-        name: 'assets/sprites/isometric/gameobjects/pumpkin',
-        mode: AnimationMode.single,
-    ).then((value) => pumpkin = value);
+    loadSprite(name: 'assets/sprites/isometric/gameobjects/wooden_chest')
+        .then((value) => woodenChest = value);
 
-    loadSprite(
-        name: 'assets/sprites/isometric/gameobjects/wooden_chest',
-        mode: AnimationMode.single,
-    ).then((value) => woodenChest = value);
+    loadSprite(name: 'assets/sprites/isometric/bat/bat')
+        .then((value) => bat = value);
 
-    loadSprite(
-        name: 'assets/sprites/isometric/bat/bat',
-        mode: AnimationMode.bounce,
-    ).then((value) => bat = value);
+    loadSprite(name: 'assets/sprites/isometric/crystal/south')
+        .then((value) => crystalSouth = value);
 
-    loadSprite(
-        name: 'assets/sprites/isometric/crystal/south',
-        mode: AnimationMode.loop,
-    ).then((value) => crystalSouth = value);
-
-    loadSprite(
-        name: 'assets/sprites/isometric/crystal/west',
-        mode: AnimationMode.loop,
-    ).then((value) => crystalWest = value);
+    loadSprite(name: 'assets/sprites/isometric/crystal/west')
+        .then((value) => crystalWest = value);
 
     loadSprite(
         name: 'assets/sprites/isometric/gameobjects/barrel',
-        image: atlas_nodes,
-        mode: AnimationMode.single,
         atlasX: 995,
         atlasY: 0,
     ).then((value) => barrelWooden = value);
 
-    itemTypeAtlases = {
-      ItemType.Weapon: atlas_weapons,
-      ItemType.Object: atlas_gameobjects,
-      ItemType.Helm: atlas_helms,
-      ItemType.Body: atlas_body,
-      ItemType.Legs: atlas_legs,
-      ItemType.Shoes: atlas_shoes,
-      ItemType.Consumable: atlas_consumables,
-      ItemType.Hand: atlas_hands,
-      ItemType.Treasure: atlas_treasures,
-      ItemType.Spell: atlas_spells,
-    };
-
-    loadCharacterShader(dirFallen).then((value) => characterShaderFallen = value);
+    loadCharacterShader(dirGoblin).then((value) => characterShaderFallen = value);
     loadCharacterShader(dirFallenArmoured).then((value) => characterShaderFallenArmoured = value);
     loadCharacterShader(dirSkeleton).then((value) => characterShaderSkeleton = value);
     loadCharacterShader(dirGargoyle).then((value) => characterShaderGargoyle = value);
@@ -480,52 +387,37 @@ class IsometricImages with IsometricComponent {
     loadCharacterShader(dirZombie).then((value) => characterShaderZombie = value);
     loadCharacterShader(dirToadWarrior).then((value) => characterShaderToadWarrior = value);
 
-    flame0 = await loadSprite(
+    loadSprite(
         name: 'assets/sprites/isometric/flame/wind0',
-        mode: AnimationMode.loop,
         atlasX: 664,
         atlasY: 1681,
         image: atlas_nodes,
-    );
-    flame1 = await loadSprite(
+    ).then((value) => flame0 = value);
+    loadSprite(
         name: 'assets/sprites/isometric/flame/wind1',
-        mode: AnimationMode.loop,
         atlasX: 664,
         atlasY: 1733,
         image: atlas_nodes,
-    );
-    flame2 = await loadSprite(
+    ).then((value) => flame1 = value);
+    loadSprite(
         name: 'assets/sprites/isometric/flame/wind2',
-        mode: AnimationMode.loop,
         atlasX: 664,
         atlasY: 1778,
         image: atlas_nodes,
-    );
+    ).then((value) => flame2 = value);
+
+    await _completerImages.future;
   }
 
   Future<CharacterSpriteGroup> loadCharacterSpriteGroup(String directory) async =>
       CharacterSpriteGroup(
-        idle: await loadSprite(
-            name: '$directory/idle', mode: AnimationMode.bounce,
-        ),
-        running: await loadSprite(
-            name: '$directory/running', mode: AnimationMode.loop,
-        ),
-        dead: await loadSprite(
-            name: '$directory/dead', mode: AnimationMode.single,
-        ),
-        strike1: await loadSprite(
-            name: '$directory/strike', mode: AnimationMode.single,
-        ),
-        strike2: await loadSprite(
-          name: '$directory/strike', mode: AnimationMode.single,
-        ),
-        hurt: await loadSprite(
-            name: '$directory/hurt', mode: AnimationMode.single,
-        ),
-        fire: await loadSprite(
-          name: '$directory/fire', mode: AnimationMode.single,
-        ),
+        idle: await loadSprite(name: '$directory/idle'),
+        running: await loadSprite(name: '$directory/running'),
+        dead: await loadSprite(name: '$directory/dead'),
+        strike1: await loadSprite(name: '$directory/strike'),
+        strike2: await loadSprite(name: '$directory/strike'),
+        hurt: await loadSprite(name: '$directory/hurt'),
+        fire: await loadSprite(name: '$directory/fire'),
         change: emptySprite,
         casting: emptySprite,
       );
@@ -556,15 +448,15 @@ class IsometricImages with IsometricComponent {
     final directory = 'assets/sprites/isometric/kid/${direction.name}/$typeName/$subTypeName';
 
     kidCharacterSpriteGroup[subType] = CharacterSpriteGroup(
-        idle: skipIdle ? emptySprite : await loadSprite(name: '$directory/idle', mode: AnimationMode.bounce),
-        running: skipRunning ? emptySprite : await loadSprite(name: '$directory/running', mode: AnimationMode.loop),
-        change: skipChange ? emptySprite : await loadSprite(name: '$directory/change', mode: AnimationMode.bounce),
-        dead: skipDead ? emptySprite : await loadSprite(name: '$directory/dead', mode: AnimationMode.single),
-        fire: skipFire ? emptySprite : await loadSprite(name: '$directory/fire', mode: AnimationMode.single),
-        strike1: skipStrike ? emptySprite : await loadSprite(name: '$directory/strike_1', mode: AnimationMode.single),
-        strike2: skipStrike ? emptySprite : await loadSprite(name: '$directory/strike_2', mode: AnimationMode.single),
-        hurt: skipHurt ? emptySprite : await loadSprite(name: '$directory/hurt', mode: AnimationMode.single),
-        casting: skipCasting ? emptySprite : await loadSprite(name: '$directory/casting', mode: AnimationMode.single),
+        idle: skipIdle ? emptySprite : await loadSprite(name: '$directory/idle'),
+        running: skipRunning ? emptySprite : await loadSprite(name: '$directory/running'),
+        change: skipChange ? emptySprite : await loadSprite(name: '$directory/change'),
+        dead: skipDead ? emptySprite : await loadSprite(name: '$directory/dead'),
+        fire: skipFire ? emptySprite : await loadSprite(name: '$directory/fire'),
+        strike1: skipStrike ? emptySprite : await loadSprite(name: '$directory/strike_1'),
+        strike2: skipStrike ? emptySprite : await loadSprite(name: '$directory/strike_2'),
+        hurt: skipHurt ? emptySprite : await loadSprite(name: '$directory/hurt'),
+        casting: skipCasting ? emptySprite : await loadSprite(name: '$directory/casting'),
     );
   }
 
@@ -578,7 +470,7 @@ class IsometricImages with IsometricComponent {
     final directory = 'assets/sprites/front/kid/diffuse/$typeName/$subTypeName';
 
     kidCharacterSpriteGroup[subType] = CharacterSpriteGroup(
-      idle: await loadSprite(name: '$directory/idle', mode: AnimationMode.bounce),
+      idle: await loadSprite(name: '$directory/idle'),
       running: emptySprite,
       change: emptySprite,
       dead: emptySprite,
@@ -599,13 +491,13 @@ class IsometricImages with IsometricComponent {
 
   Future<Sprite> loadSprite({
     required String name,
-    required int mode,
     Image? image,
     int atlasX = 0,
     int atlasY = 0,
   }) async {
 
     try {
+      totalImages.value++;
       image = image ?? await loadImageAsset('$name.png');
       final json = await loadAssetJson('$name.json');
 
@@ -622,6 +514,7 @@ class IsometricImages with IsometricComponent {
         }
       }
 
+      totalImagesLoaded.value++;
       return Sprite(
         image: image,
         src: src,
@@ -630,10 +523,9 @@ class IsometricImages with IsometricComponent {
         columns: json.getInt('columns'),
         srcWidth: json.getDouble('width'),
         srcHeight: json.getDouble('height'),
-        mode: mode,
       );
     } catch(e) {
-      // print(e);
+      totalImagesLoaded.value++;
       return emptySprite;
     }
   }

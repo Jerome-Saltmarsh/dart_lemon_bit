@@ -1,6 +1,6 @@
-
-enum NetworkRequestInventory {
-  Move,
-  Use,
-  Drop,
-}
+//
+// enum NetworkRequestInventory {
+//   Move,
+//   Use,
+//   Drop,
+// }

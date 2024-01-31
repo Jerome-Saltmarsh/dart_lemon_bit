@@ -31,20 +31,20 @@ extension AmuletRender on Amulet {
   }
 
   void renderPlayerHoverItemRange() {
-    final item = itemHover.value;
+    final item = aimTargetItemTypeCurrent.value;
     if (item == null) return;
     renderPlayerItemRange(item);
   }
 
   void renderPlayerItemRange(AmuletItem item) {
-    final level = amulet.getAmuletPlayerItemLevel(item);
-    final stats = item.getStatsForLevel(level);
+    // final level = amulet.getAmuletPlayerItemLevel(item);
+    // final stats = item.getStatsForLevel(level);
 
-    if (stats == null){
-      return;
-    }
+    // if (stats == null){
+    //   return;
+    // }
 
-    final range = stats.range;
+    final range = item.range ?? 0;
 
     if (range <= 0) return;
     engine.color = Colors.white;
@@ -59,7 +59,7 @@ extension AmuletRender on Amulet {
 
   void renderActivatedPower({Color rangeColor = Colors.white}) {
 
-    final activeSlotAmuletItem = activeAmuletItemSlot?.amuletItem.value;
+    final activeSlotAmuletItem = activeAmuletItemSlot?.value;
 
     if (activeSlotAmuletItem == null) {
       return;
@@ -71,7 +71,7 @@ extension AmuletRender on Amulet {
       return;
     }
 
-    final radius = skillType.radius;
+    final radius = activeSlotAmuletItem.radius;
 
     if (radius != null) {
       engine.color = Colors.white;
@@ -81,7 +81,7 @@ extension AmuletRender on Amulet {
       );
     }
 
-    final range = skillType.range;
+    final range = activeSlotAmuletItem.range;
     if (range != null) {
       engine.color = rangeColor;
       renderCircleAroundPlayer(radius: range);

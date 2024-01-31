@@ -3,50 +3,37 @@ import '../src.dart';
 class ItemType {
   static const Weapon = 1;
   static const Helm = 2;
-  static const Body = 3;
-  static const Legs = 4;
+  static const Armor = 3;
+  static const Shoes = 4;
   static const Object = 5;
   static const Consumable = 6;
-  static const Hand = 7;
-  static const Treasure = 8;
-  static const Shoes = 9;
-  static const Spell = 10;
+  static const Amulet_Item = 8;
 
   static const collections = {
     Weapon: WeaponType.values,
     Helm: HelmType.values,
-    Body: BodyType.values,
-    Legs: LegType.values,
-    Hand: HandType.values,
+    Armor: ArmorType.values,
     Object: GameObjectType.values,
     Consumable: ConsumableType.values,
-    Treasure: TreasureType.values,
-    Spell: SpellType.values,
   };
 
   static String getName(int value) => const {
       Helm: 'Helm',
       Weapon: 'Weapon',
-      Legs: 'Legs',
-      Body: 'Body',
-      Hand: 'Hands',
+      Armor: 'Armor',
       Object: 'Object',
       Consumable: 'Consumable',
       Shoes: 'Shoes',
-      Spell: 'Spell',
+      Amulet_Item: 'Amulet_Item',
   }[value] ?? 'gameobject-type-unknown-$value';
 
   static String getNameSubType(int type, int subType) => switch (type) {
       Helm => HelmType.getName(subType),
-      Body => BodyType.getName(subType),
-      Legs => LegType.getName(subType),
+      Armor => ArmorType.getName(subType),
       Object => GameObjectType.getName(subType),
-      Hand => HandType.getName(subType),
       Weapon => WeaponType.getName(subType),
       Consumable => ConsumableType.getName(subType),
-      Treasure => TreasureType.getName(subType),
       Shoes => ShoeType.getName(subType),
-      Spell => SpellType.getName(subType),
       _ => throw Exception('GameObjectType.getNameSubType(type: $type, subType: $subType)')
     };
 
@@ -58,12 +45,10 @@ class ItemType {
 
   static const values = [
     Weapon,
-    Legs,
-    Body,
+    Armor,
     Helm,
     Object,
     Consumable,
-    Treasure,
     Shoes,
   ];
 }

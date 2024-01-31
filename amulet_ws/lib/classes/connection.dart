@@ -1,11 +1,10 @@
 import 'dart:async';
 
 
+import '../packages/amulet_engine/src.dart';
 import 'root.dart';
 
 import 'package:web_socket_channel/web_socket_channel.dart';
-
-import '../../packages/src.dart';
 
 class Connection extends ByteReader {
 
@@ -122,11 +121,12 @@ class Connection extends ByteReader {
                 return;
               }
             }
-            if (character.containsKey('tutorial_completed')){
-              controller.playerJoinAmuletTown();
-            } else {
-              controller.playerJoinGameTutorial();
-            }
+            controller.playerJoinAmuletTown();
+            // if (character.containsKey('tutorial_completed')){
+            //   controller.playerJoinAmuletTown();
+            // } else {
+            //   controller.playerJoinGameTutorial();
+            // }
 
             player.userId = userId;
             // player.active = false;
@@ -201,10 +201,7 @@ class Connection extends ByteReader {
   }
 
   void onPlayerLoaded(AmuletPlayer player) {
-    // if (!player.data.containsKey('tutorial_completed')){
-    //   nerve.amulet.playerStartTutorial(player);
-    // }
-    player.refillItemSlotsWeapons();
+
   }
 
   bool playerNeedsToBeInitialized(AmuletPlayer player) => !player.initialized;

@@ -9,4 +9,5 @@ class NetworkResponseIsometric {
  static const Game_Running = 11;
  static const Edit_Enabled = 12;
  static const Zoom = 13;
+ static const Seconds_Per_Frame = 14;
 }

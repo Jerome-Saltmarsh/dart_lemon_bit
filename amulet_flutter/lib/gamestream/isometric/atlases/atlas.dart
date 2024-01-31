@@ -1,12 +1,8 @@
-import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_spells.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/src.dart';
 import 'package:amulet_engine/packages/common.dart';
-import 'atlas_src_hands.dart';
-import 'atlas_src_shoes.dart';
 
 
 class Atlas {
-
   static const SrcX = 0;
   static const SrcY = 1;
   static const SrcWidth = 2;
@@ -53,22 +49,22 @@ class Atlas {
     GameObjectType.Grenade: AtlasSrcObjects.Grenade,
   };
 
-  static const SrcCollection = <int, Map<int, List<double>>>{
-    ItemType.Weapon: atlasSrcWeapons,
-    ItemType.Legs: atlasSrcLegs,
-    ItemType.Body: atlasSrcBody,
-    ItemType.Helm: atlasSrcHelm,
-    ItemType.Object: Collection_Objects,
-    ItemType.Hand: atlasSrcHands,
-    ItemType.Consumable: atlasSrcConsumables,
-    ItemType.Treasure: atlasSrcTreasures,
-    ItemType.Shoes: atlasSrcShoes,
-    ItemType.Spell: atlasSrcSpells,
-  };
+  static List<double> getSrc(int type, int subType) {
 
-  static List<double> getSrc(int type, int subType) =>
-      SrcCollection[type]?[subType] ??
-      (throw Exception(
+    if (type == ItemType.Amulet_Item){
+      return atlasSrcAmuletItem[AmuletItem.values[subType]] ?? (throw Exception(
           'Atlas.getSrc(type: ${ItemType.getName(type)}, subType: ${ItemType.getNameSubType(type, subType)})'
       ));
+    }
+
+    if (type == ItemType.Object){
+      return Collection_Objects[subType] ?? (throw Exception(
+          'Atlas.getSrc(type: ${ItemType.getName(type)}, subType: ${ItemType.getNameSubType(type, subType)})'
+      ));
+    }
+
+    throw Exception(
+        'Atlas.getSrc(type: ${ItemType.getName(type)}, subType: ${ItemType.getNameSubType(type, subType)})'
+    );
+  }
 }

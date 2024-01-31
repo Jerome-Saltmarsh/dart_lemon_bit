@@ -33,7 +33,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
   final complexion = Watch(0);
   final hairType = Watch(0);
   final hairColor = Watch(0);
-  final gender = Watch(0);
+  final gender = Watch(Gender.male);
   final headType = Watch(0);
   final error = Watch('');
 
@@ -42,7 +42,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
       builder: (context, components) {
         final palette = components.colors.palette;
         complexion.value = palette.length - 1;
-        const width = 850.0;
+        const width = 700.0;
         return buildBorder(
           color: Colors.black12,
           width: 3,
@@ -58,30 +58,25 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       buildCharacterCanvas(components),
-                      buildControls(palette),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          buildControls(palette),
+                          height8,
+                          buildControlName(),
+                          height8,
+                          buildButtonStart(components),
+                        ],
+                      ),
                     ],
                   ),
-                  height4,
-                  Positioned(
-                    bottom: 8,
-                    right: 8,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        width4,
-                        Column(
-                          children: [
-                            buildText('NAME', color: Colors.white.withOpacity(0.8)),
-                            height8,
-                            buildControlName(),
-                          ],
-                        ),
-                        width4,
-                        buildButtonStart(components),
-                      ],
-                    ),
-                  ),
+                  // height4,
+                  // Positioned(
+                  //   bottom: 8,
+                  //   right: 8,
+                  //   child: buildRowNameAndStart(components),
+                  // ),
                 ],
               )),
         );
@@ -91,38 +86,33 @@ class DialogCreateCharacterComputer extends StatelessWidget {
   Widget buildButtonStart(
       IsometricComponents components,
   ) =>
-      Row(
-        children: [
-          buildWatch(error, (error) => buildText(error, color: Colors.red)),
-          width8,
-          onPressed(
-            action: () {
-              createCharacter(
-              name: nameController.text,
-              complexion: complexion.value,
-              hairType: hairType.value,
-              hairColor: hairColor.value,
-              gender: gender.value,
-              headType: headType.value,
-            );
-             onCreated();
-            },
-            child: MouseOver(builder: (mouseOver) => buildBorder(
-                  color: mouseOver ? Colors.green : Colors.black12,
-                  width: 4,
-                  child: Container(
-                      alignment: Alignment.center,
-                      width: 64.0 * goldenRatio_1618 * goldenRatio_1618,
-                      height: 64.0,
-                      child: buildText('START', size: 34, color: Colors.green)))),
-          ),
-        ],
+      onPressed(
+        action: () {
+          createCharacter(
+            name: nameController.text,
+            complexion: complexion.value,
+            hairType: hairType.value,
+            hairColor: hairColor.value,
+            gender: Gender.male,
+            headType: headType.value,
+        );
+         onCreated();
+        },
+        child: Container(
+            alignment: Alignment.center,
+            width: widthName,
+            height: 64.0,
+            color: Colors.green,
+            child: buildText('START', size: 34, color: Colors.white),
+        ),
       );
+
+  static const widthName = 310.0;
 
   GSKeyEventHandler buildControlName() =>
       GSKeyEventHandler(
         child: Container(
-            width: 320,
+            width: widthName,
             padding: const EdgeInsets.all(8),
             color: Colors.black12,
             child: TextField(
@@ -145,16 +135,16 @@ class DialogCreateCharacterComputer extends StatelessWidget {
       buildColumnHairStyle(),
       width4,
       buildColumnHairColor(palette),
-      width4,
-      buildColumnBodyShape(),
-      width4,
-      buildColumnHeadType(),
+      // width4,
+      // buildColumnBodyShape(),
+      // width4,
+      // buildColumnHeadType(),
     ],
   );
 
   Widget buildCharacterCanvas(IsometricComponents components) {
     final palette = components.colors.palette;
-    const width = 280.0;
+    const width = 275.0;
     return onPressed(
                 action: (){
                   row.value = (row.value + 1) % 8;
@@ -181,12 +171,9 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                               gender: gender.value,
                               helmType: 0,
                               headType: headType.value,
-                              bodyType: BodyType.Shirt_Blue,
+                              armorType: ArmorType.Tunic,
                               shoeType: ShoeType.Leather_Boots,
-                              legsType: LegType.Leather,
                               hairType: hairType.value,
-                              handsLeft: HandType.None,
-                              handsRight: HandType.None,
                               weaponType: 0,
                               skinColor: palette[complexion.value].value,
                               hairColor: palette[hairColor.value].value,

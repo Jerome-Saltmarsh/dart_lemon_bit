@@ -10,7 +10,7 @@ class NetworkRequest {
   static const Set_FPS = 42;
   static const Scene = 43;
   static const Environment_Request = 44;
-  static const Inventory_Request = 45;
+  // static const Inventory_Request = 45;
   static const Player = 46;
   static const User = 47;
 }

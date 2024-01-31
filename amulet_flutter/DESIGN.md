@@ -1,35 +1,41 @@
-[DAMAGE_TYPE]
-    PIERCE (ARROW) -> LESS EFFECTIVE AGAINST STONE
-    SLASH (SWORD) -> LESS EFFECTIVE AGAINST STONE
-    CRUSH (HAMMER) -> MORE EFFECTIVE AGAINST STONE
 
-[ELEMENTAL]
-    FREEZE
-    BURN
-    ZAP 
-    POISONED - CANNOT CAST SPELLS 
+SKILLS
+    KNIGHT
+        MIGHT
+            increases the attack damage of melee attacks
+        SHIELD
+            temporarily resistances against attacks
+    WIZARD
+        HEAL
+            heals health
+        FIREBALL
+            launches a fireball that explodes on impact
+        TELEPORT
+            shifts a short distance 
+    ROGUE
+        MULTISHOT
+            fires multiple arrows with a single shot
+        SNEAK
+            turn invisible to escape enemies
+            enemies attacked while invisible receive double damage
+        
+[CLASSES]
+ROGUE  | THIEF  | SCOUT 
+MAGE   | WIZARD 
+KNIGHT | WARRIOR
+HEALER | ALCHEMIST
 
-the witch changes form cycling through the different elements
-    stone
-    fire
-    water
-    air
+[FEATURES]
+[new] item slots for amulets and potions
+[new] potion of attack
+[new] potion of power
+[new] potion of health
+[new] potion of invisibility
 
-in each stage she is either strong or weak against the player depending on the players 
-element
+the player starts with only one item slot but unlocks new slots by progressing through the game
 
-the player must be strategic by attacking while the witch is in a weaker form
+item slots can carry potions are amulets but not equipment
 
-ATTRIBUTES
-    CUNNING
-    BRAVE
-    SHREWD
-    MALICIOUS    
-    DECEITFUL
-    
-
-
-
-
+the player must make trade offs between amulets which provide passive improvements vs consumables
 
 

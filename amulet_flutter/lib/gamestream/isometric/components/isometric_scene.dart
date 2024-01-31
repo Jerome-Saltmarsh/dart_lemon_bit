@@ -12,6 +12,7 @@ import 'package:amulet_flutter/gamestream/isometric/consts/map_projectile_type_t
 import 'package:amulet_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:amulet_flutter/gamestream/isometric/enums/node_visibility.dart';
 import 'package:amulet_flutter/gamestream/isometric/functions/src.dart';
+import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:amulet_flutter/isometric/classes/character.dart';
 import 'package:amulet_flutter/isometric/classes/gameobject.dart';
@@ -188,6 +189,8 @@ class IsometricScene with IsometricComponent implements Updatable {
     ambientResetIndex = 0;
     _ambientAlpha = clampedValue;
     ambientColor = setAlpha(ambientColor, clampedValue);
+
+
   }
 
   // TODO Optimize
@@ -244,12 +247,13 @@ class IsometricScene with IsometricComponent implements Updatable {
   void onComponentUpdate(){
     interpolationPadding = ((scene.interpolationLength + 1) * Node_Size) / engine.zoom;
 
-    jobBatchResetNodeColorsToAmbient();
+    updateNodeColorsToAmbient();
+    // jobBatchResetNodeColorsToAmbient();
     updateProjectiles();
+    updateCharacters();
     updateGameObjects();
     updateParticleSmokeEmitters();
     updateParticleFireEmitters();
-    // updateParticleWindEmitters();
 
     if (nextLightingUpdate-- <= 0) {
       nextLightingUpdate = options.framesPerLightingUpdate;
@@ -257,17 +261,28 @@ class IsometricScene with IsometricComponent implements Updatable {
     }
   }
 
-  void jobBatchResetNodeColorsToAmbient() {
+  // void jobBatchResetNodeColorsToAmbient() {
+  //
+  //   if (ambientResetIndex >= totalNodes)
+  //     return;
+  //
+  //   const ambientResetBatchSize = 10000;
+  //   final targetEnd = ambientResetIndex + ambientResetBatchSize;
+  //   final end = min(targetEnd, totalNodes);
+  //   nodeColors.fillRange(ambientResetIndex, end, ambientColor);
+  //   ambientResetIndex += ambientResetBatchSize;
+  //
+  //
+  // }
 
-    if (ambientResetIndex >= totalNodes)
-      return;
-
-    const ambientResetBatchSize = 5000;
-    final targetEnd = ambientResetIndex + ambientResetBatchSize;
-    final end = min(targetEnd, totalNodes);
-    nodeColors.fillRange(ambientResetIndex, end, ambientColor);
-    ambientResetIndex += ambientResetBatchSize;
+  void updateNodeColorsToAmbient() {
+    if (nodeColors.isEmpty) return;
+    if (updateAmbientColorValue == ambientColor) return;
+    nodeColors.fillRange(ambientResetIndex, nodeColors.length, ambientColor);
+    updateAmbientColorValue = ambientColor;
   }
+
+  var updateAmbientColorValue = 0;
 
   // TODO OPTIMIZE
   void generateHeightMap() {
@@ -1485,20 +1500,53 @@ class IsometricScene with IsometricComponent implements Updatable {
     }
   }
 
+  var characterColdEmissionNext = 0;
+  var characterColdEmissionRate = 2;
+
+  void updateCharacters(){
+
+    if (characterColdEmissionNext-- >= 0){
+      return;
+    }
+    characterColdEmissionNext = characterColdEmissionRate;
+
+    final totalCharacters = this.totalCharacters;
+    final characters = this.characters;
+    for (var i = 0; i < totalCharacters; i++){
+      final character = characters[i];
+      if (character.isStatusCold) {
+        particles.emitIce(
+            x: character.x + giveOrTake(5),
+            y: character.y + giveOrTake(5),
+            z: character.z,
+        );
+      }
+    }
+  }
+
   void updateProjectiles() {
     final totalProjectiles = this.totalProjectiles;
     final projectiles = this.projectiles;
     for (var i = 0; i < totalProjectiles; i++) {
       final projectile = projectiles[i];
-      if (projectile.type == ProjectileType.Rocket) {
-        particles.emitSmoke(x: projectile.x, y: projectile.y, z: projectile.z);
-        render.projectShadow(projectile);
-        continue;
+
+      switch (projectile.type) {
+        case ProjectileType.Fireball:
+          particles.emitFlame(
+            x: projectile.x,
+            y: projectile.y,
+            z: projectile.z,
+          );
+          break;
+        case ProjectileType.FrostBall:
+          particles.emitIce(
+            x: projectile.x,
+            y: projectile.y,
+            z: projectile.z,
+          );
+          break;
       }
-      if (projectile.type == ProjectileType.Fireball) {
-        particles.emitFlame(x: projectile.x, y: projectile.y, z: projectile.z);
-        continue;
-      }
+
     }
   }
 
@@ -2215,11 +2263,7 @@ class IsometricScene with IsometricComponent implements Updatable {
       return;
     }
 
-    final ambientRatio = 1.0 - (scene.ambientAlpha / 255);
-
-    // final colorNW = merge32BitColors(colorNorth, colorWest);
-    // final colorSE = merge32BitColors(colorSouth, colorEast);
-    // final colorFlat = merge32BitColors(colorNW, colorSE);
+    var ambientRatio = 1.0 - (scene.ambientAlpha / 255);
 
     final index = getIndexPosition(character);
     final colorN = this.colorNorth(index);
@@ -2228,6 +2272,8 @@ class IsometricScene with IsometricComponent implements Updatable {
     final colorW = this.colorWest(index);
     final colorNW = this.colorNorthWest(index);
     final colorSE = this.colorSouthEast(index);
+
+
     final colorNAlpha = getAlpha(colorN);
     final colorEAlpha = getAlpha(colorE);
     final colorSAlpha = getAlpha(colorS);
@@ -2240,7 +2286,11 @@ class IsometricScene with IsometricComponent implements Updatable {
 
     if (colorSE != -1){
       final colorSEAlpha = getAlpha(colorSE);
-      maxSEAlpha = interpolate(max(colorSEAlpha, maxSEAlpha), 255, ambientRatio * 0.25).toInt();
+      maxSEAlpha = interpolate(
+          max(colorSEAlpha, maxSEAlpha),
+          255,
+          ambientRatio * 0.25
+      ).toInt();
     }
 
     if (colorNW != -1){
@@ -2248,20 +2298,33 @@ class IsometricScene with IsometricComponent implements Updatable {
       maxNWAlpha = max(alphaNW, maxNWAlpha);
     }
 
-    final minSEAlpha = min(colorSAlpha, colorEAlpha);
-    final minNWAlpha = min(colorNAlpha, colorWAlpha);
+
+    var minSEAlpha = min(colorSAlpha, colorEAlpha);
+    var minNWAlpha = min(colorNAlpha, colorWAlpha);
 
     final southEast = merge32BitColors(colorS, colorE);
     final northWest = merge32BitColors(colorN, colorW);
 
-    final adjustedSE = interpolateColors(southEast, scene.ambientColorNight, ambientRatio);
+    var adjustedSE = interpolateColors(southEast, scene.ambientColorNight, ambientRatio);
+    var adjustedNW = interpolateColors(northWest, scene.ambientColorNight, ambientRatio);
 
     if (minSEAlpha < minNWAlpha){
        character.colorSouthEast = setAlpha(adjustedSE, minSEAlpha);
-       character.colorNorthWest = setAlpha(northWest, maxNWAlpha);
+       character.colorNorthWest = setAlpha(adjustedNW, maxNWAlpha);
     } else {
       character.colorSouthEast = setAlpha(adjustedSE, maxSEAlpha);
-      character.colorNorthWest = setAlpha(northWest, minNWAlpha);
+      character.colorNorthWest = setAlpha(adjustedNW, minNWAlpha);
+    }
+
+    if (character.isStatusCold) {
+      final alphaSouthEast = getAlpha(character.colorSouthEast);
+      final alphaNorthWest = getAlpha(character.colorNorthWest);
+
+      final alphaSouthEastInverse = (255 - alphaSouthEast) / 255;
+      final alphaNorthWestInverse = (255 - alphaNorthWest) / 255;
+
+      character.colorSouthEast = interpolateColors(character.colorSouthEast, Palette.blue_2.value, alphaSouthEastInverse);
+      character.colorNorthWest = interpolateColors(character.colorNorthWest, Palette.blue_2.value, alphaNorthWestInverse);
     }
   }
 

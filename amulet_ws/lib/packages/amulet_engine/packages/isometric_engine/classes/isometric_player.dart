@@ -2,11 +2,8 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-import '../../../classes/amulet_item_slot.dart';
-import '../../../mixins/equipped_weapon.dart';
 import '../isometric_engine.dart';
 import '../consts/isometric_settings.dart';
-
 
 class IsometricPlayer extends Character with ByteWriter {
 
@@ -78,7 +75,6 @@ class IsometricPlayer extends Character with ByteWriter {
     bool autoTargetNearbyEnemies = false,
   }) : super(
     characterType: CharacterType.Human,
-    weaponCooldown: 20,
     weaponRange: 100,
     weaponType: WeaponType.Unarmed,
     weaponDamage: 1,
@@ -227,16 +223,16 @@ class IsometricPlayer extends Character with ByteWriter {
   }
 
   @override
-  set bodyType(int value) {
-    super.bodyType = value;
-    writeBodyType();
+  set armorType(int value) {
+    super.armorType = value;
+    writeArmorType();
   }
 
-  @override
-  set legsType(int value) {
-    super.legsType = value;
-    writeLegsType();
-  }
+  // @override
+  // set legsType(int value) {
+  //   super.legsType = value;
+  //   writeLegsType();
+  // }
 
   @override
   set weaponType(int value) {
@@ -244,17 +240,17 @@ class IsometricPlayer extends Character with ByteWriter {
     writeWeaponType();
   }
 
-  @override
-  set handTypeLeft(int value){
-    super.handTypeLeft = value;
-    writeHandTypeLeft();
-  }
+  // @override
+  // set handTypeLeft(int value){
+  //   super.handTypeLeft = value;
+  //   writeHandTypeLeft();
+  // }
 
-  @override
-  set handTypeRight(int value){
-    super.handTypeRight = value;
-    writeHandTypeRight();
-  }
+  // @override
+  // set handTypeRight(int value){
+  //   super.handTypeRight = value;
+  //   writeHandTypeRight();
+  // }
 
   @override
   set gender(int value){
@@ -738,9 +734,9 @@ class IsometricPlayer extends Character with ByteWriter {
     if (writeA){
       cacheTemplateA[cacheIndex] = compressedA;
       writeByte(character.weaponType);
-      writeByte(character.bodyType);
+      writeByte(character.armorType);
       writeByte(character.helmType);
-      writeByte(character.legsType);
+      writeByte(0);  // writeByte(character.legsType);
     }
 
     if (writeB){
@@ -753,8 +749,8 @@ class IsometricPlayer extends Character with ByteWriter {
 
     if (writeC){
       cacheTemplateC[cacheIndex] = compressedC;
-      writeByte(character.handTypeLeft);
-      writeByte(character.handTypeRight);
+      writeByte(0); // writeByte(character.handTypeLeft);
+      writeByte(0);  // writeByte(character.handTypeRight);
       writeByte(character.hairType);
       writeByte(character.hairColor);
     }
@@ -898,7 +894,7 @@ class IsometricPlayer extends Character with ByteWriter {
     writeUInt16(gameObject.id);
     writeBool(gameObject.active);
     writeByte(gameObject.type);
-    writeByte(gameObject.subType);
+    writeUInt16(gameObject.subType);
     writeUInt16(gameObject.health);
     writeUInt16(gameObject.healthMax);
     writeIsometricPosition(gameObject);
@@ -985,15 +981,15 @@ class IsometricPlayer extends Character with ByteWriter {
     writeByte(NetworkResponse.Isometric);
     writeByte(NetworkResponseIsometric.Selected_Collider);
     writeBool(true);
-
-    if (selectedCollider is EquippedWeapon){
-      writeBool(true);
-      final equippedWeapon = selectedCollider as EquippedWeapon;
-      writeAmuletItemSlot(equippedWeapon.itemSlotWeapon);
-      writeAmuletItemSlot(equippedWeapon.itemSlotPower);
-    } else {
-      writeBool(false);
-    }
+    writeBool(false); // selectedCollider is AmuletPlayer
+    // if (selectedCollider is AmuletPlayer){
+    //   writeBool(true);
+    //   // writeAmuletItemSlot(selectedCollider.equippedWeapon);
+    //   // writeAmuletItemSlot(selectedCollider.equippedWeapon); // TODO
+    //   // writeAmuletItemSlot(selectedCollider.activeAmuletItemSlot);
+    // } else {
+    //   writeBool(false);
+    // }
 
     if (selectedCollider is GameObject) {
       final gameObject = selectedCollider;
@@ -1186,16 +1182,6 @@ class IsometricPlayer extends Character with ByteWriter {
     if (!active) return;
 
     game.updatePlayerAimTarget(this);
-
-    // if (idling && !weaponStateBusy) {
-    //   final diff = IsometricDirection.getDifference(
-    //       lookDirection, direction);
-    //   if (diff >= 2) {
-    //     angle += piQuarter;
-    //   } else if (diff <= -3) {
-    //     angle -= piQuarter;
-    //   }
-    // }
   }
 
   double getMouseDistance() => this.getDistanceXYZ(mouseSceneX, mouseSceneY, mouseSceneZ);
@@ -1218,34 +1204,16 @@ class IsometricPlayer extends Character with ByteWriter {
     writeByte(helmType);
   }
 
-  void writeBodyType() {
+  void writeArmorType() {
     writeByte(NetworkResponse.Player);
-    writeByte(NetworkResponsePlayer.BodyType);
-    writeByte(bodyType);
-  }
-
-  void writeLegsType() {
-    writeByte(NetworkResponse.Player);
-    writeByte(NetworkResponsePlayer.LegsType);
-    writeByte(legsType);
-  }
-
-  void writeHandTypeLeft() {
-    writeByte(NetworkResponse.Player);
-    writeByte(NetworkResponsePlayer.HandTypeLeft);
-    writeByte(handTypeLeft);
+    writeByte(NetworkResponsePlayer.ArmorType);
+    writeByte(armorType);
   }
 
   void writeWeaponType() {
     writeByte(NetworkResponse.Player);
     writeByte(NetworkResponsePlayer.WeaponType);
     writeByte(weaponType);
-  }
-
-  void writeHandTypeRight() {
-    writeByte(NetworkResponse.Player);
-    writeByte(NetworkResponsePlayer.HandTypeRight);
-    writeByte(handTypeRight);
   }
 
   void downloadSceneMarks() {
@@ -1396,10 +1364,10 @@ class IsometricPlayer extends Character with ByteWriter {
     writeBool(value);
   }
 
-  void writeAmuletItemSlot(AmuletItemSlot amuletItemSlot){
-    writeInt16(amuletItemSlot.amuletItem?.index ?? -1);
-    writeUInt16(amuletItemSlot.charges);
-    writeUInt16(amuletItemSlot.max);
-    writePercentage(amuletItemSlot.cooldownPercentage);
-  }
+  // void writeAmuletItemSlot(AmuletItemSlot amuletItemSlot){
+  //   writeInt16(amuletItemSlot.amuletItem?.index ?? -1);
+  //   writeUInt16(amuletItemSlot.charges);
+  //   writeUInt16(amuletItemSlot.max);
+  //   writePercentage(amuletItemSlot.cooldownPercentage);
+  // }
 }

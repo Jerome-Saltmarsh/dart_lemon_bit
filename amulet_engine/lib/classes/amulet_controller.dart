@@ -294,10 +294,6 @@ class AmuletController {
         handlePlayerRequest(arguments);
         break;
 
-      case NetworkRequest.Inventory_Request:
-        handleInventoryRequest(player, arguments.map(int.parse).toList(growable: false));
-        break;
-
       case NetworkRequest.Set_FPS:
         final value = parseArg1(arguments);
         if (value == null) return;
@@ -474,8 +470,13 @@ class AmuletController {
         game.setHourMinutes(hour, 0);
         break;
 
+      case NetworkRequestIsometric.Set_Seconds_Per_Frame:
+        final secondsPerFrame = parseArg2(arguments);
+        if (secondsPerFrame == null) return;
+        game.setSecondsPerFrame(secondsPerFrame);
+        break;
+
       case NetworkRequestIsometric.Editor_Load_Game:
-      // _player = engine.joinGameEditor(name: arguments[2]);
         break;
 
       case NetworkRequestIsometric.Move_Selected_Collider_To_Mouse:
@@ -625,22 +626,18 @@ class AmuletController {
     final player = this.player;
     final amuletPlayer = player;
     final amuletGame = player.amuletGame;
-
-    final inventoryOpen = arguments.getArgBool('--inventory');
-    if (inventoryOpen != null) {
-      player.inventoryOpen = inventoryOpen;
-      return;
-    }
-
     final requestIndex = parseArg1(arguments);
+
     if (requestIndex == null) return;
+
     if (!isValidIndex(requestIndex, NetworkRequestAmulet.values)){
       errorInvalidClientRequest();
       return;
     }
-    final mmoRequest = NetworkRequestAmulet.values[requestIndex];
 
-    switch (mmoRequest){
+    final networkRequestAmulet = NetworkRequestAmulet.values[requestIndex];
+
+    switch (networkRequestAmulet) {
       case NetworkRequestAmulet.Spawn_Random_Enemy:
         amuletGame.spawnRandomEnemy();
         break;
@@ -656,57 +653,38 @@ class AmuletController {
       case NetworkRequestAmulet.End_Interaction:
         player.endInteraction();
         break;
-      case NetworkRequestAmulet.Select_Item:
-        final index = parseArg2(arguments);
-        if (index == null) return;
-        player.selectItem(index);
-        break;
-      case NetworkRequestAmulet.Select_Treasure:
-        final index = parseArg2(arguments);
-        if (index == null) return;
-        player.selectTreasure(index);
+      case NetworkRequestAmulet.Drop_Item_Type:
+        final itemType = parseArg2(arguments);
+        if (itemType == null) return;
+        player.dropItemType(itemType);
         break;
       case NetworkRequestAmulet.Select_Item_Type:
-        final slotTypeIndex = parseArg2(arguments);
-        if (slotTypeIndex == null) return;
-        final slotType = SlotType.values.tryGet(slotTypeIndex);
-        if (slotType == null){
-          player.writeAmuletError('invalid slot type index: $slotTypeIndex');
-          return;
-        }
-        player.setActiveSlotType(slotType);
+        final itemType = parseArg2(arguments);
+        if (itemType == null) return;
+        player.selectItemType(itemType);
         break;
       case NetworkRequestAmulet.Select_Talk_Option:
         final index = parseArg2(arguments);
         if (index == null) return;
         player.selectNpcTalkOption(index);
         break;
-      case NetworkRequestAmulet.Toggle_Inventory_Open:
-        player.toggleInventoryOpen();
-        break;
-      case NetworkRequestAmulet.Upgrade_Element:
-        final index = parseArg2(arguments);
-        if (index == null) return;
-        if (!isValidIndex(index, AmuletElement.values)){
-          errorInvalidClientRequest();
+      case NetworkRequestAmulet.Select_Skill_Type_Left:
+        final skillTypeIndex = parseArg2(arguments);
+        if (skillTypeIndex == null) return;
+        final skillType = SkillType.values.tryGet(skillTypeIndex);
+        if (skillType == null){
           return;
         }
-        final amuletElement = AmuletElement.values[index];
-        player.upgradeAmuletElement(amuletElement);
+        player.selectSkillTypeLeft(skillType);
         break;
-      case NetworkRequestAmulet.Set_Inventory_Open:
-        throw Exception('not implemented');
-      case NetworkRequestAmulet.Gain_Level:
-        if (!isAdmin) {
-          throw Exception('admin mode not enabled');
+      case NetworkRequestAmulet.Select_Skill_Type_Right:
+        final skillTypeIndex = parseArg2(arguments);
+        if (skillTypeIndex == null) return;
+        final skillType = SkillType.values.tryGet(skillTypeIndex);
+        if (skillType == null){
+          return;
         }
-        amuletPlayer.gainLevel();
-        break;
-      case NetworkRequestAmulet.Gain_Experience:
-        if (!isAdmin) {
-          throw Exception('admin mode not enabled');
-        }
-        amuletPlayer.gainExperience(amuletPlayer.experienceRequired ~/ 4);
+        player.selectSkillTypeRight(skillType);
         break;
       case NetworkRequestAmulet.Reset:
         if (!isAdmin) {
@@ -1127,50 +1105,6 @@ class AmuletController {
           return;
         }
         player.name = arguments[2];
-        break;
-    }
-  }
-
-  void handleInventoryRequest(AmuletPlayer player, List<int> arguments) {
-    if (arguments.isEmpty) return;
-
-    if (!isValidIndex(arguments[1], NetworkRequestInventory.values)) {
-      return;
-    }
-
-    switch (NetworkRequestInventory.values[arguments[1]]) {
-      case NetworkRequestInventory.Move:
-        final srcSlotTypeIndex = arguments[2];
-        final srcIndex = arguments[3];
-        final targetSlotTypeIndex = arguments[4];
-        final targetIndex = arguments[5];
-
-        const slotTypes = SlotType.values;
-
-        if (!isValidIndex(srcSlotTypeIndex, slotTypes) ||
-            !isValidIndex(targetSlotTypeIndex, slotTypes)) return;
-
-        final srcSlotType = slotTypes[srcSlotTypeIndex];
-        final targetSlotType = slotTypes[targetSlotTypeIndex];
-
-        final srcAmuletItemSlot =
-        player.getItemObjectAtSlotType(srcSlotType, srcIndex);
-        final targetAmuletItemSlot =
-        player.getItemObjectAtSlotType(targetSlotType, targetIndex);
-
-        player.swapAmuletItemSlots(srcAmuletItemSlot, targetAmuletItemSlot);
-        break;
-
-      case NetworkRequestInventory.Use:
-        final slotTypeIndex = arguments[2];
-        final srcIndex = arguments[3];
-        player.useSlotTypeAtIndex(SlotType.values[slotTypeIndex], srcIndex);
-        break;
-
-      case NetworkRequestInventory.Drop:
-        final slotTypeIndex = arguments[2];
-        final srcIndex = arguments[3];
-        player.inventoryDropSlotType(SlotType.values[slotTypeIndex], srcIndex);
         break;
     }
   }

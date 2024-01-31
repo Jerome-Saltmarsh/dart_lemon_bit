@@ -85,7 +85,6 @@ class Amulet {
   });
 
   Future construct({required bool initializeUpdateTimer}) async {
-    AmuletItem.values.forEach((item) => item.validate());
     await scenes.load();
 
     if (initializeUpdateTimer){
@@ -297,6 +296,7 @@ class Amulet {
     final games = this.games;
     for (var i = 0; i < games.length; i++) {
       final game = games[i];
+      if (game.players.isEmpty) continue;
       game.updateJobs();
       game.update();
       game.writePlayerResponses();
@@ -408,39 +408,13 @@ class Amulet {
 
   void resetPlayer(AmuletPlayer player) {
     playerChangeGameToTown(player);
-    final weapons = player.weapons;
-    for (final weapon in weapons) {
-      weapon.clear();
-    }
-    for (final weapon in player.items) {
-      weapon.clear();
-    }
-    for (final treasure in player.treasures) {
-      treasure.clear();
-    }
-    weapons[0].amuletItem = AmuletItem.Weapon_Short_Sword;
-    weapons[1].amuletItem = AmuletItem.Weapon_Old_Bow;
-    weapons[2].amuletItem = AmuletItem.Spell_Heal;
     amuletTime.hour = 12;
-    player.elementPoints = 0;
-    player.elementFire = 0;
-    player.elementWater = 0;
-    player.elementAir = 0;
-    player.elementStone = 0;
-    player.level = 1;
-    player.experience = 0;
-    player.equippedHelm.clear();
-    player.equippedHandRight.clear();
-    player.equippedHandLeft.clear();
-    player.equippedBody.clear();
-    player.equippedLegs.clear();
-    player.equippedShoe.clear();
-    player.equippedBody.amuletItem = AmuletItem.Armor_Shirt_Blue_Worn;
-    player.equippedLegs.amuletItem = AmuletItem.Pants_Travellers;
+    player.equippedWeapon = null;
+    player.equippedArmor = null;
     player.health = player.maxHealth;
     player.characterState = CharacterState.Idle;
     player.equipmentDirty = true;
-    player.refillItemSlotsWeapons();
+    player.controlsEnabled = true;
     player.clearActionFrame();
   }
 

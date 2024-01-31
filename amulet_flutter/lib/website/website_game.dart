@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:amulet_flutter/functions/validate_atlases.dart';
+// import 'package:amulet_flutter/functions/validate_atlases.dart';
 import 'package:amulet_flutter/gamestream/game.dart';
 import 'package:amulet_flutter/gamestream/operation_status.dart';
 import 'package:amulet_flutter/website/website_ui.dart';
@@ -27,9 +27,6 @@ class WebsiteGame extends Game {
   late final visitCount = Watch(0, onChanged: onChangedVisitCount);
 
   @override
-  void onComponentReady() => validateAtlases();
-
-  @override
   void onActivated() {
     // engine.fullScreenExit();
   }
@@ -52,15 +49,12 @@ class WebsiteGame extends Game {
   }
 
   @override
-  Widget buildUI(BuildContext context) => GSFullscreen(
+  Widget buildUI(BuildContext context) {
+    engine.fullScreenEnter();
+    return GSFullscreen(
         child: buildPageWebsiteDesktop(context),
       );
-
-  // void toggleWebsitePage() =>
-  //     websitePage.value =
-  //     websitePage.value == WebsitePage.Select_Region
-  //         ? WebsitePage.Select_Character
-  //         : WebsitePage.Select_Region;
+  }
 
   void showWebsitePageRegion(){
      websitePage.value = WebsitePage.Select_Region;

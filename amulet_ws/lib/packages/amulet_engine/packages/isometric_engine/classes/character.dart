@@ -15,8 +15,6 @@ class Character extends Collider {
   var _maxHealth = 1;
   var _goal = CharacterGoal.Idle;
 
-  var experience = 0;
-  var spawnLootOnDeath = true;
   /// in seconds
   var respawnDurationTotal = (60 * 3);
   var gender = Gender.female;
@@ -43,7 +41,6 @@ class Character extends Collider {
   var weaponType = WeaponType.Unarmed;
   var weaponDamage = 1;
   var weaponRange = 20.0;
-  var weaponCooldown = 0;
   var characterState = CharacterState.Idle;
   var frame = 0;
   var runSpeed = 1.0;
@@ -62,10 +59,7 @@ class Character extends Collider {
   var runY = 0.0;
   var runZ = 0.0;
   var helmType = HelmType.None;
-  var bodyType = BodyType.None;
-  var legsType = LegType.None;
-  var handTypeLeft = HandType.None;
-  var handTypeRight = HandType.None;
+  var armorType = ArmorType.None;
   var roamEnabled = false;
   var roamNext = 0;
   var roamRadius = 2;
@@ -85,7 +79,6 @@ class Character extends Collider {
     required this.weaponType,
     required this.weaponDamage,
     required this.weaponRange,
-    required this.weaponCooldown,
     required this.attackDuration,
     required int health,
     String? name,
@@ -441,9 +434,9 @@ class Character extends Collider {
   
   int get templateDataA => compressBytesToUInt32(
     weaponType,
-    bodyType,
+    armorType,
     helmType,
-    legsType,
+    0, // TODO this was legsType
   );
 
   int get templateDataB => compressBytesToUInt32(
@@ -454,8 +447,8 @@ class Character extends Collider {
   );
 
   int get templateDataC => compressBytesToUInt32(
-    handTypeLeft,
-    handTypeRight,
+    0, // TODO this was handTypeLeft
+    0, // TODO this was handTypeRight,
     hairType,
     hairColor,
   );

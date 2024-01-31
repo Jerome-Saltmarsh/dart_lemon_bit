@@ -1,9 +1,8 @@
 
-import '../mixins/src.dart';
 import '../packages/src.dart';
 import 'amulet_player.dart';
 
-class AmuletNpc extends Character with Elemental {
+class AmuletNpc extends Character {
 
   Function(AmuletPlayer player, AmuletNpc self)? interact;
 
@@ -13,7 +12,6 @@ class AmuletNpc extends Character with Elemental {
     required super.team,
     required super.weaponDamage,
     required super.weaponRange,
-    required super.weaponCooldown,
     required super.x,
     required super.y,
     required super.z,

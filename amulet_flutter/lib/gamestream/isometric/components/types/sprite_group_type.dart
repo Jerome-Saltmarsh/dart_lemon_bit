@@ -1,13 +1,12 @@
 import 'package:amulet_engine/packages/common.dart';
 
 class SpriteGroupType {
-  static const Body_Male = 3;
-  static const Body_Female = 4;
+  static const Armor = 2;
   static const Hand_Left = 6;
   static const Hand_Right = 7;
   static const Head = 8;
   static const Helm = 9;
-  static const Legs = 10;
+  // static const Legs = 10;
   static const Shadow = 11;
   static const Torso = 12;
   static const Weapon = 14;
@@ -16,13 +15,12 @@ class SpriteGroupType {
   static const Shoes = 20;
 
   static String getName(int value)=> const {
-    Body_Male: 'body_male',
-    Body_Female: 'body_female',
+    Armor: 'armor',
     Hand_Left: 'hands_left',
     Hand_Right: 'hands_right',
     Head: 'head',
     Helm: 'helms',
-    Legs: 'legs',
+    // Legs: 'legs',
     Shadow: 'shadow',
     Torso: 'torso',
     Weapon: 'weapons',
@@ -32,13 +30,12 @@ class SpriteGroupType {
   }[value] ?? (throw Exception('SpriteGroup.getName($value)'));
 
   static String getSubTypeName(int type, int subType) => switch (type) {
-      Body_Male => BodyType.getName(subType),
-      Body_Female => BodyType.getName(subType),
-      Hand_Left => HandType.getName(subType),
-      Hand_Right => HandType.getName(subType),
+      Armor => ArmorType.getName(subType),
+      // Hand_Left => HandType.getName(subType),
+      // Hand_Right => HandType.getName(subType),
       Head => HeadType.getName(subType),
       Helm => HelmType.getName(subType),
-      Legs => LegType.getName(subType),
+      // Legs => LegType.getName(subType),
       Torso => Gender.getName(subType),
       Weapon => WeaponType.getName(subType),
       Weapon_Trail => WeaponType.getName(subType),
@@ -49,17 +46,4 @@ class SpriteGroupType {
           'SpriteGroupType.getName(type: $type, subType: $subType)'
       ),
     };
-  // static const values = [
-  //   Body_Male,
-  //   Hand_Left,
-  //   Hand_Right,
-  //   Head,
-  //   Helm,
-  //   Legs,
-  //   Shadow,
-  //   Torso,
-  //   Weapon,
-  //   Hair,
-  //   Shoes,
-  // ];
 }

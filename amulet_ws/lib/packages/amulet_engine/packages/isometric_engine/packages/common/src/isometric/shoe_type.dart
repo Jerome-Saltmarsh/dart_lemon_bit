@@ -2,21 +2,42 @@
 
 class ShoeType {
   static const None = 0;
+  // warrior
   static const Leather_Boots = 1;
-  static const Iron_Plates = 2;
-  static const Black_Boots = 3;
+  static const Grieves = 2;
+  static const Sabatons = 3;
+  // wizard
+  static const Black_Slippers = 4;
+  static const Footwraps = 5;
+  static const Soles = 6;
+  // rogue
+  static const Treads = 7;
+  static const Striders = 8;
+  static const Satin_Boots = 9;
 
   static String getName(int value) => const {
-      None: 'None',
-      Leather_Boots: 'Leather Boots',
-      Iron_Plates: 'Iron Plates',
-      Black_Boots: 'Black_Boots',
+    None: 'None',
+    Leather_Boots: 'Leather_Boots',
+    Grieves: 'Grieves',
+    Sabatons: 'Sabatons',
+    Black_Slippers: 'Black_Slippers',
+    Footwraps: 'Footwraps',
+    Soles: 'Soles',
+    Treads: 'Treads',
+    Striders: 'Striders',
+    Satin_Boots: 'Satin_Boots',
   }[value] ?? (throw Exception('ShoeType.getName($value)'));
 
   static const values = [
     Leather_Boots,
-    Iron_Plates,
-    Black_Boots,
+    Grieves,
+    Sabatons,
+    Black_Slippers,
+    Footwraps,
+    Soles,
+    Treads,
+    Striders,
+    Satin_Boots,
   ];
 
 }

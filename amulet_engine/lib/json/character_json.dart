@@ -4,32 +4,32 @@ typedef CharacterJson = Json;
 
 extension CharacterJsonExtension on CharacterJson {
 
-  static const FIELD_ELEMENT_FIRE = 'elementFire';
-  static const FIELD_ELEMENT_WATER = 'elementWater';
-  static const FIELD_ELEMENT_ELECTRICITY = 'elementElectricity';
-  static const FIELD_ELEMENT_POINTS = 'elementPoints';
   static const FIELD_UUID = 'uuid';
   static const FIELD_NAME = 'name';
+  static const FIELD_WEAPON = 'weapon';
+  static const FIELD_HELM = 'helm';
+  static const FIELD_ARMOR = 'body';
+  static const FIELD_SHOES = 'shoes';
 
-  int get elementFire => getInt(FIELD_ELEMENT_FIRE);
-  
-  int get elementWater => getInt(FIELD_ELEMENT_WATER);
-  
-  int get elementElectricity => getInt(FIELD_ELEMENT_ELECTRICITY);
+  String get weapon => tryGetString(FIELD_WEAPON) ?? '-';
 
-  int get elementPoints => getInt(FIELD_ELEMENT_POINTS);
+  String get helm => tryGetString(FIELD_HELM) ?? '-';
+
+  String get armor => tryGetString(FIELD_ARMOR) ?? '-';
+
+  String get shoes => tryGetString(FIELD_SHOES) ?? '-';
 
   String get uuid => getString(FIELD_UUID);
 
   String get name => getString(FIELD_NAME);
-  
-  set elementPoints(int value) => setInt(FIELD_ELEMENT_POINTS, value);
 
-  set elementFire(int value) => setInt(FIELD_ELEMENT_FIRE, value);
+  set weapon(String value) => setString(FIELD_WEAPON, value);
 
-  set elementWater(int value) => setInt(FIELD_ELEMENT_WATER, value);
+  set helm(String value) => setString(FIELD_HELM, value);
 
-  set elementElectricity(int value) => setInt(FIELD_ELEMENT_ELECTRICITY, value);
+  set armor(String value) => setString(FIELD_ARMOR, value);
+
+  set shoes(String value) => setString(FIELD_SHOES, value);
 
   set uuid(String value) => setString(FIELD_UUID, value);
 

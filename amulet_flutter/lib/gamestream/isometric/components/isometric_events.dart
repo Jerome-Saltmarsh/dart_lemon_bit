@@ -222,23 +222,25 @@ class IsometricEvents with IsometricComponent {
         audio.play(audio.thunder, x, y, z);
         break;
 
-      case GameEvent.Spell_Used:
-        final spellType = parser.readByte();
-        switch (spellType){
-          case SpellType.Heal:
-            audio.buff_1.play();
-            for (var i = 0; i < 6; i++) {
-              particles.emitWater(
-                  x: x + giveOrTake(10),
-                  y: y + giveOrTake(10),
-                  z: z,
-              );
-            }
-            break;
-          case SpellType.Blink:
-            audio.dagger_woosh_9.play();
-            particles.spawnParticleConfetti(x, y, z);
-            break;
+      case GameEvent.Character_Healed:
+        audio.buff_1.play();
+        for (var i = 0; i < 6; i++) {
+          particles.emitWater(
+            x: x + giveOrTake(10),
+            y: y + giveOrTake(10),
+            z: z,
+          );
+        }
+        break;
+
+      case GameEvent.Character_Caste_Healed:
+        audio.buff_1.play();
+        for (var i = 0; i < 6; i++) {
+          particles.emitWater(
+            x: x + giveOrTake(10),
+            y: y + giveOrTake(10),
+            z: z,
+          );
         }
         break;
     }
@@ -362,6 +364,7 @@ class IsometricEvents with IsometricComponent {
         break;
       case PlayerEvent.Item_Dropped:
         audio.popSounds14();
+        amulet.aimTargetItemTypeCurrent.value = null;
         break;
       case PlayerEvent.Item_Sold:
         audio.coins_24();

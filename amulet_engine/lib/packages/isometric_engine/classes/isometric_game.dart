@@ -383,13 +383,12 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     player.aimTarget = closestCollider;
   }
 
-  bool isMeleeAOE(int weaponType){
-    return false;
-  }
-
   void performAbilityMelee({
     required Character character,
     required DamageType damageType,
+    required double range,
+    required int damage,
+    required bool areaOfEffect,
   }){
 
     dispatchGameEventPosition(
@@ -397,31 +396,41 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       character,
     );
 
+    if (damage <= 0) {
+      dispatchAttackMissed(
+        character.x,
+        character.y,
+        character.z,
+        character,
+      );
+      return;
+    }
+
     final target = character.target;
     if (target is Collider) {
-      if (character.withinAttackRangeAndAngle(target)){
+      if (character.withinStrikeRadius(target, range)){
         applyHit(
           target: target,
-          damage: character.weaponDamage,
+          damage: damage,
           srcCharacter: character,
           damageType: damageType,
         );
-        return;
+        if (!areaOfEffect){
+          return;
+        }
       }
     }
 
     final angle = character.angle;
-    final attackRadius = character.weaponRange;
     var attackHit = false;
-    var nearestDistance = attackRadius;
+    var nearestDistance = range;
     Collider? nearest;
-    final areaOfEffect = isMeleeAOE(character.weaponType);
 
     for (final other in characters) {
       if (!other.active) continue;
       if (!other.hitable) continue;
       if (character.onSameTeam(other)) continue;
-      if (!character.withinAttackRangeAndAngle(other)) {
+      if (!character.withinRadiusPosition(other, range)) {
         continue;
       }
 
@@ -436,9 +445,9 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
       applyHit(
         target: other,
-        damage: character.weaponDamage,
+        damage: damage,
         srcCharacter: character,
-        damageType: DamageType.melee,
+        damageType: DamageType.Melee,
       );
       attackHit = true;
     }
@@ -449,7 +458,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       if (!gameObject.active) continue;
       if (!gameObject.hitable) continue;
 
-      if (!character.withinAttackRangeAndAngle(gameObject)) {
+      if (!character.withinRadiusPosition(gameObject, range)) {
         continue;
       }
 
@@ -464,9 +473,9 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
       applyHit(
         target: gameObject,
-        damage: character.weaponDamage,
+        damage: damage,
         srcCharacter: character,
-        damageType: DamageType.melee,
+        damageType: DamageType.Melee,
       );
       attackHit = true;
     }
@@ -474,13 +483,13 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     if (nearest != null) {
       applyHit(
         target: nearest,
-        damage: character.weaponDamage,
+        damage: damage,
         srcCharacter: character,
-        damageType: DamageType.melee,
+        damageType: DamageType.Melee,
       );
     }
 
-    final attackRadiusHalf = attackRadius * 0.5;
+    final attackRadiusHalf = range * 0.5;
     final performX = character.x + adj(angle, attackRadiusHalf);
     final performY = character.y + opp(angle, attackRadiusHalf);
     final performZ = character.z;
@@ -517,16 +526,30 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
 
     if (!attackHit) {
-      for (final player in players) {
-        if (!player.withinRadiusEventDispatch(performX, performY)) continue;
-        player.writeGameEvent(
-          type: GameEvent.Attack_Missed,
-          x: performX,
-          y: performY,
-          z: performZ,
-        );
-        player.writeUInt16(character.weaponType);
-      }
+      dispatchAttackMissed(
+          performX,
+          performY,
+          performZ,
+          character,
+      );
+    }
+  }
+
+  void dispatchAttackMissed(
+      double performX,
+      double performY,
+      double performZ,
+      Character character,
+  ) {
+    for (final player in players) {
+      if (!player.withinRadiusEventDispatch(performX, performY)) continue;
+      player.writeGameEvent(
+        type: GameEvent.Attack_Missed,
+        x: performX,
+        y: performY,
+        z: performZ,
+      );
+      player.writeUInt16(character.weaponType);
     }
   }
 
@@ -586,6 +609,16 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     for (final player in players) {
       player.writeGameEventGameObjectDestroyed(gameObject);
     }
+  }
+
+  void setSecondsPerFrame(int value){
+    if (value < 0){
+      return;
+    }
+    time.secondsPerFrame = value;
+    dispatchByte(NetworkResponse.Isometric);
+    dispatchByte(NetworkResponseIsometric.Seconds_Per_Frame);
+    dispatchUInt16(value);
   }
 
   void setHourMinutes(int hour, int minutes) {
@@ -754,8 +787,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required double y,
     required double z,
     required Character srcCharacter,
-    double radius = 100.0,
-    int damage = 25,
+    required double radius,
+    required int damage,
   }) {
     if (!scene.inboundsXYZ(x, y, z)) return;
     dispatchGameEvent(GameEvent.Explosion, x, y, z);
@@ -782,7 +815,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         srcCharacter: srcCharacter,
         damage: damage,
         friendlyFire: true,
-        damageType: DamageType.fire,
+        damageType: DamageType.Fire,
       );
     }
 
@@ -798,7 +831,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         srcCharacter: srcCharacter,
         damage: damage,
         friendlyFire: true,
-        damageType: DamageType.fire,
+        damageType: DamageType.Fire,
       );
     }
   }
@@ -877,6 +910,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     target.health -= damage;
 
     if (target.health <= 0) {
+      target.statusColdDuration = 0;
       target.facePosition(src, force: true);
       setCharacterStateDead(target);
       customOnCharacterKilled(target, src);
@@ -1115,30 +1149,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   void deactivateProjectile(Projectile projectile) {
     assert (projectile.active);
-    switch (projectile.type) {
-      case ProjectileType.Orb:
-        break;
-      case ProjectileType.Rocket:
-        final owner = projectile.parent;
-        if (owner == null) return;
-        createExplosion(
-          x: projectile.x,
-          y: projectile.y,
-          z: projectile.z,
-          srcCharacter: owner,
-        );
-        break;
-      case ProjectileType.Bullet:
-        dispatchGameEvent(
-          GameEvent.Bullet_Deactivated,
-          projectile.x,
-          projectile.y,
-          projectile.z,
-        );
-        break;
-      default:
-        break;
-    }
     projectile.active = false;
     projectile.parent = null;
     projectile.target = null;
@@ -1281,7 +1291,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         srcCharacter: owner,
         target: target,
         damage: projectile.damage,
-        damageType: DamageType.projectile,
+        damageType: projectile.damageType,
       );
     }
 
@@ -1363,47 +1373,11 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     character.update();
   }
 
-  void performCharacterAction(Character character){
-    final weaponType = character.weaponType;
-
-    if (WeaponType.valuesMelee.contains(weaponType)) {
-      if (attackAlwaysHitsTarget) {
-        final target = character.target;
-        if (target is Collider) {
-          applyHit(
-            srcCharacter: character,
-            target: target,
-            damage: character.weaponDamage,
-            damageType: DamageType.melee,
-          );
-        }
-        return;
-      }
-      performAbilityMelee(
-          character: character,
-          damageType: DamageType.melee,
-      );
-      return;
-    }
-
-    if (weaponType == WeaponType.Bow) {
-      dispatchGameEvent(
-        GameEvent.Bow_Released,
-        character.x,
-        character.y,
-        character.z,
-      );
-      spawnProjectileArrow(
-        src: character,
-        damage: character.weaponDamage,
-        range: character.weaponRange,
-        angle: character.angle,
-      );
-      return;
-    }
-  }
-
   void updateCharacterState(Character character) {
+
+    if (character.shouldPerformStart){
+      performCharacterStart(character);
+    }
 
     if (character.shouldPerformAction) {
       performCharacterAction(character);
@@ -1413,11 +1387,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       character.clearActionFrame();
     }
 
-    if (
-      character.actionDuration > 0 &&
-      character.frame >= character.actionDuration
-    ) {
-      endCharacterAction(character);
+    if (character.shouldPerformEnd) {
+      performCharacterEnd(character);
     }
 
     if (character.running) {
@@ -1448,29 +1419,58 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     character.frame++;
   }
 
-  void endCharacterAction(Character character) {
+  void performCharacterStart(Character character){
+
+  }
+
+  void performCharacterAction(Character character){
+    final weaponType = character.weaponType;
+    if (WeaponType.valuesMelee.contains(weaponType)) {
+      if (attackAlwaysHitsTarget) {
+        final target = character.target;
+        if (target is Collider) {
+          applyHit(
+            srcCharacter: character,
+            target: target,
+            damage: character.weaponDamage,
+            damageType: DamageType.Melee,
+          );
+        }
+        return;
+      }
+      performAbilityMelee(
+        character: character,
+        damageType: DamageType.Melee,
+        range: character.weaponRange,
+        damage: character.weaponDamage,
+        areaOfEffect: false,
+      );
+      return;
+    }
+
+    if (weaponType == WeaponType.Bow) {
+      dispatchGameEvent(
+        GameEvent.Bow_Released,
+        character.x,
+        character.y,
+        character.z,
+      );
+      spawnProjectileArrow(
+        src: character,
+        damage: character.weaponDamage,
+        range: character.weaponRange,
+        angle: character.angle,
+      );
+      return;
+    }
+  }
+
+  void performCharacterEnd(Character character) {
     if (character.dead) {
       return;
     }
 
     character.clearAction();
-  }
-
-  Projectile spawnProjectileOrb({
-    required Character src,
-    required int damage,
-    required double range,
-  }) {
-    dispatchGameEventPosition(GameEvent.Blue_Orb_Fired, src);
-    return spawnProjectile(
-      src: src,
-      range: range,
-      target: src.target,
-      projectileType: ProjectileType.Orb,
-      angle: src.target != null ? null : (src is IsometricPlayer ? src
-          .angle : src.angle),
-      damage: damage,
-    );
   }
 
   void spawnProjectileArrow({
@@ -1482,7 +1482,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   }) {
     assert (range > 0);
     assert (damage > 0);
-    // dispatchGameEvent(GameEvent.Arrow_Fired, src.x, src.y, src.z);
     spawnProjectile(
       src: src,
       range: range,
@@ -1632,6 +1631,13 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     final players = this.players;
     for (final player in players) {
       player.writeByte(byte);
+    }
+  }
+
+  void dispatchUInt16(int value){
+    final players = this.players;
+    for (final player in players) {
+      player.writeUInt16(value);
     }
   }
 
@@ -2211,11 +2217,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       return;
     }
 
-    if (characterConditionCollectTarget(character)){
-      characterGoalCollectTarget(character);
-      return;
-    }
-
     if (characterConditionFollowPath(character)){
       characterActionFollowPath(character);
       return;
@@ -2253,41 +2254,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   void characterRunToTarget(Character character){
     character.runStraightToTarget();
-  }
-
-  void characterGoalCollectTarget(Character character){
-    character.goal = CharacterGoal.Collect_Target;
-
-    if (characterConditionCollectTargetGameObject(character)){
-      characterActionCollectTargetGameObject(character);
-      return;
-    }
-
-    if (characterConditionRunTowardsCollectTarget(character)){
-      characterActionRunTowardsTarget(character);
-      return;
-    }
-
-    if (characterConditionFollowPathToCollectTarget(character)){
-      characterActionFollowPathToTarget(character);
-      return;
-    }
-
-    character.action = CharacterAction.Stuck;
-  }
-
-  void characterActionCollectTargetGameObject(Character character){
-    final target = character.target;
-
-    assert (target is GameObject);
-    if (target is! GameObject) {
-      return;
-    }
-
-    character.action = CharacterAction.Collect_Target;
-    onCharacterCollectedGameObject(character, target);
-    characterActionIdle(character);
-    clearCharacterTarget(character);
   }
 
   void onCharacterCollectedGameObject(Character character, GameObject gameObject){
@@ -2363,7 +2329,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
     if (!character.pathFindingEnabled) {
       if (character.isEnemy(target)) {
-        return !character.withinAttackRange(target);
+        return !character.withinWeaponRange(target);
       }
       if (character.isAlly(target)){
         return !character.withinInteractRange(target);
@@ -2373,7 +2339,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
     if (scene.isPerceptible(character, target)) {
       if (character.isEnemy(target)) {
-        return !character.withinAttackRange(target);
+        return !character.withinWeaponRange(target);
       }
       if (character.isAlly(target)){
         return !character.withinInteractRange(target);

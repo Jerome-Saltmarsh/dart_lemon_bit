@@ -74,12 +74,16 @@ enum GameError {
   Talent_Max_Level,
   Selected_Mark_Index_Not_Set,
   Invalid_Mark_Stack_Index,
-  Insufficient_Element_Points,
-  Insufficient_Elements,
+  // Insufficient_Element_Points,
+  // Insufficient_Elements,
   Weapon_Rack_Full,
   Insufficient_Weapon_Charges,
   No_Weapon_Equipped,
-  Weapon_Required;
+  Weapon_Required,
+  Bow_Required_For_Skill,
+  Sword_Required_For_Skill,
+  Staff_Required_For_Skill,
+  Insufficient_Magic;
 
   static GameError fromIndex(int index) {
     if (index < 0) throw Exception('$index < 0');

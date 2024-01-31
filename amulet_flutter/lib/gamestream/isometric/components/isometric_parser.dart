@@ -79,9 +79,9 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
       case NetworkResponse.Amulet:
         readNetworkResponseAmulet();
         break;
-      case NetworkResponse.Amulet_Player:
-        readNetworkResponseAmuletPlayer();
-        break;
+      // case NetworkResponse.Amulet_Player:
+      //   readNetworkResponseAmuletPlayer();
+      //   break;
       case NetworkResponse.Game_Error:
         readNetworkResponseGameError();
         break;
@@ -168,10 +168,6 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
         readPlayerAimTarget();
         break;
 
-      // case NetworkResponseIsometric.Player_Accuracy:
-      //   player.accuracy.value = readPercentage();
-      //   break;
-
       case NetworkResponseIsometric.Player_Weapon_Duration_Percentage:
         player.weaponCooldown.value = readPercentage();
         break;
@@ -180,13 +176,13 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
         scene.gameObjects.clear();
         break;
 
-      // case NetworkResponseIsometric.Player_Initialized:
-      //   player.onPlayerInitialized();
-      //   break;
-
       case NetworkResponseIsometric.Player_Controls:
         player.controlsCanTargetEnemies.value = readBool();
         player.controlsRunInDirectionEnabled.value = readBool();
+        break;
+
+      case NetworkResponseIsometric.Seconds_Per_Frame:
+        options.secondsPerFrame.value = readUInt16();
         break;
     }
   }
@@ -209,12 +205,11 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
     if (!debugger.selectedCollider.value)
       return;
 
-
-    final isEquippedWeapon = readBool();
-    if (isEquippedWeapon) {
-      readItemSlot(debugger.itemSlotWeapon);
-      readItemSlot(debugger.itemSlotPower);
-    }
+    // final isEquippedWeapon = readBool();
+    // if (isEquippedWeapon) {
+    //   readItemSlot(debugger.itemSlotWeapon);
+    //   readItemSlot(debugger.itemSlotPower);
+    // }
 
     final selectedColliderType = readByte();
     debugger.selectedColliderType.value = selectedColliderType;
@@ -327,12 +322,6 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
     scene.loaded = true;
   }
 
-  // void readIsometricPlayerPosition() {
-  //   final position = player.position;
-  //   readIsometricPosition(position);
-  //   player.updateIndexes();
-  // }
-
   void readPlayerAimTarget() {
     final aimTargetSet = readBool();
     player.aimTargetSet.value = aimTargetSet;
@@ -382,7 +371,7 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
     final gameObject = scene.findOrCreateGameObject(id);
     gameObject.active = readBool();
     gameObject.type = readByte();
-    gameObject.subType = readByte();
+    gameObject.subType = readUInt16();
     gameObject.health = readUInt16();
     gameObject.maxHealth = readUInt16();
     readIsometricPosition(gameObject);
@@ -433,75 +422,101 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
     editor.gameObjectSelectedEmissionIntensity.value = gameObject.emissionIntensity;
   }
 
+  var bytesSaved = 0;
+
   void readNetworkResponseCharacters(){
+    final scene = this.scene;
     scene.totalCharacters = 0;
 
     while (true) {
 
-      final compressionLevel = readByte();
-      if (compressionLevel == CHARACTER_END) break;
+      final compressionA = readByte();
+      if (compressionA == CHARACTER_END) break;
       final character = scene.getCharacterInstance();
+      final readCharacterTypeAndTeam = readBitFromByte(compressionA, 0);
+      final readCharacterState = readBitFromByte(compressionA, 1);
+      final readHealth = readBitFromByte(compressionA, 2);
+      character.isStatusCold = readBitFromByte(compressionA, 3);
+      final readDirection = readBitFromByte(compressionA, 4);
+      final readFrameChanged = readBitFromByte(compressionA, 5);
+      final readFrameChangedByOne = readBitFromByte(compressionA, 6);
+      final readPosition = readBitFromByte(compressionA, 7);
 
-      final stateAChanged = readBitFromByte(compressionLevel, 0);
-      final stateBChanged = readBitFromByte(compressionLevel, 1);
-      final changeTypeX = (compressionLevel & Hex00001100) >> 2;
-      final changeTypeY =  (compressionLevel & Hex00110000) >> 4;
-      final changeTypeZ = (compressionLevel & Hex11000000) >> 6;
+      if (readCharacterTypeAndTeam) {
+        final value = readByte();
+        final characterType = value & Hex00111111;
+        final team = value >> 6;
+        character.characterType = characterType;
+        character.team = team;
+      }
 
-      if (stateAChanged) {
-        character.characterType = readByte();
+      if (readCharacterState) {
         character.state = readByte();
-        character.team = readByte();
+      }
+
+      if (readHealth) {
         character.health = readPercentage();
       }
 
-      if (stateBChanged){
-        final animationAndFrameDirection = readByte();
-        character.direction = (animationAndFrameDirection & Hex11100000) >> 5;
-        assert (character.direction >= 0 && character.direction <= 7);
-        character.animationFrame = (animationAndFrameDirection & Hex00011111);
+      if (readDirection) {
+        character.direction = readByte();
       }
 
-      switch (changeTypeX) {
-        case ChangeType.None:
-          break;
-        case ChangeType.One:
-          character.x++;
-          break;
-        case ChangeType.Delta:
-          character.x += readInt8();
-          break;
-        case ChangeType.Absolute:
-          character.x = readInt16().toDouble();
-          break;
+      if (readFrameChanged) {
+        if (readFrameChangedByOne){
+          bytesSaved++;
+          character.animationFrame++;
+        } else {
+          character.animationFrame = readByte();
+        }
       }
 
-      switch (changeTypeY) {
-        case ChangeType.None:
-          break;
-        case ChangeType.One:
-          character.y++;
-          break;
-        case ChangeType.Delta:
-          character.y += readInt8();
-          break;
-        case ChangeType.Absolute:
-          character.y = readInt16().toDouble();
-          break;
-      }
+      if (readPosition){
+        final compressionB = readByte();
+        final changeTypeX = (compressionB & Hex00001100) >> 2;
+        final changeTypeY =  (compressionB & Hex00110000) >> 4;
+        final changeTypeZ = (compressionB & Hex11000000) >> 6;
+        switch (changeTypeX) {
+          case ChangeType.None:
+            break;
+          case ChangeType.One:
+            character.x++;
+            break;
+          case ChangeType.Delta:
+            character.x += readInt8();
+            break;
+          case ChangeType.Absolute:
+            character.x = readInt16().toDouble();
+            break;
+        }
 
-      switch (changeTypeZ) {
-        case ChangeType.None:
-          break;
-        case ChangeType.One:
-          character.z++;
-          break;
-        case ChangeType.Delta:
-          character.z += readInt8();
-          break;
-        case ChangeType.Absolute:
-          character.z = readInt16().toDouble();
-          break;
+        switch (changeTypeY) {
+          case ChangeType.None:
+            break;
+          case ChangeType.One:
+            character.y++;
+            break;
+          case ChangeType.Delta:
+            character.y += readInt8();
+            break;
+          case ChangeType.Absolute:
+            character.y = readInt16().toDouble();
+            break;
+        }
+
+        switch (changeTypeZ) {
+          case ChangeType.None:
+            break;
+          case ChangeType.One:
+            character.z++;
+            break;
+          case ChangeType.Delta:
+            character.z += readInt8();
+            break;
+          case ChangeType.Absolute:
+            character.z = readInt16().toDouble();
+            break;
+        }
       }
 
       if (character.characterType == CharacterType.Human){
@@ -513,7 +528,6 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
       } else {
         character.actionComplete = 0;
       }
-
 
       scene.totalCharacters++;
     }
@@ -591,7 +605,7 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
 
     if (readA) {
       character.weaponType = readByte();
-      character.bodyType = readByte();
+      character.armorType = readByte();
       character.helmType = readByte();
       character.legType = readByte();
     }
@@ -688,31 +702,12 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
     }
   }
 
-  void readNetworkResponseAmuletPlayer() {
-    final amulet = this.amulet;
-    switch (readByte()) {
-      case NetworkResponseAmuletPlayer.Elements:
-        amulet.elementFire.value = readByte();
-        amulet.elementWater.value = readByte();
-        amulet.elementElectricity.value = readByte();
-        break;
-      case NetworkResponseAmuletPlayer.Element_Points:
-        amulet.elementPoints.value = readUInt16();
-        break;
-      case NetworkResponseAmuletPlayer.Message:
-        amulet.clearMessage();
-        amulet.messages.addAll(readString().split('.').map((e) => e.trim()).toList(growable: false));
-        amulet.messages.removeWhere((element) => element.isEmpty);
-        amulet.messageIndex.value = 0;
-        break;
-      case NetworkResponseAmuletPlayer.End_Interaction:
-        amulet.playerInteracting.value = false;
-        break;
-      case NetworkResponseAmuletPlayer.Camera_Target:
-        readCameraTarget();
-        break;
-    }
-  }
+  // void readNetworkResponseAmuletPlayer() {
+  //   final amulet = this.amulet;
+  //   switch (readByte()) {
+  //
+  //   }
+  // }
 
   void readNetworkServerError() {
     final message = readString();

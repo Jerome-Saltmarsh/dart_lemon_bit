@@ -4,6 +4,8 @@ import 'dart:typed_data';
 import '../isometric_engine.dart';
 import '../consts/isometric_settings.dart';
 
+
+
 class Character extends Collider {
 
   static const maxAnimationFrames = 32;
@@ -15,8 +17,15 @@ class Character extends Collider {
   var _maxHealth = 1;
   var _goal = CharacterGoal.Idle;
 
-  var experience = 0;
-  var spawnLootOnDeath = true;
+
+  /// 0 cold
+  /// 1 frozen
+  /// 2 stunned
+  /// 3 blind
+  var statusColdDuration = 0;
+
+  bool get isStatusCold => statusColdDuration > 0;
+
   /// in seconds
   var respawnDurationTotal = (60 * 3);
   var gender = Gender.female;
@@ -43,7 +52,6 @@ class Character extends Collider {
   var weaponType = WeaponType.Unarmed;
   var weaponDamage = 1;
   var weaponRange = 20.0;
-  var weaponCooldown = 0;
   var characterState = CharacterState.Idle;
   var frame = 0;
   var runSpeed = 1.0;
@@ -62,10 +70,7 @@ class Character extends Collider {
   var runY = 0.0;
   var runZ = 0.0;
   var helmType = HelmType.None;
-  var bodyType = BodyType.None;
-  var legsType = LegType.None;
-  var handTypeLeft = HandType.None;
-  var handTypeRight = HandType.None;
+  var armorType = ArmorType.None;
   var roamEnabled = false;
   var roamNext = 0;
   var roamRadius = 2;
@@ -85,7 +90,6 @@ class Character extends Collider {
     required this.weaponType,
     required this.weaponDamage,
     required this.weaponRange,
-    required this.weaponCooldown,
     required this.attackDuration,
     required int health,
     String? name,
@@ -122,26 +126,18 @@ class Character extends Collider {
     _goal = value;
   }
 
-  int get compressedAnimationFrameAndDirection =>
-      animationFrame | direction << 5;
-
   int get framesPerAnimation => characterStateChanging ? 1 : 3;
 
-  int get animationFrame {
-    return (frame ~/ framesPerAnimation) % maxAnimationFrames;
-  }
+  int get animationFrame => (frame ~/ framesPerAnimation) % maxAnimationFrames;
 
   double get actionCompletionPercentage =>
       actionDuration <= 0 ? 0 : frame / actionDuration;
 
-  int get compressedState => compressBytesToUInt32(
-    characterType,
-    characterState,
-    team,
-    (healthPercentage * 255).toInt(),
-  );
-
   bool get shouldPerformAction => actionFrame > 0 && frame == actionFrame;
+
+  bool get shouldPerformStart => actionFrame > 0 && frame == 0;
+
+  bool get shouldPerformEnd =>  actionDuration > 0 && frame >= actionDuration;
 
   bool get pathSet => pathTargetIndex >= 0 && pathCurrent >= 0;
 
@@ -166,7 +162,7 @@ class Character extends Collider {
     if (target == null){
       return throw Exception('target == null');
     }
-    return withinAttackRange(target);
+    return withinWeaponRange(target);
   }
 
   bool get isPlayer => false;
@@ -220,6 +216,8 @@ class Character extends Collider {
   bool get targetSet => target != null;
 
   double get healthPercentage => (health / maxHealth).clamp(0, 1.0);
+
+  int get healthPercentageByte => (healthPercentage * 255).toInt();
 
   double get angle => _angle;
 
@@ -295,7 +293,7 @@ class Character extends Collider {
   }
 
   bool withinAttackRangeAndAngle(Collider collider){
-    if (!withinAttackRange(collider)){
+    if (!withinWeaponRange(collider)){
       return false;
     }
     final angle = getAngle(collider);
@@ -303,14 +301,16 @@ class Character extends Collider {
     return angleD < piQuarter; // TODO Replace constant with weaponAngleRange
   }
 
-  bool withinAttackRange(Position target){
+  bool withinWeaponRange(Position target) => withinStrikeRadius(target, weaponRange);
+
+  bool withinStrikeRadius(Position target, double radius){
     if ((target.z - z).abs() > Character_Height) {
       return false;
     }
     if (target is Collider) {
-      return withinRadiusPosition(target, weaponRange + target.radius);
+      return withinRadiusPosition(target, radius + target.radius);
     }
-    return withinRadiusPosition(target, weaponRange);
+    return withinRadiusPosition(target, radius);
   }
 
   void faceTarget() {
@@ -329,6 +329,11 @@ class Character extends Collider {
   }
 
   void update() {
+
+    if (statusColdDuration > 0){
+      statusColdDuration--;
+    }
+
     if (
       runToDestinationEnabled &&
       !arrivedAtDestination &&
@@ -441,9 +446,9 @@ class Character extends Collider {
   
   int get templateDataA => compressBytesToUInt32(
     weaponType,
-    bodyType,
+    armorType,
     helmType,
-    legsType,
+    0, // TODO this was legsType
   );
 
   int get templateDataB => compressBytesToUInt32(
@@ -454,8 +459,8 @@ class Character extends Collider {
   );
 
   int get templateDataC => compressBytesToUInt32(
-    handTypeLeft,
-    handTypeRight,
+    0, // TODO this was handTypeLeft
+    0, // TODO this was handTypeRight,
     hairType,
     hairColor,
   );
@@ -603,5 +608,7 @@ class Character extends Collider {
   void setActionFrame(int value) {
     actionFrame = value;
   }
+
+  int get characterTypeAndTeam => characterType | team << 6;
 
 }

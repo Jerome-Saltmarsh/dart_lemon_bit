@@ -5,21 +5,31 @@ class WeaponType {
   static const Sword_Heavy_Sapphire = 26;
   static const Bow = 7;
   static const Staff = 15;
-  static const Spell_Thunderbolt = 27;
 
   static const valuesMelee = [
-    Unarmed,
+    ...valuesSwords,
+    ...valuesStaffs,
+  ];
+
+  static const valuesBows = [
+    Bow,
+  ];
+
+  static const valuesSwords = [
     Shortsword,
     Broadsword,
     Sword_Heavy_Sapphire,
-    Staff,
+  ];
+
+  static const valuesStaffs = [
+    Staff
   ];
 
   static const values = [
     Unarmed,
-    ...valuesMelee,
-    Bow,
-    Spell_Thunderbolt,
+    ...valuesStaffs,
+    ...valuesSwords,
+    ...valuesBows,
   ];
 
   static String getName(int value) => const {
@@ -29,6 +39,11 @@ class WeaponType {
       Sword_Heavy_Sapphire: 'Sword_Heavy_Sapphire',
       Bow: 'Bow',
       Staff: 'staff',
-      Spell_Thunderbolt: 'Thunderbolt',
     }[value] ?? 'weapon-type-unknown-$value';
+
+  static bool isBow(int weaponType) => valuesBows.contains(weaponType);
+
+  static bool isSword(int weaponType) => valuesSwords.contains(weaponType);
+
+  static bool isStaff(int weaponType) => valuesStaffs.contains(weaponType);
 }

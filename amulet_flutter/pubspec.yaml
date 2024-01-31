@@ -1,5 +1,11 @@
 
 
+
+
+
+
+
+
 name: amulet_flutter
 description: next gen cloud gaming
 
@@ -88,67 +94,31 @@ flutter:
     - assets/sprites/isometric/kid/shadow/
     - assets/sprites/isometric/kid/south/
     - assets/sprites/isometric/kid/west/
-    - assets/sprites/isometric/kid/south/body_male/shirt_blue/
-    - assets/sprites/isometric/kid/south/body_male/leather_armour/
-    - assets/sprites/isometric/kid/south/body_female/shirt_blue/
-    - assets/sprites/isometric/kid/south/body_female/leather_armour/
     - assets/sprites/isometric/kid/south/hair/01/
     - assets/sprites/isometric/kid/south/hair/02/
     - assets/sprites/isometric/kid/south/hair/03/
-    - assets/sprites/isometric/kid/south/hands_left/gauntlets/
-    - assets/sprites/isometric/kid/south/hands_left/leather_gloves/
-    - assets/sprites/isometric/kid/south/hands_right/gauntlets/
-    - assets/sprites/isometric/kid/south/hands_right/leather_gloves/
     - assets/sprites/isometric/kid/south/head/boy/
     - assets/sprites/isometric/kid/south/head/girl/
-    - assets/sprites/isometric/kid/south/helms/steel/
-    - assets/sprites/isometric/kid/south/helms/wizard_hat/
-    - assets/sprites/isometric/kid/south/legs/leather/
     - assets/sprites/isometric/kid/south/torso/female/
     - assets/sprites/isometric/kid/south/torso/male/
     - assets/sprites/isometric/kid/south/weapons/bow/
     - assets/sprites/isometric/kid/south/weapons/staff/
-    - assets/sprites/isometric/kid/south/shoes/iron_plates/
     - assets/sprites/isometric/kid/south/shoes/leather_boots/
-    - assets/sprites/isometric/kid/west/body_male/shirt_blue/
-    - assets/sprites/isometric/kid/west/body_male/leather_armour/
-    - assets/sprites/isometric/kid/west/body_female/shirt_blue/
-    - assets/sprites/isometric/kid/west/body_female/leather_armour/
     - assets/sprites/isometric/kid/west/hair/01/
     - assets/sprites/isometric/kid/west/hair/02/
     - assets/sprites/isometric/kid/west/hair/03/
-    - assets/sprites/isometric/kid/west/hands_left/gauntlets/
-    - assets/sprites/isometric/kid/west/hands_left/leather_gloves/
-    - assets/sprites/isometric/kid/west/hands_right/gauntlets/
-    - assets/sprites/isometric/kid/west/hands_right/leather_gloves/
     - assets/sprites/isometric/kid/west/head/boy/
     - assets/sprites/isometric/kid/west/head/girl/
-    - assets/sprites/isometric/kid/west/helms/steel/
-    - assets/sprites/isometric/kid/west/helms/wizard_hat/
-    - assets/sprites/isometric/kid/west/legs/leather/
     - assets/sprites/isometric/kid/west/torso/female/
     - assets/sprites/isometric/kid/west/torso/male/
     - assets/sprites/isometric/kid/west/weapons/bow/
     - assets/sprites/isometric/kid/west/weapons/staff/
-    - assets/sprites/isometric/kid/west/shoes/iron_plates/
     - assets/sprites/isometric/kid/west/shoes/leather_boots/
-    - assets/sprites/isometric/kid/diffuse/body_female/leather_armour/
-    - assets/sprites/isometric/kid/diffuse/body_female/shirt_blue/
-    - assets/sprites/isometric/kid/diffuse/body_male/leather_armour/
-    - assets/sprites/isometric/kid/diffuse/body_male/shirt_blue/
     - assets/sprites/isometric/kid/diffuse/hair/01/
     - assets/sprites/isometric/kid/diffuse/hair/02/
     - assets/sprites/isometric/kid/diffuse/hair/03/
-    - assets/sprites/isometric/kid/diffuse/hands_left/gauntlets/
-    - assets/sprites/isometric/kid/diffuse/hands_left/leather_gloves/
-    - assets/sprites/isometric/kid/diffuse/hands_right/gauntlets/
-    - assets/sprites/isometric/kid/diffuse/hands_right/leather_gloves/
     - assets/sprites/isometric/kid/diffuse/head/boy/
     - assets/sprites/isometric/kid/diffuse/head/girl/
-    - assets/sprites/isometric/kid/diffuse/helms/steel/
-    - assets/sprites/isometric/kid/diffuse/helms/wizard_hat/
-    - assets/sprites/isometric/kid/diffuse/legs/leather/
-    - assets/sprites/isometric/kid/diffuse/shoes/iron_plates/
     - assets/sprites/isometric/kid/diffuse/shoes/leather_boots/
     - assets/sprites/isometric/kid/diffuse/torso/female/
     - assets/sprites/isometric/kid/diffuse/torso/male/
@@ -182,8 +152,6 @@ flutter:
     - assets/sprites/isometric/zombie/shadow/
     - assets/sprites/isometric/zombie/south/
     - assets/sprites/isometric/zombie/west/
-    - assets/sprites/isometric/kid/diffuse/weapons_trail/
-    - assets/sprites/isometric/kid/diffuse/weapons_trail/sword/
     - assets/sprites/isometric/fallen_armoured/
     - assets/sprites/isometric/fallen_armoured/flat/
     - assets/sprites/isometric/fallen_armoured/shadow/
@@ -196,30 +164,65 @@ flutter:
     - assets/sprites/isometric/kid/diffuse/weapons/sword_heavy_sapphire/
     - assets/sprites/isometric/kid/south/weapons/sword_heavy_sapphire/
     - assets/sprites/isometric/kid/west/weapons/sword_heavy_sapphire/
-    - assets/sprites/isometric/kid/diffuse/helms/witches_hat/
-    - assets/sprites/isometric/kid/south/helms/witches_hat/
-    - assets/sprites/isometric/kid/west/helms/witches_hat/
-    - assets/sprites/isometric/kid/diffuse/body_male/black_cloak/
-    - assets/sprites/isometric/kid/south/body_male/black_cloak/
-    - assets/sprites/isometric/kid/west/body_male/black_cloak/
-    - assets/sprites/isometric/kid/diffuse/body_female/black_cloak/
-    - assets/sprites/isometric/kid/diffuse/shoes/black_boots/
-    - assets/sprites/isometric/kid/south/body_female/black_cloak/
-    - assets/sprites/isometric/kid/south/shoes/black_boots/
-    - assets/sprites/isometric/kid/west/body_female/black_cloak/
-    - assets/sprites/isometric/kid/west/shoes/black_boots/
     - assets/sprites/isometric/gargoyle/
     - assets/sprites/isometric/gargoyle/flat/
     - assets/sprites/isometric/gargoyle/south/
     - assets/sprites/isometric/gargoyle/west/
     - assets/sprites/isometric/gargoyle/shadow/
-    - assets/sprites/isometric/kid/diffuse/legs/plated/
-    - assets/sprites/isometric/kid/south/legs/plated/
-    - assets/sprites/isometric/kid/west/legs/plated/
-    - assets/sprites/isometric/kid/diffuse/legs/linen_striped/
-    - assets/sprites/isometric/kid/south/legs/linen_striped/
-    - assets/sprites/isometric/kid/west/legs/linen_striped/
     - assets/sprites/isometric/toad_warrior/
     - assets/sprites/isometric/toad_warrior/flat/
     - assets/sprites/isometric/toad_warrior/south/
     - assets/sprites/isometric/toad_warrior/west/
+    - assets/sprites/isometric/kid/diffuse/armor/
+    - assets/sprites/isometric/kid/south/armor/
+    - assets/sprites/isometric/kid/west/armor/
+    - assets/sprites/isometric/kid/diffuse/armor/tunic/
+    - assets/sprites/isometric/kid/south/armor/tunic/
+    - assets/sprites/isometric/kid/west/armor/tunic/
+    - assets/sprites/isometric/kid/diffuse/helms/pointed_hat_black/
+    - assets/sprites/isometric/kid/diffuse/helms/pointed_hat_purple/
+    - assets/sprites/isometric/kid/south/helms/pointed_hat_black/
+    - assets/sprites/isometric/kid/south/helms/pointed_hat_purple/
+    - assets/sprites/isometric/kid/west/helms/pointed_hat_black/
+    - assets/sprites/isometric/kid/west/helms/pointed_hat_purple/
+    - assets/sprites/isometric/kid/diffuse/helms/steel_cap/
+    - assets/sprites/isometric/kid/south/helms/steel_cap/
+    - assets/sprites/isometric/kid/west/helms/steel_cap/
+    - assets/sprites/isometric/kid/diffuse/armor/leather/
+    - assets/sprites/isometric/kid/south/armor/leather/
+    - assets/sprites/isometric/kid/west/armor/leather/
+    - assets/sprites/isometric/kid/diffuse/armor/chainmail/
+    - assets/sprites/isometric/kid/south/armor/chainmail/
+    - assets/sprites/isometric/kid/west/armor/chainmail/
+    - assets/sprites/isometric/kid/diffuse/armor/platemail/
+    - assets/sprites/isometric/kid/south/armor/platemail/
+    - assets/sprites/isometric/kid/west/armor/platemail/
+    - assets/sprites/isometric/kid/diffuse/armor/robes/
+    - assets/sprites/isometric/kid/south/armor/robes/
+    - assets/sprites/isometric/kid/west/armor/robes/
+    - assets/sprites/isometric/kid/diffuse/armor/cloak/
+    - assets/sprites/isometric/kid/south/armor/cloak/
+    - assets/sprites/isometric/kid/west/armor/cloak/
+    - assets/sprites/isometric/kid/diffuse/helms/leather_cap/
+    - assets/sprites/isometric/kid/south/helms/leather_cap/
+    - assets/sprites/isometric/kid/west/helms/leather_cap/
+    - assets/sprites/isometric/kid/diffuse/helms/feather_cap/
+    - assets/sprites/isometric/kid/south/helms/feather_cap/
+    - assets/sprites/isometric/kid/west/helms/feather_cap/
+    - assets/sprites/isometric/kid/diffuse/shoes/grieves/
+    - assets/sprites/isometric/kid/south/shoes/grieves/
+    - assets/sprites/isometric/kid/west/shoes/grieves/
+    - assets/sprites/isometric/kid/diffuse/shoes/black_slippers/
+    - assets/sprites/isometric/kid/south/shoes/black_slippers/
+    - assets/sprites/isometric/kid/west/shoes/black_slippers/
+    - assets/sprites/isometric/kid/diffuse/shoes/treads/
+    - assets/sprites/isometric/kid/south/shoes/treads/
+    - assets/sprites/isometric/kid/west/shoes/treads/
+    - assets/sprites/isometric/kid/diffuse/helms/full_helm/
+    - assets/sprites/isometric/kid/south/helms/full_helm/
+    - assets/sprites/isometric/kid/west/helms/full_helm/
+    - assets/sprites/isometric/goblin/
+    - assets/sprites/isometric/goblin/flat/
+    - assets/sprites/isometric/goblin/south/
+    - assets/sprites/isometric/goblin/west/
+    - assets/sprites/isometric/goblin/shadow/

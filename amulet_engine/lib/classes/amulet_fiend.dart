@@ -1,9 +1,8 @@
 
 
-import '../mixins/elemental.dart';
 import '../packages/isomeric_engine.dart';
 
-class AmuletFiend extends Character with Elemental {
+class AmuletFiend extends Character {
 
   FiendType fiendType;
 
@@ -15,10 +14,9 @@ class AmuletFiend extends Character with Elemental {
     required this.fiendType,
   }) : super (
     characterType: fiendType.characterType,
-    weaponType: fiendType.weaponType,
+    weaponType: WeaponType.Unarmed,
     weaponDamage: fiendType.damage,
     weaponRange: fiendType.weaponRange,
-    weaponCooldown: fiendType.weaponCooldown,
     attackDuration: fiendType.attackDuration,
     health: fiendType.health,
   );
@@ -30,9 +28,8 @@ class AmuletFiend extends Character with Elemental {
     weaponDamage = fiendType.damage;
     attackDuration = fiendType.attackDuration;
     runSpeed = fiendType.runSpeed;
-    experience = fiendType.experience;
     chanceOfSetTarget = fiendType.chanceOfSetTarget;
-    weaponType = fiendType.weaponType;
+    // weaponType = fiendType.weaponType;
     weaponRange = fiendType.weaponRange;
     characterType = fiendType.characterType;
   }
@@ -47,20 +44,8 @@ class AmuletFiend extends Character with Elemental {
   String get name => fiendType.name;
 
   @override
-  int get experience => fiendType.experience;
-
-  @override
   int get maxHealth => fiendType.health;
 
   @override
-  int get elementWater => fiendType.elementWater;
-
-  @override
-  int get elementFire => fiendType.elementFire;
-
-  @override
-  int get elementAir => fiendType.elementAir;
-
-  @override
-  int get elementStone => fiendType.elementStone;
+  double get runSpeed => super.runSpeed * (isStatusCold ? 0.5 : 1.0);
 }

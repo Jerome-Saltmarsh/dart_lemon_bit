@@ -12,7 +12,6 @@ import 'package:amulet_flutter/gamestream/isometric/components/functions/format_
 import 'package:amulet_flutter/gamestream/ui/widgets/gs_container.dart';
 import 'package:amulet_flutter/gamestream/ui/widgets/gs_refresh.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
-import '../../../../amulet/ui/builders/build_weapon_slot_at_index.dart';
 import 'debug_tab.dart';
 
 extension isometricDebugUI on IsometricDebug {
@@ -430,18 +429,18 @@ extension isometricDebugUI on IsometricDebug {
         ),
         buildTarget(),
         buildText('EQUIPPED'),
-        Row(
-          children: [
-            buildWeaponSlotAtIndex2(
-              itemSlot: debugger.itemSlotWeapon,
-              amulet: amulet,
-            ),
-            buildWeaponSlotAtIndex2(
-              itemSlot: debugger.itemSlotPower,
-              amulet: amulet,
-            ),
-          ],
-        )
+        // Row(
+        //   children: [
+        //     buildWeaponSlotAtIndex2(
+        //       itemSlot: debugger.itemSlotWeapon,
+        //       amulet: amulet,
+        //     ),
+        //     buildWeaponSlotAtIndex2(
+        //       itemSlot: debugger.itemSlotPower,
+        //       amulet: amulet,
+        //     ),
+        //   ],
+        // )
       ],
     ),
   );
@@ -509,10 +508,6 @@ extension isometricDebugUI on IsometricDebug {
       ],
     );
 
-
-
-
-
   String get formattedConnectionDuration {
     final duration = server.remote.websocket.connectionDuration;
     if (duration == null) return 'not connected';
@@ -528,7 +523,10 @@ extension isometricDebugUI on IsometricDebug {
     final bytesPerSecond = (bytes / seconds).round();
     final bytesPerMinute = bytesPerSecond * 60;
     final bytesPerHour = bytesPerMinute * 60;
-    return 'per second: $bytesPerSecond, per minute: $bytesPerMinute, per hour: $bytesPerHour';
+    return
+        'per second: $bytesPerSecond, '
+        'per minute: $bytesPerMinute, '
+        'per hour: $bytesPerHour';
   }
 
   String formatAverageBytePerSecond(int bytes){
@@ -567,8 +565,7 @@ extension isometricDebugUI on IsometricDebug {
             action: player.toggleGender,
             child: buildRowMapped('gender', player.gender, Gender.getName)
           ),
-          buildRowMapped('legs type', player.legsType, LegType.getName),
-          buildRowMapped('body type', player.bodyType, BodyType.getName),
+          buildRowMapped('body type', player.armorType, ArmorType.getName),
           onPressed(
             action: () => ui.showDialogGetHairType(onSelected: player.setHairType),
             child: buildRowMapped('hair type', player.hairType, HairType.getName)
@@ -582,7 +579,6 @@ extension isometricDebugUI on IsometricDebug {
             )),
           ),
           buildRowMapped('helm type', player.helmType, HelmType.getName),
-          buildRowMapped('hand type left', player.handTypeLeft, HandType.getName),
           onPressed(
             action: player.showDialogChangeComplexion,
             child: buildRowWatch('complexion', player.complexion, (complexion) => Container(
@@ -602,8 +598,6 @@ extension isometricDebugUI on IsometricDebug {
             }),
           ),
           buildButtonAcquireItem(),
-          buildButtonGainLevel(),
-          buildButtonGainExperience(),
           buildButtonSkipTutorial(),
           buildButtonReset(),
         ],
@@ -660,6 +654,18 @@ extension isometricDebugUI on IsometricDebug {
   Widget buildTabOptions() =>
       buildTab(
         children: [
+          buildRowToggle(
+            text: 'seconds per frame',
+            action: () {
+              ui.showDialogGetInt(onSelected: (value) =>
+                  amulet.server.sendNetworkRequest(
+                    NetworkRequest.Isometric,
+                    NetworkRequestIsometric.Set_Seconds_Per_Frame.index,
+                    value,
+                  ));
+            },
+            value: () => options.secondsPerFrame.value,
+          ),
           buildRowToggle(
             text: 'render_north',
             action: () => options.renderNorth = !options.renderNorth,
@@ -891,16 +897,6 @@ extension isometricDebugUI on IsometricDebug {
   Widget buildButtonReset() => onPressed(
     action: amulet.requestReset,
     child: GSContainer(child: buildText('RESET')),
-  );
-
-  Widget buildButtonGainLevel() => onPressed(
-    action: amulet.requestGainLevel,
-    child: GSContainer(child: buildText('GAIN LEVEL')),
-  );
-
-  Widget buildButtonGainExperience() => onPressed(
-    action: amulet.requestGainExperience,
-    child: GSContainer(child: buildText('GAIN EXPERIENCE')),
   );
 
   Widget buildButtonSkipTutorial() => onPressed(

@@ -1,8 +1,11 @@
 
-import 'package:amulet_engine/classes/src.dart';
 
 import '../../packages/isomeric_engine.dart';
 import '../../packages/isometric_engine/packages/common/src/amulet/quests/quest_main.dart';
+import '../amulet_game.dart';
+import '../amulet_npc.dart';
+import '../amulet_player.dart';
+import '../talk_option.dart';
 
 class AmuletGameWorld11 extends AmuletGame {
 
@@ -43,9 +46,8 @@ class AmuletGameWorld11 extends AmuletGame {
       y: scene.getIndexY(indexSpawnWarren),
       z: scene.getIndexZ(indexSpawnWarren),
       health: 200,
-      team: AmuletTeam.Human,
+      team: TeamType.Good,
       weaponType: WeaponType.Unarmed,
-      weaponCooldown: 0,
       weaponDamage: 0,
       weaponRange: 0,
       attackDuration: 0,
@@ -53,10 +55,10 @@ class AmuletGameWorld11 extends AmuletGame {
     )
       ..fixed = true
       ..invincible = true
-      ..helmType = HelmType.Steel
-      ..bodyType = BodyType.Leather_Armour
+      ..helmType = HelmType.Full_Helm
+      ..armorType = ArmorType.Leather
       ..shoeType = ShoeType.Leather_Boots
-      ..legsType = LegType.Leather
+      // ..legsType = LegType.Leather
       ..interact = onInteractWithWarren
       ..complexion = ComplexionType.fair;
 
@@ -66,9 +68,8 @@ class AmuletGameWorld11 extends AmuletGame {
       z: scene.getIndexZ(indexSpawnGuard1),
       health: 50,
       invincible: true,
-      team: AmuletTeam.Human,
+      team: TeamType.Good,
       weaponType: WeaponType.Bow,
-      weaponCooldown: 3,
       weaponDamage: 3,
       weaponRange: 120,
       attackDuration: 30,
@@ -76,11 +77,11 @@ class AmuletGameWorld11 extends AmuletGame {
     )
       ..fixed = false
       ..invincible = true
-      ..helmType = HelmType.Steel
-      ..bodyType = BodyType.Leather_Armour
-      ..legsType = LegType.Leather
-      ..handTypeLeft = HandType.Leather_Gloves
-      ..shoeType = ShoeType.Iron_Plates
+      ..helmType = HelmType.Leather_Cap
+      ..armorType = ArmorType.Leather
+      // ..legsType = LegType.Leather
+      // ..handTypeLeft = HandType.Leather_Gloves
+      ..shoeType = ShoeType.Grieves
       ..weaponType = WeaponType.Bow
       ..chanceOfSetTarget = 1.0
       ..complexion = ComplexionType.fair;
@@ -91,9 +92,8 @@ class AmuletGameWorld11 extends AmuletGame {
       z: scene.getIndexZ(indexSpawnGuard2),
       health: 50,
       invincible: true,
-      team: AmuletTeam.Human,
+      team: TeamType.Good,
       weaponType: WeaponType.Bow,
-      weaponCooldown: 3,
       weaponDamage: 3,
       weaponRange: 120,
       attackDuration: 30,
@@ -101,12 +101,12 @@ class AmuletGameWorld11 extends AmuletGame {
     )
       ..fixed = false
       ..invincible = true
-      ..helmType = HelmType.Steel
-      ..bodyType = BodyType.Leather_Armour
-      ..legsType = LegType.Leather
-      ..handTypeLeft = HandType.Leather_Gloves
+      ..helmType = HelmType.Full_Helm
+      ..armorType = ArmorType.Leather
+      // ..legsType = LegType.Leather
+      // ..handTypeLeft = HandType.Leather_Gloves
       ..weaponType = WeaponType.Bow
-      ..shoeType = ShoeType.Iron_Plates
+      ..shoeType = ShoeType.Grieves
       ..chanceOfSetTarget = 1.0
       ..complexion = ComplexionType.fair;
 
@@ -116,9 +116,8 @@ class AmuletGameWorld11 extends AmuletGame {
       z: scene.getIndexZ(indexSpawnMay),
       health: 50,
       invincible: true,
-      team: AmuletTeam.Human,
+      team: TeamType.Good,
       weaponType: WeaponType.Bow,
-      weaponCooldown: 3,
       weaponDamage: 3,
       weaponRange: 120,
       attackDuration: 30,
@@ -130,10 +129,10 @@ class AmuletGameWorld11 extends AmuletGame {
       ..helmType = HelmType.None
       ..hairType = 2
       ..hairColor = 30
-      ..bodyType = BodyType.Shirt_Blue
-      ..legsType = LegType.Leather
+      ..armorType = ArmorType.Tunic
+      // ..legsType = LegType.Leather
       ..shoeType = ShoeType.Leather_Boots
-      ..handTypeLeft = HandType.None
+      // ..handTypeLeft = HandType.None
       ..weaponType = WeaponType.Unarmed
       ..gender = Gender.female
       ..interact = onInteractWithMay
@@ -145,9 +144,8 @@ class AmuletGameWorld11 extends AmuletGame {
       z: scene.getIndexZ(indexSpawnSophie),
       health: 50,
       invincible: true,
-      team: AmuletTeam.Human,
+      team: TeamType.Good,
       weaponType: WeaponType.Unarmed,
-      weaponCooldown: 3,
       weaponDamage: 3,
       weaponRange: 120,
       attackDuration: 30,
@@ -159,10 +157,10 @@ class AmuletGameWorld11 extends AmuletGame {
       ..helmType = HelmType.None
       ..hairType = 2
       ..hairColor = 30
-      ..bodyType = BodyType.Shirt_Blue
-      ..legsType = LegType.Leather
+      ..armorType = ArmorType.Tunic
+      // ..legsType = LegType.Leather
       ..shoeType = ShoeType.Leather_Boots
-      ..handTypeLeft = HandType.None
+      // ..handTypeLeft = HandType.None
       ..weaponType = WeaponType.Unarmed
       ..gender = Gender.female
       ..interact = onInteractWithSophie
@@ -174,9 +172,8 @@ class AmuletGameWorld11 extends AmuletGame {
       z: scene.getIndexZ(indexSpawnTraveller),
       health: 50,
       invincible: true,
-      team: AmuletTeam.Human,
+      team: TeamType.Good,
       weaponType: WeaponType.Bow,
-      weaponCooldown: 3,
       weaponDamage: 3,
       weaponRange: 120,
       attackDuration: 30,
@@ -184,14 +181,12 @@ class AmuletGameWorld11 extends AmuletGame {
     )
       ..fixed = true
       ..invincible = true
-      ..helmType = HelmType.Wizard_Hat
+      ..helmType = HelmType.Pointed_Hat_Black
       ..hairType = 1
       ..hairColor = 20
       ..autoTarget = false
-      ..bodyType = BodyType.Leather_Armour
+      ..armorType = ArmorType.Leather
       ..shoeType = ShoeType.Leather_Boots
-      ..legsType = LegType.Leather
-      ..handTypeLeft = HandType.None
       ..weaponType = WeaponType.Staff
       ..gender = Gender.male
       ..interact = onInteractWithTraveller

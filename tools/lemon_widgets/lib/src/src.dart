@@ -8,3 +8,4 @@ export 'on_pressed.dart';
 export 'on_disposed.dart';
 export 'functions/src.dart';
 export 'fill_space.dart';
+export 'expanded.dart';

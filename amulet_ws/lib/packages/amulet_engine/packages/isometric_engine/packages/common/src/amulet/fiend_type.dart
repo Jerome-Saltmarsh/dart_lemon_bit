@@ -7,7 +7,7 @@ enum FiendType {
   Fallen(
     level: 1,
     health: 4,
-    damage: 1,
+    damage: 2,
     characterType: CharacterType.Fallen,
     attackDuration: 20,
     experience: 1,
@@ -16,12 +16,13 @@ enum FiendType {
     weaponType: WeaponType.Shortsword,
     weaponRange: 25,
     quantity: 2,
-    weaponCooldown: 20,
     clearTargetOnPerformAction: true,
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 50,
-    elementFire: 1,
-    chanceOfDropLoot: 0.05,
+    chanceOfDropCommon: 0.25,
+    chanceOfDropRare: 0.05,
+    chanceOfDropLegendary: 0.01,
+    chanceOfDropPotion: 0.15,
   ),
   Skeleton(
     level: 2,
@@ -35,13 +36,14 @@ enum FiendType {
     weaponType: WeaponType.Bow,
     weaponRange: 150,
     quantity: 2,
-    weaponCooldown: 20,
     clearTargetOnPerformAction: false,
     postAttackPauseDurationMin: 30,
     postAttackPauseDurationMax: 80,
-    elementStone: 1,
     resists: DamageType.fire,
-    chanceOfDropLoot: 0.05,
+    chanceOfDropCommon: 0.25,
+    chanceOfDropRare: 0.05,
+    chanceOfDropLegendary: 0.025,
+    chanceOfDropPotion: 0.15,
   ),
   Wolf(
     level: 3,
@@ -55,13 +57,14 @@ enum FiendType {
     weaponType: WeaponType.Unarmed,
     weaponRange: 50,
     quantity: 1,
-    weaponCooldown: 20,
     clearTargetOnPerformAction: false,
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 40,
-    elementAir: 1,
     resists: DamageType.wind,
-    chanceOfDropLoot: 0.1,
+    chanceOfDropCommon: 0.25,
+    chanceOfDropRare: 0.05,
+    chanceOfDropLegendary: 0.025,
+    chanceOfDropPotion: 0.15,
   ),
   Zombie(
     level: 4,
@@ -75,13 +78,14 @@ enum FiendType {
     weaponType: WeaponType.Unarmed,
     weaponRange: 50,
     quantity: 1,
-    weaponCooldown: 20,
     clearTargetOnPerformAction: true,
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 60,
-    elementWater: 1,
     resists: DamageType.melee,
-    chanceOfDropLoot: 0.05,
+    chanceOfDropCommon: 0.25,
+    chanceOfDropRare: 0.05,
+    chanceOfDropLegendary: 0.025,
+    chanceOfDropPotion: 0.15,
   ),
   Fallen_Armoured(
     level: 5,
@@ -95,13 +99,14 @@ enum FiendType {
     weaponType: WeaponType.Shortsword,
     weaponRange: 25,
     quantity: 2,
-    weaponCooldown: 20,
     clearTargetOnPerformAction: true,
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 50,
-    elementWater: 1,
     resists: DamageType.melee,
-    chanceOfDropLoot: 0.1,
+    chanceOfDropCommon: 0.25,
+    chanceOfDropRare: 0.05,
+    chanceOfDropLegendary: 0.025,
+    chanceOfDropPotion: 0.15,
   ),
   Gargoyle(
     level: 6,
@@ -115,13 +120,14 @@ enum FiendType {
     weaponType: WeaponType.Shortsword,
     weaponRange: 130,
     quantity: 1,
-    weaponCooldown: 30,
     clearTargetOnPerformAction: false,
     postAttackPauseDurationMin: 30,
     postAttackPauseDurationMax: 100,
-    elementStone: 1,
     resists: DamageType.projectile,
-    chanceOfDropLoot: 0.33,
+    chanceOfDropCommon: 0.25,
+    chanceOfDropRare: 0.05,
+    chanceOfDropLegendary: 0.025,
+    chanceOfDropPotion: 0.15,
   ),
   Toad_Warrior(
     level: 6,
@@ -135,13 +141,14 @@ enum FiendType {
     weaponType: WeaponType.Shortsword,
     weaponRange: 130,
     quantity: 1,
-    weaponCooldown: 30,
     clearTargetOnPerformAction: false,
     postAttackPauseDurationMin: 30,
     postAttackPauseDurationMax: 100,
-    elementWater: 1,
     resists: DamageType.melee,
-    chanceOfDropLoot: 0.33,
+    chanceOfDropCommon: 0.25,
+    chanceOfDropRare: 0.05,
+    chanceOfDropLegendary: 0.025,
+    chanceOfDropPotion: 0.15,
   );
 
   final int level;
@@ -156,15 +163,13 @@ enum FiendType {
   final double chanceOfSetTarget;
   final double weaponRange;
   final int weaponType;
-  final int weaponCooldown;
   final bool clearTargetOnPerformAction;
   final int postAttackPauseDurationMin;
   final int postAttackPauseDurationMax;
-  final int elementWater;
-  final int elementFire;
-  final int elementAir;
-  final int elementStone;
-  final double chanceOfDropLoot;
+  final double chanceOfDropLegendary;
+  final double chanceOfDropRare;
+  final double chanceOfDropCommon;
+  final double chanceOfDropPotion;
   final DamageType? resists;
 
   const FiendType({
@@ -178,16 +183,14 @@ enum FiendType {
     required this.weaponType,
     required this.weaponRange,
     required this.quantity,
-    required this.weaponCooldown,
     required this.level,
     required this.clearTargetOnPerformAction,
     required this.postAttackPauseDurationMin,
     required this.postAttackPauseDurationMax,
-    required this.chanceOfDropLoot,
+    required this.chanceOfDropCommon,
+    required this.chanceOfDropRare,
+    required this.chanceOfDropLegendary,
+    required this.chanceOfDropPotion,
     this.resists,
-    this.elementWater = 0,
-    this.elementFire = 0,
-    this.elementAir = 0,
-    this.elementStone = 0,
   });
 }

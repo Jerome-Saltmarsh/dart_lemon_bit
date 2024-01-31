@@ -2,15 +2,12 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-import '../../../classes/amulet_item_slot.dart';
-import '../../../mixins/equipped_weapon.dart';
 import '../isometric_engine.dart';
 import '../consts/isometric_settings.dart';
 
-
 class IsometricPlayer extends Character with ByteWriter {
 
-  static const Cache_Length = 200;
+  static const Cache_Length = 250;
 
   var editEnabled = true;
   var controlsEnabled = true;
@@ -52,8 +49,12 @@ class IsometricPlayer extends Character with ByteWriter {
   var positionCacheZ = 0;
   var data = Json();
 
-  final cacheStateB = Uint8List(Cache_Length);
-  final cacheStateA = Uint32List(Cache_Length);
+  final cacheCharacterTypeAndTeam = Uint8List(Cache_Length);
+  final cacheCharacterState = Uint8List(Cache_Length);
+  final cacheHealthPerc = Uint8List(Cache_Length);
+  final cacheDirection = Uint8List(Cache_Length);
+  final cacheAnimationFrame = Uint8List(Cache_Length);
+
   final cachePositionX = Int16List(Cache_Length);
   final cachePositionY = Int16List(Cache_Length);
   final cachePositionZ = Int16List(Cache_Length);
@@ -78,7 +79,6 @@ class IsometricPlayer extends Character with ByteWriter {
     bool autoTargetNearbyEnemies = false,
   }) : super(
     characterType: CharacterType.Human,
-    weaponCooldown: 20,
     weaponRange: 100,
     weaponType: WeaponType.Unarmed,
     weaponDamage: 1,
@@ -227,16 +227,16 @@ class IsometricPlayer extends Character with ByteWriter {
   }
 
   @override
-  set bodyType(int value) {
-    super.bodyType = value;
-    writeBodyType();
+  set armorType(int value) {
+    super.armorType = value;
+    writeArmorType();
   }
 
-  @override
-  set legsType(int value) {
-    super.legsType = value;
-    writeLegsType();
-  }
+  // @override
+  // set legsType(int value) {
+  //   super.legsType = value;
+  //   writeLegsType();
+  // }
 
   @override
   set weaponType(int value) {
@@ -244,17 +244,17 @@ class IsometricPlayer extends Character with ByteWriter {
     writeWeaponType();
   }
 
-  @override
-  set handTypeLeft(int value){
-    super.handTypeLeft = value;
-    writeHandTypeLeft();
-  }
+  // @override
+  // set handTypeLeft(int value){
+  //   super.handTypeLeft = value;
+  //   writeHandTypeLeft();
+  // }
 
-  @override
-  set handTypeRight(int value){
-    super.handTypeRight = value;
-    writeHandTypeRight();
-  }
+  // @override
+  // set handTypeRight(int value){
+  //   super.handTypeRight = value;
+  //   writeHandTypeRight();
+  // }
 
   @override
   set gender(int value){
@@ -345,7 +345,7 @@ class IsometricPlayer extends Character with ByteWriter {
       initialize();
     }
 
-    if (!sceneDownloaded){
+    if (!sceneDownloaded) {
       downloadScene();
     }
 
@@ -354,10 +354,8 @@ class IsometricPlayer extends Character with ByteWriter {
     writePlayerAimTargetPosition();
     writePlayerAimTargetAction();
     writePlayerDestination();
-
     writePlayerCharacterState();
     writeSelectedCollider();
-
     writeProjectiles();
     writeCharacters();
     writeEditorGameObjectSelected();
@@ -399,9 +397,6 @@ class IsometricPlayer extends Character with ByteWriter {
     final cachePositionY = this.cachePositionY;
     final cachePositionZ = this.cachePositionZ;
 
-    final cacheStateA = this.cacheStateA;
-    final cacheStateB = this.cacheStateB;
-
     var cacheIndex = 0;
 
     for (var i = 0; i < charactersLength; i++) {
@@ -440,60 +435,95 @@ class IsometricPlayer extends Character with ByteWriter {
       final diffYChangeType = ChangeType.fromDiff(diffY);
       final diffZChangeType = ChangeType.fromDiff(diffZ);
 
-      final compressedState = character.compressedState;
-      final compressedFrameAndDirection = character.compressedAnimationFrameAndDirection;
+      final changedCharacterTypeTeam = character.characterTypeAndTeam != cacheCharacterTypeAndTeam[cacheIndex];
+      final changedCharacterState = character.characterState != cacheCharacterState[cacheIndex];
+      final changedHealthPercByte = character.healthPercentageByte != cacheHealthPerc[cacheIndex];
+      final changedDirection = character.direction != cacheDirection[cacheIndex];
 
-      final stateAChanged = compressedState != cacheStateA[cacheIndex];
-      final stateBChanged = compressedFrameAndDirection != cacheStateB[cacheIndex];
+      final animationFrameDiff = character.animationFrame - cacheAnimationFrame[cacheIndex];
+      final changedFrame = animationFrameDiff != 0;
+      final changedFrameByOne = animationFrameDiff == 1;
+      final changedPosition =
+          diffXChangeType != ChangeType.None ||
+          diffYChangeType != ChangeType.None ||
+          diffZChangeType != ChangeType.None ;
 
-      final compressionLevel = writeBits(stateAChanged, stateBChanged, false, false, false, false, false, false)
-         | (diffXChangeType << 2)
-         | (diffYChangeType << 4)
-         | (diffZChangeType << 6);
 
-      writeByte(compressionLevel);
+      final compressionA = writeBits(
+          changedCharacterTypeTeam,
+          changedCharacterState,
+          changedHealthPercByte,
+          character.isStatusCold,
+          changedDirection,
+          changedFrame,
+          changedFrameByOne,
+          changedPosition,
+      );
+      writeByte(compressionA);
 
-      if (stateAChanged){
-        writeByte(character.characterType);
+      if (changedCharacterTypeTeam) {
+        writeByte(character.characterTypeAndTeam);
+        cacheCharacterTypeAndTeam[cacheIndex] = character.characterTypeAndTeam;
+      }
+
+      if (changedCharacterState){
         writeByte(character.characterState);
-        writeByte(character.team);
-        writePercentage(character.healthPercentage);
-        cacheStateA[cacheIndex] = compressedState;
+        cacheCharacterState[cacheIndex] = character.characterState;
       }
 
-      if (stateBChanged) {
-        writeByte(compressedFrameAndDirection);
-        cacheStateB[cacheIndex] = compressedFrameAndDirection;
+      if (changedHealthPercByte) {
+        writeByte(character.healthPercentageByte);
+        cacheHealthPerc[cacheIndex] = character.healthPercentageByte;
       }
 
-      if (diffXChangeType == ChangeType.One) {
-        cachePositionX[cacheIndex]++;
-      } else if (diffXChangeType == ChangeType.Delta) {
-        writeInt8(diffX);
-        cachePositionX[cacheIndex] = characterX;
-      } else if (diffXChangeType == ChangeType.Absolute) {
-        writeInt16(characterX);
-        cachePositionX[cacheIndex] = characterX;
+      if (changedDirection) {
+        writeByte(character.direction);
+        cacheDirection[cacheIndex] = character.direction;
       }
 
-      if (diffYChangeType == ChangeType.One) {
-        cachePositionY[cacheIndex]++;
-      } else if (diffYChangeType == ChangeType.Delta) {
-        writeInt8(diffY);
-        cachePositionY[cacheIndex] = characterY;
-      } else if (diffYChangeType == ChangeType.Absolute) {
-        writeInt16(characterY);
-        cachePositionY[cacheIndex] = characterY;
+      if (changedFrame) {
+        if (!changedFrameByOne){
+          writeByte(character.animationFrame);
+        }
+        cacheAnimationFrame[cacheIndex] = character.animationFrame;
       }
 
-      if (diffZChangeType == ChangeType.One) {
-        cachePositionZ[cacheIndex]++;
-      } else if (diffZChangeType == ChangeType.Delta) {
-        writeInt8(diffZ);
-        cachePositionZ[cacheIndex] = characterZ;
-      } else if (diffZChangeType == ChangeType.Absolute) {
-        writeInt16(characterZ);
-        cachePositionZ[cacheIndex] = characterZ;
+      if (changedPosition) {
+        final compressionB =
+          diffXChangeType << 2 |
+          diffYChangeType << 4 |
+          diffZChangeType << 6 ;
+        writeByte(compressionB);
+
+        if (diffXChangeType == ChangeType.One) {
+          cachePositionX[cacheIndex]++;
+        } else if (diffXChangeType == ChangeType.Delta) {
+          writeInt8(diffX);
+          cachePositionX[cacheIndex] = characterX;
+        } else if (diffXChangeType == ChangeType.Absolute) {
+          writeInt16(characterX);
+          cachePositionX[cacheIndex] = characterX;
+        }
+
+        if (diffYChangeType == ChangeType.One) {
+          cachePositionY[cacheIndex]++;
+        } else if (diffYChangeType == ChangeType.Delta) {
+          writeInt8(diffY);
+          cachePositionY[cacheIndex] = characterY;
+        } else if (diffYChangeType == ChangeType.Absolute) {
+          writeInt16(characterY);
+          cachePositionY[cacheIndex] = characterY;
+        }
+
+        if (diffZChangeType == ChangeType.One) {
+          cachePositionZ[cacheIndex]++;
+        } else if (diffZChangeType == ChangeType.Delta) {
+          writeInt8(diffZ);
+          cachePositionZ[cacheIndex] = characterZ;
+        } else if (diffZChangeType == ChangeType.Absolute) {
+          writeInt16(characterZ);
+          cachePositionZ[cacheIndex] = characterZ;
+        }
       }
 
       if (character.characterTypeTemplate) {
@@ -513,6 +543,7 @@ class IsometricPlayer extends Character with ByteWriter {
   void downloadScene(){
     writeGameRunning();
     writeGameTime();
+    writeSecondsPerFrame();
     writePlayerTeam();
     writeEditEnabled();
     writeScene();
@@ -714,6 +745,12 @@ class IsometricPlayer extends Character with ByteWriter {
     writeUInt24(game.time.time);
   }
 
+  void writeSecondsPerFrame(){
+    writeByte(NetworkResponse.Isometric);
+    writeByte(NetworkResponseIsometric.Seconds_Per_Frame);
+    writeUInt16(game.time.secondsPerFrame);
+  }
+
   void writeProjectile(Projectile projectile){
     if (!projectile.active) return;
     writePosition(projectile);
@@ -738,9 +775,9 @@ class IsometricPlayer extends Character with ByteWriter {
     if (writeA){
       cacheTemplateA[cacheIndex] = compressedA;
       writeByte(character.weaponType);
-      writeByte(character.bodyType);
+      writeByte(character.armorType);
       writeByte(character.helmType);
-      writeByte(character.legsType);
+      writeByte(0);  // writeByte(character.legsType);
     }
 
     if (writeB){
@@ -753,8 +790,8 @@ class IsometricPlayer extends Character with ByteWriter {
 
     if (writeC){
       cacheTemplateC[cacheIndex] = compressedC;
-      writeByte(character.handTypeLeft);
-      writeByte(character.handTypeRight);
+      writeByte(0); // writeByte(character.handTypeLeft);
+      writeByte(0);  // writeByte(character.handTypeRight);
       writeByte(character.hairType);
       writeByte(character.hairColor);
     }
@@ -898,7 +935,7 @@ class IsometricPlayer extends Character with ByteWriter {
     writeUInt16(gameObject.id);
     writeBool(gameObject.active);
     writeByte(gameObject.type);
-    writeByte(gameObject.subType);
+    writeUInt16(gameObject.subType);
     writeUInt16(gameObject.health);
     writeUInt16(gameObject.healthMax);
     writeIsometricPosition(gameObject);
@@ -985,15 +1022,15 @@ class IsometricPlayer extends Character with ByteWriter {
     writeByte(NetworkResponse.Isometric);
     writeByte(NetworkResponseIsometric.Selected_Collider);
     writeBool(true);
-
-    if (selectedCollider is EquippedWeapon){
-      writeBool(true);
-      final equippedWeapon = selectedCollider as EquippedWeapon;
-      writeAmuletItemSlot(equippedWeapon.itemSlotWeapon);
-      writeAmuletItemSlot(equippedWeapon.itemSlotPower);
-    } else {
-      writeBool(false);
-    }
+    writeBool(false); // selectedCollider is AmuletPlayer
+    // if (selectedCollider is AmuletPlayer){
+    //   writeBool(true);
+    //   // writeAmuletItemSlot(selectedCollider.equippedWeapon);
+    //   // writeAmuletItemSlot(selectedCollider.equippedWeapon); // TODO
+    //   // writeAmuletItemSlot(selectedCollider.activeAmuletItemSlot);
+    // } else {
+    //   writeBool(false);
+    // }
 
     if (selectedCollider is GameObject) {
       final gameObject = selectedCollider;
@@ -1186,16 +1223,6 @@ class IsometricPlayer extends Character with ByteWriter {
     if (!active) return;
 
     game.updatePlayerAimTarget(this);
-
-    // if (idling && !weaponStateBusy) {
-    //   final diff = IsometricDirection.getDifference(
-    //       lookDirection, direction);
-    //   if (diff >= 2) {
-    //     angle += piQuarter;
-    //   } else if (diff <= -3) {
-    //     angle -= piQuarter;
-    //   }
-    // }
   }
 
   double getMouseDistance() => this.getDistanceXYZ(mouseSceneX, mouseSceneY, mouseSceneZ);
@@ -1218,34 +1245,16 @@ class IsometricPlayer extends Character with ByteWriter {
     writeByte(helmType);
   }
 
-  void writeBodyType() {
+  void writeArmorType() {
     writeByte(NetworkResponse.Player);
-    writeByte(NetworkResponsePlayer.BodyType);
-    writeByte(bodyType);
-  }
-
-  void writeLegsType() {
-    writeByte(NetworkResponse.Player);
-    writeByte(NetworkResponsePlayer.LegsType);
-    writeByte(legsType);
-  }
-
-  void writeHandTypeLeft() {
-    writeByte(NetworkResponse.Player);
-    writeByte(NetworkResponsePlayer.HandTypeLeft);
-    writeByte(handTypeLeft);
+    writeByte(NetworkResponsePlayer.ArmorType);
+    writeByte(armorType);
   }
 
   void writeWeaponType() {
     writeByte(NetworkResponse.Player);
     writeByte(NetworkResponsePlayer.WeaponType);
     writeByte(weaponType);
-  }
-
-  void writeHandTypeRight() {
-    writeByte(NetworkResponse.Player);
-    writeByte(NetworkResponsePlayer.HandTypeRight);
-    writeByte(handTypeRight);
   }
 
   void downloadSceneMarks() {
@@ -1383,8 +1392,11 @@ class IsometricPlayer extends Character with ByteWriter {
     cachePositionX.fillRange(0, cachePositionX.length, 0);
     cachePositionY.fillRange(0, cachePositionY.length, 0);
     cachePositionZ.fillRange(0, cachePositionZ.length, 0);
-    cacheStateA.fillRange(0, cacheStateA.length, 0);
-    cacheStateB.fillRange(0, cacheStateB.length, 0);
+    cacheCharacterTypeAndTeam.fillRange(0, cacheCharacterTypeAndTeam.length, 0);
+    cacheCharacterState.fillRange(0, cacheCharacterState.length, 0);
+    cacheHealthPerc.fillRange(0, cacheHealthPerc.length, 0);
+    cacheDirection.fillRange(0, cacheDirection.length, 0);
+    cacheAnimationFrame.fillRange(0, cacheAnimationFrame.length, 0);
     writeByte(NetworkResponse.Player);
     writeByte(NetworkResponsePlayer.Cache_Cleared);
   }
@@ -1396,10 +1408,10 @@ class IsometricPlayer extends Character with ByteWriter {
     writeBool(value);
   }
 
-  void writeAmuletItemSlot(AmuletItemSlot amuletItemSlot){
-    writeInt16(amuletItemSlot.amuletItem?.index ?? -1);
-    writeUInt16(amuletItemSlot.charges);
-    writeUInt16(amuletItemSlot.max);
-    writePercentage(amuletItemSlot.cooldownPercentage);
-  }
+  // void writeAmuletItemSlot(AmuletItemSlot amuletItemSlot){
+  //   writeInt16(amuletItemSlot.amuletItem?.index ?? -1);
+  //   writeUInt16(amuletItemSlot.charges);
+  //   writeUInt16(amuletItemSlot.max);
+  //   writePercentage(amuletItemSlot.cooldownPercentage);
+  // }
 }

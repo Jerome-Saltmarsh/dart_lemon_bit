@@ -5,9 +5,10 @@ class ChangeType {
   static const Absolute = 2;
   static const One = 3;
 
-  static int fromDiff(num diff) =>
-    diff == 0 ? None :
+  static int fromDiff(num diff) {
+    return diff == 0 ? None :
       diff == 1 ? One :
         diff.abs() < 128 ? Delta :
           Absolute;
+  }
 }

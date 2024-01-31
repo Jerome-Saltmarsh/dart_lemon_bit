@@ -139,25 +139,16 @@ class ServerLocal implements Server {
     ensureInitialized().then((value) async {
       playerServer.uuid = generateUUID();
       playerServer.name = name;
-      playerServer.level = 1;
-      playerServer.elementPoints = 0;
-      playerServer.elementFire = 0;
-      playerServer.elementWater = 0;
-      playerServer.elementAir = 0;
-      playerServer.elementStone = 0;
-      playerServer.experience = 0;
       playerServer.complexion = complexion;
       playerServer.hairType = hairType;
       playerServer.hairColor = hairColor;
       playerServer.gender = gender;
       playerServer.headType = headType;
       playerServer.tutorialObjective = QuestTutorial.values.first;
-      playerServer.equippedHelm.amuletItem = null;
-      playerServer.equippedHandLeft.amuletItem = null;
-      playerServer.equippedHandRight.amuletItem = null;
-      playerServer.equippedShoe.amuletItem = null;
-      playerServer.equippedBody.amuletItem = AmuletItem.Armor_Shirt_Blue_Worn;
-      playerServer.equippedLegs.amuletItem = AmuletItem.Pants_Travellers;
+      playerServer.equippedWeapon = null;
+      playerServer.equippedHelm = null;
+      playerServer.equippedShoes = null;
+      playerServer.equippedArmor = null;
       final json = writeAmuletPlayerToJson(playerServer);
       final characters = getCharacters();
       characters.add(json);
@@ -194,7 +185,6 @@ class ServerLocal implements Server {
       playerServer.active = true;
       writeJsonToAmuletPlayer(character, playerServer);
       controller.playerJoin();
-      playerServer.refillItemSlotsWeapons();;
       playerServer.regainFullHealth();
       amulet.resumeUpdateTimer();
       parser.server.onServerConnectionEstablished();

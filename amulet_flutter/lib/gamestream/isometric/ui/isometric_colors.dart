@@ -253,3 +253,91 @@ class IsometricColors {
     ];
   }
 }
+
+class Palette {
+  static const Black = Color.fromRGBO(38, 34, 47, 1.0);
+
+  static const brown_4 = Color.fromRGBO(46, 34, 47, 1);
+  static const brown_3 = Color.fromRGBO(62, 53, 70, 1);
+  static const brown_2 = Color.fromRGBO(98, 85, 101, 1);
+  static const brown_1 = Color.fromRGBO(150, 108, 108, 1);
+  static const brown_0 = Color.fromRGBO(171, 148, 122, 1);
+
+  static const grey_0 = Color.fromRGBO(255, 255, 255, 1);
+  static const grey_1 = Color.fromRGBO(199, 220, 208, 1);
+  static const grey_2 = Color.fromRGBO(155, 171, 178, 1);
+  static const grey_3 = Color.fromRGBO(127, 112, 138, 1);
+  static const grey_4 = Color.fromRGBO(105, 79, 98, 1);
+
+  static const red_0  = Color.fromRGBO(245, 125, 74, 1);
+  static const red_1  = Color.fromRGBO(234, 79, 54, 1);
+  static const red_2  = Color.fromRGBO(179, 56, 49, 1);
+  static const red_3  = Color.fromRGBO(110, 39, 39, 1);
+
+  static const orange_0  = Color.fromRGBO(249, 194, 43, 1);
+  static const orange_1  = Color.fromRGBO(247, 150, 23, 1);
+  static const orange_2  = Color.fromRGBO(251, 107, 29, 1);
+  static const orange_3  = Color.fromRGBO(232, 59, 59, 1);
+  static const orange_4  = Color.fromRGBO(174, 35, 52, 1);
+
+  static const apricot_0  = Color.fromRGBO(251, 185, 84, 1);
+  static const apricot_1  = Color.fromRGBO(230, 144, 78, 1);
+  static const apricot_2  = Color.fromRGBO(205, 104, 61, 1);
+  static const apricot_3  = Color.fromRGBO(158, 69, 57, 1);
+  static const apricot_4  = Color.fromRGBO(122, 48, 69, 1);
+
+  static const butter_0  = Color.fromRGBO(251, 255, 134, 1);
+  static const butter_1  = Color.fromRGBO(213, 224, 75, 1);
+  static const butter_2  = Color.fromRGBO(162, 169, 71, 1);
+  static const butter_3  = Color.fromRGBO(103, 102, 51, 1);
+  static const butter_4  = Color.fromRGBO(76, 62, 36 , 1);
+
+  static const teal_0  = Color.fromRGBO(205, 223, 108 , 1);
+  static const teal_1  = Color.fromRGBO(145, 219, 105 , 1);
+  static const teal_2  = Color.fromRGBO(30, 188, 115 , 1);
+  static const teal_3  = Color.fromRGBO(35, 144, 99 , 1);
+  static const teal_4  = Color.fromRGBO(22, 90, 76 , 1);
+
+  static const sage_0  = Color.fromRGBO(178, 186, 144 , 1);
+  static const sage_1  = Color.fromRGBO(148, 169, 132 , 1);
+  static const sage_2  = Color.fromRGBO(84, 126, 100 , 1);
+  static const sage_3  = Color.fromRGBO(55, 78, 74 , 1);
+  static const sage_4  = Color.fromRGBO(49, 54, 56 , 1);
+
+  static const aqua_1 = Color.fromRGBO(143, 248, 226, 1);
+  static const aqua_2 = Color.fromRGBO(48, 225, 185, 1);
+  static const aqua_3 = Color.fromRGBO(14, 175, 155, 1);
+  static const aqua_4 = Color.fromRGBO(11, 138, 143, 1);
+  static const  aqua_5 = Color.fromRGBO(11, 94, 101, 1);
+
+  static const blue_0 = Color.fromARGB(255, 143, 211, 255);
+  static const blue_1 = Color.fromARGB(255, 77, 155, 230);
+  static const blue_2 = Color.fromARGB(255, 77, 101, 180);
+  static const blue_3 = Color.fromARGB(255, 72, 74, 119);
+  static const blue_4 = Color.fromARGB(255, 50, 51, 83);
+
+  static const purple_0 = Color.fromRGBO(234, 173, 237, 1);
+  static const purple_1 = Color.fromRGBO(168, 132, 243, 1);
+  static const purple_2 = Color.fromRGBO(144, 94, 169, 1);
+  static const purple_3 = Color.fromRGBO(107, 62, 117, 1);
+  static const purple_4 = Color.fromRGBO(69, 41, 63, 1);
+
+  static const pink_0 = Color.fromRGBO(237, 128, 153, 1);
+  static const pink_1 = Color.fromRGBO(207, 101, 127, 1);
+  static const pink_2 = Color.fromRGBO(162, 75, 111, 1);
+  static const pink_3 = Color.fromRGBO(117, 60, 84, 1);
+
+  static const peach_0 = Color.fromRGBO(253, 203, 176, 1);
+  static const peach_1 = Color.fromRGBO(252, 167, 144, 1);
+  static const peach_2 = Color.fromRGBO(246, 129, 129, 1);
+  static const peach_3 = Color.fromRGBO(240, 79, 120, 1);
+  static const peach_4 = Color.fromRGBO(195, 36, 84, 1);
+  static const peach_5 = Color.fromRGBO(131, 28, 93, 1);
+
+  static const brownDark = Color.fromRGBO(36, 33, 38, 1);
+  static const brownDarkX = Color.fromRGBO(29, 27, 31, 1.0);
+  static const brownLight = Color.fromRGBO(48, 48, 48, 1.0);
+
+  static const black = Black;
+  static const white = Colors.white;
+}

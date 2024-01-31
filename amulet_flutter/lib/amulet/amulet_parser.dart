@@ -1,10 +1,8 @@
 
 import 'dart:typed_data';
 
-import 'package:amulet_engine/packages/common.dart';
-import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/quests/quest_main.dart';
+import 'package:amulet_engine/src.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_parser.dart';
-import 'package:lemon_byte/byte_reader.dart';
 
 import 'classes/map_location.dart';
 
@@ -34,52 +32,27 @@ extension AmuletParser on IsometricParser {
          }
          amulet.npcOptionsReads.value++;
          break;
-       case NetworkResponseAmulet.Player_Item_Length:
-         amulet.setItemLength(readUInt16());
-         break;
        case NetworkResponseAmulet.Player_World_Index:
          amulet.worldRow = readByte();
          amulet.worldColumn = readByte();
          break;
-       case NetworkResponseAmulet.Player_Item:
-         final index = readUInt16();
-         final type = readInt16();
-         final item = type != -1 ? AmuletItem.values[type] : null;
-         amulet.setItem(index: index, item: item);
-         break;
        case NetworkResponseAmulet.Player_Weapon:
          readPlayerWeapon();
          break;
-       case NetworkResponseAmulet.Player_Treasure:
-         final index = readUInt16();
-         final type = readInt16();
-         final item = type != -1 ? AmuletItem.values[type] : null;
-         amulet.setTreasure(index: index, item: item);
+       case NetworkResponseAmulet.Amulet_Event:
+         readAmuletEvent();
          break;
-       // case NetworkResponseAmulet.Player_Equipped_Weapon_Index:
-       //   amulet.equippedWeaponIndex.value = readInt16();
-       //   break;
+       case NetworkResponseAmulet.Player_Skill_Types:
+         readPlayerSkillTypes();
+         break;
+       case NetworkResponseAmulet.Player_Skills_Left_Right:
+         readPlayerSkillsLeftRight();
+         break;
        case NetworkResponseAmulet.Player_Equipped:
-         amulet.equippedWeapon.amuletItem.value = readMMOItem();
-         amulet.equippedHelm.amuletItem.value = readMMOItem();
-         amulet.equippedBody.amuletItem.value = readMMOItem();
-         amulet.equippedLegs.amuletItem.value = readMMOItem();
-         amulet.equippedHandLeft.amuletItem.value = readMMOItem();
-         amulet.equippedHandRight.amuletItem.value = readMMOItem();
-         amulet.equippedShoes.amuletItem.value = readMMOItem();
-         break;
-       case NetworkResponseAmulet.Player_Experience:
-         amulet.playerExperience.value = readUInt24();
-         amulet.playerExperienceRequired.value = readUInt24();
-         break;
-       case NetworkResponseAmulet.Player_Level:
-         amulet.playerLevel.value = readByte();
-         break;
-       case NetworkResponseAmulet.Player_Inventory_Open:
-         amulet.playerInventoryOpen.value = readBool();
-         break;
-       case NetworkResponseAmulet.Activated_Power_Index:
-         amulet.activatedPowerIndex.value = readInt8();
+         amulet.equippedWeapon.value = readAmuletItem();
+         amulet.equippedHelm.value = readAmuletItem();
+         amulet.equippedArmor.value = readAmuletItem();
+         amulet.equippedShoes.value = readAmuletItem();
          break;
        case NetworkResponseAmulet.Active_Power_Position:
          readIsometricPosition(amulet.activePowerPosition);
@@ -105,28 +78,6 @@ extension AmuletParser on IsometricParser {
          break;
        case NetworkResponseAmulet.Highlight_Amulet_Item_Clear:
          amulet.clearHighlightAmuletItem();
-         break;
-       case NetworkResponseAmulet.Player_Level_Gained:
-         amulet.onPlayerLevelGained();
-         break;
-       case NetworkResponseAmulet.Element_Upgraded:
-         amulet.onPlayerElementUpgraded();
-         break;
-       case NetworkResponseAmulet.Aim_Target_Element:
-         final water = readByte();
-         final fire = readByte();
-         final air = readByte();
-         final stone = readByte();
-         amulet.aimTargetElementWater.value = water;
-         amulet.aimTargetElementFire.value = fire;
-         amulet.aimTargetElementAir.value = air;
-         amulet.aimTargetElementStone.value = stone;
-         amulet.aimTargetElement.value = AmuletElement.max(
-             water: water,
-             fire: fire,
-             air: air,
-             stone: stone,
-         );
          break;
        case NetworkResponseAmulet.Aim_Target_Fiend_Type:
          final isFiend = readBool();
@@ -159,6 +110,36 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Active_Slot_Type:
          readActiveSlotType();
          break;
+       case NetworkResponseAmulet.Aim_Target_Item_Type:
+         readAimTargetItemType();
+         break;
+       case NetworkResponseAmulet.Player_Magic:
+         readPlayerMagic();
+         break;
+       case NetworkResponseAmulet.Player_Regen_Magic:
+         readPlayerRegenMagic();
+         break;
+       case NetworkResponseAmulet.Player_Regen_Health:
+         readPlayerRegenHealth();
+         break;
+       case NetworkResponseAmulet.Player_Run_Speed:
+         readPlayerRunSpeed();
+         break;
+       case NetworkResponseAmulet.Player_Weapon_Damage:
+         readPlayerWeaponDamage();
+         break;
+       case NetworkResponseAmulet.Message:
+         amulet.clearMessage();
+         amulet.messages.addAll(readString().split('.').map((e) => e.trim()).toList(growable: false));
+         amulet.messages.removeWhere((element) => element.isEmpty);
+         amulet.messageIndex.value = 0;
+         break;
+       case NetworkResponseAmulet.End_Interaction:
+         amulet.playerInteracting.value = false;
+         break;
+       case NetworkResponseAmulet.Camera_Target:
+         readCameraTarget();
+         break;
      }
   }
 
@@ -172,27 +153,27 @@ extension AmuletParser on IsometricParser {
     final type = readInt16();
 
     if (type == -1){
-      amulet.setWeapon(
-        index: index,
-        item: null,
-        cooldownPercentage: 0,
-        charges: 0,
-        max: 0,
-      );
+      // amulet.setWeapon(
+      //   index: index,
+      //   item: null,
+      //   cooldownPercentage: 0,
+      //   charges: 0,
+      //   max: 0,
+      // );
       return;
     }
 
-    final cooldownPercentage = readPercentage();
-    final charges = readUInt16();
-    final max = readUInt16();
-    final item = AmuletItem.values[type];
-    amulet.setWeapon(
-      index: index,
-      item: item,
-      cooldownPercentage: cooldownPercentage,
-      charges: charges,
-      max: max,
-    );
+    // final cooldownPercentage = readPercentage();
+    // final charges = readUInt16();
+    // final max = readUInt16();
+    // final item = AmuletItem.values[type];
+    // amulet.setWeapon(
+    //   index: index,
+    //   item: item,
+    //   cooldownPercentage: cooldownPercentage,
+    //   charges: charges,
+    //   max: max,
+    // );
   }
 
   void onPlayAudioType(AudioType audioType) {
@@ -264,5 +245,61 @@ extension AmuletParser on IsometricParser {
        return;
      }
      amulet.activeSlotType.value = SlotType.values[readByte()];
+  }
+
+  void readAimTargetItemType() =>
+      amulet.aimTargetItemType.value = readBool() ? readAmuletItem() : null;
+
+  AmuletItem? readAmuletItem() {
+     final index = readInt16();
+     return AmuletItem.values.tryGet(index);
+  }
+
+  void readPlayerMagic() {
+    amulet.playerMagicMax.value = readUInt16();
+    amulet.playerMagic.value = readUInt16();
+  }
+
+  void readPlayerRegenMagic() {
+    amulet.playerRegenMagic.value = readUInt16();
+  }
+
+  void readPlayerRegenHealth() {
+    amulet.playerRegenHealth.value = readUInt16();
+  }
+
+  void readPlayerRunSpeed() {
+    amulet.playerRunSpeed.value = readUInt16();
+  }
+
+  void readPlayerWeaponDamage() {
+    amulet.playerWeaponDamageMin.value = readUInt16();
+    amulet.playerWeaponDamageMax.value = readUInt16();
+    amulet.playerWeaponRange.value = readUInt16();
+  }
+
+  void readPlayerSkillsLeftRight() {
+    amulet.playerSkillLeft.value = readSkillType();
+    amulet.playerSkillRight.value = readSkillType();
+  }
+
+  SkillType readSkillType() => SkillType.values[readByte()];
+
+  void readAmuletEvent() {
+    final x = readDouble();
+    final y = readDouble();
+    final z = readDouble();
+    final amuletEvent = readByte();
+    amulet.onAmuletEvent(x: x, y: y, z: z, amuletEvent: amuletEvent);
+  }
+
+  void readPlayerSkillTypes() {
+    amulet.playerSkillTypes.clear();
+    for (var i = 0; i < SkillType.values.length; i++){
+      if (readBool()) {
+        amulet.playerSkillTypes.add(SkillType.values[i]);
+      }
+    }
+    amulet.playerSkillTypesNotifier.value++;
   }
 }

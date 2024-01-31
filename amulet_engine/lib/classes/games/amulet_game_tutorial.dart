@@ -2,7 +2,6 @@
 import '../../packages/isometric_engine/packages/common/src/amulet/quests/quest_tutorials.dart';
 import '../../packages/src.dart';
 import '../amulet_game.dart';
-import '../amulet_item_slot.dart';
 import '../amulet_npc.dart';
 import '../amulet_player.dart';
 import '../amulet_player_script.dart';
@@ -71,7 +70,6 @@ class AmuletGameTutorial extends AmuletGame {
        QuestTutorial.Acquire_Bow => keysFiend01,
        QuestTutorial.Equip_Bow => keysRoom4,
        QuestTutorial.Draw_Bow => keysRoom4,
-       QuestTutorial.Open_Inventory => keysRoom4,
        QuestTutorial.Strike_Crystal_2 => keysRoom4,
        QuestTutorial.Leave => keysRoom4,
        QuestTutorial.Finished => keysRoom4,
@@ -87,23 +85,10 @@ class AmuletGameTutorial extends AmuletGame {
       !const[GameObjectType.Crystal_Glowing_False, GameObjectType.Crystal_Glowing_True].contains(element.subType)
     );
 
-    player.equipBody(AmuletItem.Armor_Shirt_Blue_Worn, force: true);
-    player.equipLegs(AmuletItem.Pants_Travellers, force: true);
-    // player.equippedWeaponIndex = -1;
-
     deactivate(crystal1GlowingFalse);
     deactivate(crystal1GlowingTrue);
-
     deactivate(crystal2GlowingFalse);
     deactivate(crystal2GlowingTrue);
-
-    for (final weapon in player.weapons){
-      weapon.amuletItem = null;
-    }
-
-    for (final item in player.items){
-      item.amuletItem = null;
-    }
 
     if (player.readOnce('tutorial_initialized')) {
       actionInitializeNewPlayer(player);
@@ -130,7 +115,7 @@ class AmuletGameTutorial extends AmuletGame {
     }
 
     if (objectiveCompleted(player, QuestTutorial.Acquire_Sword)){
-      player.setWeapon(index: 0, amuletItem: AmuletItem.Weapon_Short_Sword);
+      // player.setWeapon(index: 0, amuletItem: AmuletItem.Weapon_Short_Sword);
       // player.equippedWeaponIndex = 0;
     }
 
@@ -146,11 +131,11 @@ class AmuletGameTutorial extends AmuletGame {
       );
     }
 
-    if (objectiveCompleted(player, QuestTutorial.Acquire_Heal)){
-      player.setWeapon(index: 1, amuletItem: AmuletItem.Spell_Heal);
-    } else {
-      actionInstantiateFiend01();
-    }
+    // if (objectiveCompleted(player, QuestTutorial.Acquire_Heal)){
+    //   player.setWeapon(index: 1, amuletItem: AmuletItem.Spell_Heal);
+    // } else {
+    //   actionInstantiateFiend01();
+    // }
 
     if (objectiveCompleted(player, QuestTutorial.Use_Heal)){
       setNodeEmpty(getSceneKey(keysDoor02));
@@ -178,12 +163,12 @@ class AmuletGameTutorial extends AmuletGame {
 
     if (!objectiveCompleted(player, QuestTutorial.Acquire_Bow)){
       spawnAmuletItemAtIndex(
-        item: AmuletItem.Weapon_Old_Bow,
+        item: AmuletItem.Weapon_Bow_1_Common,
         index: getSceneKey(keysSpawnBow),
         deactivationTimer: -1,
       );
     } else {
-      player.setWeapon(index: 2, amuletItem: AmuletItem.Weapon_Old_Bow);
+      // player.setWeapon(index: 2, amuletItem: AmuletItem.Weapon_Old_Bow);
     }
 
     if (objectiveCompleted(player, QuestTutorial.Strike_Crystal_2)) {
@@ -197,7 +182,7 @@ class AmuletGameTutorial extends AmuletGame {
       );
     }
 
-    player.refillItemSlotsWeapons();
+    // player.refillItemSlotsWeapons();
     player.writeGameObjects();
   }
 
@@ -214,7 +199,6 @@ class AmuletGameTutorial extends AmuletGame {
     guide = AmuletNpc(
       name: 'Guide',
       weaponType: 0,
-      weaponCooldown: 0,
       weaponDamage: 0,
       weaponRange: 0,
       attackDuration: 0,
@@ -222,15 +206,15 @@ class AmuletGameTutorial extends AmuletGame {
       x: 1000,
       y: 1400,
       z: 25,
-      team: AmuletTeam.Human,
+      team: TeamType.Good,
       health: 50,
       invincible: true,
     )
       ..autoTarget = false
       ..complexion = 0
       ..invincible = true
-      ..legsType = LegType.Leather
-      ..bodyType = BodyType.Leather_Armour;
+      // ..legsType = LegType.Leather
+      ..armorType = ArmorType.Leather;
 
     add(guide);
     deactivate(guide);
@@ -271,12 +255,8 @@ class AmuletGameTutorial extends AmuletGame {
 
   bool isObjectiveCompleted(AmuletPlayer player) =>
     switch (player.tutorialObjective) {
-      QuestTutorial.Open_Inventory =>
-        player.inventoryOpen,
-       QuestTutorial.Equip_Bow =>
-          player.weapons.any((element) => element.amuletItem == AmuletItem.Weapon_Old_Bow),
        QuestTutorial.Draw_Bow =>
-        player.itemSlotWeapon.amuletItem == AmuletItem.Weapon_Old_Bow,
+        player.equippedWeapon == AmuletItem.Weapon_Bow_1_Common,
        QuestTutorial.Leave => getNodeIndexV3(player) == indexLeave,
         _ => false
     };
@@ -334,9 +314,6 @@ class AmuletGameTutorial extends AmuletGame {
         break;
       case QuestTutorial.Acquire_Bow:
         break;
-      case QuestTutorial.Open_Inventory:
-        onObjectiveSetOpenInventory(player);
-        break;
       case QuestTutorial.Equip_Bow:
         onObjectiveSetEquipBow(player);
         break;
@@ -362,7 +339,7 @@ class AmuletGameTutorial extends AmuletGame {
         .wait(seconds: 1)
         .cameraSetTarget(guide)
         .faceEachOther(player, guide)
-        .highlightAmuletItem(AmuletItem.Spell_Heal)
+        // .highlightAmuletItem(AmuletItem.Spell_Heal)
         .talk(guide,
           'one has acquired the spell of healing.'
           'press the flashing heal icon at the bottom of the screen'
@@ -400,15 +377,8 @@ class AmuletGameTutorial extends AmuletGame {
             .controlsDisabled()
             .cameraSetTarget(guide)
             .faceEachOther(player, guide)
-            .add(() => player.writeHighlightAmuletItems(AmuletItem.Spell_Heal))
+            // .add(() => player.writeHighlightAmuletItems(AmuletItem.Spell_Heal))
             .talk(guide, 'caste heal by pressing the heal icon at the bottom of the screen.')
-            .end();
-        break;
-      case QuestTutorial.Open_Inventory:
-        runScript(player)
-            .cameraSetTarget(guide)
-            .faceEachOther(player, guide)
-            .talk(guide, 'open the inventory by hovering the mouse over the inventory icon at the bottom left corner of the screen')
             .end();
         break;
       case QuestTutorial.Equip_Bow:
@@ -439,7 +409,7 @@ class AmuletGameTutorial extends AmuletGame {
 
   void actionSpawnWeaponSwordAtGuide() =>
     spawnAmuletItem(
-      item: AmuletItem.Weapon_Short_Sword,
+      item: AmuletItem.Weapon_Bow_1_Common,
       x: guide.x,
       y: guide.y,
       z: guide.z,
@@ -473,13 +443,13 @@ class AmuletGameTutorial extends AmuletGame {
   }
 
   void actionSpawnAmuletItemSpellHeal(Character target) {
-    spawnAmuletItem(
-        item: AmuletItem.Spell_Heal,
-        x: target.x,
-        y: target.y,
-        z: target.z,
-        deactivationTimer: -1,
-    );
+    // spawnAmuletItem(
+    //     item: AmuletItem.Glove_Healers_Hand,
+    //     x: target.x,
+    //     y: target.y,
+    //     z: target.z,
+    //     deactivationTimer: -1,
+    // );
   }
 
   @override
@@ -508,19 +478,18 @@ class AmuletGameTutorial extends AmuletGame {
 
   void actionInstantiateFiend01() {
     fiend01 = spawnFiendTypeAtIndex(
-        fiendType: FiendType.Fallen,
+        fiendType: FiendType.Goblin,
         index: getSceneKey(keysFiend01),
     )
       ..maxHealth = 3
       ..health = 3
-      ..spawnLootOnDeath = false
       ..respawnDurationTotal = -1;
   }
 
   void actionInitializeNewPlayer(AmuletPlayer player) {
-    for (final weapon in player.weapons){
-      weapon.amuletItem = null;
-    }
+    // for (final weapon in player.weapons){
+    //   weapon.amuletItem = null;
+    // }
     // player.equippedWeaponIndex = -1;
     // player.healthBase = 15;
     player.health = player.maxHealth;
@@ -528,12 +497,12 @@ class AmuletGameTutorial extends AmuletGame {
 
   @override
   void onAmuletItemUsed(AmuletPlayer player, AmuletItem amuletItem) {
-    if (
-      amuletItem == AmuletItem.Spell_Heal &&
-      player.tutorialObjective == QuestTutorial.Use_Heal
-    ) {
-      onSpellHealUsedForTheFirstTime(player);
-    }
+    // if (
+    //   amuletItem == AmuletItem.Glove_Healers_Hand &&
+    //   player.tutorialObjective == QuestTutorial.Use_Heal
+    // ) {
+    //   onSpellHealUsedForTheFirstTime(player);
+    // }
   }
 
   void spawnFiends02() {
@@ -542,10 +511,9 @@ class AmuletGameTutorial extends AmuletGame {
       const shiftRadius = 10;
       fiends02.add(
       spawnFiendTypeAtIndex(
-        fiendType: FiendType.Fallen,
+        fiendType: FiendType.Goblin,
         index: fiend02Index,
       )
-        ..spawnLootOnDeath = false
         ..respawnDurationTotal = -1
         ..x += giveOrTake(shiftRadius)
         ..y += giveOrTake(shiftRadius)
@@ -556,18 +524,8 @@ class AmuletGameTutorial extends AmuletGame {
   @override
   void onAmuletItemAcquired(AmuletPlayer player, AmuletItem amuletItem) {
     switch (amuletItem){
-      case AmuletItem.Weapon_Short_Sword:
+      case AmuletItem.Weapon_Bow_1_Common:
         if (player.tutorialObjective == QuestTutorial.Acquire_Sword){
-          startNextTutorialObjective(player);
-        }
-        break;
-      case AmuletItem.Spell_Heal:
-        if (player.tutorialObjective == QuestTutorial.Acquire_Heal){
-          startNextTutorialObjective(player);
-        }
-        break;
-      case AmuletItem.Weapon_Old_Bow:
-        if (player.tutorialObjective == QuestTutorial.Acquire_Bow){
           startNextTutorialObjective(player);
         }
         break;
@@ -636,54 +594,14 @@ class AmuletGameTutorial extends AmuletGame {
           .end()
           .add(() => startNextTutorialObjective(player));
 
-  void onObjectiveSetOpenInventory(AmuletPlayer player) => runScript(player)
-        .controlsDisabled()
-        .add(() {
-          for (final weapon in player.weapons){
-            if (weapon.amuletItem == AmuletItem.Weapon_Old_Bow){
-              player.swapAmuletItemSlots(
-                  weapon,
-                  player.getEmptyItemSlot(),
-              );
-            }
-          }
-        })
-        .movePositionToSceneKey(guide, keysSpawnBow)
-        .cameraSetTarget(guide)
-        .wait(seconds: 1)
-        .activate(guide)
-        .wait(seconds: 1)
-        .faceEachOther(player, guide)
-        .add(() => player.writeOptionsSetHighlightIconInventory(true))
-        .talk(guide,
-          'one hath acquired a new weapon.'
-          'one must now learn of the inventory.'
-          'open the inventory by hovering the mouse over the bag icon at the bottom left corner of the screen'
-        )
-        .end();
 
   void onObjectiveSetEquipBow(AmuletPlayer player) =>
     runScript(player)
       .faceEachOther(player, guide)
-      .highlightAmuletItem(AmuletItem.Weapon_Old_Bow)
+      .highlightAmuletItem(AmuletItem.Weapon_Bow_1_Common)
       .talk(guide,
         'add the bow to the weapons rack by clicking the bow icon in the inventory.',
       );
-
-  @override
-  void onPlayerInventoryMoved(
-      AmuletPlayer player,
-      AmuletItemSlot srcAmuletItemSlot,
-      AmuletItemSlot targetAmuletItemSlot,
-  ) {
-    if (
-      player.weapons.contains(targetAmuletItemSlot) &&
-      targetAmuletItemSlot.amuletItem == AmuletItem.Weapon_Old_Bow &&
-      player.tutorialObjective == QuestTutorial.Equip_Bow
-    ) {
-      startNextTutorialObjective(player);
-    }
-  }
 
   AmuletPlayerScript runScript(AmuletPlayer player){
     final instance = AmuletPlayerScript(player);
@@ -788,7 +706,7 @@ class AmuletGameTutorial extends AmuletGame {
       .controlsDisabled()
       .cameraSetTarget(guide)
       .faceEachOther(player, guide)
-      .highlightAmuletItem(AmuletItem.Weapon_Old_Bow)
+      .highlightAmuletItem(AmuletItem.Weapon_Bow_1_Common)
       .talk(guide,
         'excellent.'
         'draw the bow by clicking the bow icon at the bottom of the screen'
