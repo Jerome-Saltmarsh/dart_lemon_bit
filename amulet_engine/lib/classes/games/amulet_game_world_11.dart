@@ -58,7 +58,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..helmType = HelmType.Full_Helm
       ..armorType = ArmorType.Leather
       ..shoeType = ShoeType.Leather_Boots
-      ..interact = onInteractWithWarren
+      ..interact = onInteractWithGareth
       ..complexion = ComplexionType.fair;
 
     npcGuard1 = AmuletNpc(
@@ -191,18 +191,21 @@ class AmuletGameWorld11 extends AmuletGame {
     characters.add(npcSophie);
   }
 
-  void onInteractWithWarren(AmuletPlayer player, AmuletNpc warren){
+  // Magatha
+  void onInteractWithGareth(AmuletPlayer player, AmuletNpc warren){
     switch (player.questMain){
       case QuestMain.Speak_With_Warren:
         player.talk(
             warren,
-              'Hello stranger.'
-              'The names Gareth I am the lord of this gloomy old town'
-              'The evil witch Magatha has made the forsaken castle in the north her home.'
-              'Since then Her fowl minions have poured out into the country side.'
-              'We would be eternally grateful if you aided us.',
-            onInteractionOver: (){
+              'Hello there.'
+              'The names Gareth I am the lord of this gloomy old town.'
+              'An evil witch has made the forsaken castle in the north her home.'
+              'Since then her fowl minions have been scouring the country side.'
+              'We would be eternally grateful if you could aid us in defeating her.'
+              'Here take this sword.',
+            onInteractionOver: () {
               player.questMain = QuestMain.Kill_The_Witch;
+              player.acquireAmuletItem(AmuletItem.Weapon_Sword_1_Common);
             }
         );
         break;
@@ -225,11 +228,6 @@ class AmuletGameWorld11 extends AmuletGame {
       }),
       TalkOption('Learn', (player) {
         player.talk(npc,
-            'there are four different elements. '
-            'water, fire, air and stone.'
-            'water is strong against fire.'
-            'fire against air.'
-            'and air against stone.'
             'it would would serve one well to remember that.'
         );
       }),
