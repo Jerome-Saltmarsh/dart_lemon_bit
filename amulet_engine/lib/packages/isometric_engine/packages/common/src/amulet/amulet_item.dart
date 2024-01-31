@@ -314,6 +314,7 @@ enum AmuletItem {
     subType: ArmorType.Tunic,
     quality: ItemQuality.Common,
     maxHealth: 1,
+    skillType: SkillType.Heal,
   ),
   Armor_Warrior_1_Leather_Common(
     label: 'Leather',

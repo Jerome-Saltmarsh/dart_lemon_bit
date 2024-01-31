@@ -202,7 +202,8 @@ class AmuletGameWorld11 extends AmuletGame {
               'An evil witch has made the forsaken castle in the north her home.'
               'Since then her fowl minions have been scouring the country side.'
               'We would be eternally grateful if you could aid us in defeating her.'
-              'Here take this sword.',
+              'Its not much but take my old sword.'
+              'Before you leave Sophie wished to speak with you.',
             onInteractionOver: () {
               player.questMain = QuestMain.Kill_The_Witch;
               player.acquireAmuletItem(AmuletItem.Weapon_Sword_1_Common);
@@ -222,14 +223,36 @@ class AmuletGameWorld11 extends AmuletGame {
   }
 
   void onInteractWithSophie(AmuletPlayer player, AmuletNpc npc){
+
+    if (!player.data.containsKey('sophie_met')) {
+      player.data['sophie_met'] = true;
+      player.talk(npc,
+          'Its nice to meet you, Im Sophie.'
+          'Venturing out into the wilderness is dangerous.'
+          'You must first understand about items.'
+          'There are for kinds of items.'
+          'Weapons, Head-wear, Armor and Shoes.'
+          'Many items bestow their wearer with special abilities.'
+          'Take this armor.'
+          'It allows you to heal yourself.'
+          'Right click to caste.'
+          'Good luck!'
+          ,
+        onInteractionOver: (){
+           player.acquireAmuletItem(AmuletItem.Armor_Neutral_1_Common_Tunic);
+        }
+      );
+      return;
+    }
+
     player.talk(npc, 'how can I help you?', options: [
-      TalkOption('FINISH-GAME', (player) {
-        player.writePlayerEvent(PlayerEvent.Game_Finished);
-      }),
-      TalkOption('Learn', (player) {
+      TalkOption('change skills?', (player) {
         player.talk(npc,
-            'it would would serve one well to remember that.'
+            'click on the skill menu item to the right side of the heal bar.'
         );
+      }),
+      TalkOption('Nevermind', (player) {
+        player.endInteraction();
       }),
     ]);
 

@@ -16,14 +16,14 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 [CURRENT]
-[fix] disable tutorial
+[new] ui skills row
 
 [RELEASE]
 [fix] particle speed
 [new] model amulet items
-[new] ui skills row
 
 ## 01.02.2024
+[fix] disable tutorial
 [fix] front view render
 
 ## 31.01.2024
