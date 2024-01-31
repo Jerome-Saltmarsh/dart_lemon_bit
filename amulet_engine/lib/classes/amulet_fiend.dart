@@ -15,8 +15,8 @@ class AmuletFiend extends Character {
   }) : super (
     characterType: fiendType.characterType,
     weaponType: WeaponType.Unarmed,
-    weaponDamage: fiendType.damage,
-    weaponRange: fiendType.weaponRange,
+    attackDamage: fiendType.damage,
+    attackRange: fiendType.weaponRange,
     attackDuration: fiendType.attackDuration,
     health: fiendType.health,
   );
@@ -25,12 +25,12 @@ class AmuletFiend extends Character {
     maxHealth = fiendType.health;
     health = maxHealth;
     name = fiendType.name;
-    weaponDamage = fiendType.damage;
+    attackDamage = fiendType.damage;
     attackDuration = fiendType.attackDuration;
     runSpeed = fiendType.runSpeed;
     chanceOfSetTarget = fiendType.chanceOfSetTarget;
     // weaponType = fiendType.weaponType;
-    weaponRange = fiendType.weaponRange;
+    attackRange = fiendType.weaponRange;
     characterType = fiendType.characterType;
   }
 
@@ -38,7 +38,7 @@ class AmuletFiend extends Character {
   int get characterType => fiendType.characterType;
 
   @override
-  double get weaponRange => fiendType.weaponRange;
+  double get attackRange => fiendType.weaponRange;
 
   @override
   String get name => fiendType.name;

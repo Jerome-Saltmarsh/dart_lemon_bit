@@ -138,10 +138,10 @@ class AmuletPlayer extends IsometricPlayer with
   int get weaponType => equippedWeapon?.subType ?? WeaponType.Unarmed;
 
   @override
-  int get weaponDamage => randomInt(weaponDamageMin, weaponDamageMax + 1);
+  int get attackDamage => randomInt(weaponDamageMin, weaponDamageMax + 1);
 
   @override
-  double get weaponRange => getSkillTypeRange(skillActive);
+  double get attackRange => getSkillTypeRange(skillActive);
 
   @override
   int get helmType => equippedHelm?.subType ?? HelmType.None;
@@ -295,7 +295,7 @@ class AmuletPlayer extends IsometricPlayer with
     if (
       cacheWeaponDamageMin == weaponDamageMin &&
       cacheWeaponDamageMax == weaponDamageMax &&
-      cacheWeaponRange == weaponRange
+      cacheWeaponRange == attackRange
     ) return;
     cacheWeaponDamageMin = cacheWeaponDamageMin;
     cacheWeaponDamageMax = cacheWeaponDamageMax;
@@ -303,7 +303,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(NetworkResponseAmulet.Player_Weapon_Damage);
     writeUInt16(weaponDamageMin);
     writeUInt16(weaponDamageMax);
-    writeUInt16(weaponRange.toInt());
+    writeUInt16(attackRange.toInt());
   }
 
   void writeDebug() {
@@ -684,12 +684,12 @@ class AmuletPlayer extends IsometricPlayer with
   /// the first time a flag name is entered it will return true
   /// however any time after that if the same flag name is entered
   /// the return will be false
-  bool readOnce(String name){
-    if (!data.containsKey(name)){
-      data[name] = true;
-      return true;
-    }
-    return false;
+  bool flagged(String name){
+    if (data.containsKey(name))
+      return false;
+
+    data[name] = true;
+    return true;
   }
 
   int getInt(String name) => data[name] as int;
@@ -773,7 +773,7 @@ class AmuletPlayer extends IsometricPlayer with
     }
 
     final subType = amuletItem.subType;
-    this.weaponDamage = AmuletGame.getAmuletItemDamage(amuletItem);
+    this.attackDamage = AmuletGame.getAmuletItemDamage(amuletItem);
 
     useWeaponType(
       weaponType: subType,
@@ -1125,11 +1125,12 @@ class AmuletPlayer extends IsometricPlayer with
     performSkillType();
   }
 
-  void setSkillActiveLeft(bool value){
-    if (deadOrBusy) {
+  @override
+  void setSkillActiveLeft(bool value) {
+    if (deadOrBusy && !value){
       return;
     }
-    skillActiveLeft = value;
+    super.setSkillActiveLeft(value);
   }
 
   void performSkillType(){
@@ -1171,8 +1172,6 @@ class AmuletPlayer extends IsometricPlayer with
     final subType = equippedWeapon?.subType;
     return subType != null && WeaponType.valuesBows.contains(subType);
   }
-
-  void clearActiveSkill() => setSkillActiveLeft(true);
 
   void selectSkillTypeLeft(SkillType value) {
     skillTypeLeft = value;
@@ -1288,4 +1287,14 @@ class AmuletPlayer extends IsometricPlayer with
     return false;
   }
 
+  @override
+  void onPerformEnd() {
+    activeSkillActiveLeft();
+  }
+
+  @override
+  void setCharacterStateHurt({int duration = 10}) {
+    super.setCharacterStateHurt(duration: duration);
+    activeSkillActiveLeft();
+  }
 }

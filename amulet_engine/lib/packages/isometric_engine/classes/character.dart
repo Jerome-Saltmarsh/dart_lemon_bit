@@ -50,8 +50,8 @@ class Character extends Collider {
   var actionFrame = -1;
   var weaponHitForce = 10.0;
   var weaponType = WeaponType.Unarmed;
-  var weaponDamage = 1;
-  var weaponRange = 20.0;
+  var attackDamage = 1;
+  var attackRange = 20.0;
   var characterState = CharacterState.Idle;
   var frame = 0;
   var runSpeed = 1.0;
@@ -88,8 +88,8 @@ class Character extends Collider {
     required super.team,
     required this.characterType,
     required this.weaponType,
-    required this.weaponDamage,
-    required this.weaponRange,
+    required this.attackDamage,
+    required this.attackRange,
     required this.attackDuration,
     required int health,
     String? name,
@@ -153,7 +153,7 @@ class Character extends Collider {
   bool get shouldUpdatePath =>
       (pathTargetIndex != pathTargetIndexPrevious) || (pathCurrent == 0);
 
-  double get weaponRangeSquared => weaponRange * weaponRange;
+  double get weaponRangeSquared => attackRange * attackRange;
 
   int get pathCurrentIndex => path[pathCurrent];
 
@@ -301,7 +301,7 @@ class Character extends Collider {
     return angleD < piQuarter; // TODO Replace constant with weaponAngleRange
   }
 
-  bool withinWeaponRange(Position target) => withinStrikeRadius(target, weaponRange);
+  bool withinWeaponRange(Position target) => withinStrikeRadius(target, attackRange);
 
   bool withinStrikeRadius(Position target, double radius){
     if ((target.z - z).abs() > Character_Height) {
@@ -610,5 +610,4 @@ class Character extends Collider {
   }
 
   int get characterTypeAndTeam => characterType | team << 6;
-
 }

@@ -1432,7 +1432,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
           applyHit(
             srcCharacter: character,
             target: target,
-            damage: character.weaponDamage,
+            damage: character.attackDamage,
             damageType: DamageType.Melee,
           );
         }
@@ -1441,8 +1441,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       performAbilityMelee(
         character: character,
         damageType: DamageType.Melee,
-        range: character.weaponRange,
-        damage: character.weaponDamage,
+        range: character.attackRange,
+        damage: character.attackDamage,
         areaOfEffect: false,
       );
       return;
@@ -1457,8 +1457,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       );
       spawnProjectileArrow(
         src: character,
-        damage: character.weaponDamage,
-        range: character.weaponRange,
+        damage: character.attackDamage,
+        range: character.attackRange,
         angle: character.angle,
       );
       return;

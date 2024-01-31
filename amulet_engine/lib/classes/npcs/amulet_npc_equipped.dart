@@ -9,8 +9,8 @@ class AmuletNpcEquipped extends AmuletNpc {
   AmuletNpcEquipped({
       required super.health,
       required super.team,
-      required super.weaponDamage,
-      required super.weaponRange,
+      required super.attackDamage,
+      required super.attackRange,
       required super.x,
       required super.y,
       required super.z,

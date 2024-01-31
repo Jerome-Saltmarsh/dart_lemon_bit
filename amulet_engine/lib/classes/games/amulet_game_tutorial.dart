@@ -90,7 +90,7 @@ class AmuletGameTutorial extends AmuletGame {
     deactivate(crystal2GlowingFalse);
     deactivate(crystal2GlowingTrue);
 
-    if (player.readOnce('tutorial_initialized')) {
+    if (player.flagged('tutorial_initialized')) {
       actionInitializeNewPlayer(player);
     }
 
@@ -199,8 +199,8 @@ class AmuletGameTutorial extends AmuletGame {
     guide = AmuletNpc(
       name: 'Guide',
       weaponType: 0,
-      weaponDamage: 0,
-      weaponRange: 0,
+      attackDamage: 0,
+      attackRange: 0,
       attackDuration: 0,
       interact: onInteractedWithGuide,
       x: 1000,

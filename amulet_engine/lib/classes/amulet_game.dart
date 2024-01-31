@@ -253,9 +253,17 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
      }
 
      if (character is AmuletPlayer) {
-       character.clearActiveSkill();
+       character.activeSkillActiveLeft();
      }
      super.performCharacterEnd(character);
+  }
+
+  @override
+  void setCharacterStateDead(Character character) {
+    super.setCharacterStateDead(character);
+    if (character is AmuletPlayer) {
+      character.activeSkillActiveLeft();
+    }
   }
 
   @override

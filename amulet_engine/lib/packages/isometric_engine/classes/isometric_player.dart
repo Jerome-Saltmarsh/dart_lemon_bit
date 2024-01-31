@@ -79,9 +79,9 @@ class IsometricPlayer extends Character with ByteWriter {
     bool autoTargetNearbyEnemies = false,
   }) : super(
     characterType: CharacterType.Human,
-    weaponRange: 100,
+    attackRange: 100,
     weaponType: WeaponType.Unarmed,
-    weaponDamage: 1,
+    attackDamage: 1,
     attackDuration: 25,
   ){
     autoTarget = autoTargetNearbyEnemies;
@@ -1067,8 +1067,8 @@ class IsometricPlayer extends Character with ByteWriter {
       writeClampUInt16(character.actionDuration);
       writeClampUInt16(character.frame);
       writeUInt16(character.weaponType);
-      writeUInt16(character.weaponDamage);
-      writeUInt16(character.weaponRange.toInt());
+      writeUInt16(character.attackDamage);
+      writeUInt16(character.attackRange.toInt());
       writeByte(0); // TODO
       writeUInt16(0); // TODO
       writeBool(character.autoTarget);

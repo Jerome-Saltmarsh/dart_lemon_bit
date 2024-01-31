@@ -48,8 +48,8 @@ class AmuletGameWorld11 extends AmuletGame {
       health: 200,
       team: TeamType.Good,
       weaponType: WeaponType.Unarmed,
-      weaponDamage: 0,
-      weaponRange: 0,
+      attackDamage: 0,
+      attackRange: 0,
       attackDuration: 0,
       name: "Gareth",
     )
@@ -69,8 +69,8 @@ class AmuletGameWorld11 extends AmuletGame {
       invincible: true,
       team: TeamType.Good,
       weaponType: WeaponType.Bow,
-      weaponDamage: 3,
-      weaponRange: 120,
+      attackDamage: 3,
+      attackRange: 120,
       attackDuration: 30,
       name: "Guard",
     )
@@ -91,8 +91,8 @@ class AmuletGameWorld11 extends AmuletGame {
       invincible: true,
       team: TeamType.Good,
       weaponType: WeaponType.Bow,
-      weaponDamage: 3,
-      weaponRange: 120,
+      attackDamage: 3,
+      attackRange: 120,
       attackDuration: 30,
       name: "Guard",
     )
@@ -113,8 +113,8 @@ class AmuletGameWorld11 extends AmuletGame {
       invincible: true,
       team: TeamType.Good,
       weaponType: WeaponType.Bow,
-      weaponDamage: 3,
-      weaponRange: 120,
+      attackDamage: 3,
+      attackRange: 120,
       attackDuration: 30,
       name: "May",
     )
@@ -139,8 +139,8 @@ class AmuletGameWorld11 extends AmuletGame {
       invincible: true,
       team: TeamType.Good,
       weaponType: WeaponType.Unarmed,
-      weaponDamage: 3,
-      weaponRange: 120,
+      attackDamage: 3,
+      attackRange: 120,
       attackDuration: 30,
       name: "Sophie",
     )
@@ -165,8 +165,8 @@ class AmuletGameWorld11 extends AmuletGame {
       invincible: true,
       team: TeamType.Good,
       weaponType: WeaponType.Bow,
-      weaponDamage: 3,
-      weaponRange: 120,
+      attackDamage: 3,
+      attackRange: 120,
       attackDuration: 30,
       name: 'Mysterious-Traveller',
     )
@@ -198,12 +198,13 @@ class AmuletGameWorld11 extends AmuletGame {
         player.talk(
             warren,
               'Hello there.'
-              'The names Gareth I am the lord of this gloomy old town.'
-              'An evil witch has made the forsaken castle in the north her home.'
+              'The names Gareth and I am the lord of this gloomy old town.'
+              'Some time ago an evil witch made the forsaken castle in the north her home.'
               'Since then her fowl minions have been scouring the country side.'
+              'Her powers are beyond any of ours.'
               'We would be eternally grateful if you could aid us in defeating her.'
-              'Its not much but take my old sword.'
-              'Before you leave Sophie wished to speak with you.',
+              'Its not much but please take my old sword.'
+              'By the way Sophie wished to speak with you.',
             onInteractionOver: () {
               player.questMain = QuestMain.Kill_The_Witch;
               player.acquireAmuletItem(AmuletItem.Weapon_Sword_1_Common);
@@ -224,8 +225,7 @@ class AmuletGameWorld11 extends AmuletGame {
 
   void onInteractWithSophie(AmuletPlayer player, AmuletNpc npc){
 
-    if (!player.data.containsKey('sophie_met')) {
-      player.data['sophie_met'] = true;
+    if (player.flagged('sophie_met')) {
       player.talk(npc,
           'Its nice to meet you, Im Sophie.'
           'Venturing out into the wilderness is dangerous.'

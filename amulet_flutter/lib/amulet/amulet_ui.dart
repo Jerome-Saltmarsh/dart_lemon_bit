@@ -70,7 +70,14 @@ class AmuletUI {
           Positioned(
               bottom: 8,
               left: 8,
-              child: buildWindowPlayerStats(),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  buildWindowPlayerStats(),
+                  width8,
+                  buildButtonQuest(),
+                ],
+              ),
           ),
           buildPositionedWatchAimTargetItemType(),
           buildPositionedMessage(),
@@ -960,6 +967,11 @@ class AmuletUI {
         color: amulet.style.containerColor,
         child: buildText(skillType.name),
       );
+
+  Widget buildButtonQuest() => onPressed(
+    action: amulet.windowVisibleQuests.toggle,
+    child: GSContainer(child: buildText('quest')),
+  );
 }
 
 String formatFramesToSeconds(int frames){
@@ -967,5 +979,5 @@ String formatFramesToSeconds(int frames){
   return '${(frames / fps).toStringAsFixed(2)} seconds';
 }
 
-Widget buildWatchVisible(Watch<bool> watch, Widget child) =>
-    buildWatch(watch, (t) => t ? child : nothing);
+Widget buildWatchVisible(Watch<bool> watch, Widget child, {bool condition = true}) =>
+    buildWatch(watch, (t) => t == condition ? child : nothing);

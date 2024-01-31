@@ -15,8 +15,8 @@ class AmuletNpcWitch extends AmuletNpc {
   }) : super(
     health: 30,
     weaponType: WeaponType.Staff,
-    weaponRange: 50,
-    weaponDamage: 5,
+    attackRange: 50,
+    attackDamage: 5,
     team: TeamType.Evil,
     name: 'Witch',
     attackDuration: 20,
