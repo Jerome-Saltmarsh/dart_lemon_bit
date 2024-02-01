@@ -39,4 +39,7 @@ class AmuletGameObject extends GameObject {
     // TODO: implement onSameTeamAs
     throw UnimplementedError();
   }
+
+  @override
+  bool get ignorePointer => amuletItem.isConsumable;
 }

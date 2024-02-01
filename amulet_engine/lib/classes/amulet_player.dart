@@ -1286,11 +1286,6 @@ class AmuletPlayer extends IsometricPlayer with
       equippedShoes?.skillType == skillType ;
 
   @override
-  void onPerformEnd() {
-    activeSkillActiveLeft();
-  }
-
-  @override
   void setCharacterStateHurt({int duration = 10}) {
     super.setCharacterStateHurt(duration: duration);
     activeSkillActiveLeft();
