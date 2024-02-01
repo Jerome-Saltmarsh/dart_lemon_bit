@@ -20,6 +20,8 @@ class AmuletUI {
   static const margin2 = 130.0;
   static const margin3 = 315.0;
   static const margin4 = 560.0;
+  static const barWidth = 228.0;
+  static const barHeight = 16.0;
 
   final Amulet amulet;
 
@@ -587,29 +589,24 @@ class AmuletUI {
 
   Widget buildEquippedAmuletItems() =>
       Container(
-        padding: const EdgeInsets.all(2),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        width: barWidth,
+        alignment: Alignment.center,
+        // padding: const EdgeInsets.all(2),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Row(
-              children: [
-                buildWatchAmuletItem(amulet.equippedWeapon),
-                width6,
-                buildWatchAmuletItem(amulet.equippedHelm),
-                width6,
-                buildWatchAmuletItem(amulet.equippedArmor),
-                width6,
-                buildWatchAmuletItem(amulet.equippedShoes),
-              ],
-            ),
+            buildWatchAmuletItem(amulet.equippedWeapon),
+            width8,
+            buildWatchAmuletItem(amulet.equippedHelm),
+            width8,
+            buildWatchAmuletItem(amulet.equippedArmor),
+            width8,
+            buildWatchAmuletItem(amulet.equippedShoes),
           ],
         ),
       );
 
   Widget buildPlayerHealthBar() {
-    const width = 256.0;
-    const height = 16.0;
 
     return IgnorePointer(
       child: buildWatch(amulet.player.healthPercentage, (healthPercentage) {
@@ -617,14 +614,14 @@ class AmuletUI {
           return nothing;
         }
         return Container(
-          width: width,
-          height: height,
+          width: barWidth,
+          height: barHeight,
           color: Colors.black26,
           padding: const EdgeInsets.all(2),
           alignment: Alignment.centerLeft,
           child: Container(
-            width: width * healthPercentage,
-            height: height,
+            width: barWidth * healthPercentage,
+            height: barHeight,
             color: Color.lerp(Colors.red, Colors.green, healthPercentage),
           ),
         );
@@ -633,21 +630,18 @@ class AmuletUI {
   }
 
   Widget buildPlayerMagicBar() {
-    const width = 256.0;
-    const height = 16.0;
-
     return IgnorePointer(
       child: buildWatch(amulet.playerMagicPercentage, (percentage) =>
         Container(
-          width: width,
-          height: height,
+          width: barWidth,
+          height: barHeight,
           color: Colors.black26,
           padding: const EdgeInsets.all(2),
           alignment: Alignment.centerLeft,
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 100),
-            width: width * percentage,
-            height: height,
+            width: barWidth * percentage,
+            height: barHeight,
             color: Colors.blue,
           ),
         )),
@@ -849,6 +843,8 @@ class AmuletUI {
             ? null
             : () => amulet.dropAmuletItem(amuletItem),
         child: Container(
+          width: 50,
+          height: 50,
           alignment: Alignment.center,
           color: Colors.white12,
           padding: const EdgeInsets.all(2),
