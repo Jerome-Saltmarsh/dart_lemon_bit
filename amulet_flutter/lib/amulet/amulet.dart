@@ -269,18 +269,8 @@ class Amulet extends IsometricGame {
         value,
       );
 
-  void selectAmuletItem(AmuletItem amuletItem) =>
-      selectItemType(amuletItem.type);
-
-  void selectItemType(int itemType) =>
-      server.sendNetworkRequestAmulet(
-        NetworkRequestAmulet.Select_Item_Type,
-        itemType,
-      );
-
-
   void selectSlotType(SlotType slotType) =>
-      sendAmuletRequest(NetworkRequestAmulet.Select_Item_Type, slotType.index);
+      sendAmuletRequest(NetworkRequestAmulet.Select_Slot_Type, slotType.index);
 
   void spawnRandomEnemy() =>
       server.sendNetworkRequestAmulet(

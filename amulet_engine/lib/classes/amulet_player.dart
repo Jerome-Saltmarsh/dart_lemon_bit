@@ -14,6 +14,8 @@ import 'amulet_npc.dart';
 import 'games/amulet_game_tutorial.dart';
 import 'talk_option.dart';
 
+
+
 class AmuletPlayer extends IsometricPlayer with
     Equipped,
     Skilled,
@@ -49,6 +51,15 @@ class AmuletPlayer extends IsometricPlayer with
   Function? onInteractionOver;
   Position? cameraTarget;
   AmuletGame amuletGame;
+  SlotType? activeSlotType;
+
+  void setActiveSlotType(SlotType? value) {
+    if (value != null && getEquippedSlotType(value)?.skill == null) {
+      return;
+    }
+    this.activeSlotType = value;
+    writeActiveSlotType();
+  }
 
   AmuletPlayer({
     required this.amuletGame,
@@ -449,6 +460,7 @@ class AmuletPlayer extends IsometricPlayer with
     armorType = equippedArmor?.subType ?? 0;
     shoeType = equippedShoes?.subType ?? ShoeType.None;
     checkAssignedSkills();
+    checkActiveSlotType();
     writeEquipped();
     writePlayerHealth();
     writePlayerMagic();
@@ -801,7 +813,7 @@ class AmuletPlayer extends IsometricPlayer with
 
     this.attackDamage = AmuletGame.getAmuletItemDamage(amuletItem);
 
-    switch (amuletItem.skillCasteType) {
+    switch (skillActive.casteType) {
       case CasteType.Caste:
         setCharacterStateCasting(
           duration: performDuration
@@ -816,9 +828,6 @@ class AmuletPlayer extends IsometricPlayer with
         setCharacterStateFire(
             duration: performDuration
         );
-        break;
-      case null:
-        // TODO INSTANT
         break;
     }
   }
@@ -1211,10 +1220,6 @@ class AmuletPlayer extends IsometricPlayer with
     activeSkillActiveLeft();
   }
 
-  void selectItemType(int itemType) {
-    // TODO
-  }
-
   void writeCharacteristics() {
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Characteristics);
@@ -1222,4 +1227,34 @@ class AmuletPlayer extends IsometricPlayer with
     writeUInt16(characteristicsWizard);
     writeUInt16(characteristicsRogue);
   }
+
+  void writeActiveSlotType() {
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Player_Active_Slot_Type);
+    writeInt8(activeSlotType?.index ?? -1);
+  }
+
+  AmuletItem? getEquippedSlotType(SlotType? slotType) =>
+    switch (slotType){
+       SlotType.Weapon => equippedWeapon,
+       SlotType.Helm => equippedHelm,
+       SlotType.Armor => equippedArmor,
+       SlotType.Shoes => equippedShoes,
+       null => null
+    };
+
+  void checkActiveSlotType() {
+     final value = activeSlotType;
+     if (value == null) return;
+     final amuletItem = getEquippedSlotType(activeSlotType);
+     if (amuletItem == null || amuletItem.skill == null){
+       clearActiveSlotType();
+     }
+  }
+
+  void clearActiveSlotType() {
+    setActiveSlotType(null);
+  }
+
+
 }

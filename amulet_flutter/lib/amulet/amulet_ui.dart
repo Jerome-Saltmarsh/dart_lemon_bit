@@ -1,5 +1,6 @@
 
 import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/amulet_item.dart';
+import 'package:amulet_engine/packages/isometric_engine/packages/common/src/isometric/slot_type.dart';
 import 'package:amulet_engine/packages/isometric_engine/packages/common/src/isometric/target_action.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';
@@ -600,17 +601,16 @@ class AmuletUI {
       Container(
         width: barWidth,
         alignment: Alignment.center,
-        // padding: const EdgeInsets.all(2),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            buildWatchAmuletItem(amulet.equippedWeapon),
+            buildWatchAmuletItem(amulet.equippedWeapon, SlotType.Weapon),
             width8,
-            buildWatchAmuletItem(amulet.equippedHelm),
+            buildWatchAmuletItem(amulet.equippedHelm, SlotType.Helm),
             width8,
-            buildWatchAmuletItem(amulet.equippedArmor),
+            buildWatchAmuletItem(amulet.equippedArmor, SlotType.Armor),
             width8,
-            buildWatchAmuletItem(amulet.equippedShoes),
+            buildWatchAmuletItem(amulet.equippedShoes, SlotType.Shoes),
           ],
         ),
       );
@@ -860,15 +860,33 @@ class AmuletUI {
       child: buildText(value, color: titleColor),
   );
 
-  Widget buildWatchAmuletItem(Watch<AmuletItem?> watch) =>
-    buildWatch(watch, (amuletItem) {
+  Widget buildWatchAmuletItem(Watch<AmuletItem?> watch, SlotType slotType) {
+
+    final activeContainer = buildBorder(
+      color: Colors.white,
+      width: 2,
+      child: Container(
+        width: 16,
+        height: 16,
+        color: Colors.transparent,
+      ),
+    );
+
+    final activeBorder = buildWatch(amulet.activeSlotType, (t) {
+      if (t != slotType) {
+        return nothing;
+      }
+      return activeContainer;
+    });
+
+    return buildWatch(watch, (amuletItem) {
       const size = 50.0;
       return onPressed(
         onEnter: () => amulet.aimTargetItemType.value = amuletItem,
         onExit: () => amulet.aimTargetItemType.value = null,
         action: amuletItem == null
             ? null
-            : () => amulet.selectAmuletItem(amuletItem),
+            : () => amulet.selectSlotType(slotType),
         onRightClick: amuletItem == null
             ? null
             : () => amulet.dropAmuletItem(amuletItem),
@@ -896,11 +914,17 @@ class AmuletUI {
                 right: 2,
                 child: Container(color: Colors.red, width: 16, height: 16,)
               ),
+              Positioned(
+                bottom: 2,
+                right: 2,
+                child: activeBorder,
+              ),
             ],
           ),
         ),
       );
     });
+  }
 
   Widget buildWindowAmuletItemStats(AmuletItem? amuletItem) {
     if (amuletItem == null) {

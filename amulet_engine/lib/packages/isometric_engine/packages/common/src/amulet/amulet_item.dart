@@ -87,34 +87,31 @@ enum AmuletItem {
       damageMax: 5,
       quality: ItemQuality.Common,
       characteristics: Characteristics(knight: 1),
-      skillA: Skill(
+      weaponSkill: Skill(
           skillType: SkillType.Strike,
-          damage: 5,
+          damageMin: 2,
+          damageMax: 4,
           performDuration: 25,
       ),
   ),
   Weapon_Sword_1_Rare(
-    label: "a basic short sword",
+    label: "Short Sword",
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Weapon,
     subType: WeaponType.Shortsword,
     skillType: SkillType.Strike,
     performDuration: 25,
-    damageMin: 2,
-    damageMax: 7,
+    damageMin: 3,
+    damageMax: 6,
     range: 45,
     quality: ItemQuality.Rare,
     characteristics: Characteristics(knight: 1),
-    skillA: Skill(
+    weaponSkill: Skill(
       skillType: SkillType.Strike,
-      damage: 5,
+      damageMin: 4,
+      damageMax: 7,
       performDuration: 25,
-    ),
-    skillB: Skill(
-        skillType: SkillType.Fireball,
-        damage: 10,
-        performDuration: 35,
     ),
   ),
   Weapon_Sword_1_Legendary(
@@ -152,7 +149,12 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
     skillType: SkillType.Frostball,
-    skillCasteType: CasteType.Strike,
+    skill: Skill(
+        skillType: SkillType.Frostball,
+        damageMin: 3,
+        damageMax: 5,
+        performDuration: 20,
+    ),
     performDuration: 35,
     range: 50,
     damageMin: 3,
@@ -167,7 +169,6 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
     skillType: SkillType.Fireball,
-    skillCasteType: CasteType.Strike,
     performDuration: 35,
     range: 50,
     damageMin: 3,
@@ -182,7 +183,6 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
     skillType: SkillType.Fireball,
-    skillCasteType: CasteType.Strike,
     performDuration: 35,
     range: 80,
     damageMin: 3,
@@ -197,7 +197,6 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Bow,
     skillType: SkillType.Split_Shot,
-    skillCasteType: CasteType.Fire,
     performDuration: 25,
     range: 125,
     damageMin: 2,
@@ -700,7 +699,6 @@ enum AmuletItem {
   ),
   Consumable_Potion_Magic(
     label: 'a common tonic',
-    description: 'heals a small amount of health',
     type: ItemType.Consumable,
     subType: ConsumableType.Potion_Blue,
     levelMin: 0,
@@ -711,7 +709,6 @@ enum AmuletItem {
   ),
   Consumable_Potion_Health(
     label: 'a common tonic',
-    description: 'heals a small amount of health',
     type: ItemType.Consumable,
     subType: ConsumableType.Potion_Red,
     levelMin: 0,
@@ -725,15 +722,13 @@ enum AmuletItem {
   final int levelMin;
   /// the maximum level of fiends that can drop this item
   final int levelMax;
-  final String? description;
   /// see item_type.dart in commons
   final int type;
   final int subType;
   final SkillType? skillType;
-  final Skill? skillA;
-  final Skill? skillB;
+  final Skill? skill;
+  final Skill? weaponSkill;
   final Characteristics characteristics;
-  final CasteType? skillCasteType;
   final int? damageMin;
   final int? damageMax;
   final double? range;
@@ -761,19 +756,17 @@ enum AmuletItem {
     this.maxMagic,
     this.regenMagic,
     this.regenHealth,
-    this.description,
     this.skillType,
+    this.weaponSkill,
     this.damageMin,
     this.damageMax,
     this.range,
     this.radius,
+    this.skill,
     this.performDuration,
     this.health,
     this.skillMagicCost,
     this.runSpeed,
-    this.skillCasteType,
-    this.skillA,
-    this.skillB,
   });
 
   bool get isWeapon => type == ItemType.Weapon;
@@ -832,21 +825,24 @@ class Characteristics {
 }
 
 enum SkillType {
-  Strike,
-  Shoot_Arrow,
-  Mighty_Swing,
-  Terrify,
-  Frostball,
-  Fireball,
-  Explode,
-  Firestorm,
-  Freeze_Target,
-  Freeze_Area,
-  Heal,
-  Greater_Heal,
-  Teleport,
-  Entangle,
-  Split_Shot;
+  Strike(casteType: CasteType.Strike),
+  Shoot_Arrow(casteType: CasteType.Fire),
+  Mighty_Swing(casteType: CasteType.Strike),
+  Terrify(casteType: CasteType.Caste),
+  Frostball(casteType: CasteType.Caste),
+  Fireball(casteType: CasteType.Caste),
+  Explode(casteType: CasteType.Caste),
+  Firestorm(casteType: CasteType.Caste),
+  Freeze_Target(casteType: CasteType.Caste),
+  Freeze_Area(casteType: CasteType.Caste),
+  Heal(casteType: CasteType.Caste),
+  Teleport(casteType: CasteType.Caste),
+  Entangle(casteType: CasteType.Caste),
+  Split_Shot(casteType: CasteType.Fire);
+
+  final CasteType casteType;
+
+  const SkillType({required this.casteType});
 
   int getDamage(Characteristics characteristics) {
     // Implement the logic for calculating damage based on characteristics
@@ -911,12 +907,14 @@ enum WeaponClass {
 
 class Skill {
   final SkillType skillType;
-  final int damage;
+  final int damageMin;
+  final int damageMax;
   final int performDuration;
 
   const Skill({
     required this.skillType,
-    required this.damage,
+    required this.damageMin,
+    required this.damageMax,
     required this.performDuration,
   });
 }

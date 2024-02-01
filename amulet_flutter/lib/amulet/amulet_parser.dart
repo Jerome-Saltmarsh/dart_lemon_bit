@@ -48,6 +48,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Characteristics:
          readPlayerCharacteristics();
          break;
+       case NetworkResponseAmulet.Player_Active_Slot_Type:
+         readPlayerActiveSlotType();
+         break;
        case NetworkResponseAmulet.Player_Skills_Left_Right:
          readPlayerSkillsLeftRight();
          break;
@@ -109,9 +112,6 @@ extension AmuletParser on IsometricParser {
          break;
        case NetworkResponseAmulet.Quest_Main:
          readQuestMain();
-         break;
-       case NetworkResponseAmulet.Active_Slot_Type:
-         readActiveSlotType();
          break;
        case NetworkResponseAmulet.Aim_Target_Item_Type:
          readAimTargetItemType();
@@ -242,14 +242,6 @@ extension AmuletParser on IsometricParser {
   void readQuestMain() =>
       amulet.questMain.value = QuestMain.values[readByte()];
 
-  void readActiveSlotType() {
-     if (!readBool()) {
-       amulet.activeSlotType.value = null;
-       return;
-     }
-     amulet.activeSlotType.value = SlotType.values[readByte()];
-  }
-
   void readAimTargetItemType() =>
       amulet.aimTargetItemType.value = readBool() ? readAmuletItem() : null;
 
@@ -311,5 +303,10 @@ extension AmuletParser on IsometricParser {
      characteristics.knight.value = readUInt16();
      characteristics.wizard.value = readUInt16();
      characteristics.rogue.value = readUInt16();
+  }
+
+  void readPlayerActiveSlotType() {
+    final index = readInt8();
+    amulet.activeSlotType.value = SlotType.values.tryGet(index);
   }
 }
