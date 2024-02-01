@@ -847,12 +847,26 @@ class AmuletUI {
           height: 50,
           alignment: Alignment.center,
           color: Colors.white12,
-          padding: const EdgeInsets.all(2),
-          child: Container(
+          // padding: const EdgeInsets.all(2),
+          child: Stack(
             alignment: Alignment.center,
-            color: Colors.black12,
-            padding: const EdgeInsets.all(2),
-            child: amuletItem == null ? nothing : AmuletItemImage(amuletItem: amuletItem, scale: size / 32,),
+            children: [
+              Positioned(
+                child: Container(
+                  alignment: Alignment.center,
+                  color: Colors.black12,
+                  padding: const EdgeInsets.all(2),
+                  child: amuletItem == null
+                      ? nothing
+                      : AmuletItemImage(amuletItem: amuletItem, scale: size / 32,),
+                ),
+              ),
+              Positioned(
+                bottom: 2,
+                right: 2,
+                child: Container(color: Colors.red, width: 16, height: 16,)
+              ),
+            ],
           ),
         ),
       );

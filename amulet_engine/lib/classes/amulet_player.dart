@@ -1,7 +1,6 @@
 
 import 'dart:math';
 
-import '../maps/map_item_type_to_slot_type.dart';
 import '../packages/isomeric_engine.dart';
 import '../mixins/src.dart';
 import '../packages/isometric_engine/packages/common/src/amulet/quests/quest_main.dart';
@@ -50,7 +49,6 @@ class AmuletPlayer extends IsometricPlayer with
   Function? onInteractionOver;
   Position? cameraTarget;
   AmuletGame amuletGame;
-  SlotType? activeSlotType;
 
   AmuletPlayer({
     required this.amuletGame,
@@ -92,18 +90,18 @@ class AmuletPlayer extends IsometricPlayer with
     return QuestMain.values[questMainIndex];
   }
 
-  AmuletItem? get activeAmuletItemSlot {
-     switch (activeSlotType){
-       case SlotType.Helm:
-         return equippedHelm;
-       case SlotType.Armor:
-         return equippedArmor;
-       case SlotType.Shoes:
-         return equippedShoes;
-       default:
-         return null;
-     }
-  }
+  // AmuletItem? get activeAmuletItemSlot {
+  //    switch (activeSlotType){
+  //      case SlotType.Helm:
+  //        return equippedHelm;
+  //      case SlotType.Armor:
+  //        return equippedArmor;
+  //      case SlotType.Shoes:
+  //        return equippedShoes;
+  //      default:
+  //        return null;
+  //    }
+  // }
 
   set questMain (QuestMain value){
     data.setInt('quest_main', value.index);
@@ -409,19 +407,19 @@ class AmuletPlayer extends IsometricPlayer with
     );
   }
 
-  void deactivateSlotType() => setActiveSlotType(null);
+  // void deactivateSlotType() => setActiveSlotType(null);
 
-  void setActiveSlotType(SlotType? value) {
-    activeSlotType = value;
-    writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Active_Slot_Type);
-    if (value == null) {
-      writeFalse();
-      return;
-    }
-    writeTrue();
-    writeByte(value.index);
-  }
+  // void setActiveSlotType(SlotType? value) {
+  //   activeSlotType = value;
+  //   writeByte(NetworkResponse.Amulet);
+  //   writeByte(NetworkResponseAmulet.Active_Slot_Type);
+  //   if (value == null) {
+  //     writeFalse();
+  //     return;
+  //   }
+  //   writeTrue();
+  //   writeByte(value.index);
+  // }
 
   void selectNpcTalkOption(int index) {
      if (index < 0 || index >= npcOptions.length){
@@ -536,22 +534,18 @@ class AmuletPlayer extends IsometricPlayer with
   // }
 
   void updateCastePosition() {
-
     final skillType = skillActive;
-    if (skillType.casteType == CasteType.Positional) {
-      final mouseDistance = getMouseDistance();
-      final maxRange = getSkillTypeRange(skillType);
-      if (mouseDistance <= maxRange){
-        castePositionX = mouseSceneX;
-        castePositionY = mouseSceneY;
-        castePositionZ = mouseSceneZ;
-      } else {
-        final mouseAngle = getMouseAngle() + pi;
-        castePositionX = x + adj(mouseAngle, maxRange);
-        castePositionY = y + opp(mouseAngle, maxRange);
-        castePositionZ = z;
-      }
-      // writeActivePowerPosition();
+    final mouseDistance = getMouseDistance();
+    final maxRange = getSkillTypeRange(skillType);
+    if (mouseDistance <= maxRange){
+      castePositionX = mouseSceneX;
+      castePositionY = mouseSceneY;
+      castePositionZ = mouseSceneZ;
+    } else {
+      final mouseAngle = getMouseAngle() + pi;
+      castePositionX = x + adj(mouseAngle, maxRange);
+      castePositionY = y + opp(mouseAngle, maxRange);
+      castePositionZ = z;
     }
   }
 
@@ -655,11 +649,11 @@ class AmuletPlayer extends IsometricPlayer with
         _ => null
     };
 
-  @override
-  void clearAction() {
-    super.clearAction();
-    deactivateSlotType();
-  }
+  // @override
+  // void clearAction() {
+  //   super.clearAction();
+  //   deactivateSlotType();
+  // }
 
   void writeMessage(String message){
     writeByte(NetworkResponse.Amulet);
@@ -764,168 +758,60 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
 
-    if (noWeaponEquipped){
-      return;
+    AmuletItem? amuletItem;
+
+    if (skillActive == equippedWeapon?.skillType) {
+      amuletItem = equippedWeapon;
     }
 
-    final amuletItem = equippedWeapon;
+    if (skillActive == equippedHelm?.skillType) {
+      amuletItem = equippedHelm;
+    }
+
+    if (skillActive == equippedArmor?.skillType) {
+      amuletItem = equippedArmor;
+    }
+
+    if (skillActive == equippedShoes?.skillType) {
+      amuletItem = equippedShoes;
+    }
+
+    if (const [SkillType.Strike, SkillType.Shoot_Arrow].contains(skillActive)){
+      amuletItem = equippedWeapon;
+    }
 
     if (amuletItem == null){
-      return;
+      throw Exception('amuletItem == null');
     }
-
-    final performDuration = amuletItem.performDuration;
-
-    if (performDuration == null){
-      throw Exception('performDuration is null: $amuletItem');
-    }
-
-    final subType = amuletItem.subType;
-    this.attackDamage = AmuletGame.getAmuletItemDamage(amuletItem);
-
-    useWeaponType(
-      weaponType: subType,
-      duration: performDuration,
-    );
-  }
-
-  void useWeaponType({
-    required int weaponType,
-    required int duration,
-  }) {
-
-    if (const[
-      WeaponType.Shortsword,
-      WeaponType.Broadsword,
-      WeaponType.Staff,
-      WeaponType.Sword_Heavy_Sapphire,
-    ].contains(weaponType)) {
-      setCharacterStateStriking(
-        duration: duration,
-      );
-      return;
-    }
-
-    if (const[
-      WeaponType.Bow,
-    ].contains(weaponType)){
-      setCharacterStateFire(
-        duration: duration,
-      );
-      return;
-    }
-
-    throw Exception(
-        'amuletPlayer.attack() - weapon type not implemented ${WeaponType
-            .getName(weaponType)}'
-    );
-  }
-
-  void useActivatedPower() {
-    if (deadInactiveOrBusy) {
-      return;
-    }
-
-    final amuletItemSlot = this.activeAmuletItemSlot;
-
-    if (amuletItemSlot != null){
-      onAmuletItemUsed(amuletItemSlot);
-    }
-  }
-
-  void onAmuletItemUsed(AmuletItem amuletItem) {
-
-    // final dependency = amuletItem.dependency;
-    //
-    // if (dependency != null) {
-    //   final equippedWeaponAmuletItem = equippedWeapon;
-    //
-    //   if (equippedWeaponAmuletItem == null || equippedWeaponAmuletItem.subType != dependency) {
-    //     writeGameError(GameError.Weapon_Required);
-    //     return;
-    //   }
-    // }
 
     final performDuration = amuletItem.performDuration;
 
     if (performDuration == null) {
-      throw Exception('performDuration == null: ${amuletItem}');
+      throw Exception('performDuration is null: $amuletItem');
     }
 
-    final magicCost = amuletItem.skillMagicCost;
+    this.attackDamage = AmuletGame.getAmuletItemDamage(amuletItem);
 
-    if (magicCost != null) {
-      if (magicCost > magic){
-        writeGameError(GameError.Insufficient_Magic);
-      }
-      magic -= magicCost;
-    }
-
-
-    switch (amuletItem.skillType?.casteType) {
-      case CasteType.Self:
+    switch (amuletItem.skillCasteType) {
+      case CasteType.Caste:
         setCharacterStateCasting(
-          duration: performDuration,
+          duration: performDuration
         );
         break;
-      case CasteType.Targeted_Enemy:
-        if (target == null) {
-          deactivateSlotType();
-          return;
-        }
-        useWeaponType(
-          weaponType: amuletItem.subType,
-          duration: performDuration,
-        );
-        // useWeaponType(
-        //   weaponType: dependency ?? amuletItem.subType,
-        //   duration: performDuration,
-        // );
-        break;
-      case CasteType.Targeted_Ally:
-        if (target == null) {
-          deactivateSlotType();
-          return;
-        }
-        setCharacterStateCasting(
-          duration: performDuration,
+      case CasteType.Strike:
+        setCharacterStateStriking(
+            duration: performDuration
         );
         break;
-      case CasteType.Positional:
-        setCharacterStateCasting(
-          duration: performDuration,
-        );
-        break;
-      case CasteType.Instant:
-        break;
-      case CasteType.Directional:
-        lookAtMouse();
-        setCharacterStateCasting(
-          duration: performDuration,
+      case CasteType.Fire:
+        setCharacterStateFire(
+            duration: performDuration
         );
         break;
       case null:
-        break;
-      case CasteType.Passive:
-        break;
-    }
-  }
-
-  void useSlotTypeAtIndex(SlotType slotType, int index) {
-    if (index < 0) {
-      return;
-    }
-
-    switch (slotType){
-
-      default:
-        setActiveSlotType(slotType);
+        // TODO INSTANT
         break;
     }
-  }
-
-  void clearActivatedPowerIndex(){
-    deactivateSlotType();
   }
 
   writeHighlightAmuletItems(AmuletItem amuletItem){
@@ -1101,8 +987,8 @@ class AmuletPlayer extends IsometricPlayer with
      magic += regenMagic;
   }
 
-  void selectItemType(int itemType) =>
-      setActiveSlotType(mapItemTypeToSlotType(itemType));
+  // void selectItemType(int itemType) =>
+  //     setActiveSlotType(mapItemTypeToSlotType(itemType));
 
   @override
   set skillTypeLeft(SkillType value) {
@@ -1124,12 +1010,12 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   void performSkillLeft(){
-    setSkillActiveLeft(true);
+    activeSkillActiveLeft();
     performSkillType();
   }
 
   void performSkillRight(){
-    setSkillActiveLeft(false);
+    activeSkillActiveRight();
     performSkillType();
   }
 
@@ -1141,31 +1027,29 @@ class AmuletPlayer extends IsometricPlayer with
     super.setSkillActiveLeft(value);
   }
 
-  void performSkillType(){
+  void performSkillType() {
     final skillType = skillActive;
 
-    final weaponClass = skillType.weaponClass;
-    if (weaponClass != null && equippedWeaponClass != weaponClass){
-      switch (weaponClass){
-        case WeaponClass.Staff:
-          writeGameError(GameError.Staff_Required_For_Skill);
-          return;
-        case WeaponClass.Sword:
-          writeGameError(GameError.Sword_Required_For_Skill);
-          return;
-        case WeaponClass.Bow:
-          writeGameError(GameError.Bow_Required_For_Skill);
-          return;
-      }
-    }
+    // final weaponClass = skillType.weaponClass;
+    // if (weaponClass != null && equippedWeaponClass != weaponClass){
+    //   switch (weaponClass){
+    //     case WeaponClass.Staff:
+    //       writeGameError(GameError.Staff_Required_For_Skill);
+    //       return;
+    //     case WeaponClass.Sword:
+    //       writeGameError(GameError.Sword_Required_For_Skill);
+    //       return;
+    //     case WeaponClass.Bow:
+    //       writeGameError(GameError.Bow_Required_For_Skill);
+    //       return;
+    //   }
+    // }
 
     final magicCost = getSkillTypeMagicCost(skillType);
     if (magicCost > magic) {
       writeGameError(GameError.Insufficient_Magic);
       return;
     }
-
-
 
     magic -= magicCost;
     performForceAttack();
@@ -1200,6 +1084,7 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   int getSkillTypeDamage(SkillType skillType) {
+
     if (const [
       SkillType.Shoot_Arrow,
       SkillType.Strike,
@@ -1211,8 +1096,14 @@ class AmuletPlayer extends IsometricPlayer with
     switch (skillType) {
       case SkillType.Mighty_Swing:
         return randomWeaponDamage * 2;
+      case SkillType.Frostball:
+        return 5;
+      case SkillType.Fireball:
+        return 5;
+      case SkillType.Explode:
+        return 10;
       default:
-        return skillType.damage;
+        throw Exception('skillType.damage unknown');
     }
   }
 
@@ -1228,15 +1119,35 @@ class AmuletPlayer extends IsometricPlayer with
       }
       return weapon.range ?? 0;
     }
-    return skillType.range;
+
+    switch (skillType) {
+      case SkillType.Frostball:
+        return 120;
+      case SkillType.Fireball:
+        return 120;
+      default:
+        throw Exception('skillTypeRange unknown');
+    }
   }
 
-  double getSkillTypeRadius(SkillType skillType){
-    return skillType.radius;
+  double getSkillTypeRadius(SkillType skillType) {
+     switch (skillType){
+       case SkillType.Explode:
+         return 50;
+       default:
+         return 0;
+     }
   }
 
   int getSkillTypeMagicCost(SkillType skillType){
-    return skillType.magicCost;
+    switch (skillType){
+      case SkillType.Fireball:
+        return 5;
+      case SkillType.Explode:
+        return 10;
+      default:
+        return 0;
+    }
   }
 
   void performSkillTypeSplitShot() {
@@ -1289,5 +1200,9 @@ class AmuletPlayer extends IsometricPlayer with
   void setCharacterStateHurt({int duration = 10}) {
     super.setCharacterStateHurt(duration: duration);
     activeSkillActiveLeft();
+  }
+
+  void selectItemType(int itemType) {
+    // TODO
   }
 }

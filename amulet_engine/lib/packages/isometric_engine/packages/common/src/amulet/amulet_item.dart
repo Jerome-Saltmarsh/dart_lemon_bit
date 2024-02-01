@@ -86,6 +86,11 @@ enum AmuletItem {
       damageMin: 0,
       damageMax: 5,
       quality: ItemQuality.Common,
+      skillA: Skill(
+          skillType: SkillType.Strike,
+          damage: 5,
+          performDuration: 25,
+      ),
   ),
   Weapon_Sword_1_Rare(
     label: "a basic short sword",
@@ -99,6 +104,16 @@ enum AmuletItem {
     damageMax: 7,
     range: 45,
     quality: ItemQuality.Rare,
+    skillA: Skill(
+      skillType: SkillType.Strike,
+      damage: 5,
+      performDuration: 25,
+    ),
+    skillB: Skill(
+        skillType: SkillType.Fireball,
+        damage: 10,
+        performDuration: 35,
+    ),
   ),
   Weapon_Sword_1_Legendary(
     label: "Short Blade of Glen",
@@ -133,6 +148,7 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
     skillType: SkillType.Frostball,
+    skillCasteType: CasteType.Strike,
     performDuration: 35,
     range: 50,
     damageMin: 3,
@@ -146,6 +162,7 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
     skillType: SkillType.Fireball,
+    skillCasteType: CasteType.Strike,
     performDuration: 35,
     range: 50,
     damageMin: 3,
@@ -159,6 +176,7 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
     skillType: SkillType.Fireball,
+    skillCasteType: CasteType.Strike,
     performDuration: 35,
     range: 80,
     damageMin: 3,
@@ -172,6 +190,7 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Bow,
     skillType: SkillType.Split_Shot,
+    skillCasteType: CasteType.Fire,
     performDuration: 25,
     range: 125,
     damageMin: 2,
@@ -556,6 +575,7 @@ enum AmuletItem {
     maxMagic: 5,
     skillType: SkillType.Teleport,
     skillMagicCost: 6,
+    performDuration: 20,
   ),
   Shoes_Warrior_2_Grieves_Common(
     label: 'Grieves',
@@ -563,7 +583,6 @@ enum AmuletItem {
     levelMax: 5,
     type: ItemType.Shoes,
     subType: ShoeType.Grieves,
-    performDuration: 25,
     quality: ItemQuality.Common,
     maxHealth: 5,
     runSpeed: -0.125,
@@ -578,6 +597,7 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
+    performDuration: 20,
     skillMagicCost: 6,
   ),
   Shoes_Rogue_2_Striders_Common(
@@ -590,6 +610,7 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
+    performDuration: 20,
     skillMagicCost: 6,
   ),
   Shoes_Warrior_3_Sabatons_Common(
@@ -657,6 +678,9 @@ enum AmuletItem {
   final int type;
   final int subType;
   final SkillType? skillType;
+  final Skill? skillA;
+  final Skill? skillB;
+  final CasteType? skillCasteType;
   final int? damageMin;
   final int? damageMax;
   final double? range;
@@ -693,6 +717,9 @@ enum AmuletItem {
     this.health,
     this.skillMagicCost,
     this.runSpeed,
+    this.skillCasteType,
+    this.skillA,
+    this.skillB,
   });
 
   bool get isWeapon => type == ItemType.Weapon;
@@ -713,55 +740,64 @@ enum AmuletItem {
       .toList(growable: false);
 }
 
-enum AttackClass {
-  Strike, // sword, staff,
-  Fire, // bow
-  Caste, // staff
+class SkillTypeLevelStats {
+  final int damageMax;
+  final int damageMin;
+
+  SkillTypeLevelStats({
+    required this.damageMax,
+    required this.damageMin,
+  });
+}
+
+class Characteristics {
+  final int wizard;
+  final int knight;
+  final int rogue;
+
+  Characteristics({
+    required this.wizard,
+    required this.knight,
+    required this.rogue,
+  });
 }
 
 enum SkillType {
-  Strike(casteType: CasteType.Self, magicCost: 0, range: 0),
-  Shoot_Arrow(casteType: CasteType.Self, magicCost: 0, range: 0),
-  Mighty_Swing(casteType: CasteType.Instant, magicCost: 5, range: 0, weaponClass: WeaponClass.Sword),
-  Terrify(casteType: CasteType.Instant, magicCost: 3, range: 100),
-  Frostball(casteType: CasteType.Directional, magicCost: 3, range: 150, damage: 2),
-  Fireball(casteType: CasteType.Directional, magicCost: 2, range: 150, damage: 5),
-  Explode(casteType: CasteType.Positional, magicCost: 6, range: 200, damage: 10, weaponClass: WeaponClass.Staff),
-  Firestorm(casteType: CasteType.Directional, magicCost: 7, range: 120, damage: 15, weaponClass: WeaponClass.Staff),
-  Freeze_Target(casteType: CasteType.Targeted_Enemy, magicCost: 4, range: 120, damage: 3, weaponClass: WeaponClass.Staff),
-  Freeze_Area(casteType: CasteType.Positional, magicCost: 5, range: 120, radius: 50, damage: 2, weaponClass: WeaponClass.Staff),
-  Heal(casteType: CasteType.Self, magicCost: 3, range: 0, ),
-  Greater_Heal(casteType: CasteType.Self, magicCost: 5, range: 0, ),
-  Teleport(casteType: CasteType.Positional, magicCost: 4, range: 180,),
-  Entangle(casteType: CasteType.Self, magicCost: 2, range: 120, weaponClass: WeaponClass.Bow),
-  Split_Shot(casteType: CasteType.Self, magicCost: 2, range: 120, weaponClass: WeaponClass.Bow);
+  Strike,
+  Shoot_Arrow,
+  Mighty_Swing,
+  Terrify,
+  Frostball,
+  Fireball,
+  Explode,
+  Firestorm,
+  Freeze_Target,
+  Freeze_Area,
+  Heal,
+  Greater_Heal,
+  Teleport,
+  Entangle,
+  Split_Shot;
 
-  final CasteType casteType;
-  final WeaponClass? weaponClass;
-  final int magicCost;
-  final double range;
-  final double radius;
-  final int damage;
-
-  const SkillType({
-    required this.casteType,
-    required this.magicCost,
-    required this.range,
-    this.radius = 0,
-    this.damage = 0,
-    this.weaponClass,
-  });
-
+  int getDamage(Characteristics characteristics) {
+    // Implement the logic for calculating damage based on characteristics
+    // You can use a switch statement or if-else statements to handle different skills
+    switch (this) {
+      case SkillType.Strike:
+        return characteristics.knight;
+      case SkillType.Shoot_Arrow:
+        return characteristics.rogue;
+      default:
+      // Default case, return a default value or throw an exception
+        throw Exception('Unhandled SkillType: $this');
+    }
+  }
 }
 
 enum CasteType {
-  Passive,
-  Instant,
-  Self,
-  Positional,
-  Targeted_Enemy,
-  Targeted_Ally,
-  Directional,
+  Strike,
+  Fire,
+  Caste,
 }
 
 enum ItemQuality {
@@ -774,6 +810,13 @@ enum ClassType {
   Warrior,
   Wizard,
   Rogue,
+}
+
+enum PerformType {
+  Strike,
+  Fire,
+  Caste,
+  Instant,
 }
 
 enum WeaponClass {
@@ -795,4 +838,16 @@ enum WeaponClass {
         'amuletPlayer.getWeaponTypeWeaponClass(weaponType: $weaponType)'
     );
   }
+}
+
+class Skill {
+  final SkillType skillType;
+  final int damage;
+  final int performDuration;
+
+  const Skill({
+    required this.skillType,
+    required this.damage,
+    required this.performDuration,
+  });
 }

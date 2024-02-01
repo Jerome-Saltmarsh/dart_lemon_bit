@@ -15,6 +15,15 @@ ctrl + shift + e        : view recent changes
 alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
+[SYSTEM-ITEM BASED VALUES]
+  [PROS]
+  [CONS]
+    - SELECTED AMULET_ITEM        
+
+[CHARACTERISTICS]    
+  [PROS]
+    - ITEM SYNERGY
+
 [CURRENT]
 [new] ui skills row
 
