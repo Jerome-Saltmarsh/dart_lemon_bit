@@ -779,56 +779,35 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
 
-    AmuletItem? amuletItem;
-
-    if (skillActive == equippedWeapon?.skillType) {
-      amuletItem = equippedWeapon;
+    final performDuration = getSkillTypePerformDuration(skillActive);
+    final magicCost = getSkillTypeMagicCost(skillActive);
+    if (magicCost > magic) {
+      writeGameError(GameError.Insufficient_Magic);
+      return;
     }
 
-    if (skillActive == equippedHelm?.skillType) {
-      amuletItem = equippedHelm;
-    }
-
-    if (skillActive == equippedArmor?.skillType) {
-      amuletItem = equippedArmor;
-    }
-
-    if (skillActive == equippedShoes?.skillType) {
-      amuletItem = equippedShoes;
-    }
-
-    if (const [SkillType.Strike, SkillType.Shoot_Arrow].contains(skillActive)){
-      amuletItem = equippedWeapon;
-    }
-
-    if (amuletItem == null){
-      throw Exception('amuletItem == null');
-    }
-
-    final performDuration = amuletItem.performDuration;
-
-    if (performDuration == null) {
-      throw Exception('performDuration is null: $amuletItem');
-    }
-
-    this.attackDamage = AmuletGame.getAmuletItemDamage(amuletItem);
-
+    magic -= magicCost;
+    this.attackDamage = getSkillTypeDamage(skillActive);
     switch (skillActive.casteType) {
       case CasteType.Caste:
         setCharacterStateCasting(
           duration: performDuration
         );
         break;
-      case CasteType.Strike:
-        setCharacterStateStriking(
-            duration: performDuration
-        );
-        break;
-      case CasteType.Fire:
-        setCharacterStateFire(
-            duration: performDuration
-        );
-        break;
+      case CasteType.Weapon:
+        if (equippedWeaponMelee){
+          setCharacterStateStriking(
+              duration: performDuration
+          );
+          return;
+        }
+        if (equippedWeaponBow){
+          setCharacterStateFire(
+              duration: performDuration
+          );
+          return;
+        }
+        throw Exception('cannot perform casteType.weapon');
     }
   }
 
@@ -1063,13 +1042,13 @@ class AmuletPlayer extends IsometricPlayer with
     //   }
     // }
 
-    final magicCost = getSkillTypeMagicCost(skillType);
-    if (magicCost > magic) {
-      writeGameError(GameError.Insufficient_Magic);
-      return;
-    }
-
-    magic -= magicCost;
+    // final magicCost = getSkillTypeMagicCost(skillType);
+    // if (magicCost > magic) {
+    //   writeGameError(GameError.Insufficient_Magic);
+    //   return;
+    // }
+    //
+    // magic -= magicCost;
     performForceAttack();
   }
 
@@ -1157,40 +1136,7 @@ class AmuletPlayer extends IsometricPlayer with
      }
   }
 
-  int getSkillTypeMagicCost(SkillType skillType){
-    switch (skillType){
-      case SkillType.Fireball:
-        return 5;
-      case SkillType.Explode:
-        return 10;
-      default:
-        return 0;
-    }
-  }
-
-  void performSkillTypeSplitShot() {
-    final damage = getSkillTypeDamage(SkillType.Split_Shot);
-    final range = getSkillTypeRange(SkillType.Split_Shot);
-    final spread = piEighth;
-    amuletGame.spawnProjectileArrow(
-      src: this,
-      damage: damage,
-      range: range,
-      angle: angle,
-    );
-    amuletGame.spawnProjectileArrow(
-      src: this,
-      damage: damage,
-      range: range,
-      angle: angle - spread,
-    );
-    amuletGame.spawnProjectileArrow(
-      src: this,
-      damage: damage,
-      range: range,
-      angle: angle + spread,
-    );
-  }
+  int getSkillTypeMagicCost(SkillType skillType) => skillType.magicCost;
 
   WeaponClass? get equippedWeaponClass {
       final weaponType = equippedWeapon?.subType;
@@ -1255,6 +1201,11 @@ class AmuletPlayer extends IsometricPlayer with
   void clearActiveSlotType() {
     setActiveSlotType(null);
   }
+
+  int getSkillTypePerformDuration(SkillType skillType) =>
+    skillType.casteDuration ??
+      equippedWeapon?.performDuration ??
+        (throw Exception('skillType.casteDuration and equippedWeapon is null'));
 
 
 }

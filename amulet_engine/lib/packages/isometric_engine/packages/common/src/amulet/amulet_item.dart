@@ -825,24 +825,31 @@ class Characteristics {
 }
 
 enum SkillType {
-  Strike(casteType: CasteType.Strike),
-  Shoot_Arrow(casteType: CasteType.Fire),
-  Mighty_Swing(casteType: CasteType.Strike),
-  Terrify(casteType: CasteType.Caste),
-  Frostball(casteType: CasteType.Caste),
-  Fireball(casteType: CasteType.Caste),
-  Explode(casteType: CasteType.Caste),
-  Firestorm(casteType: CasteType.Caste),
-  Freeze_Target(casteType: CasteType.Caste),
-  Freeze_Area(casteType: CasteType.Caste),
-  Heal(casteType: CasteType.Caste),
-  Teleport(casteType: CasteType.Caste),
-  Entangle(casteType: CasteType.Caste),
-  Split_Shot(casteType: CasteType.Fire);
+  Strike(casteType: CasteType.Weapon, magicCost: 0),
+  Shoot_Arrow(casteType: CasteType.Weapon, magicCost: 0),
+  Mighty_Swing(casteType: CasteType.Weapon, magicCost: 3),
+  Terrify(casteType: CasteType.Caste, magicCost: 5, casteDuration: 30),
+  Frostball(casteType: CasteType.Caste, magicCost: 4, casteDuration: 25),
+  Fireball(casteType: CasteType.Caste, magicCost: 5, casteDuration: 30),
+  Explode(casteType: CasteType.Caste, magicCost: 7, casteDuration: 35),
+  Firestorm(casteType: CasteType.Caste, magicCost: 10, casteDuration: 40),
+  Freeze_Target(casteType: CasteType.Caste, magicCost: 8, casteDuration: 20),
+  Freeze_Area(casteType: CasteType.Caste, magicCost: 5, casteDuration: 25),
+  Heal(casteType: CasteType.Caste, magicCost: 4, casteDuration: 30),
+  Teleport(casteType: CasteType.Caste, magicCost: 5, casteDuration: 35),
+  Entangle(casteType: CasteType.Caste, magicCost: 4, casteDuration: 40),
+  Split_Shot(casteType: CasteType.Weapon, magicCost: 4);
 
   final CasteType casteType;
+  final int magicCost;
+  /// if null the weapon perform duration is used instead
+  final int? casteDuration;
 
-  const SkillType({required this.casteType});
+  const SkillType({
+    required this.casteType,
+    required this.magicCost,
+    this.casteDuration,
+  });
 
   int getDamage(Characteristics characteristics) {
     // Implement the logic for calculating damage based on characteristics
@@ -860,8 +867,7 @@ enum SkillType {
 }
 
 enum CasteType {
-  Strike,
-  Fire,
+  Weapon,
   Caste,
 }
 
@@ -875,13 +881,6 @@ enum ClassType {
   Warrior,
   Wizard,
   Rogue,
-}
-
-enum PerformType {
-  Strike,
-  Fire,
-  Caste,
-  Instant,
 }
 
 enum WeaponClass {
