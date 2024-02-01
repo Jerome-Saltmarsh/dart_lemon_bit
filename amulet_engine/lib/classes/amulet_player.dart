@@ -597,6 +597,14 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
 
+    if (!skillTypeUnlocked(skillTypeLeft)){
+      skillTypeLeft = SkillType.Strike;
+    }
+
+    if (!skillTypeUnlocked(skillTypeRight)){
+      skillTypeRight = SkillType.Strike;
+    }
+
     setCharacterStateChanging();
     equipmentDirty = true;
   }
@@ -1271,21 +1279,11 @@ class AmuletPlayer extends IsometricPlayer with
     }
   }
 
-  bool skillTypeUnlocked(SkillType skillType){
-    if (equippedWeapon?.skillType == skillType){
-      return true;
-    }
-    if (equippedHelm?.skillType == skillType){
-      return true;
-    }
-    if (equippedArmor?.skillType == skillType){
-      return true;
-    }
-    if (equippedShoes?.skillType == skillType){
-      return true;
-    }
-    return false;
-  }
+  bool skillTypeUnlocked(SkillType skillType) =>
+      equippedWeapon?.skillType == skillType ||
+      equippedHelm?.skillType == skillType ||
+      equippedArmor?.skillType == skillType ||
+      equippedShoes?.skillType == skillType ;
 
   @override
   void onPerformEnd() {
