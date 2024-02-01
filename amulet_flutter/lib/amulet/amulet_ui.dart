@@ -81,7 +81,12 @@ class AmuletUI {
                 ],
               ),
           ),
-          buildPositionedWatchAimTargetItemType(),
+          Positioned(
+              top: 8,
+              left: 8,
+              child:
+              buildWatch(amulet.aimTargetItemType, buildWindowAmuletItemStats),
+          ),
           buildPositionedMessage(),
           Positioned(
             top: margin2,
@@ -91,21 +96,25 @@ class AmuletUI {
               child: buildError(),
             ),
           ),
-          Positioned(
-              top: 0,
-              left: 0,
-              child: IgnorePointer(
-                child: buildWatch(amulet.screenColor, (color) => Container(
-                      width: amulet.engine.screen.width,
-                      height: amulet.engine.screen.height,
-                      color: color,
-
-                    )
-                ),
-              )
-          )
+          buildOverlayScreenColor()
         ]),
   );
+  }
+
+  Positioned buildOverlayScreenColor() {
+    return Positioned(
+            top: 0,
+            left: 0,
+            child: IgnorePointer(
+              child: buildWatch(amulet.screenColor, (color) => Container(
+                    width: amulet.engine.screen.width,
+                    height: amulet.engine.screen.height,
+                    color: color,
+
+                  )
+              ),
+            )
+        );
   }
 
   Widget buildWindowQuest() => buildWatch(amulet.windowVisibleQuests, (visible) {
@@ -758,6 +767,27 @@ class AmuletUI {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              buildRowTitle('Knight'),
+              buildWatch(amulet.playerCharacteristics.knight, buildRowValue),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              buildRowTitle('Wizard'),
+              buildWatch(amulet.playerCharacteristics.wizard, buildRowValue),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              buildRowTitle('Rogue'),
+              buildWatch(amulet.playerCharacteristics.rogue, buildRowValue),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
               buildRowTitle('Health'),
               buildWatch(amulet.player.health, buildRowValue),
               width2,
@@ -872,73 +902,79 @@ class AmuletUI {
       );
     });
 
-  Widget buildPositionedWatchAimTargetItemType() {
-    return Positioned(
-        top: 8,
-        left: 8,
-        child: buildWatch(amulet.aimTargetItemType, (amuletItem){
-      if (amuletItem == null) {
-        return nothing;
-      }
+  Widget buildWindowAmuletItemStats(AmuletItem? amuletItem) {
+    if (amuletItem == null) {
+      return nothing;
+    }
 
-      final damageMin = amuletItem.damageMin;
-      final damageMax = amuletItem.damageMax;
-      final maxHealth = amuletItem.maxHealth;
-      final maxMagic = amuletItem.maxMagic;
-      final regenHealth = amuletItem.regenHealth;
-      final regenMagic = amuletItem.regenMagic;
-      final runSpeed = amuletItem.runSpeed;
-      final skillType = amuletItem.skillType;
-      final skillMagicCost = amuletItem.skillMagicCost;
-      final range = amuletItem.range;
-      final radius = amuletItem.radius;
-      final performDuration = amuletItem.performDuration;
+    final damageMin = amuletItem.damageMin;
+    final damageMax = amuletItem.damageMax;
+    final maxHealth = amuletItem.maxHealth;
+    final maxMagic = amuletItem.maxMagic;
+    final regenHealth = amuletItem.regenHealth;
+    final regenMagic = amuletItem.regenMagic;
+    final runSpeed = amuletItem.runSpeed;
+    final skillType = amuletItem.skillType;
+    final skillMagicCost = amuletItem.skillMagicCost;
+    final range = amuletItem.range;
+    final radius = amuletItem.radius;
+    final performDuration = amuletItem.performDuration;
 
-      return GSContainer(
-        width: 200,
-        height: 200,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AmuletItemImage(amuletItem: amuletItem, scale: 1.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                buildText(amuletItem.quality.name, color: mapItemQualityToColor(amuletItem.quality)),
-                width4,
-                buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
-              ],
-            ),
-            if (damageMin != null)
-              buildRowTitleValue('min damage', damageMin),
-            if (damageMax != null)
-              buildRowTitleValue('max damage', damageMax),
-            if (performDuration != null)
-              buildRowTitleValue('duration', '${formatFramesToSeconds(performDuration)}'),
-            if (range != null)
-              buildRowTitleValue('range', range),
-            if (radius != null)
-              buildRowTitleValue('radius', radius),
-            if (maxHealth != null)
-              buildRowTitleValue('max health', maxHealth),
-            if (maxMagic != null)
-              buildRowTitleValue('max magic', maxHealth),
-            if (regenHealth != null)
-              buildRowTitleValue('health regen', regenHealth),
-            if (regenMagic != null)
-              buildRowTitleValue('magic regen', regenMagic),
-            if (runSpeed != null)
-              buildRowTitleValue('run speed', runSpeed),
-            if (skillType != null)
-              buildRowTitleValue('skill', skillType.name),
-            if (skillMagicCost != null)
-              buildRowTitleValue('skill cost', skillMagicCost),
-          ],
-        ),
-      );
-    }));
+    final characteristics = amuletItem.characteristics;
+    final charsKnight = characteristics.knight;
+    final charsWizard = characteristics.wizard;
+    final charsRogue = characteristics.rogue;
+
+    return GSContainer(
+      width: 200,
+      height: 200,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AmuletItemImage(amuletItem: amuletItem, scale: 1.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              buildText(amuletItem.quality.name, color: mapItemQualityToColor(amuletItem.quality)),
+              width4,
+              buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
+            ],
+          ),
+          if (charsKnight != 0)
+            buildRowTitleValue('knight', charsKnight),
+          if (charsWizard != 0)
+            buildRowTitleValue('wizard', charsWizard),
+          if (charsRogue != 0)
+            buildRowTitleValue('rogue', charsRogue),
+          if (damageMin != null)
+            buildRowTitleValue('min damage', damageMin),
+          if (damageMax != null)
+            buildRowTitleValue('max damage', damageMax),
+          if (performDuration != null)
+            buildRowTitleValue('duration', '${formatFramesToSeconds(performDuration)}'),
+          if (range != null)
+            buildRowTitleValue('range', range),
+          if (radius != null)
+            buildRowTitleValue('radius', radius),
+          if (maxHealth != null)
+            buildRowTitleValue('max health', maxHealth),
+          if (maxMagic != null)
+            buildRowTitleValue('max magic', maxHealth),
+          if (regenHealth != null)
+            buildRowTitleValue('health regen', regenHealth),
+          if (regenMagic != null)
+            buildRowTitleValue('magic regen', regenMagic),
+          if (runSpeed != null)
+            buildRowTitleValue('run speed', runSpeed),
+          if (skillType != null)
+            buildRowTitleValue('skill', skillType.name),
+          if (skillMagicCost != null)
+            buildRowTitleValue('skill cost', skillMagicCost),
+        ],
+      ),
+    );
   }
 
   Widget buildRowTitleValue(dynamic title, dynamic value) =>

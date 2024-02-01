@@ -79,9 +79,6 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
       case NetworkResponse.Amulet:
         readNetworkResponseAmulet();
         break;
-      // case NetworkResponse.Amulet_Player:
-      //   readNetworkResponseAmuletPlayer();
-      //   break;
       case NetworkResponse.Game_Error:
         readNetworkResponseGameError();
         break;

@@ -130,17 +130,6 @@ class IsometricUI with IsometricComponent {
     );
   }
 
-  Widget buildWindowMenuItem({
-    required String title,
-    required  Widget child,
-  }) => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          buildText(title, size: 20, color: Colors.white70),
-          child,
-        ],
-      );
-
   Widget buildWindowMenu({List<Widget>? children, double width = 200}) =>
       GSContainer(
         child: Container(

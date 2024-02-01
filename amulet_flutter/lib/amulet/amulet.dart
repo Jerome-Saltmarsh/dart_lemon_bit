@@ -17,6 +17,11 @@ import '../gamestream/isometric/src.dart';
 import 'amulet_render.dart';
 import 'classes/map_location.dart';
 
+class Characteristics {
+  final knight = Watch(0);
+  final wizard = Watch(0);
+  final rogue = Watch(0);
+}
 
 class Amulet extends IsometricGame {
 
@@ -39,6 +44,7 @@ class Amulet extends IsometricGame {
   var playerWorldX = 0.0;
   var playerWorldY = 0.0;
 
+  final playerCharacteristics = Characteristics();
   final playerMagic = Watch(0);
   final playerMagicMax = Watch(0);
   final playerMagicPercentage = Watch(0.0);

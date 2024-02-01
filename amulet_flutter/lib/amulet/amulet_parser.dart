@@ -45,6 +45,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Skill_Types:
          readPlayerSkillTypes();
          break;
+       case NetworkResponseAmulet.Player_Characteristics:
+         readPlayerCharacteristics();
+         break;
        case NetworkResponseAmulet.Player_Skills_Left_Right:
          readPlayerSkillsLeftRight();
          break;
@@ -301,5 +304,12 @@ extension AmuletParser on IsometricParser {
       }
     }
     amulet.playerSkillTypesNotifier.value++;
+  }
+
+  void readPlayerCharacteristics() {
+     final characteristics = amulet.playerCharacteristics;
+     characteristics.knight.value = readUInt16();
+     characteristics.wizard.value = readUInt16();
+     characteristics.rogue.value = readUInt16();
   }
 }

@@ -90,18 +90,20 @@ class AmuletPlayer extends IsometricPlayer with
     return QuestMain.values[questMainIndex];
   }
 
-  // AmuletItem? get activeAmuletItemSlot {
-  //    switch (activeSlotType){
-  //      case SlotType.Helm:
-  //        return equippedHelm;
-  //      case SlotType.Armor:
-  //        return equippedArmor;
-  //      case SlotType.Shoes:
-  //        return equippedShoes;
-  //      default:
-  //        return null;
-  //    }
-  // }
+  int get characteristicsKnight => getTotalCharacteristics(CharacteristicType.Knight);
+
+  int get characteristicsWizard => getTotalCharacteristics(CharacteristicType.Wizard);
+
+  int get characteristicsRogue => getTotalCharacteristics(CharacteristicType.Rogue);
+
+  int getTotalCharacteristics(CharacteristicType type){
+    var total = 0;
+    total += equippedWeapon?.characteristics.get(type) ?? 0;
+    total += equippedHelm?.characteristics.get(type) ?? 0;
+    total += equippedArmor?.characteristics.get(type) ?? 0;
+    total += equippedShoes?.characteristics.get(type) ?? 0;
+    return total;
+  }
 
   set questMain (QuestMain value){
     data.setInt('quest_main', value.index);
@@ -147,20 +149,26 @@ class AmuletPlayer extends IsometricPlayer with
   @override
   int get maxHealth {
     var health = baseHealth;
-    health += equippedWeapon?.maxHealth ?? 0;
-    health += equippedHelm?.maxHealth ?? 0;
-    health += equippedArmor?.maxHealth ?? 0;
-    health += equippedShoes?.maxHealth ?? 0;
+    // health += equippedWeapon?.maxHealth ?? 0;
+    // health += equippedHelm?.maxHealth ?? 0;
+    // health += equippedArmor?.maxHealth ?? 0;
+    // health += equippedShoes?.maxHealth ?? 0;
+    for (final type in CharacteristicType.values){
+      health += getTotalCharacteristics(type) * type.pointsPerMaxHealth;
+    }
     return health;
   }
 
   @override
   int get maxMagic {
     var amount = baseMagic;
-    amount += equippedWeapon?.maxMagic ?? 0;
-    amount += equippedHelm?.maxMagic ?? 0;
-    amount += equippedArmor?.maxMagic ?? 0;
-    amount += equippedShoes?.maxMagic ?? 0;
+    // amount += equippedWeapon?.maxMagic ?? 0;
+    // amount += equippedHelm?.maxMagic ?? 0;
+    // amount += equippedArmor?.maxMagic ?? 0;
+    // amount += equippedShoes?.maxMagic ?? 0;
+    for (final type in CharacteristicType.values){
+      amount += getTotalCharacteristics(type) * type.pointsPerMaxMagic;
+    }
     return amount;
   }
 
@@ -445,6 +453,7 @@ class AmuletPlayer extends IsometricPlayer with
     writePlayerHealth();
     writePlayerMagic();
     writeSkillTypes();
+    writeCharacteristics();
   }
 
   void checkAssignedSkills() {
@@ -1204,5 +1213,13 @@ class AmuletPlayer extends IsometricPlayer with
 
   void selectItemType(int itemType) {
     // TODO
+  }
+
+  void writeCharacteristics() {
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Player_Characteristics);
+    writeUInt16(characteristicsKnight);
+    writeUInt16(characteristicsWizard);
+    writeUInt16(characteristicsRogue);
   }
 }
