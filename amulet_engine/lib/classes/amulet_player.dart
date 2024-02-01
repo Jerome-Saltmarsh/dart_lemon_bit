@@ -471,12 +471,7 @@ class AmuletPlayer extends IsometricPlayer with
   void checkAssignedSkills() {
 
     if (!skillTypeUnlocked(skillTypeLeft)) {
-      if (equippedWeaponBow) {
-        skillTypeLeft = SkillType.Shoot_Arrow;
-      } else
-      if (equippedWeaponMelee) {
-        skillTypeLeft = SkillType.Strike;
-      }
+      skillTypeLeft = equippedWeaponDefaultSkillType;
     }
 
     if (!skillTypeUnlocked(skillTypeRight)) {
@@ -489,12 +484,17 @@ class AmuletPlayer extends IsometricPlayer with
       }
     }
 
+    skillTypeRight = equippedWeaponDefaultSkillType;
+  }
+
+  SkillType get equippedWeaponDefaultSkillType {
     if (equippedWeaponBow) {
-      skillTypeRight = SkillType.Shoot_Arrow;
-    } else
-    if (equippedWeaponMelee) {
-      skillTypeRight = SkillType.Strike;
+      return SkillType.Shoot_Arrow;
     }
+    if (equippedWeaponMelee) {
+      return SkillType.Strike;
+    }
+    throw Exception('amuletPlayer.equippedWeaponDefaultSkillType: no weapon equipped');
   }
 
   void writeEquipped(){
@@ -787,7 +787,6 @@ class AmuletPlayer extends IsometricPlayer with
     }
 
     magic -= magicCost;
-    this.attackDamage = getSkillTypeDamage(skillActive);
     switch (skillActive.casteType) {
       case CasteType.Caste:
         setCharacterStateCasting(

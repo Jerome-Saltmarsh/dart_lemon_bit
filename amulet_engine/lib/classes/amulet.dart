@@ -415,11 +415,15 @@ class Amulet {
     playerChangeGameToTown(player);
     amuletTime.hour = 12;
     player.equippedWeapon = null;
+    player.equippedHelm = null;
     player.equippedArmor = null;
+    player.equippedShoes = null;
     player.health = player.maxHealth;
+    player.magic = player.maxMagic;
     player.characterState = CharacterState.Idle;
     player.equipmentDirty = true;
     player.controlsEnabled = true;
+    player.data.clear();
     player.clearActionFrame();
   }
 
