@@ -14,13 +14,11 @@ class IsometricAnimation implements Updatable {
   var frameRainWater = 0;
   var frameTreePosition = 0;
   var rainPosition = 0.0;
-  var frame = 0;
   var frameRate1 = 0;
   var frameRate2 = 0;
   var frameRate3 = 0;
   var frameRate4 = 0;
   var frameRate5 = 0;
-  var rendersPerFrame = 3;
 
   @override
   void onComponentUpdate() {
@@ -49,11 +47,6 @@ class IsometricAnimation implements Updatable {
       frameWaterSrcX = frameWater * Node_Size;
     }
 
-
-    if (frame++ < rendersPerFrame)
-      return;
-
-    frame = 0;
     frame1++;
     frame2++;
     frame6++;

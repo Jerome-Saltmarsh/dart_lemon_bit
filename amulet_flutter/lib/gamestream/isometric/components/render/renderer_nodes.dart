@@ -1748,7 +1748,7 @@ class RendererNodes extends RenderGroup {
 }) => engine.renderSprite(
       image: atlasNodes,
       srcX: AtlasNode.Src_Fireplace_X,
-      srcY: AtlasNode.Src_Fireplace_Y + (animation.frame6 * AtlasNode.Src_Fireplace_Height),
+      srcY: AtlasNode.Src_Fireplace_Y + ((animation.frameRate2 % 6) * AtlasNode.Src_Fireplace_Height),
       srcWidth: 48,
       srcHeight: 72,
       dstX: dstX,
