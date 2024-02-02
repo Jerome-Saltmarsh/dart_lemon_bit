@@ -457,29 +457,29 @@ enum AmuletItem {
     maxHealth: 5,
     regenMagic: 1,
     maxMagic: 5,
-    characteristics: Characteristics(knight: 1),
+    characteristics: Characteristics(wizard: 2),
   ),
   Armor_Wizard_1_Robe_Rare(
     label: 'Robe',
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Armor,
-    subType: ArmorType.Robes,
+    subType: ArmorType.Garb,
     quality: ItemQuality.Rare,
     maxHealth: 8,
     maxMagic: 10,
-    characteristics: Characteristics(knight: 1),
+    characteristics: Characteristics(wizard: 3),
   ),
   Armor_Wizard_1_Robe_Legendary(
     label: 'Robe',
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Armor,
-    subType: ArmorType.Robes,
+    subType: ArmorType.Attire,
     quality: ItemQuality.Legendary,
     maxHealth: 10,
     maxMagic: 15,
-    characteristics: Characteristics(knight: 1),
+    characteristics: Characteristics(wizard: 5),
   ),
   Armor_Rogue_1_Cloak_Common(
     label: 'Cloak',
@@ -775,10 +775,17 @@ enum AmuletItem {
       .toList(growable: false);
 }
 
-// Thief;
-// Healer;
+// PROFICIENCIES
+// COMBAT
+// DARK MAGIC
+// LIGHT MAGIC
+// DEXTERITY
+// LUCK
+
+// Thief | Bandit;
 // Elf;
 // Warlock;
+// Sage | Healer;
 enum CharacteristicType {
   Wizard(pointsPerMaxHealth: 3, pointsPerMaxMagic: 1),
   Knight(pointsPerMaxHealth: 1, pointsPerMaxMagic: 3),

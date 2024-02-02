@@ -27,6 +27,8 @@ const _armor_leather = [srcx_armor, 32.0];
 const _armor_chainmail = [srcx_armor, 128.0];
 const _armor_platemail = [srcx_armor, 64.0];
 const _armor_robe = [srcx_armor, 224.0];
+const _armor_garb = [srcx_armor, 256.0];
+const _armor_attire = [srcx_armor, 288.0];
 const _armor_cloak = [srcx_armor_rogue, 0.0];
 const _armor_mantle = [srcx_armor, 160.0];
 const _armor_shroud = [srcx_armor, 192.0];
@@ -66,8 +68,8 @@ const atlasSrcAmuletItem = <AmuletItem, List<double>> {
   AmuletItem.Armor_Warrior_3_Platemail_Rare: _armor_platemail,
   AmuletItem.Armor_Warrior_3_Platemail_Legendary: _armor_platemail,
   AmuletItem.Armor_Wizard_1_Robe_Common: _armor_robe,
-  AmuletItem.Armor_Wizard_1_Robe_Rare: _armor_robe,
-  AmuletItem.Armor_Wizard_1_Robe_Legendary: _armor_robe,
+  AmuletItem.Armor_Wizard_1_Robe_Rare: _armor_garb,
+  AmuletItem.Armor_Wizard_1_Robe_Legendary: _armor_attire,
   AmuletItem.Armor_Rogue_1_Cloak_Common: _armor_cloak,
   AmuletItem.Armor_Rogue_1_Cloak_Rare: _armor_cloak,
   AmuletItem.Armor_Rogue_1_Cloak_Legendary: _armor_cloak,

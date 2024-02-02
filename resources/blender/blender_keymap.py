@@ -1429,7 +1429,7 @@ keyconfig_data = \
        ],
       },
      ),
-    ("mesh.edge_face_add", {"type": 'F', "value": 'PRESS', "shift": True, "alt": True, "repeat": True}, None),
+    ("mesh.edge_face_add", {"type": 'Q', "value": 'PRESS', "repeat": True}, None),
     ("mesh.duplicate_move",
      {"type": 'D', "value": 'PRESS', "shift": True},
      {"properties":
