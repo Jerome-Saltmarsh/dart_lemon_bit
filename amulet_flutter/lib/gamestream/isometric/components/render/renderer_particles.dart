@@ -151,7 +151,7 @@ class RendererParticles extends RenderGroup {
               sprite: sprite,
               frame: sprite.getFrame(
                   row: IsometricDirection.toInputDirection(direction),
-                  column: particle.moving ? animation.frame1 % 2 : 0,
+                  column: particle.moving ? animation.frame % 2 : 0,
                   mode: AnimationMode.loop,
               ),
               color: scene.getColor(particle.nodeIndex), // TODO Optimize
@@ -187,7 +187,7 @@ class RendererParticles extends RenderGroup {
               sprite: sprite,
               frame: sprite.getFrame(
                 row: IsometricDirection.toInputDirection(direction),
-                column: particle.moving ? animation.frame1: 0,
+                column: particle.moving ? animation.frame: 0,
                 mode: AnimationMode.loop,
               ),
               color: scene.getColor(particle.nodeIndex),

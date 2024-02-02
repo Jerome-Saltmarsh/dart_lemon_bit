@@ -1933,7 +1933,7 @@ class IsometricScene with IsometricComponent implements Updatable {
     return index + totalColumns;
   }
 
-  bool nodeTypeBelowIs(int index, int value) => nodeType(index) == value;
+  bool nodeTypeBelowIs(int index, int value) => nodeTypeBelow(index) == value;
 
   // TODO EXPENSIVE
   int nodeTypeBelow(int index) => nodeType(index - area);

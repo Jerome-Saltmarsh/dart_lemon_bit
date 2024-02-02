@@ -122,7 +122,8 @@ class RendererNodes extends RenderGroup {
     final ambientColor = scene.ambientColor;
     final rainType = this.rainType;
     final windType = this.windType;
-    final animationFrame1 = this.animation.frame1;
+    final animationFrame1 = this.animation.frame;
+    final animationFrame2 = this.animation.frameRate2;
     final screenLeft = this.screenLeft; // cache in cpu
     final screenTop = this.screenTop; // cache in cpu
     final screenRight = this.screenRight; // cache in cpu
@@ -560,7 +561,7 @@ class RendererNodes extends RenderGroup {
                           color: nodeColors[nodeIndex],
                           rainType: rainType,
                           windType: windType,
-                          animationFrame: animationFrame1 + variations[nodeIndex],
+                          animationFrame: animationFrame2 + variations[nodeIndex],
                         );
                       }
                       break;
@@ -1077,7 +1078,7 @@ class RendererNodes extends RenderGroup {
           colorSouth: scene.colorSouth(index),
           colorNorth: scene.colorNorth(index),
           colorEast: scene.colorEast(index),
-          animationFrame: row + column + animation.frame1, // TODO Optimize
+          animationFrame: row + column + animation.frame, // TODO Optimize
         );
         break;
       case NodeType.Tree_Bottom:
@@ -1092,7 +1093,7 @@ class RendererNodes extends RenderGroup {
           colorSouth: scene.colorSouth(index),
           colorWest: scene.colorWest(index),
           color: color,
-          animationFrame: row + column + animation.frame1, // TODO Optimize
+          animationFrame: row + column + animation.frame, // TODO Optimize
         );
         break;
       case NodeType.Scaffold:
@@ -1916,19 +1917,20 @@ class RendererNodes extends RenderGroup {
     );
   }
 
-  void renderNodeRainLandingOnGround({
-    required double dstX,
-    required double dstY,
-    required int color,
-    required int rainType,
-    required int animationFrame,
-  }) => renderStandardNode(
-      color: color,
-      srcX: srcXRainLanding,
-      srcY: 72.0 * (animationFrame % 6), // TODO Expensive Operation
-      dstX: dstX,
-      dstY: dstY,
-    );
+  // void renderNodeRainLandingOnGround({
+  //   required double dstX,
+  //   required double dstY,
+  //   required int color,
+  //   required int rainType,
+  //   required int animationFrame,
+  // }) => renderStandardNode(
+  //     color: color,
+  //     srcX: srcXRainLanding,
+  //     srcY: 72.0 * (animationFrame % 6), // TODO Expensive Operation
+  //     dstX: dstX,
+  //     dstY: dstY,
+  //   );
+
   void renderNodeRainLandingOnWater({
     required double dstX,
     required double dstY,
@@ -1938,7 +1940,7 @@ class RendererNodes extends RenderGroup {
   }) => engine.renderSprite(
         image: atlasNodes,
         srcX: AtlasNode.Node_Rain_Landing_Water_X,
-        srcY: 72.0 * ((animation.frame1 + variation) % 8), // TODO Expensive Operation
+        srcY: 72.0 * ((animation.frameRate2 + variation) % 8), // TODO Expensive Operation
         srcWidth: IsometricConstants.Sprite_Width,
         srcHeight: IsometricConstants.Sprite_Height,
         dstX: dstX,
