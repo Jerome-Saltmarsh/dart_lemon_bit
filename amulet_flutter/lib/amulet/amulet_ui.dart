@@ -3,6 +3,7 @@ import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amul
 import 'package:amulet_engine/packages/isometric_engine/packages/common/src/isometric/slot_type.dart';
 import 'package:amulet_engine/packages/isometric_engine/packages/common/src/isometric/target_action.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
+import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_skill_type.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';
 import 'package:amulet_flutter/website/widgets/gs_fullscreen.dart';
 import 'package:flutter/material.dart';
@@ -764,27 +765,8 @@ class AmuletUI {
             alignment: Alignment.centerRight,
           ),
           buildWatch(amulet.player.name, (t) => buildText(t, color: Colors.orange, bold: true)),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              buildRowTitle('Knight'),
-              buildWatch(amulet.playerCharacteristics.knight, buildRowValue),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              buildRowTitle('Wizard'),
-              buildWatch(amulet.playerCharacteristics.wizard, buildRowValue),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              buildRowTitle('Rogue'),
-              buildWatch(amulet.playerCharacteristics.rogue, buildRowValue),
-            ],
-          ),
+          buildContainerPlayerCharacteristics(),
+          height16,
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -824,22 +806,22 @@ class AmuletUI {
               buildWatch(amulet.playerRunSpeed, buildRowValue),
             ],
           ),
-          Row(
-            children: [
-              buildRowTitle('Damage'),
-              buildWatch(amulet.playerWeaponDamageMin, buildRowValue),
-              width2,
-              buildRowValue('-'),
-              width2,
-              buildWatch(amulet.playerWeaponDamageMax, buildRowValue),
-            ],
-          ),
-          Row(
-            children: [
-              buildRowTitle('Range'),
-              buildWatch(amulet.playerWeaponRange, buildRowValue),
-            ],
-          ),
+          // Row(
+          //   children: [
+          //     buildRowTitle('Damage'),
+          //     buildWatch(amulet.playerWeaponDamageMin, buildRowValue),
+          //     width2,
+          //     buildRowValue('-'),
+          //     width2,
+          //     buildWatch(amulet.playerWeaponDamageMax, buildRowValue),
+          //   ],
+          // ),
+          // Row(
+          //   children: [
+          //     buildRowTitle('Range'),
+          //     buildWatch(amulet.playerWeaponRange, buildRowValue),
+          //   ],
+          // ),
           // height16,
           // buildEquippedAmuletItems(),
         ],
@@ -849,6 +831,40 @@ class AmuletUI {
     return buildWatch(amulet.windowVisiblePlayerStats,
         (visible) => visible ? windowOpen : windowClosed
     );
+  }
+
+  Container buildContainerPlayerCharacteristics() {
+    return Container(
+          color: Colors.black12,
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              buildText('ARCHETYPES', color: Colors.white70),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  buildRowTitle('Knight'),
+                  buildWatch(amulet.playerCharacteristics.knight, buildRowValue),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  buildRowTitle('Wizard'),
+                  buildWatch(amulet.playerCharacteristics.wizard, buildRowValue),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  buildRowTitle('Rogue'),
+                  buildWatch(amulet.playerCharacteristics.rogue, buildRowValue),
+                ],
+              ),
+            ],
+          ),
+        );
   }
 
   Widget buildRowValue(dynamic value) => buildText(value, color: Colors.white70);
@@ -881,6 +897,9 @@ class AmuletUI {
 
     return buildWatch(watch, (amuletItem) {
       const size = 50.0;
+
+      final skillType = amuletItem?.skillType;
+
       return onPressed(
         onEnter: () => amulet.aimTargetItemType.value = amuletItem,
         onExit: () => amulet.aimTargetItemType.value = null,
@@ -909,11 +928,17 @@ class AmuletUI {
                       : AmuletItemImage(amuletItem: amuletItem, scale: size / 32,),
                 ),
               ),
-              Positioned(
-                bottom: 2,
-                right: 2,
-                child: Container(color: Colors.red, width: 16, height: 16,)
-              ),
+              if (skillType != null)
+                Positioned(
+                  bottom: 2,
+                  right: 2,
+                  child: Container(
+                      color: Colors.black,
+                      width: 16,
+                      height: 16,
+                      child: buildSkillTypeIcon(skillType),
+                  )
+                ),
               Positioned(
                 bottom: 2,
                 right: 2,
@@ -924,6 +949,19 @@ class AmuletUI {
         ),
       );
     });
+  }
+
+  Widget buildSkillTypeIcon(SkillType skillType){
+    final src = atlasSrcSkillType[skillType];
+    if (src == null){
+      throw Exception('atlasSrcSkillType[$skillType] is null');
+    }
+    return AmuletImage(
+        srcX: src[0],
+        srcY: src[1],
+        width: iconSizeSkillType,
+        height: iconSizeSkillType,
+    );
   }
 
   Widget buildWindowAmuletItemStats(AmuletItem? amuletItem) {
@@ -1015,7 +1053,7 @@ class AmuletUI {
             toString: (skillType) => skillType.name,
             onSelected: (skillType) => amulet.selectSkillTypeRight(skillType),
           ),
-          child: buildWatch(amulet.playerSkillRight, buildSkillTypeIcon),
+          child: buildWatch(amulet.playerSkillRight, buildContainerSkillType),
         );
 
   Widget buildControlSkillTypeLeft() => onPressed(
@@ -1025,10 +1063,10 @@ class AmuletUI {
                  toString: (skillType) => skillType.name,
                  onSelected: (skillType) => amulet.selectSkillTypeLeft(skillType),
              ),
-             child: buildWatch(amulet.playerSkillLeft, buildSkillTypeIcon),
+             child: buildWatch(amulet.playerSkillLeft, buildContainerSkillType),
          );
 
-  Widget buildSkillTypeIcon(SkillType skillType) =>
+  Widget buildContainerSkillType(SkillType skillType) =>
       Container(
         width: 100,
         height: 100,

@@ -13,18 +13,46 @@ class AmuletItemImage extends StatelessWidget {
   });
 
   @override
+  Widget build(BuildContext context) {
+    const size = 32.0;
+    final src = atlasSrcAmuletItem[amuletItem] ?? const [0, 0, size, size];
+    return AmuletImage(
+      srcX: src[0],
+      srcY: src[1],
+      width: size,
+      height: size,
+      scale: scale,
+    );
+  }
+}
+
+class AmuletImage extends StatelessWidget {
+
+  final double srcX;
+  final double srcY;
+  final double width;
+  final double height;
+  final double scale;
+
+  AmuletImage({
+    required this.srcX,
+    required this.srcY,
+    required this.width,
+    required this.height,
+    this.scale = 1,
+  });
+
+  @override
   Widget build(BuildContext context) =>
       IsometricBuilder(
-          builder: (context, isometric) {
-            final src = atlasSrcAmuletItem[amuletItem] ?? const [0, 0, 32, 32];
-            return isometric.engine.buildAtlasImage(
-              image: isometric.images.atlas_amulet_items,
-              srcX: src[0],
-              srcY: src[1],
-              srcWidth: 32,
-              srcHeight: 32,
-              scale: scale,
-            );
-          }
+          builder: (context, isometric) =>
+              isometric.engine.buildAtlasImage(
+                image: isometric.images.atlas_amulet_items,
+                srcX: srcX,
+                srcY: srcY,
+                srcWidth: width,
+                srcHeight: height,
+                scale: scale,
+              )
       );
 }

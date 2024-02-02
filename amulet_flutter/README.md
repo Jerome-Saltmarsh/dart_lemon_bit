@@ -15,20 +15,11 @@ ctrl + shift + e        : view recent changes
 alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
-[SYSTEM-ITEM BASED VALUES]
-  [PROS]
-  [CONS]
-    - SELECTED AMULET_ITEM        
-
-[CHARACTERISTICS]    
-  [PROS]
-    - ITEM SYNERGY
 
 [CURRENT]
 [new] ui skills row
 
 [RELEASE]
-[fix] particle speed
 [new] model amulet items
 
 ## 01.02.2024
