@@ -750,12 +750,7 @@ class AmuletUI {
   }
 
   Widget buildButtonPlayerStats() =>
-    onPressed(
-      action: amulet.windowVisiblePlayerStats.toggle,
-      child: GSContainer(
-        child: buildText('stats'),
-      ),
-    );
+      buildToggle(amulet.windowVisiblePlayerStats, 'stats');
 
   Widget buildWindowPlayerStats() {
     final windowOpen = GSContainer(
@@ -1071,10 +1066,20 @@ class AmuletUI {
         ),
       );
 
-  Widget buildButtonQuest() => onPressed(
-    action: amulet.windowVisibleQuests.toggle,
-    child: GSContainer(child: buildText('quest')),
-  );
+  Widget buildButtonQuest() =>
+      buildToggle(amulet.windowVisibleQuests, 'quest');
+
+  Widget buildToggle(WatchBool watch, String text) =>
+      onPressed(
+        action: watch.toggle,
+        child: GSContainer(
+          padding: const EdgeInsets.all(8),
+          child: Builder(
+              builder: (context) => buildWatch(watch,
+                        (statsVisible) => buildText(text, color: statsVisible ? Colors.white : Colors.white54))
+          ),
+        ),
+      );
 }
 
 String formatFramesToSeconds(int frames){
