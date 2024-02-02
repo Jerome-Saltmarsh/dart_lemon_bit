@@ -1,4 +1,5 @@
 
+import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/amulet_item.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/amulet_app.dart';
@@ -21,6 +22,7 @@ import 'gamestream/isometric/ui/isometric_colors.dart';
 Widget buildApp(){
   print('buildApp()');
 
+  SkillType.validate();
   WidgetsFlutterBinding.ensureInitialized();
 
   final engine = AmuletApp();

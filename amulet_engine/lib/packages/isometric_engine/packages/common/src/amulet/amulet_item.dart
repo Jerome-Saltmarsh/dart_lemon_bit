@@ -825,30 +825,34 @@ class Characteristics {
 }
 
 enum SkillType {
+  None(casteType: CasteType.Caste, magicCost: 0, range: 0, casteDuration: 0),
   Strike(casteType: CasteType.Weapon, magicCost: 0),
   Shoot_Arrow(casteType: CasteType.Weapon, magicCost: 0),
   Mighty_Swing(casteType: CasteType.Weapon, magicCost: 3),
-  Terrify(casteType: CasteType.Caste, magicCost: 5, casteDuration: 30),
-  Frostball(casteType: CasteType.Caste, magicCost: 4, casteDuration: 25),
-  Fireball(casteType: CasteType.Caste, magicCost: 5, casteDuration: 30),
-  Explode(casteType: CasteType.Caste, magicCost: 7, casteDuration: 35),
-  Firestorm(casteType: CasteType.Caste, magicCost: 10, casteDuration: 40),
-  Freeze_Target(casteType: CasteType.Caste, magicCost: 8, casteDuration: 20),
-  Freeze_Area(casteType: CasteType.Caste, magicCost: 5, casteDuration: 25),
-  Heal(casteType: CasteType.Caste, magicCost: 4, casteDuration: 30),
-  Teleport(casteType: CasteType.Caste, magicCost: 5, casteDuration: 35),
-  Entangle(casteType: CasteType.Caste, magicCost: 4, casteDuration: 40),
+  Terrify(casteType: CasteType.Caste, magicCost: 5, casteDuration: 30, range: 125),
+  Frostball(casteType: CasteType.Caste, magicCost: 4, casteDuration: 25, range: 125),
+  Fireball(casteType: CasteType.Caste, magicCost: 5, casteDuration: 30, range: 150),
+  Explode(casteType: CasteType.Caste, magicCost: 7, casteDuration: 35, range: 125),
+  Firestorm(casteType: CasteType.Caste, magicCost: 10, casteDuration: 40, range: 150),
+  Freeze_Target(casteType: CasteType.Caste, magicCost: 8, casteDuration: 20, range: 125),
+  Freeze_Area(casteType: CasteType.Caste, magicCost: 5, casteDuration: 25, range: 150),
+  Heal(casteType: CasteType.Caste, magicCost: 4, casteDuration: 30, range: 0),
+  Teleport(casteType: CasteType.Caste, magicCost: 5, casteDuration: 35, range: 250),
+  Entangle(casteType: CasteType.Weapon, magicCost: 4, casteDuration: 40),
   Split_Shot(casteType: CasteType.Weapon, magicCost: 4);
 
   final CasteType casteType;
   final int magicCost;
-  /// if null the weapon perform duration is used instead
+  /// if null the weapon perform duration is used
   final int? casteDuration;
+  /// if null the weapon range is used
+  final double? range;
 
   const SkillType({
     required this.casteType,
     required this.magicCost,
     this.casteDuration,
+    this.range,
   });
 
   int getDamage(Characteristics characteristics) {
@@ -862,6 +866,19 @@ enum SkillType {
       default:
       // Default case, return a default value or throw an exception
         throw Exception('Unhandled SkillType: $this');
+    }
+  }
+
+  static void validate() {
+    for (final skillType in values){
+      if (skillType.casteType == CasteType.Caste){
+        if (skillType.range == null){
+          throw Exception('$skillType.range cannot be null');
+        }
+        if (skillType.casteDuration == null){
+          throw Exception('$skillType.casteDuration cannot be null');
+        }
+      }
     }
   }
 }

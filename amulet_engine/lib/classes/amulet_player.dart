@@ -494,7 +494,7 @@ class AmuletPlayer extends IsometricPlayer with
     if (equippedWeaponMelee) {
       return SkillType.Strike;
     }
-    throw Exception('amuletPlayer.equippedWeaponDefaultSkillType: no weapon equipped');
+    return SkillType.None;
   }
 
   void writeEquipped(){
@@ -776,6 +776,10 @@ class AmuletPlayer extends IsometricPlayer with
   void attack() {
 
     if (deadInactiveOrBusy) {
+      return;
+    }
+
+    if (skillActive == SkillType.None){
       return;
     }
 
@@ -1103,28 +1107,11 @@ class AmuletPlayer extends IsometricPlayer with
     }
   }
 
-  double getSkillTypeRange(SkillType skillType){
-    if (const [
-      SkillType.Shoot_Arrow,
-      SkillType.Strike,
-      SkillType.Split_Shot,
-    ].contains(skillType)){
-      final weapon = equippedWeapon;
-      if (weapon == null){
-        return 0;
-      }
-      return weapon.range ?? 0;
-    }
+  double getSkillTypeRange(SkillType skillType) =>
+    skillType.range ??
+        equippedWeapon?.range ??
+          (throw Exception('skillTypeRange unknown'));
 
-    switch (skillType) {
-      case SkillType.Frostball:
-        return 120;
-      case SkillType.Fireball:
-        return 120;
-      default:
-        throw Exception('skillTypeRange unknown');
-    }
-  }
 
   double getSkillTypeRadius(SkillType skillType) {
      switch (skillType){
