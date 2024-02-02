@@ -6,7 +6,6 @@ import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_skill_type.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';
 import 'package:amulet_flutter/website/widgets/gs_fullscreen.dart';
-import 'package:amulet_flutter/website/widgets/src.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
@@ -32,7 +31,6 @@ class AmuletUI {
 
   Widget buildAmuletUI() {
 
-
     final basic = MouseRegion(
       cursor: SystemMouseCursors.basic,
       hitTestBehavior: HitTestBehavior.translucent,
@@ -57,7 +55,6 @@ class AmuletUI {
             if (cursor == SystemMouseCursors.grab){
               amulet.engine.cursorType.value = CursorType.Click;
               return gestureDetector;
-              // return grab;
             }
             if (cursor == SystemMouseCursors.basic){
               amulet.engine.cursorType.value = CursorType.Basic;
@@ -1051,15 +1048,15 @@ class AmuletUI {
 
   Widget buildContainerSkillType(SkillType skillType) =>
       Container(
-        width: 100,
-        height: 100,
+        width: 94,
+        height: 94,
         alignment: Alignment.center,
         padding: const EdgeInsets.all(4),
         color: amulet.style.containerColor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            buildText(skillType.name),
+            buildText(skillType.name, color: Colors.white70),
             height8,
             buildSkillTypeIcon(skillType),
           ],

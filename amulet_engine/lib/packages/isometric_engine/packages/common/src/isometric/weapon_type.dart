@@ -6,6 +6,10 @@ class WeaponType {
   static const Bow = 7;
   static const Staff = 15;
 
+  static bool isMelee(int weaponType){
+    return valuesMelee.contains(weaponType);
+  }
+
   static const valuesMelee = [
     ...valuesSwords,
     ...valuesStaffs,
@@ -27,6 +31,10 @@ class WeaponType {
 
   static const values = [
     Unarmed,
+    ...valuesNotUnarmed,
+  ];
+
+  static const valuesNotUnarmed = [
     ...valuesStaffs,
     ...valuesSwords,
     ...valuesBows,
