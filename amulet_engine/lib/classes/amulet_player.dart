@@ -584,6 +584,9 @@ class AmuletPlayer extends IsometricPlayer with
     switch (value.type){
       case ItemType.Weapon:
         equippedWeapon = value;
+        if (skillTypeLeft == SkillType.None){
+          skillTypeLeft = equippedWeaponDefaultSkillType;
+        }
         break;
       case ItemType.Helm:
         equippedHelm = value;
@@ -1071,29 +1074,43 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(amuletEvent);
   }
 
-  int getSkillTypeDamage(SkillType skillType) {
+  int getSkillTypeDamageMin(SkillType skillType){
+
+    if (skillType == SkillType.Strike){
+      return randomWeaponDamage + characteristicsKnight ~/ 3;
+    }
 
     if (const [
       SkillType.Shoot_Arrow,
-      SkillType.Strike,
       SkillType.Split_Shot,
-    ].contains(skillType)){
-      return randomWeaponDamage;
+    ].contains(skillType)) {
+      return randomWeaponDamage + characteristicsRogue ~/ 3;
     }
 
     switch (skillType) {
       case SkillType.Mighty_Swing:
         return randomWeaponDamage * 2;
       case SkillType.Frostball:
-        return 5;
+        return 5 + characteristicsWizard ~/ 3;
       case SkillType.Fireball:
-        return 5;
+        return 5 + characteristicsWizard ~/ 3;
       case SkillType.Explode:
-        return 10;
+        return 10 + characteristicsWizard ~/ 3;
       default:
         throw Exception('skillType.damage unknown');
     }
   }
+
+  int getSkillTypeDamageMax(SkillType skillType){
+      final minDamage = getSkillTypeDamageMin(skillType);
+      return minDamage + 2 + (minDamage ~/ 8); // TODO MAGIC CONSTANT
+  }
+
+  int getSkillTypeDamage(SkillType skillType) =>
+      randomInt(
+         getSkillTypeDamageMin(skillType),
+         getSkillTypeDamageMax(skillType),
+      );
 
   double getSkillTypeRange(SkillType skillType) =>
     skillType.range ??

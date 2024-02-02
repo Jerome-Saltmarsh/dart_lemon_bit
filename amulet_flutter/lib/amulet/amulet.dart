@@ -79,6 +79,10 @@ class Amulet extends IsometricGame {
   final playerSkillTypes = <SkillType>[];
   final playerSkillTypesNotifier = Watch(0);
 
+  void onChangedPlayerSkillType(SkillType skillType){
+    audio.click_sounds_35.play();
+  }
+
   Watch<AmuletItem?>? get activeAmuletItemSlot {
     switch (activeSlotType.value){
       case SlotType.Helm:
@@ -128,9 +132,6 @@ class Amulet extends IsometricGame {
 
   Amulet(){
     print('Amulet()');
-    playerInteracting.onChanged(onChangedPlayerInteracting);
-    npcTextIndex.onChanged(onChangedNpcTextIndex);
-    error.onChanged(onChangedError);
 
     screenColorI.onChanged((t) {
       screenColor.value = Colors.black.withOpacity((1.0 - t).clamp(0, 1.0));
@@ -140,8 +141,14 @@ class Amulet extends IsometricGame {
       // aimTargetItemTypeCurrent.value = getEquippedItemSlot(itemType?.type)?.amuletItem.value;
     });
 
+    playerInteracting.onChanged(onChangedPlayerInteracting);
+    npcTextIndex.onChanged(onChangedNpcTextIndex);
+    error.onChanged(onChangedError);
     playerMagic.onChanged(refreshPlayerMagicPercentage);
     playerMagicMax.onChanged(refreshPlayerMagicPercentage);
+    playerSkillLeft.onChanged(onChangedPlayerSkillType);
+    playerSkillRight.onChanged(onChangedPlayerSkillType);
+
     verifySrcs();
   }
 

@@ -855,20 +855,6 @@ enum SkillType {
     this.range,
   });
 
-  int getDamage(Characteristics characteristics) {
-    // Implement the logic for calculating damage based on characteristics
-    // You can use a switch statement or if-else statements to handle different skills
-    switch (this) {
-      case SkillType.Strike:
-        return characteristics.knight;
-      case SkillType.Shoot_Arrow:
-        return characteristics.rogue;
-      default:
-      // Default case, return a default value or throw an exception
-        throw Exception('Unhandled SkillType: $this');
-    }
-  }
-
   static void validate() {
     for (final skillType in values){
       if (skillType.casteType == CasteType.Caste){
