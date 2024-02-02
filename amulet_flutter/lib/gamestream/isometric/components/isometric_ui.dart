@@ -756,7 +756,7 @@ class IsometricUI with IsometricComponent {
   void showDialogValues<T>({
     required String title,
     required List<T> values,
-    required String Function(T t) toString,
+    required Widget Function(T t) buildItem,
     required Function(T value) onSelected,
     double height = 400,
   }) => showDialog(
@@ -785,7 +785,7 @@ class IsometricUI with IsometricComponent {
                     onSelected(value);
                     closeDialog();
                   },
-                    child: buildText(toString(value))))
+                    child: buildItem(value)))
                     .toList(growable: false)),
           )
         ])

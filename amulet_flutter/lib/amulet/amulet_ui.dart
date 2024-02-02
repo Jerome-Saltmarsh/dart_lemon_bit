@@ -78,7 +78,7 @@ class AmuletUI {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  buildWindowPlayerStats(),
+                  buildButtonPlayerStats(),
                   width8,
                   buildButtonQuest(),
                 ],
@@ -89,6 +89,11 @@ class AmuletUI {
               left: 8,
               child:
               buildWatch(amulet.aimTargetItemType, buildWindowAmuletItemStats),
+          ),
+          Positioned(
+              bottom: 60,
+              left: 8,
+              child: buildWindowPlayerStats(),
           ),
           buildPositionedMessage(),
           Positioned(
@@ -744,15 +749,15 @@ class AmuletUI {
     }
   }
 
-  Widget buildWindowPlayerStats() {
-
-    final windowClosed = onPressed(
-      action: amulet.windowVisiblePlayerStats.setTrue,
+  Widget buildButtonPlayerStats() =>
+    onPressed(
+      action: amulet.windowVisiblePlayerStats.toggle,
       child: GSContainer(
-          child: buildText('stats'),
+        child: buildText('stats'),
       ),
     );
 
+  Widget buildWindowPlayerStats() {
     final windowOpen = GSContainer(
       width: 160,
       child: Column(
@@ -807,31 +812,11 @@ class AmuletUI {
               buildWatch(amulet.playerRunSpeed, buildRowValue),
             ],
           ),
-          // Row(
-          //   children: [
-          //     buildRowTitle('Damage'),
-          //     buildWatch(amulet.playerWeaponDamageMin, buildRowValue),
-          //     width2,
-          //     buildRowValue('-'),
-          //     width2,
-          //     buildWatch(amulet.playerWeaponDamageMax, buildRowValue),
-          //   ],
-          // ),
-          // Row(
-          //   children: [
-          //     buildRowTitle('Range'),
-          //     buildWatch(amulet.playerWeaponRange, buildRowValue),
-          //   ],
-          // ),
-          // height16,
-          // buildEquippedAmuletItems(),
         ],
       ),
     );
 
-    return buildWatch(amulet.windowVisiblePlayerStats,
-        (visible) => visible ? windowOpen : windowClosed
-    );
+    return buildWatchVisible(amulet.windowVisiblePlayerStats, windowOpen);
   }
 
   Container buildContainerPlayerCharacteristics() {
@@ -879,26 +864,8 @@ class AmuletUI {
 
   Widget buildWatchAmuletItem(Watch<AmuletItem?> watch, SlotType slotType) {
 
-    final activeContainer = buildBorder(
-      color: Colors.white,
-      width: 2,
-      child: Container(
-        width: 16,
-        height: 16,
-        color: Colors.transparent,
-      ),
-    );
-
     return buildWatch(watch, (amuletItem) {
       const size = 50.0;
-
-      // final activeBorder = buildWatch(amulet.playerSkillRight, (playerSkillRight) {
-      //   if (playerSkillRight != amuletItem?.skillType) {
-      //     return nothing;
-      //   }
-      //   return activeContainer;
-      // });
-
       final skillType = amuletItem?.skillType;
 
       return onPressed(
@@ -1057,7 +1024,14 @@ class AmuletUI {
           action: () => amulet.ui.showDialogValues(
             title: 'Skills',
             values: amulet.playerSkillTypes,
-            toString: (skillType) => skillType.name,
+            buildItem: (skillType) => Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                buildText(skillType.name),
+                width16,
+                buildSkillTypeIcon(skillType),
+              ],
+            ),
             onSelected: (skillType) => amulet.selectSkillTypeRight(skillType),
           ),
           child: buildWatch(amulet.playerSkillRight, buildContainerSkillType),
@@ -1067,7 +1041,14 @@ class AmuletUI {
              action: () => amulet.ui.showDialogValues(
                  title: 'Skills',
                  values: amulet.playerSkillTypes,
-                 toString: (skillType) => skillType.name,
+               buildItem: (skillType) => Row(
+                 mainAxisAlignment: MainAxisAlignment.center,
+                 children: [
+                   buildText(skillType.name),
+                   width16,
+                   buildSkillTypeIcon(skillType),
+                 ],
+               ),
                  onSelected: (skillType) => amulet.selectSkillTypeLeft(skillType),
              ),
              child: buildWatch(amulet.playerSkillLeft, buildContainerSkillType),

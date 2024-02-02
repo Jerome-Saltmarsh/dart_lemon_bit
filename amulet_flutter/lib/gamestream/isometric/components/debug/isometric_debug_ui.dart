@@ -1,18 +1,15 @@
 
-import 'package:amulet_flutter/gamestream/isometric/enums/mode.dart';
-import 'package:amulet_flutter/gamestream/ui.dart';
-import 'package:amulet_flutter/gamestream/ui/builders/build_watch.dart';
-import 'package:amulet_flutter/gamestream/ui/constants/height.dart';
 import 'package:amulet_engine/packages/common.dart';
-import 'package:golden_ratio/constants.dart';
-import 'package:lemon_watch/src.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/debug/isometric_debug.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/functions/format_bytes.dart';
-import 'package:amulet_flutter/gamestream/ui/widgets/gs_container.dart';
-import 'package:amulet_flutter/gamestream/ui/widgets/gs_refresh.dart';
+import 'package:amulet_flutter/gamestream/isometric/enums/mode.dart';
+import 'package:amulet_flutter/gamestream/ui.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:golden_ratio/constants.dart';
+import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
+
 import 'debug_tab.dart';
 
 extension isometricDebugUI on IsometricDebug {
@@ -176,7 +173,7 @@ extension isometricDebugUI on IsometricDebug {
               ui.showDialogValues(
                 title: 'Filter Quality',
                 values: FilterQuality.values,
-                toString: (v) => v.name,
+                buildItem: (v) => buildText(v.name),
                 onSelected: options.filterQuality,
               );
             },
