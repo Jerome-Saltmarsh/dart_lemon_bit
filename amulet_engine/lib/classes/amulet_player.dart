@@ -474,16 +474,17 @@ class AmuletPlayer extends IsometricPlayer with
       skillTypeLeft = equippedWeaponDefaultSkillType;
     }
 
-    if (!skillTypeUnlocked(skillTypeRight)) {
-      for (var i = SkillType.values.length - 1; i >= 0; i--) {
-        final skillType = SkillType.values[i];
-        if (skillTypeUnlocked(skillType)) {
-          skillTypeRight = skillType;
-          return;
-        }
-      }
+    if (skillTypeUnlocked(skillTypeRight)) {
+      return;
     }
 
+    for (var i = SkillType.values.length - 1; i >= 0; i--) {
+      final skillType = SkillType.values[i];
+      if (skillTypeUnlocked(skillType)) {
+        skillTypeRight = skillType;
+        return;
+      }
+    }
     skillTypeRight = equippedWeaponDefaultSkillType;
   }
 
@@ -984,12 +985,18 @@ class AmuletPlayer extends IsometricPlayer with
 
   @override
   set skillTypeLeft(SkillType value) {
+    if (!skillTypeUnlocked(value)){
+      return;
+    }
     super.skillTypeLeft = value;
     writeSkillsLeftRight();
   }
 
   @override
   set skillTypeRight(SkillType value) {
+    if (!skillTypeUnlocked(value)){
+      return;
+    }
     super.skillTypeRight = value;
     writeSkillsLeftRight();
   }
@@ -1133,6 +1140,9 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   bool skillTypeUnlocked(SkillType skillType) {
+    if (skillType == SkillType.None){
+      return true;
+    }
     if (skillType == SkillType.Strike){
       return equippedWeaponMelee;
     }
