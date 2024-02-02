@@ -94,7 +94,6 @@ class IsometricComponents extends ComponentContainer {
     required this.colors,
     required this.style,
     required this.engine,
-    // required this.user,
   }) {
     print('IsometricComponents()');
     engine.onError = onError;

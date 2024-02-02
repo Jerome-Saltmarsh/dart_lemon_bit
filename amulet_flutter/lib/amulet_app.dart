@@ -17,7 +17,9 @@ class AmuletApp extends LemonEngine {
     themeData: ThemeData(fontFamily: 'VT323-Regular'),
     backgroundColor: IsometricColors.Black,
     buildLoadingScreen: (context) => LoadingPage(),
-  );
+  ) {
+    zoomMin = 0.3;
+  }
 
   @override
   Widget buildUI(BuildContext buildContext) =>
