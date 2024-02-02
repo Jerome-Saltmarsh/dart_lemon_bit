@@ -127,13 +127,13 @@ class AmuletPlayer extends IsometricPlayer with
 
   bool get noWeaponEquipped => equippedWeapon == null;
 
-  int get randomWeaponDamage {
-    final weapon = equippedWeapon;
-    if (weapon == null){
-      return 0;
-    }
-    return randomInt(weapon.damageMin ?? 0, weapon.damageMax ?? 0);
-  }
+  // int get randomWeaponDamage {
+  //   final weapon = equippedWeapon;
+  //   if (weapon == null){
+  //     return 0;
+  //   }
+  //   return randomInt(weapon.damageMin ?? 0, weapon.damageMax ?? 0);
+  // }
 
   Amulet get amulet => amuletGame.amulet;
 
@@ -141,7 +141,7 @@ class AmuletPlayer extends IsometricPlayer with
   int get weaponType => equippedWeapon?.subType ?? WeaponType.Unarmed;
 
   @override
-  int get attackDamage => randomInt(weaponDamageMin, weaponDamageMax + 1);
+  int get attackDamage => getSkillTypeDamage(skillActive);
 
   @override
   double get attackRange => getSkillTypeRange(skillActive);
@@ -229,13 +229,13 @@ class AmuletPlayer extends IsometricPlayer with
     throw Exception();
   }
 
-  int get weaponDamageMin {
-    return equippedWeapon?.damageMin ?? 0;
-  }
-
-  int get weaponDamageMax {
-    return equippedWeapon?.damageMax ?? 0;
-  }
+  // int get weaponDamageMin {
+  //   return equippedWeapon?.damageMin ?? 0;
+  // }
+  //
+  // int get weaponDamageMax {
+  //   return equippedWeapon?.damageMax ?? 0;
+  // }
 
   int get regenMagic {
     var total = baseRegenMagic;
@@ -272,7 +272,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeRegenMagic();
     writeRegenHealth();
     writeRunSpeed();
-    writeWeaponDamage();
+    // writeWeaponDamage();
     super.writePlayerGame();
   }
 
@@ -300,20 +300,20 @@ class AmuletPlayer extends IsometricPlayer with
     writeUInt16((runSpeed * 10).toInt());
   }
 
-  void writeWeaponDamage() {
-    if (
-      cacheWeaponDamageMin == weaponDamageMin &&
-      cacheWeaponDamageMax == weaponDamageMax &&
-      cacheWeaponRange == attackRange
-    ) return;
-    cacheWeaponDamageMin = cacheWeaponDamageMin;
-    cacheWeaponDamageMax = cacheWeaponDamageMax;
-    writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Player_Weapon_Damage);
-    writeUInt16(weaponDamageMin);
-    writeUInt16(weaponDamageMax);
-    writeUInt16(attackRange.toInt());
-  }
+  // void writeWeaponDamage() {
+  //   if (
+  //     cacheWeaponDamageMin == weaponDamageMin &&
+  //     cacheWeaponDamageMax == weaponDamageMax &&
+  //     cacheWeaponRange == attackRange
+  //   ) return;
+  //   cacheWeaponDamageMin = cacheWeaponDamageMin;
+  //   cacheWeaponDamageMax = cacheWeaponDamageMax;
+  //   writeByte(NetworkResponse.Amulet);
+  //   writeByte(NetworkResponseAmulet.Player_Weapon_Damage);
+  //   writeUInt16(weaponDamageMin);
+  //   writeUInt16(weaponDamageMax);
+  //   writeUInt16(attackRange.toInt());
+  // }
 
   void writeDebug() {
     if (!debugging) return;
@@ -1074,43 +1074,73 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(amuletEvent);
   }
 
-  int getSkillTypeDamageMin(SkillType skillType){
+  int getSkillTypeDamageMin(SkillType skillType) =>
+      getSkillTypeDamageDivider(skillType, 4);
 
-    if (skillType == SkillType.Strike){
-      return randomWeaponDamage + characteristicsKnight ~/ 3;
+  int getSkillTypeDamageMax(SkillType skillType) =>
+      getSkillTypeDamageDivider(skillType, 3);
+
+
+  // int get equippedWeaponDamageMin {
+  //   final damageMin = equippedWeapon?.damageMin;
+  //   if (damageMin == null){
+  //     throw Exception('equippedWeapon is null');
+  //   }
+  //   return damageMin;
+  // }
+
+  int get equippedWeaponDamage {
+    final damage = equippedWeapon?.damage;
+    if (damage == null){
+      throw Exception('equippedWeapon is null');
+    }
+    return damage;
+  }
+
+  int getSkillTypeDamageDivider(SkillType skillType, int divider){
+
+    if (skillType == SkillType.Strike) {
+      return equippedWeaponDamage + characteristicsKnight ~/ divider;
     }
 
     if (const [
       SkillType.Shoot_Arrow,
       SkillType.Split_Shot,
     ].contains(skillType)) {
-      return randomWeaponDamage + characteristicsRogue ~/ 3;
+      return equippedWeaponDamage + characteristicsRogue ~/ divider;
     }
 
     switch (skillType) {
       case SkillType.Mighty_Swing:
-        return randomWeaponDamage * 2;
+        return (equippedWeaponDamage + characteristicsKnight ~/ divider) * 2;
       case SkillType.Frostball:
-        return 5 + characteristicsWizard ~/ 3;
+        return 5 + characteristicsWizard ~/ divider;
       case SkillType.Fireball:
-        return 5 + characteristicsWizard ~/ 3;
+        return 5 + characteristicsWizard ~/ divider;
       case SkillType.Explode:
-        return 10 + characteristicsWizard ~/ 3;
+        return 10 + characteristicsWizard ~/ divider;
       default:
         throw Exception('skillType.damage unknown');
     }
   }
 
-  int getSkillTypeDamageMax(SkillType skillType){
-      final minDamage = getSkillTypeDamageMin(skillType);
-      return minDamage + 2 + (minDamage ~/ 8); // TODO MAGIC CONSTANT
-  }
+  int getSkillTypeDamage(SkillType skillType) {
+    final minDamage = getSkillTypeDamageMin(skillType);
+    final maxDamage = getSkillTypeDamageMax(skillType);
 
-  int getSkillTypeDamage(SkillType skillType) =>
-      randomInt(
-         getSkillTypeDamageMin(skillType),
-         getSkillTypeDamageMax(skillType),
-      );
+    if (minDamage == maxDamage) {
+      return minDamage;
+    }
+
+    if (minDamage < maxDamage) {
+      throw Exception('min < max');
+    }
+
+    return randomInt(
+      minDamage,
+      maxDamage,
+    );
+  }
 
   double getSkillTypeRange(SkillType skillType) =>
     skillType.range ??

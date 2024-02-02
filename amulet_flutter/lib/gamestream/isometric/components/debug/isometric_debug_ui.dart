@@ -1,5 +1,6 @@
 
 import 'package:amulet_flutter/gamestream/isometric/enums/mode.dart';
+import 'package:amulet_flutter/gamestream/ui.dart';
 import 'package:amulet_flutter/gamestream/ui/builders/build_watch.dart';
 import 'package:amulet_flutter/gamestream/ui/constants/height.dart';
 import 'package:amulet_engine/packages/common.dart';
@@ -880,7 +881,13 @@ extension isometricDebugUI on IsometricDebug {
                           child: GSContainer(
                               color: Colors.green,
                               margin: const EdgeInsets.only(bottom: 4),
-                              child: buildText(e.name)),
+                              child: Row(
+                                children: [
+                                  buildText(e.name),
+                                  width8,
+                                  buildText(e.skillType?.name, color: Colors.orange),
+                                ],
+                              )),
                         );
                       }).toList(growable: false)
                       ,

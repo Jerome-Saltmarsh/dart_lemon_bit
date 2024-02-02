@@ -83,8 +83,7 @@ enum AmuletItem {
       subType: WeaponType.Shortsword,
       performDuration: 25,
       range: 40,
-      damageMin: 0,
-      damageMax: 5,
+      damage: 3,
       quality: ItemQuality.Common,
       characteristics: Characteristics(knight: 1),
       weaponSkill: Skill(
@@ -102,8 +101,7 @@ enum AmuletItem {
     subType: WeaponType.Shortsword,
     skillType: SkillType.Strike,
     performDuration: 25,
-    damageMin: 3,
-    damageMax: 6,
+    damage: 4,
     range: 45,
     quality: ItemQuality.Rare,
     characteristics: Characteristics(knight: 1),
@@ -122,8 +120,7 @@ enum AmuletItem {
     subType: WeaponType.Shortsword,
     skillType: SkillType.Strike,
     performDuration: 22,
-    damageMin: 3,
-    damageMax: 9,
+    damage: 5,
     range: 45,
     quality: ItemQuality.Legendary,
     characteristics: Characteristics(knight: 1),
@@ -137,8 +134,7 @@ enum AmuletItem {
     skillType: SkillType.Fireball,
     performDuration: 35,
     range: 40,
-    damageMin: 2,
-    damageMax: 5,
+    damage: 2,
     quality: ItemQuality.Common,
     characteristics: Characteristics(knight: 1),
   ),
@@ -157,8 +153,7 @@ enum AmuletItem {
     ),
     performDuration: 35,
     range: 50,
-    damageMin: 3,
-    damageMax: 7,
+    damage: 3,
     quality: ItemQuality.Rare,
     characteristics: Characteristics(knight: 1),
   ),
@@ -171,8 +166,7 @@ enum AmuletItem {
     skillType: SkillType.Fireball,
     performDuration: 35,
     range: 50,
-    damageMin: 3,
-    damageMax: 7,
+    damage: 3,
     quality: ItemQuality.Rare,
     characteristics: Characteristics(knight: 1),
   ),
@@ -185,8 +179,7 @@ enum AmuletItem {
     skillType: SkillType.Fireball,
     performDuration: 35,
     range: 80,
-    damageMin: 3,
-    damageMax: 7,
+    damage: 7,
     quality: ItemQuality.Legendary,
     characteristics: Characteristics(knight: 1),
   ),
@@ -199,8 +192,7 @@ enum AmuletItem {
     skillType: SkillType.Split_Shot,
     performDuration: 25,
     range: 125,
-    damageMin: 2,
-    damageMax: 5,
+    damage: 2,
     quality: ItemQuality.Common,
     characteristics: Characteristics(knight: 1),
   ),
@@ -213,8 +205,7 @@ enum AmuletItem {
     skillType: SkillType.Split_Shot,
     performDuration: 25,
     range: 135,
-    damageMin: 3,
-    damageMax: 8,
+    damage: 8,
     quality: ItemQuality.Rare,
     characteristics: Characteristics(knight: 1),
   ),
@@ -227,8 +218,7 @@ enum AmuletItem {
     skillType: SkillType.Split_Shot,
     performDuration: 32,
     range: 150,
-    damageMin: 5,
-    damageMax: 12,
+    damage: 12,
     quality: ItemQuality.Legendary,
     characteristics: Characteristics(knight: 1),
   ),
@@ -729,8 +719,7 @@ enum AmuletItem {
   final Skill? skill;
   final Skill? weaponSkill;
   final Characteristics characteristics;
-  final int? damageMin;
-  final int? damageMax;
+  final int? damage;
   final double? range;
   final double? radius;
   final int? performDuration;
@@ -758,8 +747,7 @@ enum AmuletItem {
     this.regenHealth,
     this.skillType,
     this.weaponSkill,
-    this.damageMin,
-    this.damageMax,
+    this.damage,
     this.range,
     this.radius,
     this.skill,
@@ -830,8 +818,8 @@ enum SkillType {
   Shoot_Arrow(casteType: CasteType.Weapon, magicCost: 0),
   Mighty_Swing(casteType: CasteType.Weapon, magicCost: 3),
   Terrify(casteType: CasteType.Caste, magicCost: 5, casteDuration: 30, range: 125),
-  Frostball(casteType: CasteType.Caste, magicCost: 4, casteDuration: 25, range: 125),
-  Fireball(casteType: CasteType.Caste, magicCost: 5, casteDuration: 30, range: 150),
+  Frostball(casteType: CasteType.Caste, magicCost: 4, casteDuration: 25, range: 125, damageMin: 3, damageMax: 5),
+  Fireball(casteType: CasteType.Caste, magicCost: 5, casteDuration: 30, range: 150, damageMin: 4, damageMax: 6),
   Explode(casteType: CasteType.Caste, magicCost: 7, casteDuration: 35, range: 125),
   Firestorm(casteType: CasteType.Caste, magicCost: 10, casteDuration: 40, range: 150),
   Freeze_Target(casteType: CasteType.Caste, magicCost: 8, casteDuration: 20, range: 125),
@@ -847,11 +835,15 @@ enum SkillType {
   final int? casteDuration;
   /// if null the weapon range is used
   final double? range;
+  final int? damageMin;
+  final int? damageMax;
 
   const SkillType({
     required this.casteType,
     required this.magicCost,
     this.casteDuration,
+    this.damageMin,
+    this.damageMax,
     this.range,
   });
 

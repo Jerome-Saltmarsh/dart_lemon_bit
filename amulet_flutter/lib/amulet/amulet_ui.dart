@@ -337,8 +337,8 @@ class AmuletUI {
             ),
             buildRowText('value', current.quality.name, target?.quality.name),
             buildRowText('skill', current.skillType?.name, target?.skillType?.name),
-            buildRowInt('min dmg', current.damageMin, target?.damageMin),
-            buildRowInt('max dmg', current.damageMax, target?.damageMax),
+            buildRowInt('damage', current.damage, target?.damage),
+            // buildRowInt('max dmg', current.damageMax, target?.damageMax),
             buildRowInt('range', current.range?.toInt(), target?.range?.toInt()),
             buildRowInt('radius', current.radius?.toInt(), target?.radius?.toInt()),
             buildRowIntReverse('duration', current.performDuration, target?.performDuration),
@@ -888,15 +888,15 @@ class AmuletUI {
       ),
     );
 
-    final activeBorder = buildWatch(amulet.activeSlotType, (t) {
-      if (t != slotType) {
-        return nothing;
-      }
-      return activeContainer;
-    });
-
     return buildWatch(watch, (amuletItem) {
       const size = 50.0;
+
+      final activeBorder = buildWatch(amulet.playerSkillRight, (playerSkillRight) {
+        if (playerSkillRight != amuletItem?.skillType) {
+          return nothing;
+        }
+        return activeContainer;
+      });
 
       final skillType = amuletItem?.skillType;
 
@@ -969,8 +969,7 @@ class AmuletUI {
       return nothing;
     }
 
-    final damageMin = amuletItem.damageMin;
-    final damageMax = amuletItem.damageMax;
+    final damage = amuletItem.damage;
     final maxHealth = amuletItem.maxHealth;
     final maxMagic = amuletItem.maxMagic;
     final regenHealth = amuletItem.regenHealth;
@@ -1010,10 +1009,8 @@ class AmuletUI {
             buildRowTitleValue('wizard', charsWizard),
           if (charsRogue != 0)
             buildRowTitleValue('rogue', charsRogue),
-          if (damageMin != null)
-            buildRowTitleValue('min damage', damageMin),
-          if (damageMax != null)
-            buildRowTitleValue('max damage', damageMax),
+          if (damage != null)
+            buildRowTitleValue('damage', damage),
           if (performDuration != null)
             buildRowTitleValue('duration', '${formatFramesToSeconds(performDuration)}'),
           if (range != null)

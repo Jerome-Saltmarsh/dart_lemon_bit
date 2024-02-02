@@ -951,12 +951,12 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     return false;
   }
 
-  static int getAmuletItemDamage(AmuletItem amuletItem){
-    final min = amuletItem.damageMin;
-    final max = amuletItem.damageMax;
-    if (min == null || max == null) return 0;
-    return randomInt(min, max + 1);
-  }
+  // static int getAmuletItemDamage(AmuletItem amuletItem){
+  //   final min = amuletItem.damageMin;
+  //   final max = amuletItem.damageMax;
+  //   if (min == null || max == null) return 0;
+  //   return randomInt(min, max + 1);
+  // }
 
   @override
   void performCharacterStart(Character character) {
