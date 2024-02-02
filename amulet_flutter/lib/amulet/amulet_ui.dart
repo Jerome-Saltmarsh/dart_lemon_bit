@@ -6,6 +6,7 @@ import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_skill_type.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';
 import 'package:amulet_flutter/website/widgets/gs_fullscreen.dart';
+import 'package:amulet_flutter/website/widgets/src.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
@@ -891,12 +892,12 @@ class AmuletUI {
     return buildWatch(watch, (amuletItem) {
       const size = 50.0;
 
-      final activeBorder = buildWatch(amulet.playerSkillRight, (playerSkillRight) {
-        if (playerSkillRight != amuletItem?.skillType) {
-          return nothing;
-        }
-        return activeContainer;
-      });
+      // final activeBorder = buildWatch(amulet.playerSkillRight, (playerSkillRight) {
+      //   if (playerSkillRight != amuletItem?.skillType) {
+      //     return nothing;
+      //   }
+      //   return activeContainer;
+      // });
 
       final skillType = amuletItem?.skillType;
 
@@ -919,13 +920,22 @@ class AmuletUI {
             alignment: Alignment.center,
             children: [
               Positioned(
-                child: Container(
-                  alignment: Alignment.center,
-                  color: Colors.black12,
-                  padding: const EdgeInsets.all(2),
-                  child: amuletItem == null
-                      ? nothing
-                      : AmuletItemImage(amuletItem: amuletItem, scale: size / 32,),
+                child: Builder(
+                  builder: (context) {
+
+                    return buildWatch(amulet.playerSkillRight, (playerSkillRight) {
+                      return Container(
+                        alignment: Alignment.center,
+                        color: playerSkillRight != amuletItem?.skillType ? Colors.black12 : Colors.white24,
+                        padding: const EdgeInsets.all(2),
+                        child: amuletItem == null
+                            ? nothing
+                            : AmuletItemImage(amuletItem: amuletItem, scale: size / 32,),
+                      );
+
+
+                    });
+                  }
                 ),
               ),
               if (skillType != null)
@@ -939,11 +949,11 @@ class AmuletUI {
                       child: buildSkillTypeIcon(skillType),
                   )
                 ),
-              Positioned(
-                bottom: 2,
-                right: 2,
-                child: activeBorder,
-              ),
+              // Positioned(
+              //   bottom: 2,
+              //   right: 2,
+              //   child: activeBorder,
+              // ),
             ],
           ),
         ),
@@ -1070,7 +1080,14 @@ class AmuletUI {
         alignment: Alignment.center,
         padding: const EdgeInsets.all(4),
         color: amulet.style.containerColor,
-        child: buildText(skillType.name),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            buildText(skillType.name),
+            height8,
+            buildSkillTypeIcon(skillType),
+          ],
+        ),
       );
 
   Widget buildButtonQuest() => onPressed(
