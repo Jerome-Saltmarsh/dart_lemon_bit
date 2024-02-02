@@ -53,14 +53,6 @@ class AmuletPlayer extends IsometricPlayer with
   AmuletGame amuletGame;
   SlotType? activeSlotType;
 
-  void setActiveSlotType(SlotType? value) {
-    if (value != null && getEquippedSlotType(value)?.skill == null) {
-      return;
-    }
-    this.activeSlotType = value;
-    writeActiveSlotType();
-  }
-
   AmuletPlayer({
     required this.amuletGame,
     required int itemLength,
@@ -980,9 +972,6 @@ class AmuletPlayer extends IsometricPlayer with
      magic += regenMagic;
   }
 
-  // void selectItemType(int itemType) =>
-  //     setActiveSlotType(mapItemTypeToSlotType(itemType));
-
   @override
   set skillTypeLeft(SkillType value) {
     if (!skillTypeUnlocked(value)){
@@ -1194,13 +1183,27 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   void clearActiveSlotType() {
-    setActiveSlotType(null);
+    selectSlotType(null);
+  }
+
+  void selectSlotType(SlotType? slotType) {
+    if (slotType == null) {
+      return;
+    }
+    final equipped = getEquippedSlotType(slotType);
+    if (equipped == null){
+      return;
+    }
+    final equippedSkillType = equipped.skillType;
+    if (equippedSkillType == null){
+      return;
+    }
+    skillTypeRight = equippedSkillType;
   }
 
   int getSkillTypePerformDuration(SkillType skillType) =>
     skillType.casteDuration ??
       equippedWeapon?.performDuration ??
         (throw Exception('skillType.casteDuration and equippedWeapon is null'));
-
 
 }
