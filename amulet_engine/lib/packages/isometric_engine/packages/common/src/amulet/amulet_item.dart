@@ -25,10 +25,10 @@ import 'package:collection/collection.dart';
  // wizard
     // robes [x]
     // garb [x]
-    // attire
+    // attire [x]
  // rogue
     // cloak [x]
-    // mantle
+    // mantle [x]
     // shroud
 
 // helm
