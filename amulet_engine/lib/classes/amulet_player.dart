@@ -459,7 +459,7 @@ class AmuletPlayer extends IsometricPlayer with
     helmType = equippedHelm?.subType ?? HelmType.None;
     armorType = equippedArmor?.subType ?? 0;
     shoeType = equippedShoes?.subType ?? ShoeType.None;
-    checkAssignedSkills();
+    checkAssignedSkillTypes();
     checkActiveSlotType();
     writeEquipped();
     writePlayerHealth();
@@ -468,7 +468,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeCharacteristics();
   }
 
-  void checkAssignedSkills() {
+  void checkAssignedSkillTypes() {
 
     if (!skillTypeUnlocked(skillTypeLeft)) {
       skillTypeLeft = equippedWeaponDefaultSkillType;
@@ -610,14 +610,6 @@ class AmuletPlayer extends IsometricPlayer with
   void notifyEquipmentDirty(){
     if (equipmentDirty) {
       return;
-    }
-
-    if (!skillTypeUnlocked(skillTypeLeft)){
-      skillTypeLeft = SkillType.Strike;
-    }
-
-    if (!skillTypeUnlocked(skillTypeRight)){
-      skillTypeRight = SkillType.Strike;
     }
 
     setCharacterStateChanging();
@@ -1140,11 +1132,18 @@ class AmuletPlayer extends IsometricPlayer with
     }
   }
 
-  bool skillTypeUnlocked(SkillType skillType) =>
-      equippedWeapon?.skillType == skillType ||
+  bool skillTypeUnlocked(SkillType skillType) {
+    if (skillType == SkillType.Strike){
+      return equippedWeaponMelee;
+    }
+    if (skillType == SkillType.Shoot_Arrow){
+      return equippedWeaponBow;
+    }
+    return equippedWeapon?.skillType == skillType ||
       equippedHelm?.skillType == skillType ||
       equippedArmor?.skillType == skillType ||
-      equippedShoes?.skillType == skillType ;
+      equippedShoes?.skillType == skillType;
+  }
 
   @override
   void setCharacterStateHurt({int duration = 10}) {
