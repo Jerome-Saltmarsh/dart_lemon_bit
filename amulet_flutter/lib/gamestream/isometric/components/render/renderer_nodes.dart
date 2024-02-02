@@ -1138,7 +1138,7 @@ class RendererNodes extends RenderGroup {
         );
 
         renderCustomNode(
-            srcX: 1343 + (animation.frame6 * 16), // TODO Optimize
+            srcX: 1343 + ((animation.frameRate2 % 6) * 16), // TODO Optimize
             srcY: 306,
             srcWidth: 14,
             srcHeight: 32,
@@ -1159,7 +1159,7 @@ class RendererNodes extends RenderGroup {
         );
 
         renderCustomNode(
-            srcX: 1343 + (animation.frame6 * 16), // TODO Optimize
+            srcX: 1343 + ((animation.frameRate2 % 6) * 16), // TODO Optimize
             srcY: 339,
             srcWidth: 14,
             srcHeight: 32,
@@ -1195,7 +1195,7 @@ class RendererNodes extends RenderGroup {
           colorSouth: scene.colorSouth(index),
           animationFrame: wind == WindType.Calm // TODO Optimize
               ? 0
-              : (((row - column) + animation.frame6) % 6), // TODO Optimize
+              : (((row - column) + animation.frameRate2) % 6), // TODO Optimize
         );
         break;
       case NodeType.Grass_Short:

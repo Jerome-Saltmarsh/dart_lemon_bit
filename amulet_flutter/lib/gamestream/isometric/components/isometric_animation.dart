@@ -7,8 +7,6 @@ class IsometricAnimation implements Updatable {
   var frameWaterHeight = 0;
   var frameWaterSrcX = 0.0;
   var frameWaterFlowingSrcX = 0.0;
-  var frame2 = 0;
-  var frame6 = 0;
   var frame8 = 0;
   var frame16 = 0;
   var frameRainWater = 0;
@@ -48,18 +46,8 @@ class IsometricAnimation implements Updatable {
     }
 
     frame1++;
-    frame2++;
-    frame6++;
     frame8++;
     frame16++;
-
-    if (frame2 >= 2){
-      frame2 = 0;
-    }
-
-    if (frame6 >= 6){
-      frame6 = 0;
-    }
 
     if (frame8 >= 8){
       frame8 = 0;
