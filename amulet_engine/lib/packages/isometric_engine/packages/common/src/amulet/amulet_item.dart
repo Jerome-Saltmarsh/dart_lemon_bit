@@ -24,7 +24,7 @@ import 'package:collection/collection.dart';
     // platemail [x]
  // wizard
     // robes [x]
-    // garb
+    // garb [x]
     // attire
  // rogue
     // cloak [x]

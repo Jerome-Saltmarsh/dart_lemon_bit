@@ -1,3 +1,4 @@
+
 name: amulet_flutter
 description: next gen cloud gaming
 
@@ -218,3 +219,6 @@ flutter:
     - assets/sprites/isometric/goblin/south/
     - assets/sprites/isometric/goblin/west/
     - assets/sprites/isometric/goblin/shadow/
+    - assets/sprites/isometric/kid/diffuse/armor/garb/
+    - assets/sprites/isometric/kid/south/armor/garb/
+    - assets/sprites/isometric/kid/west/armor/garb/

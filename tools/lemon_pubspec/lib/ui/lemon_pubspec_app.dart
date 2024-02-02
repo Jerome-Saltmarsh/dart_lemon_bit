@@ -36,7 +36,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  final file = File('C:/Users/Jerome/github/amulet/amulet_flutter/pubspec.yaml');
+  final file = File('C:/Users/Jerom/github/amulet/amulet_flutter/pubspec.yaml');
   List<String> missing = [];
 
   void rebuildPage() => setState(() { });

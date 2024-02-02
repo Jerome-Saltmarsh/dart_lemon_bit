@@ -146,7 +146,7 @@ def mute_animation_tracks(object_name):
 
 # BUSINESS LOGIC
 
-directory_renders = 'C:/Users/Jerome/github/amulet/resources/renders/'
+directory_renders = 'C:/Users/Jerom/github/amulet/resources/renders/'
 
 name_mesh_kid = 'mesh_kid'
 name_material_cell_shade = 'cell_shade'
@@ -197,7 +197,7 @@ def unmute_rotation_track(pivot_track_name):
 
 def build_sprites_from_renders():
     print('build_sprites_from_renders()')
-    program_path = r'C:\Users\Jerome\github\amulet\lemon_atlas\build\windows\runner\Release\lemon_sprites.exe'
+    program_path = r'C:\Users\Jerom\github\amulet\lemon_atlas\build\windows\runner\Release\lemon_sprites.exe'
     program_args = ['sync_all']
     try:
         subprocess.run([program_path] + program_args, check=True, stdout=subprocess.PIPE,
