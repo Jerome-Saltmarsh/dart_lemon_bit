@@ -587,6 +587,9 @@ class AmuletPlayer extends IsometricPlayer with
         if (skillTypeLeft == SkillType.None){
           skillTypeLeft = equippedWeaponDefaultSkillType;
         }
+        if (skillTypeRight == SkillType.None){
+          skillTypeRight = equippedWeaponDefaultSkillType;
+        }
         break;
       case ItemType.Helm:
         equippedHelm = value;
