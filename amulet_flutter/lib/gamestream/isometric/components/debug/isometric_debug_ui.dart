@@ -595,7 +595,11 @@ extension isometricDebugUI on IsometricDebug {
                   child: buildText(value));
             }),
           ),
-          buildButtonAcquireItem(),
+          // buildButtonAcquireItem(),
+          buildButtonAcquireWeapon(),
+          buildButtonAcquireHelm(),
+          buildButtonAcquireArmor(),
+          buildButtonAcquireShoes(),
           buildButtonSkipTutorial(),
           buildButtonReset(),
         ],
@@ -896,6 +900,85 @@ extension isometricDebugUI on IsometricDebug {
           ));
         },
         child: GSContainer(child: buildText('ACQUIRE ITEM')));
+  }
+
+  Widget buildButtonAcquireWeapon() =>
+      buildButtonAcquireItems('ACQUIRE WEAPON',
+          AmuletItem.values
+              .where((element) => element.isWeapon)
+              .toList(growable: false)
+      );
+
+  Widget buildButtonAcquireHelm() =>
+      buildButtonAcquireItems('ACQUIRE HELM',
+          AmuletItem.values
+              .where((element) => element.isHelm)
+              .toList(growable: false)
+      );
+
+  Widget buildButtonAcquireArmor() =>
+      buildButtonAcquireItems('ACQUIRE ARMOR',
+          AmuletItem.values
+              .where((element) => element.isArmor)
+              .toList(growable: false)
+      );
+
+  Widget buildButtonAcquireShoes() =>
+      buildButtonAcquireItems('ACQUIRE SHOES',
+          AmuletItem.values
+              .where((element) => element.isShoes)
+              .toList(growable: false)
+      );
+
+  Widget buildButtonAcquireItems(String text, List<AmuletItem> values) {
+    return onPressed(
+        action: (){
+          ui.showDialog(child: GSContainer(
+            width: 400,
+            height: 400 * goldenRatio_1381,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    buildText(text),
+                    onPressed(
+                      action: ui.closeDialog,
+                      child: buildText('Close'),
+                    ),
+                  ],
+                ),
+                Container(
+                  height: 300,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children:
+                       values.map((e) {
+                        return onPressed(
+                          action: (){
+                            amulet.requestAcquireAmuletItem(e);
+                          },
+                          child: GSContainer(
+                              color: Colors.green,
+                              margin: const EdgeInsets.only(bottom: 4),
+                              child: Row(
+                                children: [
+                                  buildText(e.name),
+                                  width8,
+                                  buildText(e.skillType?.name, color: Colors.orange),
+                                ],
+                              )),
+                        );
+                      }).toList(growable: false)
+                      ,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ));
+        },
+        child: GSContainer(child: buildText(text)));
   }
 
   Widget buildButtonReset() => onPressed(
