@@ -1,5 +1,6 @@
 
 import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/amulet_item.dart';
+import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_skill_type.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/amulet_app.dart';
@@ -22,7 +23,7 @@ import 'gamestream/isometric/ui/isometric_colors.dart';
 Widget buildApp(){
   print('buildApp()');
 
-  SkillType.validate();
+  validateAmulet();
   WidgetsFlutterBinding.ensureInitialized();
 
   final engine = AmuletApp();
@@ -71,4 +72,13 @@ Widget buildApp(){
     create: (context) => components,
     child: engine,
   );
+}
+
+void validateAmulet() {
+  for (final skillType in SkillType.values){
+    if (!atlasSrcSkillType.containsKey(skillType)){
+      print('warning atlasSrcSkillType[$skillType] is null');
+    }
+  }
+  SkillType.validate();
 }

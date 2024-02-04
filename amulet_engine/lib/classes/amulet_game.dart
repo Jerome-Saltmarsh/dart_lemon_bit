@@ -322,10 +322,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         throw Exception('not implemented');
       case SkillType.Freeze_Area:
         throw Exception('not implemented');
-      case SkillType.Firestorm:
-        throw Exception('not implemented');
-      case SkillType.Terrify:
-        throw Exception('not implemented');
       default:
         throw Exception('not implemented');
     }

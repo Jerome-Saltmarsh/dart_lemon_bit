@@ -2,6 +2,7 @@
 import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/amulet_item.dart';
 import 'package:amulet_engine/packages/isometric_engine/packages/common/src/isometric/slot_type.dart';
 import 'package:amulet_engine/packages/isometric_engine/packages/common/src/isometric/target_action.dart';
+import 'package:amulet_engine/src.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_skill_type.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';
@@ -928,8 +929,8 @@ class AmuletUI {
     return AmuletImage(
         srcX: src[0],
         srcY: src[1],
-        width: iconSizeSkillType,
-        height: iconSizeSkillType,
+        width: src.tryGet(2) ?? iconSizeSkillType,
+        height: src.tryGet(3) ?? iconSizeSkillType,
     );
   }
 

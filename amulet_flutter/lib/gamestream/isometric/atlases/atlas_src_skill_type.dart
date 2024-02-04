@@ -12,4 +12,10 @@ const atlasSrcSkillType = <SkillType, List<double>> {
   SkillType.Strike: [_srcX, iconSizeSkillType * 4],
   SkillType.Shoot_Arrow: [_srcX, iconSizeSkillType * 5],
   SkillType.Heal: [_srcX, iconSizeSkillType * 6],
+  SkillType.Mighty_Swing: [_srcX, iconSizeSkillType * 7],
+  SkillType.Explode: [_srcX, iconSizeSkillType * 8],
+  SkillType.Split_Shot: [_srcX, iconSizeSkillType * 9],
+  SkillType.Entangle: [_srcX, iconSizeSkillType * 10],
+  SkillType.Freeze_Target: [_srcX, iconSizeSkillType * 11],
+  SkillType.Freeze_Area: [_srcX, iconSizeSkillType * 12],
 };

@@ -53,6 +53,15 @@ flutter:
     - family: VT323-Regular
       fonts:
         - asset: assets/fonts/VT323-Regular.ttf
+    - family: PixelOperator
+      fonts:
+        - asset: assets/fonts/PixelOperator.ttf
+    - family: PixelOperator8
+      fonts:
+        - asset: assets/fonts/PixelOperator8.ttf
+    - family: PixelOperatorHBSC
+      fonts:
+        - asset: assets/fonts/PixelOperatorHBSC.ttf
   assets:
     - assets/fonts/
     - assets/audio/

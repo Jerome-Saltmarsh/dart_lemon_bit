@@ -1135,8 +1135,8 @@ class AmuletPlayer extends IsometricPlayer with
       return minDamage;
     }
 
-    if (minDamage < maxDamage) {
-      throw Exception('min < max');
+    if (minDamage > maxDamage) {
+      throw Exception('min damage > max damage');
     }
 
     return randomInt(

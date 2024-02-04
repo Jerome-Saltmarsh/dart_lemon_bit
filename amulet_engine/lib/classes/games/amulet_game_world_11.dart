@@ -200,11 +200,11 @@ class AmuletGameWorld11 extends AmuletGame {
               'Hello there.'
               'The names Gareth and I am the lord of this gloomy old town.'
               'Some time ago an evil witch made the forsaken castle in the north her home.'
-              'Since then her fowl minions have been scouring the country side.'
+              'Since then her foul minions have been scouring the country side.'
               'Her powers are beyond any of ours.'
               'We would be eternally grateful if you could aid us in defeating her.'
-              'Its not much but please take my old sword.'
-              'By the way Sophie wished to speak with you.',
+              "It's not much, but please take my old sword."
+              'By the way, Sophie wished to speak with you.',
             onInteractionOver: () {
               player.questMain = QuestMain.Kill_The_Witch;
               player.acquireAmuletItem(AmuletItem.Weapon_Sword_1_Common);
@@ -212,13 +212,13 @@ class AmuletGameWorld11 extends AmuletGame {
         );
         break;
       case QuestMain.Kill_The_Witch:
-        player.talk(warren, 'the witches lair is somewhere within the spooky woods');
+        player.talk(warren, 'The witches lair is somewhere within the spooky woods.');
         break;
       case QuestMain.Return_To_Warren:
-        player.talk(warren, 'you killed her! I cannot believe it. Finally we are free of her curse.');
+        player.talk(warren, 'You killed her! I cannot believe it. Finally we are free of her curse.');
         break;
       case QuestMain.Completed:
-        player.talk(warren, 'hello friend.');
+        player.talk(warren, 'Hello friend.');
         break;
     }
   }
@@ -227,11 +227,10 @@ class AmuletGameWorld11 extends AmuletGame {
 
     if (player.flagged('sophie_met')) {
       player.talk(npc,
-          'Its nice to meet you, Im Sophie.'
+          "It's nice to meet you; I'm Sophie."
           'Venturing out into the wilderness is dangerous.'
           'You must first understand about items.'
-          'There are for kinds of items.'
-          'Weapons, Head-wear, Armor and Shoes.'
+          'There are four kinds of items: weapons, head-wear, armor and shoes.'
           'Many items bestow their wearer with special abilities.'
           'Take this armor.'
           'It allows you to heal yourself.'
@@ -248,7 +247,7 @@ class AmuletGameWorld11 extends AmuletGame {
     player.talk(npc, 'how can I help you?', options: [
       TalkOption('change skills?', (player) {
         player.talk(npc,
-            'click on the skill menu item to the right side of the heal bar.'
+            'Click on the skill menu item to the right side of the heal bar.'
         );
       }),
       TalkOption('Nevermind', (player) {
@@ -263,18 +262,18 @@ class AmuletGameWorld11 extends AmuletGame {
       case QuestMain.Speak_With_Warren:
         player.talk(
             may,
-              'Welcome to the Inn.'
-              'If you are looking for something to do, try speaking wth Warren.'
+              'Welcome to the Cursed Inn.'
+              'If you are looking for something to do, try speaking with Gareth.'
         );
         break;
       case QuestMain.Kill_The_Witch:
         player.talk(may, 'Rumor has it the witch that has been terrorizing our village lives in some greater castle somewhere to the north');
         break;
       case QuestMain.Return_To_Warren:
-        player.talk(may, 'Wow you really managed to kill her? I bet Warren would like to thank you.');
+        player.talk(may, 'Wow, you really managed to kill her? I bet Warren would like to thank you.');
         break;
       case QuestMain.Completed:
-        player.talk(may, 'Welcome back to the Inn.');
+        player.talk(may, 'Welcome back to the Cursed Inn.');
         break;
     }
   }
