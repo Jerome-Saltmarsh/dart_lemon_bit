@@ -4,7 +4,6 @@ import 'dart:math';
 import '../packages/isomeric_engine.dart';
 import '../mixins/src.dart';
 import '../packages/isometric_engine/packages/common/src/amulet/quests/quest_main.dart';
-import '../json/src.dart';
 import '../packages/isometric_engine/packages/common/src/amulet/quests/quest_tutorials.dart';
 import 'amulet.dart';
 import 'amulet_fiend.dart';
@@ -23,6 +22,8 @@ class AmuletPlayer extends IsometricPlayer with
 {
   static const Data_Key_Dead_Count = 'dead';
 
+  var questTutorial = QuestTutorial.values.first;
+  var questMain = QuestMain.values.first;
   var baseHealth = 10;
   var baseMagic = 10;
   var baseRegenMagic = 1;
@@ -47,6 +48,7 @@ class AmuletPlayer extends IsometricPlayer with
   var npcText = '';
   var npcName = '';
   var npcOptions = <TalkOption>[];
+  var flags = <dynamic>[];
 
   Function? onInteractionOver;
   Position? cameraTarget;
@@ -84,14 +86,9 @@ class AmuletPlayer extends IsometricPlayer with
     writePlayerMagic();
   }
 
-  int get deathCount => data.tryGetInt(Data_Key_Dead_Count) ?? 0;
+  // int get deathCount => data.tryGetInt(Data_Key_Dead_Count) ?? 0;
 
-  set deathCount(int value) => data.setInt(Data_Key_Dead_Count, value);
-
-  QuestMain get questMain {
-    final questMainIndex = data.tryGetInt('quest_main') ?? 0;
-    return QuestMain.values[questMainIndex];
-  }
+  // set deathCount(int value) => data.setInt(Data_Key_Dead_Count, value);
 
   int get characteristicsKnight => getTotalCharacteristics(CharacteristicType.Knight);
 
@@ -108,8 +105,8 @@ class AmuletPlayer extends IsometricPlayer with
     return total;
   }
 
-  set questMain (QuestMain value){
-    data.setInt('quest_main', value.index);
+  void setQuestMain (QuestMain value){
+    this.questMain = value;
     writeQuestMain(value);
   }
 
@@ -200,33 +197,6 @@ class AmuletPlayer extends IsometricPlayer with
     }
 
     writeInteracting();
-  }
-
-  set tutorialObjective(QuestTutorial tutorialObjective){
-    data['tutorial_objective'] = tutorialObjective.name;
-  }
-
-  QuestTutorial get tutorialObjective {
-    final index = data['tutorial_objective'];
-
-    if (index == null) {
-      return QuestTutorial.values.first;
-    }
-
-    if (index is int) {
-      return QuestTutorial.values[index];
-    }
-
-    if (index is String) {
-      for (final objective in QuestTutorial.values) {
-        if (objective.name == index) {
-          return objective;
-        }
-      }
-      throw Exception('could not find objective $name');
-    }
-
-    throw Exception();
   }
 
   // int get weaponDamageMin {
@@ -690,23 +660,17 @@ class AmuletPlayer extends IsometricPlayer with
     writePlayerEvent(PlayerEvent.Player_Moved);
   }
 
-  bool flagNotSet(String name) => !flagSet(name);
-
-  bool flagSet(String name)=> data.containsKey(name);
-
   /// to run a piece of code only a single time
   /// the first time a flag name is entered it will return true
   /// however any time after that if the same flag name is entered
   /// the return will be false
   bool flagged(String name){
-    if (data.containsKey(name))
+    if (flags.contains(name))
       return false;
 
-    data[name] = true;
+    flags.add(name);
     return true;
   }
-
-  int getInt(String name) => data[name] as int;
 
   void writeCameraTarget() {
     final cameraTarget = this.cameraTarget;
@@ -727,20 +691,6 @@ class AmuletPlayer extends IsometricPlayer with
     previousCameraTarget = true;
     writeBool(true);
     writePosition(cameraTarget);
-  }
-
-  bool objectiveCompleted(String name){
-    var objectives = data['objectives'];
-
-    if (objectives == null){
-       return false;
-    }
-
-    if (objectives is! List){
-      throw Exception('objectives is! List');
-    }
-
-    return objectives.contains(name);
   }
 
   void changeGame(AmuletGame targetAmuletGame) =>
@@ -923,7 +873,7 @@ class AmuletPlayer extends IsometricPlayer with
     if (quest == QuestMain.values.last){
       return;
     }
-    questMain = QuestMain.values[quest.index + 1];
+    setQuestMain(QuestMain.values[quest.index + 1]);
   }
 
   @override

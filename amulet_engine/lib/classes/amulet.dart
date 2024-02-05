@@ -423,7 +423,7 @@ class Amulet {
     player.characterState = CharacterState.Idle;
     player.equipmentDirty = true;
     player.controlsEnabled = true;
-    player.data.clear();
+    // player.data.clear();
     player.clearActionFrame();
   }
 

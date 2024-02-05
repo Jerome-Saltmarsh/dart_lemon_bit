@@ -206,7 +206,7 @@ class AmuletGameWorld11 extends AmuletGame {
               "It's not much, but please take my old sword."
               'By the way, Sophie wished to speak with you.',
             onInteractionOver: () {
-              player.questMain = QuestMain.Kill_The_Witch;
+              player.setQuestMain(QuestMain.Kill_The_Witch);
               player.acquireAmuletItem(AmuletItem.Weapon_Sword_1_Common);
             }
         );

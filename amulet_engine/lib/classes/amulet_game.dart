@@ -229,7 +229,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   @override
   void customOnPlayerDead(AmuletPlayer player) {
-    player.deathCount++;
+    // player.deathCount++;
     addJob(seconds: 5, action: () {
       revive(player);
     });

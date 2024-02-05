@@ -718,7 +718,7 @@ class AmuletController {
 
         break;
       case NetworkRequestAmulet.Skip_Tutorial:
-        player.tutorialObjective = QuestTutorial.Finished;
+        player.questTutorial = QuestTutorial.Finished;
         amulet.playerChangeGameToTown(player);
         break;
     }

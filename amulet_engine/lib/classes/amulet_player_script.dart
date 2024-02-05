@@ -198,12 +198,6 @@ class AmuletPlayerScript {
   AmuletPlayerScript snapCameraToPlayer() =>
       add(() => player.writePlayerEvent(PlayerEvent.Player_Moved));
 
-  AmuletPlayerScript dataSet(String name, dynamic value) =>
-      add(() => player.data[name] = value);
-
-  AmuletPlayerScript dataRemove(String name) =>
-      add(() => player.data.remove(name));
-
   AmuletPlayerScript zoom(double value) => add(() => player.writeZoom(value));
 
   AmuletPlayerScript add(Function() action){

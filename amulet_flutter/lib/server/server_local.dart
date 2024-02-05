@@ -145,13 +145,15 @@ class ServerLocal implements Server {
       playerServer.hairColor = hairColor;
       playerServer.gender = gender;
       playerServer.headType = headType;
-      playerServer.tutorialObjective = QuestTutorial.values.first;
+      playerServer.questTutorial = QuestTutorial.values.first;
+      playerServer.setQuestMain(QuestMain.values.first);
       playerServer.equippedWeapon = null;
       playerServer.equippedHelm = null;
       playerServer.equippedShoes = null;
       playerServer.equippedArmor = null;
       playerServer.skillTypeLeft = SkillType.Strike;
       playerServer.skillTypeRight = SkillType.Strike;
+      parser.amulet.windowVisibleQuests.value = true;
       final json = writeAmuletPlayerToJson(playerServer);
       final characters = getCharacters();
       characters.add(json);
@@ -183,10 +185,9 @@ class ServerLocal implements Server {
     }
 
     ensureInitialized().then((value) {
-      playerServer.maxHealth =  10;
-      playerServer.health = 10;
       playerServer.active = true;
       writeJsonToAmuletPlayer(character, playerServer);
+      parser.amulet.windowVisibleQuests.value = true;
       controller.playerJoin();
       playerServer.regainFullHealth();
       amulet.resumeUpdateTimer();

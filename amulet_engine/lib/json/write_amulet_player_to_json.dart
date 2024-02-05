@@ -17,7 +17,8 @@ CharacterJson writeAmuletPlayerToJson(AmuletPlayer player){
   json.helm = player.equippedHelm?.name ?? '-';
   json.armor = player.equippedArmor?.name ?? '-';
   json.shoes = player.equippedShoes?.name ?? '-';
-  json['data'] = player.data;
+  json.setInt('quest_main', player.questMain.index);
+  json['flags'] = player.flags;
   json['name'] = player.name;
   json['complexion'] = player.complexion;
   json['gender'] = player.gender;

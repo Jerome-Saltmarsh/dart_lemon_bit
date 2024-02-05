@@ -47,7 +47,7 @@ class IsometricPlayer extends Character with ByteWriter {
   var positionCacheX = 0;
   var positionCacheY = 0;
   var positionCacheZ = 0;
-  var data = Json();
+  // var data = Json();
 
   final cacheCharacterTypeAndTeam = Uint8List(Cache_Length);
   final cacheCharacterState = Uint8List(Cache_Length);
@@ -1345,10 +1345,6 @@ class IsometricPlayer extends Character with ByteWriter {
        writeUInt16(entry.value);
     }
   }
-
-  bool hasNotKey(String name) => !hasKey(name);
-
-  bool hasKey(String name) => data.containsKey(name);
 
   void writePlayerCharacterState() {
     final characterState = this.characterState;
