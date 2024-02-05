@@ -145,7 +145,7 @@ class ServerLocal implements Server {
       playerServer.hairColor = hairColor;
       playerServer.gender = gender;
       playerServer.headType = headType;
-      playerServer.tutorialObjective = QuestTutorial.values.last;
+      playerServer.tutorialObjective = QuestTutorial.values.first;
       playerServer.equippedWeapon = null;
       playerServer.equippedHelm = null;
       playerServer.equippedShoes = null;

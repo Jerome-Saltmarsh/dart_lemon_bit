@@ -1259,11 +1259,12 @@ class AmuletController {
   }
 
   void playerJoin(){
-    if (player.tutorialObjective == QuestTutorial.Finished) {
-      playerJoinAmuletTown();
-    } else {
-      playerJoinGameTutorial();
-    }
+    playerJoinAmuletTown();
+    // if (player.tutorialObjective == QuestTutorial.Finished) {
+    //   playerJoinAmuletTown();
+    // } else {
+    //   playerJoinGameTutorial();
+    // }
   }
 
   void playerJoinAmuletTown() {
