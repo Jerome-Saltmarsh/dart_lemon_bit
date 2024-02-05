@@ -23,97 +23,101 @@ import 'widgets/dialog_create_character_computer.dart';
 extension WebsiteUI on WebsiteGame {
 
   Widget buildPageWebsiteDesktop(BuildContext context) {
-    return WatchBuilder(options.serverMode, (ServerMode serverMode) {
+    return Container(
+      color: Colors.black,
+      child: WatchBuilder(options.serverMode, (ServerMode serverMode) {
 
-        final page = WatchBuilder(websitePage, (websitePage) =>
-            switch (websitePage) {
-              WebsitePage.Select_Character =>
-                  Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Positioned(
-                        top: 8,
-                        right: 8,
-                        child: onPressed(
-                          action: engine.window.close,
-                          child: buildText('EXIT'),
+          final page = WatchBuilder(websitePage, (websitePage) =>
+              switch (websitePage) {
+                WebsitePage.Select_Character =>
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Positioned(
+                          top: 8,
+                          right: 8,
+                          child: onPressed(
+                            action: engine.window.close,
+                            child: buildText('EXIT'),
+                          ),
                         ),
-                      ),
-                      Positioned(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            buildText('AMULET', size: 120),
-                            height32,
-                            // buildTogglePlayMode(),
-                            if (serverMode == ServerMode.local)
-                              buildState(builder: (context, rebuild) =>
-                                  buildTableCharacters(
-                                    server.local.getCharacters(),
-                                    rebuild,
-                                  )
-                              ),
-                            if (serverMode == ServerMode.remote)
-                              buildWatch(server.remote.userId, (userId) {
-                                final authenticated = userId.isNotEmpty;
-                                if (authenticated) {
-                                  return buildContainerAuthenticated(server.remote);
-                                }
-                                return buildContainerAuthenticate(this, server.remote);
-                              }),
-                          ],
+                        Positioned(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              // buildText('AMULET', size: 120),
+                              Image.asset('assets/images/main_header.png'),
+                              height32,
+                              // buildTogglePlayMode(),
+                              if (serverMode == ServerMode.local)
+                                buildState(builder: (context, rebuild) =>
+                                    buildTableCharacters(
+                                      server.local.getCharacters(),
+                                      rebuild,
+                                    )
+                                ),
+                              if (serverMode == ServerMode.remote)
+                                buildWatch(server.remote.userId, (userId) {
+                                  final authenticated = userId.isNotEmpty;
+                                  if (authenticated) {
+                                    return buildContainerAuthenticated(server.remote);
+                                  }
+                                  return buildContainerAuthenticate(this, server.remote);
+                                }),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-              WebsitePage.New_Character => Stack(
-                alignment: Alignment.center,
-                children: [
-                  DialogCreateCharacterComputer(
-                    createCharacter: server.activeServer.createNewCharacter,
-                    onCreated: showPageSelectCharacter,
-                  ),
-                  Positioned(
-                    top: 8,
-                    left: 8,
-                    child: onPressed(
-                      action: showPageSelectCharacter,
-                      child: Container(
-                          color: Colors.white12,
-                          width: 100,
-                          height: 30,
-                          alignment: Alignment.center,
-                          child: buildText('<- BACK')),
+                      ],
                     ),
-                  )
-                ],
-              ),
-              WebsitePage.Select_Region => buildWebsitePageSelectRegion(
-                options: options,
-                website: website,
-                engine: engine,
-              ),
-            });
+                WebsitePage.New_Character => Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    DialogCreateCharacterComputer(
+                      createCharacter: server.activeServer.createNewCharacter,
+                      onCreated: showPageSelectCharacter,
+                    ),
+                    Positioned(
+                      top: 8,
+                      left: 8,
+                      child: onPressed(
+                        action: showPageSelectCharacter,
+                        child: Container(
+                            color: Colors.white12,
+                            width: 100,
+                            height: 30,
+                            alignment: Alignment.center,
+                            child: buildText('<- BACK')),
+                      ),
+                    )
+                  ],
+                ),
+                WebsitePage.Select_Region => buildWebsitePageSelectRegion(
+                  options: options,
+                  website: website,
+                  engine: engine,
+                ),
+              });
 
-        if (serverMode == ServerMode.remote){
-          return buildWatch(server.remote.operationStatus, (operationStatus){
-            return operationStatus != OperationStatus.None
-              ? buildFullScreen(child: buildText(operationStatus.name.replaceAll('_', ' ')))
-              : buildWatch(server.remote.websocket.connectionStatus, (connectionStatus){
-                return switch (connectionStatus) {
-                  ConnectionStatus.Connected =>
-                      buildPageConnectionStatus(connectionStatus.name),
-                  ConnectionStatus.Connecting =>
-                      buildPageConnectionStatus(connectionStatus.name),
-                  _ => page
-                };
+          if (serverMode == ServerMode.remote){
+            return buildWatch(server.remote.operationStatus, (operationStatus){
+              return operationStatus != OperationStatus.None
+                ? buildFullScreen(child: buildText(operationStatus.name.replaceAll('_', ' ')))
+                : buildWatch(server.remote.websocket.connectionStatus, (connectionStatus){
+                  return switch (connectionStatus) {
+                    ConnectionStatus.Connected =>
+                        buildPageConnectionStatus(connectionStatus.name),
+                    ConnectionStatus.Connecting =>
+                        buildPageConnectionStatus(connectionStatus.name),
+                    _ => page
+                  };
+              });
             });
-          });
-        }
+          }
 
-        return page;
-      });
+          return page;
+        }),
+    );
   }
 
   Widget buildTogglePlayMode() {
