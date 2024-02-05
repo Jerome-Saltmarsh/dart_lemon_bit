@@ -46,7 +46,7 @@ extension WebsiteUI on WebsiteGame {
                           children: [
                             buildText('AMULET', size: 120),
                             height32,
-                            buildTogglePlayMode(),
+                            // buildTogglePlayMode(),
                             if (serverMode == ServerMode.local)
                               buildState(builder: (context, rebuild) =>
                                   buildTableCharacters(
@@ -204,7 +204,7 @@ extension WebsiteUI on WebsiteGame {
                     action: () => server.playCharacter(character),
                     child: Container(
                         alignment: Alignment.center,
-                        width: 200,
+                        width: 300,
                         color: Colors.white12,
                         padding: const EdgeInsets.all(4),
                         margin: const EdgeInsets.only(bottom: 4),
@@ -212,14 +212,19 @@ extension WebsiteUI on WebsiteGame {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             buildText(character['name'], size: 22),
-                            if (weapon != null)
-                              AmuletItemImage(amuletItem: weapon, scale: 1.0),
-                            if (helm != null)
-                              AmuletItemImage(amuletItem: helm, scale: 1.0),
-                            if (armour != null)
-                              AmuletItemImage(amuletItem: armour, scale: 1.0),
-                            if (shoes != null)
-                              AmuletItemImage(amuletItem: shoes, scale: 1.0),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                if (weapon != null)
+                                  AmuletItemImage(amuletItem: weapon, scale: 1.0),
+                                if (helm != null)
+                                  AmuletItemImage(amuletItem: helm, scale: 1.0),
+                                if (armour != null)
+                                  AmuletItemImage(amuletItem: armour, scale: 1.0),
+                                if (shoes != null)
+                                  AmuletItemImage(amuletItem: shoes, scale: 1.0),
+                              ],
+                            )
                           ],
                         )),
                   ),
