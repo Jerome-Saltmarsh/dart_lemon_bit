@@ -204,7 +204,7 @@ extension WebsiteUI on WebsiteGame {
                     action: () => server.playCharacter(character),
                     child: Container(
                         alignment: Alignment.center,
-                        width: 300,
+                        width: 360,
                         color: Colors.white12,
                         padding: const EdgeInsets.all(4),
                         margin: const EdgeInsets.only(bottom: 4),
@@ -215,15 +215,11 @@ extension WebsiteUI on WebsiteGame {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                if (weapon != null)
-                                  AmuletItemImage(amuletItem: weapon, scale: 1.0),
-                                if (helm != null)
-                                  AmuletItemImage(amuletItem: helm, scale: 1.0),
-                                if (armour != null)
-                                  AmuletItemImage(amuletItem: armour, scale: 1.0),
-                                if (shoes != null)
-                                  AmuletItemImage(amuletItem: shoes, scale: 1.0),
-                              ],
+                              buildContainerAmuletItem(amuletItem: weapon),
+                              buildContainerAmuletItem(amuletItem: helm),
+                              buildContainerAmuletItem(amuletItem: armour),
+                              buildContainerAmuletItem(amuletItem: shoes),
+                            ],
                             )
                           ],
                         )),
@@ -239,6 +235,15 @@ extension WebsiteUI on WebsiteGame {
             })
                 .toList(growable: false)),
       ),
+    );
+
+  Widget buildContainerAmuletItem({AmuletItem? amuletItem})=> Container(
+      width: 36,
+      height: 36,
+      color: Colors.black26,
+      alignment: Alignment.center,
+      margin: const EdgeInsets.only(right: 4),
+      child: amuletItem != null ? AmuletItemImage(amuletItem: amuletItem, scale: 1.0) : null,
     );
 
   bool characterIsLocked(Json character){
