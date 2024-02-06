@@ -192,6 +192,7 @@ class ServerLocal implements Server {
       controller.playerJoin();
       playerServer.regainFullHealth();
       amulet.resumeUpdateTimer();
+      playerServer.checkAssignedSkillTypes();
       parser.server.onServerConnectionEstablished();
       connected = true;
     });
