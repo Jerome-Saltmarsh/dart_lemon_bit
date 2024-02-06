@@ -1,6 +1,7 @@
 
 import 'package:amulet_engine/src.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
+import 'package:amulet_flutter/amulet/classes/skill_type_stats.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_skill_type.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';
 import 'package:amulet_flutter/website/widgets/gs_fullscreen.dart';
@@ -1007,39 +1008,52 @@ class AmuletUI {
       ],
     );
 
-  Widget buildControlSkillTypeRight() => onPressed(
+  Widget buildControlSkillType({
+    required void onSelected(SkillType SkillType),
+    required Watch<SkillType> watch,
+  }) => onPressed(
           action: () => amulet.ui.showDialogValues(
             title: 'Skills',
-            values: amulet.playerSkillTypes,
-            buildItem: (skillType) => Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                buildText(skillType.name),
-                width16,
-                buildSkillTypeIcon(skillType),
-              ],
-            ),
-            onSelected: (skillType) => amulet.selectSkillTypeRight(skillType),
+            values: amulet.playerSkillTypeStats.where((e) => e.unlocked).toList(growable: false),
+            buildItem: buildContainerSkillTypeStats,
+            onSelected: (skillTypeStat) => onSelected(skillTypeStat.skillType),
           ),
-          child: buildWatch(amulet.playerSkillRight, buildContainerSkillType),
+          child: buildWatch(watch, buildContainerSkillType),
         );
 
-  Widget buildControlSkillTypeLeft() => onPressed(
-             action: () => amulet.ui.showDialogValues(
-                 title: 'Skills',
-                 values: amulet.playerSkillTypes,
-               buildItem: (skillType) => Row(
-                 mainAxisAlignment: MainAxisAlignment.center,
-                 children: [
-                   buildText(skillType.name),
-                   width16,
-                   buildSkillTypeIcon(skillType),
-                 ],
-               ),
-                 onSelected: (skillType) => amulet.selectSkillTypeLeft(skillType),
-             ),
-             child: buildWatch(amulet.playerSkillLeft, buildContainerSkillType),
-         );
+  Widget buildContainerSkillTypeStats(SkillTypeStats skillTypeStats) {
+    final skillType = skillTypeStats.skillType;
+    return Container(
+    color: Colors.white12,
+    alignment: Alignment.center,
+      padding: const EdgeInsets.all(8),
+      margin: const EdgeInsets.only(bottom: 8),
+      child: Column(
+        children: [
+          buildText(skillType.name),
+          buildSkillTypeIcon(skillType),
+          if (skillTypeStats.damageMin > 0 || skillTypeStats.damageMax > 0)
+            buildText(
+                'damage ${skillTypeStats.damageMin} - ${skillTypeStats.damageMax}'
+            ),
+          if (skillTypeStats.magicCost > 0)
+            buildText('magic cost ${skillTypeStats.magicCost}'),
+          if (skillTypeStats.range > 0)
+            buildText('range ${skillTypeStats.range}'),
+        ],
+      ),
+    );
+  }
+
+  Widget buildControlSkillTypeLeft() =>  buildControlSkillType(
+    onSelected: amulet.selectSkillTypeLeft,
+    watch: amulet.playerSkillLeft,
+  );
+
+  Widget buildControlSkillTypeRight() => buildControlSkillType(
+    onSelected: amulet.selectSkillTypeRight,
+    watch: amulet.playerSkillRight,
+  );
 
   Widget buildContainerSkillType(SkillType skillType) =>
       Container(

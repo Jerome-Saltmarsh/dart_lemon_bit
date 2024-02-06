@@ -16,6 +16,7 @@ import 'package:lemon_widgets/lemon_widgets.dart';
 import '../gamestream/isometric/src.dart';
 import 'amulet_render.dart';
 import 'classes/map_location.dart';
+import 'classes/skill_type_stats.dart';
 
 class Characteristics {
   final knight = Watch(0);
@@ -76,8 +77,10 @@ class Amulet extends IsometricGame {
   final aimTargetItemType = Watch<AmuletItem?>(null);
   final aimTargetItemTypeCurrent = Watch<AmuletItem?>(null);
   final highlightedAmuletItem = Watch<AmuletItem?>(null);
-  final playerSkillTypes = <SkillType>[];
-  final playerSkillTypesNotifier = Watch(0);
+  final playerSkillTypeStatsNotifier = Watch(0);
+  final playerSkillTypeStats = SkillType.values.map((skillType) =>
+      SkillTypeStats(skillType: skillType)
+  ).toList(growable: false);
 
   void onChangedPlayerSkillType(SkillType skillType){
     audio.click_sounds_35.play();
@@ -508,3 +511,5 @@ class Amulet extends IsometricGame {
 
   }
 }
+
+

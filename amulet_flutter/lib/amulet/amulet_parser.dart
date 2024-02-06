@@ -289,13 +289,18 @@ extension AmuletParser on IsometricParser {
   }
 
   void readPlayerSkillTypes() {
-    amulet.playerSkillTypes.clear();
-    for (var i = 0; i < SkillType.values.length; i++){
-      if (readBool()) {
-        amulet.playerSkillTypes.add(SkillType.values[i]);
-      }
+
+    for (final skillTypeStat in amulet.playerSkillTypeStats) {
+       skillTypeStat.unlocked = readBool();
+       if (!skillTypeStat.unlocked){
+         continue;
+       }
+       skillTypeStat.magicCost = readByte();
+       skillTypeStat.damageMin = readUInt16();
+       skillTypeStat.damageMax = readUInt16();
+       skillTypeStat.range = readUInt16();
     }
-    amulet.playerSkillTypesNotifier.value++;
+    amulet.playerSkillTypeStatsNotifier.value++;
   }
 
   void readPlayerCharacteristics() {
