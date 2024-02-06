@@ -55,18 +55,18 @@ class Amulet {
   final environmentUnderground = IsometricEnvironment(enabled: false);
   final timeUnderground = IsometricTime(hour: 24, enabled: false);
 
-  late final AmuletGame amuletGameWorld00;
-  late final AmuletGame amuletGameWorld01;
-  late final AmuletGame amuletGameWorld02;
-  late final AmuletGame amuletGameWorld10;
-  late final AmuletGameWorld11 amuletGameWorld11;
-  late final AmuletGame amuletGameWorld12;
-  late final AmuletGame amuletGameWorld20;
-  late final AmuletGame amuletGameWorld21;
-  late final AmuletGame amuletGameWorld22;
+  late AmuletGame amuletGameWorld00;
+  late AmuletGame amuletGameWorld01;
+  late AmuletGame amuletGameWorld02;
+  late AmuletGame amuletGameWorld10;
+  late AmuletGameWorld11 amuletGameWorld11;
+  late AmuletGame amuletGameWorld12;
+  late AmuletGame amuletGameWorld20;
+  late AmuletGame amuletGameWorld21;
+  late AmuletGame amuletGameWorld22;
 
-  late final AmuletGame amuletGameWitchesLair1;
-  late final AmuletGame amuletGameWitchesLair2;
+  late AmuletGame amuletGameWitchesLair1;
+  late AmuletGame amuletGameWitchesLair2;
 
   static const mapSize = 100;
   final worldRows = 3;
@@ -91,7 +91,7 @@ class Amulet {
       _initializeUpdateTimer();
       _initializeTimerAutoSave();
     }
-    _initializeGames();
+    resetGames();
     _compileWorldMapBytes();
     compileWorldMapLocations();
   }
@@ -109,7 +109,10 @@ class Amulet {
     throw Exception('amulet.getAmuletSceneGame("$scene")');
   }
 
-  void _initializeGames() {
+  void resetGames() {
+
+    worldMap.clear();
+    amuletTime.hour = 12;
 
     amuletGameWorld00 = AmuletGameWorld00(
       amulet: this,
@@ -423,7 +426,6 @@ class Amulet {
     player.characterState = CharacterState.Idle;
     player.equipmentDirty = true;
     player.controlsEnabled = true;
-    // player.data.clear();
     player.clearActionFrame();
   }
 

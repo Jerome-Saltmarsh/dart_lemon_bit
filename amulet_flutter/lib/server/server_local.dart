@@ -107,6 +107,7 @@ class ServerLocal implements Server {
     playerServer.setDestinationToCurrentPosition();
     parser.amulet.clearAllState();
     parser.options.game.value = parser.website;
+    amulet.resetGames();
     amulet.updateTimer?.cancel();
     amulet.timerRefreshUserCharacterLocks?.cancel();
   }
