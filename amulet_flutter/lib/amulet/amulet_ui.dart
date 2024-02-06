@@ -1111,29 +1111,36 @@ class AmuletUI {
     required Watch<SkillType> watch,
     required WatchBool menuOpen,
   }) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        buildWatch(menuOpen, (bool visible) {
-          if (!visible) return nothing;
-          return Column(
-            children: amulet.playerSkillTypeStats
-                .where((e) => e.unlocked)
-                .toList(growable: false)
-                .map((e) => onPressed(
-                      action: () => onSelected(e.skillType),
-                      child: Container(
-                          padding: const EdgeInsets.all(8),
-                          color: amulet.style.containerColor,
-                          child: buildText(e.skillType.name)),
-                    ))
-                .toList(growable: false),
-          );
-        }),
-        onPressed(
-          action: menuOpen.toggle,
-          child: buildWatch(watch, buildContainerSkillType)),
-      ],
+    return MouseRegion(
+      onExit: (_) => menuOpen.setFalse(),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          buildWatch(menuOpen, (bool visible) {
+            if (!visible) return nothing;
+            return Column(
+              children: amulet.playerSkillTypeStats
+                  .where((e) => e.unlocked)
+                  .toList(growable: false)
+                  .map((e) => onPressed(
+                        action: () {
+                          onSelected(e.skillType);
+                          menuOpen.setFalse();
+                        },
+                        child: Container(
+                            padding: const EdgeInsets.all(8),
+                            color: amulet.style.containerColor,
+                            child: buildText(e.skillType.name)),
+                      ))
+                  .toList(growable: false),
+            );
+          }),
+          onPressed(
+              onEnter: menuOpen.setTrue,
+              action: menuOpen.toggle,
+              child: buildWatch(watch, buildContainerSkillType)),
+        ],
+      ),
     );
   }
 }
