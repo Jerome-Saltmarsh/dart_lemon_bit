@@ -81,8 +81,8 @@ enum AmuletItem {
       levelMax: 5,
       type: ItemType.Weapon,
       subType: WeaponType.Shortsword,
-      performDuration: 25,
-      range: 40,
+      performDuration: WeaponDuration.Normal,
+      range: WeaponRange.ShortSword,
       damage: 3,
       quality: ItemQuality.Common,
       characteristics: Characteristics(),
@@ -94,9 +94,9 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Shortsword,
     skillType: SkillType.Strike,
-    performDuration: 25,
+    performDuration: WeaponDuration.Normal,
+    range: WeaponRange.ShortSword,
     damage: 4,
-    range: 40,
     quality: ItemQuality.Rare,
     characteristics: Characteristics(knight: 1),
   ),
@@ -107,9 +107,9 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Shortsword,
     skillType: SkillType.Mighty_Swing,
-    performDuration: 22,
+    performDuration: WeaponDuration.Fast,
+    range: WeaponRange.ShortSword,
     damage: 5,
-    range: 45,
     quality: ItemQuality.Legendary,
     characteristics: Characteristics(knight: 2),
   ),
@@ -120,8 +120,8 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
     skillType: SkillType.Frostball,
-    performDuration: 35,
-    range: 50,
+    performDuration: WeaponDuration.Slow,
+    range: WeaponRange.Staff,
     damage: 2,
     quality: ItemQuality.Rare,
     characteristics: Characteristics(),
@@ -133,11 +133,11 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
     skillType: SkillType.Fireball,
-    performDuration: 35,
-    range: 50,
+    performDuration: WeaponDuration.Slow,
+    range: WeaponRange.Staff,
     damage: 3,
     quality: ItemQuality.Rare,
-    characteristics: Characteristics(knight: 1),
+    characteristics: Characteristics(),
   ),
   Weapon_Staff_1_Legendary(
     label: 'Wooden Staff',
@@ -146,11 +146,11 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
     skillType: SkillType.Fireball,
-    performDuration: 35,
-    range: 80,
-    damage: 7,
+    performDuration: WeaponDuration.Slow,
+    range: WeaponRange.Staff,
+    damage: 5,
     quality: ItemQuality.Legendary,
-    characteristics: Characteristics(knight: 1),
+    characteristics: Characteristics(wizard: 3),
   ),
   Weapon_Bow_1_Common(
     label: 'Common Short Bow',
@@ -159,8 +159,8 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Bow,
     skillType: SkillType.Split_Shot,
-    performDuration: 25,
-    range: 125,
+    performDuration: WeaponDuration.Normal,
+    range: WeaponRange.Short_Bow,
     damage: 2,
     quality: ItemQuality.Common,
     characteristics: Characteristics(),
@@ -172,8 +172,8 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Bow,
     skillType: SkillType.Split_Shot,
-    performDuration: 25,
-    range: 135,
+    performDuration: WeaponDuration.Normal,
+    range: WeaponRange.Short_Bow,
     damage: 8,
     quality: ItemQuality.Rare,
     characteristics: Characteristics(),
@@ -185,8 +185,8 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Bow,
     skillType: SkillType.Split_Shot,
-    performDuration: 32,
-    range: 150,
+    performDuration: WeaponDuration.Fast,
+    range: WeaponRange.Short_Bow,
     damage: 12,
     quality: ItemQuality.Legendary,
     characteristics: Characteristics(),
@@ -198,7 +198,6 @@ enum AmuletItem {
     type: ItemType.Helm,
     subType: HelmType.Leather_Cap,
     skillType: SkillType.Heal,
-    performDuration: 25,
     maxHealth: 5,
     quality: ItemQuality.Common,
     regenHealth: 1,
@@ -211,7 +210,6 @@ enum AmuletItem {
     skillType: SkillType.Heal,
     type: ItemType.Helm,
     subType: HelmType.Pointed_Hat_Purple,
-    performDuration: 25,
     maxHealth: 2,
     quality: ItemQuality.Common,
     regenMagic: 1,
@@ -224,10 +222,9 @@ enum AmuletItem {
     skillType: SkillType.Split_Shot,
     type: ItemType.Helm,
     subType: HelmType.Feather_Cap,
-    performDuration: 25,
     maxHealth: 3,
     quality: ItemQuality.Common,
-    characteristics: Characteristics(knight: 1),
+    characteristics: Characteristics(rogue: 1),
   ),
   Helm_Warrior_2_Steel_Cap_Common(
     label: 'Steel Cap',
@@ -235,7 +232,6 @@ enum AmuletItem {
     levelMax: 5,
     type: ItemType.Helm,
     subType: HelmType.Steel_Cap,
-    performDuration: 25,
     maxHealth: 5,
     quality: ItemQuality.Common,
     regenHealth: 1,
@@ -247,7 +243,6 @@ enum AmuletItem {
     levelMax: 5,
     type: ItemType.Helm,
     subType: HelmType.Pointed_Hat_Black,
-    performDuration: 25,
     maxMagic: 5,
     quality: ItemQuality.Common,
     regenMagic: 1,
@@ -259,7 +254,6 @@ enum AmuletItem {
     levelMax: 5,
     type: ItemType.Helm,
     subType: HelmType.Cape,
-    performDuration: 25,
     maxHealth: 5,
     quality: ItemQuality.Common,
     regenHealth: 1,
@@ -271,7 +265,6 @@ enum AmuletItem {
     levelMax: 5,
     type: ItemType.Helm,
     subType: HelmType.Full_Helm,
-    performDuration: 25,
     maxHealth: 5,
     quality: ItemQuality.Common,
     regenHealth: 1,
@@ -283,7 +276,6 @@ enum AmuletItem {
     levelMax: 5,
     type: ItemType.Helm,
     subType: HelmType.Cowl,
-    performDuration: 25,
     maxHealth: 5,
     quality: ItemQuality.Common,
     regenHealth: 1,
@@ -295,7 +287,6 @@ enum AmuletItem {
     levelMax: 5,
     type: ItemType.Helm,
     subType: HelmType.Cape,
-    performDuration: 25,
     maxHealth: 5,
     quality: ItemQuality.Common,
     regenHealth: 1,
@@ -544,7 +535,6 @@ enum AmuletItem {
     levelMax: 5,
     type: ItemType.Shoes,
     subType: ShoeType.Leather_Boots,
-    performDuration: 25,
     quality: ItemQuality.Common,
     maxHealth: 5,
     runSpeed: -0.125,
@@ -572,7 +562,6 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    performDuration: 20,
     characteristics: Characteristics(knight: 1),
   ),
   Shoes_Warrior_2_Grieves_Common(
@@ -596,7 +585,6 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    performDuration: 20,
     characteristics: Characteristics(knight: 1),
   ),
   Shoes_Rogue_2_Striders_Common(
@@ -609,7 +597,6 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    performDuration: 20,
     characteristics: Characteristics(knight: 1),
   ),
   Shoes_Warrior_3_Sabatons_Common(
@@ -618,7 +605,6 @@ enum AmuletItem {
     levelMax: 5,
     type: ItemType.Shoes,
     subType: ShoeType.Sabatons,
-    performDuration: 25,
     quality: ItemQuality.Common,
     maxHealth: 5,
     runSpeed: -0.125,
@@ -728,6 +714,12 @@ enum AmuletItem {
   static final Consumables = values
       .where((element) => element.isConsumable)
       .toList(growable: false);
+
+  void validate() {
+    if ((this.performDuration ?? 0) > 0 && !this.isWeapon) {
+      throw Exception('$this performDuration cannot be greater than 0');
+    }
+  }
 }
 
 // PROFICIENCIES
@@ -857,4 +849,20 @@ enum WeaponClass {
         'amuletPlayer.getWeaponTypeWeaponClass(weaponType: $weaponType)'
     );
   }
+}
+
+class WeaponRange {
+  static const ShortSword = 40.0;
+  static const BroadSword = 45.0;
+  static const LongSword = 50.0;
+  static const Staff = 45.0;
+  static const Short_Bow = 150.0;
+}
+
+class WeaponDuration {
+  static const Very_Fast = 20;
+  static const Fast = 25;
+  static const Normal = 30;
+  static const Slow = 40;
+  static const Very_Slow = 45;
 }

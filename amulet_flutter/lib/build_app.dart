@@ -80,5 +80,8 @@ void validateAmulet() {
       print('warning atlasSrcSkillType[$skillType] is null');
     }
   }
+  for (final amuletItem in AmuletItem.values){
+    amuletItem.validate();
+  }
   SkillType.validate();
 }
