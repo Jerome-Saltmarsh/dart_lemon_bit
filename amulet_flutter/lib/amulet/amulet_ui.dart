@@ -163,7 +163,7 @@ class AmuletUI {
             alignment: Alignment.center,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 buildControlSkillTypeLeft(),
                 width4,
@@ -1065,11 +1065,13 @@ class AmuletUI {
   Widget buildControlSkillTypeLeft() =>  buildControlSkillType(
     onSelected: amulet.selectSkillTypeLeft,
     watch: amulet.playerSkillLeft,
+    menuOpen: amulet.windowVisibleSkillLeft,
   );
 
   Widget buildControlSkillTypeRight() => buildControlSkillType(
     onSelected: amulet.selectSkillTypeRight,
     watch: amulet.playerSkillRight,
+    menuOpen: amulet.windowVisibleSkillRight,
   );
 
   Widget buildContainerSkillType(SkillType skillType) =>
@@ -1107,18 +1109,33 @@ class AmuletUI {
   Widget buildControlSkillType({
     required void onSelected(SkillType SkillType),
     required Watch<SkillType> watch,
-  }) =>
-      onPressed(
-        action: () => amulet.ui.showDialogValues(
-          title: 'Skills',
-          values: amulet.playerSkillTypeStats
-              .where((e) => e.unlocked)
-              .toList(growable: false),
-          buildItem: buildContainerSkillTypeStats,
-          onSelected: (skillTypeStat) => onSelected(skillTypeStat.skillType),
-        ),
-        child: buildWatch(watch, buildContainerSkillType),
-      );
+    required WatchBool menuOpen,
+  }) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        buildWatch(menuOpen, (bool visible) {
+          if (!visible) return nothing;
+          return Column(
+            children: amulet.playerSkillTypeStats
+                .where((e) => e.unlocked)
+                .toList(growable: false)
+                .map((e) => onPressed(
+                      action: () => onSelected(e.skillType),
+                      child: Container(
+                          padding: const EdgeInsets.all(8),
+                          color: amulet.style.containerColor,
+                          child: buildText(e.skillType.name)),
+                    ))
+                .toList(growable: false),
+          );
+        }),
+        onPressed(
+          action: menuOpen.toggle,
+          child: buildWatch(watch, buildContainerSkillType)),
+      ],
+    );
+  }
 }
 
 String formatFramesToSeconds(int frames){
