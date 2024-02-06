@@ -1074,9 +1074,11 @@ class AmuletUI {
     menuOpen: amulet.windowVisibleSkillRight,
   );
 
+  static const containerSkillTypeWidth = 94.0;
+
   Widget buildContainerSkillType(SkillType skillType) =>
       Container(
-        width: 94,
+        width: containerSkillTypeWidth,
         height: 94,
         alignment: Alignment.center,
         padding: const EdgeInsets.all(4),
@@ -1127,10 +1129,21 @@ class AmuletUI {
                           onSelected(e.skillType);
                           menuOpen.setFalse();
                         },
-                        child: Container(
-                            padding: const EdgeInsets.all(8),
-                            color: amulet.style.containerColor,
-                            child: buildText(e.skillType.name)),
+                        child: MouseOver(
+                          builder: (mouseOver) {
+                            return Container(
+                                width: containerSkillTypeWidth,
+                                padding: const EdgeInsets.all(8),
+                                color: mouseOver ? amulet.style.containerColorDark : amulet.style.containerColor,
+                                child: Column(
+                                  children: [
+                                    FittedBox(child: buildText(e.skillType.name)),
+                                    height8,
+                                    buildSkillTypeIcon(e.skillType),
+                                  ],
+                                ));
+                          }
+                        ),
                       ))
                   .toList(growable: false),
             );
@@ -1138,7 +1151,8 @@ class AmuletUI {
           onPressed(
               onEnter: menuOpen.setTrue,
               action: menuOpen.toggle,
-              child: buildWatch(watch, buildContainerSkillType)),
+              child: buildWatch(watch, buildContainerSkillType),
+),
         ],
       ),
     );
