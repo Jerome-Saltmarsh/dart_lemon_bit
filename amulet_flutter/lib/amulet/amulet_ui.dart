@@ -1,7 +1,4 @@
 
-import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/amulet_item.dart';
-import 'package:amulet_engine/packages/isometric_engine/packages/common/src/isometric/slot_type.dart';
-import 'package:amulet_engine/packages/isometric_engine/packages/common/src/isometric/target_action.dart';
 import 'package:amulet_engine/src.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_skill_type.dart';

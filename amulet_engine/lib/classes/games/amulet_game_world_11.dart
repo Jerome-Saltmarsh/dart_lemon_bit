@@ -16,7 +16,7 @@ class AmuletGameWorld11 extends AmuletGame {
   static const keySpawnGuard2 = 'spawn_guard_2';
   static const keySpawnMay = 'spawn_may';
   static const keySpawnTraveller = 'spawn_traveller';
-  late AmuletNpc npcWarren;
+  late AmuletNpc npcGareth;
   late AmuletNpc npcGuard1;
   late AmuletNpc npcGuard2;
   late AmuletNpc npcMay;
@@ -41,7 +41,7 @@ class AmuletGameWorld11 extends AmuletGame {
     final indexSpawnMay = scene.getKey(keySpawnMay);
     final indexSpawnTraveller = scene.getKey(keySpawnTraveller);
 
-    npcWarren = AmuletNpc(
+    npcGareth = AmuletNpc(
       x: scene.getIndexX(indexSpawnWarren),
       y: scene.getIndexY(indexSpawnWarren),
       z: scene.getIndexZ(indexSpawnWarren),
@@ -183,7 +183,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..interact = onInteractWithTraveller
       ..complexion = 10;
 
-    characters.add(npcWarren);
+    characters.add(npcGareth);
     characters.add(npcGuard1);
     characters.add(npcGuard2);
     characters.add(npcMay);
@@ -192,11 +192,11 @@ class AmuletGameWorld11 extends AmuletGame {
   }
 
   // Magatha
-  void onInteractWithGareth(AmuletPlayer player, AmuletNpc warren){
+  void onInteractWithGareth(AmuletPlayer player, AmuletNpc gareth){
     switch (player.questMain){
-      case QuestMain.Speak_With_Warren:
+      case QuestMain.Speak_With_Gareth:
         player.talk(
-            warren,
+            gareth,
               'Hello there.'
               'The names Gareth and I am the lord of this gloomy old town.'
               'Some time ago an evil witch made the forsaken castle in the north her home.'
@@ -212,13 +212,13 @@ class AmuletGameWorld11 extends AmuletGame {
         );
         break;
       case QuestMain.Kill_The_Witch:
-        player.talk(warren, 'The witches lair is somewhere within the spooky woods.');
+        player.talk(gareth, 'The witches lair is somewhere within the spooky woods.');
         break;
-      case QuestMain.Return_To_Warren:
-        player.talk(warren, 'You killed her! I cannot believe it. Finally we are free of her curse.');
+      case QuestMain.Return_To_Gareth:
+        player.talk(gareth, 'You killed her! I cannot believe it. Finally we are free of her curse.');
         break;
       case QuestMain.Completed:
-        player.talk(warren, 'Hello friend.');
+        player.talk(gareth, 'Hello friend.');
         break;
     }
   }
@@ -259,30 +259,31 @@ class AmuletGameWorld11 extends AmuletGame {
 
   void onInteractWithMay(AmuletPlayer player, AmuletNpc may){
     switch (player.questMain){
-      case QuestMain.Speak_With_Warren:
+      case QuestMain.Speak_With_Gareth:
         player.talk(
             may,
-              'Welcome to the Cursed Inn.'
-              'If you are looking for something to do, try speaking with Gareth.'
+              'Welcome to our village outsider. '
+              'I believe Gareth wishes to speak with you. '
+              'He is waiting by the camp fire outside.'
         );
         break;
       case QuestMain.Kill_The_Witch:
         player.talk(may, 'Rumor has it the witch that has been terrorizing our village lives in some greater castle somewhere to the north');
         break;
-      case QuestMain.Return_To_Warren:
-        player.talk(may, 'Wow, you really managed to kill her? I bet Warren would like to thank you.');
+      case QuestMain.Return_To_Gareth:
+        player.talk(may, 'Wow, you really managed to kill her? Gareth will want to thank you.');
         break;
       case QuestMain.Completed:
-        player.talk(may, 'Welcome back to the Cursed Inn.');
+        player.talk(may, 'Thank you outside for saving us from that horrible witch.');
         break;
     }
   }
 
   void onInteractWithTraveller(AmuletPlayer player, AmuletNpc npc){
     switch (player.questMain){
-      case QuestMain.Speak_With_Warren:
+      case QuestMain.Speak_With_Gareth:
         player.talk(
-            npc, 'The man who calls himself Warren seems to carry a concerned look about him'
+            npc, 'The man who calls himself Gareth seems to carry a concerned look about him'
         );
         break;
       case QuestMain.Kill_The_Witch:
@@ -292,11 +293,11 @@ class AmuletGameWorld11 extends AmuletGame {
             'it seems you have a formidable opponents.'
         );
         break;
-      case QuestMain.Return_To_Warren:
+      case QuestMain.Return_To_Gareth:
         player.talk(npc,
             'You defeated the Witch. I am impressed.'
             'Perhaps there is something you could help me with.'
-            'return to me once you have spoken with Warren.'
+            'return to me once you have spoken with Gareth.'
           ,
         );
         break;

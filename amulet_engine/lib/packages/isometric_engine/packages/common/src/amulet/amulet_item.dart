@@ -716,9 +716,25 @@ enum AmuletItem {
       .toList(growable: false);
 
   void validate() {
-    if ((this.performDuration ?? 0) > 0 && !this.isWeapon) {
-      throw Exception('$this performDuration cannot be greater than 0');
+    if (isWeapon){
+      if ((performDuration == null)) {
+        throw Exception('$this performDuration of weapon cannot be null');
+      }
+      if ((performDuration! <= 0)) {
+        throw Exception('$this performDuration of weapon must be greater than 0');
+      }
+      if (damage == null || damage! <= 0){
+        throw Exception('$this.damage cannot cannot be null or 0');
+      }
+      if (range == null || range! <= 0){
+        throw Exception('$this.range cannot cannot be null or 0');
+      }
+    } else {
+      if ((performDuration ?? 0) > 0 && !this.isWeapon) {
+        throw Exception('$this performDuration cannot be greater than 0 for non weapon');
+      }
     }
+
   }
 }
 
