@@ -187,7 +187,7 @@ class RendererParticles extends RenderGroup {
               sprite: sprite,
               frame: sprite.getFrame(
                 row: IsometricDirection.toInputDirection(direction),
-                column: particle.moving ? animation.frame: 0,
+                column: particle.moving ? animation.frameRate3: 0,
                 mode: AnimationMode.loop,
               ),
               color: scene.getColor(particle.nodeIndex),

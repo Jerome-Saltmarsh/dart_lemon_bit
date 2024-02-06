@@ -946,7 +946,6 @@ class AmuletUI {
     final regenMagic = amuletItem.regenMagic;
     final runSpeed = amuletItem.runSpeed;
     final skillType = amuletItem.skillType;
-    final skillMagicCost = amuletItem.skillMagicCost;
     final range = amuletItem.range;
     final radius = amuletItem.radius;
     final performDuration = amuletItem.performDuration;
@@ -999,8 +998,6 @@ class AmuletUI {
             buildRowTitleValue('run speed', runSpeed),
           if (skillType != null)
             buildRowTitleValue('skill', skillType.name),
-          if (skillMagicCost != null)
-            buildRowTitleValue('skill cost', skillMagicCost),
         ],
       ),
     );

@@ -88,7 +88,7 @@ enum AmuletItem {
       characteristics: Characteristics(),
   ),
   Weapon_Sword_1_Rare(
-    label: "Short Sword",
+    label: "Sharpened Short Sword",
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Weapon,
@@ -96,7 +96,7 @@ enum AmuletItem {
     skillType: SkillType.Strike,
     performDuration: 25,
     damage: 4,
-    range: 45,
+    range: 40,
     quality: ItemQuality.Rare,
     characteristics: Characteristics(knight: 1),
   ),
@@ -111,20 +111,7 @@ enum AmuletItem {
     damage: 5,
     range: 45,
     quality: ItemQuality.Legendary,
-    characteristics: Characteristics(knight: 1),
-  ),
-  Weapon_Staff_1_Common(
-    label: 'Wooden Staff',
-    levelMin: 1,
-    levelMax: 5,
-    type: ItemType.Weapon,
-    subType: WeaponType.Staff,
-    skillType: SkillType.Fireball,
-    performDuration: 35,
-    range: 40,
-    damage: 2,
-    quality: ItemQuality.Common,
-    characteristics: Characteristics(knight: 1),
+    characteristics: Characteristics(knight: 2),
   ),
   Weapon_Staff_1_Of_Frost(
     label: 'Staff of Frost',
@@ -135,9 +122,9 @@ enum AmuletItem {
     skillType: SkillType.Frostball,
     performDuration: 35,
     range: 50,
-    damage: 3,
+    damage: 2,
     quality: ItemQuality.Rare,
-    characteristics: Characteristics(knight: 1),
+    characteristics: Characteristics(),
   ),
   Weapon_Staff_1_Of_Fire(
     label: 'Staff of Fire',
@@ -176,7 +163,7 @@ enum AmuletItem {
     range: 125,
     damage: 2,
     quality: ItemQuality.Common,
-    characteristics: Characteristics(knight: 1),
+    characteristics: Characteristics(),
   ),
   Weapon_Bow_1_Rare(
     label: 'Rare Short Bow',
@@ -189,7 +176,7 @@ enum AmuletItem {
     range: 135,
     damage: 8,
     quality: ItemQuality.Rare,
-    characteristics: Characteristics(knight: 1),
+    characteristics: Characteristics(),
   ),
   Weapon_Bow_1_Legendary(
     label: 'Legendary Short Bow',
@@ -202,7 +189,7 @@ enum AmuletItem {
     range: 150,
     damage: 12,
     quality: ItemQuality.Legendary,
-    characteristics: Characteristics(knight: 1),
+    characteristics: Characteristics(),
   ),
   Helm_Warrior_1_Leather_Cap_Common(
     label: 'Leather Cap',
@@ -210,6 +197,7 @@ enum AmuletItem {
     levelMax: 5,
     type: ItemType.Helm,
     subType: HelmType.Leather_Cap,
+    skillType: SkillType.Heal,
     performDuration: 25,
     maxHealth: 5,
     quality: ItemQuality.Common,
@@ -227,8 +215,7 @@ enum AmuletItem {
     maxHealth: 2,
     quality: ItemQuality.Common,
     regenMagic: 1,
-    skillMagicCost: 3,
-    characteristics: Characteristics(knight: 1),
+    characteristics: Characteristics(wizard: 1),
   ),
   Helm_Rogue_1_Hood_Common(
     label: 'Feather Cap',
@@ -240,7 +227,6 @@ enum AmuletItem {
     performDuration: 25,
     maxHealth: 3,
     quality: ItemQuality.Common,
-    skillMagicCost: 4,
     characteristics: Characteristics(knight: 1),
   ),
   Helm_Warrior_2_Steel_Cap_Common(
@@ -334,7 +320,6 @@ enum AmuletItem {
     subType: ArmorType.Leather,
     quality: ItemQuality.Common,
     maxHealth: 10,
-    skillMagicCost: 6,
     regenHealth: 1,
     skillType: SkillType.Mighty_Swing,
     characteristics: Characteristics(knight: 1),
@@ -575,7 +560,6 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    skillMagicCost: 6,
     characteristics: Characteristics(knight: 1),
   ),
   Shoes_Rogue_1_Treads_Common(
@@ -588,7 +572,6 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    skillMagicCost: 6,
     performDuration: 20,
     characteristics: Characteristics(knight: 1),
   ),
@@ -614,7 +597,6 @@ enum AmuletItem {
     maxMagic: 5,
     skillType: SkillType.Teleport,
     performDuration: 20,
-    skillMagicCost: 6,
     characteristics: Characteristics(knight: 1),
   ),
   Shoes_Rogue_2_Striders_Common(
@@ -628,7 +610,6 @@ enum AmuletItem {
     maxMagic: 5,
     skillType: SkillType.Teleport,
     performDuration: 20,
-    skillMagicCost: 6,
     characteristics: Characteristics(knight: 1),
   ),
   Shoes_Warrior_3_Sabatons_Common(
@@ -653,7 +634,6 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    skillMagicCost: 6,
     characteristics: Characteristics(knight: 1),
   ),
   Shoes_Rogue_3_Satin_Boots_Common(
@@ -666,7 +646,6 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    skillMagicCost: 6,
     characteristics: Characteristics(knight: 1),
   ),
   Consumable_Potion_Magic(
@@ -698,8 +677,6 @@ enum AmuletItem {
   final int type;
   final int subType;
   final SkillType? skillType;
-  // final Skill? skill;
-  // final Skill? weaponSkill;
   final Characteristics characteristics;
   final int? damage;
   final double? range;
@@ -712,7 +689,6 @@ enum AmuletItem {
   final int? maxMagic;
   final int? regenMagic;
   final int? regenHealth;
-  final int? skillMagicCost;
   final double? runSpeed;
 
   const AmuletItem({
@@ -733,7 +709,6 @@ enum AmuletItem {
     this.radius,
     this.performDuration,
     this.health,
-    this.skillMagicCost,
     this.runSpeed,
   });
 
