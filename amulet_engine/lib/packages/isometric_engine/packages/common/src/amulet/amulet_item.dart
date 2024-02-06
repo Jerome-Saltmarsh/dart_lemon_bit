@@ -85,13 +85,7 @@ enum AmuletItem {
       range: 40,
       damage: 3,
       quality: ItemQuality.Common,
-      characteristics: Characteristics(knight: 1),
-      weaponSkill: Skill(
-          skillType: SkillType.Strike,
-          damageMin: 2,
-          damageMax: 4,
-          performDuration: 25,
-      ),
+      characteristics: Characteristics(),
   ),
   Weapon_Sword_1_Rare(
     label: "Short Sword",
@@ -105,12 +99,6 @@ enum AmuletItem {
     range: 45,
     quality: ItemQuality.Rare,
     characteristics: Characteristics(knight: 1),
-    weaponSkill: Skill(
-      skillType: SkillType.Strike,
-      damageMin: 4,
-      damageMax: 7,
-      performDuration: 25,
-    ),
   ),
   Weapon_Sword_1_Legendary(
     label: "Short Blade of Glen",
@@ -145,12 +133,6 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
     skillType: SkillType.Frostball,
-    skill: Skill(
-        skillType: SkillType.Frostball,
-        damageMin: 3,
-        damageMax: 5,
-        performDuration: 20,
-    ),
     performDuration: 35,
     range: 50,
     damage: 3,
@@ -716,8 +698,8 @@ enum AmuletItem {
   final int type;
   final int subType;
   final SkillType? skillType;
-  final Skill? skill;
-  final Skill? weaponSkill;
+  // final Skill? skill;
+  // final Skill? weaponSkill;
   final Characteristics characteristics;
   final int? damage;
   final double? range;
@@ -746,11 +728,9 @@ enum AmuletItem {
     this.regenMagic,
     this.regenHealth,
     this.skillType,
-    this.weaponSkill,
     this.damage,
     this.range,
     this.radius,
-    this.skill,
     this.performDuration,
     this.health,
     this.skillMagicCost,
@@ -902,18 +882,4 @@ enum WeaponClass {
         'amuletPlayer.getWeaponTypeWeaponClass(weaponType: $weaponType)'
     );
   }
-}
-
-class Skill {
-  final SkillType skillType;
-  final int damageMin;
-  final int damageMax;
-  final int performDuration;
-
-  const Skill({
-    required this.skillType,
-    required this.damageMin,
-    required this.damageMax,
-    required this.performDuration,
-  });
 }

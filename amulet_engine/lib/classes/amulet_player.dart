@@ -1177,7 +1177,7 @@ class AmuletPlayer extends IsometricPlayer with
      final value = activeSlotType;
      if (value == null) return;
      final amuletItem = getEquippedSlotType(activeSlotType);
-     if (amuletItem == null || amuletItem.skill == null){
+     if (amuletItem == null){
        clearActiveSlotType();
      }
   }

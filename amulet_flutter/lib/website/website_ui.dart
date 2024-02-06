@@ -24,7 +24,12 @@ extension WebsiteUI on WebsiteGame {
 
   Widget buildPageWebsiteDesktop(BuildContext context) {
     return Container(
-      color: Colors.black,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/images/library_hero.png'), // Replace with your image path
+          fit: BoxFit.cover, // Adjust the fit as per your requirement
+        ),
+      ),
       child: WatchBuilder(options.serverMode, (ServerMode serverMode) {
 
           final page = WatchBuilder(websitePage, (websitePage) =>
