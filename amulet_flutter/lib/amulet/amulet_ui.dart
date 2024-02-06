@@ -807,8 +807,30 @@ class AmuletUI {
       ),
     );
 
-    return buildWatchVisible(amulet.windowVisiblePlayerStats, windowOpen);
+    final windowPlayerSkillStats = buildWindowPlayerSkillStats();
+
+    return buildWatchVisible(amulet.windowVisiblePlayerStats, Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        windowOpen,
+        width8,
+        windowPlayerSkillStats,
+      ],
+    ));
   }
+
+  Widget buildWindowPlayerSkillStats() =>
+      buildWatch(amulet.playerSkillTypeStatsNotifier, (t) => Container(
+        padding: const EdgeInsets.all(8),
+        color: amulet.style.containerColor,
+        child: Column(
+          children: amulet.playerSkillTypeStats.map((skillTypeStats) =>
+              skillTypeStats.unlocked && skillTypeStats.skillType != SkillType.None
+                  ? buildContainerSkillTypeStats(skillTypeStats)
+                  : nothing).toList(growable: false),
+         )
+      ),
+      );
 
   Container buildContainerPlayerCharacteristics() {
     return Container(
@@ -1008,30 +1030,23 @@ class AmuletUI {
       ],
     );
 
-  Widget buildControlSkillType({
-    required void onSelected(SkillType SkillType),
-    required Watch<SkillType> watch,
-  }) => onPressed(
-          action: () => amulet.ui.showDialogValues(
-            title: 'Skills',
-            values: amulet.playerSkillTypeStats.where((e) => e.unlocked).toList(growable: false),
-            buildItem: buildContainerSkillTypeStats,
-            onSelected: (skillTypeStat) => onSelected(skillTypeStat.skillType),
-          ),
-          child: buildWatch(watch, buildContainerSkillType),
-        );
-
   Widget buildContainerSkillTypeStats(SkillTypeStats skillTypeStats) {
     final skillType = skillTypeStats.skillType;
     return Container(
-    color: Colors.white12,
-    alignment: Alignment.center,
+      color: Colors.white12,
+      alignment: Alignment.center,
       padding: const EdgeInsets.all(8),
       margin: const EdgeInsets.only(bottom: 8),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildText(skillType.name),
-          buildSkillTypeIcon(skillType),
+          Row(
+            children: [
+              buildText(skillType.name),
+              width8,
+              buildSkillTypeIcon(skillType),
+            ],
+          ),
           if (skillTypeStats.damageMin > 0 || skillTypeStats.damageMax > 0)
             buildText(
                 'damage ${skillTypeStats.damageMin} - ${skillTypeStats.damageMax}'
@@ -1040,6 +1055,8 @@ class AmuletUI {
             buildText('magic cost ${skillTypeStats.magicCost}'),
           if (skillTypeStats.range > 0)
             buildText('range ${skillTypeStats.range}'),
+          if (skillTypeStats.performDuration > 0)
+            buildText('duration ${skillTypeStats.performDuration}'),
         ],
       ),
     );
@@ -1085,6 +1102,22 @@ class AmuletUI {
                         (statsVisible) => buildText(text, color: statsVisible ? Colors.white : Colors.white54))
           ),
         ),
+      );
+
+  Widget buildControlSkillType({
+    required void onSelected(SkillType SkillType),
+    required Watch<SkillType> watch,
+  }) =>
+      onPressed(
+        action: () => amulet.ui.showDialogValues(
+          title: 'Skills',
+          values: amulet.playerSkillTypeStats
+              .where((e) => e.unlocked)
+              .toList(growable: false),
+          buildItem: buildContainerSkillTypeStats,
+          onSelected: (skillTypeStat) => onSelected(skillTypeStat.skillType),
+        ),
+        child: buildWatch(watch, buildContainerSkillType),
       );
 }
 

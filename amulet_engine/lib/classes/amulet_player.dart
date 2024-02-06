@@ -1132,6 +1132,7 @@ class AmuletPlayer extends IsometricPlayer with
       writeUInt16(getSkillTypeDamageMin(skillType));
       writeUInt16(getSkillTypeDamageMax(skillType));
       writeUInt16(getSkillTypeRange(skillType).toInt());
+      writeUInt16(getSkillTypePerformDuration(skillType).toInt());
     }
   }
 
