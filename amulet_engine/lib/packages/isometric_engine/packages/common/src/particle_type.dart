@@ -44,7 +44,7 @@ class ParticleType {
       Ice: 'Ice',
     }[particleType] ?? 'unknown-$particleType';
 
-  static const deactivateOnNodeCollision = [
+  static const nodeCollidable = [
     ParticleType.Blood,
     ParticleType.Water_Drop,
   ];

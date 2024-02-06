@@ -37,7 +37,7 @@ class ParticleFlying extends ParticleRoam {
     startY = y;
     startZ = z;
     durationTotal = -1;
-    nodeCollidable = false;
+    // nodeCollidable = false;
     roamDuration = randomInt(0, 500);
     blownByWind = false;
   }

@@ -26,7 +26,7 @@ class ParticleWhisp extends ParticleRoam {
     vz = 0;
     type = ParticleType.Whisp;
     scale = randomBetween(minScale, maxScale);
-    nodeCollidable = false;
+    // nodeCollidable = false;
     changeTarget();
     scaleVelocity = scaleDelta;
   }

@@ -86,14 +86,14 @@ class IsometricParticles with IsometricComponent implements Updatable {
     particle.type = particleType;
     particle.frictionAir = ParticleType.frictionAir[particleType] ?? 1.0;
     particle.blownByWind = ParticleType.blownByWind.contains(particleType);
-    particle.deactiveOnNodeCollision = ParticleType.deactivateOnNodeCollision.contains(particleType);
+    // particle.deactiveOnNodeCollision = ParticleType.deactivateOnNodeCollision.contains(particleType);
     particle.x = x;
     particle.y = y;
     particle.z = z;
 
-    if (particle.deactiveOnNodeCollision){
-      particle.nodeCollidable = true;
-    }
+    // if (particle.deactiveOnNodeCollision){
+    //   particle.nodeCollidable = true;
+    // }
 
     particle.animation = const [
       ParticleType.Lightning_Bolt,
@@ -160,7 +160,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
       zv: randomBetween(2, 3),
       angle: angle,
       speed: speed,
-      weight: 5.0,
+      weight: 10.0,
       duration: 200,
       rotation: 0.0,
       rotationV: 0.0,
@@ -553,32 +553,25 @@ class IsometricParticles with IsometricComponent implements Updatable {
     assert (index >= 0);
     assert (index < scene.totalNodes);
 
-    final nodeCollision = nodeOrientation != NodeOrientation.None && particle.nodeCollidable;
+    final nodeCollision = nodeOrientation != NodeOrientation.None;
 
-    if (nodeCollision) {
-      if (particle.deactiveOnNodeCollision){
-
-        if (particleType == ParticleType.Water_Drop_Large){
-          final x = particle.x;
-          final y = particle.y;
-          final z = particle.z;
-          audio.play(audio.waterDrop, x, y, z, maxDistance: 300, volume: 0.6);
-          for (var i = 0; i < 3; i++) {
-            spawnParticleWaterDrop(
-                x: x,
-                y: y,
-                z: z + 5,
-                zv: 2,
-            );
-          }
+    if (nodeCollision && ParticleType.nodeCollidable.contains(particleType)) {
+      if (particleType == ParticleType.Water_Drop_Large) {
+        final x = particle.x;
+        final y = particle.y;
+        final z = particle.z;
+        audio.play(audio.waterDrop, x, y, z, maxDistance: 300, volume: 0.6);
+        for (var i = 0; i < 3; i++) {
+          spawnParticleWaterDrop(
+            x: x,
+            y: y,
+            z: z + 5,
+            zv: 2,
+          );
         }
-
-        particle.deactivate();
-        return;
       }
-      particle.z = (particle.indexZ + 1) * Node_Height;
-      particle.applyFloorFriction();
-
+      particle.deactivate();
+      return;
     } else {
 
       if (!const [
@@ -599,10 +592,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
     final bounce = nodeCollision && particle.vz < 0;
     particle.applyMotion();
-
-    // if (const [].contains(particleType)){
-    //   particle.applyRotationVelocity();
-    // }
 
     if (bounce) {
       if (nodeOrientation == NodeType.Water){
@@ -692,7 +681,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
         weight: 0,
         duration: 1000,
         rotationV: giveOrTake(0.005),
-    )..nodeCollidable = false;
+    );
   }
 
   void spawnWaterDropLarge(int index) {
@@ -709,9 +698,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
         duration: 1000,
         rotationV: 0,
     )
-       ..vz = 0
-       ..deactiveOnNodeCollision = true
-      ..nodeCollidable = true;
+       ..vz = 0;
   }
 
   void spawnTrail(double x, double y, double z, {required int color}) => spawnParticle(
@@ -721,8 +708,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
          z: z,
          weight: 0.04,
          duration: 120,
-     )..nodeCollidable = false
-      ..emissionColor = color;
+     )..emissionColor = color;
 
   void spawnLightningBolt(double x, double y, double z) {
     spawnParticle(
@@ -833,7 +819,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
         scale: scale,
       )
         ..emitsLight = false
-        ..deactiveOnNodeCollision = false
         ..blownByWind = true
   ;
 
@@ -858,7 +843,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
         scale: scale,
       )
         ..emitsLight = false
-        ..deactiveOnNodeCollision = false
         ..blownByWind = true
   ;
 
@@ -883,7 +867,6 @@ class IsometricParticles with IsometricComponent implements Updatable {
         scale: scale,
       )
         ..emitsLight = false
-        ..deactiveOnNodeCollision = false
         ..blownByWind = true
   ;
 }

@@ -20,8 +20,8 @@ class Particle extends Position {
   var scaleVelocity = 0.0;
   var type = 0;
   var bounciness = 0.0;
-  var deactiveOnNodeCollision = true;
-  var nodeCollidable = true;
+  // var deactiveOnNodeCollision = true;
+  // var nodeCollidable = true;
   var animation = false;
   var nodeIndex = 0;
   var onscreen = false;

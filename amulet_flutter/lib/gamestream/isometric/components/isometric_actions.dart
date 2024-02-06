@@ -72,7 +72,7 @@ class IsometricActions with IsometricComponent {
           z: z+ giveOrTake(r),
           duration: 60,
       )
-        ..deactiveOnNodeCollision = false
+        // ..deactiveOnNodeCollision = false
         ..vz = 0.75
         ..setSpeed(randomAngle(), giveOrTake(3));
     }
