@@ -746,7 +746,7 @@ class AmuletUI {
   }
 
   Widget buildButtonPlayerStats() =>
-      buildToggle(amulet.windowVisiblePlayerStats, 'stats');
+      buildToggle(amulet.windowVisiblePlayerStats, 'stats', hint: 'q');
 
   Widget buildWindowPlayerStats() {
     final windowOpen = GSContainer(
@@ -1110,10 +1110,11 @@ class AmuletUI {
       );
 
   Widget buildButtonQuest() =>
-      buildToggle(amulet.windowVisibleQuests, 'quest');
+      buildToggle(amulet.windowVisibleQuests, 'quest', hint: 'w');
 
-  Widget buildToggle(WatchBool watch, String text) =>
+  Widget buildToggle(WatchBool watch, String text, {String? hint}) =>
       onPressed(
+        hint: hint,
         action: watch.toggle,
         child: GSContainer(
           padding: const EdgeInsets.all(8),

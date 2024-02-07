@@ -226,6 +226,11 @@ class Amulet extends IsometricGame {
       return;
     }
 
+    if (key == PhysicalKeyboardKey.keyW) {
+      amulet.windowVisibleQuests.toggle();
+      return;
+    }
+
     if (key == PhysicalKeyboardKey.keyA) {
       selectSlotType(SlotType.Weapon);
       return;
