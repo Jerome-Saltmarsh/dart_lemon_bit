@@ -1138,8 +1138,14 @@ class AmuletUI {
                                 child: Column(
                                   children: [
                                     buildWatch(watch, (t) {
-      return FittedBox(child: buildText(e.skillType.name, color: t == e.skillType ? Colors.white : Colors.white70));
-}),
+                                    return FittedBox(
+                                        child: buildText(
+                                          e.skillType.name,
+                                          color: t == e.skillType ? Colors.white : Colors.white70,
+                                          bold: t == e.skillType,
+                                        )
+                                      );
+                                    }),
                                     height8,
                                     buildSkillTypeIcon(e.skillType),
                                   ],
