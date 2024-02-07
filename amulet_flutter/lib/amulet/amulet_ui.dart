@@ -1007,21 +1007,28 @@ class AmuletUI {
           if (performDuration != null)
             buildRowTitleValue('duration', '${formatFramesToSeconds(performDuration)}'),
           if (range != null)
-            buildRowTitleValue('range', range),
+            buildRowTitleValue('range', range.toInt()),
           if (radius != null)
             buildRowTitleValue('radius', radius),
-          if (maxHealth != null)
+          if (maxHealth != null && maxHealth > 0)
             buildRowTitleValue('max health', maxHealth),
-          if (maxMagic != null)
+          if (maxMagic != null && maxMagic > 0)
             buildRowTitleValue('max magic', maxHealth),
-          if (regenHealth != null)
+          if (regenHealth != null && regenHealth > 0)
             buildRowTitleValue('health regen', regenHealth),
-          if (regenMagic != null)
+          if (regenMagic != null && regenMagic > 0)
             buildRowTitleValue('magic regen', regenMagic),
           if (runSpeed != null)
             buildRowTitleValue('run speed', runSpeed),
           if (skillType != null)
-            buildRowTitleValue('skill', skillType.name),
+            Row(
+              children: [
+                buildRowTitle('skill'),
+                buildRowValue(skillType.name),
+                width4,
+                buildSkillTypeIcon(skillType),
+              ],
+            ),
         ],
       ),
     );
