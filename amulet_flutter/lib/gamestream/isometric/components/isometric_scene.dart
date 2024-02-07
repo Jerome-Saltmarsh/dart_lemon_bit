@@ -1538,6 +1538,13 @@ class IsometricScene with IsometricComponent implements Updatable {
             z: projectile.z,
           );
           break;
+        case ProjectileType.Ice_Arrow:
+          particles.emitIce(
+            x: projectile.x,
+            y: projectile.y,
+            z: projectile.z,
+          );
+          break;
         case ProjectileType.FrostBall:
           particles.emitIce(
             x: projectile.x,
