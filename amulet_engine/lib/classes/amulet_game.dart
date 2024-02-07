@@ -503,11 +503,12 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   }
 
   void characterPerformSkillTypeHeal(Character character) {
-    character.health += 10; // TODO
+    if (character is AmuletPlayer) {
+      character.health += character.getSkillTypeAmount(SkillType.Heal);
+    } else {
+      character.health += 10; // TODO
+    }
     dispatchGameEventPosition(GameEvent.Character_Caste_Healed, character);
-    // if (character != target) {
-    //   dispatchGameEventPosition(GameEvent.Character_Healed, target);
-    // }
   }
 
   void characterPerformSkillTypeTeleport(Character character) {
@@ -972,6 +973,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       );
     }
   }
+
 }
 
 

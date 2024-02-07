@@ -1057,6 +1057,8 @@ class AmuletUI {
             buildText('range ${skillTypeStats.range}'),
           if (skillTypeStats.performDuration > 0)
             buildText('duration ${skillTypeStats.performDuration}'),
+          if (skillTypeStats.amount > 0)
+            buildText('amount ${skillTypeStats.amount}'),
         ],
       ),
     );

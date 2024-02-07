@@ -1133,6 +1133,7 @@ class AmuletPlayer extends IsometricPlayer with
       writeUInt16(getSkillTypeDamageMax(skillType));
       writeUInt16(getSkillTypeRange(skillType).toInt());
       writeUInt16(getSkillTypePerformDuration(skillType).toInt());
+      writeUInt16(getSkillTypeAmount(skillType).toInt());
     }
   }
 
@@ -1213,4 +1214,13 @@ class AmuletPlayer extends IsometricPlayer with
     skillType.casteDuration ??
       equippedWeapon?.performDuration ??
         (throw Exception('skillType.casteDuration and equippedWeapon is null'));
+
+  int getSkillTypeAmount(SkillType skillType) {
+    switch (skillType){
+      case SkillType.Heal:
+        return 10;
+      default:
+        return 0;
+    }
+  }
 }
