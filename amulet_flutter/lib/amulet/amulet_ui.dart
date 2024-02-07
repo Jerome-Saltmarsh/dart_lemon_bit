@@ -830,11 +830,14 @@ class AmuletUI {
         ),
         child: SingleChildScrollView(
           child: Column(
-            children: amulet.playerSkillTypeStats.map((skillTypeStats) =>
-                skillTypeStats.unlocked && skillTypeStats.skillType != SkillType.None
-                    ? buildContainerSkillTypeStats(skillTypeStats)
-                    : nothing).toList(growable: false),
-           ),
+            children: [
+              buildText('SKILLS'),
+              ...amulet.playerSkillTypeStats.map((skillTypeStats) =>
+              skillTypeStats.unlocked && skillTypeStats.skillType != SkillType.None
+                  ? buildContainerSkillTypeStats(skillTypeStats)
+                  : nothing).toList(growable: false)
+            ],
+          ),
         )
       ),
       );
@@ -1047,7 +1050,7 @@ class AmuletUI {
       color: Colors.white12,
       alignment: Alignment.center,
       padding: const EdgeInsets.all(8),
-      margin: const EdgeInsets.only(bottom: 8),
+      margin: const EdgeInsets.only(top: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
