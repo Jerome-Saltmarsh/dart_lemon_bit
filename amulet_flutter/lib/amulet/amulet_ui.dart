@@ -1137,7 +1137,9 @@ class AmuletUI {
                                 color: mouseOver ? amulet.style.containerColorDark : amulet.style.containerColor,
                                 child: Column(
                                   children: [
-                                    FittedBox(child: buildText(e.skillType.name)),
+                                    buildWatch(watch, (t) {
+      return FittedBox(child: buildText(e.skillType.name, color: t == e.skillType ? Colors.white : Colors.white70));
+}),
                                     height8,
                                     buildSkillTypeIcon(e.skillType),
                                   ],
