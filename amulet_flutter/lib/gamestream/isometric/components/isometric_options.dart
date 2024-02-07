@@ -37,7 +37,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
   var clearErrorTimer = -1;
   var messageStatusDuration = 0;
   var renderResponse = true;
-  var developMode = true;
+  var developMode = false;
 
   final secondsPerFrame = Watch(0);
   final cameraPlay = Position();

@@ -56,8 +56,8 @@ WEAPON
 SKILLS
     BOW
         [x] SPLIT SHOT
+        [x] ICE ARROW
         [ ] EXPLODING ARROW
-        [ ] ICE ARROW
         [ ] FIRE ARROW
         [ ] ENTANGLE
         [ ] PIERCING ARROW
@@ -84,10 +84,10 @@ QUESTS
     [x] KILL THE WITCH
 
 AILMENTS
-    [ ] COLD
+    [x] COLD
     [ ] FROZEN
     [ ] BURNING
-    [ ] 
+    [ ] BLIND
 
 // STASH
 // SCALEMAIL

@@ -126,7 +126,7 @@ class Character extends Collider {
     _goal = value;
   }
 
-  int get framesPerAnimation => characterStateChanging ? 1 : 3;
+  int get framesPerAnimation => (characterStateChanging ? 1 : 3) * (isStatusCold ? 3 : 1);
 
   int get animationFrame => (frame ~/ framesPerAnimation) % maxAnimationFrames;
 

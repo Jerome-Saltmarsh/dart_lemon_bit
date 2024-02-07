@@ -21,7 +21,7 @@ class RendererProjectiles extends RenderGroup {
         renderArrow(dstX, dstY, angle);
         return;
       case ProjectileType.Ice_Arrow:
-        renderArrow(dstX, dstY, angle);
+        renderIceArrow(dstX, dstY, angle);
         return;
       case ProjectileType.Fireball:
         const width = 18.0;
