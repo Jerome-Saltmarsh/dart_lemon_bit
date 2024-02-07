@@ -823,12 +823,17 @@ class AmuletUI {
       buildWatch(amulet.playerSkillTypeStatsNotifier, (t) => Container(
         padding: const EdgeInsets.all(8),
         color: amulet.style.containerColor,
-        child: Column(
-          children: amulet.playerSkillTypeStats.map((skillTypeStats) =>
-              skillTypeStats.unlocked && skillTypeStats.skillType != SkillType.None
-                  ? buildContainerSkillTypeStats(skillTypeStats)
-                  : nothing).toList(growable: false),
-         )
+        constraints: BoxConstraints(
+          maxHeight: amulet.engine.screen.height - 75,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: amulet.playerSkillTypeStats.map((skillTypeStats) =>
+                skillTypeStats.unlocked && skillTypeStats.skillType != SkillType.None
+                    ? buildContainerSkillTypeStats(skillTypeStats)
+                    : nothing).toList(growable: false),
+           ),
+        )
       ),
       );
 
