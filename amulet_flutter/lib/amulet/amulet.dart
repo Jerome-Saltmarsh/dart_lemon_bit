@@ -231,6 +231,11 @@ class Amulet extends IsometricGame {
       return;
     }
 
+    if (key == PhysicalKeyboardKey.digit9 && options.developMode) {
+      amulet.sendAmuletRequest(NetworkRequestAmulet.Refill_Player_Health_Magic);
+      return;
+    }
+
     if (key == PhysicalKeyboardKey.keyA) {
       selectSlotType(SlotType.Weapon);
       return;

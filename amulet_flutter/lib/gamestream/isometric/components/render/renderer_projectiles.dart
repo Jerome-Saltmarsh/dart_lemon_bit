@@ -20,6 +20,9 @@ class RendererProjectiles extends RenderGroup {
       case ProjectileType.Arrow:
         renderArrow(dstX, dstY, angle);
         return;
+      case ProjectileType.Ice_Arrow:
+        renderArrow(dstX, dstY, angle);
+        return;
       case ProjectileType.Fireball:
         const width = 18.0;
         const height = 23.0;
@@ -79,6 +82,33 @@ class RendererProjectiles extends RenderGroup {
       srcX: 59,
       srcY: 48,
       srcWidth: 9,
+      srcHeight: 44,
+      dstX: x,
+      dstY: y,
+      rotation: rotation - piQuarter,
+      scale: 0.7,
+    );
+  }
+
+  void renderIceArrow(double x, double y, double rotation) {
+    // shadow
+    engine.renderSpriteRotated(
+      image: images.atlas_gameobjects,
+      srcX: 49,
+      srcY: 48,
+      srcWidth: 9,
+      srcHeight: 44,
+      dstX: x,
+      dstY: y + 10,
+      rotation: rotation - piQuarter,
+      scale: 0.7,
+    );
+
+    engine.renderSpriteRotated(
+      image: images.atlas_gameobjects,
+      srcX: 260,
+      srcY: 0,
+      srcWidth: 8,
       srcHeight: 44,
       dstX: x,
       dstY: y,

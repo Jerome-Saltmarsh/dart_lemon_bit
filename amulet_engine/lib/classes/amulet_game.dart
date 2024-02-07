@@ -297,7 +297,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       case SkillType.Shoot_Arrow:
         characterPerformSkillTypeShootArrow(character);
         return;
-      case SkillType.Mighty_Swing:
+      case SkillType.Mighty_Strike:
         characterPerformSkillTypeMightySwing(character);
         return;
       case SkillType.Split_Shot:
@@ -317,6 +317,12 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         break;
       case SkillType.Teleport:
         characterPerformSkillTypeTeleport(character);
+        break;
+      case SkillType.Ice_Arrow:
+        characterPerformSkillTypeIceArrow(character);
+        break;
+      case SkillType.Fire_Arrow:
+        characterPerformSkillTypeFireArrow(character);
         break;
       case SkillType.Freeze_Target:
         throw Exception('not implemented');
@@ -388,11 +394,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         areaOfEffect: true,
         range: getCharacterSkillTypeRange(
             character: character,
-            skillType: SkillType.Mighty_Swing,
+            skillType: SkillType.Mighty_Strike,
         ),
         damage: getCharacterSkillTypeDamage(
             character: character,
-            skillType: SkillType.Mighty_Swing,
+            skillType: SkillType.Mighty_Strike,
         ),
       );
 
@@ -408,6 +414,22 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
           skillType: SkillType.Shoot_Arrow,
         ),
       );
+
+  void characterPerformSkillTypeIceArrow(Character character) {
+    dispatchGameEventPosition(GameEvent.Bow_Released, character);
+    spawnProjectileIceArrow(
+      src: character,
+      damage: getCharacterSkillTypeDamage(
+          character: character,
+          skillType: SkillType.Ice_Arrow,
+      ),
+      range: getCharacterSkillTypeRange(
+          character: character,
+          skillType: SkillType.Ice_Arrow,
+      ),
+      angle: character.angle,
+    );
+  }
 
   void characterPerformSkillTypeSplitShot(Character character) {
     final damage = getCharacterSkillTypeDamage(
@@ -972,6 +994,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         amuletEvent: amuletEvent,
       );
     }
+  }
+
+  void characterPerformSkillTypeFireArrow(Character character) {
+
   }
 
 }

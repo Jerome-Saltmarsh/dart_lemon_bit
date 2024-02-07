@@ -738,10 +738,12 @@ class AmuletUI {
     switch (itemQuality){
       case ItemQuality.Common:
         return Colors.white;
-      case ItemQuality.Rare:
+      case ItemQuality.Unique:
         return Colors.blue;
+      case ItemQuality.Rare:
+        return Colors.deepOrange;
       case ItemQuality.Legendary:
-        return Colors.orange;
+        return Colors.yellow;
     }
   }
 

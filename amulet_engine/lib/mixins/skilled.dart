@@ -1,5 +1,5 @@
 
-import '../packages/isometric_engine/packages/common/src/amulet/amulet_item.dart';
+import '../packages/isometric_engine/packages/common/src/amulet/skill_type.dart';
 
 mixin Skilled {
   var skillTypeLeft = SkillType.Strike;

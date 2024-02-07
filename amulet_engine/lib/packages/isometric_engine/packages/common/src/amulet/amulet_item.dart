@@ -1,78 +1,7 @@
 import '../../src.dart';
 import 'package:collection/collection.dart';
 
-// weapon
-    // bow
-      // short [x]
-      // composite
-      // reflex
-    // sword
-      // short [x]
-      // broad
-      // long
-    // staff
-      // wooden [x]
-      // glass
-      // crystal
 
-// armour
- // neutral
-    // tunic [x]
- // knight
-    // leather [x]
-    // chainmail [x]
-    // platemail [x]
- // wizard
-    // robes [x]
-    // garb [x]
-    // attire [x]
- // rogue
-    // cloak [x]
-    // mantle [x]
-    // shroud
-
-// helm
-  // warrior
-    // leather cap [x]
-    // steel cap [x]
-    // full helm [x]
-  // wizard
-    // pointed hat purple [x]
-    // pointed hat black [x]
-    // cowl
-  // rogue
-    // feather cap [x]
-    // hood
-    // cape
-
-// shoes
-  // warrior
-    // leather boots [x]
-    // grieves [x]
-    // sabatons
-  // wizard
-    // black_slippers [x]
-    // footwraps
-    // soles
-  // rogue
-    // treads [x]
-    // striders
-    // satin_boots
-
-// stash
-  // scalemail
-  // splint
-  // banded
-  // brigandine
-  // veil
-  // diadem
-  // turban
-  // circlet
-  // great helm
-  // crest
-  // broom (weapon type wizard)
-  // wand (weapon type wizard)
-  // dagger (weapon type rogue)
 
 enum AmuletItem {
   Weapon_Sword_1_Common(
@@ -106,7 +35,7 @@ enum AmuletItem {
     levelMax: 5,
     type: ItemType.Weapon,
     subType: WeaponType.Shortsword,
-    skillType: SkillType.Mighty_Swing,
+    skillType: SkillType.Mighty_Strike,
     performDuration: WeaponDuration.Fast,
     range: WeaponRange.ShortSword,
     damage: 5,
@@ -312,7 +241,7 @@ enum AmuletItem {
     quality: ItemQuality.Common,
     maxHealth: 10,
     regenHealth: 1,
-    skillType: SkillType.Mighty_Swing,
+    skillType: SkillType.Mighty_Strike,
     characteristics: Proficiencies(strength: 1),
   ),
   Armor_Warrior_1_Leather_Rare(
@@ -324,7 +253,7 @@ enum AmuletItem {
     quality: ItemQuality.Rare,
     maxHealth: 15,
     regenHealth: 1,
-    skillType: SkillType.Mighty_Swing,
+    skillType: SkillType.Mighty_Strike,
     characteristics: Proficiencies(strength: 1),
   ),
   Armor_Warrior_1_Leather_Legendary(
@@ -336,7 +265,7 @@ enum AmuletItem {
     quality: ItemQuality.Legendary,
     maxHealth: 20,
     regenHealth: 2,
-    skillType: SkillType.Mighty_Swing,
+    skillType: SkillType.Mighty_Strike,
     characteristics: Proficiencies(strength: 1),
   ),
   Armor_Warrior_2_Chainmail_Common(
@@ -447,17 +376,18 @@ enum AmuletItem {
     subType: ArmorType.Cloak,
     quality: ItemQuality.Common,
     maxHealth: 7,
-    characteristics: Proficiencies(strength: 1),
+    characteristics: Proficiencies(dexterity: 1),
   ),
   Armor_Rogue_1_Cloak_Rare(
-    label: 'Cloak',
+    label: 'Cloak of Frost',
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Armor,
     subType: ArmorType.Cloak,
     quality: ItemQuality.Rare,
-    maxHealth: 9,
-    characteristics: Proficiencies(strength: 1),
+    maxHealth: 10,
+    skillType: SkillType.Ice_Arrow,
+    characteristics: Proficiencies(dexterity: 2),
   ),
   Armor_Rogue_1_Cloak_Legendary(
     label: 'Cloak',
@@ -477,7 +407,7 @@ enum AmuletItem {
     subType: ArmorType.Mantle,
     quality: ItemQuality.Common,
     maxHealth: 9,
-    characteristics: Proficiencies(strength: 1),
+    characteristics: Proficiencies(dexterity: 1),
   ),
   Armor_Rogue_2_Mantle_Rare(
     label: 'Mantle',
@@ -487,7 +417,7 @@ enum AmuletItem {
     subType: ArmorType.Mantle,
     quality: ItemQuality.Rare,
     maxHealth: 9,
-    characteristics: Proficiencies(strength: 1),
+    characteristics: Proficiencies(dexterity: 1),
   ),
   Armor_Rogue_2_Mantle_Legendary(
     label: 'Mantle',
@@ -497,7 +427,7 @@ enum AmuletItem {
     subType: ArmorType.Mantle,
     quality: ItemQuality.Legendary,
     maxHealth: 9,
-    characteristics: Proficiencies(strength: 1),
+    characteristics: Proficiencies(dexterity: 1),
   ),
   Armor_Rogue_3_Shroud_Common(
     label: 'Shroud',
@@ -507,7 +437,7 @@ enum AmuletItem {
     subType: ArmorType.Shroud,
     quality: ItemQuality.Common,
     maxHealth: 9,
-    characteristics: Proficiencies(strength: 1),
+    characteristics: Proficiencies(dexterity: 1),
   ),
   Armor_Rogue_3_Shroud_Rare(
     label: 'Shroud',
@@ -517,7 +447,7 @@ enum AmuletItem {
     subType: ArmorType.Shroud,
     quality: ItemQuality.Rare,
     maxHealth: 9,
-    characteristics: Proficiencies(strength: 1),
+    characteristics: Proficiencies(dexterity: 1),
   ),
   Armor_Rogue_3_Shroud_Legendary(
     label: 'Shroud',
@@ -527,7 +457,7 @@ enum AmuletItem {
     subType: ArmorType.Shroud,
     quality: ItemQuality.Legendary,
     maxHealth: 9,
-    characteristics: Proficiencies(strength: 1),
+    characteristics: Proficiencies(dexterity: 1),
   ),
   Shoes_Warrior_1_Leather_Boots_Common(
     label: 'Leather Boots',
@@ -550,7 +480,7 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    characteristics: Proficiencies(strength: 1),
+    characteristics: Proficiencies(intelligence: 1),
   ),
   Shoes_Rogue_1_Treads_Common(
     label: 'Treads',
@@ -562,7 +492,7 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    characteristics: Proficiencies(strength: 1),
+    characteristics: Proficiencies(dexterity: 1),
   ),
   Shoes_Warrior_2_Grieves_Common(
     label: 'Grieves',
@@ -585,7 +515,7 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    characteristics: Proficiencies(strength: 1),
+    characteristics: Proficiencies(intelligence: 1),
   ),
   Shoes_Rogue_2_Striders_Common(
     label: 'Striders',
@@ -597,7 +527,7 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    characteristics: Proficiencies(strength: 1),
+    characteristics: Proficiencies(dexterity: 1),
   ),
   Shoes_Warrior_3_Sabatons_Common(
     label: 'Sabatons',
@@ -620,7 +550,7 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    characteristics: Proficiencies(strength: 1),
+    characteristics: Proficiencies(intelligence: 1),
   ),
   Shoes_Rogue_3_Satin_Boots_Common(
     label: 'Satin_Boots',
@@ -632,7 +562,7 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    characteristics: Proficiencies(strength: 1),
+    characteristics: Proficiencies(dexterity: 1),
   ),
   Consumable_Potion_Magic(
     label: 'a common tonic',
@@ -738,20 +668,9 @@ enum AmuletItem {
   }
 }
 
-// PROFICIENCIES
-// COMBAT
-// DARK MAGIC
-// LIGHT MAGIC
-// DEXTERITY
-// LUCK
-
-// Thief | Bandit;
-// Elf;
-// Warlock;
-// Sage | Healer;
 enum AmuletProficiency {
-  Intelligence(pointsPerMaxHealth: 3, pointsPerMaxMagic: 1),
   Strength(pointsPerMaxHealth: 1, pointsPerMaxMagic: 3),
+  Intelligence(pointsPerMaxHealth: 3, pointsPerMaxMagic: 1),
   Dexterity(pointsPerMaxHealth: 2, pointsPerMaxMagic: 2);
 
   final int pointsPerMaxHealth;
@@ -782,52 +701,6 @@ class Proficiencies {
       };
 }
 
-enum SkillType {
-  None(casteType: CasteType.Caste, magicCost: 0, range: 0, casteDuration: 0),
-  Strike(casteType: CasteType.Weapon, magicCost: 0),
-  Shoot_Arrow(casteType: CasteType.Weapon, magicCost: 0),
-  Mighty_Swing(casteType: CasteType.Weapon, magicCost: 3),
-  Frostball(casteType: CasteType.Caste, magicCost: 4, casteDuration: 25, range: 125, damageMin: 3, damageMax: 5),
-  Fireball(casteType: CasteType.Caste, magicCost: 5, casteDuration: 30, range: 150, damageMin: 4, damageMax: 6),
-  Explode(casteType: CasteType.Caste, magicCost: 7, casteDuration: 35, range: 125),
-  Freeze_Target(casteType: CasteType.Caste, magicCost: 8, casteDuration: 20, range: 125),
-  Freeze_Area(casteType: CasteType.Caste, magicCost: 5, casteDuration: 25, range: 150),
-  Heal(casteType: CasteType.Caste, magicCost: 4, casteDuration: 30, range: 0),
-  Teleport(casteType: CasteType.Caste, magicCost: 5, casteDuration: 35, range: 250),
-  Entangle(casteType: CasteType.Weapon, magicCost: 4, casteDuration: 40),
-  Split_Shot(casteType: CasteType.Weapon, magicCost: 4);
-
-  final CasteType casteType;
-  final int magicCost;
-  /// if null the weapon perform duration is used
-  final int? casteDuration;
-  /// if null the weapon range is used
-  final double? range;
-  final int? damageMin;
-  final int? damageMax;
-
-  const SkillType({
-    required this.casteType,
-    required this.magicCost,
-    this.casteDuration,
-    this.damageMin,
-    this.damageMax,
-    this.range,
-  });
-
-  static void validate() {
-    for (final skillType in values){
-      if (skillType.casteType == CasteType.Caste){
-        if (skillType.range == null){
-          throw Exception('$skillType.range cannot be null');
-        }
-        if (skillType.casteDuration == null){
-          throw Exception('$skillType.casteDuration cannot be null');
-        }
-      }
-    }
-  }
-}
 
 enum CasteType {
   Weapon,
@@ -837,13 +710,8 @@ enum CasteType {
 enum ItemQuality {
   Legendary,
   Rare,
+  Unique,
   Common,
-}
-
-enum ClassType {
-  Warrior,
-  Wizard,
-  Rogue,
 }
 
 enum WeaponClass {

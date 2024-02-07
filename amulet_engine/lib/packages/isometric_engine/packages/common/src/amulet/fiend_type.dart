@@ -1,7 +1,7 @@
 
 import '../../../../enums/damage_type.dart';
 import '../isometric/character_type.dart';
-import 'amulet_item.dart';
+import 'skill_type.dart';
 
 enum FiendType {
   Goblin(

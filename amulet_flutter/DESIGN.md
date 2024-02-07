@@ -1,41 +1,105 @@
+WEAPON
+    BOW  
+        [x] SHORT 
+        [ ] COMPOSITE
+        [ ] REFLEX
+    SWORD
+        [x] SHORT 
+        [ ] BROAD
+        [ ] LONG
+    STAFF
+        [x] WOODEN
+        [ ] GLASS
+        [ ] CRYSTAL
+    ARMOUR
+        NEUTRAL
+            [x] TUNIC
+        KNIGHT
+            [x] LEATHER
+            [x] CHAINMAIL 
+            [x] PLATEMAIL 
+        WIZARD
+            [x] ROBES 
+            [x] GARB 
+            [x] ATTIRE 
+        ROGUE
+            [x] CLOAK 
+            [x] MANTLE
+            [ ] SHROUD
+    HELM
+        WARRIOR
+            [x] LEATHER CAP
+            [x] STEEL CAP 
+            [x] FULL HELM
+        WIZARD
+            [x] POINTED HAT PURPLE
+            [x] POINTED HAT BLACK
+            [ ] COWL
+        ROGUE
+            [x] FEATHER CAP
+            [ ] HOOD
+            [ ] CAPE
+    SHOES
+        WARRIOR
+            [x] LEATHER BOOTS
+            [x] GRIEVES [X]
+            [ ] SABATONS
+    WIZARD
+        [x] BLACK_SLIPPERS
+        [ ] FOOTWRAPS
+        [ ] SOLES
+    ROGUE
+        [x] TREADS
+        [ ] STRIDERS
+        [ ] SATIN_BOOTS
 
 SKILLS
-    KNIGHT
-        MIGHT
-            increases the attack damage of melee attacks
-        SHIELD
-            temporarily resistances against attacks
-    WIZARD
-        HEAL
-            heals health
-        FIREBALL
-            launches a fireball that explodes on impact
-        TELEPORT
-            shifts a short distance 
-    ROGUE
-        MULTISHOT
-            fires multiple arrows with a single shot
-        SNEAK
-            turn invisible to escape enemies
-            enemies attacked while invisible receive double damage
-        
-[CLASSES]
-ROGUE  | THIEF  | SCOUT 
-MAGE   | WIZARD 
-KNIGHT | WARRIOR
-HEALER | ALCHEMIST
+    BOW
+        [x] SPLIT SHOT
+        [ ] EXPLODING ARROW
+        [ ] ICE ARROW
+        [ ] FIRE ARROW
+        [ ] ENTANGLE
+        [ ] PIERCING ARROW
+    SWORD
+        [ ] SWEEP
+        [ ] CRUSH
+    STAFF
+        [ ] EXPLODE
+        [ ] FIREBALL
+        [ ] ICEBALL
+        [ ] FROST CIRCLE
+    CASTE
+        [ ] HEAL
+        [ ] TELEPORT
+        [ ] INVISIBLE
 
-[FEATURES]
-[new] item slots for amulets and potions
-[new] potion of attack
-[new] potion of power
-[new] potion of health
-[new] potion of invisibility
+PASSIVE
+    [ ] HEALTH STEAL
+    [ ] MAGIC STEAL
+    [ ] MELEE AOE
 
-the player starts with only one item slot but unlocks new slots by progressing through the game
+QUESTS
+    [ ] RELEASE CASTLE SHIELD
+    [x] KILL THE WITCH
 
-item slots can carry potions are amulets but not equipment
+AILMENTS
+    [ ] COLD
+    [ ] FROZEN
+    [ ] BURNING
+    [ ] 
 
-the player must make trade offs between amulets which provide passive improvements vs consumables
-
-
+// STASH
+// SCALEMAIL
+// SPLINT
+// BANDED
+// BRIGANDINE
+// VEIL
+// DIADEM
+// TURBAN
+// CIRCLET
+// GREAT HELM
+// CREST
+// BROOM (WEAPON TYPE WIZARD)
+// WAND (WEAPON TYPE WIZARD)
+// DAGGER (WEAPON TYPE ROGUE)

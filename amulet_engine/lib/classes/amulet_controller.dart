@@ -653,6 +653,10 @@ class AmuletController {
       case NetworkRequestAmulet.End_Interaction:
         player.endInteraction();
         break;
+      case NetworkRequestAmulet.Refill_Player_Health_Magic:
+        player.regainFullHealth();
+        player.regainFullMagic();
+        break;
       case NetworkRequestAmulet.Drop_Item_Type:
         final itemType = parseArg2(arguments);
         if (itemType == null) return;

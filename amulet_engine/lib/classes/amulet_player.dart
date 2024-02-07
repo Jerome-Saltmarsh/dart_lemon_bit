@@ -1058,12 +1058,13 @@ class AmuletPlayer extends IsometricPlayer with
     if (const [
       SkillType.Shoot_Arrow,
       SkillType.Split_Shot,
+      SkillType.Ice_Arrow,
     ].contains(skillType)) {
       return equippedWeaponDamage + characteristicsRogue ~/ divider;
     }
 
     switch (skillType) {
-      case SkillType.Mighty_Swing:
+      case SkillType.Mighty_Strike:
         return (equippedWeaponDamage + characteristicsKnight ~/ divider) * 2;
       case SkillType.Frostball:
         return 5 + characteristicsWizard ~/ divider;
