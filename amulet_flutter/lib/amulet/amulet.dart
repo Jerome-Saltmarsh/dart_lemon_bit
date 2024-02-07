@@ -19,9 +19,9 @@ import 'classes/map_location.dart';
 import 'classes/skill_type_stats.dart';
 
 class Characteristics {
-  final knight = Watch(0);
-  final wizard = Watch(0);
-  final rogue = Watch(0);
+  final strength = Watch(0);
+  final intelligence = Watch(0);
+  final dexterity = Watch(0);
 }
 
 class Amulet extends IsometricGame {

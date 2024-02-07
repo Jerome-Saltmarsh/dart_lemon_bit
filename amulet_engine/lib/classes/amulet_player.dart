@@ -90,13 +90,13 @@ class AmuletPlayer extends IsometricPlayer with
 
   // set deathCount(int value) => data.setInt(Data_Key_Dead_Count, value);
 
-  int get characteristicsKnight => getTotalCharacteristics(CharacteristicType.Knight);
+  int get characteristicsKnight => getTotalCharacteristics(AmuletProficiency.Strength);
 
-  int get characteristicsWizard => getTotalCharacteristics(CharacteristicType.Wizard);
+  int get characteristicsWizard => getTotalCharacteristics(AmuletProficiency.Intelligence);
 
-  int get characteristicsRogue => getTotalCharacteristics(CharacteristicType.Rogue);
+  int get characteristicsRogue => getTotalCharacteristics(AmuletProficiency.Dexterity);
 
-  int getTotalCharacteristics(CharacteristicType type){
+  int getTotalCharacteristics(AmuletProficiency type){
     var total = 0;
     total += equippedWeapon?.characteristics.get(type) ?? 0;
     total += equippedHelm?.characteristics.get(type) ?? 0;
@@ -153,7 +153,7 @@ class AmuletPlayer extends IsometricPlayer with
     // health += equippedHelm?.maxHealth ?? 0;
     // health += equippedArmor?.maxHealth ?? 0;
     // health += equippedShoes?.maxHealth ?? 0;
-    for (final type in CharacteristicType.values){
+    for (final type in AmuletProficiency.values){
       health += getTotalCharacteristics(type) * type.pointsPerMaxHealth;
     }
     return health;
@@ -166,7 +166,7 @@ class AmuletPlayer extends IsometricPlayer with
     // amount += equippedHelm?.maxMagic ?? 0;
     // amount += equippedArmor?.maxMagic ?? 0;
     // amount += equippedShoes?.maxMagic ?? 0;
-    for (final type in CharacteristicType.values){
+    for (final type in AmuletProficiency.values){
       amount += getTotalCharacteristics(type) * type.pointsPerMaxMagic;
     }
     return amount;

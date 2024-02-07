@@ -762,8 +762,10 @@ class AmuletUI {
             alignment: Alignment.centerRight,
           ),
           buildWatch(amulet.player.name, (t) => buildText(t, color: Colors.orange, bold: true)),
-          buildContainerPlayerCharacteristics(),
           height16,
+          buildContainerPlayerProficiencies(),
+          height16,
+          buildText('STATS', color: Colors.white70),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -837,39 +839,36 @@ class AmuletUI {
       ),
       );
 
-  Container buildContainerPlayerCharacteristics() {
-    return Container(
-          color: Colors.black12,
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildText('ARCHETYPES', color: Colors.white70),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  buildRowTitle('Knight'),
-                  buildWatch(amulet.playerCharacteristics.knight, buildRowValue),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  buildRowTitle('Wizard'),
-                  buildWatch(amulet.playerCharacteristics.wizard, buildRowValue),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  buildRowTitle('Rogue'),
-                  buildWatch(amulet.playerCharacteristics.rogue, buildRowValue),
-                ],
-              ),
-            ],
-          ),
-        );
-  }
+  Widget buildContainerPlayerProficiencies() => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      buildText('PROFICIENCIES', color: Colors.white70),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          buildRowTitle(AmuletProficiency.Strength.name),
+          buildWatch(
+              amulet.playerCharacteristics.strength, buildRowValue),
+        ],
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          buildRowTitle(AmuletProficiency.Intelligence.name),
+          buildWatch(
+              amulet.playerCharacteristics.intelligence, buildRowValue),
+        ],
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          buildRowTitle(AmuletProficiency.Dexterity.name),
+          buildWatch(
+              amulet.playerCharacteristics.dexterity, buildRowValue),
+        ],
+      ),
+    ],
+  );
 
   Widget buildRowValue(dynamic value) => buildText(value, color: Colors.white70);
 
@@ -976,9 +975,9 @@ class AmuletUI {
     final performDuration = amuletItem.performDuration;
 
     final characteristics = amuletItem.characteristics;
-    final charsKnight = characteristics.knight;
-    final charsWizard = characteristics.wizard;
-    final charsRogue = characteristics.rogue;
+    final charsStrength = characteristics.strength;
+    final charsIntelligence = characteristics.intelligence;
+    final charsDexterity = characteristics.dexterity;
 
     return GSContainer(
       width: 200,
@@ -997,12 +996,12 @@ class AmuletUI {
               buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
             ],
           ),
-          if (charsKnight != 0)
-            buildRowTitleValue('knight', charsKnight),
-          if (charsWizard != 0)
-            buildRowTitleValue('wizard', charsWizard),
-          if (charsRogue != 0)
-            buildRowTitleValue('rogue', charsRogue),
+          if (charsStrength != 0)
+            buildRowTitleValue('strength', charsStrength),
+          if (charsIntelligence != 0)
+            buildRowTitleValue('intelligence', charsIntelligence),
+          if (charsDexterity != 0)
+            buildRowTitleValue('dexterity', charsDexterity),
           if (damage != null)
             buildRowTitleValue('damage', damage),
           if (performDuration != null)
@@ -1061,7 +1060,7 @@ class AmuletUI {
           if (skillTypeStats.range > 0)
             buildText('range ${skillTypeStats.range}'),
           if (skillTypeStats.performDuration > 0)
-            buildText('duration ${skillTypeStats.performDuration}'),
+            buildText('duration ${formatFramesToSeconds(skillTypeStats.performDuration)}'),
           if (skillTypeStats.amount > 0)
             buildText('amount ${skillTypeStats.amount}'),
         ],
@@ -1176,7 +1175,7 @@ class AmuletUI {
 
 String formatFramesToSeconds(int frames){
   const fps = 45;
-  return '${(frames / fps).toStringAsFixed(2)} seconds';
+  return '${(frames / fps).toStringAsFixed(2)} sec';
 }
 
 Widget buildWatchVisible(Watch<bool> watch, Widget child, {bool condition = true}) =>

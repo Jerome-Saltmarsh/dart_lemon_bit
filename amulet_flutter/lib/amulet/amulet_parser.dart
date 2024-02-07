@@ -307,9 +307,9 @@ extension AmuletParser on IsometricParser {
 
   void readPlayerCharacteristics() {
      final characteristics = amulet.playerCharacteristics;
-     characteristics.knight.value = readUInt16();
-     characteristics.wizard.value = readUInt16();
-     characteristics.rogue.value = readUInt16();
+     characteristics.strength.value = readUInt16();
+     characteristics.intelligence.value = readUInt16();
+     characteristics.dexterity.value = readUInt16();
   }
 
   void readPlayerActiveSlotType() {
