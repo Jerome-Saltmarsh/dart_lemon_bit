@@ -25,20 +25,10 @@ class RendererProjectiles extends RenderGroup {
         return;
       case ProjectileType.Fire_Arrow:
         renderFireArrow(dstX, dstY, angle);
+        renderFireball(dstX: dstX, dstY: dstY);
         return;
       case ProjectileType.Fireball:
-        const width = 18.0;
-        const height = 23.0;
-        engine.renderSpriteRotated(
-            image: images.atlas_nodes,
-            srcX: 1177 + (width * (animation.frameRate3 % 6)),
-            srcY: 1816,
-            srcWidth: width,
-            srcHeight: height,
-            dstX: dstX,
-            dstY: dstY,
-            rotation: projectile.angle - piQuarter,
-        );
+        renderFireball(dstX: dstX, dstY: dstY);
         break;
       case ProjectileType.FrostBall:
         engine.renderSprite(
@@ -117,6 +107,24 @@ class RendererProjectiles extends RenderGroup {
       dstY: y,
       rotation: rotation - piQuarter,
       scale: 0.7,
+    );
+  }
+
+  void renderFireball({
+    required double dstX,
+    required double dstY,
+  }){
+    const width = 18.0;
+    const height = 23.0;
+    engine.renderSpriteRotated(
+      image: images.atlas_nodes,
+      srcX: 1177 + (width * (animation.frameRate3 % 6)),
+      srcY: 1816,
+      srcWidth: width,
+      srcHeight: height,
+      dstX: dstX,
+      dstY: dstY,
+      rotation: projectile.angle - piQuarter,
     );
   }
 

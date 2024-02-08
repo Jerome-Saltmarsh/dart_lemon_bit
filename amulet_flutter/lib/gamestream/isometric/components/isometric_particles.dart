@@ -19,6 +19,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
 
   static const Flame_Duration = 30;
   static const Water_Duration = 50;
+  static const Magic_Duration = 50;
   static const windStrengthMultiplier = 0.003;
 
   var windy = false;
@@ -846,6 +847,52 @@ class IsometricParticles with IsometricComponent implements Updatable {
         ..blownByWind = true
   ;
 
+  Particle spawnParticleHealth(
+    double x,
+    double y,
+    double z,
+  ) =>
+      spawnParticle(
+        particleType: ParticleType.Health,
+        x: x,
+        y: y,
+        z: z,
+        zv: 0.6,
+        angle: 0,
+        rotation: 0,
+        speed: 0,
+        weight: 0,
+        scaleV: -(1.0 / Water_Duration),
+        duration: Water_Duration,
+        scale: 1,
+      )
+        ..emitsLight = false
+        ..blownByWind = true
+  ;
+
+  Particle spawnParticleMagic(
+    double x,
+    double y,
+    double z,
+  ) =>
+      spawnParticle(
+        particleType: ParticleType.Magic,
+        x: x,
+        y: y,
+        z: z,
+        zv: 0.6,
+        angle: 0,
+        rotation: 0,
+        speed: 0,
+        weight: 0,
+        scaleV: -(1.0 / Water_Duration),
+        duration: Water_Duration,
+        scale: 1,
+      )
+        ..emitsLight = false
+        ..blownByWind = true
+  ;
+
   Particle emitIce({
     required double x,
     required double y,
@@ -869,6 +916,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
         ..emitsLight = false
         ..blownByWind = true
   ;
+
 }
 
 class WindNode {

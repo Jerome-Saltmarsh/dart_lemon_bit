@@ -941,6 +941,11 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
     final damage = min(amount, target.health);
     target.health -= damage;
+    onDamageApplied(
+      src: src,
+      target: target,
+      amount: damage,
+    );
 
     if (target.health <= 0) {
       target.facePosition(src, force: true);
@@ -956,6 +961,14 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     customOnCharacterDamageApplied(target, src, damage);
     target.setCharacterStateHurt();
     dispatchGameEventCharacterHurt(target);
+  }
+
+  void onDamageApplied({
+    required Character src,
+    required Character target,
+    required int amount,
+  }) {
+
   }
 
   /// Can be safely overridden to customize behavior

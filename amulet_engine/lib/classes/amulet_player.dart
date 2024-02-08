@@ -733,6 +733,8 @@ class AmuletPlayer extends IsometricPlayer with
 
     magic -= magicCost;
     switch (skillActive.casteType) {
+      case CasteType.Passive:
+        throw Exception('cannot perform $skillActive.casteType == CasteType.Passive');
       case CasteType.Caste:
         setCharacterStateCasting(
           duration: performDuration
@@ -972,8 +974,6 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   void performSkillType() {
-    final skillType = skillActive;
-
     // final weaponClass = skillType.weaponClass;
     // if (weaponClass != null && equippedWeaponClass != weaponClass){
     //   switch (weaponClass){
@@ -1046,6 +1046,8 @@ class AmuletPlayer extends IsometricPlayer with
     if (const [
       SkillType.Heal,
       SkillType.Teleport,
+      SkillType.Warlock,
+      SkillType.Vampire,
       SkillType.None,
     ].contains(skillType)){
       return 0;
@@ -1224,5 +1226,27 @@ class AmuletPlayer extends IsometricPlayer with
       default:
         return 0;
     }
+  }
+
+  bool skillTypeEquipped(SkillType skillType) =>
+      equippedWeapon?.skillType == skillType ||
+      equippedHelm?.skillType == skillType ||
+      equippedArmor?.skillType == skillType ||
+      equippedShoes?.skillType == skillType ;
+
+  int get healthSteal {
+    var total = 0;
+    if (skillTypeEquipped(SkillType.Vampire)) {
+      total++;
+    }
+    return total;
+  }
+
+  int get magicSteal {
+    var total = 0;
+    if (skillTypeEquipped(SkillType.Warlock)) {
+      total++;
+    }
+    return total;
   }
 }

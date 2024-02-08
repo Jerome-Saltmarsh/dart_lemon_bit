@@ -25,6 +25,9 @@ class ParticleType {
   static const Flame = 49;
   static const Water = 50;
   static const Ice = 51;
+  static const Health = 52;
+  static const Magic = 53;
+
 
   static String getName(int particleType) => const {
       Smoke: 'Smoke',
@@ -42,6 +45,8 @@ class ParticleType {
       Flame: 'Flame',
       Water: 'Water',
       Ice: 'Ice',
+      Health: 'Health',
+      Magic: 'Magic',
     }[particleType] ?? 'unknown-$particleType';
 
   static const nodeCollidable = [

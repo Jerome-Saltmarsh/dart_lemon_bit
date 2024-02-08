@@ -83,6 +83,12 @@ class IsometricEvents with IsometricComponent {
       case GameEvent.Bullet_Deactivated:
         audio.play(audio.metal_light_3, x, y, z);
         return;
+      case GameEvent.Health_Regained:
+        particles.spawnParticleHealth(x, y, z);
+        break;
+      case GameEvent.Magic_Regained:
+        particles.spawnParticleMagic(x, y, z);
+        break;
       case GameEvent.Material_Struck:
         onMaterialStruck(x, y, z, parser.readByte());
         return;

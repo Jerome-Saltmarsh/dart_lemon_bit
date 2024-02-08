@@ -148,7 +148,7 @@ enum AmuletItem {
     label: 'Feather Cap',
     levelMin: 1,
     levelMax: 5,
-    skillType: SkillType.Split_Shot,
+    skillType: SkillType.Warlock,
     type: ItemType.Helm,
     subType: HelmType.Feather_Cap,
     maxHealth: 3,
@@ -161,6 +161,7 @@ enum AmuletItem {
     levelMax: 5,
     type: ItemType.Helm,
     subType: HelmType.Steel_Cap,
+    skillType: SkillType.Vampire,
     maxHealth: 5,
     quality: ItemQuality.Common,
     regenHealth: 1,
@@ -172,6 +173,7 @@ enum AmuletItem {
     levelMax: 5,
     type: ItemType.Helm,
     subType: HelmType.Pointed_Hat_Black,
+    skillType: SkillType.Warlock,
     maxMagic: 5,
     quality: ItemQuality.Common,
     regenMagic: 1,
@@ -183,6 +185,7 @@ enum AmuletItem {
     levelMax: 5,
     type: ItemType.Helm,
     subType: HelmType.Cape,
+    skillType: SkillType.Vampire,
     maxHealth: 5,
     quality: ItemQuality.Common,
     regenHealth: 1,
@@ -717,6 +720,7 @@ class Proficiencies {
 enum CasteType {
   Weapon,
   Caste,
+  Passive,
 }
 
 enum ItemQuality {

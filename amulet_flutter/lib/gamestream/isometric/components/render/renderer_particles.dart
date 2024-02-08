@@ -41,6 +41,22 @@ class RendererParticles extends RenderGroup {
     colorD: Colors.transparent,
   );
 
+  final colorsHealth = generateColorInterpolation4(
+    length: IsometricParticles.Water_Duration,
+    colorA: Palette.teal_0.withOpacity(0.5),
+    colorB: Palette.teal_2,
+    colorC: Palette.teal_4,
+    colorD: Colors.transparent,
+  );
+
+  final colorsMagic = generateColorInterpolation4(
+    length: IsometricParticles.Water_Duration,
+    colorA: Palette.blue_0.withOpacity(0.5),
+    colorB: Palette.aqua_5,
+    colorC: Palette.white,
+    colorD: Colors.transparent,
+  );
+
   @override
   int getTotal() => totalActiveParticles;
 
@@ -301,27 +317,60 @@ class RendererParticles extends RenderGroup {
           );
           break;
         case ParticleType.Flame:
-          renderModulateSquare(
+          // renderModulateSquare(
+          //   dstX: dstX,
+          //   dstY: dstY,
+          //   color: colorsFlame[((1.0 - particle.duration01) * colorsFlame.length).toInt()].value,
+          //   scale: particle.scale,
+          // );
+          renderSquareInterpolation(
             dstX: dstX,
             dstY: dstY,
-            color: colorsFlame[((1.0 - particle.duration01) * colorsFlame.length).toInt()].value,
+            colors: colorsFlame,
+            i: 1.0 - particle.duration01,
             scale: particle.scale,
           );
           break;
         case ParticleType.Water:
-          renderModulateSquare(
+          // renderModulateSquare(
+          //   dstX: dstX,
+          //   dstY: dstY,
+          //   color: colorsWater[((1.0 - particle.duration01) * colorsWater.length).toInt()].value,
+          //   scale: particle.scale,
+          // );
+          renderSquareInterpolation(
             dstX: dstX,
             dstY: dstY,
-            color: colorsWater[((1.0 - particle.duration01) * colorsWater.length).toInt()].value,
+            colors: colorsWater,
+            i: 1.0 - particle.duration01,
             scale: particle.scale,
           );
           break;
         case ParticleType.Ice:
-          renderModulateSquare(
-             dstX: dstX,
-             dstY: dstY,
-             color: colorsIce[((1.0 - particle.duration01) * colorsIce.length).toInt()].value,
-             scale: particle.scale,
+          renderSquareInterpolation(
+            dstX: dstX,
+            dstY: dstY,
+            colors: colorsIce,
+            i: 1.0 - particle.duration01,
+            scale: particle.scale,
+          );
+          break;
+        case ParticleType.Health:
+          renderSquareInterpolation(
+            dstX: dstX,
+            dstY: dstY,
+            colors: colorsHealth,
+            i: 1.0 - particle.duration01,
+            scale: particle.scale,
+          );
+          break;
+        case ParticleType.Magic:
+          renderSquareInterpolation(
+            dstX: dstX,
+            dstY: dstY,
+            colors: colorsMagic,
+            i: 1.0 - particle.duration01,
+            scale: particle.scale,
           );
           break;
         case ParticleType.Shadow:
@@ -353,6 +402,20 @@ class RendererParticles extends RenderGroup {
           break;
       }
     }
+
+    void renderSquareInterpolation({
+      required double dstX,
+      required double dstY,
+      required List<Color> colors,
+      required double i,
+      required double scale,
+    }) =>
+      renderModulateSquare(
+        dstX: dstX,
+        dstY: dstY,
+        color: colors[((1.0 - i) * colors.length).toInt()].value,
+        scale: scale,
+      );
 
   void renderMyst(Particle particle, {double scale = 1.0}) {
     const size = 64.0;

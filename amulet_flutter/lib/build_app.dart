@@ -78,7 +78,7 @@ Widget buildApp(){
 void validateAmulet() {
   for (final skillType in SkillType.values){
     if (!atlasSrcSkillType.containsKey(skillType)){
-      print('warning atlasSrcSkillType[$skillType] is null');
+      throw Exception('atlasSrcSkillType[$skillType] == null');
     }
   }
   for (final amuletItem in AmuletItem.values){

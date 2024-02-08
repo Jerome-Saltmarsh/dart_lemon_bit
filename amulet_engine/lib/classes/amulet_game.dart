@@ -1028,6 +1028,26 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       );
     }
   }
+
+  @override
+  void onDamageApplied({
+    required Character src,
+    required Character target,
+    required int amount,
+  }) {
+    if (src is AmuletPlayer) {
+      final healthSteal = src.healthSteal;
+      final magicSteal = src.magicSteal;
+      if (healthSteal > 0) {
+        src.health += src.healthSteal;  
+        dispatchGameEventPosition(GameEvent.Health_Regained, src);
+      }
+      if (magicSteal > 0) {
+        src.magic += src.magicSteal;
+        dispatchGameEventPosition(GameEvent.Magic_Regained, src);
+      }
+    }
+  }
 }
 
 
