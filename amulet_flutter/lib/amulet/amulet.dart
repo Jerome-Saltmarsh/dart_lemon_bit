@@ -528,6 +528,15 @@ class Amulet extends IsometricGame {
   }) {
 
   }
+
+  AmuletItem? getEquippedItemType(int itemType) =>
+      switch (itemType) {
+          ItemType.Weapon => equippedWeapon.value,
+          ItemType.Helm => equippedHelm.value,
+          ItemType.Armor => equippedArmor.value,
+          ItemType.Shoes => equippedShoes.value,
+          _ => throw Exception('amulet.getEquippedItemType(itemType: $itemType)')
+      };
 }
 
 

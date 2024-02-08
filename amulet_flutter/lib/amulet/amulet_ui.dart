@@ -978,11 +978,13 @@ class AmuletUI {
     final range = amuletItem.range;
     final radius = amuletItem.radius;
     final performDuration = amuletItem.performDuration;
+    final itemType = amuletItem.type;
 
     final characteristics = amuletItem.characteristics;
     final charsStrength = characteristics.strength;
     final charsIntelligence = characteristics.intelligence;
     final charsDexterity = characteristics.dexterity;
+    final equippedItemType = amulet.getEquippedItemType(itemType);
 
     return GSContainer(
       width: 200,
@@ -991,6 +993,13 @@ class AmuletUI {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              buildText(amuletItem.quality.name),
+              buildText(ItemType.getName(itemType)),
+            ],
+          ),
           AmuletItemImage(amuletItem: amuletItem, scale: 1.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -1034,9 +1043,17 @@ class AmuletUI {
                 buildSkillTypeIcon(skillType),
               ],
             ),
+
+          if (equippedItemType == amuletItem)
+            Container(
+                margin: const EdgeInsets.only(top: 8),
+                child: buildText('EQUIPPED', color: Colors.green),
+            ),
         ],
       ),
     );
+
+
   }
 
   Widget buildRowTitleValue(dynamic title, dynamic value) =>

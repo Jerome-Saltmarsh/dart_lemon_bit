@@ -649,6 +649,7 @@ enum AmuletItem {
 
   bool get isArmor => type == ItemType.Armor;
 
+
   static AmuletItem? findByName(String name) =>
       values.firstWhereOrNull((element) => element.name == name);
 
