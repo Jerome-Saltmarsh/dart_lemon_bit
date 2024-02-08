@@ -355,12 +355,12 @@ class IsometricPlayer extends Character with ByteWriter {
     writePlayerAimTargetAction();
     writePlayerDestination();
     writePlayerCharacterState();
-    writeSelectedCollider();
-    writeProjectiles();
+    // writeSelectedCollider();
     writeCharacters();
     writeEditorGameObjectSelected();
     writeGameTime();
     writeAimTargetHealthPercentage();
+    writeProjectiles();
   }
 
   void writeAimTargetHealthPercentage() {
@@ -462,6 +462,8 @@ class IsometricPlayer extends Character with ByteWriter {
           changedFrameByOne,
           changedPosition,
       );
+
+      writeTrue();
       writeByte(compressionA);
 
       if (changedCharacterTypeTeam) {
@@ -687,21 +689,21 @@ class IsometricPlayer extends Character with ByteWriter {
       (this.y - y).abs() < minRadius;
 
   void writeProjectiles(){
-    final projectiles = game.projectiles;
-    var totalActiveProjectiles = 0;
-    for (final projectile in projectiles) {
-      if (!projectile.active) continue;
-      totalActiveProjectiles++;
-    }
     writeByte(NetworkResponse.Projectiles);
-    writeUInt16(totalActiveProjectiles);
+    final projectiles = game.projectiles;
     for (final projectile in projectiles){
       if (!projectile.active) continue;
+      writeTrue();
       writePosition(projectile);
       writeByte(projectile.type);
       writeAngle(projectile.velocityAngle);
     }
+    writeFalse();
   }
+
+  void writeTrue() => writeBool(true);
+
+  void writeFalse() => writeBool(false);
 
   void writeGameEvent({
     required int type,

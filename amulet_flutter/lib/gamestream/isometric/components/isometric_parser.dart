@@ -20,21 +20,29 @@ import 'isometric_component.dart';
 class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8List>{
   final bufferSize = Watch(0);
   final decoder = ZLibDecoder();
+  var debugging = false;
 
   @override
   void add(Uint8List bytes) {
-    index = 0;
     values = bytes;
+    index = 0;
     bufferSize.value = bytes.length;
     options.rendersSinceUpdate.value = 0;
-    final length = bytes.length;
+    try {
+     parseValues();
+    } catch (exception) {
+      debugParseValues();
+    }
+    onReadResponseFinished();
+    index = 0;
+  }
 
+  void parseValues(){
+    final length = values.length;
+    index = 0;
     while (index < length) {
       readServerResponse(readByte());
     }
-
-    onReadResponseFinished();
-    index = 0;
   }
 
   void onReadResponseFinished() {
@@ -48,6 +56,11 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
   }
 
   void readServerResponse(int serverResponse){
+
+    if (debugging) {
+      print('debug_network_response[${NetworkResponse.getName(serverResponse)}]');
+    }
+
     switch (serverResponse) {
       case NetworkResponse.Characters:
         readNetworkResponseCharacters();
@@ -98,7 +111,7 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
         readNetworkResponseOptions();
         break;
       default:
-        readNetworkResponseDefault();
+        handleInvalidNetworkResponse(serverResponse);
         return;
     }
   }
@@ -107,11 +120,18 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
     player.readNetworkResponsePlayer();
   }
 
-  void readNetworkResponseDefault() {
-    print('read error; index: $index');
+  void handleInvalidNetworkResponse(int value) {
+    debugParseValues();
+    server.disconnect();
+  }
+
+  void debugParseValues(){
+    if (debugging) return;
+    print('isometricParser.debugParseValues()');
     print(values);
     ui.error.value = 'failed to parse response from server';
-    server.disconnect();
+    debugging = true;
+    parseValues();
   }
 
   void readSortGameObjects() {
@@ -425,10 +445,8 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
     final scene = this.scene;
     scene.totalCharacters = 0;
 
-    while (true) {
-
+    while (readBool()) {
       final compressionA = readByte();
-      if (compressionA == CHARACTER_END) break;
       final character = scene.getCharacterInstance();
       final readCharacterTypeAndTeam = readBitFromByte(compressionA, 0);
       final readCharacterState = readBitFromByte(compressionA, 1);
@@ -582,19 +600,21 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
 
   void readNetworkResponseProjectiles(){
     final projectiles = scene.projectiles;
-    final totalProjectiles = readUInt16();
-    scene.totalProjectiles = totalProjectiles;
-    while (scene.totalProjectiles >= projectiles.length){
-      projectiles.add(Projectile());
-    }
-    for (var i = 0; i < scene.totalProjectiles; i++) {
+    var i = 0;
+
+    while (readBool()){
+      if (i >= projectiles.length){
+        projectiles.add(Projectile());
+      }
       final projectile = projectiles[i];
       projectile.x = readDouble();
       projectile.y = readDouble();
       projectile.z = readDouble();
       projectile.type = readByte();
       projectile.angle = readDouble() * degreesToRadians;
+      i++;
     }
+    scene.totalProjectiles = i;
   }
 
   // TODO OPTIMIZE

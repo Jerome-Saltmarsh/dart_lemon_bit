@@ -16,4 +16,26 @@ class NetworkResponse {
   static const Editor = 39;
   static const Server_Error = 41;
   static const Options = 42;
+
+  static String getName(int value){
+    return const {
+      Projectiles: 'Projectiles',
+      Game_Event: 'Game_Event',
+      Player_Event: 'Player_Event',
+      Game_Time: 'Game_Time',
+      GameObject: 'GameObject',
+      Environment: 'Environment',
+      Game_Error: 'Game_Error',
+      GameObjects: 'GameObjects',
+      Amulet: 'Amulet',
+      Isometric: 'Isometric',
+      Characters: 'Characters',
+      FPS: 'FPS',
+      Player: 'Player',
+      Scene: 'Scene',
+      Editor: 'Editor',
+      Server_Error: 'Server_Error',
+      Options: 'Options',
+    } [value] ?? ('unknown_network_response.$value');
+  }
 }

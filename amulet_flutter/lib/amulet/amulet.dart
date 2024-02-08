@@ -185,6 +185,7 @@ class Amulet extends IsometricGame {
     if (value.isEmpty)
       return;
 
+    print(value);
     audio.errorSound15.play();
     errorTimer = 70;
   }

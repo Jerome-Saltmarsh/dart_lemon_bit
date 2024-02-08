@@ -494,7 +494,13 @@ class IsometricEvents with IsometricComponent {
      print('onChangedPlayerActive($playerActive)');
   }
 
-  void onGameEventCharacterHurt(int type, double x, double y, double z, double angle) {
+  void onGameEventCharacterHurt(
+      int type,
+      double x,
+      double y,
+      double z,
+      double angle,
+      ) {
 
     audio.play(randomItem(audio.bloody_punches), x, y, z);
     audio.play(audio.heavy_punch_13, x, y, z);
