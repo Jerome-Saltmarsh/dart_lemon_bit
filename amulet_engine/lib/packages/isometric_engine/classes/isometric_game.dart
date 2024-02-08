@@ -389,6 +389,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required double range,
     required int damage,
     required bool areaOfEffect,
+    required int ailmentDuration,
+    required int ailmentDamage,
   }){
 
     dispatchGameEventPosition(
@@ -414,6 +416,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
           damage: damage,
           srcCharacter: character,
           damageType: damageType,
+          ailmentDuration: ailmentDuration,
+          ailmentDamage: ailmentDamage,
         );
         if (!areaOfEffect){
           return;
@@ -448,6 +452,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         damage: damage,
         srcCharacter: character,
         damageType: DamageType.Melee,
+        ailmentDuration: ailmentDuration,
+        ailmentDamage: ailmentDamage,
       );
       attackHit = true;
     }
@@ -476,6 +482,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         damage: damage,
         srcCharacter: character,
         damageType: DamageType.Melee,
+        ailmentDuration: ailmentDuration,
+        ailmentDamage: ailmentDamage,
       );
       attackHit = true;
     }
@@ -486,6 +494,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         damage: damage,
         srcCharacter: character,
         damageType: DamageType.Melee,
+        ailmentDuration: ailmentDuration,
+        ailmentDamage: ailmentDamage,
       );
     }
 
@@ -789,6 +799,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required Character srcCharacter,
     required double radius,
     required int damage,
+    required int ailmentDuration,
+    required int ailmentDamage,
   }) {
     if (!scene.inboundsXYZ(x, y, z)) return;
     dispatchGameEvent(GameEvent.Explosion, x, y, z);
@@ -816,6 +828,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         damage: damage,
         friendlyFire: true,
         damageType: DamageType.Fire,
+        ailmentDamage: ailmentDamage,
+        ailmentDuration: ailmentDuration,
       );
     }
 
@@ -832,6 +846,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         damage: damage,
         friendlyFire: true,
         damageType: DamageType.Fire,
+        ailmentDamage: ailmentDamage,
+        ailmentDuration: ailmentDuration,
       );
     }
   }
@@ -903,8 +919,25 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required Character target,
     required int amount,
     required DamageType damageType,
+    required int ailmentDuration,
+    required int ailmentDamage,
   }) {
     if (target.dead || target.invincible) return;
+
+    if (characterResistsDamageType(target, damageType)) {
+      amount = amount ~/ 2;
+    } else {
+      if (ailmentDuration > 0){
+        if (damageType == DamageType.Ice) {
+          target.ailmentColdDuration += ailmentDuration;
+        }
+        if (damageType == DamageType.Fire) {
+          target.ailmentBurningDuration += ailmentDuration;
+          target.ailmentBurningSrc = src;
+          target.ailmentBurningDamage = ailmentDamage;
+        }
+      }
+    }
 
     final damage = min(amount, target.health);
     target.health -= damage;
@@ -1292,6 +1325,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         target: target,
         damage: projectile.damage,
         damageType: projectile.damageType,
+        ailmentDuration: projectile.ailmentDuration,
+        ailmentDamage: projectile.ailmentDamage
       );
     }
 
@@ -1306,6 +1341,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required Collider target,
     required int damage,
     required DamageType damageType,
+    required int ailmentDuration,
+    required int ailmentDamage,
     double? angle,
     bool friendlyFire = false,
   }) {
@@ -1346,6 +1383,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
           target: target,
           amount: damage,
           damageType: damageType,
+          ailmentDuration: ailmentDuration,
+          ailmentDamage: ailmentDamage,
       );
       return;
     }
@@ -1364,6 +1403,24 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         character.frame++;
       }
       return;
+    }
+
+    if (character.isAilmentBurning) {
+       if (frame % fps == 0) {
+         final burnRadius = character.ailmentBurningRadius;
+         final src = character.ailmentBurningSrc ?? (throw Exception('character.ailmentBurningSrc is null'));
+         for (final otherCharacter in characters) {
+           if (!otherCharacter.withinRadiusPosition(character, burnRadius)) continue;
+           applyDamageToCharacter(
+             src: src,
+             target: character,
+             amount: character.ailmentBurningDamage,
+             damageType: DamageType.Fire,
+             ailmentDuration: 0,
+             ailmentDamage: 0,
+           );
+         }
+       }
     }
 
     updateCharacterTarget(character);
@@ -1436,6 +1493,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
             target: target,
             damage: character.attackDamage,
             damageType: DamageType.Melee,
+            ailmentDamage: 0,
+            ailmentDuration: 0,
           );
         }
         return;
@@ -1446,6 +1505,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         range: character.attackRange,
         damage: character.attackDamage,
         areaOfEffect: false,
+        ailmentDuration: 0,
+        ailmentDamage: 0,
       );
       return;
     }
@@ -1491,6 +1552,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       angle: target != null ? null : angle ?? src.angle,
       projectileType: ProjectileType.Arrow,
       damage: damage,
+      ailmentDuration: 0,
+      ailmentDamage: 0,
     );
   }
 
@@ -1498,8 +1561,11 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required Character src,
     required int damage,
     required double range,
+    required int ailmentDuration,
+    required int ailmentDamage,
     Position? target,
     double? angle,
+
   }) {
     assert (range > 0);
     assert (damage > 0);
@@ -1510,6 +1576,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       angle: target != null ? null : angle ?? src.angle,
       projectileType: ProjectileType.Ice_Arrow,
       damage: damage,
+      ailmentDuration: ailmentDuration,
+      ailmentDamage: ailmentDamage,
     );
   }
 
@@ -1517,6 +1585,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required Character src,
     required int damage,
     required double range,
+    required int ailmentDuration,
+    required int ailmentDamage,
     Position? target,
     double? angle,
   }) {
@@ -1529,6 +1599,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       angle: target != null ? null : angle ?? src.angle,
       projectileType: ProjectileType.Fire_Arrow,
       damage: damage,
+      ailmentDuration: ailmentDuration,
+      ailmentDamage: ailmentDamage
     );
   }
 
@@ -1537,6 +1609,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required double range,
     required int projectileType,
     required int damage,
+    required int ailmentDuration,
+    required int ailmentDamage,
     double? angle = 0,
     Position? target,
   }) {
@@ -1551,6 +1625,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     if (finalAngle == null) {
       finalAngle = target != null ? src.getAngle(target) : src.angle;
     }
+    projectile.ailmentDuration = ailmentDuration;
+    projectile.ailmentDamage = ailmentDamage;
     projectile.damage = damage;
     projectile.hitable = true;
     projectile.active = true;
@@ -2664,4 +2740,9 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   void onCharacterTargetChanged(Character character, Position? value) {
 
   }
+
+  bool characterResistsDamageType(Character character, DamageType damageType){
+    return false;
+  }
+
 }

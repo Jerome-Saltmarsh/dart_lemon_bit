@@ -609,44 +609,47 @@ class AmuletGameTutorial extends AmuletGame {
     scripts.add(instance);
     return instance;
   }
+  // @override
+  // void applyHit({
+  //   required Character srcCharacter,
+  //   required Collider target,
+  //   required int damage,
+  //   required DamageType damageType,
+  //   required int
+  //   int ailmentDuration = 0,
+  //   double? angle,
+  //   bool friendlyFire = false,
+  //
+  // }) {
+  //   super.applyHit(
+  //       srcCharacter: srcCharacter,
+  //       target: target,
+  //       damage: damage,
+  //       angle: angle,
+  //       friendlyFire: friendlyFire,
+  //       damageType: damageType,
+  //   );
+  //
+  //   if (srcCharacter is! AmuletPlayer){
+  //     return;
+  //   }
+  //
+  //   final player = srcCharacter;
+  //
+  //   if (
+  //     target == crystal1GlowingFalse &&
+  //     srcCharacter.questTutorial == QuestTutorial.Strike_Crystal_1
+  //   ){
+  //     onStruckCrystal1(player);
+  //     return;
+  //   }
+  //
+  //   if (target == crystal2GlowingFalse){
+  //     onStruckCrystal2(player);
+  //     return;
+  //   }
+  // }
 
-  @override
-  void applyHit({
-    required Character srcCharacter,
-    required Collider target,
-    required int damage,
-    required DamageType damageType,
-    double? angle,
-    bool friendlyFire = false,
-  }) {
-    super.applyHit(
-        srcCharacter: srcCharacter,
-        target: target,
-        damage: damage,
-        angle: angle,
-        friendlyFire: friendlyFire,
-        damageType: damageType,
-    );
-
-    if (srcCharacter is! AmuletPlayer){
-      return;
-    }
-
-    final player = srcCharacter;
-
-    if (
-      target == crystal1GlowingFalse &&
-      srcCharacter.questTutorial == QuestTutorial.Strike_Crystal_1
-    ){
-      onStruckCrystal1(player);
-      return;
-    }
-
-    if (target == crystal2GlowingFalse){
-      onStruckCrystal2(player);
-      return;
-    }
-  }
 
   /// zoom the camera in
   /// then return the camera zoom to the previous value

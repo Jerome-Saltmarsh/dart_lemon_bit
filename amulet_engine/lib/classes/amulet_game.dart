@@ -346,6 +346,16 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       return 0;
   }
 
+  int getCharacterSkillTypeAilmentDuration({
+    required Character character,
+    required SkillType skillType,
+  }) => ((skillType.ailmentDuration ?? 0) * fps).toInt();
+
+  int getCharacterSkillTypeAilmentDamage({
+    required Character character,
+    required SkillType skillType,
+  }) => skillType.ailmentDamage ?? 0;
+
   int getCharacterSkillTypeDamage({
     required Character character,
     required SkillType skillType,
@@ -385,6 +395,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
             character: character,
             skillType: SkillType.Strike,
         ),
+        ailmentDuration: 0,
+        ailmentDamage: 0,
       );
 
   void characterPerformSkillTypeMightySwing(Character character) =>
@@ -400,20 +412,30 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
             character: character,
             skillType: SkillType.Mighty_Strike,
         ),
+        ailmentDuration: 0,
+        ailmentDamage: 0,
       );
 
-  void characterPerformSkillTypeShootArrow(Character character) =>
-      performAbilityArrow(
+  void characterPerformSkillTypeShootArrow(Character character) {
+    dispatchGameEvent(
+      GameEvent.Bow_Released,
+      character.x,
+      character.y,
+      character.z,
+    );
+    spawnProjectileArrow(
+      src: character,
+      damage: getCharacterSkillTypeDamage(
         character: character,
-        damage: getCharacterSkillTypeDamage(
-          character: character,
-          skillType: SkillType.Shoot_Arrow,
-        ),
-        range: getCharacterSkillTypeRange(
-          character: character,
-          skillType: SkillType.Shoot_Arrow,
-        ),
-      );
+        skillType: SkillType.Shoot_Arrow,
+      ),
+      range: getCharacterSkillTypeRange(
+        character: character,
+        skillType: SkillType.Shoot_Arrow,
+      ),
+      angle: character.angle,
+    );
+  }
 
   void characterPerformSkillTypeIceArrow(Character character) {
     dispatchGameEventPosition(GameEvent.Bow_Released, character);
@@ -426,6 +448,14 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       range: getCharacterSkillTypeRange(
           character: character,
           skillType: SkillType.Ice_Arrow,
+      ),
+      ailmentDuration: getCharacterSkillTypeAilmentDuration(
+          character: character,
+          skillType: SkillType.Ice_Arrow,
+      ),
+      ailmentDamage: getCharacterSkillTypeAilmentDamage(
+        character: character,
+        skillType: SkillType.Ice_Arrow,
       ),
       angle: character.angle,
     );
@@ -440,6 +470,14 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
           skillType: SkillType.Fire_Arrow,
       ),
       range: getCharacterSkillTypeRange(
+          character: character,
+          skillType: SkillType.Fire_Arrow,
+      ),
+      ailmentDuration: getCharacterSkillTypeAilmentDuration(
+          character: character,
+          skillType: SkillType.Fire_Arrow,
+      ),
+      ailmentDamage: getCharacterSkillTypeAilmentDamage(
           character: character,
           skillType: SkillType.Fire_Arrow,
       ),
@@ -498,24 +536,41 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       ),
       projectileType: ProjectileType.Fireball,
       angle: character.angle,
+      ailmentDuration: getCharacterSkillTypeAilmentDuration(
+          character: character,
+          skillType: SkillType.Fireball,
+      ),
+      ailmentDamage: getCharacterSkillTypeAilmentDamage(
+          character: character,
+          skillType: SkillType.Fireball,
+      ),
     );
   }
 
-  void characterPerformSkillTypeFrostBall(Character character) {
-    spawnProjectile(
-      src: character,
-      damage: getCharacterSkillTypeDamage(
-        character: character,
-        skillType: SkillType.Frostball,
-      ),
-      range: getCharacterSkillTypeRange(
-        character: character,
-        skillType: SkillType.Frostball,
-      ),
-      projectileType: ProjectileType.FrostBall,
-      angle: character.angle,
-    );
-  }
+
+
+  void characterPerformSkillTypeFrostBall(Character character) =>
+      spawnProjectile(
+        src: character,
+        damage: getCharacterSkillTypeDamage(
+            character: character,
+            skillType: SkillType.Frostball,
+        ),
+        range: getCharacterSkillTypeRange(
+            character: character,
+            skillType: SkillType.Frostball,
+        ),
+        projectileType: ProjectileType.FrostBall,
+        angle: character.angle,
+        ailmentDuration: getCharacterSkillTypeAilmentDuration(
+            character: character,
+            skillType: SkillType.Frostball,
+        ),
+        ailmentDamage: getCharacterSkillTypeAilmentDamage(
+            character: character,
+            skillType: SkillType.Frostball,
+        )
+      );
 
   void characterPerformSkillTypeExplode(Character character) {
 
@@ -530,6 +585,14 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
           skillType: SkillType.Explode,
         ),
         damage: getCharacterSkillTypeDamage(
+            character: character,
+            skillType: SkillType.Explode,
+        ),
+        ailmentDuration: getCharacterSkillTypeAilmentDuration(
+            character: character,
+            skillType: SkillType.Explode,
+        ),
+        ailmentDamage: getCharacterSkillTypeAilmentDamage(
             character: character,
             skillType: SkillType.Explode,
         ),
@@ -560,52 +623,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       return;
     }
     throw Exception('fiend cannot perform ${SkillType.Teleport}');
-  }
-
-  void performAbilityFireball({
-    required Character character,
-    required int damage,
-    required double range,
-  }) {
-     spawnProjectile(
-      src: character,
-      damage: damage,
-      range: range,
-      projectileType: ProjectileType.Fireball,
-      angle: character.angle,
-    );
-  }
-
-  void performSpellFireball({
-    required Character character,
-    required int damage,
-    required double range,
-  }) =>
-    spawnProjectile(
-        src: character,
-        damage: damage,
-        range: range,
-        projectileType: ProjectileType.Fireball,
-        angle: character.angle,
-    );
-
-  void performAbilityArrow({
-    required Character character,
-    required int damage,
-    required double range,
-  }) {
-     dispatchGameEvent(
-      GameEvent.Bow_Released,
-      character.x,
-      character.y,
-      character.z,
-    );
-    spawnProjectileArrow(
-      src: character,
-      damage: damage,
-      range: range,
-      angle: character.angle,
-    );
   }
 
   @override
@@ -956,38 +973,35 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     dispatchByte(character.characterType);
   }
 
-  @override
-  void applyDamageToCharacter({
-    required Character src,
-    required Character target,
-    required int amount,
-    required DamageType damageType,
-  }) {
+  // @override
+  // void applyDamageToCharacter({
+  //   required Character src,
+  //   required Character target,
+  //   required int amount,
+  //   required DamageType damageType,
+  //   int ailmentDuration =  0,
+  // }) {
+  //   if (characterResistsDamageType(target, damageType)) {
+  //     amount = amount ~/ 2;
+  //   } else {
+  //     if (ailmentDuration > 0){
+  //       if (damageType == DamageType.Ice) {
+  //         target.ailmentColdDuration += ailmentDuration; // TODO COLD DURATION
+  //       }
+  //       if (damageType == DamageType.Fire) {
+  //         target.ailmentBurningDuration += ailmentDuration; // TODO COLD DURATION
+  //         target.ailmentBurningSrc = src;
+  //       }
+  //     }
+  //   }
+  //   super.applyDamageToCharacter(
+  //     src: src,
+  //     target: target,
+  //     amount: amount,
+  //     damageType: damageType,
+  //   );
+  // }
 
-    if (characterResistsDamageType(target, damageType)) {
-      amount = amount ~/ 2;
-    } else {
-      if (damageType == DamageType.Ice) {
-        target.ailmentColdDuration += 120; // TODO COLD DURATION
-      }
-      if (damageType == DamageType.Fire) {
-        target.ailmentBurningDuration += 120; // TODO COLD DURATION
-      }
-    }
-    super.applyDamageToCharacter(
-      src: src,
-      target: target,
-      amount: amount,
-      damageType: damageType,
-    );
-  }
-
-  bool characterResistsDamageType(Character character, DamageType damageType){
-    if (character is AmuletFiend) {
-      return character.fiendType.resists == damageType;
-    }
-    return false;
-  }
 
   // static int getAmuletItemDamage(AmuletItem amuletItem){
   //   final min = amuletItem.damageMin;

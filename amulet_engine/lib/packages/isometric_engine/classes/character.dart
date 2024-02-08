@@ -20,8 +20,8 @@ class Character extends Collider {
   var ailmentColdDuration = 0;
   var ailmentBurningDamage = 0;
   var ailmentBurningDuration = 0;
-
-
+  var ailmentBurningRadius = 50.0;
+  Character? ailmentBurningSrc;
 
   bool get isAilmentCold => ailmentColdDuration > 0;
 
@@ -350,6 +350,9 @@ class Character extends Collider {
 
     if (ailmentBurningDuration > 0) {
       ailmentBurningDuration--;
+      if (ailmentBurningDuration == 0){
+        ailmentBurningSrc = null;
+      }
     }
   }
 
