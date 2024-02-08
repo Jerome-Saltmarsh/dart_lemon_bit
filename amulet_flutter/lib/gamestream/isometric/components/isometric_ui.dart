@@ -291,7 +291,9 @@ class IsometricUI with IsometricComponent {
               Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    buildWatch(options.sceneName, (sceneName) => buildText(sceneName, color: Colors.white70, size: 22)),
+                    buildSceneName(),
+                    // width8,
+                    // buildFiendCount(),
                     width16,
                     buildWatchBool(options.timeVisible, () => controlTime),
                     width32,
@@ -306,6 +308,41 @@ class IsometricUI with IsometricComponent {
         );
       }),
     );
+  }
+
+  Widget buildSceneName() =>
+      Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          buildWatch(
+              options.sceneName,
+              (sceneName) =>
+                  buildText(sceneName, color: Colors.white70, size: 22)),
+          width8,
+          Container(
+            padding: const EdgeInsets.all(2),
+            color: Colors.black12,
+            child: Row(
+              children: [
+                buildText('monsters', size: 22, color: Colors.deepOrange),
+                width2,
+                buildWatch(
+                    amulet.fiendCountAlive,
+                    (count) =>
+                        buildText(count, size: 22, color: Colors.deepOrange)),
+              ],
+            ),
+          ),
+
+        ],
+      );
+
+  Widget buildFiendCount() {
+     return Column(
+       children: [
+          buildWatch(amulet.fiendCountAlive, (t) => buildText('Fiends: $t')),
+       ],
+     );
   }
 
   Widget buildIconAudioSound() =>

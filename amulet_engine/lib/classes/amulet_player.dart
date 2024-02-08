@@ -776,6 +776,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeOptionsSetHighlightIconInventory(false);
     writeSkillsLeftRight();
     writeSkillTypes();
+    writeFiendCount();
   }
 
   void writeSceneName() {
@@ -1248,5 +1249,26 @@ class AmuletPlayer extends IsometricPlayer with
       total++;
     }
     return total;
+  }
+
+  void writeFiendCount() {
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Fiend_Count);
+
+    var totalAlive = 0;
+    var totalDead = 0;
+
+    final characters = game.characters;
+    for (final character in characters){
+      if (character is! AmuletFiend) continue;
+      if (character.alive) {
+        totalAlive++;
+      } else {
+        totalDead++;
+      }
+    }
+
+    writeUInt16(totalAlive);
+    writeUInt16(totalDead);
   }
 }

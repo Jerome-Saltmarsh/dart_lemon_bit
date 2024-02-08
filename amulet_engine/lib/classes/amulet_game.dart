@@ -637,6 +637,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       });
     }
 
+    dispatchFiendCount();
+
     if (target is AmuletFiend) {
       if (randomChance(target.fiendType.chanceOfDropLegendary)) {
         spawnRandomLootAtFiend(target, itemQuality: ItemQuality.Legendary);
@@ -663,6 +665,12 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       }
 
     }
+  }
+
+  void dispatchFiendCount(){
+     for (final player in players){
+       player.writeFiendCount();
+     }
   }
 
   void spawnRandomLootAtFiend(AmuletFiend fiend, {
@@ -1039,7 +1047,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       final healthSteal = src.healthSteal;
       final magicSteal = src.magicSteal;
       if (healthSteal > 0) {
-        src.health += src.healthSteal;  
+        src.health += src.healthSteal;
         dispatchGameEventPosition(GameEvent.Health_Regained, src);
       }
       if (magicSteal > 0) {

@@ -29,6 +29,11 @@ class Amulet extends IsometricGame {
   final screenColor = Watch(Colors.transparent);
   final screenColorI = Watch(0.0);
   final cursor = Watch(SystemMouseCursors.basic);
+  final fiendCountAlive = Watch(0);
+  final fiendCountDead = Watch(0);
+  final fiendCountTotal = Watch(0);
+  final fiendCountPercentage = Watch(0.0);
+
   var worldMapClrs = Int32List(0);
   var worldMapDsts = Float32List(0);
   var worldMapSrcs = Float32List(0);
@@ -146,6 +151,15 @@ class Amulet extends IsometricGame {
       // aimTargetItemTypeCurrent.value = getEquippedItemSlot(itemType?.type)?.amuletItem.value;
     });
 
+    fiendCountAlive.onChanged((t) {
+      updateFiendCountTotal();
+      updateFiendCountPercentage();
+    });
+    fiendCountDead.onChanged((t) {
+      updateFiendCountTotal();
+      updateFiendCountPercentage();
+    });
+
     playerInteracting.onChanged(onChangedPlayerInteracting);
     npcTextIndex.onChanged(onChangedNpcTextIndex);
     error.onChanged(onChangedError);
@@ -162,6 +176,19 @@ class Amulet extends IsometricGame {
        if (atlasSrcAmuletItem.containsKey(amuletItem)) continue;
        print('verification_warning: atlasSrcAmuletItem[${amuletItem.name}]');
      }
+  }
+
+  void updateFiendCountTotal(){
+    fiendCountTotal.value = fiendCountAlive.value + fiendCountDead.value;
+  }
+
+  void updateFiendCountPercentage() {
+    final total = fiendCountTotal.value;
+    if (total == 0){
+      fiendCountPercentage.value = 1.0;
+    } else {
+      fiendCountPercentage.value = (fiendCountAlive.value / total).clamp(0, 1);
+    }
   }
 
   void refreshPlayerMagicPercentage(int _){

@@ -19,7 +19,9 @@ class AmuletFiend extends Character {
     attackRange: fiendType.weaponRange,
     attackDuration: fiendType.attackDuration,
     health: fiendType.health,
-  );
+  ) {
+    respawnDurationTotal = -1;
+  }
 
   void onFiendTypeChanged(){
     maxHealth = fiendType.health;
