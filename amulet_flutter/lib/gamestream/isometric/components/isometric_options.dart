@@ -30,8 +30,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
   var framesPerLightingUpdate = 60;
   var cursorType = IsometricCursorType.Hand;
   var renderCursorEnable = true;
-  var renderHealthBarEnemies = false;
-  var renderHealthBarAllies = false;
+  var renderHealthBars = false;
   var updateAmbientAlphaAccordingToTimeEnabled = true;
   var sceneSmokeSourcesSmokeDuration = 250;
   var clearErrorTimer = -1;
@@ -151,12 +150,8 @@ class IsometricOptions with IsometricComponent implements Updatable {
     renderCursorEnable = false;
   }
 
-  void toggleRenderHealthBarEnemies() {
-    renderHealthBarEnemies = !renderHealthBarEnemies;
-  }
-
-  void toggleRenderHealthbarAllies(){
-    renderHealthBarAllies = !renderHealthBarAllies;
+  void toggleRenderHealthBars(){
+    renderHealthBars = !renderHealthBars;
   }
 
   void _onChangedGameError(GameError? gameError){

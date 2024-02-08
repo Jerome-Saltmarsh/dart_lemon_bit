@@ -304,17 +304,36 @@ class IsometricRender with IsometricComponent {
     required Position position,
     required double percentage,
     int color = 1,
-  }) => engine.renderSprite(
-    image: images.atlas_gameobjects,
-    dstX: position.renderX - 26,
-    dstY: position.renderY - 45,
-    srcX: 171,
-    srcY: 16,
-    srcWidth: 51.0 * percentage,
-    srcHeight: 8,
-    anchorX: 0.0,
-    color: color,
-  );
+  }) {
+    final dstX = position.renderX - 26;
+    final dstY = position.renderY - 45;
+    const srcWidth = 51.0;
+    const srcHeight = 8.0;
+    final image = images.atlas_gameobjects;
+
+    engine.renderSprite(
+      image: image,
+      dstX: dstX,
+      dstY: dstY,
+      srcX: 171,
+      srcY: 24,
+      srcWidth: srcWidth,
+      srcHeight: srcHeight,
+      anchorX: 0.0,
+      color: color,
+    );
+    engine.renderSprite(
+      image: image,
+      dstX: dstX,
+      dstY: dstY,
+      srcX: 171,
+      srcY: 16,
+      srcWidth: srcWidth * percentage,
+      srcHeight: srcHeight,
+      anchorX: 0.0,
+      color: color,
+    );
+  }
 
   void editWireFrames() {
     for (var z = 0; z < editor.z; z++) {

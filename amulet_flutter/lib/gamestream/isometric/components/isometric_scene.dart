@@ -779,6 +779,13 @@ class IsometricScene with IsometricComponent implements Updatable {
     for (var i = 0; i < totalCharacters; i++) {
       final character = characters[i];
 
+      if (character.isAilmentBurning){
+        applyVector3EmissionAmbient(
+          character,
+          alpha: 0,
+        );
+      }
+
       if (const [
         CharacterType.Fallen,
       ].contains(character.characterType))

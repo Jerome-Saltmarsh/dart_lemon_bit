@@ -485,12 +485,8 @@ extension isometricDebugUI on IsometricDebug {
           child: buildText('decrease'),
         ),
         onPressed(
-            action: options.toggleRenderHealthbarAllies,
-            child: buildRow('render-health-ally', GSRefresh(() => buildValueText(options.renderHealthBarAllies))),
-        ),
-        onPressed(
-            action: options.toggleRenderHealthBarEnemies,
-            child: buildRow('render-health-enemy', GSRefresh(() => buildValueText(options.renderHealthBarEnemies))),
+            action: options.toggleRenderHealthBars,
+            child: buildRow('health-bars_visible', GSRefresh(() => buildValueText(options.renderHealthBars))),
         ),
         onPressed(
             action: player.toggleControlsCanTargetEnemies,

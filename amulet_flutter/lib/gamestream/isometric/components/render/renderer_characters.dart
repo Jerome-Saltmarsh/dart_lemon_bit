@@ -52,12 +52,8 @@ class RendererCharacters extends RenderGroup {
   void renderFunction(LemonEngine engine, IsometricImages images) {
     final character = this.character;
 
-    if (!renderBottom){
-      if (!character.allie && options.renderHealthBarEnemies) {
-        render.characterHealthBar(character);
-      }
-
-      if (character.allie && options.renderHealthBarAllies) {
+    if (!renderBottom) {
+      if (options.renderHealthBars && !character.dead) {
         render.characterHealthBar(character);
       }
     }
