@@ -293,22 +293,33 @@ class IsometricRender with IsometricComponent {
     );
   }
 
-  void characterHealthBar(Character character) =>
-      healthBarPosition(
+  void renderHealthBarCharacter(Character character) =>
+      renderHealthBarPosition(
         position: character,
         percentage: character.health,
         color: character.colorDiffuse,
       );
 
-  void healthBarPosition({
+  void renderHealthBarPosition({
     required Position position,
     required double percentage,
     int color = 1,
+  }) =>
+      renderHealthBar(
+        dstX: position.renderX - 26,
+        dstY: position.renderY - 55,
+        percentage: percentage,
+        color: color,
+      );
+
+  void renderHealthBar({
+    required double dstX,
+    required double dstY,
+    required double percentage,
+    int color = 1,
   }) {
-    final dstX = position.renderX - 26;
-    final dstY = position.renderY - 45;
     const srcWidth = 51.0;
-    const srcHeight = 8.0;
+    const srcHeight = 7.44;
     final image = images.atlas_gameobjects;
 
     engine.renderSprite(

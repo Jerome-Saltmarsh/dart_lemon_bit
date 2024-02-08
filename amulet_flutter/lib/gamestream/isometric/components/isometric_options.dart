@@ -30,7 +30,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
   var framesPerLightingUpdate = 60;
   var cursorType = IsometricCursorType.Hand;
   var renderCursorEnable = true;
-  var renderHealthBars = false;
+  var renderHealthBars = true;
   var updateAmbientAlphaAccordingToTimeEnabled = true;
   var sceneSmokeSourcesSmokeDuration = 250;
   var clearErrorTimer = -1;

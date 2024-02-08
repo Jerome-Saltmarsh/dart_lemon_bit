@@ -54,7 +54,7 @@ class RendererCharacters extends RenderGroup {
 
     if (!renderBottom) {
       if (options.renderHealthBars && !character.dead) {
-        render.characterHealthBar(character);
+        render.renderHealthBarCharacter(character);
       }
     }
 
