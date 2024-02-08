@@ -2,9 +2,10 @@ import 'package:amulet_flutter/gamestream/isometric/components/render/functions/
 import 'package:amulet_flutter/isometric/classes/position.dart';
 import 'package:amulet_engine/packages/common.dart';
 import 'package:amulet_engine/packages/lemon_math.dart';
+import 'package:amulet_engine/packages/lemon_bits.dart';
 
 class Character extends Position {
-  var isStatusCold = false;
+  // var isStatusCold = false;
   var characterType = CharacterType.Human;
   var weaponType = WeaponType.Unarmed;
   var complexion = 0;
@@ -30,6 +31,9 @@ class Character extends Position {
   var colorNorthWest = 0;
   var actionComplete = 0.0;
   var gender = 0;
+  var ailments = 0;
+
+  bool get isStatusCold => readBitFromByte(ailments, 0);
 
   bool get dead => state == CharacterState.Dead;
 

@@ -54,6 +54,7 @@ class IsometricPlayer extends Character with ByteWriter {
   final cacheHealthPerc = Uint8List(Cache_Length);
   final cacheDirection = Uint8List(Cache_Length);
   final cacheAnimationFrame = Uint8List(Cache_Length);
+  final cacheAilments = Uint8List(Cache_Length);
 
   final cachePositionX = Int16List(Cache_Length);
   final cachePositionY = Int16List(Cache_Length);
@@ -435,6 +436,9 @@ class IsometricPlayer extends Character with ByteWriter {
       final diffYChangeType = ChangeType.fromDiff(diffY);
       final diffZChangeType = ChangeType.fromDiff(diffZ);
 
+      final characterCompressedAilments = character.compressedAilments;
+
+      final changedCharacterAilments = characterCompressedAilments != cacheAilments[cacheIndex];
       final changedCharacterTypeTeam = character.characterTypeAndTeam != cacheCharacterTypeAndTeam[cacheIndex];
       final changedCharacterState = character.characterState != cacheCharacterState[cacheIndex];
       final changedHealthPercByte = character.healthPercentageByte != cacheHealthPerc[cacheIndex];
@@ -453,7 +457,7 @@ class IsometricPlayer extends Character with ByteWriter {
           changedCharacterTypeTeam,
           changedCharacterState,
           changedHealthPercByte,
-          character.isStatusCold,
+          changedCharacterAilments,
           changedDirection,
           changedFrame,
           changedFrameByOne,
@@ -474,6 +478,11 @@ class IsometricPlayer extends Character with ByteWriter {
       if (changedHealthPercByte) {
         writeByte(character.healthPercentageByte);
         cacheHealthPerc[cacheIndex] = character.healthPercentageByte;
+      }
+
+      if (changedCharacterAilments){
+        writeByte(characterCompressedAilments);
+        cacheAilments[cacheIndex] = characterCompressedAilments;
       }
 
       if (changedDirection) {
@@ -1393,6 +1402,7 @@ class IsometricPlayer extends Character with ByteWriter {
     cacheHealthPerc.fillRange(0, cacheHealthPerc.length, 0);
     cacheDirection.fillRange(0, cacheDirection.length, 0);
     cacheAnimationFrame.fillRange(0, cacheAnimationFrame.length, 0);
+    cacheAilments.fillRange(0, cacheAilments.length, 0);
     writeByte(NetworkResponse.Player);
     writeByte(NetworkResponsePlayer.Cache_Cleared);
   }

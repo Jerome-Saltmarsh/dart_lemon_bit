@@ -57,21 +57,21 @@ SKILLS
     BOW
         [x] SPLIT SHOT
         [x] ICE ARROW
+        [x] FIRE ARROW          
         [ ] EXPLODING ARROW
-        [ ] FIRE ARROW
         [ ] ENTANGLE
         [ ] PIERCING ARROW
     SWORD
         [ ] SWEEP
         [ ] CRUSH
     STAFF
+        [x] FIREBALL
+        [x] ICEBALL
         [ ] EXPLODE
-        [ ] FIREBALL
-        [ ] ICEBALL
         [ ] FROST CIRCLE
     CASTE
-        [ ] HEAL
-        [ ] TELEPORT
+        [x] HEAL
+        [x] TELEPORT
         [ ] INVISIBLE
 
 PASSIVE
@@ -84,10 +84,19 @@ QUESTS
     [x] KILL THE WITCH
 
 AILMENTS
-    [x] COLD
-    [ ] FROZEN
-    [ ] BURNING
-    [ ] BLIND
+    [x] COLD    
+    [ ] FROZEN (CANNOT MOVE OR ATTACK)
+    [ ] BURNING (DAMAGES NEARBY)
+    [ ] BLIND (CANNOT ATTACK)
+    [ ] SILENT (CANNOT USE SKILLS)
+    [ ] CONFUSED (ATTACKS ALLIES)
+
+BUFFS
+    [ ] SHIELDED (REDUCES DAMAGE TAKEN)
+    [ ] THORNS (REFLECTS DAMAGE)
+    [ ] LIFE STEAL
+    [ ] MAGIC STEAL
+    [ ] MELEE AOE DAMAGE
 
 // STASH
 // SCALEMAIL

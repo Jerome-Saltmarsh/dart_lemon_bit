@@ -17,14 +17,13 @@ class Character extends Collider {
   var _maxHealth = 1;
   var _goal = CharacterGoal.Idle;
 
-
-  /// 0 cold
-  /// 1 frozen
-  /// 2 stunned
-  /// 3 blind
   var statusColdDuration = 0;
+  var ailmentBurningDamage = 0;
+  var ailmentBurningDuration = 0;
 
   bool get isStatusCold => statusColdDuration > 0;
+
+  bool get isAilmentBurning => ailmentBurningDuration > 0;
 
   /// in seconds
   var respawnDurationTotal = (60 * 3);
@@ -610,4 +609,9 @@ class Character extends Collider {
   }
 
   int get characterTypeAndTeam => characterType | team << 6;
+
+  int get compressedAilments {
+    return writeBits(isStatusCold, isAilmentBurning, false, false, false, false, false, false);
+  }
+
 }
