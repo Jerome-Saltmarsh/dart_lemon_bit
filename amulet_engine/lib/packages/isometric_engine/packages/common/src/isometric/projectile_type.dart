@@ -16,6 +16,8 @@ class ProjectileType {
 
    static double getRadius(int type) => const {
       Arrow    : 10.0,
+      Fire_Arrow    : 15.0,
+      Ice_Arrow    : 15.0,
       Fireball : 10.0,
       FrostBall : 10.0,
    }[type] ?? 10;

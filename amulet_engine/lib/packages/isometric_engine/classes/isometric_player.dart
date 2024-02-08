@@ -27,7 +27,6 @@ class IsometricPlayer extends Character with ByteWriter {
 
   var _previousCharacterState = -1;
   var weaponDurationPercentagePrevious = 0.0;
-  var totalProjectiles = 0;
   var inputMode = InputMode.Keyboard;
   var screenLeft = 0.0;
   var screenTop = 0.0;
@@ -694,14 +693,14 @@ class IsometricPlayer extends Character with ByteWriter {
       if (!projectile.active) continue;
       totalActiveProjectiles++;
     }
-    if (totalActiveProjectiles == 0){
-      if (totalProjectiles == 0) return;
-      totalProjectiles = 0;
-    }
-    totalProjectiles = totalActiveProjectiles;
     writeByte(NetworkResponse.Projectiles);
     writeUInt16(totalActiveProjectiles);
-    projectiles.forEach(writeProjectile);
+    for (final projectile in projectiles){
+      if (!projectile.active) continue;
+      writePosition(projectile);
+      writeByte(projectile.type);
+      writeAngle(projectile.velocityAngle);
+    }
   }
 
   void writeGameEvent({
@@ -760,12 +759,12 @@ class IsometricPlayer extends Character with ByteWriter {
     writeUInt16(game.time.secondsPerFrame);
   }
 
-  void writeProjectile(Projectile projectile){
-    if (!projectile.active) return;
-    writePosition(projectile);
-    writeByte(projectile.type);
-    writeAngle(projectile.velocityAngle);
-  }
+  // void writeProjectile(Projectile projectile){
+  //   if (!projectile.active) return;
+  //   writePosition(projectile);
+  //   writeByte(projectile.type);
+  //   writeAngle(projectile.velocityAngle);
+  // }
 
   void writeCharacterTemplate(Character character, int cacheIndex) {
 

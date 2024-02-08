@@ -582,7 +582,8 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
 
   void readNetworkResponseProjectiles(){
     final projectiles = scene.projectiles;
-    scene.totalProjectiles = readUInt16();
+    final totalProjectiles = readUInt16();
+    scene.totalProjectiles = totalProjectiles;
     while (scene.totalProjectiles >= projectiles.length){
       projectiles.add(Projectile());
     }

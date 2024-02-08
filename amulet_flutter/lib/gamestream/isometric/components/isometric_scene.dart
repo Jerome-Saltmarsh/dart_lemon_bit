@@ -1514,12 +1514,24 @@ class IsometricScene with IsometricComponent implements Updatable {
     final characters = this.characters;
     for (var i = 0; i < totalCharacters; i++){
       final character = characters[i];
-      if (character.isStatusCold) {
+      if (character.isAilmentCold) {
         particles.emitIce(
             x: character.x + giveOrTake(5),
             y: character.y + giveOrTake(5),
             z: character.z,
         );
+      }
+      if (character.isAilmentBurning) {
+        particles.emitFlame(
+            x: character.x + giveOrTake(10),
+            y: character.y + giveOrTake(10),
+            z: character.z,
+        );
+        // particles.emitSmoke(
+        //     x: character.x + giveOrTake(10),
+        //     y: character.y + giveOrTake(10),
+        //     z: character.z,
+        // );
       }
     }
   }
@@ -2330,7 +2342,7 @@ class IsometricScene with IsometricComponent implements Updatable {
       character.colorNorthWest = setAlpha(adjustedNW, minNWAlpha);
     }
 
-    if (character.isStatusCold) {
+    if (character.isAilmentCold) {
       final alphaSouthEast = getAlpha(character.colorSouthEast);
       final alphaNorthWest = getAlpha(character.colorNorthWest);
 
@@ -2339,6 +2351,16 @@ class IsometricScene with IsometricComponent implements Updatable {
 
       character.colorSouthEast = interpolateColors(character.colorSouthEast, Palette.blue_2.value, alphaSouthEastInverse);
       character.colorNorthWest = interpolateColors(character.colorNorthWest, Palette.blue_2.value, alphaNorthWestInverse);
+    } else
+    if (character.isAilmentBurning) {
+      final alphaSouthEast = getAlpha(character.colorSouthEast);
+      final alphaNorthWest = getAlpha(character.colorNorthWest);
+
+      final alphaSouthEastInverse = (255 - alphaSouthEast) / 255;
+      final alphaNorthWestInverse = (255 - alphaNorthWest) / 255;
+
+      character.colorSouthEast = interpolateColors(character.colorSouthEast, Palette.orange_2.value, alphaSouthEastInverse);
+      character.colorNorthWest = interpolateColors(character.colorNorthWest, Palette.orange_2.value, alphaNorthWestInverse);
     }
   }
 

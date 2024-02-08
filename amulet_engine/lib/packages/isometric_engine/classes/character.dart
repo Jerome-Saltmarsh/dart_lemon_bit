@@ -17,16 +17,19 @@ class Character extends Collider {
   var _maxHealth = 1;
   var _goal = CharacterGoal.Idle;
 
-  var statusColdDuration = 0;
+  var ailmentColdDuration = 0;
   var ailmentBurningDamage = 0;
   var ailmentBurningDuration = 0;
 
-  bool get isStatusCold => statusColdDuration > 0;
+
+
+  bool get isAilmentCold => ailmentColdDuration > 0;
 
   bool get isAilmentBurning => ailmentBurningDuration > 0;
 
   /// in seconds
   var respawnDurationTotal = (60 * 3);
+  // var respawnDurationTotal = 20;
   var gender = Gender.female;
   var headType = HeadType.boy;
   var shoeType = ShoeType.None;
@@ -125,7 +128,7 @@ class Character extends Collider {
     _goal = value;
   }
 
-  int get framesPerAnimation => (characterStateChanging ? 1 : 3) * (isStatusCold ? 3 : 1);
+  int get framesPerAnimation => (characterStateChanging ? 1 : 3) * (isAilmentCold ? 3 : 1);
 
   int get animationFrame => (frame ~/ framesPerAnimation) % maxAnimationFrames;
 
@@ -329,9 +332,7 @@ class Character extends Collider {
 
   void update() {
 
-    if (statusColdDuration > 0){
-      statusColdDuration--;
-    }
+    updateAilments();
 
     if (
       runToDestinationEnabled &&
@@ -339,6 +340,16 @@ class Character extends Collider {
       withinRadiusXYZ(runX, runY, runZ, 8)
     ){
        setDestinationToCurrentPosition();
+    }
+  }
+
+  void updateAilments() {
+     if (ailmentColdDuration > 0) {
+      ailmentColdDuration--;
+    }
+
+    if (ailmentBurningDuration > 0) {
+      ailmentBurningDuration--;
     }
   }
 
@@ -611,7 +622,7 @@ class Character extends Collider {
   int get characterTypeAndTeam => characterType | team << 6;
 
   int get compressedAilments {
-    return writeBits(isStatusCold, isAilmentBurning, false, false, false, false, false, false);
+    return writeBits(isAilmentCold, isAilmentBurning, false, false, false, false, false, false);
   }
 
 }

@@ -910,7 +910,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     target.health -= damage;
 
     if (target.health <= 0) {
-      target.statusColdDuration = 0;
       target.facePosition(src, force: true);
       setCharacterStateDead(target);
       customOnCharacterKilled(target, src);
@@ -1124,6 +1123,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
     dispatchGameEventCharacterDeath(character);
     character.health = 0;
+    character.ailmentColdDuration = 0;
     character.characterState = CharacterState.Dead;
     character.actionDuration = 0;
     character.frame = 0;
@@ -1358,6 +1358,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
 
     if (character.dead) {
+      character.updateAilments();
+
       if (character.animationFrame < Character.maxAnimationDeathFrames){
         character.frame++;
       }

@@ -29,7 +29,6 @@ class AmuletFiend extends Character {
     attackDuration = fiendType.attackDuration;
     runSpeed = fiendType.runSpeed;
     chanceOfSetTarget = fiendType.chanceOfSetTarget;
-    // weaponType = fiendType.weaponType;
     attackRange = fiendType.weaponRange;
     characterType = fiendType.characterType;
   }
@@ -47,5 +46,5 @@ class AmuletFiend extends Character {
   int get maxHealth => fiendType.health;
 
   @override
-  double get runSpeed => super.runSpeed * (isStatusCold ? 0.5 : 1.0);
+  double get runSpeed => super.runSpeed * (isAilmentCold ? 0.5 : 1.0);
 }

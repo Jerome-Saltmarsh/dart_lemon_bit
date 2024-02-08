@@ -611,6 +611,15 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   @override
   void customOnCharacterKilled(Character target, src) {
 
+    if (target.respawnDurationTotal > 0){
+      addJob(seconds: target.respawnDurationTotal, action: () {
+        dispatchGameEventPosition(GameEvent.Character_Vanished, target);
+        setCharacterStateSpawning(target);
+        target.moveToStartPosition();
+        dispatchGameEventPosition(GameEvent.Character_Vanished, target);
+      });
+    }
+
     if (target is AmuletFiend) {
       if (randomChance(target.fiendType.chanceOfDropLegendary)) {
         spawnRandomLootAtFiend(target, itemQuality: ItemQuality.Legendary);
@@ -636,15 +645,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         return;
       }
 
-    }
-
-    if (target.respawnDurationTotal > 0){
-      addJob(seconds: target.respawnDurationTotal, action: () {
-        dispatchGameEventPosition(GameEvent.Character_Vanished, target);
-        setCharacterStateSpawning(target);
-        target.moveToStartPosition();
-        dispatchGameEventPosition(GameEvent.Character_Vanished, target);
-      });
     }
   }
 
@@ -967,8 +967,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     if (characterResistsDamageType(target, damageType)) {
       amount = amount ~/ 2;
     } else {
-      if (damageType == DamageType.Ice){
-        target.statusColdDuration += 120;
+      if (damageType == DamageType.Ice) {
+        target.ailmentColdDuration += 120; // TODO COLD DURATION
+      }
+      if (damageType == DamageType.Fire) {
+        target.ailmentBurningDuration += 120; // TODO COLD DURATION
       }
     }
     super.applyDamageToCharacter(

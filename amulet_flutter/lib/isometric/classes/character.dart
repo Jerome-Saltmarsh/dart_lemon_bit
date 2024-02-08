@@ -5,7 +5,6 @@ import 'package:amulet_engine/packages/lemon_math.dart';
 import 'package:amulet_engine/packages/lemon_bits.dart';
 
 class Character extends Position {
-  // var isStatusCold = false;
   var characterType = CharacterType.Human;
   var weaponType = WeaponType.Unarmed;
   var complexion = 0;
@@ -33,7 +32,9 @@ class Character extends Position {
   var gender = 0;
   var ailments = 0;
 
-  bool get isStatusCold => readBitFromByte(ailments, 0);
+  bool get isAilmentCold => readBitFromByte(ailments, 0);
+
+  bool get isAilmentBurning => readBitFromByte(ailments, 1);
 
   bool get dead => state == CharacterState.Dead;
 
