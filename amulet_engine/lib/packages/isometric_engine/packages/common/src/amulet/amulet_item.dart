@@ -378,7 +378,7 @@ enum AmuletItem {
     maxHealth: 7,
     characteristics: Proficiencies(dexterity: 1),
   ),
-  Armor_Rogue_1_Cloak_Rare(
+  Armor_Rogue_1_Cloak_of_Frost(
     label: 'Cloak of Frost',
     levelMin: 1,
     levelMax: 5,
@@ -388,6 +388,17 @@ enum AmuletItem {
     maxHealth: 10,
     skillType: SkillType.Ice_Arrow,
     characteristics: Proficiencies(dexterity: 2),
+  ),
+  Armor_Rogue_1_Cloak_of_Fire(
+    label: 'Cloak of Fire',
+    levelMin: 1,
+    levelMax: 5,
+    type: ItemType.Armor,
+    subType: ArmorType.Cloak,
+    quality: ItemQuality.Rare,
+    maxHealth: 10,
+    skillType: SkillType.Fire_Arrow,
+    characteristics: Proficiencies(dexterity: 3, intelligence: 1),
   ),
   Armor_Rogue_1_Cloak_Legendary(
     label: 'Cloak',

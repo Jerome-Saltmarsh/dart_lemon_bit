@@ -1511,6 +1511,25 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     );
   }
 
+  void spawnProjectileFireArrow({
+    required Character src,
+    required int damage,
+    required double range,
+    Position? target,
+    double? angle,
+  }) {
+    assert (range > 0);
+    assert (damage > 0);
+    spawnProjectile(
+      src: src,
+      range: range,
+      target: target,
+      angle: target != null ? null : angle ?? src.angle,
+      projectileType: ProjectileType.Fire_Arrow,
+      damage: damage,
+    );
+  }
+
   Projectile spawnProjectile({
     required Character src,
     required double range,

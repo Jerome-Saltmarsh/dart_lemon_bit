@@ -19,4 +19,5 @@ const atlasSrcSkillType = <SkillType, List<double>> {
   SkillType.Freeze_Target: [_srcX, iconSizeSkillType * 11],
   SkillType.Freeze_Area: [_srcX, iconSizeSkillType * 12],
   SkillType.Ice_Arrow: [_srcX, 208],
+  SkillType.Fire_Arrow: [_srcX, 224],
 };

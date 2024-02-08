@@ -1059,6 +1059,7 @@ class AmuletPlayer extends IsometricPlayer with
       SkillType.Shoot_Arrow,
       SkillType.Split_Shot,
       SkillType.Ice_Arrow,
+      SkillType.Fire_Arrow,
     ].contains(skillType)) {
       return equippedWeaponDamage + characteristicsRogue ~/ divider;
     }

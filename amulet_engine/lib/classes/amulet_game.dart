@@ -431,6 +431,22 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     );
   }
 
+  void characterPerformSkillTypeFireArrow(Character character) {
+    dispatchGameEventPosition(GameEvent.Bow_Released, character);
+    spawnProjectileFireArrow(
+      src: character,
+      damage: getCharacterSkillTypeDamage(
+          character: character,
+          skillType: SkillType.Fire_Arrow,
+      ),
+      range: getCharacterSkillTypeRange(
+          character: character,
+          skillType: SkillType.Fire_Arrow,
+      ),
+      angle: character.angle,
+    );
+  }
+
   void characterPerformSkillTypeSplitShot(Character character) {
     final damage = getCharacterSkillTypeDamage(
         character: character,
@@ -995,11 +1011,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       );
     }
   }
-
-  void characterPerformSkillTypeFireArrow(Character character) {
-
-  }
-
 }
 
 
