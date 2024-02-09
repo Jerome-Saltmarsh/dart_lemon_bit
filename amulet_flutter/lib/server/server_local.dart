@@ -154,6 +154,9 @@ class ServerLocal implements Server {
       playerServer.equippedArmor = null;
       playerServer.skillTypeLeft = SkillType.Strike;
       playerServer.skillTypeRight = SkillType.Strike;
+      playerServer.game.movePlayerToSpawnPoint(playerServer);
+      // player.x += giveOrTake(5);
+      // player.y += giveOrTake(5);
       parser.amulet.windowVisibleQuests.value = true;
       final json = writeAmuletPlayerToJson(playerServer);
       final characters = getCharacters();

@@ -25,6 +25,9 @@ void writeJsonToAmuletPlayer(
   player.hairColor = json['hairColor'] ?? 0;
   player.initialized = json['initialized'] ?? false;
   player.active = true;
+  player.x = json.getDouble('x');
+  player.y = json.getDouble('y');
+  player.z = json.getDouble('z');
   player.setQuestMain(QuestMain.values[json.tryGetInt('quest_main') ?? 0]);
   player.writePlayerHealth(); // TODO remove game logic
   player.notifyEquipmentDirty(); // TODO remove game logic

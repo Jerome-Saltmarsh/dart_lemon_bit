@@ -241,6 +241,10 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   /// ACTIONS
 
+  void movePlayerToSpawnPoint(Position position){
+
+  }
+
   void movePositionToIndex(Position position, int index) =>
       scene.movePositionToIndex(position, index);
 

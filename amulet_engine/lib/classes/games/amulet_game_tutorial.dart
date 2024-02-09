@@ -190,9 +190,9 @@ class AmuletGameTutorial extends AmuletGame {
     characters.removeWhere((element) => element.characterType == CharacterType.Fallen);
   }
 
-  void movePlayerToSpawnPoint(AmuletPlayer player) {
-    scene.movePositionToKey(player, getSpawnKey(player.questTutorial));
-    player.writePlayerMoved();
+  void movePlayerToSpawnPoint(Position player) {
+    // scene.movePositionToKey(player, getSpawnKey(player.questTutorial));
+    // player.writePlayerMoved();
   }
 
   void instantiateGuide() {

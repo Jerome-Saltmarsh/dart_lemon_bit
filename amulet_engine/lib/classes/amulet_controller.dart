@@ -1274,9 +1274,9 @@ class AmuletController {
   void playerJoinAmuletTown() {
     final game = amulet.amuletGameWorld11;
     joinGame(game);
-    game.movePositionToIndex(player, game.indexSpawnPlayer);
-    player.x += giveOrTake(5);
-    player.y += giveOrTake(5);
+    // game.movePositionToIndex(player, game.indexSpawnPlayer);
+    // player.x += giveOrTake(5);
+    // player.y += giveOrTake(5);
     player.writePlayerMoved();
   }
 }

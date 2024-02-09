@@ -191,6 +191,10 @@ class AmuletGameWorld11 extends AmuletGame {
     characters.add(npcSophie);
   }
 
+  @override
+  void movePlayerToSpawnPoint(Position position) =>
+      movePositionToIndex(position, indexSpawnPlayer);
+
   // Magatha
   void onInteractWithGareth(AmuletPlayer player, AmuletNpc gareth){
     switch (player.questMain){
