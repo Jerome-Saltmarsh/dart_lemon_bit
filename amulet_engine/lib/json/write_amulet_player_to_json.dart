@@ -69,5 +69,6 @@ Json writeAmuletFiendToJson(AmuletFiend amuletFiend){
   json['fiend_type'] = amuletFiend.fiendType.index;
   json['health'] = amuletFiend.health;
   json['character_state'] = amuletFiend.characterState;
+  json['angle'] = amuletFiend.angle.toInt();
   return json;
 }

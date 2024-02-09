@@ -67,6 +67,7 @@ AmuletFiend mapFiendJsonToAmuletFiend(Json fiendJson) =>
    )
      ..health = fiendJson.getInt('health')
      ..characterState = fiendJson.getInt('character_state')
+     ..angle = fiendJson.getDouble('angle')
      ..startPositionX = fiendJson.getDouble('start_x')
      ..startPositionY = fiendJson.getDouble('start_y')
      ..startPositionZ = fiendJson.getDouble('start_z');
