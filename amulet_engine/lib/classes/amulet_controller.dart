@@ -5,7 +5,6 @@ import 'dart:typed_data';
 import '../editor/randomize_scene.dart';
 import '../packages/isometric_engine/packages/common/src/amulet/quests/quest_tutorials.dart';
 import 'amulet.dart';
-import 'amulet_game.dart';
 import 'amulet_player.dart';
 import '../packages/src.dart';
 import '../utils/src.dart';
@@ -1150,19 +1149,6 @@ class AmuletController {
     }
   }
 
-  void leaveCurrentGame(){
-    final game = player.game;
-    game.removePlayer(player);
-  }
-
-  void joinGame(AmuletGame game){
-    leaveCurrentGame();
-    player.game = game;
-    player.amuletGame = game;
-    player.active = true;
-    game.add(player);
-  }
-
   Future joinGameEditorScene(Scene scene) async {
     // final game = AmuletGameEditor(
     //   scene: scene,
@@ -1256,27 +1242,5 @@ class AmuletController {
       keySpaceDown: keyDownSpace,
       keyDownShift: keyDownShift,
     );
-  }
-
-  void playerJoinGameTutorial() {
-    joinGame(amulet.buildAmuletGameTutorial());
-  }
-
-  void playerJoin(){
-    playerJoinAmuletTown();
-    // if (player.tutorialObjective == QuestTutorial.Finished) {
-    //   playerJoinAmuletTown();
-    // } else {
-    //   playerJoinGameTutorial();
-    // }
-  }
-
-  void playerJoinAmuletTown() {
-    final game = amulet.amuletGameWorld11;
-    joinGame(game);
-    // game.movePositionToIndex(player, game.indexSpawnPlayer);
-    // player.x += giveOrTake(5);
-    // player.y += giveOrTake(5);
-    player.writePlayerMoved();
   }
 }

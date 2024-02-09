@@ -59,7 +59,7 @@ class Amulet {
   late AmuletGame amuletGameWorld01;
   late AmuletGame amuletGameWorld02;
   late AmuletGame amuletGameWorld10;
-  late AmuletGameWorld11 amuletGameWorld11;
+  late AmuletGameWorld11 amuletGameVillage;
   late AmuletGame amuletGameWorld12;
   late AmuletGame amuletGameWorld20;
   late AmuletGame amuletGameWorld21;
@@ -130,13 +130,13 @@ class Amulet {
       amuletScene: AmuletScene.World_01
     );
 
-    amuletGameWorld11 = AmuletGameWorld11(amulet: this);
+    amuletGameVillage = AmuletGameWorld11(amulet: this);
 
     worldMap.add(amuletGameWorld00);
     worldMap.add(amuletGameWorld01);
     worldMap.add(buildEmptyField(AmuletScene.World_02));
     worldMap.add(buildEmptyField(AmuletScene.World_10));
-    worldMap.add(amuletGameWorld11);
+    worldMap.add(amuletGameVillage);
     worldMap.add(buildEmptyField(AmuletScene.World_12));
     worldMap.add(buildEmptyField(AmuletScene.World_20));
     worldMap.add(buildEmptyField(AmuletScene.World_21));
@@ -348,7 +348,7 @@ class Amulet {
   void playerChangeGameToTown(AmuletPlayer player) =>
       playerChangeGame(
         player: player,
-        target: amuletGameWorld11,
+        target: amuletGameVillage,
         sceneKey: 'spawn_player',
       );
 
@@ -430,14 +430,22 @@ class Amulet {
   }
 
   void revivePlayer(AmuletPlayer player) {
-      if (player.game != amuletGameWorld11){
+      if (player.game != amuletGameVillage){
         playerChangeGameToTown(player);
       } else {
-        amuletGameWorld11.movePositionToIndex(
+        amuletGameVillage.movePositionToIndex(
             player,
-            amuletGameWorld11.indexSpawnPlayer,
+            amuletGameVillage.indexSpawnPlayer,
         );
       }
 
+  }
+
+  AmuletGame findGame(AmuletScene amuletScene) {
+     for (final game in games){
+       if (game.amuletScene != amuletScene) continue;
+       return game;
+     }
+     throw Exception('amulet.findGame($amuletScene) - 404');
   }
 }

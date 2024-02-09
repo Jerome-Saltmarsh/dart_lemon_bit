@@ -104,6 +104,7 @@ class ServerLocal implements Server {
     playerServer.target = null;
     playerServer.interacting = false;
     playerServer.controlsEnabled = true;
+    playerServer.amuletGame = amulet.amuletGameLoading;
     playerServer.setDestinationToCurrentPosition();
     parser.amulet.clearAllState();
     parser.options.game.value = parser.website;
@@ -138,32 +139,31 @@ class ServerLocal implements Server {
       throw Exception('invalid field name');
     }
 
-    ensureInitialized().then((value) async {
-      playerServer.uuid = generateUUID();
-      playerServer.name = name;
-      playerServer.complexion = complexion;
-      playerServer.hairType = hairType;
-      playerServer.hairColor = hairColor;
-      playerServer.gender = gender;
-      playerServer.headType = headType;
-      playerServer.questTutorial = QuestTutorial.values.first;
-      playerServer.setQuestMain(QuestMain.values.first);
-      playerServer.equippedWeapon = null;
-      playerServer.equippedHelm = null;
-      playerServer.equippedShoes = null;
-      playerServer.equippedArmor = null;
-      playerServer.skillTypeLeft = SkillType.Strike;
-      playerServer.skillTypeRight = SkillType.Strike;
-      playerServer.game.movePlayerToSpawnPoint(playerServer);
-      // player.x += giveOrTake(5);
-      // player.y += giveOrTake(5);
-      parser.amulet.windowVisibleQuests.value = true;
-      final json = writeAmuletPlayerToJson(playerServer);
-      final characters = getCharacters();
-      characters.add(json);
-      await persistCharacters(characters);
-      playCharacter(json.uuid);
-    });
+    await ensureInitialized();
+    playerServer.uuid = generateUUID();
+    playerServer.name = name;
+    playerServer.complexion = complexion;
+    playerServer.hairType = hairType;
+    playerServer.hairColor = hairColor;
+    playerServer.gender = gender;
+    playerServer.headType = headType;
+    playerServer.questTutorial = QuestTutorial.values.first;
+    playerServer.equippedWeapon = null;
+    playerServer.equippedHelm = null;
+    playerServer.equippedShoes = null;
+    playerServer.equippedArmor = null;
+    playerServer.skillTypeLeft = SkillType.Strike;
+    playerServer.skillTypeRight = SkillType.Strike;
+    playerServer.amuletGame = amulet.amuletGameVillage;
+    playerServer.x = 1000;
+    playerServer.y = 1000;
+    playerServer.z = 24;
+    playerServer.setQuestMain(QuestMain.values.first);
+    final json = writeAmuletPlayerToJson(playerServer);
+    final characters = getCharacters();
+    characters.add(json);
+    await persistCharacters(characters);
+    playCharacter(playerServer.uuid);
   }
 
   Future persistCharacters(List<Json> characters) =>
@@ -192,15 +192,14 @@ class ServerLocal implements Server {
       playerServer.active = true;
       writeJsonToAmuletPlayer(character, playerServer);
       parser.amulet.windowVisibleQuests.value = true;
-      controller.playerJoin();
-      // playerServer.regainFullHealth();
       amulet.resumeUpdateTimer();
       playerServer.checkAssignedSkillTypes();
       parser.server.onServerConnectionEstablished();
       connected = true;
     }).catchError((error) {
       // parser.options.ui.error.value = 'Load Character Failed';
-      parser.options.ui.error.value = error;
+      print(error);
+      parser.options.ui.error.value = error.toString();
     });
   }
 

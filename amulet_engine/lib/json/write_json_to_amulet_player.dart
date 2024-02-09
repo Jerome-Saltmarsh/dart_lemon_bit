@@ -1,21 +1,22 @@
 
 import 'package:amulet_engine/classes/amulet_fiend.dart';
-import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/quests/quest_main.dart';
+import 'package:amulet_engine/src.dart';
 
 import '../classes/amulet.dart';
-import '../classes/amulet_player.dart';
-import '../packages/src.dart';
-import 'character_json.dart';
 
 void writeJsonToAmuletPlayer(
     CharacterJson json,
     AmuletPlayer player,
 ){
+  final jsonAmulet = json.getChild('amulet');
+  final amuletSceneName = json['amulet_scene_name'];
+  final amuletScene = AmuletScene.findByName(amuletSceneName);
+  final amulet = player.amulet;
+  player.amuletGame = amulet.findGame(amuletScene);
   player.equippedWeapon = AmuletItem.findByName(json.weapon);
   player.equippedHelm = AmuletItem.findByName(json.helm);
   player.equippedArmor = AmuletItem.findByName(json.armor);
   player.equippedShoes = AmuletItem.findByName(json.shoes);
-
   player.uuid = json['uuid'] ?? (throw Exception('json[uuid] is null'));
   player.complexion = json['complexion'] ?? 0;
   player.name = json['name'];
@@ -31,11 +32,8 @@ void writeJsonToAmuletPlayer(
   player.setQuestMain(QuestMain.values[json.tryGetInt('quest_main') ?? 0]);
   player.writePlayerHealth(); // TODO remove game logic
   player.notifyEquipmentDirty(); // TODO remove game logic
-
-  final jsonAmulet = json.tryGetChild('amulet');
-  if (jsonAmulet != null) {
-    writeJsonAmuletToMemory(jsonAmulet, player.amulet);
-  }
+  writeJsonAmuletToMemory(jsonAmulet, player.amulet);
+  player.joinGame(player.amuletGame);
 }
 
 void writeJsonAmuletToMemory(Json jsonAmulet, Amulet amulet) {

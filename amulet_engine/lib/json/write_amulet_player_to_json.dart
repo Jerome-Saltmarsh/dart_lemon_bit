@@ -35,6 +35,7 @@ CharacterJson writeAmuletPlayerToJson(AmuletPlayer player){
   json['hairType'] = player.hairType;
   json['hairColor'] = player.hairColor;
   json['initialized'] = player.initialized;
+  json['amulet_scene_name'] = player.amuletGame.amuletScene.name;
   json['amulet'] = writeAmuletToJson(player.amulet);
   return json;
 }

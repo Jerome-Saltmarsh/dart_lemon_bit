@@ -2712,6 +2712,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   void onPlayerJoined(T player) {
     player.game = this;
+    player.active = true;
     player.sceneDownloaded = false;
     player.downloadScene();
   }

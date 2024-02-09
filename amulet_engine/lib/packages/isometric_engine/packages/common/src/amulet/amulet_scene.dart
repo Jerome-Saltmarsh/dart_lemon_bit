@@ -18,4 +18,13 @@ enum AmuletScene {
 
   final int level;
   const AmuletScene({required this.level});
+
+  static AmuletScene findByName(String name){
+    for (final value in values){
+      if (value.name == name) {
+        return value;
+      }
+    }
+    throw Exception('AmuletScene.findByName("$name")');
+  }
 }

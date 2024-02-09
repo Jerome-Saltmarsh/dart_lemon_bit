@@ -1271,4 +1271,11 @@ class AmuletPlayer extends IsometricPlayer with
     writeUInt16(totalAlive);
     writeUInt16(totalDead);
   }
+
+  void leaveCurrentGame() => game.removePlayer(this);
+
+  void joinGame(AmuletGame game){
+    leaveCurrentGame();
+    game.add(this);
+  }
 }
