@@ -154,7 +154,8 @@ class ServerLocal implements Server {
     playerServer.equippedArmor = null;
     playerServer.skillTypeLeft = SkillType.Strike;
     playerServer.skillTypeRight = SkillType.Strike;
-    playerServer.amuletGame = amuletGameVillage;
+    parser.amulet.windowVisibleQuests.value = true;
+    parser.amulet.windowVisiblePlayerStats.value = true;
     playerServer.setQuestMain(QuestMain.values.first);
     amuletGameVillage.movePositionToIndex(
         playerServer,
@@ -193,7 +194,6 @@ class ServerLocal implements Server {
       playerServer.active = true;
       writeJsonToAmuletPlayer(character, playerServer);
       playerServer.writePlayerMoved();
-      parser.amulet.windowVisibleQuests.value = true;
       amulet.resumeUpdateTimer();
       playerServer.checkAssignedSkillTypes();
       parser.server.onServerConnectionEstablished();

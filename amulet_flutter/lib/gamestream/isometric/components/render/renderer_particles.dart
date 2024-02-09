@@ -413,7 +413,7 @@ class RendererParticles extends RenderGroup {
       renderModulateSquare(
         dstX: dstX,
         dstY: dstY,
-        color: colors[((1.0 - i) * colors.length).toInt()].value,
+        color: colors[(i * colors.length).toInt()].value,
         scale: scale,
       );
 

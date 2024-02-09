@@ -30,9 +30,9 @@ void writeJsonToAmuletPlayer(
   player.y = json.getDouble('y');
   player.z = json.getDouble('z');
   player.setQuestMain(QuestMain.values[json.tryGetInt('quest_main') ?? 0]);
-  player.writePlayerHealth(); // TODO remove game logic
-  player.notifyEquipmentDirty(); // TODO remove game logic
   writeJsonAmuletToMemory(jsonAmulet, player.amulet);
+  player.writePlayerHealth();
+  player.notifyEquipmentDirty();
   player.joinGame(player.amuletGame);
 }
 
