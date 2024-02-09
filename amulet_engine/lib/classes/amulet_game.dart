@@ -628,18 +628,49 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   @override
   void customOnCharacterKilled(Character target, src) {
 
-    if (target.respawnDurationTotal > 0){
-      addJob(seconds: target.respawnDurationTotal, action: () {
-        dispatchGameEventPosition(GameEvent.Character_Vanished, target);
-        setCharacterStateSpawning(target);
-        target.moveToStartPosition();
-        dispatchGameEventPosition(GameEvent.Character_Vanished, target);
-      });
-    }
+    // if (target.respawnDurationTotal > 0){
+    //   addJob(seconds: target.respawnDurationTotal, action: () {
+    //     dispatchGameEventPosition(GameEvent.Character_Vanished, target);
+    //     setCharacterStateSpawning(target);
+    //     target.moveToStartPosition();
+    //     dispatchGameEventPosition(GameEvent.Character_Vanished, target);
+    //   });
+    // }
 
     dispatchFiendCount();
 
     if (target is AmuletFiend) {
+      if (randomChance(target.fiendType.chanceOfDropPotion)) {
+        spawnAmuletItemAtPosition(
+          item: AmuletItem.Consumables.random,
+          position: target,
+          deactivationTimer: lootDeactivationTimer,
+        );
+      }
+
+      if (getFiendCountAlive() == 0){
+        final items = AmuletItem.find(
+            itemQuality: ItemQuality.Rare,
+            level: amuletScene.level,
+        );
+        if (items.isNotEmpty) {
+          spawnAmuletItemAtPosition(
+            item: randomItem(items),
+            position: target,
+          );
+        }
+
+        spawnAmuletItemAtPosition(
+          item: AmuletItem.Consumable_Potion_Health,
+          position: target,
+        );
+
+        spawnAmuletItemAtPosition(
+          item: AmuletItem.Consumable_Potion_Health,
+          position: target,
+        );
+      }
+
       if (randomChance(target.fiendType.chanceOfDropLegendary)) {
         spawnRandomLootAtFiend(target, itemQuality: ItemQuality.Legendary);
         return;
@@ -655,17 +686,21 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         return;
       }
 
-      if (randomChance(target.fiendType.chanceOfDropPotion)) {
-        spawnAmuletItemAtPosition(
-          item: AmuletItem.Consumables.random,
-          position: target,
-          deactivationTimer: lootDeactivationTimer,
-        );
-        return;
-      }
-
     }
   }
+
+  int getFiendCountAlive() {
+    var totalAlive = 0;
+    final characters = this.characters;
+    for (final character in characters){
+      if (character is! AmuletFiend) continue;
+      if (character.alive) {
+        totalAlive++;
+      }
+    }
+    return totalAlive;
+  }
+
 
   void dispatchFiendCount(){
      for (final player in players){
@@ -751,7 +786,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       frameSpawned: frame,
       deactivationTimer: deactivationTimer ?? gameObjectDeactivationTimer,
     )
-      ..velocityZ = 10
+      ..velocityZ = 5
       ..setVelocity(randomAngle(), 1.0);
 
     add(amuletGameObject);

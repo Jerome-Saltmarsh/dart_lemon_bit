@@ -660,6 +660,16 @@ enum AmuletItem {
       .where((element) => element.isConsumable)
       .toList(growable: false);
 
+  static Iterable<AmuletItem> find({
+    required ItemQuality itemQuality,
+    required int level,
+  }) =>
+      values.where((amuletItem) =>
+        amuletItem.quality == itemQuality &&
+        amuletItem.levelMin <= level &&
+        amuletItem.levelMax > level
+      );
+
   void validate() {
     if (isWeapon){
       if ((performDuration == null)) {
