@@ -135,11 +135,11 @@ class ServerLocal implements Server {
     required int gender,
     required int headType,
   }) async {
+    await ensureInitialized();
     if (name == FIELD_CHARACTERS) {
       throw Exception('invalid field name');
     }
-
-    await ensureInitialized();
+    final amuletGameVillage = amulet.amuletGameVillage;
     playerServer.uuid = generateUUID();
     playerServer.name = name;
     playerServer.complexion = complexion;
@@ -154,11 +154,12 @@ class ServerLocal implements Server {
     playerServer.equippedArmor = null;
     playerServer.skillTypeLeft = SkillType.Strike;
     playerServer.skillTypeRight = SkillType.Strike;
-    playerServer.amuletGame = amulet.amuletGameVillage;
-    playerServer.x = 1000;
-    playerServer.y = 1000;
-    playerServer.z = 24;
+    playerServer.amuletGame = amuletGameVillage;
     playerServer.setQuestMain(QuestMain.values.first);
+    amuletGameVillage.movePositionToIndex(
+        playerServer,
+        amuletGameVillage.indexSpawnPlayer,
+    );
     final json = writeAmuletPlayerToJson(playerServer);
     final characters = getCharacters();
     characters.add(json);
@@ -191,6 +192,7 @@ class ServerLocal implements Server {
     ensureInitialized().then((value) {
       playerServer.active = true;
       writeJsonToAmuletPlayer(character, playerServer);
+      playerServer.writePlayerMoved();
       parser.amulet.windowVisibleQuests.value = true;
       amulet.resumeUpdateTimer();
       playerServer.checkAssignedSkillTypes();
