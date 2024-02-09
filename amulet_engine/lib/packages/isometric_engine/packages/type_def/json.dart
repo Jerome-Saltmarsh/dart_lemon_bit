@@ -25,8 +25,6 @@ extension JsonExtension on Json {
     return (this[key] as List).cast<T>();
   }
 
-  List<T> getList<T>(String key)=> (this[key] as List).cast<T>();
-
   Json getChild(String key){
     if (!containsKey(key)) {
       throw Exception("json.getChild($key). No key");
@@ -34,6 +32,21 @@ extension JsonExtension on Json {
     final value = this[key];
     if (value is Json) return value;
     throw Exception("value $key is not a json object");
+  }
+
+  List<Json> getObjects(String key) => getList<Json>(key);
+
+  List<T> getList<T>(String key){
+    if (!containsKey(key)) {
+      throw Exception("json.getList($key). No key");
+    }
+    final value = this[key];
+    if (value is! List){
+      throw Exception('value is not list');
+    }
+    return value.cast<T>();
+    // if (value is List<Json>) return value;
+    // throw Exception("value $key is not a json object");
   }
 
   List<J> mapList<T, J>(String key, J Function(T t) mapper){

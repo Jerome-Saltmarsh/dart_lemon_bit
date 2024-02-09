@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.gamestream" "\0"
-            VALUE "FileDescription", "amulet_flutter" "\0"
+            VALUE "CompanyName", "com.amulet" "\0"
+            VALUE "FileDescription", "amulet" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "amulet_flutter" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2022 com.gamestream. All rights reserved." "\0"
-            VALUE "OriginalFilename", "amulet_flutter.exe" "\0"
-            VALUE "ProductName", "amulet_flutter" "\0"
+            VALUE "InternalName", "amulet" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2022 Jerome Saltmarsh. All rights reserved." "\0"
+            VALUE "OriginalFilename", "amulet.exe" "\0"
+            VALUE "ProductName", "amulet" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

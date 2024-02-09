@@ -107,7 +107,7 @@ class ServerLocal implements Server {
     playerServer.setDestinationToCurrentPosition();
     parser.amulet.clearAllState();
     parser.options.game.value = parser.website;
-    amulet.resetGames();
+    // amulet.resetGames();
     amulet.updateTimer?.cancel();
     amulet.timerRefreshUserCharacterLocks?.cancel();
   }
@@ -190,11 +190,14 @@ class ServerLocal implements Server {
       writeJsonToAmuletPlayer(character, playerServer);
       parser.amulet.windowVisibleQuests.value = true;
       controller.playerJoin();
-      playerServer.regainFullHealth();
+      // playerServer.regainFullHealth();
       amulet.resumeUpdateTimer();
       playerServer.checkAssignedSkillTypes();
       parser.server.onServerConnectionEstablished();
       connected = true;
+    }).catchError((error) {
+      // parser.options.ui.error.value = 'Load Character Failed';
+      parser.options.ui.error.value = error;
     });
   }
 

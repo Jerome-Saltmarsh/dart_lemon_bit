@@ -80,7 +80,13 @@ class IsometricUI with IsometricComponent {
                      crossAxisAlignment: CrossAxisAlignment.end,
                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                      children: [
-                       buildText(error, color: Colors.red),
+                       SingleChildScrollView(
+                         child: Container(
+                           constraints: BoxConstraints(
+                           maxHeight: 200,
+                           ),
+                           child: buildText(error, color: Colors.red)),
+                       ),
                        height16,
                        onPressed(
                          action: () => this.error.value = null,
