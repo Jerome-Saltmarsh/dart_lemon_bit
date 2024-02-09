@@ -626,4 +626,5 @@ class Scene {
     keys[name] = value;
     clearCompiled();
   }
+
 }

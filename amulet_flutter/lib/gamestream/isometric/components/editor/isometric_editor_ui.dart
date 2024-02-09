@@ -56,6 +56,7 @@ extension IsometricEditorUI on IsometricEditor {
     NodeType.Tiles,
     NodeType.Palisade,
     NodeType.Shadow,
+    NodeType.Shrine,
   ];
 
   static const nodeTypesColumn2 = [

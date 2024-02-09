@@ -110,17 +110,17 @@ class AmuletPlayer extends IsometricPlayer with
     writeQuestMain(value);
   }
 
-  @override
-  set aimTarget(Collider? value) {
-    if (
-    noWeaponEquipped &&
-        value is GameObject &&
-        value.hitable
-    ){
-      return;
-    }
-    super.aimTarget = value;
-  }
+  // @override
+  // set aimTarget(Collider? value) {
+  //   if (
+  //   noWeaponEquipped &&
+  //       value is GameObject &&
+  //       value.hitable
+  //   ){
+  //     return;
+  //   }
+  //   super.aimTarget = value;
+  // }
 
   bool get noWeaponEquipped => equippedWeapon == null;
 

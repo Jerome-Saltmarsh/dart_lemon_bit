@@ -32,6 +32,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required this.amuletScene,
   }) {
     spawnFiendsAtSpawnNodes();
+    spawnShrineGameObjects();
     refreshFlatNodes();
   }
 
@@ -1090,6 +1091,38 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         dispatchGameEventPosition(GameEvent.Magic_Regained, src);
       }
     }
+  }
+
+  void spawnShrineGameObjects() {
+    final nodeTypes = scene.types;
+    final nodeTypesLength = nodeTypes.length;
+    for (var index = 0; index < nodeTypesLength; index++){
+      final nodeType = nodeTypes[index];
+      if (nodeType != NodeType.Shrine) continue;
+      final shrineObject = spawnGameObjectAtIndex(
+          index: index,
+          type: ItemType.Object,
+          subType: GameObjectType.Interactable,
+          team: TeamType.Neutral,
+      );
+
+      shrineObject.persistable = false;
+      shrineObject.interactable = true;
+      shrineObject.customName = 'Shrine';
+      shrineObject.onInteract = (src){
+          if (src is AmuletPlayer) {
+            useShrine(src, shrineObject);
+          }
+        };
+    }
+  }
+
+  void useShrine(AmuletPlayer player, GameObject shrineObject) {
+    player.regainFullMagic();
+    player.regainFullHealth();
+    final nodeIndex = scene.getIndexPosition(shrineObject);
+    deactivate(shrineObject);
+    setNode(nodeIndex: nodeIndex, variation: NodeType.variationShrineInactive);
   }
 }
 

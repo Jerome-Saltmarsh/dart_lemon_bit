@@ -50,6 +50,7 @@ class NodeType {
   static const Tiles = 93;
   static const Palisade = 94;
   static const Shadow = 95;
+  static const Shrine = 96;
 
   static bool supportsOrientationSolid(int type) => const [
         Brick,
@@ -105,7 +106,8 @@ class NodeType {
         Road,
         Metal,
         Tree_Stump,
-        Fireplace
+        Fireplace,
+        Shrine,
   ].contains(type);
 
   static bool supportsOrientationSlopeSymmetric(int type) => const [
@@ -340,6 +342,7 @@ class NodeType {
     Tiles: 'Tiles',
     Palisade: 'Palisade',
     Shadow: 'Shadow',
+    Shrine: 'Shrine',
   }[type] ?? 'unknown($type)';
 
   static bool isLightSource(int type) => const [
@@ -348,4 +351,8 @@ class NodeType {
       NodeType.Torch_Red,
       NodeType.Fireplace,
     ].contains(type);
+
+  static const variationShrineActive = 1;
+  static const variationShrineInactive = 0;
 }
+

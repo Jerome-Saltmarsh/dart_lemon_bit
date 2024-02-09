@@ -317,12 +317,6 @@ class RendererParticles extends RenderGroup {
           );
           break;
         case ParticleType.Flame:
-          // renderModulateSquare(
-          //   dstX: dstX,
-          //   dstY: dstY,
-          //   color: colorsFlame[((1.0 - particle.duration01) * colorsFlame.length).toInt()].value,
-          //   scale: particle.scale,
-          // );
           renderSquareInterpolation(
             dstX: dstX,
             dstY: dstY,
@@ -332,12 +326,6 @@ class RendererParticles extends RenderGroup {
           );
           break;
         case ParticleType.Water:
-          // renderModulateSquare(
-          //   dstX: dstX,
-          //   dstY: dstY,
-          //   color: colorsWater[((1.0 - particle.duration01) * colorsWater.length).toInt()].value,
-          //   scale: particle.scale,
-          // );
           renderSquareInterpolation(
             dstX: dstX,
             dstY: dstY,

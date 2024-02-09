@@ -1040,6 +1040,15 @@ class RendererNodes extends RenderGroup {
           color: color,
         );
         break;
+      case NodeType.Shrine:
+        renderStandardNode(
+          srcX: variation == 0 ? 848 : 897,
+          srcY: 80,
+          dstX: dstX,
+          dstY: dstY,
+          color: color,
+        );
+        break;
       case NodeType.Concrete:
         renderNodeTemplateShaded(
             srcX: IsometricConstants.Sprite_Width_Padded_8,
