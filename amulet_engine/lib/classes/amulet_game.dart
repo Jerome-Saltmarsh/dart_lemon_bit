@@ -32,7 +32,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required this.amuletScene,
   }) {
     spawnFiendsAtSpawnNodes();
-    spawnShrineGameObjects();
     refreshFlatNodes();
   }
 
@@ -1093,27 +1092,21 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
   }
 
-  void spawnShrineGameObjects() {
-    final nodeTypes = scene.types;
-    final nodeTypesLength = nodeTypes.length;
-    for (var index = 0; index < nodeTypesLength; index++){
-      final nodeType = nodeTypes[index];
-      if (nodeType != NodeType.Shrine) continue;
-      final shrineObject = spawnGameObjectAtIndex(
-          index: index,
-          type: ItemType.Object,
-          subType: GameObjectType.Interactable,
-          team: TeamType.Neutral,
-      );
-      shrineObject.persistable = false;
-      shrineObject.interactable = true;
-      shrineObject.customName = 'Shrine';
-      shrineObject.onInteract = (src){
-          if (src is AmuletPlayer) {
-            useShrine(src, shrineObject);
-          }
-        };
-    }
+  void spawnGameObjectShrine(int index) {
+    final shrineObject = spawnGameObjectAtIndex(
+      index: index,
+      type: ItemType.Object,
+      subType: GameObjectType.Interactable,
+      team: TeamType.Neutral,
+    );
+    shrineObject.persistable = false;
+    shrineObject.interactable = true;
+    shrineObject.customName = 'Shrine';
+    shrineObject.onInteract = (src){
+      if (src is AmuletPlayer) {
+        useShrine(src, shrineObject);
+      }
+    };
   }
 
   void useShrine(AmuletPlayer player, GameObject shrineObject) {

@@ -8,4 +8,5 @@ class NetworkResponseScene {
   static const Download_Scene = 4;
   static const Name = 5;
   static const Keys = 6;
+  static const Variations = 7;
 }

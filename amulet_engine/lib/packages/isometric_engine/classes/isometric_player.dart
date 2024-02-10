@@ -2,6 +2,8 @@
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:amulet_engine/packages/isometric_engine/instances/encoder.dart';
+
 import '../isometric_engine.dart';
 import '../consts/isometric_settings.dart';
 
@@ -557,6 +559,7 @@ class IsometricPlayer extends Character with ByteWriter {
     writePlayerTeam();
     writeEditEnabled();
     writeScene();
+    writeSceneVariations();
     writeWeather();
     writeGameObjects();
     writeFPS();
@@ -1341,6 +1344,22 @@ class IsometricPlayer extends Character with ByteWriter {
     writeInt16(x.toInt());
     writeInt16(y.toInt());
     writeInt16(z.toInt());
+  }
+
+  void writeSceneVariations(){
+    writeByte(NetworkResponse.Scene);
+    writeByte(NetworkResponseScene.Variations);
+    compressAndWrite(game.scene.variations);
+    // final variations = game.scene.variations;
+    // final compressed = encoder.encode(variations);
+    // writeUInt16(compressed.length);
+    // writeBytes(compressed);
+  }
+
+  void compressAndWrite(List<int> bytes) {
+    final compressed = encoder.encode(bytes);
+    writeUInt16(compressed.length);
+    writeBytes(compressed);
   }
 
   void writeSceneKeys() {

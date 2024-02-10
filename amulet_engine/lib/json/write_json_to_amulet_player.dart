@@ -54,14 +54,17 @@ void writeJsonAmuletToMemory(Json jsonAmulet, Amulet amulet) {
          final nodeTypes = game.scene.types;
          final nodeTypesLength = nodeTypes.length;
          final variations = game.scene.variations;
-         for (var i = 0; i < nodeTypesLength; i++){
-            final nodeType = nodeTypes[i];
-            if (nodeType != NodeType.Shrine) continue;
-            variations[i] = NodeType.variationShrineActive;
-         }
          final shrinesUsed = sceneJson.getListInt('shrines_used');
-         for (final shrineIndex in shrinesUsed) {
-           variations[shrineIndex] = NodeType.variationShrineInactive;
+         for (var index = 0; index < nodeTypesLength; index++) {
+            final nodeType = nodeTypes[index];
+            if (nodeType != NodeType.Shrine) continue;
+            final shrineUsed = shrinesUsed.contains(index);
+            variations[index] = shrineUsed
+                ? NodeType.variationShrineInactive
+                : NodeType.variationShrineActive;
+            if (!shrineUsed){
+              game.spawnGameObjectShrine(index);
+            }
          }
          break;
       }

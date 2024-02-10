@@ -696,6 +696,9 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
       case NetworkResponseScene.Keys:
         readNetworkResponseSceneKeys();
         break;
+      case NetworkResponseScene.Variations:
+        readNetworkResponseSceneVariations();
+        break;
     }
   }
 
@@ -779,4 +782,16 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
   void close() {
     // TODO: implement close
   }
+
+  void readNetworkResponseSceneVariations() =>
+      scene.nodeVariations = readCompressed();
+
+  Uint8List readCompressed(){
+    final compressedLength = readUInt16();
+    final compressedBytes = readBytes(compressedLength);
+    return Uint8List.fromList(decoder.decodeBytes(compressedBytes));
+  }
+
+
+
 }
