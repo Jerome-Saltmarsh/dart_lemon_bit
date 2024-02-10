@@ -28,6 +28,8 @@ void writeJsonToAmuletPlayer(
   player.x = json.getDouble('x');
   player.y = json.getDouble('y');
   player.z = json.getDouble('z');
+  player.skillTypeLeft = json.skillTypeLeft;
+  player.skillTypeRight = json.skillTypeRight;
   player.setQuestMain(QuestMain.values[json.tryGetInt('quest_main') ?? 0]);
   writeJsonAmuletToMemory(jsonAmulet, player);
   player.writePlayerHealth();

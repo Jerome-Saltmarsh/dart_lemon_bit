@@ -19,6 +19,8 @@ CharacterJson writeAmuletPlayerToJson(AmuletPlayer player){
   json.helm = player.equippedHelm?.name ?? '-';
   json.armor = player.equippedArmor?.name ?? '-';
   json.shoes = player.equippedShoes?.name ?? '-';
+  json.skillTypeLeft = player.skillTypeLeft;
+  json.skillTypeRight = player.skillTypeRight;
   json['x'] = player.x.toInt();
   json['y'] = player.y.toInt();
   json['z'] = player.z.toInt();

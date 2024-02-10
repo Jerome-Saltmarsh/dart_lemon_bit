@@ -173,10 +173,6 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
         readSelectedCollider();
         break;
 
-      // case NetworkResponseIsometric.Scene:
-      //   readScene();
-      //   break;
-
       case NetworkResponseIsometric.Game_Running:
         readGameRunning();
         break;

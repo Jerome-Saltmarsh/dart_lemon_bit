@@ -1,3 +1,5 @@
+import 'package:amulet_engine/packages/common.dart';
+
 import '../packages/isometric_engine/packages/type_def/json.dart';
 
 typedef CharacterJson = Json;
@@ -10,6 +12,8 @@ extension CharacterJsonExtension on CharacterJson {
   static const FIELD_HELM = 'helm';
   static const FIELD_ARMOR = 'body';
   static const FIELD_SHOES = 'shoes';
+  static const FIELD_SKILL_TYPE_LEFT = 'skill_type_left';
+  static const FIELD_SKILL_TYPE_RIGHT = 'skill_type_right';
 
   String get weapon => tryGetString(FIELD_WEAPON) ?? '-';
 
@@ -23,6 +27,10 @@ extension CharacterJsonExtension on CharacterJson {
 
   String get name => getString(FIELD_NAME);
 
+  SkillType get skillTypeLeft => SkillType.parse(getString(FIELD_SKILL_TYPE_LEFT));
+
+  SkillType get skillTypeRight => SkillType.parse(getString(FIELD_SKILL_TYPE_RIGHT));
+
   set weapon(String value) => setString(FIELD_WEAPON, value);
 
   set helm(String value) => setString(FIELD_HELM, value);
@@ -34,6 +42,10 @@ extension CharacterJsonExtension on CharacterJson {
   set uuid(String value) => setString(FIELD_UUID, value);
 
   set name(String value) => setString(FIELD_NAME, value);
+
+  set skillTypeLeft(SkillType skillType) => setString(FIELD_SKILL_TYPE_LEFT, skillType.name);
+
+  set skillTypeRight(SkillType skillType) => setString(FIELD_SKILL_TYPE_RIGHT, skillType.name);
 
   void setString(String key, String value){
     this[key] = value;
