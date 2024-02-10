@@ -589,9 +589,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   void onGridChanged() {
     scene.refreshMetrics();
-    for (final player in players) {
-      player.writeScene();
-    }
+    dispatchDownloadScene();
   }
 
   void deactivate(Collider collider) {
@@ -2029,7 +2027,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     scene.shapes[nodeIndex] = orientation;
     scene.types[nodeIndex] = nodeType;
     scene.variations[nodeIndex] = variation;
-    scene.clearCompiled();
 
     final players = this.players;
     for (final player in players) {
@@ -2694,15 +2691,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
   }
 
-  void notifyPlayersSceneChanged() {
-    scene.compiled = null;
-    for (final player in players){
-      player.writeScene();
-    }
-  }
-
   void dispatchDownloadScene(){
-    scene.compiled = null;
     for (final player in players){
       player.sceneDownloaded = false;
     }

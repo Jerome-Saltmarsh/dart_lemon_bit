@@ -1,6 +1,5 @@
 
 class NetworkResponseIsometric {
- static const Scene = 0;
  static const Selected_Collider = 2;
  static const Player_Weapon_Duration_Percentage = 3;
  static const GameObjects = 7;

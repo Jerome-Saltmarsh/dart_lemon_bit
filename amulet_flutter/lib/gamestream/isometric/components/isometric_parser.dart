@@ -173,9 +173,9 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
         readSelectedCollider();
         break;
 
-      case NetworkResponseIsometric.Scene:
-        readScene();
-        break;
+      // case NetworkResponseIsometric.Scene:
+      //   readScene();
+      //   break;
 
       case NetworkResponseIsometric.Game_Running:
         readGameRunning();
@@ -298,46 +298,46 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
     }
   }
 
-  void readScene() {
-    options.game.value = options.amulet;
-
-    print('readScene()');
-    final scenePart = readByte(); /// DO NOT DELETE
-
-    final scene = this.scene;
-    scene.clearVisited();
-    scene.totalZ = readUInt16();
-    scene.totalRows = readUInt16();
-    scene.totalColumns = readUInt16();
-
-    final compressedNodeTypeLength = readUInt24();
-    final compressedNodeOrientationsLength = readUInt24();
-
-    final compressedNodeTypes = readUint8List(compressedNodeTypeLength);
-    final compressedNodeOrientations = readUint8List(compressedNodeOrientationsLength);
-
-    final scenePartMarks = readByte(); /// DO NOT DELETE
-    final marksLength = readUInt16();
-    final marks = readUint32List(marksLength);
-    scene.marks = marks;
-    scene.marksChangedNotifier.value++;
-
-    final scenePartKeys = readByte(); /// DO NOT DELETE
-    readNetworkResponseSceneKeys();
-
-    final scenePartVariations = readByte(); /// DO NOT DELETE
-    final compressedVariationsLength = readUInt24();
-    final compressedVariations = readUint8List(compressedVariationsLength);
-    scene.nodeVariations = Uint8List.fromList(decoder.decodeBytes(compressedVariations));
-
-    scene.nodeTypes = Uint8List.fromList(decoder.decodeBytes(compressedNodeTypes));
-    scene.nodeOrientations = Uint8List.fromList(decoder.decodeBytes(compressedNodeOrientations));
-    scene.colorStack.fillRange(0, scene.colorStack.length, scene.ambientColor);
-    events.onChangedNodes();
-    particles.clearParticles();
-    io.recenterCursor();
-    scene.loaded = true;
-  }
+  // void readScene() {
+  //   options.game.value = options.amulet;
+  //
+  //   print('readScene()');
+  //   final scenePart = readByte(); /// DO NOT DELETE
+  //
+  //   final scene = this.scene;
+  //   scene.clearVisited();
+  //   scene.totalZ = readUInt16();
+  //   scene.totalRows = readUInt16();
+  //   scene.totalColumns = readUInt16();
+  //
+  //   final compressedNodeTypeLength = readUInt24();
+  //   final compressedNodeOrientationsLength = readUInt24();
+  //
+  //   final compressedNodeTypes = readUint8List(compressedNodeTypeLength);
+  //   final compressedNodeOrientations = readUint8List(compressedNodeOrientationsLength);
+  //
+  //   final scenePartMarks = readByte(); /// DO NOT DELETE
+  //   final marksLength = readUInt16();
+  //   final marks = readUint32List(marksLength);
+  //   scene.marks = marks;
+  //   scene.marksChangedNotifier.value++;
+  //
+  //   final scenePartKeys = readByte(); /// DO NOT DELETE
+  //   readNetworkResponseSceneKeys();
+  //
+  //   final scenePartVariations = readByte(); /// DO NOT DELETE
+  //   final compressedVariationsLength = readUInt24();
+  //   final compressedVariations = readUint8List(compressedVariationsLength);
+  //   scene.nodeVariations = Uint8List.fromList(decoder.decodeBytes(compressedVariations));
+  //
+  //   scene.nodeTypes = Uint8List.fromList(decoder.decodeBytes(compressedNodeTypes));
+  //   scene.nodeOrientations = Uint8List.fromList(decoder.decodeBytes(compressedNodeOrientations));
+  //   scene.colorStack.fillRange(0, scene.colorStack.length, scene.ambientColor);
+  //   events.onChangedNodes();
+  //   particles.clearParticles();
+  //   io.recenterCursor();
+  //   scene.loaded = true;
+  // }
 
   void readPlayerAimTarget() {
     final aimTargetSet = readBool();

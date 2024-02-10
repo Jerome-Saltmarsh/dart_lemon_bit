@@ -16,8 +16,6 @@ class Scene {
   Uint8List shapes;
   Uint8List variations;
 
-  Uint8List? compiled;
-
   /// used for pathfinding to contains the the index of a previous path
   final visitHistory = Uint32List(10000);
   final visitStack = Uint32List(10000);
@@ -88,13 +86,7 @@ class Scene {
     }
     types[index] = type;
     shapes[index] = orientation;
-    clearCompiled();
   }
-
-  void clearCompiled() {
-    compiled = null;
-  }
-
 
   int getTypeXYZ(double x, double y, double z) =>
       inboundsXYZ(x, y, z)
@@ -579,7 +571,6 @@ class Scene {
 
   void addKey(String name, int value){
     keys[name] = value;
-    clearCompiled();
   }
 
   /// returns the associated node index
@@ -602,12 +593,10 @@ class Scene {
 
   void deleteKey(String keyName){
     keys.remove(keyName);
-    clearCompiled();
   }
 
   void setKey(String name, int value){
     keys[name] = value;
-    clearCompiled();
   }
 
 }

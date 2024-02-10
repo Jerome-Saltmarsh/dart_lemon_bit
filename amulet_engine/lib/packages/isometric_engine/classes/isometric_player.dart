@@ -558,7 +558,6 @@ class IsometricPlayer extends Character with ByteWriter {
     writeSecondsPerFrame();
     writePlayerTeam();
     writeEditEnabled();
-    // writeScene();
     writeSceneDimensions();
     writeSceneVariations();
     writeSceneNodeTypes();
@@ -855,16 +854,16 @@ class IsometricPlayer extends Character with ByteWriter {
     writeDouble(value.z);
   }
 
-  void writeScene() {
-    writeByte(NetworkResponse.Isometric);
-    writeByte(NetworkResponseIsometric.Scene);
-    var compiled = scene.compiled;
-    if (compiled == null) {
-      compiled = SceneWriter().compileScene(scene, gameObjects: false);
-      scene.compiled = compiled;
-    }
-    writeBytes(compiled);
-  }
+  // void writeScene() {
+  //   writeByte(NetworkResponse.Isometric);
+  //   writeByte(NetworkResponseIsometric.Scene);
+  //   var compiled = scene.compiled;
+  //   if (compiled == null) {
+  //     compiled = SceneWriter().compileScene(scene, gameObjects: false);
+  //     scene.compiled = compiled;
+  //   }
+  //   writeBytes(compiled);
+  // }
 
   void writeAngle(double radians){
     writeDouble(radians * radiansToDegrees);

@@ -268,7 +268,7 @@ class AmuletController {
             return;
           case NetworkRequestEdit.Randomize:
             randomizeScene(player.scene);
-            player.game.notifyPlayersSceneChanged();
+            player.game.dispatchDownloadScene();
             break;
         }
         break;
@@ -877,7 +877,7 @@ class AmuletController {
     scene.marks.clear();
     scene.locations.clear();
     scene.keys.clear();
-    player.game.notifyPlayersSceneChanged();
+    player.game.dispatchDownloadScene();
 
   }
 

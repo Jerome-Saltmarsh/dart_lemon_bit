@@ -19,7 +19,7 @@ class AmuletScenesFlutter extends AmuletScenes {
       return;
     }
 
-    scene.clearCompiled();
+    // scene.clearCompiled();
     final sceneWriter = SceneWriter();
     writeBytesToFile(
       fileName: '${scene.name}.scene',
