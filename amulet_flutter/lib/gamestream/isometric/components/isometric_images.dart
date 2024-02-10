@@ -105,6 +105,7 @@ class IsometricImages with IsometricComponent {
   late final Sprite crystalSouth;
   late final Sprite crystalWest;
   late final Sprite barrelWooden;
+  late final Sprite shrine;
 
   late final CharacterSpriteGroup spriteGroupEmpty;
 
@@ -335,6 +336,10 @@ class IsometricImages with IsometricComponent {
         atlasX: 995,
         atlasY: 0,
     ).then((value) => barrelWooden = value);
+
+    loadSprite(
+        name: 'assets/sprites/isometric/gameobjects/shrine',
+    ).then((value) => shrine = value);
 
     loadCharacterShader(dirGoblin).then((value) => characterShaderFallen = value);
     loadCharacterShader(dirFallenArmoured).then((value) => characterShaderFallenArmoured = value);

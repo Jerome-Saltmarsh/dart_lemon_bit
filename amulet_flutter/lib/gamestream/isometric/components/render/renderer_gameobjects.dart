@@ -196,12 +196,8 @@ class RendererGameObjects extends RenderGroup {
     required int colorSouth,
     required int colorWest,
   }) {
-    final scene = this.scene;
-    final gameObjectIndex = scene.getIndexPosition(gameObject);
     const scale = 0.35;
-
     const anchorY = 0.66;
-
     final sprite = images.crystal;
 
     engine.setBlendModeModulate();

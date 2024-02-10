@@ -1041,23 +1041,15 @@ class RendererNodes extends RenderGroup {
         );
         break;
       case NodeType.Shrine:
-        rendererGameObjects.renderCrystal(
+        render.renderSpriteAutoIndexedNESW(
+          sprite: images.shrine,
           dstX: dstX,
-          dstY: dstY + 25,
-          glowing: variation == NodeType.variationShrineActive,
-          colorNorth: scene.colorNorth(index),
-          colorEast: scene.colorEast(index),
-          colorSouth: scene.colorSouth(index),
-          colorWest: scene.colorWest(index),
+          dstY: dstY + 15,
+          index: index,
+          anchorY: 0.66,
+          scale: 1.0,
         );
         engine.bufferImage = images.atlas_nodes;
-        // renderStandardNode(
-        //   srcX: variation == NodeType.variationShrineActive ? 848 : 897,
-        //   srcY: 80,
-        //   dstX: dstX,
-        //   dstY: dstY,
-        //   color: color,
-        // );
         break;
       case NodeType.Concrete:
         renderNodeTemplateShaded(

@@ -762,6 +762,28 @@ class IsometricRender with IsometricComponent {
     );
   }
 
+  void renderSpriteAutoIndexedNESW({
+    required Sprite sprite,
+    required double dstX,
+    required double dstY,
+    required int index,
+    double scale = 1.0,
+    double anchorY = 0.5,
+  }) {
+    final scene = this.scene;
+    render.renderSpriteAutoNESW(
+      sprite: sprite,
+      dstX: dstX,
+      dstY: dstY,
+      colorNorth: scene.colorNorth(index),
+      colorEast: scene.colorEast(index),
+      colorSouth: scene.colorSouth(index),
+      colorWest: scene.colorWest(index),
+      anchorY: anchorY,
+      scale: scale,
+    );
+  }
+
   /// renders a sprite composed of four frames
   /// flat, shadow, south, west
   void renderSpriteAuto({
@@ -823,6 +845,81 @@ class IsometricRender with IsometricComponent {
       dstY: dstY,
       anchorY: anchorY,
     );
+  }
+
+  void renderSpriteAutoNESW({
+    required Sprite sprite,
+    required double dstX,
+    required double dstY,
+    required int colorNorth,
+    required int colorEast,
+    required int colorSouth,
+    required int colorWest,
+    double scale = 1.0,
+    double anchorY = 0.5,
+  }) {
+    // final ambientRatio = 1.0 - (scene.ambientAlpha / 255);
+    final colorNW = merge32BitColors(colorNorth, colorWest);
+    final colorSE = merge32BitColors(colorSouth, colorEast);
+    final colorFlat = merge32BitColors(colorNW, colorSE);
+    // final adjustedSE = interpolateColors(colorSE, scene.ambientColorNight, ambientRatio);
+
+    // shadow
+    render.sprite(
+      sprite: sprite,
+      frame: 2,
+      color: colorFlat,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
+    // north
+    render.sprite(
+      sprite: sprite,
+      frame: 1,
+      color: colorNorth,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
+    // east
+    render.sprite(
+      sprite: sprite,
+      frame: 0,
+      color: colorEast,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
+    // south
+    render.sprite(
+      sprite: sprite,
+      frame: 3,
+      color: colorSE,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
+    // west
+    render.sprite(
+      sprite: sprite,
+      frame: 4,
+      color: colorNW,
+      scale: scale,
+      dstX: dstX,
+      dstY: dstY,
+      anchorY: anchorY,
+    );
+
+
   }
 
 }
