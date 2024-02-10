@@ -29,8 +29,6 @@ class SceneWriter extends ByteWriter {
 
 
   void writeNodes(Scene scene){
-    scene.removeUnusedNodes();
-
     final compressedNodeTypes = encoder.encode(scene.types);
     final compressedNodeOrientations = encoder.encode(scene.shapes);
     assert (!compressedNodeTypes.any((element) => element > 256));

@@ -560,6 +560,8 @@ class IsometricPlayer extends Character with ByteWriter {
     writeEditEnabled();
     writeScene();
     writeSceneVariations();
+    writeSceneNodeTypes();
+    writeSceneNodeOrientations();
     writeWeather();
     writeGameObjects();
     writeFPS();
@@ -1350,10 +1352,18 @@ class IsometricPlayer extends Character with ByteWriter {
     writeByte(NetworkResponse.Scene);
     writeByte(NetworkResponseScene.Variations);
     compressAndWrite(game.scene.variations);
-    // final variations = game.scene.variations;
-    // final compressed = encoder.encode(variations);
-    // writeUInt16(compressed.length);
-    // writeBytes(compressed);
+  }
+
+  void writeSceneNodeTypes(){
+    writeByte(NetworkResponse.Scene);
+    writeByte(NetworkResponseScene.Node_Types);
+    compressAndWrite(game.scene.types);
+  }
+
+  void writeSceneNodeOrientations(){
+    writeByte(NetworkResponse.Scene);
+    writeByte(NetworkResponseScene.Node_Orientations);
+    compressAndWrite(game.scene.shapes);
   }
 
   void compressAndWrite(List<int> bytes) {

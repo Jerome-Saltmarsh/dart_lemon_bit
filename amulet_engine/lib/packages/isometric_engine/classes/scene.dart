@@ -56,23 +56,6 @@ class Scene {
     refreshMetrics();
   }
 
-  void removeUnusedNodes(){
-    var totalDeleted = 0;
-    final total = types.length;
-     for (var i = 0; i < total; i++) {
-        if (const [
-          // NodeType.Spawn_Player,
-          // NodeType.Spawn,
-          // NodeType.Spawn_Weapon,
-        ].contains(types[i])) {
-          types[i] = NodeType.Empty;
-          totalDeleted++;
-        }
-     }
-     if (totalDeleted > 0){
-       print("total old node types removed: $totalDeleted");
-     }
-  }
 
   void refreshMetrics() {
     if (path.length != types.length) {
