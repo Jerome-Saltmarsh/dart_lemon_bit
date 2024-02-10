@@ -85,6 +85,8 @@ class ServerLocal implements Server {
   Future disconnect() async {
     await persistPlayerServer();
     connected = false;
+    playerServer.flags.clear();
+    playerServer.sceneShrinesUsed.clear();
     playerServer.clearCache();
     playerServer.x = 0.0;
     playerServer.y = 0;
@@ -108,7 +110,6 @@ class ServerLocal implements Server {
     playerServer.setDestinationToCurrentPosition();
     parser.amulet.clearAllState();
     parser.options.game.value = parser.website;
-    // amulet.resetGames();
     amulet.updateTimer?.cancel();
     amulet.timerRefreshUserCharacterLocks?.cancel();
   }

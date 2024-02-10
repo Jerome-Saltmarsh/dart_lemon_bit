@@ -792,7 +792,6 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
   void readNetworkResponseSceneVariations() =>
       scene.nodeVariations = readCompressed();
 
-
   void readNetworkResponseSceneNodeTypes() =>
       scene.nodeTypes = readCompressed();
 

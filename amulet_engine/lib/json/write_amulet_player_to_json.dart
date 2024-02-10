@@ -56,7 +56,7 @@ Json writeAmuletGameToJson(AmuletGame amuletGame, AmuletPlayer amuletPlayer) {
   }
   json['fiends'] = fiends;
   json['scene_index'] = amuletGame.amuletScene.index;
-  json['shrines_used'] = amuletPlayer.sceneShrinesUsed[amuletGame.amuletScene] ?? const [];
+  json['shrines_used'] = amuletPlayer.sceneShrinesUsed[amuletGame.amuletScene] ??  [];
   return json;
 }
 

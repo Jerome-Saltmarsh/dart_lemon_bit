@@ -1119,7 +1119,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     if (!sceneShrinesUsed.containsKey(amuletScene)){
       sceneShrinesUsed[amuletScene] = [];
     }
-    sceneShrinesUsed[amuletScene]?.add(nodeIndex);
+    final shrinesUsed = sceneShrinesUsed[amuletScene];
+    if (shrinesUsed == null){
+      throw Exception('shrinesUsed == null');
+    }
+    shrinesUsed.add(nodeIndex);
     dispatchGameEventPosition(GameEvent.Shrine_Used, shrineObject);
   }
 

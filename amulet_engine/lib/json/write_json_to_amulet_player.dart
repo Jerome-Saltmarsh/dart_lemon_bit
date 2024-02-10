@@ -2,8 +2,6 @@
 import 'package:amulet_engine/classes/amulet_fiend.dart';
 import 'package:amulet_engine/src.dart';
 
-import '../classes/amulet.dart';
-
 void writeJsonToAmuletPlayer(
     CharacterJson json,
     AmuletPlayer player,
@@ -30,13 +28,14 @@ void writeJsonToAmuletPlayer(
   player.y = json.getDouble('y');
   player.z = json.getDouble('z');
   player.setQuestMain(QuestMain.values[json.tryGetInt('quest_main') ?? 0]);
-  writeJsonAmuletToMemory(jsonAmulet, player.amulet);
+  writeJsonAmuletToMemory(jsonAmulet, player);
   player.writePlayerHealth();
   player.notifyEquipmentDirty();
   player.joinGame(player.amuletGame);
 }
 
-void writeJsonAmuletToMemory(Json jsonAmulet, Amulet amulet) {
+void writeJsonAmuletToMemory(Json jsonAmulet, AmuletPlayer player) {
+   final amulet = player.amulet;
    amulet.amuletTime.time = jsonAmulet.getInt('time');
    final scenes = jsonAmulet.getObjects('scenes');
    for (final game in amulet.games) {
@@ -59,6 +58,7 @@ void writeJsonAmuletToMemory(Json jsonAmulet, Amulet amulet) {
             final nodeType = nodeTypes[index];
             if (nodeType != NodeType.Shrine) continue;
             final shrineUsed = shrinesUsed.contains(index);
+            player.sceneShrinesUsed[game.amuletScene] = shrinesUsed;
             variations[index] = shrineUsed
                 ? NodeType.variationShrineInactive
                 : NodeType.variationShrineActive;
