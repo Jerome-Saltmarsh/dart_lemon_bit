@@ -36,18 +36,21 @@ CharacterJson writeAmuletPlayerToJson(AmuletPlayer player){
   json['hairColor'] = player.hairColor;
   json['initialized'] = player.initialized;
   json['amulet_scene_name'] = player.amuletGame.amuletScene.name;
-  json['amulet'] = writeAmuletToJson(player.amulet);
+  json['amulet'] = writeAmuletToJson(player);
   return json;
 }
 
-Json writeAmuletToJson(final Amulet amulet) {
-    final json = Json();
-    json['time'] = amulet.amuletTime.time;
-    json['scenes'] = amulet.games.map(writeAmuletGameToJson).toList(growable: false);
-    return json;
+Json writeAmuletToJson(final AmuletPlayer amuletPlayer) {
+  final amulet = amuletPlayer.amulet;
+  final json = Json();
+  json['time'] = amulet.amuletTime.time;
+  json['scenes'] = amulet.games
+      .map((game) => writeAmuletGameToJson(game, amuletPlayer))
+      .toList(growable: false);
+  return json;
 }
 
-Json writeAmuletGameToJson(AmuletGame amuletGame) {
+Json writeAmuletGameToJson(AmuletGame amuletGame, AmuletPlayer amuletPlayer) {
   final json = Json();
   final fiends = <Json>[];
   for (final character in amuletGame.characters) {
@@ -56,6 +59,7 @@ Json writeAmuletGameToJson(AmuletGame amuletGame) {
   }
   json['fiends'] = fiends;
   json['scene_index'] = amuletGame.amuletScene.index;
+  json['shrines_used'] = amuletPlayer.sceneShrinesUsed[amuletGame.amuletScene] ?? const [];
   return json;
 }
 

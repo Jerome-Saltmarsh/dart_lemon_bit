@@ -36,6 +36,8 @@ extension JsonExtension on Json {
 
   List<Json> getObjects(String key) => getList<Json>(key);
 
+  List<int> getListInt(String key) => getList<int>(key);
+
   List<T> getList<T>(String key){
     if (!containsKey(key)) {
       throw Exception("json.getList($key). No key");

@@ -1042,7 +1042,7 @@ class RendererNodes extends RenderGroup {
         break;
       case NodeType.Shrine:
         renderStandardNode(
-          srcX: variation == 0 ? 848 : 897,
+          srcX: variation == NodeType.variationShrineActive ? 848 : 897,
           srcY: 80,
           dstX: dstX,
           dstY: dstY,

@@ -1123,6 +1123,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     final nodeIndex = scene.getIndexPosition(shrineObject);
     deactivate(shrineObject);
     setNode(nodeIndex: nodeIndex, variation: NodeType.variationShrineInactive);
+    final sceneShrinesUsed = player.sceneShrinesUsed;
+    if (!sceneShrinesUsed.containsKey(amuletScene)){
+      sceneShrinesUsed[amuletScene] = [];
+    }
+    sceneShrinesUsed[amuletScene]?.add(nodeIndex);
   }
 }
 

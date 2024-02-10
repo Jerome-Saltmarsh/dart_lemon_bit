@@ -50,6 +50,8 @@ class AmuletPlayer extends IsometricPlayer with
   var npcOptions = <TalkOption>[];
   var flags = <dynamic>[];
 
+  final sceneShrinesUsed = <AmuletScene, List<int>> {};
+
   Function? onInteractionOver;
   Position? cameraTarget;
   AmuletGame amuletGame;

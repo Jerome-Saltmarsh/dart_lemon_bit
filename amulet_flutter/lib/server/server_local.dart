@@ -156,6 +156,7 @@ class ServerLocal implements Server {
     playerServer.skillTypeRight = SkillType.Strike;
     parser.amulet.windowVisibleQuests.value = true;
     parser.amulet.windowVisiblePlayerStats.value = true;
+    playerServer.amuletGame = amuletGameVillage;
     playerServer.setQuestMain(QuestMain.values.first);
     amuletGameVillage.movePositionToIndex(
         playerServer,
