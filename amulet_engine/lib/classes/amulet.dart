@@ -169,7 +169,7 @@ class Amulet {
     games.add(amuletGameWitchesLair2);
 
     for (final game in worldMap){
-      game.resetShrines();
+      // game.resetShrines();
       game.spawnMarkPortals();
     }
   }

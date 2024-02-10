@@ -40,6 +40,7 @@ void writeJsonAmuletToMemory(Json jsonAmulet, Amulet amulet) {
    amulet.amuletTime.time = jsonAmulet.getInt('time');
    final scenes = jsonAmulet.getObjects('scenes');
    for (final game in amulet.games) {
+      game.scene.compiled = null;
       for (final sceneJson in scenes) {
          final sceneIndex = sceneJson.getInt('scene_index');
          if (game.amuletScene.index != sceneIndex) continue;
