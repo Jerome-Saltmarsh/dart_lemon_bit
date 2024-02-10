@@ -1129,10 +1129,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     shrinesUsed.add(nodeIndex);
     dispatchGameEventPosition(GameEvent.Shrine_Used, shrineObject);
   }
-
-  void clearShrines() {
-
-  }
 }
 
 

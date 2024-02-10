@@ -11,4 +11,6 @@ class NetworkResponseScene {
   static const Variations = 7;
   static const Node_Types = 8;
   static const Node_Orientations = 9;
+  static const Dimensions = 10;
+  static const Changed = 11;
 }

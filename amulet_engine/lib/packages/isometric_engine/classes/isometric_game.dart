@@ -2684,13 +2684,13 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   void sortMarksAndDispatch() {
     scene.sortMarks();
     for (final player in players) {
-      player.downloadSceneMarks();
+      player.writeSceneMarks();
     }
   }
 
   void notifyPlayersSceneKeysChanged() {
     for (final player in players){
-      player.writeSceneKeys();
+      player.writeNetworkResponseSceneKeys();
     }
   }
 

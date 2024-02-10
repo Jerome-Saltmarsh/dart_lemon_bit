@@ -558,10 +558,14 @@ class IsometricPlayer extends Character with ByteWriter {
     writeSecondsPerFrame();
     writePlayerTeam();
     writeEditEnabled();
-    writeScene();
+    // writeScene();
+    writeSceneDimensions();
     writeSceneVariations();
     writeSceneNodeTypes();
     writeSceneNodeOrientations();
+    writeSceneMarks();
+    writeNetworkResponseSceneKeys();
+    writeNetworkResponseSceneChanged();
     writeWeather();
     writeGameObjects();
     writeFPS();
@@ -1272,16 +1276,6 @@ class IsometricPlayer extends Character with ByteWriter {
     writeByte(weaponType);
   }
 
-  void downloadSceneMarks() {
-    writeByte(NetworkResponse.Scene);
-    writeByte(NetworkResponseScene.Marks);
-    final marks = scene.marks;
-    writeUInt16(marks.length);
-    for (final mark in marks){
-      writeUInt32(mark);
-    }
-  }
-
   void writePlayerComplexion() {
     writeByte(NetworkResponse.Player);
     writeByte(NetworkResponsePlayer.Complexion);
@@ -1366,6 +1360,34 @@ class IsometricPlayer extends Character with ByteWriter {
     compressAndWrite(game.scene.shapes);
   }
 
+  void writeSceneMarks() {
+    writeByte(NetworkResponse.Scene);
+    writeByte(NetworkResponseScene.Marks);
+    final marks = scene.marks;
+    writeUInt16(marks.length);
+    for (final mark in marks){
+      writeUInt32(mark);
+    }
+  }
+
+  void writeNetworkResponseSceneKeys(){
+    writeByte(NetworkResponse.Scene);
+    writeByte(NetworkResponseScene.Keys);
+    final keys = scene.keys;
+    final length = keys.length;
+    writeUInt16(length);
+    final entries = keys.entries;
+    for (final entry in entries){
+      writeString(entry.key);
+      writeUInt16(entry.value);
+    }
+  }
+
+  void writeNetworkResponseSceneChanged(){
+    writeByte(NetworkResponse.Scene);
+    writeByte(NetworkResponseScene.Changed);
+  }
+
   void compressAndWrite(List<int> bytes) {
     final compressed = encoder.encode(bytes);
     writeUInt16(compressed.length);
@@ -1442,5 +1464,13 @@ class IsometricPlayer extends Character with ByteWriter {
     writeByte(NetworkResponse.Player);
     writeByte(NetworkResponsePlayer.Controls_Enabled);
     writeBool(value);
+  }
+
+  void writeSceneDimensions() {
+    writeByte(NetworkResponse.Scene);
+    writeByte(NetworkResponseScene.Dimensions);
+    writeUInt16(scene.height);
+    writeUInt16(scene.rows);
+    writeUInt16(scene.columns);
   }
 }

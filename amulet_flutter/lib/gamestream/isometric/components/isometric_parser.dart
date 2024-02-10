@@ -679,7 +679,7 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
         readNode();
         break;
       case NetworkResponseScene.Marks:
-        readMarks();
+        readNetworkResponseSceneMarks();
         break;
       case NetworkResponseScene.GameObject_Deleted:
         readGameObjectDeleted();
@@ -705,6 +705,12 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
       case NetworkResponseScene.Node_Orientations:
         readNetworkResponseSceneNodeOrientations();
         break;
+      case NetworkResponseScene.Dimensions:
+        readNetworkResponseSceneDimensions();
+        break;
+      case NetworkResponseScene.Changed:
+        readNetworkResponseSceneChanged();
+        break;
     }
   }
 
@@ -712,13 +718,13 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
     options.sceneName.value = readString();
   }
 
-  void readMarks() {
+  void readNetworkResponseSceneMarks() {
     final length = readUInt16();
     final marks = Uint32List(length);
-    scene.marks = marks;
     for (var i = 0; i < length; i++) {
       marks[i] = readUInt32();
     }
+    scene.marks = marks;
     scene.marksChangedNotifier.value++;
   }
 
@@ -804,7 +810,20 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
     return Uint8List.fromList(decoder.decodeBytes(compressedBytes));
   }
 
+  void readNetworkResponseSceneDimensions() {
+    scene.totalZ = readUInt16();
+    scene.totalRows = readUInt16();
+    scene.totalColumns = readUInt16();
+  }
 
-
-
+  void readNetworkResponseSceneChanged() {
+    options.game.value = options.amulet;
+    final scene = this.scene;
+    scene.clearVisited();
+    scene.colorStack.fillRange(0, scene.colorStack.length, scene.ambientColor);
+    events.onChangedNodes();
+    particles.clearParticles();
+    io.recenterCursor();
+    scene.loaded = true;
+  }
 }

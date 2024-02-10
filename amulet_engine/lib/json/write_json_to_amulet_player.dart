@@ -40,8 +40,6 @@ void writeJsonAmuletToMemory(Json jsonAmulet, AmuletPlayer player) {
    amulet.amuletTime.time = jsonAmulet.getInt('time');
    final scenes = jsonAmulet.getObjects('scenes');
 
-
-
    for (final game in amulet.games) {
       game.scene.compiled = null;
       for (final sceneJson in scenes) {
@@ -59,8 +57,6 @@ void writeJsonAmuletToMemory(Json jsonAmulet, AmuletPlayer player) {
          final variations = game.scene.variations;
          final shrinesUsed = sceneJson.getListInt('shrines_used');
          player.sceneShrinesUsed[game.amuletScene] = shrinesUsed;
-
-         game.clearShrines();
 
          for (var index = 0; index < nodeTypesLength; index++) {
             final nodeType = nodeTypes[index];
