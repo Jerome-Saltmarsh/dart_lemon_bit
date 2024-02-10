@@ -29,7 +29,12 @@ class GameObject extends Collider {
   int get materialType => getMaterialType(type, subType);
 
   bool get ignorePointer =>
-      type == ItemType.Object && subType != GameObjectType.Interactable;
+        !active || (
+          !collectable &&
+          !interactable &&
+          onInteract == null &&
+          !hitable
+        );
 
   static int getMaterialType(int type, int subType){
      switch (type){

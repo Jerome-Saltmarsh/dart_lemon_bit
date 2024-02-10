@@ -365,11 +365,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
     final gameObjects = this.gameObjects;
     for (final gameObject in gameObjects) {
-      if (!gameObject.active || gameObject.ignorePointer) continue;
-      if (!gameObject.collectable &&
-          !gameObject.interactable &&
-          !gameObject.hitable
-      ) continue;
+      if (gameObject.ignorePointer) continue;
 
       final radius = max(Min_Radius, gameObject.radius);
       if ((mouseX - gameObject.x).abs() > radius) continue;
@@ -1250,14 +1246,9 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   void remove(Position? instance) {
     if (instance == null) return;
 
-    for (final character in characters){
-      if (character.target == instance){
-        character.clearTarget();
-      }
-    }
+    clearTarget(instance);
 
     if (instance is T) {
-     
       removePlayer(instance);
     }
 
@@ -1284,6 +1275,15 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
 
     throw Exception();
+  }
+
+
+  void clearTarget(Position position){
+    final characters = this.characters;
+    for (final character in characters){
+      if (character.target != position) continue;
+      character.clearTarget();
+    }
   }
 
   void setCharacterStateSpawning(Character character) =>

@@ -1096,11 +1096,14 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     final shrineObject = spawnGameObjectAtIndex(
       index: index,
       type: ItemType.Object,
-      subType: GameObjectType.Interactable,
+      subType: GameObjectType.Shrine,
       team: TeamType.Neutral,
     );
     shrineObject.persistable = false;
     shrineObject.interactable = true;
+    shrineObject.physical = false;
+    shrineObject.hitable = false;
+    shrineObject.collectable = false;
     shrineObject.customName = 'Shrine';
     shrineObject.onInteract = (src){
       if (src is AmuletPlayer) {
@@ -1113,7 +1116,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     player.regainFullMagic();
     player.regainFullHealth();
     final nodeIndex = scene.getIndexPosition(shrineObject);
-    deactivate(shrineObject);
+    remove(shrineObject);
     setNode(nodeIndex: nodeIndex, variation: NodeType.variationShrineInactive);
     final sceneShrinesUsed = player.sceneShrinesUsed;
     if (!sceneShrinesUsed.containsKey(amuletScene)){
@@ -1127,15 +1130,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     dispatchGameEventPosition(GameEvent.Shrine_Used, shrineObject);
   }
 
-  // void resetShrines() {
-  //   final nodeTypes = scene.types;
-  //   final nodeTypesLength = nodeTypes.length;
-  //   for (var i = 0; i < nodeTypesLength; i++){
-  //      final nodeType = nodeTypes[i];
-  //      if (nodeType != NodeType.Shrine) continue;
-  //      scene.variations[i] = NodeType.variationShrineActive;
-  //   }
-  // }
+  void clearShrines() {
+
+  }
 }
 
 

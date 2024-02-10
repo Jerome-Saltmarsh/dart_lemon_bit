@@ -6,10 +6,11 @@ void writeJsonToAmuletPlayer(
     CharacterJson json,
     AmuletPlayer player,
 ){
+  final amulet = player.amulet;
+  amulet.resetGames();
   final jsonAmulet = json.getChild('amulet');
   final amuletSceneName = json['amulet_scene_name'];
   final amuletScene = AmuletScene.findByName(amuletSceneName);
-  final amulet = player.amulet;
   player.amuletGame = amulet.findGame(amuletScene);
   player.equippedWeapon = AmuletItem.findByName(json.weapon);
   player.equippedHelm = AmuletItem.findByName(json.helm);
@@ -38,6 +39,9 @@ void writeJsonAmuletToMemory(Json jsonAmulet, AmuletPlayer player) {
    final amulet = player.amulet;
    amulet.amuletTime.time = jsonAmulet.getInt('time');
    final scenes = jsonAmulet.getObjects('scenes');
+
+
+
    for (final game in amulet.games) {
       game.scene.compiled = null;
       for (final sceneJson in scenes) {
@@ -54,11 +58,14 @@ void writeJsonAmuletToMemory(Json jsonAmulet, AmuletPlayer player) {
          final nodeTypesLength = nodeTypes.length;
          final variations = game.scene.variations;
          final shrinesUsed = sceneJson.getListInt('shrines_used');
+         player.sceneShrinesUsed[game.amuletScene] = shrinesUsed;
+
+         game.clearShrines();
+
          for (var index = 0; index < nodeTypesLength; index++) {
             final nodeType = nodeTypes[index];
             if (nodeType != NodeType.Shrine) continue;
             final shrineUsed = shrinesUsed.contains(index);
-            player.sceneShrinesUsed[game.amuletScene] = shrinesUsed;
             variations[index] = shrineUsed
                 ? NodeType.variationShrineInactive
                 : NodeType.variationShrineActive;

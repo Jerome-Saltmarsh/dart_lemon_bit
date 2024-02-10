@@ -85,6 +85,8 @@ class ServerLocal implements Server {
   Future disconnect() async {
     await persistPlayerServer();
     connected = false;
+    amulet.games.clear();
+    amulet.worldMap.clear();
     playerServer.flags.clear();
     playerServer.sceneShrinesUsed.clear();
     playerServer.clearCache();
