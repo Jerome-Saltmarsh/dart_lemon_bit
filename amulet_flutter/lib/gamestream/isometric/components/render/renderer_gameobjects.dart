@@ -1,6 +1,7 @@
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_amulet_item.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_images.dart';
+import 'package:amulet_flutter/gamestream/isometric/components/isometric_render.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_scene.dart';
 import 'package:amulet_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:amulet_flutter/isometric/classes/gameobject.dart';
@@ -141,112 +142,21 @@ class RendererGameObjects extends RenderGroup {
       return;
     }
 
-    if (
-      type == ItemType.Object &&
-      const [
-        GameObjectType.Crystal_Glowing_False,
-        GameObjectType.Crystal_Glowing_True,
-      ].contains(subType)
-    ){
-      final scene = this.scene;
-      final gameObjectIndex = scene.getIndexPosition(gameObject);
-      const scale = 0.35;
-
-      final dstX = gameObject.renderX;
-      final dstY = gameObject.renderY;
-      const anchorY = 0.66;
-
-      final sprite = images.crystal;
-
-      engine.setBlendModeModulate();
-
-      final color = (subType == GameObjectType.Crystal_Glowing_False ? colors.purple_3 : colors.aqua_2).value;
-
-      render.sprite(
-          sprite: sprite,
-          frame: sprite.getFrame(row: 0, column: 0, mode: AnimationMode.single),
-          color: color,
-          scale: scale,
-          dstX: dstX,
-          dstY: dstY,
-          anchorY: anchorY,
-      );
-
-      render.sprite(
-          sprite: sprite,
-          frame: sprite.getFrame(row: 0, column: 1, mode: AnimationMode.single),
-          color: color,
-          scale: scale,
-          dstX: dstX,
-          dstY: dstY,
-          anchorY: anchorY,
-      );
-
-      render.sprite(
-          sprite: sprite,
-          frame: sprite.getFrame(row: 0, column: 2, mode: AnimationMode.single),
-          color: color,
-          scale: scale,
-          dstX: dstX,
-          dstY: dstY,
-        anchorY: anchorY,
-      );
-
-      render.sprite(
-          sprite: sprite,
-          frame: sprite.getFrame(row: 0, column: 3, mode: AnimationMode.single),
-          color: color,
-          scale: scale,
-          dstX: dstX,
-          dstY: dstY,
-        anchorY: anchorY,
-      );
-
-      if (subType == GameObjectType.Crystal_Glowing_False){
-        render.sprite(
-          sprite: sprite,
-          frame: sprite.getFrame(row: 0, column: 0, mode: AnimationMode.single),
-          color: scene.colorEast(gameObjectIndex),
-          scale: scale,
-          dstX: dstX,
-          dstY: dstY,
-          anchorY: anchorY,
-        );
-
-        render.sprite(
-          sprite: sprite,
-          frame: sprite.getFrame(row: 0, column: 1, mode: AnimationMode.single),
-          color: scene.colorNorth(gameObjectIndex),
-          scale: scale,
-          dstX: dstX,
-          dstY: dstY,
-          anchorY: anchorY,
-        );
-
-        render.sprite(
-          sprite: sprite,
-          frame: sprite.getFrame(row: 0, column: 2, mode: AnimationMode.single),
-          color: scene.colorSouth(gameObjectIndex),
-          scale: scale,
-          dstX: dstX,
-          dstY: dstY,
-          anchorY: anchorY,
-        );
-
-        render.sprite(
-          sprite: sprite,
-          frame: sprite.getFrame(row: 0, column: 3, mode: AnimationMode.single),
-          color: scene.colorWest(gameObjectIndex),
-          scale: scale,
-          dstX: dstX,
-          dstY: dstY,
-          anchorY: anchorY,
-        );
-      }
-
-      engine.setBlendModeDstATop();
-      return;
-    }
+    // if (
+    //   type == ItemType.Object &&
+    //   const [
+    //     GameObjectType.Crystal_Glowing_False,
+    //     GameObjectType.Crystal_Glowing_True,
+    //   ].contains(subType)
+    // ){
+    //   renderCrystal(
+    //       dstX: gameObject.renderX,
+    //       dstY: gameObject.renderY,
+    //       colorEast: colorEast,
+    //       glowing: subType == GameObjectType.Crystal_Glowing_True,
+    //
+    //   );
+    // }
 
     final isAmuletItem = type == ItemType.Amulet_Item;
 
@@ -275,6 +185,113 @@ class RendererGameObjects extends RenderGroup {
       return;
     }
     // throw Exception('rendererGameObjects.')
+  }
+
+  void renderCrystal({
+    required dstX,
+    required dstY,
+    required bool glowing,
+    required int colorNorth,
+    required int colorEast,
+    required int colorSouth,
+    required int colorWest,
+  }) {
+    final scene = this.scene;
+    final gameObjectIndex = scene.getIndexPosition(gameObject);
+    const scale = 0.35;
+
+    const anchorY = 0.66;
+
+    final sprite = images.crystal;
+
+    engine.setBlendModeModulate();
+
+    final color = (glowing ? colors.purple_3 : colors.aqua_2).value;
+
+    render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: 0, mode: AnimationMode.single),
+        color: color,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+    );
+
+    render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: 1, mode: AnimationMode.single),
+        color: color,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+    );
+
+    render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: 2, mode: AnimationMode.single),
+        color: color,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+      anchorY: anchorY,
+    );
+
+    render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: 3, mode: AnimationMode.single),
+        color: color,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+      anchorY: anchorY,
+    );
+
+    if (!glowing){
+      render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: 0, mode: AnimationMode.single),
+        color: colorEast,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+
+      render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: 1, mode: AnimationMode.single),
+        color: colorNorth,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+
+      render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: 2, mode: AnimationMode.single),
+        color: colorSouth,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+
+      render.sprite(
+        sprite: sprite,
+        frame: sprite.getFrame(row: 0, column: 3, mode: AnimationMode.single),
+        color: colorWest,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+        anchorY: anchorY,
+      );
+    }
+
+    engine.setBlendModeDstATop();
+    return;
   }
 
   void renderCrateWooden(
