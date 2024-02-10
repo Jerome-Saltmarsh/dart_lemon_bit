@@ -16,6 +16,7 @@ void writeJsonToAmuletPlayer(
   player.equippedHelm = AmuletItem.findByName(json.helm);
   player.equippedArmor = AmuletItem.findByName(json.armor);
   player.equippedShoes = AmuletItem.findByName(json.shoes);
+  player.equipmentDirty = true;
   player.uuid = json['uuid'] ?? (throw Exception('json[uuid] is null'));
   player.complexion = json['complexion'] ?? 0;
   player.name = json['name'];
@@ -33,7 +34,6 @@ void writeJsonToAmuletPlayer(
   player.setQuestMain(QuestMain.values[json.tryGetInt('quest_main') ?? 0]);
   writeJsonAmuletToMemory(jsonAmulet, player);
   player.writePlayerHealth();
-  player.notifyEquipmentDirty();
   player.joinGame(player.amuletGame);
 }
 
