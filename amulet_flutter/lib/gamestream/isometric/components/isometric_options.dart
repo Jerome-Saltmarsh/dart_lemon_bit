@@ -159,10 +159,6 @@ class IsometricOptions with IsometricComponent implements Updatable {
     if (gameError == null)
       return;
 
-    game.value.onGameError(gameError);
-
-    clearErrorTimer = 300;
-    audio.playAudioError();
     switch (gameError) {
       case GameError.Unable_To_Join_Game:
         ui.error.value = 'unable to join game';

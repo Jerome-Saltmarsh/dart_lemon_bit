@@ -226,6 +226,10 @@ class IsometricAudio with IsometricComponent implements Updatable {
   ];
 
   double getVolumeTargetDayAmbience() {
+    if (!enabledSound.value) {
+      return 0;
+    }
+
     final hours = environment.hours.value;
     if (hours > 8 && hours < 4) return 0.2;
     return 0;
@@ -266,6 +270,10 @@ class IsometricAudio with IsometricComponent implements Updatable {
   }
 
   double getVolumeTargetRain() {
+    if (!enabledSound.value) {
+      return 0;
+    }
+
     switch (environment.rainType.value){
       case RainType.None:
         return 0;
@@ -279,6 +287,10 @@ class IsometricAudio with IsometricComponent implements Updatable {
   }
 
   double getVolumeTargetCrickets() {
+    if (!enabledSound.value) {
+      return 0;
+    }
+
     final hour = environment.hours.value;
     const max = 0.8;
     if (hour >= 5 && hour < 7) return max;
@@ -287,6 +299,10 @@ class IsometricAudio with IsometricComponent implements Updatable {
   }
 
   double getVolumeTargetDistanceThunder(){
+    if (!enabledSound.value) {
+      return 0;
+    }
+
     if (environment.lightningOn) return 1.0;
     return 0;
   }
@@ -466,8 +482,11 @@ class IsometricAudio with IsometricComponent implements Updatable {
     maxDistance: maxDistance,
   );
 
-  void playAudioError(){
-    errorSound15();
+  void playAudioError() => playSound(errorSound15);
+
+  void playSound(AudioSingle audioSingle, {double volume = 1.0}){
+    if (!enabledSound.value) return;
+    audioSingle.play(volume: volume);
   }
 
   void toggleMutedSound() => enabledSound.value = !enabledSound.value;

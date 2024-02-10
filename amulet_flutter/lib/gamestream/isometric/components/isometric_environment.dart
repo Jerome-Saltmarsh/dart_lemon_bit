@@ -131,6 +131,10 @@ class IsometricEnvironment with IsometricComponent {
   }
 
   double getVolumeTargetWind() {
+    if (!audio.enabledSound.value) {
+      return 0;
+    }
+
     final windLineDistance = (engine.screenCenterRenderX - windLineRenderX).abs();
     final windLineDistanceVolume = IsometricAudio.convertDistanceToVolume(windLineDistance, maxDistance: 300);
     var target = 0.0;

@@ -144,7 +144,11 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
 
   void readNetworkResponseGameError() {
     final errorTypeIndex = readByte();
-    options.gameError.value = GameError.fromIndex(errorTypeIndex);
+    final gameError = GameError.fromIndex(errorTypeIndex);
+    options.gameError.value = gameError;
+    options.game.value.onGameError(gameError);
+    options.clearErrorTimer = 200;
+    audio.playAudioError();
   }
 
   void readGameObjectDeleted() {
@@ -366,7 +370,7 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
           rendererNodes.lightningFlashing = flashing;
           environment.lightningFlashing = flashing;
           if (flashing) {
-            audio.thunder(1.0);
+            audio.playSound(audio.thunder, volume: 0.7);
           }
         }
         break;
