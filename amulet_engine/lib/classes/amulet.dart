@@ -111,6 +111,7 @@ class Amulet {
 
   void resetGames() {
 
+    games.clear();
     worldMap.clear();
     amuletTime.hour = 12;
 
@@ -167,10 +168,10 @@ class Amulet {
     games.add(amuletGameWitchesLair1);
     games.add(amuletGameWitchesLair2);
 
-    for (final game in games){
+    for (final game in worldMap){
+      game.resetShrines();
       game.spawnMarkPortals();
     }
-
   }
 
   AmuletGame buildEmptyField(AmuletScene amuletScene) =>

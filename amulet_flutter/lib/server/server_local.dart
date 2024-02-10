@@ -139,7 +139,10 @@ class ServerLocal implements Server {
     if (name == FIELD_CHARACTERS) {
       throw Exception('invalid field name');
     }
+    amulet.resetGames();
     final amuletGameVillage = amulet.amuletGameVillage;
+    playerServer.sceneShrinesUsed.clear();
+    playerServer.flags.clear();
     playerServer.uuid = generateUUID();
     playerServer.name = name;
     playerServer.complexion = complexion;
@@ -154,6 +157,7 @@ class ServerLocal implements Server {
     playerServer.equippedArmor = null;
     playerServer.skillTypeLeft = SkillType.Strike;
     playerServer.skillTypeRight = SkillType.Strike;
+    playerServer.sceneDownloaded = false;
     parser.amulet.windowVisibleQuests.value = true;
     parser.amulet.windowVisiblePlayerStats.value = true;
     playerServer.amuletGame = amuletGameVillage;
@@ -200,7 +204,6 @@ class ServerLocal implements Server {
       parser.server.onServerConnectionEstablished();
       connected = true;
     }).catchError((error) {
-      // parser.options.ui.error.value = 'Load Character Failed';
       print(error);
       parser.options.ui.error.value = error.toString();
     });

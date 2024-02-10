@@ -589,7 +589,8 @@ class IsometricScene with IsometricComponent implements Updatable {
 
     for (var i = 0; i < totalNodes; i++) {
 
-      if (!NodeType.isLightSource(nodeTypes[i]))
+      final nodeType = nodeTypes[i];
+      if (!NodeType.isLightSource(nodeType))
         continue;
 
       nodeLightSources[nodeLightSourcesTotal] = i;
@@ -1621,6 +1622,17 @@ class IsometricScene with IsometricComponent implements Updatable {
           emitLight(
             index: nodeIndex,
             value: colors.blue_1.withOpacity(0.5).value,
+            intensity: torchEmissionIntensityColored,
+            ambient: false,
+          );
+          break;
+        case NodeType.Shrine:
+          if (nodeVariations[nodeIndex] == NodeType.variationShrineInactive)
+            continue;
+
+          emitLight(
+            index: nodeIndex,
+            value: colors.aqua_2.withOpacity(0.5).value,
             intensity: torchEmissionIntensityColored,
             ambient: false,
           );

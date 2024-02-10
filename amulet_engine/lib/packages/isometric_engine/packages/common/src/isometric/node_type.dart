@@ -350,6 +350,7 @@ class NodeType {
       NodeType.Torch_Blue,
       NodeType.Torch_Red,
       NodeType.Fireplace,
+      NodeType.Shrine,
     ].contains(type);
 
   static const variationShrineActive = 1;

@@ -1105,7 +1105,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
           subType: GameObjectType.Interactable,
           team: TeamType.Neutral,
       );
-
       shrineObject.persistable = false;
       shrineObject.interactable = true;
       shrineObject.customName = 'Shrine';
@@ -1128,6 +1127,17 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       sceneShrinesUsed[amuletScene] = [];
     }
     sceneShrinesUsed[amuletScene]?.add(nodeIndex);
+    dispatchGameEventPosition(GameEvent.Shrine_Used, shrineObject);
+  }
+
+  void resetShrines() {
+    final nodeTypes = scene.types;
+    final nodeTypesLength = nodeTypes.length;
+    for (var i = 0; i < nodeTypesLength; i++){
+       final nodeType = nodeTypes[i];
+       if (nodeType != NodeType.Shrine) continue;
+       scene.variations[i] = NodeType.variationShrineActive;
+    }
   }
 }
 
