@@ -728,7 +728,9 @@ class Proficiencies {
 
 
 enum CasteType {
-  Weapon,
+  Bow,
+  Sword,
+  Staff,
   Caste,
   Passive,
 }

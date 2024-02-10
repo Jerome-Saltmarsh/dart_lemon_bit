@@ -1074,8 +1074,14 @@ class AmuletUI {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              buildText(skillType.name),
+              buildText(skillType.casteType.name),
+            ],
+          ),
+          Row(
+            children: [
+              buildText(skillType.name.replaceAll('_', ' ')),
               width8,
               buildSkillTypeIcon(skillType),
             ],

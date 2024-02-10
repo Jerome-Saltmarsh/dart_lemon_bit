@@ -733,7 +733,6 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
 
-    magic -= magicCost;
     switch (skillActive.casteType) {
       case CasteType.Passive:
         throw Exception('cannot perform $skillActive.casteType == CasteType.Passive');
@@ -742,21 +741,36 @@ class AmuletPlayer extends IsometricPlayer with
           duration: performDuration
         );
         break;
-      case CasteType.Weapon:
-        if (equippedWeaponMelee){
-          setCharacterStateStriking(
-              duration: performDuration
-          );
+      case CasteType.Bow:
+        if (!equippedWeaponBow){
+          writeGameError(GameError.Bow_Required);
           return;
         }
-        if (equippedWeaponBow){
-          setCharacterStateFire(
-              duration: performDuration
-          );
+        setCharacterStateFire(
+            duration: performDuration
+        );
+        break;
+      case CasteType.Staff:
+        if (!equippedWeaponStaff) {
+          writeGameError(GameError.Staff_Required);
           return;
         }
-        throw Exception('cannot perform casteType.weapon');
+        setCharacterStateStriking(
+          duration: performDuration
+        );
+        break;
+      case CasteType.Sword:
+        if (!equippedWeaponSword) {
+          writeGameError(GameError.Sword_Required);
+          return;
+        }
+        setCharacterStateStriking(
+          duration: performDuration
+        );
+        break;
     }
+
+    magic -= magicCost;
   }
 
   writeHighlightAmuletItems(AmuletItem amuletItem){
@@ -1010,6 +1024,16 @@ class AmuletPlayer extends IsometricPlayer with
   bool get equippedWeaponBow {
     final subType = equippedWeapon?.subType;
     return subType != null && WeaponType.valuesBows.contains(subType);
+  }
+
+  bool get equippedWeaponStaff {
+    final subType = equippedWeapon?.subType;
+    return subType != null && WeaponType.valuesStaffs.contains(subType);
+  }
+
+  bool get equippedWeaponSword {
+    final subType = equippedWeapon?.subType;
+    return subType != null && WeaponType.valuesSwords.contains(subType);
   }
 
   void selectSkillTypeLeft(SkillType value) {

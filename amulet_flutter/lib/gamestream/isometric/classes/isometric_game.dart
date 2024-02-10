@@ -88,7 +88,7 @@ class IsometricGame extends Game {
        if (error == null)
          return nothing;
 
-       return buildText(error.name);
+       return buildText(error.name.replaceAll('_', ' '));
     });
   }
 
