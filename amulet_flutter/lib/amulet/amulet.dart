@@ -33,6 +33,7 @@ class Amulet extends IsometricGame {
   final fiendCountDead = Watch(0);
   final fiendCountTotal = Watch(0);
   final fiendCountPercentage = Watch(0.0);
+  final flaskPercentage = Watch(0.0);
 
   var worldMapClrs = Int32List(0);
   var worldMapDsts = Float32List(0);
@@ -564,6 +565,11 @@ class Amulet extends IsometricGame {
           ItemType.Shoes => equippedShoes.value,
           _ => throw Exception('amulet.getEquippedItemType(itemType: $itemType)')
       };
+
+  void useFlask() =>
+      server.sendNetworkRequestAmulet(
+        NetworkRequestAmulet.Use_Flask
+      );
 }
 
 

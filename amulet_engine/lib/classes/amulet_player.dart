@@ -50,6 +50,9 @@ class AmuletPlayer extends IsometricPlayer with
   var npcOptions = <TalkOption>[];
   var flags = <dynamic>[];
 
+  var flaskAmount = 0;
+  static const flaskCapacity = 25;
+
   final sceneShrinesUsed = <AmuletScene, List<int>> {};
 
   Function? onInteractionOver;
@@ -79,6 +82,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeInteracting();
     writeGender();
     writePlayerComplexion();
+    setFlaskAmount(flaskCapacity);
   }
 
   @override
@@ -1303,5 +1307,28 @@ class AmuletPlayer extends IsometricPlayer with
   void joinGame(AmuletGame game){
     leaveCurrentGame();
     game.add(this);
+  }
+
+  void setFlaskAmount(int value){
+    flaskAmount = clamp(value, 0, flaskCapacity);
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Flask_Percentage);
+    writePercentage(flaskAmount / flaskCapacity);
+  }
+
+  void incrementFlask() {
+    if (flaskAmount >= flaskCapacity) return;
+    setFlaskAmount(flaskAmount + 1);
+  }
+
+  void useFlask() {
+    if (flaskAmount < flaskCapacity) {
+      writeGameError(GameError.Flask_Not_Ready);
+      return;
+    }
+    setFlaskAmount(0);
+    regainFullHealth();
+    regainFullMagic();
+    writePlayerEvent(PlayerEvent.Drink);
   }
 }

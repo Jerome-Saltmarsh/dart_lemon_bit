@@ -3,6 +3,11 @@ import 'dart:math';
 
 import 'package:audioplayers/audioplayers.dart';
 
+class AudioChannel {
+  var enabled = true;
+  var volume = 1.0;
+}
+
 class AudioSingle {
   final loader = Completer<bool>();
   final String name;

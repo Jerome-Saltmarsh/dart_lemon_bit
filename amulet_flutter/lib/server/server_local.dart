@@ -158,6 +158,7 @@ class ServerLocal implements Server {
     playerServer.equippedHelm = null;
     playerServer.equippedShoes = null;
     playerServer.equippedArmor = null;
+    playerServer.setFlaskAmount(0);
     playerServer.skillTypeLeft = SkillType.Strike;
     playerServer.skillTypeRight = SkillType.Strike;
     playerServer.sceneDownloaded = false;

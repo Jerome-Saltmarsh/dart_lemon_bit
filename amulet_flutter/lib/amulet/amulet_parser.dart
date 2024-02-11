@@ -146,6 +146,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Camera_Target:
          readCameraTarget();
          break;
+       case NetworkResponseAmulet.Flask_Percentage:
+         readNetworkResponseAmuletFlashPercentage();
+         break;
      }
   }
 
@@ -323,5 +326,9 @@ extension AmuletParser on IsometricParser {
   void readFiendCount() {
     amulet.fiendCountAlive.value = readUInt16();
     amulet.fiendCountDead.value = readUInt16();
+  }
+
+  void readNetworkResponseAmuletFlashPercentage() {
+     amulet.flaskPercentage.value = readPercentage();
   }
 }

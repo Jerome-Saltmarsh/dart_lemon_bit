@@ -69,6 +69,17 @@ class AmuletUI {
           buildPositionedPlayerHealthAndWeapons(),
           buildPlayerAimTarget(),
           Positioned(
+              top: 8,
+              left: 8,
+              child: onPressed(
+                action: amulet.useFlask,
+                child: buildWatchBar(
+                  watch: amulet.flaskPercentage,
+                  color: Colors.cyanAccent,
+                ),
+              )
+          ),
+          Positioned(
               bottom: 8,
               left: 8,
               child: Row(
@@ -660,6 +671,27 @@ class AmuletUI {
     );
   }
 
+  Widget buildWatchBar({
+    required Watch<double> watch,
+    required Color color,
+  }) =>
+      IgnorePointer(
+      child: buildWatch(watch, (percentage) =>
+        Container(
+          width: barWidth,
+          height: barHeight,
+          color: Colors.black26,
+          padding: const EdgeInsets.all(2),
+          alignment: Alignment.centerLeft,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 100),
+            width: barWidth * percentage,
+            height: barHeight,
+            color: color,
+          ),
+        )),
+    );
+
   Widget buildButtonClose({required Function action}) => onPressed(
       child: Container(
           width: 80,
@@ -1207,6 +1239,15 @@ class AmuletUI {
       ),
     );
   }
+
+  Widget buildWindowFlask() =>
+      GSContainer(
+        child: buildWatch(amulet.flaskPercentage, (flaskPercentage) {
+            return Container(
+
+            );
+        }),
+    );
 }
 
 String formatFramesToSeconds(int frames){
