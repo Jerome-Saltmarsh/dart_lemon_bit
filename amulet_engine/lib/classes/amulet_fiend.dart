@@ -21,6 +21,7 @@ class AmuletFiend extends Character {
     health: fiendType.health,
   ) {
     respawnDurationTotal = -1;
+    weaponHitForce = 2.0;
   }
 
   void onFiendTypeChanged(){

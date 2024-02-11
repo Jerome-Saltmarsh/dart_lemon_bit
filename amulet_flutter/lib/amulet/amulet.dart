@@ -260,6 +260,11 @@ class Amulet extends IsometricGame {
       return;
     }
 
+    if (key == PhysicalKeyboardKey.keyE) {
+      amulet.useFlask();
+      return;
+    }
+
     if (key == PhysicalKeyboardKey.space) {
       options.toggleRenderHealthBars();
       return;

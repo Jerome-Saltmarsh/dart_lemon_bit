@@ -75,7 +75,9 @@ class AmuletUI {
                 action: amulet.useFlask,
                 child: buildWatchBar(
                   watch: amulet.flaskPercentage,
-                  color: Colors.cyanAccent,
+                  color: Colors.cyan,
+                  barWidth: 100,
+                  barHeight: 20,
                 ),
               )
           ),
@@ -674,6 +676,8 @@ class AmuletUI {
   Widget buildWatchBar({
     required Watch<double> watch,
     required Color color,
+    required double barWidth,
+    required double barHeight
   }) =>
       IgnorePointer(
       child: buildWatch(watch, (percentage) =>
@@ -800,44 +804,64 @@ class AmuletUI {
           buildContainerPlayerProficiencies(),
           height16,
           buildText('STATS', color: Colors.white70),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              buildRowTitle('Health'),
-              buildWatch(amulet.player.health, buildRowValue),
-              width2,
-              buildRowValue('/'),
-              width2,
-              buildWatch(amulet.player.maxHealth, buildRowValue),
-            ],
+          Tooltip(
+            message: 'Health',
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                AmuletImage(srcX: 768, srcY: 0, width: 16, height: 16),
+                width8,
+                buildWatch(amulet.player.health, buildRowValue),
+                width2,
+                buildRowValue('/'),
+                width2,
+                buildWatch(amulet.player.maxHealth, buildRowValue),
+              ],
+            ),
           ),
-          Row(
-            children: [
-              buildRowTitle('Magic'),
-              buildWatch(amulet.playerMagic, buildRowValue),
-              width2,
-              buildRowValue('/'),
-              width2,
-              buildWatch(amulet.playerMagicMax, buildRowValue),
-            ],
+          Tooltip(
+            message: 'Magic',
+            child: Row(
+              children: [
+                AmuletImage(srcX: 768, srcY: 16, width: 16, height: 16),
+                width8,
+                buildWatch(amulet.playerMagic, buildRowValue),
+                width2,
+                buildRowValue('/'),
+                width2,
+                buildWatch(amulet.playerMagicMax, buildRowValue),
+              ],
+            ),
           ),
-          Row(
-            children: [
-              buildRowTitle('Magic Regen'),
-              buildWatch(amulet.playerRegenMagic, buildRowValue),
-            ],
+          Tooltip(
+            message: 'Health Regen',
+            child: Row(
+              children: [
+                AmuletImage(srcX: 768, srcY: 32, width: 16, height: 16),
+                width8,
+                buildWatch(amulet.playerRegenHealth, buildRowValue),
+              ],
+            ),
           ),
-          Row(
-            children: [
-              buildRowTitle('Health Regen'),
-              buildWatch(amulet.playerRegenHealth, buildRowValue),
-            ],
+          Tooltip(
+            message: 'Magic Regen',
+            child: Row(
+              children: [
+                AmuletImage(srcX: 768, srcY: 48, width: 16, height: 16),
+                width8,
+                buildWatch(amulet.playerRegenMagic, buildRowValue),
+              ],
+            ),
           ),
-          Row(
-            children: [
-              buildRowTitle('Run Speed'),
-              buildWatch(amulet.playerRunSpeed, buildRowValue),
-            ],
+          Tooltip(
+            message: 'Run Speed',
+            child: Row(
+              children: [
+                AmuletImage(srcX: 768, srcY: 64, width: 16, height: 16),
+                width8,
+                buildWatch(amulet.playerRunSpeed, buildRowValue),
+              ],
+            ),
           ),
         ],
       ),
