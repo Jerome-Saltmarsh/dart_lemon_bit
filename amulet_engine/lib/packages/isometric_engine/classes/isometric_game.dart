@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:amulet_engine/classes/amulet_gameobject.dart';
+
 import '../isometric_engine.dart';
 import '../consts/isometric_settings.dart';
 
@@ -743,6 +745,12 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   }
 
   void updateCharacterTarget(Character character){
+
+
+    final target = character.target;
+    if (target is AmuletGameObject && target.inactive){
+      character.clearTarget();
+    }
 
     if (character.busy || !character.autoTarget){
       return;

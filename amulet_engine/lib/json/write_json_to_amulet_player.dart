@@ -75,8 +75,8 @@ void writeJsonAmuletToMemory(Json jsonAmulet, AmuletPlayer player) {
    }
 }
 
-AmuletFiend mapFiendJsonToAmuletFiend(Json fiendJson) =>
-    AmuletFiend(
+AmuletFiend mapFiendJsonToAmuletFiend(Json fiendJson) {
+  final amuletFiend = AmuletFiend(
        x: fiendJson.getDouble('x'),
        y: fiendJson.getDouble('y'),
        z: fiendJson.getDouble('z'),
@@ -89,3 +89,10 @@ AmuletFiend mapFiendJsonToAmuletFiend(Json fiendJson) =>
      ..startPositionX = fiendJson.getDouble('start_x')
      ..startPositionY = fiendJson.getDouble('start_y')
      ..startPositionZ = fiendJson.getDouble('start_z');
+
+  if (amuletFiend.dead) {
+    amuletFiend.frame = Character.maxAnimationDeathFrames;
+  }
+
+  return amuletFiend;
+}
