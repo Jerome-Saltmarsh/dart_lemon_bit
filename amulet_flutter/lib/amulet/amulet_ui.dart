@@ -858,6 +858,11 @@ class AmuletUI {
   Widget buildIconHealth() =>
       AmuletImage(srcX: 768, srcY: 0, width: 16, height: 16);
 
+  Widget buildIconHealAmount() =>
+      AmuletImage(srcX: 768, srcY: 320, width: 16, height: 16);
+
+
+
   // Widget buildIconDuration() =>
   //     AmuletImage(srcX: 769, srcY: 65, width: 16, height: 16);
 
@@ -871,10 +876,7 @@ class AmuletUI {
       buildWatch(amulet.playerSkillTypeStatsNotifier, (t) => Container(
         padding: const EdgeInsets.all(8),
         color: amulet.style.containerColor,
-        constraints: BoxConstraints(
-          maxHeight: amulet.engine.screen.height - 75,
-        ),
-        child: SingleChildScrollView(
+        child: buildSafeContainer(
           child: Column(
             children: [
               buildText('SKILLS'),
@@ -1208,7 +1210,7 @@ class AmuletUI {
           if (skillTypeStats.amount > 0)
             Tooltip(
                 message: 'Amount',
-                child: buildRow(buildIconAmount(), skillTypeStats.amount)
+                child: buildRow(buildIconSkillTypeAmount(skillType), skillTypeStats.amount)
             ),
         ],
       ),
@@ -1404,10 +1406,10 @@ class AmuletUI {
   );
 
   Widget buildIconRange() => AmuletImage(
-        srcX: 772,
-        srcY: 275,
-        width: 26,
-        height: 26,
+        srcX: 768,
+        srcY: 112,
+        width: 16,
+        height: 16,
     );
 
   Widget buildRow(Widget key, dynamic value) =>
@@ -1419,7 +1421,14 @@ class AmuletUI {
         ],
   );
 
-  Widget buildIconAmount() => buildText('Amount');
+  Widget buildIconSkillTypeAmount(SkillType skillType) {
+    switch (skillType){
+      case SkillType.Heal:
+        return buildIconHealAmount();
+      default:
+        return buildText('Amount');
+    }
+  }
 
 }
 
