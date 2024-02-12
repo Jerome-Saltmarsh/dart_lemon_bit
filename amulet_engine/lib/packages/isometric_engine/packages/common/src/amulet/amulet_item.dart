@@ -14,7 +14,6 @@ enum AmuletItem {
       range: WeaponRange.ShortSword,
       damage: 3,
       quality: ItemQuality.Common,
-      characteristics: Proficiencies(),
   ),
   Weapon_Sword_1_Rare(
     label: "Sharpened Short Sword",
@@ -27,7 +26,6 @@ enum AmuletItem {
     range: WeaponRange.ShortSword,
     damage: 4,
     quality: ItemQuality.Rare,
-    characteristics: Proficiencies(strength: 1),
   ),
   Weapon_Sword_1_Legendary(
     label: "Short Blade of Glen",
@@ -40,7 +38,6 @@ enum AmuletItem {
     range: WeaponRange.ShortSword,
     damage: 5,
     quality: ItemQuality.Legendary,
-    characteristics: Proficiencies(strength: 2),
   ),
   Weapon_Staff_1_Of_Frost(
     label: 'Staff of Frost',
@@ -53,7 +50,6 @@ enum AmuletItem {
     range: WeaponRange.Staff,
     damage: 2,
     quality: ItemQuality.Rare,
-    characteristics: Proficiencies(),
   ),
   Weapon_Staff_1_Of_Fire(
     label: 'Staff of Fire',
@@ -66,7 +62,6 @@ enum AmuletItem {
     range: WeaponRange.Staff,
     damage: 3,
     quality: ItemQuality.Rare,
-    characteristics: Proficiencies(),
   ),
   Weapon_Staff_1_Legendary(
     label: 'Wooden Staff',
@@ -79,7 +74,6 @@ enum AmuletItem {
     range: WeaponRange.Staff,
     damage: 5,
     quality: ItemQuality.Legendary,
-    characteristics: Proficiencies(intelligence: 3),
   ),
   Weapon_Bow_1_Common(
     label: 'Common Short Bow',
@@ -92,7 +86,6 @@ enum AmuletItem {
     range: WeaponRange.Short_Bow,
     damage: 2,
     quality: ItemQuality.Common,
-    characteristics: Proficiencies(),
   ),
   Weapon_Bow_1_Rare(
     label: 'Rare Short Bow',
@@ -105,7 +98,6 @@ enum AmuletItem {
     range: WeaponRange.Short_Bow,
     damage: 8,
     quality: ItemQuality.Rare,
-    characteristics: Proficiencies(),
   ),
   Weapon_Bow_1_Legendary(
     label: 'Legendary Short Bow',
@@ -118,7 +110,6 @@ enum AmuletItem {
     range: WeaponRange.Short_Bow,
     damage: 12,
     quality: ItemQuality.Legendary,
-    characteristics: Proficiencies(),
   ),
   Helm_Warrior_1_Leather_Cap_Common(
     label: 'Leather Cap',
@@ -130,7 +121,6 @@ enum AmuletItem {
     maxHealth: 5,
     quality: ItemQuality.Common,
     regenHealth: 1,
-    characteristics: Proficiencies(strength: 1),
   ),
   Helm_Wizard_1_Pointed_Hat_Purple_Common(
     label: 'Crooked Hat',
@@ -142,7 +132,7 @@ enum AmuletItem {
     maxHealth: 2,
     quality: ItemQuality.Common,
     regenMagic: 1,
-    characteristics: Proficiencies(intelligence: 1),
+    talentStaff: 2,
   ),
   Helm_Rogue_1_Hood_Common(
     label: 'Feather Cap',
@@ -153,7 +143,7 @@ enum AmuletItem {
     subType: HelmType.Feather_Cap,
     maxHealth: 3,
     quality: ItemQuality.Common,
-    characteristics: Proficiencies(dexterity: 1),
+    talentBow: 2,
   ),
   Helm_Warrior_2_Steel_Cap_Common(
     label: 'Steel Cap',
@@ -165,7 +155,7 @@ enum AmuletItem {
     maxHealth: 5,
     quality: ItemQuality.Common,
     regenHealth: 1,
-    characteristics: Proficiencies(strength: 1),
+    talentSword: 2,
   ),
   Helm_Wizard_2_Pointed_Hat_Black_Common(
     label: 'Pointed Hat',
@@ -177,7 +167,7 @@ enum AmuletItem {
     maxMagic: 5,
     quality: ItemQuality.Common,
     regenMagic: 1,
-    characteristics: Proficiencies(strength: 1),
+    talentStaff: 3,
   ),
   Helm_Rogue_2_Cape_Common(
     label: 'Cape',
@@ -189,7 +179,7 @@ enum AmuletItem {
     maxHealth: 5,
     quality: ItemQuality.Common,
     regenHealth: 1,
-    characteristics: Proficiencies(strength: 1),
+    talentBow: 3,
   ),
   Helm_Warrior_3_Full_Helm_Common(
     label: 'Full Helm',
@@ -200,7 +190,7 @@ enum AmuletItem {
     maxHealth: 5,
     quality: ItemQuality.Common,
     regenHealth: 1,
-    characteristics: Proficiencies(strength: 1),
+    talentSword: 3,
   ),
   Helm_Wizard_3_Circlet_Common(
     label: 'Circlet',
@@ -211,7 +201,7 @@ enum AmuletItem {
     maxHealth: 5,
     quality: ItemQuality.Common,
     regenHealth: 1,
-    characteristics: Proficiencies(strength: 1),
+    talentStaff: 3,
   ),
   Helm_Rogue_3_Veil_Common(
     label: 'Veil',
@@ -222,7 +212,7 @@ enum AmuletItem {
     maxHealth: 5,
     quality: ItemQuality.Common,
     regenHealth: 1,
-    characteristics: Proficiencies(strength: 1),
+    talentBow: 4,
   ),
   Armor_Neutral_1_Common_Tunic(
     label: 'Common',
@@ -231,9 +221,13 @@ enum AmuletItem {
     type: ItemType.Armor,
     subType: ArmorType.Tunic,
     quality: ItemQuality.Common,
-    maxHealth: 1,
+    maxHealth: 5,
+    maxMagic: 5,
     skillType: SkillType.Heal,
-    characteristics: Proficiencies(strength: 1),
+    talentSword: 1,
+    talentBow: 1,
+    talentStaff: 1,
+    talentCaste: 1
   ),
   Armor_Warrior_1_Leather_Common(
     label: 'Leather',
@@ -245,7 +239,7 @@ enum AmuletItem {
     maxHealth: 10,
     regenHealth: 1,
     skillType: SkillType.Mighty_Strike,
-    characteristics: Proficiencies(strength: 1),
+    talentSword: 3,
   ),
   Armor_Warrior_1_Leather_Rare(
     label: 'Leather',
@@ -257,7 +251,7 @@ enum AmuletItem {
     maxHealth: 15,
     regenHealth: 1,
     skillType: SkillType.Mighty_Strike,
-    characteristics: Proficiencies(strength: 1),
+    talentSword: 3,
   ),
   Armor_Warrior_1_Leather_Legendary(
     label: 'Leather',
@@ -269,7 +263,7 @@ enum AmuletItem {
     maxHealth: 20,
     regenHealth: 2,
     skillType: SkillType.Mighty_Strike,
-    characteristics: Proficiencies(strength: 1),
+    talentSword: 3,
   ),
   Armor_Warrior_2_Chainmail_Common(
     label: 'Chainmail',
@@ -280,7 +274,7 @@ enum AmuletItem {
     quality: ItemQuality.Common,
     maxHealth: 20,
     regenHealth: 2,
-    characteristics: Proficiencies(strength: 1),
+    talentSword: 3,
   ),
   Armor_Warrior_2_Chainmail_Rare(
     label: 'Chainmail',
@@ -291,7 +285,7 @@ enum AmuletItem {
     quality: ItemQuality.Rare,
     maxHealth: 30,
     regenHealth: 2,
-    characteristics: Proficiencies(strength: 1),
+    talentSword: 3,
   ),
   Armor_Warrior_2_Chainmail_Legendary(
     label: 'Chainmail',
@@ -302,7 +296,7 @@ enum AmuletItem {
     quality: ItemQuality.Legendary,
     maxHealth: 40,
     regenHealth: 3,
-    characteristics: Proficiencies(strength: 1),
+    talentSword: 3,
   ),
   Armor_Warrior_3_Platemail_Common(
     label: 'Platemail',
@@ -313,7 +307,7 @@ enum AmuletItem {
     quality: ItemQuality.Common,
     maxHealth: 30,
     regenHealth: 3,
-    characteristics: Proficiencies(strength: 1),
+    talentSword: 3,
   ),
   Armor_Warrior_3_Platemail_Rare(
     label: 'Platemail',
@@ -324,7 +318,7 @@ enum AmuletItem {
     quality: ItemQuality.Rare,
     maxHealth: 30,
     regenHealth: 3,
-    characteristics: Proficiencies(strength: 1),
+    talentSword: 3,
   ),
   Armor_Warrior_3_Platemail_Legendary(
     label: 'Platemail',
@@ -335,7 +329,7 @@ enum AmuletItem {
     quality: ItemQuality.Legendary,
     maxHealth: 30,
     regenHealth: 3,
-    characteristics: Proficiencies(strength: 1),
+    talentSword: 3,
   ),
   Armor_Wizard_1_Robe_Common(
     label: 'Robe',
@@ -347,7 +341,7 @@ enum AmuletItem {
     maxHealth: 5,
     regenMagic: 1,
     maxMagic: 5,
-    characteristics: Proficiencies(intelligence: 2),
+    talentStaff: 3,
   ),
   Armor_Wizard_1_Robe_Rare(
     label: 'Robe',
@@ -358,7 +352,7 @@ enum AmuletItem {
     quality: ItemQuality.Rare,
     maxHealth: 8,
     maxMagic: 10,
-    characteristics: Proficiencies(intelligence: 3),
+    talentStaff: 3,
   ),
   Armor_Wizard_1_Robe_Legendary(
     label: 'Robe',
@@ -369,7 +363,7 @@ enum AmuletItem {
     quality: ItemQuality.Legendary,
     maxHealth: 10,
     maxMagic: 15,
-    characteristics: Proficiencies(intelligence: 5),
+    talentStaff: 3,
   ),
   Armor_Rogue_1_Cloak_Common(
     label: 'Cloak',
@@ -379,7 +373,7 @@ enum AmuletItem {
     subType: ArmorType.Cloak,
     quality: ItemQuality.Common,
     maxHealth: 7,
-    characteristics: Proficiencies(dexterity: 1),
+    talentBow: 5,
   ),
   Armor_Rogue_1_Cloak_of_Frost(
     label: 'Cloak of Frost',
@@ -390,7 +384,7 @@ enum AmuletItem {
     quality: ItemQuality.Rare,
     maxHealth: 10,
     skillType: SkillType.Ice_Arrow,
-    characteristics: Proficiencies(dexterity: 2),
+    talentBow: 5,
   ),
   Armor_Rogue_1_Cloak_of_Fire(
     label: 'Cloak of Fire',
@@ -401,7 +395,7 @@ enum AmuletItem {
     quality: ItemQuality.Rare,
     maxHealth: 10,
     skillType: SkillType.Fire_Arrow,
-    characteristics: Proficiencies(dexterity: 3, intelligence: 1),
+    talentBow: 5,
   ),
   Armor_Rogue_1_Cloak_Legendary(
     label: 'Cloak',
@@ -411,7 +405,7 @@ enum AmuletItem {
     subType: ArmorType.Cloak,
     quality: ItemQuality.Legendary,
     maxHealth: 12,
-    characteristics: Proficiencies(strength: 1),
+    talentBow: 5,
   ),
   Armor_Rogue_2_Mantle_Common(
     label: 'Mantle',
@@ -421,7 +415,7 @@ enum AmuletItem {
     subType: ArmorType.Mantle,
     quality: ItemQuality.Common,
     maxHealth: 9,
-    characteristics: Proficiencies(dexterity: 1),
+    talentBow: 5,
   ),
   Armor_Rogue_2_Mantle_Rare(
     label: 'Mantle',
@@ -431,7 +425,7 @@ enum AmuletItem {
     subType: ArmorType.Mantle,
     quality: ItemQuality.Rare,
     maxHealth: 9,
-    characteristics: Proficiencies(dexterity: 1),
+    talentBow: 5,
   ),
   Armor_Rogue_2_Mantle_Legendary(
     label: 'Mantle',
@@ -441,7 +435,7 @@ enum AmuletItem {
     subType: ArmorType.Mantle,
     quality: ItemQuality.Legendary,
     maxHealth: 9,
-    characteristics: Proficiencies(dexterity: 1),
+    talentBow: 5,
   ),
   Armor_Rogue_3_Shroud_Common(
     label: 'Shroud',
@@ -451,7 +445,7 @@ enum AmuletItem {
     subType: ArmorType.Shroud,
     quality: ItemQuality.Common,
     maxHealth: 9,
-    characteristics: Proficiencies(dexterity: 1),
+    talentBow: 5,
   ),
   Armor_Rogue_3_Shroud_Rare(
     label: 'Shroud',
@@ -461,7 +455,7 @@ enum AmuletItem {
     subType: ArmorType.Shroud,
     quality: ItemQuality.Rare,
     maxHealth: 9,
-    characteristics: Proficiencies(dexterity: 1),
+    talentBow: 5,
   ),
   Armor_Rogue_3_Shroud_Legendary(
     label: 'Shroud',
@@ -471,7 +465,7 @@ enum AmuletItem {
     subType: ArmorType.Shroud,
     quality: ItemQuality.Legendary,
     maxHealth: 9,
-    characteristics: Proficiencies(dexterity: 1),
+    talentBow: 5,
   ),
   Shoes_Warrior_1_Leather_Boots_Common(
     label: 'Leather Boots',
@@ -482,7 +476,7 @@ enum AmuletItem {
     quality: ItemQuality.Common,
     maxHealth: 5,
     runSpeed: -0.125,
-    characteristics: Proficiencies(strength: 1),
+    talentSword: 5,
   ),
   Shoes_Wizard_1_Black_Slippers_Common(
     label: 'Black Slippers',
@@ -494,7 +488,7 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    characteristics: Proficiencies(intelligence: 1),
+    talentStaff: 5,
   ),
   Shoes_Rogue_1_Treads_Common(
     label: 'Treads',
@@ -506,7 +500,7 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    characteristics: Proficiencies(dexterity: 1),
+    talentBow: 5,
   ),
   Shoes_Warrior_2_Grieves_Common(
     label: 'Grieves',
@@ -517,7 +511,7 @@ enum AmuletItem {
     quality: ItemQuality.Common,
     maxHealth: 5,
     runSpeed: -0.125,
-    characteristics: Proficiencies(strength: 1),
+    talentSword: 5,
   ),
   Shoes_Wizard_2_Footwraps_Common(
     label: 'Footwraps',
@@ -529,7 +523,8 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    characteristics: Proficiencies(intelligence: 1),
+    talentStaff: 5,
+    talentCaste: 3,
   ),
   Shoes_Rogue_2_Striders_Common(
     label: 'Striders',
@@ -541,7 +536,7 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    characteristics: Proficiencies(dexterity: 1),
+    talentBow: 5,
   ),
   Shoes_Warrior_3_Sabatons_Common(
     label: 'Sabatons',
@@ -552,7 +547,7 @@ enum AmuletItem {
     quality: ItemQuality.Common,
     maxHealth: 5,
     runSpeed: -0.125,
-    characteristics: Proficiencies(strength: 1),
+    talentSword: 5,
   ),
   Shoes_Wizard_3_Soles_Common(
     label: 'Soles',
@@ -564,7 +559,7 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    characteristics: Proficiencies(intelligence: 1),
+    talentStaff: 5,
   ),
   Shoes_Rogue_3_Satin_Boots_Common(
     label: 'Satin_Boots',
@@ -576,7 +571,7 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    characteristics: Proficiencies(dexterity: 1),
+    talentBow: 3,
   ),
   Consumable_Potion_Magic(
     label: 'a common tonic',
@@ -586,7 +581,6 @@ enum AmuletItem {
     levelMax: 99,
     quality: ItemQuality.Common,
     maxMagic: 20,
-    characteristics: Proficiencies(),
   ),
   Consumable_Potion_Health(
     label: 'a common tonic',
@@ -596,7 +590,6 @@ enum AmuletItem {
     levelMax: 99,
     quality: ItemQuality.Common,
     health: 20,
-    characteristics: Proficiencies(),
   );
 
   /// the minimum level of a fiend that can drop this item
@@ -607,10 +600,8 @@ enum AmuletItem {
   final int type;
   final int subType;
   final SkillType? skillType;
-  final Proficiencies characteristics;
   final int? damage;
   final double? range;
-  final double? radius;
   final int? performDuration;
   final int? health;
   final ItemQuality quality;
@@ -620,6 +611,10 @@ enum AmuletItem {
   final int? regenMagic;
   final int? regenHealth;
   final double? runSpeed;
+  final int talentSword;
+  final int talentBow;
+  final int talentStaff;
+  final int talentCaste;
 
   const AmuletItem({
     required this.type,
@@ -627,7 +622,6 @@ enum AmuletItem {
     required this.levelMin,
     required this.quality,
     required this.label,
-    required this.characteristics,
     this.levelMax = 99,
     this.maxHealth = 0,
     this.maxMagic,
@@ -636,13 +630,22 @@ enum AmuletItem {
     this.skillType,
     this.damage,
     this.range,
-    this.radius,
     this.performDuration,
     this.health,
     this.runSpeed,
+    this.talentBow = 0,
+    this.talentCaste = 0,
+    this.talentStaff = 0,
+    this.talentSword = 0,
   });
 
   bool get isWeapon => type == ItemType.Weapon;
+
+  bool get isWeaponSword => isWeapon && WeaponType.isSword(subType);
+
+  bool get isWeaponStaff => isWeapon && WeaponType.isStaff(subType);
+
+  bool get isWeaponBow => isWeapon && WeaponType.isBow(subType);
 
   bool get isShoes => type == ItemType.Shoes;
 
@@ -651,7 +654,6 @@ enum AmuletItem {
   bool get isConsumable => type == ItemType.Consumable;
 
   bool get isArmor => type == ItemType.Armor;
-
 
   static AmuletItem? findByName(String name) =>
       values.firstWhereOrNull((element) => element.name == name);
@@ -692,40 +694,6 @@ enum AmuletItem {
 
   }
 }
-
-enum AmuletProficiency {
-  Strength(pointsPerMaxHealth: 1, pointsPerMaxMagic: 3),
-  Intelligence(pointsPerMaxHealth: 3, pointsPerMaxMagic: 1),
-  Dexterity(pointsPerMaxHealth: 2, pointsPerMaxMagic: 2);
-
-  final int pointsPerMaxHealth;
-  final int pointsPerMaxMagic;
-
-  const AmuletProficiency({
-    required this.pointsPerMaxHealth,
-    required this.pointsPerMaxMagic,
-  });
-}
-
-class Proficiencies {
-  final int strength;
-  final int intelligence;
-  final int dexterity;
-
-  const Proficiencies({
-    this.intelligence = 0,
-    this.strength = 0,
-    this.dexterity = 0,
-  });
-
-  int get(AmuletProficiency type) =>
-      switch (type){
-        AmuletProficiency.Strength => strength,
-        AmuletProficiency.Intelligence => intelligence,
-        AmuletProficiency.Dexterity => dexterity
-      };
-}
-
 
 enum CasteType {
   Bow,

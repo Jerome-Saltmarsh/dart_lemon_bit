@@ -71,15 +71,15 @@ extension AmuletRender on Amulet {
       return;
     }
 
-    final radius = activeSlotAmuletItem.radius;
+    // final radius = activeSlotAmuletItem.radius;
 
-    if (radius != null) {
-      engine.color = Colors.white;
-      render.circleOutlineAtPosition(
-        position: activePowerPosition,
-        radius: radius,
-      );
-    }
+    // if (radius != null) {
+    //   engine.color = Colors.white;
+    //   render.circleOutlineAtPosition(
+    //     position: activePowerPosition,
+    //     radius: radius,
+    //   );
+    // }
 
     final range = activeSlotAmuletItem.range;
     if (range != null) {

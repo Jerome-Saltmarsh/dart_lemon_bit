@@ -22,6 +22,7 @@ class Characteristics {
   final strength = Watch(0);
   final intelligence = Watch(0);
   final dexterity = Watch(0);
+  final caste = Watch(0);
 }
 
 class Amulet extends IsometricGame {

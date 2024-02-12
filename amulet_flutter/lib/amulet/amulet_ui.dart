@@ -8,10 +8,10 @@ import 'package:amulet_flutter/website/widgets/gs_fullscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
+import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
-import 'package:lemon_watch/src.dart';
-import 'ui/containers/build_container_item_hover.dart';
+import 'getters/get_src_caste_type.dart';
 import 'ui/containers/build_container_player_front.dart';
 import 'ui/widgets/src.dart';
 
@@ -255,23 +255,6 @@ class AmuletUI {
         );
       }));
 
-  Widget buildPositionedAmuletItemHover()
-  => buildContainerAmuletItemHover(amulet: amulet);
-
-  Widget buildPositionedAmuletItemInformation() {
-
-    return Positioned(
-        top: 8,
-        left: 8,
-        child: buildWatch(amulet.aimTargetItemTypeCurrent, (current) {
-          return buildWatch(amulet.aimTargetItemType, (target) =>
-            current == null ? nothing : buildContainerCompareItems(current, target));
-        }
-        ),
-      );
-  }
-
-
   Widget buildRow(String column1, Widget column2, Widget? column3) {
     const width1 = 80.0;
     const width = 130.0;
@@ -336,29 +319,6 @@ class AmuletUI {
           buildText(column3, color: column3Color),
         );
   }
-
-  Widget buildContainerCompareItems(AmuletItem current, AmuletItem? target) =>
-      Container(
-      color: amulet.style.containerColor,
-      padding: const EdgeInsets.all(16),
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            buildRow('', buildText('current', color: Colors.white54, italic: true), null),
-            buildRow('',  AmuletItemImage(amuletItem: current, scale: 1.0), target == null ? nothing : AmuletItemImage(amuletItem: target, scale: 1.0)),
-            buildRow('',
-                buildText(current.label, color: mapItemQualityToColor(current.quality)),
-                target == null ? null : buildText(target.label, color: mapItemQualityToColor(target.quality)),
-            ),
-            buildRowText('value', current.quality.name, target?.quality.name),
-            buildRowText('skill', current.skillType?.name, target?.skillType?.name),
-            buildRowInt('damage', current.damage, target?.damage),
-            // buildRowInt('max dmg', current.damageMax, target?.damageMax),
-            buildRowInt('range', current.range?.toInt(), target?.range?.toInt()),
-            buildRowInt('radius', current.radius?.toInt(), target?.radius?.toInt()),
-            buildRowIntReverse('duration', current.performDuration, target?.performDuration),
-          ]),
-    );
 
   static Color compareIntGreater(int? a, int? b){
     if (a == b){
@@ -809,7 +769,7 @@ class AmuletUI {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                AmuletImage(srcX: 768, srcY: 0, width: 16, height: 16),
+                buildIconHealth(),
                 width8,
                 buildWatch(amulet.player.health, buildRowValue),
                 width2,
@@ -823,7 +783,7 @@ class AmuletUI {
             message: 'Magic',
             child: Row(
               children: [
-                AmuletImage(srcX: 768, srcY: 16, width: 16, height: 16),
+                buildIconMagic(),
                 width8,
                 buildWatch(amulet.playerMagic, buildRowValue),
                 width2,
@@ -837,7 +797,7 @@ class AmuletUI {
             message: 'Health Regen',
             child: Row(
               children: [
-                AmuletImage(srcX: 768, srcY: 32, width: 16, height: 16),
+                buildIconHealthRegen(),
                 width8,
                 buildWatch(amulet.playerRegenHealth, buildRowValue),
               ],
@@ -847,7 +807,7 @@ class AmuletUI {
             message: 'Magic Regen',
             child: Row(
               children: [
-                AmuletImage(srcX: 768, srcY: 48, width: 16, height: 16),
+                buildIconMagicRegen(),
                 width8,
                 buildWatch(amulet.playerRegenMagic, buildRowValue),
               ],
@@ -857,7 +817,7 @@ class AmuletUI {
             message: 'Run Speed',
             child: Row(
               children: [
-                AmuletImage(srcX: 768, srcY: 64, width: 16, height: 16),
+                buildIconRunSpeed(),
                 width8,
                 buildWatch(amulet.playerRunSpeed, buildRowValue),
               ],
@@ -878,6 +838,19 @@ class AmuletUI {
       ],
     ));
   }
+
+  AmuletImage buildIconRunSpeed() => AmuletImage(srcX: 768, srcY: 64, width: 16, height: 16);
+
+  AmuletImage buildIconMagicRegen() => AmuletImage(srcX: 768, srcY: 48, width: 16, height: 16);
+
+  AmuletImage buildIconHealth() {
+    return AmuletImage(srcX: 768, srcY: 0, width: 16, height: 16);
+  }
+
+  AmuletImage buildIconMagic() => AmuletImage(srcX: 768, srcY: 16, width: 16, height: 16);
+
+  AmuletImage buildIconHealthRegen() =>
+      AmuletImage(srcX: 768, srcY: 32, width: 16, height: 16);
 
   Widget buildWindowPlayerSkillStats() =>
       buildWatch(amulet.playerSkillTypeStatsNotifier, (t) => Container(
@@ -903,30 +876,59 @@ class AmuletUI {
   Widget buildContainerPlayerProficiencies() => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      buildText('PROFICIENCIES', color: Colors.white70),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          buildRowTitle(AmuletProficiency.Strength.name),
-          buildWatch(
-              amulet.playerCharacteristics.strength, buildRowValue),
-        ],
+      buildText('MASTERY', color: Colors.white70),
+      Tooltip(
+        message: 'Sword',
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            buildCasteTypeIcon(CasteType.Sword),
+            width8,
+            buildWatch(
+                amulet.playerCharacteristics.strength, buildRowValue),
+          ],
+        ),
       ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          buildRowTitle(AmuletProficiency.Intelligence.name),
-          buildWatch(
-              amulet.playerCharacteristics.intelligence, buildRowValue),
-        ],
+      Tooltip(
+        message: 'Staff',
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            buildCasteTypeIcon(CasteType.Staff),
+            width8,
+            buildWatch(
+                amulet.playerCharacteristics.intelligence,
+                buildRowValue,
+            ),
+          ],
+        ),
       ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          buildRowTitle(AmuletProficiency.Dexterity.name),
-          buildWatch(
-              amulet.playerCharacteristics.dexterity, buildRowValue),
-        ],
+      Tooltip(
+        message: 'Bow',
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            buildCasteTypeIcon(CasteType.Bow),
+            width8,
+            buildWatch(
+                amulet.playerCharacteristics.dexterity, buildRowValue,
+            ),
+          ],
+        ),
+      ),
+      Tooltip(
+        message: 'Caste',
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            buildCasteTypeIcon(CasteType.Caste),
+            width8,
+            buildWatch(
+              amulet.playerCharacteristics.caste,
+              buildRowValue,
+            ),
+          ],
+        ),
       ),
     ],
   );
@@ -1032,14 +1034,13 @@ class AmuletUI {
     final runSpeed = amuletItem.runSpeed;
     final skillType = amuletItem.skillType;
     final range = amuletItem.range;
-    final radius = amuletItem.radius;
     final performDuration = amuletItem.performDuration;
     final itemType = amuletItem.type;
 
-    final characteristics = amuletItem.characteristics;
-    final charsStrength = characteristics.strength;
-    final charsIntelligence = characteristics.intelligence;
-    final charsDexterity = characteristics.dexterity;
+    final talentSword = amuletItem.talentSword;
+    final talentStaff = amuletItem.talentStaff;
+    final talentBow = amuletItem.talentBow;
+    final talentCaste = amuletItem.talentCaste;
     final equippedItemType = amulet.getEquippedItemType(itemType);
 
     return GSContainer(
@@ -1066,37 +1067,76 @@ class AmuletUI {
               buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
             ],
           ),
-          if (charsStrength != 0)
-            buildRowTitleValue('strength', charsStrength),
-          if (charsIntelligence != 0)
-            buildRowTitleValue('intelligence', charsIntelligence),
-          if (charsDexterity != 0)
-            buildRowTitleValue('dexterity', charsDexterity),
+          if (talentSword != 0)
+            Row(
+              children: [
+                buildCasteTypeIcon(CasteType.Sword),
+                width8,
+                buildRowValue(talentSword),
+              ],
+            ),
+          if (talentStaff != 0)
+            Row(
+              children: [
+                buildCasteTypeIcon(CasteType.Staff),
+                width8,
+                buildRowValue(talentStaff),
+              ],
+            ),
+          if (talentBow != 0)
+            Row(
+              children: [
+                buildCasteTypeIcon(CasteType.Bow),
+                width8,
+                buildRowValue(talentBow),
+              ],
+            ),
           if (damage != null)
             buildRowTitleValue('damage', damage),
           if (performDuration != null)
             buildRowTitleValue('duration', '${formatFramesToSeconds(performDuration)}'),
           if (range != null)
             buildRowTitleValue('range', range.toInt()),
-          if (radius != null)
-            buildRowTitleValue('radius', radius),
           if (maxHealth != null && maxHealth > 0)
-            buildRowTitleValue('max health', maxHealth),
+            Row(
+              children: [
+                buildIconHealth(),
+                width8,
+                buildRowValue(maxHealth),
+              ],
+            ),
           if (maxMagic != null && maxMagic > 0)
             buildRowTitleValue('max magic', maxHealth),
           if (regenHealth != null && regenHealth > 0)
-            buildRowTitleValue('health regen', regenHealth),
+            Row(
+              children: [
+                buildIconHealthRegen(),
+                width8,
+                buildRowValue(regenHealth),
+              ],
+            ),
           if (regenMagic != null && regenMagic > 0)
-            buildRowTitleValue('magic regen', regenMagic),
+            Row(
+              children: [
+                buildIconMagicRegen(),
+                width8,
+                buildRowValue(regenMagic),
+              ],
+            ),
           if (runSpeed != null)
-            buildRowTitleValue('run speed', runSpeed),
+            Row(
+              children: [
+                buildIconRunSpeed(),
+                width8,
+                buildRowValue(runSpeed),
+              ],
+            ),
           if (skillType != null)
             Row(
               children: [
-                buildRowTitle('skill'),
-                buildRowValue(skillType.name),
-                width4,
                 buildSkillTypeIcon(skillType),
+                width8,
+                buildRowValue(skillType.name.replaceAll('_', ' ')),
               ],
             ),
 
@@ -1119,6 +1159,9 @@ class AmuletUI {
       ],
     );
 
+  Widget buildCasteTypeIcon(CasteType casteType) =>
+      AmuletImageSrc(src: getSrcCasteType(casteType));
+
   Widget buildContainerSkillTypeStats(SkillTypeStats skillTypeStats) {
     final skillType = skillTypeStats.skillType;
     return Container(
@@ -1132,7 +1175,8 @@ class AmuletUI {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              buildText(skillType.casteType.name),
+              // buildText(skillType.casteType.name),
+              buildCasteTypeIcon(skillType.casteType),
             ],
           ),
           Row(

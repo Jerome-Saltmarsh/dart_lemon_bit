@@ -96,18 +96,39 @@ class AmuletPlayer extends IsometricPlayer with
 
   // set deathCount(int value) => data.setInt(Data_Key_Dead_Count, value);
 
-  int get characteristicsKnight => getTotalCharacteristics(AmuletProficiency.Strength);
-
-  int get characteristicsWizard => getTotalCharacteristics(AmuletProficiency.Intelligence);
-
-  int get characteristicsRogue => getTotalCharacteristics(AmuletProficiency.Dexterity);
-
-  int getTotalCharacteristics(AmuletProficiency type){
+  int get proficiencySword {
     var total = 0;
-    total += equippedWeapon?.characteristics.get(type) ?? 0;
-    total += equippedHelm?.characteristics.get(type) ?? 0;
-    total += equippedArmor?.characteristics.get(type) ?? 0;
-    total += equippedShoes?.characteristics.get(type) ?? 0;
+    total += equippedWeapon?.talentSword ?? 0;
+    total += equippedHelm?.talentSword ?? 0;
+    total += equippedArmor?.talentSword ?? 0;
+    total += equippedShoes?.talentSword ?? 0;
+    return total;
+  }
+
+  int get proficiencyStaff {
+    var total = 0;
+    total += equippedWeapon?.talentStaff ?? 0;
+    total += equippedHelm?.talentStaff ?? 0;
+    total += equippedArmor?.talentStaff ?? 0;
+    total += equippedShoes?.talentStaff ?? 0;
+    return total;
+  }
+
+  int get proficiencyBow {
+    var total = 0;
+    total += equippedWeapon?.talentBow ?? 0;
+    total += equippedHelm?.talentBow ?? 0;
+    total += equippedArmor?.talentBow ?? 0;
+    total += equippedShoes?.talentBow ?? 0;
+    return total;
+  }
+
+  int get proficiencyCaste {
+    var total = 0;
+    total += equippedWeapon?.talentCaste ?? 0;
+    total += equippedHelm?.talentCaste ?? 0;
+    total += equippedArmor?.talentCaste ?? 0;
+    total += equippedShoes?.talentCaste ?? 0;
     return total;
   }
 
@@ -155,26 +176,20 @@ class AmuletPlayer extends IsometricPlayer with
   @override
   int get maxHealth {
     var health = baseHealth;
-    // health += equippedWeapon?.maxHealth ?? 0;
-    // health += equippedHelm?.maxHealth ?? 0;
-    // health += equippedArmor?.maxHealth ?? 0;
-    // health += equippedShoes?.maxHealth ?? 0;
-    for (final type in AmuletProficiency.values){
-      health += getTotalCharacteristics(type) * type.pointsPerMaxHealth;
-    }
+    health += equippedWeapon?.maxHealth ?? 0;
+    health += equippedHelm?.maxHealth ?? 0;
+    health += equippedArmor?.maxHealth ?? 0;
+    health += equippedShoes?.maxHealth ?? 0;
     return health;
   }
 
   @override
   int get maxMagic {
     var amount = baseMagic;
-    // amount += equippedWeapon?.maxMagic ?? 0;
-    // amount += equippedHelm?.maxMagic ?? 0;
-    // amount += equippedArmor?.maxMagic ?? 0;
-    // amount += equippedShoes?.maxMagic ?? 0;
-    for (final type in AmuletProficiency.values){
-      amount += getTotalCharacteristics(type) * type.pointsPerMaxMagic;
-    }
+    amount += equippedWeapon?.maxMagic ?? 0;
+    amount += equippedHelm?.maxMagic ?? 0;
+    amount += equippedArmor?.maxMagic ?? 0;
+    amount += equippedShoes?.maxMagic ?? 0;
     return amount;
   }
 
@@ -978,12 +993,12 @@ class AmuletPlayer extends IsometricPlayer with
 
   void performSkillLeft(){
     activeSkillActiveLeft();
-    performSkillType();
+    performForceAttack();
   }
 
   void performSkillRight(){
     activeSkillActiveRight();
-    performSkillType();
+    performForceAttack();
   }
 
   @override
@@ -994,51 +1009,16 @@ class AmuletPlayer extends IsometricPlayer with
     super.setSkillActiveLeft(value);
   }
 
-  void performSkillType() {
-    // final weaponClass = skillType.weaponClass;
-    // if (weaponClass != null && equippedWeaponClass != weaponClass){
-    //   switch (weaponClass){
-    //     case WeaponClass.Staff:
-    //       writeGameError(GameError.Staff_Required_For_Skill);
-    //       return;
-    //     case WeaponClass.Sword:
-    //       writeGameError(GameError.Sword_Required_For_Skill);
-    //       return;
-    //     case WeaponClass.Bow:
-    //       writeGameError(GameError.Bow_Required_For_Skill);
-    //       return;
-    //   }
-    // }
-
-    // final magicCost = getSkillTypeMagicCost(skillType);
-    // if (magicCost > magic) {
-    //   writeGameError(GameError.Insufficient_Magic);
-    //   return;
-    // }
-    //
-    // magic -= magicCost;
-    performForceAttack();
-  }
-
   bool get equippedWeaponMelee {
     final subType = equippedWeapon?.subType;
     return subType != null && WeaponType.valuesMelee.contains(subType);
   }
 
-  bool get equippedWeaponBow {
-    final subType = equippedWeapon?.subType;
-    return subType != null && WeaponType.valuesBows.contains(subType);
-  }
+  bool get equippedWeaponBow => equippedWeapon?.isWeaponBow ?? false;
 
-  bool get equippedWeaponStaff {
-    final subType = equippedWeapon?.subType;
-    return subType != null && WeaponType.valuesStaffs.contains(subType);
-  }
+  bool get equippedWeaponStaff => equippedWeapon?.isWeaponStaff ?? false;
 
-  bool get equippedWeaponSword {
-    final subType = equippedWeapon?.subType;
-    return subType != null && WeaponType.valuesSwords.contains(subType);
-  }
+  bool get equippedWeaponSword => equippedWeapon?.isWeaponSword ?? false;
 
   void selectSkillTypeLeft(SkillType value) {
     skillTypeLeft = value;
@@ -1085,7 +1065,7 @@ class AmuletPlayer extends IsometricPlayer with
     }
 
     if (skillType == SkillType.Strike) {
-      return equippedWeaponDamage + characteristicsKnight ~/ divider;
+      return equippedWeaponDamage + proficiencySword ~/ divider;
     }
 
     if (const [
@@ -1094,18 +1074,18 @@ class AmuletPlayer extends IsometricPlayer with
       SkillType.Ice_Arrow,
       SkillType.Fire_Arrow,
     ].contains(skillType)) {
-      return equippedWeaponDamage + characteristicsRogue ~/ divider;
+      return equippedWeaponDamage + proficiencyBow ~/ divider;
     }
 
     switch (skillType) {
       case SkillType.Mighty_Strike:
-        return (equippedWeaponDamage + characteristicsKnight ~/ divider) * 2;
+        return (equippedWeaponDamage + proficiencySword ~/ divider) * 2;
       case SkillType.Frostball:
-        return 5 + characteristicsWizard ~/ divider;
+        return 5 + proficiencyStaff ~/ divider;
       case SkillType.Fireball:
-        return 5 + characteristicsWizard ~/ divider;
+        return 5 + proficiencyStaff ~/ divider;
       case SkillType.Explode:
-        return 10 + characteristicsWizard ~/ divider;
+        return 10 + proficiencyStaff ~/ divider;
       default:
         throw Exception('$skillType.damage unknown');
     }
@@ -1197,9 +1177,9 @@ class AmuletPlayer extends IsometricPlayer with
   void writeCharacteristics() {
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Characteristics);
-    writeUInt16(characteristicsKnight);
-    writeUInt16(characteristicsWizard);
-    writeUInt16(characteristicsRogue);
+    writeUInt16(proficiencySword);
+    writeUInt16(proficiencyStaff);
+    writeUInt16(proficiencyBow);
   }
 
   void writeActiveSlotType() {
