@@ -133,6 +133,11 @@ class IsometricGame extends Game {
         server.sendIsometricRequestToggleDebugging();
         return;
       }
+
+      if (key == PhysicalKeyboardKey.digit8) {
+        amulet.windowVisibleAmuletItems.toggle();
+        return;
+      }
     }
 
     if (key == PhysicalKeyboardKey.escape) {

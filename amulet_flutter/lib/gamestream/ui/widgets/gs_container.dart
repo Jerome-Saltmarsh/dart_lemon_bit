@@ -12,6 +12,7 @@ class GSContainer extends StatelessWidget {
   final EdgeInsets? margin;
   final EdgeInsets? padding;
   final Border? border;
+  final BoxConstraints? constraints;
 
   GSContainer({
     super.key,
@@ -23,6 +24,7 @@ class GSContainer extends StatelessWidget {
     this.color,
     this.padding,
     this.border,
+    this.constraints,
     this.rounded = false,
   });
 
@@ -35,6 +37,7 @@ class GSContainer extends StatelessWidget {
         padding: padding ?? const EdgeInsets.all(16),
         margin: margin,
         child: child,
+        constraints: constraints,
         decoration: BoxDecoration(
           color: color ?? Palette.brownDark,
           borderRadius: rounded ? const BorderRadius.all(Radius.circular(4)) : null,

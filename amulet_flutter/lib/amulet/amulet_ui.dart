@@ -97,6 +97,7 @@ class AmuletUI {
               child: buildWindowPlayerStats(),
           ),
           buildPositionedMessage(),
+          buildOverlayScreenColor(),
           Positioned(
             top: margin2,
             child: Container(
@@ -105,7 +106,14 @@ class AmuletUI {
               child: buildError(),
             ),
           ),
-          buildOverlayScreenColor()
+          Positioned(
+            top: 8,
+            left: 8,
+            child:
+            buildWatch(amulet.windowVisibleAmuletItems, (visible){
+              return visible ? buildWindowAmuletItems() : nothing;
+            }),
+          ),
         ]),
   );
   }
@@ -853,15 +861,20 @@ class AmuletUI {
     ));
   }
 
-  AmuletImage buildIconRunSpeed() => AmuletImage(srcX: 768, srcY: 64, width: 16, height: 16);
+  AmuletImage buildIconRunSpeed() =>
+      AmuletImage(srcX: 768, srcY: 64, width: 16, height: 16);
 
-  AmuletImage buildIconMagicRegen() => AmuletImage(srcX: 768, srcY: 48, width: 16, height: 16);
+  AmuletImage buildIconMagicRegen() =>
+      AmuletImage(srcX: 768, srcY: 48, width: 16, height: 16);
 
-  AmuletImage buildIconHealth() {
-    return AmuletImage(srcX: 768, srcY: 0, width: 16, height: 16);
-  }
+  AmuletImage buildIconHealth() =>
+      AmuletImage(srcX: 768, srcY: 0, width: 16, height: 16);
 
-  AmuletImage buildIconMagic() => AmuletImage(srcX: 768, srcY: 16, width: 16, height: 16);
+  AmuletImage buildIconDuration() =>
+      AmuletImage(srcX: 775, srcY: 243, width: 18, height: 25);
+
+  AmuletImage buildIconMagic() =>
+      AmuletImage(srcX: 768, srcY: 16, width: 16, height: 16);
 
   AmuletImage buildIconHealthRegen() =>
       AmuletImage(srcX: 768, srcY: 32, width: 16, height: 16);
@@ -1088,15 +1101,7 @@ class AmuletUI {
             ],
           ),
           AmuletItemImage(amuletItem: amuletItem, scale: 1.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              buildText(amuletItem.quality.name, color: mapItemQualityToColor(amuletItem.quality)),
-              width4,
-              buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
-            ],
-          ),
+          buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
           if (talentSword != 0)
             Row(
               children: [
@@ -1121,10 +1126,31 @@ class AmuletUI {
                 buildRowValue(talentBow),
               ],
             ),
+          if (talentCaste != 0)
+            Row(
+              children: [
+                buildCasteTypeIcon(CasteType.Caste),
+                width8,
+                buildRowValue(talentCaste),
+              ],
+            ),
           if (damage != null)
-            buildRowTitleValue('damage', damage),
+            Row(
+              children: [
+                buildIconDamage(),
+                width8,
+                buildRowValue(damage),
+              ],
+            ),
           if (performDuration != null)
-            buildRowTitleValue('duration', '${formatFramesToSeconds(performDuration)}'),
+            Row(
+              children: [
+                buildIconDuration(),
+                width8,
+                buildRowValue(formatFramesToSeconds(performDuration)),
+              ],
+            ),
+            // buildRowTitleValue('duration', '${formatFramesToSeconds(performDuration)}'),
           if (range != null)
             buildRowTitleValue('range', range.toInt()),
           if (maxHealth != null && maxHealth > 0)
@@ -1187,6 +1213,13 @@ class AmuletUI {
       children: [
         buildRowTitle(title), buildRowValue(value),
       ],
+    );
+
+  Widget buildIconDamage() => AmuletImage(
+        srcX: 768,
+        srcY: 208,
+        width: 16,
+        height: 16,
     );
 
   Widget buildCasteTypeIcon(CasteType casteType) =>
@@ -1342,6 +1375,44 @@ class AmuletUI {
       ),
     );
   }
+
+  Widget buildWindowAmuletItems() =>
+      GSContainer(
+        child: Column(
+          children: [
+            buildText('AMULET_ITEMS'),
+            height16,
+            Container(
+              constraints: BoxConstraints(maxHeight: amulet.engine.screen.height - 150),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: AmuletItem.sortedValues
+                      .map(buildAmuletItemElement)
+                      .toList(growable: false),
+                ),
+              ),
+            ),
+          ],
+        ),
+    );
+
+  Widget buildAmuletItemElement(AmuletItem amuletItem) => Container(
+    margin: const EdgeInsets.only(top: 8),
+    child: Container(
+      padding: const EdgeInsets.all(8),
+      color: Colors.white12,
+      child: Row(
+          children: [
+            Container(
+                alignment: Alignment.centerLeft,
+                width: 300,
+                child: buildText(amuletItem.name),
+            ),
+            buildText(amuletItem.quantify),
+          ],
+        ),
+    ),
+  );
 }
 
 String formatFramesToSeconds(int frames){

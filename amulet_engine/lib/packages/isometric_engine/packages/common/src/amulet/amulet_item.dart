@@ -100,7 +100,7 @@ enum AmuletItem {
     quality: ItemQuality.Rare,
   ),
   Weapon_Bow_1_Legendary(
-    label: 'Legendary Short Bow',
+    label: "Ligon's Bow",
     levelMin: 1,
     levelMax: 5,
     type: ItemType.Weapon,
@@ -655,6 +655,25 @@ enum AmuletItem {
 
   bool get isArmor => type == ItemType.Armor;
 
+  int get quantify {
+    var total = 0;
+    if (isWeapon) {
+      total += damage ?? 0;
+    }
+    if (skillType != null) {
+      total += 5;
+    }
+    total += talentSword;
+    total += talentStaff;
+    total += talentBow;
+    total += talentCaste;
+    total += maxHealth ?? 0;
+    total += maxMagic ?? 0;
+    total += (regenHealth ?? 0) * 5;
+    total += (regenMagic ?? 0) * 5;
+    return total;
+  }
+
   static AmuletItem? findByName(String name) =>
       values.firstWhereOrNull((element) => element.name == name);
 
@@ -671,6 +690,24 @@ enum AmuletItem {
         amuletItem.levelMin <= level &&
         amuletItem.levelMax > level
       );
+
+  static final sortedValues = (){
+    final vals = List.of(values);
+    vals.sort(sortByQuantify);
+    return vals;
+  }();
+
+  static int sortByQuantify(AmuletItem a, AmuletItem b){
+    final aQuantify = a.quantify;
+    final bQuantify = b.quantify;
+    if (aQuantify < bQuantify){
+      return -1;
+    }
+    if (aQuantify > bQuantify){
+      return 1;
+    }
+    return 0;
+  }
 
   void validate() {
     if (isWeapon){
