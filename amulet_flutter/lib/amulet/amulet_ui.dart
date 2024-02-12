@@ -1008,6 +1008,22 @@ class AmuletUI {
     });
   }
 
+  Widget buildIconHealthCost() =>
+      AmuletImage(
+        srcX: 768,
+        srcY: 208,
+        width: 16,
+        height: 16,
+      );
+
+  Widget buildIconMagicCost() =>
+      AmuletImage(
+        srcX: 768,
+        srcY: 224,
+        width: 16,
+        height: 16,
+      );
+
   Widget buildSkillTypeIcon(SkillType skillType){
     final src = atlasSrcSkillType[skillType];
     if (src == null){
@@ -1175,15 +1191,14 @@ class AmuletUI {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              // buildText(skillType.casteType.name),
               buildCasteTypeIcon(skillType.casteType),
             ],
           ),
           Row(
             children: [
-              buildText(skillType.name.replaceAll('_', ' ')),
-              width8,
               buildSkillTypeIcon(skillType),
+              width8,
+              buildText(skillType.name.replaceAll('_', ' ')),
             ],
           ),
           if (skillTypeStats.damageMin > 0 || skillTypeStats.damageMax > 0)
@@ -1191,7 +1206,13 @@ class AmuletUI {
                 'damage ${skillTypeStats.damageMin} - ${skillTypeStats.damageMax}'
             ),
           if (skillTypeStats.magicCost > 0)
-            buildText('magic cost ${skillTypeStats.magicCost}'),
+            Row(
+              children: [
+                buildIconMagicCost(),
+                width8,
+                buildRowValue(skillTypeStats.magicCost),
+              ],
+            ),
           if (skillTypeStats.range > 0)
             buildText('range ${skillTypeStats.range}'),
           if (skillTypeStats.performDuration > 0)
