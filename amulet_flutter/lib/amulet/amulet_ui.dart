@@ -71,15 +71,7 @@ class AmuletUI {
           Positioned(
               top: 8,
               left: 8,
-              child: onPressed(
-                action: amulet.useFlask,
-                child: buildWatchBar(
-                  watch: amulet.flaskPercentage,
-                  color: Colors.cyan,
-                  barWidth: 100,
-                  barHeight: 20,
-                ),
-              )
+              child: buildWindowFlask()
           ),
           Positioned(
               bottom: 8,
@@ -117,6 +109,28 @@ class AmuletUI {
         ]),
   );
   }
+
+  Widget buildWindowFlask() =>
+      onPressed(
+        hint: 'Drink Flask (E)',
+        action: amulet.useFlask,
+        child: Row(
+          children: [
+            AmuletImage(
+              srcX: 133,
+              srcY: 163,
+              width: 22,
+              height: 26,
+            ),
+            buildWatchBar(
+              watch: amulet.flaskPercentage,
+              color: amulet.colors.aqua_2,
+              barWidth: 100,
+              barHeight: 20,
+            ),
+          ],
+        ),
+      );
 
   Positioned buildOverlayScreenColor() {
     return Positioned(
@@ -645,7 +659,7 @@ class AmuletUI {
           width: barWidth,
           height: barHeight,
           color: Colors.black26,
-          padding: const EdgeInsets.all(2),
+          padding: const EdgeInsets.all(4),
           alignment: Alignment.centerLeft,
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 100),
@@ -1328,15 +1342,6 @@ class AmuletUI {
       ),
     );
   }
-
-  Widget buildWindowFlask() =>
-      GSContainer(
-        child: buildWatch(amulet.flaskPercentage, (flaskPercentage) {
-            return Container(
-
-            );
-        }),
-    );
 }
 
 String formatFramesToSeconds(int frames){
