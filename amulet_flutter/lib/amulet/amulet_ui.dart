@@ -758,7 +758,7 @@ class AmuletUI {
 
   Widget buildWindowPlayerStats() {
     final windowOpen = GSContainer(
-      width: 160,
+      width: 120,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -827,7 +827,7 @@ class AmuletUI {
             message: 'Agility',
             child: Row(
               children: [
-                buildIconRunSpeed(),
+                buildIconAgility(),
                 width8,
                 buildWatch(amulet.playerRunSpeed, buildRowValue),
               ],
@@ -849,7 +849,7 @@ class AmuletUI {
     ));
   }
 
-  Widget buildIconRunSpeed() =>
+  Widget buildIconAgility() =>
       AmuletImage(srcX: 768, srcY: 64, width: 16, height: 16);
 
   Widget buildIconMagicRegen() =>
@@ -858,8 +858,8 @@ class AmuletUI {
   Widget buildIconHealth() =>
       AmuletImage(srcX: 768, srcY: 0, width: 16, height: 16);
 
-  Widget buildIconDuration() =>
-      AmuletImage(srcX: 775, srcY: 243, width: 18, height: 25);
+  // Widget buildIconDuration() =>
+  //     AmuletImage(srcX: 769, srcY: 65, width: 16, height: 16);
 
   Widget buildIconMagic() =>
       AmuletImage(srcX: 768, srcY: 16, width: 16, height: 16);
@@ -1079,7 +1079,7 @@ class AmuletUI {
 
     return GSContainer(
       width: 200,
-      height: 200,
+      // height: 200,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1104,7 +1104,7 @@ class AmuletUI {
           if (damage != null)
             buildRow(buildIconDamage(), damage),
           if (performDuration != null)
-            buildRow(buildIconDuration(), formatFramesToSeconds(performDuration)),
+            buildRow(buildIconAgility(), formatFramesToSeconds(performDuration)),
           if (range != null)
             buildRow(buildIconRange(), range.toInt()),
           if (maxHealth != null && maxHealth > 0)
@@ -1116,7 +1116,7 @@ class AmuletUI {
           if (regenMagic != null && regenMagic > 0)
             buildRow(buildIconMagicRegen(), regenMagic),
           if (runSpeed != null)
-            buildRow(buildIconRunSpeed(), runSpeed),
+            buildRow(buildIconAgility(), runSpeed),
           if (skillType != null)
             buildRow(buildSkillTypeIcon(skillType), skillType.name.replaceAll('_', ' ')),
           if (equippedItemType == amuletItem)
@@ -1156,17 +1156,24 @@ class AmuletUI {
     return Container(
       color: Colors.white12,
       alignment: Alignment.center,
+      width: 150,
       padding: const EdgeInsets.all(8),
       margin: const EdgeInsets.only(top: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Tooltip(
-            message: 'Caste Type',
-            child: buildRow(
-                buildIconCasteType(skillType.casteType),
-                skillType.casteType.name.replaceAll('_', ' '),
-            ),
+          // Tooltip(
+          //   message: 'Caste Type',
+          //   child: buildRow(
+          //       buildIconCasteType(skillType.casteType),
+          //       skillType.casteType.name.replaceAll('_', ' '),
+          //   ),
+          // ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              buildIconCasteType(skillType.casteType),
+            ],
           ),
           Tooltip(
             message: 'Skill Name',
@@ -1197,7 +1204,7 @@ class AmuletUI {
           if (skillTypeStats.performDuration > 0)
             Tooltip(
                 message: 'Duration',
-                child: buildRow(buildIconDuration(), formatFramesToSeconds(skillTypeStats.performDuration))),
+                child: buildRow(buildIconAgility(), formatFramesToSeconds(skillTypeStats.performDuration))),
           if (skillTypeStats.amount > 0)
             Tooltip(
                 message: 'Amount',
