@@ -127,7 +127,7 @@ class AmuletUI {
 
   Widget buildWindowFlask() =>
       onPressed(
-        hint: 'Drink Flask (E)',
+        hint: 'Drink Flask (Space)',
         action: amulet.useFlask,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -740,7 +740,7 @@ class AmuletUI {
             buildText('Right Click: Use Secondary Skill'),
             buildText('Left Shift: Stop'),
             buildText('Left Shift + Left Click: Attack'),
-            buildText('E: Drink Flask'),
+            buildText('Space: Drink Flask'),
         ],
       )),
     ],
@@ -1233,7 +1233,7 @@ class AmuletUI {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            buildText(skillType.name, color: Colors.white70),
+            buildText(skillType.name.replaceAll('_', ' '), color: Colors.white70),
             height8,
             buildSkillTypeIcon(skillType),
           ],
@@ -1291,7 +1291,7 @@ class AmuletUI {
                                     buildWatch(watch, (t) {
                                     return FittedBox(
                                         child: buildText(
-                                          e.skillType.name,
+                                          e.skillType.name.replaceAll('_', ' '),
                                           color: t == e.skillType ? Colors.white : Colors.white70,
                                           bold: t == e.skillType,
                                         )

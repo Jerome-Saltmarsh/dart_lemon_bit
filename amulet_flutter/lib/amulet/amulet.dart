@@ -272,18 +272,8 @@ class Amulet extends IsometricGame {
       return;
     }
 
-    if (key == PhysicalKeyboardKey.keyE) {
-      amulet.useFlask();
-      return;
-    }
-
     if (key == PhysicalKeyboardKey.space) {
-      options.toggleRenderHealthBars();
-      return;
-    }
-
-    if (key == PhysicalKeyboardKey.digit9 && options.developMode) {
-      amulet.sendAmuletRequest(NetworkRequestAmulet.Refill_Player_Health_Magic);
+      amulet.useFlask();
       return;
     }
 
@@ -303,6 +293,18 @@ class Amulet extends IsometricGame {
       selectSlotType(SlotType.Shoes);
       return;
     }
+
+    if (options.developMode){
+      if (key == PhysicalKeyboardKey.digit9) {
+        amulet.sendAmuletRequest(NetworkRequestAmulet.Refill_Player_Health_Magic);
+        return;
+      }
+    }
+
+    // if (key == PhysicalKeyboardKey.space) {
+    //   options.toggleRenderHealthBars();
+    //   return;
+    // }
   }
 
   @override
