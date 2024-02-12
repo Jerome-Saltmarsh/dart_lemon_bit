@@ -50,4 +50,7 @@ class AmuletFiend extends Character {
 
   @override
   double get runSpeed => super.runSpeed * (isAilmentCold ? 0.5 : 1.0);
+
+  @override
+  bool get collidable => alive;
 }
