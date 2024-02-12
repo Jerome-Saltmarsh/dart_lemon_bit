@@ -138,7 +138,7 @@ enum AmuletItem {
     label: 'Feather Cap',
     levelMin: 1,
     levelMax: 5,
-    skillType: SkillType.Warlock,
+    skillType: SkillType.Entangle,
     type: ItemType.Helm,
     subType: HelmType.Feather_Cap,
     maxHealth: 3,
@@ -151,7 +151,7 @@ enum AmuletItem {
     levelMax: 5,
     type: ItemType.Helm,
     subType: HelmType.Steel_Cap,
-    skillType: SkillType.Vampire,
+    skillType: SkillType.Mighty_Strike,
     maxHealth: 5,
     quality: ItemQuality.Common,
     regenHealth: 1,
@@ -163,7 +163,7 @@ enum AmuletItem {
     levelMax: 5,
     type: ItemType.Helm,
     subType: HelmType.Pointed_Hat_Black,
-    skillType: SkillType.Warlock,
+    skillType: SkillType.Ice_Arrow,
     maxMagic: 5,
     quality: ItemQuality.Common,
     regenMagic: 1,
@@ -175,7 +175,7 @@ enum AmuletItem {
     levelMax: 5,
     type: ItemType.Helm,
     subType: HelmType.Cape,
-    skillType: SkillType.Vampire,
+    skillType: SkillType.Split_Shot,
     maxHealth: 5,
     quality: ItemQuality.Common,
     regenHealth: 1,
@@ -615,6 +615,8 @@ enum AmuletItem {
   final int talentBow;
   final int talentStaff;
   final int talentCaste;
+  final int magicSteal;
+  final int healthSteal;
 
   const AmuletItem({
     required this.type,
@@ -637,6 +639,8 @@ enum AmuletItem {
     this.talentCaste = 0,
     this.talentStaff = 0,
     this.talentSword = 0,
+    this.magicSteal = 0,
+    this.healthSteal = 0,
   });
 
   bool get isWeapon => type == ItemType.Weapon;
@@ -657,20 +661,17 @@ enum AmuletItem {
 
   int get quantify {
     var total = 0;
-    if (isWeapon) {
-      total += damage ?? 0;
-    }
-    if (skillType != null) {
-      total += 5;
-    }
+    total += damage ?? 0;
+    total += skillType?.quantify ?? 0;
     total += talentSword;
     total += talentStaff;
     total += talentBow;
     total += talentCaste;
     total += maxHealth ?? 0;
     total += maxMagic ?? 0;
-    total += (regenHealth ?? 0) * 5;
-    total += (regenMagic ?? 0) * 5;
+    const pointsPerRegen = 5;
+    total += (regenHealth ?? 0) * pointsPerRegen;
+    total += (regenMagic ?? 0) * pointsPerRegen;
     return total;
   }
 
@@ -737,7 +738,6 @@ enum CasteType {
   Sword,
   Staff,
   Caste,
-  Passive,
 }
 
 enum ItemQuality {

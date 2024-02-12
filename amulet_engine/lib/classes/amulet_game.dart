@@ -1086,11 +1086,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       final healthSteal = src.healthSteal;
       final magicSteal = src.magicSteal;
       if (healthSteal > 0) {
-        src.health += src.healthSteal;
+        src.health += healthSteal;
         dispatchGameEventPosition(GameEvent.Health_Regained, src);
       }
       if (magicSteal > 0) {
-        src.magic += src.magicSteal;
+        src.magic += magicSteal;
         dispatchGameEventPosition(GameEvent.Magic_Regained, src);
       }
     }

@@ -175,22 +175,22 @@ class AmuletPlayer extends IsometricPlayer with
 
   @override
   int get maxHealth {
-    var health = baseHealth;
-    health += equippedWeapon?.maxHealth ?? 0;
-    health += equippedHelm?.maxHealth ?? 0;
-    health += equippedArmor?.maxHealth ?? 0;
-    health += equippedShoes?.maxHealth ?? 0;
-    return health;
+    var total = baseHealth;
+    total += equippedWeapon?.maxHealth ?? 0;
+    total += equippedHelm?.maxHealth ?? 0;
+    total += equippedArmor?.maxHealth ?? 0;
+    total += equippedShoes?.maxHealth ?? 0;
+    return total;
   }
 
   @override
   int get maxMagic {
-    var amount = baseMagic;
-    amount += equippedWeapon?.maxMagic ?? 0;
-    amount += equippedHelm?.maxMagic ?? 0;
-    amount += equippedArmor?.maxMagic ?? 0;
-    amount += equippedShoes?.maxMagic ?? 0;
-    return amount;
+    var total = baseMagic;
+    total += equippedWeapon?.maxMagic ?? 0;
+    total += equippedHelm?.maxMagic ?? 0;
+    total += equippedArmor?.maxMagic ?? 0;
+    total += equippedShoes?.maxMagic ?? 0;
+    return total;
   }
 
   @override
@@ -747,8 +747,6 @@ class AmuletPlayer extends IsometricPlayer with
     }
 
     switch (skillActive.casteType) {
-      case CasteType.Passive:
-        throw Exception('cannot perform $skillActive.casteType == CasteType.Passive');
       case CasteType.Caste:
         setCharacterStateCasting(
           duration: performDuration
@@ -1051,8 +1049,6 @@ class AmuletPlayer extends IsometricPlayer with
     if (const [
       SkillType.Heal,
       SkillType.Teleport,
-      SkillType.Warlock,
-      SkillType.Vampire,
       SkillType.None,
     ].contains(skillType)){
       return 0;
@@ -1241,17 +1237,19 @@ class AmuletPlayer extends IsometricPlayer with
 
   int get healthSteal {
     var total = 0;
-    if (skillTypeEquipped(SkillType.Vampire)) {
-      total++;
-    }
+    total += equippedWeapon?.healthSteal ?? 0;
+    total += equippedHelm?.healthSteal ?? 0;
+    total += equippedArmor?.healthSteal ?? 0;
+    total += equippedShoes?.healthSteal ?? 0;
     return total;
   }
 
   int get magicSteal {
     var total = 0;
-    if (skillTypeEquipped(SkillType.Warlock)) {
-      total++;
-    }
+    total += equippedWeapon?.magicSteal ?? 0;
+    total += equippedHelm?.magicSteal ?? 0;
+    total += equippedArmor?.magicSteal ?? 0;
+    total += equippedShoes?.magicSteal ?? 0;
     return total;
   }
 

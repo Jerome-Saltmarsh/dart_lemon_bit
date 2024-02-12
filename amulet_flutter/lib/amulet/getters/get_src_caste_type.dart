@@ -30,11 +30,5 @@ List<double> getSrcCasteType(CasteType casteType){
         width,
         height,
       ],
-    CasteType.Passive => const [
-        x,
-        192,
-        width,
-        height,
-      ]
   };
 }

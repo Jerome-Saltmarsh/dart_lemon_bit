@@ -123,12 +123,17 @@ class AmuletUI {
         hint: 'Drink Flask (E)',
         action: amulet.useFlask,
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AmuletImage(
-              srcX: 133,
-              srcY: 163,
-              width: 22,
-              height: 26,
+            Container(
+              padding: const EdgeInsets.all(8),
+              color: Colors.black26,
+              child: AmuletImage(
+                srcX: 133,
+                srcY: 163,
+                width: 22,
+                height: 26,
+              ),
             ),
             buildWatchBar(
               watch: amulet.flaskPercentage,
@@ -276,71 +281,6 @@ class AmuletUI {
           ),
         );
       }));
-
-  Widget buildRow(String column1, Widget column2, Widget? column3) {
-    const width1 = 80.0;
-    const width = 130.0;
-    return Container(
-      margin: const EdgeInsets.only(bottom: 4),
-      child: Row(
-        children: [
-          if (column1.isEmpty)
-            const SizedBox(width: width1),
-          if (column1.isNotEmpty)
-          Container(
-              alignment: Alignment.centerLeft,
-              color: Colors.black12,
-              padding: const EdgeInsets.all(2),
-              margin: const EdgeInsets.only(right: 2),
-              width: width1, child: buildText(column1, color: Colors.white70)),
-          width4,
-          Container(width: width, child: column2),
-          if (column3 != null)
-          width4,
-          if (column3 != null)
-          Container(width: width, child: column3),
-        ],
-      ),
-    );
-  }
-
-  Widget buildRowInt(
-      String column1,
-      int? column2,
-      int? column3,
-      ) =>
-      buildRowText(column1, column2, column3,
-        column2Color: compareIntGreater(column2, column3),
-        column3Color: compareIntGreater(column3, column2),
-      );
-
-  Widget buildRowIntReverse(
-      String column1,
-      int? column2,
-      int? column3,
-      ) =>
-      buildRowText(column1, column2, column3,
-        column2Color: compareIntGreater(column3, column2),
-        column3Color: compareIntGreater(column2, column3),
-      );
-
-  Widget buildRowText(
-      String column1,
-      dynamic column2,
-      dynamic column3,
-      {
-        Color column2Color = Colors.white70,
-        Color column3Color = Colors.white70,
-      }) {
-    if (column2 == null && column3 == null){
-      return nothing;
-    }
-    return buildRow(
-          column1,
-          buildText(column2, color: column2Color),
-          buildText(column3, color: column3Color),
-        );
-  }
 
   static Color compareIntGreater(int? a, int? b){
     if (a == b){
@@ -1103,99 +1043,31 @@ class AmuletUI {
           AmuletItemImage(amuletItem: amuletItem, scale: 1.0),
           buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
           if (talentSword != 0)
-            Row(
-              children: [
-                buildCasteTypeIcon(CasteType.Sword),
-                width8,
-                buildRowValue(talentSword),
-              ],
-            ),
+            buildRow(buildCasteTypeIcon(CasteType.Sword), talentSword),
           if (talentStaff != 0)
-            Row(
-              children: [
-                buildCasteTypeIcon(CasteType.Staff),
-                width8,
-                buildRowValue(talentStaff),
-              ],
-            ),
+            buildRow(buildCasteTypeIcon(CasteType.Staff), talentStaff),
           if (talentBow != 0)
-            Row(
-              children: [
-                buildCasteTypeIcon(CasteType.Bow),
-                width8,
-                buildRowValue(talentBow),
-              ],
-            ),
+            buildRow(buildCasteTypeIcon(CasteType.Bow), talentBow),
           if (talentCaste != 0)
-            Row(
-              children: [
-                buildCasteTypeIcon(CasteType.Caste),
-                width8,
-                buildRowValue(talentCaste),
-              ],
-            ),
+            buildRow(buildCasteTypeIcon(CasteType.Caste), talentCaste),
           if (damage != null)
-            Row(
-              children: [
-                buildIconDamage(),
-                width8,
-                buildRowValue(damage),
-              ],
-            ),
+            buildRow(buildIconDamage(), damage),
           if (performDuration != null)
-            Row(
-              children: [
-                buildIconDuration(),
-                width8,
-                buildRowValue(formatFramesToSeconds(performDuration)),
-              ],
-            ),
-            // buildRowTitleValue('duration', '${formatFramesToSeconds(performDuration)}'),
+            buildRow(buildIconDuration(), formatFramesToSeconds(performDuration)),
           if (range != null)
-            buildRowTitleValue('range', range.toInt()),
+            buildRow(buildIconRange(), range.toInt()),
           if (maxHealth != null && maxHealth > 0)
-            Row(
-              children: [
-                buildIconHealth(),
-                width8,
-                buildRowValue(maxHealth),
-              ],
-            ),
+            buildRow(buildIconHealth(), maxHealth),
           if (maxMagic != null && maxMagic > 0)
-            buildRowTitleValue('max magic', maxHealth),
+            buildRow(buildIconMagic(), maxMagic),
           if (regenHealth != null && regenHealth > 0)
-            Row(
-              children: [
-                buildIconHealthRegen(),
-                width8,
-                buildRowValue(regenHealth),
-              ],
-            ),
+            buildRow(buildIconHealthRegen(), regenHealth),
           if (regenMagic != null && regenMagic > 0)
-            Row(
-              children: [
-                buildIconMagicRegen(),
-                width8,
-                buildRowValue(regenMagic),
-              ],
-            ),
+            buildRow(buildIconMagicRegen(), regenMagic),
           if (runSpeed != null)
-            Row(
-              children: [
-                buildIconRunSpeed(),
-                width8,
-                buildRowValue(runSpeed),
-              ],
-            ),
+            buildRow(buildIconRunSpeed(), runSpeed),
           if (skillType != null)
-            Row(
-              children: [
-                buildSkillTypeIcon(skillType),
-                width8,
-                buildRowValue(skillType.name.replaceAll('_', ' ')),
-              ],
-            ),
-
+            buildRow(buildSkillTypeIcon(skillType), skillType.name.replaceAll('_', ' ')),
           if (equippedItemType == amuletItem)
             Container(
                 margin: const EdgeInsets.only(top: 8),
@@ -1235,41 +1107,32 @@ class AmuletUI {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
+          buildRow(
               buildCasteTypeIcon(skillType.casteType),
-            ],
+              skillType.casteType.name.replaceAll('_', ' '),
           ),
-          Row(
-            children: [
+          buildRow(
               buildSkillTypeIcon(skillType),
-              width8,
-              buildText(skillType.name.replaceAll('_', ' ')),
-            ],
+              skillType.name.replaceAll('_', ' '),
           ),
           if (skillTypeStats.damageMin > 0 || skillTypeStats.damageMax > 0)
-            buildText(
-                'damage ${skillTypeStats.damageMin} - ${skillTypeStats.damageMax}'
+            buildRow(
+                buildIconDamage(),
+                '${skillTypeStats.damageMin} - ${skillTypeStats.damageMax}',
             ),
           if (skillTypeStats.magicCost > 0)
-            Row(
-              children: [
-                buildIconMagicCost(),
-                width8,
-                buildRowValue(skillTypeStats.magicCost),
-              ],
-            ),
+            buildRow(buildIconMagicCost(), skillTypeStats.magicCost),
           if (skillTypeStats.range > 0)
-            buildText('range ${skillTypeStats.range}'),
+            buildRow(buildIconRange(), skillTypeStats.range),
           if (skillTypeStats.performDuration > 0)
-            buildText('duration ${formatFramesToSeconds(skillTypeStats.performDuration)}'),
+            buildRow(buildIconDuration(), formatFramesToSeconds(skillTypeStats.performDuration)),
           if (skillTypeStats.amount > 0)
-            buildText('amount ${skillTypeStats.amount}'),
+            buildRow(buildIconAmount(), skillTypeStats.amount),
         ],
       ),
     );
   }
+
 
   Widget buildControlSkillTypeLeft() =>  buildControlSkillType(
     onSelected: amulet.selectSkillTypeLeft,
@@ -1413,6 +1276,25 @@ class AmuletUI {
         ),
     ),
   );
+
+  Widget buildIconRange() => AmuletImage(
+        srcX: 772,
+        srcY: 275,
+        width: 26,
+        height: 26,
+    );
+
+  Widget buildRow(Widget key, dynamic value) =>
+      Row(
+        children: [
+          key,
+          width8,
+          buildText(value),
+        ],
+  );
+
+  Widget buildIconAmount() => buildText('Amount');
+
 }
 
 String formatFramesToSeconds(int frames){
