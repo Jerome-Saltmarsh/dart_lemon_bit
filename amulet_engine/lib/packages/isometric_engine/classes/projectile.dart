@@ -43,5 +43,9 @@ class Projectile extends Collider {
   bool onSameTeam(dynamic target) =>
       parent?.onSameTeam(target) ?? false;
 
+  void clearTarget() {
+    target = null;
+  }
+
 }
 

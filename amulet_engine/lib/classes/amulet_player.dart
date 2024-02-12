@@ -532,12 +532,6 @@ class AmuletPlayer extends IsometricPlayer with
     writePlayerEvent(PlayerEvent.Character_State_Changing);
   }
 
-  // @override
-  // void update() {
-  //   super.update();
-  //   updateActiveSkillTypePosition();
-  // }
-
   void updateCastePosition() {
     final skillType = skillActive;
     final mouseDistance = getMouseDistance();

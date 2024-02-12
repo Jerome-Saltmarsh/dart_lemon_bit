@@ -863,7 +863,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       AmuletGameObject gameObject,
   ){
      if (player.acquireAmuletItem(gameObject.amuletItem)){
-       deactivate(gameObject);
+       remove(gameObject);
      }
   }
 

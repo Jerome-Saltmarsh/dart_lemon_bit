@@ -595,7 +595,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   void deactivate(Collider collider) {
     if (!collider.active) return;
     collider.deactivate();
-    onDeactivated(collider);
+    clearTarget(collider);
   }
 
   void dispatchGameEventCharacterDeath(Character character) {
@@ -1275,12 +1275,16 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     throw Exception();
   }
 
-
   void clearTarget(Position position){
     final characters = this.characters;
     for (final character in characters){
       if (character.target != position) continue;
       character.clearTarget();
+    }
+    final projectiles = this.projectiles;
+    for (final projectile in projectiles) {
+      if (projectile.target == position) continue;
+      projectile.clearTarget();
     }
   }
 
@@ -2704,21 +2708,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     player.active = true;
     player.sceneDownloaded = false;
     player.downloadScene();
-  }
-
-  void onDeactivated(Collider collider) {
-    final characters = this.characters;
-    for (final character in characters) {
-      if (character.target == collider) {
-        clearCharacterTarget(character);
-      }
-    }
-
-    final projectiles = this.projectiles;
-    for (final projectile in projectiles) {
-      if (projectile.target == collider) continue;
-      projectile.target = null;
-    }
   }
 
   void applyChangesToScene(){
