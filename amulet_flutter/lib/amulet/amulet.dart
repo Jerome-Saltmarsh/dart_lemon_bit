@@ -20,9 +20,9 @@ import 'classes/map_location.dart';
 import 'classes/skill_type_stats.dart';
 
 class Characteristics {
-  final strength = Watch(0);
-  final intelligence = Watch(0);
-  final dexterity = Watch(0);
+  final sword = Watch(0);
+  final staff = Watch(0);
+  final bow = Watch(0);
   final caste = Watch(0);
 }
 
@@ -53,7 +53,7 @@ class Amulet extends IsometricGame {
   var playerWorldX = 0.0;
   var playerWorldY = 0.0;
 
-  final playerCharacteristics = Characteristics();
+  final playerMastery = Characteristics();
   final playerMagic = Watch(0);
   final playerMagicMax = Watch(0);
   final playerMagicPercentage = Watch(0.0);
@@ -82,6 +82,7 @@ class Amulet extends IsometricGame {
   final questMain = Watch(QuestMain.values.first);
   final windowVisibleQuests = WatchBool(true);
   final windowVisiblePlayerStats = WatchBool(true);
+  final windowVisibleHelp = WatchBool(false);
 
   late final AmuletUI amuletUI;
 
@@ -263,6 +264,11 @@ class Amulet extends IsometricGame {
 
     if (key == PhysicalKeyboardKey.keyW) {
       amulet.windowVisibleQuests.toggle();
+      return;
+    }
+
+    if (key == PhysicalKeyboardKey.keyH) {
+      amulet.windowVisibleHelp.toggle();
       return;
     }
 

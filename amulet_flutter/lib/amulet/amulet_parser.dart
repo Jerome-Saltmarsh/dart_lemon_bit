@@ -312,10 +312,10 @@ extension AmuletParser on IsometricParser {
   }
 
   void readPlayerCharacteristics() {
-     final characteristics = amulet.playerCharacteristics;
-     characteristics.strength.value = readUInt16();
-     characteristics.intelligence.value = readUInt16();
-     characteristics.dexterity.value = readUInt16();
+     final characteristics = amulet.playerMastery;
+     characteristics.sword.value = readUInt16();
+     characteristics.staff.value = readUInt16();
+     characteristics.bow.value = readUInt16();
   }
 
   void readPlayerActiveSlotType() {

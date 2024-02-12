@@ -83,6 +83,8 @@ class AmuletUI {
                   buildButtonPlayerStats(),
                   width8,
                   buildButtonQuest(),
+                  width8,
+                  buildToggleHelp(),
                 ],
               ),
           ),
@@ -115,6 +117,10 @@ class AmuletUI {
               return visible ? buildWindowQuantify() : nothing;
             }),
           ),
+          Positioned(
+              top: 50,
+              child: buildWatch(amulet.windowVisibleHelp, (t) => t ? buildWindowHelp() : nothing)
+          )
         ]),
   );
   }
@@ -709,6 +715,47 @@ class AmuletUI {
   Widget buildButtonPlayerStats() =>
       buildToggle(amulet.windowVisiblePlayerStats, 'stats', hint: 'q');
 
+  Widget buildWindowHelp() => GSContainer(
+      width: 400,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          buildDialogTitle('HELP'),
+          onPressed(
+              action: amulet.windowVisibleHelp.setFalse,
+              child: buildText('X', color: Colors.orange)
+          ),
+        ],
+      ),
+      height16,
+      buildSafeContainer(child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+            buildText('CONTROLS', color: Colors.white70),
+            buildText('Left Click: Run / Attack / Talk'),
+            buildText('Right Click: Use Secondary Skill'),
+            buildText('Left Shift: Stop'),
+            buildText('Left Shift + Left Click: Attack'),
+            buildText('E: Drink Flask'),
+        ],
+      )),
+    ],
+  ));
+
+  Widget buildSafeContainer({
+    required Widget child,
+  }) =>
+      Container(
+        constraints: BoxConstraints(maxHeight: amulet.engine.screen.height - 100),
+        child: SingleChildScrollView(
+          child: child,
+        )
+      );
+
   Widget buildWindowPlayerStats() {
     final windowOpen = GSContainer(
       width: 160,
@@ -802,22 +849,22 @@ class AmuletUI {
     ));
   }
 
-  AmuletImage buildIconRunSpeed() =>
+  Widget buildIconRunSpeed() =>
       AmuletImage(srcX: 768, srcY: 64, width: 16, height: 16);
 
-  AmuletImage buildIconMagicRegen() =>
+  Widget buildIconMagicRegen() =>
       AmuletImage(srcX: 768, srcY: 48, width: 16, height: 16);
 
-  AmuletImage buildIconHealth() =>
+  Widget buildIconHealth() =>
       AmuletImage(srcX: 768, srcY: 0, width: 16, height: 16);
 
-  AmuletImage buildIconDuration() =>
+  Widget buildIconDuration() =>
       AmuletImage(srcX: 775, srcY: 243, width: 18, height: 25);
 
-  AmuletImage buildIconMagic() =>
+  Widget buildIconMagic() =>
       AmuletImage(srcX: 768, srcY: 16, width: 16, height: 16);
 
-  AmuletImage buildIconHealthRegen() =>
+  Widget buildIconHealthRegen() =>
       AmuletImage(srcX: 768, srcY: 32, width: 16, height: 16);
 
   Widget buildWindowPlayerSkillStats() =>
@@ -850,49 +897,52 @@ class AmuletUI {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            buildCasteTypeIcon(CasteType.Sword),
+            buildIconCasteType(CasteType.Sword),
             width8,
             buildWatch(
-                amulet.playerCharacteristics.strength, buildRowValue),
+                amulet.playerMastery.sword, buildRowValue),
           ],
         ),
       ),
+      height4,
       Tooltip(
         message: 'Staff',
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            buildCasteTypeIcon(CasteType.Staff),
+            buildIconCasteType(CasteType.Staff),
             width8,
             buildWatch(
-                amulet.playerCharacteristics.intelligence,
+                amulet.playerMastery.staff,
                 buildRowValue,
             ),
           ],
         ),
       ),
+      height4,
       Tooltip(
         message: 'Bow',
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            buildCasteTypeIcon(CasteType.Bow),
+            buildIconCasteType(CasteType.Bow),
             width8,
             buildWatch(
-                amulet.playerCharacteristics.dexterity, buildRowValue,
+                amulet.playerMastery.bow, buildRowValue,
             ),
           ],
         ),
       ),
+      height4,
       Tooltip(
         message: 'Caste',
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            buildCasteTypeIcon(CasteType.Caste),
+            buildIconCasteType(CasteType.Caste),
             width8,
             buildWatch(
-              amulet.playerCharacteristics.caste,
+              amulet.playerMastery.caste,
               buildRowValue,
             ),
           ],
@@ -1044,13 +1094,13 @@ class AmuletUI {
           AmuletItemImage(amuletItem: amuletItem, scale: 1.0),
           buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
           if (talentSword != 0)
-            buildRow(buildCasteTypeIcon(CasteType.Sword), talentSword),
+            buildRow(buildIconCasteType(CasteType.Sword), talentSword),
           if (talentStaff != 0)
-            buildRow(buildCasteTypeIcon(CasteType.Staff), talentStaff),
+            buildRow(buildIconCasteType(CasteType.Staff), talentStaff),
           if (talentBow != 0)
-            buildRow(buildCasteTypeIcon(CasteType.Bow), talentBow),
+            buildRow(buildIconCasteType(CasteType.Bow), talentBow),
           if (talentCaste != 0)
-            buildRow(buildCasteTypeIcon(CasteType.Caste), talentCaste),
+            buildRow(buildIconCasteType(CasteType.Caste), talentCaste),
           if (damage != null)
             buildRow(buildIconDamage(), damage),
           if (performDuration != null)
@@ -1095,8 +1145,11 @@ class AmuletUI {
         height: 16,
     );
 
-  Widget buildCasteTypeIcon(CasteType casteType) =>
-      AmuletImageSrc(src: getSrcCasteType(casteType));
+  Widget buildIconCasteType(CasteType casteType) =>
+      Container(
+          padding: const EdgeInsets.all(4),
+          color: Colors.black26,
+          child: AmuletImageSrc(src: getSrcCasteType(casteType)));
 
   Widget buildContainerSkillTypeStats(SkillTypeStats skillTypeStats) {
     final skillType = skillTypeStats.skillType;
@@ -1108,34 +1161,43 @@ class AmuletUI {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildRow(
-              buildCasteTypeIcon(skillType.casteType),
-              skillType.casteType.name.replaceAll('_', ' '),
+          Tooltip(
+            message: 'Caste Type',
+            child: buildRow(
+                buildIconCasteType(skillType.casteType),
+                skillType.casteType.name.replaceAll('_', ' '),
+            ),
           ),
-          buildRow(
-              buildSkillTypeIcon(skillType),
-              skillType.name.replaceAll('_', ' '),
+          Tooltip(
+            message: 'Skill Name',
+            child: buildRow(
+                buildSkillTypeIcon(skillType),
+                skillType.name.replaceAll('_', ' '),
+            ),
           ),
           if (skillTypeStats.damageMin > 0 || skillTypeStats.damageMax > 0)
-            buildRow(
-                buildIconDamage(),
-                '${skillTypeStats.damageMin} - ${skillTypeStats.damageMax}',
+            Tooltip(
+              message: 'Damage',
+              child: buildRow(
+                  buildIconDamage(),
+                  '${skillTypeStats.damageMin} - ${skillTypeStats.damageMax}',
+              ),
             ),
           if (skillTypeStats.magicCost > 0)
             Tooltip(
-                message: 'Damage',
-                child: buildRow(buildIconMagicCost(), skillTypeStats.magicCost)
-            ),
+                message: 'Magic Cost',
+                child: buildRow(
+                    buildIconMagicCost(),
+                    skillTypeStats.magicCost,
+                )),
           if (skillTypeStats.range > 0)
             Tooltip(
                 message: 'Range',
-                child: buildRow(buildIconRange(), skillTypeStats.range),
-            ),
+                child: buildRow(buildIconRange(), skillTypeStats.range)),
           if (skillTypeStats.performDuration > 0)
             Tooltip(
                 message: 'Duration',
-                child: buildRow(buildIconDuration(), formatFramesToSeconds(skillTypeStats.performDuration))
-            ),
+                child: buildRow(buildIconDuration(), formatFramesToSeconds(skillTypeStats.performDuration))),
           if (skillTypeStats.amount > 0)
             Tooltip(
                 message: 'Amount',
@@ -1180,6 +1242,9 @@ class AmuletUI {
 
   Widget buildButtonQuest() =>
       buildToggle(amulet.windowVisibleQuests, 'quest', hint: 'w');
+
+  Widget buildToggleHelp() =>
+      buildToggle(amulet.windowVisibleHelp, 'help', hint: 'h');
 
   Widget buildToggle(WatchBool watch, String text, {String? hint}) =>
       onPressed(
