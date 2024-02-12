@@ -1510,6 +1510,7 @@ class IsometricScene with IsometricComponent implements Updatable {
 
   var characterColdEmissionNext = 0;
   var characterColdEmissionRate = 2;
+  var emitSmoke = false;
 
   void updateCharacters(){
 
@@ -1520,6 +1521,7 @@ class IsometricScene with IsometricComponent implements Updatable {
 
     final totalCharacters = this.totalCharacters;
     final characters = this.characters;
+
     for (var i = 0; i < totalCharacters; i++){
       final character = characters[i];
       if (character.isAilmentCold) {
@@ -1535,11 +1537,15 @@ class IsometricScene with IsometricComponent implements Updatable {
             y: character.y + giveOrTake(10),
             z: character.z,
         );
-        // particles.emitSmoke(
-        //     x: character.x + giveOrTake(10),
-        //     y: character.y + giveOrTake(10),
-        //     z: character.z,
-        // );
+
+        emitSmoke = !emitSmoke;
+        if (emitSmoke){
+          particles.emitSmoke(
+            x: character.x + giveOrTake(10),
+            y: character.y + giveOrTake(10),
+            z: character.z,
+          );
+        }
       }
     }
   }

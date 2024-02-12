@@ -7,6 +7,7 @@ import 'package:amulet_engine/packages/common.dart';
 import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/quests/quest_main.dart';
 import 'package:amulet_flutter/amulet/amulet_ui.dart';
 import 'package:amulet_flutter/amulet/classes/item_slot.dart';
+import 'package:amulet_flutter/amulet/ui/enums/quantify_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_engine/lemon_engine.dart';
@@ -68,7 +69,10 @@ class Amulet extends IsometricGame {
   final playerSkillRight = Watch(SkillType.Strike);
   final windowVisibleSkillLeft = WatchBool(false);
   final windowVisibleSkillRight = WatchBool(false);
-  final windowVisibleAmuletItems = WatchBool(false);
+  final windowVisibleQuantify = WatchBool(false);
+  final windowQuantifyTab = Watch(QuantifyTab.values.first);
+  // final windowVisibleQuantifyAmuletItems = WatchBool(false);
+  // final windowVisibleQuantifyFiendTypes = WatchBool(false);
 
   final playerRunSpeed = Watch(0);
 

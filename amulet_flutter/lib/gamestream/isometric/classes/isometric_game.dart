@@ -135,7 +135,7 @@ class IsometricGame extends Game {
       }
 
       if (key == PhysicalKeyboardKey.digit8) {
-        amulet.windowVisibleAmuletItems.toggle();
+        amulet.windowVisibleQuantify.toggle();
         return;
       }
     }

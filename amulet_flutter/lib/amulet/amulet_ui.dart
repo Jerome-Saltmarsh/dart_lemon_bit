@@ -2,6 +2,7 @@
 import 'package:amulet_engine/src.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/amulet/classes/skill_type_stats.dart';
+import 'package:amulet_flutter/amulet/ui/enums/quantify_tab.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_skill_type.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';
 import 'package:amulet_flutter/website/widgets/gs_fullscreen.dart';
@@ -110,8 +111,8 @@ class AmuletUI {
             top: 8,
             left: 8,
             child:
-            buildWatch(amulet.windowVisibleAmuletItems, (visible){
-              return visible ? buildWindowAmuletItems() : nothing;
+            buildWatch(amulet.windowVisibleQuantify, (visible){
+              return visible ? buildWindowQuantify() : nothing;
             }),
           ),
         ]),
@@ -776,7 +777,7 @@ class AmuletUI {
             ),
           ),
           Tooltip(
-            message: 'Run Speed',
+            message: 'Agility',
             child: Row(
               children: [
                 buildIconRunSpeed(),
@@ -1121,13 +1122,25 @@ class AmuletUI {
                 '${skillTypeStats.damageMin} - ${skillTypeStats.damageMax}',
             ),
           if (skillTypeStats.magicCost > 0)
-            buildRow(buildIconMagicCost(), skillTypeStats.magicCost),
+            Tooltip(
+                message: 'Damage',
+                child: buildRow(buildIconMagicCost(), skillTypeStats.magicCost)
+            ),
           if (skillTypeStats.range > 0)
-            buildRow(buildIconRange(), skillTypeStats.range),
+            Tooltip(
+                message: 'Range',
+                child: buildRow(buildIconRange(), skillTypeStats.range),
+            ),
           if (skillTypeStats.performDuration > 0)
-            buildRow(buildIconDuration(), formatFramesToSeconds(skillTypeStats.performDuration)),
+            Tooltip(
+                message: 'Duration',
+                child: buildRow(buildIconDuration(), formatFramesToSeconds(skillTypeStats.performDuration))
+            ),
           if (skillTypeStats.amount > 0)
-            buildRow(buildIconAmount(), skillTypeStats.amount),
+            Tooltip(
+                message: 'Amount',
+                child: buildRow(buildIconAmount(), skillTypeStats.amount)
+            ),
         ],
       ),
     );
@@ -1239,25 +1252,48 @@ class AmuletUI {
     );
   }
 
-  Widget buildWindowAmuletItems() =>
-      GSContainer(
-        child: Column(
-          children: [
-            buildText('AMULET_ITEMS'),
-            height16,
-            Container(
-              constraints: BoxConstraints(maxHeight: amulet.engine.screen.height - 150),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: AmuletItem.sortedValues
-                      .map(buildAmuletItemElement)
-                      .toList(growable: false),
-                ),
+  Widget buildWindowQuantify(){
+     return GSContainer(
+       child: buildWatch(amulet.windowQuantifyTab, (activeQuantifyTab) {
+         return Column(
+           children: [
+              Row(
+                children: QuantifyTab.values.map((e) {
+                  return Container(
+                    width: 120,
+                    height: 50,
+                    color: e == activeQuantifyTab ? Colors.black38 : Colors.black12,
+                    alignment: Alignment.center,
+                    child: onPressed(
+                        action: () => amulet.windowQuantifyTab.value = e,
+                        child: buildText(e.name),
+                    ),
+                  );
+                }).toList(growable: false),
               ),
-            ),
-          ],
-        ),
-    );
+             Container(
+               constraints: BoxConstraints(maxHeight: amulet.engine.screen.height - 150),
+               child: SingleChildScrollView(
+                 child: Column(
+                   children: buildChildrenQuantifyTab(activeQuantifyTab),
+                 ),
+               ),
+             )
+           ],
+         );
+       }),
+     );
+  }
+
+  List<Widget> buildChildrenQuantifyTab(QuantifyTab quantifyTab) =>
+      switch (quantifyTab) {
+        QuantifyTab.Amulet_Items => AmuletItem.sortedValues
+            .map(buildAmuletItemElement)
+            .toList(growable: false),
+        QuantifyTab.Fiend_Types => FiendType.sortedValues
+            .map(buildElementFiendType)
+            .toList(growable: false)
+      };
 
   Widget buildAmuletItemElement(AmuletItem amuletItem) => Container(
     margin: const EdgeInsets.only(top: 8),
@@ -1272,6 +1308,24 @@ class AmuletUI {
                 child: buildText(amuletItem.name),
             ),
             buildText(amuletItem.quantify),
+          ],
+        ),
+    ),
+  );
+
+  Widget buildElementFiendType(FiendType fiendType) => Container(
+    margin: const EdgeInsets.only(top: 8),
+    child: Container(
+      padding: const EdgeInsets.all(8),
+      color: Colors.white12,
+      child: Row(
+          children: [
+            Container(
+                alignment: Alignment.centerLeft,
+                width: 300,
+                child: buildText(fiendType.name),
+            ),
+            buildText(fiendType.quantify),
           ],
         ),
     ),

@@ -186,4 +186,36 @@ enum FiendType {
     this.resists,
     this.skillRadius = 0,
   });
+
+  int get quantify {
+    var total = 0;
+    total += health;
+    total += ((damage / attackDuration) * 45).toInt();
+    total += skillType.quantify;
+    if (resists != null) {
+      total += 3;
+    }
+    return total;
+  }
+
+  static final sortedValues = (){
+    final vals = List.of(values);
+    vals.sort(sortByQuantify);
+    return vals;
+  }();
+
+  static int sortByQuantify(FiendType a, FiendType b){
+    final aQuantify = a.quantify;
+    final bQuantify = b.quantify;
+    if (aQuantify < bQuantify){
+      return -1;
+    }
+    if (aQuantify > bQuantify){
+      return 1;
+    }
+    return 0;
+  }
 }
+
+
+

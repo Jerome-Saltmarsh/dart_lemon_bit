@@ -743,6 +743,7 @@ class AmuletPlayer extends IsometricPlayer with
     final magicCost = getSkillTypeMagicCost(skillActive);
     if (magicCost > magic) {
       writeGameError(GameError.Insufficient_Magic);
+      clearTarget();
       return;
     }
 
@@ -1039,7 +1040,7 @@ class AmuletPlayer extends IsometricPlayer with
   int get equippedWeaponDamage {
     final damage = equippedWeapon?.damage;
     if (damage == null){
-      throw Exception('equippedWeapon is null');
+       return 0;
     }
     return damage;
   }
@@ -1102,7 +1103,7 @@ class AmuletPlayer extends IsometricPlayer with
   double getSkillTypeRange(SkillType skillType) =>
     skillType.range ??
         equippedWeapon?.range ??
-          (throw Exception('amuletPlayer.getSkillTypeRange($skillType)'));
+          0;
 
 
   double getSkillTypeRadius(SkillType skillType) {
@@ -1218,7 +1219,7 @@ class AmuletPlayer extends IsometricPlayer with
   int getSkillTypePerformDuration(SkillType skillType) =>
     skillType.casteDuration ??
       equippedWeapon?.performDuration ??
-        (throw Exception('skillType.casteDuration and equippedWeapon is null'));
+        0;
 
   int getSkillTypeAmount(SkillType skillType) {
     switch (skillType){
