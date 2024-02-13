@@ -870,6 +870,12 @@ class AmuletUI {
               return buildRow(buildIconRange(), weaponRange);
             }),
           ),
+          Tooltip(
+            message: 'Attack Speed',
+            child: buildWatch(amulet.playerWeaponAttackSpeed, (attackSpeed){
+              return buildRow(buildIconAttackSpeed(), AttackSpeed.values[attackSpeed].name);
+            }),
+          ),
         ],
       ),
     );
@@ -1485,6 +1491,10 @@ class AmuletUI {
 
   Widget buildIconMagicSteal() =>
       AmuletImage(srcX: 768, srcY: 272, width: 16, height: 16);
+
+  Widget buildIconAttackSpeed() {
+    return AmuletImage(srcX: 768, srcY: 288, width: 16, height: 16);
+  }
 }
 
 String formatFramesToSeconds(int frames){

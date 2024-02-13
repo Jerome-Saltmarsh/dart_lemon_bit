@@ -146,6 +146,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Weapon_Range:
          readPlayerWeaponRange();
          break;
+       case NetworkResponseAmulet.Player_Weapon_Attack_Speed:
+         readPlayerWeaponAttackSpeed();
+         break;
        case NetworkResponseAmulet.Message:
          amulet.clearMessage();
          amulet.messages.addAll(readString().split('.').map((e) => e.trim()).toList(growable: false));
@@ -352,5 +355,9 @@ extension AmuletParser on IsometricParser {
 
   void readPlayerWeaponRange() {
     amulet.playerWeaponRange.value = readUInt16();
+  }
+
+  void readPlayerWeaponAttackSpeed() {
+    amulet.playerWeaponAttackSpeed.value = readByte();
   }
 }

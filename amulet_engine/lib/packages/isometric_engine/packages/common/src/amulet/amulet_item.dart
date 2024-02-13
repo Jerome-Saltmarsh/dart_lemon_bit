@@ -790,12 +790,27 @@ class WeaponDuration {
   static const Very_Slow = 45;
 }
 
-class AttackSpeed {
-  static const Extremely_Fast = 15;
-  static const Very_Fast = 20;
-  static const Fast = 25;
-  static const Normal = 30;
-  static const Slow = 35;
-  static const Very_Slow = 40;
-  static const Extremely_Slow = 45;
+enum AttackSpeed {
+  None(1000),
+  Extremely_Slow(45),
+  Very_Slow(40),
+  Slow(35),
+  Normal(30),
+  Fast(25),
+  Very_Fast(20),
+  Extremely_Fast(15);
+
+  final int duration;
+
+  const AttackSpeed(this.duration);
+
+  static AttackSpeed fromDuration(int duration){
+      for (final value in values){
+        if (duration >= value.duration) {
+          return value;
+        }
+      }
+      return Extremely_Fast;
+  }
+
 }

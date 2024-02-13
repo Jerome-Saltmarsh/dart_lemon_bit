@@ -89,6 +89,18 @@ class AmuletPlayer extends IsometricPlayer with
     setFlaskAmount(AmuletSettings.Flask_Capacity);
   }
 
+  int get equippedWeaponAttackSpeed {
+    final equippedWeapon = this.equippedWeapon;
+    if (equippedWeapon == null){
+      return AttackSpeed.None.index;
+    }
+    final duration = equippedWeapon.performDuration;
+    if (duration == null){
+      return AttackSpeed.None.index;
+    }
+    return AttackSpeed.fromDuration(duration).index;
+  }
+
   @override
   set magic(int value) {
     value = value.clamp(0, maxMagic);
@@ -435,6 +447,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeSkillTypes();
     writeCharacteristics();
     writeEquippedWeaponRange();
+    writeEquippedWeaponAttackSpeed();
   }
 
   void checkAssignedSkillTypes() {
@@ -1354,6 +1367,12 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Weapon_Range);
     writeUInt16(equippedWeaponRange.toInt());
+  }
+
+  void writeEquippedWeaponAttackSpeed() {
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Player_Weapon_Attack_Speed);
+    writeByte(equippedWeaponAttackSpeed);
   }
 }
 
