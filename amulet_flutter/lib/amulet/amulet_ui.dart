@@ -1208,8 +1208,11 @@ class AmuletUI {
                 child: buildRow(buildIconAgility(), formatFramesToSeconds(skillTypeStats.performDuration))),
           if (skillTypeStats.amount > 0)
             Tooltip(
-                message: 'Amount',
-                child: buildRow(buildIconSkillTypeAmount(skillType), skillTypeStats.amount)
+                message: getSkillTypeAmountToolTip(skillType),
+                child: buildRow(
+                    buildIconSkillTypeAmount(skillType),
+                    skillTypeStats.amount,
+                )
             ),
         ],
       ),
@@ -1420,15 +1423,28 @@ class AmuletUI {
         ],
   );
 
-  Widget buildIconSkillTypeAmount(SkillType skillType) {
+  Widget buildIconSkillTypeAmount(SkillType skillType) =>
+      switch (skillType) {
+        SkillType.Heal => buildIconHealAmount(),
+        SkillType.Split_Shot => AmuletImage(
+              srcX: 768,
+              srcY: 240,
+              width: 16,
+              height: 16,
+          ),
+        _ => buildText('Amount')
+      };
+
+  String? getSkillTypeAmountToolTip(SkillType skillType){
     switch (skillType){
+      case SkillType.Split_Shot:
+        return 'Total Arrows';
       case SkillType.Heal:
-        return buildIconHealAmount();
+        return 'Heal Amount';
       default:
-        return buildText('Amount');
+        return 'Amount';
     }
   }
-
 }
 
 String formatFramesToSeconds(int frames){
