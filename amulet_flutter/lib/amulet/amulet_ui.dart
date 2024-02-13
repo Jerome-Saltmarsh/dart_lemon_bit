@@ -833,6 +833,36 @@ class AmuletUI {
               ],
             ),
           ),
+          if (amulet.options.developMode)
+          Tooltip(
+            message: 'Player Perform Frame Velocity',
+            child: Row(
+              children: [
+                buildText('FV'),
+                width8,
+                buildWatch(amulet.playerPerformFrameVelocity, buildRowValue),
+              ],
+            ),
+          ),
+          height16,
+          buildText('BONUSES', color: Colors.white70),
+
+          buildWatch(amulet.playerHealthSteal, (healthSteal) {
+             if (healthSteal <= 0){
+               return nothing;
+             }
+             return Tooltip(
+                 message: 'Health Steal',
+                 child: buildRow(buildIconHealthSteal(), healthSteal));
+          }),
+          buildWatch(amulet.playerMagicSteal, (magicSteal) {
+             if (magicSteal <= 0){
+               return nothing;
+             }
+             return Tooltip(
+                 message: 'Magic Steal',
+                 child: buildRow(buildIconMagicSteal(), magicSteal));
+          }),
         ],
       ),
     );
@@ -1199,10 +1229,10 @@ class AmuletUI {
             Tooltip(
                 message: 'Range',
                 child: buildRow(buildIconRange(), skillTypeStats.range)),
-          if (skillTypeStats.performDuration > 0)
-            Tooltip(
-                message: 'Duration',
-                child: buildRow(buildIconAgility(), formatFramesToSeconds(skillTypeStats.performDuration))),
+          // if (skillTypeStats.performDuration > 0)
+          //   Tooltip(
+          //       message: 'Duration',
+          //       child: buildRow(buildIconAgility(), formatFramesToSeconds(skillTypeStats.performDuration))),
           if (skillTypeStats.amount > 0)
             Tooltip(
                 message: getSkillTypeAmountToolTip(skillType),
@@ -1442,6 +1472,12 @@ class AmuletUI {
         return 'Amount';
     }
   }
+
+  Widget buildIconHealthSteal() =>
+      AmuletImage(srcX: 768, srcY: 256, width: 16, height: 16);
+
+  Widget buildIconMagicSteal() =>
+      AmuletImage(srcX: 768, srcY: 272, width: 16, height: 16);
 }
 
 String formatFramesToSeconds(int frames){

@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:typed_data';
 
 
@@ -379,7 +380,20 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       if (character is AmuletFiend) {
         return character.fiendType.skillRadius;
       }
-      return 0;
+      throw Exception('amuletGame.getCharacterSkillTypeRadius()');
+  }
+
+  int getCharacterSkillTypeAmount({
+    required Character character,
+    required SkillType skillType,
+  }){
+    if (character is AmuletPlayer){
+      return character.getSkillTypeAmount(skillType);
+    }
+    if (character is AmuletFiend) {
+      return character.fiendType.skillAmount;
+    }
+    throw Exception('amuletGame.getCharacterSkillTypeAmount()');
   }
 
   void characterPerformSkillTypeStrike(Character character) =>
@@ -494,7 +508,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         character: character,
         skillType: SkillType.Split_Shot,
     );
-    final spread = piEighth;
     final angle = character.angle;
 
     dispatchGameEvent(
@@ -503,24 +516,26 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       character.y,
       character.z,
     );
-    spawnProjectileArrow(
-      src: character,
-      damage: damage,
-      range: range,
-      angle: angle,
+
+    final totalArrows = getCharacterSkillTypeAmount(
+        character: character,
+        skillType: SkillType.Split_Shot,
     );
-    spawnProjectileArrow(
-      src: character,
-      damage: damage,
-      range: range,
-      angle: angle - spread,
-    );
-    spawnProjectileArrow(
-      src: character,
-      damage: damage,
-      range: range,
-      angle: angle + spread,
-    );
+
+    final spread = getSplitShortSpread(totalArrows);
+
+    for (var i = 0; i < totalArrows; i++){
+      spawnProjectileArrow(
+        src: character,
+        damage: damage,
+        range: range,
+        angle: angle + giveOrTake(spread),
+      );
+    }
+  }
+
+  double getSplitShortSpread(int amount){
+    return piEighth;
   }
 
   void characterPerformSkillTypeFireball(Character character) {
@@ -1086,11 +1101,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       final healthSteal = src.healthSteal;
       final magicSteal = src.magicSteal;
       if (healthSteal > 0) {
-        src.health += healthSteal;
+        src.health += max(amount, healthSteal);
         dispatchGameEventPosition(GameEvent.Health_Regained, src);
       }
       if (magicSteal > 0) {
-        src.magic += magicSteal;
+        src.magic += max(amount, magicSteal);
         dispatchGameEventPosition(GameEvent.Magic_Regained, src);
       }
     }

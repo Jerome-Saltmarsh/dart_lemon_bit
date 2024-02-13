@@ -640,8 +640,6 @@ class Character extends Collider {
      return 1.0;
   }
 
-  void clearFrame(){
-    frame = 0;
-  }
+  void clearFrame() => frame = 0;
 
 }

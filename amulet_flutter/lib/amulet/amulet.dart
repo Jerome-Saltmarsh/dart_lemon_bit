@@ -36,6 +36,7 @@ class Amulet extends IsometricGame {
   final fiendCountTotal = Watch(0);
   final fiendCountPercentage = Watch(0.0);
   final flaskPercentage = Watch(0.0);
+  final playerPerformFrameVelocity = Watch(0.0);
 
   var worldMapClrs = Int32List(0);
   var worldMapDsts = Float32List(0);
@@ -57,6 +58,8 @@ class Amulet extends IsometricGame {
   final playerMagic = Watch(0);
   final playerMagicMax = Watch(0);
   final playerMagicPercentage = Watch(0.0);
+  final playerHealthSteal = Watch(0);
+  final playerMagicSteal = Watch(0);
 
   final playerRegenMagic = Watch(0);
   final playerRegenHealth = Watch(0);

@@ -134,6 +134,15 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Agility:
          readPlayerAgility();
          break;
+       case NetworkResponseAmulet.Perform_Frame_Velocity:
+         readPlayerPerformFrameVelocity();
+         break;
+       case NetworkResponseAmulet.Player_Health_Steal:
+         readPlayerHealthSteal();
+         break;
+       case NetworkResponseAmulet.Player_Magic_Steal:
+         readPlayerMagicSteal();
+         break;
        case NetworkResponseAmulet.Player_Weapon_Damage:
          readPlayerWeaponDamage();
          break;
@@ -336,4 +345,14 @@ extension AmuletParser on IsometricParser {
   void readNetworkResponseAmuletFlashPercentage() {
      amulet.flaskPercentage.value = readPercentage();
   }
+
+  void readPlayerPerformFrameVelocity() {
+    amulet.playerPerformFrameVelocity.value = readUInt16() / 1000;
+  }
+
+  void readPlayerHealthSteal() =>
+      amulet.playerHealthSteal.value = readByte();
+
+  void readPlayerMagicSteal() =>
+      amulet.playerMagicSteal.value = readByte();
 }

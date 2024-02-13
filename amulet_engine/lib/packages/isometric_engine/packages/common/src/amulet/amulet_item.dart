@@ -264,6 +264,7 @@ enum AmuletItem {
     regenHealth: 2,
     skillType: SkillType.Mighty_Strike,
     masterySword: 3,
+    healthSteal: 1,
   ),
   Armor_Warrior_2_Chainmail_Common(
     label: 'Chainmail',
@@ -275,6 +276,7 @@ enum AmuletItem {
     maxHealth: 20,
     regenHealth: 2,
     masterySword: 3,
+    healthSteal: 1,
   ),
   Armor_Warrior_2_Chainmail_Rare(
     label: 'Chainmail',
@@ -297,6 +299,8 @@ enum AmuletItem {
     maxHealth: 40,
     regenHealth: 3,
     masterySword: 3,
+    healthSteal: 1,
+    magicSteal: 1,
   ),
   Armor_Warrior_3_Platemail_Common(
     label: 'Platemail',
@@ -342,6 +346,7 @@ enum AmuletItem {
     regenMagic: 1,
     maxMagic: 5,
     masteryStaff: 3,
+    magicSteal: 1,
   ),
   Armor_Wizard_1_Robe_Rare(
     label: 'Robe',

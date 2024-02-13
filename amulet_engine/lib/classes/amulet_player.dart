@@ -6,6 +6,7 @@ import '../mixins/src.dart';
 import '../packages/isometric_engine/packages/common/src/amulet/quests/quest_main.dart';
 import '../packages/isometric_engine/packages/common/src/amulet/quests/quest_tutorials.dart';
 import 'amulet.dart';
+import 'amulet_settings.dart';
 import 'amulet_fiend.dart';
 import 'amulet_game.dart';
 import 'amulet_gameobject.dart';
@@ -45,6 +46,9 @@ class AmuletPlayer extends IsometricPlayer with
   var cacheWeaponDamageMin = 0;
   var cacheWeaponDamageMax = 0;
   var cacheWeaponRange = 0;
+  var cachePerformFrameVelocity = -1.0;
+  var cacheHealthSteal = -1;
+  var cacheMagicSteal = -1;
 
   var npcText = '';
   var npcName = '';
@@ -52,7 +56,6 @@ class AmuletPlayer extends IsometricPlayer with
   var flags = <dynamic>[];
 
   var flaskAmount = 0;
-  static const flaskCapacity = 25;
 
   final sceneShrinesUsed = <AmuletScene, List<int>> {};
 
@@ -83,7 +86,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeInteracting();
     writeGender();
     writePlayerComplexion();
-    setFlaskAmount(flaskCapacity);
+    setFlaskAmount(AmuletSettings.Flask_Capacity);
   }
 
   @override
@@ -250,6 +253,9 @@ class AmuletPlayer extends IsometricPlayer with
     writeRegenHealth();
     writeRunSpeed();
     writeAgility();
+    writePerformFrameVelocity();
+    writeHealthSteal();
+    writeMagicSteal();
     super.writePlayerGame();
   }
 
@@ -1197,19 +1203,20 @@ class AmuletPlayer extends IsometricPlayer with
 
   int getSkillTypePerformDuration(SkillType skillType) {
     const minPerformDuration = 8;
-    final playerAgility = agility;
+    // final playerAgility = agility;
 
     final baseDuration = skillType.casteDuration ??
       equippedWeapon?.performDuration ??
         0;
 
-    return max(baseDuration - playerAgility, minPerformDuration);
+    return max(baseDuration, minPerformDuration);
   }
 
   int getSkillTypeAmount(SkillType skillType) {
     switch (skillType) {
       case SkillType.Split_Shot:
-        return 3 + (masteryBow ~/ 4);
+        return AmuletSettings.Skill_Type_Split_Shot_Base_Amount +
+            (masteryBow * AmuletSettings.Skill_Type_Split_Shot_Amount_Ratio).toInt();
       case SkillType.Heal:
         return 5 + (masteryCaste * 2);
       default:
@@ -1270,19 +1277,19 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   void setFlaskAmount(int value){
-    flaskAmount = clamp(value, 0, flaskCapacity);
+    flaskAmount = clamp(value, 0, AmuletSettings.Flask_Capacity);
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Flask_Percentage);
-    writePercentage(flaskAmount / flaskCapacity);
+    writePercentage(flaskAmount / AmuletSettings.Flask_Capacity);
   }
 
   void incrementFlask() {
-    if (flaskAmount >= flaskCapacity) return;
+    if (flaskAmount >= AmuletSettings.Flask_Capacity) return;
     setFlaskAmount(flaskAmount + 1);
   }
 
   void useFlask() {
-    if (flaskAmount < flaskCapacity) {
+    if (flaskAmount < AmuletSettings.Flask_Capacity) {
       writeGameError(GameError.Flask_Not_Ready);
       return;
     }
@@ -1295,8 +1302,48 @@ class AmuletPlayer extends IsometricPlayer with
   @override
   double get frameVelocity {
     if (actionFrame > 0){
-      return super.frameVelocity + (agility / 10);
+      return performFrameVelocity;
     }
     return super.frameVelocity;
   }
+
+  double get performFrameVelocity =>
+      super.frameVelocity + (agility * AmuletSettings.Frame_Velocity_Agility_Ratio);
+
+  void writePerformFrameVelocity() {
+    final frameVelocity = performFrameVelocity;
+    if (cachePerformFrameVelocity == frameVelocity) return;
+
+    cachePerformFrameVelocity = frameVelocity;
+     writeByte(NetworkResponse.Amulet);
+     writeByte(NetworkResponseAmulet.Perform_Frame_Velocity);
+     writeUInt16((frameVelocity * 1000).toInt());
+  }
+
+  @override
+  void clearCache() {
+    super.clearCache();
+    cachePerformFrameVelocity = -1;
+  }
+
+  void writeHealthSteal() {
+     final healthSteal = this.healthSteal;
+     if (healthSteal == cacheHealthSteal) return;
+
+     cacheHealthSteal = healthSteal;
+     writeByte(NetworkResponse.Amulet);
+     writeByte(NetworkResponseAmulet.Player_Health_Steal);
+     writeByte(healthSteal);
+  }
+
+  void writeMagicSteal() {
+     final magicSteal = this.magicSteal;
+     if (magicSteal == cacheMagicSteal) return;
+
+     cacheMagicSteal = magicSteal;
+     writeByte(NetworkResponse.Amulet);
+     writeByte(NetworkResponseAmulet.Player_Magic_Steal);
+     writeByte(magicSteal);
+  }
 }
+
