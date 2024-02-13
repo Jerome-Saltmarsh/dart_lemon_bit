@@ -426,6 +426,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         ),
         ailmentDuration: 0,
         ailmentDamage: 0,
+        maxHitRadian: 45 * degreesToRadians,
       );
   }
 
@@ -470,6 +471,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
             ),
         ailmentDuration: 0,
         ailmentDamage: 0,
+        maxHitRadian: pi,
       );
 
   void characterPerformSkillTypeShootArrow(Character character) {

@@ -385,6 +385,26 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     player.aimTarget = closestCollider;
   }
 
+  /// returns a number between 0.0 and 1.0
+  double calculateHitRate({
+    required double angle,
+    required double maxAngle,
+    required double distance,
+    required double maxDistance,
+  }) {
+    if (
+      angle > maxAngle ||
+      distance > maxDistance ||
+      maxAngle <= 0 ||
+      maxDistance <= 0
+    ){
+      return 0;
+    }
+
+    return (inverseProportion(angle, maxAngle) +
+           inverseProportion(distance, maxDistance)) / 2.0;
+  }
+
   void applyHitMelee({
     required Character character,
     required DamageType damageType,
@@ -393,9 +413,10 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required int areaOfEffectDamage,
     required int ailmentDuration,
     required int ailmentDamage,
+    required double maxHitRadian,
   }){
 
-    const maxHitRadian = 45 * degreesToRadians;
+    // const maxHitRadian = 45 * degreesToRadians;
     final areaOfEffect = areaOfEffectDamage > 0;
     final characterAngle = character.angle;
     var attackHit = false;
@@ -426,24 +447,33 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
     if (hitTarget == null) {
       var nearestDistance = range;
+      var highestHitRate = 0.0;
 
       final characters = this.characters;
       for (final other in characters) {
 
         final otherDistance = character.getDistance(other) - other.radius;
-        final faceAngleDiff = character.getFaceAngleDiff(other).abs();
+        final otherFaceAngleDiff = character.getFaceAngleDiff(other).abs();
+
+        final otherHitRate = calculateHitRate(
+          angle: otherFaceAngleDiff,
+          distance: otherDistance,
+          maxAngle: maxHitRadian,
+          maxDistance: range,
+        );
 
         if (
-          otherDistance > nearestDistance ||
+          otherHitRate <= 0 ||
+          otherHitRate < highestHitRate ||
           !other.active ||
           other.invincible ||
           !other.hitable ||
           other.dead ||
-          faceAngleDiff > maxHitRadian ||
           character.onSameTeam(other)
         ) continue;
 
-        nearestDistance = otherDistance;
+        // nearestDistance = otherDistance;
+        highestHitRate = otherHitRate;
         hitTarget = other;
       }
 
@@ -1509,6 +1539,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         areaOfEffectDamage: 0,
         ailmentDuration: 0,
         ailmentDamage: 0,
+        maxHitRadian: 45 * degreesToRadians,
       );
       return;
     }
@@ -2724,4 +2755,12 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     return false;
   }
 
+}
+
+/// TODO ADD TO MATH LIBRARY
+double inverseProportion(num a, num b) {
+  if (b == 0) {
+    throw ArgumentError('Division by zero is not allowed');
+  }
+  return 1.0 - (a / b);
 }
