@@ -143,6 +143,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Magic_Steal:
          readPlayerMagicSteal();
          break;
+       case NetworkResponseAmulet.Player_Area_Damage:
+         readPlayerAreaOfEffectDamage();
+         break;
        case NetworkResponseAmulet.Player_Weapon_Range:
          readPlayerWeaponRange();
          break;
@@ -339,13 +342,11 @@ extension AmuletParser on IsometricParser {
     amulet.fiendCountDead.value = readUInt16();
   }
 
-  void readNetworkResponseAmuletFlashPercentage() {
-     amulet.flaskPercentage.value = readPercentage();
-  }
+  void readNetworkResponseAmuletFlashPercentage() =>
+      amulet.flaskPercentage.value = readPercentage();
 
-  void readPlayerPerformFrameVelocity() {
-    amulet.playerPerformFrameVelocity.value = readUInt16() / 1000;
-  }
+  void readPlayerPerformFrameVelocity() =>
+      amulet.playerPerformFrameVelocity.value = readUInt16() / 1000;
 
   void readPlayerHealthSteal() =>
       amulet.playerHealthSteal.value = readByte();
@@ -353,18 +354,12 @@ extension AmuletParser on IsometricParser {
   void readPlayerMagicSteal() =>
       amulet.playerMagicSteal.value = readByte();
 
-  void readPlayerWeaponRange() {
-    amulet.playerWeaponRange.value = readUInt16();
-  }
+  void readPlayerWeaponRange() =>
+      amulet.playerWeaponRange.value = readUInt16();
 
-  void readPlayerWeaponAttackSpeed() {
-    final available = readBool();
+  void readPlayerWeaponAttackSpeed() =>
+      amulet.playerWeaponAttackSpeed.value = readBool() ? readByte() : null;
 
-    if (available){
-      amulet.playerWeaponAttackSpeed.value = readByte();
-    } else {
-      amulet.playerWeaponAttackSpeed.value = null;
-    }
-
-  }
+  void readPlayerAreaOfEffectDamage() =>
+      amulet.playerAreaOfEffectDamage.value = readUInt16();
 }

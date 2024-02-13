@@ -67,6 +67,7 @@ enum FiendType {
     level: 4,
     health: 20,
     damage: 10,
+    areaOfEffectDamage: 3,
     characterType: CharacterType.Zombie,
     attackDuration: 20,
     runSpeed: 0.5,
@@ -165,6 +166,7 @@ enum FiendType {
   final double chanceOfDropPotion;
   final DamageType? resists;
   final SkillType skillType;
+  final int areaOfEffectDamage;
 
   const FiendType({
     required this.health,
@@ -187,6 +189,7 @@ enum FiendType {
     this.resists,
     this.skillRadius = 0,
     this.skillAmount = 0,
+    this.areaOfEffectDamage = 0,
   });
 
   int get quantify {

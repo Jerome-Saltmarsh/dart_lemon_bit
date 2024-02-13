@@ -396,28 +396,64 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     throw Exception('amuletGame.getCharacterSkillTypeAmount()');
   }
 
-  void characterPerformSkillTypeStrike(Character character) =>
-      performAbilityMelee(
+
+  int getCharacterAreaOfEffectDamage(Character character){
+      if (character is AmuletPlayer){
+         return character.areaDamage;
+      }
+      if (character is AmuletFiend){
+        return character.fiendType.areaOfEffectDamage;
+      }
+      return 0;
+  }
+
+  void characterPerformSkillTypeStrike(Character character) {
+
+    applyHitMelee(
         character: character,
         damageType: DamageType.Melee,
-        areaOfEffect: false,
         range: getCharacterSkillTypeRange(
             character: character,
             skillType: SkillType.Strike,
         ),
         damage: getCharacterSkillTypeDamage(
+            character: character,
+            skillType: SkillType.Strike,
+        ),
+        areaOfEffectDamage: getCharacterSkillTypeAreaOfEffectDamage(
             character: character,
             skillType: SkillType.Strike,
         ),
         ailmentDuration: 0,
         ailmentDamage: 0,
       );
+  }
+
+  int getCharacterSkillTypeAreaOfEffectDamage({
+    required Character character,
+    required SkillType skillType,
+  }) {
+     if (character is AmuletPlayer){
+       switch (skillType){
+         case SkillType.Strike:
+           return character.areaDamage;
+         case SkillType.Mighty_Strike:
+           return 3 + character.masterySword ~/ 3;
+         default:
+           return 0;
+       }
+     }
+     if (character is AmuletFiend){
+       return character.fiendType.skillAmount;
+     }
+     return 0;
+  }
+
 
   void characterPerformSkillTypeMightySwing(Character character) =>
-      performAbilityMelee(
+      applyHitMelee(
         character: character,
         damageType: DamageType.Melee,
-        areaOfEffect: true,
         range: getCharacterSkillTypeRange(
             character: character,
             skillType: SkillType.Mighty_Strike,
@@ -426,6 +462,12 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
             character: character,
             skillType: SkillType.Mighty_Strike,
         ),
+        areaOfEffectDamage:
+            getCharacterAreaOfEffectDamage(character) +
+            getCharacterSkillTypeAreaOfEffectDamage(
+                character: character,
+                skillType: SkillType.Mighty_Strike,
+            ),
         ailmentDuration: 0,
         ailmentDamage: 0,
       );

@@ -788,6 +788,14 @@ class AmuletUI {
                 message: 'Magic Steal',
                 child: buildRow(buildIconMagicSteal(), magicSteal));
           }),
+          buildWatch(amulet.playerAreaOfEffectDamage, (areaDamage) {
+            if (areaDamage <= 0){
+              return nothing;
+            }
+            return Tooltip(
+                message: 'Area Damage',
+                child: buildRow(buildIconAreaDamage(), areaDamage));
+          }),
           height16,
           buildContainerPlayerMastery(),
           height16,
@@ -1509,9 +1517,11 @@ class AmuletUI {
   Widget buildIconMagicSteal() =>
       AmuletImage(srcX: 768, srcY: 272, width: 16, height: 16);
 
-  Widget buildIconAttackSpeed() {
-    return AmuletImage(srcX: 768, srcY: 288, width: 16, height: 16);
-  }
+  Widget buildIconAttackSpeed() =>
+      AmuletImage(srcX: 768, srcY: 288, width: 16, height: 16);
+
+  Widget buildIconAreaDamage() =>
+      AmuletImage(srcX: 768, srcY: 304, width: 16, height: 16);
 }
 
 String formatFramesToSeconds(int frames){

@@ -306,6 +306,11 @@ class Character extends Collider {
 
   bool withinWeaponRange(Position target) => withinStrikeRadius(target, attackRange);
 
+  /// calculates the difference in radians between the characters face direction and another position
+  double getFaceAngleDiff(Position position){
+    return angleDiff(position.getAngle(this), angle);
+  }
+
   bool withinStrikeRadius(Position target, double radius){
     if ((target.z - z).abs() > Character_Height) {
       return false;
