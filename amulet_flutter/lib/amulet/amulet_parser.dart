@@ -358,6 +358,13 @@ extension AmuletParser on IsometricParser {
   }
 
   void readPlayerWeaponAttackSpeed() {
-    amulet.playerWeaponAttackSpeed.value = readByte();
+    final available = readBool();
+
+    if (available){
+      amulet.playerWeaponAttackSpeed.value = readByte();
+    } else {
+      amulet.playerWeaponAttackSpeed.value = null;
+    }
+
   }
 }

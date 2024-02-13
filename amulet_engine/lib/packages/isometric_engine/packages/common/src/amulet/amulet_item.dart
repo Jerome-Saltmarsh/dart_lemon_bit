@@ -791,14 +791,11 @@ class WeaponDuration {
 }
 
 enum AttackSpeed {
-  None(1000),
-  Extremely_Slow(45),
   Very_Slow(40),
   Slow(35),
   Normal(30),
   Fast(25),
-  Very_Fast(20),
-  Extremely_Fast(15);
+  Very_Fast(20);
 
   final int duration;
 
@@ -810,7 +807,7 @@ enum AttackSpeed {
           return value;
         }
       }
-      return Extremely_Fast;
+      return AttackSpeed.values.last;
   }
 
 }

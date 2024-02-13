@@ -870,12 +870,18 @@ class AmuletUI {
               return buildRow(buildIconRange(), weaponRange);
             }),
           ),
-          Tooltip(
-            message: 'Attack Speed',
-            child: buildWatch(amulet.playerWeaponAttackSpeed, (attackSpeed){
-              return buildRow(buildIconAttackSpeed(), AttackSpeed.values[attackSpeed].name);
-            }),
-          ),
+          buildWatch(amulet.playerWeaponAttackSpeed, (attackSpeed){
+            return Tooltip(
+              message: attackSpeed == null ? 'Attack Speed' : 'Attack Speed: ${AttackSpeed.values[attackSpeed].name.replaceAll('_', ' ')}',
+              child: Row(
+                children: [
+                  buildIconAttackSpeed(),
+                  width8,
+                  buildAttackSpeedValue(attackSpeed ?? -1),
+                ],
+              ),
+            );
+          }),
         ],
       ),
     );
@@ -890,6 +896,17 @@ class AmuletUI {
         windowPlayerSkillStats,
       ],
     ));
+  }
+
+  Widget buildAttackSpeedValue(int value){
+    return Row(children: List.generate(AttackSpeed.values.length, (index) {
+       return Container(
+         width: 4,
+         height: 4 * goldenRatio_1618,
+         margin: const EdgeInsets.only(right: 4),
+         color: value >= index ? Colors.white70 : Colors.white24,
+       );
+    }));
   }
 
   Widget buildIconAgility() =>

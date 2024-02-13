@@ -89,14 +89,14 @@ class AmuletPlayer extends IsometricPlayer with
     setFlaskAmount(AmuletSettings.Flask_Capacity);
   }
 
-  int get equippedWeaponAttackSpeed {
+  int? get equippedWeaponAttackSpeed {
     final equippedWeapon = this.equippedWeapon;
     if (equippedWeapon == null){
-      return AttackSpeed.None.index;
+      return null;
     }
     final duration = equippedWeapon.performDuration;
     if (duration == null){
-      return AttackSpeed.None.index;
+      return null;
     }
     return AttackSpeed.fromDuration(duration).index;
   }
@@ -1372,7 +1372,14 @@ class AmuletPlayer extends IsometricPlayer with
   void writeEquippedWeaponAttackSpeed() {
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Weapon_Attack_Speed);
-    writeByte(equippedWeaponAttackSpeed);
+    final value = equippedWeaponAttackSpeed;
+
+    if (value == null){
+      writeFalse();
+      return;
+    }
+    writeTrue();
+    writeByte(value);
   }
 }
 
