@@ -789,3 +789,13 @@ class WeaponDuration {
   static const Slow = 40;
   static const Very_Slow = 45;
 }
+
+class AttackSpeed {
+  static const Extremely_Fast = 15;
+  static const Very_Fast = 20;
+  static const Fast = 25;
+  static const Normal = 30;
+  static const Slow = 35;
+  static const Very_Slow = 40;
+  static const Extremely_Slow = 45;
+}

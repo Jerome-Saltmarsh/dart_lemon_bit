@@ -771,6 +771,24 @@ class AmuletUI {
           ),
           buildWatch(amulet.player.name, (t) => buildText(t, color: Colors.orange, bold: true)),
           height16,
+          buildText('BONUSES', color: Colors.white70),
+          buildWatch(amulet.playerHealthSteal, (healthSteal) {
+            if (healthSteal <= 0){
+              return nothing;
+            }
+            return Tooltip(
+                message: 'Health Steal',
+                child: buildRow(buildIconHealthSteal(), healthSteal));
+          }),
+          buildWatch(amulet.playerMagicSteal, (magicSteal) {
+            if (magicSteal <= 0){
+              return nothing;
+            }
+            return Tooltip(
+                message: 'Magic Steal',
+                child: buildRow(buildIconMagicSteal(), magicSteal));
+          }),
+          height16,
           buildContainerPlayerMastery(),
           height16,
           buildText('STATS', color: Colors.white70),
@@ -845,24 +863,13 @@ class AmuletUI {
             ),
           ),
           height16,
-          buildText('BONUSES', color: Colors.white70),
-
-          buildWatch(amulet.playerHealthSteal, (healthSteal) {
-             if (healthSteal <= 0){
-               return nothing;
-             }
-             return Tooltip(
-                 message: 'Health Steal',
-                 child: buildRow(buildIconHealthSteal(), healthSteal));
-          }),
-          buildWatch(amulet.playerMagicSteal, (magicSteal) {
-             if (magicSteal <= 0){
-               return nothing;
-             }
-             return Tooltip(
-                 message: 'Magic Steal',
-                 child: buildRow(buildIconMagicSteal(), magicSteal));
-          }),
+          buildText('WEAPON', color: Colors.white70),
+          Tooltip(
+            message: 'Range',
+            child: buildWatch(amulet.playerWeaponRange, (weaponRange){
+              return buildRow(buildIconRange(), weaponRange);
+            }),
+          ),
         ],
       ),
     );

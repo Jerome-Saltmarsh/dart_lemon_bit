@@ -434,6 +434,7 @@ class AmuletPlayer extends IsometricPlayer with
     writePlayerMagic();
     writeSkillTypes();
     writeCharacteristics();
+    writeEquippedWeaponRange();
   }
 
   void checkAssignedSkillTypes() {
@@ -1344,6 +1345,15 @@ class AmuletPlayer extends IsometricPlayer with
      writeByte(NetworkResponse.Amulet);
      writeByte(NetworkResponseAmulet.Player_Magic_Steal);
      writeByte(magicSteal);
+  }
+
+  double get equippedWeaponRange =>
+      equippedWeapon?.range ?? 0;
+
+  void writeEquippedWeaponRange() {
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Player_Weapon_Range);
+    writeUInt16(equippedWeaponRange.toInt());
   }
 }
 

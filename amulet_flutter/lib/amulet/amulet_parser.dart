@@ -143,8 +143,8 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Magic_Steal:
          readPlayerMagicSteal();
          break;
-       case NetworkResponseAmulet.Player_Weapon_Damage:
-         readPlayerWeaponDamage();
+       case NetworkResponseAmulet.Player_Weapon_Range:
+         readPlayerWeaponRange();
          break;
        case NetworkResponseAmulet.Message:
          amulet.clearMessage();
@@ -287,12 +287,6 @@ extension AmuletParser on IsometricParser {
   void readPlayerAgility() =>
       amulet.playerAgility.value = readUInt16();
 
-  void readPlayerWeaponDamage() {
-    amulet.playerWeaponDamageMin.value = readUInt16();
-    amulet.playerWeaponDamageMax.value = readUInt16();
-    amulet.playerWeaponRange.value = readUInt16();
-  }
-
   void readPlayerSkillsLeftRight() {
     amulet.playerSkillLeft.value = readSkillType();
     amulet.playerSkillRight.value = readSkillType();
@@ -355,4 +349,8 @@ extension AmuletParser on IsometricParser {
 
   void readPlayerMagicSteal() =>
       amulet.playerMagicSteal.value = readByte();
+
+  void readPlayerWeaponRange() {
+    amulet.playerWeaponRange.value = readUInt16();
+  }
 }
