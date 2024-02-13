@@ -1067,16 +1067,15 @@ class AmuletUI {
     final maxMagic = amuletItem.maxMagic;
     final regenHealth = amuletItem.regenHealth;
     final regenMagic = amuletItem.regenMagic;
-    final runSpeed = amuletItem.runSpeed;
+    final agility = amuletItem.agility;
     final skillType = amuletItem.skillType;
     final range = amuletItem.range;
     final performDuration = amuletItem.performDuration;
     final itemType = amuletItem.type;
-
-    final talentSword = amuletItem.talentSword;
-    final talentStaff = amuletItem.talentStaff;
-    final talentBow = amuletItem.talentBow;
-    final talentCaste = amuletItem.talentCaste;
+    final masterySword = amuletItem.masterySword;
+    final masteryStaff = amuletItem.masteryStaff;
+    final masteryBow = amuletItem.masteryBow;
+    final masteryCaste = amuletItem.masteryCaste;
     final equippedItemType = amulet.getEquippedItemType(itemType);
 
     return GSContainer(
@@ -1095,14 +1094,14 @@ class AmuletUI {
           ),
           AmuletItemImage(amuletItem: amuletItem, scale: 1.0),
           buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
-          if (talentSword != 0)
-            buildRow(buildIconCasteType(CasteType.Sword), talentSword),
-          if (talentStaff != 0)
-            buildRow(buildIconCasteType(CasteType.Staff), talentStaff),
-          if (talentBow != 0)
-            buildRow(buildIconCasteType(CasteType.Bow), talentBow),
-          if (talentCaste != 0)
-            buildRow(buildIconCasteType(CasteType.Caste), talentCaste),
+          if (masterySword != 0)
+            buildRow(buildIconCasteType(CasteType.Sword), masterySword),
+          if (masteryStaff != 0)
+            buildRow(buildIconCasteType(CasteType.Staff), masteryStaff),
+          if (masteryBow != 0)
+            buildRow(buildIconCasteType(CasteType.Bow), masteryBow),
+          if (masteryCaste != 0)
+            buildRow(buildIconCasteType(CasteType.Caste), masteryCaste),
           if (damage != null)
             buildRow(buildIconDamage(), damage),
           if (performDuration != null)
@@ -1117,8 +1116,8 @@ class AmuletUI {
             buildRow(buildIconHealthRegen(), regenHealth),
           if (regenMagic != null && regenMagic > 0)
             buildRow(buildIconMagicRegen(), regenMagic),
-          if (runSpeed != null)
-            buildRow(buildIconAgility(), runSpeed),
+          if (agility != null)
+            buildRow(buildIconAgility(), agility),
           if (skillType != null)
             buildRow(buildSkillTypeIcon(skillType), skillType.name.replaceAll('_', ' ')),
           if (equippedItemType == amuletItem)

@@ -1178,9 +1178,9 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     character.ailmentColdDuration = 0;
     character.characterState = CharacterState.Dead;
     character.actionDuration = 0;
-    character.frame = 0;
     character.physical = false;
     character.hitable = false;
+    character.clearFrame();
     character.clearPath();
     character.setDestinationToCurrentPosition();
     clearCharacterTarget(character);
@@ -1427,7 +1427,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       character.updateAilments();
 
       if (character.animationFrame < Character.maxAnimationDeathFrames){
-        character.frame++;
+        character.applyFrameVelocity();
       }
       return;
     }
@@ -1461,7 +1461,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   void updateCharacterState(Character character) {
 
-    if (character.shouldPerformStart){
+    if (character.shouldPerformStart) {
       performCharacterStart(character);
     }
 
@@ -1502,7 +1502,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       }
     }
 
-    character.frame++;
+    character.applyFrameVelocity();
   }
 
   void performCharacterStart(Character character){

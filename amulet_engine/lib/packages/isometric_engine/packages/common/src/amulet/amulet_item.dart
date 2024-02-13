@@ -132,7 +132,7 @@ enum AmuletItem {
     maxHealth: 2,
     quality: ItemQuality.Common,
     regenMagic: 1,
-    talentStaff: 2,
+    masteryStaff: 2,
   ),
   Helm_Rogue_1_Hood_Common(
     label: 'Feather Cap',
@@ -143,7 +143,7 @@ enum AmuletItem {
     subType: HelmType.Feather_Cap,
     maxHealth: 3,
     quality: ItemQuality.Common,
-    talentBow: 2,
+    masteryBow: 2,
   ),
   Helm_Warrior_2_Steel_Cap_Common(
     label: 'Steel Cap',
@@ -155,7 +155,7 @@ enum AmuletItem {
     maxHealth: 5,
     quality: ItemQuality.Common,
     regenHealth: 1,
-    talentSword: 2,
+    masterySword: 2,
   ),
   Helm_Wizard_2_Pointed_Hat_Black_Common(
     label: 'Pointed Hat',
@@ -167,7 +167,7 @@ enum AmuletItem {
     maxMagic: 5,
     quality: ItemQuality.Common,
     regenMagic: 1,
-    talentStaff: 3,
+    masteryStaff: 3,
   ),
   Helm_Rogue_2_Cape_Common(
     label: 'Cape',
@@ -179,7 +179,7 @@ enum AmuletItem {
     maxHealth: 5,
     quality: ItemQuality.Common,
     regenHealth: 1,
-    talentBow: 3,
+    masteryBow: 3,
   ),
   Helm_Warrior_3_Full_Helm_Common(
     label: 'Full Helm',
@@ -190,7 +190,7 @@ enum AmuletItem {
     maxHealth: 5,
     quality: ItemQuality.Common,
     regenHealth: 1,
-    talentSword: 3,
+    masterySword: 3,
   ),
   Helm_Wizard_3_Circlet_Common(
     label: 'Circlet',
@@ -201,7 +201,7 @@ enum AmuletItem {
     maxHealth: 5,
     quality: ItemQuality.Common,
     regenHealth: 1,
-    talentStaff: 3,
+    masteryStaff: 3,
   ),
   Helm_Rogue_3_Veil_Common(
     label: 'Veil',
@@ -212,7 +212,7 @@ enum AmuletItem {
     maxHealth: 5,
     quality: ItemQuality.Common,
     regenHealth: 1,
-    talentBow: 4,
+    masteryBow: 4,
   ),
   Armor_Neutral_1_Common_Tunic(
     label: 'Common',
@@ -224,10 +224,10 @@ enum AmuletItem {
     maxHealth: 5,
     maxMagic: 5,
     skillType: SkillType.Heal,
-    talentSword: 1,
-    talentBow: 1,
-    talentStaff: 1,
-    talentCaste: 1
+    masterySword: 1,
+    masteryBow: 1,
+    masteryStaff: 1,
+    masteryCaste: 1
   ),
   Armor_Warrior_1_Leather_Common(
     label: 'Leather',
@@ -239,7 +239,7 @@ enum AmuletItem {
     maxHealth: 10,
     regenHealth: 1,
     skillType: SkillType.Mighty_Strike,
-    talentSword: 3,
+    masterySword: 3,
   ),
   Armor_Warrior_1_Leather_Rare(
     label: 'Leather',
@@ -251,7 +251,7 @@ enum AmuletItem {
     maxHealth: 15,
     regenHealth: 1,
     skillType: SkillType.Mighty_Strike,
-    talentSword: 3,
+    masterySword: 3,
   ),
   Armor_Warrior_1_Leather_Legendary(
     label: 'Leather',
@@ -263,7 +263,7 @@ enum AmuletItem {
     maxHealth: 20,
     regenHealth: 2,
     skillType: SkillType.Mighty_Strike,
-    talentSword: 3,
+    masterySword: 3,
   ),
   Armor_Warrior_2_Chainmail_Common(
     label: 'Chainmail',
@@ -274,7 +274,7 @@ enum AmuletItem {
     quality: ItemQuality.Common,
     maxHealth: 20,
     regenHealth: 2,
-    talentSword: 3,
+    masterySword: 3,
   ),
   Armor_Warrior_2_Chainmail_Rare(
     label: 'Chainmail',
@@ -285,7 +285,7 @@ enum AmuletItem {
     quality: ItemQuality.Rare,
     maxHealth: 30,
     regenHealth: 2,
-    talentSword: 3,
+    masterySword: 3,
   ),
   Armor_Warrior_2_Chainmail_Legendary(
     label: 'Chainmail',
@@ -296,7 +296,7 @@ enum AmuletItem {
     quality: ItemQuality.Legendary,
     maxHealth: 40,
     regenHealth: 3,
-    talentSword: 3,
+    masterySword: 3,
   ),
   Armor_Warrior_3_Platemail_Common(
     label: 'Platemail',
@@ -307,7 +307,7 @@ enum AmuletItem {
     quality: ItemQuality.Common,
     maxHealth: 30,
     regenHealth: 3,
-    talentSword: 3,
+    masterySword: 3,
   ),
   Armor_Warrior_3_Platemail_Rare(
     label: 'Platemail',
@@ -318,7 +318,7 @@ enum AmuletItem {
     quality: ItemQuality.Rare,
     maxHealth: 30,
     regenHealth: 3,
-    talentSword: 3,
+    masterySword: 3,
   ),
   Armor_Warrior_3_Platemail_Legendary(
     label: 'Platemail',
@@ -329,7 +329,7 @@ enum AmuletItem {
     quality: ItemQuality.Legendary,
     maxHealth: 30,
     regenHealth: 3,
-    talentSword: 3,
+    masterySword: 3,
   ),
   Armor_Wizard_1_Robe_Common(
     label: 'Robe',
@@ -341,7 +341,7 @@ enum AmuletItem {
     maxHealth: 5,
     regenMagic: 1,
     maxMagic: 5,
-    talentStaff: 3,
+    masteryStaff: 3,
   ),
   Armor_Wizard_1_Robe_Rare(
     label: 'Robe',
@@ -352,7 +352,7 @@ enum AmuletItem {
     quality: ItemQuality.Rare,
     maxHealth: 8,
     maxMagic: 10,
-    talentStaff: 3,
+    masteryStaff: 3,
   ),
   Armor_Wizard_1_Robe_Legendary(
     label: 'Robe',
@@ -363,7 +363,7 @@ enum AmuletItem {
     quality: ItemQuality.Legendary,
     maxHealth: 10,
     maxMagic: 15,
-    talentStaff: 3,
+    masteryStaff: 3,
   ),
   Armor_Rogue_1_Cloak_Common(
     label: 'Cloak',
@@ -373,7 +373,7 @@ enum AmuletItem {
     subType: ArmorType.Cloak,
     quality: ItemQuality.Common,
     maxHealth: 7,
-    talentBow: 5,
+    masteryBow: 5,
   ),
   Armor_Rogue_1_Cloak_of_Frost(
     label: 'Cloak of Frost',
@@ -384,7 +384,7 @@ enum AmuletItem {
     quality: ItemQuality.Rare,
     maxHealth: 10,
     skillType: SkillType.Ice_Arrow,
-    talentBow: 5,
+    masteryBow: 5,
   ),
   Armor_Rogue_1_Cloak_of_Fire(
     label: 'Cloak of Fire',
@@ -395,7 +395,7 @@ enum AmuletItem {
     quality: ItemQuality.Rare,
     maxHealth: 10,
     skillType: SkillType.Fire_Arrow,
-    talentBow: 5,
+    masteryBow: 5,
   ),
   Armor_Rogue_1_Cloak_Legendary(
     label: 'Cloak',
@@ -405,7 +405,7 @@ enum AmuletItem {
     subType: ArmorType.Cloak,
     quality: ItemQuality.Legendary,
     maxHealth: 12,
-    talentBow: 5,
+    masteryBow: 5,
   ),
   Armor_Rogue_2_Mantle_Common(
     label: 'Mantle',
@@ -415,7 +415,7 @@ enum AmuletItem {
     subType: ArmorType.Mantle,
     quality: ItemQuality.Common,
     maxHealth: 9,
-    talentBow: 5,
+    masteryBow: 5,
   ),
   Armor_Rogue_2_Mantle_Rare(
     label: 'Mantle',
@@ -425,7 +425,7 @@ enum AmuletItem {
     subType: ArmorType.Mantle,
     quality: ItemQuality.Rare,
     maxHealth: 9,
-    talentBow: 5,
+    masteryBow: 5,
   ),
   Armor_Rogue_2_Mantle_Legendary(
     label: 'Mantle',
@@ -435,7 +435,7 @@ enum AmuletItem {
     subType: ArmorType.Mantle,
     quality: ItemQuality.Legendary,
     maxHealth: 9,
-    talentBow: 5,
+    masteryBow: 5,
   ),
   Armor_Rogue_3_Shroud_Common(
     label: 'Shroud',
@@ -445,7 +445,7 @@ enum AmuletItem {
     subType: ArmorType.Shroud,
     quality: ItemQuality.Common,
     maxHealth: 9,
-    talentBow: 5,
+    masteryBow: 5,
   ),
   Armor_Rogue_3_Shroud_Rare(
     label: 'Shroud',
@@ -455,7 +455,7 @@ enum AmuletItem {
     subType: ArmorType.Shroud,
     quality: ItemQuality.Rare,
     maxHealth: 9,
-    talentBow: 5,
+    masteryBow: 5,
   ),
   Armor_Rogue_3_Shroud_Legendary(
     label: 'Shroud',
@@ -465,7 +465,7 @@ enum AmuletItem {
     subType: ArmorType.Shroud,
     quality: ItemQuality.Legendary,
     maxHealth: 9,
-    talentBow: 5,
+    masteryBow: 5,
   ),
   Shoes_Warrior_1_Leather_Boots_Common(
     label: 'Leather Boots',
@@ -475,8 +475,8 @@ enum AmuletItem {
     subType: ShoeType.Leather_Boots,
     quality: ItemQuality.Common,
     maxHealth: 5,
-    runSpeed: -0.125,
-    talentSword: 5,
+    agility: 2,
+    masterySword: 5,
   ),
   Shoes_Wizard_1_Black_Slippers_Common(
     label: 'Black Slippers',
@@ -488,7 +488,7 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    talentStaff: 5,
+    masteryStaff: 5,
   ),
   Shoes_Rogue_1_Treads_Common(
     label: 'Treads',
@@ -500,7 +500,7 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    talentBow: 5,
+    masteryBow: 5,
   ),
   Shoes_Warrior_2_Grieves_Common(
     label: 'Grieves',
@@ -510,8 +510,8 @@ enum AmuletItem {
     subType: ShoeType.Grieves,
     quality: ItemQuality.Common,
     maxHealth: 5,
-    runSpeed: -0.125,
-    talentSword: 5,
+    agility: 3,
+    masterySword: 5,
   ),
   Shoes_Wizard_2_Footwraps_Common(
     label: 'Footwraps',
@@ -523,8 +523,8 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    talentStaff: 5,
-    talentCaste: 3,
+    masteryStaff: 5,
+    masteryCaste: 3,
   ),
   Shoes_Rogue_2_Striders_Common(
     label: 'Striders',
@@ -536,7 +536,8 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    talentBow: 5,
+    masteryBow: 5,
+    agility: 8,
   ),
   Shoes_Warrior_3_Sabatons_Common(
     label: 'Sabatons',
@@ -546,8 +547,8 @@ enum AmuletItem {
     subType: ShoeType.Sabatons,
     quality: ItemQuality.Common,
     maxHealth: 5,
-    runSpeed: -0.125,
-    talentSword: 5,
+    agility: 3,
+    masterySword: 5,
   ),
   Shoes_Wizard_3_Soles_Common(
     label: 'Soles',
@@ -559,7 +560,7 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    talentStaff: 5,
+    masteryStaff: 5,
   ),
   Shoes_Rogue_3_Satin_Boots_Common(
     label: 'Satin_Boots',
@@ -571,7 +572,7 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillType: SkillType.Teleport,
-    talentBow: 3,
+    masteryBow: 3,
   ),
   Consumable_Potion_Magic(
     label: 'a common tonic',
@@ -610,11 +611,11 @@ enum AmuletItem {
   final int? maxMagic;
   final int? regenMagic;
   final int? regenHealth;
-  final double? runSpeed;
-  final int talentSword;
-  final int talentBow;
-  final int talentStaff;
-  final int talentCaste;
+  final int? agility;
+  final int masterySword;
+  final int masteryBow;
+  final int masteryStaff;
+  final int masteryCaste;
   final int magicSteal;
   final int healthSteal;
 
@@ -634,11 +635,11 @@ enum AmuletItem {
     this.range,
     this.performDuration,
     this.health,
-    this.runSpeed,
-    this.talentBow = 0,
-    this.talentCaste = 0,
-    this.talentStaff = 0,
-    this.talentSword = 0,
+    this.agility,
+    this.masteryBow = 0,
+    this.masteryCaste = 0,
+    this.masteryStaff = 0,
+    this.masterySword = 0,
     this.magicSteal = 0,
     this.healthSteal = 0,
   });
@@ -663,10 +664,10 @@ enum AmuletItem {
     var total = 0;
     total += damage ?? 0;
     total += skillType?.quantify ?? 0;
-    total += talentSword;
-    total += talentStaff;
-    total += talentBow;
-    total += talentCaste;
+    total += masterySword;
+    total += masteryStaff;
+    total += masteryBow;
+    total += masteryCaste;
     total += maxHealth ?? 0;
     total += maxMagic ?? 0;
     const pointsPerRegen = 5;

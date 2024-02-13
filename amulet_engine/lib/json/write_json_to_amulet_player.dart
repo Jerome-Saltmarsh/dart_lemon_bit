@@ -91,7 +91,7 @@ AmuletFiend mapFiendJsonToAmuletFiend(Json fiendJson) {
      ..startPositionZ = fiendJson.getDouble('start_z');
 
   if (amuletFiend.dead) {
-    amuletFiend.frame = Character.maxAnimationDeathFrames;
+    amuletFiend.frame = Character.maxAnimationDeathFrames.toDouble();
   }
 
   return amuletFiend;

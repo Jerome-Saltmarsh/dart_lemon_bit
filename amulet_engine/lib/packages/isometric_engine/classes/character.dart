@@ -55,7 +55,8 @@ class Character extends Collider {
   var attackDamage = 1;
   var attackRange = 20.0;
   var characterState = CharacterState.Idle;
-  var frame = 0;
+  var frame = 0.0;
+  var frameVelocity = 1.0;
   var runSpeed = 1.0;
   @override
   var name = "";
@@ -135,7 +136,9 @@ class Character extends Collider {
   double get actionCompletionPercentage =>
       actionDuration <= 0 ? 0 : frame / actionDuration;
 
-  bool get shouldPerformAction => actionFrame > 0 && frame == actionFrame;
+  bool get shouldPerformAction => actionFrame > 0 &&
+      frame < actionFrame &&
+      frame + frameVelocity >= actionFrame;
 
   bool get shouldPerformStart => actionFrame > 0 && frame == 0;
 
@@ -258,8 +261,8 @@ class Character extends Collider {
     physical = true;
     hitable = true;
     characterState = CharacterState.Spawning;
-    frame = 0;
     actionDuration = duration;
+    clearFrame();
   }
 
   void setCharacterStateChanging({int duration = 15}) {
@@ -268,8 +271,8 @@ class Character extends Collider {
     }
 
     characterState = CharacterState.Changing;
-    frame = 0;
     actionDuration = duration;
+    clearFrame();
   }
 
   void setCharacterStateHurt({int duration = 10}){
@@ -278,8 +281,8 @@ class Character extends Collider {
     }
 
     characterState = CharacterState.Hurt;
-    frame = 0;
     actionDuration = duration;
+    clearFrame();
   }
 
 
@@ -450,8 +453,8 @@ class Character extends Collider {
     }
 
     characterState = CharacterState.Idle;
-    frame = 0;
     actionDuration = -1;
+    clearFrame();
   }
 
   @override
@@ -595,8 +598,8 @@ class Character extends Collider {
     }
 
     characterState = value;
-    frame = 0;
     actionDuration = duration;
+    clearFrame();
   }
 
 
@@ -626,6 +629,14 @@ class Character extends Collider {
 
   int get compressedAilments {
     return writeBits(isAilmentCold, isAilmentBurning, false, false, false, false, false, false);
+  }
+
+  void applyFrameVelocity() {
+    frame += frameVelocity;
+  }
+
+  void clearFrame(){
+    frame = 0;
   }
 
 }

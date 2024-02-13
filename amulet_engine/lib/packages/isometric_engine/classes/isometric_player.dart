@@ -1083,7 +1083,7 @@ class IsometricPlayer extends Character with ByteWriter {
       writeByte(character.characterState);
       writeByte(character.complexion);
       writeClampUInt16(character.actionDuration);
-      writeClampUInt16(character.frame);
+      writeClampUInt16(character.frame.toInt());
       writeUInt16(character.weaponType);
       writeUInt16(character.attackDamage);
       writeUInt16(character.attackRange.toInt());
