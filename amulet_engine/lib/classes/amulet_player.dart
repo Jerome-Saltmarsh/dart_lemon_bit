@@ -1297,4 +1297,7 @@ class AmuletPlayer extends IsometricPlayer with
     regainFullMagic();
     writePlayerEvent(PlayerEvent.Drink);
   }
+
+  @override
+  double get frameVelocity => super.frameVelocity + (agility / 10);
 }

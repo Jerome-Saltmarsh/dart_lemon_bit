@@ -771,7 +771,7 @@ class AmuletUI {
           ),
           buildWatch(amulet.player.name, (t) => buildText(t, color: Colors.orange, bold: true)),
           height16,
-          buildContainerPlayerProficiencies(),
+          buildContainerPlayerMastery(),
           height16,
           buildText('STATS', color: Colors.white70),
           Tooltip(
@@ -890,7 +890,7 @@ class AmuletUI {
       ),
       );
 
-  Widget buildContainerPlayerProficiencies() => Column(
+  Widget buildContainerPlayerMastery() => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       buildText('MASTERY', color: Colors.white70),
@@ -1147,10 +1147,7 @@ class AmuletUI {
     );
 
   Widget buildIconCasteType(CasteType casteType) =>
-      Container(
-          padding: const EdgeInsets.all(4),
-          color: Colors.black26,
-          child: AmuletImageSrc(src: getSrcCasteType(casteType)));
+      AmuletImageSrc(src: getSrcCasteType(casteType));
 
   Widget buildContainerSkillTypeStats(SkillTypeStats skillTypeStats) {
     final skillType = skillTypeStats.skillType;
