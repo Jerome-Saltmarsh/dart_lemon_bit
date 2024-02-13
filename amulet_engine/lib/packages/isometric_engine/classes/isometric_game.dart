@@ -416,7 +416,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required double maxHitRadian,
   }){
 
-    // const maxHitRadian = 45 * degreesToRadians;
     final areaOfEffect = areaOfEffectDamage > 0;
     final characterAngle = character.angle;
     var attackHit = false;
@@ -437,61 +436,67 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       return;
     }
 
-    final target = character.target;
-    if (target is Collider) {
-      if (character.withinStrikeRadius(target, range)){
-        hitTarget = target;
-        attackHit = true;
-      }
+    // final target = character.target;
+    // if (target is Collider) {
+    //   if (character.withinStrikeRadius(target, range)){
+    //     hitTarget = target;
+    //     attackHit = true;
+    //   }
+    // }
+
+    var highestHitRate = 0.0;
+
+    final characters = this.characters;
+    for (final other in characters) {
+
+      final otherDistance = character.getDistance(other) - other.radius;
+      final otherFaceAngleDiff = character.getFaceAngleDiff(other).abs();
+
+      final otherHitRate = calculateHitRate(
+        angle: otherFaceAngleDiff,
+        distance: otherDistance,
+        maxAngle: maxHitRadian,
+        maxDistance: range,
+      );
+
+      if (
+        otherHitRate <= 0 ||
+        otherHitRate < highestHitRate ||
+        other.invincible ||
+        other.dead ||
+        !other.hitable ||
+        !other.active ||
+        character.onSameTeam(other)
+      ) continue;
+
+      highestHitRate = otherHitRate;
+      hitTarget = other;
     }
 
-    if (hitTarget == null) {
-      var nearestDistance = range;
-      var highestHitRate = 0.0;
+    final gameObjects = this.gameObjects;
+    final gameObjectsLength = gameObjects.length;
 
-      final characters = this.characters;
-      for (final other in characters) {
+    for (var i = 0; i < gameObjectsLength; i++) {
+      final gameObject = gameObjects[i];
+      final gameObjectDistance = character.getDistance(gameObject) - gameObject.radius;
+      final otherFaceAngleDiff = character.getFaceAngleDiff(gameObject).abs();
 
-        final otherDistance = character.getDistance(other) - other.radius;
-        final otherFaceAngleDiff = character.getFaceAngleDiff(other).abs();
+      final otherHitRate = calculateHitRate(
+        angle: otherFaceAngleDiff,
+        distance: gameObjectDistance,
+        maxAngle: maxHitRadian,
+        maxDistance: range,
+      );
 
-        final otherHitRate = calculateHitRate(
-          angle: otherFaceAngleDiff,
-          distance: otherDistance,
-          maxAngle: maxHitRadian,
-          maxDistance: range,
-        );
+      if (
+        otherHitRate <= 0 ||
+        otherHitRate < highestHitRate ||
+        !gameObject.active ||
+        !gameObject.hitable
+      ) continue;
 
-        if (
-          otherHitRate <= 0 ||
-          otherHitRate < highestHitRate ||
-          !other.active ||
-          other.invincible ||
-          !other.hitable ||
-          other.dead ||
-          character.onSameTeam(other)
-        ) continue;
-
-        // nearestDistance = otherDistance;
-        highestHitRate = otherHitRate;
-        hitTarget = other;
-      }
-
-      final gameObjects = this.gameObjects;
-      final gameObjectsLength = gameObjects.length;
-
-      for (var i = 0; i < gameObjectsLength; i++) {
-        final gameObject = gameObjects[i];
-        final gameObjectDistance = character.getDistance(gameObject) - gameObject.radius;
-
-        if (!gameObject.active) continue;
-        if (!gameObject.hitable) continue;
-        if (character.getAngle(gameObject) > maxHitRadian) continue;
-        if (gameObjectDistance > nearestDistance) continue;
-
-        nearestDistance = gameObjectDistance;
-        hitTarget = gameObject;
-      }
+      highestHitRate = otherHitRate;
+      hitTarget = gameObject;
     }
 
     if (hitTarget != null) {
