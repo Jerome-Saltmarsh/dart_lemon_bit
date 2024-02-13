@@ -436,14 +436,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       return;
     }
 
-    // final target = character.target;
-    // if (target is Collider) {
-    //   if (character.withinStrikeRadius(target, range)){
-    //     hitTarget = target;
-    //     attackHit = true;
-    //   }
-    // }
-
     var highestHitRate = 0.0;
 
     final characters = this.characters;
@@ -509,6 +501,39 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         ailmentDamage: ailmentDamage,
       );
       attackHit = true;
+    }
+
+    if (areaOfEffectDamage > 0) {
+      for (final other in characters) {
+
+        final otherDistance = character.getDistance(other) - other.radius;
+        final otherFaceAngleDiff = character.getFaceAngleDiff(other).abs();
+
+        final otherHitRate = calculateHitRate(
+          angle: otherFaceAngleDiff,
+          distance: otherDistance,
+          maxAngle: maxHitRadian,
+          maxDistance: range,
+        );
+
+        if (
+            otherHitRate <= 0 ||
+            other.invincible ||
+            other.dead ||
+            !other.hitable ||
+            !other.active ||
+            character.onSameTeam(other)
+        ) continue;
+
+        applyHit(
+            srcCharacter: character,
+            target: other,
+            damage: areaOfEffectDamage,
+            damageType: damageType,
+            ailmentDuration: ailmentDuration,
+            ailmentDamage: ailmentDamage,
+        );
+      }
     }
 
     if (attackHit) return;

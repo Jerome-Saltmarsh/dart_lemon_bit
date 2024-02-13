@@ -11,7 +11,7 @@ enum AmuletItem {
       type: ItemType.Weapon,
       subType: WeaponType.Shortsword,
       performDuration: WeaponDuration.Normal,
-      range: WeaponRange.Melee_Short,
+      range: WeaponRange.Melee_Long,
       damage: 3,
       quality: ItemQuality.Common,
       areaOfEffectDamage: 1,
@@ -779,8 +779,8 @@ enum WeaponClass {
 
 class WeaponRange {
   static const Melee_Short = 50.0;
-  static const Melee_Medium = 60.0;
-  static const Melee_Long = 70.0;
+  static const Melee_Medium = 75.0;
+  static const Melee_Long = 80.0;
   static const Ranged_Short = 150.0;
   static const Ranged_Medium = 175.0;
   static const Ranged_Long = 200.0;
