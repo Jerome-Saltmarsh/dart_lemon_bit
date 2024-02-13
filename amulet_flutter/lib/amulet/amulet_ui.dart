@@ -829,7 +829,7 @@ class AmuletUI {
               children: [
                 buildIconAgility(),
                 width8,
-                buildWatch(amulet.playerRunSpeed, buildRowValue),
+                buildWatch(amulet.playerAgility, buildRowValue),
               ],
             ),
           ),

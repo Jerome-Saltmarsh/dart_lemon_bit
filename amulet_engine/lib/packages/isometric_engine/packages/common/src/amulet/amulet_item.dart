@@ -510,7 +510,7 @@ enum AmuletItem {
     subType: ShoeType.Grieves,
     quality: ItemQuality.Common,
     maxHealth: 5,
-    agility: 3,
+    agility: 20,
     masterySword: 5,
   ),
   Shoes_Wizard_2_Footwraps_Common(

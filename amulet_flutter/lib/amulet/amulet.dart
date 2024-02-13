@@ -75,6 +75,7 @@ class Amulet extends IsometricGame {
   // final windowVisibleQuantifyFiendTypes = WatchBool(false);
 
   final playerRunSpeed = Watch(0);
+  final playerAgility = Watch(0);
 
   final activeSlotType = Watch<SlotType?>(null);
   final worldMapLarge = WatchBool(false);

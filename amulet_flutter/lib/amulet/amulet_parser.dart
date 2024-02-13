@@ -131,6 +131,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Run_Speed:
          readPlayerRunSpeed();
          break;
+       case NetworkResponseAmulet.Player_Agility:
+         readPlayerAgility();
+         break;
        case NetworkResponseAmulet.Player_Weapon_Damage:
          readPlayerWeaponDamage();
          break;
@@ -249,7 +252,9 @@ extension AmuletParser on IsometricParser {
       amulet.questMain.value = QuestMain.values[readByte()];
 
   void readAimTargetItemType() =>
-      amulet.aimTargetItemType.value = readBool() ? readAmuletItem() : null;
+      amulet.aimTargetItemType.value = readBool()
+          ? readAmuletItem()
+          : null;
 
   AmuletItem? readAmuletItem() {
      final index = readInt16();
@@ -261,17 +266,17 @@ extension AmuletParser on IsometricParser {
     amulet.playerMagic.value = readUInt16();
   }
 
-  void readPlayerRegenMagic() {
-    amulet.playerRegenMagic.value = readUInt16();
-  }
+  void readPlayerRegenMagic() =>
+      amulet.playerRegenMagic.value = readUInt16();
 
-  void readPlayerRegenHealth() {
-    amulet.playerRegenHealth.value = readUInt16();
-  }
+  void readPlayerRegenHealth() =>
+      amulet.playerRegenHealth.value = readUInt16();
 
-  void readPlayerRunSpeed() {
-    amulet.playerRunSpeed.value = readUInt16();
-  }
+  void readPlayerRunSpeed() =>
+      amulet.playerRunSpeed.value = readUInt16();
+
+  void readPlayerAgility() =>
+      amulet.playerAgility.value = readUInt16();
 
   void readPlayerWeaponDamage() {
     amulet.playerWeaponDamageMin.value = readUInt16();

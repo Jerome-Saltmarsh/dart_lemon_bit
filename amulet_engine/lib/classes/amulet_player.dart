@@ -41,6 +41,7 @@ class AmuletPlayer extends IsometricPlayer with
   var cacheRegenMagic = 0;
   var cacheRegenHealth = 0;
   var cacheRunSpeed = 0.0;
+  var cacheAgility = 0;
   var cacheWeaponDamageMin = 0;
   var cacheWeaponDamageMax = 0;
   var cacheWeaponRange = 0;
@@ -248,7 +249,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeRegenMagic();
     writeRegenHealth();
     writeRunSpeed();
-    // writeWeaponDamage();
+    writeAgility();
     super.writePlayerGame();
   }
 
@@ -276,20 +277,13 @@ class AmuletPlayer extends IsometricPlayer with
     writeUInt16((runSpeed * 10).toInt());
   }
 
-  // void writeWeaponDamage() {
-  //   if (
-  //     cacheWeaponDamageMin == weaponDamageMin &&
-  //     cacheWeaponDamageMax == weaponDamageMax &&
-  //     cacheWeaponRange == attackRange
-  //   ) return;
-  //   cacheWeaponDamageMin = cacheWeaponDamageMin;
-  //   cacheWeaponDamageMax = cacheWeaponDamageMax;
-  //   writeByte(NetworkResponse.Amulet);
-  //   writeByte(NetworkResponseAmulet.Player_Weapon_Damage);
-  //   writeUInt16(weaponDamageMin);
-  //   writeUInt16(weaponDamageMax);
-  //   writeUInt16(attackRange.toInt());
-  // }
+  void writeAgility() {
+    if (cacheAgility == agility) return;
+    cacheAgility = agility;
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Player_Agility);
+    writeUInt16(agility);
+  }
 
   void writeDebug() {
     if (!debugging) return;
@@ -1299,5 +1293,10 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   @override
-  double get frameVelocity => super.frameVelocity + (agility / 10);
+  double get frameVelocity {
+    if (actionFrame > 0){
+      return super.frameVelocity + (agility / 10);
+    }
+    return super.frameVelocity;
+  }
 }
