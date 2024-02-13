@@ -1539,7 +1539,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         areaOfEffectDamage: 0,
         ailmentDuration: 0,
         ailmentDamage: 0,
-        maxHitRadian: 45 * degreesToRadians,
+        maxHitRadian: 90 * degreesToRadians,
       );
       return;
     }

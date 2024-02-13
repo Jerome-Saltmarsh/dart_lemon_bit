@@ -426,7 +426,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         ),
         ailmentDuration: 0,
         ailmentDamage: 0,
-        maxHitRadian: 45 * degreesToRadians,
+        maxHitRadian: 90 * degreesToRadians,
       );
   }
 
