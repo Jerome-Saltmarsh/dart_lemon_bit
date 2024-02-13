@@ -129,12 +129,10 @@ class Character extends Collider {
     _goal = value;
   }
 
-  int get framesPerAnimation => (characterStateChanging ? 1 : 3) * (isAilmentCold ? 3 : 1);
-
-  int get animationFrame => (frame ~/ framesPerAnimation) % maxAnimationFrames;
+  int get animationFrame => (frame ~/ 3).toInt() % maxAnimationFrames;
 
   double get actionCompletionPercentage =>
-      actionDuration <= 0 ? 0 : frame / actionDuration;
+      actionDuration <= 0 ? 0 : (frame / actionDuration).clamp(0, 1);
 
   bool get shouldPerformAction => actionFrame > 0 &&
       frame < actionFrame &&
@@ -632,7 +630,14 @@ class Character extends Collider {
   }
 
   void applyFrameVelocity() {
-    frame += frameVelocity;
+    frame += frameVelocity * getAilmentVelocity();
+  }
+
+  double getAilmentVelocity(){
+     if (isAilmentCold) {
+       return 0.5;
+     }
+     return 1.0;
   }
 
   void clearFrame(){
