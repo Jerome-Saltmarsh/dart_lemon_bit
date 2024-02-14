@@ -83,6 +83,7 @@ enum GameError {
   Bow_Required,
   Sword_Required,
   Staff_Required,
+  Melee_Weapon_Required,
   Flask_Not_Ready,
   Insufficient_Magic;
 

@@ -785,6 +785,15 @@ class AmuletPlayer extends IsometricPlayer with
           duration: performDuration
         );
         break;
+      case CasteType.Melee:
+        if (!equippedWeaponMelee) {
+          writeGameError(GameError.Melee_Weapon_Required);
+          return;
+        }
+        setCharacterStateStriking(
+          duration: performDuration
+        );
+        break;
     }
 
     magic -= magicCost;
@@ -1005,16 +1014,13 @@ class AmuletPlayer extends IsometricPlayer with
     super.setSkillActiveLeft(value);
   }
 
-  bool get equippedWeaponMelee {
-    final subType = equippedWeapon?.subType;
-    return subType != null && WeaponType.valuesMelee.contains(subType);
-  }
-
   bool get equippedWeaponBow => equippedWeapon?.isWeaponBow ?? false;
 
   bool get equippedWeaponStaff => equippedWeapon?.isWeaponStaff ?? false;
 
   bool get equippedWeaponSword => equippedWeapon?.isWeaponSword ?? false;
+
+  bool get equippedWeaponMelee => equippedWeaponSword || equippedWeaponStaff;
 
   void selectSkillTypeLeft(SkillType value) {
     skillTypeLeft = value;
@@ -1108,7 +1114,8 @@ class AmuletPlayer extends IsometricPlayer with
         CasteType.Caste => skillType.range,
         CasteType.Bow => equippedWeaponRange?.ranged,
         CasteType.Staff => equippedWeaponRange?.melee,
-        CasteType.Sword => equippedWeaponRange?.melee
+        CasteType.Sword => equippedWeaponRange?.melee,
+        CasteType.Melee => equippedWeaponRange?.melee,
       } ?? 0;
 
   double getSkillTypeRadius(SkillType skillType) {

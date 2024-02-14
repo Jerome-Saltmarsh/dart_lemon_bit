@@ -747,6 +747,7 @@ enum CasteType {
   Sword,
   Staff,
   Caste,
+  Melee,
 }
 
 enum ItemQuality {
