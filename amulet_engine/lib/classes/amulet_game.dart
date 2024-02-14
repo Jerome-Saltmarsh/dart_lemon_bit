@@ -395,12 +395,12 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   }
 
 
-  int getCharacterAreaOfEffectDamage(Character character){
-      if (character is AmuletPlayer){
+  double getCharacterAreaOfEffectDamage(Character character){
+      if (character is AmuletPlayer) {
          return character.areaDamage;
       }
-      if (character is AmuletFiend){
-        return character.fiendType.areaOfEffectDamage;
+      if (character is AmuletFiend) {
+        return character.fiendType.areaDamage;
       }
       return 0;
   }
@@ -418,7 +418,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
             character: character,
             skillType: SkillType.Strike,
         ),
-        areaOfEffectDamage: getCharacterSkillTypeAreaOfEffectDamage(
+        areaDamage: getCharacterSkillTypeAreaDamage(
             character: character,
             skillType: SkillType.Strike,
         ),
@@ -428,7 +428,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       );
   }
 
-  int getCharacterSkillTypeAreaOfEffectDamage({
+  double getCharacterSkillTypeAreaDamage({
     required Character character,
     required SkillType skillType,
   }) {
@@ -437,13 +437,13 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
          case SkillType.Strike:
            return character.areaDamage;
          case SkillType.Mighty_Strike:
-           return 3 + character.masterySword ~/ 3;
+           return character.areaDamage + (character.masterySword ~/ 3);
          default:
            return 0;
        }
      }
      if (character is AmuletFiend){
-       return character.fiendType.skillAmount;
+       return character.fiendType.skillAmount / 10.0;
      }
      return 0;
   }
@@ -461,9 +461,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
             character: character,
             skillType: SkillType.Mighty_Strike,
         ),
-        areaOfEffectDamage:
-            getCharacterAreaOfEffectDamage(character) +
-            getCharacterSkillTypeAreaOfEffectDamage(
+        areaDamage:
+            getCharacterSkillTypeAreaDamage(
                 character: character,
                 skillType: SkillType.Mighty_Strike,
             ),

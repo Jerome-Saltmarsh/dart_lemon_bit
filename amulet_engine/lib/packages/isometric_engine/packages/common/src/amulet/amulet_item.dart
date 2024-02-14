@@ -1,3 +1,5 @@
+import 'package:amulet_engine/packages/isomeric_engine.dart';
+
 import '../../src.dart';
 import 'package:collection/collection.dart';
 
@@ -14,7 +16,7 @@ enum AmuletItem {
       range: WeaponRange.Long,
       damage: 3,
       quality: ItemQuality.Common,
-      areaOfEffectDamage: 1,
+      areaDamage: AreaDamage.Small,
   ),
   Weapon_Sword_1_Rare(
     label: "Sharpened Short Sword",
@@ -27,6 +29,7 @@ enum AmuletItem {
     range: WeaponRange.Short,
     damage: 4,
     quality: ItemQuality.Rare,
+    areaDamage: AreaDamage.Large,
   ),
   Weapon_Sword_1_Legendary(
     label: "Short Blade of Glen",
@@ -39,6 +42,7 @@ enum AmuletItem {
     range: WeaponRange.Short,
     damage: 5,
     quality: ItemQuality.Legendary,
+    areaDamage: AreaDamage.Very_Large,
   ),
   Weapon_Staff_1_Of_Frost(
     label: 'Staff of Frost',
@@ -613,7 +617,7 @@ enum AmuletItem {
   final int? health;
   final ItemQuality quality;
   final String label;
-  final int? areaOfEffectDamage;
+  final AreaDamage? areaDamage;
   final int? maxHealth;
   final int? maxMagic;
   final int? regenMagic;
@@ -643,7 +647,7 @@ enum AmuletItem {
     this.attackSpeed,
     this.health,
     this.agility,
-    this.areaOfEffectDamage,
+    this.areaDamage,
     this.masteryBow = 0,
     this.masteryCaste = 0,
     this.masteryStaff = 0,
@@ -786,11 +790,23 @@ enum WeaponRange {
   const WeaponRange({required this.melee, required this.ranged});
 }
 
-enum AttackArea {
-  Very_Small,
-  Small,
-  Large,
-  Very_Large,
+enum AreaDamage {
+  Very_Small(value: 0),
+  Small(value: 0.33),
+  Large(value: 0.66),
+  Very_Large(value: 1.0);
+
+  final double value;
+
+  const AreaDamage({required this.value});
+
+  static AreaDamage from(double value){
+     for (final areaDamage in values){
+       if (areaDamage.value > value) continue;
+       return areaDamage;
+     }
+     return values.last;
+  }
 }
 
 enum AttackSpeed {

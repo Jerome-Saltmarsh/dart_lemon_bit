@@ -788,14 +788,6 @@ class AmuletUI {
                 message: 'Magic Steal',
                 child: buildRow(buildIconMagicSteal(), magicSteal));
           }),
-          buildWatch(amulet.playerAreaOfEffectDamage, (areaDamage) {
-            if (areaDamage <= 0){
-              return nothing;
-            }
-            return Tooltip(
-                message: 'Area Damage',
-                child: buildRow(buildIconAreaDamage(), areaDamage));
-          }),
           height16,
           buildContainerPlayerMastery(),
           height16,
@@ -888,6 +880,17 @@ class AmuletUI {
               ),
             );
           }),
+          buildWatch(amulet.playerAreaOfEffectDamage, (areaDamage) {
+            return Tooltip(
+                message: 'Area Damage',
+                child: Row(
+                  children: [
+                    buildIconAreaDamage(),
+                    width8,
+                    buildBars(total: 4, value: areaDamage.index),
+                  ],
+                ));
+          }),
         ],
       ),
     );
@@ -922,6 +925,17 @@ class AmuletUI {
           buildBars(
             total: 4,
             value: value ?? 0,
+          )
+        ],
+      );
+
+  Widget buildBarsAreaDamage(AreaDamage value) => Row(
+        children: [
+          buildIconAreaDamage(),
+          width8,
+          buildBars(
+            total: 4,
+            value: value.index,
           )
         ],
       );
@@ -1166,6 +1180,7 @@ class AmuletUI {
     final agility = amuletItem.agility;
     final skillType = amuletItem.skillType;
     final range = amuletItem.range;
+    final areaDamage = amuletItem.areaDamage;
     final attackSpeed = amuletItem.attackSpeed;
     final itemType = amuletItem.type;
     final masterySword = amuletItem.masterySword;
@@ -1204,8 +1219,11 @@ class AmuletUI {
           //   buildRow(buildIconAgility(), formatFramesToSeconds(performDuration)),
           if (attackSpeed != null)
             buildBarsAttackSpeed(attackSpeed.index),
+          if (areaDamage != null)
+            buildBarsAreaDamage(areaDamage),
           if (range != null)
             buildBarsRange(range.index),
+
           if (maxHealth != null && maxHealth > 0)
             buildRow(buildIconHealth(), maxHealth),
           if (maxMagic != null && maxMagic > 0)

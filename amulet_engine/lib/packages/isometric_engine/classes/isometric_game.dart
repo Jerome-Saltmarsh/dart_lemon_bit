@@ -405,18 +405,19 @@ abstract class IsometricGame<T extends IsometricPlayer> {
            inverseProportion(distance, maxDistance)) / 2.0;
   }
 
+  /// @areaDamage a value between 0.0 and 1.0
   void applyHitMelee({
     required Character character,
     required DamageType damageType,
     required double range,
     required int damage,
-    required int areaOfEffectDamage,
     required int ailmentDuration,
     required int ailmentDamage,
     required double maxHitRadian,
+    required double areaDamage,
   }){
+    areaDamage = areaDamage.clamp(0, 1);
 
-    final areaOfEffect = areaOfEffectDamage > 0;
     final characterAngle = character.angle;
     var attackHit = false;
     Collider? hitTarget = null;
@@ -426,7 +427,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       character,
     );
 
-    if (damage <= 0 && areaOfEffectDamage < 0) {
+    if (damage <= 0) {
       dispatchAttackMissed(
         character.x,
         character.y,
@@ -500,11 +501,11 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         ailmentDuration: ailmentDuration,
         ailmentDamage: ailmentDamage,
       );
-      attackHit = true;
     }
 
-    if (areaOfEffectDamage > 0) {
+    if (areaDamage > 0) {
       for (final other in characters) {
+        if (other == hitTarget) continue;
 
         final otherDistance = character.getDistance(other) - other.radius;
         final otherFaceAngleDiff = character.getFaceAngleDiff(other).abs();
@@ -525,13 +526,19 @@ abstract class IsometricGame<T extends IsometricPlayer> {
             character.onSameTeam(other)
         ) continue;
 
+        final finalRate = areaDamage * otherHitRate;
+        final finalDamage = (damage * finalRate).toInt();
+
+        if (finalDamage <= 0) continue;
+
+        attackHit = true;
         applyHit(
-            srcCharacter: character,
-            target: other,
-            damage: areaOfEffectDamage,
-            damageType: damageType,
-            ailmentDuration: ailmentDuration,
-            ailmentDamage: ailmentDamage,
+          srcCharacter: character,
+          target: other,
+          damage: finalDamage,
+          damageType: damageType,
+          ailmentDuration: (ailmentDuration * finalRate).toInt(),
+          ailmentDamage: (ailmentDamage * finalRate).toInt(),
         );
       }
     }
@@ -1566,7 +1573,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         damageType: DamageType.Melee,
         range: character.attackRange,
         damage: character.attackDamage,
-        areaOfEffectDamage: 0,
+        areaDamage: 0,
         ailmentDuration: 0,
         ailmentDamage: 0,
         maxHitRadian: 90 * degreesToRadians,

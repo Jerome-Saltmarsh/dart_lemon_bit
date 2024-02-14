@@ -1372,19 +1372,19 @@ class AmuletPlayer extends IsometricPlayer with
     tryWriteByte(equippedWeaponAttackSpeed?.index);
   }
 
-  int get areaDamage {
-    var total = 0;
-    total += equippedWeapon?.areaOfEffectDamage ?? 0;
-    total += equippedHelm?.areaOfEffectDamage ?? 0;
-    total += equippedArmor?.areaOfEffectDamage ?? 0;
-    total += equippedShoes?.areaOfEffectDamage ?? 0;
+  double get areaDamage {
+    var total = 0.0;
+    total += equippedWeapon?.areaDamage?.value ?? 0;
+    total += equippedHelm?.areaDamage?.value ?? 0;
+    total += equippedArmor?.areaDamage?.value ?? 0;
+    total += equippedShoes?.areaDamage?.value ?? 0;
     return total;
   }
 
   void writeAreaDamage() {
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Area_Damage);
-    writeUInt16(areaDamage);
+    writeByte(AreaDamage.from(areaDamage).index);
   }
 
   void tryWriteByte(int? value){

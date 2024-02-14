@@ -144,7 +144,7 @@ extension AmuletParser on IsometricParser {
          readPlayerMagicSteal();
          break;
        case NetworkResponseAmulet.Player_Area_Damage:
-         readPlayerAreaOfEffectDamage();
+         readPlayerAreaDamage();
          break;
        case NetworkResponseAmulet.Player_Weapon_Range:
          readPlayerWeaponRange();
@@ -360,8 +360,8 @@ extension AmuletParser on IsometricParser {
   void readPlayerWeaponAttackSpeed() =>
       amulet.playerWeaponAttackSpeed.value = readBool() ? readByte() : null;
 
-  void readPlayerAreaOfEffectDamage() =>
-      amulet.playerAreaOfEffectDamage.value = readUInt16();
+  void readPlayerAreaDamage() =>
+      amulet.playerAreaOfEffectDamage.value = AreaDamage.values[readByte()];
 
   int? tryReadInt() => readBool() ? readByte() : null;
 }
