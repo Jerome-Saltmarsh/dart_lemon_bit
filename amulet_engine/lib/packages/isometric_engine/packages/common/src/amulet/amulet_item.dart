@@ -48,7 +48,7 @@ enum AmuletItem {
     subType: WeaponType.Staff,
     skillType: SkillType.Frostball,
     performDuration: AttackSpeed.Value_Slow,
-    range: WeaponRange.Melee_Medium,
+    range: WeaponRange.Melee_Long,
     damage: 2,
     quality: ItemQuality.Rare,
   ),
@@ -60,7 +60,7 @@ enum AmuletItem {
     subType: WeaponType.Staff,
     skillType: SkillType.Fireball,
     performDuration: AttackSpeed.Value_Slow,
-    range: WeaponRange.Melee_Medium,
+    range: WeaponRange.Melee_Long,
     damage: 3,
     quality: ItemQuality.Rare,
   ),
@@ -72,7 +72,7 @@ enum AmuletItem {
     subType: WeaponType.Staff,
     skillType: SkillType.Fireball,
     performDuration: AttackSpeed.Value_Fast,
-    range: WeaponRange.Melee_Medium,
+    range: WeaponRange.Melee_Long,
     damage: 5,
     quality: ItemQuality.Legendary,
   ),
@@ -778,12 +778,15 @@ enum WeaponClass {
 }
 
 class WeaponRange {
-  static const Melee_Short = 50.0;
-  static const Melee_Medium = 75.0;
+  static const Melee_Very_Short = 50.0;
+  static const Melee_Short = 75.0;
   static const Melee_Long = 80.0;
-  static const Ranged_Short = 150.0;
-  static const Ranged_Medium = 175.0;
+  static const Melee_Very_Long = 80.0;
+
+  static const Ranged_Very_Short = 150.0;
+  static const Ranged_Short = 175.0;
   static const Ranged_Long = 200.0;
+  static const Ranged_Very_Long = 200.0;
 }
 
 enum AttackSpeed {
