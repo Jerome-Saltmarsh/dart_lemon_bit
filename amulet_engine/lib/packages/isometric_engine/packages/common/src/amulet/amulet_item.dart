@@ -786,6 +786,13 @@ enum WeaponRange {
   const WeaponRange({required this.melee, required this.ranged});
 }
 
+enum AttackArea {
+  Very_Small,
+  Small,
+  Large,
+  Very_Large,
+}
+
 enum AttackSpeed {
   Very_Slow(duration: 48),
   Slow(duration: 40),

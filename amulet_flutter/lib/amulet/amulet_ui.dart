@@ -1258,13 +1258,6 @@ class AmuletUI {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Tooltip(
-          //   message: 'Caste Type',
-          //   child: buildRow(
-          //       buildIconCasteType(skillType.casteType),
-          //       skillType.casteType.name.replaceAll('_', ' '),
-          //   ),
-          // ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -1293,14 +1286,11 @@ class AmuletUI {
                     buildIconMagicCost(),
                     skillTypeStats.magicCost,
                 )),
-          if (skillTypeStats.range > 0)
-            Tooltip(
-                message: 'Range',
-                child: buildRow(buildIconRange(), skillTypeStats.range)),
-          // if (skillTypeStats.performDuration > 0)
+          // if (skillTypeStats.range > 0)
           //   Tooltip(
-          //       message: 'Duration',
-          //       child: buildRow(buildIconAgility(), formatFramesToSeconds(skillTypeStats.performDuration))),
+          //       message: 'Range',
+          //       child: buildRow(buildIconRange(), skillTypeStats.range)
+          //   ),
           if (skillTypeStats.amount > 0)
             Tooltip(
                 message: getSkillTypeAmountToolTip(skillType),
