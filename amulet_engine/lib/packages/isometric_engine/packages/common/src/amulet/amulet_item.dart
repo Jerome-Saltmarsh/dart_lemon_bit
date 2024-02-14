@@ -10,7 +10,7 @@ enum AmuletItem {
       levelMax: 5,
       type: ItemType.Weapon,
       subType: WeaponType.Shortsword,
-      performDuration: WeaponDuration.Normal,
+      performDuration: AttackSpeed.Value_Fast,
       range: WeaponRange.Melee_Long,
       damage: 3,
       quality: ItemQuality.Common,
@@ -23,7 +23,7 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Shortsword,
     skillType: SkillType.Strike,
-    performDuration: WeaponDuration.Normal,
+    performDuration: AttackSpeed.Value_Fast,
     range: WeaponRange.Melee_Short,
     damage: 4,
     quality: ItemQuality.Rare,
@@ -35,7 +35,7 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Shortsword,
     skillType: SkillType.Mighty_Strike,
-    performDuration: WeaponDuration.Fast,
+    performDuration: AttackSpeed.Value_Very_Fast,
     range: WeaponRange.Melee_Short,
     damage: 5,
     quality: ItemQuality.Legendary,
@@ -47,7 +47,7 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
     skillType: SkillType.Frostball,
-    performDuration: WeaponDuration.Slow,
+    performDuration: AttackSpeed.Value_Slow,
     range: WeaponRange.Melee_Medium,
     damage: 2,
     quality: ItemQuality.Rare,
@@ -59,7 +59,7 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
     skillType: SkillType.Fireball,
-    performDuration: WeaponDuration.Slow,
+    performDuration: AttackSpeed.Value_Slow,
     range: WeaponRange.Melee_Medium,
     damage: 3,
     quality: ItemQuality.Rare,
@@ -71,7 +71,7 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
     skillType: SkillType.Fireball,
-    performDuration: WeaponDuration.Slow,
+    performDuration: AttackSpeed.Value_Fast,
     range: WeaponRange.Melee_Medium,
     damage: 5,
     quality: ItemQuality.Legendary,
@@ -83,7 +83,7 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Bow,
     skillType: SkillType.Split_Shot,
-    performDuration: WeaponDuration.Normal,
+    performDuration: AttackSpeed.Value_Fast,
     range: WeaponRange.Ranged_Short,
     damage: 2,
     quality: ItemQuality.Common,
@@ -95,7 +95,7 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Bow,
     skillType: SkillType.Split_Shot,
-    performDuration: WeaponDuration.Normal,
+    performDuration: AttackSpeed.Value_Fast,
     range: WeaponRange.Ranged_Short,
     damage: 8,
     quality: ItemQuality.Rare,
@@ -107,7 +107,7 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Bow,
     skillType: SkillType.Split_Shot,
-    performDuration: WeaponDuration.Fast,
+    performDuration: AttackSpeed.Value_Very_Fast,
     range: WeaponRange.Ranged_Short,
     damage: 12,
     quality: ItemQuality.Legendary,
@@ -786,24 +786,20 @@ class WeaponRange {
   static const Ranged_Long = 200.0;
 }
 
-class WeaponDuration {
-  static const Very_Fast = 20;
-  static const Fast = 25;
-  static const Normal = 30;
-  static const Slow = 35;
-  static const Very_Slow = 40;
-}
-
 enum AttackSpeed {
-  Very_Slow(40),
-  Slow(35),
-  Normal(30),
-  Fast(25),
-  Very_Fast(20);
+  Very_Slow(duration: Value_Very_Slow),
+  Slow(duration: Value_Slow),
+  Fast(duration: Value_Fast),
+  Very_Fast(duration: Value_Very_Fast);
+
+  static const Value_Very_Slow = 48;
+  static const Value_Slow = 40;
+  static const Value_Fast = 32;
+  static const Value_Very_Fast = 24;
 
   final int duration;
 
-  const AttackSpeed(this.duration);
+  const AttackSpeed({required this.duration});
 
   static AttackSpeed fromDuration(int duration){
       for (final value in values){
