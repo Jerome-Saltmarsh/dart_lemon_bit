@@ -1,6 +1,7 @@
 
 
-import '../packages/src.dart';
+import '../common/src.dart';
+import '../isometric/src.dart';
 
 class AmuletGameObject extends GameObject {
 

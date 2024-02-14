@@ -1,6 +1,7 @@
 import 'dart:math';
-import 'package:amulet_engine/packages/common.dart';
-import 'package:amulet_engine/packages/lemon_math.dart';
+
+import 'package:amulet_engine/common.dart';
+import 'package:lemon_math/src.dart';
 
 class Position implements Comparable<Position>{
 

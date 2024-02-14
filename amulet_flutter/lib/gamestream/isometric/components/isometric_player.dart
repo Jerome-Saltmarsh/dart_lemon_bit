@@ -1,5 +1,5 @@
+import 'package:amulet_engine/common.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:amulet_engine/packages/common.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:amulet_flutter/isometric/classes/character.dart';

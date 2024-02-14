@@ -1,4 +1,5 @@
-import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/amulet_item.dart';
+
+import 'package:amulet_engine/common/src.dart';
 
 const srcx_weapon_staff = 32.0;
 const srcx_weapon_sword = 64.0;

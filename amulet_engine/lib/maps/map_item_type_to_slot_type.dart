@@ -1,5 +1,4 @@
-
-import '../packages/common.dart';
+import 'package:amulet_engine/common/src.dart';
 
 SlotType mapItemTypeToSlotType(int itemType) => switch (itemType) {
       ItemType.Weapon => SlotType.Weapon,

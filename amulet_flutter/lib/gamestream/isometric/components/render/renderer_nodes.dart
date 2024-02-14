@@ -1,8 +1,7 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:amulet_engine/packages/common.dart';
-import 'package:amulet_engine/packages/lemon_math.dart';
+import 'package:amulet_engine/common.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_nodes_y.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/render_group.dart';
@@ -15,6 +14,7 @@ import 'package:amulet_flutter/isometric/functions/get_render.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
+import 'package:lemon_math/src.dart';
 
 import 'constants/node_src.dart';
 

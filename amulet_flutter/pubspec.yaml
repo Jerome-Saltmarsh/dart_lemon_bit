@@ -45,8 +45,14 @@ dependencies:
     path: ..\tools\lemon_engine
   lemon_byte:
     path: ..\tools\lemon_byte
+  lemon_math:
+    path: ..\tools\lemon_math
+  lemon_bits:
+     path: ..\tools\lemon_bits
   gamestream_http_client:
     path: ..\gamestream_http_client
+  lemon_json:
+    path: ..\tools\lemon_json
 
 flutter:
   fonts:

@@ -1,7 +1,7 @@
 
 import 'package:amulet_engine/classes/amulet_fiend.dart';
 import 'package:amulet_engine/classes/amulet_game.dart';
-import 'package:amulet_engine/packages/isomeric_engine.dart';
+import 'package:lemon_json/src.dart';
 
 import 'character_json.dart';
 import '../classes/amulet_player.dart';

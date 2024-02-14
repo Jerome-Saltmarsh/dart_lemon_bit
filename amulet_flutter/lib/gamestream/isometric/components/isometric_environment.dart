@@ -1,8 +1,8 @@
 
-import 'package:amulet_engine/packages/isometric_engine/packages/lemon_math/src/functions/pyramid.dart';
+import 'package:amulet_engine/common.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
-import 'package:amulet_engine/packages/common.dart';
+import 'package:lemon_math/src.dart';
 import 'package:lemon_watch/src.dart';
 
 import 'isometric_audio.dart';

@@ -1,4 +1,5 @@
 
+import '../../isometric/src.dart';
 import '../../src.dart';
 
 class WitchesLair2 extends AmuletGame {

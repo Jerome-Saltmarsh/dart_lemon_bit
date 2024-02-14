@@ -3,17 +3,20 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:amulet_engine/isometric/classes/src.dart';
+import 'package:amulet_engine/isometric/functions/generate_empty_scene.dart';
 import 'package:archive/archive.dart';
+import 'package:lemon_byte/src.dart';
 
-import '../packages/isomeric_engine.dart';
+import '../common/src.dart';
 import 'amulet_game.dart';
 import 'amulet_player.dart';
 import 'amulet_scenes.dart';
 import 'games/amulet_game_tutorial.dart';
-import 'games/witches_lair_1.dart';
-import 'games/witches_lair_2.dart';
 import 'games/amulet_game_world_00.dart';
 import 'games/amulet_game_world_11.dart';
+import 'games/witches_lair_1.dart';
+import 'games/witches_lair_2.dart';
 
 class Amulet {
 

@@ -1,13 +1,16 @@
 
 import 'dart:typed_data';
 
+import 'package:lemon_bits/src.dart';
+import 'package:lemon_byte/src.dart';
+import 'package:lemon_math/src.dart';
 
+import '../common/src.dart';
 import '../editor/randomize_scene.dart';
-import '../packages/isometric_engine/packages/common/src/amulet/quests/quest_tutorials.dart';
+import '../isometric/src.dart';
+import '../utils/src.dart';
 import 'amulet.dart';
 import 'amulet_player.dart';
-import '../packages/src.dart';
-import '../utils/src.dart';
 
 class AmuletController {
   final parser = ByteReader();

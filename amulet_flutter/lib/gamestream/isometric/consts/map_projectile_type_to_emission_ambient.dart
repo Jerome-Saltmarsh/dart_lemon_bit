@@ -1,4 +1,5 @@
-import 'package:amulet_engine/packages/common.dart';
+
+import 'package:amulet_engine/common.dart';
 
 const mapProjectileTypeEmissionToEmissionAmbient = {
   ProjectileType.Arrow: 70,

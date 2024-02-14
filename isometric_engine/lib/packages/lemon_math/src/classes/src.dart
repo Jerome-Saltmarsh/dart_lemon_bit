@@ -1,4 +1,0 @@
-
-library;
-
-export 'ease.dart';

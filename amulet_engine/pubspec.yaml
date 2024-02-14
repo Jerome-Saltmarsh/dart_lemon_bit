@@ -9,3 +9,13 @@ dependencies:
   fast_noise: ^1.0.1
   archive: ^3.4.9
   uuid: ^4.1.0
+
+  lemon_bits:
+    path: ..\tools\lemon_bits
+  lemon_byte:
+    path: ..\tools\lemon_byte
+  lemon_math:
+    path: ..\tools\lemon_math
+  lemon_json:
+    path: ..\tools\lemon_json
+

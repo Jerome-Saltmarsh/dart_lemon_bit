@@ -1,6 +1,6 @@
 
 
-import '../../packages/isomeric_engine.dart';
+import '../../common/src.dart';
 import '../amulet_npc.dart';
 
 

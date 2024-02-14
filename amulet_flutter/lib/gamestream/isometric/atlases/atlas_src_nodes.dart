@@ -1,6 +1,7 @@
 
 
-import 'package:amulet_engine/packages/isometric_engine/packages/common/src/isometric/node_type.dart';
+
+import 'package:amulet_engine/common.dart';
 
 /// [x, y]
 const atlasSrcNodes = <int, List<double>> {

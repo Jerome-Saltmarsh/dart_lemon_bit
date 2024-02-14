@@ -1,4 +1,5 @@
-import '../packages/isometric_engine/isometric_engine.dart';
+
+import '../isometric/src.dart';
 
 abstract class AmuletScenes {
 

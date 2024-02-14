@@ -1,1 +1,0 @@
-const casteActionFramePercentage = 0.6;

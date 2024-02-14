@@ -1,6 +1,5 @@
-import 'package:amulet_engine/packages/isometric_engine/packages/lemon_math/src/constants/pi_quarter.dart';
-import 'package:amulet_engine/packages/isometric_engine/packages/lemon_math/src/functions/rotate.dart';
 import 'package:flutter/material.dart';
+import 'package:lemon_math/src.dart';
 
 class MapLocation {
   late final TextSpan textSpan;

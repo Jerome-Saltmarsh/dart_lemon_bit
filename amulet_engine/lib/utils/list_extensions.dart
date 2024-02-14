@@ -1,6 +1,4 @@
-
-
-import '../packages/isometric_engine/packages/lemon_math/src/functions/random_item.dart';
+import 'package:lemon_math/src.dart';
 
 extension ListExtensions<T> on List<T> {
 

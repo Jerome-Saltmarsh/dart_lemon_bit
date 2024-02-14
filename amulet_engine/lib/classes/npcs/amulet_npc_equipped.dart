@@ -1,5 +1,5 @@
 
-import '../../packages/isomeric_engine.dart';
+import '../../common/src.dart';
 import '../src.dart';
 
 class AmuletNpcEquipped extends AmuletNpc {

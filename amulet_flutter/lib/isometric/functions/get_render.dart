@@ -1,4 +1,5 @@
-import 'package:amulet_engine/packages/common.dart';
+
+import 'package:amulet_engine/common.dart';
 
 double getRenderXOfRowAndColumn(int row, int column) =>
 (row - column) * Node_Size_Half;

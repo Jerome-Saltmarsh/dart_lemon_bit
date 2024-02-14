@@ -1,3 +1,4 @@
+import 'package:amulet_engine/isometric/src.dart';
 import 'package:amulet_engine/src.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;

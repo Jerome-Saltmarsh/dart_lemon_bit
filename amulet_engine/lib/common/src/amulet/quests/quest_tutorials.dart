@@ -1,0 +1,13 @@
+enum QuestTutorial {
+  Acquire_Sword,
+  Strike_Crystal_1,
+  Acquire_Heal,
+  Use_Heal,
+  Vanquish_Fiends_02,
+  Acquire_Bow,
+  Equip_Bow,
+  Draw_Bow,
+  Strike_Crystal_2,
+  Leave,
+  Finished,
+}

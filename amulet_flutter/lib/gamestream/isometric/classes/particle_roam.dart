@@ -1,7 +1,7 @@
 
 
 import 'package:amulet_flutter/isometric/classes/particle.dart';
-import 'package:amulet_engine/packages/lemon_math.dart';
+import 'package:lemon_math/src.dart';
 
 abstract class ParticleRoam extends Particle {
   var startX = 0.0;

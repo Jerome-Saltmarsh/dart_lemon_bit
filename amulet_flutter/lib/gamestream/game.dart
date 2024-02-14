@@ -1,5 +1,5 @@
+import 'package:amulet_engine/common/src.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:amulet_engine/packages/common.dart';
 import 'package:flutter/services.dart';
 
 import 'isometric/components/src.dart';

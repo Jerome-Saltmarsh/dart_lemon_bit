@@ -1,6 +1,5 @@
-import 'package:amulet_engine/packages/common.dart';
-
-import '../packages/isometric_engine/packages/type_def/json.dart';
+import 'package:amulet_engine/common/src.dart';
+import 'package:lemon_json/src.dart';
 
 typedef CharacterJson = Json;
 

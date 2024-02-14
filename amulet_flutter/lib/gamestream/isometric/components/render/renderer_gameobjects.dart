@@ -1,3 +1,4 @@
+import 'package:amulet_engine/common.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_amulet_item.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_images.dart';
@@ -5,7 +6,6 @@ import 'package:amulet_flutter/gamestream/isometric/components/isometric_scene.d
 import 'package:amulet_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:amulet_flutter/isometric/classes/gameobject.dart';
 import 'package:amulet_flutter/isometric/classes/position.dart';
-import 'package:amulet_engine/packages/common.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_sprite/lib.dart';

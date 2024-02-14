@@ -1,7 +1,7 @@
 import 'dart:ui' as ui;
 import 'dart:ui';
 
-import 'package:amulet_engine/packages/common.dart';
+import 'package:amulet_engine/common.dart';
 import 'package:amulet_flutter/website/widgets/gs_fullscreen.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:golden_ratio/constants.dart';

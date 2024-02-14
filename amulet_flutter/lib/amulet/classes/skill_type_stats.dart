@@ -1,5 +1,6 @@
 
-import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/skill_type.dart';
+
+import 'package:amulet_engine/common/src.dart';
 
 class SkillTypeStats {
   final SkillType skillType;

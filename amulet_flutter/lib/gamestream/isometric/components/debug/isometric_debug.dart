@@ -1,10 +1,10 @@
 
 import 'dart:typed_data';
+import 'package:amulet_engine/common.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/particle_roam.dart';
-import 'package:amulet_engine/packages/common.dart';
-import 'package:amulet_engine/packages/lemon_math.dart';
 import 'package:amulet_flutter/packages/lemon_components/updatable.dart';
 import 'package:flutter/services.dart';
+import 'package:lemon_math/src.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';

@@ -1,8 +1,8 @@
+import 'package:amulet_engine/common.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/render/functions/merge_32_bit_colors.dart';
 import 'package:amulet_flutter/isometric/classes/position.dart';
-import 'package:amulet_engine/packages/common.dart';
-import 'package:amulet_engine/packages/lemon_math.dart';
-import 'package:amulet_engine/packages/lemon_bits.dart';
+import 'package:lemon_bits/src.dart';
+import 'package:lemon_math/src.dart';
 
 class Character extends Position {
   var characterType = CharacterType.Human;

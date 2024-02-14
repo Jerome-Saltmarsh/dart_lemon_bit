@@ -1,9 +1,9 @@
 
-import 'package:amulet_engine/packages/lemon_math.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/lemon_engine.dart';
+import 'package:lemon_math/src.dart';
 
 class AmuletWorldMap extends StatelessWidget {
   final Amulet amulet;

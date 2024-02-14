@@ -1,5 +1,5 @@
+import 'package:amulet_engine/common.dart';
 import 'package:amulet_engine/json/character_json.dart';
-import 'package:amulet_engine/packages/common.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/functions/get_server_mode_text.dart';
 import 'package:amulet_flutter/gamestream/operation_status.dart';
 import 'package:amulet_flutter/gamestream/ui/src.dart';

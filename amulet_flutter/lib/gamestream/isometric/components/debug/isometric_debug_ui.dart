@@ -1,5 +1,5 @@
 
-import 'package:amulet_engine/packages/common.dart';
+import 'package:amulet_engine/common.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/debug/isometric_debug.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/functions/format_bytes.dart';
 import 'package:amulet_flutter/gamestream/isometric/enums/mode.dart';

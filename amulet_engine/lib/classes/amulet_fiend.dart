@@ -1,6 +1,7 @@
 
 
-import '../packages/isomeric_engine.dart';
+import '../common/src.dart';
+import '../isometric/src.dart';
 
 class AmuletFiend extends Character {
 

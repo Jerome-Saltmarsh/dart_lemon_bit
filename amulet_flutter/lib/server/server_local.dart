@@ -8,6 +8,7 @@ import 'package:amulet_flutter/amulet/classes/amulet_scenes_flutter.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_parser.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_player.dart' as PlayerClient;
 import 'package:amulet_flutter/server/src.dart';
+import 'package:lemon_json/src.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 

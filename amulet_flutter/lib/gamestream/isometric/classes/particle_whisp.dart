@@ -1,7 +1,8 @@
 import 'package:amulet_flutter/gamestream/isometric/classes/particle_roam.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_particles.dart';
-import 'package:amulet_engine/packages/common.dart';
-import 'package:amulet_engine/packages/lemon_math.dart';
+
+import 'package:amulet_engine/common.dart';
+import 'package:lemon_math/src.dart';
 
 class ParticleWhisp extends ParticleRoam {
 

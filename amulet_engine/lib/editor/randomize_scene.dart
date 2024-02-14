@@ -1,5 +1,8 @@
 
-import '../packages/isomeric_engine.dart';
+import 'package:lemon_math/src.dart';
+
+import '../common/src.dart';
+import '../isometric/src.dart';
 import '../utils/list_extensions.dart';
 
 void randomizeScene(Scene scene){

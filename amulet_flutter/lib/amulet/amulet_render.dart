@@ -1,7 +1,7 @@
 
+import 'package:amulet_engine/common/src.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
-import 'package:amulet_engine/packages/common.dart';
 
 extension AmuletRender on Amulet {
 

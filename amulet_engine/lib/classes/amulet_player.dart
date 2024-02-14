@@ -1,10 +1,10 @@
 
 import 'dart:math';
 
-import '../packages/isomeric_engine.dart';
+import 'package:lemon_math/src.dart';
+
+import '../common/src.dart';
 import '../mixins/src.dart';
-import '../packages/isometric_engine/packages/common/src/amulet/quests/quest_main.dart';
-import '../packages/isometric_engine/packages/common/src/amulet/quests/quest_tutorials.dart';
 import 'amulet.dart';
 import 'amulet_settings.dart';
 import 'amulet_fiend.dart';
@@ -13,7 +13,7 @@ import 'amulet_gameobject.dart';
 import 'amulet_npc.dart';
 import 'games/amulet_game_tutorial.dart';
 import 'talk_option.dart';
-
+import '../isometric/src.dart';
 
 
 class AmuletPlayer extends IsometricPlayer with
@@ -1222,7 +1222,7 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   int getSkillTypePerformDuration(SkillType skillType) =>
-      skillType.casteDuration ??
+      skillType.casteSpeed?.duration ??
       this.equippedWeaponAttackSpeed?.duration ??
       (throw Exception('amuletPlayer.getSkillTypePerformDuration(skillType: $skillType)'));
 

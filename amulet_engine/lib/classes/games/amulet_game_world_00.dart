@@ -1,5 +1,5 @@
 
-import '../../packages/src.dart';
+import '../../common/src.dart';
 import '../amulet_game.dart';
 
 class AmuletGameWorld00 extends AmuletGame {

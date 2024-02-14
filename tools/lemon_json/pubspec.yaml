@@ -1,0 +1,7 @@
+name: lemon_json
+description: "a utility library for using json"
+version: 1.0.0
+homepage:
+
+environment:
+  sdk: '>=3.2.6 <4.0.0'

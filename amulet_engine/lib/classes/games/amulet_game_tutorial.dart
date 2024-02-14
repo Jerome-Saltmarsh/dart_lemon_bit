@@ -1,6 +1,8 @@
 
-import '../../packages/isometric_engine/packages/common/src/amulet/quests/quest_tutorials.dart';
-import '../../packages/src.dart';
+import 'package:lemon_math/src.dart';
+
+import '../../common/src.dart';
+import '../../isometric/src.dart';
 import '../amulet_game.dart';
 import '../amulet_npc.dart';
 import '../amulet_player.dart';

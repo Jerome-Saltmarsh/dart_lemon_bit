@@ -1,12 +1,12 @@
-import 'package:amulet_engine/packages/isometric_engine/packages/lemon_math/src/functions/get_alpha.dart';
+import 'package:amulet_engine/common.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/particle_flying.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/src.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_images.dart';
-import 'package:amulet_engine/packages/common.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
+import 'package:lemon_math/src.dart';
 import 'package:lemon_sprite/lib.dart';
 
 import '../../functions/generate_colors.dart';

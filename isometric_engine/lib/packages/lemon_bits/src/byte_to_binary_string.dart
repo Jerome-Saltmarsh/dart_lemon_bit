@@ -1,1 +1,0 @@
-String byteToBinaryString(int byte) => byte.toRadixString(2).padLeft(8, '0');

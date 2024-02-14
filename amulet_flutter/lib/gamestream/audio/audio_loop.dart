@@ -1,5 +1,5 @@
-import 'package:amulet_engine/packages/isometric_engine/packages/lemon_math/src/functions/clamp01.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:lemon_math/src.dart';
 
 class AudioLoop {
 

@@ -1,5 +1,5 @@
+import 'package:amulet_engine/common/src.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/src.dart';
-import 'package:amulet_engine/packages/common.dart';
 
 
 class Atlas {

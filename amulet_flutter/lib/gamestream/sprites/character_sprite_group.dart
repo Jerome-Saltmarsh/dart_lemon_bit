@@ -1,4 +1,4 @@
-import 'package:amulet_engine/packages/common.dart';
+import 'package:amulet_engine/common.dart';
 import 'package:lemon_sprite/lib.dart';
 
 

@@ -1,4 +1,4 @@
-import 'package:amulet_engine/packages/common.dart';
+import 'package:amulet_engine/common.dart';
 import 'package:amulet_flutter/packages/lemon_components/updatable.dart';
 
 class IsometricAnimation implements Updatable {

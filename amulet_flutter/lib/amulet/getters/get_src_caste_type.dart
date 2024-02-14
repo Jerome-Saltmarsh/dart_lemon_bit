@@ -1,5 +1,6 @@
 
-import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/amulet_item.dart';
+
+import 'package:amulet_engine/common/src.dart';
 
 List<double> getSrcCasteType(CasteType casteType){
   const x = 768.0;

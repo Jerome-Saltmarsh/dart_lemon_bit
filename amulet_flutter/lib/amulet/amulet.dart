@@ -3,8 +3,8 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:ui';
 
-import 'package:amulet_engine/packages/common.dart';
-import 'package:amulet_engine/packages/isometric_engine/packages/common/src/amulet/quests/quest_main.dart';
+import 'package:amulet_engine/common/src.dart';
+import 'package:amulet_engine/common/src/amulet/quests/src.dart';
 import 'package:amulet_flutter/amulet/amulet_ui.dart';
 import 'package:amulet_flutter/amulet/classes/item_slot.dart';
 import 'package:amulet_flutter/amulet/ui/enums/quantify_tab.dart';
