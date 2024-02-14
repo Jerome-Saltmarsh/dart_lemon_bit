@@ -904,18 +904,27 @@ class AmuletUI {
     ));
   }
 
-  Row buildBarsRange(int? weaponRange) {
-    return Row(
-                children: [
-                  buildIconRange(),
-                  width8,
-                  buildBars(
-                    total: 4,
-                    value: weaponRange ?? 0,
-                  )
-                ],
-                );
-  }
+  Widget buildBarsRange(int? weaponRange) => Row(
+        children: [
+          buildIconRange(),
+          width8,
+          buildBars(
+            total: 4,
+            value: weaponRange ?? 0,
+          )
+        ],
+      );
+
+  Widget buildBarsAttackSpeed(int? value) => Row(
+        children: [
+          buildIconAttackSpeed(),
+          width8,
+          buildBars(
+            total: 4,
+            value: value ?? 0,
+          )
+        ],
+      );
 
   Widget buildAttackSpeedValue(int value){
     return Row(children: List.generate(AttackSpeed.values.length, (index) {
@@ -1157,7 +1166,7 @@ class AmuletUI {
     final agility = amuletItem.agility;
     final skillType = amuletItem.skillType;
     final range = amuletItem.range;
-    final performDuration = amuletItem.performDuration;
+    final attackSpeed = amuletItem.attackSpeed;
     final itemType = amuletItem.type;
     final masterySword = amuletItem.masterySword;
     final masteryStaff = amuletItem.masteryStaff;
@@ -1191,8 +1200,10 @@ class AmuletUI {
             buildRow(buildIconCasteType(CasteType.Caste), masteryCaste),
           if (damage != null)
             buildRow(buildIconDamage(), damage),
-          if (performDuration != null)
-            buildRow(buildIconAgility(), formatFramesToSeconds(performDuration)),
+          // if (performDuration != null)
+          //   buildRow(buildIconAgility(), formatFramesToSeconds(performDuration)),
+          if (attackSpeed != null)
+            buildBarsAttackSpeed(attackSpeed.index),
           if (range != null)
             buildBarsRange(range.index),
           if (maxHealth != null && maxHealth > 0)

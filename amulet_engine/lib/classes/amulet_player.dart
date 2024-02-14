@@ -89,17 +89,8 @@ class AmuletPlayer extends IsometricPlayer with
     setFlaskAmount(AmuletSettings.Flask_Capacity);
   }
 
-  int? get equippedWeaponAttackSpeed {
-    final equippedWeapon = this.equippedWeapon;
-    if (equippedWeapon == null){
-      return null;
-    }
-    final duration = equippedWeapon.performDuration;
-    if (duration == null){
-      return null;
-    }
-    return AttackSpeed.fromDuration(duration).index;
-  }
+  AttackSpeed? get equippedWeaponAttackSpeed =>
+      equippedWeapon?.attackSpeed;
 
   @override
   set magic(int value) {
@@ -1230,16 +1221,10 @@ class AmuletPlayer extends IsometricPlayer with
     skillTypeRight = equippedSkillType;
   }
 
-  int getSkillTypePerformDuration(SkillType skillType) {
-    const minPerformDuration = 8;
-    // final playerAgility = agility;
-
-    final baseDuration = skillType.casteDuration ??
-      equippedWeapon?.performDuration ??
-        0;
-
-    return max(baseDuration, minPerformDuration);
-  }
+  int getSkillTypePerformDuration(SkillType skillType) =>
+      skillType.casteDuration ??
+      this.equippedWeaponAttackSpeed?.duration ??
+      (throw Exception('amuletPlayer.getSkillTypePerformDuration(skillType: $skillType)'));
 
   int getSkillTypeAmount(SkillType skillType) {
     switch (skillType) {
@@ -1384,14 +1369,7 @@ class AmuletPlayer extends IsometricPlayer with
   void writeEquippedWeaponAttackSpeed() {
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Weapon_Attack_Speed);
-    final value = equippedWeaponAttackSpeed;
-
-    if (value == null){
-      writeFalse();
-      return;
-    }
-    writeTrue();
-    writeByte(value);
+    tryWriteByte(equippedWeaponAttackSpeed?.index);
   }
 
   int get areaDamage {

@@ -10,7 +10,7 @@ enum AmuletItem {
       levelMax: 5,
       type: ItemType.Weapon,
       subType: WeaponType.Shortsword,
-      performDuration: AttackSpeed.Value_Fast,
+      attackSpeed: AttackSpeed.Fast,
       range: WeaponRange.Long,
       damage: 3,
       quality: ItemQuality.Common,
@@ -23,7 +23,7 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Shortsword,
     skillType: SkillType.Strike,
-    performDuration: AttackSpeed.Value_Fast,
+    attackSpeed: AttackSpeed.Fast,
     range: WeaponRange.Short,
     damage: 4,
     quality: ItemQuality.Rare,
@@ -35,7 +35,7 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Shortsword,
     skillType: SkillType.Mighty_Strike,
-    performDuration: AttackSpeed.Value_Very_Fast,
+    attackSpeed: AttackSpeed.Very_Fast,
     range: WeaponRange.Short,
     damage: 5,
     quality: ItemQuality.Legendary,
@@ -47,7 +47,7 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
     skillType: SkillType.Frostball,
-    performDuration: AttackSpeed.Value_Slow,
+    attackSpeed: AttackSpeed.Slow,
     range: WeaponRange.Long,
     damage: 2,
     quality: ItemQuality.Rare,
@@ -59,7 +59,7 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
     skillType: SkillType.Fireball,
-    performDuration: AttackSpeed.Value_Slow,
+    attackSpeed: AttackSpeed.Slow,
     range: WeaponRange.Long,
     damage: 3,
     quality: ItemQuality.Rare,
@@ -71,7 +71,7 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Staff,
     skillType: SkillType.Fireball,
-    performDuration: AttackSpeed.Value_Fast,
+    attackSpeed: AttackSpeed.Fast,
     range: WeaponRange.Long,
     damage: 5,
     quality: ItemQuality.Legendary,
@@ -83,7 +83,7 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Bow,
     skillType: SkillType.Split_Shot,
-    performDuration: AttackSpeed.Value_Fast,
+    attackSpeed: AttackSpeed.Fast,
     range: WeaponRange.Short,
     damage: 2,
     quality: ItemQuality.Common,
@@ -95,7 +95,7 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Bow,
     skillType: SkillType.Split_Shot,
-    performDuration: AttackSpeed.Value_Fast,
+    attackSpeed: AttackSpeed.Fast,
     range: WeaponRange.Short,
     damage: 8,
     quality: ItemQuality.Rare,
@@ -107,7 +107,7 @@ enum AmuletItem {
     type: ItemType.Weapon,
     subType: WeaponType.Bow,
     skillType: SkillType.Split_Shot,
-    performDuration: AttackSpeed.Value_Very_Fast,
+    attackSpeed: AttackSpeed.Very_Fast,
     range: WeaponRange.Short,
     damage: 12,
     quality: ItemQuality.Legendary,
@@ -609,7 +609,7 @@ enum AmuletItem {
   final SkillType? skillType;
   final int? damage;
   final WeaponRange? range;
-  final int? performDuration;
+  final AttackSpeed? attackSpeed;
   final int? health;
   final ItemQuality quality;
   final String label;
@@ -640,7 +640,7 @@ enum AmuletItem {
     this.skillType,
     this.damage,
     this.range,
-    this.performDuration,
+    this.attackSpeed,
     this.health,
     this.agility,
     this.areaOfEffectDamage,
@@ -721,22 +721,19 @@ enum AmuletItem {
 
   void validate() {
     if (isWeapon){
-      if ((performDuration == null)) {
+      if ((attackSpeed == null)) {
         throw Exception('$this performDuration of weapon cannot be null');
-      }
-      if ((performDuration! <= 0)) {
-        throw Exception('$this performDuration of weapon must be greater than 0');
       }
       if (damage == null || damage! <= 0){
         throw Exception('$this.damage cannot cannot be null or 0');
       }
       if (range == null){
-        throw Exception('$this.range cannot cannot be null or 0');
+        throw Exception('$this.range cannot cannot be null');
       }
     } else {
-      if ((performDuration ?? 0) > 0 && !this.isWeapon) {
-        throw Exception('$this performDuration cannot be greater than 0 for non weapon');
-      }
+      // if ((performDuration ?? 0) > 0 && !this.isWeapon) {
+      //   throw Exception('$this performDuration cannot be greater than 0 for non weapon');
+      // }
     }
 
   }
@@ -790,15 +787,10 @@ enum WeaponRange {
 }
 
 enum AttackSpeed {
-  Very_Slow(duration: Value_Very_Slow),
-  Slow(duration: Value_Slow),
-  Fast(duration: Value_Fast),
-  Very_Fast(duration: Value_Very_Fast);
-
-  static const Value_Very_Slow = 48;
-  static const Value_Slow = 40;
-  static const Value_Fast = 32;
-  static const Value_Very_Fast = 24;
+  Very_Slow(duration: 48),
+  Slow(duration: 40),
+  Fast(duration: 32),
+  Very_Fast(duration: 24);
 
   final int duration;
 
