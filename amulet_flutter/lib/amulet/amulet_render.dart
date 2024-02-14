@@ -44,17 +44,17 @@ extension AmuletRender on Amulet {
     //   return;
     // }
 
-    final range = item.range ?? 0;
-
-    if (range <= 0) return;
-    engine.color = Colors.white;
-    render.circleOutline(
-        x: player.x,
-        y: player.y,
-        z: player.z,
-        radius: range,
-        sections: 20
-    );
+    // final range = item.range ?? 0;
+    //
+    // if (range <= 0) return;
+    // engine.color = Colors.white;
+    // render.circleOutline(
+    //     x: player.x,
+    //     y: player.y,
+    //     z: player.z,
+    //     radius: range,
+    //     sections: 20
+    // );
   }
 
   void renderActivatedPower({Color rangeColor = Colors.white}) {
@@ -81,13 +81,13 @@ extension AmuletRender on Amulet {
     //   );
     // }
 
-    final range = activeSlotAmuletItem.range;
-    if (range != null) {
-      engine.color = rangeColor;
-      renderCircleAroundPlayer(radius: range);
-    }
+    // final range = activeSlotAmuletItem.range;
+    // if (range != null) {
+    //   engine.color = rangeColor;
+    //   renderCircleAroundPlayer(radius: range);
+    // }
 
-    engine.color = Colors.white;
+    // engine.color = Colors.white;
   }
 
   void renderCircleAroundPlayer({required double radius}) =>

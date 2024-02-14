@@ -67,7 +67,7 @@ class Amulet extends IsometricGame {
 
   final playerWeaponDamageMin = Watch(0);
   final playerWeaponDamageMax = Watch(0);
-  final playerWeaponRange = Watch(0);
+  final playerWeaponRange = Watch<int?>(0);
   final playerWeaponAttackSpeed = Watch<int?>(0);
 
   final playerSkillLeft = Watch(SkillType.Strike);

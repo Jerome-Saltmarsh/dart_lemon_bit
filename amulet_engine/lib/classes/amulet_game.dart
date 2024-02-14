@@ -1,12 +1,10 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-
 import '../../src.dart';
 import 'amulet.dart';
 import 'amulet_fiend.dart';
 import 'amulet_gameobject.dart';
-
 
 class AmuletGame extends IsometricGame<AmuletPlayer> {
 

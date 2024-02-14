@@ -874,9 +874,7 @@ class AmuletUI {
           buildText('WEAPON', color: Colors.white70),
           Tooltip(
             message: 'Range',
-            child: buildWatch(amulet.playerWeaponRange, (weaponRange){
-              return buildRow(buildIconRange(), weaponRange);
-            }),
+            child: buildWatch(amulet.playerWeaponRange, buildBarsRange),
           ),
           buildWatch(amulet.playerWeaponAttackSpeed, (attackSpeed){
             return Tooltip(
@@ -906,6 +904,19 @@ class AmuletUI {
     ));
   }
 
+  Row buildBarsRange(int? weaponRange) {
+    return Row(
+                children: [
+                  buildIconRange(),
+                  width8,
+                  buildBars(
+                    total: 4,
+                    value: weaponRange ?? 0,
+                  )
+                ],
+                );
+  }
+
   Widget buildAttackSpeedValue(int value){
     return Row(children: List.generate(AttackSpeed.values.length, (index) {
        return Container(
@@ -916,6 +927,14 @@ class AmuletUI {
        );
     }));
   }
+
+  Widget buildBars({required int total, required int value}) =>
+      Row(children: List.generate(total, (index) => Container(
+         width: 4,
+         height: 4 * goldenRatio_1618,
+         margin: const EdgeInsets.only(right: 4),
+         color: value >= index ? Colors.white70 : Colors.white24,
+       )));
 
   Widget buildIconAgility() =>
       AmuletImage(srcX: 768, srcY: 64, width: 16, height: 16);
@@ -1175,7 +1194,7 @@ class AmuletUI {
           if (performDuration != null)
             buildRow(buildIconAgility(), formatFramesToSeconds(performDuration)),
           if (range != null)
-            buildRow(buildIconRange(), range.toInt()),
+            buildBarsRange(range.index),
           if (maxHealth != null && maxHealth > 0)
             buildRow(buildIconHealth(), maxHealth),
           if (maxMagic != null && maxMagic > 0)

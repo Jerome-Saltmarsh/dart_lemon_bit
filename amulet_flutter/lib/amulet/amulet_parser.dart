@@ -355,11 +355,13 @@ extension AmuletParser on IsometricParser {
       amulet.playerMagicSteal.value = readByte();
 
   void readPlayerWeaponRange() =>
-      amulet.playerWeaponRange.value = readUInt16();
+      amulet.playerWeaponRange.value = tryReadInt();
 
   void readPlayerWeaponAttackSpeed() =>
       amulet.playerWeaponAttackSpeed.value = readBool() ? readByte() : null;
 
   void readPlayerAreaOfEffectDamage() =>
       amulet.playerAreaOfEffectDamage.value = readUInt16();
+
+  int? tryReadInt() => readBool() ? readByte() : null;
 }

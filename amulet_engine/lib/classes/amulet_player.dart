@@ -536,6 +536,11 @@ class AmuletPlayer extends IsometricPlayer with
     final skillType = skillActive;
     final mouseDistance = getMouseDistance();
     final maxRange = getSkillTypeRange(skillType);
+
+    if (maxRange == null){
+      return;
+    }
+
     if (mouseDistance <= maxRange){
       castePositionX = mouseSceneX;
       castePositionY = mouseSceneY;
@@ -1099,10 +1104,12 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   double getSkillTypeRange(SkillType skillType) =>
-    skillType.range ??
-        equippedWeapon?.range ??
-          0;
-
+      switch (skillType.casteType) {
+        CasteType.Caste => skillType.range,
+        CasteType.Bow => equippedWeaponRange?.ranged,
+        CasteType.Staff => equippedWeaponRange?.melee,
+        CasteType.Sword => equippedWeaponRange?.melee
+      } ?? 0;
 
   double getSkillTypeRadius(SkillType skillType) {
      switch (skillType){
@@ -1114,6 +1121,8 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   int getSkillTypeMagicCost(SkillType skillType) => skillType.magicCost;
+
+  WeaponRange? get equippedWeaponRange => equippedWeapon?.range;
 
   WeaponClass? get equippedWeaponClass {
       final weaponType = equippedWeapon?.subType;
@@ -1135,7 +1144,7 @@ class AmuletPlayer extends IsometricPlayer with
       writeByte(getSkillTypeMagicCost(skillType));
       writeUInt16(getSkillTypeDamageMin(skillType));
       writeUInt16(getSkillTypeDamageMax(skillType));
-      writeUInt16(getSkillTypeRange(skillType).toInt());
+      writeUInt16((getSkillTypeRange(skillType) ?? 0).toInt());
       writeUInt16(getSkillTypePerformDuration(skillType).toInt());
       writeUInt16(getSkillTypeAmount(skillType).toInt());
     }
@@ -1359,13 +1368,10 @@ class AmuletPlayer extends IsometricPlayer with
      writeByte(magicSteal);
   }
 
-  double get equippedWeaponRange =>
-      equippedWeapon?.range ?? 0;
-
   void writeEquippedWeaponRange() {
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Weapon_Range);
-    writeUInt16(equippedWeaponRange.toInt());
+    tryWriteByte(equippedWeapon?.range?.index);
   }
 
   void writeEquippedWeaponAttackSpeed() {
@@ -1394,6 +1400,15 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Area_Damage);
     writeUInt16(areaDamage);
+  }
+
+  void tryWriteByte(int? value){
+    if (value == null){
+      writeFalse();
+      return;
+    }
+    writeTrue();
+    writeByte(value);
   }
 }
 
