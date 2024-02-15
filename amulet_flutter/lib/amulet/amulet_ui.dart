@@ -880,17 +880,7 @@ class AmuletUI {
               ),
             );
           }),
-          buildWatch(amulet.playerAreaOfEffectDamage, (areaDamage) {
-            return Tooltip(
-                message: 'Area Damage',
-                child: Row(
-                  children: [
-                    buildIconAreaDamage(),
-                    width8,
-                    buildBars(total: 4, value: areaDamage.index),
-                  ],
-                ));
-          }),
+          buildWatch(amulet.playerWeaponAreaDamage, buildBarsAreaDamage),
         ],
       ),
     );
@@ -929,16 +919,19 @@ class AmuletUI {
         ],
       );
 
-  Widget buildBarsAreaDamage(AreaDamage value) => Row(
-        children: [
-          buildIconAreaDamage(),
-          width8,
-          buildBars(
-            total: 4,
-            value: value.index,
-          )
-        ],
-      );
+  Widget buildBarsAreaDamage(AreaDamage? value) => Tooltip(
+    message: 'Area Damage',
+    child: Row(
+          children: [
+            buildIconAreaDamage(),
+            width8,
+            buildBars(
+              total: 4,
+              value: value?.index ?? 0,
+            )
+          ],
+        ),
+  );
 
   Widget buildAttackSpeedValue(int value){
     return Row(children: List.generate(AttackSpeed.values.length, (index) {
@@ -1215,15 +1208,12 @@ class AmuletUI {
             buildRow(buildIconCasteType(CasteType.Caste), masteryCaste),
           if (damage != null)
             buildRow(buildIconDamage(), damage),
-          // if (performDuration != null)
-          //   buildRow(buildIconAgility(), formatFramesToSeconds(performDuration)),
+          if (range != null)
+            buildBarsRange(range.index),
           if (attackSpeed != null)
             buildBarsAttackSpeed(attackSpeed.index),
           if (areaDamage != null)
             buildBarsAreaDamage(areaDamage),
-          if (range != null)
-            buildBarsRange(range.index),
-
           if (maxHealth != null && maxHealth > 0)
             buildRow(buildIconHealth(), maxHealth),
           if (maxMagic != null && maxMagic > 0)

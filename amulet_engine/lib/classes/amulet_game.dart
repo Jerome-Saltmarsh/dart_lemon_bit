@@ -397,8 +397,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     throw Exception('amuletGame.getCharacterSkillTypeAmount()');
   }
 
-
-  double getCharacterAreaOfEffectDamage(Character character){
+  double getCharacterAreaDamage(Character character){
       if (character is AmuletPlayer) {
          return character.areaDamage;
       }

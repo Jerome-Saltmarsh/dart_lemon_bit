@@ -42,5 +42,5 @@ class NetworkResponseAmulet {
    static const Player_Magic_Steal = 56;
    static const Player_Weapon_Range = 57;
    static const Player_Weapon_Attack_Speed = 58;
-   static const Player_Area_Damage = 59;
+   static const Player_Weapon_Area_Damage = 59;
 }

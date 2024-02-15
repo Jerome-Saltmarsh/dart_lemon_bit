@@ -439,7 +439,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeCharacteristics();
     writeEquippedWeaponRange();
     writeEquippedWeaponAttackSpeed();
-    writeAreaDamage();
+    writeEquippedWeaponAreaDamage();
   }
 
   void checkAssignedSkillTypes() {
@@ -1381,11 +1381,13 @@ class AmuletPlayer extends IsometricPlayer with
     return total;
   }
 
-  void writeAreaDamage() {
+  void writeEquippedWeaponAreaDamage() {
     writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Player_Area_Damage);
-    writeByte(AreaDamage.from(areaDamage).index);
+    writeByte(NetworkResponseAmulet.Player_Weapon_Area_Damage);
+    tryWriteByte(equippedWeaponAreaDamage?.index);
   }
+
+  AreaDamage? get equippedWeaponAreaDamage => equippedWeapon?.areaDamage;
 
   void tryWriteByte(int? value){
     if (value == null){
