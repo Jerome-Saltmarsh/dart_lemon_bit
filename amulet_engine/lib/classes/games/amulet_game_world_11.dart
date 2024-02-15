@@ -69,7 +69,7 @@ class AmuletGameWorld11 extends AmuletGame {
       health: 50,
       invincible: true,
       team: TeamType.Good,
-      weaponType: WeaponType.Bow,
+      weaponType: WeaponType.Bow_Short,
       attackDamage: 3,
       attackRange: 120,
       attackDuration: 30,
@@ -80,7 +80,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..helmType = HelmType.Leather_Cap
       ..armorType = ArmorType.Leather
       ..shoeType = ShoeType.Grieves
-      ..weaponType = WeaponType.Bow
+      ..weaponType = WeaponType.Bow_Short
       ..chanceOfSetTarget = 1.0
       ..complexion = ComplexionType.fair;
 
@@ -91,7 +91,7 @@ class AmuletGameWorld11 extends AmuletGame {
       health: 50,
       invincible: true,
       team: TeamType.Good,
-      weaponType: WeaponType.Bow,
+      weaponType: WeaponType.Bow_Short,
       attackDamage: 3,
       attackRange: 120,
       attackDuration: 30,
@@ -101,7 +101,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..invincible = true
       ..helmType = HelmType.Full_Helm
       ..armorType = ArmorType.Leather
-      ..weaponType = WeaponType.Bow
+      ..weaponType = WeaponType.Bow_Short
       ..shoeType = ShoeType.Grieves
       ..chanceOfSetTarget = 1.0
       ..complexion = ComplexionType.fair;
@@ -113,7 +113,7 @@ class AmuletGameWorld11 extends AmuletGame {
       health: 50,
       invincible: true,
       team: TeamType.Good,
-      weaponType: WeaponType.Bow,
+      weaponType: WeaponType.Bow_Short,
       attackDamage: 3,
       attackRange: 120,
       attackDuration: 30,
@@ -165,7 +165,7 @@ class AmuletGameWorld11 extends AmuletGame {
       health: 50,
       invincible: true,
       team: TeamType.Good,
-      weaponType: WeaponType.Bow,
+      weaponType: WeaponType.Bow_Short,
       attackDamage: 3,
       attackRange: 120,
       attackDuration: 30,

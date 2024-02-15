@@ -617,11 +617,13 @@ class Character extends Collider {
   void attack() {
     clearPath();
 
-    if (weaponType == WeaponType.Bow) {
+    if (WeaponType.isBow(weaponType)) {
       setCharacterStateFire(
         duration: attackDuration, // TODO
       );
-    } else {
+    }
+
+    if (WeaponType.isMelee(weaponType)){
       setCharacterStateStriking(
         duration: attackDuration, // TODO
       );

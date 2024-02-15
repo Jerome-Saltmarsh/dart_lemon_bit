@@ -4,7 +4,6 @@ import 'dart:ui' as ui;
 import 'dart:ui';
 
 import 'package:amulet_engine/common/src.dart';
-import 'package:amulet_engine/common/src/amulet/quests/src.dart';
 import 'package:amulet_flutter/amulet/amulet_ui.dart';
 import 'package:amulet_flutter/amulet/classes/item_slot.dart';
 import 'package:amulet_flutter/amulet/ui/enums/quantify_tab.dart';
@@ -19,7 +18,7 @@ import 'amulet_render.dart';
 import 'classes/map_location.dart';
 import 'classes/skill_type_stats.dart';
 
-class Characteristics {
+class Mastery {
   final sword = Watch(0);
   final staff = Watch(0);
   final bow = Watch(0);
@@ -54,7 +53,7 @@ class Amulet extends IsometricGame {
   var playerWorldX = 0.0;
   var playerWorldY = 0.0;
 
-  final playerMastery = Characteristics();
+  final playerMastery = Mastery();
   final playerMagic = Watch(0);
   final playerMagicMax = Watch(0);
   final playerMagicPercentage = Watch(0.0);

@@ -165,7 +165,7 @@ class AmuletGameTutorial extends AmuletGame {
 
     if (!objectiveCompleted(player, QuestTutorial.Acquire_Bow)){
       spawnAmuletItemAtIndex(
-        item: AmuletItem.Weapon_Bow_1_Common,
+        item: AmuletItem.Weapon_Bow_Short,
         index: getSceneKey(keysSpawnBow),
         deactivationTimer: -1,
       );
@@ -258,7 +258,7 @@ class AmuletGameTutorial extends AmuletGame {
   bool isObjectiveCompleted(AmuletPlayer player) =>
     switch (player.questTutorial) {
        QuestTutorial.Draw_Bow =>
-        player.equippedWeapon == AmuletItem.Weapon_Bow_1_Common,
+        player.equippedWeapon == AmuletItem.Weapon_Bow_Short,
        QuestTutorial.Leave => getNodeIndexV3(player) == indexLeave,
         _ => false
     };
@@ -411,7 +411,7 @@ class AmuletGameTutorial extends AmuletGame {
 
   void actionSpawnWeaponSwordAtGuide() =>
     spawnAmuletItem(
-      item: AmuletItem.Weapon_Bow_1_Common,
+      item: AmuletItem.Weapon_Bow_Short,
       x: guide.x,
       y: guide.y,
       z: guide.z,
@@ -526,7 +526,7 @@ class AmuletGameTutorial extends AmuletGame {
   @override
   void onAmuletItemAcquired(AmuletPlayer player, AmuletItem amuletItem) {
     switch (amuletItem){
-      case AmuletItem.Weapon_Bow_1_Common:
+      case AmuletItem.Weapon_Bow_Short:
         if (player.questTutorial == QuestTutorial.Acquire_Sword){
           startNextTutorialObjective(player);
         }
@@ -600,7 +600,7 @@ class AmuletGameTutorial extends AmuletGame {
   void onObjectiveSetEquipBow(AmuletPlayer player) =>
     runScript(player)
       .faceEachOther(player, guide)
-      .highlightAmuletItem(AmuletItem.Weapon_Bow_1_Common)
+      .highlightAmuletItem(AmuletItem.Weapon_Bow_Short)
       .talk(guide,
         'add the bow to the weapons rack by clicking the bow icon in the inventory.',
       );
@@ -711,7 +711,7 @@ class AmuletGameTutorial extends AmuletGame {
       .controlsDisabled()
       .cameraSetTarget(guide)
       .faceEachOther(player, guide)
-      .highlightAmuletItem(AmuletItem.Weapon_Bow_1_Common)
+      .highlightAmuletItem(AmuletItem.Weapon_Bow_Short)
       .talk(guide,
         'excellent.'
         'draw the bow by clicking the bow icon at the bottom of the screen'

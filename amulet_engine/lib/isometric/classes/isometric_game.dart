@@ -1595,7 +1595,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       return;
     }
 
-    if (weaponType == WeaponType.Bow) {
+    if (WeaponType.isBow(weaponType)) {
       dispatchGameEvent(
         GameEvent.Bow_Released,
         character.x,

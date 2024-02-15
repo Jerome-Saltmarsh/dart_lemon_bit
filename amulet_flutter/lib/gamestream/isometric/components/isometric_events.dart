@@ -480,20 +480,6 @@ class IsometricEvents with IsometricComponent {
     final itemType = parser.readUInt16();
     // todo read subtype
     if (itemType == WeaponType.Unarmed) return;
-
-    switch (itemType) {
-      // case WeaponType.Shortsword:
-      //   audio.sword_unsheathe();
-      //   break;
-      case WeaponType.Bow:
-        // audio.bow_draw();
-        // break;
-      default:
-        // if (ItemType.isTypeWeapon(itemType)){
-        //   audio.gun_pickup_01();
-        // }
-        break;
-    }
   }
 
   void onChangedPlayerActive(bool playerActive){
