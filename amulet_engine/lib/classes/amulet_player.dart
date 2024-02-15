@@ -1375,7 +1375,8 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   double get chanceOfCriticalDamage =>
-      totalCriticalHitPoints / AmuletSettings.Max_Critical_Hit_Points;
+      (totalCriticalHitPoints / AmuletSettings.Max_Critical_Hit_Points)
+          * AmuletSettings.Critical_Hit_Chance_Multiplier;
 
   int get totalCriticalHitPoints {
     var total = 0;
