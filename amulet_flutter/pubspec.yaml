@@ -1,4 +1,5 @@
 
+
 name: amulet_flutter
 description: gothic hack and slash rpg
 
@@ -165,13 +166,6 @@ flutter:
     - assets/sprites/isometric/fallen_armoured/shadow/
     - assets/sprites/isometric/fallen_armoured/south/
     - assets/sprites/isometric/fallen_armoured/west/
-    - assets/sprites/isometric/kid/diffuse/weapons/broadsword/
-    - assets/sprites/isometric/kid/south/weapons/broadsword/
-    - assets/sprites/isometric/kid/west/weapons/broadsword/
-    - assets/sprites/isometric/kid/diffuse/weapons/shortsword/
-    - assets/sprites/isometric/kid/diffuse/weapons/sword_heavy_sapphire/
-    - assets/sprites/isometric/kid/south/weapons/sword_heavy_sapphire/
-    - assets/sprites/isometric/kid/west/weapons/sword_heavy_sapphire/
     - assets/sprites/isometric/gargoyle/
     - assets/sprites/isometric/gargoyle/flat/
     - assets/sprites/isometric/gargoyle/south/
@@ -243,3 +237,12 @@ flutter:
     - assets/sprites/isometric/kid/diffuse/armor/mantle/
     - assets/sprites/isometric/kid/south/armor/mantle/
     - assets/sprites/isometric/kid/west/armor/mantle/
+    - assets/sprites/isometric/kid/diffuse/weapons/sword_broad/
+    - assets/sprites/isometric/kid/south/weapons/sword_broad/
+    - assets/sprites/isometric/kid/west/weapons/sword_broad/
+    - assets/sprites/isometric/kid/diffuse/weapons/sword_long/
+    - assets/sprites/isometric/kid/south/weapons/sword_long/
+    - assets/sprites/isometric/kid/west/weapons/sword_long/
+    - assets/sprites/isometric/kid/diffuse/weapons/sword_short/
+    - assets/sprites/isometric/kid/south/weapons/sword_short/
+    - assets/sprites/isometric/kid/west/weapons/sword_short/

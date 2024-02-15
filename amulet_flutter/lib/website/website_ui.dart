@@ -54,7 +54,8 @@ extension WebsiteUI on WebsiteGame {
                               // buildText('AMULET', size: 120),
                               Image.asset('assets/images/main_header.png'),
                               height32,
-                              // buildTogglePlayMode(),
+                              // if (options.developMode)
+                              //   buildTogglePlayMode(),
                               if (serverMode == ServerMode.local)
                                 buildState(builder: (context, rebuild) =>
                                     buildTableCharacters(

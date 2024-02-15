@@ -54,7 +54,6 @@ class AmuletPlayer extends IsometricPlayer with
   var npcName = '';
   var npcOptions = <TalkOption>[];
   var flags = <dynamic>[];
-
   var flaskAmount = 0;
 
   final sceneShrinesUsed = <AmuletScene, List<int>> {};
@@ -63,6 +62,7 @@ class AmuletPlayer extends IsometricPlayer with
   Position? cameraTarget;
   AmuletGame amuletGame;
   SlotType? activeSlotType;
+
 
   AmuletPlayer({
     required this.amuletGame,

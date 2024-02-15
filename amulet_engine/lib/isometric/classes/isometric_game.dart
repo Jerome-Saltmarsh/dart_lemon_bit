@@ -572,11 +572,11 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     final nodeType = scene.types[nodeIndex];
 
     if (!NodeType.isRainOrEmpty(nodeType)) {
-      character.applyForce(
-        force: 4.5,
-        angle: characterAngle + pi,
-      );
-      character.clampVelocity(Physics.Max_Velocity);
+      // character.applyForce(
+      //   force: 4.5,
+      //   angle: characterAngle + pi,
+      // );
+      // character.clampVelocity(Physics.Max_Velocity);
       attackHit = true;
       for (final player in players) {
         if (!player.withinRadiusEventDispatch(performX, performY)) continue;
@@ -2808,10 +2808,3 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
 }
 
-/// TODO ADD TO MATH LIBRARY
-double inverseProportion(num a, num b) {
-  if (b == 0) {
-    throw ArgumentError('Division by zero is not allowed');
-  }
-  return 1.0 - (a / b);
-}

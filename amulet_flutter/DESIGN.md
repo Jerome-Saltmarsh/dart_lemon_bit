@@ -1,16 +1,16 @@
 WEAPON
     BOW  
-        [x] SHORT 
-        [ ] COMPOSITE
-        [ ] REFLEX
+        [x] SHORT_BOW
+        [ ] COMPOSITE_BOW
+        [ ] LONG_BOW
     SWORD
-        [x] SHORT 
-        [ ] BROAD
-        [ ] LONG
+        [x] SHORT_SWORD
+        [ ] BROAD_SWORD
+        [ ] LONG_SWORD
     STAFF
-        [x] WOODEN
-        [ ] GLASS
-        [ ] CRYSTAL
+        [x] WAND
+        [ ] SHORT_STAFF
+        [ ] LONG_STAFF
     ARMOUR
         NEUTRAL
             [x] TUNIC

@@ -11,15 +11,16 @@ class IsometricEvents with IsometricComponent {
      // TODO show a dialog box asking the user to go fullscreen
   }
 
-  void onWeaponTypeEquipped(int attackType, double x, double y, double z) {
-    switch (attackType) {
-      case WeaponType.Shortsword:
-        audio.play(audio.sword_unsheathe, x, y, z);
-      case WeaponType.Bow:
-        audio.play(audio.bow_draw, x, y, z);
-        break;
-      default:
-        break;
+  void onWeaponTypeEquipped(int weaponType, double x, double y, double z) {
+
+    if (WeaponType.isSword(weaponType)){
+      audio.play(audio.sword_unsheathe, x, y, z);
+      return;
+    }
+
+    if (WeaponType.isBow(weaponType)){
+      audio.play(audio.bow_draw, x, y, z);
+      return;
     }
   }
 
@@ -163,14 +164,9 @@ class IsometricEvents with IsometricComponent {
         }
         break;
       case GameEvent.Attack_Missed:
-        final attackType = parser.readUInt16();
-        switch (attackType) {
-          case WeaponType.Unarmed:
-            audio.play(audio.arm_swing_whoosh_11, x, y, z);
-            break;
-          case WeaponType.Shortsword:
-            audio.play(audio.arm_swing_whoosh_11, x, y, z);
-            break;
+        final weaponType = parser.readUInt16();
+        if (WeaponType.isMelee(weaponType)){
+          audio.play(audio.arm_swing_whoosh_11, x, y, z);
         }
         break;
       case GameEvent.Teleport_Start:
@@ -469,15 +465,14 @@ class IsometricEvents with IsometricComponent {
   void onChangedPlayerWeapon(int weaponType){
     if (weaponType == WeaponType.Unarmed) return;
 
-    switch (weaponType) {
-      case WeaponType.Shortsword:
-        audio.sword_unsheathe();
-        break;
-      case WeaponType.Bow:
-        audio.bow_draw();
-        break;
-      default:
-        break;
+    if (WeaponType.isSword(weaponType)) {
+      audio.sword_unsheathe();
+      return;
+    }
+
+    if (WeaponType.isBow(weaponType)) {
+      audio.bow_draw();
+      return;
     }
   }
 
@@ -487,12 +482,12 @@ class IsometricEvents with IsometricComponent {
     if (itemType == WeaponType.Unarmed) return;
 
     switch (itemType) {
-      case WeaponType.Shortsword:
-        audio.sword_unsheathe();
-        break;
+      // case WeaponType.Shortsword:
+      //   audio.sword_unsheathe();
+      //   break;
       case WeaponType.Bow:
-        audio.bow_draw();
-        break;
+        // audio.bow_draw();
+        // break;
       default:
         // if (ItemType.isTypeWeapon(itemType)){
         //   audio.gun_pickup_01();

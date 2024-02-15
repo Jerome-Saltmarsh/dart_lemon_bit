@@ -2,48 +2,45 @@ import '../../src.dart';
 import 'package:collection/collection.dart';
 
 
-
 enum AmuletItem {
-  Weapon_Sword_1_Common(
+  Weapon_Sword_Short_Common(
       label: 'Short Sword',
       levelMin: 1,
       levelMax: 5,
       type: ItemType.Weapon,
-      subType: WeaponType.Shortsword,
+      subType: WeaponType.Sword_Short,
+      attackSpeed: AttackSpeed.Very_Fast,
+      range: WeaponRange.Very_Short,
+      damage: 3,
+      quality: ItemQuality.Common,
+      areaDamage: null,
+      criticalHitPoints: 2,
+  ),
+  Weapon_Sword_Broad_Common(
+      label: 'Broad Sword',
+      levelMin: 1,
+      levelMax: 5,
+      type: ItemType.Weapon,
+      subType: WeaponType.Sword_Broad,
       attackSpeed: AttackSpeed.Fast,
-      range: WeaponRange.Long,
+      range: WeaponRange.Short,
       damage: 3,
       quality: ItemQuality.Common,
       areaDamage: AreaDamage.Small,
       criticalHitPoints: 2,
   ),
-  Weapon_Sword_1_Rare(
-    label: "Sharpened Short Sword",
-    levelMin: 1,
-    levelMax: 5,
-    type: ItemType.Weapon,
-    subType: WeaponType.Shortsword,
-    skillType: SkillType.Strike,
-    attackSpeed: AttackSpeed.Fast,
-    range: WeaponRange.Short,
-    damage: 4,
-    quality: ItemQuality.Rare,
-    areaDamage: AreaDamage.Large,
-    criticalHitPoints: 4,
-  ),
-  Weapon_Sword_1_Legendary(
-    label: "Short Blade of Glen",
-    levelMin: 1,
-    levelMax: 5,
-    type: ItemType.Weapon,
-    subType: WeaponType.Shortsword,
-    skillType: SkillType.Mighty_Strike,
-    attackSpeed: AttackSpeed.Very_Fast,
-    range: WeaponRange.Short,
-    damage: 5,
-    quality: ItemQuality.Legendary,
-    areaDamage: AreaDamage.Very_Large,
-    criticalHitPoints: 6,
+  Weapon_Broad_Sword_Long_Common(
+      label: 'Long Sword',
+      levelMin: 1,
+      levelMax: 5,
+      type: ItemType.Weapon,
+      subType: WeaponType.Sword_Long,
+      attackSpeed: AttackSpeed.Slow,
+      range: WeaponRange.Long,
+      damage: 5,
+      quality: ItemQuality.Common,
+      areaDamage: AreaDamage.Large,
+      criticalHitPoints: 5,
   ),
   Weapon_Staff_1_Of_Frost(
     label: 'Staff of Frost',
@@ -92,10 +89,9 @@ enum AmuletItem {
     subType: WeaponType.Bow,
     skillType: SkillType.Split_Shot,
     attackSpeed: AttackSpeed.Fast,
-    range: WeaponRange.Short,
+    range: WeaponRange.Very_Short,
     damage: 2,
     quality: ItemQuality.Common,
-    criticalHitPoints: 2,
   ),
   Weapon_Bow_1_Rare(
     label: 'Rare Short Bow',
@@ -690,11 +686,16 @@ enum AmuletItem {
     total += masteryCaste;
     total += maxHealth ?? 0;
     total += maxMagic ?? 0;
+    total += criticalHitPoints;
+    total += areaDamage?.quantify ?? 0;
+    total += range?.quantify ?? 0;
     const pointsPerRegen = 5;
     total += (regenHealth ?? 0) * pointsPerRegen;
     total += (regenMagic ?? 0) * pointsPerRegen;
     return total;
   }
+
+
 
   static AmuletItem? findByName(String name) =>
       values.firstWhereOrNull((element) => element.name == name);
@@ -796,12 +797,14 @@ enum WeaponRange {
   final double melee;
   final double ranged;
   const WeaponRange({required this.melee, required this.ranged});
+
+  int get quantify => (index * 4).toInt();
 }
 
 enum AreaDamage {
-  Very_Small(value: 0),
-  Small(value: 0.33),
-  Large(value: 0.66),
+  Very_Small(value: 0.25),
+  Small(value: 0.50),
+  Large(value: 0.75),
   Very_Large(value: 1.0);
 
   final double value;
@@ -814,6 +817,10 @@ enum AreaDamage {
        return areaDamage;
      }
      return values.last;
+  }
+
+  int get quantify {
+    return (this.value * 6).toInt();
   }
 }
 

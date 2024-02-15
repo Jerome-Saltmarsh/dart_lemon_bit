@@ -1,14 +1,14 @@
 class WeaponType {
   static const Unarmed = 0;
-  static const Shortsword = 6;
-  static const Broadsword = 25;
-  static const Sword_Heavy_Sapphire = 26;
-  static const Bow = 7;
-  static const Staff = 15;
+  static const Sword_Short = 1;
+  static const Sword_Broad = 2;
+  static const Sword_Long = 3;
+  static const Sword_Claymore = 4;
+  static const Bow = 4;
+  static const Staff = 5;
 
-  static bool isMelee(int weaponType){
-    return valuesMelee.contains(weaponType);
-  }
+  static bool isMelee(int weaponType) =>
+      valuesMelee.contains(weaponType);
 
   static const valuesMelee = [
     ...valuesSwords,
@@ -20,9 +20,10 @@ class WeaponType {
   ];
 
   static const valuesSwords = [
-    Shortsword,
-    Broadsword,
-    Sword_Heavy_Sapphire,
+    Sword_Short,
+    Sword_Broad,
+    Sword_Long,
+    Sword_Claymore,
   ];
 
   static const valuesStaffs = [
@@ -42,9 +43,9 @@ class WeaponType {
 
   static String getName(int value) => const {
       Unarmed: 'unarmed',
-      Shortsword: 'Shortsword',
-      Broadsword: 'Broadsword',
-      Sword_Heavy_Sapphire: 'Sword_Heavy_Sapphire',
+      Sword_Short: 'sword_short',
+      Sword_Broad: 'sword_broad',
+      Sword_Long: 'sword_long',
       Bow: 'Bow',
       Staff: 'staff',
     }[value] ?? 'weapon-type-unknown-$value';
