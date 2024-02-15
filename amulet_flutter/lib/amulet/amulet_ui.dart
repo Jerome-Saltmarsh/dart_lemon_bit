@@ -927,7 +927,7 @@ class AmuletUI {
             width8,
             buildBars(
               total: 4,
-              value: value?.index ?? 0,
+              value: value?.index ?? -1,
             )
           ],
         ),
