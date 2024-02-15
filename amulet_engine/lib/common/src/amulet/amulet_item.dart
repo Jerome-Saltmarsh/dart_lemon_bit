@@ -3,7 +3,7 @@ import 'package:collection/collection.dart';
 
 
 enum AmuletItem {
-  Weapon_Sword_Short_Common(
+  Weapon_Sword_Short(
       label: 'Short Sword',
       levelMin: 1,
       levelMax: 5,
@@ -11,12 +11,12 @@ enum AmuletItem {
       subType: WeaponType.Sword_Short,
       attackSpeed: AttackSpeed.Very_Fast,
       range: WeaponRange.Very_Short,
+      areaDamage: AreaDamage.Very_Small,
       damage: 3,
       quality: ItemQuality.Common,
-      areaDamage: null,
       criticalHitPoints: 2,
   ),
-  Weapon_Sword_Broad_Common(
+  Weapon_Sword_Broad(
       label: 'Broad Sword',
       levelMin: 1,
       levelMax: 5,
@@ -24,12 +24,12 @@ enum AmuletItem {
       subType: WeaponType.Sword_Broad,
       attackSpeed: AttackSpeed.Fast,
       range: WeaponRange.Short,
+      areaDamage: AreaDamage.Small,
       damage: 3,
       quality: ItemQuality.Common,
-      areaDamage: AreaDamage.Small,
       criticalHitPoints: 2,
   ),
-  Weapon_Broad_Sword_Long_Common(
+  Weapon_Sword_Long(
       label: 'Long Sword',
       levelMin: 1,
       levelMax: 5,
@@ -37,9 +37,22 @@ enum AmuletItem {
       subType: WeaponType.Sword_Long,
       attackSpeed: AttackSpeed.Slow,
       range: WeaponRange.Long,
+      areaDamage: AreaDamage.Large,
       damage: 5,
       quality: ItemQuality.Common,
-      areaDamage: AreaDamage.Large,
+      criticalHitPoints: 5,
+  ),
+  Weapon_Sword_Giant(
+      label: 'Claymore',
+      levelMin: 1,
+      levelMax: 5,
+      type: ItemType.Weapon,
+      subType: WeaponType.Sword_Giant,
+      attackSpeed: AttackSpeed.Very_Slow,
+      range: WeaponRange.Very_Long,
+      areaDamage: AreaDamage.Very_Large,
+      damage: 8,
+      quality: ItemQuality.Common,
       criticalHitPoints: 5,
   ),
   Weapon_Staff_1_Of_Frost(

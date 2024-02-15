@@ -39,12 +39,13 @@ const _shoes_grieves = [srcx_shoes, 32.0];
 const _shoes_treads = [srcx_shoes, 96.0];
 
 const atlasSrcAmuletItem = <AmuletItem, List<double>> {
+  AmuletItem.Weapon_Sword_Short: _weapons_sword_short,
+  AmuletItem.Weapon_Sword_Broad: _weapons_sword_short,
+  AmuletItem.Weapon_Sword_Long: _weapons_sword_short,
+  AmuletItem.Weapon_Sword_Giant: _weapons_sword_short,
   AmuletItem.Weapon_Staff_1_Of_Fire: _weapons_staff_fire,
   AmuletItem.Weapon_Staff_1_Of_Frost: _weapons_staff_ice,
   AmuletItem.Weapon_Staff_1_Legendary: _weapons_staff_wooden,
-  AmuletItem.Weapon_Sword_Short_Common: _weapons_sword_short,
-  AmuletItem.Weapon_Sword_Broad_Common: _weapons_sword_short,
-  AmuletItem.Weapon_Broad_Sword_Long_Common: _weapons_sword_short,
   AmuletItem.Weapon_Bow_1_Common: _weapons_bow_short,
   AmuletItem.Weapon_Bow_1_Rare: _weapons_bow_short,
   AmuletItem.Weapon_Bow_1_Legendary: _weapons_bow_short,

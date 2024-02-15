@@ -3,9 +3,9 @@ class WeaponType {
   static const Sword_Short = 1;
   static const Sword_Broad = 2;
   static const Sword_Long = 3;
-  static const Sword_Claymore = 4;
-  static const Bow = 4;
-  static const Staff = 5;
+  static const Sword_Giant = 4;
+  static const Bow = 5;
+  static const Staff = 6;
 
   static bool isMelee(int weaponType) =>
       valuesMelee.contains(weaponType);
@@ -23,7 +23,7 @@ class WeaponType {
     Sword_Short,
     Sword_Broad,
     Sword_Long,
-    Sword_Claymore,
+    Sword_Giant,
   ];
 
   static const valuesStaffs = [
@@ -41,14 +41,18 @@ class WeaponType {
     ...valuesBows,
   ];
 
-  static String getName(int value) => const {
-      Unarmed: 'unarmed',
-      Sword_Short: 'sword_short',
-      Sword_Broad: 'sword_broad',
-      Sword_Long: 'sword_long',
-      Bow: 'Bow',
-      Staff: 'staff',
-    }[value] ?? 'weapon-type-unknown-$value';
+  static const names = {
+    Unarmed: 'unarmed',
+    Sword_Short: 'sword_short',
+    Sword_Broad: 'sword_broad',
+    Sword_Long: 'sword_long',
+    Sword_Giant: 'sword_giant',
+    Bow: 'Bow',
+    Staff: 'staff',
+  };
+
+  static String getName(int value) =>
+      names[value] ?? (throw Exception('WeaponType.getName($value)'));
 
   static bool isBow(int weaponType) => valuesBows.contains(weaponType);
 

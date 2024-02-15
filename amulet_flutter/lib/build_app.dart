@@ -75,6 +75,12 @@ Widget buildApp(){
 }
 
 void validateAmulet() {
+
+  for (final weaponType in WeaponType.values){
+    if (WeaponType.names.containsKey(weaponType)) continue;
+    throw Exception('validation exception. WeaponType.names[$weaponType] is null');
+  }
+
   for (final skillType in SkillType.values){
     if (!atlasSrcSkillType.containsKey(skillType)){
       throw Exception('atlasSrcSkillType[$skillType] == null');
