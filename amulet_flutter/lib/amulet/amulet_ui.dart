@@ -851,6 +851,16 @@ class AmuletUI {
               ],
             ),
           ),
+          Tooltip(
+            message: 'Critical Hit Points',
+            child: Row(
+              children: [
+                buildIconCriticalHitPoints(),
+                width8,
+                buildWatch(amulet.playerCriticalHitPoints, buildRowValue),
+              ],
+            ),
+          ),
           if (amulet.options.developMode)
           Tooltip(
             message: 'Player Perform Frame Velocity',
@@ -1165,6 +1175,8 @@ class AmuletUI {
       return nothing;
     }
 
+    final healthSteal = amuletItem.healthSteal;
+    final magicSteal = amuletItem.magicSteal;
     final damage = amuletItem.damage;
     final maxHealth = amuletItem.maxHealth;
     final maxMagic = amuletItem.maxMagic;
@@ -1180,6 +1192,7 @@ class AmuletUI {
     final masteryStaff = amuletItem.masteryStaff;
     final masteryBow = amuletItem.masteryBow;
     final masteryCaste = amuletItem.masteryCaste;
+    final criticalHitPoints = amuletItem.criticalHitPoints;
     final equippedItemType = amulet.getEquippedItemType(itemType);
 
     return GSContainer(
@@ -1226,6 +1239,12 @@ class AmuletUI {
             buildRow(buildIconAgility(), agility),
           if (skillType != null)
             buildRow(buildSkillTypeIcon(skillType), skillType.name.replaceAll('_', ' ')),
+          if (healthSteal > 0)
+            buildRow(buildIconHealthSteal(), healthSteal),
+          if (magicSteal > 0)
+            buildRow(buildIconMagicSteal(), magicSteal),
+          if (criticalHitPoints > 0)
+            buildRow(buildIconCriticalHitPoints(), criticalHitPoints),
           if (equippedItemType == amuletItem)
             Container(
                 margin: const EdgeInsets.only(top: 8),
@@ -1550,6 +1569,9 @@ class AmuletUI {
 
   Widget buildIconAreaDamage() =>
       AmuletImage(srcX: 768, srcY: 304, width: 16, height: 16);
+
+  Widget buildIconCriticalHitPoints() =>
+      AmuletImage(srcX: 768, srcY: 336, width: 16, height: 16);
 }
 
 String formatFramesToSeconds(int frames){

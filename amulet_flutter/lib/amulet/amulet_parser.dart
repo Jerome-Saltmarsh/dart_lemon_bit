@@ -153,6 +153,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Weapon_Attack_Speed:
          readPlayerWeaponAttackSpeed();
          break;
+       case NetworkResponseAmulet.Player_Critical_Hit_Points:
+         readPlayerCriticalHitPoints();
+         break;
        case NetworkResponseAmulet.Message:
          amulet.clearMessage();
          amulet.messages.addAll(readString().split('.').map((e) => e.trim()).toList(growable: false));
@@ -370,4 +373,7 @@ extension AmuletParser on IsometricParser {
   }
 
   int? tryReadInt() => readBool() ? readByte() : null;
+
+  void readPlayerCriticalHitPoints() =>
+      amulet.playerCriticalHitPoints.value = readByte();
 }

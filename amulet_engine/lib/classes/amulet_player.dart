@@ -440,6 +440,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeEquippedWeaponRange();
     writeEquippedWeaponAttackSpeed();
     writeEquippedWeaponAreaDamage();
+    writePlayerCriticalHitPoints();
   }
 
   void checkAssignedSkillTypes() {
@@ -1047,14 +1048,6 @@ class AmuletPlayer extends IsometricPlayer with
 
   int getSkillTypeDamageDivider(SkillType skillType, int divider){
 
-    if (const [
-      SkillType.Heal,
-      SkillType.Teleport,
-      SkillType.None,
-    ].contains(skillType)){
-      return 0;
-    }
-
     if (skillType == SkillType.Strike) {
       return equippedWeaponDamage + masterySword ~/ divider;
     }
@@ -1078,7 +1071,7 @@ class AmuletPlayer extends IsometricPlayer with
       case SkillType.Explode:
         return 10 + masteryStaff ~/ divider;
       default:
-        throw Exception('$skillType.damage unknown');
+        return 0;
     }
   }
 
@@ -1381,6 +1374,18 @@ class AmuletPlayer extends IsometricPlayer with
     return total;
   }
 
+  double get chanceOfCriticalDamage =>
+      totalCriticalHitPoints / AmuletSettings.Max_Critical_Hit_Points;
+
+  int get totalCriticalHitPoints {
+    var total = 0;
+    total += equippedWeapon?.criticalHitPoints ?? 0;
+    total += equippedHelm?.criticalHitPoints ?? 0;
+    total += equippedArmor?.criticalHitPoints ?? 0;
+    total += equippedShoes?.criticalHitPoints ?? 0;
+    return total.clamp(0, AmuletSettings.Max_Critical_Hit_Points);
+  }
+
   void writeEquippedWeaponAreaDamage() {
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Weapon_Area_Damage);
@@ -1396,6 +1401,12 @@ class AmuletPlayer extends IsometricPlayer with
     }
     writeTrue();
     writeByte(value);
+  }
+
+  void writePlayerCriticalHitPoints() {
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Player_Critical_Hit_Points);
+    writeByte(totalCriticalHitPoints);
   }
 }
 

@@ -15,6 +15,7 @@ enum AmuletItem {
       damage: 3,
       quality: ItemQuality.Common,
       areaDamage: AreaDamage.Small,
+      criticalHitPoints: 2,
   ),
   Weapon_Sword_1_Rare(
     label: "Sharpened Short Sword",
@@ -28,6 +29,7 @@ enum AmuletItem {
     damage: 4,
     quality: ItemQuality.Rare,
     areaDamage: AreaDamage.Large,
+    criticalHitPoints: 4,
   ),
   Weapon_Sword_1_Legendary(
     label: "Short Blade of Glen",
@@ -41,6 +43,7 @@ enum AmuletItem {
     damage: 5,
     quality: ItemQuality.Legendary,
     areaDamage: AreaDamage.Very_Large,
+    criticalHitPoints: 6,
   ),
   Weapon_Staff_1_Of_Frost(
     label: 'Staff of Frost',
@@ -53,6 +56,7 @@ enum AmuletItem {
     range: WeaponRange.Long,
     damage: 2,
     quality: ItemQuality.Rare,
+    criticalHitPoints: 2,
   ),
   Weapon_Staff_1_Of_Fire(
     label: 'Staff of Fire',
@@ -65,6 +69,7 @@ enum AmuletItem {
     range: WeaponRange.Long,
     damage: 3,
     quality: ItemQuality.Rare,
+    criticalHitPoints: 4,
   ),
   Weapon_Staff_1_Legendary(
     label: 'Wooden Staff',
@@ -77,6 +82,7 @@ enum AmuletItem {
     range: WeaponRange.Long,
     damage: 5,
     quality: ItemQuality.Legendary,
+    criticalHitPoints: 4,
   ),
   Weapon_Bow_1_Common(
     label: 'Common Short Bow',
@@ -89,6 +95,7 @@ enum AmuletItem {
     range: WeaponRange.Short,
     damage: 2,
     quality: ItemQuality.Common,
+    criticalHitPoints: 2,
   ),
   Weapon_Bow_1_Rare(
     label: 'Rare Short Bow',
@@ -101,6 +108,7 @@ enum AmuletItem {
     range: WeaponRange.Short,
     damage: 8,
     quality: ItemQuality.Rare,
+    criticalHitPoints: 4,
   ),
   Weapon_Bow_1_Legendary(
     label: "Ligon's Bow",
@@ -616,6 +624,7 @@ enum AmuletItem {
   final ItemQuality quality;
   final String label;
   final AreaDamage? areaDamage;
+  final int criticalHitPoints;
   final int? maxHealth;
   final int? maxMagic;
   final int? regenMagic;
@@ -652,6 +661,7 @@ enum AmuletItem {
     this.masterySword = 0,
     this.magicSteal = 0,
     this.healthSteal = 0,
+    this.criticalHitPoints = 0,
   });
 
   bool get isWeapon => type == ItemType.Weapon;

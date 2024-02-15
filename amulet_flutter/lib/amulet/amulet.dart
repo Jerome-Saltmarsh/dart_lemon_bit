@@ -63,6 +63,7 @@ class Amulet extends IsometricGame {
 
   final playerRegenMagic = Watch(0);
   final playerRegenHealth = Watch(0);
+  final playerCriticalHitPoints = Watch(0);
 
   final playerWeaponDamageMin = Watch(0);
   final playerWeaponDamageMax = Watch(0);

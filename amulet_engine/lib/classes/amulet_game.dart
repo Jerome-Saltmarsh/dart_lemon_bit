@@ -407,6 +407,36 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       return 0;
   }
 
+  @override
+  void applyHit({
+    required Character srcCharacter,
+    required Collider target,
+    required int damage,
+    required DamageType damageType,
+    required int ailmentDuration,
+    required int ailmentDamage,
+    double? angle,
+    bool friendlyFire = false,
+  }) {
+    var damageMultiplier = 1.0;
+    if (
+      srcCharacter is AmuletPlayer &&
+      randomChance(srcCharacter.chanceOfCriticalDamage)
+    ) {
+      damageMultiplier = AmuletSettings.Critical_Hit_Damage_Multiplier;
+    }
+    super.applyHit(
+        srcCharacter: srcCharacter,
+        target: target,
+        damage: (damage * damageMultiplier).toInt(),
+        damageType: damageType,
+        ailmentDuration: ailmentDuration,
+        ailmentDamage: ailmentDamage,
+        angle: angle,
+        friendlyFire: friendlyFire,
+    );
+  }
+
   void characterPerformSkillTypeStrike(Character character) {
 
     applyHitMelee(
