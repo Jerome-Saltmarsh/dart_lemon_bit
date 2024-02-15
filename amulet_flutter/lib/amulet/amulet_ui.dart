@@ -903,7 +903,7 @@ class AmuletUI {
           width8,
           buildBars(
             total: 4,
-            value: weaponRange ?? 0,
+            value: weaponRange ?? -1,
           )
         ],
       );
