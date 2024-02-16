@@ -9,7 +9,7 @@ class SkillTypeStats {
   var damageMin = 0;
   var damageMax = 0;
   var range = 0;
-  var performDuration = 0;
+  // var performDuration = 0;
   var amount = 0;
   SkillTypeStats({required this.skillType});
 }

@@ -14,7 +14,7 @@ class AmuletNpcWitch extends AmuletNpc {
     required super.z,
   }) : super(
     health: 30,
-    weaponType: WeaponType.Staff,
+    weaponType: WeaponType.Staff_Scepter,
     attackRange: 50,
     attackDamage: 5,
     team: TeamType.Evil,

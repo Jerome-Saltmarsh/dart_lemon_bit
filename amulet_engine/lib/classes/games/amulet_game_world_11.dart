@@ -179,7 +179,7 @@ class AmuletGameWorld11 extends AmuletGame {
       ..autoTarget = false
       ..armorType = ArmorType.Leather
       ..shoeType = ShoeType.Leather_Boots
-      ..weaponType = WeaponType.Staff
+      ..weaponType = WeaponType.Staff_Scepter
       ..gender = Gender.male
       ..interact = onInteractWithTraveller
       ..complexion = 10;

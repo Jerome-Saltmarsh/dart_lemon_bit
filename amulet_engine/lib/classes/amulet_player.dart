@@ -727,68 +727,76 @@ class AmuletPlayer extends IsometricPlayer with
 
   @override
   void attack() {
-
-    if (deadInactiveOrBusy) {
-      return;
-    }
-
-    if (skillActive == SkillType.None){
-      return;
-    }
-
-    final performDuration = getSkillTypePerformDuration(skillActive);
-    final magicCost = getSkillTypeMagicCost(skillActive);
-    if (magicCost > magic) {
-      writeGameError(GameError.Insufficient_Magic);
-      clearTarget();
+    if (deadInactiveOrBusy || skillActive == SkillType.None) {
       return;
     }
 
     switch (skillActive.casteType) {
-      case CasteType.Caste:
-        setCharacterStateCasting(
-          duration: performDuration
-        );
-        break;
       case CasteType.Bow:
-        if (!equippedWeaponBow){
+        if (!equippedWeaponBow) {
           writeGameError(GameError.Bow_Required);
           return;
         }
-        setCharacterStateFire(
-            duration: performDuration
-        );
         break;
       case CasteType.Staff:
         if (!equippedWeaponStaff) {
           writeGameError(GameError.Staff_Required);
           return;
         }
-        setCharacterStateStriking(
-          duration: performDuration
-        );
         break;
       case CasteType.Sword:
         if (!equippedWeaponSword) {
           writeGameError(GameError.Sword_Required);
           return;
         }
-        setCharacterStateStriking(
-          duration: performDuration
-        );
         break;
       case CasteType.Melee:
         if (!equippedWeaponMelee) {
           writeGameError(GameError.Melee_Weapon_Required);
           return;
         }
-        setCharacterStateStriking(
-          duration: performDuration
-        );
+        break;
+      default:
         break;
     }
 
-    magic -= magicCost;
+    final magicCost = getSkillTypeMagicCost(skillActive);
+    if (magicCost > magic) {
+      writeGameError(GameError.Insufficient_Magic);
+      clearTarget();
+      return;
+
+      magic -= magicCost;
+      final performDuration = getSkillTypePerformDuration(skillActive);
+
+      switch (skillActive.casteType) {
+        case CasteType.Caste:
+          setCharacterStateCasting(
+              duration: performDuration
+          );
+          break;
+        case CasteType.Bow:
+          setCharacterStateFire(
+              duration: performDuration
+          );
+          break;
+        case CasteType.Staff:
+          setCharacterStateStriking(
+              duration: performDuration
+          );
+          break;
+        case CasteType.Sword:
+          setCharacterStateStriking(
+              duration: performDuration
+          );
+          break;
+        case CasteType.Melee:
+          setCharacterStateStriking(
+              duration: performDuration
+          );
+          break;
+      }
+    }
   }
 
   writeHighlightAmuletItems(AmuletItem amuletItem){
@@ -1136,7 +1144,7 @@ class AmuletPlayer extends IsometricPlayer with
       writeUInt16(getSkillTypeDamageMin(skillType));
       writeUInt16(getSkillTypeDamageMax(skillType));
       writeUInt16((getSkillTypeRange(skillType) ?? 0).toInt());
-      writeUInt16(getSkillTypePerformDuration(skillType).toInt());
+      // writeUInt16(getSkillTypePerformDuration(skillType).toInt());
       writeUInt16(getSkillTypeAmount(skillType).toInt());
     }
   }

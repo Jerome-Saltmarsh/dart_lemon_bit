@@ -262,3 +262,6 @@ flutter:
     - assets/sprites/isometric/kid/west/weapons/bow_long/
     - assets/sprites/isometric/kid/west/weapons/bow_reflex/
     - assets/sprites/isometric/kid/west/weapons/bow_short/
+    - assets/sprites/isometric/kid/diffuse/weapons/staff_wand/
+    - assets/sprites/isometric/kid/south/weapons/staff_wand/
+    - assets/sprites/isometric/kid/west/weapons/staff_wand/

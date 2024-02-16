@@ -323,7 +323,7 @@ extension AmuletParser on IsometricParser {
        skillTypeStat.damageMin = readUInt16();
        skillTypeStat.damageMax = readUInt16();
        skillTypeStat.range = readUInt16();
-       skillTypeStat.performDuration = readUInt16();
+       // skillTypeStat.performDuration = readUInt16();
        skillTypeStat.amount = readUInt16();
     }
     amulet.playerSkillTypeStatsNotifier.value++;

@@ -8,7 +8,10 @@ class WeaponType {
   static const Bow_Reflex = 6;
   static const Bow_Composite = 7;
   static const Bow_Long = 8;
-  static const Staff = 9;
+  static const Staff_Wand = 9;
+  static const Staff_Broom = 10;
+  static const Staff_Scepter = 11;
+  static const Staff_Long = 12;
 
   static bool isMelee(int weaponType) =>
       valuesMelee.contains(weaponType);
@@ -33,7 +36,7 @@ class WeaponType {
   ];
 
   static const valuesStaffs = [
-    Staff
+    Staff_Scepter
   ];
 
   static const values = [
@@ -57,7 +60,10 @@ class WeaponType {
     Bow_Composite: 'bow_composite',
     Bow_Reflex: 'bow_reflex',
     Bow_Long: 'bow_long',
-    Staff: 'staff',
+    Staff_Wand: 'staff_wand',
+    Staff_Broom: 'staff_broom',
+    Staff_Scepter: 'staff_scepter',
+    Staff_Long: 'staff_long',
   };
 
   static String getName(int value) =>
