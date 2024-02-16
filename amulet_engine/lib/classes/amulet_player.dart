@@ -765,37 +765,27 @@ class AmuletPlayer extends IsometricPlayer with
       writeGameError(GameError.Insufficient_Magic);
       clearTarget();
       return;
+    }
 
-      magic -= magicCost;
-      final performDuration = getSkillTypePerformDuration(skillActive);
+    magic -= magicCost;
+    final performDuration = getSkillTypePerformDuration(skillActive);
 
-      switch (skillActive.casteType) {
-        case CasteType.Caste:
-          setCharacterStateCasting(
-              duration: performDuration
-          );
-          break;
-        case CasteType.Bow:
-          setCharacterStateFire(
-              duration: performDuration
-          );
-          break;
-        case CasteType.Staff:
-          setCharacterStateStriking(
-              duration: performDuration
-          );
-          break;
-        case CasteType.Sword:
-          setCharacterStateStriking(
-              duration: performDuration
-          );
-          break;
-        case CasteType.Melee:
-          setCharacterStateStriking(
-              duration: performDuration
-          );
-          break;
-      }
+    switch (skillActive.casteType) {
+      case CasteType.Caste:
+        setCharacterStateCasting(duration: performDuration);
+        break;
+      case CasteType.Bow:
+        setCharacterStateFire(duration: performDuration);
+        break;
+      case CasteType.Staff:
+        setCharacterStateStriking(duration: performDuration);
+        break;
+      case CasteType.Sword:
+        setCharacterStateStriking(duration: performDuration);
+        break;
+      case CasteType.Melee:
+        setCharacterStateStriking(duration: performDuration);
+        break;
     }
   }
 
