@@ -10,11 +10,14 @@ const srcx_armor = 192.0;
 const srcx_armor_rogue = 256.0;
 const srcx_shoes = 224.0;
 
-const _weapons_staff_wooden = [srcx_weapon_staff, 0.0];
+const _weapons_sword_short = [srcx_weapon_sword, 0.0];
+const _weapons_sword_broad = [srcx_weapon_sword, 32.0];
+const _weapons_sword_long = [srcx_weapon_sword, 64.0];
+const _weapons_sword_giant = [srcx_weapon_sword, 96.0];
+const _weapons_bow_short = [srcx_weapon_bow, 0.0];
+const _weapons_staff_wand = [srcx_weapon_staff, 96.0];
 const _weapons_staff_ice = [srcx_weapon_staff, 32.0];
 const _weapons_staff_fire = [srcx_weapon_staff, 64.0];
-const _weapons_sword_short = [srcx_weapon_sword, 0.0];
-const _weapons_bow_short = [srcx_weapon_bow, 0.0];
 const _helms_pointed_hat_purple = [srcx_helm, 32.0];
 const _helms_pointed_hat_black = [srcx_helm, 64.0];
 const _helms_leather_cap = [srcx_helm, 0.0];
@@ -40,10 +43,10 @@ const _shoes_treads = [srcx_shoes, 96.0];
 
 const atlasSrcAmuletItem = <AmuletItem, List<double>> {
   AmuletItem.Weapon_Sword_Short: _weapons_sword_short,
-  AmuletItem.Weapon_Sword_Broad: _weapons_sword_short,
-  AmuletItem.Weapon_Sword_Long: _weapons_sword_short,
-  AmuletItem.Weapon_Sword_Giant: _weapons_sword_short,
-  AmuletItem.Weapon_Staff_Wand: _weapons_staff_fire,
+  AmuletItem.Weapon_Sword_Broad: _weapons_sword_broad,
+  AmuletItem.Weapon_Sword_Long: _weapons_sword_long,
+  AmuletItem.Weapon_Sword_Giant: _weapons_sword_giant,
+  AmuletItem.Weapon_Staff_Wand: _weapons_staff_wand,
   AmuletItem.Weapon_Bow_Short: _weapons_bow_short,
   AmuletItem.Weapon_Bow_Reflex: _weapons_bow_short,
   AmuletItem.Weapon_Bow_Composite: _weapons_bow_short,

@@ -7,10 +7,16 @@ WEAPON
         [x] SHORT_SWORD
         [ ] BROAD_SWORD
         [ ] LONG_SWORD
-    STAFF
-        [x] WAND
-        [ ] SHORT_STAFF
-        [ ] LONG_STAFF
+    ARCANE
+        VERY_SHORT
+            [x] WAND
+        SHORT
+            [ ] SCEPTER
+            [ ] SHORT_STAFF
+        LONG
+            [ ] BROOM
+        VERY_LONG
+            [ ] LONG_STAFF
     ARMOUR
         NEUTRAL
             [x] TUNIC

@@ -36,7 +36,10 @@ class WeaponType {
   ];
 
   static const valuesStaffs = [
-    Staff_Scepter
+    Staff_Wand,
+    Staff_Broom,
+    Staff_Scepter,
+    Staff_Long,
   ];
 
   static const values = [
