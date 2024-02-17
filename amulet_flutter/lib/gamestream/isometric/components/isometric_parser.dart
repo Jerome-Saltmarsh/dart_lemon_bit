@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'package:amulet_engine/common.dart';
 import 'package:amulet_flutter/amulet/classes/item_slot.dart';
 import 'package:amulet_flutter/gamestream/isometric/enums/emission_type.dart';
-import 'package:lemon_bits/src.dart';
+import 'package:lemon_bit/src.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:archive/archive.dart';

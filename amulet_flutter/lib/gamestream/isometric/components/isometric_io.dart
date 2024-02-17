@@ -4,7 +4,7 @@ import 'package:amulet_flutter/isometric/functions/get_render.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:amulet_flutter/packages/lemon_components/src.dart';
 import 'package:flutter/services.dart';
-import 'package:lemon_bits/src.dart';
+import 'package:lemon_bit/src.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_watch/src.dart';
 import 'classes/touch_controller.dart';

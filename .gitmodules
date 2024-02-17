@@ -1,3 +1,6 @@
+[submodule "tools/lemon_bit"]
+	path = tools/lemon_bit
+	url = git@github.com:Jerome-Saltmarsh/dart_lemon_bit.git
 [submodule "tools/lemon_byte"]
 	path = tools/lemon_byte
 	url = git@github.com:Jerome-Saltmarsh/dart-lemon-byte.git

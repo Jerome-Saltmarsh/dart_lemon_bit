@@ -3,7 +3,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:amulet_engine/isometric/consts/frames_per_second.dart';
-import 'package:lemon_bits/src.dart';
+import 'package:lemon_bit/src.dart';
 import 'package:lemon_byte/src.dart';
 import 'package:lemon_math/src.dart';
 

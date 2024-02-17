@@ -49,8 +49,8 @@ dependencies:
     path: ..\tools\lemon_byte
   lemon_math:
     path: ..\tools\lemon_math
-  lemon_bits:
-     path: ..\tools\lemon_bits
+  lemon_bit:
+     path: ..\tools\lemon_bit
   gamestream_http_client:
     path: ..\gamestream_http_client
   lemon_json:

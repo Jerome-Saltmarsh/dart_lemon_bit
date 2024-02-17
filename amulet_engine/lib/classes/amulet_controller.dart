@@ -1,7 +1,7 @@
 
 import 'dart:typed_data';
 
-import 'package:lemon_bits/src.dart';
+import 'package:lemon_bit/src.dart';
 import 'package:lemon_byte/src.dart';
 import 'package:lemon_math/src.dart';
 

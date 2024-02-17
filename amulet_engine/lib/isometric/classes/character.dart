@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:amulet_engine/isometric/consts/caste_action_frame_percentage.dart';
 import 'package:amulet_engine/isometric/consts/fire_action_frame_percentage.dart';
-import 'package:lemon_bits/src.dart';
+import 'package:lemon_bit/src.dart';
 import 'package:lemon_math/src.dart';
 
 import '../../common/src.dart';

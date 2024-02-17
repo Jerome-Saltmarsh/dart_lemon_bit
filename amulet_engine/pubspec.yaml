@@ -10,8 +10,8 @@ dependencies:
   archive: ^3.4.9
   uuid: ^4.1.0
 
-  lemon_bits:
-    path: ..\tools\lemon_bits
+  lemon_bit:
+    path: ..\tools\lemon_bit
   lemon_byte:
     path: ..\tools\lemon_byte
   lemon_math:
