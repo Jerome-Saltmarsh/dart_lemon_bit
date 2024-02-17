@@ -1,6 +1,7 @@
 
 
 
+
 name: amulet_flutter
 description: gothic hack and slash rpg
 
@@ -262,3 +263,6 @@ flutter:
     - assets/sprites/isometric/kid/diffuse/weapons/staff_wand/
     - assets/sprites/isometric/kid/south/weapons/staff_wand/
     - assets/sprites/isometric/kid/west/weapons/staff_wand/
+    - assets/sprites/isometric/kid/diffuse/weapons/staff_globe/
+    - assets/sprites/isometric/kid/south/weapons/staff_globe/
+    - assets/sprites/isometric/kid/west/weapons/staff_globe/

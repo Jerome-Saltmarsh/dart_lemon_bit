@@ -9,7 +9,7 @@ class WeaponType {
   static const Bow_Composite = 7;
   static const Bow_Long = 8;
   static const Staff_Wand = 9;
-  static const Staff_Broom = 10;
+  static const Staff_Globe = 10;
   static const Staff_Scepter = 11;
   static const Staff_Long = 12;
 
@@ -37,7 +37,7 @@ class WeaponType {
 
   static const valuesStaffs = [
     Staff_Wand,
-    Staff_Broom,
+    Staff_Globe,
     Staff_Scepter,
     Staff_Long,
   ];
@@ -64,7 +64,7 @@ class WeaponType {
     Bow_Reflex: 'bow_reflex',
     Bow_Long: 'bow_long',
     Staff_Wand: 'staff_wand',
-    Staff_Broom: 'staff_broom',
+    Staff_Globe: 'staff_globe',
     Staff_Scepter: 'staff_scepter',
     Staff_Long: 'staff_long',
   };
