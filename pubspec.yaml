@@ -1,0 +1,14 @@
+name: lemon_bit
+description: a utility library for read and writing bits
+version: 1.0.0
+repository: https://github.com/Jerome-Saltmarsh/dart_lemon_bit
+
+environment:
+  sdk: ^3.1.5
+
+# Add regular dependencies here.
+dependencies:
+  # path: ^1.8.0
+
+dev_dependencies:
+  lints: ^2.0.0
