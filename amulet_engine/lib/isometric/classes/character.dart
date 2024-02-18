@@ -25,19 +25,22 @@ class Character extends Collider {
   var _maxHealth = 1;
   var _goal = CharacterGoal.Idle;
 
-  var ailmentColdDuration = 0;
-  var ailmentBurningDamage = 0;
-  var ailmentBurningDuration = 0;
-  var ailmentBurningRadius = 50.0;
+  var conditionColdDuration = 0;
+  var conditionBurningDamage = 0;
+  var conditionBurningDuration = 0;
+  var conditionBurningRadius = 50.0;
+  var conditionBlindDuration = 0;
+
   Character? ailmentBurningSrc;
 
-  bool get isAilmentCold => ailmentColdDuration > 0;
+  bool get conditionIsCold => conditionColdDuration > 0;
 
-  bool get isAilmentBurning => ailmentBurningDuration > 0;
+  bool get conditionIsBurning => conditionBurningDuration > 0;
+
+  bool get conditionIsBlind => conditionBlindDuration > 0;
 
   /// in seconds
   var respawnDurationTotal = (60 * 3);
-  // var respawnDurationTotal = 20;
   var gender = Gender.female;
   var headType = HeadType.boy;
   var shoeType = ShoeType.None;
@@ -358,15 +361,19 @@ class Character extends Collider {
   }
 
   void updateAilments() {
-     if (ailmentColdDuration > 0) {
-      ailmentColdDuration--;
+     if (conditionColdDuration > 0) {
+      conditionColdDuration--;
     }
 
-    if (ailmentBurningDuration > 0) {
-      ailmentBurningDuration--;
-      if (ailmentBurningDuration == 0){
+    if (conditionBurningDuration > 0) {
+      conditionBurningDuration--;
+      if (conditionBurningDuration == 0){
         ailmentBurningSrc = null;
       }
+    }
+
+    if (conditionBlindDuration > 0){
+      conditionBlindDuration--;
     }
   }
 
@@ -640,16 +647,24 @@ class Character extends Collider {
 
   int get characterTypeAndTeam => characterType | team << 6;
 
-  int get compressedAilments {
-    return writeBits(isAilmentCold, isAilmentBurning, false, false, false, false, false, false);
-  }
+  int get compressedAilments =>
+      writeBits(
+          conditionIsCold,
+          conditionIsBurning,
+          conditionIsBlind,
+          false,
+          false,
+          false,
+          false,
+          false,
+      );
 
   void applyFrameVelocity() {
     frame += frameVelocity * getAilmentVelocity();
   }
 
   double getAilmentVelocity(){
-     if (isAilmentCold) {
+     if (conditionIsCold) {
        return 0.5;
      }
      return 1.0;

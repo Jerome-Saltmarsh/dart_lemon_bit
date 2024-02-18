@@ -1,11 +1,15 @@
 
-
 import '../common/src.dart';
 import '../isometric/src.dart';
+
+// wolves: blind
+// shaman: heal, revive, fireball
+
 
 class AmuletFiend extends Character {
 
   FiendType fiendType;
+  SkillType? activeSkillType;
 
   AmuletFiend({
     required super.x,
@@ -26,19 +30,17 @@ class AmuletFiend extends Character {
   }
 
   void onFiendTypeChanged(){
-    maxHealth = fiendType.health;
     health = maxHealth;
-    name = fiendType.name;
-    attackDamage = fiendType.damage;
-    attackDuration = fiendType.attackDuration;
-    runSpeed = fiendType.runSpeed;
-    chanceOfSetTarget = fiendType.chanceOfSetTarget;
-    attackRange = fiendType.weaponRange;
-    characterType = fiendType.characterType;
   }
 
   @override
   int get characterType => fiendType.characterType;
+
+  @override
+  int get attackDamage => fiendType.damage;
+
+  @override
+  int get attackDuration => fiendType.attackDuration;
 
   @override
   double get attackRange => fiendType.weaponRange;
@@ -50,10 +52,13 @@ class AmuletFiend extends Character {
   int get maxHealth => fiendType.health;
 
   @override
-  double get runSpeed => super.runSpeed * (isAilmentCold ? 0.5 : 1.0);
+  double get runSpeed => fiendType.runSpeed * (conditionIsCold ? 0.5 : 1.0);
 
   @override
   bool get collidable => alive;
+
+  @override
+  double get chanceOfSetTarget => fiendType.chanceOfSetTarget;
 
   @override
   void attack() {
@@ -62,4 +67,5 @@ class AmuletFiend extends Character {
       duration: attackDuration, // TODO
     );
   }
+
 }

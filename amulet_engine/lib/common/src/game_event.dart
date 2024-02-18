@@ -10,7 +10,7 @@ class GameEvent {
   static const Game_Object_Destroyed    = 65;
   static const Weapon_Type_Equipped     = 69;
   static const Node_Struck              = 70;
-  static const Attack_Missed            = 71;
+  static const Attack_Hit_Nothing       = 71;
   static const AI_Target_Acquired       = 72;
   static const Explosion                = 75;
   static const Bullet_Deactivated       = 76;
@@ -32,4 +32,5 @@ class GameEvent {
   static const Health_Regained = 97;
   static const Magic_Regained = 98;
   static const Shrine_Used = 99;
+  static const Attack_Missed = 100;
 }

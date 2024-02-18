@@ -449,7 +449,6 @@ class IsometricPlayer extends Character with ByteWriter {
       final diffZChangeType = ChangeType.fromDiff(diffZ);
 
       final characterCompressedAilments = character.compressedAilments;
-
       final changedCharacterAilments = characterCompressedAilments != cacheAilments[cacheIndex];
       final changedCharacterTypeTeam = character.characterTypeAndTeam != cacheCharacterTypeAndTeam[cacheIndex];
       final changedCharacterState = character.characterState != cacheCharacterState[cacheIndex];

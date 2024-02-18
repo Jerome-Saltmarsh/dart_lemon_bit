@@ -36,6 +36,8 @@ class Character extends Position {
 
   bool get isAilmentBurning => readBitFromByte(ailments, 1);
 
+  bool get isAilmentBlind => readBitFromByte(ailments, 2);
+
   bool get dead => state == CharacterState.Dead;
 
   bool get spawning => state == CharacterState.Spawning;

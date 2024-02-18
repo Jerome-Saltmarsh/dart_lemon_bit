@@ -442,7 +442,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     );
 
     if (damage <= 0) {
-      dispatchAttackMissed(
+      dispatchAttackHitNothing(
         character.x,
         character.y,
         character.z,
@@ -572,11 +572,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     final nodeType = scene.types[nodeIndex];
 
     if (!NodeType.isRainOrEmpty(nodeType)) {
-      // character.applyForce(
-      //   force: 4.5,
-      //   angle: characterAngle + pi,
-      // );
-      // character.clampVelocity(Physics.Max_Velocity);
       attackHit = true;
       for (final player in players) {
         if (!player.withinRadiusEventDispatch(performX, performY)) continue;
@@ -595,7 +590,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
 
     if (attackHit) return;
-    dispatchAttackMissed(
+    dispatchAttackHitNothing(
       performX,
       performY,
       performZ,
@@ -603,7 +598,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     );
   }
 
-  void dispatchAttackMissed(
+  void dispatchAttackHitNothing(
       double performX,
       double performY,
       double performZ,
@@ -612,7 +607,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     for (final player in players) {
       if (!player.withinRadiusEventDispatch(performX, performY)) continue;
       player.writeGameEvent(
-        type: GameEvent.Attack_Missed,
+        type: GameEvent.Attack_Hit_Nothing,
         x: performX,
         y: performY,
         z: performZ,
@@ -991,12 +986,12 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     } else {
       if (ailmentDuration > 0){
         if (damageType == DamageType.Ice) {
-          target.ailmentColdDuration += ailmentDuration;
+          target.conditionColdDuration += ailmentDuration;
         }
         if (damageType == DamageType.Fire) {
-          target.ailmentBurningDuration += ailmentDuration;
+          target.conditionBurningDuration += ailmentDuration;
           target.ailmentBurningSrc = src;
-          target.ailmentBurningDamage = ailmentDamage;
+          target.conditionBurningDamage = ailmentDamage;
         }
       }
     }
@@ -1231,7 +1226,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
     dispatchGameEventCharacterDeath(character);
     character.health = 0;
-    character.ailmentColdDuration = 0;
+    character.conditionColdDuration = 0;
     character.characterState = CharacterState.Dead;
     character.actionDuration = 0;
     character.physical = false;
@@ -1427,17 +1422,19 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required int ailmentDuration,
     required int ailmentDamage,
     double? angle,
+    double force = 0,
     bool friendlyFire = false,
   }) {
     if (!target.hitable) return;
     if (!target.active) return;
 
-    angle ??= target.getAngle(srcCharacter);
+    if (force > 0) {
+      target.applyForce(
+        force: force,
+        angle: angle ?? target.getAngle(srcCharacter),
+      );
+    }
 
-    target.applyForce(
-      force: srcCharacter.weaponHitForce,
-      angle: angle,
-    );
 
     target.clampVelocity(Physics.Max_Velocity);
 
@@ -1488,16 +1485,16 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       return;
     }
 
-    if (character.isAilmentBurning) {
+    if (character.conditionIsBurning) {
        if (frame % fps == 0) {
-         final burnRadius = character.ailmentBurningRadius;
+         final burnRadius = character.conditionBurningRadius;
          final src = character.ailmentBurningSrc ?? (throw Exception('character.ailmentBurningSrc is null'));
          for (final otherCharacter in characters) {
            if (!otherCharacter.withinRadiusPosition(character, burnRadius)) continue;
            applyDamageToCharacter(
              src: src,
              target: character,
-             amount: character.ailmentBurningDamage,
+             amount: character.conditionBurningDamage,
              damageType: DamageType.Fire,
              ailmentDuration: 0,
              ailmentDamage: 0,

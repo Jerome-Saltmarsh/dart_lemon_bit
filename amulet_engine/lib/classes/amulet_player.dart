@@ -16,6 +16,7 @@ import 'talk_option.dart';
 import '../isometric/src.dart';
 
 
+
 class AmuletPlayer extends IsometricPlayer with
     Equipped,
     Skilled,
@@ -86,7 +87,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeInteracting();
     writeGender();
     writePlayerComplexion();
-    setFlaskAmount(AmuletSettings.Flask_Capacity);
+    setFlaskAmount(AmuletSettings.Max_Flask);
   }
 
   AttackSpeed? get equippedWeaponAttackSpeed =>
@@ -1220,8 +1221,8 @@ class AmuletPlayer extends IsometricPlayer with
   int getSkillTypeAmount(SkillType skillType) {
     switch (skillType) {
       case SkillType.Split_Shot:
-        return AmuletSettings.Skill_Type_Split_Shot_Base_Amount +
-            (masteryBow * AmuletSettings.Skill_Type_Split_Shot_Amount_Ratio).toInt();
+        return AmuletSettings.Amount_Skill_Type_Split_Shot_Base +
+            (masteryBow * AmuletSettings.Ratio_Skill_Type_Split_Shot_Amount).toInt();
       case SkillType.Heal:
         return 5 + (masteryCaste * 2);
       default:
@@ -1282,19 +1283,19 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   void setFlaskAmount(int value){
-    flaskAmount = clamp(value, 0, AmuletSettings.Flask_Capacity);
+    flaskAmount = clamp(value, 0, AmuletSettings.Max_Flask);
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Flask_Percentage);
-    writePercentage(flaskAmount / AmuletSettings.Flask_Capacity);
+    writePercentage(flaskAmount / AmuletSettings.Max_Flask);
   }
 
   void incrementFlask() {
-    if (flaskAmount >= AmuletSettings.Flask_Capacity) return;
+    if (flaskAmount >= AmuletSettings.Max_Flask) return;
     setFlaskAmount(flaskAmount + 1);
   }
 
   void useFlask() {
-    if (flaskAmount < AmuletSettings.Flask_Capacity) {
+    if (flaskAmount < AmuletSettings.Max_Flask) {
       writeGameError(GameError.Flask_Not_Ready);
       return;
     }
@@ -1313,7 +1314,7 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   double get performFrameVelocity =>
-      super.frameVelocity + (agility * AmuletSettings.Frame_Velocity_Agility_Ratio);
+      super.frameVelocity + (agility * AmuletSettings.Ratio_Frame_Velocity_Agility);
 
   void writePerformFrameVelocity() {
     final frameVelocity = performFrameVelocity;
@@ -1373,8 +1374,7 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   double get chanceOfCriticalDamage =>
-      (totalCriticalHitPoints / AmuletSettings.Max_Critical_Hit_Points)
-          * AmuletSettings.Critical_Hit_Chance_Multiplier;
+      totalCriticalHitPoints / AmuletSettings.Max_Critical_Hit_Points;
 
   int get totalCriticalHitPoints {
     var total = 0;

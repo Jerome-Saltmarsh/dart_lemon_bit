@@ -121,7 +121,7 @@ enum SkillType {
       magicCost: 5,
       casteSpeed: AttackSpeed.Fast,
       range: 250,
-    quantify: 4,
+      quantify: 4,
   ),
   Entangle(
       description: 'Binds an enemies legs for a short duration',
@@ -129,6 +129,14 @@ enum SkillType {
       magicCost: 4,
       range: 150,
       casteSpeed: AttackSpeed.Slow,
+      quantify: 3,
+  ),
+  Blind(
+    description: 'Blinds enemies for a short duration',
+    casteType: CasteType.Caste,
+    magicCost: 5,
+    range: 300,
+    casteSpeed: AttackSpeed.Fast,
     quantify: 3,
   ),
   ;

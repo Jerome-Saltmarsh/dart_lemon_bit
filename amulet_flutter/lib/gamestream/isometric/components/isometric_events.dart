@@ -163,11 +163,9 @@ class IsometricEvents with IsometricComponent {
           );
         }
         break;
-      case GameEvent.Attack_Missed:
+      case GameEvent.Attack_Hit_Nothing:
         final weaponType = parser.readUInt16();
-        if (WeaponType.isMelee(weaponType)){
-          audio.play(audio.arm_swing_whoosh_11, x, y, z);
-        }
+        onGameEventAttackHitNothing(weaponType, x, y, z);
         break;
       case GameEvent.Teleport_Start:
         final spawnConfetti = particles.spawnParticleConfettiByType;
@@ -250,6 +248,12 @@ class IsometricEvents with IsometricComponent {
           );
         }
         break;
+    }
+  }
+
+  void onGameEventAttackHitNothing(int weaponType, double x, double y, double z) {
+    if (WeaponType.isMelee(weaponType)){
+      audio.play(audio.arm_swing_whoosh_11, x, y, z);
     }
   }
 

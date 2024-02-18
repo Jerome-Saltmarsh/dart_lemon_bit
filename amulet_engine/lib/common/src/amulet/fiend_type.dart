@@ -63,6 +63,7 @@ enum FiendType {
     chanceOfDropLegendary: 0.025,
     chanceOfDropPotion: 0.15,
     skillType: SkillType.Strike,
+    skillTypeB: SkillType.Blind,
   ),
   Zombie(
     level: 4,
@@ -167,6 +168,7 @@ enum FiendType {
   final double chanceOfDropPotion;
   final DamageType? resists;
   final SkillType skillType;
+  final SkillType? skillTypeB;
   final double areaDamage;
 
   const FiendType({
@@ -187,6 +189,7 @@ enum FiendType {
     required this.chanceOfDropLegendary,
     required this.chanceOfDropPotion,
     required this.skillType,
+    this.skillTypeB,
     this.resists,
     this.skillRadius = 0,
     this.skillAmount = 0,

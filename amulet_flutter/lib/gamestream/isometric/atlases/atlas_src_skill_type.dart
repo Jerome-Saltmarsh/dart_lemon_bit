@@ -20,4 +20,5 @@ const atlasSrcSkillType = <SkillType, List<double>> {
   SkillType.Ice_Arrow: [_srcX, 256],
   SkillType.Fire_Arrow: [_srcX, 272],
   SkillType.Exploding_Arrow: [_srcX, 240],
+  SkillType.Blind: [_srcX, 336],
 };

@@ -250,6 +250,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
                 fiendType.postAttackPauseDurationMax,
             ),
           );
+          character.activeSkillType = character.fiendType.skillType;
           return;
         }
      }
@@ -274,7 +275,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     if (character is AmuletFiend){
       characterPerformSkillType(
         character: character,
-        skillType: character.fiendType.skillType,
+        skillType: character.activeSkillType ?? character.fiendType.skillType,
       );
       return;
     }
@@ -325,6 +326,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         break;
       case SkillType.Fire_Arrow:
         characterPerformSkillTypeFireArrow(character);
+        break;
+      case SkillType.Blind:
+        characterPerformSkillTypeBlind(character);
         break;
       case SkillType.Freeze_Target:
         throw Exception('not implemented');
@@ -407,6 +411,47 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       return 0;
   }
 
+  double getCharacterMissRatio(Character character){
+     if (character.conditionIsBlind) {
+       return AmuletSettings.Chance_Blind_Miss;
+     }
+     return 0;
+  }
+
+  @override
+  void characterGoalKillTarget(Character character) {
+
+    if (character.deadOrBusy) {
+      return;
+    }
+
+    final target = character.target;
+    if (target is! Character){
+      return;
+    }
+
+    if (character is! AmuletFiend) {
+      super.characterGoalKillTarget(character);
+      return;
+    }
+
+    final fiendType = character.fiendType;
+    final skillB = fiendType.skillTypeB;
+
+    if (skillB == SkillType.Blind && !target.conditionIsBlind) {
+      character.activeSkillType = SkillType.Blind;
+      character.attack();
+      return;
+    }
+
+    character.activeSkillType = character.fiendType.skillType;
+    super.characterGoalKillTarget(character);
+  }
+
+
+
+
+
   @override
   void applyHit({
     required Character srcCharacter,
@@ -416,14 +461,22 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required int ailmentDuration,
     required int ailmentDamage,
     double? angle,
+    double force = 0,
     bool friendlyFire = false,
   }) {
+
+    final missRatio = getCharacterMissRatio(srcCharacter);
+    if (missRatio > 0 && randomChance(missRatio)){
+      dispatchGameEventPosition(GameEvent.Attack_Missed, target);
+      return;
+    }
+
     var damageMultiplier = 1.0;
     if (
       srcCharacter is AmuletPlayer &&
       randomChance(srcCharacter.chanceOfCriticalDamage)
     ) {
-      damageMultiplier = AmuletSettings.Critical_Hit_Damage_Multiplier;
+      damageMultiplier = AmuletSettings.Ratio_Critical_Hit_Damage;
     }
     super.applyHit(
         srcCharacter: srcCharacter,
@@ -606,6 +659,22 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       );
     }
   }
+
+  void characterPerformSkillTypeBlind(Character character) {
+    final target = character.target;
+    if (target is! Character){
+      return;
+    }
+    applyConditionBlind(target);
+  }
+
+  void applyConditionBlind(Character character) {
+      character.conditionBlindDuration = blindDuration;
+  }
+
+  int get blindDuration => AmuletSettings.Duration_Condition_Blind * fps;
+
+  int get fps => amulet.fps;
 
   double getSplitShortSpread(int amount){
     return piEighth;

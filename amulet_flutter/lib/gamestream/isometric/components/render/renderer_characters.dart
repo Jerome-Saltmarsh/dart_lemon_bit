@@ -68,6 +68,10 @@ class RendererCharacters extends RenderGroup {
 
     scene.applyColorToCharacter(character);
 
+    if (character.isAilmentBlind) {
+      render.textPosition(character, 'blind', offsetY: -100);
+    }
+
     switch (character.characterType) {
       case CharacterType.Human:
         renderCharacterHuman(character);

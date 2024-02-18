@@ -10,3 +10,6 @@
 [submodule "tools/lemon_math"]
 	path = tools/lemon_math
 	url = git@github.com:Jerome-Saltmarsh/dart-lemon-math.git
+[submodule "tools/lemon_json"]
+	path = tools/lemon_json
+	url = https://github.com/Jerome-Saltmarsh/lemon_json
