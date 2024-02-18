@@ -182,7 +182,7 @@ enum AmuletItem {
     label: 'Feather Cap',
     levelMin: 1,
     levelMax: 5,
-    skillType: SkillType.Entangle,
+    skillType: SkillType.Ice_Arrow,
     type: ItemType.Helm,
     subType: HelmType.Feather_Cap,
     maxHealth: 3,

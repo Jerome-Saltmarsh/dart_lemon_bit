@@ -15,12 +15,16 @@ ctrl + shift + e        : view recent changes
 alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
-
-[CURRENT]
-[new] ui skills row
-
 [RELEASE]
-[new] model amulet items
+[new] ui item comparison table
+[new] scene witches lair 1
+[new] scene witches lair 2
+[fix] not striking bug
+
+## 19.02.2024
+[new] ailment blind
+[new] skill type caste blind
+[ref] reset player
 
 ## 01.02.2024
 [fix] disable tutorial
