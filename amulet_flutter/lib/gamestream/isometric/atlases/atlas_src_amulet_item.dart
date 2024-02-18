@@ -49,6 +49,7 @@ const atlasSrcAmuletItem = <AmuletItem, List<double>> {
   AmuletItem.Weapon_Staff_Wand: [srcx_weapon_staff, 0],
   AmuletItem.Weapon_Staff_Globe: [srcx_weapon_staff, 32],
   AmuletItem.Weapon_Staff_Scepter: [srcx_weapon_staff, 64],
+  AmuletItem.Weapon_Staff_Long: [34, 99, 28, 28],
   AmuletItem.Weapon_Bow_Short: _weapons_bow_short,
   AmuletItem.Weapon_Bow_Reflex: _weapons_bow_short,
   AmuletItem.Weapon_Bow_Composite: _weapons_bow_short,
