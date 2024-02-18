@@ -172,7 +172,6 @@ class Amulet {
     games.add(amuletGameWitchesLair2);
 
     for (final game in worldMap){
-      // game.resetShrines();
       game.spawnMarkPortals();
     }
   }
@@ -420,16 +419,6 @@ class Amulet {
 
   void resetPlayer(AmuletPlayer player) {
     resetGames();
-    for (final game in games){
-      game.spawnFiendsAtSpawnNodes();
-    }
-    playerChangeGameToTown(player);
-
-    player.amuletGame = amuletGameVillage;
-    amuletGameVillage.movePositionToIndex(
-      player,
-      amuletGameVillage.indexSpawnPlayer,
-    );
     amuletTime.hour = 12;
 
     player.setFlaskAmount(0);
@@ -449,7 +438,19 @@ class Amulet {
     player.characterState = CharacterState.Idle;
     player.health = player.maxHealth;
     player.magic = player.maxMagic;
+    player.clearCache();
     player.clearActionFrame();
+
+    for (final game in games){
+      game.spawnFiendsAtSpawnNodes();
+      game.resetShrines(player);
+    }
+    playerChangeGameToTown(player);
+    player.amuletGame = amuletGameVillage;
+    amuletGameVillage.movePositionToIndex(
+      player,
+      amuletGameVillage.indexSpawnPlayer,
+    );
   }
 
   void revivePlayer(AmuletPlayer player) {

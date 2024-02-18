@@ -1289,6 +1289,17 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     shrinesUsed.add(nodeIndex);
     dispatchGameEventPosition(GameEvent.Shrine_Used, shrineObject);
   }
+
+  void resetShrines(AmuletPlayer player) {
+    final nodeTypes = scene.types;
+    final length = nodeTypes.length;
+    for (var i = 0; i < length; i++){
+       final nodeType = scene.types[i];
+       if (nodeType != NodeType.Shrine) continue;
+       scene.variations[i] = NodeType.variationShrineActive;
+       spawnGameObjectShrine(i);
+    }
+  }
 }
 
 
