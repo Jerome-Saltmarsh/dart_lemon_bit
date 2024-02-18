@@ -422,6 +422,7 @@ class Amulet {
     amuletTime.hour = 12;
 
     player.setFlaskAmount(0);
+    player.skillActiveLeft = true;
     player.skillTypeLeft = SkillType.None;
     player.skillTypeRight = SkillType.None;
     player.sceneShrinesUsed.clear();

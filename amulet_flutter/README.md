@@ -16,6 +16,10 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 [RELEASE]
+[new] skill type fireball level 3
+[new] skill type fireball level 2
+[new] skill type iceball level 2
+[new] skill type iceball level 3
 [new] ui item comparison table
 [new] scene witches lair 1
 [new] scene witches lair 2
