@@ -419,17 +419,36 @@ class Amulet {
   }
 
   void resetPlayer(AmuletPlayer player) {
+    resetGames();
+    for (final game in games){
+      game.spawnFiendsAtSpawnNodes();
+    }
     playerChangeGameToTown(player);
+
+    player.amuletGame = amuletGameVillage;
+    amuletGameVillage.movePositionToIndex(
+      player,
+      amuletGameVillage.indexSpawnPlayer,
+    );
     amuletTime.hour = 12;
+
+    player.setFlaskAmount(0);
+    player.skillTypeLeft = SkillType.None;
+    player.skillTypeRight = SkillType.None;
+    player.sceneShrinesUsed.clear();
+    player.sceneDownloaded = false;
     player.equippedWeapon = null;
     player.equippedHelm = null;
     player.equippedArmor = null;
     player.equippedShoes = null;
-    player.health = player.maxHealth;
-    player.magic = player.maxMagic;
-    player.characterState = CharacterState.Idle;
     player.equipmentDirty = true;
     player.controlsEnabled = true;
+    player.flags.clear();
+    player.questMain = QuestMain.values.first;
+    player.questTutorial = QuestTutorial.values.first;
+    player.characterState = CharacterState.Idle;
+    player.health = player.maxHealth;
+    player.magic = player.maxMagic;
     player.clearActionFrame();
   }
 

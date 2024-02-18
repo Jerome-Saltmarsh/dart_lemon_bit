@@ -1043,7 +1043,7 @@ class RendererNodes extends RenderGroup {
       case NodeType.Shrine:
         render.renderSpriteAutoIndexedNESW(
           sprite: variation == NodeType.variationShrineActive
-              ? images.crystalBlue
+              ? images.shrineActive
               : images.shrineInactive,
           dstX: dstX,
           dstY: dstY + 15,

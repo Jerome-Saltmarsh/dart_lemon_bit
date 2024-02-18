@@ -324,24 +324,27 @@ class IsometricUI with IsometricComponent {
               options.sceneName,
               (sceneName) =>
                   buildText(sceneName, color: Colors.white70, size: 22)),
-          width8,
-          Container(
-            padding: const EdgeInsets.all(2),
-            color: Colors.black12,
-            child: Row(
-              children: [
-                buildText('monsters', size: 22, color: Colors.deepOrange),
-                width2,
-                buildWatch(
-                    amulet.fiendCountAlive,
-                    (count) =>
-                        buildText(count, size: 22, color: Colors.deepOrange)),
-              ],
-            ),
-          ),
-
+          // width8,
+          // buildControlFiendsRemaining(),
         ],
       );
+
+  Container buildControlFiendsRemaining() {
+    return Container(
+          padding: const EdgeInsets.all(2),
+          color: Colors.black12,
+          child: Row(
+            children: [
+              buildText('monsters', size: 22, color: Colors.deepOrange),
+              width2,
+              buildWatch(
+                  amulet.fiendCountAlive,
+                  (count) =>
+                      buildText(count, size: 22, color: Colors.deepOrange)),
+            ],
+          ),
+        );
+  }
 
   Widget buildFiendCount() {
      return Column(

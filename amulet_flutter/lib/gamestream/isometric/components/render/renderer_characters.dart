@@ -69,7 +69,15 @@ class RendererCharacters extends RenderGroup {
     scene.applyColorToCharacter(character);
 
     if (character.isAilmentBlind) {
-      render.textPosition(character, 'blind', offsetY: -100);
+      engine.renderSprite(
+          image: images.atlas_amulet_items,
+          srcX: 400,
+          srcY: 336,
+          srcWidth: 16,
+          srcHeight: 16,
+          dstX: character.renderX,
+          dstY: character.renderY - 70,
+      );
     }
 
     switch (character.characterType) {

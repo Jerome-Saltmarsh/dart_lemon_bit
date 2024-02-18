@@ -33,7 +33,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required this.name,
     required this.amuletScene,
   }) {
-    spawnFiendsAtSpawnNodes();
     refreshFlatNodes();
   }
 

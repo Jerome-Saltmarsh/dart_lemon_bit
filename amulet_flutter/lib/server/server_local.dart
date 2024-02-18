@@ -143,10 +143,6 @@ class ServerLocal implements Server {
     if (name == FIELD_CHARACTERS) {
       throw Exception('invalid field name');
     }
-    amulet.resetGames();
-    final amuletGameVillage = amulet.amuletGameVillage;
-    playerServer.sceneShrinesUsed.clear();
-    playerServer.flags.clear();
     playerServer.uuid = generateUUID();
     playerServer.name = name;
     playerServer.complexion = complexion;
@@ -154,23 +150,10 @@ class ServerLocal implements Server {
     playerServer.hairColor = hairColor;
     playerServer.gender = gender;
     playerServer.headType = headType;
-    playerServer.questTutorial = QuestTutorial.values.first;
-    playerServer.equippedWeapon = null;
-    playerServer.equippedHelm = null;
-    playerServer.equippedShoes = null;
-    playerServer.equippedArmor = null;
-    playerServer.setFlaskAmount(0);
-    playerServer.skillTypeLeft = SkillType.Strike;
-    playerServer.skillTypeRight = SkillType.Strike;
-    playerServer.sceneDownloaded = false;
     parser.amulet.windowVisibleQuests.value = true;
     parser.amulet.windowVisiblePlayerStats.value = true;
-    playerServer.amuletGame = amuletGameVillage;
-    playerServer.setQuestMain(QuestMain.values.first);
-    amuletGameVillage.movePositionToIndex(
-        playerServer,
-        amuletGameVillage.indexSpawnPlayer,
-    );
+    amulet.resetPlayer(playerServer);
+    // final amuletGameVillage = amulet.amuletGameVillage;
     final json = writeAmuletPlayerToJson(playerServer);
     final characters = getCharacters();
     characters.add(json);
