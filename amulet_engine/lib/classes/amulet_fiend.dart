@@ -54,4 +54,12 @@ class AmuletFiend extends Character {
 
   @override
   bool get collidable => alive;
+
+  @override
+  void attack() {
+    clearPath();
+    setCharacterStateStriking(
+      duration: attackDuration, // TODO
+    );
+  }
 }

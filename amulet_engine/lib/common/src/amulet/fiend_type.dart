@@ -13,7 +13,7 @@ enum FiendType {
     attackDuration: 20,
     runSpeed: 0.7,
     chanceOfSetTarget: 0.25,
-    weaponRange: 50,
+    weaponRange: 60,
     quantity: 2,
     clearTargetOnPerformAction: true,
     postAttackPauseDurationMin: 20,
