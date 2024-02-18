@@ -255,7 +255,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
      }
 
      if (character is AmuletPlayer) {
-       character.activeSkillActiveLeft();
+       character.skillActiveLeft = true;
      }
      super.performCharacterEnd(character);
   }

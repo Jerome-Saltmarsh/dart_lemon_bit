@@ -23,6 +23,8 @@ ctrl + []               : move caret to code block
 [new] scene witches lair 1
 [new] scene witches lair 2
 [fix] not striking bug
+[fix] balance amulet items
+[fix] balance amulet fiends
 
 ## 19.02.2024
 [new] ui item comparison table
