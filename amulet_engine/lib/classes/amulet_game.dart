@@ -317,9 +317,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       case SkillType.Heal:
         characterPerformSkillTypeHeal(character);
         break;
-      case SkillType.Teleport:
-        characterPerformSkillTypeTeleport(character);
-        break;
+      // case SkillType.Teleport:
+      //   characterPerformSkillTypeTeleport(character);
+      //   break;
       case SkillType.Ice_Arrow:
         characterPerformSkillTypeIceArrow(character);
         break;
@@ -778,7 +778,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       dispatchGameEventPosition(GameEvent.Blink_Arrive, character);
       return;
     }
-    throw Exception('fiend cannot perform ${SkillType.Teleport}');
+    // throw Exception('fiend cannot perform ${SkillType.Teleport}');
   }
 
   @override

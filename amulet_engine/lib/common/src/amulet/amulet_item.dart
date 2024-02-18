@@ -536,7 +536,7 @@ enum AmuletItem {
     quality: ItemQuality.Common,
     maxHealth: 1,
     maxMagic: 5,
-    skillType: SkillType.Teleport,
+    skillType: SkillType.Frostball,
     masteryStaff: 5,
   ),
   Shoes_Rogue_1_Treads_Common(
@@ -548,7 +548,7 @@ enum AmuletItem {
     quality: ItemQuality.Common,
     maxHealth: 1,
     maxMagic: 5,
-    skillType: SkillType.Teleport,
+    skillType: SkillType.Split_Shot,
     masteryBow: 5,
   ),
   Shoes_Warrior_2_Grieves_Common(
@@ -571,7 +571,7 @@ enum AmuletItem {
     quality: ItemQuality.Common,
     maxHealth: 1,
     maxMagic: 5,
-    skillType: SkillType.Teleport,
+    skillType: SkillType.Ice_Arrow,
     masteryStaff: 5,
     masteryCaste: 3,
   ),
@@ -584,7 +584,7 @@ enum AmuletItem {
     quality: ItemQuality.Common,
     maxHealth: 1,
     maxMagic: 5,
-    skillType: SkillType.Teleport,
+    skillType: SkillType.Mighty_Strike,
     masteryBow: 5,
     agility: 8,
   ),
@@ -608,7 +608,7 @@ enum AmuletItem {
     quality: ItemQuality.Common,
     maxHealth: 1,
     maxMagic: 5,
-    skillType: SkillType.Teleport,
+    skillType: SkillType.Blind,
     masteryStaff: 5,
   ),
   Shoes_Rogue_3_Satin_Boots_Common(
@@ -620,7 +620,7 @@ enum AmuletItem {
     quality: ItemQuality.Common,
     maxHealth: 1,
     maxMagic: 5,
-    skillType: SkillType.Teleport,
+    skillType: SkillType.Ice_Arrow,
     masteryBow: 3,
   ),
   Consumable_Potion_Magic(

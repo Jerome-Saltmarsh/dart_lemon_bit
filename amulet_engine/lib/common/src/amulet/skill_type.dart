@@ -115,14 +115,14 @@ enum SkillType {
       quantify: 3,
       amount: 10,
   ),
-  Teleport(
-      description: 'move a short distance through space',
-      casteType: CasteType.Caste,
-      magicCost: 5,
-      casteSpeed: AttackSpeed.Fast,
-      range: 250,
-      quantify: 4,
-  ),
+  // Teleport(
+  //     description: 'move a short distance through space',
+  //     casteType: CasteType.Caste,
+  //     magicCost: 5,
+  //     casteSpeed: AttackSpeed.Fast,
+  //     range: 250,
+  //     quantify: 4,
+  // ),
   // Entangle(
   //     description: 'Binds an enemies legs for a short duration',
   //     casteType: CasteType.Caste,

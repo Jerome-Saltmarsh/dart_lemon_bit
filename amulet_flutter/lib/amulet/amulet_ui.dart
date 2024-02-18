@@ -92,7 +92,14 @@ class AmuletUI {
               top: 8,
               left: 8,
               child:
-              buildWatch(amulet.aimTargetItemType, buildWindowAmuletItemStats),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildWatch(amulet.aimTargetItemTypeComparison, buildWindowAmuletItemStats),
+                  width8,
+                  buildWatch(amulet.aimTargetItemType, buildWindowAmuletItemStats),
+                ],
+              ),
           ),
           Positioned(
               bottom: 60,
@@ -1196,7 +1203,7 @@ class AmuletUI {
     final equippedItemType = amulet.getEquippedItemType(itemType);
 
     return GSContainer(
-      width: 200,
+      width: 170,
       // height: 200,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -1246,9 +1253,11 @@ class AmuletUI {
           if (criticalHitPoints > 0)
             buildRow(buildIconCriticalHitPoints(), criticalHitPoints),
           if (equippedItemType == amuletItem)
-            Container(
-                margin: const EdgeInsets.only(top: 8),
-                child: buildText('EQUIPPED', color: Colors.green),
+            alignRight(
+              child: Container(
+                  margin: const EdgeInsets.only(top: 8),
+                  child: buildText('EQUIPPED', color: Colors.green),
+              ),
             ),
         ],
       ),

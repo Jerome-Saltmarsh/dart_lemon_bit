@@ -388,7 +388,7 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   void spawnAmuletItem(AmuletItem item){
-    const spawnDistance = 40.0;
+    const spawnDistance = 20.0;
     final spawnAngle = randomAngle();
     amuletGame.spawnAmuletItem(
       x: x + adj(spawnAngle, spawnDistance),

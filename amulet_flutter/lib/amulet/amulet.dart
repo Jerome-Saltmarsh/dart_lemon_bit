@@ -96,6 +96,7 @@ class Amulet extends IsometricGame {
   final emptyItemSlot = buildText('-');
 
   final aimTargetItemType = Watch<AmuletItem?>(null);
+  final aimTargetItemTypeComparison = Watch<AmuletItem?>(null);
   final aimTargetItemTypeCurrent = Watch<AmuletItem?>(null);
   final highlightedAmuletItem = Watch<AmuletItem?>(null);
   final playerSkillTypeStatsNotifier = Watch(0);
@@ -162,7 +163,44 @@ class Amulet extends IsometricGame {
     });
 
     aimTargetItemType.onChanged((itemType) {
-      // aimTargetItemTypeCurrent.value = getEquippedItemSlot(itemType?.type)?.amuletItem.value;
+
+      if (itemType == null){
+        aimTargetItemTypeComparison.value = null;
+        return;
+      }
+
+      if (itemType.isWeapon) {
+        if (itemType == equippedWeapon.value){
+          aimTargetItemTypeComparison.value = null;
+        } else {
+          aimTargetItemTypeComparison.value = equippedWeapon.value;
+        }
+      }
+
+      if (itemType.isHelm) {
+        if (itemType == equippedHelm.value) {
+          aimTargetItemTypeComparison.value = null;
+        } else {
+          aimTargetItemTypeComparison.value = equippedHelm.value;
+        }
+
+      }
+
+      if (itemType.isArmor) {
+        if (itemType == equippedArmor.value) {
+          aimTargetItemTypeComparison.value = null;
+        } else {
+          aimTargetItemTypeComparison.value = equippedArmor.value;
+        }
+      }
+
+      if (itemType.isShoes) {
+        if (itemType == equippedShoes.value){
+          aimTargetItemTypeComparison.value = null;
+        } else {
+          aimTargetItemTypeComparison.value = equippedShoes.value;
+        }
+      }
     });
 
     fiendCountAlive.onChanged((t) {

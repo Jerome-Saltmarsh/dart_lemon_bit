@@ -20,12 +20,13 @@ ctrl + []               : move caret to code block
 [new] skill type fireball level 2
 [new] skill type iceball level 2
 [new] skill type iceball level 3
-[new] ui item comparison table
 [new] scene witches lair 1
 [new] scene witches lair 2
 [fix] not striking bug
 
 ## 19.02.2024
+[new] ui item comparison table
+[fix] remove skill type teleport
 [new] ailment blind
 [new] skill type caste blind
 [ref] reset player
