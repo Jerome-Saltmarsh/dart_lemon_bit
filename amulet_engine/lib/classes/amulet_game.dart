@@ -422,33 +422,34 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   }
 
   @override
-  void characterGoalKillTarget(Character character) {
+  void characterGoalAttackTarget(Character character) {
 
     if (character.deadOrBusy) {
       return;
     }
 
     final target = character.target;
-    if (target is! Character){
-      return;
-    }
 
     if (character is! AmuletFiend) {
-      super.characterGoalKillTarget(character);
+      super.characterGoalAttackTarget(character);
       return;
     }
 
     final fiendType = character.fiendType;
     final skillB = fiendType.skillTypeB;
 
-    if (skillB == SkillType.Blind && !target.conditionIsBlind) {
+    if (
+      target is Character &&
+      skillB == SkillType.Blind &&
+      !target.conditionIsBlind
+    ) {
       character.activeSkillType = SkillType.Blind;
       character.attack();
       return;
     }
 
     character.activeSkillType = character.fiendType.skillType;
-    super.characterGoalKillTarget(character);
+    super.characterGoalAttackTarget(character);
   }
 
 

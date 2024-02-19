@@ -2403,8 +2403,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       return;
     }
 
-    if (characterConditionKillTarget(character)) {
-      characterGoalKillTarget(character);
+    if (characterConditionAttackTarget(character)) {
+      characterGoalAttackTarget(character);
       return;
     }
 
@@ -2456,15 +2456,30 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     remove(gameObject);
   }
 
-  bool characterConditionKillTarget(Character character) =>
-      character.isEnemy(character.target);
+  bool characterConditionAttackTarget(Character character) {
+     final target = character.target;
+
+     if (target == null) {
+       return false;
+     }
+
+     if (target is Character){
+       return character.isEnemy(target);
+     }
+
+     if (target is GameObject){
+       return !target.interactable && target.onInteract == null;
+     }
+
+     return false;
+  }
 
   bool shouldCharacterPerformAttackOnTarget(Character character) =>
       character.target != null &&
       character.targetWithinAttackRange &&
       (!character.pathFindingEnabled || character.targetPerceptible);
 
-  void characterGoalKillTarget(Character character){
+  void characterGoalAttackTarget(Character character){
     character.goal = CharacterGoal.Kill_Target;
 
     if (shouldCharacterPerformAttackOnTarget(character)){
