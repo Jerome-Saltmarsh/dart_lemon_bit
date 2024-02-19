@@ -1367,22 +1367,21 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
       final projectileX = projectile.x;
       final projectileY = projectile.y;
+      final projectileZ = projectile.z;
       final projectileRadius = projectile.radius;
+      final projectileParent = projectile.parent;
 
       assert (target == null);
       for (var j = 0; j < colliders.length; j++) {
         final collider = colliders[j];
+        if (projectileParent == collider) continue;
         if (!collider.active) continue;
         if (!collider.hitable) continue;
-        final radius = collider.radius + projectileRadius;
-        if ((collider.x - projectileX).abs() > radius) continue;
-        if ((collider.y - projectileY).abs() > radius) continue;
-        if (projectile.z + projectileRadius < collider.z) continue;
-        if (projectile.z - projectileRadius > collider.z + Character_Height) {
-          continue;
-        }
-        if (projectile.parent == collider) continue;
-        if (!projectile.isEnemy(collider) && !projectile.friendlyFire) continue;
+        final combinedRadius = collider.radius + projectileRadius;
+        if ((collider.x - projectileX).abs() > combinedRadius) continue;
+        if ((collider.y - projectileY).abs() > combinedRadius) continue;
+        if ((projectile.z - projectileZ).abs() > combinedRadius) continue;
+        if (projectile.isAlly(collider) && !projectile.friendlyFire) continue;
         handleProjectileHit(projectile, collider);
         break;
       }

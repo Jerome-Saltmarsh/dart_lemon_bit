@@ -1001,7 +1001,8 @@ class IsometricPlayer extends Character with ByteWriter {
       y: gameObject.y,
       z: gameObject.z,
     );
-    writeUInt16(gameObject.itemType);
+    writeByte(gameObject.itemType);
+    writeByte(gameObject.subType);
   }
 
   void writePlayerTeam(){

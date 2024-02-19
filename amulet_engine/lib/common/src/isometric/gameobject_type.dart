@@ -21,9 +21,18 @@ class GameObjectType {
       // Barrel_Explosive
   ].contains(value);
 
+  static bool isMaterialWood(int value) => materialWood.contains(value);
+
   static double getRadius(int value){
     return 15.0;
   }
+
+  static const materialWood = [
+    Crate_Wooden,
+    Barrel,
+    Wooden_Cart,
+    Wooden_Chest,
+  ];
 
   static String getName(int value) {
     return const {

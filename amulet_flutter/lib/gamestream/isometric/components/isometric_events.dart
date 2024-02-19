@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:amulet_engine/common.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
+import 'package:intl/intl.dart';
 import 'package:lemon_math/src.dart';
 
 class IsometricEvents with IsometricComponent {
@@ -196,11 +197,14 @@ class IsometricEvents with IsometricComponent {
         return;
 
       case GameEvent.Game_Object_Destroyed:
+        final type = parser.readByte();
+        final subType = parser.readByte();
         onGameEventGameObjectDestroyed(
             x,
             y,
             z,
-            parser.readUInt16(),
+            type,
+            subType,
         );
         return;
 
@@ -522,20 +526,15 @@ class IsometricEvents with IsometricComponent {
       double y,
       double z,
       int type,
+      int subType,
       ){
-    switch (type){
-      case GameObjectType.Barrel:
+    if (type == ItemType.Object){
+      if (GameObjectType.isMaterialWood(subType)) {
         audio.play(audio.crate_breaking, x, y, z);
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < 8; i++) {
           particles.spawnParticleBlockWood(x, y, z);
         }
-        break;
-      case GameObjectType.Crate_Wooden:
-        audio.play(audio.crate_breaking, x, y, z);
-        for (var i = 0; i < 5; i++) {
-          particles.spawnParticleBlockWood(x, y, z);
-        }
-        break;
+      }
     }
   }
 

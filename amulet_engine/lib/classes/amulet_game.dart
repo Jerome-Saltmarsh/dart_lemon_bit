@@ -1071,8 +1071,24 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   @override
   void onGameObjectSpawned(GameObject gameObject) {
 
-    switch (gameObject.itemType){
-
+    if (gameObject.itemType == ItemType.Object){
+       final subType = gameObject.subType;
+       if (const[
+         GameObjectType.Barrel,
+         GameObjectType.Wooden_Chest,
+         GameObjectType.Crate_Wooden,
+       ].contains(subType)){
+         gameObject.persistable = true;
+         gameObject.physical = true;
+         gameObject.healthMax = 1;
+         gameObject.health = 1;
+         gameObject.interactable = false;
+         gameObject.destroyable = true;
+         gameObject.dirty = true;
+         gameObject.deactivationTimer = -1;
+         gameObject.hitable = true;
+         gameObject.collidable = true;
+       }
     }
   }
 

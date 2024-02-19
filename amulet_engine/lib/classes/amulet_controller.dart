@@ -672,7 +672,7 @@ class AmuletController {
           return;
         }
 
-        player.dropItemType(slotType);
+        player.dropSlotType(slotType);
         break;
       case NetworkRequestAmulet.Select_Slot_Type:
         final index = parseArg2(arguments);
