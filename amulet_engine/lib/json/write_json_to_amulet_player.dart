@@ -83,7 +83,7 @@ AmuletFiend mapFiendJsonToAmuletFiend(Json fiendJson) {
        y: fiendJson.getDouble('y'),
        z: fiendJson.getDouble('z'),
        team: TeamType.Evil,
-       fiendType: FiendType.values[fiendJson.getInt('fiend_type')],
+       fiendType: FiendType.values.tryGet(fiendJson.getInt('fiend_type')) ?? FiendType.Goblin,
    )
      ..health = fiendJson.getInt('health')
      ..characterState = fiendJson.getInt('character_state')

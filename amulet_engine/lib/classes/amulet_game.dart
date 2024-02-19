@@ -184,7 +184,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         continue;
       }
       final markSubType = MarkType.getSubType(markValue);
-      final fiendType = FiendType.values[markSubType];
+      final fiendType = FiendType.values.tryGet(markSubType) ?? FiendType.Goblin;
       final quantity = fiendType.quantity;
 
       for (var j = 0; j < quantity; j++){

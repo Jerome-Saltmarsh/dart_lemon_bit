@@ -26,9 +26,9 @@ ctrl + []               : move caret to code block
 [fix] not striking bug
 [fix] balance amulet items
 [fix] balance amulet fiends
-[fix] remove character type toad
 
 ## 19.02.2024
+[fix] remove character type toad
 [new] ui item comparison table
 [fix] remove skill type teleport
 [new] ailment blind
