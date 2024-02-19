@@ -712,10 +712,10 @@ class AmuletUI {
         return Colors.white;
       case ItemQuality.Unique:
         return Colors.blue;
-      case ItemQuality.Rare:
-        return Colors.deepOrange;
-      case ItemQuality.Legendary:
-        return Colors.yellow;
+      // case ItemQuality.Rare:
+      //   return Colors.deepOrange;
+      // case ItemQuality.Legendary:
+      //   return Colors.yellow;
     }
   }
 

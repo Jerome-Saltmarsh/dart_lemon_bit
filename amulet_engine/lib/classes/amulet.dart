@@ -171,7 +171,7 @@ class Amulet {
     games.add(amuletGameWitchesLair1);
     games.add(amuletGameWitchesLair2);
 
-    for (final game in games){
+    for (final game in games) {
       game.spawnMarkPortals();
     }
   }

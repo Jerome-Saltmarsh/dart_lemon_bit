@@ -243,7 +243,7 @@ class AmuletGameWorld11 extends AmuletGame {
           'Good luck!'
           ,
         onInteractionOver: (){
-           player.acquireAmuletItem(AmuletItem.Armor_Neutral_1_Common_Tunic);
+           player.acquireAmuletItem(AmuletItem.Armor_Tunic);
         }
       );
       return;

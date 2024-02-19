@@ -86,7 +86,7 @@ enum FiendType {
     chanceOfDropPotion: 0.15,
     skillType: SkillType.Strike,
   ),
-  Fallen_Armoured(
+  Goblin_Armoured(
     level: 5,
     health: 12,
     damage: 3,

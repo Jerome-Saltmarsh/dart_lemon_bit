@@ -867,21 +867,7 @@ extension isometricDebugUI on IsometricDebug {
                     child: Column(
                       children:
                       AmuletItem.values.map((e) {
-                        return onPressed(
-                          action: (){
-                            amulet.requestAcquireAmuletItem(e);
-                          },
-                          child: GSContainer(
-                              color: Colors.green,
-                              margin: const EdgeInsets.only(bottom: 4),
-                              child: Row(
-                                children: [
-                                  buildText(e.name),
-                                  width8,
-                                  buildText(e.skillType?.name, color: Colors.orange),
-                                ],
-                              )),
-                        );
+                        return buildButtonAcquireAmuletItem(e);
                       }).toList(growable: false)
                       ,
                     ),
@@ -944,25 +930,9 @@ extension isometricDebugUI on IsometricDebug {
                   height: 300,
                   child: SingleChildScrollView(
                     child: Column(
-                      children:
-                       values.map((e) {
-                        return onPressed(
-                          action: (){
-                            amulet.requestAcquireAmuletItem(e);
-                          },
-                          child: GSContainer(
-                              color: Colors.green,
-                              margin: const EdgeInsets.only(bottom: 4),
-                              child: Row(
-                                children: [
-                                  buildText(e.name),
-                                  width8,
-                                  buildText(e.skillType?.name, color: Colors.orange),
-                                ],
-                              )),
-                        );
-                      }).toList(growable: false)
-                      ,
+                      children: values
+                          .map(buildButtonAcquireAmuletItem)
+                          .toList(growable: false),
                     ),
                   ),
                 )
@@ -972,6 +942,11 @@ extension isometricDebugUI on IsometricDebug {
         },
         child: GSContainer(child: buildText(text)));
   }
+
+  Widget buildButtonAcquireAmuletItem(AmuletItem amuletItem) => onPressed(
+      action: () => amulet.requestAcquireAmuletItem(amuletItem),
+      child: amulet.amuletUI.buildWindowAmuletItemStats(amuletItem),
+    );
 
   Widget buildButtonReset() => onPressed(
     action: amulet.requestReset,

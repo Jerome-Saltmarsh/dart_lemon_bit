@@ -810,7 +810,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
       if (getFiendCountAlive() == 0){
         final items = AmuletItem.find(
-            itemQuality: ItemQuality.Rare,
+            itemQuality: ItemQuality.Unique,
             level: amuletScene.level,
         );
         if (items.isNotEmpty) {
@@ -831,15 +831,15 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         );
       }
 
-      if (randomChance(target.fiendType.chanceOfDropLegendary)) {
-        spawnRandomLootAtFiend(target, itemQuality: ItemQuality.Legendary);
-        return;
-      }
+      // if (randomChance(target.fiendType.chanceOfDropLegendary)) {
+      //   spawnRandomLootAtFiend(target, itemQuality: ItemQuality.Legendary);
+      //   return;
+      // }
 
-      if (randomChance(target.fiendType.chanceOfDropRare)) {
-        spawnRandomLootAtFiend(target, itemQuality: ItemQuality.Rare);
-        return;
-      }
+      // if (randomChance(target.fiendType.chanceOfDropRare)) {
+      //   spawnRandomLootAtFiend(target, itemQuality: ItemQuality.Rare);
+      //   return;
+      // }
 
       if (randomChance(target.fiendType.chanceOfDropCommon)) {
         spawnRandomLootAtFiend(target, itemQuality: ItemQuality.Common);
@@ -876,7 +876,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     final fiendLevel = fiendType.level;
     
     final values = AmuletItem.values.where((element) =>
-      fiendLevel >= element.levelMin &&
+      fiendLevel >= element.level &&
       fiendLevel < element.levelMax &&
       element.quality == itemQuality
     );

@@ -15,16 +15,18 @@ ctrl + shift + e        : view recent changes
 alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
+REMINDER: IT DOESN'T NEED TO BE PERFECT
+
 [RELEASE]
+[fix] balance helms
+[fix] boss fight
 [fix] npc roam 
-[fix] ui amulet item container collision 
+[fix] ui amulet item container collision
+[fix] balance amulet fiends
 [new] skill type fireball level 3
 [new] skill type fireball level 2
 [new] skill type iceball level 2
 [new] skill type iceball level 3
-[new] scene witches lair 2
-[fix] balance amulet items
-[fix] balance amulet fiends
 
 ## 19.02.2024
 [new] scene witches lair 1
