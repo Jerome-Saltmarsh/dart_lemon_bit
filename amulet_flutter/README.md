@@ -22,12 +22,12 @@ ctrl + []               : move caret to code block
 [new] skill type fireball level 2
 [new] skill type iceball level 2
 [new] skill type iceball level 3
-[new] scene witches lair 1
 [new] scene witches lair 2
 [fix] balance amulet items
 [fix] balance amulet fiends
 
 ## 19.02.2024
+[new] scene witches lair 1
 [fix] portals in witches lair
 [fix] amulet item still selectable after disappearing
 [fix] not striking bug
