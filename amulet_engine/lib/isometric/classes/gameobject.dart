@@ -23,7 +23,8 @@ class GameObject extends Collider {
   var health = 0;
   var healthMax = 0;
   var deactivationTimer = -1;
-  String? customName;
+  var frameSpawned = 0;
+  String? label;
   Function(dynamic src)? onInteract;
 
   @override
@@ -86,7 +87,7 @@ class GameObject extends Collider {
   }
 
   @override
-  String get name => customName ?? ItemType.getNameSubType(itemType, subType);
+  String get name => label ?? ItemType.getNameSubType(itemType, subType);
 
   GameObject copy() =>
       GameObject(

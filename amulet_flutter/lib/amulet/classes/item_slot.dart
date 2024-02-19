@@ -35,6 +35,8 @@ class ItemSlot {
         return srcItem.isArmor;
       case SlotType.Shoes:
         return srcItem.isShoes;
+      case SlotType.Consumable:
+        return false;
     }
   }
 }

@@ -67,7 +67,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
            subType: GameObjectType.Interactable,
            team: TeamType.Neutral,
          );
-         portal.customName = amuletScene.name;
+         portal.label = amuletScene.name;
          portal.interactable = true;
          portal.fixed = true;
          portal.gravity = false;
@@ -1070,11 +1070,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   @override
   void onGameObjectSpawned(GameObject gameObject) {
-    // if (gameObject.type != ItemType.Object) {
-    //   dispatchGameEventPosition(GameEventType.GameObject_Spawned, gameObject);
-    //   dispatchByte(gameObject.type);
-    //   dispatchByte(gameObject.subType);
-    // }
+
+    switch (gameObject.itemType){
+
+    }
   }
 
   @override
@@ -1264,7 +1263,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     shrineObject.physical = false;
     shrineObject.hitable = false;
     shrineObject.collectable = false;
-    shrineObject.customName = 'Shrine';
+    shrineObject.label = 'Shrine';
     shrineObject.onInteract = (src){
       if (src is AmuletPlayer) {
         useShrine(src, shrineObject);

@@ -1196,13 +1196,13 @@ class AmuletUI {
     final range = amuletItem.range;
     final areaDamage = amuletItem.areaDamage;
     final attackSpeed = amuletItem.attackSpeed;
-    final itemType = amuletItem.type;
+    final slotType = amuletItem.slotType;
     final masterySword = amuletItem.masterySword;
     final masteryStaff = amuletItem.masteryStaff;
     final masteryBow = amuletItem.masteryBow;
     final masteryCaste = amuletItem.masteryCaste;
     final criticalHitPoints = amuletItem.criticalHitPoints;
-    final equippedItemType = amulet.getEquippedItemType(itemType);
+    final equippedItemType = amulet.getEquippedItemType(slotType);
 
     return GSContainer(
       width: 170,
@@ -1219,7 +1219,7 @@ class AmuletUI {
                 children: [
                   // buildText(amuletItem.quality.name),
                   // width8,
-                  buildText(ItemType.getName(itemType)),
+                  buildText(slotType.name),
                 ],
               ),
             ],

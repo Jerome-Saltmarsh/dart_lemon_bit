@@ -4,4 +4,5 @@ enum SlotType {
   Armor,
   Helm,
   Shoes,
+  Consumable,
 }

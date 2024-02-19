@@ -378,15 +378,15 @@ class Amulet extends IsometricGame {
   }
 
   void dropItemTypeWeapon() =>
-      dropItemType(ItemType.Weapon);
+      dropItemType(SlotType.Weapon);
 
   void dropAmuletItem(AmuletItem amuletItem) =>
-      dropItemType(amuletItem.type);
+      dropItemType(amuletItem.slotType);
 
-  void dropItemType(int value) =>
+  void dropItemType(SlotType slotType) =>
       server.sendNetworkRequestAmulet(
         NetworkRequestAmulet.Drop_Item_Type,
-        value,
+        slotType.index,
       );
 
   void selectSlotType(SlotType slotType) =>
@@ -621,12 +621,12 @@ class Amulet extends IsometricGame {
 
   }
 
-  AmuletItem? getEquippedItemType(int itemType) =>
+  AmuletItem? getEquippedItemType(SlotType itemType) =>
       switch (itemType) {
-          ItemType.Weapon => equippedWeapon.value,
-          ItemType.Helm => equippedHelm.value,
-          ItemType.Armor => equippedArmor.value,
-          ItemType.Shoes => equippedShoes.value,
+          SlotType.Weapon => equippedWeapon.value,
+          SlotType.Helm => equippedHelm.value,
+          SlotType.Armor => equippedArmor.value,
+          SlotType.Shoes => equippedShoes.value,
           _ => throw Exception('amulet.getEquippedItemType(itemType: $itemType)')
       };
 

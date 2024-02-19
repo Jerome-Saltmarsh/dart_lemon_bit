@@ -560,13 +560,13 @@ class AmuletPlayer extends IsometricPlayer with
     bool force = false,
   }) {
 
-    final currentlyEquipped = getEquippedAmuletItem(itemType: value.type);
+    final currentlyEquipped = getEquippedAmuletItem(itemType: value.slotType);
     if (currentlyEquipped != null) {
-      dropItemType(currentlyEquipped.type);
+      dropItemType(currentlyEquipped.slotType);
     }
 
-    switch (value.type){
-      case ItemType.Weapon:
+    switch (value.slotType){
+      case SlotType.Weapon:
         equippedWeapon = value;
         if (skillTypeLeft == SkillType.None){
           skillTypeLeft = equippedWeaponDefaultSkillType;
@@ -575,14 +575,16 @@ class AmuletPlayer extends IsometricPlayer with
           skillTypeRight = equippedWeaponDefaultSkillType;
         }
         break;
-      case ItemType.Helm:
+      case SlotType.Helm:
         equippedHelm = value;
         break;
-      case ItemType.Armor:
+      case SlotType.Armor:
         equippedArmor = value;
         break;
-      case ItemType.Shoes:
+      case SlotType.Shoes:
         equippedShoes = value;
+        break;
+      case SlotType.Consumable:
         break;
     }
 
@@ -610,25 +612,27 @@ class AmuletPlayer extends IsometricPlayer with
     writeString(error);
   }
 
-  void dropItemType(int itemType){
+  void dropItemType(SlotType itemType){
       final equippedAmuletItem = getEquippedAmuletItem(itemType: itemType);
       if (equippedAmuletItem == null){
         return;
       }
 
       spawnAmuletItem(equippedAmuletItem);
-      switch (equippedAmuletItem.type) {
-        case ItemType.Weapon:
+      switch (equippedAmuletItem.slotType) {
+        case SlotType.Weapon:
           equippedWeapon = null;
           break;
-        case ItemType.Helm:
+        case SlotType.Helm:
           equippedHelm = null;
           break;
-        case ItemType.Armor:
+        case SlotType.Armor:
           equippedArmor = null;
           break;
-        case ItemType.Shoes:
+        case SlotType.Shoes:
           equippedShoes = null;
+          break;
+        case SlotType.Consumable:
           break;
       }
 
@@ -636,20 +640,14 @@ class AmuletPlayer extends IsometricPlayer with
       notifyEquipmentDirty();
   }
 
-  AmuletItem? getEquippedAmuletItem({required int itemType}) =>
-      switch (itemType){
-        ItemType.Weapon => equippedWeapon,
-        ItemType.Helm => equippedHelm,
-        ItemType.Armor => equippedArmor,
-        ItemType.Shoes => equippedShoes,
-        _ => null
-    };
-
-  // @override
-  // void clearAction() {
-  //   super.clearAction();
-  //   deactivateSlotType();
-  // }
+  AmuletItem? getEquippedAmuletItem({required SlotType itemType}) =>
+      switch (itemType) {
+        SlotType.Weapon => equippedWeapon,
+        SlotType.Helm => equippedHelm,
+        SlotType.Armor => equippedArmor,
+        SlotType.Shoes => equippedShoes,
+        SlotType.Consumable => null,
+      };
 
   void writeMessage(String message){
     writeByte(NetworkResponse.Amulet);
@@ -1237,6 +1235,7 @@ class AmuletPlayer extends IsometricPlayer with
        SlotType.Helm => equippedHelm,
        SlotType.Armor => equippedArmor,
        SlotType.Shoes => equippedShoes,
+       SlotType.Consumable => null,
        null => null
     };
 

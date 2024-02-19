@@ -5,21 +5,20 @@ import '../isometric/src.dart';
 
 class AmuletGameObject extends GameObject {
 
-  final int frameSpawned;
-
   AmuletGameObject({
     required super.x,
     required super.y,
     required super.z,
     required super.id,
     required AmuletItem amuletItem,
-    required this.frameSpawned,
+    required int frameSpawned,
     required int deactivationTimer
   }) : super(
       itemType: ItemType.Amulet_Item,
       subType: amuletItem.index,
       team: TeamType.Neutral,
   ) {
+    this.frameSpawned = frameSpawned;
     this.amuletItem = amuletItem;
     this.deactivationTimer = deactivationTimer;
     fixed = false;
@@ -33,7 +32,7 @@ class AmuletGameObject extends GameObject {
   }
 
   @override
-  String get name => amuletItem.label;
+  String? get label => amuletItem.label;
 
   @override
   bool get ignorePointer => super.ignorePointer || amuletItem.isConsumable;

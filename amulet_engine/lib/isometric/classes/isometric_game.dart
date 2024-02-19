@@ -1231,6 +1231,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     character.actionDuration = 0;
     character.physical = false;
     character.hitable = false;
+    character.actionFrame = -1;
     character.clearFrame();
     character.clearPath();
     character.setDestinationToCurrentPosition();
@@ -2204,7 +2205,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   void destroyGameObject(GameObject gameObject) {
     if (!gameObject.active) return;
     dispatchGameEventGameObjectDestroyed(gameObject);
-    deactivate(gameObject);
+    remove(gameObject);
     customOnGameObjectDestroyed(gameObject);
   }
 

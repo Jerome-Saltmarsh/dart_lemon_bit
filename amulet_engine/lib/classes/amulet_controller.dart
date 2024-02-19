@@ -663,9 +663,16 @@ class AmuletController {
         player.regainFullMagic();
         break;
       case NetworkRequestAmulet.Drop_Item_Type:
-        final itemType = parseArg2(arguments);
-        if (itemType == null) return;
-        player.dropItemType(itemType);
+        final slotTypeIndex = parseArg2(arguments);
+        if (slotTypeIndex == null) return;
+        final slotType = SlotType.values.tryGet(slotTypeIndex);
+
+        if (slotType == null) {
+          player.writeAmuletError('invalid SlotType.index $slotTypeIndex');
+          return;
+        }
+
+        player.dropItemType(slotType);
         break;
       case NetworkRequestAmulet.Select_Slot_Type:
         final index = parseArg2(arguments);
