@@ -1214,11 +1214,16 @@ class AmuletUI {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              buildText(amuletItem.quality.name),
-              buildText(ItemType.getName(itemType)),
+              AmuletItemImage(amuletItem: amuletItem, scale: 1.0),
+              Row(
+                children: [
+                  // buildText(amuletItem.quality.name),
+                  // width8,
+                  buildText(ItemType.getName(itemType)),
+                ],
+              ),
             ],
           ),
-          AmuletItemImage(amuletItem: amuletItem, scale: 1.0),
           buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
           Row(children: [
             if (masterySword != 0)
