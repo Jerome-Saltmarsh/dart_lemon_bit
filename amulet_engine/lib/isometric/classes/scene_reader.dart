@@ -64,7 +64,7 @@ class SceneReader extends ByteReader {
           y: scene.getIndexY(markIndex),
           z: scene.getIndexZ(markIndex),
           team: TeamType.Neutral,
-          type: ItemType.Object,
+          itemType: ItemType.Object,
           subType: GameObjectType.Rune,
           id: gameObjectsId++,
         )
@@ -131,7 +131,7 @@ class SceneReader extends ByteReader {
             x: x,
             y: y,
             z: z,
-            type: type,
+            itemType: type,
             subType: subType,
             id: gameObjectsId++,
             team: team,

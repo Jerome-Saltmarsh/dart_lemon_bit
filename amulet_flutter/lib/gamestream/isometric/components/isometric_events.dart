@@ -530,20 +530,11 @@ class IsometricEvents with IsometricComponent {
           particles.spawnParticleBlockWood(x, y, z);
         }
         break;
-      case GameObjectType.Toilet:
-        audio.play(audio.crate_breaking, x, y, z);
-        for (var i = 0; i < 5; i++) {
-          particles.spawnParticleBlockWood(x, y, z);
-        }
-        break;
       case GameObjectType.Crate_Wooden:
         audio.play(audio.crate_breaking, x, y, z);
         for (var i = 0; i < 5; i++) {
           particles.spawnParticleBlockWood(x, y, z);
         }
-        break;
-
-      case GameObjectType.Credits:
         break;
     }
   }

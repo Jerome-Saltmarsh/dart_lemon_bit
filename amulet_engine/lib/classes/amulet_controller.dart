@@ -1034,7 +1034,7 @@ class AmuletController {
           x: selectedGameObject.x,
           y: selectedGameObject.y,
           z: selectedGameObject.z,
-          type: selectedGameObject.type,
+          type: selectedGameObject.itemType,
           subType: selectedGameObject.subType,
           team: selectedGameObject.team,
         );

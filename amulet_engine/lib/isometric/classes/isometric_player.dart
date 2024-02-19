@@ -639,7 +639,7 @@ class IsometricPlayer extends Character with ByteWriter {
     if (aimTarget is GameObject){
       writeByte(NetworkResponse.Player);
       writeByte(NetworkResponsePlayer.Aim_Target_Type);
-      writeUInt16(aimTarget.type);
+      writeUInt16(aimTarget.itemType);
     }
     if (aimTarget is Character) {
       writeByte(NetworkResponse.Player);
@@ -962,7 +962,7 @@ class IsometricPlayer extends Character with ByteWriter {
     writeByte(NetworkResponse.GameObject);
     writeUInt16(gameObject.id);
     writeBool(gameObject.active);
-    writeByte(gameObject.type);
+    writeByte(gameObject.itemType);
     writeUInt16(gameObject.subType);
     writeUInt16(gameObject.health);
     writeUInt16(gameObject.healthMax);
@@ -1001,7 +1001,7 @@ class IsometricPlayer extends Character with ByteWriter {
       y: gameObject.y,
       z: gameObject.z,
     );
-    writeUInt16(gameObject.type);
+    writeUInt16(gameObject.itemType);
   }
 
   void writePlayerTeam(){
@@ -1069,7 +1069,7 @@ class IsometricPlayer extends Character with ByteWriter {
       writeUInt16(gameObject.health);
       writeUInt16(gameObject.healthMax);
       writeIsometricPosition(gameObject);
-      writeByte(gameObject.type);
+      writeByte(gameObject.itemType);
       writeByte(gameObject.subType);
       return;
     }

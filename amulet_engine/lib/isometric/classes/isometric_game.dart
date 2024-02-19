@@ -242,7 +242,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   GameObject? findGameObjectByType(int type) {
     for (final gameObject in gameObjects) {
-      if (gameObject.type == type) return gameObject;
+      if (gameObject.itemType == type) return gameObject;
     }
     return null;
   }
@@ -1794,7 +1794,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       gameObject.velocityX = 0;
       gameObject.velocityY = 0;
       gameObject.velocityZ = 0;
-      gameObject.type = type;
+      gameObject.itemType = type;
       gameObject.subType = subType;
       gameObject.active = true;
       gameObject.dirty = true;
@@ -1808,7 +1808,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       x: x,
       y: y,
       z: z,
-      type: type,
+      itemType: type,
       subType: subType,
       id: generateId(),
       team: team,

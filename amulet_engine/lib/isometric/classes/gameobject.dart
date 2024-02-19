@@ -6,8 +6,7 @@ class GameObject extends Collider {
   /// Prevents gameobject from being recycled in the object pool until the next frame
   var available = false;
   var id = 0;
-  /// ItemType.dart
-  var type = 0;
+  var itemType = 0;
   var subType = -1;
   var quantity = 0;
   var interactable = false;
@@ -28,7 +27,7 @@ class GameObject extends Collider {
   Function(dynamic src)? onInteract;
 
   @override
-  int get materialType => getMaterialType(type, subType);
+  int get materialType => getMaterialType(itemType, subType);
 
   bool get ignorePointer =>
         !active || (
@@ -56,12 +55,12 @@ class GameObject extends Collider {
     required super.y,
     required super.z,
     required super.team,
-    required this.type,
+    required this.itemType,
     required this.subType,
     required this.id,
     super.radius = 15.0,
     this.health = 0,
-  }) : super(materialType: getMaterialType(type, subType)) {
+  }) : super(materialType: getMaterialType(itemType, subType)) {
     startPositionX = x;
     startPositionY = y;
     startPositionZ = z;
@@ -71,9 +70,9 @@ class GameObject extends Collider {
 
   bool get positionDirty => x != previousX || y != previousY || z != previousZ;
 
-  String get typeName => ItemType.getName(type);
+  String get typeName => ItemType.getName(itemType);
 
-  String get subTypeName => ItemType.getNameSubType(type, subType);
+  String get subTypeName => ItemType.getNameSubType(itemType, subType);
 
   void synchronizePrevious(){
     previousX = x;
@@ -87,7 +86,7 @@ class GameObject extends Collider {
   }
 
   @override
-  String get name => customName ?? ItemType.getNameSubType(type, subType);
+  String get name => customName ?? ItemType.getNameSubType(itemType, subType);
 
   GameObject copy() =>
       GameObject(
@@ -95,7 +94,7 @@ class GameObject extends Collider {
           y: y,
           z: z,
           team: team,
-          type: type,
+          itemType: itemType,
           subType: subType,
           id: id,
       )

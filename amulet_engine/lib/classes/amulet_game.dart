@@ -1081,7 +1081,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   void onGameObjectedAdded(GameObject gameObject) {
     if (gameObject is AmuletGameObject) {
       dispatchGameEventPosition(GameEvent.Amulet_GameObject_Spawned, gameObject);
-      dispatchByte(gameObject.type);
+      dispatchByte(gameObject.itemType);
       dispatchByte(gameObject.subType);
     }
   }

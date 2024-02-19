@@ -59,7 +59,7 @@ class SceneWriter extends ByteWriter {
     writeUInt16(total);
     for (final gameObject in gameObjects){
       if (!gameObject.persistable) continue;
-      writeByte(gameObject.type);
+      writeByte(gameObject.itemType);
       writeByte(gameObject.subType);
       writeByte(gameObject.team);
 
