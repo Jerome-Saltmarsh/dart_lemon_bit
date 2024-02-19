@@ -769,14 +769,16 @@ class AmuletUI {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Align(
-            child: onPressed(
-              action: amulet.windowVisiblePlayerStats.setFalse,
-              child: buildText('x'),
-            ),
-            alignment: Alignment.centerRight,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              buildWatch(amulet.player.name, (t) => buildText(t, color: Colors.orange, bold: true)),
+              onPressed(
+                action: amulet.windowVisiblePlayerStats.setFalse,
+                child: buildText('x'),
+              )
+            ],
           ),
-          buildWatch(amulet.player.name, (t) => buildText(t, color: Colors.orange, bold: true)),
           height16,
           buildText('BONUSES', color: Colors.white70),
           buildWatch(amulet.playerHealthSteal, (healthSteal) {
@@ -1218,14 +1220,21 @@ class AmuletUI {
           ),
           AmuletItemImage(amuletItem: amuletItem, scale: 1.0),
           buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
-          if (masterySword != 0)
-            buildRow(buildIconCasteType(CasteType.Sword), masterySword),
-          if (masteryStaff != 0)
-            buildRow(buildIconCasteType(CasteType.Staff), masteryStaff),
-          if (masteryBow != 0)
-            buildRow(buildIconCasteType(CasteType.Bow), masteryBow),
-          if (masteryCaste != 0)
-            buildRow(buildIconCasteType(CasteType.Caste), masteryCaste),
+          Row(children: [
+            if (masterySword != 0)
+              buildRow(buildIconCasteType(CasteType.Sword), masterySword),
+            width8,
+            if (masteryStaff != 0)
+              buildRow(buildIconCasteType(CasteType.Staff), masteryStaff),
+          ],),
+          Row(children: [
+            if (masteryBow != 0)
+              buildRow(buildIconCasteType(CasteType.Bow), masteryBow),
+            width8,
+            if (masteryCaste != 0)
+              buildRow(buildIconCasteType(CasteType.Caste), masteryCaste),
+          ],),
+
           if (damage != null)
             buildRow(buildIconDamage(), damage),
           if (range != null)

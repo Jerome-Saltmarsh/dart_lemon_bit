@@ -42,5 +42,5 @@ class AmuletGameObject extends GameObject {
   }
 
   @override
-  bool get ignorePointer => amuletItem.isConsumable;
+  bool get ignorePointer => super.ignorePointer || amuletItem.isConsumable;
 }

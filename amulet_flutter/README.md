@@ -16,6 +16,7 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 [RELEASE]
+[fix] ui amulet item container collision 
 [new] skill type fireball level 3
 [new] skill type fireball level 2
 [new] skill type iceball level 2
@@ -25,6 +26,7 @@ ctrl + []               : move caret to code block
 [fix] not striking bug
 [fix] balance amulet items
 [fix] balance amulet fiends
+[fix] remove character type toad
 
 ## 19.02.2024
 [new] ui item comparison table
