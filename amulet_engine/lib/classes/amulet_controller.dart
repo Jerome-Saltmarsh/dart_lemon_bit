@@ -643,6 +643,9 @@ class AmuletController {
       case NetworkRequestAmulet.Spawn_Random_Enemy:
         amuletGame.spawnRandomEnemy();
         break;
+      case NetworkRequestAmulet.Toggle_Debug_Enabled:
+        amuletPlayer.toggleDebugEnabled();
+        break;
       case NetworkRequestAmulet.Acquire_Amulet_Item:
         final amuletItemIndex = arguments.tryGetArgInt('--index');
         final amuletItem = AmuletItem.values.tryGet(amuletItemIndex);

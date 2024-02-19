@@ -13,4 +13,5 @@ enum NetworkRequestAmulet {
   Select_Skill_Type_Right,
   Refill_Player_Health_Magic,
   Use_Flask,
+  Toggle_Debug_Enabled,
 }

@@ -814,6 +814,14 @@ extension isometricDebugUI on IsometricDebug {
   Widget buildTabAmulet() => GSContainer(
       child: Column(
         children: [
+          onPressed(
+              action: amulet.toggleDebugEnabled,
+              child: buildRowWatch(
+                  'debug enabled',
+                  amulet.playerDebugEnabled,
+                  buildText,
+              ),
+          ),
           buildRowRefresh('world_row', () => amulet.worldRow),
           buildRowRefresh('world_column', () => amulet.worldColumn),
           buildText('CHANGE GAME'),

@@ -35,6 +35,7 @@ class Amulet extends IsometricGame {
   final fiendCountTotal = Watch(0);
   final fiendCountPercentage = Watch(0.0);
   final flaskPercentage = Watch(0.0);
+  final playerDebugEnabled = WatchBool(false);
   final playerPerformFrameVelocity = Watch(0.0);
 
   var worldMapClrs = Int32List(0);
@@ -636,6 +637,11 @@ class Amulet extends IsometricGame {
   void useFlask() =>
       server.sendNetworkRequestAmulet(
         NetworkRequestAmulet.Use_Flask
+      );
+
+  void toggleDebugEnabled() =>
+      server.sendNetworkRequestAmulet(
+          NetworkRequestAmulet.Toggle_Debug_Enabled
       );
 }
 

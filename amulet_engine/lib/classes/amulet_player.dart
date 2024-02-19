@@ -16,7 +16,6 @@ import 'talk_option.dart';
 import '../isometric/src.dart';
 
 
-
 class AmuletPlayer extends IsometricPlayer with
     Equipped,
     Skilled,
@@ -50,7 +49,7 @@ class AmuletPlayer extends IsometricPlayer with
   var cachePerformFrameVelocity = -1.0;
   var cacheHealthSteal = -1;
   var cacheMagicSteal = -1;
-  var debugEnabled = true;
+  var debugEnabled = false;
 
   var npcText = '';
   var npcName = '';
@@ -848,6 +847,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeSkillsLeftRight();
     writeSkillTypes();
     writeFiendCount();
+    writeDebugEnabled();
   }
 
   void writeSceneName() {
@@ -1470,6 +1470,17 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Skill_Active_Left);
     writeBool(skillActiveLeft);
+  }
+
+  void toggleDebugEnabled() {
+    debugEnabled = !debugEnabled;
+    writeDebugEnabled();
+  }
+
+  void writeDebugEnabled(){
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Player_Debug_Enabled);
+    writeBool(debugEnabled);
   }
 
 }
