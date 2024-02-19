@@ -13,8 +13,10 @@ extension AmuletRender on Amulet {
     }
 
     renderActivatedPower();
-    renderDebug();
 
+    if (amulet.playerDebugEnabled.value){
+      renderDebug();
+    }
   }
 
   void renderPlayerRunLine({Color color = Colors.purple}) {
