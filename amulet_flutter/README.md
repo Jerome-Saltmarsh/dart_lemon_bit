@@ -16,6 +16,7 @@ alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
 [RELEASE]
+[fix] npc roam 
 [fix] ui amulet item container collision 
 [new] skill type fireball level 3
 [new] skill type fireball level 2
@@ -23,11 +24,13 @@ ctrl + []               : move caret to code block
 [new] skill type iceball level 3
 [new] scene witches lair 1
 [new] scene witches lair 2
-[fix] not striking bug
 [fix] balance amulet items
 [fix] balance amulet fiends
 
 ## 19.02.2024
+[fix] portals in witches lair
+[fix] amulet item still selectable after disappearing
+[fix] not striking bug
 [fix] remove character type toad
 [new] ui item comparison table
 [fix] remove skill type teleport
