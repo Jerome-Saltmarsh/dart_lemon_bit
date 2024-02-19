@@ -51,7 +51,6 @@ class Character extends Collider {
   var interacting = false;
   var targetPerceptible = false;
   var hurtable = true;
-  var clearTargetOnPerformAction = true;
   var characterType = 0;
   var autoTarget = true;
   var autoTargetRange = 300.0;
@@ -472,6 +471,7 @@ class Character extends Collider {
 
     characterState = CharacterState.Idle;
     actionDuration = -1;
+    actionFrame = -1;
     clearFrame();
   }
 

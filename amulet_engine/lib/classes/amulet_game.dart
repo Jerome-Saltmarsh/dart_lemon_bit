@@ -220,7 +220,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       z: z,
       fiendType: fiendType,
     )
-      ..clearTargetOnPerformAction = fiendType.clearTargetOnPerformAction
       ..weaponHitForce = 2;
 
     character.roamEnabled = true;
@@ -239,6 +238,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   @override
   void performCharacterEnd(Character character){
      if (character is AmuletFiend){
+
+       if (character.fiendType.clearTargetOnPerformAction){
+         character.clearTarget();
+       }
+
         if (character.characterStateAttacking){
           super.performCharacterEnd(character);
           final fiendType = character.fiendType;
