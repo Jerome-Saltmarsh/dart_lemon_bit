@@ -106,12 +106,6 @@ class IsometricRender with IsometricComponent {
       return;
     }
 
-    // if (options.playModeMulti && !options.websocket.connected) {
-    // if (!server.connected) {
-    //   images.cacheImages();
-    //   return;
-    // }
-
     if (!drawCanvasEnabled){
       return;
     }
@@ -921,5 +915,6 @@ class IsometricRender with IsometricComponent {
 
 
   }
+
 
 }

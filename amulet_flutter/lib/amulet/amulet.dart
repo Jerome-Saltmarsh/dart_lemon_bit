@@ -41,6 +41,9 @@ class Amulet extends IsometricGame {
   var worldMapDsts = Float32List(0);
   var worldMapSrcs = Float32List(0);
 
+  var debugLinesTotal = 0;
+  final debugLines = Int16List(10000);
+
   var worldRow = 0;
   var worldColumn = 0;
 

@@ -120,6 +120,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Quest_Main:
          readQuestMain();
          break;
+       case NetworkResponseAmulet.Debug:
+         readNetworkResponseAmuletDebug();
+         break;
        case NetworkResponseAmulet.Aim_Target_Item_Type:
          readAimTargetItemType();
          break;
@@ -382,4 +385,18 @@ extension AmuletParser on IsometricParser {
 
   void readPlayerSkillActiveLeft() =>
       amulet.playerSkillActiveLeft.value = readBool();
+
+  void readNetworkResponseAmuletDebug() {
+     final debugLines = amulet.debugLines;
+     var i = 0;
+     while (readBool()) {
+       debugLines[i++] = readInt16();
+       debugLines[i++] = readInt16();
+       debugLines[i++] = readInt16();
+       debugLines[i++] = readInt16();
+       debugLines[i++] = readInt16();
+       debugLines[i++] = readInt16();
+     }
+     amulet.debugLinesTotal = i ~/ 6;
+  }
 }

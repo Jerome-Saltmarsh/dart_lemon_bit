@@ -50,6 +50,7 @@ class AmuletPlayer extends IsometricPlayer with
   var cachePerformFrameVelocity = -1.0;
   var cacheHealthSteal = -1;
   var cacheMagicSteal = -1;
+  var debugEnabled = true;
 
   var npcText = '';
   var npcName = '';
@@ -260,6 +261,11 @@ class AmuletPlayer extends IsometricPlayer with
     writePerformFrameVelocity();
     writeHealthSteal();
     writeMagicSteal();
+
+    if (debugEnabled){
+      writeDebug();
+    }
+
     super.writePlayerGame();
   }
 
@@ -296,25 +302,17 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   void writeDebug() {
-    if (!debugging) return;
-
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Debug);
-    var total = 0;
     final characters = game.characters;
     for (final character in characters) {
-      if (character is AmuletPlayer && onScreenPosition(character)) {
-        total++;
-      }
+        final target = character.target;
+        if (target == null) continue;
+        writeTrue();
+        writePosition(character);
+        writePosition(target);
     }
-    writeUInt16(total);
-
-    for (final character in characters) {
-      if (character is AmuletPlayer && onScreenPosition(character)) {
-         writeIsometricPosition(character);
-         writeString(character.name);
-      }
-    }
+    writeFalse();
   }
 
   bool acquireAmuletItem(AmuletItem amuletItem){

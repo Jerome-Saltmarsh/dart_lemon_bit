@@ -13,6 +13,8 @@ extension AmuletRender on Amulet {
     }
 
     renderActivatedPower();
+    renderDebug();
+
   }
 
   void renderPlayerRunLine({Color color = Colors.purple}) {
@@ -95,5 +97,23 @@ extension AmuletRender on Amulet {
         position: player.position,
         radius: radius,
       );
+
+  void renderDebug() {
+
+    final total = amulet.debugLinesTotal;
+    final debugLines = amulet.debugLines;
+    engine.setPaintColorWhite();
+    for (var i = 0; i < total; i++) {
+       final j = i * 6;
+       render.line(
+           debugLines[j + 0].toDouble(),
+           debugLines[j + 1].toDouble(),
+           debugLines[j + 2].toDouble(),
+           debugLines[j + 3].toDouble(),
+           debugLines[j + 4].toDouble(),
+           debugLines[j + 5].toDouble(),
+       );
+    }
+  }
 }
 
