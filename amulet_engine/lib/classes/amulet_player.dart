@@ -442,6 +442,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeEquippedWeaponAttackSpeed();
     writeEquippedWeaponAreaDamage();
     writePlayerCriticalHitPoints();
+    writeSkillActiveLeft();
   }
 
   void checkAssignedSkillTypes() {
@@ -726,6 +727,47 @@ class AmuletPlayer extends IsometricPlayer with
      writeByte(audioType.index);
   }
 
+  bool validateSkillType(SkillType skillType){
+    switch (skillType.casteType) {
+      case CasteType.Bow:
+        if (!equippedWeaponBow) {
+          writeGameError(GameError.Bow_Required);
+          return false;
+        }
+        break;
+      case CasteType.Staff:
+        if (!equippedWeaponStaff) {
+          writeGameError(GameError.Staff_Required);
+          return false;
+        }
+        break;
+      case CasteType.Sword:
+        if (!equippedWeaponSword) {
+          writeGameError(GameError.Sword_Required);
+          return false;
+        }
+        break;
+      case CasteType.Melee:
+        if (!equippedWeaponMelee) {
+          writeGameError(GameError.Melee_Weapon_Required);
+          return false;
+        }
+        break;
+      default:
+        break;
+    }
+
+    final magicCost = getSkillTypeMagicCost(skillType);
+    if (magicCost > magic) {
+      writeGameError(GameError.Insufficient_Magic);
+      clearTarget();
+      return false;
+    }
+
+    return true;
+
+  }
+
   @override
   void attack() {
     if (deadInactiveOrBusy || skillActive == SkillType.None) {
@@ -991,18 +1033,31 @@ class AmuletPlayer extends IsometricPlayer with
 
   void performSkillLeft(){
     activeSkillActiveLeft();
-    performForceAttack();
+    if (skillActiveLeft) {
+      performForceAttack();
+    }
   }
 
   void performSkillRight(){
     activeSkillActiveRight();
-    performForceAttack();
+    if (!skillActiveLeft){
+      performForceAttack();
+    }
+
   }
 
   @override
   void setSkillActiveLeft(bool value) {
     if (deadOrBusy) return;
-    super.setSkillActiveLeft(value);
+
+    if (value && validateSkillType(skillTypeLeft)){
+      super.setSkillActiveLeft(value);
+      return;
+    }
+    if (!value && validateSkillType(skillTypeRight)){
+      super.setSkillActiveLeft(value);
+      return;
+    }
   }
 
   bool get equippedWeaponBow => equippedWeapon?.isWeaponBow ?? false;
@@ -1407,5 +1462,18 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(NetworkResponseAmulet.Player_Critical_Hit_Points);
     writeByte(totalCriticalHitPoints);
   }
+
+  @override
+  set skillActiveLeft(bool value) {
+    super.skillActiveLeft = value;
+    writeSkillActiveLeft();
+  }
+
+  void writeSkillActiveLeft(){
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Player_Skill_Active_Left);
+    writeBool(skillActiveLeft);
+  }
+
 }
 

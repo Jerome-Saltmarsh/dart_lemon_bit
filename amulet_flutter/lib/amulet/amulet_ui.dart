@@ -1355,17 +1355,37 @@ class AmuletUI {
   }
 
 
-  Widget buildControlSkillTypeLeft() =>  buildControlSkillType(
-    onSelected: amulet.selectSkillTypeLeft,
-    watch: amulet.playerSkillLeft,
-    menuOpen: amulet.windowVisibleSkillLeft,
-  );
+  Widget buildControlSkillTypeLeft() {
+    final control = buildControlSkillType(
+      onSelected: amulet.selectSkillTypeLeft,
+      watch: amulet.playerSkillLeft,
+      menuOpen: amulet.windowVisibleSkillLeft,
+    );
 
-  Widget buildControlSkillTypeRight() => buildControlSkillType(
-    onSelected: amulet.selectSkillTypeRight,
-    watch: amulet.playerSkillRight,
-    menuOpen: amulet.windowVisibleSkillRight,
-  );
+    final bordered = buildBorder(child: control);
+
+    return buildWatch(amulet.playerSkillActiveLeft, (playerSkillActiveLeft){
+     return playerSkillActiveLeft ? bordered : control;
+    });
+
+  }
+
+  Widget buildControlSkillTypeRight() {
+  //   return buildControlSkillType(
+  //   onSelected: amulet.selectSkillTypeRight,
+  //   watch: amulet.playerSkillRight,
+  //   menuOpen: amulet.windowVisibleSkillRight,
+  // );
+    final control = buildControlSkillType(
+      onSelected: amulet.selectSkillTypeRight,
+      watch: amulet.playerSkillRight,
+      menuOpen: amulet.windowVisibleSkillRight,
+    );
+    final bordered = buildBorder(child: control);
+    return buildWatch(amulet.playerSkillActiveLeft, (playerSkillActiveLeft){
+      return !playerSkillActiveLeft ? bordered : control;
+    });
+  }
 
   static const containerSkillTypeWidth = 94.0;
 

@@ -111,6 +111,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.World_Map_Bytes:
          readWorldMapBytes();
          break;
+       case NetworkResponseAmulet.Player_Skill_Active_Left:
+         readPlayerSkillActiveLeft();
+         break;
        case NetworkResponseAmulet.World_Map_Locations:
          readWorldMapLocations();
          break;
@@ -376,4 +379,7 @@ extension AmuletParser on IsometricParser {
 
   void readPlayerCriticalHitPoints() =>
       amulet.playerCriticalHitPoints.value = readByte();
+
+  void readPlayerSkillActiveLeft() =>
+      amulet.playerSkillActiveLeft.value = readBool();
 }
