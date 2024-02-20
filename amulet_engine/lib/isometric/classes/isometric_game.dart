@@ -45,7 +45,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required this.environment,
   }) {
     customInit();
-    loadGameObjectsFromScene();
+    // loadGameObjectsFromScene();
 
     for (final gameObject in gameObjects) {
       onGameObjectSpawned(gameObject);
@@ -1072,7 +1072,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     for (var i = 0; i < numberOfCollidersMinusOne; i++) {
       final colliderI = colliders[i];
       if (!colliderI.collidable) continue;
-      // if (!colliderI.active || !colliderI.collidable) continue;
       final colliderIOrder = colliderI.order;
       final colliderIRadius = colliderI.radius;
       final colliderIBoundsBottom = colliderI.boundsBottom;
@@ -1111,11 +1110,10 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
   }
 
-  void resolveCollisionsBetween(List<Collider> collidersA,
-      List<Collider> collidersB,) {
-    // final aLength = collidersA.length;
-    // final bLength = collidersB.length;
-
+  void resolveCollisionsBetween(
+      List<Collider> collidersA,
+      List<Collider> collidersB,
+  ) {
     var bStart = 0;
     for (var indexA = 0; indexA < collidersA.length; indexA++) {
       final colliderA = collidersA[indexA];
@@ -1129,9 +1127,9 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       for (var indexB = bStart; indexB < collidersB.length; indexB++) {
         final colliderB = collidersB[indexB];
         if (!colliderB.collidable) continue;
-        final colliderBOrder = colliderB.order;
+        final colliderBorder = colliderB.order;
 
-        final orderDiff = colliderBOrder - colliderAOrder;
+        final orderDiff = colliderBorder - colliderAOrder;
 
         if (orderDiff < -colliderARadius - colliderB.radius) {
           bStart++;

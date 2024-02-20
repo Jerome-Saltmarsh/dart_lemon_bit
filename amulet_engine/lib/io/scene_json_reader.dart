@@ -53,6 +53,13 @@ GameObject readGameObjectFromJson(Json gameObjectJson){
    final team = gameObjectJson.getInt('team');
 
    if (itemType == ItemType.Object){
+
+     final healthMax = const [
+       GameObjectType.Wooden_Chest,
+       GameObjectType.Crate_Wooden,
+       GameObjectType.Barrel,
+     ].contains(subType) ? 1 : 0;
+
      return GameObject(
          x: x,
          y: y,
@@ -62,6 +69,8 @@ GameObject readGameObjectFromJson(Json gameObjectJson){
          subType: subType,
          id: id,
      )
+       ..healthMax = healthMax
+       ..health = healthMax
        ..persistable = true
        ..frameSpawned = frameSpawned;
    }

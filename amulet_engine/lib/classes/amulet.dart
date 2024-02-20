@@ -176,6 +176,7 @@ class Amulet {
 
     for (final game in games) {
       game.spawnMarkPortals();
+      game.loadGameObjectsFromScene();
     }
   }
 
