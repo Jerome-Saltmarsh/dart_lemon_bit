@@ -800,9 +800,10 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
 
     final target = character.target;
-    if (target is AmuletGameObject){
-      character.clearTarget();
-    }
+
+    // if (target is AmuletGameObject){
+    //   character.clearTarget();
+    // }
 
     if (character.busy || !character.autoTarget){
       return;

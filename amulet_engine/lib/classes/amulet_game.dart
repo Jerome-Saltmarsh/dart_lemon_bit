@@ -1131,7 +1131,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     if (
       player.deadOrBusy ||
-      // !player.active ||
       player.debugging ||
       !player.controlsEnabled
     ) return;
@@ -1160,12 +1159,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       player.mouseLeftDownDuration = 0;
       player.mouseLeftDownIgnore = false;
     }
-
-    // if (mouseLeftClicked && player.activeAmuletItemSlot != null) {
-    //   player.useActivatedPower();
-    //   player.mouseLeftDownIgnore = true;
-    //   return;
-    // }
 
     if (mouseLeftDown && !player.mouseLeftDownIgnore) {
       final aimTarget = player.aimTarget;
