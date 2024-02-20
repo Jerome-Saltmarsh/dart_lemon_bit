@@ -222,8 +222,6 @@ class Character extends Collider {
 
   bool get deadOrBusy => dead || busy;
 
-  bool get deadInactiveOrBusy => dead || busy;
-
   bool get canChangeEquipment => !dead || characterStateChanging;
 
   bool get targetSet => target != null;
@@ -536,7 +534,7 @@ class Character extends Collider {
   void setCharacterStateCasting({
     required int duration,
   }){
-    if (deadInactiveOrBusy){
+    if (deadOrBusy){
       return;
     }
     setActionFrame((duration * casteActionFramePercentage).toInt());
@@ -550,7 +548,7 @@ class Character extends Collider {
   void setCharacterStateFire({
     required int duration,
   }){
-    if (deadInactiveOrBusy){
+    if (deadOrBusy){
       return;
     }
     if (duration <= 0){
@@ -567,7 +565,7 @@ class Character extends Collider {
   void setCharacterStateStriking({
     required int duration,
   }){
-    if (deadInactiveOrBusy){
+    if (deadOrBusy){
       return;
     }
 
@@ -599,6 +597,12 @@ class Character extends Collider {
       duration: 0,
     );
 
+  @override
+  bool get collidable => alive;
+
+  @override
+  bool get hitable => alive;
+
   void setCharacterState({
     required int value,
     required int duration,
@@ -607,7 +611,7 @@ class Character extends Collider {
     assert (value != CharacterState.Dead); // use game.setCharacterStateDead
     assert (value != CharacterState.Hurt); // use character.setCharacterStateHurt
 
-    if (deadInactiveOrBusy){
+    if (deadOrBusy){
       return;
     }
 

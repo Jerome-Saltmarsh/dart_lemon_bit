@@ -765,7 +765,7 @@ class AmuletPlayer extends IsometricPlayer with
 
   @override
   void attack() {
-    if (deadInactiveOrBusy || skillActive == SkillType.None) {
+    if (deadOrBusy || skillActive == SkillType.None) {
       return;
     }
 

@@ -44,7 +44,7 @@ class WitchesLair2 extends AmuletGame {
 
   @override
   void updateCharacterAction(Character character) {
-    if (character.deadInactiveOrBusy) {
+    if (character.deadOrBusy) {
       return;
     }
 

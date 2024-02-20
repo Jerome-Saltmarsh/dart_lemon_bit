@@ -18,8 +18,6 @@ ctrl + []               : move caret to code block
 REMINDER: IT DOESN'T NEED TO BE PERFECT
 
 [RELEASE]
-[new] destructible gameobject chest
-[new] destructible gameobject barrel
 [fix] balance helms
 [fix] boss fight
 [fix] npc roam 
@@ -31,6 +29,12 @@ REMINDER: IT DOESN'T NEED TO BE PERFECT
 [new] skill type iceball level 3
 [new] skill type split_shot level 3
 [new] mark type fiend count
+
+## 20.02.2024
+[ref] remove active from collider
+[new] destructible gameobject chest
+[new] destructible gameobject barrel
+[new] destructible gameobject crate
 
 ## 19.02.2024
 [new] scene witches lair 1

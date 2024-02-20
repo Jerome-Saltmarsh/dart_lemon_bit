@@ -10,8 +10,6 @@ import 'position.dart';
 
 abstract class Collider extends Position {
   /// do not mutate directly use game.deactivateCollider
-  // var active = true;
-
   var velocityX = 0.0;
   var velocityY = 0.0;
   var velocityZ = 0.0;
