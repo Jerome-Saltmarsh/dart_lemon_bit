@@ -37,7 +37,6 @@ Json writeGameObjectToJson(GameObject gameObject){
   json['item_type'] = gameObject.itemType;
   json['sub_type'] = gameObject.subType;
   json['deactive_timer'] = gameObject.deactivationTimer;
-  // json['frame_spawned'] = gameObject.frameSpawned;
   json['team'] = gameObject.team;
   json['id'] = gameObject.id;
   return json;

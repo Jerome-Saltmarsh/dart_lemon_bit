@@ -741,6 +741,10 @@ class AmuletGameTutorial extends AmuletGame {
         sceneKey: key,
         subType: GameObjectType.Crystal_Glowing_True,
         team: TeamType.Alone,
+        persistable: false,
+        interactable: true,
+        health: 0,
+        deactivationTimer: 0,
       )
         ..hitable = false
         ..fixed = true
@@ -753,6 +757,10 @@ class AmuletGameTutorial extends AmuletGame {
         sceneKey: sceneKey,
         subType: GameObjectType.Crystal_Glowing_False,
         team: TeamType.Alone,
+        persistable: false,
+        interactable: true,
+        health: 0,
+        deactivationTimer: 0,
       )
       ..hitable = true
       ..fixed = true
@@ -765,11 +773,19 @@ class AmuletGameTutorial extends AmuletGame {
     required String sceneKey,
     required int subType,
     required int team,
+    required int health,
+    required int deactivationTimer,
+    required bool persistable,
+    required bool interactable,
   }) => spawnGameObjectAtIndex(
         index: getSceneKey(sceneKey),
         type: ItemType.Object,
         subType: subType,
         team: team,
+        persistable: persistable,
+        interactable: interactable,
+        health: health,
+        deactivationTimer: deactivationTimer,
       );
 
   void onStruckCrystal2(AmuletPlayer player) {

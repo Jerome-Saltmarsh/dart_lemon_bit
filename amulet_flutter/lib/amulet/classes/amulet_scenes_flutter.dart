@@ -24,12 +24,12 @@ class AmuletScenesFlutter extends AmuletScenes {
       return;
     }
 
-    final sceneWriter = SceneWriter();
-    writeBytesToFile(
-      fileName: '${scene.name}.scene',
-      directory: 'assets/scenes/',
-      contents: sceneWriter.compileScene(scene, gameObjects: true),
-    );
+    // final sceneWriter = SceneWriter();
+    // writeBytesToFile(
+    //   fileName: '${scene.name}.scene',
+    //   directory: 'assets/scenes/',
+    //   contents: sceneWriter.compileScene(scene, gameObjects: true),
+    // );
 
     writeJsonToFile(
         fileName: '${scene.name}.json',

@@ -65,15 +65,17 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
            type: ItemType.Object,
            subType: GameObjectType.Interactable,
            team: TeamType.Neutral,
+           persistable: false,
+           interactable: true,
+           health: 0,
+           deactivationTimer: 0,
          );
          portal.label = amuletScene.name;
-         portal.interactable = true;
          portal.fixed = true;
          portal.gravity = false;
          portal.hitable = false;
          portal.collectable = false;
          portal.collidable = false;
-         portal.persistable = false;
          portal.destroyable = false;
          portal.onInteract = (dynamic src){
            if (src is! AmuletPlayer){
@@ -940,24 +942,22 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required double y,
     required double z,
     int? deactivationTimer
-  }) {
-    final amuletGameObject = GameObject(
-      x: x,
-      y: y,
-      z: z,
-      itemType: ItemType.Amulet_Item,
-      subType: item.index,
-      id: generateId(),
-      team: TeamType.Neutral,
-      interactable: true,
-      deactivationTimer: deactivationTimer ?? gameObjectDeactivationTimer,
-    )
-      ..velocityZ = 5
-      ..setVelocity(randomAngle(), 1.0);
-
-    add(amuletGameObject);
-    return amuletGameObject;
-  }
+  }) =>
+      spawnGameObject(
+        x: x,
+        y: y,
+        z: z,
+        type: ItemType.Amulet_Item,
+        subType: item.index,
+        team: TeamType.Neutral,
+        persistable: true,
+        interactable: true,
+        deactivationTimer: deactivationTimer ?? gameObjectDeactivationTimer,
+        health: 0,
+      )
+        ..velocityZ = 5
+        ..setVelocity(randomAngle(), 1.0)
+      ;
 
   @override
   void customOnNodeDestroyed(int nodeType, int nodeIndex, int nodeOrientation) {
@@ -1264,9 +1264,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       type: ItemType.Object,
       subType: GameObjectType.Shrine,
       team: TeamType.Neutral,
+      health: 0,
+      interactable: true,
+      persistable: false,
+      deactivationTimer: 0,
     );
-    shrineObject.persistable = false;
-    shrineObject.interactable = true;
     shrineObject.physical = false;
     shrineObject.hitable = false;
     shrineObject.collectable = false;
@@ -1306,6 +1308,42 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
        spawnGameObjectShrine(i);
     }
   }
+
+  @override
+  bool isGameObjectPersistable(int type, int subType){
+     if (type == ItemType.Amulet_Item) {
+       return true;
+     }
+     if (type == ItemType.Object) {
+       return subType != GameObjectType.Interactable;
+     }
+     throw Exception('amuletGame.isGameObjectPersistable(type: $type, subType: $subType)');
+  }
+
+  GameObject spawnGameObjectType({
+    required double x,
+    required double y,
+    required double z,
+    required int gameObjectType,
+  }) =>
+      spawnGameObject(
+        x: x,
+        y: y,
+        z: z,
+        type: ItemType.Object,
+        subType: gameObjectType,
+        team: TeamType.Neutral,
+        health: destroyableGameObjectTypes.contains(gameObjectType) ? 1 : 0,
+        interactable: gameObjectType == GameObjectType.Interactable,
+        persistable: gameObjectType == GameObjectType.Interactable,
+        deactivationTimer: -1,
+    );
+
+  static const destroyableGameObjectTypes = [
+    GameObjectType.Crate_Wooden,
+    GameObjectType.Wooden_Chest,
+    GameObjectType.Barrel,
+  ];
 }
 
 

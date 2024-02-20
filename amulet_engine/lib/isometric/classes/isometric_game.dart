@@ -1748,6 +1748,10 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required int type,
     required int subType,
     required int team,
+    required int health,
+    required int deactivationTimer,
+    required bool persistable,
+    required bool interactable,
   }) {
     final scene = this.scene;
     return spawnGameObject(
@@ -1757,6 +1761,10 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         type: type,
         subType: subType,
         team: team,
+        health: health,
+        persistable: persistable,
+        interactable: interactable,
+        deactivationTimer: deactivationTimer,
       );
   }
 
@@ -1767,6 +1775,10 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required int type,
     required int subType,
     required int team,
+    required int health,
+    required bool interactable,
+    required bool persistable,
+    required int deactivationTimer,
   }) {
     final instance = GameObject(
       x: x,
@@ -1776,7 +1788,12 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       subType: subType,
       id: generateId(),
       team: team,
+      persistable: persistable,
+      health: health,
+      interactable: interactable,
+      deactivationTimer: deactivationTimer,
     );
+
     instance.dirty = true;
     gameObjects.add(instance);
     onGameObjectSpawned(instance);

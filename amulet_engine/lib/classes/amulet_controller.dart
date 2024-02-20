@@ -125,16 +125,7 @@ class AmuletController {
             handleIsometricNetworkRequestEditGameObject(arguments);
             break;
           case NetworkRequestEdit.Load_Scene:
-            try {
-              final args = arguments.map(int.parse).toList(growable: false);
-              final scene = SceneReader.readScene(
-                Uint8List.fromList(args.sublist(2, args.length)),
-              );
-              // joinGameEditorScene(scene);
-            } catch (err) {
-              sendGameError(GameError.Load_Scene_Failed);
-            }
-            return;
+            throw Exception('not implemented');
           case NetworkRequestEdit.Toggle_Game_Running:
             if (!isLocalMachine && game is! IsometricEditor) return;
             game.running = !game.running;
@@ -221,19 +212,20 @@ class AmuletController {
             break;
 
           case NetworkRequestEdit.Download:
-            final sceneWriter = SceneWriter();
-            final compiled = sceneWriter.compileScene(player.scene, gameObjects: true);
-            player.writeByte(NetworkResponse.Scene);
-            player.writeByte(NetworkResponseScene.Download_Scene);
-
-            if (player.scene.name.isEmpty){
-              player.scene.name = generateRandomName();
-            }
-
-            player.writeString(player.scene.name);
-            player.writeUInt16(compiled.length);
-            player.writeBytes(compiled);
-            break;
+            throw Exception('not implemented');
+            // final sceneWriter = SceneWriter();
+            // final compiled = sceneWriter.compileScene(player.scene, gameObjects: true);
+            // player.writeByte(NetworkResponse.Scene);
+            // player.writeByte(NetworkResponseScene.Download_Scene);
+            //
+            // if (player.scene.name.isEmpty){
+            //   player.scene.name = generateRandomName();
+            // }
+            //
+            // player.writeString(player.scene.name);
+            // player.writeUInt16(compiled.length);
+            // player.writeBytes(compiled);
+            // break;
 
           case NetworkRequestEdit.Scene_Set_Floor_Type:
             final nodeType = parseArg2(arguments);
@@ -976,13 +968,11 @@ class AmuletController {
         if (index >= scene.volume) {
           return errorInvalidClientRequest();
         }
-        final instance = player.game.spawnGameObject(
+        final instance = player.amuletGame.spawnGameObjectType(
           x: scene.getIndexX(index) + Node_Size_Half,
           y: scene.getIndexY(index) + Node_Size_Half,
           z: scene.getIndexZ(index),
-          type: ItemType.Object,
-          subType: type,
-          team: 0, // TODO
+          gameObjectType: type,
         );
         player.editorSelectedGameObject = instance;
         break;
@@ -1050,7 +1040,14 @@ class AmuletController {
           type: selectedGameObject.itemType,
           subType: selectedGameObject.subType,
           team: selectedGameObject.team,
-        );
+          persistable: selectedGameObject.persistable,
+          interactable: selectedGameObject.interactable,
+          health: selectedGameObject.health,
+          deactivationTimer: selectedGameObject.deactivationTimer,
+        )
+          ..healthMax = selectedGameObject.healthMax
+          ..health = selectedGameObject.health
+        ;
         player.editorSelectedGameObject = duplicated;
         break;
 

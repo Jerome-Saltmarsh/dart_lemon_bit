@@ -18,8 +18,7 @@ ctrl + []               : move caret to code block
 REMINDER: IT DOESN'T NEED TO BE PERFECT
 
 [RELEASE]
-[fix] gameobject persist gameobject_amulet
-[fix] gameobject caching
+[fix] persist gameobject amulet
 [fix] balance amulet fiends
 [fix] balance amulet items
 [fix] boss fight
@@ -30,6 +29,10 @@ REMINDER: IT DOESN'T NEED TO BE PERFECT
 [new] skill type iceball level 3
 [new] skill type split_shot level 3
 [new] mark type fiend count
+[new] interactable node types
+
+## 21.02.2024
+[ref] delete class amulet gameobject 
 
 ## 20.02.2024
 [fix] npc roam

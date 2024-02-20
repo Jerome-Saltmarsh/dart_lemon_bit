@@ -46,49 +46,30 @@ GameObject readGameObjectFromJson(Json gameObjectJson){
    final itemType = gameObjectJson.getInt('item_type');
    final subType = gameObjectJson.getInt('sub_type');
    final deactivateTimer = gameObjectJson.getInt('deactive_timer');
-   final frameSpawned = gameObjectJson.getInt('frame_spawned');
    final id = gameObjectJson.getInt('id');
    final team = gameObjectJson.getInt('team');
 
-   if (itemType == ItemType.Object){
+   var health = 0;
 
-     final healthMax = const [
-       GameObjectType.Wooden_Chest,
-       GameObjectType.Crate_Wooden,
-       GameObjectType.Barrel,
-     ].contains(subType) ? 1 : 0;
-
-     return GameObject(
-         x: x,
-         y: y,
-         z: z,
-         team: team,
-         itemType: itemType,
-         subType: subType,
-         id: id,
-     )
-       ..healthMax = healthMax
-       ..health = healthMax
-       ..persistable = true
-     ;
-       // ..frameSpawned = frameSpawned;
+   if (itemType == ItemType.Object && const [
+     GameObjectType.Wooden_Chest,
+     GameObjectType.Crate_Wooden,
+     GameObjectType.Barrel,
+   ].contains(subType)){
+      health = 1;
    }
 
-   if (itemType == ItemType.Amulet_Item){
-     return GameObject(
+   return GameObject(
        x: x,
        y: y,
        z: z,
-       id: id,
-       itemType: ItemType.Amulet_Item,
+       team: team,
+       itemType: itemType,
        subType: subType,
-       // frameSpawned: frameSpawned,
+       id: id,
+       health: health,
        deactivationTimer: deactivateTimer,
-       team: TeamType.Neutral,
-     )
-       ..persistable = true;
-   }
-
-   throw Exception('cannot parse gameobject item_type $itemType');
+       persistable: true,
+   );
 }
 

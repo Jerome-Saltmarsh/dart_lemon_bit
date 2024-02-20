@@ -57,6 +57,7 @@ class GameObject extends Collider {
     required this.itemType,
     required this.subType,
     required this.id,
+    required this.persistable,
     super.radius = 15.0,
     this.health = 0,
     this.interactable = false,
@@ -98,6 +99,7 @@ class GameObject extends Collider {
           itemType: itemType,
           subType: subType,
           id: id,
+          persistable: persistable,
       )
         ..interactable = interactable
         ..collectable = collectable
