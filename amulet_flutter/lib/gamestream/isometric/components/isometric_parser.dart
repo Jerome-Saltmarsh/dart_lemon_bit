@@ -197,11 +197,6 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
         readGameObjects();
         break;
 
-      case NetworkResponseIsometric.Player_Controls:
-        player.controlsCanTargetEnemies.value = readBool();
-        player.controlsRunInDirectionEnabled.value = readBool();
-        break;
-
       case NetworkResponseIsometric.Seconds_Per_Frame:
         options.secondsPerFrame.value = readUInt16();
         break;

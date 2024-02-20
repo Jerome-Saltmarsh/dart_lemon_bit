@@ -62,8 +62,6 @@ class IsometricPlayer with IsometricComponent {
   final healthPercentage = Watch(0.0);
   final weaponCooldown = Watch(1.0);
   final credits = Watch(0);
-  final controlsCanTargetEnemies = Watch(false);
-  final controlsRunInDirectionEnabled = Watch(false);
 
   late final gameDialog = Watch<GameDialog?>(
       null, onChanged: onChangedGameDialog);
@@ -150,11 +148,6 @@ class IsometricPlayer with IsometricComponent {
     }
     return false;
   }
-
-  void toggleControlsCanTargetEnemies() =>
-      server.sendIsometricRequest(
-          NetworkRequestIsometric.Toggle_Controls_Can_Target_Enemies
-      );
 
   void setPosition({double? x, double? y, double? z}){
     if (x != null){

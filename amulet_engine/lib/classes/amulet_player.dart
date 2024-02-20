@@ -72,7 +72,7 @@ class AmuletPlayer extends IsometricPlayer with
     required super.z,
   }) : super(game: amuletGame, health: 10, team: TeamType.Good) {
     respawnDurationTotal = -1;
-    controlsCanTargetEnemies = true;
+    // controlsCanTargetEnemies = true;
     characterType = CharacterType.Human;
     hurtable = false;
     hurtStateBusy = false;

@@ -94,6 +94,8 @@ class Character extends Collider {
 
   Position? target;
 
+  final targetNode = Position();
+
   Character({
     required super.x,
     required super.y,

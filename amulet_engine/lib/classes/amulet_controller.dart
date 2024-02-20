@@ -580,9 +580,9 @@ class AmuletController {
         player.toggleDebugging();
         break;
 
-      case NetworkRequestIsometric.Toggle_Controls_Can_Target_Enemies:
-        player.toggleControlsCanTargetEnemies();
-        break;
+      // case NetworkRequestIsometric.Toggle_Controls_Can_Target_Enemies:
+      //   player.toggleControlsCanTargetEnemies();
+      //   break;
     }
   }
 

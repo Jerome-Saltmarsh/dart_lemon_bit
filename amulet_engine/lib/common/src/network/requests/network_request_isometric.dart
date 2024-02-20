@@ -21,6 +21,6 @@ enum NetworkRequestIsometric {
    Debug_Attack,
    Select_GameObject,
    Toggle_Debugging,
-   Toggle_Controls_Can_Target_Enemies,
+   // Toggle_Controls_Can_Target_Enemies,
    Set_Seconds_Per_Frame,
 }

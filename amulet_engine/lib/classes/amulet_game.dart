@@ -1142,6 +1142,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     ) return;
 
     final mouseLeftClicked = mouseLeftDown && player.mouseLeftDownDuration == 0;
+    final mouseLeftHeld = mouseLeftDown && player.mouseLeftDownDuration > 0;
     final mouseRightClicked = mouseRightDown && player.mouseRightDownDuration == 0;
 
     if (mouseRightDown){
@@ -1150,42 +1151,46 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       player.mouseRightDownDuration = 0;
     }
 
+    if (mouseLeftDown) {
+      player.mouseLeftDownDuration++;
+    } else {
+      player.mouseLeftDownDuration = 0;
+    }
+
     if (mouseRightClicked) {
       player.performSkillRight();
       return;
     }
 
     if (keyDownShift){
-      player.setCharacterStateIdle();
-    }
-
-    if (mouseLeftDown) {
-      player.mouseLeftDownDuration++;
-    } else {
-      player.mouseLeftDownDuration = 0;
-      player.mouseLeftDownIgnore = false;
-    }
-
-    if (mouseLeftDown && !player.mouseLeftDownIgnore) {
-      final aimTarget = player.aimTarget;
-
-      if (aimTarget == null || (player.isEnemy(aimTarget) && !player.controlsCanTargetEnemies)){
-        if (keyDownShift){
-          player.performSkillLeft();
-          return;
-        } else {
-          player.setDestinationToMouse();
-          player.runToDestinationEnabled = true;
-          player.pathFindingEnabled = false;
-          player.target = null;
-        }
-      } else if (mouseLeftClicked) {
-        player.target = aimTarget;
-        player.runToDestinationEnabled = true;
-        player.pathFindingEnabled = false;
-        player.mouseLeftDownIgnore = true;
+      if (mouseLeftDown){
+        player.performSkillLeft();
+      } else {
+        player.setCharacterStateIdle();
       }
       return;
+    }
+
+    if (mouseLeftHeld && !player.targetSet){
+      player.setDestinationToMouse();
+      return;
+    }
+
+    if (!mouseLeftClicked) {
+      return;
+    }
+
+    final aimTarget = player.aimTarget;
+
+    if (aimTarget == null) {
+      player.setDestinationToMouse();
+      return;
+    }
+
+    if (mouseLeftClicked) {
+      player.target = aimTarget;
+      player.runToDestinationEnabled = true;
+      player.pathFindingEnabled = false;
     }
   }
 

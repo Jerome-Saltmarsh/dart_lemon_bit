@@ -31,7 +31,6 @@ class IsometricPlayer extends Character with ByteWriter {
   var _cacheAimTargetHealthPercentage = 0.0;
   var _debugging = false;
   var mouseLeftDownDuration = 0;
-  var mouseLeftDownIgnore = false;
   var mouseRightDownDuration = 0;
   var mouseRightDownIgnore = false;
   var _mouseLeftDown = false;
@@ -55,11 +54,9 @@ class IsometricPlayer extends Character with ByteWriter {
   var mouseY = 0.0;
   var charactersIStart = 0;
   var charactersIEnd = 0;
-  var controlsCanTargetEnemies = false;
   var positionCacheX = 0;
   var positionCacheY = 0;
   var positionCacheZ = 0;
-  // var data = Json();
 
   final cacheCharacterTypeAndTeam = Uint8List(Cache_Length);
   final cacheCharacterState = Uint8List(Cache_Length);
@@ -356,7 +353,7 @@ class IsometricPlayer extends Character with ByteWriter {
       writePlayerAlive();
       writePlayerEvent(PlayerEvent.Spawned);
       writeDebugging();
-      writePlayerControls();
+      // writePlayerControls();
       initialize();
     }
 
@@ -1029,7 +1026,9 @@ class IsometricPlayer extends Character with ByteWriter {
 
   void setDestinationToMouse() {
     setRunDestination(mouseSceneX, mouseSceneY, mouseSceneZ);
-
+    runToDestinationEnabled = true;
+    pathFindingEnabled = false;
+    target = null;
   }
 
   void writeSelectedCollider() {
@@ -1227,17 +1226,17 @@ class IsometricPlayer extends Character with ByteWriter {
     debugging = !debugging;
   }
 
-  void writePlayerControls(){
-    writeByte(NetworkResponse.Isometric);
-    writeByte(NetworkResponseIsometric.Player_Controls);
-    writeBool(controlsCanTargetEnemies);
-    writeBool(false); // TODO delete on client
-  }
+  // void writePlayerControls(){
+  //   writeByte(NetworkResponse.Isometric);
+  //   writeByte(NetworkResponseIsometric.Player_Controls);
+  //   writeBool(controlsCanTargetEnemies);
+  //   writeBool(false); // TODO delete on client
+  // }
 
-  void toggleControlsCanTargetEnemies() {
-    controlsCanTargetEnemies = !controlsCanTargetEnemies;
-    writePlayerControls();
-  }
+  // void toggleControlsCanTargetEnemies() {
+  //   controlsCanTargetEnemies = !controlsCanTargetEnemies;
+  //   writePlayerControls();
+  // }
 
   @override
   void update() {
