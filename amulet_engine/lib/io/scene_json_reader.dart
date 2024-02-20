@@ -29,7 +29,7 @@ Scene readSceneFromJson(Json json){
       height: json.getInt('height'),
       rows: json.getInt('rows'),
       columns: json.getInt('columns'),
-      marks: decode('marks'),
+      marks: json.getListInt('marks'),
       keys: json.getMapStringInt('keys'),
       locations: json.getMapStringInt('locations'),
       gameObjects: json.getObjects('gameobjects')

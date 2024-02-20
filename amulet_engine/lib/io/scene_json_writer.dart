@@ -13,7 +13,7 @@ Json writeSceneToJson(Scene scene){
   json['node_types'] = encoder.encode(scene.nodeTypes);
   json['node_orientations'] = encoder.encode(scene.nodeOrientations);
   json['variations'] = encoder.encode(scene.variations);
-  json['marks'] = encoder.encode(scene.marks);
+  json['marks'] = scene.marks;
   json['keys'] = scene.keys;
   json['locations'] = scene.locations;
   json['gameobjects'] = writeGameObjectsToJson(scene.gameObjects);
