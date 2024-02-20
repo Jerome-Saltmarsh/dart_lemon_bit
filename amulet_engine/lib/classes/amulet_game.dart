@@ -1176,22 +1176,17 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       return;
     }
 
-    if (!mouseLeftClicked) {
-      return;
-    }
-
-    final aimTarget = player.aimTarget;
-
-    if (aimTarget == null) {
-      player.setDestinationToMouse();
-      return;
-    }
-
     if (mouseLeftClicked) {
-      player.target = aimTarget;
-      player.runToDestinationEnabled = true;
-      player.pathFindingEnabled = false;
+      final aimTarget = player.aimTarget;
+
+      if (aimTarget == null) {
+        player.setDestinationToMouse();
+        return;
+      } else {
+        player.target = aimTarget;
+      }
     }
+
   }
 
   @override

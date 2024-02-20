@@ -72,14 +72,14 @@ class AmuletPlayer extends IsometricPlayer with
     required super.z,
   }) : super(game: amuletGame, health: 10, team: TeamType.Good) {
     respawnDurationTotal = -1;
-    // controlsCanTargetEnemies = true;
     characterType = CharacterType.Human;
     hurtable = false;
     hurtStateBusy = false;
+    runToDestinationEnabled = true;
+    pathFindingEnabled = false;
+    equipmentDirty = true;
     regainFullHealth();
     regainFullMagic();
-    // active = false;
-    equipmentDirty = true;
     setControlsEnabled(true);
     writeWorldMapBytes();
     writeWorldMapLocations();
@@ -180,6 +180,10 @@ class AmuletPlayer extends IsometricPlayer with
   set target(Position? value){
     if (super.target == value) {
       return;
+    }
+
+    if (value != null){
+
     }
 
     if (interacting) {
@@ -555,6 +559,10 @@ class AmuletPlayer extends IsometricPlayer with
     required AmuletItem value,
     bool force = false,
   }) {
+
+    if (value.isConsumable){
+      throw Exception();
+    }
 
     final currentlyEquipped = getEquippedAmuletItem(slotType: value.slotType);
     if (currentlyEquipped != null) {

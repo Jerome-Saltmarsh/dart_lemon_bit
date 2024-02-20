@@ -632,7 +632,7 @@ class Amulet extends IsometricGame {
           SlotType.Helm => equippedHelm.value,
           SlotType.Armor => equippedArmor.value,
           SlotType.Shoes => equippedShoes.value,
-          _ => throw Exception('amulet.getEquippedItemType(itemType: $itemType)')
+          SlotType.Consumable => null,
       };
 
   void useFlask() =>
