@@ -79,7 +79,7 @@ class AmuletPlayer extends IsometricPlayer with
     hurtStateBusy = false;
     regainFullHealth();
     regainFullMagic();
-    active = false;
+    // active = false;
     equipmentDirty = true;
     setControlsEnabled(true);
     writeWorldMapBytes();

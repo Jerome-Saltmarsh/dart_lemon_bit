@@ -180,14 +180,14 @@ class Character extends Collider {
 
   bool get isPlayer => false;
 
-  bool get aliveAndActive => alive && active;
+  bool get aliveAndActive => alive;
 
   bool get characterTypeTemplate =>
       characterType == CharacterType.Human;
 
   bool get dead => characterState == CharacterState.Dead;
 
-  bool get deadOrInactive => dead || !active;
+  bool get deadOrInactive => dead;
 
   bool get alive => !dead;
 
@@ -222,7 +222,7 @@ class Character extends Collider {
 
   bool get deadOrBusy => dead || busy;
 
-  bool get deadInactiveOrBusy => dead || !active || busy;
+  bool get deadInactiveOrBusy => dead || busy;
 
   bool get canChangeEquipment => !dead || characterStateChanging;
 
@@ -264,7 +264,7 @@ class Character extends Collider {
       return;
     }
 
-    active = true;
+    // active = true;
     health = maxHealth;
     physical = true;
     hitable = true;

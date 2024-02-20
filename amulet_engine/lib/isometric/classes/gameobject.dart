@@ -4,7 +4,6 @@ import 'collider.dart';
 
 class GameObject extends Collider {
   /// Prevents gameobject from being recycled in the object pool until the next frame
-  var available = false;
   var id = 0;
   var itemType = 0;
   var subType = -1;
@@ -15,7 +14,7 @@ class GameObject extends Collider {
   var collectable = false;
   var persistable = false;
   var destroyable = false;
-  var recyclable = true;
+  // var recyclable = true;
   var dirty = true;
   var previousX = 0.0;
   var previousY = 0.0;
@@ -31,7 +30,7 @@ class GameObject extends Collider {
   int get materialType => getMaterialType(itemType, subType);
 
   bool get ignorePointer =>
-        !active || (
+        (
           !collectable &&
           !interactable &&
           onInteract == null &&
@@ -103,7 +102,7 @@ class GameObject extends Collider {
         ..collectable = collectable
         ..persistable = persistable
         ..destroyable = destroyable
-        ..recyclable = recyclable
+        // ..recyclable = recyclable
         ..dirty = dirty
         ..previousX = previousX
         ..previousY = previousY
@@ -115,12 +114,12 @@ class GameObject extends Collider {
         ..startPositionY = startPositionY
         ..startPositionZ = startPositionZ;
 
-  @override
-  void deactivate() {
-    super.deactivate();
-    dirty = true;
-    available = false;
-  }
+  // @override
+  // void deactivate() {
+  //   super.deactivate();
+  //   dirty = true;
+  //   // available = false;
+  // }
 
   @override
   bool onSameTeam(a) {

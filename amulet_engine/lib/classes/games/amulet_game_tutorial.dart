@@ -87,10 +87,10 @@ class AmuletGameTutorial extends AmuletGame {
       !const[GameObjectType.Crystal_Glowing_False, GameObjectType.Crystal_Glowing_True].contains(element.subType)
     );
 
-    deactivate(crystal1GlowingFalse);
-    deactivate(crystal1GlowingTrue);
-    deactivate(crystal2GlowingFalse);
-    deactivate(crystal2GlowingTrue);
+    // deactivate(crystal1GlowingFalse);
+    // deactivate(crystal1GlowingTrue);
+    // deactivate(crystal2GlowingFalse);
+    // deactivate(crystal2GlowingTrue);
 
     if (player.flagged('tutorial_initialized')) {
       actionInitializeNewPlayer(player);
@@ -123,9 +123,9 @@ class AmuletGameTutorial extends AmuletGame {
 
     if (objectiveCompleted(player, QuestTutorial.Strike_Crystal_1)){
       setNodeEmpty(getSceneKey(keysDoor01));
-      activate(crystal1GlowingTrue);
+      // activate(crystal1GlowingTrue);
     } else {
-      activate(crystal1GlowingFalse);
+      // activate(crystal1GlowingFalse);
       setNode(
         nodeIndex: getSceneKey(keysDoor01),
         nodeType: NodeType.Wood,
@@ -174,9 +174,9 @@ class AmuletGameTutorial extends AmuletGame {
     }
 
     if (objectiveCompleted(player, QuestTutorial.Strike_Crystal_2)) {
-      activate(crystal2GlowingTrue);
+      // activate(crystal2GlowingTrue);
     } else {
-      activate(crystal2GlowingFalse);
+      // activate(crystal2GlowingFalse);
       setNode(
         nodeIndex: getSceneKey(keysExit),
         nodeType: NodeType.Wood,
@@ -219,7 +219,7 @@ class AmuletGameTutorial extends AmuletGame {
       ..armorType = ArmorType.Leather;
 
     add(guide);
-    deactivate(guide);
+    // deactivate(guide);
   }
 
   int getSceneKey(String name) =>
@@ -281,7 +281,7 @@ class AmuletGameTutorial extends AmuletGame {
 
      switch (current) {
        case QuestTutorial.Draw_Bow:
-         deactivate(guide);
+         // deactivate(guide);
          break;
        default:
          break;
@@ -362,7 +362,7 @@ class AmuletGameTutorial extends AmuletGame {
             .cameraSetTarget(guide)
             .faceEachOther(player, guide)
             .talk(guide, 'danger lies ahead')
-            .deactivate(guide)
+            // .deactivate(guide)
             .add(actionSpawnWeaponSwordAtGuide)
             .end();
         break;
@@ -553,7 +553,7 @@ class AmuletGameTutorial extends AmuletGame {
       .setNodeEmptyAtSceneKey(keysDoor02)
       .gameEventSceneKey(GameEvent.Spawn_Confetti, keysDoor02)
       .wait(seconds: 1)
-      .deactivate(guide)
+      // .deactivate(guide)
       .controlsEnabled()
       .add(() => startNextTutorialObjective(player));
   }
@@ -585,7 +585,7 @@ class AmuletGameTutorial extends AmuletGame {
             'one can see ones elements at the top left corner of the screen.'
             'one element point is gained per level.'
           )
-          .deactivate(guide)
+          // .deactivate(guide)
           .wait(seconds: 1)
           .cameraSetTargetSceneKey(keysDoor03)
           .wait(seconds: 1)
@@ -658,10 +658,10 @@ class AmuletGameTutorial extends AmuletGame {
   void onStruckCrystal1(AmuletPlayer player) {
     runScript(player)
         .zoom(2)
-        .deactivate(crystal1GlowingFalse)
+        // .deactivate(crystal1GlowingFalse)
         .activate(crystal1GlowingTrue)
         .gameEventPosition(GameEvent.Spawn_Confetti, crystal1GlowingTrue)
-        .deactivate(guide)
+        // .deactivate(guide)
         .puzzleSolved()
         .controlsDisabled()
         .wait(seconds: 1)
@@ -777,8 +777,8 @@ class AmuletGameTutorial extends AmuletGame {
      if (player.questTutorial.index > QuestTutorial.Strike_Crystal_2.index){
        return;
      }
-     deactivate(crystal2GlowingFalse);
-     activate(crystal2GlowingTrue);
+     // deactivate(crystal2GlowingFalse);
+     // activate(crystal2GlowingTrue);
      startNextTutorialObjective(player);
   }
 

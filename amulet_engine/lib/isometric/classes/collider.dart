@@ -10,7 +10,7 @@ import 'position.dart';
 
 abstract class Collider extends Position {
   /// do not mutate directly use game.deactivateCollider
-  var active = true;
+  // var active = true;
 
   var velocityX = 0.0;
   var velocityY = 0.0;
@@ -50,7 +50,7 @@ abstract class Collider extends Position {
 
   /// GETTERS
   /// Expensive Operation
-  bool get inactive => !active;
+  // bool get inactive => !active;
 
   /// Expensive Operation
   double get velocitySpeed => hyp2(velocityX, velocityY);
@@ -137,8 +137,8 @@ abstract class Collider extends Position {
 
 
   bool collidingWith(Collider that){
-    if (!active) return false;
-    if (!that.active) return false;
+    // if (!active) return false;
+    // if (!that.active) return false;
     if (boundsLeft > that.boundsRight) return false;
     if (boundsRight < that.boundsLeft) return false;
     if (boundsTop > that.boundsBottom) return false;
@@ -159,9 +159,9 @@ abstract class Collider extends Position {
     if (that is! Collider) {
       return false;
     }
-    if (!that.active) {
-      return false;
-    }
+    // if (!that.active) {
+    //   return false;
+    // }
     if (team == TeamType.Alone) {
       return false;
     }
@@ -199,12 +199,12 @@ abstract class Collider extends Position {
     return team != thatTeam;
   }
 
-  void deactivate(){
-    active = false;
-    velocityX = 0;
-    velocityY = 0;
-    velocityZ = 0;
-  }
+  // void deactivate(){
+  //   active = false;
+  //   velocityX = 0;
+  //   velocityY = 0;
+  //   velocityZ = 0;
+  // }
 
   void moveToStartPosition(){
     x = startPositionX;

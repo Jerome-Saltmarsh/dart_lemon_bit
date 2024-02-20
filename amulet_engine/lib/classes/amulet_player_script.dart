@@ -149,7 +149,7 @@ class AmuletPlayerScript {
   AmuletPlayerScript activate(Collider collider) =>
       add(() {
         log('activate($collider)');
-        getAmuletGame().activate(collider);
+        // getAmuletGame().activate(collider);
       });
 
   AmuletPlayerScript gameEventPosition(int gameEvent, Position position) =>
@@ -171,11 +171,11 @@ class AmuletPlayerScript {
   AmuletPlayerScript gameEventXYZ(int gameEvent, double x, double y, double z) =>
       add(() => player.amuletGame.dispatchGameEvent(gameEvent, x, y, z));
 
-  AmuletPlayerScript deactivate(Collider collider) =>
-      add(() {
-        log('deactivate($collider)');
-        getAmuletGame().deactivate(collider);
-      });
+  // AmuletPlayerScript deactivate(Collider collider) =>
+  //     add(() {
+  //       log('deactivate($collider)');
+  //       // getAmuletGame().deactivate(collider);
+  //     });
 
   AmuletPlayerScript changeGame(AmuletGame game, {String? sceneKey}) =>
       add(() => amulet.playerChangeGame(

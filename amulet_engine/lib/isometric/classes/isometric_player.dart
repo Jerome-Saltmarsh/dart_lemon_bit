@@ -294,11 +294,11 @@ class IsometricPlayer extends Character with ByteWriter {
      writeGameError(GameError.Invalid_Inventory_Index);
   }
 
-  @override
-  void deactivate() {
-    super.deactivate();
-    writePlayerActive();
-  }
+  // @override
+  // void deactivate() {
+  //   super.deactivate();
+  //   writePlayerActive();
+  // }
 
   void writePlayerPosition(){
 
@@ -335,7 +335,8 @@ class IsometricPlayer extends Character with ByteWriter {
   void writePlayerActive(){
     writeByte(NetworkResponse.Player);
     writeByte(NetworkResponsePlayer.Active);
-    writeBool(active);
+    writeBool(true);
+    // writeBool(active);
   }
 
   void writePlayerAimAngle(){
@@ -416,9 +417,9 @@ class IsometricPlayer extends Character with ByteWriter {
 
       final character = characters[i];
 
-      if (character.inactive) {
-        continue;
-      }
+      // if (character.inactive) {
+      //   continue;
+      // }
 
       final renderX = character.renderX;
 
@@ -710,7 +711,7 @@ class IsometricPlayer extends Character with ByteWriter {
     writeByte(NetworkResponse.Projectiles);
     final projectiles = game.projectiles;
     for (final projectile in projectiles){
-      if (!projectile.active) continue;
+      // if (!projectile.active) continue;
       writeTrue();
       writePosition(projectile);
       writeByte(projectile.type);
@@ -961,7 +962,7 @@ class IsometricPlayer extends Character with ByteWriter {
   void writeGameObject(GameObject gameObject){
     writeByte(NetworkResponse.GameObject);
     writeUInt16(gameObject.id);
-    writeBool(gameObject.active);
+    writeBool(true); // TODO
     writeByte(gameObject.itemType);
     writeUInt16(gameObject.subType);
     writeUInt16(gameObject.health);
@@ -1249,7 +1250,7 @@ class IsometricPlayer extends Character with ByteWriter {
     framesSinceClientRequest++;
 
     if (dead) return;
-    if (!active) return;
+    // if (!active) return;
 
     game.updatePlayerAimTarget(this);
   }

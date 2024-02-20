@@ -184,7 +184,7 @@ class ServerLocal implements Server {
     }
 
     ensureInitialized().then((value) {
-      playerServer.active = true;
+      // playerServer.active = true;
       writeJsonToAmuletPlayer(character, playerServer);
       playerServer.writePlayerMoved();
       amulet.resumeUpdateTimer();

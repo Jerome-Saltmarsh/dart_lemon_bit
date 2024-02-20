@@ -987,7 +987,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       player.writePlayerEventItemTypeConsumed(amuletItem.subType);
       player.health += amuletItem.health ?? 0;
       player.magic += amuletItem.maxMagic ?? 0;
-      deactivate(gameObject);
+      // deactivate(gameObject);
+      remove(gameObject);
     }
   }
 
@@ -1130,7 +1131,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     if (
       player.deadOrBusy ||
-      !player.active ||
+      // !player.active ||
       player.debugging ||
       !player.controlsEnabled
     ) return;

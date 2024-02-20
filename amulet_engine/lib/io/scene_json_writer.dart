@@ -40,6 +40,6 @@ Json writeGameObjectToJson(GameObject gameObject){
   json['frame_spawned'] = gameObject.frameSpawned;
   json['team'] = gameObject.team;
   json['id'] = gameObject.id;
-  json['active'] = gameObject.active;
+  // json['active'] = gameObject.active;
   return json;
 }

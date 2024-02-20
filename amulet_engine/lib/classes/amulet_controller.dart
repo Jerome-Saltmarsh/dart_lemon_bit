@@ -424,7 +424,7 @@ class AmuletController {
         player.y = player.mouseSceneY;
         player.health = player.maxHealth;
         player.characterState = CharacterState.Idle;
-        player.active = true;
+        // player.active = true;
         break;
 
       case NetworkRequestIsometric.Revive:

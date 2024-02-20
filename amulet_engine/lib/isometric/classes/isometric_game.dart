@@ -288,7 +288,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
     if (
       player.deadOrBusy ||
-      !player.active ||
+      // !player.active ||
       player.debugging ||
       !player.controlsEnabled
     ) return;
@@ -372,7 +372,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     final characters = this.characters;
 
     for (final character in characters) {
-      if (character.dead || !character.active) continue;
+      if (character.dead) continue;
       final radius = max(Min_Radius, character.radius);
       if ((mouseX - character.x).abs() > radius) continue;
       if ((mouseY - character.y).abs() > radius) continue;
@@ -480,7 +480,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         other.invincible ||
         other.dead ||
         !other.hitable ||
-        !other.active ||
+        // !other.active ||
         character.onSameTeam(other)
       ) continue;
 
@@ -506,7 +506,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       if (
         otherHitRate <= 0 ||
         otherHitRate < highestHitRate ||
-        !gameObject.active ||
+        // !gameObject.active ||
         !gameObject.hitable
       ) continue;
 
@@ -544,7 +544,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
             other.invincible ||
             other.dead ||
             !other.hitable ||
-            !other.active ||
+            // !other.active ||
             character.onSameTeam(other)
         ) continue;
 
@@ -636,28 +636,28 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     customOnNodeDestroyed(nodeType, nodeIndex, orientation);
   }
 
-  void activate(Collider collider) {
-    if (collider.active) return;
-    collider.active = true;
-    if (collider is GameObject) {
-      collider.dirty = true;
-    }
-    if (collider is IsometricPlayer) {
-      collider.writePlayerActive();
-    }
-    onActivated(collider);
-  }
+  // void activate(Collider collider) {
+  //   // if (collider.active) return;
+  //   // collider.active = true;
+  //   if (collider is GameObject) {
+  //     collider.dirty = true;
+  //   }
+  //   if (collider is IsometricPlayer) {
+  //     collider.writePlayerActive();
+  //   }
+  //   onActivated(collider);
+  // }
 
   void onGridChanged() {
     scene.refreshMetrics();
     dispatchDownloadScene();
   }
 
-  void deactivate(Collider collider) {
-    if (!collider.active) return;
-    collider.deactivate();
-    clearTarget(collider);
-  }
+  // void deactivate(Collider collider) {
+  //   if (!collider.active) return;
+  //   collider.deactivate();
+  //   clearTarget(collider);
+  // }
 
   void dispatchGameEventCharacterDeath(Character character) {
     final players = this.players;
@@ -748,13 +748,14 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     final totalGameObjects = gameObjects.length;
     for (var i = 0; i < totalGameObjects; i++) {
       final gameObject = gameObjects[i];
-      if (!gameObject.active) {
-        if (gameObject.recyclable && !gameObject.available) {
-          gameObject.available = true;
-        }
-      } else {
-        updateColliderPhysics(gameObject);
-      }
+      updateColliderPhysics(gameObject);
+      // if (!gameObject.active) {
+      //   if (gameObject.recyclable && !gameObject.available) {
+      //     gameObject.available = true;
+      //   }
+      // } else {
+      //
+      // }
 
       if (gameObject.positionDirty) {
         gameObject.dirty = true;
@@ -763,7 +764,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       if (gameObject.deactivationTimer > 0) {
         gameObject.deactivationTimer--;
         if (gameObject.deactivationTimer <= 0){
-          deactivate(gameObject);
+          remove(gameObject);
         }
       }
 
@@ -807,7 +808,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
 
     final target = character.target;
-    if (target is AmuletGameObject && target.inactive){
+    if (target is AmuletGameObject){
       character.clearTarget();
     }
 
@@ -839,7 +840,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   }
 
   void updateColliderPhysics(Collider collider) {
-    assert (collider.active);
+    // assert (collider.active);
 
     collider.updateVelocity();
 
@@ -848,7 +849,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         setCharacterStateDead(collider);
         return;
       }
-      deactivate(collider);
+      // deactivate(collider);
       return;
     }
 
@@ -883,7 +884,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     final gameObjectsLength = gameObjects.length;
     for (var i = 0; i < gameObjectsLength; i++) {
       final gameObject = gameObjects[i];
-      if (!gameObject.active) continue;
+      // if (!gameObject.active) continue;
       if (!gameObject.hitable) continue;
       if (!gameObject.withinRadiusXYZ(x, y, z, radius)) continue;
       applyHit(
@@ -901,7 +902,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     for (var i = 0; i < length; i++) {
       final character = characters[i];
       if (!character.hitable) continue;
-      if (!character.active) continue;
+      // if (!character.active) continue;
       if (character.dead) continue;
       if (!character.withinRadiusXYZ(x, y, z, radius)) continue;
       applyHit(
@@ -947,7 +948,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     if (player.aliveAndActive) return;
 
     player.setCharacterStateSpawning();
-    activate(player);
+    // activate(player);
     player.physical = true;
     player.hitable = true;
     player.health = player.maxHealth;
@@ -1070,7 +1071,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     final numberOfCollidersMinusOne = numberOfColliders - 1;
     for (var i = 0; i < numberOfCollidersMinusOne; i++) {
       final colliderI = colliders[i];
-      if (!colliderI.active || !colliderI.collidable) continue;
+      if (!colliderI.collidable) continue;
+      // if (!colliderI.active || !colliderI.collidable) continue;
       final colliderIOrder = colliderI.order;
       final colliderIRadius = colliderI.radius;
       final colliderIBoundsBottom = colliderI.boundsBottom;
@@ -1080,7 +1082,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
       for (var j = i + 1; j < numberOfColliders; j++) {
         final colliderJ = colliders[j];
-        if (!colliderJ.active || !colliderJ.collidable) {
+        if (!colliderJ.collidable) {
           continue;
         }
         if (colliderJ.order - colliderIOrder > (colliderIRadius + colliderJ.radius)){
@@ -1111,22 +1113,22 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   void resolveCollisionsBetween(List<Collider> collidersA,
       List<Collider> collidersB,) {
-    final aLength = collidersA.length;
-    final bLength = collidersB.length;
+    // final aLength = collidersA.length;
+    // final bLength = collidersB.length;
 
     var bStart = 0;
-    for (var indexA = 0; indexA < aLength; indexA++) {
+    for (var indexA = 0; indexA < collidersA.length; indexA++) {
       final colliderA = collidersA[indexA];
-      if (!colliderA.active || !colliderA.collidable) continue;
+      if (!colliderA.collidable) continue;
       final colliderAOrder = colliderA.order;
       final colliderARadius = colliderA.radius;
       final colliderATop = colliderA.boundsTop;
       final colliderABottom = colliderA.boundsBottom;
       final colliderARight = colliderA.boundsRight;
       final colliderALeft = colliderA.boundsLeft;
-      for (var indexB = bStart; indexB < bLength; indexB++) {
+      for (var indexB = bStart; indexB < collidersB.length; indexB++) {
         final colliderB = collidersB[indexB];
-        if (!colliderB.active || !colliderB.collidable) continue;
+        if (!colliderB.collidable) continue;
         final colliderBOrder = colliderB.order;
 
         final orderDiff = colliderBOrder - colliderAOrder;
@@ -1259,34 +1261,36 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     setCharacterStateDead(character);
   }
 
-  void deactivateProjectile(Projectile projectile) {
-    assert (projectile.active);
-    projectile.active = false;
-    projectile.parent = null;
-    projectile.target = null;
-  }
+  // void deactivateProjectile(Projectile projectile) {
+  //   // assert (projectile.active);
+  //   // projectile.active = false;
+  //   projectile.parent = null;
+  //   projectile.target = null;
+  //
+  // }
 
   void updateProjectiles() {
     final projectiles = this.projectiles;
     for (var i = 0; i < projectiles.length; i++) {
       final projectile = projectiles[i];
-      if (!projectile.active) continue;
+      // if (!projectile.active) continue;
       projectile.x += projectile.velocityX;
       projectile.y += projectile.velocityY;
       final target = projectile.target;
       if (target != null) {
         projectile.reduceDistanceZFrom(target);
       } else if (projectile.overRange) {
-        deactivateProjectile(projectile);
+        // deactivateProjectile(projectile);
+        remove(projectile);
       }
     }
     for (var i = 0; i < projectiles.length; i++) {
       final projectile = projectiles[i];
-      if (!projectile.active) continue;
+      // if (!projectile.active) continue;
       if (!scene.getCollisionAt(projectile.x, projectile.y, projectile.z)) {
         continue;
       }
-      deactivateProjectile(projectile);
+      remove(projectile);
 
       final nodeType = scene.getTypeXYZ(
           projectile.x, projectile.y, projectile.z);
@@ -1325,7 +1329,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
 
     if (instance is GameObject) {
-      instance.active = false;
+      // instance.active = false;
       gameObjects.remove(instance);
       for (final player in players) {
         player.writeUInt8(NetworkResponse.Scene);
@@ -1336,6 +1340,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
 
     if (instance is Projectile) {
+      instance.parent = null;
+      instance.target = null;
       projectiles.remove(instance);
       return;
     }
@@ -1363,7 +1369,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     final projectiles = this.projectiles;
     for (var i = 0; i < projectiles.length; i++) {
       final projectile = projectiles[i];
-      if (!projectile.active) continue;
+      // if (!projectile.active) continue;
       if (!projectile.hitable) continue;
       final target = projectile.target;
       if (target != null) {
@@ -1383,7 +1389,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       for (var j = 0; j < colliders.length; j++) {
         final collider = colliders[j];
         if (projectileParent == collider) continue;
-        if (!collider.active) continue;
+        // if (!collider.active) continue;
         if (!collider.hitable) continue;
         final combinedRadius = collider.radius + projectileRadius;
         if ((collider.x - projectileX).abs() > combinedRadius) continue;
@@ -1397,7 +1403,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   }
 
   void handleProjectileHit(Projectile projectile, Position target) {
-    assert (projectile.active);
+    // assert (projectile.active);
     assert (projectile != target);
     assert (projectile.parent != target);
 
@@ -1416,7 +1422,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       );
     }
 
-    deactivateProjectile(projectile);
+    remove(projectile);
     if (projectile.type == ProjectileType.Arrow) {
       dispatchGameEvent(GameEvent.Arrow_Hit, target.x, target.y, target.z);
     }
@@ -1434,7 +1440,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     bool friendlyFire = false,
   }) {
     if (!target.hitable) return;
-    if (!target.active) return;
+    // if (!target.active) return;
 
     if (force > 0) {
       target.applyForce(
@@ -1480,9 +1486,9 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   void updateCharacter(Character character) {
 
-    if (!character.active){
-      return;
-    }
+    // if (!character.active){
+    //   return;
+    // }
 
     if (character.dead) {
       character.updateAilments();
@@ -1718,7 +1724,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     projectile.ailmentDamage = ailmentDamage;
     projectile.damage = damage;
     projectile.hitable = true;
-    projectile.active = true;
+    // projectile.active = true;
     if (target is Position) {
       projectile.target = target;
     }
@@ -1740,11 +1746,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   }
 
   Projectile getInstanceProjectile() {
-    for (final projectile in projectiles) {
-      if (projectile.active) continue;
-      return projectile;
-    }
-
     final projectile = Projectile(
       x: 0,
       y: 0,
@@ -1788,30 +1789,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required int subType,
     required int team,
   }) {
-    final gameObjects = this.gameObjects;
-    for (final gameObject in gameObjects) {
-      if (gameObject.active) continue;
-      if (!gameObject.recyclable) continue;
-      if (!gameObject.available) continue;
-      gameObject.x = x;
-      gameObject.y = y;
-      gameObject.z = z;
-      gameObject.startPositionX = x;
-      gameObject.startPositionY = y;
-      gameObject.startPositionZ = z;
-      gameObject.velocityX = 0;
-      gameObject.velocityY = 0;
-      gameObject.velocityZ = 0;
-      gameObject.itemType = type;
-      gameObject.subType = subType;
-      gameObject.active = true;
-      gameObject.dirty = true;
-      gameObject.physicsFriction = Physics.Friction;
-      gameObject.team = team;
-      gameObject.synchronizePrevious();
-      onGameObjectSpawned(gameObject);
-      return gameObject;
-    }
     final instance = GameObject(
       x: x,
       y: y,
@@ -1821,7 +1798,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       id: generateId(),
       team: team,
     );
-    instance.active = true;
     instance.dirty = true;
     gameObjects.add(instance);
     onGameObjectSpawned(instance);
@@ -1896,7 +1872,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   }
 
   void internalOnColliderEnteredWater(Collider collider) {
-    deactivate(collider);
+    // deactivate(collider);
     if (collider is Character) {
       setCharacterStateDead(collider);
     }
@@ -1907,7 +1883,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     final scene = this.scene;
     if (!scene.isInboundV3(collider)) {
       if (collider.z > -100) return;
-      deactivate(collider);
+      // deactivate(collider);
       if (collider is Character) {
         setCharacterStateDead(collider);
       }
@@ -1988,7 +1964,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   void updateColliderSceneCollisionVertical2(Collider collider) {
     if (!scene.isInboundV3(collider)) {
       if (collider.z > -100) return;
-      deactivate(collider);
+      // deactivate(collider);
       if (collider is Character) {
         setCharacterStateDead(collider);
       }
@@ -2210,17 +2186,17 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   }
 
   void destroyGameObject(GameObject gameObject) {
-    if (!gameObject.active) return;
+    // if (!gameObject.active) return;
     dispatchGameEventGameObjectDestroyed(gameObject);
     remove(gameObject);
     customOnGameObjectDestroyed(gameObject);
   }
 
-  void deactivatePlayer(IsometricPlayer player) {
-    if (!player.active) return;
-    player.active = false;
-    player.writePlayerEvent(PlayerEvent.Player_Deactivated);
-  }
+  // void deactivatePlayer(IsometricPlayer player) {
+  //   if (!player.active) return;
+  //   // player.active = false;
+  //   player.writePlayerEvent(PlayerEvent.Player_Deactivated);
+  // }
 
   // T createPlayer() {
   //   final player = buildPlayer();
@@ -2278,7 +2254,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     Character? nearestCharacter;
     var nearestCharacterDistanceSquared = maxRadius * maxRadius;
     for (final character in characters){
-      if (!character.active) continue;
+      // if (!character.active) continue;
       final distanceSquared = character.getDistanceSquaredXYZ(x, y, z);
       if (distanceSquared > nearestCharacterDistanceSquared) continue;
       nearestCharacterDistanceSquared = distanceSquared;
@@ -2296,7 +2272,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     GameObject? nearestGameObject;
     var nearestGameObjectDistanceSquared = maxRadius * maxRadius;
     for (final gameObject in gameObjects){
-      if (!gameObject.active) continue;
+      // if (!gameObject.active) continue;
       final distanceSquared = gameObject.getDistanceSquaredXYZ(x, y, z);
       if (distanceSquared > nearestGameObjectDistanceSquared) continue;
       nearestGameObjectDistanceSquared = distanceSquared;
@@ -2790,7 +2766,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   void onPlayerJoined(T player) {
     player.game = this;
-    player.active = true;
+    // player.active = true;
     player.sceneDownloaded = false;
     player.downloadScene();
   }
