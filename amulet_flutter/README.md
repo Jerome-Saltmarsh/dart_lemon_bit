@@ -18,10 +18,12 @@ ctrl + []               : move caret to code block
 REMINDER: IT DOESN'T NEED TO BE PERFECT
 
 [RELEASE]
-[fix] balance helms
+[fix] gameobject persist gameobject_amulet
+[fix] gameobject caching
+[fix] balance amulet fiends
+[fix] balance amulet items
 [fix] boss fight
 [fix] ui amulet item container collision
-[fix] balance amulet fiends
 [new] skill type fireball level 3
 [new] skill type fireball level 2
 [new] skill type iceball level 2

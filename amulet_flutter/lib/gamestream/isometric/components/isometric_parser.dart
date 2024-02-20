@@ -190,7 +190,7 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
         break;
 
       case NetworkResponseIsometric.GameObjects:
-        scene.gameObjects.clear();
+        readGameObjects();
         break;
 
       case NetworkResponseIsometric.Player_Controls:
@@ -203,6 +203,8 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
         break;
     }
   }
+
+  void readGameObjects() => scene.gameObjects.clear();
 
   void readGameRunning() {
     options.gameRunning.value = readBool();

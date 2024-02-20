@@ -14,7 +14,6 @@ class GameObject extends Collider {
   var collectable = false;
   var persistable = false;
   var destroyable = false;
-  // var recyclable = true;
   var dirty = true;
   var previousX = 0.0;
   var previousY = 0.0;
@@ -22,14 +21,12 @@ class GameObject extends Collider {
   var health = 0;
   var healthMax = 0;
   var deactivationTimer = -1;
-  var frameSpawned = 0;
   String? label;
   Function(dynamic src)? onInteract;
 
   @override
   int get materialType => getMaterialType(itemType, subType);
 
-  bool get isObject => itemType == ItemType.Object;
 
   bool get ignorePointer =>
         (
@@ -62,6 +59,8 @@ class GameObject extends Collider {
     required this.id,
     super.radius = 15.0,
     this.health = 0,
+    this.interactable = false,
+    this.deactivationTimer = -1,
   }) : super(materialType: getMaterialType(itemType, subType)) {
     startPositionX = x;
     startPositionY = y;
@@ -115,13 +114,6 @@ class GameObject extends Collider {
         ..startPositionX = startPositionX
         ..startPositionY = startPositionY
         ..startPositionZ = startPositionZ;
-
-  // @override
-  // void deactivate() {
-  //   super.deactivate();
-  //   dirty = true;
-  //   // available = false;
-  // }
 
   @override
   bool onSameTeam(a) {

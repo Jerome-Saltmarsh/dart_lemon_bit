@@ -2,9 +2,6 @@
 import 'package:amulet_engine/isometric/enums/damage_type.dart';
 import 'package:amulet_engine/src.dart';
 
-import '../isometric/character_type.dart';
-import 'skill_type.dart';
-
 enum FiendType {
   Goblin(
     level: 1,

@@ -6,7 +6,6 @@ import 'package:lemon_math/src.dart';
 import '../../src.dart';
 import 'amulet.dart';
 import 'amulet_fiend.dart';
-import 'amulet_gameobject.dart';
 import '../isometric/src.dart';
 
 class AmuletGame extends IsometricGame<AmuletPlayer> {
@@ -910,7 +909,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   );
 
   /// @deactivationTimer set to -1 to prevent amulet item from deactivating over time
-  AmuletGameObject spawnAmuletItemAtIndex({
+  GameObject spawnAmuletItemAtIndex({
     required int index,
     required AmuletItem item,
     int? deactivationTimer
@@ -923,7 +922,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         deactivationTimer: deactivationTimer
       );
 
-  AmuletGameObject spawnAmuletItemAtPosition({
+  GameObject spawnAmuletItemAtPosition({
     required AmuletItem item,
     required Position position,
     int? deactivationTimer
@@ -935,20 +934,22 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       z: position.z,
     );
 
-  AmuletGameObject spawnAmuletItem({
+  GameObject spawnAmuletItem({
     required AmuletItem item,
     required double x,
     required double y,
     required double z,
     int? deactivationTimer
   }) {
-    final amuletGameObject = AmuletGameObject(
+    final amuletGameObject = GameObject(
       x: x,
       y: y,
       z: z,
-      amuletItem: item,
+      itemType: ItemType.Amulet_Item,
+      subType: item.index,
       id: generateId(),
-      frameSpawned: frame,
+      team: TeamType.Neutral,
+      interactable: true,
       deactivationTimer: deactivationTimer ?? gameObjectDeactivationTimer,
     )
       ..velocityZ = 5
@@ -978,16 +979,17 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   @override
   void customOnCollisionBetweenPlayerAndGameObject(AmuletPlayer player, GameObject gameObject) {
-    if (gameObject is! AmuletGameObject) {
+
+    final amuletItem = gameObject.amuletItem;
+
+    if (amuletItem == null) {
       return;
     }
 
-    final amuletItem = gameObject.amuletItem;
-    if (amuletItem.isConsumable){
+    if (amuletItem.isConsumable) {
       player.writePlayerEventItemTypeConsumed(amuletItem.subType);
       player.health += amuletItem.health ?? 0;
       player.magic += amuletItem.maxMagic ?? 0;
-      // deactivate(gameObject);
       remove(gameObject);
     }
   }
@@ -1007,7 +1009,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       Character character,
       GameObject gameObject,
   ) {
-    if (character is AmuletPlayer && gameObject is AmuletGameObject) {
+    if (character is AmuletPlayer && gameObject.isAmuletItem) {
       onAmuletPlayerInteractWithAmuletGameObject(character, gameObject);
     }
     // if (
@@ -1022,9 +1024,13 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   void onAmuletPlayerInteractWithAmuletGameObject(
       AmuletPlayer player,
-      AmuletGameObject gameObject,
+      GameObject gameObject,
   ){
-     if (player.acquireAmuletItem(gameObject.amuletItem)){
+     final amuletItem = gameObject.amuletItem;
+     if (amuletItem == null){
+       return;
+     }
+     if (player.acquireAmuletItem(amuletItem)){
        remove(gameObject);
      }
   }
@@ -1100,7 +1106,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   @override
   void onGameObjectedAdded(GameObject gameObject) {
-    if (gameObject is AmuletGameObject) {
+    if (gameObject.isAmuletItem) {
       dispatchGameEventPosition(GameEvent.Amulet_GameObject_Spawned, gameObject);
       dispatchByte(gameObject.itemType);
       dispatchByte(gameObject.subType);

@@ -9,7 +9,6 @@ import 'amulet.dart';
 import 'amulet_settings.dart';
 import 'amulet_fiend.dart';
 import 'amulet_game.dart';
-import 'amulet_gameobject.dart';
 import 'amulet_npc.dart';
 import 'games/amulet_game_tutorial.dart';
 import 'talk_option.dart';
@@ -979,14 +978,28 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Aim_Target_Item_Type);
 
-     if (aimTarget is! AmuletGameObject){
+     final aimTarget = this.aimTarget;
+     if (aimTarget is! GameObject){
+       writeFalse();
+       return;
+     }
+
+    final amuletItem = getGameObjectAmuletItem(aimTarget);
+
+     if (amuletItem == null){
        writeFalse();
        return;
      }
 
     writeTrue();
-    final gameObject = aimTarget as AmuletGameObject;
-    writeAmuletItem(gameObject.amuletItem);
+    writeAmuletItem(amuletItem);
+  }
+
+  AmuletItem? getGameObjectAmuletItem(GameObject gameObject){
+     if (gameObject.itemType != ItemType.Amulet_Item) {
+       return null;
+     }
+     return AmuletItem.values[gameObject.subType];
   }
 
   void writePlayerMagic() {

@@ -4,9 +4,7 @@
 
 import 'dart:typed_data';
 
-import 'package:amulet_engine/classes/amulet_gameobject.dart';
 import 'package:amulet_engine/common.dart';
-import 'package:amulet_engine/common/src/isometric/item_type.dart';
 import 'package:amulet_engine/isometric/classes/gameobject.dart';
 import 'package:amulet_engine/isometric/classes/scene.dart';
 import 'package:amulet_engine/isometric/instances/decoder.dart';
@@ -72,18 +70,21 @@ GameObject readGameObjectFromJson(Json gameObjectJson){
        ..healthMax = healthMax
        ..health = healthMax
        ..persistable = true
-       ..frameSpawned = frameSpawned;
+     ;
+       // ..frameSpawned = frameSpawned;
    }
 
    if (itemType == ItemType.Amulet_Item){
-     return AmuletGameObject(
+     return GameObject(
        x: x,
        y: y,
        z: z,
        id: id,
-       amuletItem: AmuletItem.values[subType],
-       frameSpawned: frameSpawned,
+       itemType: ItemType.Amulet_Item,
+       subType: subType,
+       // frameSpawned: frameSpawned,
        deactivationTimer: deactivateTimer,
+       team: TeamType.Neutral,
      )
        ..persistable = true;
    }
