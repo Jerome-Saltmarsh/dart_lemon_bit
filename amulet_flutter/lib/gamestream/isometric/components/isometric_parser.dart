@@ -181,6 +181,10 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
         readGameRunning();
         break;
 
+      case NetworkResponseIsometric.Aim_Node_Index:
+        readAimNodeIndex();
+        break;
+
       case NetworkResponseIsometric.Player_Aim_Target:
         readPlayerAimTarget();
         break;
@@ -826,5 +830,15 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
     particles.clearParticles();
     io.recenterCursor();
     scene.loaded = true;
+  }
+
+  void readAimNodeIndex() {
+    if (readBool()) {
+      player.aimNodeIndex.value = readUInt16();
+      player.aimNodeType.value = readByte();
+    } else {
+      player.aimNodeIndex.value = null;
+      player.aimNodeType.value = null;
+    }
   }
 }

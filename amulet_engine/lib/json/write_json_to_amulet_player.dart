@@ -71,7 +71,7 @@ void writeJsonAmuletToMemory(Json jsonAmulet, AmuletPlayer player) {
                 ? NodeType.variationShrineInactive
                 : NodeType.variationShrineActive;
             if (!shrineUsed){
-              game.spawnGameObjectShrine(index);
+              // game.spawnGameObjectShrine(index);
             }
          }
          break;

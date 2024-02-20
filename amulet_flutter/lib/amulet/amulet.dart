@@ -280,6 +280,7 @@ class Amulet extends IsometricGame {
   void update() {
     super.update();
 
+    updateCursor();
     if (errorTimer > 0) {
       errorTimer--;
       if (errorTimer <= 0){
@@ -643,6 +644,18 @@ class Amulet extends IsometricGame {
       server.sendNetworkRequestAmulet(
           NetworkRequestAmulet.Toggle_Debug_Enabled
       );
+
+  void updateCursor() => amulet.cursor.value = getCursor();
+
+  SystemMouseCursor getCursor(){
+    if (
+      player.aimTargetSet.value ||
+      player.aimNodeType.value != null
+    ){
+      return SystemMouseCursors.grab;
+    }
+    return SystemMouseCursors.basic;
+  }
 }
 
 

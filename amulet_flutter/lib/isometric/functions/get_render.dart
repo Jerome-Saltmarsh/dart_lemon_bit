@@ -17,7 +17,3 @@ double getRenderY(double x, double y, double z) => ((x + y) * 0.5) - z;
 double convertRenderToSceneX(double x, double y) => x + y;
 
 double convertRenderToSceneY(double x, double y) => y - x;
-
-int convertRenderToRow(double x, double y, double z) => (x + y + z) ~/ Node_Size;
-
-int convertRenderToColumn(double x, double y, double z) => (y - x + z) ~/ Node_Size;

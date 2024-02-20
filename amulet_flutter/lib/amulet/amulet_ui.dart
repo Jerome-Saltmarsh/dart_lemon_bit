@@ -68,6 +68,10 @@ class AmuletUI {
           buildDialogTalk(),
           buildPositionedWorldMap(),
           buildPositionedPlayerHealthAndWeapons(),
+          Positioned(
+            top: 8,
+             child: buildPlayerAimNode(),
+          ),
           buildPlayerAimTarget(),
           Positioned(
               top: 8,
@@ -1615,6 +1619,22 @@ class AmuletUI {
 
   Widget buildIconCriticalHitPoints() =>
       AmuletImage(srcX: 768, srcY: 336, width: 16, height: 16);
+
+  Widget buildPlayerAimNode() {
+    return buildWatch(amulet.player.aimNodeType, (aimNodeType) {
+       if (aimNodeType == null) {
+         return nothing;
+       }
+
+       return IgnorePointer(
+           child: GSContainer(
+               child: buildText(
+                   NodeType.getName(aimNodeType)
+               )
+           )
+       );
+    });
+  }
 }
 
 String formatFramesToSeconds(int frames){

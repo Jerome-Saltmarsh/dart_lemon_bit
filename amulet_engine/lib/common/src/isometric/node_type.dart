@@ -51,6 +51,7 @@ class NodeType {
   static const Palisade = 94;
   static const Shadow = 95;
   static const Shrine = 96;
+  static const Portal = 97;
 
   static bool supportsOrientationSolid(int type) => const [
         Brick,
@@ -343,17 +344,26 @@ class NodeType {
     Palisade: 'Palisade',
     Shadow: 'Shadow',
     Shrine: 'Shrine',
+    Portal: 'Portal',
   }[type] ?? 'unknown($type)';
 
   static bool isLightSource(int type) => const [
-      NodeType.Torch,
-      NodeType.Torch_Blue,
-      NodeType.Torch_Red,
-      NodeType.Fireplace,
-      NodeType.Shrine,
+      Torch,
+      Torch_Blue,
+      Torch_Red,
+      Fireplace,
+      Shrine,
     ].contains(type);
 
   static const variationShrineActive = 1;
   static const variationShrineInactive = 0;
+
+  static bool isInteractable(int nodeType) =>
+      interactables.contains(nodeType);
+
+  static const interactables = [
+    Portal,
+    Shrine,
+  ];
 }
 

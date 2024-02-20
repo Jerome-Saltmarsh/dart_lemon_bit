@@ -2797,6 +2797,5 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   bool characterResistsDamageType(Character character, DamageType damageType){
     return false;
   }
-
 }
 

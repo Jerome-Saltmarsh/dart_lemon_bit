@@ -18,7 +18,6 @@ export 'isometric_direction.dart';
 export 'item_type.dart';
 export 'lightning_type.dart';
 export 'node_orientation.dart';
-export 'node_size.dart';
 export 'node_type.dart';
 export 'treasure_type.dart';
 export 'projectile_type.dart';

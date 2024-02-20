@@ -24,6 +24,8 @@ class IsometricPlayer with IsometricComponent {
   var areaNodeIndex = 0;
   var characterState = 0;
 
+  final aimNodeIndex = Watch<int?>(null);
+  final aimNodeType = Watch<int?>(null);
   final controlsEnabled = Watch(true);
   final name = Watch('');
   final runToDestinationEnabled = Watch(false);
@@ -85,20 +87,17 @@ class IsometricPlayer with IsometricComponent {
        healthPercentage.value = health.value / maxHealth;
     });
 
-    // legsType.onChanged((t) {
-    //   print('player.legsType(${LegType.getName(t)})');
+    // aimTargetSet.onChanged((aimTargetSet) {
+    //   if (aimTargetSet){
+    //     amulet.cursor.value = SystemMouseCursors.grab;
+    //   } else {
+    //     amulet.cursor.value = SystemMouseCursors.basic;
+    //   }
     // });
-
-    aimTargetSet.onChanged((aimTargetSet) {
-      if (aimTargetSet){
-        amulet.cursor.value = SystemMouseCursors.grab;
-      } else {
-        amulet.cursor.value = SystemMouseCursors.basic;
-      }
-    });
 
     controlsEnabled.onChanged(onChangedControlsEnabled);
   }
+
 
   void onChangedControlsEnabled(bool value){
     print('player.onChangedControlsEnabled($value)');

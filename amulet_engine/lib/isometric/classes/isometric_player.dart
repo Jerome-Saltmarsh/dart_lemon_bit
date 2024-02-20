@@ -81,6 +81,7 @@ class IsometricPlayer extends Character with ByteWriter {
   IsometricGame game;
   Collider? selectedCollider;
   Collider? _aimTarget;
+  int? aimNodeIndex;
 
   IsometricPlayer({
     required this.game,
@@ -574,6 +575,7 @@ class IsometricPlayer extends Character with ByteWriter {
     writeWeather();
     writeGameObjects();
     writeFPS();
+    writeAimNodeIndex();
     game.customDownloadScene(this);
     writePlayerEvent(PlayerEvent.Scene_Changed);
     sceneDownloaded = true;
@@ -1244,9 +1246,9 @@ class IsometricPlayer extends Character with ByteWriter {
     framesSinceClientRequest++;
 
     if (dead) return;
-    // if (!active) return;
 
     game.updatePlayerAimTarget(this);
+    updateAimNodeIndex();
   }
 
   double getMouseDistance() => this.getDistanceXYZ(mouseSceneX, mouseSceneY, mouseSceneZ);
@@ -1477,5 +1479,63 @@ class IsometricPlayer extends Character with ByteWriter {
     writeUInt16(scene.height);
     writeUInt16(scene.rows);
     writeUInt16(scene.columns);
+  }
+
+  void updateAimNodeIndex(){
+
+    if (aimTarget != null) {
+      setAimNodeIndex(null);
+      return;
+    }
+
+    var z = scene.height - 1;
+    final mouseWorldX = this.mouseX;
+    final mouseWorldY = this.mouseY;
+
+    final rows = scene.rows;
+    final columns = scene.columns;
+    final height = scene.height;
+    final nodeTypes = scene.nodeTypes;
+
+    while (z >= 0) {
+      final row = convertRenderToRow(mouseWorldX, mouseWorldY, z * Node_Height);
+      final column = convertRenderToColumn(mouseWorldX, mouseWorldY, z * Node_Height);
+
+      if (
+        row < 0 ||
+        column < 0 ||
+        row >= rows ||
+        column >= columns ||
+        z >= height
+      ) break;
+
+      final index = scene.getIndex(z, row, column);
+      if (NodeType.isInteractable(nodeTypes[index])) {
+         setAimNodeIndex(index);
+         return;
+      }
+
+      z--;
+    }
+    setAimNodeIndex(null);
+  }
+
+  void setAimNodeIndex(int? value){
+    if (aimNodeIndex == value) return;
+    aimNodeIndex = value;
+    writeAimNodeIndex();
+  }
+
+  void writeAimNodeIndex(){
+    writeByte(NetworkResponse.Isometric);
+    writeByte(NetworkResponseIsometric.Aim_Node_Index);
+    final aimNodeIndex = this.aimNodeIndex;
+    if (aimNodeIndex == null){
+      writeFalse();
+      return;
+    }
+    writeTrue();
+    writeUInt16(aimNodeIndex);
+    writeByte(scene.nodeTypes[aimNodeIndex]);
   }
 }

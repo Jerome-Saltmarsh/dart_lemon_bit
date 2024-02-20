@@ -19,10 +19,6 @@ class IsometricGame extends Game {
     // updateCursorType();
   }
 
-  void updateCursorType() {
-    // options.cursorType = mapTargetActionToCursorType(player.aimTargetAction.value);
-  }
-
   void renderForeground(Canvas canvas, Size size) {
 
   }
