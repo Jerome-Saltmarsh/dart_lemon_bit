@@ -45,8 +45,8 @@ class SceneReader extends ByteReader {
 
     final scene = Scene(
       name: 'test',
-      types: nodeTypes,
-      shapes: nodeOrientations,
+      nodeTypes: nodeTypes,
+      nodeOrientations: nodeOrientations,
       height: totalZ,
       rows: totalRows,
       columns: totalColumns,

@@ -53,6 +53,8 @@ dependencies:
     path: ..\gamestream_http_client
   lemon_json:
     path: ..\tools\lemon_json
+  lemon_io:
+    path: ..\tools\lemon_io
 
 flutter:
   fonts:

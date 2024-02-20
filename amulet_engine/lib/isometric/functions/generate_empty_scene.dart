@@ -27,8 +27,8 @@ Scene generateEmptyScene({
     height: height,
     columns: columns,
     rows: rows,
-    types: nodeTypes,
-    shapes: nodeOrientations,
+    nodeTypes: nodeTypes,
+    nodeOrientations: nodeOrientations,
     marks: [],
     variations: variations,
   );

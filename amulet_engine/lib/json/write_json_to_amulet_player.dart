@@ -55,7 +55,7 @@ void writeJsonAmuletToMemory(Json jsonAmulet, AmuletPlayer player) {
                  .getObjects('fiends')
                  .map(mapFiendJsonToAmuletFiend)
          );
-         final nodeTypes = game.scene.types;
+         final nodeTypes = game.scene.nodeTypes;
          final nodeTypesLength = nodeTypes.length;
          final variations = game.scene.variations;
          final shrinesUsed = sceneJson.getListInt('shrines_used');

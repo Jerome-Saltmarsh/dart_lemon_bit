@@ -236,7 +236,7 @@ class AmuletController {
             final nodeType = parseArg2(arguments);
             if (nodeType == null) return;
             for (var i = 0; i < game.scene.area; i++){
-              game.scene.types[i] = nodeType;
+              game.scene.nodeTypes[i] = nodeType;
             }
             game.playersDownloadScene();
             break;

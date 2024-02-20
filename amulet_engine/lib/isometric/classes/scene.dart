@@ -17,8 +17,8 @@ class Scene {
   /// map location
   var locations = <String, int>{};
 
-  Uint8List types;
-  Uint8List shapes;
+  Uint8List nodeTypes;
+  Uint8List nodeOrientations;
   Uint8List variations;
 
   /// used for pathfinding to contains the the index of a previous path
@@ -46,8 +46,8 @@ class Scene {
 
   Scene({
     required this.name,
-    required this.types,
-    required this.shapes,
+    required this.nodeTypes,
+    required this.nodeOrientations,
     required this.variations,
     required this.height,
     required this.rows,
@@ -61,8 +61,8 @@ class Scene {
 
 
   void refreshMetrics() {
-    if (path.length != types.length) {
-      path = Int32List(types.length);
+    if (path.length != nodeTypes.length) {
+      path = Int32List(nodeTypes.length);
       for (var i = 0; i < path.length; i++) {
         path[i] = Not_Visited;
       }
@@ -89,13 +89,13 @@ class Scene {
     if (index < 0 || index >= volume){
       throw Exception('scene.setNode(index: $index, type: $type, orientation: $orientation)\n\tthrew: "invalid index"');
     }
-    types[index] = type;
-    shapes[index] = orientation;
+    nodeTypes[index] = type;
+    nodeOrientations[index] = orientation;
   }
 
   int getTypeXYZ(double x, double y, double z) =>
       inboundsXYZ(x, y, z)
-          ? types[getIndexXYZ(x, y, z)]
+          ? nodeTypes[getIndexXYZ(x, y, z)]
           : NodeType.Boundary;
 
   int getIndexPosition(Position position3) =>
@@ -120,7 +120,7 @@ class Scene {
       return NodeOrientation.None;
     }
 
-    return shapes[getIndexXYZ(x, y, z)];
+    return nodeOrientations[getIndexXYZ(x, y, z)];
   }
 
   bool isInboundV3(Position pos) =>
@@ -153,7 +153,7 @@ class Scene {
 
   int findPath(var indexStart, var indexEnd, {int max = 100}) {
 
-    final shapes = this.shapes;
+    final shapes = this.nodeOrientations;
 
     if (indexEnd <= 0 ||
         indexEnd >= shapes.length ||
@@ -256,7 +256,7 @@ class Scene {
     }
 
 
-    final indexShape = shapes[index];
+    final indexShape = nodeOrientations[index];
 
     if (NodeOrientation.slopeSymmetric.contains(indexShape)) {
       final fromRow = getRow(fromIndex);
@@ -327,7 +327,7 @@ class Scene {
 
     addToStack(index, fromIndex);
 
-    final indexOrientationBelow = shapes[index - area];
+    final indexOrientationBelow = nodeOrientations[index - area];
     if (indexOrientationBelow == NodeOrientation.None) {
       visit(z: z - 1, row: row, column: column, fromIndex: index);
     }
@@ -447,12 +447,12 @@ class Scene {
   int getType(int z, int row, int column) =>
       outOfBounds(z, row, column)
           ? NodeType.Boundary
-          : types[getIndex(z, row, column)];
+          : nodeTypes[getIndex(z, row, column)];
 
   int getOrientation(int z, int row, int column) =>
       outOfBounds(z, row, column)
           ? NodeType.Boundary
-          : shapes[getIndex(z, row, column)];
+          : nodeOrientations[getIndex(z, row, column)];
 
   bool inboundsXYZ(double x, double y, double z) =>
       x >= 0 &&
@@ -509,8 +509,8 @@ class Scene {
   int getZ(int nodeIndex) => nodeIndex ~/ area;
 
   int findEmptyIndex(int index) {
-    while (index < shapes.length) {
-      if (shapes[index] == NodeOrientation.None) {
+    while (index < nodeOrientations.length) {
+      if (nodeOrientations[index] == NodeOrientation.None) {
         return index;
       }
 

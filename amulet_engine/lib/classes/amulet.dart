@@ -27,8 +27,8 @@ class Amulet {
       amulet: this,
       scene: Scene(
         name: 'loading',
-        types: Uint8List(0),
-        shapes: Uint8List(0),
+        nodeTypes: Uint8List(0),
+        nodeOrientations: Uint8List(0),
         variations: Uint8List(0),
         height: 0,
         rows: 0,

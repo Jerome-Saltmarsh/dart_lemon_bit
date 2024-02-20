@@ -569,7 +569,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
 
     final nodeIndex = scene.getIndexXYZ(performX, performY, performZ);
-    final nodeType = scene.types[nodeIndex];
+    final nodeType = scene.nodeTypes[nodeIndex];
 
     if (!NodeType.isRainOrEmpty(nodeType)) {
       attackHit = true;
@@ -617,8 +617,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   }
 
   void destroyNode(int nodeIndex) {
-    final orientation = scene.shapes[nodeIndex];
-    final nodeType = scene.types[nodeIndex];
+    final orientation = scene.nodeOrientations[nodeIndex];
+    final nodeType = scene.nodeTypes[nodeIndex];
     if (nodeType == NodeType.Empty) return;
     setNode(
       nodeIndex: nodeIndex,
@@ -1912,8 +1912,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       collider.y,
       bottomZ,
     );
-    final nodeBottomOrientation = scene.shapes[nodeBottomIndex];
-    final nodeBottomType = scene.types[nodeBottomIndex];
+    final nodeBottomOrientation = scene.nodeOrientations[nodeBottomIndex];
+    final nodeBottomType = scene.nodeTypes[nodeBottomIndex];
 
     if (nodeBottomOrientation == NodeOrientation.Solid) {
       final nodeTop = ((bottomZ ~/ Node_Height) * Node_Height) + Node_Height;
@@ -1996,8 +1996,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       collider.y,
       bottomZ,
     );
-    final nodeBottomOrientation = scene.shapes[nodeBottomIndex];
-    final nodeBottomType = scene.types[nodeBottomIndex];
+    final nodeBottomOrientation = scene.nodeOrientations[nodeBottomIndex];
+    final nodeBottomType = scene.nodeTypes[nodeBottomIndex];
 
     if (nodeBottomOrientation == NodeOrientation.Solid) {
       final nodeTop = ((bottomZ ~/ Node_Height) * Node_Height) + Node_Height;
@@ -2074,15 +2074,15 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   }) {
     assert (nodeIndex >= 0);
 
-    if (nodeIndex >= scene.types.length) {
+    if (nodeIndex >= scene.nodeTypes.length) {
       throw Exception(
           "game.setNode(nodeIndex: $nodeIndex) - node index out of bounds"
       );
     }
 
-    nodeType ??= scene.types[nodeIndex];
+    nodeType ??= scene.nodeTypes[nodeIndex];
 
-    orientation ??= scene.shapes[nodeIndex];
+    orientation ??= scene.nodeOrientations[nodeIndex];
 
     variation ??= scene.variations[nodeIndex];
 
@@ -2090,8 +2090,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       orientation = NodeType.getDefaultOrientation(nodeType);
     }
 
-    scene.shapes[nodeIndex] = orientation;
-    scene.types[nodeIndex] = nodeType;
+    scene.nodeOrientations[nodeIndex] = orientation;
+    scene.nodeTypes[nodeIndex] = nodeType;
     scene.variations[nodeIndex] = variation;
 
     final players = this.players;

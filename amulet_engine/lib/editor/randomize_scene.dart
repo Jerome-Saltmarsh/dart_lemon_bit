@@ -7,7 +7,7 @@ import '../utils/list_extensions.dart';
 
 void randomizeScene(Scene scene){
   final totalNodes = scene.volume;
-  final nodeTypes = scene.types;
+  final nodeTypes = scene.nodeTypes;
   final nodeVariations = scene.variations;
   for (var i = 0; i < totalNodes; i++){
       final nodeType = nodeTypes[i];

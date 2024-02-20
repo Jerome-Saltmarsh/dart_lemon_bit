@@ -20,8 +20,8 @@ class SceneWriter extends ByteWriter {
     writeMarks(scene);
     writeKeys(scene.keys);
 
-    if (scene.variations.length != scene.types.length){
-      scene.variations = Uint8List(scene.types.length);
+    if (scene.variations.length != scene.nodeTypes.length){
+      scene.variations = Uint8List(scene.nodeTypes.length);
     }
 
     writeVariations(scene);
@@ -34,8 +34,8 @@ class SceneWriter extends ByteWriter {
 
 
   void writeNodes(Scene scene){
-    final compressedNodeTypes = encoder.encode(scene.types);
-    final compressedNodeOrientations = encoder.encode(scene.shapes);
+    final compressedNodeTypes = encoder.encode(scene.nodeTypes);
+    final compressedNodeOrientations = encoder.encode(scene.nodeOrientations);
     assert (!compressedNodeTypes.any((element) => element > 256));
     assert (!compressedNodeTypes.any((element) => element < 0));
 

@@ -1361,13 +1361,13 @@ class IsometricPlayer extends Character with ByteWriter {
   void writeSceneNodeTypes(){
     writeByte(NetworkResponse.Scene);
     writeByte(NetworkResponseScene.Node_Types);
-    compressAndWrite(game.scene.types);
+    compressAndWrite(game.scene.nodeTypes);
   }
 
   void writeSceneNodeOrientations(){
     writeByte(NetworkResponse.Scene);
     writeByte(NetworkResponseScene.Node_Orientations);
-    compressAndWrite(game.scene.shapes);
+    compressAndWrite(game.scene.nodeOrientations);
   }
 
   void writeSceneMarks() {

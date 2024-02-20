@@ -86,8 +86,8 @@ class SceneGenerator {
 
     return Scene(
         name: "",
-        types: nodeTypes,
-        shapes: nodeOrientations,
+        nodeTypes: nodeTypes,
+        nodeOrientations: nodeOrientations,
         height: height,
         rows: rows,
         columns: columns,

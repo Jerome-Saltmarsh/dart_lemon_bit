@@ -231,8 +231,8 @@ class AmuletGameTutorial extends AmuletGame {
     for (final player in players) {
       player.writeNode(
         index: index,
-        type: scene.types[index],
-        shape: scene.shapes[index],
+        type: scene.nodeTypes[index],
+        shape: scene.nodeOrientations[index],
         variation: scene.variations[index],
       );
     }

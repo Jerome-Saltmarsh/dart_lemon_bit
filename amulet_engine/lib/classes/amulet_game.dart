@@ -86,7 +86,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
            );
            src.writePlayerEvent(PlayerEvent.Portal_Used);
            final targetScene = targetGame.scene;
-           final targetShapes = targetScene.shapes;
+           final targetShapes = targetScene.nodeOrientations;
            if (targetShapes[targetIndex + targetScene.columns] == NodeOrientation.None){
              targetGame.movePositionToIndex(src, targetIndex + targetScene.columns);
            } else if (targetShapes[targetIndex + 1] == NodeOrientation.None) {
@@ -111,7 +111,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     final rows = scene.rows;
     final columns = scene.columns;
     final zs = scene.height;
-    final nodeTypes = scene.types;
+    final nodeTypes = scene.nodeTypes;
     var i = 0;
     for (var row = 0; row < rows; row++){
       for (var column = 0; column < columns; column++) {
@@ -1311,10 +1311,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   }
 
   void resetShrines(AmuletPlayer player) {
-    final nodeTypes = scene.types;
+    final nodeTypes = scene.nodeTypes;
     final length = nodeTypes.length;
     for (var i = 0; i < length; i++){
-       final nodeType = scene.types[i];
+       final nodeType = scene.nodeTypes[i];
        if (nodeType != NodeType.Shrine) continue;
        scene.variations[i] = NodeType.variationShrineActive;
        spawnGameObjectShrine(i);
