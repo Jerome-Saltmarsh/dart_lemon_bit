@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:amulet_engine/classes/amulet_gameobject.dart';
 import 'package:amulet_engine/isometric/consts/frames_per_second.dart';
 import 'package:amulet_engine/isometric/consts/physics.dart';
 import 'package:amulet_engine/isometric/enums/damage_type.dart';

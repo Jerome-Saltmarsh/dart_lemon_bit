@@ -2,9 +2,6 @@
 import '../common/src.dart';
 import '../isometric/src.dart';
 
-// wolves: blind
-// shaman: heal, revive, fireball
-
 
 class AmuletFiend extends Character {
 

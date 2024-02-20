@@ -417,10 +417,6 @@ class IsometricPlayer extends Character with ByteWriter {
 
       final character = characters[i];
 
-      // if (character.inactive) {
-      //   continue;
-      // }
-
       final renderX = character.renderX;
 
       if (renderX < screenLeftPadded || renderX > screenRightPadded) {
@@ -463,7 +459,6 @@ class IsometricPlayer extends Character with ByteWriter {
           diffXChangeType != ChangeType.None ||
           diffYChangeType != ChangeType.None ||
           diffZChangeType != ChangeType.None ;
-
 
       final compressionA = writeBits(
           changedCharacterTypeTeam,

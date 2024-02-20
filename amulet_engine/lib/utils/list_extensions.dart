@@ -10,4 +10,9 @@ extension ListExtensions<T> on List<T> {
           : this[index];
 
   T get random => randomItem(this);
+
+  List<T> sortBy(int Function(T value) getValue) {
+    sort((a, b) => getValue(a).compareTo(getValue(b)));
+    return this;
+  }
 }

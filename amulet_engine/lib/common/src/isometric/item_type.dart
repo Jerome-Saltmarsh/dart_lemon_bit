@@ -11,6 +11,7 @@ class ItemType {
 
   static String getNameSubType(int type, int subType) => switch (type) {
       Object => GameObjectType.getName(subType),
+      Amulet_Item => AmuletItem.values[subType].name,
       _ => throw Exception('GameObjectType.getNameSubType(type: $type, subType: $subType)')
     };
 

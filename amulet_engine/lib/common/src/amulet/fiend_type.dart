@@ -1,5 +1,6 @@
 
 import 'package:amulet_engine/isometric/enums/damage_type.dart';
+import 'package:amulet_engine/src.dart';
 
 import '../isometric/character_type.dart';
 import 'skill_type.dart';
@@ -24,28 +25,8 @@ enum FiendType {
     chanceOfDropPotion: 0.15,
     skillType: SkillType.Strike,
   ),
-  Skeleton(
-    level: 2,
-    health: 6,
-    damage: 3,
-    characterType: CharacterType.Skeleton,
-    attackDuration: 20,
-    runSpeed: 1.0,
-    chanceOfSetTarget: 0.3,
-    weaponRange: 150,
-    quantity: 2,
-    clearTargetOnPerformAction: false,
-    postAttackPauseDurationMin: 30,
-    postAttackPauseDurationMax: 80,
-    resists: DamageType.Fire,
-    chanceOfDropCommon: 0.25,
-    chanceOfDropRare: 0.05,
-    chanceOfDropLegendary: 0.025,
-    chanceOfDropPotion: 0.15,
-    skillType: SkillType.Shoot_Arrow,
-  ),
   Wolf(
-    level: 3,
+    level: 2,
     health: 10,
     damage: 3,
     characterType: CharacterType.Wolf,
@@ -65,13 +46,33 @@ enum FiendType {
     skillType: SkillType.Strike,
     skillTypeB: SkillType.Blind,
   ),
+  Skeleton(
+    level: 3,
+    health: 10,
+    damage: 6,
+    characterType: CharacterType.Skeleton,
+    attackDuration: 20,
+    runSpeed: 1.0,
+    chanceOfSetTarget: 0.3,
+    weaponRange: 150,
+    quantity: 2,
+    clearTargetOnPerformAction: false,
+    postAttackPauseDurationMin: 30,
+    postAttackPauseDurationMax: 80,
+    resists: DamageType.Fire,
+    chanceOfDropCommon: 0.25,
+    chanceOfDropRare: 0.05,
+    chanceOfDropLegendary: 0.025,
+    chanceOfDropPotion: 0.15,
+    skillType: SkillType.Shoot_Arrow,
+  ),
   Zombie(
     level: 4,
-    health: 20,
+    health: 19,
     damage: 10,
     areaDamage: 3,
     characterType: CharacterType.Zombie,
-    attackDuration: 20,
+    attackDuration: 25,
     runSpeed: 0.5,
     chanceOfSetTarget: 0.3,
     weaponRange: 50,
@@ -88,8 +89,8 @@ enum FiendType {
   ),
   Goblin_Armoured(
     level: 5,
-    health: 12,
-    damage: 3,
+    health: 27,
+    damage: 9,
     characterType: CharacterType.Fallen_Armoured,
     attackDuration: 20,
     runSpeed: 0.7,
@@ -108,8 +109,8 @@ enum FiendType {
   ),
   Gargoyle(
     level: 6,
-    health: 30,
-    damage: 4,
+    health: 34,
+    damage: 7,
     characterType: CharacterType.Gargoyle_01,
     attackDuration: 20,
     runSpeed: 0.65,
@@ -126,26 +127,6 @@ enum FiendType {
     chanceOfDropPotion: 0.15,
     skillType: SkillType.Fireball,
   );
-  // Toad_Warrior(
-  //   level: 6,
-  //   health: 20,
-  //   damage: 4,
-  //   characterType: CharacterType.Toad_Warrior,
-  //   attackDuration: 20,
-  //   runSpeed: 0.65,
-  //   chanceOfSetTarget: 0.5,
-  //   weaponRange: 130,
-  //   quantity: 1,
-  //   clearTargetOnPerformAction: false,
-  //   postAttackPauseDurationMin: 30,
-  //   postAttackPauseDurationMax: 100,
-  //   resists: DamageType.Melee,
-  //   chanceOfDropCommon: 0.25,
-  //   chanceOfDropRare: 0.05,
-  //   chanceOfDropLegendary: 0.025,
-  //   chanceOfDropPotion: 0.15,
-  //   skillType: SkillType.Strike,
-  // );
 
   final int level;
   final int health;
@@ -209,14 +190,12 @@ enum FiendType {
   }
 
   static final sortedValues = (){
-    final vals = List.of(values);
-    vals.sort(sortByQuantify);
-    return vals;
+    return List.of(values).sortBy((f) => f.level);
   }();
 
-  static int sortByQuantify(FiendType a, FiendType b){
-    final aQuantify = a.quantify;
-    final bQuantify = b.quantify;
+  static int sortByLevel(FiendType a, FiendType b){
+    final aQuantify = a.level;
+    final bQuantify = b.level;
     if (aQuantify < bQuantify){
       return -1;
     }
@@ -225,6 +204,7 @@ enum FiendType {
     }
     return 0;
   }
+
 }
 
 
