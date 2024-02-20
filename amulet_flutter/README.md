@@ -20,7 +20,6 @@ REMINDER: IT DOESN'T NEED TO BE PERFECT
 [RELEASE]
 [fix] balance helms
 [fix] boss fight
-[fix] npc roam 
 [fix] ui amulet item container collision
 [fix] balance amulet fiends
 [new] skill type fireball level 3
@@ -31,6 +30,7 @@ REMINDER: IT DOESN'T NEED TO BE PERFECT
 [new] mark type fiend count
 
 ## 20.02.2024
+[fix] npc roam
 [ref] remove active from collider
 [new] destructible gameobject chest
 [new] destructible gameobject barrel
