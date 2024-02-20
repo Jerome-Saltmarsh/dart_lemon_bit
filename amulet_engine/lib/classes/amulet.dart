@@ -35,6 +35,9 @@ class Amulet {
         columns: 0,
         gameObjects: [],
         marks: [],
+        keys: {},
+        locations: {},
+
       ),
       time: amuletTime,
       environment: amuletEnvironment,

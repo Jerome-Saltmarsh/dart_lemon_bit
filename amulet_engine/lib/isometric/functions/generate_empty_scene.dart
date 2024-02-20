@@ -31,5 +31,7 @@ Scene generateEmptyScene({
     nodeOrientations: nodeOrientations,
     marks: [],
     variations: variations,
+    locations: {},
+    keys: {},
   );
 }

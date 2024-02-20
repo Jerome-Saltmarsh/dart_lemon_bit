@@ -53,7 +53,9 @@ class SceneReader extends ByteReader {
       gameObjects: gameObjects,
       variations: variations,
       marks: marks,
-    )..keys = keys;
+      keys: keys,
+      locations: {},
+    );
 
     for (final mark in marks) {
       final markType = MarkType.getType(mark);

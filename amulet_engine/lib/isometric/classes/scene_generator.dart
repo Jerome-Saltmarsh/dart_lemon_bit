@@ -94,6 +94,8 @@ class SceneGenerator {
         gameObjects: [],
         marks: [],
         variations: Uint8List(volume),
+        locations: {},
+        keys: {},
 
      );
   }

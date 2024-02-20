@@ -54,6 +54,8 @@ class Scene {
     required this.columns,
     required this.gameObjects,
     required this.marks,
+    required this.keys,
+    required this.locations,
     this.underground = false,
   }) {
     refreshMetrics();

@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'type_def_json.dart';
 
 extension JsonExtension on Json {
@@ -35,6 +37,14 @@ extension JsonExtension on Json {
   }
 
   List<Json> getObjects(String key) => getList<Json>(key);
+
+  Uint8List getUint8List(String key) => Uint8List.fromList(getListInt(key));
+
+  Map<String, int> getMapStringInt(String key) =>
+      getMap<String, int>(key);
+
+  Map<T, J> getMap<T, J>(String key) =>
+      getChild(key).cast<T, J>();
 
   List<int> getListInt(String key) => getList<int>(key);
 
