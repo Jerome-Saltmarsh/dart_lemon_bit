@@ -1197,42 +1197,28 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     dispatchByte(character.characterType);
   }
 
-  // @override
-  // void applyDamageToCharacter({
-  //   required Character src,
-  //   required Character target,
-  //   required int amount,
-  //   required DamageType damageType,
-  //   int ailmentDuration =  0,
-  // }) {
-  //   if (characterResistsDamageType(target, damageType)) {
-  //     amount = amount ~/ 2;
-  //   } else {
-  //     if (ailmentDuration > 0){
-  //       if (damageType == DamageType.Ice) {
-  //         target.ailmentColdDuration += ailmentDuration; // TODO COLD DURATION
-  //       }
-  //       if (damageType == DamageType.Fire) {
-  //         target.ailmentBurningDuration += ailmentDuration; // TODO COLD DURATION
-  //         target.ailmentBurningSrc = src;
-  //       }
-  //     }
-  //   }
-  //   super.applyDamageToCharacter(
-  //     src: src,
-  //     target: target,
-  //     amount: amount,
-  //     damageType: damageType,
-  //   );
-  // }
+  @override
+  void customOnGameObjectDestroyed(GameObject gameObject) {
+    if (gameObject.isObject && const [
+      GameObjectType.Barrel,
+      GameObjectType.Wooden_Chest,
+      GameObjectType.Crate_Wooden,
+    ].contains(gameObject.subType)){
 
+      final values = AmuletItem.find(
+        itemQuality: ItemQuality.Common,
+        level: amuletScene.level,
+      );
 
-  // static int getAmuletItemDamage(AmuletItem amuletItem){
-  //   final min = amuletItem.damageMin;
-  //   final max = amuletItem.damageMax;
-  //   if (min == null || max == null) return 0;
-  //   return randomInt(min, max + 1);
-  // }
+      if (values.isNotEmpty) {
+        spawnAmuletItemAtPosition(
+          item: randomItem(values),
+          position: gameObject,
+        );
+      }
+    }
+
+  }
 
   @override
   void performCharacterStart(Character character) {

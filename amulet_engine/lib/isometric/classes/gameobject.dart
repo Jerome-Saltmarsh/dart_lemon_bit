@@ -29,6 +29,8 @@ class GameObject extends Collider {
   @override
   int get materialType => getMaterialType(itemType, subType);
 
+  bool get isObject => itemType == ItemType.Object;
+
   bool get ignorePointer =>
         (
           !collectable &&
