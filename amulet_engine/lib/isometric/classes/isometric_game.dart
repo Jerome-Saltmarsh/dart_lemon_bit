@@ -745,17 +745,9 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   void updateGameObjects() {
     var sortRequired = false;
     final gameObjects = this.gameObjects;
-    final totalGameObjects = gameObjects.length;
-    for (var i = 0; i < totalGameObjects; i++) {
+    for (var i = 0; i < gameObjects.length; i++) {
       final gameObject = gameObjects[i];
       updateColliderPhysics(gameObject);
-      // if (!gameObject.active) {
-      //   if (gameObject.recyclable && !gameObject.available) {
-      //     gameObject.available = true;
-      //   }
-      // } else {
-      //
-      // }
 
       if (gameObject.positionDirty) {
         gameObject.dirty = true;
@@ -779,7 +771,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         }
       }
 
-      if (!sortRequired && i < totalGameObjects - 1){
+      if (!sortRequired && i < gameObjects.length - 1){
         final nextGameobject = gameObjects[i + 1];
         if (nextGameobject.order < gameObject.order){
           sortRequired = true;

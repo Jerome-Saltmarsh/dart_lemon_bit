@@ -369,7 +369,7 @@ class RendererGameObjects extends RenderGroup {
   void updateFunction() {
     gameObject = scene.gameObjects[index];
 
-    while (!gameObject.active || !screen.contains(gameObject) || !scene.isPerceptiblePosition(gameObject)) {
+    while (!screen.contains(gameObject) || !scene.isPerceptiblePosition(gameObject)) {
       index++;
       if (!remaining) return;
       gameObject = scene.gameObjects[index];

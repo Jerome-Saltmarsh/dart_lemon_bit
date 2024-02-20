@@ -9,7 +9,6 @@ class GameObject extends Position {
   var subType = -1;
   var health = -1;
   var maxHealth = -1;
-  var active = false;
   var emissionType = EmissionType.None;
   var emissionHue = 0;
   var emissionSat = 0;

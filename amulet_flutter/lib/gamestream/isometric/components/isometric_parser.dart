@@ -386,7 +386,6 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
   void readNetworkResponseGameObject() {
     final id = readUInt16();
     final gameObject = scene.findOrCreateGameObject(id);
-    gameObject.active = readBool();
     gameObject.type = readByte();
     gameObject.subType = readUInt16();
     gameObject.health = readUInt16();

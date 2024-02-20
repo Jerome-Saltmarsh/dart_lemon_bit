@@ -962,7 +962,6 @@ class IsometricPlayer extends Character with ByteWriter {
   void writeGameObject(GameObject gameObject){
     writeByte(NetworkResponse.GameObject);
     writeUInt16(gameObject.id);
-    writeBool(true); // TODO
     writeByte(gameObject.itemType);
     writeUInt16(gameObject.subType);
     writeUInt16(gameObject.health);

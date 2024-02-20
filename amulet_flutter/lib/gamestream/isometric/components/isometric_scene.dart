@@ -1479,7 +1479,7 @@ class IsometricScene with IsometricComponent implements Updatable {
   void applyEmissionAmbientGameObjects() {
     final gameObjects = this.gameObjects;
     for (final gameObject in gameObjects) {
-      if (!gameObject.active || gameObject.emissionType != EmissionType.Ambient)
+      if (gameObject.emissionType != EmissionType.Ambient)
         continue;
 
       applyVector3EmissionAmbient(
@@ -1595,7 +1595,6 @@ class IsometricScene with IsometricComponent implements Updatable {
   void updateGameObjects() {
     final gameObjects = this.gameObjects;
     for (final gameObject in gameObjects){
-      if (!gameObject.active) continue;
       gameObject.update();
     }
   }
@@ -2260,7 +2259,6 @@ class IsometricScene with IsometricComponent implements Updatable {
   void applyEmissionColorGameObjects() {
     final gameObjects = this.gameObjects;
     for (final gameObject in gameObjects) {
-      if (!gameObject.active) continue;
 
       if (
         gameObject.type == ItemType.Object &&
