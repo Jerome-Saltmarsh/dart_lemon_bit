@@ -55,7 +55,7 @@ class Character extends Collider {
   var autoTarget = true;
   var autoTargetRange = 300.0;
   var autoTargetTimer = 0;
-  var autoTargetTimerDuration = 60;
+  var autoTargetTimerDuration = 15;
   var invincible = false;
   var actionDuration = -1;
   var attackDuration = 0;

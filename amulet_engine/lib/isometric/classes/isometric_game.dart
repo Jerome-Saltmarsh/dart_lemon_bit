@@ -797,13 +797,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   void updateCharacterTarget(Character character){
 
-
-    final target = character.target;
-
-    // if (target is AmuletGameObject){
-    //   character.clearTarget();
-    // }
-
     if (character.busy || !character.autoTarget){
       return;
     }
@@ -1475,10 +1468,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   }
 
   void updateCharacter(Character character) {
-
-    // if (!character.active){
-    //   return;
-    // }
 
     if (character.dead) {
       character.updateAilments();
