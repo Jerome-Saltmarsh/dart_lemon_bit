@@ -644,6 +644,10 @@ class IsometricEditor with IsometricComponent {
     sendEditorRequest(NetworkRequestEdit.Clear_Spawned);
   }
 
+  void restoreGameObjects() {
+    sendEditorRequest(NetworkRequestEdit.Restore_GameObjects);
+  }
+
   void editSceneSpawnAI() =>
       sendEditorRequest(NetworkRequestEdit.Spawn_AI);
 

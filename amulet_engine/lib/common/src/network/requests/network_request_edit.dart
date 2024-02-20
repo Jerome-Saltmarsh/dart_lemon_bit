@@ -24,4 +24,5 @@ enum NetworkRequestEdit {
    Move_Key,
    Rename_Key,
    Randomize,
+   Restore_GameObjects
 }

@@ -32,12 +32,14 @@ Scene readSceneFromJson(Json json){
       marks: json.getListInt('marks'),
       keys: json.getMapStringInt('keys'),
       locations: json.getMapStringInt('locations'),
-      gameObjects: json.getObjects('gameobjects')
-          .map(readGameObjectFromJson)
-          .toList(growable: true),
+      gameObjects: readGameObjectsFromJson(json),
   );
 }
 
+List<GameObject> readGameObjectsFromJson(Json json) =>
+    json.getObjects('gameobjects')
+      .map(readGameObjectFromJson)
+      .toList(growable: true);
 
 GameObject readGameObjectFromJson(Json gameObjectJson){
    final x = gameObjectJson.getDouble('x');
@@ -59,7 +61,9 @@ GameObject readGameObjectFromJson(Json gameObjectJson){
          itemType: itemType,
          subType: subType,
          id: id,
-     )..frameSpawned = frameSpawned;
+     )
+       ..persistable = true
+       ..frameSpawned = frameSpawned;
    }
 
    if (itemType == ItemType.Amulet_Item){
@@ -71,7 +75,8 @@ GameObject readGameObjectFromJson(Json gameObjectJson){
        amuletItem: AmuletItem.values[subType],
        frameSpawned: frameSpawned,
        deactivationTimer: deactivateTimer,
-     );
+     )
+       ..persistable = true;
    }
 
    throw Exception('cannot parse gameobject item_type $itemType');

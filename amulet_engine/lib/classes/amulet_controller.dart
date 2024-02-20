@@ -103,6 +103,9 @@ class AmuletController {
           case NetworkRequestEdit.Add_Key:
             handleNetworkRequestEditAddKey(arguments);
             break;
+          case NetworkRequestEdit.Restore_GameObjects:
+            handleNetworkRequestEditRestoreGameObjects();
+            break;
           case NetworkRequestEdit.Delete_Key:
             handleNetworkRequestEditDeleteKey(arguments);
             break;
@@ -1259,4 +1262,7 @@ class AmuletController {
       keyDownShift: keyDownShift,
     );
   }
+
+  void handleNetworkRequestEditRestoreGameObjects() =>
+      player.amuletGame.loadGameObjectsFromScene();
 }

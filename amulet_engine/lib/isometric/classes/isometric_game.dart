@@ -44,20 +44,28 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required this.time,
     required this.environment,
   }) {
-
-    for (final gameObject in scene.gameObjects){
-      gameObjects.add(
-        gameObject.copy()
-      );
-    }
-
-    gameObjects.sort();
-    gameObjectId = gameObjects.length;
     customInit();
+    loadGameObjectsFromScene();
 
     for (final gameObject in gameObjects) {
       onGameObjectSpawned(gameObject);
     }
+  }
+
+  void loadGameObjectsFromScene() =>
+      loadGameObjects(scene.gameObjects);
+
+  void loadGameObjects(List<GameObject> values){
+    this.gameObjects.clear();
+
+    for (final gameObject in values){
+      gameObjects.add(
+          gameObject.copy()
+              ..dirty = true
+      );
+    }
+    gameObjects.sort();
+    gameObjectId = gameObjects.length;
   }
 
   int get maxPlayers;

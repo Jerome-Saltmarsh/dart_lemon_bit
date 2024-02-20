@@ -764,6 +764,10 @@ extension IsometricEditorUI on IsometricEditor {
               action: editSceneClearSpawnedAI,
               child: buildText('Clear Spawned AI'),
             ),
+            onPressed(
+              action: restoreGameObjects,
+              child: buildText('Restore GameObjects'),
+            ),
           ],
         ),
       ),

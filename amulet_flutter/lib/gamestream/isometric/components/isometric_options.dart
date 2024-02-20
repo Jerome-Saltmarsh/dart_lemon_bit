@@ -45,7 +45,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
   final serverMode = Watch(ServerMode.local);
   final mode = Watch(Mode.play);
   final highlightIconInventory = WatchBool(false);
-  final timeVisible = WatchBool(true);
+  final timeVisible = WatchBool(false);
   final windowOpenMenu = WatchBool(false);
   final serverFPS = Watch(0);
   final sceneName = Watch<String?>(null);

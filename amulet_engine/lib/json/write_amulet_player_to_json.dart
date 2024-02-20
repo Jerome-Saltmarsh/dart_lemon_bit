@@ -1,6 +1,7 @@
 
 import 'package:amulet_engine/classes/amulet_fiend.dart';
 import 'package:amulet_engine/classes/amulet_game.dart';
+import 'package:amulet_engine/io/scene_json_writer.dart';
 import 'package:lemon_json/src.dart';
 
 import 'character_json.dart';
@@ -56,6 +57,7 @@ Json writeAmuletGameToJson(AmuletGame amuletGame, AmuletPlayer amuletPlayer) {
     if (character is! AmuletFiend) continue;
     fiends.add(writeAmuletFiendToJson(character));
   }
+  json['gameobjects'] = writeGameObjectsToJson(amuletGame.gameObjects);
   json['fiends'] = fiends;
   json['scene_index'] = amuletGame.amuletScene.index;
   json['shrines_used'] = amuletPlayer.sceneShrinesUsed[amuletGame.amuletScene] ??  [];
