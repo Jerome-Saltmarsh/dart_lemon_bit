@@ -1118,46 +1118,37 @@ class AmuletUI {
 
     return buildWatch(watch, (amuletItem) {
       const size = 50.0;
-      final skillType = amuletItem?.skillType;
+      if (amuletItem == null){
+        return Container(
+          width: size,
+          height: size,
+          color: Colors.black26,
+        );
+      }
+
+      final skillType = amuletItem.skillType;
 
       return onPressed(
         onEnter: () {
           return amulet.aimTargetItemType.value = amuletItem;
         },
         onExit: () => amulet.aimTargetItemType.value = null,
-        action: amuletItem == null
-            ? null
-            : () => amulet.selectSlotType(slotType),
-        onRightClick: amuletItem == null
-            ? null
-            : () => amulet.dropAmuletItem(amuletItem),
+        // action: amuletItem == null
+        //     ? null
+        //     : () => amulet.selectSlotType(slotType),
+        action: () => amulet.dropAmuletItem(amuletItem),
+        onRightClick: () => amulet.dropAmuletItem(amuletItem),
         child: Container(
           width: 50,
           height: 50,
           alignment: Alignment.center,
-          color: Colors.white12,
+          color: Colors.black26,
           // padding: const EdgeInsets.all(2),
           child: Stack(
             alignment: Alignment.center,
             children: [
               Positioned(
-                child: Builder(
-                  builder: (context) {
-
-                    return buildWatch(amulet.playerSkillRight, (playerSkillRight) {
-                      return Container(
-                        alignment: Alignment.center,
-                        color: playerSkillRight != amuletItem?.skillType ? Colors.black12 : Colors.white24,
-                        padding: const EdgeInsets.all(2),
-                        child: amuletItem == null
-                            ? nothing
-                            : AmuletItemImage(amuletItem: amuletItem, scale: size / 32,),
-                      );
-
-
-                    });
-                  }
-                ),
+                child: AmuletItemImage(amuletItem: amuletItem, scale: size / 32,),
               ),
               if (skillType != null)
                 Positioned(
