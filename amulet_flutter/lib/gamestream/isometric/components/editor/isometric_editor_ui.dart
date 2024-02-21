@@ -57,6 +57,7 @@ extension IsometricEditorUI on IsometricEditor {
     NodeType.Palisade,
     NodeType.Shadow,
     NodeType.Shrine,
+    NodeType.Portal,
   ];
 
   static const nodeTypesColumn2 = [
@@ -124,69 +125,6 @@ extension IsometricEditorUI on IsometricEditor {
           left: 0,
           top: 80,
           child: buildEditorTabNodes(),
-        ),
-      if (activeEditTab == EditorTab.Nodes)
-        Positioned(
-          left: 160,
-          top: 80,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildWatch(
-                  nodeSelectedType,
-                      (int selectedNodeType) => Row(
-                    children: [
-                      if (NodeType.supportsOrientationEmpty(
-                          selectedNodeType))
-                        buildOrientationIcon(NodeOrientation.None),
-                      if (NodeType.supportsOrientationSolid(
-                          selectedNodeType))
-                        buildOrientationIcon(NodeOrientation.Solid),
-                      if (NodeType.supportsOrientationHalf(
-                          selectedNodeType))
-                        buildOrientationIcon(NodeOrientation.Half_East),
-                      if (NodeType.supportsOrientationCorner(
-                          selectedNodeType))
-                        buildOrientationIcon(
-                            NodeOrientation.Corner_North_East),
-                      if (NodeType.supportsOrientationSlopeSymmetric(
-                          selectedNodeType))
-                        buildOrientationIcon(
-                            NodeOrientation.Slope_East),
-                      if (NodeType.supportsOrientationSlopeCornerInner(
-                          selectedNodeType))
-                        buildOrientationIcon(
-                          NodeOrientation.Slope_Inner_North_East,
-                        ),
-                      if (NodeType.supportsOrientationSlopeCornerOuter(
-                          selectedNodeType))
-                        buildOrientationIcon(
-                          NodeOrientation.Slope_Outer_North_East,
-                        ),
-                      if (NodeType.supportsOrientationRadial(
-                          selectedNodeType))
-                        buildOrientationIcon(
-                          NodeOrientation.Radial,
-                        ),
-
-                      if (NodeType.supportsOrientationHalfVertical(
-                          selectedNodeType
-                      ))
-                        buildOrientationIcon(NodeOrientation.Half_Vertical_Top),
-                      if (NodeType.supportsOrientationColumn(selectedNodeType))
-                        buildOrientationIcon(NodeOrientation.Column_Center_Center),
-                    ],
-                  )),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  buildEditorSelectedNode(),
-                  buildWatch(nodeSelectedOrientation,
-                      buildColumnEditNodeOrientation),
-                ],
-              ),
-            ],
-          ),
         ),
       if (activeEditTab == EditorTab.File)
         Positioned(
@@ -1307,25 +1245,89 @@ extension IsometricEditorUI on IsometricEditor {
   void onButtonPressedAddMark() => markAdd(nodeSelectedIndex.value);
 
   Widget buildEditorTabNodes() =>
-      Container(
-        height: engine.screen.height - 70,
-        child: SingleChildScrollView(
-          child: Row(
+      Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: engine.screen.height - 70,
+            child: SingleChildScrollView(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: nodeTypesColumn1.map(buildButtonSelectNodeType).toList(),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: nodeTypesColumn2.map(buildButtonSelectNodeType).toList(),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          width16,
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
+              buildWatch(
+                  nodeSelectedType,
+                      (int selectedNodeType) => Row(
+                    children: [
+                      if (NodeType.supportsOrientationEmpty(
+                          selectedNodeType))
+                        buildOrientationIcon(NodeOrientation.None),
+                      if (NodeType.supportsOrientationSolid(
+                          selectedNodeType))
+                        buildOrientationIcon(NodeOrientation.Solid),
+                      if (NodeType.supportsOrientationHalf(
+                          selectedNodeType))
+                        buildOrientationIcon(NodeOrientation.Half_East),
+                      if (NodeType.supportsOrientationCorner(
+                          selectedNodeType))
+                        buildOrientationIcon(
+                            NodeOrientation.Corner_North_East),
+                      if (NodeType.supportsOrientationSlopeSymmetric(
+                          selectedNodeType))
+                        buildOrientationIcon(
+                            NodeOrientation.Slope_East),
+                      if (NodeType.supportsOrientationSlopeCornerInner(
+                          selectedNodeType))
+                        buildOrientationIcon(
+                          NodeOrientation.Slope_Inner_North_East,
+                        ),
+                      if (NodeType.supportsOrientationSlopeCornerOuter(
+                          selectedNodeType))
+                        buildOrientationIcon(
+                          NodeOrientation.Slope_Outer_North_East,
+                        ),
+                      if (NodeType.supportsOrientationRadial(
+                          selectedNodeType))
+                        buildOrientationIcon(
+                          NodeOrientation.Radial,
+                        ),
+
+                      if (NodeType.supportsOrientationHalfVertical(
+                          selectedNodeType
+                      ))
+                        buildOrientationIcon(NodeOrientation.Half_Vertical_Top),
+                      if (NodeType.supportsOrientationColumn(selectedNodeType))
+                        buildOrientationIcon(NodeOrientation.Column_Center_Center),
+                    ],
+                  )),
+              Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: nodeTypesColumn1.map(buildButtonSelectNodeType).toList(),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: nodeTypesColumn2.map(buildButtonSelectNodeType).toList(),
+                children: [
+                  buildEditorSelectedNode(),
+                  buildWatch(nodeSelectedOrientation,
+                      buildColumnEditNodeOrientation),
+                ],
               ),
             ],
-          ),
-        ),
+          )
+        ],
       );
 
   Widget buildColumnSelectObjectType(){

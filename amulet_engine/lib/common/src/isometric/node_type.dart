@@ -90,6 +90,7 @@ class NodeType {
         Dust,
         Rain_Falling,
         Shadow,
+        Portal,
   ].contains(type);
 
   static bool supportsOrientationRadial(int type) => const [

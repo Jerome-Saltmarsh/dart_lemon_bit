@@ -1405,8 +1405,19 @@ class RendererNodes extends RenderGroup {
         return;
       case NodeType.Respawning:
         return;
+      case NodeType.Portal:
+        if (options.editing) {
+          renderStandardNode(
+            color: color,
+            srcX: 1704,
+            srcY: 655,
+            dstX: dstX,
+            dstY: dstY,
+          );
+        }
+        return;
       default:
-        throw Exception('renderNode(index: ${index}, orientation: ${NodeOrientation.getName(scene.nodeOrientations[index])}');
+        throw Exception('renderNode(index: ${index}, orientation: ${NodeOrientation.getName(scene.nodeOrientations[index])})');
     }
   }
 
