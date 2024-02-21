@@ -56,10 +56,9 @@ class GameObject extends Collider {
     required this.itemType,
     required this.subType,
     required this.id,
-    // required this.persistable,
+    required this.interactable,
     super.radius = 15.0,
     this.health = 0,
-    this.interactable = false,
     this.deactivationTimer = -1,
   }) : super(materialType: getMaterialType(itemType, subType)) {
     startPositionX = x;
@@ -98,13 +97,10 @@ class GameObject extends Collider {
           itemType: itemType,
           subType: subType,
           id: id,
-          // persistable: persistable,
+          interactable: interactable,
       )
-        ..interactable = interactable
         ..collectable = collectable
-        // ..persistable = persistable
         ..destroyable = destroyable
-        // ..recyclable = recyclable
         ..dirty = dirty
         ..previousX = previousX
         ..previousY = previousY

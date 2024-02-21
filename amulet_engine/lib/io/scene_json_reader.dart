@@ -69,6 +69,7 @@ GameObject readGameObjectFromJson(Json gameObjectJson){
        id: id,
        health: health,
        deactivationTimer: deactivationTimer,
+       interactable: itemType == ItemType.Amulet_Item,
    );
 }
 
