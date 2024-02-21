@@ -1179,12 +1179,18 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     if (mouseLeftClicked) {
       final aimTarget = player.aimTarget;
 
-      if (aimTarget == null) {
-        player.setDestinationToMouse();
-        return;
-      } else {
+      if (aimTarget != null){
         player.target = aimTarget;
+        return;
       }
+
+      final aimNodeIndex = player.aimNodeIndex;
+      if (aimNodeIndex != null) {
+        player.targetNodeIndex = aimNodeIndex;
+        return;
+      }
+
+      player.setDestinationToMouse();
     }
 
   }
@@ -1273,18 +1279,18 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     shrineObject.hitable = false;
     shrineObject.collectable = false;
     shrineObject.label = 'Shrine';
-    shrineObject.onInteract = (src){
-      if (src is AmuletPlayer) {
-        useShrine(src, shrineObject);
-      }
-    };
+    // shrineObject.onInteract = (src){
+    //   if (src is AmuletPlayer) {
+    //     useShrine(src, shrineObject);
+    //   }
+    // };
   }
 
-  void useShrine(AmuletPlayer player, GameObject shrineObject) {
+  void useShrine(AmuletPlayer player, int nodeIndex) {
     player.regainFullMagic();
     player.regainFullHealth();
-    final nodeIndex = scene.getIndexPosition(shrineObject);
-    remove(shrineObject);
+    // final nodeIndex = scene.getIndexPosition(shrineObject);
+    // remove(shrineObject);
     setNode(nodeIndex: nodeIndex, variation: NodeType.variationShrineInactive);
     final sceneShrinesUsed = player.sceneShrinesUsed;
     if (!sceneShrinesUsed.containsKey(amuletScene)){
@@ -1295,7 +1301,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       throw Exception('shrinesUsed == null');
     }
     shrinesUsed.add(nodeIndex);
-    dispatchGameEventPosition(GameEvent.Shrine_Used, shrineObject);
+    // dispatchGame(GameEvent.Shrine_Used, shrineObject);
   }
 
   void resetShrines(AmuletPlayer player) {
@@ -1344,6 +1350,24 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     GameObjectType.Wooden_Chest,
     GameObjectType.Barrel,
   ];
+
+  @override
+  void handleCharacterInteractWithTargetNode(Character character) {
+
+    final targetNodeIndex = character.targetNodeIndex;
+
+    if (targetNodeIndex == null || character is! AmuletPlayer){
+      return;
+    }
+
+    final nodeType = scene.nodeTypes[targetNodeIndex];
+
+    switch (nodeType){
+      case NodeType.Shrine:
+        useShrine(character, targetNodeIndex);
+        break;
+    }
+  }
 }
 
 

@@ -79,9 +79,6 @@ class Character extends Collider {
   var arrivedAtDestination = false;
   var runToDestinationEnabled = true;
   var pathFindingEnabled = true;
-  var runX = 0.0;
-  var runY = 0.0;
-  var runZ = 0.0;
   var helmType = HelmType.None;
   var armorType = ArmorType.None;
   var roamEnabled = false;
@@ -90,11 +87,11 @@ class Character extends Collider {
   var chanceOfSetTarget = 0.5;
   var maxFollowDistance = 500.0;
 
+  final runPosition = Position();
   final path = Uint32List(20);
 
   Position? target;
-
-  final targetNode = Position();
+  int? targetNodeIndex;
 
   Character({
     required super.x,
@@ -386,11 +383,11 @@ class Character extends Collider {
   }
 
   void runToDestination(){
-    faceRunDestination();
+    faceRunPosition();
     setCharacterStateRunning();
   }
 
-  void faceRunDestination() {
+  void faceRunPosition() {
     if (z != runZ){
       final diff = z - runZ;
       runX += diff;
@@ -457,10 +454,9 @@ class Character extends Collider {
     if (!runToDestinationEnabled) {
       return;
     }
-
-    runX = x;
-    runY = y;
-    runZ = z;
+    runPosition.x = x;
+    runPosition.y = y;
+    runPosition.z = z;
     arrivedAtDestination = false;
   }
 
@@ -678,4 +674,20 @@ class Character extends Collider {
 
   void clearFrame() => frame = 0;
 
+  double get runX => runPosition.x;
+
+  double get runY => runPosition.y;
+
+  double get runZ => runPosition.z;
+
+  set runX(double value){
+    runPosition.x = value;
+  }
+
+  set runY(double value){
+    runPosition.y = value;
+  }
+  set runZ(double value){
+    runPosition.z = value;
+  }
 }

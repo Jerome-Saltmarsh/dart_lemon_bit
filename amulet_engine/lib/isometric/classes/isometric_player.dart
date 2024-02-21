@@ -1537,4 +1537,21 @@ class IsometricPlayer extends Character with ByteWriter {
     writeUInt16(aimNodeIndex);
     writeByte(scene.nodeTypes[aimNodeIndex]);
   }
+
+  @override
+  set targetNodeIndex(int? value) {
+    super.targetNodeIndex = value;
+    if (value == null) {
+      return;
+    }
+    setRunDestinationToIndex(value);
+  }
+
+
+  void setRunDestinationToIndex(int index) =>
+      setRunDestination(
+        scene.getIndexX(index),
+        scene.getIndexY(index),
+        scene.getIndexZ(index),
+      );
 }

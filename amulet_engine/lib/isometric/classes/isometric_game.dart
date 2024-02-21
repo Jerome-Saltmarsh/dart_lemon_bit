@@ -2386,6 +2386,10 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       return;
     }
 
+    if (updateCharacterGoalTargetNodeIndex(character)) {
+      return;
+    }
+
     if (characterConditionInteractWithTarget(character)){
       characterGoalInteractWithTarget(character);
       return;
@@ -2508,7 +2512,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   void characterActionRunToDestination(Character character) {
     character.action = CharacterAction.Run_To_Destination;
-    character.faceRunDestination();
+    character.faceRunPosition();
     character.setCharacterStateRunning();
   }
 
@@ -2794,6 +2798,37 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   bool characterResistsDamageType(Character character, DamageType damageType){
     return false;
+  }
+
+  bool updateCharacterGoalTargetNodeIndex(Character character) {
+
+    final targetNodeIndex = character.targetNodeIndex;
+
+    if (targetNodeIndex == null){
+      return false;
+    }
+
+    final nodeX = scene.getIndexX(targetNodeIndex);
+    final nodeY = scene.getIndexY(targetNodeIndex);
+    final nodeZ = scene.getIndexZ(targetNodeIndex);
+
+    if (character.withinRadiusXYZ(
+        nodeX,
+        nodeY,
+        nodeZ,
+        IsometricSettings.Interact_Radius,
+    )){
+      handleCharacterInteractWithTargetNode(character);
+      character.targetNodeIndex = null;
+      character.setCharacterStateIdle();
+      return true;
+    }
+
+    return false;
+  }
+
+  void handleCharacterInteractWithTargetNode(Character character) {
+
   }
 }
 
