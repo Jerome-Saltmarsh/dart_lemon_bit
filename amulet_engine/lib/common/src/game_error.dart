@@ -85,7 +85,9 @@ enum GameError {
   Staff_Required,
   Melee_Weapon_Required,
   Flask_Not_Ready,
-  Insufficient_Magic;
+  Insufficient_Magic,
+  Invalid_Portal_Scene,
+  No_Connecting_Portal;
 
   static GameError fromIndex(int index) {
     if (index < 0) throw Exception('$index < 0');

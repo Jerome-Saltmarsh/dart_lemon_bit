@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:amulet_engine/utils/list_extensions.dart';
 import 'package:amulet_engine/common/src.dart';
 import 'package:lemon_math/src.dart';
 
@@ -605,5 +606,21 @@ class Scene {
   void setKey(String name, int value){
     keys[name] = value;
   }
+
+  int? findPortalWithTarget(AmuletScene amuletScene){
+    final nodeTypes = this.nodeTypes;
+    final length = nodeTypes.length;
+    for (var i = 0; i < length; i++){
+      if (nodeTypes[i] != NodeType.Portal) continue;
+      final targetPortalTarget = tryGetPortalTarget(i);
+      if (targetPortalTarget == amuletScene) {
+        return i;
+      }
+    }
+    return null;
+  }
+
+  AmuletScene? tryGetPortalTarget(int index) =>
+      AmuletScene.values.tryGet(variations.tryGet(index));
 
 }

@@ -363,6 +363,7 @@ class Amulet {
     required AmuletPlayer player,
     required AmuletGame target,
     String? sceneKey,
+    int? index,
   }){
     final currentGame = player.amuletGame;
     if (currentGame != target){
@@ -373,6 +374,11 @@ class Amulet {
     player.clearCache();
     if (sceneKey != null){
       target.scene.movePositionToKey(player, sceneKey);
+      player.writePlayerMoved();
+    }
+
+    if (index != null) {
+      target.scene.movePositionToIndex(player, index);
       player.writePlayerMoved();
     }
   }

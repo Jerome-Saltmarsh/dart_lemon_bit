@@ -1359,7 +1359,34 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       case NodeType.Shrine:
         useShrine(character, targetNodeIndex);
         break;
+      case NodeType.Portal:
+        usePortal(character, targetNodeIndex);
+        break;
     }
+  }
+
+  void usePortal(AmuletPlayer character, int nodeIndex) {
+
+    final amuletScene = scene.tryGetPortalTarget(nodeIndex);
+
+    if (amuletScene == null){
+       character.writeGameError(GameError.Invalid_Portal_Scene);
+       return;
+    }
+
+    final targetGame = amulet.findGame(amuletScene);
+    final targetNodeIndex = targetGame.scene.findPortalWithTarget(this.amuletScene);
+
+    if (targetNodeIndex == null) {
+      character.writeGameError(GameError.No_Connecting_Portal);
+      return;
+    }
+
+    amulet.playerChangeGame(
+        player: character,
+        target: targetGame,
+        index: targetNodeIndex,
+    );
   }
 }
 
