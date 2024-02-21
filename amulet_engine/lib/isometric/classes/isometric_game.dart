@@ -138,6 +138,10 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   void removePlayer(T player){
     player.aimTarget = null;
     player.target = null;
+    player.aimNodeIndex = null;
+    player.arrivedAtDestination = true;
+    player.clearVelocity();
+    player.setDestinationToCurrentPosition();
     if (players.remove(player)) {
       onPlayerRemoved(player);
     }
