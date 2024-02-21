@@ -1512,6 +1512,8 @@ class AmuletPlayer extends IsometricPlayer with
       case NodeType.Shrine:
         final variation = scene.variations[index];
         return variation == NodeType.Variation_Shrine_Active;
+      case NodeType.Portal:
+        return true;
       default:
         return false;
     }

@@ -1831,6 +1831,14 @@ abstract class IsometricGame<T extends IsometricPlayer> {
           position.z,
       );
 
+  void dispatchGameEventIndex(int gameEventType, int index) =>
+      dispatchGameEvent(
+          gameEventType,
+          scene.getIndexX(index),
+          scene.getIndexY(index),
+          scene.getIndexZ(index),
+      );
+
   void dispatchGameEvent(int gameEvent, double x, double y, double z) {
     final players = this.players;
     for (final player in players) {
