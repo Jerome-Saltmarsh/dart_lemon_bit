@@ -212,4 +212,10 @@ abstract class Collider extends Position {
 
   double get distanceFromStartSquared =>
       getDistanceSquaredXYZ(startPositionX, startPositionY, startPositionZ);
+
+  void clearVelocity(){
+    velocityX = 0;
+    velocityY = 0;
+    velocityZ = 0;
+  }
 }

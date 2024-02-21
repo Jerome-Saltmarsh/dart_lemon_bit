@@ -371,6 +371,8 @@ class Amulet {
       target.add(player);
     }
     player.clearCache();
+    player.setCharacterStateIdle();
+    player.clearVelocity();
     if (sceneKey != null){
       target.scene.movePositionToKey(player, sceneKey);
       player.writePlayerMoved();
