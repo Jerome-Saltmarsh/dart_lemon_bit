@@ -35,72 +35,72 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     refreshFlatNodes();
   }
 
-  void spawnMarkPortals() {
-    final marks = scene.marks;
-    for (final mark in marks) {
-       if (MarkType.getType(mark) != MarkType.Portal){
-         continue;
-       }
-       final index = MarkType.getIndex(mark);
-       final subType = MarkType.getSubType(mark);
-       final amuletScene = AmuletScene.values[subType];
-
-
-       var targetIndex = -1;
-       final targetGame = amulet.getAmuletSceneGame(amuletScene);
-       final targetGameMarks = targetGame.scene.marks;
-       for (final targetMark in targetGameMarks){
-          if (MarkType.getType(targetMark) != MarkType.Portal) continue;
-          final targetMarkSubType = MarkType.getSubType(targetMark);
-          final targetScene = AmuletScene.values[targetMarkSubType];
-          if (targetScene != this.amuletScene) continue;
-          targetIndex = MarkType.getIndex(targetMark);
-       }
-
-       if (targetIndex == -1){
-         print('INVALID_PORTALS: ${amuletScene.name} does not a have a portal to ${this.amuletScene.name}');
-       } else {
-         final portal = spawnGameObjectAtIndex(
-           index: index,
-           type: ItemType.Object,
-           subType: GameObjectType.Interactable,
-           team: TeamType.Neutral,
-           persistable: false,
-           interactable: true,
-           health: 0,
-           deactivationTimer: 0,
-         );
-         portal.label = amuletScene.name;
-         portal.fixed = true;
-         portal.gravity = false;
-         portal.hitable = false;
-         portal.collectable = false;
-         portal.collidable = false;
-         portal.destroyable = false;
-         portal.onInteract = (dynamic src){
-           if (src is! AmuletPlayer){
-             return;
-           }
-           amulet.playerChangeGame(
-             player: src,
-             target: targetGame,
-           );
-           src.writePlayerEvent(PlayerEvent.Portal_Used);
-           final targetScene = targetGame.scene;
-           final targetShapes = targetScene.nodeOrientations;
-           if (targetShapes[targetIndex + targetScene.columns] == NodeOrientation.None){
-             targetGame.movePositionToIndex(src, targetIndex + targetScene.columns);
-           } else if (targetShapes[targetIndex + 1] == NodeOrientation.None) {
-             targetGame.movePositionToIndex(src, targetIndex + 1);
-           } else {
-             print('INVALID_PORTALS: ${amuletScene.name} does not a have a valid port index destination');
-           }
-
-           src.writePlayerMoved();
-         };
-       }
-    }
-  }
+  // void spawnMarkPortals() {
+  //   final marks = scene.marks;
+  //   for (final mark in marks) {
+  //      if (MarkType.getType(mark) != MarkType.Portal){
+  //        continue;
+  //      }
+  //      final index = MarkType.getIndex(mark);
+  //      final subType = MarkType.getSubType(mark);
+  //      final amuletScene = AmuletScene.values[subType];
+  //
+  //
+  //      var targetIndex = -1;
+  //      final targetGame = amulet.getAmuletSceneGame(amuletScene);
+  //      final targetGameMarks = targetGame.scene.marks;
+  //      for (final targetMark in targetGameMarks){
+  //         if (MarkType.getType(targetMark) != MarkType.Portal) continue;
+  //         final targetMarkSubType = MarkType.getSubType(targetMark);
+  //         final targetScene = AmuletScene.values[targetMarkSubType];
+  //         if (targetScene != this.amuletScene) continue;
+  //         targetIndex = MarkType.getIndex(targetMark);
+  //      }
+  //
+  //      if (targetIndex == -1){
+  //        print('INVALID_PORTALS: ${amuletScene.name} does not a have a portal to ${this.amuletScene.name}');
+  //      } else {
+  //        final portal = spawnGameObjectAtIndex(
+  //          index: index,
+  //          type: ItemType.Object,
+  //          subType: GameObjectType.Interactable,
+  //          team: TeamType.Neutral,
+  //          persistable: false,
+  //          interactable: true,
+  //          health: 0,
+  //          deactivationTimer: 0,
+  //        );
+  //        portal.label = amuletScene.name;
+  //        portal.fixed = true;
+  //        portal.gravity = false;
+  //        portal.hitable = false;
+  //        portal.collectable = false;
+  //        portal.collidable = false;
+  //        portal.destroyable = false;
+  //        portal.onInteract = (dynamic src){
+  //          if (src is! AmuletPlayer){
+  //            return;
+  //          }
+  //          amulet.playerChangeGame(
+  //            player: src,
+  //            target: targetGame,
+  //          );
+  //          src.writePlayerEvent(PlayerEvent.Portal_Used);
+  //          final targetScene = targetGame.scene;
+  //          final targetShapes = targetScene.nodeOrientations;
+  //          if (targetShapes[targetIndex + targetScene.columns] == NodeOrientation.None){
+  //            targetGame.movePositionToIndex(src, targetIndex + targetScene.columns);
+  //          } else if (targetShapes[targetIndex + 1] == NodeOrientation.None) {
+  //            targetGame.movePositionToIndex(src, targetIndex + 1);
+  //          } else {
+  //            print('INVALID_PORTALS: ${amuletScene.name} does not a have a valid port index destination');
+  //          }
+  //
+  //          src.writePlayerMoved();
+  //        };
+  //      }
+  //   }
+  // }
 
   void refreshFlatNodes(){
     final scene = this.scene;
@@ -1264,22 +1264,22 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
   }
 
-  void spawnGameObjectShrine(int index) {
-    final shrineObject = spawnGameObjectAtIndex(
-      index: index,
-      type: ItemType.Object,
-      subType: GameObjectType.Shrine,
-      team: TeamType.Neutral,
-      health: 0,
-      interactable: true,
-      persistable: false,
-      deactivationTimer: 0,
-    );
-    shrineObject.physical = false;
-    shrineObject.hitable = false;
-    shrineObject.collectable = false;
-    shrineObject.label = 'Shrine';
-  }
+  // void spawnGameObjectShrine(int index) {
+  //   final shrineObject = spawnGameObjectAtIndex(
+  //     index: index,
+  //     type: ItemType.Object,
+  //     subType: GameObjectType.Shrine,
+  //     team: TeamType.Neutral,
+  //     health: 0,
+  //     interactable: true,
+  //     persistable: false,
+  //     deactivationTimer: 0,
+  //   );
+  //   shrineObject.physical = false;
+  //   shrineObject.hitable = false;
+  //   shrineObject.collectable = false;
+  //   shrineObject.label = 'Shrine';
+  // }
 
   void useShrine(AmuletPlayer player, int nodeIndex) {
     player.regainFullMagic();
@@ -1297,28 +1297,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     dispatchGameEventIndex(GameEvent.Shrine_Used, nodeIndex);
   }
 
-  void resetShrines(AmuletPlayer player) {
-    final nodeTypes = scene.nodeTypes;
-    final length = nodeTypes.length;
-    for (var i = 0; i < length; i++){
-       final nodeType = scene.nodeTypes[i];
-       if (nodeType != NodeType.Shrine) continue;
-       scene.variations[i] = NodeType.Variation_Shrine_Active;
-       spawnGameObjectShrine(i);
-    }
-  }
-
-  @override
-  bool isGameObjectPersistable(int type, int subType){
-     if (type == ItemType.Amulet_Item) {
-       return true;
-     }
-     if (type == ItemType.Object) {
-       return subType != GameObjectType.Interactable;
-     }
-     throw Exception('amuletGame.isGameObjectPersistable(type: $type, subType: $subType)');
-  }
-
   GameObject spawnGameObjectType({
     required double x,
     required double y,
@@ -1333,8 +1311,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         subType: gameObjectType,
         team: TeamType.Neutral,
         health: destroyableGameObjectTypes.contains(gameObjectType) ? 1 : 0,
-        interactable: gameObjectType == GameObjectType.Interactable,
-        persistable: gameObjectType == GameObjectType.Interactable,
+        interactable: false,
+        persistable: true,
         deactivationTimer: -1,
     );
 

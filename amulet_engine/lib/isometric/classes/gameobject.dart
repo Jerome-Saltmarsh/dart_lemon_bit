@@ -22,7 +22,7 @@ class GameObject extends Collider {
   var healthMax = 0;
   var deactivationTimer = -1;
   String? label;
-  Function(dynamic src)? onInteract;
+  // Function(dynamic src)? onInteract;
 
   @override
   int get materialType => getMaterialType(itemType, subType);
@@ -32,7 +32,6 @@ class GameObject extends Collider {
         (
           !collectable &&
           !interactable &&
-          onInteract == null &&
           !hitable
         );
 

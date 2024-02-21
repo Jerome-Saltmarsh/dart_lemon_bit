@@ -35,18 +35,6 @@ class RendererGameObjects extends RenderGroup {
     final render = this.render;
     final scene = this.scene;
 
-    if (type == ItemType.Object && subType == GameObjectType.Interactable) {
-      if (options.debugging){
-        render.circleOutlineAtPosition(position: gameObject, radius: 10);
-      }
-      return;
-    }
-
-    // if (type == ItemType.Object && subType == GameObjectType.Barrel){
-    //   renderBarrel(scene, gameObject, images, render);
-    //   return;
-    // }
-
     if (type == ItemType.Object && subType == GameObjectType.Crate_Wooden){
       renderCrateWooden(scene, gameObject, images, engine);
       return;

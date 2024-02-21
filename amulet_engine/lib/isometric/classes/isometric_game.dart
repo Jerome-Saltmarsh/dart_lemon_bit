@@ -2458,7 +2458,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
      }
 
      if (target is GameObject){
-       return !target.interactable && target.onInteract == null;
+       return !target.interactable;
      }
 
      return false;
@@ -2679,7 +2679,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       }
       if (target is GameObject) {
         customOnCharacterInteractWithGameObject(character, target);
-        target.onInteract?.call(character);
+        // target.onInteract?.call(character);
       }
       character.setCharacterStateIdle();
       character.setDestinationToCurrentPosition();

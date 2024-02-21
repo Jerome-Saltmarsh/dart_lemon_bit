@@ -8,14 +8,14 @@ class GameObjectType {
   static const Bottle = 31;
   static const Crystal_Glowing_False = 12;
   static const Crystal_Glowing_True = 41;
-  static const Interactable = 45;
+  // static const Interactable = 45;
   static const Wooden_Cart = 46;
   static const Broom = 47;
   static const Firewood = 48;
   static const Pumpkin = 49;
   static const Wooden_Chest = 50;
   static const Rune = 51;
-  static const Shrine = 52;
+  // static const Shrine = 52;
 
   static bool isMaterialMetal(int value) => const [
       // Barrel_Explosive
@@ -44,14 +44,14 @@ class GameObjectType {
       Bed: 'Bed',
       Bottle: 'Bottle',
       Crystal_Glowing_True: 'Crystal Glowing',
-      Interactable: 'Interactable',
+      // Interactable: 'Interactable',
       Wooden_Cart: 'Wooden_Cart',
       Broom: 'Broom',
       Firewood: 'Firewood',
       Pumpkin: 'Pumpkin',
       Wooden_Chest: 'Wooden_Chest',
       Rune: 'Rune',
-      Shrine: 'Shrine',
+      // Shrine: 'Shrine',
     }[value] ?? 'object-type-unknown-$value';
   }
 
@@ -64,13 +64,13 @@ class GameObjectType {
     Bed,
     Bottle,
     Crystal_Glowing_True,
-    Interactable,
+    // Interactable,
     Wooden_Cart,
     Broom,
     Firewood,
     Pumpkin,
     Wooden_Chest,
     Rune,
-    Shrine,
+    // Shrine,
   ];
 }

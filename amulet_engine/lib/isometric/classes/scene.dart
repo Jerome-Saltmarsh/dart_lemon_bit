@@ -623,4 +623,14 @@ class Scene {
   AmuletScene? tryGetPortalTarget(int index) =>
       AmuletScene.values.tryGet(variations.tryGet(index));
 
+
+  void resetShrines() {
+    final nodeTypes = this.nodeTypes;
+    final length = nodeTypes.length;
+    for (var i = 0; i < length; i++){
+      final nodeType = nodeTypes[i];
+      if (nodeType != NodeType.Shrine) continue;
+      variations[i] = NodeType.Variation_Shrine_Active;
+    }
+  }
 }

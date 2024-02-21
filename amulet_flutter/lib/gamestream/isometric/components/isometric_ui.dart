@@ -279,7 +279,7 @@ class IsometricUI with IsometricComponent {
               buildText('Warning: No message received from server $frames')));
 
   Widget buildMainMenu({List<Widget>? children}) {
-    final controlTime = buildTime();
+    // final controlTime = buildTime();
     return MouseRegion(
       onEnter: (PointerEnterEvent event) {
         options.windowOpenMenu.value = true;
@@ -300,8 +300,8 @@ class IsometricUI with IsometricComponent {
                     buildSceneName(),
                     // width8,
                     // buildFiendCount(),
-                    width16,
-                    buildWatchBool(options.timeVisible, () => controlTime),
+                    // width16,
+                    // buildWatchBool(options.timeVisible, () => controlTime),
                     width32,
                     menuVisible ? buildIconCogTurned() : buildIconCog(),
                     width16,

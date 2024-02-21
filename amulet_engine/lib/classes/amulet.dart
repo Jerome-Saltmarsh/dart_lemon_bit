@@ -175,7 +175,6 @@ class Amulet {
     games.add(amuletGameWitchesLair2);
 
     for (final game in games) {
-      game.spawnMarkPortals();
       game.loadGameObjectsFromScene();
     }
   }
@@ -454,7 +453,7 @@ class Amulet {
 
     for (final game in games){
       game.spawnFiendsAtSpawnNodes();
-      game.resetShrines(player);
+      game.scene.resetShrines();
     }
     playerChangeGameToTown(player);
     player.amuletGame = amuletGameVillage;
