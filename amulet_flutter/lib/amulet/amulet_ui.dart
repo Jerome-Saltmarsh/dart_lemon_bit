@@ -67,7 +67,11 @@ class AmuletUI {
           buildWindowQuest(),
           buildDialogTalk(),
           buildPositionedWorldMap(),
-          buildPositionedPlayerHealthAndWeapons(),
+          // buildPositionedPlayerHealthAndWeapons(),
+          Positioned(
+              bottom: 8,
+              child: buildPlayerSkillSlots(),
+          ),
           Positioned(
             top: 8,
              child: buildPlayerAimNode(),
@@ -234,6 +238,8 @@ class AmuletUI {
                       buildPlayerMagicBar(),
                       height2,
                       buildEquippedAmuletItems(),
+                      // height2,
+                      // buildPlayerSkillSlots(),
                     ],
                   ),
                 ),
@@ -904,6 +910,8 @@ class AmuletUI {
             );
           }),
           buildWatch(amulet.playerWeaponAreaDamage, buildBarsAreaDamage),
+          height16,
+          buildEquippedAmuletItems(),
         ],
       ),
     );
@@ -1393,16 +1401,16 @@ class AmuletUI {
 
   Widget buildContainerSkillType(SkillType skillType) =>
       Container(
-        width: containerSkillTypeWidth,
-        height: 94,
+        width: 50,
+        height: 50,
         alignment: Alignment.center,
         padding: const EdgeInsets.all(4),
         color: amulet.style.containerColor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            buildText(skillType.name.replaceAll('_', ' '), color: Colors.white70),
-            height8,
+            // buildText(skillType.name.replaceAll('_', ' '), color: Colors.white70),
+            // height8,
             buildSkillTypeIcon(skillType),
           ],
         ),
@@ -1646,6 +1654,35 @@ class AmuletUI {
        );
     });
   }
+
+  Widget buildPlayerSkillSlots() {
+     return Row(
+       crossAxisAlignment: CrossAxisAlignment.end,
+       children: [
+         buildSkillSlot(amulet.skillSlot0, amulet.windowVisibleSkillSlot0),
+         width4,
+         buildSkillSlot(amulet.skillSlot1, amulet.windowVisibleSkillSlot1),
+         width4,
+         buildSkillSlot(amulet.skillSlot2, amulet.windowVisibleSkillSlot2),
+         width4,
+         buildSkillSlot(amulet.skillSlot3, amulet.windowVisibleSkillSlot3),
+       ],
+     );
+  }
+
+  Widget buildSkillSlot(Watch<SkillType> watch, WatchBool menuOpen){
+    return buildControlSkillType(
+      onSelected: (selectedSkillType){
+        amulet.setSkillSlotValue(
+          index: amulet.getSkillSlotIndex(watch),
+          skillType: selectedSkillType,
+        );
+      },
+      watch: watch,
+      menuOpen: menuOpen,
+    );
+  }
+
 }
 
 String formatFramesToSeconds(int frames){

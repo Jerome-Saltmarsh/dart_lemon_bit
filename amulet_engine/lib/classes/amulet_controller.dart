@@ -735,6 +735,26 @@ class AmuletController {
         player.questTutorial = QuestTutorial.Finished;
         amulet.playerChangeGameToTown(player);
         break;
+      case NetworkRequestAmulet.Set_Skill_Slot_Value:
+        final index = parseArg2(arguments);
+        final skillTypeIndex = parseArg3(arguments);
+
+        if (index == null || skillTypeIndex == null){
+          // TODO notify error
+          return;
+        }
+
+        final skillType = SkillType.values.tryGet(skillTypeIndex);
+
+        if (skillType == null){
+          // TODO notify error
+          return;
+        }
+        player.setSkillSlotValue(
+            index: index,
+            skillType: skillType,
+        );
+        break;
     }
   }
 

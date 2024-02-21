@@ -15,4 +15,9 @@ extension ListExtensions<T> on List<T> {
     sort((a, b) => getValue(a).compareTo(getValue(b)));
     return this;
   }
+
+  bool isValidIndex(int? index) =>
+      index != null &&
+      index >= 0 &&
+      index <= length;
 }

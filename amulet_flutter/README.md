@@ -19,7 +19,6 @@ REMINDER: IT DOESN'T NEED TO BE PERFECT
 
 [RELEASE]
 [ref] mark type fiend count
-[fix] persist gameobject amulet
 [fix] balance amulet fiends
 [fix] balance amulet items
 [fix] boss fight
@@ -33,6 +32,7 @@ REMINDER: IT DOESN'T NEED TO BE PERFECT
 [new] skill type necromancer raise skeleton
 
 ## 21.02.2024
+[fix] persist gameobject amulet
 [new] interactable node types
 [ref] delete class amulet gameobject 
 [ref] delete gameobject interactable 

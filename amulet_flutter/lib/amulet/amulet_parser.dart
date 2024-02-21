@@ -46,6 +46,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Fiend_Count:
          readFiendCount();
          break;
+       case NetworkResponseAmulet.Player_Skill_Slots:
+         readPlayerSkillSlots();
+         break;
        case NetworkResponseAmulet.Player_Skill_Types:
          readPlayerSkillTypes();
          break;
@@ -405,4 +408,11 @@ extension AmuletParser on IsometricParser {
 
   void readPlayerDebugEnabled() =>
       amulet.playerDebugEnabled.value = readBool();
+
+  void readPlayerSkillSlots() {
+     amulet.skillSlot0.value = readSkillType();
+     amulet.skillSlot1.value = readSkillType();
+     amulet.skillSlot2.value = readSkillType();
+     amulet.skillSlot3.value = readSkillType();
+  }
 }

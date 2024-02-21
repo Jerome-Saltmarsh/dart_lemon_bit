@@ -1,6 +1,7 @@
 
 import 'dart:math';
 
+import 'package:amulet_engine/src.dart';
 import 'package:lemon_math/src.dart';
 
 import '../common/src.dart';
@@ -55,8 +56,10 @@ class AmuletPlayer extends IsometricPlayer with
   var npcOptions = <TalkOption>[];
   var flags = <dynamic>[];
   var flaskAmount = 0;
+  var skillSlotIndex = 0;
 
   final sceneShrinesUsed = <AmuletScene, List<int>> {};
+  final skillSlots = List.generate(4, (index) => SkillType.None);
 
   Function? onInteractionOver;
   Position? cameraTarget;
@@ -855,6 +858,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeSkillTypes();
     writeFiendCount();
     writeDebugEnabled();
+    writeSkillSlots();
   }
 
   void writeSceneName() {
@@ -1517,6 +1521,25 @@ class AmuletPlayer extends IsometricPlayer with
       default:
         return false;
     }
+  }
+
+  void writeSkillSlots() {
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Player_Skill_Slots);
+    for (final skillSlot in skillSlots) {
+      writeByte(skillSlot.index);
+    }
+  }
+
+  void setSkillSlotValue({
+    required int index,
+    required SkillType skillType,
+  }) {
+    if (!skillSlots.isValidIndex(index)) {
+      throw Exception();
+    }
+    skillSlots[index] = skillType;
+    writeSkillSlots();
   }
 }
 

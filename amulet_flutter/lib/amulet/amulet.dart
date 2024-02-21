@@ -38,6 +38,17 @@ class Amulet extends IsometricGame {
   final playerDebugEnabled = WatchBool(false);
   final playerPerformFrameVelocity = Watch(0.0);
 
+
+  final windowVisibleSkillSlot0 = WatchBool(false);
+  final windowVisibleSkillSlot1 = WatchBool(false);
+  final windowVisibleSkillSlot2 = WatchBool(false);
+  final windowVisibleSkillSlot3 = WatchBool(false);
+
+  final skillSlot0 = Watch(SkillType.None);
+  final skillSlot1 = Watch(SkillType.None);
+  final skillSlot2 = Watch(SkillType.None);
+  final skillSlot3 = Watch(SkillType.None);
+
   var worldMapClrs = Int32List(0);
   var worldMapDsts = Float32List(0);
   var worldMapSrcs = Float32List(0);
@@ -656,6 +667,31 @@ class Amulet extends IsometricGame {
     }
     return SystemMouseCursors.basic;
   }
+
+
+  int getSkillSlotIndex(Watch<SkillType> watch) {
+     if (watch == skillSlot0){
+       return 0;
+     }
+     if (watch == skillSlot1){
+       return 1;
+     }
+     if (watch == skillSlot2){
+       return 2;
+     }
+     if (watch == skillSlot3){
+       return 3;
+     }
+     throw Exception();
+  }
+
+  void setSkillSlotValue({
+    required int index,
+    required SkillType skillType,
+  }) => sendAmuletRequest(
+        NetworkRequestAmulet.Set_Skill_Slot_Value,
+        '$index ${skillType.index}',
+    );
 }
 
 
