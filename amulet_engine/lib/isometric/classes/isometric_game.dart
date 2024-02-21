@@ -2224,6 +2224,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
      while (true) {
        if (gameObjects.any((element) => element.id == i)){
          i++;
+         continue;
        }
        return i;
      }

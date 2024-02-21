@@ -57,9 +57,9 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
 
   void readServerResponse(int serverResponse){
 
-    if (debugging) {
-      print('debug_network_response[${NetworkResponse.getName(serverResponse)}]');
-    }
+    // if (debugging) {
+    //   print('debug_network_response[${NetworkResponse.getName(serverResponse)}]');
+    // }
 
     switch (serverResponse) {
       case NetworkResponse.Characters:
