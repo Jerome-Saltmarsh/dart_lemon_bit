@@ -1103,7 +1103,9 @@ class AmuletUI {
       final skillType = amuletItem?.skillType;
 
       return onPressed(
-        onEnter: () => amulet.aimTargetItemType.value = amuletItem,
+        onEnter: () {
+          return amulet.aimTargetItemType.value = amuletItem;
+        },
         onExit: () => amulet.aimTargetItemType.value = null,
         action: amuletItem == null
             ? null
@@ -1368,7 +1370,7 @@ class AmuletUI {
 
 
   Widget buildControlSkillTypeLeft() {
-    final control = buildControlSkillType(
+    final control = buildExpandableSkillType(
       onSelected: amulet.selectSkillTypeLeft,
       watch: amulet.playerSkillLeft,
       menuOpen: amulet.windowVisibleSkillLeft,
@@ -1385,7 +1387,7 @@ class AmuletUI {
   }
 
   Widget buildControlSkillTypeRight() {
-    final control = buildControlSkillType(
+    final control = buildExpandableSkillType(
       onSelected: amulet.selectSkillTypeRight,
       watch: amulet.playerSkillRight,
       menuOpen: amulet.windowVisibleSkillRight,
@@ -1422,20 +1424,7 @@ class AmuletUI {
   Widget buildToggleHelp() =>
       buildToggle(amulet.windowVisibleHelp, 'help', hint: 'h');
 
-  Widget buildToggle(WatchBool watch, String text, {String? hint}) =>
-      onPressed(
-        hint: hint,
-        action: watch.toggle,
-        child: GSContainer(
-          padding: const EdgeInsets.all(8),
-          child: Builder(
-              builder: (context) => buildWatch(watch,
-                        (statsVisible) => buildText(text, color: statsVisible ? Colors.white : Colors.white54))
-          ),
-        ),
-      );
-
-  Widget buildControlSkillType({
+  Widget buildExpandableSkillType({
     required void onSelected(SkillType SkillType),
     required Watch<SkillType> watch,
     required WatchBool menuOpen,
@@ -1456,38 +1445,39 @@ class AmuletUI {
                           onSelected(e.skillType);
                           menuOpen.setFalse();
                         },
-                        child: MouseOver(
-                          builder: (mouseOver) {
-                            return Container(
-                                width: containerSkillTypeWidth,
-                                padding: const EdgeInsets.all(8),
-                                color: mouseOver ? amulet.style.containerColorDark : amulet.style.containerColor,
-                                child: Column(
-                                  children: [
-                                    buildWatch(watch, (t) {
+                        child: MouseOver(builder: (mouseOver) {
+                          return Container(
+                              width: containerSkillTypeWidth,
+                              padding: const EdgeInsets.all(8),
+                              color: mouseOver
+                                  ? amulet.style.containerColorDark
+                                  : amulet.style.containerColor,
+                              child: Column(
+                                children: [
+                                  buildWatch(watch, (t) {
                                     return FittedBox(
                                         child: buildText(
-                                          e.skillType.name.replaceAll('_', ' '),
-                                          color: t == e.skillType ? Colors.white : Colors.white70,
-                                          bold: t == e.skillType,
-                                        )
-                                      );
-                                    }),
-                                    height8,
-                                    buildSkillTypeIcon(e.skillType),
-                                  ],
-                                ));
-                          }
-                        ),
+                                      e.skillType.name.replaceAll('_', ' '),
+                                      color: t == e.skillType
+                                          ? Colors.white
+                                          : Colors.white70,
+                                      bold: t == e.skillType,
+                                    ));
+                                  }),
+                                  height8,
+                                  buildSkillTypeIcon(e.skillType),
+                                ],
+                              ));
+                        }),
                       ))
                   .toList(growable: false),
             );
           }),
           onPressed(
-              onEnter: menuOpen.setTrue,
-              action: menuOpen.toggle,
-              child: buildWatch(watch, buildContainerSkillType),
-),
+            onEnter: menuOpen.setTrue,
+            action: menuOpen.toggle,
+            child: buildWatch(watch, buildContainerSkillType),
+          ),
         ],
       ),
     );
@@ -1673,36 +1663,68 @@ class AmuletUI {
   Widget buildSkillSlot(Watch<SkillType> watch, WatchBool menuOpen){
 
     final index = amulet.getSkillSlotIndex(watch);
-
-    final control = buildControlSkillType(
-      onSelected: (selectedSkillType){
-        amulet.setSkillSlotValue(
-          index: index,
-          skillType: selectedSkillType,
-        );
-      },
-      watch: watch,
-      menuOpen: menuOpen,
-    );
-
     final padding = const EdgeInsets.all(4);
+    final icon = buildWatch(watch, buildSkillTypeIcon);
 
-    final containerSelected = Container(
-      child: control,
+    final containerActive = Container(
+      child: icon,
       padding: padding,
-      color: Colors.white54,
+      color: Colors.white70,
     );
 
-    final containerNotSelected = Container(
-      child: control,
+    final containerInactive = Container(
+      child: icon,
       padding: padding,
       color: Colors.transparent,
     );
 
-    return buildWatch(amulet.playerSkillSlotIndex, (playerSkillSlotIndex) =>
-      playerSkillSlotIndex == index ? containerSelected : containerNotSelected);
+    return onPressed(
+      action: () => amulet.setSkillSlotIndex(index),
+      child: buildWatch(amulet.playerSkillSlotIndex, (selectedIndex) =>
+      selectedIndex == index ? containerActive : containerInactive),
+    );
+
+    // final control = buildExpandableSkillType(
+    //   onSelected: (selectedSkillType){
+    //     amulet.setSkillSlotValue(
+    //       index: index,
+    //       skillType: selectedSkillType,
+    //     );
+    //   },
+    //   watch: watch,
+    //   menuOpen: menuOpen,
+    // );
+    //
+    // final padding = const EdgeInsets.all(4);
+    //
+    // final containerSelected = Container(
+    //   child: control,
+    //   padding: padding,
+    //   color: Colors.white54,
+    // );
+    //
+    // final containerNotSelected = Container(
+    //   child: control,
+    //   padding: padding,
+    //   color: Colors.transparent,
+    // );
+    //
+    // return buildWatch(amulet.playerSkillSlotIndex, (playerSkillSlotIndex) =>
+    //   playerSkillSlotIndex == index ? containerSelected : containerNotSelected);
   }
 
+  Widget buildToggle(WatchBool watch, String text, {String? hint}) => onPressed(
+    hint: hint,
+    action: watch.toggle,
+    child: GSContainer(
+      padding: const EdgeInsets.all(8),
+      child: Builder(
+          builder: (context) => buildWatch(
+              watch,
+                  (statsVisible) => buildText(text,
+                  color: statsVisible ? Colors.white : Colors.white54))),
+    ),
+  );
 }
 
 String formatFramesToSeconds(int frames){

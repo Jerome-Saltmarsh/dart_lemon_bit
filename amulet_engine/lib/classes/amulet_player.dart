@@ -50,6 +50,7 @@ class AmuletPlayer extends IsometricPlayer with
   var flags = <dynamic>[];
   var flaskAmount = 0;
   var skillSlotIndex = 0;
+  var skillSlotsDirty = false;
 
   final sceneShrinesUsed = <AmuletScene, List<int>> {};
   final skillSlots = List.generate(4, (index) => SkillType.None);
@@ -263,6 +264,11 @@ class AmuletPlayer extends IsometricPlayer with
       writeDebug();
     }
 
+    if (skillSlotsDirty){
+      writeSkillSlots();
+      skillSlotsDirty = false;
+    }
+
     super.writePlayerGame();
   }
 
@@ -420,12 +426,14 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
 
+
     health = clamp(health, 0, maxHealth);
     weaponType = equippedWeapon?.subType ?? WeaponType.Unarmed;
     equipmentDirty = false;
     helmType = equippedHelm?.subType ?? HelmType.None;
     armorType = equippedArmor?.subType ?? 0;
     shoeType = equippedShoes?.subType ?? ShoeType.None;
+    removeInvalidSkillSlots();
     checkAssignedSkillTypes();
     checkActiveSlotType();
     writeEquipped();
@@ -587,9 +595,54 @@ class AmuletPlayer extends IsometricPlayer with
         break;
     }
 
+    final skillType = value.skillType;
+
+    if (skillType != null && !skillTypeAssignedToSkillSlot(skillType)) {
+        tryToAssignSkillTypeToEmptySlot(skillType);
+    }
+
     notifyEquipmentDirty();
   }
 
+  void tryToAssignSkillTypeToEmptySlot(SkillType skillType) {
+    final availableIndex = getEmptySkillSlotIndex();
+    if (availableIndex != null) {
+      setSkillSlotValue(
+        skillType: skillType,
+        index: availableIndex,
+      );
+    }
+  }
+
+  void removeInvalidSkillSlots() {
+    for (var i = 0; i < skillSlots.length; i++) {
+      final skillSlot = skillSlots[i];
+      if (skillTypeUnlocked(skillSlot)) continue;
+      setSkillSlotValue(
+          index: i,
+          skillType: SkillType.None,
+      );
+    }
+  }
+
+  void notifySkillSlotsDirty() {
+    skillSlotsDirty = true;
+  }
+
+
+  bool skillTypeAssignedToSkillSlot(SkillType skillType) {
+     return getSkillTypeSlotIndex(skillType) != null;
+  }
+
+  int? getEmptySkillSlotIndex() => getSkillTypeSlotIndex(SkillType.None);
+
+  int? getSkillTypeSlotIndex(SkillType skillType) {
+    for (var i = 0; i < skillSlots.length; i++) {
+      if (skillType != skillSlots[i]) continue;
+      return i;
+    }
+    return null;
+  }
 
   void notifyEquipmentDirty(){
     if (equipmentDirty) {
@@ -1529,10 +1582,10 @@ class AmuletPlayer extends IsometricPlayer with
     required SkillType skillType,
   }) {
     if (!skillSlots.isValidIndex(index)) {
-      throw Exception();
+      throw Exception('amuletPlayer.setSkillSlotValue(index: $index, skillType: $skillType)');
     }
     skillSlots[index] = skillType;
-    writeSkillSlots();
+    notifySkillSlotsDirty();
   }
 
   void writeSkillSlotIndex(){

@@ -377,7 +377,7 @@ class IsometricUI with IsometricComponent {
         ),
       );
 
-  Widget buildIconFullscreen() => WatchBuilder(
+  Widget buildIconFullscreen() => buildWatch(
       engine.fullScreen,
           (bool fullscreen) => onPressed(
           hint: 'toggle fullscreen',

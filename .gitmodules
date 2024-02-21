@@ -16,4 +16,6 @@
 [submodule "tools/lemon_io"]
 	path = tools/lemon_io
 	url = https://github.com/Jerome-Saltmarsh/dart_lemon_io
-
+[submodule "tools/lemon_watch"]
+	path = tools/lemon_watch
+	url = git@github.com:Jerome-Saltmarsh/lemon_watch.git

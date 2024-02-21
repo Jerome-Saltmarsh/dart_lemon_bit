@@ -34,6 +34,7 @@ dependencies:
   http: ^1.1.2
   intl: ^0.17.0
   url_launcher: ^6.1.10
+  lemon_watch: ^1.1.1
 
   amulet_engine:
     path: ..\amulet_engine

@@ -7,6 +7,7 @@ import 'package:amulet_flutter/gamestream/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:golden_ratio/constants.dart';
+import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
@@ -236,8 +237,8 @@ extension isometricDebugUI on IsometricDebug {
       GSRefresh(() => buildText('engine-camera-zoom: ${engine.targetZoom.toStringAsFixed(3)}')),
       GSRefresh(() => buildText('engine-render-frame: ${engine.paintFrame}')),
       GSRefresh(() => buildText('engine-update-frame: ${engine.updateFrame}')),
-      buildRowWatchInt(text: 'engine.ms-render', watch: engine.msRender),
-      buildRowWatchInt(text: 'engine.ms-update', watch: engine.msUpdate),
+      // buildRowWatchInt(text: 'engine.ms-render', watch: engine.msRender),
+      // buildRowWatchInt(text: 'engine.ms-update', watch: engine.msUpdate),
       buildWatch(engine.msRender, (t) {
         return buildRowText(text: 'engine.fps-render', value: t <= 0 ? '0' : (1000 ~/ t).toString());
       }),
