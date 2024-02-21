@@ -94,9 +94,9 @@ class AmuletUI {
                   width8,
                   buildTogglePlayerSkills(),
                   width8,
-                  buildButtonQuest(),
-                  width8,
-                  buildToggleHelp(),
+                  buildTogglePlayerQuest(),
+                  // width8,
+                  // buildToggleHelp(),
                 ],
               ),
           ),
@@ -780,6 +780,20 @@ class AmuletUI {
     );
   }
 
+  Widget buildTogglePlayerQuest() {
+
+    final active = AmuletImage(srcX: 723, srcY: 3, width: 26, height: 25);
+    final notActive = AmuletImage(srcX: 691, srcY: 3, width: 26, height: 25);
+
+    return onPressed(
+      action: amulet.windowVisibleQuests.toggle,
+      child: buildWatch(
+          amulet.windowVisibleQuests,
+          (windowVisibleEquipment) =>
+              windowVisibleEquipment ? active : notActive),
+    );
+  }
+
   Widget buildWindowHelp() => GSContainer(
       width: 400,
       child: Column(
@@ -1158,7 +1172,7 @@ class AmuletUI {
         return Container(
           width: size,
           height: size,
-          color: Colors.black26,
+          color: Colors.black12,
         );
       }
 
@@ -1175,10 +1189,10 @@ class AmuletUI {
         action: () => amulet.dropAmuletItem(amuletItem),
         onRightClick: () => amulet.dropAmuletItem(amuletItem),
         child: Container(
-          width: 50,
-          height: 50,
+          width: size,
+          height: size,
           alignment: Alignment.center,
-          color: Colors.black26,
+          color: Colors.black12,
           // padding: const EdgeInsets.all(2),
           child: Stack(
             alignment: Alignment.center,
@@ -1462,9 +1476,6 @@ class AmuletUI {
           ],
         ),
       );
-
-  Widget buildButtonQuest() =>
-      buildToggle(amulet.windowVisibleQuests, 'quest', hint: 'w');
 
   Widget buildToggleHelp() =>
       buildToggle(amulet.windowVisibleHelp, 'help', hint: 'h');

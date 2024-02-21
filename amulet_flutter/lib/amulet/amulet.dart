@@ -7,6 +7,7 @@ import 'package:amulet_engine/common/src.dart';
 import 'package:amulet_flutter/amulet/amulet_ui.dart';
 import 'package:amulet_flutter/amulet/classes/item_slot.dart';
 import 'package:amulet_flutter/amulet/ui/enums/quantify_tab.dart';
+import 'package:amulet_flutter/gamestream/ui/builders/build_watch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_engine/lemon_engine.dart';
@@ -704,6 +705,24 @@ class Amulet extends IsometricGame {
         NetworkRequestAmulet.Set_Skill_Slot_Value,
         '$index ${skillType.index}',
     );
+
+  @override
+  List<Widget> buildMenuItems() {
+    return [
+      onPressed(
+        action: amulet.windowVisibleHelp.toggle,
+        child: Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              buildText('HELP', size: 20, color: Colors.white70),
+              buildWatch(amulet.windowVisibleHelp, amulet.ui.buildIconCheckbox),
+            ],
+          ),
+        ),
+      )
+    ];
+  }
 }
 
 
