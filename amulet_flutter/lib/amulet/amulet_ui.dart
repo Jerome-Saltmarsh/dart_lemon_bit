@@ -90,7 +90,7 @@ class AmuletUI {
                 children: [
                   buildToggleEquipment(),
                   width8,
-                  buildButtonPlayerStats(),
+                  buildTogglePlayerStats(),
                   width8,
                   buildToggleSkills(),
                   width8,
@@ -738,11 +738,33 @@ class AmuletUI {
     }
   }
 
-  Widget buildButtonPlayerStats() =>
-      buildToggle(amulet.windowVisiblePlayerStats, 'stats', hint: 'q');
+  Widget buildToggleEquipment() {
 
-  Widget buildToggleEquipment() =>
-      buildToggle(amulet.windowVisibleEquipment, 'equipped', hint: 'e');
+    final active = AmuletImage(srcX: 725, srcY: 99, width: 22, height: 25);
+    final notActive = AmuletImage(srcX: 693, srcY: 99, width: 22, height: 25);
+
+    return onPressed(
+      action: amulet.windowVisibleEquipment.toggle,
+      child: buildWatch(
+          amulet.windowVisibleEquipment,
+          (windowVisibleEquipment) =>
+              windowVisibleEquipment ? active : notActive),
+    );
+  }
+
+  Widget buildTogglePlayerStats() {
+
+    final active = AmuletImage(srcX: 723, srcY: 131, width: 26, height: 26);
+    final notActive = AmuletImage(srcX: 691, srcY: 131, width: 26, height: 26);
+
+    return onPressed(
+      action: amulet.windowVisiblePlayerStats.toggle,
+      child: buildWatch(
+          amulet.windowVisiblePlayerStats,
+          (windowVisibleEquipment) =>
+              windowVisibleEquipment ? active : notActive),
+    );
+  }
 
   Widget buildToggleSkills() =>
       buildToggle(amulet.windowVisibleSkills, 'skills', hint: 'e');
