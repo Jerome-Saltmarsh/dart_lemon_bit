@@ -107,6 +107,7 @@ class Amulet extends IsometricGame {
   final windowVisibleQuests = WatchBool(true);
   final windowVisiblePlayerStats = WatchBool(true);
   final windowVisibleEquipment = WatchBool(true);
+  final windowVisibleSkills = WatchBool(false);
   final windowVisibleHelp = WatchBool(false);
 
   late final AmuletUI amuletUI;

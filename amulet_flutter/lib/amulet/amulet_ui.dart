@@ -92,6 +92,8 @@ class AmuletUI {
                   width8,
                   buildButtonPlayerStats(),
                   width8,
+                  buildToggleSkills(),
+                  width8,
                   buildButtonQuest(),
                   width8,
                   buildToggleHelp(),
@@ -118,7 +120,11 @@ class AmuletUI {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   buildWindowPlayerEquipped(),
-                  buildWindowPlayerStats(),
+                  buildWatchVisible(
+                      amulet.windowVisiblePlayerStats,
+                      buildWindowPlayerStats(),
+                  ),
+                  buildWindowPlayerSkills()
                 ],
               ),
           ),
@@ -738,6 +744,9 @@ class AmuletUI {
   Widget buildToggleEquipment() =>
       buildToggle(amulet.windowVisibleEquipment, 'equipped', hint: 'e');
 
+  Widget buildToggleSkills() =>
+      buildToggle(amulet.windowVisibleSkills, 'skills', hint: 'e');
+
   Widget buildWindowHelp() => GSContainer(
       width: 400,
       child: Column(
@@ -791,9 +800,14 @@ class AmuletUI {
               )),
       );
 
+  Widget buildWindowPlayerSkills(){
+     return buildWatchVisible(amulet.windowVisibleSkills, buildWindowPlayerSkillStats());
+  }
+
   Widget buildWindowPlayerStats() {
-    final windowOpen = GSContainer(
+    return GSContainer(
       width: 120,
+      margin: const EdgeInsets.only(right: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -933,17 +947,6 @@ class AmuletUI {
         ],
       ),
     );
-
-    final windowPlayerSkillStats = buildWindowPlayerSkillStats();
-
-    return buildWatchVisible(amulet.windowVisiblePlayerStats, Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        windowOpen,
-        width8,
-        windowPlayerSkillStats,
-      ],
-    ));
   }
 
   Widget buildBarsRange(int? weaponRange) => Row(
