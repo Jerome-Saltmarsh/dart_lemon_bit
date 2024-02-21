@@ -88,6 +88,8 @@ class AmuletUI {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
+                  buildToggleEquipment(),
+                  width8,
                   buildButtonPlayerStats(),
                   width8,
                   buildButtonQuest(),
@@ -112,7 +114,13 @@ class AmuletUI {
           Positioned(
               bottom: 60,
               left: 8,
-              child: buildWindowPlayerStats(),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  buildWindowPlayerEquipped(),
+                  buildWindowPlayerStats(),
+                ],
+              ),
           ),
           buildPositionedMessage(),
           buildOverlayScreenColor(),
@@ -560,21 +568,16 @@ class AmuletUI {
       );
 
   Widget buildEquippedAmuletItems() =>
-      Container(
-        width: barWidth,
-        alignment: Alignment.center,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            buildWatchAmuletItem(amulet.equippedWeapon, SlotType.Weapon),
-            width8,
-            buildWatchAmuletItem(amulet.equippedHelm, SlotType.Helm),
-            width8,
-            buildWatchAmuletItem(amulet.equippedArmor, SlotType.Armor),
-            width8,
-            buildWatchAmuletItem(amulet.equippedShoes, SlotType.Shoes),
-          ],
-        ),
+      Column(
+        children: [
+          buildWatchAmuletItem(amulet.equippedWeapon, SlotType.Weapon),
+          height8,
+          buildWatchAmuletItem(amulet.equippedHelm, SlotType.Helm),
+          height8,
+          buildWatchAmuletItem(amulet.equippedArmor, SlotType.Armor),
+          height8,
+          buildWatchAmuletItem(amulet.equippedShoes, SlotType.Shoes),
+        ],
       );
 
   Widget buildPlayerHealthBar() {
@@ -732,6 +735,9 @@ class AmuletUI {
   Widget buildButtonPlayerStats() =>
       buildToggle(amulet.windowVisiblePlayerStats, 'stats', hint: 'q');
 
+  Widget buildToggleEquipment() =>
+      buildToggle(amulet.windowVisibleEquipment, 'equipped', hint: 'e');
+
   Widget buildWindowHelp() => GSContainer(
       width: 400,
       child: Column(
@@ -771,6 +777,18 @@ class AmuletUI {
         child: SingleChildScrollView(
           child: child,
         )
+      );
+
+  Widget buildWindowPlayerEquipped() =>
+      buildWatchVisible(
+          amulet.windowVisibleEquipment,
+          GSContainer(
+              margin: const EdgeInsets.only(right: 8),
+              child: Column(
+                children: [
+                  buildEquippedAmuletItems(),
+                ],
+              )),
       );
 
   Widget buildWindowPlayerStats() {
@@ -910,8 +928,8 @@ class AmuletUI {
             );
           }),
           buildWatch(amulet.playerWeaponAreaDamage, buildBarsAreaDamage),
-          height16,
-          buildEquippedAmuletItems(),
+          // height16,
+          // buildEquippedAmuletItems(),
         ],
       ),
     );
@@ -1645,37 +1663,39 @@ class AmuletUI {
     });
   }
 
-  Widget buildPlayerSkillSlots() {
-     return Row(
-       crossAxisAlignment: CrossAxisAlignment.end,
-       children: [
-         buildSkillSlot(amulet.skillSlot0, amulet.windowVisibleSkillSlot0),
-         width4,
-         buildSkillSlot(amulet.skillSlot1, amulet.windowVisibleSkillSlot1),
-         width4,
-         buildSkillSlot(amulet.skillSlot2, amulet.windowVisibleSkillSlot2),
-         width4,
-         buildSkillSlot(amulet.skillSlot3, amulet.windowVisibleSkillSlot3),
-       ],
-     );
-  }
+  Widget buildPlayerSkillSlots() => Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          buildSkillSlot(amulet.skillSlot0, amulet.windowVisibleSkillSlot0),
+          width8,
+          buildSkillSlot(amulet.skillSlot1, amulet.windowVisibleSkillSlot1),
+          width8,
+          buildSkillSlot(amulet.skillSlot2, amulet.windowVisibleSkillSlot2),
+          width8,
+          buildSkillSlot(amulet.skillSlot3, amulet.windowVisibleSkillSlot3),
+        ],
+      );
 
   Widget buildSkillSlot(Watch<SkillType> watch, WatchBool menuOpen){
 
     final index = amulet.getSkillSlotIndex(watch);
-    final padding = const EdgeInsets.all(4);
     final icon = buildWatch(watch, buildSkillTypeIcon);
+    const size = 50.0;
 
     final containerActive = Container(
       child: icon,
-      padding: padding,
-      color: Colors.white70,
+      color: Colors.white24,
+      width: size,
+      height: size,
+      alignment: Alignment.center,
     );
 
     final containerInactive = Container(
       child: icon,
-      padding: padding,
-      color: Colors.transparent,
+      color: Colors.black26,
+      width: size,
+      height: size,
+      alignment: Alignment.center,
     );
 
     return onPressed(
@@ -1683,34 +1703,6 @@ class AmuletUI {
       child: buildWatch(amulet.playerSkillSlotIndex, (selectedIndex) =>
       selectedIndex == index ? containerActive : containerInactive),
     );
-
-    // final control = buildExpandableSkillType(
-    //   onSelected: (selectedSkillType){
-    //     amulet.setSkillSlotValue(
-    //       index: index,
-    //       skillType: selectedSkillType,
-    //     );
-    //   },
-    //   watch: watch,
-    //   menuOpen: menuOpen,
-    // );
-    //
-    // final padding = const EdgeInsets.all(4);
-    //
-    // final containerSelected = Container(
-    //   child: control,
-    //   padding: padding,
-    //   color: Colors.white54,
-    // );
-    //
-    // final containerNotSelected = Container(
-    //   child: control,
-    //   padding: padding,
-    //   color: Colors.transparent,
-    // );
-    //
-    // return buildWatch(amulet.playerSkillSlotIndex, (playerSkillSlotIndex) =>
-    //   playerSkillSlotIndex == index ? containerSelected : containerNotSelected);
   }
 
   Widget buildToggle(WatchBool watch, String text, {String? hint}) => onPressed(
