@@ -49,6 +49,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Skill_Slots:
          readPlayerSkillSlots();
          break;
+       case NetworkResponseAmulet.Player_Skill_Slot_Index:
+         readPlayerSkillSlotIndex();
+         break;
        case NetworkResponseAmulet.Player_Skill_Types:
          readPlayerSkillTypes();
          break;
@@ -415,4 +418,7 @@ extension AmuletParser on IsometricParser {
      amulet.skillSlot2.value = readSkillType();
      amulet.skillSlot3.value = readSkillType();
   }
+
+  void readPlayerSkillSlotIndex() =>
+      amulet.playerSkillSlotIndex.value = readByte();
 }

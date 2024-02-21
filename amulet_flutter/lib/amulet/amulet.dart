@@ -49,6 +49,8 @@ class Amulet extends IsometricGame {
   final skillSlot2 = Watch(SkillType.None);
   final skillSlot3 = Watch(SkillType.None);
 
+  final playerSkillSlotIndex = Watch(-1);
+
   var worldMapClrs = Int32List(0);
   var worldMapDsts = Float32List(0);
   var worldMapSrcs = Float32List(0);
@@ -339,19 +341,23 @@ class Amulet extends IsometricGame {
     }
 
     if (key == PhysicalKeyboardKey.keyA) {
-      selectSlotType(SlotType.Weapon);
+      // selectSlotType(SlotType.Weapon);
+      setSkillSlotIndex(0);
       return;
     }
     if (key == PhysicalKeyboardKey.keyS) {
-      selectSlotType(SlotType.Helm);
+      // selectSlotType(SlotType.Helm);
+      setSkillSlotIndex(1);
       return;
     }
     if (key == PhysicalKeyboardKey.keyD) {
-      selectSlotType(SlotType.Armor);
+      // selectSlotType(SlotType.Armor);
+      setSkillSlotIndex(2);
       return;
     }
     if (key == PhysicalKeyboardKey.keyF) {
-      selectSlotType(SlotType.Shoes);
+      // selectSlotType(SlotType.Shoes);
+      setSkillSlotIndex(3);
       return;
     }
 
@@ -407,6 +413,10 @@ class Amulet extends IsometricGame {
 
   void selectSlotType(SlotType slotType) =>
       sendAmuletRequest(NetworkRequestAmulet.Select_Slot_Type, slotType.index);
+
+  void setSkillSlotIndex(int index){
+    sendAmuletRequest(NetworkRequestAmulet.Set_Skill_Slot_Index, index);
+  }
 
   void spawnRandomEnemy() =>
       server.sendNetworkRequestAmulet(

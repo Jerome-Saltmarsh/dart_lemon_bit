@@ -1671,16 +1671,36 @@ class AmuletUI {
   }
 
   Widget buildSkillSlot(Watch<SkillType> watch, WatchBool menuOpen){
-    return buildControlSkillType(
+
+    final index = amulet.getSkillSlotIndex(watch);
+
+    final control = buildControlSkillType(
       onSelected: (selectedSkillType){
         amulet.setSkillSlotValue(
-          index: amulet.getSkillSlotIndex(watch),
+          index: index,
           skillType: selectedSkillType,
         );
       },
       watch: watch,
       menuOpen: menuOpen,
     );
+
+    final padding = const EdgeInsets.all(4);
+
+    final containerSelected = Container(
+      child: control,
+      padding: padding,
+      color: Colors.white54,
+    );
+
+    final containerNotSelected = Container(
+      child: control,
+      padding: padding,
+      color: Colors.transparent,
+    );
+
+    return buildWatch(amulet.playerSkillSlotIndex, (playerSkillSlotIndex) =>
+      playerSkillSlotIndex == index ? containerSelected : containerNotSelected);
   }
 
 }

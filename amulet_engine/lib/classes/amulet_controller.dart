@@ -755,6 +755,13 @@ class AmuletController {
             skillType: skillType,
         );
         break;
+      case NetworkRequestAmulet.Set_Skill_Slot_Index:
+        final index = parseArg2(arguments);
+        if (index == null){
+          return;
+        }
+        player.setSkillSlotIndex(index);
+        break;
     }
   }
 

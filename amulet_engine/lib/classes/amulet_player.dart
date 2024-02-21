@@ -4,15 +4,8 @@ import 'dart:math';
 import 'package:amulet_engine/src.dart';
 import 'package:lemon_math/src.dart';
 
-import '../common/src.dart';
-import '../mixins/src.dart';
 import 'amulet.dart';
-import 'amulet_settings.dart';
 import 'amulet_fiend.dart';
-import 'amulet_game.dart';
-import 'amulet_npc.dart';
-import 'games/amulet_game_tutorial.dart';
-import 'talk_option.dart';
 import '../isometric/src.dart';
 
 
@@ -65,7 +58,6 @@ class AmuletPlayer extends IsometricPlayer with
   Position? cameraTarget;
   AmuletGame amuletGame;
   SlotType? activeSlotType;
-
 
   AmuletPlayer({
     required this.amuletGame,
@@ -859,6 +851,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeFiendCount();
     writeDebugEnabled();
     writeSkillSlots();
+    writeSkillSlotIndex();
   }
 
   void writeSceneName() {
@@ -1540,6 +1533,18 @@ class AmuletPlayer extends IsometricPlayer with
     }
     skillSlots[index] = skillType;
     writeSkillSlots();
+  }
+
+  void writeSkillSlotIndex(){
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Player_Skill_Slot_Index);
+    writeByte(skillSlotIndex);
+  }
+
+  void setSkillSlotIndex(int value){
+    if (value < 0 || value > 3) return;
+    skillSlotIndex = value;
+    writeSkillSlotIndex();
   }
 }
 
