@@ -1620,17 +1620,28 @@ class AmuletUI {
   Widget buildIconCriticalHitPoints() =>
       AmuletImage(srcX: 768, srcY: 336, width: 16, height: 16);
 
+  String getAimNodeText(int index){
+     final nodeType = amulet.scene.nodeTypes[index];
+     final variation = amulet.scene.nodeVariations[index];
+
+     switch (nodeType){
+       case NodeType.Portal:
+         return AmuletScene.values.tryGet(variation)?.name.replaceAll('_', ' ') ?? 'invalid AmuletScene index: $variation';
+       case NodeType.Shrine:
+         return 'Shrine';
+       default:
+         return '';
+     }
+  }
+
   Widget buildPlayerAimNode() {
-    return buildWatch(amulet.player.aimNodeType, (aimNodeType) {
-       if (aimNodeType == null) {
+    return buildWatch(amulet.player.aimNodeIndex, (aimNodeIndex) {
+       if (aimNodeIndex == null) {
          return nothing;
        }
-
        return IgnorePointer(
            child: GSContainer(
-               child: buildText(
-                   NodeType.getName(aimNodeType)
-               )
+               child: buildText(getAimNodeText(aimNodeIndex))
            )
        );
     });
