@@ -1274,7 +1274,25 @@ extension IsometricEditorUI on IsometricEditor {
             children: [
               buildWatch(
                   nodeSelectedType,
-                      (int selectedNodeType) => Row(
+                      (int selectedNodeType) {
+
+                    if (selectedNodeType == NodeType.Portal){
+                      return buildWatch(nodeSelectedVariation, (variation){
+                        return Column(
+                          children: AmuletScene.values
+                              .map((e) => onPressed(
+                                action: () => setNode(
+                                  index: selectedIndex,
+                                  variation: e.index,
+                                ),
+                                child: Container(child: buildText(e.name, bold: variation == e.index))
+                          ))
+                              .toList(growable: false),
+                        );
+                      });
+                    }
+
+                        return Row(
                     children: [
                       if (NodeType.supportsOrientationEmpty(
                           selectedNodeType))
@@ -1316,7 +1334,8 @@ extension IsometricEditorUI on IsometricEditor {
                       if (NodeType.supportsOrientationColumn(selectedNodeType))
                         buildOrientationIcon(NodeOrientation.Column_Center_Center),
                     ],
-                  )),
+                  );
+                      }),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
