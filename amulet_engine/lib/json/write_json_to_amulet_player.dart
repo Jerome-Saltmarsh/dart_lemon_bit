@@ -68,8 +68,8 @@ void writeJsonAmuletToMemory(Json jsonAmulet, AmuletPlayer player) {
             if (nodeType != NodeType.Shrine) continue;
             final shrineUsed = shrinesUsed.contains(index);
             variations[index] = shrineUsed
-                ? NodeType.variationShrineInactive
-                : NodeType.variationShrineActive;
+                ? NodeType.Variation_Shrine_Inactive
+                : NodeType.Variation_Shrine_Active;
             if (!shrineUsed){
               // game.spawnGameObjectShrine(index);
             }

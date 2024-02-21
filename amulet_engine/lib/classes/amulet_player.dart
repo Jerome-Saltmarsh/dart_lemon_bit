@@ -1504,5 +1504,17 @@ class AmuletPlayer extends IsometricPlayer with
     writeBool(debugEnabled);
   }
 
+  @override
+  bool canInteractWithNodeAtIndex(int index) {
+    final nodeType = scene.nodeTypes[index];
+
+    switch (nodeType){
+      case NodeType.Shrine:
+        final variation = scene.variations[index];
+        return variation == NodeType.Variation_Shrine_Active;
+      default:
+        return false;
+    }
+  }
 }
 

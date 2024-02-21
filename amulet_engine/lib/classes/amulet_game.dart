@@ -1279,19 +1279,12 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     shrineObject.hitable = false;
     shrineObject.collectable = false;
     shrineObject.label = 'Shrine';
-    // shrineObject.onInteract = (src){
-    //   if (src is AmuletPlayer) {
-    //     useShrine(src, shrineObject);
-    //   }
-    // };
   }
 
   void useShrine(AmuletPlayer player, int nodeIndex) {
     player.regainFullMagic();
     player.regainFullHealth();
-    // final nodeIndex = scene.getIndexPosition(shrineObject);
-    // remove(shrineObject);
-    setNode(nodeIndex: nodeIndex, variation: NodeType.variationShrineInactive);
+    setNode(nodeIndex: nodeIndex, variation: NodeType.Variation_Shrine_Inactive);
     final sceneShrinesUsed = player.sceneShrinesUsed;
     if (!sceneShrinesUsed.containsKey(amuletScene)){
       sceneShrinesUsed[amuletScene] = [];
@@ -1301,7 +1294,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       throw Exception('shrinesUsed == null');
     }
     shrinesUsed.add(nodeIndex);
-    // dispatchGame(GameEvent.Shrine_Used, shrineObject);
+    dispatchGameEventPosition(GameEvent.Shrine_Used, player);
   }
 
   void resetShrines(AmuletPlayer player) {
@@ -1310,7 +1303,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     for (var i = 0; i < length; i++){
        final nodeType = scene.nodeTypes[i];
        if (nodeType != NodeType.Shrine) continue;
-       scene.variations[i] = NodeType.variationShrineActive;
+       scene.variations[i] = NodeType.Variation_Shrine_Active;
        spawnGameObjectShrine(i);
     }
   }

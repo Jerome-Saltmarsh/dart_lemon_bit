@@ -355,15 +355,7 @@ class NodeType {
       Shrine,
     ].contains(type);
 
-  static const variationShrineActive = 1;
-  static const variationShrineInactive = 0;
-
-  static bool isInteractable(int nodeType) =>
-      interactables.contains(nodeType);
-
-  static const interactables = [
-    Portal,
-    Shrine,
-  ];
+  static const Variation_Shrine_Active = 1;
+  static const Variation_Shrine_Inactive = 0;
 }
 

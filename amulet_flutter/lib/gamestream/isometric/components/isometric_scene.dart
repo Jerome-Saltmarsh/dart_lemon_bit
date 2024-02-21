@@ -1631,7 +1631,7 @@ class IsometricScene with IsometricComponent implements Updatable {
           );
           break;
         case NodeType.Shrine:
-          if (nodeVariations[nodeIndex] == NodeType.variationShrineInactive)
+          if (nodeVariations[nodeIndex] == NodeType.Variation_Shrine_Inactive)
             continue;
 
           emitLight(

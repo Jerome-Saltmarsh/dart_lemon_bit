@@ -1509,15 +1509,16 @@ class IsometricPlayer extends Character with ByteWriter {
       ) break;
 
       final index = scene.getIndex(z, row, column);
-      if (NodeType.isInteractable(nodeTypes[index])) {
+      if (canInteractWithNodeAtIndex(index)) {
          setAimNodeIndex(index);
          return;
       }
-
       z--;
     }
     setAimNodeIndex(null);
   }
+
+  bool canInteractWithNodeAtIndex(int index) => false;
 
   void setAimNodeIndex(int? value){
     if (aimNodeIndex == value) return;

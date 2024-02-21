@@ -1042,7 +1042,7 @@ class RendererNodes extends RenderGroup {
         break;
       case NodeType.Shrine:
         render.renderSpriteAutoIndexedNESW(
-          sprite: variation == NodeType.variationShrineActive
+          sprite: variation == NodeType.Variation_Shrine_Active
               ? images.shrineActive
               : images.shrineInactive,
           dstX: dstX,
