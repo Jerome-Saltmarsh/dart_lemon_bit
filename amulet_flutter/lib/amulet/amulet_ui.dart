@@ -92,7 +92,7 @@ class AmuletUI {
                   width8,
                   buildTogglePlayerStats(),
                   width8,
-                  buildToggleSkills(),
+                  buildTogglePlayerSkills(),
                   width8,
                   buildButtonQuest(),
                   width8,
@@ -766,8 +766,19 @@ class AmuletUI {
     );
   }
 
-  Widget buildToggleSkills() =>
-      buildToggle(amulet.windowVisibleSkills, 'skills', hint: 'e');
+  Widget buildTogglePlayerSkills() {
+
+    final active = AmuletImage(srcX: 723, srcY: 39, width: 26, height: 23);
+    final notActive = AmuletImage(srcX: 691, srcY: 39, width: 26, height: 23);
+
+    return onPressed(
+      action: amulet.windowVisiblePlayerSkills.toggle,
+      child: buildWatch(
+          amulet.windowVisiblePlayerSkills,
+          (windowVisibleEquipment) =>
+              windowVisibleEquipment ? active : notActive),
+    );
+  }
 
   Widget buildWindowHelp() => GSContainer(
       width: 400,
@@ -823,7 +834,7 @@ class AmuletUI {
       );
 
   Widget buildWindowPlayerSkills(){
-     return buildWatchVisible(amulet.windowVisibleSkills, buildWindowPlayerSkillStats());
+     return buildWatchVisible(amulet.windowVisiblePlayerSkills, buildWindowPlayerSkillStats());
   }
 
   Widget buildWindowPlayerStats() {
