@@ -20,14 +20,10 @@ Json writeSceneToJson(Scene scene){
   return json;
 }
 
-List<Json> writeGameObjectsToJson(List<GameObject> gameObjects){
-  final list = <Json>[];
-  for (final gameObject in gameObjects){
-    if (!gameObject.persistable) continue;
-    list.add(writeGameObjectToJson(gameObject));
-  }
-  return list;
-}
+List<Json> writeGameObjectsToJson(List<GameObject> gameObjects) =>
+    gameObjects
+        .map(writeGameObjectToJson)
+        .toList(growable: true);
 
 Json writeGameObjectToJson(GameObject gameObject){
   final json = Json();
@@ -36,7 +32,7 @@ Json writeGameObjectToJson(GameObject gameObject){
   json['z'] = gameObject.z.toInt();
   json['item_type'] = gameObject.itemType;
   json['sub_type'] = gameObject.subType;
-  json['deactive_timer'] = gameObject.deactivationTimer;
+  json['deactivation_timer'] = gameObject.deactivationTimer;
   json['team'] = gameObject.team;
   json['id'] = gameObject.id;
   return json;

@@ -83,7 +83,7 @@ class AmuletGameTutorial extends AmuletGame {
 
     removeFiends();
     gameObjects.removeWhere((element) =>
-      !element.persistable &&
+      // !element.persistable &&
       !const[GameObjectType.Crystal_Glowing_False, GameObjectType.Crystal_Glowing_True].contains(element.subType)
     );
 

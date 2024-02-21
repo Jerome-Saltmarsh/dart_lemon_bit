@@ -890,7 +890,7 @@ class IsometricPlayer extends Character with ByteWriter {
     writeBool(selectedGameObject.fixed);
     writeBool(selectedGameObject.collectable);
     writeBool(selectedGameObject.physical);
-    writeBool(selectedGameObject.persistable);
+    // writeBool(selectedGameObject.persistable);
     writeBool(selectedGameObject.gravity);
     writeBool(selectedGameObject.interactable);
     writeBool(selectedGameObject.collidable);

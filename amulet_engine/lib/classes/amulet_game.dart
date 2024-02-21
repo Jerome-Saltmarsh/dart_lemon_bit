@@ -950,7 +950,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         type: ItemType.Amulet_Item,
         subType: item.index,
         team: TeamType.Neutral,
-        persistable: true,
+        // persistable: true,
         interactable: true,
         deactivationTimer: deactivationTimer ?? gameObjectDeactivationTimer,
         health: 0,
@@ -1090,7 +1090,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
          GameObjectType.Wooden_Chest,
          GameObjectType.Crate_Wooden,
        ].contains(subType)){
-         gameObject.persistable = true;
+         // gameObject.persistable = true;
          gameObject.physical = true;
          gameObject.healthMax = 1;
          gameObject.health = 1;
@@ -1312,7 +1312,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         team: TeamType.Neutral,
         health: destroyableGameObjectTypes.contains(gameObjectType) ? 1 : 0,
         interactable: false,
-        persistable: true,
+        // persistable: true,
         deactivationTimer: -1,
     );
 

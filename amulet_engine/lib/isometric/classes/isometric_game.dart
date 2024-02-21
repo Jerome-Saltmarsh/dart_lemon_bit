@@ -29,7 +29,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   var playerId = 0;
   var timerUpdateAITargets = 0;
   var frame = 0;
-  var gameObjectId = 0;
   var _running = true;
 
   final List<T> players = [];
@@ -64,7 +63,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       );
     }
     gameObjects.sort();
-    gameObjectId = gameObjects.length;
   }
 
   int get maxPlayers;
@@ -84,8 +82,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       player.writeGameRunning();
     }
   }
-
-  int generateUniqueId() => _id++;
 
   void writePlayerResponses() {
     final players = this.players;
@@ -1764,7 +1760,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         subType: subType,
         team: team,
         health: health,
-        persistable: persistable,
+        // persistable: persistable,
         interactable: interactable,
         deactivationTimer: deactivationTimer,
       );
@@ -1779,7 +1775,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required int team,
     required int health,
     required bool interactable,
-    required bool persistable,
     required int deactivationTimer,
   }) {
     final instance = GameObject(
@@ -1788,9 +1783,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       z: z,
       itemType: type,
       subType: subType,
-      id: generateId(),
+      id: generateUniqueGameObjectId(),
       team: team,
-      persistable: persistable,
       health: health,
       interactable: interactable,
       deactivationTimer: deactivationTimer,
@@ -2178,13 +2172,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       GameObject target) {}
 
   void reset() {
-    for (var i = 0; i < gameObjects.length; i++) {
-      final gameObject = gameObjects[i];
-      if (!gameObject.persistable) {
-        gameObjects.removeAt(i);
-        i--;
-        continue;
-      }
+    for (final gameObject in gameObjects) {
       gameObject.x = gameObject.startPositionX;
       gameObject.y = gameObject.startPositionY;
       gameObject.z = gameObject.startPositionZ;
@@ -2230,7 +2218,16 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     playersWriteWeather();
   }
 
-  int generateId() => gameObjectId++;
+  int generateUniqueGameObjectId() {
+     var i = 0;
+
+     while (true) {
+       if (gameObjects.any((element) => element.id == i)){
+         i++;
+       }
+       return i;
+     }
+  }
 
   Collider? getNearestCollider({
     required double x,
@@ -2786,9 +2783,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     final sceneGameObjects = scene.gameObjects;
     sceneGameObjects.clear();
     for (final gameObject in gameObjects){
-      if (!gameObject.persistable) {
-        continue;
-      }
       sceneGameObjects.add(gameObject);
     }
   }

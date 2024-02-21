@@ -12,7 +12,7 @@ class GameObject extends Collider {
   /// collectable means that the player automatically picks this item up by colliding with it
   /// this is used for health potions
   var collectable = false;
-  var persistable = false;
+  // var persistable = false;
   var destroyable = false;
   var dirty = true;
   var previousX = 0.0;
@@ -56,7 +56,7 @@ class GameObject extends Collider {
     required this.itemType,
     required this.subType,
     required this.id,
-    required this.persistable,
+    // required this.persistable,
     super.radius = 15.0,
     this.health = 0,
     this.interactable = false,
@@ -98,11 +98,11 @@ class GameObject extends Collider {
           itemType: itemType,
           subType: subType,
           id: id,
-          persistable: persistable,
+          // persistable: persistable,
       )
         ..interactable = interactable
         ..collectable = collectable
-        ..persistable = persistable
+        // ..persistable = persistable
         ..destroyable = destroyable
         // ..recyclable = recyclable
         ..dirty = dirty

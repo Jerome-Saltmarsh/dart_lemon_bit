@@ -41,7 +41,6 @@ class IsometricEditor with IsometricComponent {
   final gameObjectSelectedFixed = Watch(true);
   final gameObjectSelectedCollectable = Watch(true);
   final gameObjectSelectedPhysical = Watch(true);
-  final gameObjectSelectedPersistable = Watch(true);
   final gameObjectSelectedAmount = Watch(0);
   final gameObjectSelectedParticleType = Watch(0);
   final gameObjectSelectedParticleSpawnRate = Watch(0);
@@ -563,9 +562,9 @@ class IsometricEditor with IsometricComponent {
   void selectedGameObjectTogglePhysical() =>
       sendGameObjectRequest(IsometricEditorGameObjectRequest.Toggle_Physical);
 
-  void selectedGameObjectTogglePersistable() =>
-      sendGameObjectRequest(
-          IsometricEditorGameObjectRequest.Toggle_Persistable);
+  // void selectedGameObjectTogglePersistable() =>
+  //     sendGameObjectRequest(
+  //         IsometricEditorGameObjectRequest.Toggle_Persistable);
 
   void actionAddGameObject(int type) =>
       sendGameObjectRequest(IsometricEditorGameObjectRequest.Add,

@@ -427,11 +427,9 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
     editor.gameObjectSelectedFixed.value = readBool();
     editor.gameObjectSelectedCollectable.value = readBool();
     editor.gameObjectSelectedPhysical.value = readBool();
-    editor.gameObjectSelectedPersistable.value = readBool();
     editor.gameObjectSelectedGravity.value = readBool();
     editor.gameObjectSelectedInteractable.value = readBool();
     editor.gameObjectSelectedCollidable.value = readBool();
-
     editor.gameObjectSelectedType.value          = gameObject.type;
     editor.gameObjectSelectedSubType.value       = gameObject.subType;
 

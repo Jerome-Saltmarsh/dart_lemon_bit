@@ -45,7 +45,7 @@ GameObject readGameObjectFromJson(Json gameObjectJson){
    final z = gameObjectJson.getDouble('z');
    final itemType = gameObjectJson.getInt('item_type');
    final subType = gameObjectJson.getInt('sub_type');
-   final deactivateTimer = gameObjectJson.getInt('deactive_timer');
+   final deactivationTimer = gameObjectJson.tryGetInt('deactivation_timer') ?? -1;
    final id = gameObjectJson.getInt('id');
    final team = gameObjectJson.getInt('team');
 
@@ -68,8 +68,7 @@ GameObject readGameObjectFromJson(Json gameObjectJson){
        subType: subType,
        id: id,
        health: health,
-       deactivationTimer: deactivateTimer,
-       persistable: true,
+       deactivationTimer: deactivationTimer,
    );
 }
 

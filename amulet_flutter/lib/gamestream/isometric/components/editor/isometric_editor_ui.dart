@@ -1076,7 +1076,7 @@ extension IsometricEditorUI on IsometricEditor {
                         buildWatchFixed(),
                         buildWatchCollectable(),
                         buildWatchPhysical(),
-                        buildWatchPersistable(),
+                        // buildWatchPersistable(),
                         buildWatchInteractable(),
                         buildWatchCollidable(),
                         buildWatchEmission(),
@@ -1632,20 +1632,20 @@ extension IsometricEditorUI on IsometricEditor {
           ),
         ));
 
-  Widget buildWatchPersistable() => buildWatch(
-        gameObjectSelectedPersistable,
-            (bool enabled) => onPressed(
-          action:
-          selectedGameObjectTogglePersistable,
-          child: Row(
-            mainAxisAlignment:
-            MainAxisAlignment.spaceBetween,
-            children: [
-              buildText('Persistable'),
-              buildText(enabled),
-            ],
-          ),
-        ));
+  // Widget buildWatchPersistable() => buildWatch(
+  //       gameObjectSelectedPersistable,
+  //           (bool enabled) => onPressed(
+  //         action:
+  //         selectedGameObjectTogglePersistable,
+  //         child: Row(
+  //           mainAxisAlignment:
+  //           MainAxisAlignment.spaceBetween,
+  //           children: [
+  //             buildText('Persistable'),
+  //             buildText(enabled),
+  //           ],
+  //         ),
+  //       ));
 
   Widget buildWatchEmission() => buildWatch(
         gameObjectSelectedEmission,

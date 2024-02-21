@@ -1040,7 +1040,7 @@ class AmuletController {
           type: selectedGameObject.itemType,
           subType: selectedGameObject.subType,
           team: selectedGameObject.team,
-          persistable: selectedGameObject.persistable,
+          // persistable: selectedGameObject.persistable,
           interactable: selectedGameObject.interactable,
           health: selectedGameObject.health,
           deactivationTimer: selectedGameObject.deactivationTimer,
@@ -1057,11 +1057,11 @@ class AmuletController {
         player.writeEditorGameObjectSelected();
         break;
 
-      case IsometricEditorGameObjectRequest.Toggle_Persistable:
-        if (selectedGameObject == null) return;
-        selectedGameObject.persistable = !selectedGameObject.persistable;
-        player.writeEditorGameObjectSelected();
-        break;
+      // case IsometricEditorGameObjectRequest.Toggle_Persistable:
+      //   if (selectedGameObject == null) return;
+      //   selectedGameObject.persistable = !selectedGameObject.persistable;
+      //   player.writeEditorGameObjectSelected();
+      //   break;
     }
   }
 

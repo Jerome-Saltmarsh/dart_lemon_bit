@@ -18,21 +18,26 @@ ctrl + []               : move caret to code block
 REMINDER: IT DOESN'T NEED TO BE PERFECT
 
 [RELEASE]
+[ref] mark type fiend count
 [fix] persist gameobject amulet
 [fix] balance amulet fiends
 [fix] balance amulet items
 [fix] boss fight
 [fix] ui amulet item container collision
-[new] skill type fireball level 3
-[new] skill type fireball level 2
-[new] skill type iceball level 2
-[new] skill type iceball level 3
-[new] skill type split_shot level 3
-[new] mark type fiend count
-[new] interactable node types
+[new] skill type mage fireball level 3
+[new] skill type mage fireball level 2
+[new] skill type mage iceball level 2
+[new] skill type mage iceball level 3
+[new] skill type rogue split_shot level 3
+[new] skill type rogue passive arrows pierce enemies
+[new] skill type necromancer raise skeleton
 
 ## 21.02.2024
+[new] interactable node types
 [ref] delete class amulet gameobject 
+[ref] delete gameobject interactable 
+[ref] delete gameobject shrine 
+[ref] delete gameobject portal 
 
 ## 20.02.2024
 [fix] npc roam
