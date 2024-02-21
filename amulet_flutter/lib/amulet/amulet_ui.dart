@@ -744,6 +744,7 @@ class AmuletUI {
     final notActive = AmuletImage(srcX: 693, srcY: 99, width: 22, height: 25);
 
     return onPressed(
+      hint: 'Equipment (Q)',
       action: amulet.windowVisibleEquipment.toggle,
       child: buildWatch(
           amulet.windowVisibleEquipment,
@@ -758,6 +759,7 @@ class AmuletUI {
     final notActive = AmuletImage(srcX: 691, srcY: 131, width: 26, height: 26);
 
     return onPressed(
+      hint: 'Stats (W)',
       action: amulet.windowVisiblePlayerStats.toggle,
       child: buildWatch(
           amulet.windowVisiblePlayerStats,
@@ -772,6 +774,7 @@ class AmuletUI {
     final notActive = AmuletImage(srcX: 691, srcY: 39, width: 26, height: 23);
 
     return onPressed(
+      hint: 'Skills (E)',
       action: amulet.windowVisiblePlayerSkills.toggle,
       child: buildWatch(
           amulet.windowVisiblePlayerSkills,
@@ -786,6 +789,7 @@ class AmuletUI {
     final notActive = AmuletImage(srcX: 691, srcY: 3, width: 26, height: 25);
 
     return onPressed(
+      hint: 'Quests (R)',
       action: amulet.windowVisibleQuests.toggle,
       child: buildWatch(
           amulet.windowVisibleQuests,
