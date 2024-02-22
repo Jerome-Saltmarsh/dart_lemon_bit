@@ -1083,6 +1083,9 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   @override
+  SkillType get skillTypeRight => skillSlots[skillSlotIndex];
+
+  @override
   set skillTypeRight(SkillType value) {
     if (!skillTypeUnlocked(value)){
       return;

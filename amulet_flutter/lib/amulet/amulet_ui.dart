@@ -1886,11 +1886,11 @@ class AmuletUI {
         return Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            if (mouseOver)
-            Container(
-                margin: const EdgeInsets.only(bottom: 6),
-                child: changeButton,
-            ),
+            // if (mouseOver)
+            // Container(
+            //     margin: const EdgeInsets.only(bottom: 6),
+            //     child: changeButton,
+            // ),
             Stack(
               alignment: Alignment.center,
               children: [
