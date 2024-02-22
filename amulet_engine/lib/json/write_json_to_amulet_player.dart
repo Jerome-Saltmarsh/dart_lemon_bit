@@ -73,7 +73,7 @@ void writeJsonAmuletToMemory(Json jsonAmulet, AmuletPlayer player) {
          final variations = game.scene.variations;
          final shrinesUsed = sceneJson.getListInt('shrines_used');
          player.sceneShrinesUsed[game.amuletScene] = shrinesUsed;
-         game.importGameObjects(readGameObjectsFromJson(sceneJson));
+         game.setGameObjects(readGameObjectsFromJson(sceneJson));
 
          for (var index = 0; index < nodeTypesLength; index++) {
             final nodeType = nodeTypes[index];
