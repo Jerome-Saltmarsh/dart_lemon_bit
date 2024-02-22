@@ -661,9 +661,6 @@ class AmuletController {
       case NetworkRequestAmulet.End_Interaction:
         player.endInteraction();
         break;
-      case NetworkRequestAmulet.Use_Flask:
-        player.useFlask();
-        break;
       case NetworkRequestAmulet.Refill_Player_Health_Magic:
         player.regainFullHealth();
         player.regainFullMagic();

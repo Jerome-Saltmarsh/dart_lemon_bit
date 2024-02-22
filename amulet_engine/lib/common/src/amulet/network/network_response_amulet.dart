@@ -35,7 +35,6 @@ class NetworkResponseAmulet {
    static const Player_Characteristics = 48;
    static const Player_Active_Slot_Type = 49;
    static const Fiend_Count = 51;
-   static const Flask_Percentage = 52;
    static const Player_Agility = 53;
    static const Perform_Frame_Velocity = 54;
    static const Player_Health_Steal = 55;

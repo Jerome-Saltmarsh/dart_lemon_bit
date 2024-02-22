@@ -801,10 +801,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     dispatchFiendCount();
 
-    if (src is AmuletPlayer){
-      src.incrementFlask();
-    }
-
     if (target is AmuletFiend) {
       if (randomChance(target.fiendType.chanceOfDropPotion)) {
         spawnAmuletItemAtPosition(

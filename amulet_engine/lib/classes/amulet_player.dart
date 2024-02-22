@@ -48,7 +48,6 @@ class AmuletPlayer extends IsometricPlayer with
   var npcName = '';
   var npcOptions = <TalkOption>[];
   var flags = <dynamic>[];
-  var flaskAmount = 0;
   var skillSlotIndex = 0;
   var skillSlotsDirty = false;
   var consumableSlotsDirty = true;
@@ -84,7 +83,6 @@ class AmuletPlayer extends IsometricPlayer with
     writeInteracting();
     writeGender();
     writePlayerComplexion();
-    setFlaskAmount(AmuletSettings.Max_Flask);
   }
 
   AttackSpeed? get equippedWeaponAttackSpeed =>
@@ -1438,29 +1436,6 @@ class AmuletPlayer extends IsometricPlayer with
   void joinGame(AmuletGame game){
     leaveCurrentGame();
     game.add(this);
-  }
-
-  void setFlaskAmount(int value){
-    flaskAmount = clamp(value, 0, AmuletSettings.Max_Flask);
-    writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Flask_Percentage);
-    writePercentage(flaskAmount / AmuletSettings.Max_Flask);
-  }
-
-  void incrementFlask() {
-    if (flaskAmount >= AmuletSettings.Max_Flask) return;
-    setFlaskAmount(flaskAmount + 1);
-  }
-
-  void useFlask() {
-    if (flaskAmount < AmuletSettings.Max_Flask) {
-      writeGameError(GameError.Flask_Not_Ready);
-      return;
-    }
-    setFlaskAmount(0);
-    regainFullHealth();
-    regainFullMagic();
-    writePlayerEvent(PlayerEvent.Drink);
   }
 
   @override

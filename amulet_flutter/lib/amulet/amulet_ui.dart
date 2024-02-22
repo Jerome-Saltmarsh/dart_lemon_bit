@@ -16,7 +16,6 @@ import 'package:lemon_widgets/lemon_widgets.dart';
 import 'classes/amulet_colors.dart';
 import 'getters/get_src_caste_type.dart';
 import 'ui/containers/build_container_player_front.dart';
-import 'ui/widgets/amulet_image_src.dart';
 import 'ui/widgets/src.dart';
 
 class AmuletUI {
@@ -186,28 +185,6 @@ class AmuletUI {
         )
       );
   }
-
-  Widget buildWindowFlask() =>
-      onPressed(
-        hint: 'Drink Flask (Space)',
-        action: amulet.useFlask,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              color: Colors.black26,
-              child: buildIconPotion(),
-            ),
-            buildWatchBar(
-              watch: amulet.flaskPercentage,
-              color: amulet.colors.aqua_2,
-              barWidth: 100,
-              barHeight: 20,
-            ),
-          ],
-        ),
-      );
 
   AmuletImage buildIconPotion() {
     return AmuletImage(

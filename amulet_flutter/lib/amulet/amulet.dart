@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 import 'dart:ui';
 
 import 'package:amulet_engine/common/src.dart';
+import 'package:amulet_flutter/amulet/amulet_keys.dart';
 import 'package:amulet_flutter/amulet/amulet_ui.dart';
 import 'package:amulet_flutter/amulet/classes/item_slot.dart';
 import 'package:amulet_flutter/amulet/ui/enums/quantify_tab.dart';
@@ -35,7 +36,6 @@ class Amulet extends IsometricGame {
   final fiendCountDead = Watch(0);
   final fiendCountTotal = Watch(0);
   final fiendCountPercentage = Watch(0.0);
-  final flaskPercentage = Watch(0.0);
   final playerDebugEnabled = WatchBool(false);
   final playerPerformFrameVelocity = Watch(0.0);
   final highlightedSkillType = Watch<SkillType?>(null);
@@ -112,6 +112,7 @@ class Amulet extends IsometricGame {
   final windowVisibleEquipment = WatchBool(true);
   final windowVisiblePlayerSkills = WatchBool(false);
   final windowVisibleHelp = WatchBool(false);
+  final amuletKeys = AmuletKeys();
 
   late final AmuletUI amuletUI;
 
@@ -332,68 +333,55 @@ class Amulet extends IsometricGame {
     if (options.editing)
       return;
 
-    if (key == PhysicalKeyboardKey.keyQ) {
-      amulet.windowVisibleEquipment.toggle();
+    if (key == amuletKeys.toggleWindowEquipment) {
+      windowVisibleEquipment.toggle();
       return;
     }
 
-    if (key == PhysicalKeyboardKey.keyW) {
-      amulet.windowVisiblePlayerStats.toggle();
+    if (key == amuletKeys.toggleWindowPlayerStats) {
+      windowVisiblePlayerStats.toggle();
       return;
     }
 
-    if (key == PhysicalKeyboardKey.keyE) {
-      amulet.windowVisiblePlayerSkills.toggle();
+    if (key == amuletKeys.toggleWindowSkills) {
+      windowVisiblePlayerSkills.toggle();
       return;
     }
 
-    if (key == PhysicalKeyboardKey.keyR) {
-      amulet.windowVisibleQuests.toggle();
+    if (key == amuletKeys.toggleWindowQuest) {
+      windowVisibleQuests.toggle();
       return;
     }
 
-    if (key == PhysicalKeyboardKey.keyH) {
-      amulet.windowVisibleHelp.toggle();
+    if (key == amuletKeys.toggleWindowHelp) {
+      windowVisibleHelp.toggle();
       return;
     }
 
-    if (key == PhysicalKeyboardKey.space) {
-      amulet.useFlask();
-      return;
-    }
-
-    if (key == PhysicalKeyboardKey.keyA) {
-      // selectSlotType(SlotType.Weapon);
+    if (key == amuletKeys.selectSkill0) {
       setSkillSlotIndex(0);
       return;
     }
-    if (key == PhysicalKeyboardKey.keyS) {
-      // selectSlotType(SlotType.Helm);
+
+    if (key == amuletKeys.selectSkill1) {
       setSkillSlotIndex(1);
       return;
     }
-    if (key == PhysicalKeyboardKey.keyD) {
-      // selectSlotType(SlotType.Armor);
+    if (key == amuletKeys.selectSkill2) {
       setSkillSlotIndex(2);
       return;
     }
-    if (key == PhysicalKeyboardKey.keyF) {
-      // selectSlotType(SlotType.Shoes);
+    if (key == amuletKeys.selectSkill3) {
       setSkillSlotIndex(3);
       return;
     }
 
     if (options.developMode){
-      if (key == PhysicalKeyboardKey.digit9) {
+      if (key == amuletKeys.refillHealthAndMagic) {
         amulet.sendAmuletRequest(NetworkRequestAmulet.Refill_Player_Health_Magic);
         return;
       }
     }
-
-    // if (key == PhysicalKeyboardKey.space) {
-    //   options.toggleRenderHealthBars();
-    //   return;
-    // }
   }
 
   @override
@@ -677,11 +665,6 @@ class Amulet extends IsometricGame {
           SlotType.Shoes => equippedShoes.value,
           SlotType.Consumable => null,
       };
-
-  void useFlask() =>
-      server.sendNetworkRequestAmulet(
-        NetworkRequestAmulet.Use_Flask
-      );
 
   void toggleDebugEnabled() =>
       server.sendNetworkRequestAmulet(

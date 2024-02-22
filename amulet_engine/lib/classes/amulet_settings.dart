@@ -1,7 +1,6 @@
 class AmuletSettings {
   static const Amount_Skill_Type_Split_Shot_Base = 3;
 
-  static const Max_Flask = 25;
   static const Max_Critical_Hit_Points = 100;
 
   static const Ratio_Critical_Hit_Damage = 2.0;

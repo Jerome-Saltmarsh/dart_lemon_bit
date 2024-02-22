@@ -84,7 +84,6 @@ enum GameError {
   Sword_Required,
   Staff_Required,
   Melee_Weapon_Required,
-  Flask_Not_Ready,
   Insufficient_Magic,
   Invalid_Portal_Scene,
   No_Connecting_Portal,

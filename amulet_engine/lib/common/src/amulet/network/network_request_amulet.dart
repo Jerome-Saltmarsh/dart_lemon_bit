@@ -12,7 +12,6 @@ enum NetworkRequestAmulet {
   Select_Skill_Type_Left,
   Select_Skill_Type_Right,
   Refill_Player_Health_Magic,
-  Use_Flask,
   Toggle_Debug_Enabled,
   Set_Skill_Slot_Value,
   Set_Skill_Slot_Index,
