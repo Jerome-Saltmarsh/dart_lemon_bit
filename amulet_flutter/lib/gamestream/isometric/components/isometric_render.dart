@@ -309,7 +309,7 @@ class IsometricRender with IsometricComponent {
     int color = 1,
   }) =>
       renderHealthBar(
-        dstX: position.renderX - 26,
+        dstX: position.renderX - 20,
         dstY: position.renderY - 55,
         percentage: percentage,
         color: color,
@@ -321,8 +321,8 @@ class IsometricRender with IsometricComponent {
     int color = 1,
   }) =>
       renderMagicBar(
-        dstX: position.renderX - 26,
-        dstY: position.renderY - 55 + 8,
+        dstX: position.renderX - 20,
+        dstY: position.renderY - 55 + 6,
         percentage: percentage,
         color: color,
       );
@@ -377,7 +377,7 @@ class IsometricRender with IsometricComponent {
   }) {
     const srcX = 171.0;
     const srcWidth = 40.0;
-    const srcHeight = 6.44;
+    const srcHeight = 5.44;
     const interpolation = 0.6;
     final image = images.atlas_gameobjects;
 
