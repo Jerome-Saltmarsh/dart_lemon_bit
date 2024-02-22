@@ -1664,6 +1664,14 @@ class AmuletPlayer extends IsometricPlayer with
 
     setConsumableSlot(index: index, amuletItem: null);
     spawnAmuletItem(amuletItem);
+    writeAmuletItemDropped(amuletItem);
   }
+
+  void writeAmuletItemDropped(AmuletItem amuletItem) {
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Amulet_Item_Dropped);
+    writeAmuletItem(amuletItem);
+  }
+
 }
 

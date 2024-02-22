@@ -813,6 +813,12 @@ class Amulet extends IsometricGame {
       index,
     );
   }
+
+  void onAmuletItemDropped(AmuletItem amuletItem) {
+     if (amuletItem.isConsumable){
+       audio.material_struck_glass.play();
+     }
+  }
 }
 
 

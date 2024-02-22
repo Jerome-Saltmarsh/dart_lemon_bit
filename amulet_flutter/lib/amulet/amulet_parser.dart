@@ -165,6 +165,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Amulet_Item_Consumed:
          readAmuletItemConsumed();
          break;
+       case NetworkResponseAmulet.Amulet_Item_Dropped:
+         readAmuletItemDropped();
+         break;
        case NetworkResponseAmulet.Player_Weapon_Area_Damage:
          readPlayerWeaponAreaDamage();
          break;
@@ -435,6 +438,14 @@ extension AmuletParser on IsometricParser {
       return;
     }
     amulet.onAmuletItemConsumed(amuletItem);
+  }
+
+  void readAmuletItemDropped() {
+    final amuletItem = readAmuletItem();
+
+    if (amuletItem != null){
+      amulet.onAmuletItemDropped(amuletItem);
+    }
   }
 
 
