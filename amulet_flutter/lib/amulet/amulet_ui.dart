@@ -158,6 +158,16 @@ class AmuletUI {
   );
   }
 
+  Widget buildWindowPotions() =>
+      Row(
+        children: [
+          buildIconPotion(),
+          buildIconPotion(),
+          buildIconPotion(),
+          buildIconPotion(),
+        ],
+      );
+
   Widget buildWindowFlask() =>
       onPressed(
         hint: 'Drink Flask (Space)',
@@ -168,12 +178,7 @@ class AmuletUI {
             Container(
               padding: const EdgeInsets.all(8),
               color: Colors.black26,
-              child: AmuletImage(
-                srcX: 133,
-                srcY: 163,
-                width: 22,
-                height: 26,
-              ),
+              child: buildIconPotion(),
             ),
             buildWatchBar(
               watch: amulet.flaskPercentage,
@@ -184,6 +189,15 @@ class AmuletUI {
           ],
         ),
       );
+
+  AmuletImage buildIconPotion() {
+    return AmuletImage(
+              srcX: 133,
+              srcY: 163,
+              width: 22,
+              height: 26,
+            );
+  }
 
   Positioned buildOverlayScreenColor() {
     return Positioned(
@@ -1947,9 +1961,9 @@ class AmuletUI {
 
   Widget buildHudTopLeft() => Column(
         children: [
-          buildWindowFlask(),
           buildPlayerHealthBar(),
           buildPlayerMagicBar(),
+          buildWindowPotions(),
         ],
       );
 }

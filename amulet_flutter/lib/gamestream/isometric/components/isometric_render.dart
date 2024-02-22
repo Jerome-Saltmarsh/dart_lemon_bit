@@ -376,8 +376,8 @@ class IsometricRender with IsometricComponent {
     required int color2,
   }) {
     const srcX = 171.0;
-    const srcWidth = 51.0;
-    const srcHeight = 7.44;
+    const srcWidth = 40.0;
+    const srcHeight = 6.44;
     const interpolation = 0.6;
     final image = images.atlas_gameobjects;
 
