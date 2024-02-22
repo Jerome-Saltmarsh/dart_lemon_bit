@@ -986,12 +986,12 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       return;
     }
 
-    if (amuletItem.isConsumable) {
-      player.writePlayerEventItemTypeConsumed(amuletItem.subType);
-      player.health += amuletItem.health ?? 0;
-      player.magic += amuletItem.maxMagic ?? 0;
-      remove(gameObject);
-    }
+    // if (amuletItem.isConsumable) {
+    //   player.writePlayerEventItemTypeConsumed(amuletItem.subType);
+    //   player.health += amuletItem.health ?? 0;
+    //   player.magic += amuletItem.maxMagic ?? 0;
+    //   remove(gameObject);
+    // }
   }
 
   @override

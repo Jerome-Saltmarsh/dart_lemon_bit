@@ -166,15 +166,25 @@ class AmuletUI {
             .toList(growable: false),
       );
 
-  Widget buildSlotConsumable(Watch<AmuletItem?> itemSlot){
+  Widget buildSlotConsumable(Watch<AmuletItem?> itemSlot) {
     const size = 30.0;
-    return Container(
-      child: buildWatch(itemSlot, (t) => t == null ? nothing : AmuletItemImage(amuletItem: t, scale: 1)),
-      width: size,
-      height: size,
-      alignment: Alignment.center,
-      color: Colors.black12,
-    );
+    return buildWatch(itemSlot, (t) =>
+        buildBorder(
+          color: Colors.black26,
+          width: 2,
+          radius: BorderRadius.zero,
+          child: onPressed(
+            action: t == null ? null : () => amulet.useConsumableSlot(itemSlot),
+            child: Container(
+              child: t == null ? nothing : AmuletItemImage(amuletItem: t, scale: 1),
+              width: size,
+              height: size,
+              alignment: Alignment.center,
+              color: Colors.black12,
+            ),
+          ),
+        )
+      );
   }
 
   Widget buildWindowFlask() =>

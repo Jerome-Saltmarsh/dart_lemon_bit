@@ -16,4 +16,5 @@ enum NetworkRequestAmulet {
   Toggle_Debug_Enabled,
   Set_Skill_Slot_Value,
   Set_Skill_Slot_Index,
+  Consume_Slot,
 }

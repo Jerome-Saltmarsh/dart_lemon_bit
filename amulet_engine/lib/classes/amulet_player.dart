@@ -1646,5 +1646,33 @@ class AmuletPlayer extends IsometricPlayer with
       writeInt16(consumableSlots[i]?.index ?? -1);
     }
   }
+
+  void consumeSlot(int index) {
+     if (!consumableSlots.isValidIndex(index)){
+       writeGameError(GameError.Invalid_Consumable_Index);
+       return;
+     }
+
+     final amuletItem = consumableSlots[index];
+     if (amuletItem == null){
+       writeGameError(GameError.Consumable_Empty);
+       return;
+     }
+
+     consumeAmuletItem(amuletItem);
+     setConsumableSlot(index: index, amuletItem: null);
+  }
+
+  void consumeAmuletItem(AmuletItem amuletItem){
+    health += amuletItem.regenHealth ?? 0;
+    magic += amuletItem.regenMagic ?? 0;
+    writeAmuletItemConsumed(amuletItem);
+  }
+
+  void writeAmuletItemConsumed(AmuletItem amuletItem){
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Amulet_Item_Consumed);
+    writeAmuletItem(amuletItem);
+  }
 }
 

@@ -638,6 +638,14 @@ class AmuletController {
       case NetworkRequestAmulet.Spawn_Random_Enemy:
         amuletGame.spawnRandomEnemy();
         break;
+      case NetworkRequestAmulet.Consume_Slot:
+        final index = parseArg2(arguments);
+        if (index == null) {
+          amuletPlayer.writeGameError(GameError.Invalid_Client_Request);
+          return;
+        }
+        amuletPlayer.consumeSlot(index);
+        break;
       case NetworkRequestAmulet.Toggle_Debug_Enabled:
         amuletPlayer.toggleDebugEnabled();
         break;

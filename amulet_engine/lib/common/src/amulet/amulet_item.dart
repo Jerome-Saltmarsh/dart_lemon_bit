@@ -404,14 +404,14 @@ enum AmuletItem {
     slotType: SlotType.Consumable,
     subType: ConsumableType.Potion_Blue,
     level: 0,
-    maxMagic: 20,
+    regenMagic: 20,
   ),
   Consumable_Potion_Health(
     label: 'a common tonic',
     slotType: SlotType.Consumable,
     subType: ConsumableType.Potion_Red,
     level: 0,
-    health: 20,
+    regenHealth: 20,
   );
 
   int get levelMax => level + 1;

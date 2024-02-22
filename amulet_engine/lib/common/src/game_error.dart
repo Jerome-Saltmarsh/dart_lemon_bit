@@ -88,7 +88,7 @@ enum GameError {
   Insufficient_Magic,
   Invalid_Portal_Scene,
   No_Connecting_Portal,
-  Potion_Slots_Full, Invalid_Consumable_Index;
+  Potion_Slots_Full, Invalid_Consumable_Index, Consumable_Empty;
 
   static GameError fromIndex(int index) {
     if (index < 0) throw Exception('$index < 0');
