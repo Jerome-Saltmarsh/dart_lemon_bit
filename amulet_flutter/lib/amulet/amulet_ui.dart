@@ -210,12 +210,15 @@ class AmuletUI {
             children: [
               Row(
                 children: [
-                  buildText('QUEST'),
-                  fillSpace,
-                  onPressed(
-                    action: amulet.windowVisibleQuests.setFalse,
-                    child: buildText('X', color: Colors.orange),
+                  Row(
+                    children: [
+                      buildIconQuestGrey(),
+                      // width8,
+                      // buildTextHeader('QUEST'),
+                    ],
                   ),
+                  fillSpace,
+                  buildButtonClose(amulet.windowVisibleQuests),
                 ],
               ),
               alignCenter(
@@ -651,14 +654,9 @@ class AmuletUI {
         )),
     );
 
-  Widget buildButtonClose({required Function action}) => onPressed(
-      child: Container(
-          width: 80,
-          height: 80 * goldenRatio_0381,
-          alignment: Alignment.center,
-          color: Colors.black26,
-          child: buildText('x', color: Colors.white70, size: 22)),
-      action: action);
+  Widget buildButtonClose(WatchBool watchBool) => onPressed(
+      child: buildText('X', color: Colors.orange),
+      action: watchBool.setFalse);
 
   Widget buildDialogTitle(String text) =>
       buildText(text, size: 28.0, color: Colors.white70);
@@ -738,10 +736,14 @@ class AmuletUI {
     }
   }
 
+  Widget buildIconItemsGrey(){
+    return AmuletImage(srcX: 693, srcY: 99, width: 22, height: 25);
+  }
+
   Widget buildToggleEquipment() {
 
     final active = AmuletImage(srcX: 725, srcY: 99, width: 22, height: 25);
-    final notActive = AmuletImage(srcX: 693, srcY: 99, width: 22, height: 25);
+    final notActive = buildIconItemsGrey();
 
     return onPressed(
       hint: 'Equipment (Q)',
@@ -753,10 +755,14 @@ class AmuletUI {
     );
   }
 
+  Widget buildIconPlayerStatsGrey(){
+    return AmuletImage(srcX: 691, srcY: 131, width: 26, height: 26);
+  }
+
   Widget buildTogglePlayerStats() {
 
     final active = AmuletImage(srcX: 723, srcY: 131, width: 26, height: 26);
-    final notActive = AmuletImage(srcX: 691, srcY: 131, width: 26, height: 26);
+    final notActive = buildIconPlayerStatsGrey();
 
     return onPressed(
       hint: 'Stats (W)',
@@ -768,10 +774,21 @@ class AmuletUI {
     );
   }
 
+  Widget buildIconSkills() => AmuletImage(srcX: 723, srcY: 39, width: 26, height: 20);
+
+  Widget buildIconSkillsGrey({double scale = 1.0}) =>
+      AmuletImage(
+        srcX: 691,
+        srcY: 39,
+        width: 26,
+        height: 20,
+        scale: scale,
+      );
+
   Widget buildTogglePlayerSkills() {
 
-    final active = AmuletImage(srcX: 723, srcY: 39, width: 26, height: 23);
-    final notActive = AmuletImage(srcX: 691, srcY: 39, width: 26, height: 23);
+    final active = buildIconSkills();
+    final notActive = buildIconSkillsGrey();
 
     return onPressed(
       hint: 'Skills (E)',
@@ -783,10 +800,14 @@ class AmuletUI {
     );
   }
 
+  Widget buildIconQuestGrey(){
+     return AmuletImage(srcX: 691, srcY: 3, width: 26, height: 25);
+  }
+
   Widget buildTogglePlayerQuest() {
 
     final active = AmuletImage(srcX: 723, srcY: 3, width: 26, height: 25);
-    final notActive = AmuletImage(srcX: 691, srcY: 3, width: 26, height: 25);
+    final notActive = buildIconQuestGrey();
 
     return onPressed(
       hint: 'Quests (R)',
@@ -843,9 +864,26 @@ class AmuletUI {
       buildWatchVisible(
           amulet.windowVisibleEquipment,
           GSContainer(
+            width: 100,
               margin: const EdgeInsets.only(right: 8),
               child: Column(
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          buildIconItemsGrey(),
+                          // width4,
+                          // buildTextHeader('ITEMS'),
+                        ],
+                      ),
+                      buildButtonClose(amulet.windowVisibleEquipment)
+                    ],
+                  ),
+                  height16,
                   buildEquippedAmuletItems(),
                 ],
               )),
@@ -864,16 +902,31 @@ class AmuletUI {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              buildWatch(amulet.player.name, (t) => buildText(t, color: Colors.orange, bold: true)),
-              onPressed(
-                action: amulet.windowVisiblePlayerStats.setFalse,
-                child: buildText('x'),
-              )
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  buildIconPlayerStatsGrey(),
+                  // width4,
+                  // buildTextHeader('STATS'),
+                ],
+              ),
+              buildButtonClose(amulet.windowVisiblePlayerStats)
             ],
           ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     buildWatch(amulet.player.name, (t) => buildText(t, color: Colors.orange, bold: true)),
+          //     onPressed(
+          //       action: amulet.windowVisiblePlayerStats.setFalse,
+          //       child: buildText('x'),
+          //     )
+          //   ],
+          // ),
           height16,
-          buildText('BONUSES', color: Colors.white70),
+          buildTextHeader('BONUSES'),
           buildWatch(amulet.playerHealthSteal, (healthSteal) {
             if (healthSteal <= 0){
               return nothing;
@@ -893,7 +946,7 @@ class AmuletUI {
           height16,
           buildContainerPlayerMastery(),
           height16,
-          buildText('STATS', color: Colors.white70),
+          buildTextHeader('STATS'),
           Tooltip(
             message: 'Health',
             child: Row(
@@ -1081,11 +1134,26 @@ class AmuletUI {
   Widget buildWindowPlayerSkillStats() =>
       buildWatch(amulet.playerSkillTypeStatsNotifier, (t) => Container(
         padding: const EdgeInsets.all(8),
+        width: 170,
         color: amulet.style.containerColor,
         child: buildSafeContainer(
           child: Column(
             children: [
-              buildText('SKILLS'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      buildIconSkillsGrey(),
+                      // width4,
+                      // buildTextHeader('SKILLS'),
+                    ],
+                  ),
+                  buildButtonClose(amulet.windowVisiblePlayerSkills)
+                ],
+              ),
               ...amulet.playerSkillTypeStats.map((skillTypeStats) =>
               skillTypeStats.unlocked && skillTypeStats.skillType != SkillType.None
                   ? buildContainerSkillTypeStats(skillTypeStats)
@@ -1759,6 +1827,8 @@ class AmuletUI {
                   color: statsVisible ? Colors.white : Colors.white54))),
     ),
   );
+
+  Widget buildTextHeader(String value) => buildText(value, color: Colors.white70);
 }
 
 String formatFramesToSeconds(int frames){
