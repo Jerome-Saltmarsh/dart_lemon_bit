@@ -1850,10 +1850,41 @@ class AmuletUI {
       alignment: Alignment.center,
     );
 
-    return onPressed(
-      action: () => amulet.setSkillSlotIndex(index),
-      child: buildWatch(amulet.playerSkillSlotIndex, (selectedIndex) =>
-      selectedIndex == index ? containerActive : containerInactive),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        onPressed(
+          action: () => amulet.setSkillSlotIndex(index),
+          child: buildWatch(amulet.playerSkillSlotIndex, (selectedIndex) =>
+          selectedIndex == index ? containerActive : containerInactive),
+        ),
+        height8,
+        onPressed(
+            action: () {
+              amulet.ui.showDialogValues(
+                  title: 'Assign Skill',
+                  values: amulet.playerSkills,
+                  buildItem: (skillType) {
+                    return buildText(skillType.name);
+                  },
+                  onSelected: (skillType){
+                    amulet.setSkillSlotValue(
+                        index: index,
+                        skillType: skillType,
+                    );
+                  },
+              );
+            },
+            child: Container(
+              width: 15,
+              height: 15,
+              decoration: BoxDecoration(
+                color: Palette.brownDark.withOpacity(0.6),
+                shape: BoxShape.circle
+              ),
+
+            )),
+      ],
     );
   }
 

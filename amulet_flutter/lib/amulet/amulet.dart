@@ -125,6 +125,13 @@ class Amulet extends IsometricGame {
       SkillTypeStats(skillType: skillType)
   ).toList(growable: false);
 
+  List<SkillType> get playerSkills =>
+      playerSkillTypeStats
+        .where((element) => element.unlocked)
+        .map((e) => e.skillType)
+        .toList(growable: false)
+      ;
+
   void onChangedPlayerSkillType(SkillType skillType){
     audio.click_sounds_35.play();
   }
