@@ -792,12 +792,26 @@ class Amulet extends IsometricGame {
     }
     sendAmuletRequest(
         NetworkRequestAmulet.Consume_Slot,
-        consumableSlots.indexOf(slot),
+        index,
     );
   }
 
   void onAmuletItemConsumed(AmuletItem amuletItem){
     audio.drink.play();
+  }
+
+  void dropConsumableSlot(Watch<AmuletItem?> itemSlot) {
+    final index = consumableSlots.indexOf(itemSlot);
+    if (index == -1){
+      throw Exception('invalid slot');
+    }
+    if (itemSlot.value == null) {
+      return;
+    }
+    sendAmuletRequest(
+      NetworkRequestAmulet.Drop_Consumable,
+      index,
+    );
   }
 }
 

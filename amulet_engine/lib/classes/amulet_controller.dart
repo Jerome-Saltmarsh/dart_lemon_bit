@@ -646,6 +646,14 @@ class AmuletController {
         }
         amuletPlayer.consumeSlot(index);
         break;
+      case NetworkRequestAmulet.Drop_Consumable:
+        final index = parseArg2(arguments);
+        if (index == null) {
+          amuletPlayer.writeGameError(GameError.Invalid_Client_Request);
+          return;
+        }
+        amuletPlayer.dropConsumable(index);
+        break;
       case NetworkRequestAmulet.Toggle_Debug_Enabled:
         amuletPlayer.toggleDebugEnabled();
         break;

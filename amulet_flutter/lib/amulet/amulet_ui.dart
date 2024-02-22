@@ -173,6 +173,7 @@ class AmuletUI {
           width: 2,
           radius: BorderRadius.zero,
           child: onPressed(
+            onRightClick: t == null ? null : () => amulet.dropConsumableSlot(itemSlot),
             action: t == null ? null : () => amulet.useConsumableSlot(itemSlot),
             child: Container(
               child: t == null ? nothing : AmuletItemImage(amuletItem: t, scale: 1),
