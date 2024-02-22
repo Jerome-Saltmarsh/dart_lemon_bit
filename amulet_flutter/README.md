@@ -31,6 +31,9 @@ REMINDER: IT DOESN'T NEED TO BE PERFECT
 [new] skill type rogue passive arrows pierce enemies
 [new] skill type necromancer raise skeleton
 
+## 22.02.2024
+[new] simplified ui design
+
 ## 21.02.2024
 [fix] persist gameobject amulet
 [new] interactable node types

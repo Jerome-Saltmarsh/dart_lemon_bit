@@ -38,7 +38,7 @@ class Amulet extends IsometricGame {
   final flaskPercentage = Watch(0.0);
   final playerDebugEnabled = WatchBool(false);
   final playerPerformFrameVelocity = Watch(0.0);
-
+  final highlightedSkillType = Watch<SkillType?>(null);
 
   final windowVisibleSkillSlot0 = WatchBool(false);
   final windowVisibleSkillSlot1 = WatchBool(false);
@@ -739,6 +739,31 @@ class Amulet extends IsometricGame {
         ),
       )
     ];
+  }
+
+  SkillTypeStats getSkillTypeStats(SkillType skillType){
+     for (final skillTypeStats in playerSkillTypeStats){
+       if (skillTypeStats.skillType == skillType){
+         return skillTypeStats;
+       }
+     }
+     throw Exception();
+  }
+
+  Watch<SkillType> getSkillSlotAt(int index){
+    switch (index){
+      case 0:
+        return skillSlot0;
+      case 1:
+        return skillSlot1;
+      case 2:
+        return skillSlot2;
+      case 3:
+        return skillSlot3;
+      default:
+        throw Exception('amulet.getSkillSlotAt($index)');
+
+    }
   }
 }
 

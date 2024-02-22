@@ -70,6 +70,10 @@ class AmuletUI {
           buildPositionedWorldMap(),
           // buildPositionedPlayerHealthAndWeapons(),
           Positioned(
+              bottom: 100,
+              child: buildWindowHighlightSkillType(),
+          ),
+          Positioned(
               bottom: 8,
               child: buildPlayerSkillSlots(),
           ),
@@ -1850,38 +1854,42 @@ class AmuletUI {
       alignment: Alignment.center,
     );
 
-    final changeButton = onPressed(
-        action: () {
-          amulet.ui.showDialogValues(
-            title: 'Assign Skill',
-            values: amulet.playerSkills,
-            buildItem: (skillType) {
-              return buildText(skillType.name);
-            },
-            onSelected: (skillType){
-              amulet.setSkillSlotValue(
-                index: index,
-                skillType: skillType,
-              );
-            },
-          );
-        },
-        child: Container(
-          width: 15,
-          height: 15,
-          decoration: BoxDecoration(
-              color: Palette.brownDark.withOpacity(0.6),
-              shape: BoxShape.circle
-          ),
-
-        ));
+    // final changeButton = onPressed(
+    //     action: () {
+    //       amulet.ui.showDialogValues(
+    //         title: 'Assign Skill',
+    //         values: amulet.playerSkills,
+    //         buildItem: (skillType) {
+    //           return buildText(skillType.name);
+    //         },
+    //         onSelected: (skillType){
+    //           amulet.setSkillSlotValue(
+    //             index: index,
+    //             skillType: skillType,
+    //           );
+    //         },
+    //       );
+    //     },
+    //     child: Container(
+    //       width: 15,
+    //       height: 15,
+    //       decoration: BoxDecoration(
+    //           color: Palette.brownDark.withOpacity(0.6),
+    //           shape: BoxShape.circle
+    //       ),
+    //
+    //     ));
 
     final key = Positioned(
         bottom: 4,
         right: 4,
         child: buildText(const['A', 'S', 'D', 'F',].tryGet(index), size: 20));
 
+    final skillStats = buildWatch(watch, (t) => buildContainerSkillTypeStats(amulet.getSkillTypeStats(t)));
+
     return MouseOver(
+      onEnter: () => amulet.highlightedSkillType.value = amulet.getSkillSlotAt(index).value,
+      onExit: () => amulet.highlightedSkillType.value = null,
       builder: (mouseOver) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -1892,6 +1900,7 @@ class AmuletUI {
             //     child: changeButton,
             // ),
             Stack(
+              fit: StackFit.passthrough,
               alignment: Alignment.center,
               children: [
                 onPressed(
@@ -1924,6 +1933,16 @@ class AmuletUI {
   );
 
   Widget buildTextHeader(String value) => buildText(value, color: Colors.white70);
+
+  Widget buildWindowHighlightSkillType() {
+    return buildWatch(amulet.highlightedSkillType, (skillType) {
+       if (skillType == null){
+         return nothing;
+       }
+       final buildStat = amulet.getSkillTypeStats(skillType);
+       return buildContainerSkillTypeStats(buildStat);
+    });
+  }
 }
 
 String formatFramesToSeconds(int frames){
