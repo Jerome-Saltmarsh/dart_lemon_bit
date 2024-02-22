@@ -221,7 +221,7 @@ class AmuletUI {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    buildIconQuestGrey(),
+                    buildIconQuest(),
                     buildButtonClose(amulet.windowVisibleQuests),
                   ],
                 ),
@@ -805,14 +805,31 @@ class AmuletUI {
     );
   }
 
-  Widget buildIconQuestGrey(){
-     return AmuletImage(srcX: 691, srcY: 3, width: 26, height: 25);
-  }
+  Widget buildIconQuestGrey() =>
+      AmuletImage(srcX: 691, srcY: 3, width: 26, height: 25);
+
+  Widget buildIconQuest() =>
+      AmuletImage(srcX: 723, srcY: 3, width: 26, height: 25);
 
   Widget buildTogglePlayerQuest() {
 
-    final active = AmuletImage(srcX: 723, srcY: 3, width: 26, height: 25);
-    final notActive = buildIconQuestGrey();
+    const size = 50.0;
+
+    final active = Container(
+        alignment: Alignment.center,
+        width: size,
+        height: size,
+        child: buildIconQuest(),
+        color: Palette.brownDark,
+    );
+
+    final notActive = Container(
+      alignment: Alignment.center,
+      width: size,
+      height: size,
+      child: buildIconQuestGrey(),
+      color: Palette.brownDark.withOpacity(0.3),
+    );
 
     return onPressed(
       hint: 'Quests (R)',
