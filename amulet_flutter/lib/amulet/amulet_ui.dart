@@ -1850,42 +1850,63 @@ class AmuletUI {
       alignment: Alignment.center,
     );
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        onPressed(
-          hint: const['A', 'S', 'D', 'F'].tryGet(index),
-          action: () => amulet.setSkillSlotIndex(index),
-          child: buildWatch(amulet.playerSkillSlotIndex, (selectedIndex) =>
-          selectedIndex == index ? containerActive : containerInactive),
-        ),
-        height8,
-        onPressed(
-            action: () {
-              amulet.ui.showDialogValues(
-                  title: 'Assign Skill',
-                  values: amulet.playerSkills,
-                  buildItem: (skillType) {
-                    return buildText(skillType.name);
-                  },
-                  onSelected: (skillType){
-                    amulet.setSkillSlotValue(
-                        index: index,
-                        skillType: skillType,
-                    );
-                  },
+    final changeButton = onPressed(
+        action: () {
+          amulet.ui.showDialogValues(
+            title: 'Assign Skill',
+            values: amulet.playerSkills,
+            buildItem: (skillType) {
+              return buildText(skillType.name);
+            },
+            onSelected: (skillType){
+              amulet.setSkillSlotValue(
+                index: index,
+                skillType: skillType,
               );
             },
-            child: Container(
-              width: 15,
-              height: 15,
-              decoration: BoxDecoration(
-                color: Palette.brownDark.withOpacity(0.6),
-                shape: BoxShape.circle
-              ),
+          );
+        },
+        child: Container(
+          width: 15,
+          height: 15,
+          decoration: BoxDecoration(
+              color: Palette.brownDark.withOpacity(0.6),
+              shape: BoxShape.circle
+          ),
 
-            )),
-      ],
+        ));
+
+    final key = Positioned(
+        bottom: 4,
+        right: 4,
+        child: buildText(const['A', 'S', 'D', 'F',].tryGet(index), size: 20));
+
+    return MouseOver(
+      builder: (mouseOver) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            if (mouseOver)
+            Container(
+                margin: const EdgeInsets.only(bottom: 6),
+                child: changeButton,
+            ),
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                onPressed(
+                  // hint: const['A', 'S', 'D', 'F'].tryGet(index),
+                  action: () => amulet.setSkillSlotIndex(index),
+                  child: buildWatch(amulet.playerSkillSlotIndex, (selectedIndex) =>
+                  selectedIndex == index ? containerActive : containerInactive),
+                ),
+                if (mouseOver)
+                  key,
+              ],
+            ),
+          ],
+        );
+      }
     );
   }
 
