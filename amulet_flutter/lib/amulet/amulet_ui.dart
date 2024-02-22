@@ -1854,6 +1854,7 @@ class AmuletUI {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         onPressed(
+          hint: const['A', 'S', 'D', 'F'].tryGet(index),
           action: () => amulet.setSkillSlotIndex(index),
           child: buildWatch(amulet.playerSkillSlotIndex, (selectedIndex) =>
           selectedIndex == index ? containerActive : containerInactive),
