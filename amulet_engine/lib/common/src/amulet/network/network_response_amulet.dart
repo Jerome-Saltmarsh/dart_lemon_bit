@@ -48,4 +48,5 @@ class NetworkResponseAmulet {
    static const Player_Debug_Enabled = 62;
    static const Player_Skill_Slots = 63;
    static const Player_Skill_Slot_Index = 64;
+   static const Player_Consumable_Slots = 65;
 }

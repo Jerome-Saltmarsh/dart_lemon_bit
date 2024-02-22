@@ -150,6 +150,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Agility:
          readPlayerAgility();
          break;
+       case NetworkResponseAmulet.Player_Consumable_Slots:
+         readPlayerConsumableSlots();
+         break;
        case NetworkResponseAmulet.Perform_Frame_Velocity:
          readPlayerPerformFrameVelocity();
          break;
@@ -421,4 +424,13 @@ extension AmuletParser on IsometricParser {
 
   void readPlayerSkillSlotIndex() =>
       amulet.playerSkillSlotIndex.value = readByte();
+
+  void readPlayerConsumableSlots() {
+      for (var i = 0; i < 4; i++){
+        final amuletItemIndex = readInt16();
+        amulet.consumableSlots[i].value = AmuletItem.values.tryGet(amuletItemIndex);
+      }
+  }
+
+
 }

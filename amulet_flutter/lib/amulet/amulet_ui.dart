@@ -16,6 +16,7 @@ import 'package:lemon_widgets/lemon_widgets.dart';
 import 'classes/amulet_colors.dart';
 import 'getters/get_src_caste_type.dart';
 import 'ui/containers/build_container_player_front.dart';
+import 'ui/widgets/amulet_image_src.dart';
 import 'ui/widgets/src.dart';
 
 class AmuletUI {
@@ -160,13 +161,21 @@ class AmuletUI {
 
   Widget buildWindowPotions() =>
       Row(
-        children: [
-          buildIconPotion(),
-          buildIconPotion(),
-          buildIconPotion(),
-          buildIconPotion(),
-        ],
+        children: amulet.consumableSlots
+            .map(buildSlotConsumable)
+            .toList(growable: false),
       );
+
+  Widget buildSlotConsumable(Watch<AmuletItem?> itemSlot){
+    const size = 30.0;
+    return Container(
+      child: buildWatch(itemSlot, (t) => t == null ? nothing : AmuletItemImage(amuletItem: t, scale: 1)),
+      width: size,
+      height: size,
+      alignment: Alignment.center,
+      color: Colors.black12,
+    );
+  }
 
   Widget buildWindowFlask() =>
       onPressed(
@@ -1506,7 +1515,7 @@ class AmuletUI {
   Widget buildContainerSkillTypeStats(SkillTypeStats skillTypeStats) {
     final skillType = skillTypeStats.skillType;
     return Container(
-      color: Colors.white12,
+      color: Colors.black12,
       alignment: Alignment.center,
       width: 150,
       padding: const EdgeInsets.all(8),

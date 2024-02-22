@@ -50,6 +50,8 @@ class Amulet extends IsometricGame {
   final skillSlot2 = Watch(SkillType.None);
   final skillSlot3 = Watch(SkillType.None);
 
+  final consumableSlots = List.generate(4, (index) => Watch<AmuletItem?>(null));
+
   final playerSkillSlotIndex = Watch(-1);
 
   var worldMapClrs = Int32List(0);

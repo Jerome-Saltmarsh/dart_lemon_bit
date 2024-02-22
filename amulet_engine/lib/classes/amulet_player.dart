@@ -51,9 +51,11 @@ class AmuletPlayer extends IsometricPlayer with
   var flaskAmount = 0;
   var skillSlotIndex = 0;
   var skillSlotsDirty = false;
+  var consumableSlotsDirty = true;
 
   final sceneShrinesUsed = <AmuletScene, List<int>> {};
   final skillSlots = List.generate(4, (index) => SkillType.None);
+  final consumableSlots = List<AmuletItem?>.generate(4, (index) => null);
 
   Function? onInteractionOver;
   Position? cameraTarget;
@@ -267,6 +269,11 @@ class AmuletPlayer extends IsometricPlayer with
     if (skillSlotsDirty){
       writeSkillSlots();
       skillSlotsDirty = false;
+    }
+
+    if (consumableSlotsDirty) {
+      writeConsumableSlots();
+      consumableSlotsDirty = false;
     }
 
     super.writePlayerGame();
@@ -1606,5 +1613,14 @@ class AmuletPlayer extends IsometricPlayer with
 
   @override
   double get magicPercentage => maxMagic > 0 ? magic / maxMagic : 0;
+
+  void writeConsumableSlots(){
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Player_Consumable_Slots);
+
+    for (var i = 0; i < consumableSlots.length; i++){
+      writeInt16(consumableSlots[i]?.index ?? -1);
+    }
+  }
 }
 
