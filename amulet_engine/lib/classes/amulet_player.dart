@@ -564,7 +564,8 @@ class AmuletPlayer extends IsometricPlayer with
   }) {
 
     if (value.isConsumable){
-      throw Exception();
+      // throw Exception();
+      return;
     }
 
     final currentlyEquipped = getEquippedAmuletItem(slotType: value.slotType);

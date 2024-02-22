@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:amulet_engine/common.dart';
 import 'package:amulet_flutter/amulet/classes/amulet_colors.dart';
+import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/isometric/functions/get_render.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
@@ -377,7 +378,9 @@ class IsometricRender with IsometricComponent {
     const srcX = 171.0;
     const srcWidth = 51.0;
     const srcHeight = 7.44;
+    const interpolation = 0.6;
     final image = images.atlas_gameobjects;
+
 
     engine.setBlendModeModulate();
 
@@ -390,7 +393,7 @@ class IsometricRender with IsometricComponent {
       srcWidth: srcWidth,
       srcHeight: srcHeight,
       anchorX: 0.0,
-      color: color2,
+      color: interpolateColors(color1, Palette.Black.value, interpolation),
     );
 
     engine.renderSprite(
@@ -402,7 +405,20 @@ class IsometricRender with IsometricComponent {
       srcWidth: srcWidth,
       srcHeight: srcHeight,
       anchorX: 0.0,
+      color: interpolateColors(color2, Palette.Black.value, interpolation),
+    );
+
+    engine.renderSprite(
+      image: image,
+      dstX: dstX,
+      dstY: dstY,
+      srcX: srcX,
+      srcY: 64,
+      srcWidth: srcWidth * percentage,
+      srcHeight: srcHeight,
+      anchorX: 0.0,
       color: color1,
+
     );
 
     engine.renderSprite(
@@ -415,18 +431,6 @@ class IsometricRender with IsometricComponent {
       srcHeight: srcHeight,
       anchorX: 0.0,
       color: color2,
-    );
-
-    engine.renderSprite(
-      image: image,
-      dstX: dstX,
-      dstY: dstY,
-      srcX: srcX,
-      srcY: 64,
-      srcWidth: srcWidth * percentage,
-      srcHeight: srcHeight,
-      anchorX: 0.0,
-      color: color1,
     );
 
     engine.setBlendModeDstATop();
