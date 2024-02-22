@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:amulet_engine/extensions/gameobject_extension.dart';
 import 'package:amulet_engine/isometric/consts/frames_per_second.dart';
 import 'package:amulet_engine/isometric/consts/physics.dart';
 import 'package:amulet_engine/isometric/enums/damage_type.dart';
@@ -63,6 +64,19 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       );
     }
     gameObjects.sort();
+  }
+
+  void importGameObjects(List<GameObject> values){
+    gameObjects.clear();
+    gameObjects.addAll(values);
+    markGameObjectsAsDirty();
+    sortGameObjects();
+  }
+
+  void markGameObjectsAsDirty() {
+    for (final gameObject in gameObjects){
+      gameObject.dirty = true;
+    }
   }
 
   int get maxPlayers;

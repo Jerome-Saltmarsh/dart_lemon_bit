@@ -950,12 +950,12 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         type: ItemType.Amulet_Item,
         subType: item.index,
         team: TeamType.Neutral,
-        // persistable: true,
         interactable: true,
         deactivationTimer: deactivationTimer ?? gameObjectDeactivationTimer,
         health: 0,
       )
         ..velocityZ = 5
+        ..physical = false
         ..setVelocity(randomAngle(), 1.0)
       ;
 
@@ -1312,7 +1312,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         team: TeamType.Neutral,
         health: destroyableGameObjectTypes.contains(gameObjectType) ? 1 : 0,
         interactable: false,
-        // persistable: true,
         deactivationTimer: -1,
     );
 

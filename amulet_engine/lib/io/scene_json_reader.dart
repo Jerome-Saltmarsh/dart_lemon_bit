@@ -51,13 +51,19 @@ GameObject readGameObjectFromJson(Json gameObjectJson){
 
    var health = 0;
 
-   if (itemType == ItemType.Object && const [
-     GameObjectType.Wooden_Chest,
-     GameObjectType.Crate_Wooden,
-     GameObjectType.Barrel,
-   ].contains(subType)){
-      health = 1;
+   switch (itemType){
+     case ItemType.Object:
+       if (const [
+         GameObjectType.Wooden_Chest,
+         GameObjectType.Crate_Wooden,
+         GameObjectType.Barrel,
+       ].contains(subType)){
+         health = 1;
+       }
+       break;
    }
+
+   final isAmuletItem = itemType == ItemType.Amulet_Item;
 
    return GameObject(
        x: x,
@@ -69,7 +75,8 @@ GameObject readGameObjectFromJson(Json gameObjectJson){
        id: id,
        health: health,
        deactivationTimer: deactivationTimer,
-       interactable: itemType == ItemType.Amulet_Item,
-   );
+       interactable: isAmuletItem,
+   )
+     ..physical = !isAmuletItem;
 }
 
