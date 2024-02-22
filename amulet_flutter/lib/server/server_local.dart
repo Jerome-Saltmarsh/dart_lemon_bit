@@ -153,6 +153,7 @@ class ServerLocal implements Server {
     parser.amulet.windowVisibleQuests.value = true;
     parser.amulet.windowVisiblePlayerStats.value = true;
     amulet.resetPlayer(playerServer);
+    parser.amulet.onNewCharacterCreated();
     final json = writeAmuletPlayerToJson(playerServer);
     final characters = getCharacters();
     characters.add(json);

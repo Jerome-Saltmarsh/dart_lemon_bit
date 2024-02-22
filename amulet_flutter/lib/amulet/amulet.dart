@@ -767,6 +767,13 @@ class Amulet extends IsometricGame {
 
     }
   }
+
+  void onNewCharacterCreated() {
+    windowVisibleQuests.setTrue();
+    windowVisiblePlayerStats.setTrue();
+    windowVisibleEquipment.setTrue();
+    windowVisiblePlayerSkills.setTrue();
+  }
 }
 
 
