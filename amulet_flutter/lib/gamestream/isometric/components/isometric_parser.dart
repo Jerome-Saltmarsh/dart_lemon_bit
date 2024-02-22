@@ -538,6 +538,8 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
 
       if (character.characterType == CharacterType.Human){
         readCharacterTemplate(character);
+      } else {
+        character.isPlayer = false;
       }
 
       if (CharacterState.supportsAction.contains(character.state)){
@@ -622,6 +624,9 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
     final readA = readBitFromByte(compression, 0);
     final readB = readBitFromByte(compression, 1);
     final readC = readBitFromByte(compression, 2);
+    final isPlayer = readBitFromByte(compression, 3);
+
+    character.isPlayer = isPlayer;
 
     if (readA) {
       character.weaponType = readByte();
@@ -642,6 +647,10 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
       character.handTypeRight = readByte();
       character.hairType = readByte();
       character.hairColor = readByte();
+    }
+
+    if (isPlayer) {
+      character.magicPercentage = readPercentage();
     }
   }
 

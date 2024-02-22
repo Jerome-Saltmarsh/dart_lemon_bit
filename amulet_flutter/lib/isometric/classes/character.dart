@@ -31,6 +31,8 @@ class Character extends Position {
   var actionComplete = 0.0;
   var gender = 0;
   var ailments = 0;
+  var magicPercentage = 0.0;
+  var isPlayer = false;
 
   bool get isAilmentCold => readBitFromByte(ailments, 0);
 

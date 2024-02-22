@@ -294,6 +294,13 @@ class IsometricRender with IsometricComponent {
         color: character.colorDiffuse,
       );
 
+  void renderMagicBarCharacter(Character character) =>
+      renderMagicBarPosition(
+        position: character,
+        percentage: character.magicPercentage,
+        color: character.colorDiffuse,
+      );
+
   void renderHealthBarPosition({
     required Position position,
     required double percentage,
@@ -302,6 +309,18 @@ class IsometricRender with IsometricComponent {
       renderHealthBar(
         dstX: position.renderX - 26,
         dstY: position.renderY - 55,
+        percentage: percentage,
+        color: color,
+      );
+
+  void renderMagicBarPosition({
+    required Position position,
+    required double percentage,
+    int color = 1,
+  }) =>
+      renderMagicBar(
+        dstX: position.renderX - 26,
+        dstY: position.renderY - 55 + 8,
         percentage: percentage,
         color: color,
       );
@@ -333,6 +352,40 @@ class IsometricRender with IsometricComponent {
       dstY: dstY,
       srcX: 171,
       srcY: 16,
+      srcWidth: srcWidth * percentage,
+      srcHeight: srcHeight,
+      anchorX: 0.0,
+      color: color,
+    );
+  }
+
+  void renderMagicBar({
+    required double dstX,
+    required double dstY,
+    required double percentage,
+    int color = 1,
+  }) {
+    const srcWidth = 51.0;
+    const srcHeight = 7.44;
+    final image = images.atlas_gameobjects;
+
+    engine.renderSprite(
+      image: image,
+      dstX: dstX,
+      dstY: dstY,
+      srcX: 171,
+      srcY: 56,
+      srcWidth: srcWidth,
+      srcHeight: srcHeight,
+      anchorX: 0.0,
+      color: color,
+    );
+    engine.renderSprite(
+      image: image,
+      dstX: dstX,
+      dstY: dstY,
+      srcX: 171,
+      srcY: 48,
       srcWidth: srcWidth * percentage,
       srcHeight: srcHeight,
       anchorX: 0.0,

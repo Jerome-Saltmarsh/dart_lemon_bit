@@ -93,6 +93,8 @@ class Character extends Collider {
   Position? target;
   int? targetNodeIndex;
 
+  double get magicPercentage => 0;
+
   Character({
     required super.x,
     required super.y,

@@ -791,8 +791,10 @@ class IsometricPlayer extends Character with ByteWriter {
     final writeB = cacheTemplateB[cacheIndex] != compressedB;
     final writeC = cacheTemplateC[cacheIndex] != compressedC;
 
+    final isPlayer = this == character;
+
     writeByte(
-      writeBits(writeA, writeB, writeC, false, false, false, false, false)
+      writeBits(writeA, writeB, writeC, isPlayer, false, false, false, false)
     );
 
     if (writeA){
@@ -817,6 +819,10 @@ class IsometricPlayer extends Character with ByteWriter {
       writeByte(0);  // writeByte(character.handTypeRight);
       writeByte(character.hairType);
       writeByte(character.hairColor);
+    }
+
+    if (isPlayer) {
+      writePercentage(character.magicPercentage);
     }
   }
 

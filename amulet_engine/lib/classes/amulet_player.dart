@@ -1602,5 +1602,8 @@ class AmuletPlayer extends IsometricPlayer with
     skillSlotIndex = value;
     writeSkillSlotIndex();
   }
+
+  @override
+  double get magicPercentage => maxMagic > 0 ? magic / maxMagic : 0;
 }
 

@@ -1894,11 +1894,6 @@ class AmuletUI {
         return Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            // if (mouseOver)
-            // Container(
-            //     margin: const EdgeInsets.only(bottom: 6),
-            //     child: changeButton,
-            // ),
             Stack(
               fit: StackFit.passthrough,
               alignment: Alignment.center,
@@ -1940,6 +1935,11 @@ class AmuletUI {
          return nothing;
        }
        final buildStat = amulet.getSkillTypeStats(skillType);
+
+       if (buildStat.skillType == SkillType.None) {
+         return nothing;
+       }
+
        return buildContainerSkillTypeStats(buildStat);
     });
   }

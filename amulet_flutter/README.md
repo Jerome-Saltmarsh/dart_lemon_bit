@@ -15,13 +15,20 @@ ctrl + shift + e        : view recent changes
 alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
+[COMPANY NAMES]
+SKULLBOSS 
+SKULLWARE 
+SKULLSOFT 
+
 REMINDER: IT DOESN'T NEED TO BE PERFECT
 
 [RELEASE]
-[ref] mark type fiend count
-[fix] balance amulet fiends
-[fix] balance amulet items
+[new] render mana bar
+[new] mark type fiend count
+[new] balance amulet fiends
+[new] balance amulet items
 [fix] boss fight
+[fix] ai path finding
 [fix] ui amulet item container collision
 [new] skill type mage fireball level 3
 [new] skill type mage fireball level 2
