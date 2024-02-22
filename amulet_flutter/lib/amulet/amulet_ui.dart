@@ -792,16 +792,23 @@ class AmuletUI {
 
   Widget buildTogglePlayerSkills() {
 
-    final active = buildIconSkills();
-    final notActive = buildIconSkillsGrey();
+    final active = buildToggleContainer(
+      child: buildIconSkills(),
+      active: true,
+    );
+
+    final notActive = buildToggleContainer(
+      child: buildIconSkillsGrey(),
+      active: false,
+    );
 
     return onPressed(
-      hint: 'Skills (E)',
+      hint: 'Skills (W)',
       action: amulet.windowVisiblePlayerSkills.toggle,
       child: buildWatch(
           amulet.windowVisiblePlayerSkills,
-          (windowVisibleEquipment) =>
-              windowVisibleEquipment ? active : notActive),
+              (windowVisibleEquipment) =>
+          windowVisibleEquipment ? active : notActive),
     );
   }
 
@@ -811,26 +818,29 @@ class AmuletUI {
   Widget buildIconQuest() =>
       AmuletImage(srcX: 723, srcY: 3, width: 26, height: 25);
 
-  Widget buildTogglePlayerQuest() {
 
+  Widget buildToggleContainer({required Widget child, required bool active}){
     const size = 50.0;
-
-    final active = Container(
-        alignment: Alignment.center,
-        width: size,
-        height: size,
-        child: buildIconQuest(),
-        color: Palette.brownDark,
-    );
-
-    final notActive = Container(
+    return Container(
       alignment: Alignment.center,
       width: size,
       height: size,
-      child: buildIconQuestGrey(),
-      color: Palette.brownDark.withOpacity(0.3),
+      child: child,
+      color: active ? Palette.brownDark : Palette.brownDark.withOpacity(0.3),
+    );
+  }
+
+  Widget buildTogglePlayerQuest() {
+
+    final active = buildToggleContainer(
+        child: buildIconQuest(),
+        active: true,
     );
 
+    final notActive = buildToggleContainer(
+      child: buildIconQuestGrey(),
+      active: false,
+    );
     return onPressed(
       hint: 'Quests (R)',
       action: amulet.windowVisibleQuests.toggle,
