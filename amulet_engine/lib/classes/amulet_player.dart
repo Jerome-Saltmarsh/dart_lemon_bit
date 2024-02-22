@@ -565,13 +565,19 @@ class AmuletPlayer extends IsometricPlayer with
     writeDouble(castePositionZ);
   }
 
+
   void equipAmuletItem({
     required AmuletItem value,
     bool force = false,
   }) {
 
-    if (value.isConsumable){
-      // throw Exception();
+    if (value.isConsumable) {
+      final availableIndex = getEmptyConsumableSlotIndex();
+      if (availableIndex == null){
+        writeGameError(GameError.Potion_Slots_Full);
+        return;
+      }
+      setConsumableSlot(index: availableIndex, amuletItem: value);
       return;
     }
 
@@ -610,6 +616,24 @@ class AmuletPlayer extends IsometricPlayer with
     }
 
     notifyEquipmentDirty();
+  }
+
+  void setConsumableSlot({required int index, AmuletItem? amuletItem}) {
+    if (!consumableSlots.isValidIndex(index)) {
+      writeGameError(GameError.Invalid_Consumable_Index);
+      return;
+    }
+    consumableSlots[index] = amuletItem;
+    consumableSlotsDirty = true;
+  }
+
+  int? getEmptyConsumableSlotIndex(){
+    for (var i = 0; i < consumableSlots.length; i++){
+       if (consumableSlots[i] == null) {
+         return i;
+       }
+    }
+    return null;
   }
 
   void tryToAssignSkillTypeToEmptySlot(SkillType skillType) {

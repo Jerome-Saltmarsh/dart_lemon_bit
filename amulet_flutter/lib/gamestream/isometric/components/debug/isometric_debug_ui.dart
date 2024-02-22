@@ -7,7 +7,6 @@ import 'package:amulet_flutter/gamestream/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:golden_ratio/constants.dart';
-import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
@@ -587,6 +586,7 @@ extension isometricDebugUI on IsometricDebug {
           buildButtonAcquireArmor(),
           buildButtonAcquireShoes(),
           buildButtonSkipTutorial(),
+          buildButtonAcquireConsumable(),
           buildButtonReset(),
         ],
       );
@@ -893,6 +893,13 @@ extension isometricDebugUI on IsometricDebug {
       buildButtonAcquireItems('ACQUIRE HELM',
           AmuletItem.values
               .where((element) => element.isHelm)
+              .toList(growable: false)
+      );
+
+  Widget buildButtonAcquireConsumable() =>
+      buildButtonAcquireItems('ACQUIRE CONSUMABLE',
+          AmuletItem.values
+              .where((element) => element.isConsumable)
               .toList(growable: false)
       );
 
