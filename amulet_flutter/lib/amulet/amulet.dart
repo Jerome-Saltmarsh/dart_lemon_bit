@@ -324,11 +324,21 @@ class Amulet extends IsometricGame {
       return;
 
     if (key == PhysicalKeyboardKey.keyQ) {
-      amulet.windowVisiblePlayerStats.toggle();
+      amulet.windowVisibleEquipment.toggle();
       return;
     }
 
     if (key == PhysicalKeyboardKey.keyW) {
+      amulet.windowVisiblePlayerStats.toggle();
+      return;
+    }
+
+    if (key == PhysicalKeyboardKey.keyE) {
+      amulet.windowVisiblePlayerSkills.toggle();
+      return;
+    }
+
+    if (key == PhysicalKeyboardKey.keyR) {
       amulet.windowVisibleQuests.toggle();
       return;
     }
