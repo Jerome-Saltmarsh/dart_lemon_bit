@@ -16,6 +16,8 @@ extension ListExtensions<T> on List<T> {
     return this;
   }
 
+  void fill(T? value) => fillRange(0, length, value);
+
   bool isValidIndex(int? index) =>
       index != null &&
       index >= 0 &&

@@ -33,6 +33,19 @@ void writeJsonToAmuletPlayer(
   player.z = json.getDouble('z');
   player.skillTypeLeft = json.skillTypeLeft;
   player.skillTypeRight = json.skillTypeRight;
+
+  player.skillSlots.fill(SkillType.None);
+  final skillSlotInts = json.getListInt('skill_slots');
+
+  if (skillSlotInts.length == player.skillSlots.length){
+    for (var i = 0; i < skillSlotInts.length; i++){
+       final skillSlotIndex = skillSlotInts[i];
+       if (SkillType.values.isValidIndex(skillSlotIndex)){
+          player.skillSlots[i] = SkillType.values[skillSlotIndex];
+       }
+    }
+  }
+
   player.setQuestMain(QuestMain.values[json.tryGetInt('quest_main') ?? 0]);
   writeJsonAmuletToMemory(jsonAmulet, player);
   player.writePlayerHealth();
