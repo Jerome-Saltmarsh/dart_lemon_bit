@@ -254,6 +254,7 @@ class IsometricColors {
   }
 }
 
+
 class Palette {
   static const Black = Color.fromRGBO(38, 34, 47, 1.0);
 

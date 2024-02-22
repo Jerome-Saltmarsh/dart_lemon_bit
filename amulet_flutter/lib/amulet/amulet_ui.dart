@@ -13,6 +13,7 @@ import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
+import 'classes/amulet_colors.dart';
 import 'getters/get_src_caste_type.dart';
 import 'ui/containers/build_container_player_front.dart';
 import 'ui/widgets/src.dart';
@@ -23,8 +24,8 @@ class AmuletUI {
   static const margin2 = 130.0;
   static const margin3 = 315.0;
   static const margin4 = 560.0;
-  static const barWidth = 228.0;
-  static const barHeight = 16.0;
+  static const barWidth = 120.0;
+  static const barHeight = 10.0;
 
   final Amulet amulet;
 
@@ -85,7 +86,7 @@ class AmuletUI {
           Positioned(
               top: 8,
               left: 8,
-              child: buildWindowFlask()
+              child: buildHudTopLeft(),
           ),
           Positioned(
               bottom: 8,
@@ -615,7 +616,7 @@ class AmuletUI {
           child: Container(
             width: barWidth * healthPercentage,
             height: barHeight,
-            color: Color.lerp(Colors.red, Colors.green, healthPercentage),
+            color: AmuletColors.Health,
           ),
         );
       }),
@@ -635,7 +636,7 @@ class AmuletUI {
             duration: const Duration(milliseconds: 100),
             width: barWidth * percentage,
             height: barHeight,
-            color: Colors.blue,
+            color: AmuletColors.Magic,
           ),
         )),
     );
@@ -1943,6 +1944,14 @@ class AmuletUI {
        return buildContainerSkillTypeStats(buildStat);
     });
   }
+
+  Widget buildHudTopLeft() => Column(
+        children: [
+          buildWindowFlask(),
+          buildPlayerHealthBar(),
+          buildPlayerMagicBar(),
+        ],
+      );
 }
 
 String formatFramesToSeconds(int frames){
