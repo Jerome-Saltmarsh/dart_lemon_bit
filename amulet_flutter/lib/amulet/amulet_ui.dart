@@ -4,6 +4,7 @@ import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/amulet/classes/skill_type_stats.dart';
 import 'package:amulet_flutter/amulet/ui/enums/quantify_tab.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_skill_type.dart';
+import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';
 import 'package:amulet_flutter/website/widgets/gs_fullscreen.dart';
 import 'package:flutter/material.dart';
@@ -197,37 +198,41 @@ class AmuletUI {
         );
   }
 
+  Widget buildWindowBorder({required Widget child}) {
+    return buildBorder(
+        width: 4,
+        color: Palette.brownDarkX,
+        child: child,
+    );
+  }
+
   Widget buildWindowQuest() => buildWatch(amulet.windowVisibleQuests, (visible) {
       if (!visible){
         return nothing;
       }
       return Positioned(
         top: 8,
-        child: GSContainer(
-          width: 300,
-          height: 200,
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Row(
-                    children: [
-                      buildIconQuestGrey(),
-                      // width8,
-                      // buildTextHeader('QUEST'),
-                    ],
-                  ),
-                  fillSpace,
-                  buildButtonClose(amulet.windowVisibleQuests),
-                ],
-              ),
-              alignCenter(
-                child: buildWatch(
-                  amulet.questMain,
-                  (questMain) => buildText(questMain.instructions)
+        child: buildWindowBorder(
+          child: GSContainer(
+            width: 300,
+            height: 200,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    buildIconQuestGrey(),
+                    buildButtonClose(amulet.windowVisibleQuests),
+                  ],
                 ),
-              ),
-            ],
+                alignCenter(
+                  child: buildWatch(
+                    amulet.questMain,
+                    (questMain) => buildText(questMain.instructions, color: Colors.white70)
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       );
@@ -863,30 +868,32 @@ class AmuletUI {
   Widget buildWindowPlayerEquipped() =>
       buildWatchVisible(
           amulet.windowVisibleEquipment,
-          GSContainer(
-            width: 100,
-              margin: const EdgeInsets.only(right: 8),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          buildIconItemsGrey(),
-                          // width4,
-                          // buildTextHeader('ITEMS'),
-                        ],
-                      ),
-                      buildButtonClose(amulet.windowVisibleEquipment)
-                    ],
-                  ),
-                  height16,
-                  buildEquippedAmuletItems(),
-                ],
-              )),
+          Container(
+            margin: const EdgeInsets.only(right: 8),
+            child: GSContainer(
+                width: 100,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            buildIconItemsGrey(),
+                            // width4,
+                            // buildTextHeader('ITEMS'),
+                          ],
+                        ),
+                        buildButtonClose(amulet.windowVisibleEquipment)
+                      ],
+                    ),
+                    height16,
+                    buildEquippedAmuletItems(),
+                  ],
+                )),
+          ),
       );
 
   Widget buildWindowPlayerSkills(){
