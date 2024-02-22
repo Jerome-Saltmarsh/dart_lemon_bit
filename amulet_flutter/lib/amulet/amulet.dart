@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 import 'dart:ui';
 
 import 'package:amulet_engine/common/src.dart';
+import 'package:amulet_engine/src.dart';
 import 'package:amulet_flutter/amulet/amulet_keys.dart';
 import 'package:amulet_flutter/amulet/amulet_ui.dart';
 import 'package:amulet_flutter/amulet/classes/item_slot.dart';
@@ -374,6 +375,22 @@ class Amulet extends IsometricGame {
     if (key == amuletKeys.selectSkill3) {
       setSkillSlotIndex(3);
       return;
+    }
+
+    if (key == amuletKeys.consume0){
+      consumeSlotAtIndex(0);
+    }
+
+    if (key == amuletKeys.consume1){
+      consumeSlotAtIndex(1);
+    }
+
+    if (key == amuletKeys.consume2){
+      consumeSlotAtIndex(2);
+    }
+
+    if (key == amuletKeys.consume3){
+      consumeSlotAtIndex(3);
     }
 
     if (options.developMode){
@@ -758,10 +775,20 @@ class Amulet extends IsometricGame {
     windowVisiblePlayerSkills.setTrue();
   }
 
+  void consumeSlotAtIndex(int index){
+    final consumableSlot = consumableSlots.tryGet(index);
+    if (consumableSlot != null) {
+      useConsumableSlot(consumableSlot);
+    }
+  }
+
   void useConsumableSlot(Watch<AmuletItem?> slot) {
     final index = consumableSlots.indexOf(slot);
     if (index == -1){
        throw Exception('invalid slot');
+    }
+    if (slot.value == null) {
+      return;
     }
     sendAmuletRequest(
         NetworkRequestAmulet.Consume_Slot,

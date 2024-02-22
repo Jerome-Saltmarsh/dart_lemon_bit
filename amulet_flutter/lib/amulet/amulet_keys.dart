@@ -13,5 +13,10 @@ class AmuletKeys {
   var selectSkill2 = PhysicalKeyboardKey.keyD;
   var selectSkill3 = PhysicalKeyboardKey.keyF;
 
+  var consume0 = PhysicalKeyboardKey.digit1;
+  var consume1 = PhysicalKeyboardKey.digit2;
+  var consume2 = PhysicalKeyboardKey.digit3;
+  var consume3 = PhysicalKeyboardKey.digit4;
+
   var refillHealthAndMagic = PhysicalKeyboardKey.digit9;
 }
