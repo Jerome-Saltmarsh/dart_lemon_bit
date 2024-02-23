@@ -24,7 +24,7 @@ class AmuletUI {
   static const margin2 = 130.0;
   static const margin3 = 315.0;
   static const margin4 = 560.0;
-  static const barWidth = 120.0;
+  static const barWidth = 136.0;
   static const barHeight = 10.0;
 
   final Amulet amulet;
@@ -1957,6 +1957,7 @@ class AmuletUI {
   }
 
   Widget buildHudTopLeft() => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           buildPlayerHealthBar(),
           buildPlayerMagicBar(),
