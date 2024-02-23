@@ -4,7 +4,7 @@ import 'collider.dart';
 
 class GameObject extends Collider {
   /// Prevents gameobject from being recycled in the object pool until the next frame
-  var id = 0;
+  var id = -1;
   var itemType = 0;
   var subType = -1;
   var quantity = 0;
@@ -54,16 +54,22 @@ class GameObject extends Collider {
     required super.team,
     required this.itemType,
     required this.subType,
-    required this.id,
     required this.interactable,
     super.radius = 15.0,
     this.health = 0,
+    this.healthMax = 0,
     this.deactivationTimer = -1,
+    int? id,
   }) : super(materialType: getMaterialType(itemType, subType)) {
     startPositionX = x;
     startPositionY = y;
     startPositionZ = z;
     healthMax = health;
+
+    if (id != null){
+      this.id = id;
+    }
+
     synchronizePrevious();
   }
 
@@ -99,6 +105,12 @@ class GameObject extends Collider {
           interactable: interactable,
       )
         ..physical = physical
+        ..hitable = hitable
+        ..fixed = fixed
+        ..gravity = gravity
+        ..collidable = collidable
+        ..radius = radius
+        ..team = team
         ..collectable = collectable
         ..destroyable = destroyable
         ..dirty = dirty

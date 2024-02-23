@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:amulet_engine/extensions/gameobject_extension.dart';
 import 'package:amulet_engine/isometric/consts/frames_per_second.dart';
 import 'package:amulet_engine/isometric/consts/physics.dart';
 import 'package:amulet_engine/isometric/enums/damage_type.dart';
@@ -47,9 +46,9 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     customInit();
     // loadGameObjectsFromScene();
 
-    for (final gameObject in gameObjects) {
-      onGameObjectSpawned(gameObject);
-    }
+    // for (final gameObject in gameObjects) {
+    //   onGameObjectSpawned(gameObject);
+    // }
   }
 
   void loadGameObjectsFromScene() =>
@@ -149,21 +148,35 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   void add(Collider value){
     if (value is Character){
-       characters.add(value);
+      if (characters.contains(value)){
+        return;
+      }
+      characters.add(value);
     }
     if (value is GameObject){
       if (gameObjects.contains(value)){
         return;
       }
       gameObjects.add(value);
-      onGameObjectedAdded(value);
+      if (value.id < 0 || findGameObjectById(value.id) != null){
+        value.id = generateUniqueGameObjectId();
+      }
+      value.dirty = true;
+      onAddedGameObject(value);
     }
     if (value is Projectile){
+      if (projectiles.contains(value)){
+        return;
+      }
       projectiles.add(value);
+      onAddedProjectile(value);
     }
     if (value is T) {
+      if (players.contains(value)){
+        return;
+      }
       players.add(value);
-      onPlayerJoined(value);
+      onAddedPlayer(value);
     }
   }
 
@@ -227,9 +240,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   /// @override
   void customInit() {}
-
-  /// @override
-  void onGameObjectSpawned(GameObject gameObject) {}
 
   /// @override
   void customOnGameObjectDestroyed(GameObject gameObject) {}
@@ -1744,60 +1754,35 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     position.z = scene.getIndexZ(index);
   }
 
-  GameObject spawnGameObjectAtIndex({
-    required int index,
-    required int type,
-    required int subType,
-    required int team,
-    required int health,
-    required int deactivationTimer,
-    required bool persistable,
-    required bool interactable,
-  }) {
-    final scene = this.scene;
-    return spawnGameObject(
-        x: scene.getIndexX(index),
-        y: scene.getIndexY(index),
-        z: scene.getIndexZ(index),
-        type: type,
-        subType: subType,
-        team: team,
-        health: health,
-        // persistable: persistable,
-        interactable: interactable,
-        deactivationTimer: deactivationTimer,
-      );
-  }
-
-  GameObject spawnGameObject({
-    required double x,
-    required double y,
-    required double z,
-    required int type,
-    required int subType,
-    required int team,
-    required int health,
-    required bool interactable,
-    required int deactivationTimer,
-  }) {
-    final instance = GameObject(
-      x: x,
-      y: y,
-      z: z,
-      itemType: type,
-      subType: subType,
-      id: generateUniqueGameObjectId(),
-      team: team,
-      health: health,
-      interactable: interactable,
-      deactivationTimer: deactivationTimer,
-    );
-
-    instance.dirty = true;
-    gameObjects.add(instance);
-    onGameObjectSpawned(instance);
-    return instance;
-  }
+  // GameObject spawnGameObject({
+  //   required double x,
+  //   required double y,
+  //   required double z,
+  //   required int type,
+  //   required int subType,
+  //   required int team,
+  //   required int health,
+  //   required bool interactable,
+  //   required int deactivationTimer,
+  // }) {
+  //   final instance = GameObject(
+  //     x: x,
+  //     y: y,
+  //     z: z,
+  //     itemType: type,
+  //     subType: subType,
+  //     id: generateUniqueGameObjectId(),
+  //     team: team,
+  //     health: health,
+  //     interactable: interactable,
+  //     deactivationTimer: deactivationTimer,
+  //   );
+  //
+  //   instance.dirty = true;
+  //   gameObjects.add(instance);
+  //   onGameObjectSpawned(instance);
+  //   return instance;
+  // }
 
   void dispatchByte(int byte){
     if (byte < 0 || byte > 255){
@@ -2773,9 +2758,9 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
   }
 
-  void onGameObjectedAdded(GameObject value) {}
+  void onAddedGameObject(GameObject value) {}
 
-  void onPlayerJoined(T player) {
+  void onAddedPlayer(T player) {
     player.game = this;
     // player.active = true;
     player.sceneDownloaded = false;
@@ -2840,6 +2825,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   void handleCharacterInteractWithTargetNode(Character character) {
 
   }
+
+  void onAddedProjectile(Projectile value) {}
 }
 
 

@@ -929,7 +929,7 @@ class AmuletPlayer extends IsometricPlayer with
   void downloadScene() {
     super.downloadScene();
     writeSceneName();
-    writeOptionsSetTimeVisible(game is! AmuletGameTutorial);
+    writeOptionsSetTimeVisible(false);
     writeOptionsSetHighlightIconInventory(false);
     writeSkillsLeftRight();
     writeSkillTypes();

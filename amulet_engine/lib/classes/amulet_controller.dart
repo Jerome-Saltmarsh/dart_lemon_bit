@@ -1073,22 +1073,10 @@ class AmuletController {
 
       case IsometricEditorGameObjectRequest.Duplicate:
         if (selectedGameObject == null) return;
-        final duplicated = player.game.spawnGameObject(
-          x: selectedGameObject.x,
-          y: selectedGameObject.y,
-          z: selectedGameObject.z,
-          type: selectedGameObject.itemType,
-          subType: selectedGameObject.subType,
-          team: selectedGameObject.team,
-          // persistable: selectedGameObject.persistable,
-          interactable: selectedGameObject.interactable,
-          health: selectedGameObject.health,
-          deactivationTimer: selectedGameObject.deactivationTimer,
-        )
-          ..healthMax = selectedGameObject.healthMax
-          ..health = selectedGameObject.health
-        ;
-        player.editorSelectedGameObject = duplicated;
+
+        final newInstance = selectedGameObject.copy();
+        player.game.add(newInstance);
+        player.editorSelectedGameObject = newInstance;
         break;
 
       case IsometricEditorGameObjectRequest.Toggle_Physical:

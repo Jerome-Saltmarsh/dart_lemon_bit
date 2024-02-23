@@ -938,22 +938,22 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required double y,
     required double z,
     int? deactivationTimer
-  }) =>
-      spawnGameObject(
-        x: x,
-        y: y,
-        z: z,
-        type: ItemType.Amulet_Item,
-        subType: item.index,
-        team: TeamType.Neutral,
-        interactable: true,
-        deactivationTimer: deactivationTimer ?? gameObjectDeactivationTimer,
-        health: 0,
-      )
-        ..velocityZ = 5
-        ..physical = false
-        ..setVelocity(randomAngle(), 1.0)
-      ;
+  }) {
+    final instance = GameObject(
+      x: x,
+      y: y,
+      z: z,
+      itemType: ItemType.Amulet_Item,
+      subType: item.index,
+      team: TeamType.Neutral,
+      interactable: true,
+      deactivationTimer: deactivationTimer ?? gameObjectDeactivationTimer,
+      health: 0,
+    );
+    add(instance);
+    return instance;
+  }
+
 
   @override
   void customOnNodeDestroyed(int nodeType, int nodeIndex, int nodeOrientation) {
@@ -1077,41 +1077,43 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   }
 
   @override
-  void onGameObjectSpawned(GameObject gameObject) {
-
+  void onAddedGameObject(GameObject gameObject) {
     if (gameObject.itemType == ItemType.Object){
-       final subType = gameObject.subType;
-       if (const[
-         GameObjectType.Barrel,
-         GameObjectType.Wooden_Chest,
-         GameObjectType.Crate_Wooden,
-       ].contains(subType)){
-         // gameObject.persistable = true;
-         gameObject.physical = true;
-         gameObject.healthMax = 1;
-         gameObject.health = 1;
-         gameObject.interactable = false;
-         gameObject.destroyable = true;
-         gameObject.dirty = true;
-         gameObject.deactivationTimer = -1;
-         gameObject.hitable = true;
-         gameObject.collidable = true;
-       }
+      final subType = gameObject.subType;
+      if (const[
+        GameObjectType.Barrel,
+        GameObjectType.Wooden_Chest,
+        GameObjectType.Crate_Wooden,
+      ].contains(subType)){
+        gameObject.physical = true;
+        gameObject.healthMax = 1;
+        gameObject.health = 1;
+        gameObject.interactable = false;
+        gameObject.destroyable = true;
+        gameObject.dirty = true;
+        gameObject.deactivationTimer = -1;
+        gameObject.hitable = true;
+        gameObject.collidable = true;
+      }
     }
-  }
 
-  @override
-  void onGameObjectedAdded(GameObject gameObject) {
     if (gameObject.isAmuletItem) {
-      dispatchGameEventPosition(GameEvent.Amulet_GameObject_Spawned, gameObject);
-      dispatchByte(gameObject.itemType);
-      dispatchByte(gameObject.subType);
+      gameObject.physical = false;
+      gameObject.healthMax = 0;
+      gameObject.health = 0;
+      gameObject.interactable = true;
+      gameObject.destroyable = false;
+      gameObject.dirty = true;
+      gameObject.deactivationTimer = gameObjectDeactivationTimer;
+      gameObject.hitable = false;
+      gameObject.collidable = true;
     }
+
   }
 
   @override
-  void onPlayerJoined(AmuletPlayer player) {
-    super.onPlayerJoined(player);
+  void onAddedPlayer(AmuletPlayer player) {
+    super.onAddedPlayer(player);
     player.writeWorldIndex();
   }
 
@@ -1298,18 +1300,21 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required double y,
     required double z,
     required int gameObjectType,
-  }) =>
-      spawnGameObject(
-        x: x,
-        y: y,
-        z: z,
-        type: ItemType.Object,
-        subType: gameObjectType,
-        team: TeamType.Neutral,
-        health: destroyableGameObjectTypes.contains(gameObjectType) ? 1 : 0,
-        interactable: false,
-        deactivationTimer: -1,
+  }) {
+    final instance = GameObject(
+      x: x,
+      y: y,
+      z: z,
+      itemType: ItemType.Object,
+      subType: gameObjectType,
+      team: TeamType.Neutral,
+      health: destroyableGameObjectTypes.contains(gameObjectType) ? 1 : 0,
+      interactable: false,
+      deactivationTimer: -1,
     );
+    add(instance);
+    return instance;
+  }
 
   static const destroyableGameObjectTypes = [
     GameObjectType.Crate_Wooden,

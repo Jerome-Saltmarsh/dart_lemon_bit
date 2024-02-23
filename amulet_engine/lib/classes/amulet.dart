@@ -12,7 +12,6 @@ import '../common/src.dart';
 import 'amulet_game.dart';
 import 'amulet_player.dart';
 import 'amulet_scenes.dart';
-import 'games/amulet_game_tutorial.dart';
 import 'games/amulet_game_world_00.dart';
 import 'games/amulet_game_world_11.dart';
 import 'games/witches_lair_1.dart';
@@ -103,9 +102,9 @@ class Amulet {
   }
 
   AmuletGame getAmuletSceneGame(AmuletScene scene) {
-    if (scene == AmuletScene.Tutorial){
-     return buildAmuletGameTutorial();
-    }
+    // if (scene == AmuletScene.Tutorial){
+    //  return buildAmuletGameTutorial();
+    // }
     final games = this.games;
     for (final game in games){
       if (game.amuletScene == scene){
@@ -317,16 +316,16 @@ class Amulet {
     }
   }
 
-  AmuletGameTutorial buildAmuletGameTutorial(){
-    final game = AmuletGameTutorial(
-      amulet: this,
-      scene: scenes.tutorial,
-      time: timeUnderground,
-      environment: environmentUnderground,
-    );
-    addGame(game);
-    return game;
-  }
+  // AmuletGameTutorial buildAmuletGameTutorial(){
+  //   final game = AmuletGameTutorial(
+  //     amulet: this,
+  //     scene: scenes.tutorial,
+  //     time: timeUnderground,
+  //     environment: environmentUnderground,
+  //   );
+  //   addGame(game);
+  //   return game;
+  // }
 
   void removeEmptyGames() {
     for (var i = 0; i < games.length; i++) {
@@ -337,6 +336,12 @@ class Amulet {
     }
   }
 
+  // void playerStartTutorial(AmuletPlayer player) =>
+  //   playerChangeGame(
+  //     player: player,
+  //     target: buildAmuletGameTutorial(),
+  //   );
+
   AmuletGame addGame(AmuletGame game) {
     if (!games.contains(game)){
       print('amulet.addGame($game)');
@@ -344,12 +349,6 @@ class Amulet {
     }
     return game;
   }
-
-  void playerStartTutorial(AmuletPlayer player) =>
-    playerChangeGame(
-      player: player,
-      target: buildAmuletGameTutorial(),
-    );
 
   void playerChangeGameToTown(AmuletPlayer player) =>
       playerChangeGame(

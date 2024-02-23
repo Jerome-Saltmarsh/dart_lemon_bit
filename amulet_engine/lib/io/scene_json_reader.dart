@@ -77,6 +77,7 @@ GameObject readGameObjectFromJson(Json gameObjectJson){
        deactivationTimer: deactivationTimer,
        interactable: isAmuletItem,
    )
+     ..hitable = !isAmuletItem
      ..physical = !isAmuletItem;
 }
 

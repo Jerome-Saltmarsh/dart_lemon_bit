@@ -16,8 +16,8 @@ class AmuletApp extends LemonEngine {
     title: 'AMULET',
     // themeData: ThemeData(fontFamily: 'PixelOperatorHBSC'),
     themeData: ThemeData(fontFamily: 'VT323-Regular'),
-    // backgroundColor: IsometricColors.Black,
-    backgroundColor: Colors.black,
+    backgroundColor: IsometricColors.Black,
+    // backgroundColor: Colors.black,
     buildLoadingScreen: (context) => LoadingPage(),
   ) {
     zoomMin = 0.3;
