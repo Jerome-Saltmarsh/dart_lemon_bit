@@ -14,38 +14,10 @@ class GameObject extends Collider {
   var collectable = false;
   var destroyable = false;
   var dirty = true;
-  var previousX = 0.0;
-  var previousY = 0.0;
-  var previousZ = 0.0;
   var health = 0;
   var healthMax = 0;
   var deactivationTimer = -1;
   String? label;
-  // Function(dynamic src)? onInteract;
-
-  @override
-  int get materialType => getMaterialType(itemType, subType);
-
-
-  bool get ignorePointer =>
-        (
-          !collectable &&
-          !interactable &&
-          !hitable
-        );
-
-  static int getMaterialType(int type, int subType){
-     switch (type){
-       case ItemType.Object:
-         switch (subType){
-           case GameObjectType.Crystal_Glowing_False:
-             return MaterialType.Glass;
-           case GameObjectType.Crystal_Glowing_True:
-             return MaterialType.Glass;
-         }
-     }
-     return MaterialType.None;
-  }
 
   GameObject({
     required super.x,
@@ -69,21 +41,59 @@ class GameObject extends Collider {
     if (id != null){
       this.id = id;
     }
-
-    synchronizePrevious();
   }
 
-  bool get positionDirty => x != previousX || y != previousY || z != previousZ;
+  @override
+  set x(double value){
+    final current = x;
+    if (current == value) return;
+    super.x = value;
+    if (current.toInt() == value.toInt()) return;
+      markAsDirty();
+  }
+
+  @override
+  set y(double value){
+    final current = y;
+    if (current == value) return;
+    super.y = value;
+    if (current.toInt() == value.toInt()) return
+    markAsDirty();
+  }
+
+  @override
+  set z(double value) {
+    final current = z;
+    if (current == value) return;
+    super.z = value;
+    if (current.toInt() == value.toInt()) return;
+    markAsDirty();
+  }
+
+
+  void markAsDirty() {
+    dirty = true;
+  }
+
+  @override
+  int get materialType => getMaterialType(itemType, subType);
+
+  bool get ignorePointer =>
+      (
+          !collectable &&
+              !interactable &&
+              !hitable
+      );
 
   String get typeName => ItemType.getName(itemType);
 
   String get subTypeName => ItemType.getNameSubType(itemType, subType);
 
-  void synchronizePrevious(){
-    previousX = x;
-    previousY = y;
-    previousZ = z;
-  }
+  // void synchronizePrevious(){
+  //   previousX = x;
+  //   previousY = y;
+  //   previousZ = z;
+  // }
 
   @override
   String toString() {
@@ -114,9 +124,9 @@ class GameObject extends Collider {
         ..collectable = collectable
         ..destroyable = destroyable
         ..dirty = dirty
-        ..previousX = previousX
-        ..previousY = previousY
-        ..previousZ = previousZ
+        // ..previousX = previousX
+        // ..previousY = previousY
+        // ..previousZ = previousZ
         ..health = health
         ..healthMax = healthMax
         ..deactivationTimer = deactivationTimer
@@ -128,6 +138,19 @@ class GameObject extends Collider {
   bool onSameTeam(a) {
     // TODO: implement onSameTeamAs
     throw UnimplementedError();
+  }
+
+  static int getMaterialType(int type, int subType){
+    switch (type){
+      case ItemType.Object:
+        switch (subType){
+          case GameObjectType.Crystal_Glowing_False:
+            return MaterialType.Glass;
+          case GameObjectType.Crystal_Glowing_True:
+            return MaterialType.Glass;
+        }
+    }
+    return MaterialType.None;
   }
 }
 
