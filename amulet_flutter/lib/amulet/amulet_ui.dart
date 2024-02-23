@@ -189,17 +189,17 @@ class AmuletUI {
       ),
     );
 
-    final shortKey = IgnorePointer(
-      child: Positioned(
-          bottom: 4,
-          right: 4,
+    final shortKey = Positioned(
+        bottom: 2,
+        right: 2,
+        child: IgnorePointer(
           child: Container(
               width: 16,
               height: 16,
               color: Palette.brownDark,
               alignment: Alignment.center,
-              child: buildText(amulet.getConsumeSlotPhysicalKeyboardKey(itemSlot)?.name))),
-    );
+              child: buildText(amulet.getConsumeSlotPhysicalKeyboardKey(itemSlot)?.name)),
+        ));
 
     return MouseOver(
       builder: (mouseOver) {
