@@ -25,6 +25,7 @@ class Character extends Collider {
   var _maxHealth = 1;
   var _goal = CharacterGoal.Idle;
 
+  var reviveTimer = -1;
   var conditionColdDuration = 0;
   var conditionBurningDamage = 0;
   var conditionBurningDuration = 0;

@@ -14,7 +14,6 @@ import 'gameobject.dart';
 import 'isometric_environment.dart';
 import 'isometric_player.dart';
 import 'isometric_time.dart';
-import 'job.dart';
 import 'position.dart';
 import 'projectile.dart';
 import 'scene.dart';
@@ -33,7 +32,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   var gameObjectsOrderDirty = false;
 
   final List<T> players = [];
-  final jobs = <GameJob>[];
+  // final jobs = <GameJob>[];
   final gameObjects = <GameObject>[];
   final characters = <Character>[];
   final projectiles = <Projectile>[];
@@ -42,14 +41,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required this.scene,
     required this.time,
     required this.environment,
-  }) {
-    customInit();
-    // loadGameObjectsFromScene();
-
-    // for (final gameObject in gameObjects) {
-    //   onGameObjectSpawned(gameObject);
-    // }
-  }
+  });
 
   void loadGameObjectsFromScene() =>
       setGameObjects(copyGameObjects(scene.gameObjects));
@@ -57,8 +49,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   void setGameObjects(List<GameObject> values){
     clearGameObjects();
     addAll(values);
-    // markGameObjectsAsDirty();
-    // sortGameObjects();
   }
 
   void clearGameObjects(){
@@ -99,45 +89,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       customWriteGame();
     }
   }
-
-  void addJob({
-    required num seconds,
-    required Function action,
-    bool repeat = false,
-  }) {
-    final frames = (fps * seconds).toInt();
-    for (final job in jobs) {
-      if (!job.available) continue;
-      job.remaining = frames;
-      job.duration = frames;
-      job.action = action;
-      job.repeat = repeat;
-      job.available = false;
-      return;
-    }
-    jobs.add(GameJob(frames, action, repeat: repeat));
-  }
-
-  void updateJobs() {
-    final jobs = this.jobs;
-    for (var i = 0; i < jobs.length; i++) {
-      final job = jobs[i];
-      if (job.remaining <= 0) continue;
-      job.remaining--;
-      if (job.remaining > 0) continue;
-      job.action();
-      if (job.repeat) {
-        job.remaining = job.duration;
-      } else {
-        job.action = _clearJob;
-        job.duration = 0;
-        job.remaining = 0;
-        job.available = true;
-      }
-    }
-  }
-
-  void _clearJob(){}
 
   void removePlayer(T player){
     player.aimTarget = null;
@@ -252,9 +203,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   void customOnPlayerJoined(T player) {}
 
   /// @override
-  void customInit() {}
-
-  /// @override
   void customOnGameObjectDestroyed(GameObject gameObject) {}
 
   /// @override
@@ -264,13 +212,13 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   /// @override
   void customOnNodeDestroyed(int nodeType, int nodeIndex, int nodeOrientation) {
     // default behavior is to respawn after a period however this can be safely overriden
-    addJob(seconds: 1000, action: () {
-      setNode(
-        nodeIndex: nodeIndex,
-        nodeType: nodeType,
-        orientation: nodeOrientation,
-      );
-    });
+    // addJob(seconds: 1000, action: () {
+    //   setNode(
+    //     nodeIndex: nodeIndex,
+    //     nodeType: nodeType,
+    //     orientation: nodeOrientation,
+    //   );
+    // });
   }
 
   GameObject? findGameObjectByType(int type) {
@@ -959,22 +907,24 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     sortColliders();
   }
 
-  void revive(T player) {
+  void revive(Character player) {
     if (player.aliveAndActive) return;
 
     player.setCharacterStateSpawning();
-    // activate(player);
     player.physical = true;
     player.hitable = true;
     player.health = player.maxHealth;
     clearCharacterTarget(player);
-    customOnPlayerRevived(player);
-    player.writePlayerMoved();
-    player.writePlayerAlive();
-    player.writePlayerEvent(PlayerEvent.Spawned);
-    player.writePlayerHealth();
-    player.writeGameTime();
-    player.health = player.maxHealth;
+
+    if (player is T){
+      customOnPlayerRevived(player);
+      player.writePlayerMoved();
+      player.writePlayerAlive();
+      player.writePlayerEvent(PlayerEvent.Spawned);
+      player.writePlayerHealth();
+      player.writeGameTime();
+      player.health = player.maxHealth;
+    }
   }
 
   void playersWriteWeather() {
@@ -1505,6 +1455,14 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       if (character.animationFrame < Character.maxAnimationDeathFrames){
         character.applyFrameVelocity();
       }
+
+      if (character.reviveTimer > 0){
+        character.reviveTimer--;
+        if (character.reviveTimer <= 0) {
+           revive(character);
+        }
+      }
+
       return;
     }
 

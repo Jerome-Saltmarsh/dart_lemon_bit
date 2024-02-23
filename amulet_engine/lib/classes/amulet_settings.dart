@@ -11,4 +11,5 @@ class AmuletSettings {
 
   /// in seconds
   static const Duration_Condition_Blind = 4;
+  static const Player_Revive_Timer = 3;
 }

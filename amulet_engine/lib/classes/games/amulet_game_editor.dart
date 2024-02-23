@@ -18,8 +18,7 @@ class AmuletGameEditor extends AmuletGame {
   );
 
   @override
-  void revive(AmuletPlayer player) {
-    super.revive(player);
+  void customOnPlayerRevived(AmuletPlayer player) {
     player.x = scene.rowLength * 0.5;
     player.y = scene.columnLength * 0.5;
     player.z = scene.heightLength;
