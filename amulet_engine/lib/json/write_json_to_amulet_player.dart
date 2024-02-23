@@ -11,9 +11,13 @@ void writeJsonToAmuletPlayer(
 ){
   final amulet = player.amulet;
   amulet.resetGames();
+
   final jsonAmulet = json.getChild('amulet');
   final amuletSceneName = json['amulet_scene_name'];
   final amuletScene = AmuletScene.findByName(amuletSceneName);
+  final skillSlotInts = json.getListInt('skill_slots');
+  final consumableSlots = json.getListInt('consumable_slots');
+
   player.amuletGame = amulet.findGame(amuletScene);
   player.equippedWeapon = AmuletItem.findByName(json.weapon);
   player.equippedHelm = AmuletItem.findByName(json.helm);
@@ -33,9 +37,15 @@ void writeJsonToAmuletPlayer(
   player.z = json.getDouble('z');
   player.skillTypeLeft = json.skillTypeLeft;
   player.skillTypeRight = json.skillTypeRight;
-
+  player.consumableSlots.fill(null);
+  player.consumableSlotsDirty = true;
   player.skillSlots.fill(SkillType.None);
-  final skillSlotInts = json.getListInt('skill_slots');
+
+  if (consumableSlots.length == player.consumableSlots.length){
+    for (var i = 0; i < consumableSlots.length; i++){
+       player.consumableSlots[i] = AmuletItem.values.tryGet(consumableSlots[i]);
+    }
+  }
 
   if (skillSlotInts.length == player.skillSlots.length){
     for (var i = 0; i < skillSlotInts.length; i++){
