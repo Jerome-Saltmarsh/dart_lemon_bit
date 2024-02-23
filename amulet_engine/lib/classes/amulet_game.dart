@@ -1087,12 +1087,13 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         gameObject.healthMax = 1;
         gameObject.health = 1;
         gameObject.interactable = false;
-        gameObject.destroyable = true;
         gameObject.dirty = true;
         gameObject.deactivationTimer = -1;
         gameObject.hitable = true;
         gameObject.collidable = true;
       }
+
+      gameObject.fixed = !const [GameObjectType.Barrel].contains(subType);
     }
 
     if (gameObject.isAmuletItem) {
@@ -1100,7 +1101,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       gameObject.healthMax = 0;
       gameObject.health = 0;
       gameObject.interactable = true;
-      gameObject.destroyable = false;
       gameObject.dirty = true;
       gameObject.deactivationTimer = gameObjectDeactivationTimer;
       gameObject.hitable = false;

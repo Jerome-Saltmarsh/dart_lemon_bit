@@ -29,20 +29,23 @@ SKULLSOFT
 REMINDER: IT DOESN'T NEED TO BE PERFECT
 
 [RELEASE]
-[new] render mana bar
+[new] redesign crystal
+[new] node type fiend spawn
 [new] mark type fiend count
 [new] balance amulet fiends
 [new] balance amulet items
 [fix] boss fight
 [fix] ai path finding
 [fix] ui amulet item container collision
-[new] skill type mage fireball level 3
-[new] skill type mage fireball level 2
-[new] skill type mage iceball level 2
-[new] skill type mage iceball level 3
-[new] skill type rogue split_shot level 3
+[new] skill type progression mage fireball
+[new] skill type progression mage iceball
+[new] skill type progression mage splitshot
+[new] skill type progression mage shield
 [new] skill type rogue passive arrows pierce enemies
 [new] skill type necromancer raise skeleton
+
+## 23.02.2024
+[new] render mana bar
 
 ## 22.02.2024
 [new] simplified ui design

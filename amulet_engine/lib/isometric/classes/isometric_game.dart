@@ -53,6 +53,11 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   void clearGameObjects(){
     gameObjects.clear();
+
+    for (final player in players) {
+      player.editorDeselectGameObject();
+    }
+
     playersWriteByte(NetworkResponse.Scene);
     playersWriteByte(NetworkResponseScene.GameObjects_Cleared);
   }
@@ -732,6 +737,11 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         continue;
       }
 
+      if (gameObject.z < 0){
+        destroyGameObject(gameObject);
+        continue;
+      }
+
       sortRequired = true;
       cleanGameObject(gameObject);
     }
@@ -1279,12 +1289,14 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
 
     if (instance is GameObject) {
-      // instance.active = false;
       gameObjects.remove(instance);
       for (final player in players) {
-        player.writeUInt8(NetworkResponse.Scene);
-        player.writeUInt8(NetworkResponseScene.GameObject_Deleted);
-        player.writeUInt16(instance.id);
+
+        if (player.editState.selectedGameObject == instance){
+          player.editorDeselectGameObject();
+        }
+
+        player.writeGameObjectDeleted(instance);
       }
       return;
     }
@@ -1808,14 +1820,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   }
 
   void playerDeleteEditorSelectedGameObject(IsometricPlayer player) {
-    remove(player.editorSelectedGameObject);
-    playerDeselectEditorSelectedGameObject(player);
-  }
-
-  void playerDeselectEditorSelectedGameObject(IsometricPlayer player) {
-    if (player.editorSelectedGameObject == null) return;
-    player.editorSelectedGameObject = null;
-    player.writePlayerEvent(PlayerEvent.GameObject_Deselected);
+    remove(player.editState.selectedGameObject);
   }
 
   void updateColliderSceneCollision(Collider collider) {
@@ -2132,29 +2137,10 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   }
 
   void destroyGameObject(GameObject gameObject) {
-    // if (!gameObject.active) return;
     dispatchGameEventGameObjectDestroyed(gameObject);
     remove(gameObject);
     customOnGameObjectDestroyed(gameObject);
   }
-
-  // void deactivatePlayer(IsometricPlayer player) {
-  //   if (!player.active) return;
-  //   // player.active = false;
-  //   player.writePlayerEvent(PlayerEvent.Player_Deactivated);
-  // }
-
-  // T createPlayer() {
-  //   final player = buildPlayer();
-  //   player.setDestinationToCurrentPosition();
-  //   player.sceneDownloaded = false;
-  //   characters.add(player);
-  //   customOnPlayerJoined(player);
-  //   player.writePlayerAlive();
-  //   player.writePlayerEvent(PlayerEvent.Player_Moved);
-  //   player.writePlayerEvent(PlayerEvent.Game_Joined);
-  //   return player;
-  // }
 
   void customWriteGame() {
     notifyPlayersEnvironmentChanged();

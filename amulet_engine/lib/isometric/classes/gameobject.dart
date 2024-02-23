@@ -12,7 +12,7 @@ class GameObject extends Collider {
   /// collectable means that the player automatically picks this item up by colliding with it
   /// this is used for health potions
   var collectable = false;
-  var destroyable = false;
+  // var destroyable = false;
   var dirty = true;
   var health = 0;
   var healthMax = 0;
@@ -122,11 +122,7 @@ class GameObject extends Collider {
         ..radius = radius
         ..team = team
         ..collectable = collectable
-        ..destroyable = destroyable
         ..dirty = dirty
-        // ..previousX = previousX
-        // ..previousY = previousY
-        // ..previousZ = previousZ
         ..health = health
         ..healthMax = healthMax
         ..deactivationTimer = deactivationTimer

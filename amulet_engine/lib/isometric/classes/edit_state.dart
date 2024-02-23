@@ -1,17 +1,19 @@
 
 import 'package:amulet_engine/common/src.dart';
 
+import 'gameobject.dart';
 import 'isometric_game.dart';
 import 'isometric_player.dart';
 import 'scene.dart';
 
 
-class EditorState {
+class EditState {
 
   final IsometricPlayer player;
   var _selectedMarkListIndex = 0;
+  GameObject? selectedGameObject;
 
-  EditorState(this.player);
+  EditState(this.player);
 
   IsometricGame get game => player.game;
 
@@ -74,7 +76,7 @@ class EditorState {
   void deleteMark() {
     final game = player.game;
 
-    final listIndex = player.editor.selectedMarkListIndex;
+    final listIndex = player.editState.selectedMarkListIndex;
 
     if (listIndex < 0 || listIndex >= scene.marks.length) {
       return;

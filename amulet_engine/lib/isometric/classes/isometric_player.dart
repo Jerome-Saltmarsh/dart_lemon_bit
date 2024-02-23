@@ -12,7 +12,7 @@ import '../consts/isometric_settings.dart';
 import '../instances/encoder.dart';
 import 'character.dart';
 import 'collider.dart';
-import 'editor_state.dart';
+import 'edit_state.dart';
 import 'gameobject.dart';
 import 'isometric_game.dart';
 import 'position.dart';
@@ -72,9 +72,8 @@ class IsometricPlayer extends Character with ByteWriter {
   final cacheTemplateB = Uint32List(Cache_Length);
   final cacheTemplateC = Uint32List(Cache_Length);
 
-  late final editor = EditorState(this);
+  late final editState = EditState(this);
 
-  GameObject? editorSelectedGameObject;
   IsometricGame game;
   Collider? selectedCollider;
   Collider? _aimTarget;
@@ -887,7 +886,7 @@ class IsometricPlayer extends Character with ByteWriter {
   }
 
   void writeEditorGameObjectSelected() {
-    final selectedGameObject = editorSelectedGameObject;
+    final selectedGameObject = editState.selectedGameObject;
     if (selectedGameObject == null) return;
     writeByte(NetworkResponse.Editor);
     writeByte(NetworkResponseEditor.Editor_GameObject_Selected);
@@ -1561,4 +1560,16 @@ class IsometricPlayer extends Character with ByteWriter {
         scene.getIndexY(index),
         scene.getIndexZ(index),
       );
+
+  void writeGameObjectDeleted(GameObject gameObject){
+    writeUInt8(NetworkResponse.Scene);
+    writeUInt8(NetworkResponseScene.GameObject_Deleted);
+    writeUInt16(gameObject.id);
+  }
+
+  void editorDeselectGameObject() {
+    if (editState.selectedGameObject == null) return;
+    editState.selectedGameObject = null;
+    writePlayerEvent(PlayerEvent.GameObject_Deselected);
+  }
 }

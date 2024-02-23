@@ -8,7 +8,7 @@ export 'gameobject.dart';
 export 'isometric_environment.dart';
 export 'isometric_game.dart';
 export 'isometric_player.dart';
-export 'editor_state.dart';
+export 'edit_state.dart';
 export 'isometric_time.dart';
 export 'position.dart';
 export 'projectile.dart';

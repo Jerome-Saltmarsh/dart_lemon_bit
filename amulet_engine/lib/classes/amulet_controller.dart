@@ -97,7 +97,7 @@ class AmuletController {
         ];
 
 
-        final editor = player.editor;
+        final editor = player.editState;
 
         switch (networkRequestEdit){
           case NetworkRequestEdit.Add_Key:
@@ -170,7 +170,7 @@ class AmuletController {
               return;
             }
 
-            player.editor.setSelectedMarkType(markType);
+            player.editState.setSelectedMarkType(markType);
             break;
 
           case NetworkRequestEdit.Mark_Set_Sub_Type:
@@ -179,7 +179,7 @@ class AmuletController {
               return;
             }
 
-            player.editor.setSelectedMarkSubType(markSubType);
+            player.editState.setSelectedMarkSubType(markSubType);
             break;
 
           case NetworkRequestEdit.Generate_Scene:
@@ -611,7 +611,7 @@ class AmuletController {
 
         player.scene.addMark(index: index, markType: markType);
         player.game.sortMarksAndDispatch();
-        player.editor.selectedMarkListIndex = player.scene.marks.indexWhere((mark) {
+        player.editState.selectedMarkListIndex = player.scene.marks.indexWhere((mark) {
           return index == MarkType.getIndex(mark) && markType ==  MarkType.getType(mark);
         });
         break;
@@ -946,7 +946,7 @@ class AmuletController {
     }
 
     final gameObjectRequest = gameObjectRequests[gameObjectRequestIndex];
-    final selectedGameObject = player.editorSelectedGameObject;
+    final selectedGameObject = player.editState.selectedGameObject;
 
     switch (gameObjectRequest) {
 
@@ -966,18 +966,18 @@ class AmuletController {
           distance = nextDistance;
         }
         if (distance < 100){
-          player.editorSelectedGameObject = closest;
+          player.editState.selectedGameObject = closest;
         } else {
-          player.game.playerDeselectEditorSelectedGameObject(player);
+          player.editorDeselectGameObject();
         }
         break;
 
       case IsometricEditorGameObjectRequest.Deselect:
-        player.game.playerDeselectEditorSelectedGameObject(player);
+        player.editorDeselectGameObject();
         break;
 
       case IsometricEditorGameObjectRequest.Translate:
-        final selectedGameObject = player.editorSelectedGameObject;
+        final selectedGameObject = player.editState.selectedGameObject;
         if (selectedGameObject == null) return;
         final tx = double.tryParse(arguments[3]);
         final ty = double.tryParse(arguments[4]);
@@ -1014,7 +1014,7 @@ class AmuletController {
           z: scene.getIndexZ(index),
           gameObjectType: type,
         );
-        player.editorSelectedGameObject = instance;
+        player.editState.selectedGameObject = instance;
         break;
 
       case IsometricEditorGameObjectRequest.Delete:
@@ -1022,7 +1022,7 @@ class AmuletController {
         break;
 
       case IsometricEditorGameObjectRequest.Move_To_Mouse:
-        final selectedGameObject = player.editorSelectedGameObject;
+        final selectedGameObject = player.editState.selectedGameObject;
         if (selectedGameObject == null) return;
         selectedGameObject.x = player.mouseSceneX;
         selectedGameObject.y = player.mouseSceneY;
@@ -1076,7 +1076,7 @@ class AmuletController {
 
         final newInstance = selectedGameObject.copy();
         player.game.add(newInstance);
-        player.editorSelectedGameObject = newInstance;
+        player.editState.selectedGameObject = newInstance;
         break;
 
       case IsometricEditorGameObjectRequest.Toggle_Physical:

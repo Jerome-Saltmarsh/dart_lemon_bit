@@ -749,13 +749,6 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
     }
   }
 
-  // void readNetworkResponseAmuletPlayer() {
-  //   final amulet = this.amulet;
-  //   switch (readByte()) {
-  //
-  //   }
-  // }
-
   void readNetworkServerError() {
     final message = readString();
     ui.error.value = message;
