@@ -718,6 +718,9 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
       case NetworkResponseScene.Changed:
         readNetworkResponseSceneChanged();
         break;
+      case NetworkResponseScene.GameObjects_Cleared:
+        readNetworkResponseGameObjectsCleared();
+        break;
     }
   }
 
@@ -842,5 +845,9 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
       player.aimNodeIndex.value = null;
       player.aimNodeType.value = null;
     }
+  }
+
+  void readNetworkResponseGameObjectsCleared() {
+    scene.gameObjects.clear();
   }
 }

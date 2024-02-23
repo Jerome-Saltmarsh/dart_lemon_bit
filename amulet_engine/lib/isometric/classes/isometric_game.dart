@@ -55,10 +55,16 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       setGameObjects(copyGameObjects(scene.gameObjects));
 
   void setGameObjects(List<GameObject> values){
-    gameObjects.clear();
+    clearGameObjects();
     addAll(values);
-    markGameObjectsAsDirty();
-    sortGameObjects();
+    // markGameObjectsAsDirty();
+    // sortGameObjects();
+  }
+
+  void clearGameObjects(){
+    gameObjects.clear();
+    playersWriteByte(NetworkResponse.Scene);
+    playersWriteByte(NetworkResponseScene.GameObjects_Cleared);
   }
 
   void markGameObjectsAsDirty() {
@@ -808,9 +814,9 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   }
 
   void sortGameObjects(){
+    gameObjects.sort();
     playersWriteByte(NetworkResponse.Scene);
     playersWriteByte(NetworkResponseScene.Sort_GameObjects);
-    gameObjects.sort();
   }
 
   void updateCharacterTarget(Character character){

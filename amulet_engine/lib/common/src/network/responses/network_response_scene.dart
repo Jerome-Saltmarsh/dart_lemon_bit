@@ -13,4 +13,5 @@ class NetworkResponseScene {
   static const Node_Orientations = 9;
   static const Dimensions = 10;
   static const Changed = 11;
+  static const GameObjects_Cleared = 12;
 }
