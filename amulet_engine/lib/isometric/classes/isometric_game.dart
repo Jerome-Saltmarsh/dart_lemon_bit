@@ -25,12 +25,12 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   IsometricEnvironment environment;
   IsometricTime time;
 
-  var _id = 0;
   var attackAlwaysHitsTarget = false;
   var playerId = 0;
   var timerUpdateAITargets = 0;
   var frame = 0;
   var _running = true;
+  var gameObjectsOrderDirty = false;
 
   final List<T> players = [];
   final jobs = <GameJob>[];
@@ -56,7 +56,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   void setGameObjects(List<GameObject> values){
     gameObjects.clear();
-    gameObjects.addAll(values);
+    addAll(values);
     markGameObjectsAsDirty();
     sortGameObjects();
   }
@@ -146,6 +146,12 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     characters.remove(player);
   }
 
+  void addAll<J extends Collider>(List<J> colliders){
+     for (final collider in colliders){
+       add(collider);
+     }
+  }
+
   void add(Collider value){
     if (value is Character){
       if (characters.contains(value)){
@@ -162,6 +168,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         value.id = generateUniqueGameObjectId();
       }
       value.dirty = true;
+      gameObjectsOrderDirty = true;
       onAddedGameObject(value);
     }
     if (value is Projectile){
@@ -937,6 +944,12 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     updateProjectiles(); // called twice to fix collision detection
     updateProjectiles(); // called twice to fix collision detection
     updateProjectiles(); // called twice to fix collision detection
+
+    if (gameObjectsOrderDirty){
+      sortGameObjects();
+      gameObjectsOrderDirty = false;
+    }
+
     sortColliders();
   }
 
