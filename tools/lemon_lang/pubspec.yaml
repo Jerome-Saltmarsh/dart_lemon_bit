@@ -1,0 +1,14 @@
+name: lemon_lang
+description: >
+  A Dart package providing extension methods to enhance the functionality
+  of the built-in List class. Includes methods for safely accessing elements,
+  sorting, filling, and validating indices.
+  
+  This package is designed to improve the usability and expressiveness of
+  working with lists in Dart projects.
+
+version: 1.0.1
+
+environment:
+  sdk: ^3.2.6
+

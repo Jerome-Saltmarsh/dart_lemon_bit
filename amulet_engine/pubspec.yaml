@@ -18,4 +18,6 @@ dependencies:
     path: ..\tools\lemon_math
   lemon_json:
     path: ..\tools\lemon_json
+  lemon_lang:
+    path: ..\tools\lemon_lang
 

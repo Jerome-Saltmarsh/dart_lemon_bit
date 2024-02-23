@@ -4,11 +4,17 @@ mklink /J "C:\Users\Jerome\github\amulet\amulet_flutter\assets\scenes" "C:\Users
 
 pause
 
-[COMMANDS]
+[GIT]
+git remote set-url <name> <url>
+git remote add origin <url>
+
+[FLUTTER]
 flutter build web --web-renderer canvaskit --release
+
+[FIREBASE]
 firebase deploy
 
-[shortcut-keys]
+[ANDROID_STUDIO]
 ctrl + shift + arrow    : navigate to next method
 ctrl + w                : minimal mode
 ctrl + shift + e        : view recent changes

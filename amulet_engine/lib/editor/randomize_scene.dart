@@ -3,7 +3,6 @@ import 'package:lemon_math/src.dart';
 
 import '../common/src.dart';
 import '../isometric/src.dart';
-import '../utils/list_extensions.dart';
 
 void randomizeScene(Scene scene){
   final totalNodes = scene.volume;
@@ -21,7 +20,7 @@ void randomizeScene(Scene scene){
         if (randomChance(0.05)){
           nodeVariations[i] = 2;
         } else {
-          nodeVariations[i] = const[0, 1].random;
+           nodeVariations[i] = randomItem(const[0, 1]);
         }
         continue;
       }

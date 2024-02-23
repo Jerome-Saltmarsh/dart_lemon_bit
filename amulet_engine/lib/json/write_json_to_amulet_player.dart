@@ -4,6 +4,7 @@ import 'package:amulet_engine/io/scene_json_reader.dart';
 import 'package:amulet_engine/isometric/classes/character.dart';
 import 'package:amulet_engine/src.dart';
 import 'package:lemon_json/src.dart';
+import 'package:lemon_lang/src.dart';
 
 void writeJsonToAmuletPlayer(
     CharacterJson json,

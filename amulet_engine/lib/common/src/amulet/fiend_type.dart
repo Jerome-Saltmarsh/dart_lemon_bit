@@ -1,6 +1,7 @@
 
 import 'package:amulet_engine/isometric/enums/damage_type.dart';
 import 'package:amulet_engine/src.dart';
+import 'package:lemon_lang/src.dart';
 
 enum FiendType {
   Goblin(

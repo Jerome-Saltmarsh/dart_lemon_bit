@@ -2,6 +2,7 @@
 import 'dart:math';
 
 import 'package:amulet_engine/src.dart';
+import 'package:lemon_lang/src.dart';
 import 'package:lemon_math/src.dart';
 
 import 'amulet.dart';

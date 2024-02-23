@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:lemon_lang/src.dart';
 import 'package:lemon_math/src.dart';
 
 import '../../src.dart';
@@ -801,7 +802,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     if (target is AmuletFiend) {
       if (randomChance(target.fiendType.chanceOfDropPotion)) {
         spawnAmuletItemAtPosition(
-          item: AmuletItem.Consumables.random,
+          item: randomItem(AmuletItem.Consumables),
           position: target,
           deactivationTimer: lootDeactivationTimer,
         );
@@ -966,7 +967,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   void spawnRandomConsumableAtIndex(int nodeIndex) {
     spawnAmuletItemAtIndex(
         index: nodeIndex,
-        item: AmuletItem.Consumables.random,
+        item: randomItem(AmuletItem.Consumables),
     );
   }
 

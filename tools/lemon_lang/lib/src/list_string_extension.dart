@@ -1,4 +1,12 @@
-extension Args on List<String> {
+extension ListStringExtension on List<String> {
+
+  int? tryGetArgInt(String name){
+    final arg = tryGetArgString(name);
+    if (arg == null){
+      return null;
+    }
+    return int.tryParse(arg);
+  }
 
   String? tryGetArgString(String name){
     final index = indexOf(name);
@@ -9,14 +17,6 @@ extension Args on List<String> {
       return null;
     }
     return this[index + 1];
-  }
-
-  int? tryGetArgInt(String name){
-    final arg = tryGetArgString(name);
-    if (arg == null){
-      return null;
-    }
-    return int.tryParse(arg);
   }
 
   int getArgInt(String name){

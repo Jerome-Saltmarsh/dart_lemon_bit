@@ -1,15 +1,11 @@
-import 'package:lemon_math/src.dart';
-
 extension ListExtensions<T> on List<T> {
 
   T? tryGet(int? index) =>
       index == null ||
-      index < 0 ||
-      index >= length
+          index < 0 ||
+          index >= length
           ? null
           : this[index];
-
-  T get random => randomItem(this);
 
   List<T> sortBy(int Function(T value) getValue) {
     sort((a, b) => getValue(a).compareTo(getValue(b)));
@@ -20,6 +16,6 @@ extension ListExtensions<T> on List<T> {
 
   bool isValidIndex(int? index) =>
       index != null &&
-      index >= 0 &&
-      index <= length;
+          index >= 0 &&
+          index <= length;
 }
