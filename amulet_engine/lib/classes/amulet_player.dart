@@ -575,6 +575,7 @@ class AmuletPlayer extends IsometricPlayer with
         writeGameError(GameError.Potion_Slots_Full);
         return;
       }
+      setCharacterStateChanging();
       setConsumableSlot(index: availableIndex, amuletItem: value);
       writeAmuletItemEquipped(value);
       return;
@@ -1663,6 +1664,7 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
 
+    setCharacterStateChanging();
     setConsumableSlot(index: index, amuletItem: null);
     spawnAmuletItem(amuletItem);
     writeAmuletItemDropped(amuletItem);
