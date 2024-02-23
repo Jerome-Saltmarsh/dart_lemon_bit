@@ -819,6 +819,12 @@ class Amulet extends IsometricGame {
        audio.material_struck_glass.play();
      }
   }
+
+  void onAmuletItemEquipped(AmuletItem amuletItem) {
+    if (amuletItem.isConsumable){
+      audio.material_struck_glass.play();
+    }
+  }
 }
 
 

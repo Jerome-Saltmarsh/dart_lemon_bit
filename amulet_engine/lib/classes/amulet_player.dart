@@ -576,6 +576,7 @@ class AmuletPlayer extends IsometricPlayer with
         return;
       }
       setConsumableSlot(index: availableIndex, amuletItem: value);
+      writeAmuletItemEquipped(value);
       return;
     }
 
@@ -1670,6 +1671,12 @@ class AmuletPlayer extends IsometricPlayer with
   void writeAmuletItemDropped(AmuletItem amuletItem) {
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Amulet_Item_Dropped);
+    writeAmuletItem(amuletItem);
+  }
+
+  void writeAmuletItemEquipped(AmuletItem amuletItem) {
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Amulet_Item_Equipped);
     writeAmuletItem(amuletItem);
   }
 
