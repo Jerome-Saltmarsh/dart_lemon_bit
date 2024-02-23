@@ -343,9 +343,9 @@ class AmuletPlayer extends IsometricPlayer with
       if (value.interactable) {
         return TargetAction.Talk;
       }
-      if (value.collectable) {
-        return TargetAction.Collect;
-      }
+      // if (value.collectable) {
+      //   return TargetAction.Collect;
+      // }
       return TargetAction.Run;
     }
 

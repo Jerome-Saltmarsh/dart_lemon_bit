@@ -1049,8 +1049,8 @@ class AmuletController {
 
       case IsometricEditorGameObjectRequest.Toggle_Collectable:
         if (selectedGameObject == null) return;
-        selectedGameObject.collectable = !selectedGameObject.collectable;
-        player.writeEditorGameObjectSelected();
+        // selectedGameObject.collectable = !selectedGameObject.collectable;
+        // player.writeEditorGameObjectSelected();
         break;
 
       case IsometricEditorGameObjectRequest.Toggle_Gravity:

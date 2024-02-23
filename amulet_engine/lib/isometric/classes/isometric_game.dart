@@ -2500,10 +2500,10 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     return false;
   }
 
-  bool characterConditionCollectTarget(Character character) {
-    final target = character.target;
-    return target is GameObject && target.collectable;
-  }
+  // bool characterConditionCollectTarget(Character character) {
+  //   final target = character.target;
+  //   return target is GameObject && target.collectable;
+  // }
 
   void setPathTargetIndexToTarget(Character character){
     final target = character.target;

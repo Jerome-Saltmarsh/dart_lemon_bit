@@ -660,9 +660,9 @@ class IsometricPlayer extends Character with ByteWriter {
       if (value.interactable) {
         return TargetAction.Talk;
       }
-      if (value.collectable){
-        return TargetAction.Collect;
-      }
+      // if (value.collectable){
+      //   return TargetAction.Collect;
+      // }
       if (value.physical && value.hitable){
         return TargetAction.Attack;
       }
@@ -893,7 +893,7 @@ class IsometricPlayer extends Character with ByteWriter {
     writeUInt16(selectedGameObject.id);
     writeBool(selectedGameObject.hitable);
     writeBool(selectedGameObject.fixed);
-    writeBool(selectedGameObject.collectable);
+    writeBool(false); // writeBool(selectedGameObject.collectable);
     writeBool(selectedGameObject.physical);
     // writeBool(selectedGameObject.persistable);
     writeBool(selectedGameObject.gravity);
