@@ -825,6 +825,22 @@ class Amulet extends IsometricGame {
       audio.material_struck_glass.play();
     }
   }
+
+  PhysicalKeyboardKey? getConsumeSlotPhysicalKeyboardKey(Watch<AmuletItem?> itemSlot) {
+    if (itemSlot == consumableSlots[0]){
+      return amuletKeys.consume0;
+    }
+    if (itemSlot == consumableSlots[1]){
+      return amuletKeys.consume1;
+    }
+    if (itemSlot == consumableSlots[2]){
+      return amuletKeys.consume2;
+    }
+    if (itemSlot == consumableSlots[2]){
+      return amuletKeys.consume3;
+    }
+    return null;
+  }
 }
 
 

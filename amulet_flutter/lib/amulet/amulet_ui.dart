@@ -1,7 +1,7 @@
 
 import 'package:amulet_engine/src.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
-import 'package:amulet_flutter/amulet/classes/skill_type_stats.dart';
+import 'package:amulet_flutter/amulet/src.dart';
 import 'package:amulet_flutter/amulet/ui/enums/quantify_tab.dart';
 import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_skill_type.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
@@ -13,10 +13,8 @@ import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
-import 'classes/amulet_colors.dart';
 import 'getters/get_src_caste_type.dart';
 import 'ui/containers/build_container_player_front.dart';
-import 'ui/widgets/src.dart';
 
 class AmuletUI {
   static const itemImageSize = 64.0;
@@ -120,17 +118,7 @@ class AmuletUI {
           Positioned(
               bottom: 64,
               left: 8,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  buildWindowPlayerEquipped(),
-                  buildWatchVisible(
-                      amulet.windowVisiblePlayerStats,
-                      buildWindowPlayerStats(),
-                  ),
-                  buildWindowPlayerSkills()
-                ],
-              ),
+              child: buildHudBottomLeft(),
           ),
           buildPositionedMessage(),
           buildOverlayScreenColor(),
@@ -158,6 +146,18 @@ class AmuletUI {
   );
   }
 
+  Widget buildHudBottomLeft() => Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                buildWindowPlayerEquipped(),
+                buildWatchVisible(
+                    amulet.windowVisiblePlayerStats,
+                    buildWindowPlayerStats(),
+                ),
+                buildWindowPlayerSkills()
+              ],
+            );
+
   Widget buildWindowPotions() =>
       Row(
         children: amulet.consumableSlots
@@ -167,24 +167,52 @@ class AmuletUI {
 
   Widget buildSlotConsumable(Watch<AmuletItem?> itemSlot) {
     const size = 30.0;
-    return buildWatch(itemSlot, (t) =>
-        buildBorder(
-          color: Colors.black26,
-          width: 2,
-          radius: BorderRadius.zero,
-          child: onPressed(
-            onRightClick: t == null ? null : () => amulet.dropConsumableSlot(itemSlot),
-            action: t == null ? null : () => amulet.useConsumableSlot(itemSlot),
-            child: Container(
-              child: t == null ? nothing : AmuletItemImage(amuletItem: t, scale: 1),
-              width: size,
-              height: size,
-              alignment: Alignment.center,
-              color: Colors.black12,
+
+    final control = Positioned(
+      child: buildWatch(itemSlot, (t) =>
+          buildBorder(
+            color: Colors.black26,
+            width: 2,
+            radius: BorderRadius.zero,
+            child: onPressed(
+              onRightClick: t == null ? null : () => amulet.dropConsumableSlot(itemSlot),
+              action: t == null ? null : () => amulet.useConsumableSlot(itemSlot),
+              child: Container(
+                child: t == null ? nothing : AmuletItemImage(amuletItem: t, scale: 1),
+                width: size,
+                height: size,
+                alignment: Alignment.center,
+                color: Colors.black12,
+              ),
             ),
-          ),
-        )
-      );
+          )
+      ),
+    );
+
+    final shortKey = IgnorePointer(
+      child: Positioned(
+          bottom: 4,
+          right: 4,
+          child: Container(
+              width: 16,
+              height: 16,
+              color: Palette.brownDark,
+              alignment: Alignment.center,
+              child: buildText(amulet.getConsumeSlotPhysicalKeyboardKey(itemSlot)?.name))),
+    );
+
+    return MouseOver(
+      builder: (mouseOver) {
+        return Stack(
+          alignment: Alignment.center,
+          children: [
+            control,
+            if (mouseOver)
+              shortKey,
+          ],
+        );
+      }
+    );
   }
 
   AmuletImage buildIconPotion() {
