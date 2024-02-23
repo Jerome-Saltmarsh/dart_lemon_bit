@@ -836,7 +836,7 @@ class Amulet extends IsometricGame {
     if (itemSlot == consumableSlots[2]){
       return amuletKeys.consume2;
     }
-    if (itemSlot == consumableSlots[2]){
+    if (itemSlot == consumableSlots[3]){
       return amuletKeys.consume3;
     }
     return null;
