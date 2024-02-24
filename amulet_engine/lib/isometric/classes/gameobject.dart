@@ -120,7 +120,6 @@ class GameObject extends Collider {
         ..collidable = collidable
         ..radius = radius
         ..team = team
-        // ..collectable = collectable
         ..dirty = dirty
         ..health = health
         ..healthMax = healthMax

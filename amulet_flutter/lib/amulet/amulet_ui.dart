@@ -1018,26 +1018,26 @@ class AmuletUI {
             ],
           ),
           height16,
-          buildTextHeader('BONUSES'),
-          buildWatch(amulet.playerHealthSteal, (healthSteal) {
-            if (healthSteal <= 0){
-              return nothing;
-            }
-            return Tooltip(
-                message: 'Health Steal',
-                child: buildRow(buildIconHealthSteal(), healthSteal));
-          }),
-          buildWatch(amulet.playerMagicSteal, (magicSteal) {
-            if (magicSteal <= 0){
-              return nothing;
-            }
-            return Tooltip(
-                message: 'Magic Steal',
-                child: buildRow(buildIconMagicSteal(), magicSteal));
-          }),
-          height16,
-          buildContainerPlayerMastery(),
-          height16,
+          // buildTextHeader('BONUSES'),
+          // buildWatch(amulet.playerHealthSteal, (healthSteal) {
+          //   if (healthSteal <= 0){
+          //     return nothing;
+          //   }
+          //   return Tooltip(
+          //       message: 'Health Steal',
+          //       child: buildRow(buildIconHealthSteal(), healthSteal));
+          // }),
+          // buildWatch(amulet.playerMagicSteal, (magicSteal) {
+          //   if (magicSteal <= 0){
+          //     return nothing;
+          //   }
+          //   return Tooltip(
+          //       message: 'Magic Steal',
+          //       child: buildRow(buildIconMagicSteal(), magicSteal));
+          // }),
+          // height16,
+          // buildContainerPlayerMastery(),
+          // height16,
           buildTextHeader('STATS'),
           Tooltip(
             message: 'Health',
@@ -1352,24 +1352,23 @@ class AmuletUI {
           height: size,
           alignment: Alignment.center,
           color: Colors.black12,
-          // padding: const EdgeInsets.all(2),
           child: Stack(
             alignment: Alignment.center,
             children: [
               Positioned(
                 child: AmuletItemImage(amuletItem: amuletItem, scale: size / 32,),
               ),
-              if (skillType != null)
-                Positioned(
-                  bottom: 2,
-                  right: 2,
-                  child: Container(
-                      color: Colors.black,
-                      width: 16,
-                      height: 16,
-                      child: buildSkillTypeIcon(skillType),
-                  )
-                ),
+              // if (skillType != null)
+                // Positioned(
+                //   bottom: 2,
+                //   right: 2,
+                //   child: Container(
+                //       color: Colors.black,
+                //       width: 16,
+                //       height: 16,
+                //       child: buildSkillTypeIcon(skillType),
+                //   )
+                // ),
               // Positioned(
               //   bottom: 2,
               //   right: 2,
