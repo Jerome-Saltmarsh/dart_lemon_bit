@@ -19,7 +19,6 @@ import 'package:lemon_widgets/lemon_widgets.dart';
 import '../gamestream/isometric/src.dart';
 import 'amulet_render.dart';
 import 'classes/map_location.dart';
-import 'classes/skill_type_stats.dart';
 
 
 class Amulet extends IsometricGame {
@@ -653,10 +652,12 @@ class Amulet extends IsometricGame {
           value.index,
       );
 
-  void sendAmuletRequest(NetworkRequestAmulet request, [dynamic message]) =>
+  void sendAmuletRequest(NetworkRequestAmulet request, [dynamic arg1, dynamic arg2]) =>
       server.sendNetworkRequest(
           NetworkRequest.Amulet,
-          '${request.index} $message'
+          request.index,
+          arg1,
+          arg2,
       );
 
   void onAmuletEvent({
@@ -836,11 +837,3 @@ class Amulet extends IsometricGame {
     return null;
   }
 }
-
-// Map<T, J> asMap<T, J>(List<T> list, J build(T t)) {
-//   final map = <T, J>{};
-//   for (var i = 0; i < list.length; i++) {
-//     map[list[i]] = build(list[i]);
-//   }
-//   return map;
-// }

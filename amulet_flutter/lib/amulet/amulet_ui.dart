@@ -1190,87 +1190,67 @@ class AmuletUI {
 
   Widget buildWindowPlayerSkillStats() =>
     GSContainer(
-      child: Column(
-        children: SkillType.values
-            .map(buildContainerSkillTypeInfo)
-            .toList(growable: false),
+      height: amulet.engine.screen.height - 200,
+      child: SingleChildScrollView(
+        child: Column(
+          children: SkillType.values
+              .where((element) => !const[
+                SkillType.None,
+                SkillType.Strike,
+                SkillType.Shoot_Arrow,
+              ].contains(element))
+              .map(buildContainerSkillTypeInfo)
+              .toList(growable: false),
+        ),
       ),
     );
 
   Widget buildContainerSkillTypeInfo(SkillType skillType){
      final watch = amulet.playerSkills[skillType] ?? (throw Exception());
      return buildWatch(watch, (level) {
-       return Column(
-         children: [
-            buildSkillTypeIcon(skillType),
-            buildText(level),
-         ],
+       return Container(
+         width: 125,
+         height: 50,
+         padding: const EdgeInsets.all(4),
+         color: Colors.black26,
+         margin: const EdgeInsets.only(bottom: 6),
+         child: Column(
+           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+           children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  buildSkillTypeIcon(skillType),
+                  buildText(skillType.name.clean, color: Colors.white70, size: 16),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: List.generate(4, (index) => onPressed(
+                      action: () {
+                        amulet.setSkillSlotValue(
+                            index: index,
+                            skillType: skillType,
+                        );
+                      },
+                      child: Container(
+                        width: 12,
+                        height: 12,
+                        color: Colors.black54,
+                        margin: index < 3 ? const EdgeInsets.only(right: 4) : null,
+                      ),
+                    )),
+                  ),
+                  buildText(level),
+                ],
+              ),
+           ],
+         ),
        );
      });
   }
-
-  // Widget buildContainerPlayerMastery() => Column(
-  //   crossAxisAlignment: CrossAxisAlignment.start,
-  //   children: [
-  //     buildText('MASTERY', color: Colors.white70),
-  //     Tooltip(
-  //       message: 'Sword',
-  //       child: Row(
-  //         mainAxisAlignment: MainAxisAlignment.start,
-  //         children: [
-  //           buildIconCasteType(CasteType.Sword),
-  //           width8,
-  //           buildWatch(
-  //               amulet.playerMastery.sword, buildRowValue),
-  //         ],
-  //       ),
-  //     ),
-  //     height4,
-  //     Tooltip(
-  //       message: 'Staff',
-  //       child: Row(
-  //         mainAxisAlignment: MainAxisAlignment.start,
-  //         children: [
-  //           buildIconCasteType(CasteType.Staff),
-  //           width8,
-  //           buildWatch(
-  //               amulet.playerMastery.staff,
-  //               buildRowValue,
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //     height4,
-  //     Tooltip(
-  //       message: 'Bow',
-  //       child: Row(
-  //         mainAxisAlignment: MainAxisAlignment.start,
-  //         children: [
-  //           buildIconCasteType(CasteType.Bow),
-  //           width8,
-  //           buildWatch(
-  //               amulet.playerMastery.bow, buildRowValue,
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //     height4,
-  //     Tooltip(
-  //       message: 'Caste',
-  //       child: Row(
-  //         mainAxisAlignment: MainAxisAlignment.start,
-  //         children: [
-  //           buildIconCasteType(CasteType.Caste),
-  //           width8,
-  //           buildWatch(
-  //             amulet.playerMastery.caste,
-  //             buildRowValue,
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   ],
-  // );
 
   Widget buildRowValue(dynamic value) => buildText(value, color: Colors.white70);
 

@@ -5,7 +5,6 @@ import 'package:amulet_flutter/packages/lemon_components/src.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_bit/src.dart';
 import 'package:lemon_byte/byte_writer.dart';
-import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'classes/touch_controller.dart';
 
