@@ -96,42 +96,6 @@ class AmuletPlayer extends IsometricPlayer with
     writePlayerMagic();
   }
 
-  int get masterySword {
-    var total = 0;
-    total += equippedWeapon?.masterySword ?? 0;
-    total += equippedHelm?.masterySword ?? 0;
-    total += equippedArmor?.masterySword ?? 0;
-    total += equippedShoes?.masterySword ?? 0;
-    return total;
-  }
-
-  int get masteryStaff {
-    var total = 0;
-    total += equippedWeapon?.masteryStaff ?? 0;
-    total += equippedHelm?.masteryStaff ?? 0;
-    total += equippedArmor?.masteryStaff ?? 0;
-    total += equippedShoes?.masteryStaff ?? 0;
-    return total;
-  }
-
-  int get masteryBow {
-    var total = 0;
-    total += equippedWeapon?.masteryBow ?? 0;
-    total += equippedHelm?.masteryBow ?? 0;
-    total += equippedArmor?.masteryBow ?? 0;
-    total += equippedShoes?.masteryBow ?? 0;
-    return total;
-  }
-
-  int get masteryCaste {
-    var total = 0;
-    total += equippedWeapon?.masteryCaste ?? 0;
-    total += equippedHelm?.masteryCaste ?? 0;
-    total += equippedArmor?.masteryCaste ?? 0;
-    total += equippedShoes?.masteryCaste ?? 0;
-    return total;
-  }
-
   void setQuestMain (QuestMain value){
     this.questMain = value;
     writeQuestMain(value);
@@ -446,7 +410,6 @@ class AmuletPlayer extends IsometricPlayer with
     writePlayerHealth();
     writePlayerMagic();
     writeSkillTypes();
-    writeCharacteristics();
     writeEquippedWeaponRange();
     writeEquippedWeaponAttackSpeed();
     writeEquippedWeaponAreaDamage();
@@ -539,10 +502,6 @@ class AmuletPlayer extends IsometricPlayer with
     final skillType = skillActive;
     final mouseDistance = getMouseDistance();
     final maxRange = getSkillTypeRange(skillType);
-
-    if (maxRange == null){
-      return;
-    }
 
     if (mouseDistance <= maxRange){
       castePositionX = mouseSceneX;
@@ -1206,7 +1165,7 @@ class AmuletPlayer extends IsometricPlayer with
   int getSkillTypeDamageDivider(SkillType skillType, int divider){
 
     if (skillType == SkillType.Strike) {
-      return equippedWeaponDamage + masterySword ~/ divider;
+      return equippedWeaponDamage;
     }
 
     if (const [
@@ -1215,18 +1174,18 @@ class AmuletPlayer extends IsometricPlayer with
       SkillType.Ice_Arrow,
       SkillType.Fire_Arrow,
     ].contains(skillType)) {
-      return equippedWeaponDamage + masteryBow ~/ divider;
+      return equippedWeaponDamage;
     }
 
     switch (skillType) {
       case SkillType.Mighty_Strike:
-        return (equippedWeaponDamage + masterySword ~/ divider) * 2;
+        return equippedWeaponDamage * 2;
       case SkillType.Frostball:
-        return 5 + masteryStaff ~/ divider;
+        return 5;
       case SkillType.Fireball:
-        return 5 + masteryStaff ~/ divider;
+        return 5;
       case SkillType.Explode:
-        return 10 + masteryStaff ~/ divider;
+        return 10;
       default:
         return 0;
     }
@@ -1280,21 +1239,31 @@ class AmuletPlayer extends IsometricPlayer with
       return WeaponClass.fromWeaponType(weaponType);
   }
 
+  int getSkillTypeLevel(SkillType skillType){
+     var total = 0;
+     total += equippedWeapon?.skills[skillType] ?? 0;
+     total += equippedHelm?.skills[skillType] ?? 0;
+     total += equippedArmor?.skills[skillType] ?? 0;
+     total += equippedShoes?.skills[skillType] ?? 0;
+     return total;
+  }
+
   void writeSkillTypes() {
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Skill_Types);
     for (final skillType in SkillType.values){
-      if (!skillTypeUnlocked(skillType)){
-        writeFalse();
-        continue;
-      }
-      writeTrue();
-      writeByte(getSkillTypeMagicCost(skillType));
-      writeUInt16(getSkillTypeDamageMin(skillType));
-      writeUInt16(getSkillTypeDamageMax(skillType));
-      writeUInt16((getSkillTypeRange(skillType) ?? 0).toInt());
-      // writeUInt16(getSkillTypePerformDuration(skillType).toInt());
-      writeUInt16(getSkillTypeAmount(skillType).toInt());
+      writeUInt16(getSkillTypeLevel(skillType));
+      // if (!skillTypeUnlocked(skillType)){
+      //   writeFalse();
+      //   continue;
+      // }
+      // writeTrue();
+      // writeByte(skillType.index);
+      // writeByte(getSkillTypeMagicCost(skillType));
+      // writeUInt16(getSkillTypeDamageMin(skillType));
+      // writeUInt16(getSkillTypeDamageMax(skillType));
+      // writeUInt16((getSkillTypeRange(skillType) ?? 0).toInt());
+      // writeUInt16(getSkillTypeAmount(skillType).toInt());
     }
   }
 
@@ -1318,14 +1287,6 @@ class AmuletPlayer extends IsometricPlayer with
   void setCharacterStateHurt({int duration = 10}) {
     super.setCharacterStateHurt(duration: duration);
     activeSkillActiveLeft();
-  }
-
-  void writeCharacteristics() {
-    writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Player_Characteristics);
-    writeUInt16(masterySword);
-    writeUInt16(masteryStaff);
-    writeUInt16(masteryBow);
   }
 
   void writeActiveSlotType() {
@@ -1381,9 +1342,9 @@ class AmuletPlayer extends IsometricPlayer with
     switch (skillType) {
       case SkillType.Split_Shot:
         return AmuletSettings.Amount_Skill_Type_Split_Shot_Base +
-            (masteryBow * AmuletSettings.Ratio_Skill_Type_Split_Shot_Amount).toInt();
+            (AmuletSettings.Ratio_Skill_Type_Split_Shot_Amount).toInt();
       case SkillType.Heal:
-        return 5 + (masteryCaste * 2);
+        return 5;
       default:
         return 0;
     }
@@ -1682,6 +1643,8 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(NetworkResponseAmulet.Amulet_Item_Equipped);
     writeAmuletItem(amuletItem);
   }
+
+
 
 }
 

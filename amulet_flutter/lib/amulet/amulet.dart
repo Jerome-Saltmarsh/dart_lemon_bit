@@ -21,12 +21,6 @@ import 'amulet_render.dart';
 import 'classes/map_location.dart';
 import 'classes/skill_type_stats.dart';
 
-class Mastery {
-  final sword = Watch(0);
-  final staff = Watch(0);
-  final bow = Watch(0);
-  final caste = Watch(0);
-}
 
 class Amulet extends IsometricGame {
 
@@ -74,7 +68,6 @@ class Amulet extends IsometricGame {
   var playerWorldX = 0.0;
   var playerWorldY = 0.0;
 
-  final playerMastery = Mastery();
   final playerMagic = Watch(0);
   final playerMagicMax = Watch(0);
   final playerMagicPercentage = Watch(0.0);
@@ -92,14 +85,13 @@ class Amulet extends IsometricGame {
   final playerWeaponAttackSpeed = Watch<int?>(0);
   final playerWeaponAreaDamage = Watch<AreaDamage?>(null);
 
+  final playerSkills = SkillType.values.asMapReversed((t) => Watch(0));
   final playerSkillLeft = Watch(SkillType.Strike);
   final playerSkillRight = Watch(SkillType.Strike);
   final windowVisibleSkillLeft = WatchBool(false);
   final windowVisibleSkillRight = WatchBool(false);
   final windowVisibleQuantify = WatchBool(false);
   final windowQuantifyTab = Watch(QuantifyTab.values.first);
-  // final windowVisibleQuantifyAmuletItems = WatchBool(false);
-  // final windowVisibleQuantifyFiendTypes = WatchBool(false);
 
   final playerRunSpeed = Watch(0);
   final playerAgility = Watch(0);
@@ -124,17 +116,19 @@ class Amulet extends IsometricGame {
   final aimTargetItemTypeComparison = Watch<AmuletItem?>(null);
   final aimTargetItemTypeCurrent = Watch<AmuletItem?>(null);
   final highlightedAmuletItem = Watch<AmuletItem?>(null);
-  final playerSkillTypeStatsNotifier = Watch(0);
-  final playerSkillTypeStats = SkillType.values.map((skillType) =>
-      SkillTypeStats(skillType: skillType)
-  ).toList(growable: false);
+  // final playerSkillsNotifier = Watch(0);
+  // final playerSkillTypeStats = SkillType.values.map((skillType) =>
+  //     SkillTypeStats(skillType: skillType)
+  // ).toList(growable: false);
 
-  List<SkillType> get playerSkills =>
-      playerSkillTypeStats
-        .where((element) => element.unlocked)
-        .map((e) => e.skillType)
-        .toList(growable: false)
-      ;
+  // final playerSkills = SkillType.values.m
+
+  // List<SkillType> get playerSkills =>
+  //     playerSkillTypeStats
+  //       .where((element) => element.unlocked)
+  //       .map((e) => e.skillType)
+  //       .toList(growable: false)
+  //     ;
 
   void onChangedPlayerSkillType(SkillType skillType){
     audio.click_sounds_35.play();
@@ -743,14 +737,14 @@ class Amulet extends IsometricGame {
     ];
   }
 
-  SkillTypeStats getSkillTypeStats(SkillType skillType){
-     for (final skillTypeStats in playerSkillTypeStats){
-       if (skillTypeStats.skillType == skillType){
-         return skillTypeStats;
-       }
-     }
-     throw Exception();
-  }
+  // SkillTypeStats getSkillTypeStats(SkillType skillType){
+  //    for (final skillTypeStats in playerSkillTypeStats){
+  //      if (skillTypeStats.skillType == skillType){
+  //        return skillTypeStats;
+  //      }
+  //    }
+  //    throw Exception();
+  // }
 
   Watch<SkillType> getSkillSlotAt(int index){
     switch (index){
@@ -843,4 +837,10 @@ class Amulet extends IsometricGame {
   }
 }
 
-
+// Map<T, J> asMap<T, J>(List<T> list, J build(T t)) {
+//   final map = <T, J>{};
+//   for (var i = 0; i < list.length; i++) {
+//     map[list[i]] = build(list[i]);
+//   }
+//   return map;
+// }

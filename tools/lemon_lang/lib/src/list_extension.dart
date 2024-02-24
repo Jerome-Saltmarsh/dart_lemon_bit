@@ -18,4 +18,12 @@ extension ListExtensions<T> on List<T> {
       index != null &&
           index >= 0 &&
           index <= length;
+
+  Map<T, J> asMapReversed<J>(J build(T t)) {
+    final map = <T, J>{};
+    for (var i = 0; i < length; i++) {
+      map[this[i]] = build(this[i]);
+    }
+    return map;
+  }
 }

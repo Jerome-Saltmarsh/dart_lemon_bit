@@ -56,9 +56,6 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Skill_Types:
          readPlayerSkillTypes();
          break;
-       case NetworkResponseAmulet.Player_Characteristics:
-         readPlayerCharacteristics();
-         break;
        case NetworkResponseAmulet.Player_Active_Slot_Type:
          readPlayerActiveSlotType();
          break;
@@ -339,26 +336,10 @@ extension AmuletParser on IsometricParser {
 
   void readPlayerSkillTypes() {
 
-    for (final skillTypeStat in amulet.playerSkillTypeStats) {
-       skillTypeStat.unlocked = readBool();
-       if (!skillTypeStat.unlocked){
-         continue;
-       }
-       skillTypeStat.magicCost = readByte();
-       skillTypeStat.damageMin = readUInt16();
-       skillTypeStat.damageMax = readUInt16();
-       skillTypeStat.range = readUInt16();
-       // skillTypeStat.performDuration = readUInt16();
-       skillTypeStat.amount = readUInt16();
+    for (final skillTypeStat in SkillType.values) {
+       amulet.playerSkills[skillTypeStat]?.value = readUInt16();
     }
-    amulet.playerSkillTypeStatsNotifier.value++;
-  }
-
-  void readPlayerCharacteristics() {
-     final characteristics = amulet.playerMastery;
-     characteristics.sword.value = readUInt16();
-     characteristics.staff.value = readUInt16();
-     characteristics.bow.value = readUInt16();
+    // amulet.playerSkillsNotifier.value++;
   }
 
   void readPlayerActiveSlotType() {

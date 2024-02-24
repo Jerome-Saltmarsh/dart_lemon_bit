@@ -525,7 +525,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
          case SkillType.Strike:
            return character.areaDamage;
          case SkillType.Mighty_Strike:
-           return character.areaDamage + (character.masterySword ~/ 3);
+           return character.areaDamage;
          default:
            return 0;
        }
