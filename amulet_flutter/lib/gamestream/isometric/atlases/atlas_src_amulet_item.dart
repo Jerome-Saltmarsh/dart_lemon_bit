@@ -72,6 +72,6 @@ const atlasSrcAmuletItem = <AmuletItem, List<double>> {
   AmuletItem.Shoes_Warrior_3_Sabatons_Common: _shoes_grieves,
   AmuletItem.Shoes_Soles: _shoes_grieves,
   AmuletItem.Shoes_Satin_Boots: _shoes_grieves,
-  AmuletItem.Consumable_Potion_Health: [srcx_consumable, 32],
+  AmuletItem.Consumable_Potion_Health: [srcx_consumable, 0],
   AmuletItem.Consumable_Potion_Magic: [srcx_consumable, 64],
 };

@@ -1053,26 +1053,26 @@ class AmuletUI {
               ],
             ),
           ),
-          Tooltip(
-            message: 'Agility',
-            child: Row(
-              children: [
-                buildIconAgility(),
-                width8,
-                buildWatch(amulet.playerAgility, buildRowValue),
-              ],
-            ),
-          ),
-          Tooltip(
-            message: 'Critical Hit Points',
-            child: Row(
-              children: [
-                buildIconCriticalHitPoints(),
-                width8,
-                buildWatch(amulet.playerCriticalHitPoints, buildRowValue),
-              ],
-            ),
-          ),
+          // Tooltip(
+          //   message: 'Agility',
+          //   child: Row(
+          //     children: [
+          //       buildIconAgility(),
+          //       width8,
+          //       buildWatch(amulet.playerAgility, buildRowValue),
+          //     ],
+          //   ),
+          // ),
+          // Tooltip(
+          //   message: 'Critical Hit Points',
+          //   child: Row(
+          //     children: [
+          //       buildIconCriticalHitPoints(),
+          //       width8,
+          //       buildWatch(amulet.playerCriticalHitPoints, buildRowValue),
+          //     ],
+          //   ),
+          // ),
           if (amulet.options.developMode)
           Tooltip(
             message: 'Player Perform Frame Velocity',
@@ -1191,17 +1191,80 @@ class AmuletUI {
   Widget buildWindowPlayerSkillStats() =>
     GSContainer(
       height: amulet.engine.screen.height - 200,
-      child: SingleChildScrollView(
-        child: Column(
-          children: SkillType.values
-              .where((element) => !const[
-                SkillType.None,
-                SkillType.Strike,
-                SkillType.Shoot_Arrow,
-              ].contains(element))
-              .map(buildContainerSkillTypeInfo)
-              .toList(growable: false),
-        ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Tooltip(
+                  message: 'Skills',
+                  child: buildIconSkills()),
+              buildButtonClose(amulet.windowVisiblePlayerSkills)
+            ],
+          ),
+          height16,
+          SingleChildScrollView(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Column(
+                //   children: SkillType.values
+                //       .where((element) => !const[
+                //         SkillType.None,
+                //         SkillType.Strike,
+                //         SkillType.Shoot_Arrow,
+                //       ].contains(element))
+                //       .map(buildContainerSkillTypeInfo)
+                //       .toList(growable: false),
+                // ),
+                Column(
+                  children: SkillType.values
+                      .where((element) => !const[
+                        SkillType.None,
+                        SkillType.Strike,
+                        SkillType.Shoot_Arrow,
+                      ].contains(element) && element.casteType == CasteType.Sword)
+                      .map(buildContainerSkillTypeInfo)
+                      .toList(growable: false),
+                ),
+                width8,
+                Column(
+                  children: SkillType.values
+                      .where((element) => !const[
+                        SkillType.None,
+                        SkillType.Strike,
+                        SkillType.Shoot_Arrow,
+                      ].contains(element) && element.casteType == CasteType.Staff)
+                      .map(buildContainerSkillTypeInfo)
+                      .toList(growable: false),
+                ),
+                width8,
+                Column(
+                  children: SkillType.values
+                      .where((element) => !const[
+                        SkillType.None,
+                        SkillType.Strike,
+                        SkillType.Shoot_Arrow,
+                      ].contains(element) && element.casteType == CasteType.Bow)
+                      .map(buildContainerSkillTypeInfo)
+                      .toList(growable: false),
+                ),
+                width8,
+                Column(
+                  children: SkillType.values
+                      .where((element) => !const[
+                        SkillType.None,
+                        SkillType.Strike,
+                        SkillType.Shoot_Arrow,
+                      ].contains(element) && element.casteType == CasteType.Caste)
+                      .map(buildContainerSkillTypeInfo)
+                      .toList(growable: false),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
 
