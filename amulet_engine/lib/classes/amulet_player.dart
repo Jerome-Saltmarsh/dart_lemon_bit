@@ -1558,6 +1558,12 @@ class AmuletPlayer extends IsometricPlayer with
     if (!skillSlots.isValidIndex(index)) {
       throw Exception('amuletPlayer.setSkillSlotValue(index: $index, skillType: $skillType)');
     }
+
+    for (var i = 0; i < skillSlots.length; i++) {
+       if (skillSlots[i] != skillType) continue;
+       skillSlots[i] = SkillType.None;
+    }
+
     skillSlots[index] = skillType;
     notifySkillSlotsDirty();
   }
