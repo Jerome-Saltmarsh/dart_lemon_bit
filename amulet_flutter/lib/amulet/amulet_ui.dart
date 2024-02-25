@@ -1414,16 +1414,12 @@ class AmuletUI {
     final areaDamage = amuletItem.areaDamage;
     final attackSpeed = amuletItem.attackSpeed;
     final slotType = amuletItem.slotType;
-    // final masterySword = amuletItem.masterySword;
-    // final masteryStaff = amuletItem.masteryStaff;
-    // final masteryBow = amuletItem.masteryBow;
-    // final masteryCaste = amuletItem.masteryCaste;
     final criticalHitPoints = amuletItem.criticalHitPoints;
     final equippedItemType = amulet.getEquippedItemType(slotType);
 
+
     return GSContainer(
       width: 170,
-      // height: 200,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1432,31 +1428,10 @@ class AmuletUI {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               AmuletItemImage(amuletItem: amuletItem, scale: 1.0),
-              Row(
-                children: [
-                  // buildText(amuletItem.quality.name),
-                  // width8,
-                  buildText(slotType.name),
-                ],
-              ),
+              buildText(slotType.name),
             ],
           ),
           buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
-          // Row(children: [
-          //   if (masterySword != 0)
-          //     buildRow(buildIconCasteType(CasteType.Sword), masterySword),
-          //   width8,
-          //   if (masteryStaff != 0)
-          //     buildRow(buildIconCasteType(CasteType.Staff), masteryStaff),
-          // ],),
-          // Row(children: [
-          //   if (masteryBow != 0)
-          //     buildRow(buildIconCasteType(CasteType.Bow), masteryBow),
-          //   width8,
-          //   if (masteryCaste != 0)
-          //     buildRow(buildIconCasteType(CasteType.Caste), masteryCaste),
-          // ],),
-
           if (damage != null)
             buildRow(buildIconDamage(), damage),
           if (range != null)
@@ -1481,11 +1456,18 @@ class AmuletUI {
             buildRow(buildIconMagicSteal(), magicSteal),
           if (criticalHitPoints > 0)
             buildRow(buildIconCriticalHitPoints(), criticalHitPoints),
+           ...amuletItem.skills.entries.map((e) => Row(children: [
+             buildSkillTypeIcon(e.key),
+             width4,
+             buildTextValue('+${e.value}'),
+             width4,
+             buildTextValue(e.key.name.clean),
+           ],)),
           if (equippedItemType == amuletItem)
             alignRight(
               child: Container(
-                  margin: const EdgeInsets.only(top: 8),
-                  child: buildText('EQUIPPED', color: Colors.green),
+                margin: const EdgeInsets.only(top: 8),
+                child: buildText('EQUIPPED', color: Colors.green),
               ),
             ),
         ],
@@ -1922,6 +1904,9 @@ class AmuletUI {
           buildWindowPotions(),
         ],
       );
+
+  Widget buildTextValue(value) => buildText(value, color: Colors.white70);
+
 }
 
 String formatFramesToSeconds(int frames){
