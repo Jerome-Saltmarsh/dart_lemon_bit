@@ -1214,6 +1214,8 @@ class AmuletUI {
                 width8,
                 buildColumnCasteType(CasteType.Staff),
                 width8,
+                buildColumnCasteType(CasteType.Caste),
+                width8,
                 buildColumnCasteType(CasteType.Passive),
               ],
             ),
