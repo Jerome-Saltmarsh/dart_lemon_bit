@@ -68,6 +68,7 @@ class AmuletFiend extends Character {
     );
   }
 
-
-
+  int getSkillTypeLevel(SkillType skillType) {
+    return fiendType.skillLevel;
+  }
 }

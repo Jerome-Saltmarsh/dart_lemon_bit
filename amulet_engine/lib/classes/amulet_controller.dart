@@ -685,12 +685,12 @@ class AmuletController {
 
         player.dropSlotType(slotType);
         break;
-      case NetworkRequestAmulet.Select_Slot_Type:
-        final index = parseArg2(arguments);
-        final slotType = SlotType.values.tryGet(index);
-        if (slotType == null) return;
-        player.selectSlotType(slotType);
-        break;
+      // case NetworkRequestAmulet.Select_Slot_Type:
+      //   final index = parseArg2(arguments);
+      //   final slotType = SlotType.values.tryGet(index);
+      //   if (slotType == null) return;
+      //   player.selectSlotType(slotType);
+      //   break;
       case NetworkRequestAmulet.Select_Talk_Option:
         final index = parseArg2(arguments);
         if (index == null) return;

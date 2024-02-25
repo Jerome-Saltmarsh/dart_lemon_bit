@@ -1,7 +1,7 @@
 
 enum NetworkRequestAmulet {
   End_Interaction,
-  Select_Slot_Type,
+  // Select_Slot_Type,
   Select_Talk_Option,
   Spawn_Random_Enemy,
   Acquire_Amulet_Item,

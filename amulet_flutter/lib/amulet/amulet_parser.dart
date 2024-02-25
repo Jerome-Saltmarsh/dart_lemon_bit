@@ -56,9 +56,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Skill_Types:
          readPlayerSkillTypes();
          break;
-       case NetworkResponseAmulet.Player_Active_Slot_Type:
-         readPlayerActiveSlotType();
-         break;
+       // case NetworkResponseAmulet.Player_Active_Slot_Type:
+       //   readPlayerActiveSlotType();
+       //   break;
        case NetworkResponseAmulet.Player_Skills_Left_Right:
          readPlayerSkillsLeftRight();
          break;
@@ -342,10 +342,10 @@ extension AmuletParser on IsometricParser {
     // amulet.playerSkillsNotifier.value++;
   }
 
-  void readPlayerActiveSlotType() {
-    final index = readInt8();
-    amulet.activeSlotType.value = SlotType.values.tryGet(index);
-  }
+  // void readPlayerActiveSlotType() {
+  //   final index = readInt8();
+  //   amulet.activeSlotType.value = SlotType.values.tryGet(index);
+  // }
 
   void readFiendCount() {
     amulet.fiendCountAlive.value = readUInt16();

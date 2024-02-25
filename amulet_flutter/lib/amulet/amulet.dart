@@ -95,7 +95,7 @@ class Amulet extends IsometricGame {
   final playerRunSpeed = Watch(0);
   final playerAgility = Watch(0);
 
-  final activeSlotType = Watch<SlotType?>(null);
+  // final activeSlotType = Watch<SlotType?>(null);
   final worldMapLarge = WatchBool(false);
   final amuletScene = Watch<AmuletScene?>(null);
   final questMain = Watch(QuestMain.values.first);
@@ -133,18 +133,18 @@ class Amulet extends IsometricGame {
     audio.click_sounds_35.play();
   }
 
-  Watch<AmuletItem?>? get activeAmuletItemSlot {
-    switch (activeSlotType.value){
-      case SlotType.Helm:
-        return equippedHelm;
-      case SlotType.Armor:
-        return equippedArmor;
-      case SlotType.Shoes:
-        return equippedShoes;
-      default:
-        return null;
-    }
-  }
+  // Watch<AmuletItem?>? get activeAmuletItemSlot {
+  //   switch (activeSlotType.value){
+  //     case SlotType.Helm:
+  //       return equippedHelm;
+  //     case SlotType.Armor:
+  //       return equippedArmor;
+  //     case SlotType.Shoes:
+  //       return equippedShoes;
+  //     default:
+  //       return null;
+  //   }
+  // }
 
   final slotContainerDefault = Container(
     color: Colors.black12,
@@ -431,8 +431,8 @@ class Amulet extends IsometricGame {
         slotType.index,
       );
 
-  void selectSlotType(SlotType slotType) =>
-      sendAmuletRequest(NetworkRequestAmulet.Select_Slot_Type, slotType.index);
+  // void selectSlotType(SlotType slotType) =>
+  //     sendAmuletRequest(NetworkRequestAmulet.Select_Slot_Type, slotType.index);
 
   void setSkillSlotIndex(int index){
     sendAmuletRequest(NetworkRequestAmulet.Set_Skill_Slot_Index, index);

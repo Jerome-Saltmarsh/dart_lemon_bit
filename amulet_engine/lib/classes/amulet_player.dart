@@ -60,7 +60,6 @@ class AmuletPlayer extends IsometricPlayer with
   Function? onInteractionOver;
   Position? cameraTarget;
   AmuletGame amuletGame;
-  SlotType? activeSlotType;
 
   AmuletPlayer({
     required this.amuletGame,
@@ -405,7 +404,7 @@ class AmuletPlayer extends IsometricPlayer with
     shoeType = equippedShoes?.subType ?? ShoeType.None;
     removeInvalidSkillSlots();
     checkAssignedSkillTypes();
-    checkActiveSlotType();
+    // checkActiveSlotType();
     writeEquipped();
     writePlayerHealth();
     writePlayerMagic();
@@ -1289,11 +1288,11 @@ class AmuletPlayer extends IsometricPlayer with
     activeSkillActiveLeft();
   }
 
-  void writeActiveSlotType() {
-    writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Player_Active_Slot_Type);
-    writeInt8(activeSlotType?.index ?? -1);
-  }
+  // void writeActiveSlotType() {
+  //   writeByte(NetworkResponse.Amulet);
+  //   writeByte(NetworkResponseAmulet.Player_Active_Slot_Type);
+  //   writeInt8(activeSlotType?.index ?? -1);
+  // }
 
   AmuletItem? getEquippedSlotType(SlotType? slotType) =>
     switch (slotType){
@@ -1305,33 +1304,18 @@ class AmuletPlayer extends IsometricPlayer with
        null => null
     };
 
-  void checkActiveSlotType() {
-     final value = activeSlotType;
-     if (value == null) return;
-     final amuletItem = getEquippedSlotType(activeSlotType);
-     if (amuletItem == null){
-       clearActiveSlotType();
-     }
-  }
+  // void checkActiveSlotType() {
+  //    final value = activeSlotType;
+  //    if (value == null) return;
+  //    final amuletItem = getEquippedSlotType(activeSlotType);
+  //    if (amuletItem == null){
+  //      clearActiveSlotType();
+  //    }
+  // }
 
-  void clearActiveSlotType() {
-    selectSlotType(null);
-  }
-
-  void selectSlotType(SlotType? slotType) {
-    if (slotType == null) {
-      return;
-    }
-    final equipped = getEquippedSlotType(slotType);
-    if (equipped == null){
-      return;
-    }
-    final equippedSkillType = equipped.skillType;
-    if (equippedSkillType == null){
-      return;
-    }
-    skillTypeRight = equippedSkillType;
-  }
+  // void clearActiveSlotType() {
+  //   selectSlotType(null);
+  // }
 
   int getSkillTypePerformDuration(SkillType skillType) =>
       skillType.casteSpeed?.duration ??

@@ -295,6 +295,16 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required Character character,
     required SkillType skillType,
   }){
+
+    final skillLevel = getCharacterSkillTypeLevel(
+      character: character,
+      skillType: SkillType.Split_Shot,
+    );
+
+    if (skillLevel <= 0){
+      throw Exception();
+    }
+
     switch (skillType) {
       case SkillType.Strike:
         characterPerformSkillTypeStrike(character);
@@ -306,7 +316,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         characterPerformSkillTypeMightySwing(character);
         return;
       case SkillType.Split_Shot:
-        characterPerformSkillTypeSplitShot(character);
+        characterPerformSkillTypeSplitShot(character, skillLevel);
         break;
       case SkillType.Fireball:
         characterPerformSkillTypeFireball(character);
@@ -628,7 +638,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     );
   }
 
-  void characterPerformSkillTypeSplitShot(Character character) {
+  void characterPerformSkillTypeSplitShot(Character character, int skillLevel) {
     final damage = getCharacterSkillTypeDamage(
         character: character,
         skillType: SkillType.Split_Shot,
@@ -646,11 +656,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       character.z,
     );
 
-    final totalArrows = getCharacterSkillTypeAmount(
-        character: character,
-        skillType: SkillType.Split_Shot,
-    );
-
+    final totalArrows = 2 + skillLevel;
     final spread = getSplitShortSpread(totalArrows);
 
     for (var i = 0; i < totalArrows; i++){
@@ -1362,6 +1368,19 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         target: targetGame,
         index: targetNodeIndex,
     );
+  }
+
+  int getCharacterSkillTypeLevel({
+    required Character character,
+    required SkillType skillType,
+  }) {
+    if (character is AmuletPlayer){
+      return character.getSkillTypeLevel(skillType);
+    }
+    if (character is AmuletFiend){
+      return character.getSkillTypeLevel(skillType);
+    }
+    throw Exception('amuletGame.getCharacterSkillTypeLevel()');
   }
 }
 

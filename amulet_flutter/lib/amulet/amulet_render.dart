@@ -12,7 +12,7 @@ extension AmuletRender on Amulet {
       renderPlayerRunLine();
     }
 
-    renderActivatedPower();
+    // renderActivatedPower();
 
     if (amulet.playerDebugEnabled.value){
       renderDebug();
@@ -61,38 +61,38 @@ extension AmuletRender on Amulet {
     // );
   }
 
-  void renderActivatedPower({Color rangeColor = Colors.white}) {
-
-    final activeSlotAmuletItem = activeAmuletItemSlot?.value;
-
-    if (activeSlotAmuletItem == null) {
-      return;
-    }
-
-    final skillType = activeSlotAmuletItem.skillType;
-
-    if (skillType == null){
-      return;
-    }
-
-    // final radius = activeSlotAmuletItem.radius;
-
-    // if (radius != null) {
-    //   engine.color = Colors.white;
-    //   render.circleOutlineAtPosition(
-    //     position: activePowerPosition,
-    //     radius: radius,
-    //   );
-    // }
-
-    // final range = activeSlotAmuletItem.range;
-    // if (range != null) {
-    //   engine.color = rangeColor;
-    //   renderCircleAroundPlayer(radius: range);
-    // }
-
-    // engine.color = Colors.white;
-  }
+  // void renderActivatedPower({Color rangeColor = Colors.white}) {
+  //
+  //   final activeSlotAmuletItem = activeAmuletItemSlot?.value;
+  //
+  //   if (activeSlotAmuletItem == null) {
+  //     return;
+  //   }
+  //
+  //   final skillType = activeSlotAmuletItem.skillType;
+  //
+  //   if (skillType == null){
+  //     return;
+  //   }
+  //
+  //   // final radius = activeSlotAmuletItem.radius;
+  //
+  //   // if (radius != null) {
+  //   //   engine.color = Colors.white;
+  //   //   render.circleOutlineAtPosition(
+  //   //     position: activePowerPosition,
+  //   //     radius: radius,
+  //   //   );
+  //   // }
+  //
+  //   // final range = activeSlotAmuletItem.range;
+  //   // if (range != null) {
+  //   //   engine.color = rangeColor;
+  //   //   renderCircleAroundPlayer(radius: range);
+  //   // }
+  //
+  //   // engine.color = Colors.white;
+  // }
 
   void renderCircleAroundPlayer({required double radius}) =>
       render.circleOutlineAtPosition(

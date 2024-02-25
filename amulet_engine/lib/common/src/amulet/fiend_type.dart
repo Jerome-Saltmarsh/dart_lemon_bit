@@ -22,6 +22,7 @@ enum FiendType {
     chanceOfDropLegendary: 0.01,
     chanceOfDropPotion: 0.15,
     skillType: SkillType.Strike,
+    skillLevel: 1,
   ),
   Wolf(
     level: 2,
@@ -43,6 +44,7 @@ enum FiendType {
     chanceOfDropPotion: 0.15,
     skillType: SkillType.Strike,
     skillTypeB: SkillType.Blind,
+    skillLevel: 1,
   ),
   Skeleton(
     level: 3,
@@ -63,6 +65,7 @@ enum FiendType {
     chanceOfDropLegendary: 0.025,
     chanceOfDropPotion: 0.15,
     skillType: SkillType.Shoot_Arrow,
+    skillLevel: 1,
   ),
   Zombie(
     level: 4,
@@ -84,6 +87,7 @@ enum FiendType {
     chanceOfDropLegendary: 0.025,
     chanceOfDropPotion: 0.15,
     skillType: SkillType.Strike,
+    skillLevel: 1,
   ),
   Goblin_Armoured(
     level: 5,
@@ -104,6 +108,7 @@ enum FiendType {
     chanceOfDropLegendary: 0.025,
     chanceOfDropPotion: 0.15,
     skillType: SkillType.Strike,
+    skillLevel: 1,
   ),
   Gargoyle(
     level: 6,
@@ -124,6 +129,7 @@ enum FiendType {
     chanceOfDropLegendary: 0.025,
     chanceOfDropPotion: 0.15,
     skillType: SkillType.Fireball,
+    skillLevel: 1,
   );
 
   final int level;
@@ -138,6 +144,7 @@ enum FiendType {
   final double weaponRange;
   final double skillRadius;
   final int skillAmount;
+  final int skillLevel;
   final bool clearTargetOnPerformAction;
   final int postAttackPauseDurationMin;
   final int postAttackPauseDurationMax;
@@ -168,6 +175,7 @@ enum FiendType {
     required this.chanceOfDropLegendary,
     required this.chanceOfDropPotion,
     required this.skillType,
+    required this.skillLevel,
     this.skillTypeB,
     this.resists,
     this.skillRadius = 0,
