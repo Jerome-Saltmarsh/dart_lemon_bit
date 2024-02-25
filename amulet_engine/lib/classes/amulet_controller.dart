@@ -751,18 +751,18 @@ class AmuletController {
       case NetworkRequestAmulet.Set_Skill_Slot_Value:
         final index = parseArg2(arguments);
         final skillTypeIndex = parseArg3(arguments);
-
-        if (index == null || skillTypeIndex == null){
-          // TODO notify error
-          return;
-        }
-
         final skillType = SkillType.values.tryGet(skillTypeIndex);
 
         if (skillType == null){
-          // TODO notify error
+          player.writeGameError(GameError.Invalid_Skill_Type_Index);
           return;
         }
+
+        if (index == null || !player.skillSlots.isValidIndex(index)) {
+          player.writeGameError(GameError.Invalid_Skill_Slot_Index);
+          return;
+        }
+
         player.setSkillSlotValue(
             index: index,
             skillType: skillType,

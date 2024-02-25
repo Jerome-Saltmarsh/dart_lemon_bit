@@ -298,7 +298,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     final skillLevel = getCharacterSkillTypeLevel(
       character: character,
-      skillType: SkillType.Split_Shot,
+      skillType: skillType,
     );
 
     if (skillLevel <= 0){

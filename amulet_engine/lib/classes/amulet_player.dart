@@ -404,7 +404,6 @@ class AmuletPlayer extends IsometricPlayer with
     shoeType = equippedShoes?.subType ?? ShoeType.None;
     removeInvalidSkillSlots();
     checkAssignedSkillTypes();
-    // checkActiveSlotType();
     writeEquipped();
     writePlayerHealth();
     writePlayerMagic();
@@ -417,6 +416,16 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   void checkAssignedSkillTypes() {
+
+    for (var i = 0; i < skillSlots.length; i++){
+      final skillType = skillSlots[i];
+      final skillLevel = getSkillTypeLevel(skillType);
+
+      if (skillLevel <= 0) {
+        skillSlots[i] = SkillType.None;
+        notifySkillSlotsDirty();
+      }
+    }
 
     if (!skillTypeUnlocked(skillTypeLeft)) {
       skillTypeLeft = equippedWeaponDefaultSkillType;
@@ -616,10 +625,7 @@ class AmuletPlayer extends IsometricPlayer with
     }
   }
 
-  void notifySkillSlotsDirty() {
-    skillSlotsDirty = true;
-  }
-
+  void notifySkillSlotsDirty() => skillSlotsDirty = true;
 
   bool skillTypeAssignedToSkillSlot(SkillType skillType) {
      return getSkillTypeSlotIndex(skillType) != null;
@@ -1541,6 +1547,10 @@ class AmuletPlayer extends IsometricPlayer with
   }) {
     if (!skillSlots.isValidIndex(index)) {
       throw Exception('amuletPlayer.setSkillSlotValue(index: $index, skillType: $skillType)');
+    }
+
+    if (getSkillTypeLevel(skillType) <= 0) {
+      throw Exception();
     }
 
     for (var i = 0; i < skillSlots.length; i++) {
