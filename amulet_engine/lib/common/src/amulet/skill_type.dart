@@ -139,6 +139,31 @@ enum SkillType {
     casteSpeed: AttackSpeed.Fast,
     quantify: 3,
   ),
+  Passive_Agile(
+    description: 'Increases attack and caste speed',
+    casteType: CasteType.Passive,
+    magicCost: 0,
+    quantify: 0,
+  ),
+  Passive_Health_Steal(
+    description: 'Steal health when damage is applied to enemies',
+    casteType: CasteType.Passive,
+    magicCost: 0,
+    quantify: 0,
+  ),
+  Passive_Magic_Steal(
+    description: 'Steal magic when damage is applied to enemies',
+    casteType: CasteType.Passive,
+    magicCost: 0,
+    quantify: 0,
+  ),
+  Passive_Critical_Hit(
+    description: 'Chance of doing double damage',
+    casteType: CasteType.Passive,
+    magicCost: 0,
+    quantify: 0,
+  ),
+
   ;
 
 

@@ -203,14 +203,8 @@ class AmuletPlayer extends IsometricPlayer with
     return total;
   }
 
-  int get agility {
-    var total = 0;
-    total += equippedWeapon?.agility ?? 0;
-    total += equippedHelm?.agility ?? 0;
-    total += equippedArmor?.agility ?? 0;
-    total += equippedShoes?.agility ?? 0;
-    return total;
-  }
+  int get agility =>
+      getSkillTypeLevel(SkillType.Passive_Agile);
 
   @override
   void writePlayerGame() {
@@ -864,6 +858,8 @@ class AmuletPlayer extends IsometricPlayer with
     final performDuration = getSkillTypePerformDuration(skillActive);
 
     switch (skillActive.casteType) {
+      case CasteType.Passive:
+        throw Exception();
       case CasteType.Caste:
         setCharacterStateCasting(duration: performDuration);
         break;
@@ -1219,6 +1215,7 @@ class AmuletPlayer extends IsometricPlayer with
 
   double getSkillTypeRange(SkillType skillType) =>
       switch (skillType.casteType) {
+        CasteType.Passive => skillType.range,
         CasteType.Caste => skillType.range,
         CasteType.Bow => equippedWeaponRange?.ranged,
         CasteType.Staff => equippedWeaponRange?.melee,
@@ -1318,35 +1315,11 @@ class AmuletPlayer extends IsometricPlayer with
       this.equippedWeaponAttackSpeed?.duration ??
       (throw Exception('amuletPlayer.getSkillTypePerformDuration(skillType: $skillType)'));
 
-  int getSkillTypeAmount(SkillType skillType) {
-    switch (skillType) {
-      case SkillType.Split_Shot:
-        return AmuletSettings.Amount_Skill_Type_Split_Shot_Base +
-            (AmuletSettings.Ratio_Skill_Type_Split_Shot_Amount).toInt();
-      case SkillType.Heal:
-        return 5;
-      default:
-        return 0;
-    }
-  }
+  int get healthSteal =>
+      getSkillTypeLevel(SkillType.Passive_Health_Steal);
 
-  int get healthSteal {
-    var total = 0;
-    total += equippedWeapon?.healthSteal ?? 0;
-    total += equippedHelm?.healthSteal ?? 0;
-    total += equippedArmor?.healthSteal ?? 0;
-    total += equippedShoes?.healthSteal ?? 0;
-    return total;
-  }
-
-  int get magicSteal {
-    var total = 0;
-    total += equippedWeapon?.magicSteal ?? 0;
-    total += equippedHelm?.magicSteal ?? 0;
-    total += equippedArmor?.magicSteal ?? 0;
-    total += equippedShoes?.magicSteal ?? 0;
-    return total;
-  }
+  int get magicSteal =>
+      getSkillTypeLevel(SkillType.Passive_Magic_Steal);
 
   void writeFiendCount() {
     writeByte(NetworkResponse.Amulet);
@@ -1447,14 +1420,8 @@ class AmuletPlayer extends IsometricPlayer with
   double get chanceOfCriticalDamage =>
       totalCriticalHitPoints / AmuletSettings.Max_Critical_Hit_Points;
 
-  int get totalCriticalHitPoints {
-    var total = 0;
-    total += equippedWeapon?.criticalHitPoints ?? 0;
-    total += equippedHelm?.criticalHitPoints ?? 0;
-    total += equippedArmor?.criticalHitPoints ?? 0;
-    total += equippedShoes?.criticalHitPoints ?? 0;
-    return total.clamp(0, AmuletSettings.Max_Critical_Hit_Points);
-  }
+  int get totalCriticalHitPoints =>
+      getSkillTypeLevel(SkillType.Passive_Critical_Hit);
 
   void writeEquippedWeaponAreaDamage() {
     writeByte(NetworkResponse.Amulet);

@@ -81,11 +81,6 @@ void validateAmulet() {
     throw Exception('validation exception. WeaponType.names[$weaponType] is null');
   }
 
-  for (final skillType in SkillType.values){
-    if (!atlasSrcSkillType.containsKey(skillType)){
-      throw Exception('atlasSrcSkillType[$skillType] == null');
-    }
-  }
   for (final amuletItem in AmuletItem.values){
     amuletItem.validate();
   }

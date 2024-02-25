@@ -37,5 +37,11 @@ List<double> getSrcCasteType(CasteType casteType){
         width,
         height,
       ],
+    CasteType.Passive => const [
+        784,
+        128,
+        width,
+        height,
+      ],
   };
 }

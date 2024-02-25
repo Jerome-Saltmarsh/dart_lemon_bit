@@ -1385,10 +1385,7 @@ class AmuletUI {
       );
 
   Widget buildSkillTypeIcon(SkillType skillType){
-    final src = atlasSrcSkillType[skillType];
-    if (src == null){
-      throw Exception('atlasSrcSkillType[$skillType] is null');
-    }
+    final src = getSkillTypeSrc(skillType);
     return AmuletImage(
         srcX: src[0],
         srcY: src[1],
@@ -1402,19 +1399,19 @@ class AmuletUI {
       return nothing;
     }
 
-    final healthSteal = amuletItem.healthSteal;
-    final magicSteal = amuletItem.magicSteal;
+    // final healthSteal = amuletItem.healthSteal;
+    // final magicSteal = amuletItem.magicSteal;
     final damage = amuletItem.damage;
     final maxHealth = amuletItem.maxHealth;
     final maxMagic = amuletItem.maxMagic;
     final regenHealth = amuletItem.regenHealth;
     final regenMagic = amuletItem.regenMagic;
-    final agility = amuletItem.agility;
+    // final agility = amuletItem.agility;
     final range = amuletItem.range;
     final areaDamage = amuletItem.areaDamage;
     final attackSpeed = amuletItem.attackSpeed;
     final slotType = amuletItem.slotType;
-    final criticalHitPoints = amuletItem.criticalHitPoints;
+    // final criticalHitPoints = amuletItem.criticalHitPoints;
     final equippedItemType = amulet.getEquippedItemType(slotType);
 
 
@@ -1448,14 +1445,14 @@ class AmuletUI {
             buildRow(buildIconHealthRegen(), regenHealth),
           if (regenMagic != null && regenMagic > 0)
             buildRow(buildIconMagicRegen(), regenMagic),
-          if (agility != null)
-            buildRow(buildIconAgility(), agility),
-          if (healthSteal > 0)
-            buildRow(buildIconHealthSteal(), healthSteal),
-          if (magicSteal > 0)
-            buildRow(buildIconMagicSteal(), magicSteal),
-          if (criticalHitPoints > 0)
-            buildRow(buildIconCriticalHitPoints(), criticalHitPoints),
+          // if (agility != null)
+          //   buildRow(buildIconAgility(), agility),
+          // if (healthSteal > 0)
+          //   buildRow(buildIconHealthSteal(), healthSteal),
+          // if (magicSteal > 0)
+          //   buildRow(buildIconMagicSteal(), magicSteal),
+          // if (criticalHitPoints > 0)
+          //   buildRow(buildIconCriticalHitPoints(), criticalHitPoints),
            ...amuletItem.skills.entries.map((e) => Row(children: [
              buildSkillTypeIcon(e.key),
              width4,

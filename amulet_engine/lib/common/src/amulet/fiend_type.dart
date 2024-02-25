@@ -142,8 +142,6 @@ enum FiendType {
   final double runSpeed;
   final double chanceOfSetTarget;
   final double weaponRange;
-  final double skillRadius;
-  final int skillAmount;
   final int skillLevel;
   final bool clearTargetOnPerformAction;
   final int postAttackPauseDurationMin;
@@ -178,8 +176,6 @@ enum FiendType {
     required this.skillLevel,
     this.skillTypeB,
     this.resists,
-    this.skillRadius = 0,
-    this.skillAmount = 0,
     this.areaDamage = 0,
   });
 

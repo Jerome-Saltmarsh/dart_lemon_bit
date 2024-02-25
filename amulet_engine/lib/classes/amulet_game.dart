@@ -298,12 +298,12 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required SkillType skillType,
   }){
 
-    final skillLevel = getCharacterSkillTypeLevel(
+    final level = getCharacterSkillTypeLevel(
       character: character,
       skillType: skillType,
     );
 
-    if (skillLevel <= 0 && !weaponSkillTypes.contains(skillType)){
+    if (level <= 0 && !weaponSkillTypes.contains(skillType)){
       throw Exception();
     }
 
@@ -318,7 +318,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         characterPerformSkillTypeMightySwing(character);
         return;
       case SkillType.Split_Shot:
-        characterPerformSkillTypeSplitShot(character, skillLevel);
+        characterPerformSkillTypeSplitShot(character, level);
         break;
       case SkillType.Fireball:
         characterPerformSkillTypeFireball(character);
@@ -327,14 +327,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         characterPerformSkillTypeFrostBall(character);
         break;
       case SkillType.Explode:
-        characterPerformSkillTypeExplode(character);
+        characterPerformSkillTypeExplode(character, level);
         break;
       case SkillType.Heal:
-        characterPerformSkillTypeHeal(character);
+        characterPerformSkillTypeHeal(character, level);
         break;
-      // case SkillType.Teleport:
-      //   characterPerformSkillTypeTeleport(character);
-      //   break;
       case SkillType.Ice_Arrow:
         characterPerformSkillTypeIceArrow(character);
         break;
@@ -387,32 +384,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         return character.fiendType.damage;
       }
       throw Exception();
-  }
-
-  double getCharacterSkillTypeRadius({
-    required Character character,
-    required SkillType skillType,
-  }){
-      if (character is AmuletPlayer) {
-        return character.getSkillTypeRadius(skillType);
-      }
-      if (character is AmuletFiend) {
-        return character.fiendType.skillRadius;
-      }
-      throw Exception('amuletGame.getCharacterSkillTypeRadius()');
-  }
-
-  int getCharacterSkillTypeAmount({
-    required Character character,
-    required SkillType skillType,
-  }){
-    if (character is AmuletPlayer){
-      return character.getSkillTypeAmount(skillType);
-    }
-    if (character is AmuletFiend) {
-      return character.fiendType.skillAmount;
-    }
-    throw Exception('amuletGame.getCharacterSkillTypeAmount()');
   }
 
   double getCharacterAreaDamage(Character character){
@@ -543,9 +514,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
        }
      }
      if (character is AmuletFiend){
-       return character.fiendType.skillAmount / 10.0;
+       return character.fiendType.areaDamage;
      }
-     return 0;
+     throw Exception();
   }
 
 
@@ -740,7 +711,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         )
       );
 
-  void characterPerformSkillTypeExplode(Character character) {
+  void characterPerformSkillTypeExplode(Character character, int level) {
 
     if (character is AmuletPlayer){
       createExplosion(
@@ -748,10 +719,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         y: character.castePositionY,
         z: character.castePositionZ,
         srcCharacter: character,
-        radius: getCharacterSkillTypeRadius(
-          character: character,
-          skillType: SkillType.Explode,
-        ),
+        radius: 100,
         damage: getCharacterSkillTypeDamage(
             character: character,
             skillType: SkillType.Explode,
@@ -771,12 +739,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     throw Exception('fiend cannot perform ${SkillType.Explode}');
   }
 
-  void characterPerformSkillTypeHeal(Character character) {
-    if (character is AmuletPlayer) {
-      character.health += character.getSkillTypeAmount(SkillType.Heal);
-    } else {
-      character.health += 10; // TODO
-    }
+  void characterPerformSkillTypeHeal(Character character, int skillLevel) {
+    character.health += AmuletSettings.Skill_Heal_Ratio * skillLevel;
     dispatchGameEventPosition(GameEvent.Character_Caste_Healed, character);
   }
 
