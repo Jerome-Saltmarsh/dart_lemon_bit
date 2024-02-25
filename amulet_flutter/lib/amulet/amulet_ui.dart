@@ -147,17 +147,24 @@ class AmuletUI {
   );
   }
 
-  Widget buildHudBottomLeft() => Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                buildWindowPlayerEquipped(),
-                buildWatchVisible(
-                    amulet.windowVisiblePlayerStats,
-                    buildWindowPlayerStats(),
-                ),
-                buildWindowPlayerSkills()
-              ],
-            );
+  Widget buildHudBottomLeft() =>
+      Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          buildWatchVisible(
+            amulet.windowVisibleEquipment,
+            buildWindowPlayerEquipped(),
+          ),
+          buildWatchVisible(
+            amulet.windowVisiblePlayerStats,
+            buildWindowPlayerStats(),
+          ),
+          buildWatchVisible(
+            amulet.windowVisiblePlayerSkills,
+            buildWindowPlayerSkills(),
+          ),
+        ],
+      );
 
   Widget buildWindowPotions() =>
       Row(
@@ -935,35 +942,28 @@ class AmuletUI {
       );
 
   Widget buildWindowPlayerEquipped() =>
-      buildWatchVisible(
-          amulet.windowVisibleEquipment,
-          Container(
-            margin: const EdgeInsets.only(right: 8),
-            child: GSContainer(
-                width: 100,
-                child: Column(
+      Container(
+        margin: const EdgeInsets.only(right: 8),
+        child: GSContainer(
+            width: 100,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Tooltip(
-                          message: 'Items',
-                          child: buildIconItems(),
-                        ),
-                        buildButtonClose(amulet.windowVisibleEquipment)
-                      ],
+                    Tooltip(
+                      message: 'Items',
+                      child: buildIconItems(),
                     ),
-                    height16,
-                    buildEquippedAmuletItems(),
+                    buildButtonClose(amulet.windowVisibleEquipment)
                   ],
-                )),
-          ),
+                ),
+                height16,
+                buildEquippedAmuletItems(),
+              ],
+            )),
       );
-
-  Widget buildWindowPlayerSkills(){
-     return buildWatchVisible(amulet.windowVisiblePlayerSkills, buildWindowPlayerSkillStats());
-  }
 
   Widget buildWindowPlayerStats() {
     return GSContainer(
@@ -1188,7 +1188,7 @@ class AmuletUI {
   Widget buildIconHealthRegen() =>
       AmuletImage(srcX: 768, srcY: 32, width: 16, height: 16);
 
-  Widget buildWindowPlayerSkillStats() =>
+  Widget buildWindowPlayerSkills() =>
     GSContainer(
       height: amulet.engine.screen.height - 200,
       child: Column(
