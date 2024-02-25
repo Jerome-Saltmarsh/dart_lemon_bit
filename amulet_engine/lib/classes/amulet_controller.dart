@@ -638,6 +638,16 @@ class AmuletController {
       case NetworkRequestAmulet.Spawn_Random_Enemy:
         amuletGame.spawnRandomEnemy();
         break;
+      case NetworkRequestAmulet.Toggle_Skill_Type:
+        final skillTypeIndex = parseArg2(arguments);
+        final skillType = SkillType.values.tryGet(skillTypeIndex);
+
+        if (skillType == null) {
+          amuletPlayer.writeGameError(GameError.Invalid_Skill_Type_Index);
+          return;
+        }
+        amuletPlayer.toggleSkillType(skillType);
+        break;
       case NetworkRequestAmulet.Consume_Slot:
         final index = parseArg2(arguments);
         if (index == null) {

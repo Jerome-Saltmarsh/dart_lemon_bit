@@ -17,4 +17,5 @@ enum NetworkRequestAmulet {
   Set_Skill_Slot_Index,
   Consume_Slot,
   Drop_Consumable,
+  Toggle_Skill_Type,
 }

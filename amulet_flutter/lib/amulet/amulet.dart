@@ -84,7 +84,7 @@ class Amulet extends IsometricGame {
   final playerWeaponAttackSpeed = Watch<int?>(0);
   final playerWeaponAreaDamage = Watch<AreaDamage?>(null);
 
-  final playerSkills = SkillType.values.asMapReversed((t) => Watch(0));
+  final playerSkillTypeLevels = SkillType.values.asMapReversed((t) => Watch(0));
   final playerSkillLeft = Watch(SkillType.Strike);
   final playerSkillRight = Watch(SkillType.Strike);
   final windowVisibleSkillLeft = WatchBool(false);
@@ -836,4 +836,7 @@ class Amulet extends IsometricGame {
     }
     return null;
   }
+
+  void toggleSkillType(SkillType skillType) =>
+      sendAmuletRequest(NetworkRequestAmulet.Toggle_Skill_Type, skillType.index);
 }

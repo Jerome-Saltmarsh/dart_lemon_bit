@@ -32,7 +32,6 @@ class NetworkResponseAmulet {
    static const Player_Skills_Left_Right = 45;
    static const Amulet_Event = 46;
    static const Player_Skill_Types = 47;
-   // static const Player_Active_Slot_Type = 49;
    static const Fiend_Count = 51;
    static const Player_Agility = 53;
    static const Perform_Frame_Velocity = 54;

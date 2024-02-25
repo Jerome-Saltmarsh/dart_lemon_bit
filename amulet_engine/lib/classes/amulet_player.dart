@@ -577,10 +577,13 @@ class AmuletPlayer extends IsometricPlayer with
         break;
     }
 
-    final skillType = value.skillType;
+    final skills = value.skills.entries;
 
-    if (skillType != null && !skillTypeAssignedToSkillSlot(skillType)) {
+    for (final skill in skills){
+      final skillType = skill.key;
+      if (!skillTypeAssignedToSkillSlot(skillType)) {
         tryToAssignSkillTypeToEmptySlot(skillType);
+      }
     }
 
     notifyEquipmentDirty();
@@ -1257,18 +1260,8 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Skill_Types);
     for (final skillType in SkillType.values){
+      writeByte(skillType.index);
       writeUInt16(getSkillTypeLevel(skillType));
-      // if (!skillTypeUnlocked(skillType)){
-      //   writeFalse();
-      //   continue;
-      // }
-      // writeTrue();
-      // writeByte(skillType.index);
-      // writeByte(getSkillTypeMagicCost(skillType));
-      // writeUInt16(getSkillTypeDamageMin(skillType));
-      // writeUInt16(getSkillTypeDamageMax(skillType));
-      // writeUInt16((getSkillTypeRange(skillType) ?? 0).toInt());
-      // writeUInt16(getSkillTypeAmount(skillType).toInt());
     }
   }
 
@@ -1282,10 +1275,7 @@ class AmuletPlayer extends IsometricPlayer with
     if (skillType == SkillType.Shoot_Arrow){
       return equippedWeaponBow;
     }
-    return equippedWeapon?.skillType == skillType ||
-      equippedHelm?.skillType == skillType ||
-      equippedArmor?.skillType == skillType ||
-      equippedShoes?.skillType == skillType;
+    return getSkillTypeLevel(skillType) > 0;
   }
 
   @override
@@ -1339,12 +1329,6 @@ class AmuletPlayer extends IsometricPlayer with
         return 0;
     }
   }
-
-  bool skillTypeEquipped(SkillType skillType) =>
-      equippedWeapon?.skillType == skillType ||
-      equippedHelm?.skillType == skillType ||
-      equippedArmor?.skillType == skillType ||
-      equippedShoes?.skillType == skillType ;
 
   int get healthSteal {
     var total = 0;
@@ -1644,7 +1628,32 @@ class AmuletPlayer extends IsometricPlayer with
     writeAmuletItem(amuletItem);
   }
 
+  void toggleSkillType(SkillType skillType) {
 
+    if (!skillTypeUnlocked(skillType)){
+      writeGameError(GameError.Skill_Type_Locked);
+      return;
+    }
+
+    final slotIndex = getSkillTypeSlotIndex(skillType);
+
+    if (slotIndex != null) {
+      clearSkillSlot(slotIndex);
+    }
+
+    setSkillSlotValue(
+        index: skillSlotIndex,
+        skillType: skillType,
+    );
+  }
+
+  void clearSkillSlot(int index) =>
+      assignSkillSlot(index, SkillType.None);
+
+  void assignSkillSlot(int index, SkillType skillType){
+    skillSlots[index] = skillType;
+    notifySkillSlotsDirty();
+  }
 
 }
 

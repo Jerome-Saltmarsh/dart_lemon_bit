@@ -336,16 +336,11 @@ extension AmuletParser on IsometricParser {
 
   void readPlayerSkillTypes() {
 
-    for (final skillTypeStat in SkillType.values) {
-       amulet.playerSkills[skillTypeStat]?.value = readUInt16();
+    for (var i = 0; i < SkillType.values.length; i++) {
+      final skillType = readSkillType();
+       amulet.playerSkillTypeLevels[skillType]?.value = readUInt16();
     }
-    // amulet.playerSkillsNotifier.value++;
   }
-
-  // void readPlayerActiveSlotType() {
-  //   final index = readInt8();
-  //   amulet.activeSlotType.value = SlotType.values.tryGet(index);
-  // }
 
   void readFiendCount() {
     amulet.fiendCountAlive.value = readUInt16();
