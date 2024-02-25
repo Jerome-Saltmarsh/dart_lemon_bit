@@ -204,7 +204,7 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   int get agility =>
-      getSkillTypeLevel(SkillType.Passive_Agile);
+      getSkillTypeLevel(SkillType.Agile);
 
   @override
   void writePlayerGame() {
@@ -1316,10 +1316,10 @@ class AmuletPlayer extends IsometricPlayer with
       (throw Exception('amuletPlayer.getSkillTypePerformDuration(skillType: $skillType)'));
 
   int get healthSteal =>
-      getSkillTypeLevel(SkillType.Passive_Health_Steal);
+      getSkillTypeLevel(SkillType.Health_Steal);
 
   int get magicSteal =>
-      getSkillTypeLevel(SkillType.Passive_Magic_Steal);
+      getSkillTypeLevel(SkillType.Magic_Steal);
 
   void writeFiendCount() {
     writeByte(NetworkResponse.Amulet);
@@ -1421,7 +1421,7 @@ class AmuletPlayer extends IsometricPlayer with
       totalCriticalHitPoints / AmuletSettings.Max_Critical_Hit_Points;
 
   int get totalCriticalHitPoints =>
-      getSkillTypeLevel(SkillType.Passive_Critical_Hit);
+      getSkillTypeLevel(SkillType.Critical_Hit);
 
   void writeEquippedWeaponAreaDamage() {
     writeByte(NetworkResponse.Amulet);

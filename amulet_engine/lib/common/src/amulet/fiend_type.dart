@@ -184,7 +184,6 @@ enum FiendType {
     total += health;
     total += ((damage / attackDuration) * 45).toInt();
     total += weaponRange ~/ 30;
-    total += skillType.quantify;
     if (resists != null) {
       total += 3;
     }

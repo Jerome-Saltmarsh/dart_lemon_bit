@@ -20,8 +20,8 @@ List<double> getSkillTypeSrc(SkillType skillType) =>
       SkillType.Fire_Arrow => const [_srcX, 272],
       SkillType.Exploding_Arrow => const [_srcX, 240],
       SkillType.Blind => const [_srcX, 336],
-      SkillType.Passive_Agile => const [768, 64],
-      SkillType.Passive_Health_Steal => const [768, 256],
-      SkillType.Passive_Magic_Steal => const [768, 272],
-      SkillType.Passive_Critical_Hit =>  const [768, 336],
+      SkillType.Agile => const [768, 64],
+      SkillType.Health_Steal => const [768, 256],
+      SkillType.Magic_Steal => const [768, 272],
+      SkillType.Critical_Hit =>  const [768, 336],
     };

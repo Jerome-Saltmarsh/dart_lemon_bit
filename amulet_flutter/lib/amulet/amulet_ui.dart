@@ -1251,6 +1251,17 @@ class AmuletUI {
                       .map(buildContainerSkillTypeInfo)
                       .toList(growable: false),
                 ),
+                width8,
+                Column(
+                  children: SkillType.values
+                      .where((element) => !const[
+                    SkillType.None,
+                    SkillType.Strike,
+                    SkillType.Shoot_Arrow,
+                  ].contains(element) && element.casteType == CasteType.Passive)
+                      .map(buildContainerSkillTypeInfo)
+                      .toList(growable: false),
+                ),
               ],
             ),
           ),
