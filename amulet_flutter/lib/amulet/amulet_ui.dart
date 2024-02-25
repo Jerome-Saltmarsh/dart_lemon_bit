@@ -1208,66 +1208,36 @@ class AmuletUI {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  children: SkillType.values
-                      .where((element) => !const[
-                        SkillType.None,
-                        SkillType.Strike,
-                        SkillType.Shoot_Arrow,
-                      ].contains(element) && element.casteType == CasteType.Sword)
-                      .map(buildContainerSkillTypeInfo)
-                      .toList(growable: false),
-                ),
+                buildColumnCasteType(CasteType.Sword),
                 width8,
-                Column(
-                  children: SkillType.values
-                      .where((element) => !const[
-                        SkillType.None,
-                        SkillType.Strike,
-                        SkillType.Shoot_Arrow,
-                      ].contains(element) && element.casteType == CasteType.Staff)
-                      .map(buildContainerSkillTypeInfo)
-                      .toList(growable: false),
-                ),
+                buildColumnCasteType(CasteType.Bow),
                 width8,
-                Column(
-                  children: SkillType.values
-                      .where((element) => !const[
-                        SkillType.None,
-                        SkillType.Strike,
-                        SkillType.Shoot_Arrow,
-                      ].contains(element) && element.casteType == CasteType.Bow)
-                      .map(buildContainerSkillTypeInfo)
-                      .toList(growable: false),
-                ),
+                buildColumnCasteType(CasteType.Staff),
                 width8,
-                Column(
-                  children: SkillType.values
-                      .where((element) => !const[
-                        SkillType.None,
-                        SkillType.Strike,
-                        SkillType.Shoot_Arrow,
-                      ].contains(element) && element.casteType == CasteType.Caste)
-                      .map(buildContainerSkillTypeInfo)
-                      .toList(growable: false),
-                ),
-                width8,
-                Column(
-                  children: SkillType.values
-                      .where((element) => !const[
-                    SkillType.None,
-                    SkillType.Strike,
-                    SkillType.Shoot_Arrow,
-                  ].contains(element) && element.casteType == CasteType.Passive)
-                      .map(buildContainerSkillTypeInfo)
-                      .toList(growable: false),
-                ),
+                buildColumnCasteType(CasteType.Passive),
               ],
             ),
           ),
         ],
       ),
     );
+
+  Widget buildColumnCasteType(CasteType casteType) => Column(
+        children: [
+          buildIconCasteType(casteType),
+          height8,
+          ...SkillType.values
+              .where((element) =>
+          !const [
+            SkillType.None,
+            SkillType.Strike,
+            SkillType.Shoot_Arrow,
+          ].contains(element) &&
+              element.casteType == casteType)
+              .map(buildContainerSkillTypeInfo)
+              .toList(growable: false)
+        ],
+      );
 
   Widget buildContainerSkillTypeInfo(SkillType skillType){
      final watch = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());
