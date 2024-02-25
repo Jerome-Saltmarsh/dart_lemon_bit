@@ -1519,8 +1519,15 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(skillSlotIndex);
   }
 
-  void setSkillSlotIndex(int value){
-    if (value < 0 || value > 3) return;
+  void setSkillSlotIndex(int value) {
+
+    if (dead) return;
+    if (busy && !skillActiveLeft) return;
+
+    if (!skillSlots.isValidIndex(value)) {
+      writeGameError(GameError.Invalid_Skill_Slot_Index);
+      return;
+    };
     skillSlotIndex = value;
     writeSkillSlotIndex();
   }
