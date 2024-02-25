@@ -11,6 +11,8 @@ import '../isometric/src.dart';
 
 class AmuletGame extends IsometricGame<AmuletPlayer> {
 
+  static const weaponSkillTypes = [SkillType.Shoot_Arrow, SkillType.Strike];
+
   final Amulet amulet;
   final String name;
   final AmuletScene amuletScene;
@@ -301,7 +303,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       skillType: skillType,
     );
 
-    if (skillLevel <= 0){
+    if (skillLevel <= 0 && !weaponSkillTypes.contains(skillType)){
       throw Exception();
     }
 
@@ -384,7 +386,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       if (character is AmuletFiend) {
         return character.fiendType.damage;
       }
-      return 0;
+      throw Exception();
   }
 
   double getCharacterSkillTypeRadius({
