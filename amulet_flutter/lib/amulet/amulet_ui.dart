@@ -65,7 +65,6 @@ class AmuletUI {
           }),
         ),
       ),
-          buildWindowQuest(),
           buildDialogTalk(),
           buildPositionedWorldMap(),
           Positioned(
@@ -124,6 +123,7 @@ class AmuletUI {
             child: buildWindowPlayerSkillSlots(),
           ),
           buildPositionedMessage(),
+          buildWindowQuest(),
           buildOverlayScreenColor(),
           Positioned(
             top: margin2,
@@ -133,6 +133,7 @@ class AmuletUI {
               child: buildError(),
             ),
           ),
+
           Positioned(
             top: 8,
             left: 8,
