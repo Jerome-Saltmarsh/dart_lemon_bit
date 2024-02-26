@@ -1190,19 +1190,26 @@ class AmuletUI {
                 ],
               ),
               height16,
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  buildColumnCasteType(CasteType.Sword),
-                  width8,
-                  buildColumnCasteType(CasteType.Bow),
-                  width8,
-                  buildColumnCasteType(CasteType.Staff),
-                  width8,
-                  buildColumnCasteType(CasteType.Caste),
-                  width8,
-                  buildColumnCasteType(CasteType.Passive),
-                ],
+              Container(
+                constraints: BoxConstraints(
+                  maxHeight: amulet.engine.screen.height - 270,
+                ),
+                child: SingleChildScrollView(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      buildColumnCasteType(CasteType.Sword),
+                      width8,
+                      buildColumnCasteType(CasteType.Bow),
+                      width8,
+                      buildColumnCasteType(CasteType.Staff),
+                      width8,
+                      buildColumnCasteType(CasteType.Caste),
+                      width8,
+                      buildColumnCasteType(CasteType.Passive),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
