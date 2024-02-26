@@ -1231,16 +1231,33 @@ class AmuletUI {
     color: Palette.brownDark,
   );
 
+  final containerAssignable = Container(
+    width: 50,
+    height: 50,
+    color: Palette.brown_3,
+  );
+
+  final containerNotAssignable = Container(
+    width: 50,
+    height: 50,
+    color: Colors.transparent,
+  );
+
   Widget buildWindowPlayerSkillsSkillType(SkillType skillType){
 
 
     final watchSkillTypeAssigned = amulet.playerSkillTypeSlotAssigned[skillType] ?? (throw Exception());
+    final watchSkillTypeLevel = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());
 
 
     final assignedContainer = buildWatch(
         watchSkillTypeAssigned, (assigned) =>
-          assigned ? containerAssigned : containerNotAssigned
+          assigned ? containerAssigned : nothing
     );
+
+    final assignableContainer = buildWatch(watchSkillTypeLevel, (level) {
+       return level > 0 ? containerAssignable : containerNotAssignable;
+    });
 
      final watch = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());
 
@@ -1292,6 +1309,7 @@ class AmuletUI {
              clipBehavior: Clip.none,
              // fit: StackFit.loose,
              children: [
+               assignableContainer,
                assignedContainer,
                b,
                Positioned(
