@@ -1867,29 +1867,38 @@ class AmuletUI {
     final child = buildWatch(amulet.playerSkillSlotIndex, (selectedIndex) =>
     selectedIndex == index ? containerActive : containerInactive);
 
-    return DragTarget<SkillType>(
-      onAccept: (value){
-        amulet.setSkillSlotValue(
-            index: index,
-            skillType: value,
-        );
-      },
-      builder: (context, candidateData, rejectData) {
-        return MouseOver(
-            builder: (mouseOver) {
-              return Stack(
-                fit: StackFit.passthrough,
-                alignment: Alignment.center,
-                children: [
-                  child,
-                  if (mouseOver)
-                    key,
-                ],
-              );
-            }
-        );
-      },
-    );
+    return buildWatch(skillSlot, (skillType) {
+
+      final feedback = buildIconSkillType(skillType, dstX: 25, dstY: 25);
+      return Draggable(
+        data: skillSlot.value,
+        feedback: feedback,
+        child: DragTarget<SkillType>(
+          onAccept: (value){
+            amulet.setSkillSlotValue(
+              index: index,
+              skillType: value,
+            );
+          },
+          builder: (context, candidateData, rejectData) {
+            return MouseOver(
+                builder: (mouseOver) {
+                  return Stack(
+                    fit: StackFit.passthrough,
+                    alignment: Alignment.center,
+                    children: [
+                      child,
+                      if (mouseOver)
+                        key,
+                    ],
+                  );
+                }
+            );
+          },
+        ),
+      );
+    });
+
   }
 
   Widget buildToggle(WatchBool watch, String text, {String? hint}) => onPressed(
