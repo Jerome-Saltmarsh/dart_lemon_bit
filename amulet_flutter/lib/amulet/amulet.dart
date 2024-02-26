@@ -23,6 +23,7 @@ import 'classes/map_location.dart';
 
 class Amulet extends IsometricGame {
 
+  SkillType? mouseOverSkillType;
   final screenColor = Watch(Colors.transparent);
   final screenColorI = Watch(0.0);
   final cursor = Watch(SystemMouseCursors.basic);
@@ -209,7 +210,7 @@ class Amulet extends IsometricGame {
       updateFiendCountPercentage();
     });
 
-    windowVisiblePlayerSkills.onChanged(onWindowVisibilityChanged);
+    windowVisiblePlayerSkills.onChanged(onChangedWindowVisiblePlayerSkills);
     windowVisibleEquipment.onChanged(onWindowVisibilityChanged);
     windowVisiblePlayerStats.onChanged(onWindowVisibilityChanged);
     windowVisibleQuests.onChanged(onWindowVisibilityChanged);
@@ -224,6 +225,11 @@ class Amulet extends IsometricGame {
     playerSkillRight.onChanged(onChangedPlayerSkillType);
     skillSlotsChangedNotifier.onChanged(onChangedSkillSlots);
     verifySrcs();
+  }
+
+  void onChangedWindowVisiblePlayerSkills(bool value){
+    amulet.mouseOverSkillType = null;
+    onWindowVisibilityChanged(value);
   }
 
   void onChangedSkillSlots(int _){
@@ -343,19 +349,35 @@ class Amulet extends IsometricGame {
     }
 
     if (key == amuletKeys.selectSkill0) {
+      final mouseOverSkillType = amulet.mouseOverSkillType;
+      if (mouseOverSkillType != null){
+         setSkillSlotValue(index: 0, skillType: mouseOverSkillType);
+      }
       setSkillSlotIndex(0);
       return;
     }
 
     if (key == amuletKeys.selectSkill1) {
+      final mouseOverSkillType = amulet.mouseOverSkillType;
+      if (mouseOverSkillType != null){
+        setSkillSlotValue(index: 1, skillType: mouseOverSkillType);
+      }
       setSkillSlotIndex(1);
       return;
     }
     if (key == amuletKeys.selectSkill2) {
+      final mouseOverSkillType = amulet.mouseOverSkillType;
+      if (mouseOverSkillType != null){
+        setSkillSlotValue(index: 2, skillType: mouseOverSkillType);
+      }
       setSkillSlotIndex(2);
       return;
     }
     if (key == amuletKeys.selectSkill3) {
+      final mouseOverSkillType = amulet.mouseOverSkillType;
+      if (mouseOverSkillType != null){
+        setSkillSlotValue(index: 3, skillType: mouseOverSkillType);
+      }
       setSkillSlotIndex(3);
       return;
     }

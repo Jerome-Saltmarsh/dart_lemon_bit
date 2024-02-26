@@ -1218,7 +1218,6 @@ class AmuletUI {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             buildIconCasteType(casteType),
-            // Divider(color: Colors.white54,),
             height32,
             ...SkillType.values
                 .where((element) =>
@@ -1280,10 +1279,8 @@ class AmuletUI {
 
   Widget buildWindowPlayerSkillsSkillType(SkillType skillType){
 
-
     final watchSkillTypeAssigned = amulet.playerSkillTypeSlotAssigned[skillType] ?? (throw Exception());
     final watchSkillTypeLevel = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());
-
 
     final assignedContainer = buildWatch(
         watchSkillTypeAssigned, (assigned) =>
@@ -1295,7 +1292,6 @@ class AmuletUI {
     });
 
      final watch = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());
-
 
      const height = 50.0;
      const width = height;
@@ -1330,10 +1326,12 @@ class AmuletUI {
          onEnter: () {
            showInfo = true;
            refreshFunction?.call();
+           amulet.mouseOverSkillType = skillType;
          },
          onExit: (){
            showInfo = false;
            refreshFunction?.call();
+           amulet.mouseOverSkillType = null;
          },
          action: unlocked ? () => amulet.toggleSkillType(skillType) : null,
          child: Container(
@@ -1342,7 +1340,6 @@ class AmuletUI {
            margin: const EdgeInsets.only(bottom: 6),
            child: Stack(
              clipBehavior: Clip.none,
-             // fit: StackFit.loose,
              children: [
                assignableContainer,
                assignedContainer,
