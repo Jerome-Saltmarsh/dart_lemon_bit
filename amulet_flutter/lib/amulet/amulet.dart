@@ -32,7 +32,6 @@ class Amulet extends IsometricGame {
   final fiendCountPercentage = Watch(0.0);
   final playerDebugEnabled = WatchBool(false);
   final playerPerformFrameVelocity = Watch(0.0);
-  final highlightedSkillType = Watch<SkillType?>(null);
 
   final windowVisibleSkillSlot0 = WatchBool(false);
   final windowVisibleSkillSlot1 = WatchBool(false);
