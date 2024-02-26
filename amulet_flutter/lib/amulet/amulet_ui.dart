@@ -1286,6 +1286,8 @@ class AmuletUI {
            child: Container(
              width: width,
              height: height,
+             color: Colors.black26,
+             margin: const EdgeInsets.only(bottom: 6),
              child: Stack(
                clipBehavior: Clip.none,
                // fit: StackFit.loose,
@@ -1296,8 +1298,8 @@ class AmuletUI {
                      width: width,
                      height: height,
                      alignment: Alignment.center,
-                     color: Colors.black26,
-                     margin: const EdgeInsets.only(bottom: 6),
+                     // color: Colors.black26,
+                     // margin: const EdgeInsets.only(bottom: 6),
                      child: buildIconSkillType(skillType),
                    ),
                  ),
