@@ -1923,7 +1923,7 @@ class AmuletUI {
       width: 3,
       child: Container(
         child: slot,
-        color: Colors.white24,
+        color: Palette.brown_3,
         width: size,
         height: size,
         alignment: Alignment.center,
@@ -1935,7 +1935,7 @@ class AmuletUI {
       color: Colors.transparent,
       child: Container(
         child: slot,
-        color: Colors.black26,
+        color: Palette.brownDark,
         width: size,
         height: size,
         alignment: Alignment.center,
