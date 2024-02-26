@@ -127,6 +127,16 @@ enum SkillType {
     casteType: CasteType.Passive,
     magicCost: 0,
   ),
+  Magic_Regen(
+    description: 'Increase mana gained over time',
+    casteType: CasteType.Passive,
+    magicCost: 0,
+  ),
+  Health_Regen(
+    description: 'Increase health gained over time',
+    casteType: CasteType.Passive,
+    magicCost: 0,
+  ),
   ;
 
 

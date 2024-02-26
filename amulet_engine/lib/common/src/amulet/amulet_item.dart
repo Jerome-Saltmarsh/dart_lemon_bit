@@ -125,6 +125,8 @@ enum AmuletItem {
     damage: 2,
       skills: {
         SkillType.Fireball: 1,
+        SkillType.Magic_Steal: 2,
+        SkillType.Magic_Regen: 2,
       }
   ),
   Weapon_Staff_Scepter(
@@ -157,7 +159,6 @@ enum AmuletItem {
     slotType: SlotType.Helm,
     subType: HelmType.Leather_Cap,
     maxHealth: 5,
-    regenHealth: 1,
       skills: {
         SkillType.Mighty_Strike: 1,
         SkillType.Heal: 2,
@@ -169,7 +170,6 @@ enum AmuletItem {
     slotType: SlotType.Helm,
     subType: HelmType.Steel_Cap,
     maxHealth: 8,
-    regenHealth: 1,
       skills: {
         SkillType.Mighty_Strike: 1,
       }
@@ -180,7 +180,6 @@ enum AmuletItem {
     slotType: SlotType.Helm,
     subType: HelmType.Full_Helm,
     maxHealth: 11,
-    regenHealth: 1,
       skills: {
         SkillType.Mighty_Strike: 1,
       }
@@ -192,7 +191,6 @@ enum AmuletItem {
     subType: HelmType.Pointed_Hat_Purple,
     maxHealth: 1,
     maxMagic: 3,
-    regenMagic: 1,
       skills: {
         SkillType.Fireball: 1,
       }
@@ -204,7 +202,6 @@ enum AmuletItem {
     subType: HelmType.Pointed_Hat_Black,
     maxHealth: 2,
     maxMagic: 5,
-    regenMagic: 1,
       skills: {
         SkillType.Fireball: 1,
       }
@@ -216,7 +213,6 @@ enum AmuletItem {
     subType: HelmType.Cowl,
     maxHealth: 2,
     maxMagic: 7,
-    regenMagic: 1,
       skills: {
         SkillType.Fireball: 1,
       }
@@ -260,7 +256,6 @@ enum AmuletItem {
     subType: ArmorType.Tunic,
     maxHealth: 5,
     maxMagic: 5,
-    regenHealth: 1,
       skills: {
         SkillType.Split_Shot: 1,
       }
@@ -271,7 +266,6 @@ enum AmuletItem {
     slotType: SlotType.Armor,
     subType: ArmorType.Leather,
     maxHealth: 10,
-    regenHealth: 1,
       skills: {
         SkillType.Mighty_Strike: 1,
         SkillType.Heal: 2,
@@ -283,7 +277,6 @@ enum AmuletItem {
     slotType: SlotType.Armor,
     subType: ArmorType.Chainmail,
     maxHealth: 20,
-    regenHealth: 2,
       skills: {
         SkillType.Mighty_Strike: 1,
       }
@@ -294,7 +287,6 @@ enum AmuletItem {
     slotType: SlotType.Armor,
     subType: ArmorType.Platemail,
     maxHealth: 30,
-    regenHealth: 3,
       skills: {
         SkillType.Mighty_Strike: 1,
       }
@@ -305,10 +297,10 @@ enum AmuletItem {
     slotType: SlotType.Armor,
     subType: ArmorType.Robes,
     maxHealth: 5,
-    regenMagic: 1,
     maxMagic: 5,
       skills: {
         SkillType.Fireball: 1,
+        SkillType.Magic_Steal: 2,
       }
   ),
   Armor_Cloak(
@@ -317,7 +309,6 @@ enum AmuletItem {
     slotType: SlotType.Armor,
     subType: ArmorType.Cloak,
     maxHealth: 5,
-    regenMagic: 1,
     maxMagic: 5,
       skills: {
         SkillType.Split_Shot: 1,
@@ -444,7 +435,6 @@ enum AmuletItem {
     slotType: SlotType.Consumable,
     subType: ConsumableType.Potion_Blue,
     level: 0,
-    regenMagic: 20,
     skills: {}
   ),
   Consumable_Potion_Health(
@@ -452,16 +442,15 @@ enum AmuletItem {
     slotType: SlotType.Consumable,
     subType: ConsumableType.Potion_Red,
     level: 0,
-    regenHealth: 20,
     skills: {}
   );
 
   int get levelMax => level + 1;
-  
+
   /// the minimum level of a fiend that can drop this item
   final int level;
   /// the maximum level of fiends that can drop this item
-  
+
   /// see item_type.dart in commons
   final SlotType slotType;
   final int subType;
@@ -473,8 +462,8 @@ enum AmuletItem {
   final AreaDamage? areaDamage;
   final int? maxHealth;
   final int? maxMagic;
-  final int? regenMagic;
-  final int? regenHealth;
+  // final int? regenMagic;
+  // final int? regenHealth;
 
   final Map<SkillType, int> skills;
 
@@ -487,8 +476,6 @@ enum AmuletItem {
     this.quality = ItemQuality.Common,
     this.maxHealth = 0,
     this.maxMagic,
-    this.regenMagic,
-    this.regenHealth,
     this.damage,
     this.range,
     this.attackSpeed,
@@ -518,9 +505,6 @@ enum AmuletItem {
     total += maxMagic ?? 0;
     total += areaDamage?.quantify ?? 0;
     total += range?.quantify ?? 0;
-    const pointsPerRegen = 5;
-    total += (regenHealth ?? 0) * pointsPerRegen;
-    total += (regenMagic ?? 0) * pointsPerRegen;
     return total;
   }
 

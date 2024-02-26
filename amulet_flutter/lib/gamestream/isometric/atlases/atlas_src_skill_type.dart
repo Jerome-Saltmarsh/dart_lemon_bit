@@ -24,4 +24,6 @@ List<double> getSkillTypeSrc(SkillType skillType) =>
       SkillType.Health_Steal => const [768, 256],
       SkillType.Magic_Steal => const [768, 272],
       SkillType.Critical_Hit =>  const [768, 336],
+      SkillType.Magic_Regen =>  const [416, 224, 32, 32],
+      SkillType.Health_Regen =>  const [416, 256, 32, 32],
     };

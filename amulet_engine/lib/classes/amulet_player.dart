@@ -175,23 +175,9 @@ class AmuletPlayer extends IsometricPlayer with
   //   return equippedWeapon?.damageMax ?? 0;
   // }
 
-  int get regenMagic {
-    var total = baseRegenMagic;
-    total += equippedWeapon?.regenMagic ?? 0;
-    total += equippedHelm?.regenMagic ?? 0;
-    total += equippedArmor?.regenMagic ?? 0;
-    total += equippedShoes?.regenMagic ?? 0;
-    return total;
-  }
+  int get regenMagic => getSkillTypeLevel(SkillType.Magic_Regen);
 
-  int get regenHealth {
-    var total = baseRegenHealth;
-    total += equippedWeapon?.regenHealth ?? 0;
-    total += equippedHelm?.regenHealth ?? 0;
-    total += equippedArmor?.regenHealth ?? 0;
-    total += equippedShoes?.regenHealth ?? 0;
-    return total;
-  }
+  int get regenHealth => getSkillTypeLevel(SkillType.Health_Regen);
 
   @override
   double get runSpeed {
@@ -1570,8 +1556,17 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   void consumeAmuletItem(AmuletItem amuletItem){
-    health += amuletItem.regenHealth ?? 0;
-    magic += amuletItem.regenMagic ?? 0;
+    switch (amuletItem){
+      case AmuletItem.Consumable_Potion_Health:
+        health += 10;
+        break;
+      case AmuletItem.Consumable_Potion_Magic:
+        magic += 10;
+        break;
+      default:
+        throw Exception();
+    }
+
     writeAmuletItemConsumed(amuletItem);
   }
 

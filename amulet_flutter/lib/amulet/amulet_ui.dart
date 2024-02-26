@@ -981,26 +981,6 @@ class AmuletUI {
             ],
           ),
           height16,
-          // buildTextHeader('BONUSES'),
-          // buildWatch(amulet.playerHealthSteal, (healthSteal) {
-          //   if (healthSteal <= 0){
-          //     return nothing;
-          //   }
-          //   return Tooltip(
-          //       message: 'Health Steal',
-          //       child: buildRow(buildIconHealthSteal(), healthSteal));
-          // }),
-          // buildWatch(amulet.playerMagicSteal, (magicSteal) {
-          //   if (magicSteal <= 0){
-          //     return nothing;
-          //   }
-          //   return Tooltip(
-          //       message: 'Magic Steal',
-          //       child: buildRow(buildIconMagicSteal(), magicSteal));
-          // }),
-          // height16,
-          // buildContainerPlayerMastery(),
-          // height16,
           buildTextHeader('STATS'),
           Tooltip(
             message: 'Health',
@@ -1031,26 +1011,26 @@ class AmuletUI {
               ],
             ),
           ),
-          Tooltip(
-            message: 'Health Regen',
-            child: Row(
-              children: [
-                buildIconHealthRegen(),
-                width8,
-                buildWatch(amulet.playerRegenHealth, buildRowValue),
-              ],
-            ),
-          ),
-          Tooltip(
-            message: 'Magic Regen',
-            child: Row(
-              children: [
-                buildIconMagicRegen(),
-                width8,
-                buildWatch(amulet.playerRegenMagic, buildRowValue),
-              ],
-            ),
-          ),
+          // Tooltip(
+          //   message: 'Health Regen',
+          //   child: Row(
+          //     children: [
+          //       buildIconHealthRegen(),
+          //       width8,
+          //       buildWatch(amulet.playerRegenHealth, buildRowValue),
+          //     ],
+          //   ),
+          // ),
+          // Tooltip(
+          //   message: 'Magic Regen',
+          //   child: Row(
+          //     children: [
+          //       buildIconMagicRegen(),
+          //       width8,
+          //       buildWatch(amulet.playerRegenMagic, buildRowValue),
+          //     ],
+          //   ),
+          // ),
           // Tooltip(
           //   message: 'Agility',
           //   child: Row(
@@ -1489,8 +1469,8 @@ class AmuletUI {
     final damage = amuletItem.damage;
     final maxHealth = amuletItem.maxHealth;
     final maxMagic = amuletItem.maxMagic;
-    final regenHealth = amuletItem.regenHealth;
-    final regenMagic = amuletItem.regenMagic;
+    // final regenHealth = amuletItem.regenHealth;
+    // final regenMagic = amuletItem.regenMagic;
     // final agility = amuletItem.agility;
     final range = amuletItem.range;
     final areaDamage = amuletItem.areaDamage;
@@ -1526,10 +1506,10 @@ class AmuletUI {
             buildRow(buildIconHealth(), maxHealth),
           if (maxMagic != null && maxMagic > 0)
             buildRow(buildIconMagic(), maxMagic),
-          if (regenHealth != null && regenHealth > 0)
-            buildRow(buildIconHealthRegen(), regenHealth),
-          if (regenMagic != null && regenMagic > 0)
-            buildRow(buildIconMagicRegen(), regenMagic),
+          // if (regenHealth != null && regenHealth > 0)
+          //   buildRow(buildIconHealthRegen(), regenHealth),
+          // if (regenMagic != null && regenMagic > 0)
+          //   buildRow(buildIconMagicRegen(), regenMagic),
           // if (agility != null)
           //   buildRow(buildIconAgility(), agility),
           // if (healthSteal > 0)
