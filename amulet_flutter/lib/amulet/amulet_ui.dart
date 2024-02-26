@@ -1314,7 +1314,12 @@ class AmuletUI {
      });
   }
 
-  Widget buildContainerSkillTypeAssigned(SkillType skillType){
+  Widget buildContainerSkillTypeAssigned(
+      SkillType skillType,
+      Function onClickLeft,
+      Function onClickRight,
+
+      ){
      final watch = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());
 
      const infoWidth = 120.0;
@@ -1323,7 +1328,6 @@ class AmuletUI {
 
      return buildWatch(watch, (level) {
 
-       final unlocked = level > 0;
        final info = Positioned(
            bottom: height + 5,
            right: -infoWidth * 0.33,
@@ -1357,7 +1361,8 @@ class AmuletUI {
            showInfo = false;
            refreshFunction?.call();
          },
-         action: unlocked ? () => amulet.toggleSkillType(skillType) : null,
+         action: onClickLeft,
+         onRightClick: onClickRight,
          child: Container(
            width: width,
            height: height,
@@ -1890,7 +1895,13 @@ class AmuletUI {
     final index = amulet.getSkillSlotIndex(watch);
     const size = 50.0;
 
-    final slot = buildWatch(watch, buildContainerSkillTypeAssigned);
+    final slot = buildWatch(watch, (skillType) {
+      return buildContainerSkillTypeAssigned(
+        skillType, () => amulet.setSkillSlotIndex(index), () {
+        amulet.setSkillSlotIndex(index);
+        amulet.windowVisiblePlayerSkills.setTrue();
+      });
+    });
 
     final containerActive = buildBorder(
       color: Colors.white54,
@@ -1922,28 +1933,19 @@ class AmuletUI {
         right: 4,
         child: buildText(const['A', 'S', 'D', 'F',].tryGet(index), size: 20));
 
+
+    final child = buildWatch(amulet.playerSkillSlotIndex, (selectedIndex) =>
+    selectedIndex == index ? containerActive : containerInactive);
+
     return MouseOver(
       builder: (mouseOver) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+        return Stack(
+          fit: StackFit.passthrough,
+          alignment: Alignment.center,
           children: [
-            Stack(
-              fit: StackFit.passthrough,
-              alignment: Alignment.center,
-              children: [
-                onPressed(
-                  onRightClick: () {
-                    amulet.setSkillSlotIndex(index);
-                    amulet.windowVisiblePlayerSkills.setTrue();
-                  },
-                  action: () => amulet.setSkillSlotIndex(index),
-                  child: buildWatch(amulet.playerSkillSlotIndex, (selectedIndex) =>
-                  selectedIndex == index ? containerActive : containerInactive),
-                ),
-                if (mouseOver)
-                  key,
-              ],
-            ),
+            child,
+            if (mouseOver)
+              key,
           ],
         );
       }
