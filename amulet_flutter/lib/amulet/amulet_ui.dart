@@ -1346,7 +1346,7 @@ class AmuletUI {
 
        final b = buildState(builder: (context, rebuild){
          refreshFunction = rebuild;
-          if (showInfo){
+          if (showInfo && skillType != SkillType.None){
             return info;
           }
           return nothing;
@@ -1367,19 +1367,12 @@ class AmuletUI {
            width: width,
            height: height,
            child: Stack(
+             alignment: Alignment.center,
              clipBehavior: Clip.none,
-             // fit: StackFit.loose,
              children: [
                b,
                Positioned(
-                 child: Container(
-                   width: width,
-                   height: height,
-                   alignment: Alignment.center,
-                   // padding: const EdgeInsets.all(4),
-                   // margin: const EdgeInsets.only(bottom: 6),
-                   child: buildSkillTypeIcon(skillType),
-                 ),
+                 child: buildSkillTypeIcon(skillType),
                ),
              ],
            ),
