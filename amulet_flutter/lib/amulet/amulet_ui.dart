@@ -1322,6 +1322,7 @@ class AmuletUI {
      final watch = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());
 
 
+     const infoWidth = 120.0;
      const height = 50.0;
      const width = height;
 
@@ -1331,11 +1332,12 @@ class AmuletUI {
        final info = Positioned(
            bottom: height + 5,
            // right: width + 5,
-           right: 0,
+           right: -infoWidth * 0.33,
            child: buildBorder(
              color: Colors.white70,
              width: 2,
              child: GSContainer(
+                 width: infoWidth,
                  child: buildTextValue(skillType.name.clean)),
            ),
        );
