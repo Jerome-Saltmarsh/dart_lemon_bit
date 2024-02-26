@@ -400,6 +400,7 @@ extension AmuletParser on IsometricParser {
      amulet.skillSlot1.value = readSkillType();
      amulet.skillSlot2.value = readSkillType();
      amulet.skillSlot3.value = readSkillType();
+     amulet.skillSlotsChangedNotifier.value++;
   }
 
   void readPlayerSkillSlotIndex() =>

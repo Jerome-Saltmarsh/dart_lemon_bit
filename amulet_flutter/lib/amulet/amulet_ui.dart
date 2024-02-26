@@ -1213,12 +1213,35 @@ class AmuletUI {
             SkillType.Shoot_Arrow,
           ].contains(element) &&
               element.casteType == casteType)
-              .map(buildWindowSkillTypeElement)
+              .map(buildWindowPlayerSkillsSkillType)
               .toList(growable: false)
         ],
       );
 
-  Widget buildWindowSkillTypeElement(SkillType skillType){
+
+  final containerAssigned = Container(
+    width: 50,
+    height: 50,
+    color: Colors.green,
+  );
+
+  final containerNotAssigned = Container(
+    width: 50,
+    height: 50,
+    color: Palette.brownDark,
+  );
+
+  Widget buildWindowPlayerSkillsSkillType(SkillType skillType){
+
+
+    final watchSkillTypeAssigned = amulet.playerSkillTypeSlotAssigned[skillType] ?? (throw Exception());
+
+
+    final assignedContainer = buildWatch(
+        watchSkillTypeAssigned, (assigned) =>
+          assigned ? containerAssigned : containerNotAssigned
+    );
+
      final watch = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());
 
 
@@ -1264,16 +1287,12 @@ class AmuletUI {
          child: Container(
            width: width,
            height: height,
-           decoration: BoxDecoration(
-             color: Colors.black26,
-             // border: Border.all(color: Colors.black12, width: 6),
-             // borderRadius: BorderRadius.zero,
-           ),
            margin: const EdgeInsets.only(bottom: 6),
            child: Stack(
              clipBehavior: Clip.none,
              // fit: StackFit.loose,
              children: [
+               assignedContainer,
                b,
                Positioned(
                  child: Container(

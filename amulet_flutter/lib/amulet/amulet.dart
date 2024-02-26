@@ -38,6 +38,8 @@ class Amulet extends IsometricGame {
   final skillSlot2 = Watch(SkillType.None);
   final skillSlot3 = Watch(SkillType.None);
 
+  final skillSlotsChangedNotifier = Watch(0);
+
   final consumableSlots = List.generate(4, (index) => Watch<AmuletItem?>(null));
 
   final playerSkillSlotIndex = Watch(-1);
@@ -79,6 +81,8 @@ class Amulet extends IsometricGame {
   final playerWeaponAreaDamage = Watch<AreaDamage?>(null);
 
   final playerSkillTypeLevels = SkillType.values.asMapReversed((t) => Watch(0));
+  final playerSkillTypeSlotIndex = SkillType.values.asMapReversed((t) => Watch<int?>(null));
+  final playerSkillTypeSlotAssigned = SkillType.values.asMapReversed((t) => Watch(false));
   final playerSkillLeft = Watch(SkillType.Strike);
   final playerSkillRight = Watch(SkillType.Strike);
   final windowVisibleSkillLeft = WatchBool(false);
@@ -218,8 +222,16 @@ class Amulet extends IsometricGame {
     playerMagicMax.onChanged(refreshPlayerMagicPercentage);
     playerSkillLeft.onChanged(onChangedPlayerSkillType);
     playerSkillRight.onChanged(onChangedPlayerSkillType);
-
+    skillSlotsChangedNotifier.onChanged(onChangedSkillSlots);
     verifySrcs();
+  }
+
+  void onChangedSkillSlots(int _){
+     for (final skillType in SkillType.values) {
+       final index = amulet.getSkillTypeSlotIndex(skillType);
+       amulet.playerSkillTypeSlotIndex[skillType]?.value = index;
+       amulet.playerSkillTypeSlotAssigned[skillType]?.value = index != null;
+     }
   }
 
   void onWindowVisibilityChanged(bool value){
@@ -817,4 +829,20 @@ class Amulet extends IsometricGame {
 
   void toggleSkillType(SkillType skillType) =>
       sendAmuletRequest(NetworkRequestAmulet.Toggle_Skill_Type, skillType.index);
+
+  int? getSkillTypeSlotIndex(SkillType skillType) {
+      if (skillType == skillSlot0.value){
+        return 0;
+      }
+      if (skillType == skillSlot1.value){
+        return 1;
+      }
+      if (skillType == skillSlot2.value){
+        return 2;
+      }
+      if (skillType == skillSlot3.value){
+        return 3;
+      }
+      return null;
+  }
 }
