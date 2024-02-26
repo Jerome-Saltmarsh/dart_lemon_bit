@@ -1232,12 +1232,12 @@ class AmuletUI {
             SkillType.Shoot_Arrow,
           ].contains(element) &&
               element.casteType == casteType)
-              .map(buildContainerSkillTypeInfo)
+              .map(buildWindowSkillTypeElement)
               .toList(growable: false)
         ],
       );
 
-  Widget buildContainerSkillTypeInfo(SkillType skillType){
+  Widget buildWindowSkillTypeElement(SkillType skillType){
      final watch = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());
 
 
@@ -1270,44 +1270,48 @@ class AmuletUI {
           return nothing;
        });
 
-       return onPressed(
-         onEnter: () {
-            showInfo = true;
-            refreshFunction?.call();
-         },
-         onExit: (){
-           showInfo = false;
-           refreshFunction?.call();
-         },
-         action: unlocked ? () => amulet.toggleSkillType(skillType) : null,
-         child: Container(
-           width: width,
-           height: height,
-           child: Stack(
-             clipBehavior: Clip.none,
-             // fit: StackFit.loose,
-             children: [
-               b,
-               Positioned(
-                 child: Container(
-                   width: width,
-                   height: height,
-                   alignment: Alignment.center,
-                   color: Colors.black26,
-                   margin: const EdgeInsets.only(bottom: 6),
-                   child: buildSkillTypeIcon(skillType),
-                 ),
-               ),
-               if (level > 0)
+       return Draggable(
+         data: skillType,
+         feedback: buildIconSkillType(skillType),
+         child: onPressed(
+           onEnter: () {
+              showInfo = true;
+              refreshFunction?.call();
+           },
+           onExit: (){
+             showInfo = false;
+             refreshFunction?.call();
+           },
+           action: unlocked ? () => amulet.toggleSkillType(skillType) : null,
+           child: Container(
+             width: width,
+             height: height,
+             child: Stack(
+               clipBehavior: Clip.none,
+               // fit: StackFit.loose,
+               children: [
+                 b,
                  Positioned(
-                     bottom: 0,
-                     right: 0,
-                     child:  Container(
-                         width: 20,
-                         height: 20,
-                         alignment: Alignment.center,
-                         child: buildText(level)))
-             ],
+                   child: Container(
+                     width: width,
+                     height: height,
+                     alignment: Alignment.center,
+                     color: Colors.black26,
+                     margin: const EdgeInsets.only(bottom: 6),
+                     child: buildIconSkillType(skillType),
+                   ),
+                 ),
+                 if (level > 0)
+                   Positioned(
+                       bottom: 0,
+                       right: 0,
+                       child:  Container(
+                           width: 20,
+                           height: 20,
+                           alignment: Alignment.center,
+                           child: buildText(level)))
+               ],
+             ),
            ),
          ),
        );
@@ -1372,7 +1376,7 @@ class AmuletUI {
              children: [
                b,
                Positioned(
-                 child: buildSkillTypeIcon(skillType),
+                 child: buildIconSkillType(skillType),
                ),
              ],
            ),
@@ -1462,7 +1466,7 @@ class AmuletUI {
         height: 16,
       );
 
-  Widget buildSkillTypeIcon(SkillType skillType){
+  Widget buildIconSkillType(SkillType skillType){
     final src = getSkillTypeSrc(skillType);
     return AmuletImage(
         srcX: src[0],
@@ -1532,7 +1536,7 @@ class AmuletUI {
           // if (criticalHitPoints > 0)
           //   buildRow(buildIconCriticalHitPoints(), criticalHitPoints),
            ...amuletItem.skills.entries.map((e) => Row(children: [
-             buildSkillTypeIcon(e.key),
+             buildIconSkillType(e.key),
              width4,
              buildTextValue('+${e.value}'),
              width4,
@@ -1589,7 +1593,7 @@ class AmuletUI {
           Tooltip(
             message: 'Skill Name',
             child: buildRow(
-                buildSkillTypeIcon(skillType),
+                buildIconSkillType(skillType),
                 skillType.name.replaceAll('_', ' '),
             ),
           ),
@@ -1640,7 +1644,7 @@ class AmuletUI {
           children: [
             // buildText(skillType.name.replaceAll('_', ' '), color: Colors.white70),
             // height8,
-            buildSkillTypeIcon(skillType),
+            buildIconSkillType(skillType),
           ],
         ),
       );
@@ -1882,12 +1886,12 @@ class AmuletUI {
         ],
       );
 
-  Widget buildSkillSlot(Watch<SkillType> watch){
+  Widget buildSkillSlot(Watch<SkillType> skillSlot){
 
-    final index = amulet.getSkillSlotIndex(watch);
+    final index = amulet.getSkillSlotIndex(skillSlot);
     const size = 50.0;
 
-    final slot = buildWatch(watch, (skillType) {
+    final slot = buildWatch(skillSlot, (skillType) {
       return buildContainerSkillTypeAssigned(
         skillType, () => amulet.setSkillSlotIndex(index), () {
         amulet.setSkillSlotIndex(index);
@@ -1897,7 +1901,6 @@ class AmuletUI {
 
     final containerActive = buildBorder(
       color: Colors.white54,
-      // color: Colors.transparent,
       width: 3,
       child: Container(
         child: slot,
@@ -1929,18 +1932,28 @@ class AmuletUI {
     final child = buildWatch(amulet.playerSkillSlotIndex, (selectedIndex) =>
     selectedIndex == index ? containerActive : containerInactive);
 
-    return MouseOver(
-      builder: (mouseOver) {
-        return Stack(
-          fit: StackFit.passthrough,
-          alignment: Alignment.center,
-          children: [
-            child,
-            if (mouseOver)
-              key,
-          ],
+    return DragTarget<SkillType>(
+      onAccept: (value){
+        amulet.setSkillSlotValue(
+            index: index,
+            skillType: value,
         );
-      }
+      },
+      builder: (context, candidateData, rejectData) {
+        return MouseOver(
+            builder: (mouseOver) {
+              return Stack(
+                fit: StackFit.passthrough,
+                alignment: Alignment.center,
+                children: [
+                  child,
+                  if (mouseOver)
+                    key,
+                ],
+              );
+            }
+        );
+      },
     );
   }
 
@@ -1969,6 +1982,7 @@ class AmuletUI {
       );
 
   Widget buildTextValue(value) => buildText(value, color: Colors.white70);
+
 
 }
 
