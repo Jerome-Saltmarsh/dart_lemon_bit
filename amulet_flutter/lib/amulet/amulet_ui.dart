@@ -1270,52 +1270,56 @@ class AmuletUI {
           return nothing;
        });
 
+       final child = onPressed(
+         onEnter: () {
+           showInfo = true;
+           refreshFunction?.call();
+         },
+         onExit: (){
+           showInfo = false;
+           refreshFunction?.call();
+         },
+         action: unlocked ? () => amulet.toggleSkillType(skillType) : null,
+         child: Container(
+           width: width,
+           height: height,
+           decoration: BoxDecoration(
+             color: Colors.black26,
+             // border: Border.all(color: Colors.black12, width: 6),
+             // borderRadius: BorderRadius.zero,
+           ),
+           margin: const EdgeInsets.only(bottom: 6),
+           child: Stack(
+             clipBehavior: Clip.none,
+             // fit: StackFit.loose,
+             children: [
+               b,
+               Positioned(
+                 child: Container(
+                   width: width,
+                   height: height,
+                   alignment: Alignment.center,
+                   child: buildIconSkillType(skillType),
+                 ),
+               ),
+               if (level > 0)
+                 Positioned(
+                     bottom: 0,
+                     right: 0,
+                     child:  Container(
+                         width: 20,
+                         height: 20,
+                         alignment: Alignment.center,
+                         child: buildText(level)))
+             ],
+           ),
+         ),
+       );
+
        return Draggable(
          data: skillType,
          feedback: buildIconSkillType(skillType),
-         child: onPressed(
-           onEnter: () {
-              showInfo = true;
-              refreshFunction?.call();
-           },
-           onExit: (){
-             showInfo = false;
-             refreshFunction?.call();
-           },
-           action: unlocked ? () => amulet.toggleSkillType(skillType) : null,
-           child: Container(
-             width: width,
-             height: height,
-             color: Colors.black26,
-             margin: const EdgeInsets.only(bottom: 6),
-             child: Stack(
-               clipBehavior: Clip.none,
-               // fit: StackFit.loose,
-               children: [
-                 b,
-                 Positioned(
-                   child: Container(
-                     width: width,
-                     height: height,
-                     alignment: Alignment.center,
-                     // color: Colors.black26,
-                     // margin: const EdgeInsets.only(bottom: 6),
-                     child: buildIconSkillType(skillType),
-                   ),
-                 ),
-                 if (level > 0)
-                   Positioned(
-                       bottom: 0,
-                       right: 0,
-                       child:  Container(
-                           width: 20,
-                           height: 20,
-                           alignment: Alignment.center,
-                           child: buildText(level)))
-               ],
-             ),
-           ),
-         ),
+         child: child,
        );
      });
   }
