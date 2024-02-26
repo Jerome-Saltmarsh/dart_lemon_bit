@@ -1244,15 +1244,17 @@ class AmuletUI {
   Widget buildContainerSkillTypeInfo(SkillType skillType){
      final watch = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());
 
+
      const height = 50.0;
-     const width = height * goldenRatio_1381;
+     const width = height;
 
      return buildWatch(watch, (level) {
 
        final unlocked = level > 0;
        final info = Positioned(
-           top: 0,
-           right: width + 5,
+           bottom: height + 5,
+           // right: width + 5,
+           right: 0,
            child: buildBorder(
              color: Colors.white70,
              width: 2,
@@ -1297,18 +1299,22 @@ class AmuletUI {
                    child: Container(
                      width: width,
                      height: height,
+                     alignment: Alignment.center,
                      padding: const EdgeInsets.all(4),
                      color: Colors.black26,
                      margin: const EdgeInsets.only(bottom: 6),
-                     child: Column(
-                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                       children: [
-                         buildSkillTypeIcon(skillType),
-                         buildText(level),
-                       ],
-                     ),
+                     child: buildSkillTypeIcon(skillType),
                    ),
                  ),
+                 if (level > 0)
+                 Positioned(
+                     bottom: 0,
+                     right: 0,
+                     child:  Container(
+                         width: 20,
+                         height: 20,
+                         alignment: Alignment.center,
+                         child: buildText(level)))
                ],
              ),
            ),
