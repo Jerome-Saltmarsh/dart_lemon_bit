@@ -1248,7 +1248,6 @@ class AmuletUI {
        final unlocked = level > 0;
        final info = Positioned(
            bottom: height + 5,
-           // right: width + 5,
            right: 0,
            child: buildBorder(
              color: Colors.white70,
@@ -1280,28 +1279,26 @@ class AmuletUI {
            refreshFunction?.call();
          },
          action: unlocked ? () => amulet.toggleSkillType(skillType) : null,
-         child: buildBorder(
-           color: unlocked ? Colors.white70 : Colors.transparent,
-           child: Container(
-             width: width,
-             height: height,
-             child: Stack(
-               clipBehavior: Clip.none,
-               // fit: StackFit.loose,
-               children: [
-                 b,
-                 Positioned(
-                   child: Container(
-                     width: width,
-                     height: height,
-                     alignment: Alignment.center,
-                     padding: const EdgeInsets.all(4),
-                     color: Colors.black26,
-                     margin: const EdgeInsets.only(bottom: 6),
-                     child: buildSkillTypeIcon(skillType),
-                   ),
+         child: Container(
+           width: width,
+           height: height,
+           child: Stack(
+             clipBehavior: Clip.none,
+             // fit: StackFit.loose,
+             children: [
+               b,
+               Positioned(
+                 child: Container(
+                   width: width,
+                   height: height,
+                   alignment: Alignment.center,
+                   padding: const EdgeInsets.all(4),
+                   color: Colors.black26,
+                   margin: const EdgeInsets.only(bottom: 6),
+                   child: buildSkillTypeIcon(skillType),
                  ),
-                 if (level > 0)
+               ),
+               if (level > 0)
                  Positioned(
                      bottom: 0,
                      right: 0,
@@ -1310,8 +1307,7 @@ class AmuletUI {
                          height: 20,
                          alignment: Alignment.center,
                          child: buildText(level)))
-               ],
-             ),
+             ],
            ),
          ),
        );
