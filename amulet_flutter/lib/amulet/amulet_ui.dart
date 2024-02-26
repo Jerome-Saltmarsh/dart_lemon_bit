@@ -1212,42 +1212,45 @@ class AmuletUI {
   );
 
   Widget buildColumnCasteType(CasteType casteType) {
-    return Column(
-        children: [
-          buildIconCasteType(casteType),
-          Divider(color: Colors.white54,),
-          height16,
-          ...SkillType.values
-              .where((element) =>
-          !const [
-            SkillType.None,
-            SkillType.Strike,
-            SkillType.Shoot_Arrow,
-          ].contains(element) &&
-              element.casteType == casteType)
-              .map((skillType){
+    return Container(
+      width: 50,
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            buildIconCasteType(casteType),
+            // Divider(color: Colors.white54,),
+            height32,
+            ...SkillType.values
+                .where((element) =>
+            !const [
+              SkillType.None,
+              SkillType.Strike,
+              SkillType.Shoot_Arrow,
+            ].contains(element) &&
+                element.casteType == casteType)
+                .map((skillType){
 
-                final value = buildWindowPlayerSkillsSkillType(skillType);
-                final watchLevel = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());;
+                  final value = buildWindowPlayerSkillsSkillType(skillType);
+                  final watchLevel = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());;
 
-                final unlocked = buildWatch(watchLevel, (level){
-                  if (level <= 0) {
-                    return nothing;
-                  }
-                  return value;
-                });
-
-                return buildWatch(filterSkillTypes, (filter) {
-                    if (filter) {
-                      return unlocked;
+                  final unlocked = buildWatch(watchLevel, (level){
+                    if (level <= 0) {
+                      return nothing;
                     }
                     return value;
-                });
-                // return buildWindowPlayerSkillsSkillType(skillType);
-          })
-              .toList(growable: false)
-        ],
-      );
+                  });
+
+                  return buildWatch(filterSkillTypes, (filter) {
+                      if (filter) {
+                        return unlocked;
+                      }
+                      return value;
+                  });
+            })
+                .toList(growable: false)
+          ],
+        ),
+    );
   }
 
 
