@@ -1321,7 +1321,6 @@ class AmuletUI {
   Widget buildContainerSkillTypeAssigned(SkillType skillType){
      final watch = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());
 
-
      const infoWidth = 120.0;
      const height = 50.0;
      const width = height;
@@ -1331,7 +1330,6 @@ class AmuletUI {
        final unlocked = level > 0;
        final info = Positioned(
            bottom: height + 5,
-           // right: width + 5,
            right: -infoWidth * 0.33,
            child: buildBorder(
              color: Colors.white70,
@@ -1364,29 +1362,26 @@ class AmuletUI {
            refreshFunction?.call();
          },
          action: unlocked ? () => amulet.toggleSkillType(skillType) : null,
-         child: buildBorder(
-           color: unlocked ? Colors.white70 : Colors.transparent,
-           child: Container(
-             width: width,
-             height: height,
-             child: Stack(
-               clipBehavior: Clip.none,
-               // fit: StackFit.loose,
-               children: [
-                 b,
-                 Positioned(
-                   child: Container(
-                     width: width,
-                     height: height,
-                     alignment: Alignment.center,
-                     padding: const EdgeInsets.all(4),
-                     color: Colors.black26,
-                     margin: const EdgeInsets.only(bottom: 6),
-                     child: buildSkillTypeIcon(skillType),
-                   ),
+         child: Container(
+           width: width,
+           height: height,
+           child: Stack(
+             clipBehavior: Clip.none,
+             // fit: StackFit.loose,
+             children: [
+               b,
+               Positioned(
+                 child: Container(
+                   width: width,
+                   height: height,
+                   alignment: Alignment.center,
+                   padding: const EdgeInsets.all(4),
+                   color: Colors.black26,
+                   margin: const EdgeInsets.only(bottom: 6),
+                   child: buildSkillTypeIcon(skillType),
                  ),
-               ],
-             ),
+               ),
+             ],
            ),
          ),
        );
@@ -1884,17 +1879,17 @@ class AmuletUI {
   Widget buildWindowPlayerSkillSlots() => Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          buildSkillSlot(amulet.skillSlot0, amulet.windowVisibleSkillSlot0),
+          buildSkillSlot(amulet.skillSlot0),
           width8,
-          buildSkillSlot(amulet.skillSlot1, amulet.windowVisibleSkillSlot1),
+          buildSkillSlot(amulet.skillSlot1),
           width8,
-          buildSkillSlot(amulet.skillSlot2, amulet.windowVisibleSkillSlot2),
+          buildSkillSlot(amulet.skillSlot2),
           width8,
-          buildSkillSlot(amulet.skillSlot3, amulet.windowVisibleSkillSlot3),
+          buildSkillSlot(amulet.skillSlot3),
         ],
       );
 
-  Widget buildSkillSlot(Watch<SkillType> watch, WatchBool menuOpen){
+  Widget buildSkillSlot(Watch<SkillType> watch){
 
     final index = amulet.getSkillSlotIndex(watch);
     const size = 50.0;

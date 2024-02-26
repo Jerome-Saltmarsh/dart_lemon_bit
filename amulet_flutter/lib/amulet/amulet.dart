@@ -33,11 +33,6 @@ class Amulet extends IsometricGame {
   final playerDebugEnabled = WatchBool(false);
   final playerPerformFrameVelocity = Watch(0.0);
 
-  final windowVisibleSkillSlot0 = WatchBool(false);
-  final windowVisibleSkillSlot1 = WatchBool(false);
-  final windowVisibleSkillSlot2 = WatchBool(false);
-  final windowVisibleSkillSlot3 = WatchBool(false);
-
   final skillSlot0 = Watch(SkillType.None);
   final skillSlot1 = Watch(SkillType.None);
   final skillSlot2 = Watch(SkillType.None);
