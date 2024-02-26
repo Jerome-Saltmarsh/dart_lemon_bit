@@ -1243,17 +1243,21 @@ class AmuletUI {
 
   Widget buildContainerSkillTypeInfo(SkillType skillType){
      final watch = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());
+
+     const height = 50.0;
+     const width = height * goldenRatio_1381;
+
      return buildWatch(watch, (level) {
 
        final unlocked = level > 0;
        final info = Positioned(
            top: 0,
-           right: 125 + 5,
+           right: width + 5,
            child: buildBorder(
              color: Colors.white70,
              width: 2,
              child: GSContainer(
-                 child: buildTextValue(skillType.name)),
+                 child: buildTextValue(skillType.name.clean)),
            ),
        );
 
@@ -1282,8 +1286,8 @@ class AmuletUI {
          child: buildBorder(
            color: unlocked ? Colors.white70 : Colors.transparent,
            child: Container(
-             width: 125,
-             height: 50,
+             width: width,
+             height: height,
              child: Stack(
                clipBehavior: Clip.none,
                // fit: StackFit.loose,
@@ -1291,32 +1295,16 @@ class AmuletUI {
                  b,
                  Positioned(
                    child: Container(
-                     width: 125,
-                     height: 50,
+                     width: width,
+                     height: height,
                      padding: const EdgeInsets.all(4),
                      color: Colors.black26,
                      margin: const EdgeInsets.only(bottom: 6),
                      child: Column(
                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              buildSkillTypeIcon(skillType),
-                              buildText(
-                                  skillType.name.clean,
-                                  color: unlocked ? Colors.white70 : Colors.white54,
-                                  size: 16,
-                                  bold: unlocked
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              buildText(level),
-                            ],
-                          ),
+                         buildSkillTypeIcon(skillType),
+                         buildText(level),
                        ],
                      ),
                    ),
