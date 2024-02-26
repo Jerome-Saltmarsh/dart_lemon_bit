@@ -1246,38 +1246,81 @@ class AmuletUI {
      return buildWatch(watch, (level) {
 
        final unlocked = level > 0;
+       final info = Positioned(
+           top: 0,
+           right: 125 + 5,
+           child: buildBorder(
+             color: Colors.white70,
+             width: 2,
+             child: GSContainer(
+                 child: buildTextValue(skillType.name)),
+           ),
+       );
+
+       var showInfo = false;
+
+       Function? refreshFunction;
+
+       final b = buildState(builder: (context, rebuild){
+         refreshFunction = rebuild;
+          if (showInfo){
+            return info;
+          }
+          return nothing;
+       });
 
        return onPressed(
+         onEnter: () {
+            showInfo = true;
+            refreshFunction?.call();
+         },
+         onExit: (){
+           showInfo = false;
+           refreshFunction?.call();
+         },
          action: unlocked ? () => amulet.toggleSkillType(skillType) : null,
          child: buildBorder(
            color: unlocked ? Colors.white70 : Colors.transparent,
            child: Container(
              width: 125,
              height: 50,
-             padding: const EdgeInsets.all(4),
-             color: Colors.black26,
-             margin: const EdgeInsets.only(bottom: 6),
-             child: Column(
-               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+             child: Stack(
+               clipBehavior: Clip.none,
+               // fit: StackFit.loose,
                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      buildSkillTypeIcon(skillType),
-                      buildText(
-                          skillType.name.clean,
-                          color: unlocked ? Colors.white70 : Colors.white54,
-                          size: 16,
-                          bold: unlocked
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      buildText(level),
-                    ],
-                  ),
+                 b,
+                 Positioned(
+                   child: Container(
+                     width: 125,
+                     height: 50,
+                     padding: const EdgeInsets.all(4),
+                     color: Colors.black26,
+                     margin: const EdgeInsets.only(bottom: 6),
+                     child: Column(
+                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                       children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              buildSkillTypeIcon(skillType),
+                              buildText(
+                                  skillType.name.clean,
+                                  color: unlocked ? Colors.white70 : Colors.white54,
+                                  size: 16,
+                                  bold: unlocked
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              buildText(level),
+                            ],
+                          ),
+                       ],
+                     ),
+                   ),
+                 ),
                ],
              ),
            ),
