@@ -27,6 +27,9 @@ class AmuletUI {
   static const barHeight = 10.0;
 
   final Amulet amulet;
+  final filterSkillTypes = WatchBool(false);
+  final iconCheckBoxTrue = AmuletImage(srcX: 560, srcY: 0, width: 16, height: 16);
+  final iconCheckBoxFalse = AmuletImage(srcX: 560, srcY: 16, width: 16, height: 16);
 
   AmuletUI(this.amulet);
 
@@ -1156,55 +1159,64 @@ class AmuletUI {
   Widget buildIconHealAmount() =>
       AmuletImage(srcX: 768, srcY: 320, width: 16, height: 16);
 
-
-
-  // Widget buildIconDuration() =>
-  //     AmuletImage(srcX: 769, srcY: 65, width: 16, height: 16);
-
   Widget buildIconMagic() =>
       AmuletImage(srcX: 768, srcY: 16, width: 16, height: 16);
 
   Widget buildIconHealthRegen() =>
       AmuletImage(srcX: 768, srcY: 32, width: 16, height: 16);
 
-  Widget buildWindowPlayerSkills() => GSContainer(
-        width: 314,
-        height: amulet.engine.screen.height - 200,
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Tooltip(message: 'Skills', child: buildIconSkills()),
-                buildButtonClose(amulet.windowVisiblePlayerSkills)
-              ],
-            ),
-            height16,
-            SingleChildScrollView(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+  Widget buildWindowPlayerSkills() => buildWindowBorder(
+    child: GSContainer(
+          width: 314,
+          height: amulet.engine.screen.height - 200,
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  buildColumnCasteType(CasteType.Sword),
-                  width8,
-                  buildColumnCasteType(CasteType.Bow),
-                  width8,
-                  buildColumnCasteType(CasteType.Staff),
-                  width8,
-                  buildColumnCasteType(CasteType.Caste),
-                  width8,
-                  buildColumnCasteType(CasteType.Passive),
+                  Tooltip(message: 'Skills', child: buildIconSkills()),
+                  onPressed(
+                    action: filterSkillTypes.toggle,
+                    child: Row(
+                      children: [
+                        buildText('ALL'),
+                        width8,
+                        buildWatch(filterSkillTypes, buildIconCheckBox),
+                      ],
+                    ),
+                  ),
+                  buildButtonClose(amulet.windowVisiblePlayerSkills)
                 ],
               ),
-            ),
-          ],
+              height16,
+              SingleChildScrollView(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    buildColumnCasteType(CasteType.Sword),
+                    width8,
+                    buildColumnCasteType(CasteType.Bow),
+                    width8,
+                    buildColumnCasteType(CasteType.Staff),
+                    width8,
+                    buildColumnCasteType(CasteType.Caste),
+                    width8,
+                    buildColumnCasteType(CasteType.Passive),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
-      );
+  );
 
-  Widget buildColumnCasteType(CasteType casteType) => Column(
+  Widget buildColumnCasteType(CasteType casteType) {
+    return Column(
         children: [
           buildIconCasteType(casteType),
-          height8,
+          Divider(color: Colors.white54,),
+          height16,
           ...SkillType.values
               .where((element) =>
           !const [
@@ -1213,10 +1225,30 @@ class AmuletUI {
             SkillType.Shoot_Arrow,
           ].contains(element) &&
               element.casteType == casteType)
-              .map(buildWindowPlayerSkillsSkillType)
+              .map((skillType){
+
+                final value = buildWindowPlayerSkillsSkillType(skillType);
+                final watchLevel = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());;
+
+                final unlocked = buildWatch(watchLevel, (level){
+                  if (level <= 0) {
+                    return nothing;
+                  }
+                  return value;
+                });
+
+                return buildWatch(filterSkillTypes, (filter) {
+                    if (filter) {
+                      return unlocked;
+                    }
+                    return value;
+                });
+                // return buildWindowPlayerSkillsSkillType(skillType);
+          })
               .toList(growable: false)
         ],
       );
+  }
 
 
   final containerAssigned = Container(
@@ -1945,6 +1977,8 @@ class AmuletUI {
 
   Widget buildTextValue(value) => buildText(value, color: Colors.white70);
 
+  Widget buildIconCheckBox(bool value) =>
+      value ? iconCheckBoxTrue : iconCheckBoxFalse;
 
 }
 
