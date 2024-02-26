@@ -116,6 +116,13 @@ class AmuletUI {
               left: 8,
               child: buildHudBottomLeft(),
           ),
+          Positioned(
+              bottom: 100,
+              child: buildWatchVisible(
+                  amulet.windowVisiblePlayerSkills,
+                  buildWindowPlayerSkills(),
+              )
+          ),
           buildPositionedMessage(),
           buildOverlayScreenColor(),
           Positioned(
@@ -153,10 +160,6 @@ class AmuletUI {
           buildWatchVisible(
             amulet.windowVisiblePlayerStats,
             buildWindowPlayerStats(),
-          ),
-          buildWatchVisible(
-            amulet.windowVisiblePlayerSkills,
-            buildWindowPlayerSkills(),
           ),
         ],
       );
@@ -1183,41 +1186,38 @@ class AmuletUI {
   Widget buildIconHealthRegen() =>
       AmuletImage(srcX: 768, srcY: 32, width: 16, height: 16);
 
-  Widget buildWindowPlayerSkills() =>
-    GSContainer(
-      height: amulet.engine.screen.height - 200,
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Tooltip(
-                  message: 'Skills',
-                  child: buildIconSkills()),
-              buildButtonClose(amulet.windowVisiblePlayerSkills)
-            ],
-          ),
-          height16,
-          SingleChildScrollView(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+  Widget buildWindowPlayerSkills() => GSContainer(
+        height: amulet.engine.screen.height - 200,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                buildColumnCasteType(CasteType.Sword),
-                width8,
-                buildColumnCasteType(CasteType.Bow),
-                width8,
-                buildColumnCasteType(CasteType.Staff),
-                width8,
-                buildColumnCasteType(CasteType.Caste),
-                width8,
-                buildColumnCasteType(CasteType.Passive),
+                Tooltip(message: 'Skills', child: buildIconSkills()),
+                buildButtonClose(amulet.windowVisiblePlayerSkills)
               ],
             ),
-          ),
-        ],
-      ),
-    );
+            height16,
+            SingleChildScrollView(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildColumnCasteType(CasteType.Sword),
+                  width8,
+                  buildColumnCasteType(CasteType.Bow),
+                  width8,
+                  buildColumnCasteType(CasteType.Staff),
+                  width8,
+                  buildColumnCasteType(CasteType.Caste),
+                  width8,
+                  buildColumnCasteType(CasteType.Passive),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
 
   Widget buildColumnCasteType(CasteType casteType) => Column(
         children: [
