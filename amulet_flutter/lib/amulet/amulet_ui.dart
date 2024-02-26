@@ -69,10 +69,6 @@ class AmuletUI {
           buildDialogTalk(),
           buildPositionedWorldMap(),
           Positioned(
-              bottom: 8,
-              child: buildWindowPlayerSkillSlots(),
-          ),
-          Positioned(
             top: 8,
              child: buildPlayerAimNode(),
           ),
@@ -122,6 +118,10 @@ class AmuletUI {
                   amulet.windowVisiblePlayerSkills,
                   buildWindowPlayerSkills(),
               )
+          ),
+          Positioned(
+            bottom: 8,
+            child: buildWindowPlayerSkillSlots(),
           ),
           buildPositionedMessage(),
           buildOverlayScreenColor(),
@@ -1187,6 +1187,7 @@ class AmuletUI {
       AmuletImage(srcX: 768, srcY: 32, width: 16, height: 16);
 
   Widget buildWindowPlayerSkills() => GSContainer(
+        width: 314,
         height: amulet.engine.screen.height - 200,
         child: Column(
           children: [
