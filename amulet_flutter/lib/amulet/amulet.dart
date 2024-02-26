@@ -109,36 +109,10 @@ class Amulet extends IsometricGame {
   final aimTargetItemTypeComparison = Watch<AmuletItem?>(null);
   final aimTargetItemTypeCurrent = Watch<AmuletItem?>(null);
   final highlightedAmuletItem = Watch<AmuletItem?>(null);
-  // final playerSkillsNotifier = Watch(0);
-  // final playerSkillTypeStats = SkillType.values.map((skillType) =>
-  //     SkillTypeStats(skillType: skillType)
-  // ).toList(growable: false);
-
-  // final playerSkills = SkillType.values.m
-
-  // List<SkillType> get playerSkills =>
-  //     playerSkillTypeStats
-  //       .where((element) => element.unlocked)
-  //       .map((e) => e.skillType)
-  //       .toList(growable: false)
-  //     ;
 
   void onChangedPlayerSkillType(SkillType skillType){
     audio.click_sounds_35.play();
   }
-
-  // Watch<AmuletItem?>? get activeAmuletItemSlot {
-  //   switch (activeSlotType.value){
-  //     case SlotType.Helm:
-  //       return equippedHelm;
-  //     case SlotType.Armor:
-  //       return equippedArmor;
-  //     case SlotType.Shoes:
-  //       return equippedShoes;
-  //     default:
-  //       return null;
-  //   }
-  // }
 
   final slotContainerDefault = Container(
     color: Colors.black12,
@@ -231,6 +205,12 @@ class Amulet extends IsometricGame {
       updateFiendCountPercentage();
     });
 
+    windowVisiblePlayerSkills.onChanged(onWindowVisibilityChanged);
+    windowVisibleEquipment.onChanged(onWindowVisibilityChanged);
+    windowVisiblePlayerStats.onChanged(onWindowVisibilityChanged);
+    windowVisibleQuests.onChanged(onWindowVisibilityChanged);
+    windowVisibleHelp.onChanged(onWindowVisibilityChanged);
+    windowVisibleQuantify.onChanged(onWindowVisibilityChanged);
     playerInteracting.onChanged(onChangedPlayerInteracting);
     npcTextIndex.onChanged(onChangedNpcTextIndex);
     error.onChanged(onChangedError);
@@ -240,6 +220,10 @@ class Amulet extends IsometricGame {
     playerSkillRight.onChanged(onChangedPlayerSkillType);
 
     verifySrcs();
+  }
+
+  void onWindowVisibilityChanged(bool value){
+    audio.click_sounds_35.play();
   }
 
   void verifySrcs(){

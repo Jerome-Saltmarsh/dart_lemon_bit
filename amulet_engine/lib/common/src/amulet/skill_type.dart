@@ -137,6 +137,11 @@ enum SkillType {
     casteType: CasteType.Passive,
     magicCost: 0,
   ),
+  Area_Damage(
+    description: 'Effects the amount of enemies effected by a melee attack',
+    casteType: CasteType.Passive,
+    magicCost: 0,
+  ),
   ;
 
 

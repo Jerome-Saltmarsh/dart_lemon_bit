@@ -462,9 +462,6 @@ enum AmuletItem {
   final AreaDamage? areaDamage;
   final int? maxHealth;
   final int? maxMagic;
-  // final int? regenMagic;
-  // final int? regenHealth;
-
   final Map<SkillType, int> skills;
 
   const AmuletItem({

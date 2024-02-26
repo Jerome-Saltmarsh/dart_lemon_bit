@@ -84,8 +84,8 @@ class AmuletUI {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   buildToggleEquipment(),
-                  width8,
-                  buildTogglePlayerStats(),
+                  // width8,
+                  // buildTogglePlayerStats(),
                   width8,
                   buildTogglePlayerSkills(),
                   width8,
