@@ -1292,7 +1292,6 @@ class AmuletUI {
                    width: width,
                    height: height,
                    alignment: Alignment.center,
-                   padding: const EdgeInsets.all(4),
                    color: Colors.black26,
                    margin: const EdgeInsets.only(bottom: 6),
                    child: buildSkillTypeIcon(skillType),
@@ -1892,20 +1891,29 @@ class AmuletUI {
 
     final slot = buildWatch(watch, buildContainerSkillTypeAssigned);
 
-    final containerActive = Container(
-      child: slot,
-      color: Colors.black.withOpacity(0.6),
-      width: size,
-      height: size,
-      alignment: Alignment.center,
+    final containerActive = buildBorder(
+      color: Colors.white54,
+      // color: Colors.transparent,
+      width: 3,
+      child: Container(
+        child: slot,
+        color: Colors.white24,
+        width: size,
+        height: size,
+        alignment: Alignment.center,
+      ),
     );
 
-    final containerInactive = Container(
-      child: slot,
-      color: Colors.black26,
-      width: size,
-      height: size,
-      alignment: Alignment.center,
+    final containerInactive = buildBorder(
+      width: 3,
+      color: Colors.transparent,
+      child: Container(
+        child: slot,
+        color: Colors.black26,
+        width: size,
+        height: size,
+        alignment: Alignment.center,
+      ),
     );
 
     final key = Positioned(
