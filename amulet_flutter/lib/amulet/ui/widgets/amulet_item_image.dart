@@ -35,6 +35,8 @@ class AmuletImage extends StatelessWidget {
   final double width;
   final double height;
   final double scale;
+  final double dstX;
+  final double dstY;
 
   AmuletImage({
     required this.srcX,
@@ -42,6 +44,8 @@ class AmuletImage extends StatelessWidget {
     required this.width,
     required this.height,
     this.scale = 1,
+    this.dstX = 0,
+    this.dstY = 0,
   });
 
   @override
@@ -55,6 +59,8 @@ class AmuletImage extends StatelessWidget {
                 srcWidth: width,
                 srcHeight: height,
                 scale: scale,
+                dstX: dstX,
+                dstY: dstY,
               )
       );
 }

@@ -1316,11 +1316,15 @@ class AmuletUI {
          ),
        );
 
-       return Draggable(
-         data: skillType,
-         feedback: buildIconSkillType(skillType),
-         child: child,
-       );
+       if (unlocked){
+         return Draggable(
+           data: skillType,
+           feedback: buildIconSkillType(skillType, dstX: 25, dstY: 25),
+           child: child,
+         );
+       }
+
+       return child;
      });
   }
 
@@ -1472,15 +1476,8 @@ class AmuletUI {
         height: 16,
       );
 
-  Widget buildIconSkillType(SkillType skillType){
-    final src = getSkillTypeSrc(skillType);
-    return AmuletImage(
-        srcX: src[0],
-        srcY: src[1],
-        width: src.tryGet(2) ?? iconSizeSkillType,
-        height: src.tryGet(3) ?? iconSizeSkillType,
-    );
-  }
+  Widget buildIconSkillType(SkillType skillType, {double dstX = 0, double dstY = 0}) =>
+      AmuletImageSrc(src: getSkillTypeSrc(skillType), dstX: dstX, dstY: dstY);
 
   Widget buildWindowAmuletItemStats(AmuletItem? amuletItem) {
     if (amuletItem == null) {
@@ -1578,63 +1575,6 @@ class AmuletUI {
 
   Widget buildIconCasteType(CasteType casteType) =>
       AmuletImageSrc(src: getSrcCasteType(casteType));
-
-  Widget buildContainerSkillTypeStats(SkillTypeStats skillTypeStats) {
-    final skillType = skillTypeStats.skillType;
-    return Container(
-      color: Colors.black12,
-      alignment: Alignment.center,
-      width: 150,
-      padding: const EdgeInsets.all(8),
-      margin: const EdgeInsets.only(top: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              buildIconCasteType(skillType.casteType),
-            ],
-          ),
-          Tooltip(
-            message: 'Skill Name',
-            child: buildRow(
-                buildIconSkillType(skillType),
-                skillType.name.replaceAll('_', ' '),
-            ),
-          ),
-          if (skillTypeStats.damageMin > 0 || skillTypeStats.damageMax > 0)
-            Tooltip(
-              message: 'Damage',
-              child: buildRow(
-                  buildIconDamage(),
-                  '${skillTypeStats.damageMin} - ${skillTypeStats.damageMax}',
-              ),
-            ),
-          if (skillTypeStats.magicCost > 0)
-            Tooltip(
-                message: 'Magic Cost',
-                child: buildRow(
-                    buildIconMagicCost(),
-                    skillTypeStats.magicCost,
-                )),
-          // if (skillTypeStats.range > 0)
-          //   Tooltip(
-          //       message: 'Range',
-          //       child: buildRow(buildIconRange(), skillTypeStats.range)
-          //   ),
-          if (skillTypeStats.amount > 0)
-            Tooltip(
-                message: getSkillTypeAmountToolTip(skillType),
-                child: buildRow(
-                    buildIconSkillTypeAmount(skillType),
-                    skillTypeStats.amount,
-                )
-            ),
-        ],
-      ),
-    );
-  }
 
   static const containerSkillTypeWidth = 94.0;
 
@@ -1825,17 +1765,6 @@ class AmuletUI {
           ),
         _ => buildText('Amount')
       };
-
-  String? getSkillTypeAmountToolTip(SkillType skillType){
-    switch (skillType){
-      case SkillType.Split_Shot:
-        return 'Total Arrows';
-      case SkillType.Heal:
-        return 'Heal Amount';
-      default:
-        return 'Amount';
-    }
-  }
 
   Widget buildIconHealthSteal() =>
       AmuletImage(srcX: 768, srcY: 256, width: 16, height: 16);
