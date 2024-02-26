@@ -962,6 +962,36 @@ class AmuletUI {
                   ],
                 ),
                 height16,
+                Tooltip(
+                  message: 'Health',
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      buildIconHealth(),
+                      width8,
+                      buildWatch(amulet.player.health, (health) => buildText(health, color: AmuletColors.Health)),
+                      width2,
+                      buildText('/', color: AmuletColors.Health),
+                      width2,
+                      buildWatch(amulet.player.maxHealth, (health) => buildText(health, color: AmuletColors.Health)),
+                    ],
+                  ),
+                ),
+                Tooltip(
+                  message: 'Magic',
+                  child: Row(
+                    children: [
+                      buildIconMagic(),
+                      width8,
+                      buildWatch(amulet.playerMagic, (value) => buildText(value, color: AmuletColors.Magic)),
+                      width2,
+                      buildText('/', color: AmuletColors.Magic),
+                      width2,
+                      buildWatch(amulet.playerMagicMax, (value) => buildText(value, color: AmuletColors.Magic)),
+                    ],
+                  ),
+                ),
+                height16,
                 buildEquippedAmuletItems(),
               ],
             )),
