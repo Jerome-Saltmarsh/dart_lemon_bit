@@ -160,6 +160,7 @@ enum AmuletItem {
     regenHealth: 1,
       skills: {
         SkillType.Mighty_Strike: 1,
+        SkillType.Heal: 2,
       }
   ),
   Helm_Steel_Cap(
@@ -273,6 +274,7 @@ enum AmuletItem {
     regenHealth: 1,
       skills: {
         SkillType.Mighty_Strike: 1,
+        SkillType.Heal: 2,
       }
   ),
   Armor_Chainmail(

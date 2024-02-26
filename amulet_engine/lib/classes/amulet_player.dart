@@ -1497,17 +1497,26 @@ class AmuletPlayer extends IsometricPlayer with
     required SkillType skillType,
   }) {
     if (!skillSlots.isValidIndex(index)) {
-      throw Exception('amuletPlayer.setSkillSlotValue(index: $index, skillType: $skillType)');
+      writeGameError(GameError.Invalid_Skill_Slot_Index);
+      return;
     }
 
     if (getSkillTypeLevel(skillType) <= 0) {
-      throw Exception();
+      writeGameError(GameError.Skill_Type_Locked);
+      return;
     }
 
-    for (var i = 0; i < skillSlots.length; i++) {
-       if (skillSlots[i] != skillType) continue;
-       skillSlots[i] = SkillType.None;
+    final previousSkillTypeIndex = getSkillTypeSlotIndex(skillType);
+
+    if (previousSkillTypeIndex != null){
+      final existingSkillAtIndex = skillSlots[index];
+      skillSlots[previousSkillTypeIndex] = existingSkillAtIndex;
     }
+
+    // for (var i = 0; i < skillSlots.length; i++) {
+    //    if (skillSlots[i] != skillType) continue;
+    //    skillSlots[i] = SkillType.None;
+    // }
 
     skillSlots[index] = skillType;
     notifySkillSlotsDirty();
