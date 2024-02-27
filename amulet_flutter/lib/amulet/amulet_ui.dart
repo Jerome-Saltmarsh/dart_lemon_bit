@@ -1296,24 +1296,16 @@ class AmuletUI {
 
   static const Container_Size = 35.0;
 
-  final containerAssigned = buildBorder(
-    color: Colors.white70,
-    width: 3,
-    child: Container(
-      width: Container_Size,
-      height: Container_Size,
-      color: Palette.brown_3,
-    ),
+  final containerAssigned = Container(
+    width: Container_Size,
+    height: Container_Size,
+    color: Palette.brown_3,
   );
 
-  final containerAssignable = buildBorder(
-    width: 3,
-    color:  Palette.brown_3,
-    child: Container(
-      width: Container_Size,
-      height: Container_Size,
-      color: Palette.brown_3,
-    ),
+  final containerAssignable = Container(
+    width: Container_Size,
+    height: Container_Size,
+    color: Palette.brown_3,
   );
 
   final containerNotAssignable = Container(
@@ -1324,34 +1316,32 @@ class AmuletUI {
 
   Widget buildWindowPlayerSkillsSkillType(SkillType skillType){
 
-    final watchSkillTypeAssigned = amulet.playerSkillTypeSlotAssigned[skillType] ?? (throw Exception());
-    final watchSkillTypeLevel = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());
+    final watchAssigned = amulet.playerSkillTypeSlotAssigned[skillType] ?? (throw Exception());
+    final watchLevel = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());
 
-    final assignedContainer = buildWatch(
-        watchSkillTypeAssigned, (assigned) =>
-          assigned ? containerAssigned : nothing
-    );
-
-    final assignableContainer = buildWatch(watchSkillTypeLevel, (level) {
-       return level > 0 ? containerAssignable : containerNotAssignable;
-    });
-
-     final watch = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());
+    // final assignedContainer = buildWatch(
+    //     watchAssigned, (assigned) =>
+    //       assigned ? containerAssigned : nothing
+    // );
+    //
+    // final assignableContainer = buildWatch(watchLevel, (level) {
+    //    return level > 0 ? containerAssignable : containerNotAssignable;
+    // });
 
 
-     return buildWatch(watch, (level) {
-
-       final unlocked = level > 0;
-       final info = Positioned(
+     return buildWatch(watchAssigned, (assigned) {
+       return buildWatch(watchLevel, (level) {
+         final unlocked = level > 0;
+         final info = Positioned(
            bottom: Container_Size + 5,
            right: 0,
            child: buildBorder(
              color: Colors.white70,
              width: 2,
              child: GSContainer(
-               constraints: BoxConstraints(
-                 maxWidth: 200,
-               ),
+                 constraints: BoxConstraints(
+                   maxWidth: 200,
+                 ),
                  child: Column(
                    children: [
                      buildTextValue(skillType.name.clean),
@@ -1360,76 +1350,82 @@ class AmuletUI {
                    ],
                  )),
            ),
-       );
-
-       var showInfo = false;
-
-       Function? refreshFunction;
-
-       final b = buildState(builder: (context, rebuild){
-         refreshFunction = rebuild;
-          if (showInfo){
-            return info;
-          }
-          return nothing;
-       });
-
-       final child = onPressed(
-         onEnter: () {
-           showInfo = true;
-           refreshFunction?.call();
-           amulet.mouseOverSkillType = skillType;
-         },
-         onExit: (){
-           showInfo = false;
-           refreshFunction?.call();
-           amulet.mouseOverSkillType = null;
-         },
-         action: unlocked ? () => amulet.toggleSkillType(skillType) : null,
-         child: Container(
-           width: Container_Size,
-           height: Container_Size,
-           margin: const EdgeInsets.only(bottom: 6),
-           child: Stack(
-             clipBehavior: Clip.none,
-             fit: StackFit.passthrough,
-             children: [
-               assignableContainer,
-               assignedContainer,
-               b,
-               Positioned(
-                 child: Container(
-                   width: Container_Size,
-                   height: Container_Size,
-                   alignment: Alignment.center,
-                   child: buildIconSkillType(skillType),
-                 ),
-               ),
-               if (level > 0)
-                 Positioned(
-                     bottom: 0,
-                     right: 0,
-                     child:  Container(
-                         width: 20,
-                         height: 20,
-                         color: Palette.brown_1,
-                         alignment: Alignment.center,
-                         child: buildText(level)))
-             ],
-           ),
-         ),
-       );
-
-       if (unlocked){
-         return Draggable(
-           data: skillType,
-           feedback: buildIconSkillType(skillType, dstX: 25, dstY: 25),
-           child: child,
          );
-       }
 
-       return child;
+         var showInfo = false;
+
+         Function? refreshFunction;
+
+         final b = buildState(builder: (context, rebuild){
+           refreshFunction = rebuild;
+           if (showInfo){
+             return info;
+           }
+           return nothing;
+         });
+
+         final child = onPressed(
+           onEnter: () {
+             showInfo = true;
+             refreshFunction?.call();
+             amulet.mouseOverSkillType = skillType;
+           },
+           onExit: (){
+             showInfo = false;
+             refreshFunction?.call();
+             amulet.mouseOverSkillType = null;
+           },
+           action: unlocked ? () => amulet.toggleSkillType(skillType) : null,
+           child: Container(
+             width: Container_Size,
+             height: Container_Size,
+             margin: const EdgeInsets.only(bottom: 6),
+             child: Stack(
+               clipBehavior: Clip.none,
+               fit: StackFit.passthrough,
+               children: [
+                 if (assigned)
+                   containerAssigned,
+                 if (!assigned && unlocked)
+                   containerAssignable,
+                 if (!assigned && !unlocked)
+                   containerNotAssignable,
+                 b,
+                 Positioned(
+                   child: Container(
+                     width: Container_Size,
+                     height: Container_Size,
+                     alignment: Alignment.center,
+                     child: buildIconSkillType(skillType),
+                   ),
+                 ),
+                 if (level > 0)
+                   Positioned(
+                       bottom: 0,
+                       right: 0,
+                       child:   Container(
+                           width: 20,
+                           height: 20,
+                           color: assigned ? Palette.teal_1 : Palette.brown_1,
+                           alignment: Alignment.center,
+                           child: buildText(level)))
+               ],
+             ),
+           ),
+         );
+
+         if (unlocked){
+           return Draggable(
+             data: skillType,
+             feedback: buildIconSkillType(skillType, dstX: 25, dstY: 25),
+             child: child,
+           );
+         }
+
+         return child;
+       });
      });
+
   }
 
   Widget buildContainerSkillTypeAssigned(
