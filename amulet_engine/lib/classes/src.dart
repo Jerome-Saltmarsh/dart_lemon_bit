@@ -7,7 +7,6 @@ export 'amulet_npc.dart';
 export 'amulet_player.dart';
 export 'amulet_player_script.dart';
 export 'amulet_scenes.dart';
-export 'amulet_settings.dart';
 export 'talk_option.dart';
 export 'games/src.dart';
 export 'npcs/src.dart';

@@ -1308,8 +1308,8 @@ class AmuletUI {
          final unlocked = level > 0;
 
          final info = Positioned(
-           bottom: Container_Size + 5,
-           right: 0,
+           top: -70,
+           right: Container_Size + 5,
            child: buildBorder(
              color: Colors.white70,
              width: 2,
@@ -1323,28 +1323,68 @@ class AmuletUI {
                      Row(
                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                        children: [
-                         buildTextValue('${skillType.name.clean} $level'),
-                         if (skillType.magicCost > 0)
-                         Row(
-                           children: [
-                             iconMagic,
-                             width4,
-                             buildText(skillType.magicCost, color: Palette.red_1),
-                           ],
+                         Container(
+                           color: Colors.black12,
+                           padding: const EdgeInsets.all(8),
+                           child: Row(
+                             crossAxisAlignment: CrossAxisAlignment.center,
+                             children: [
+                               buildIconSkillType(skillType),
+                               width4,
+                               Container(
+                                   // color: Colors.black26,
+                                   // padding: const EdgeInsets.all(4),
+                                   child: buildText(
+                                       skillType.name.clean,
+                                       underline: true,
+                                       color: Colors.white70,
+                                   )
+                               ),
+                               // buildTextValue(skillType.name.clean),
+                             ],
+                           ),
                          ),
-                         if (skillType.magicCost == 0 && skillType.casteType == CasteType.Passive)
-                           buildText('Passive'),
                        ],
                      ),
                      height8,
                      buildTextValue(skillType.description.clean),
                      height8,
                      if (level > 0)
+                       buildText('level $level - current'),
+                     if (level > 0)
                      Container(
                          margin: const EdgeInsets.only(bottom: 8),
-                         child: buildTextValue('current: ${SkillType.getLevelDescription(skillType, level)}')),
+                         child: buildText(SkillType.getLevelDescription(skillType, level), color: Colors.orange)),
                      if (level < 20) // max skill level
-                     buildTextValue('next: ${SkillType.getLevelDescription(skillType, level + 1)}'),
+                       buildText('level ${level + 1} - next'),
+                     if (level < 20) // max skill level
+                     buildText(SkillType.getLevelDescription(skillType, level + 1), color: Colors.orange),
+
+                     if (skillType.isPassive)
+                       Row(
+                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                         children: [
+                           nothing,
+                           Container(
+                               color: Colors.white10,
+                               padding: const EdgeInsets.all(4),
+                               child: buildText('Passive', color: Colors.white70)),
+                         ],
+                       ),
+                     if (skillType.magicCost > 0)
+                       Row(
+                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                         children: [
+                           nothing,
+                           Row(
+                             children: [
+                               iconMagic,
+                               width4,
+                               buildText(skillType.magicCost, color: Palette.red_1),
+                             ],
+                           ),
+                         ],
+                       ),
                    ],
                  )),
            ),

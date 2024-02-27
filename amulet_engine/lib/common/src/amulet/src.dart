@@ -7,6 +7,7 @@ export 'amulet_scene.dart';
 export 'amulet_team.dart';
 export 'fiend_type.dart';
 export 'skill_type.dart';
+export 'amulet_settings.dart';
 export 'network/network_request_amulet.dart';
 export 'network/network_response_amulet.dart';
 export 'quests/src.dart';

@@ -187,7 +187,7 @@ class AmuletPlayer extends IsometricPlayer with
     return interpolate(baseRunSpeed, AmuletSettings.Max_Run_Speed, i);
   }
 
-  int get agility => getAssignedSkillTypeLevel(SkillType.Attack_Speed);
+  int get attackSpeed => getAssignedSkillTypeLevel(SkillType.Attack_Speed);
 
   @override
   void writePlayerGame() {
@@ -238,11 +238,11 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   void writeAgility() {
-    if (cacheAgility == agility) return;
-    cacheAgility = agility;
+    if (cacheAgility == attackSpeed) return;
+    cacheAgility = attackSpeed;
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Agility);
-    writeUInt16(agility);
+    writeUInt16(attackSpeed);
   }
 
   void writeDebug() {
@@ -1353,7 +1353,7 @@ class AmuletPlayer extends IsometricPlayer with
       interpolate(
         AmuletSettings.Min_Perform_Velocity,
         AmuletSettings.Max_Perform_Velocity,
-        agility / AmuletSettings.Max_Skill_Points,
+        attackSpeed / AmuletSettings.Max_Skill_Points,
       );
 
   void writePerformFrameVelocity() {

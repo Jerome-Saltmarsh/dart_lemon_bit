@@ -1,4 +1,8 @@
+import 'package:lemon_lang/src.dart';
+import 'package:lemon_math/src.dart';
+
 import 'amulet_item.dart';
+import 'amulet_settings.dart';
 
 enum SkillClass {
   Sword,
@@ -174,6 +178,8 @@ enum SkillType {
     this.range,
   });
 
+  bool get isPassive => casteType == CasteType.Passive;
+
   static void validate() {
     for (final skillType in values){
       if (skillType.casteType == CasteType.Caste){
@@ -200,11 +206,23 @@ enum SkillType {
     switch (skillType){
       case SkillType.Heal:
         return 'Heals ${getHealAmount(level)} health';
+      case SkillType.Attack_Speed:
+        return '${(getAttackSpeedPercentage(level) * 100).toInt()}% faster';
       default:
         return '';
     }
   }
 
   static int getHealAmount(int level) => 5 * level;
+
+  static double getAttackSpeedPercentage(int level){
+    final value = interpolate(
+      AmuletSettings.Min_Perform_Velocity,
+      AmuletSettings.Max_Perform_Velocity,
+      level / AmuletSettings.Max_Skill_Points,
+    );
+
+    return getPercentageDiff(AmuletSettings.Min_Perform_Velocity, value);
+  }
 }
 
