@@ -770,7 +770,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   }
 
   void characterPerformSkillTypeHeal(Character character, int skillLevel) {
-    character.health += AmuletSettings.Skill_Heal_Ratio * skillLevel;
+    character.health += SkillType.getHealAmount(skillLevel);
     dispatchGameEventPosition(GameEvent.Character_Caste_Healed, character);
   }
 

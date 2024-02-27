@@ -94,7 +94,7 @@ enum SkillType {
   ),
   // CASTE
   Heal(
-      description: 'Heals a small amount of health',
+      description: 'Heals Wounds',
       casteType: CasteType.Caste,
       magicCost: 4,
       casteSpeed: AttackSpeed.Fast,
@@ -194,5 +194,17 @@ enum SkillType {
      }
      throw Exception('SkillType.parse("$name")');
   }
+
+  static String? getLevelDescription(SkillType skillType, int level){
+
+    switch (skillType){
+      case SkillType.Heal:
+        return 'Heals ${getHealAmount(level)} health';
+      default:
+        return '';
+    }
+  }
+
+  static int getHealAmount(int level) => 5 * level;
 }
 

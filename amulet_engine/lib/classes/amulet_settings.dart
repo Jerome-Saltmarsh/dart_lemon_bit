@@ -12,7 +12,6 @@ class AmuletSettings {
   /// in seconds
   static const Duration_Condition_Blind = 4;
   static const Player_Revive_Timer = 3;
-  static const Skill_Heal_Ratio = 10;
   static const Max_Skill_Points = 20;
   static const Min_Perform_Velocity = 1.0;
   static const Max_Perform_Velocity = 2.0;

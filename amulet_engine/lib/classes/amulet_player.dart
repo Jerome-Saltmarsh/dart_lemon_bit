@@ -1632,6 +1632,5 @@ class AmuletPlayer extends IsometricPlayer with
     skillSlots[index] = skillType;
     notifySkillSlotsDirty();
   }
-
 }
 

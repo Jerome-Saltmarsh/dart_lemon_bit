@@ -1301,19 +1301,10 @@ class AmuletUI {
     final watchAssigned = amulet.playerSkillTypeSlotAssigned[skillType] ?? (throw Exception());
     final watchLevel = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());
 
-    // final assignedContainer = buildWatch(
-    //     watchAssigned, (assigned) =>
-    //       assigned ? containerAssigned : nothing
-    // );
-    //
-    // final assignableContainer = buildWatch(watchLevel, (level) {
-    //    return level > 0 ? containerAssignable : containerNotAssignable;
-    // });
-
-
      return buildWatch(watchAssigned, (assigned) {
        return buildWatch(watchLevel, (level) {
          final unlocked = level > 0;
+
          final info = Positioned(
            bottom: Container_Size + 5,
            right: 0,
@@ -1325,10 +1316,33 @@ class AmuletUI {
                    maxWidth: 200,
                  ),
                  child: Column(
+                   crossAxisAlignment: CrossAxisAlignment.start,
                    children: [
-                     buildTextValue(skillType.name.clean),
+                     Row(
+                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                       children: [
+                         buildTextValue('${skillType.name.clean} $level'),
+                         if (skillType.magicCost > 0)
+                         Row(
+                           children: [
+                             buildIconMagic(),
+                             width4,
+                             buildText(skillType.magicCost, color: Palette.red_1),
+                           ],
+                         ),
+                         if (skillType.magicCost == 0 && skillType.casteType == CasteType.Passive)
+                           buildText('Passive'),
+                       ],
+                     ),
                      height8,
                      buildTextValue(skillType.description.clean),
+                     height8,
+                     if (level > 0)
+                     Container(
+                         margin: const EdgeInsets.only(bottom: 8),
+                         child: buildTextValue('current: ${SkillType.getLevelDescription(skillType, level)}')),
+                     if (level < 20) // max skill level
+                     buildTextValue('next: ${SkillType.getLevelDescription(skillType, level + 1)}'),
                    ],
                  )),
            ),
