@@ -191,15 +191,10 @@ class AmuletPlayer extends IsometricPlayer with
 
   @override
   void writePlayerGame() {
+
     cleanEquipment();
     writeCameraTarget();
-    // writeRegenMagic();
-    // writeRegenHealth();
-    // writeRunSpeed();
-    // writeAgility();
     writePerformFrameVelocity();
-    // writeHealthSteal();
-    // writeMagicSteal();
 
     if (debugEnabled){
       writeDebug();
@@ -1411,8 +1406,11 @@ class AmuletPlayer extends IsometricPlayer with
     return total;
   }
 
-  double get chanceOfCriticalDamage =>
-      totalCriticalHitPoints / AmuletSettings.Max_Critical_Hit_Points;
+  double get chanceOfCriticalDamage {
+    final points = getAssignedSkillTypeLevel(SkillType.Critical_Hit);
+    final i = points / AmuletSettings.Max_Skill_Points;
+    return interpolate(0, AmuletSettings.Max_Critical_Hit_Chance, i);
+  }
 
   int get totalCriticalHitPoints =>
       getSkillTypeLevel(SkillType.Critical_Hit);
