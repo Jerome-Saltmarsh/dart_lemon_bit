@@ -6,9 +6,6 @@
 # Conventional directory for build output.
 build/
 packages/
-resources/renders/
-resources/cakewalk/
-resources/cakewalk/*
 # See https://www.dartlang.org/guides/libraries/private-files
 
 # Files and directories created by pub
@@ -34,6 +31,4 @@ doc/api/
 .flutter-plugins
 .flutter-plugins-dependencies
 
-amulet_ws/lib/packages
-/amulet_ws/lib/packages/
-/amulet_ws/lib/packages/*
+lemon_lang.iml

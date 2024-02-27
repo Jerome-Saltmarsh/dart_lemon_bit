@@ -1,6 +1,7 @@
 import 'package:amulet_engine/common.dart';
 import 'package:amulet_flutter/isometric/classes/position.dart';
 import 'package:lemon_math/src.dart';
+import 'package:lemon_lang/src.dart';
 import '../../gamestream/isometric/enums/emission_type.dart';
 
 class GameObject extends Position {
@@ -24,12 +25,12 @@ class GameObject extends Position {
 
   GameObject(this.id); // PROPERTIES
   
-  double get healthPercentage => maxHealth <= 0 ? 0 : health / maxHealth;
+  double get healthPercentage => health.percentageOf(maxHealth);
 
   double get emissionIntensity => _emission_intensity;
 
   set emissionIntensity(double value){
-    _emission_intensity = clamp01(value);
+    _emission_intensity = value.clamp01();
   }
 
   // METHODS

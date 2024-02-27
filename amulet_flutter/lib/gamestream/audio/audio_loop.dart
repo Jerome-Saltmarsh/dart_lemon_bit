@@ -1,5 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
-import 'package:lemon_math/src.dart';
+import 'package:lemon_lang/src.dart';
 
 class AudioLoop {
 
@@ -32,7 +32,7 @@ class AudioLoop {
     });
 
   void update(){
-    final targetVolume = clamp01(getTargetVolume());
+    final targetVolume = getTargetVolume().clamp01();
     final volumeDelta = (targetVolume - volume) * volumeFade;
     if (volumeDelta.abs() < minVolumeDelta) {
       if (targetVolume == 0 && volume != 0){
@@ -45,7 +45,7 @@ class AudioLoop {
 
   void setVolume(double value){
     if (volume == value) return;
-    final clampedVolume = clamp01(value);
+    final clampedVolume = value.clamp01();
     if (volume == clampedVolume) return;
     audioPlayer.setVolume(clampedVolume);
   }

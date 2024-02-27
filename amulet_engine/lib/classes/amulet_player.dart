@@ -1528,7 +1528,7 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   @override
-  double get magicPercentage => (maxMagic > 0.0 ? magic / maxMagic : 0.0).clamp(0.0, 1.0);
+  double get magicPercentage => (magic.percentageOf(maxMagic)).clamp01();
 
   void writeConsumableSlots(){
     writeByte(NetworkResponse.Amulet);
