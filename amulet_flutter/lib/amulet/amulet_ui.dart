@@ -29,6 +29,8 @@ class AmuletUI {
   final iconCheckBoxTrue = AmuletImage(srcX: 560, srcY: 0, width: 16, height: 16);
   final iconCheckBoxFalse = AmuletImage(srcX: 560, srcY: 16, width: 16, height: 16);
 
+  late final iconMagic = buildIconMagic();
+
   AmuletUI(this.amulet);
 
   Widget buildAmuletUI() {
@@ -1325,7 +1327,7 @@ class AmuletUI {
                          if (skillType.magicCost > 0)
                          Row(
                            children: [
-                             buildIconMagic(),
+                             iconMagic,
                              width4,
                              buildText(skillType.magicCost, color: Palette.red_1),
                            ],
@@ -1908,7 +1910,7 @@ class AmuletUI {
     });
 
     final containerActive = buildBorder(
-      color: Colors.white54,
+      color: Colors.white70,
       width: 3,
       child: Container(
         child: slot,
@@ -1921,10 +1923,10 @@ class AmuletUI {
 
     final containerInactive = buildBorder(
       width: 3,
-      color: Colors.transparent,
+      color: Palette.brown_4,
       child: Container(
         child: slot,
-        color: Palette.brownDark,
+        color: Palette.brown_3,
         width: size,
         height: size,
         alignment: Alignment.center,
