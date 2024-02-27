@@ -1308,7 +1308,7 @@ class AmuletUI {
 
   final containerAssignable = buildBorder(
     width: 3,
-    color:  Palette.brownDark,
+    color:  Palette.brown_3,
     child: Container(
       width: Container_Size,
       height: Container_Size,
@@ -1412,6 +1412,7 @@ class AmuletUI {
                      child:  Container(
                          width: 20,
                          height: 20,
+                         color: Palette.brown_1,
                          alignment: Alignment.center,
                          child: buildText(level)))
              ],
