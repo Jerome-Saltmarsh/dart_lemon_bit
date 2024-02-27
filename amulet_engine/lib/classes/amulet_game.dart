@@ -519,28 +519,38 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
      throw Exception();
   }
 
+  double getCharacterAssignedSkillLevelI(Character character, SkillType skillType) {
+    final level = getCharacterAssignedSkillLevel(character, skillType);
+    return interpolate(0, 1.0, level / AmuletSettings.Max_Skill_Points);
+}
 
-  void characterPerformSkillTypeMightySwing(Character character) =>
-      applyHitMelee(
+  int getCharacterAssignedSkillLevel(Character character, SkillType skillType){
+     if (character is AmuletPlayer){
+       return character.getAssignedSkillTypeLevel(skillType);
+     }
+     if (character is AmuletFiend){
+       return character.fiendType.skillLevel;
+     }
+     throw Exception();
+  }
+
+
+
+  void characterPerformSkillTypeMightySwing(Character character) {
+    applyHitMelee(
         character: character,
         damageType: DamageType.Melee,
-        range: getCharacterSkillTypeRange(
-            character: character,
-            skillType: SkillType.Mighty_Strike,
-        ),
+        range: getCharacterWeaponRange(character),
         damage: getCharacterSkillTypeDamage(
             character: character,
             skillType: SkillType.Mighty_Strike,
         ),
-        areaDamage:
-            getCharacterSkillTypeAreaDamage(
-                character: character,
-                skillType: SkillType.Mighty_Strike,
-            ),
+        areaDamage: getCharacterAreaDamage(character),
         ailmentDuration: 0,
         ailmentDamage: 0,
         maxHitRadian: pi,
       );
+  }
 
   void characterPerformSkillTypeShootArrow(Character character) {
     dispatchGameEvent(

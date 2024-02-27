@@ -79,7 +79,6 @@ class Amulet extends IsometricGame {
   final playerWeaponDamageMax = Watch(0);
   final playerWeaponRange = Watch<int?>(0);
   final playerWeaponAttackSpeed = Watch<int?>(0);
-  final playerWeaponAreaDamage = Watch<AreaDamage?>(null);
 
   final playerSkillTypeLevels = SkillType.values.asMapReversed((t) => Watch(0));
   final playerSkillTypeSlotIndex = SkillType.values.asMapReversed((t) => Watch<int?>(null));

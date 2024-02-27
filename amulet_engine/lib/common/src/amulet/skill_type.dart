@@ -21,7 +21,7 @@ enum SkillType {
       magicCost: 0,
   ),
   Mighty_Strike(
-      description: 'Applies area of effect damage to melee attacks',
+      description: 'Causes extra damage',
       casteType: CasteType.Sword,
       magicCost: 3,
   ),

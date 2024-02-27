@@ -382,7 +382,6 @@ class AmuletPlayer extends IsometricPlayer with
     writeSkillTypes();
     writeEquippedWeaponRange();
     writeEquippedWeaponAttackSpeed();
-    writeEquippedWeaponAreaDamage();
     writePlayerCriticalHitPoints();
     writeSkillActiveLeft();
   }
@@ -1233,6 +1232,10 @@ class AmuletPlayer extends IsometricPlayer with
       return 0;
   }
 
+  /// returns a number between 0.0 and 1.0
+  double getAssignedSkillTypeLevelI(SkillType skillType) =>
+      getAssignedSkillTypeLevel(skillType) / AmuletSettings.Max_Skill_Points;
+
   int getSkillTypeLevel(SkillType skillType){
      var total = 0;
      total += equippedWeapon?.skills[skillType] ?? 0;
@@ -1402,12 +1405,7 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   double get areaDamage {
-    var total = 0.0;
-    total += equippedWeapon?.areaDamage?.value ?? 0;
-    total += equippedHelm?.areaDamage?.value ?? 0;
-    total += equippedArmor?.areaDamage?.value ?? 0;
-    total += equippedShoes?.areaDamage?.value ?? 0;
-    return total;
+     return getAssignedSkillTypeLevelI(SkillType.Area_Damage);
   }
 
   double get chanceOfCriticalDamage {
@@ -1418,14 +1416,6 @@ class AmuletPlayer extends IsometricPlayer with
 
   int get totalCriticalHitPoints =>
       getSkillTypeLevel(SkillType.Critical_Hit);
-
-  void writeEquippedWeaponAreaDamage() {
-    writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Player_Weapon_Area_Damage);
-    tryWriteByte(equippedWeaponAreaDamage?.index);
-  }
-
-  AreaDamage? get equippedWeaponAreaDamage => equippedWeapon?.areaDamage;
 
   void tryWriteByte(int? value){
     if (value == null){
@@ -1538,7 +1528,7 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   @override
-  double get magicPercentage => maxMagic > 0 ? magic / maxMagic : 0;
+  double get magicPercentage => (maxMagic > 0.0 ? magic / maxMagic : 0.0).clamp(0.0, 1.0);
 
   void writeConsumableSlots(){
     writeByte(NetworkResponse.Amulet);

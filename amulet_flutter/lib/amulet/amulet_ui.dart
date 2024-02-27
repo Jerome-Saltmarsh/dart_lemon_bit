@@ -1587,21 +1587,13 @@ class AmuletUI {
       return nothing;
     }
 
-    // final healthSteal = amuletItem.healthSteal;
-    // final magicSteal = amuletItem.magicSteal;
     final damage = amuletItem.damage;
     final maxHealth = amuletItem.maxHealth;
     final maxMagic = amuletItem.maxMagic;
-    // final regenHealth = amuletItem.regenHealth;
-    // final regenMagic = amuletItem.regenMagic;
-    // final agility = amuletItem.agility;
     final range = amuletItem.range;
-    final areaDamage = amuletItem.areaDamage;
     final attackSpeed = amuletItem.attackSpeed;
     final slotType = amuletItem.slotType;
-    // final criticalHitPoints = amuletItem.criticalHitPoints;
     final equippedItemType = amulet.getEquippedItemType(slotType);
-
 
     return GSContainer(
       width: 170,
@@ -1623,24 +1615,10 @@ class AmuletUI {
             buildBarsRange(range.index),
           if (attackSpeed != null)
             buildBarsAttackSpeed(attackSpeed.index),
-          if (areaDamage != null)
-            buildBarsAreaDamage(areaDamage),
           if (maxHealth != null && maxHealth > 0)
             buildRow(buildIconHealth(), maxHealth),
           if (maxMagic != null && maxMagic > 0)
             buildRow(buildIconMagic(), maxMagic),
-          // if (regenHealth != null && regenHealth > 0)
-          //   buildRow(buildIconHealthRegen(), regenHealth),
-          // if (regenMagic != null && regenMagic > 0)
-          //   buildRow(buildIconMagicRegen(), regenMagic),
-          // if (agility != null)
-          //   buildRow(buildIconAgility(), agility),
-          // if (healthSteal > 0)
-          //   buildRow(buildIconHealthSteal(), healthSteal),
-          // if (magicSteal > 0)
-          //   buildRow(buildIconMagicSteal(), magicSteal),
-          // if (criticalHitPoints > 0)
-          //   buildRow(buildIconCriticalHitPoints(), criticalHitPoints),
            ...amuletItem.skills.entries.map((e) => Row(children: [
              buildIconSkillType(e.key),
              width4,

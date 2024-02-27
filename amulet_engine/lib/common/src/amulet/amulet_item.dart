@@ -10,10 +10,10 @@ enum AmuletItem {
       subType: WeaponType.Sword_Short,
       attackSpeed: AttackSpeed.Very_Fast,
       range: WeaponRange.Very_Short,
-      areaDamage: AreaDamage.Very_Small,
       damage: 3,
       skills: {
         SkillType.Mighty_Strike: 1,
+        SkillType.Area_Damage: 0,
       }
   ),
   Weapon_Sword_Broad(
@@ -23,10 +23,10 @@ enum AmuletItem {
       subType: WeaponType.Sword_Broad,
       attackSpeed: AttackSpeed.Fast,
       range: WeaponRange.Short,
-      areaDamage: AreaDamage.Small,
       damage: 4,
       skills: {
         SkillType.Mighty_Strike: 1,
+        SkillType.Area_Damage: 7,
       }
   ),
   Weapon_Sword_Long(
@@ -36,10 +36,10 @@ enum AmuletItem {
       subType: WeaponType.Sword_Long,
       attackSpeed: AttackSpeed.Slow,
       range: WeaponRange.Long,
-      areaDamage: AreaDamage.Large,
       damage: 5,
       skills: {
         SkillType.Mighty_Strike: 1,
+        SkillType.Area_Damage: 14,
       }
   ),
   Weapon_Sword_Giant(
@@ -49,10 +49,10 @@ enum AmuletItem {
       subType: WeaponType.Sword_Giant,
       attackSpeed: AttackSpeed.Very_Slow,
       range: WeaponRange.Very_Long,
-      areaDamage: AreaDamage.Very_Large,
       damage: 6,
       skills: {
-        SkillType.Mighty_Strike: 1,
+        SkillType.Mighty_Strike: 20,
+        SkillType.Area_Damage: 20,
       }
   ),
   Weapon_Bow_Short(
@@ -465,7 +465,6 @@ enum AmuletItem {
   final AttackSpeed? attackSpeed;
   final ItemQuality quality;
   final String label;
-  final AreaDamage? areaDamage;
   final int? maxHealth;
   final int? maxMagic;
   final Map<SkillType, int> skills;
@@ -482,7 +481,6 @@ enum AmuletItem {
     this.damage,
     this.range,
     this.attackSpeed,
-    this.areaDamage,
   });
 
   bool get isWeapon => slotType == SlotType.Weapon;
@@ -506,7 +504,6 @@ enum AmuletItem {
     total += damage ?? 0;
     total += maxHealth ?? 0;
     total += maxMagic ?? 0;
-    total += areaDamage?.quantify ?? 0;
     total += range?.quantify ?? 0;
     return total;
   }
