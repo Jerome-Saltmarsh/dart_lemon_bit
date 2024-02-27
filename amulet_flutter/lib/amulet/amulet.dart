@@ -99,7 +99,7 @@ class Amulet extends IsometricGame {
   final amuletScene = Watch<AmuletScene?>(null);
   final questMain = Watch(QuestMain.values.first);
   final windowVisibleQuests = WatchBool(true);
-  final windowVisiblePlayerStats = WatchBool(true);
+  // final windowVisiblePlayerStats = WatchBool(true);
   final windowVisibleEquipment = WatchBool(true);
   final windowVisiblePlayerSkills = WatchBool(false);
   final windowVisibleHelp = WatchBool(false);
@@ -212,7 +212,7 @@ class Amulet extends IsometricGame {
 
     windowVisiblePlayerSkills.onChanged(onChangedWindowVisiblePlayerSkills);
     windowVisibleEquipment.onChanged(onWindowVisibilityChanged);
-    windowVisiblePlayerStats.onChanged(onWindowVisibilityChanged);
+    // windowVisiblePlayerStats.onChanged(onWindowVisibilityChanged);
     windowVisibleQuests.onChanged(onWindowVisibilityChanged);
     windowVisibleHelp.onChanged(onWindowVisibilityChanged);
     windowVisibleQuantify.onChanged(onWindowVisibilityChanged);
@@ -224,7 +224,6 @@ class Amulet extends IsometricGame {
     playerSkillLeft.onChanged(onChangedPlayerSkillType);
     playerSkillRight.onChanged(onChangedPlayerSkillType);
     skillSlotsChangedNotifier.onChanged(onChangedSkillSlots);
-    verifySrcs();
   }
 
   void onChangedWindowVisiblePlayerSkills(bool value){
@@ -242,13 +241,6 @@ class Amulet extends IsometricGame {
 
   void onWindowVisibilityChanged(bool value){
     audio.click_sounds_35.play();
-  }
-
-  void verifySrcs(){
-     for (final amuletItem in AmuletItem.values){
-       if (atlasSrcAmuletItem.containsKey(amuletItem)) continue;
-       print('verification_warning: atlasSrcAmuletItem[${amuletItem.name}]');
-     }
   }
 
   void updateFiendCountTotal(){
@@ -328,10 +320,10 @@ class Amulet extends IsometricGame {
       return;
     }
 
-    if (key == amuletKeys.toggleWindowPlayerStats) {
-      windowVisiblePlayerStats.toggle();
-      return;
-    }
+    // if (key == amuletKeys.toggleWindowPlayerStats) {
+    //   windowVisiblePlayerStats.toggle();
+    //   return;
+    // }
 
     if (key == amuletKeys.toggleWindowSkills) {
       windowVisiblePlayerSkills.toggle();
@@ -777,7 +769,7 @@ class Amulet extends IsometricGame {
 
   void onNewCharacterCreated() {
     windowVisibleQuests.setTrue();
-    windowVisiblePlayerStats.setTrue();
+    // windowVisiblePlayerStats.setTrue();
     windowVisibleEquipment.setTrue();
     windowVisiblePlayerSkills.setTrue();
   }

@@ -151,7 +151,6 @@ class ServerLocal implements Server {
     playerServer.gender = gender;
     playerServer.headType = headType;
     parser.amulet.windowVisibleQuests.value = true;
-    parser.amulet.windowVisiblePlayerStats.value = true;
     amulet.resetPlayer(playerServer);
     parser.amulet.onNewCharacterCreated();
     final json = writeAmuletPlayerToJson(playerServer);

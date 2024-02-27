@@ -161,10 +161,10 @@ class AmuletUI {
             amulet.windowVisibleEquipment,
             buildWindowPlayerEquipped(),
           ),
-          buildWatchVisible(
-            amulet.windowVisiblePlayerStats,
-            buildWindowPlayerStats(),
-          ),
+          // buildWatchVisible(
+          //   amulet.windowVisiblePlayerStats,
+          //   buildWindowPlayerStats(),
+          // ),
         ],
       );
 
@@ -793,26 +793,26 @@ class AmuletUI {
   Widget buildIconPlayerStatsGrey() =>
       AmuletImage(srcX: 691, srcY: 131, width: 26, height: 26);
 
-  Widget buildTogglePlayerStats() {
-
-    final active = buildToggleContainer(
-      child: buildIconPlayerStats(),
-      active: true,
-    );
-
-    final notActive = buildToggleContainer(
-      child: buildIconPlayerStatsGrey(),
-      active: false,
-    );
-    return onPressed(
-      hint: 'Stats (W)',
-      action: amulet.windowVisiblePlayerStats.toggle,
-      child: buildWatch(
-          amulet.windowVisiblePlayerStats,
-              (windowVisibleEquipment) =>
-          windowVisibleEquipment ? active : notActive),
-    );
-  }
+  // Widget buildTogglePlayerStats() {
+  //
+  //   final active = buildToggleContainer(
+  //     child: buildIconPlayerStats(),
+  //     active: true,
+  //   );
+  //
+  //   final notActive = buildToggleContainer(
+  //     child: buildIconPlayerStatsGrey(),
+  //     active: false,
+  //   );
+  //   return onPressed(
+  //     hint: 'Stats (W)',
+  //     action: amulet.windowVisiblePlayerStats.toggle,
+  //     child: buildWatch(
+  //         amulet.windowVisiblePlayerStats,
+  //             (windowVisibleEquipment) =>
+  //         windowVisibleEquipment ? active : notActive),
+  //   );
+  // }
 
 
   // Widget buildTogglePlayerStats() {
@@ -997,130 +997,130 @@ class AmuletUI {
             )),
       );
 
-  Widget buildWindowPlayerStats() {
-    return GSContainer(
-      width: 120,
-      margin: const EdgeInsets.only(right: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Tooltip(
-                  message: 'Stats',
-                  child: buildIconPlayerStats()),
-              buildButtonClose(amulet.windowVisiblePlayerStats)
-            ],
-          ),
-          height16,
-          buildTextHeader('STATS'),
-          Tooltip(
-            message: 'Health',
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                buildIconHealth(),
-                width8,
-                buildWatch(amulet.player.health, buildRowValue),
-                width2,
-                buildRowValue('/'),
-                width2,
-                buildWatch(amulet.player.maxHealth, buildRowValue),
-              ],
-            ),
-          ),
-          Tooltip(
-            message: 'Magic',
-            child: Row(
-              children: [
-                buildIconMagic(),
-                width8,
-                buildWatch(amulet.playerMagic, buildRowValue),
-                width2,
-                buildRowValue('/'),
-                width2,
-                buildWatch(amulet.playerMagicMax, buildRowValue),
-              ],
-            ),
-          ),
-          // Tooltip(
-          //   message: 'Health Regen',
-          //   child: Row(
-          //     children: [
-          //       buildIconHealthRegen(),
-          //       width8,
-          //       buildWatch(amulet.playerRegenHealth, buildRowValue),
-          //     ],
-          //   ),
-          // ),
-          // Tooltip(
-          //   message: 'Magic Regen',
-          //   child: Row(
-          //     children: [
-          //       buildIconMagicRegen(),
-          //       width8,
-          //       buildWatch(amulet.playerRegenMagic, buildRowValue),
-          //     ],
-          //   ),
-          // ),
-          // Tooltip(
-          //   message: 'Agility',
-          //   child: Row(
-          //     children: [
-          //       buildIconAgility(),
-          //       width8,
-          //       buildWatch(amulet.playerAgility, buildRowValue),
-          //     ],
-          //   ),
-          // ),
-          // Tooltip(
-          //   message: 'Critical Hit Points',
-          //   child: Row(
-          //     children: [
-          //       buildIconCriticalHitPoints(),
-          //       width8,
-          //       buildWatch(amulet.playerCriticalHitPoints, buildRowValue),
-          //     ],
-          //   ),
-          // ),
-          if (amulet.options.developMode)
-          Tooltip(
-            message: 'Player Perform Frame Velocity',
-            child: Row(
-              children: [
-                buildText('FV'),
-                width8,
-                buildWatch(amulet.playerPerformFrameVelocity, buildRowValue),
-              ],
-            ),
-          ),
-          height16,
-          buildText('WEAPON', color: Colors.white70),
-          Tooltip(
-            message: 'Range',
-            child: buildWatch(amulet.playerWeaponRange, buildBarsRange),
-          ),
-          buildWatch(amulet.playerWeaponAttackSpeed, (attackSpeed){
-            return Tooltip(
-              message: attackSpeed == null ? 'Attack Speed' : 'Attack Speed: ${AttackSpeed.values[attackSpeed].name.replaceAll('_', ' ')}',
-              child: Row(
-                children: [
-                  buildIconAttackSpeed(),
-                  width8,
-                  buildAttackSpeedValue(attackSpeed ?? -1),
-                ],
-              ),
-            );
-          }),
-          buildWatch(amulet.playerWeaponAreaDamage, buildBarsAreaDamage),
-          // height16,
-          // buildEquippedAmuletItems(),
-        ],
-      ),
-    );
-  }
+  // Widget buildWindowPlayerStats() {
+  //   return GSContainer(
+  //     width: 120,
+  //     margin: const EdgeInsets.only(right: 8),
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         Row(
+  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //           crossAxisAlignment: CrossAxisAlignment.center,
+  //           children: [
+  //             Tooltip(
+  //                 message: 'Stats',
+  //                 child: buildIconPlayerStats()),
+  //             buildButtonClose(amulet.windowVisiblePlayerStats)
+  //           ],
+  //         ),
+  //         height16,
+  //         buildTextHeader('STATS'),
+  //         Tooltip(
+  //           message: 'Health',
+  //           child: Row(
+  //             mainAxisAlignment: MainAxisAlignment.start,
+  //             children: [
+  //               buildIconHealth(),
+  //               width8,
+  //               buildWatch(amulet.player.health, buildRowValue),
+  //               width2,
+  //               buildRowValue('/'),
+  //               width2,
+  //               buildWatch(amulet.player.maxHealth, buildRowValue),
+  //             ],
+  //           ),
+  //         ),
+  //         Tooltip(
+  //           message: 'Magic',
+  //           child: Row(
+  //             children: [
+  //               buildIconMagic(),
+  //               width8,
+  //               buildWatch(amulet.playerMagic, buildRowValue),
+  //               width2,
+  //               buildRowValue('/'),
+  //               width2,
+  //               buildWatch(amulet.playerMagicMax, buildRowValue),
+  //             ],
+  //           ),
+  //         ),
+  //         // Tooltip(
+  //         //   message: 'Health Regen',
+  //         //   child: Row(
+  //         //     children: [
+  //         //       buildIconHealthRegen(),
+  //         //       width8,
+  //         //       buildWatch(amulet.playerRegenHealth, buildRowValue),
+  //         //     ],
+  //         //   ),
+  //         // ),
+  //         // Tooltip(
+  //         //   message: 'Magic Regen',
+  //         //   child: Row(
+  //         //     children: [
+  //         //       buildIconMagicRegen(),
+  //         //       width8,
+  //         //       buildWatch(amulet.playerRegenMagic, buildRowValue),
+  //         //     ],
+  //         //   ),
+  //         // ),
+  //         // Tooltip(
+  //         //   message: 'Agility',
+  //         //   child: Row(
+  //         //     children: [
+  //         //       buildIconAgility(),
+  //         //       width8,
+  //         //       buildWatch(amulet.playerAgility, buildRowValue),
+  //         //     ],
+  //         //   ),
+  //         // ),
+  //         // Tooltip(
+  //         //   message: 'Critical Hit Points',
+  //         //   child: Row(
+  //         //     children: [
+  //         //       buildIconCriticalHitPoints(),
+  //         //       width8,
+  //         //       buildWatch(amulet.playerCriticalHitPoints, buildRowValue),
+  //         //     ],
+  //         //   ),
+  //         // ),
+  //         if (amulet.options.developMode)
+  //         Tooltip(
+  //           message: 'Player Perform Frame Velocity',
+  //           child: Row(
+  //             children: [
+  //               buildText('FV'),
+  //               width8,
+  //               buildWatch(amulet.playerPerformFrameVelocity, buildRowValue),
+  //             ],
+  //           ),
+  //         ),
+  //         height16,
+  //         buildText('WEAPON', color: Colors.white70),
+  //         Tooltip(
+  //           message: 'Range',
+  //           child: buildWatch(amulet.playerWeaponRange, buildBarsRange),
+  //         ),
+  //         buildWatch(amulet.playerWeaponAttackSpeed, (attackSpeed){
+  //           return Tooltip(
+  //             message: attackSpeed == null ? 'Attack Speed' : 'Attack Speed: ${AttackSpeed.values[attackSpeed].name.replaceAll('_', ' ')}',
+  //             child: Row(
+  //               children: [
+  //                 buildIconAttackSpeed(),
+  //                 width8,
+  //                 buildAttackSpeedValue(attackSpeed ?? -1),
+  //               ],
+  //             ),
+  //           );
+  //         }),
+  //         buildWatch(amulet.playerWeaponAreaDamage, buildBarsAreaDamage),
+  //         // height16,
+  //         // buildEquippedAmuletItems(),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget buildBarsRange(int? weaponRange) => Row(
         children: [

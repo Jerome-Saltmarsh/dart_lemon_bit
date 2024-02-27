@@ -514,12 +514,6 @@ class IsometricUI with IsometricComponent {
           color: colorFill
       );
 
-  Widget buildImageGameObject(int objectType) =>
-      buildImageFromSrc(
-        images.atlas_gameobjects,
-        Atlas.getSrc(ItemType.Object, objectType),
-      );
-
   Widget buildImageFromSrc(ui.Image image, List<double> src) =>
       IsometricBuilder(builder: (context, isometric) =>
           isometric.engine.buildAtlasImage(

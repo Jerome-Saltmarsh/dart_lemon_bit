@@ -150,8 +150,7 @@ class RendererGameObjects extends RenderGroup {
     if (isAmuletItem){
       renderBouncingGameObjectShadow(gameObject);
 
-      final src = atlasSrcAmuletItem[AmuletItem.values[subType]] ?? const[0, 0];
-
+      final src = getAmuletItemSrc(AmuletItem.values[subType]);
       engine.renderSprite(
           image: images.atlas_amulet_items,
           dstX: gameObject.renderX,

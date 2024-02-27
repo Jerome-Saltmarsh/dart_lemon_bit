@@ -1,6 +1,5 @@
 
 import 'package:amulet_engine/common/src.dart';
-import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_skill_type.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/amulet_app.dart';

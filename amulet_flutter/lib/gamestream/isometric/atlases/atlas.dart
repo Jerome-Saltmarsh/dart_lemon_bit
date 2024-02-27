@@ -20,23 +20,4 @@ class Atlas {
     GameObjectType.Bed: AtlasSrcObjects.Bed,
     GameObjectType.Bottle: AtlasSrcObjects.Bottle,
   };
-
-  static List<double> getSrc(int type, int subType) {
-
-    if (type == ItemType.Amulet_Item){
-      return atlasSrcAmuletItem[AmuletItem.values[subType]] ?? (throw Exception(
-          'Atlas.getSrc(type: ${ItemType.getName(type)}, subType: ${ItemType.getNameSubType(type, subType)})'
-      ));
-    }
-
-    if (type == ItemType.Object){
-      return Collection_Objects[subType] ?? (throw Exception(
-          'Atlas.getSrc(type: ${ItemType.getName(type)}, subType: ${ItemType.getNameSubType(type, subType)})'
-      ));
-    }
-
-    throw Exception(
-        'Atlas.getSrc(type: ${ItemType.getName(type)}, subType: ${ItemType.getNameSubType(type, subType)})'
-    );
-  }
 }

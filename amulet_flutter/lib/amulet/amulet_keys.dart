@@ -2,7 +2,7 @@
 import 'package:flutter/services.dart';
 
 class AmuletKeys {
-  var toggleWindowPlayerStats = PhysicalKeyboardKey.keyW;
+  // var toggleWindowPlayerStats = PhysicalKeyboardKey.keyW;
   var toggleWindowEquipment = PhysicalKeyboardKey.keyQ;
   var toggleWindowSkills = PhysicalKeyboardKey.keyE;
   var toggleWindowQuest = PhysicalKeyboardKey.keyR;

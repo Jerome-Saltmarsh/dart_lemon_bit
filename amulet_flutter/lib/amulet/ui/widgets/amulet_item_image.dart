@@ -16,7 +16,7 @@ class AmuletItemImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const size = 32.0;
-    final src = atlasSrcAmuletItem[amuletItem] ?? const [0, 0, size, size];
+    final src = getAmuletItemSrc(amuletItem);
     return AmuletImage(
       srcX: src[0],
       srcY: src[1],
