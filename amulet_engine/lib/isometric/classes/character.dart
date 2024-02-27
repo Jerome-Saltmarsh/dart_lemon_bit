@@ -87,6 +87,7 @@ class Character extends Collider {
   var roamRadius = 2;
   var chanceOfSetTarget = 0.5;
   var maxFollowDistance = 500.0;
+  var magic = 0;
 
   final runPosition = Position();
   final path = Uint32List(20);
@@ -250,7 +251,6 @@ class Character extends Collider {
       health = _maxHealth;
     }
   }
-
   set health (int value) => _health = clamp(value, 0, maxHealth);
 
   set direction(int value) =>

@@ -88,6 +88,7 @@ enum FiendType {
     chanceOfDropPotion: 0.15,
     skillType: SkillType.Strike,
     skillLevel: 1,
+    healthSteal: 0.1,
   ),
   Goblin_Armoured(
     level: 5,
@@ -154,6 +155,7 @@ enum FiendType {
   final SkillType skillType;
   final SkillType? skillTypeB;
   final double areaDamage;
+  final double healthSteal;
 
   const FiendType({
     required this.health,
@@ -177,6 +179,7 @@ enum FiendType {
     this.skillTypeB,
     this.resists,
     this.areaDamage = 0,
+    this.healthSteal = 0,
   });
 
   int get quantify {

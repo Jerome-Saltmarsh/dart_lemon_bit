@@ -35,8 +35,6 @@ class NetworkResponseAmulet {
    static const Fiend_Count = 51;
    static const Player_Agility = 53;
    static const Perform_Frame_Velocity = 54;
-   static const Player_Health_Steal = 55;
-   static const Player_Magic_Steal = 56;
    static const Player_Weapon_Range = 57;
    static const Player_Weapon_Attack_Speed = 58;
    static const Player_Critical_Hit_Points = 60;

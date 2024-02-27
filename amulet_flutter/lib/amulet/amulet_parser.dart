@@ -154,12 +154,6 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Perform_Frame_Velocity:
          readPlayerPerformFrameVelocity();
          break;
-       case NetworkResponseAmulet.Player_Health_Steal:
-         readPlayerHealthSteal();
-         break;
-       case NetworkResponseAmulet.Player_Magic_Steal:
-         readPlayerMagicSteal();
-         break;
        case NetworkResponseAmulet.Amulet_Item_Consumed:
          readAmuletItemConsumed();
          break;
@@ -346,12 +340,6 @@ extension AmuletParser on IsometricParser {
 
   void readPlayerPerformFrameVelocity() =>
       amulet.playerPerformFrameVelocity.value = readUInt16() / 1000;
-
-  void readPlayerHealthSteal() =>
-      amulet.playerHealthSteal.value = readByte();
-
-  void readPlayerMagicSteal() =>
-      amulet.playerMagicSteal.value = readByte();
 
   void readPlayerWeaponRange() =>
       amulet.playerWeaponRange.value = tryReadInt();

@@ -169,11 +169,11 @@ class AmuletPlayer extends IsometricPlayer with
 
   int get regenMagic =>
       AmuletSettings.Base_Magic_Regen +
-        getAssignedSkillTypeLevel(SkillType.Magic_Regen);
+        getSkillTypeLevelAssigned(SkillType.Magic_Regen);
 
   int get regenHealth =>
       AmuletSettings.Base_Magic_Regen +
-          getAssignedSkillTypeLevel(SkillType.Health_Regen);
+          getSkillTypeLevelAssigned(SkillType.Health_Regen);
 
   @override
   double get runSpeed {
@@ -187,7 +187,7 @@ class AmuletPlayer extends IsometricPlayer with
     return interpolate(baseRunSpeed, AmuletSettings.Max_Run_Speed, i);
   }
 
-  int get attackSpeed => getAssignedSkillTypeLevel(SkillType.Attack_Speed);
+  int get attackSpeed => getSkillTypeLevelAssigned(SkillType.Attack_Speed);
 
   @override
   void writePlayerGame() {
@@ -1225,7 +1225,7 @@ class AmuletPlayer extends IsometricPlayer with
       return WeaponClass.fromWeaponType(weaponType);
   }
 
-  int getAssignedSkillTypeLevel(SkillType skillType){
+  int getSkillTypeLevelAssigned(SkillType skillType){
       if (skillTypeAssignedToSkillSlot(skillType)){
         return getSkillTypeLevel(skillType);
       }
@@ -1234,7 +1234,7 @@ class AmuletPlayer extends IsometricPlayer with
 
   /// returns a number between 0.0 and 1.0
   double getAssignedSkillTypeLevelI(SkillType skillType) =>
-      getAssignedSkillTypeLevel(skillType) / AmuletSettings.Max_Skill_Points;
+      getSkillTypeLevelAssigned(skillType) / AmuletSettings.Max_Skill_Points;
 
   int getSkillTypeLevel(SkillType skillType){
      var total = 0;
@@ -1307,11 +1307,11 @@ class AmuletPlayer extends IsometricPlayer with
       this.equippedWeaponAttackSpeed?.duration ??
       (throw Exception('amuletPlayer.getSkillTypePerformDuration(skillType: $skillType)'));
 
-  int get healthSteal =>
-      getSkillTypeLevel(SkillType.Health_Steal);
+  double get healthSteal =>
+      SkillType.getHealthSteal(getSkillTypeLevelAssigned(SkillType.Health_Steal));
 
-  int get magicSteal =>
-      getSkillTypeLevel(SkillType.Magic_Steal);
+  double get magicSteal =>
+      SkillType.getMagicSteal(getSkillTypeLevelAssigned(SkillType.Magic_Steal));
 
   void writeFiendCount() {
     writeByte(NetworkResponse.Amulet);
@@ -1349,12 +1349,12 @@ class AmuletPlayer extends IsometricPlayer with
     return super.frameVelocity;
   }
 
-  double get performFrameVelocity =>
-      interpolate(
-        AmuletSettings.Min_Perform_Velocity,
-        AmuletSettings.Max_Perform_Velocity,
-        attackSpeed / AmuletSettings.Max_Skill_Points,
-      );
+  double get performFrameVelocity {
+    final attackSpeedLevel = getSkillTypeLevelAssigned(SkillType.Attack_Speed);
+    final attackSpeedPerc = SkillType.getAttackSpeedPercentage(attackSpeedLevel);
+    final base = AmuletSettings.Min_Perform_Velocity;
+    return base + (base * attackSpeedPerc);
+  }
 
   void writePerformFrameVelocity() {
     final frameVelocity = performFrameVelocity;
@@ -1370,26 +1370,6 @@ class AmuletPlayer extends IsometricPlayer with
   void clearCache() {
     super.clearCache();
     cachePerformFrameVelocity = -1;
-  }
-
-  void writeHealthSteal() {
-     final healthSteal = this.healthSteal;
-     if (healthSteal == cacheHealthSteal) return;
-
-     cacheHealthSteal = healthSteal;
-     writeByte(NetworkResponse.Amulet);
-     writeByte(NetworkResponseAmulet.Player_Health_Steal);
-     writeByte(healthSteal);
-  }
-
-  void writeMagicSteal() {
-     final magicSteal = this.magicSteal;
-     if (magicSteal == cacheMagicSteal) return;
-
-     cacheMagicSteal = magicSteal;
-     writeByte(NetworkResponse.Amulet);
-     writeByte(NetworkResponseAmulet.Player_Magic_Steal);
-     writeByte(magicSteal);
   }
 
   void writeEquippedWeaponRange() {
@@ -1409,7 +1389,7 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   double get chanceOfCriticalDamage {
-    final points = getAssignedSkillTypeLevel(SkillType.Critical_Hit);
+    final points = getSkillTypeLevelAssigned(SkillType.Critical_Hit);
     final i = points / AmuletSettings.Max_Skill_Points;
     return interpolate(0, AmuletSettings.Max_Critical_Hit_Chance, i);
   }

@@ -117,12 +117,12 @@ enum SkillType {
     magicCost: 0,
   ),
   Health_Steal(
-    description: 'Steal health when damage is applied to enemies',
+    description: 'regain a percentage of damage applied as health',
     casteType: CasteType.Passive,
     magicCost: 0,
   ),
   Magic_Steal(
-    description: 'Steal magic when damage is applied to enemies',
+    description: 'regain a percentage of damage applied as magic',
     casteType: CasteType.Passive,
     magicCost: 0,
   ),
@@ -166,6 +166,10 @@ enum SkillType {
   final double? ailmentDuration;
   final int? ailmentDamage;
 
+  static const Max_Skill_Points = AmuletSettings.Max_Skill_Points;
+  static const Max_Health_Steal = 1.0;
+  static const Max_Magic_Steal = 1.0;
+
   const SkillType({
     required this.casteType,
     required this.magicCost,
@@ -201,18 +205,6 @@ enum SkillType {
      throw Exception('SkillType.parse("$name")');
   }
 
-  static String? getLevelDescription(SkillType skillType, int level){
-
-    switch (skillType){
-      case SkillType.Heal:
-        return 'Heals ${getHealAmount(level)} health';
-      case SkillType.Attack_Speed:
-        return '${(getAttackSpeedPercentage(level) * 100).toInt()}% faster';
-      default:
-        return '';
-    }
-  }
-
   static int getHealAmount(int level) => 5 * level;
 
   static double getAttackSpeedPercentage(int level){
@@ -224,5 +216,12 @@ enum SkillType {
 
     return getPercentageDiff(AmuletSettings.Min_Perform_Velocity, value);
   }
+
+  static double getHealthSteal(int level) =>
+      interpolate(0, SkillType.Max_Health_Steal, level / Max_Skill_Points);
+
+  static double getMagicSteal(int level) =>
+      interpolate(0, SkillType.Max_Magic_Steal, level / Max_Skill_Points);
+
 }
 

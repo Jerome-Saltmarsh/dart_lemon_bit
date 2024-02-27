@@ -1354,22 +1354,28 @@ class AmuletUI {
                      if (level > 0)
                      Container(
                          margin: const EdgeInsets.only(bottom: 8),
-                         child: buildText(SkillType.getLevelDescription(skillType, level), color: Colors.orange)),
+                         child: buildText(
+                             getLevelDescription(skillType, level),
+                             color: getSkillTypeLevelDescriptionColor(skillType),
+                         )),
                      if (level < 20) // max skill level
                        buildText('level ${level + 1} - next'),
                      if (level < 20) // max skill level
-                     buildText(SkillType.getLevelDescription(skillType, level + 1), color: Colors.orange),
+                     buildText(getLevelDescription(skillType, level + 1), color: getSkillTypeLevelDescriptionColor(skillType)),
 
                      if (skillType.isPassive)
-                       Row(
-                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                         children: [
-                           nothing,
-                           Container(
-                               color: Colors.white10,
-                               padding: const EdgeInsets.all(4),
-                               child: buildText('Passive', color: Colors.white70)),
-                         ],
+                       Container(
+                         margin: const EdgeInsets.only(top: 8),
+                         child: Row(
+                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                           children: [
+                             nothing,
+                             Container(
+                                 color: Colors.white10,
+                                 padding: const EdgeInsets.all(4),
+                                 child: buildText('Passive', color: Colors.white70)),
+                           ],
+                         ),
                        ),
                      if (skillType.magicCost > 0)
                        Row(
@@ -2054,3 +2060,29 @@ String formatFramesToSeconds(int frames){
 
 Widget buildWatchVisible(Watch<bool> watch, Widget child, {bool condition = true}) =>
     buildWatch(watch, (t) => t == condition ? child : nothing);
+
+String? getLevelDescription(SkillType skillType, int level) {
+  switch (skillType) {
+    case SkillType.Heal:
+      return '+${SkillType.getHealAmount(level)} health';
+    case SkillType.Attack_Speed:
+      return 'Attack Speed +${(SkillType.getAttackSpeedPercentage(level) * 100).toInt()}%';
+    case SkillType.Health_Steal:
+      return SkillType.getHealthSteal(level).toStringPercentage;
+    default:
+      return '';
+  }
+}
+
+Color getSkillTypeLevelDescriptionColor(SkillType skillType){
+   switch (skillType){
+     case SkillType.Heal:
+       return AmuletColors.Health;
+     default:
+       return Colors.orange;
+   }
+}
+
+extension DoubleExtension on double {
+  String get toStringPercentage => '${(this * 100).toInt()}%';
+}

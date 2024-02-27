@@ -526,7 +526,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   int getCharacterAssignedSkillLevel(Character character, SkillType skillType){
      if (character is AmuletPlayer){
-       return character.getAssignedSkillTypeLevel(skillType);
+       return character.getSkillTypeLevelAssigned(skillType);
      }
      if (character is AmuletFiend){
        return character.fiendType.skillLevel;
@@ -1241,42 +1241,35 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
   }
 
+  double getCharacterHealthSteal(Character character){
+    if (character is AmuletPlayer) {
+      return character.healthSteal;
+    }
+    if (character is AmuletFiend) {
+      return character.fiendType.healthSteal;
+    }
+    return 0;
+  }
+
   @override
   void onDamageApplied({
     required Character src,
     required Character target,
     required int amount,
   }) {
-    if (src is AmuletPlayer) {
-      final healthSteal = src.healthSteal;
-      final magicSteal = src.magicSteal;
-      if (healthSteal > 0) {
-        src.health += max(amount, healthSteal);
-        dispatchGameEventPosition(GameEvent.Health_Regained, src);
-      }
-      if (magicSteal > 0) {
-        src.magic += max(amount, magicSteal);
-        dispatchGameEventPosition(GameEvent.Magic_Regained, src);
-      }
+
+    final healthSteal = getCharacterHealthSteal(src);
+    if (healthSteal > 0) {
+      src.health += (amount * healthSteal).toInt();
+      dispatchGameEventPosition(GameEvent.Health_Regained, src);
+    }
+
+    final magicSteal = getCharacterHealthSteal(src);
+    if (magicSteal > 0) {
+      src.magic += (amount * healthSteal).toInt();
+      dispatchGameEventPosition(GameEvent.Magic_Regained, src);
     }
   }
-
-  // void spawnGameObjectShrine(int index) {
-  //   final shrineObject = spawnGameObjectAtIndex(
-  //     index: index,
-  //     type: ItemType.Object,
-  //     subType: GameObjectType.Shrine,
-  //     team: TeamType.Neutral,
-  //     health: 0,
-  //     interactable: true,
-  //     persistable: false,
-  //     deactivationTimer: 0,
-  //   );
-  //   shrineObject.physical = false;
-  //   shrineObject.hitable = false;
-  //   shrineObject.collectable = false;
-  //   shrineObject.label = 'Shrine';
-  // }
 
   void useShrine(AmuletPlayer player, int nodeIndex) {
     player.regainFullMagic();
