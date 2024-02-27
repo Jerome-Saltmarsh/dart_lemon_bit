@@ -1294,12 +1294,14 @@ class AmuletUI {
       );
 
 
+  static const Container_Size = 35.0;
+
   final containerAssigned = buildBorder(
     color: Colors.white70,
     width: 3,
     child: Container(
-      width: 50,
-      height: 50,
+      width: Container_Size,
+      height: Container_Size,
       color: Palette.brown_3,
     ),
   );
@@ -1308,15 +1310,15 @@ class AmuletUI {
     width: 3,
     color:  Palette.brownDark,
     child: Container(
-      width: 50,
-      height: 50,
+      width: Container_Size,
+      height: Container_Size,
       color: Palette.brown_3,
     ),
   );
 
   final containerNotAssignable = Container(
-    width: 50,
-    height: 50,
+    width: Container_Size,
+    height: Container_Size,
     color: Colors.transparent,
   );
 
@@ -1336,14 +1338,12 @@ class AmuletUI {
 
      final watch = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());
 
-     const height = 50.0;
-     const width = height;
 
      return buildWatch(watch, (level) {
 
        final unlocked = level > 0;
        final info = Positioned(
-           bottom: height + 5,
+           bottom: Container_Size + 5,
            right: 0,
            child: buildBorder(
              color: Colors.white70,
@@ -1387,8 +1387,8 @@ class AmuletUI {
          },
          action: unlocked ? () => amulet.toggleSkillType(skillType) : null,
          child: Container(
-           width: width,
-           height: height,
+           width: Container_Size,
+           height: Container_Size,
            margin: const EdgeInsets.only(bottom: 6),
            child: Stack(
              clipBehavior: Clip.none,
@@ -1399,8 +1399,8 @@ class AmuletUI {
                b,
                Positioned(
                  child: Container(
-                   width: width,
-                   height: height,
+                   width: Container_Size,
+                   height: Container_Size,
                    alignment: Alignment.center,
                    child: buildIconSkillType(skillType),
                  ),
