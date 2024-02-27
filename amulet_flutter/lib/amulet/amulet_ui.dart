@@ -3,7 +3,6 @@ import 'package:amulet_engine/src.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/amulet/src.dart';
 import 'package:amulet_flutter/amulet/ui/enums/quantify_tab.dart';
-import 'package:amulet_flutter/amulet/getters/get_src_skill_type.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';
 import 'package:amulet_flutter/website/widgets/gs_fullscreen.dart';
@@ -14,7 +13,6 @@ import 'package:lemon_lang/src.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
-import 'getters/get_src_caste_type.dart';
 import 'ui/containers/build_container_player_front.dart';
 
 class AmuletUI {
@@ -1295,22 +1293,25 @@ class AmuletUI {
         ),
       );
 
-  final containerAssigned = Container(
-    width: 50,
-    height: 50,
-    color: Colors.green,
+
+  final containerAssigned = buildBorder(
+    color: Colors.white70,
+    width: 3,
+    child: Container(
+      width: 50,
+      height: 50,
+      color: Palette.brown_3,
+    ),
   );
 
-  final containerNotAssigned = Container(
-    width: 50,
-    height: 50,
-    color: Palette.brownDark,
-  );
-
-  final containerAssignable = Container(
-    width: 50,
-    height: 50,
-    color: Palette.brown_3,
+  final containerAssignable = buildBorder(
+    width: 3,
+    color:  Palette.brownDark,
+    child: Container(
+      width: 50,
+      height: 50,
+      color: Palette.brown_3,
+    ),
   );
 
   final containerNotAssignable = Container(
