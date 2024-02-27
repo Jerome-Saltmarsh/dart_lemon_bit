@@ -1294,7 +1294,7 @@ class AmuletUI {
       );
 
 
-  static const Container_Size = 35.0;
+  static const Container_Size = 40.0;
 
   final containerAssigned = Container(
     width: Container_Size,
