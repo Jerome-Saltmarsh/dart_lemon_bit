@@ -1231,24 +1231,22 @@ class AmuletUI {
               ),
               height16,
               Container(
-                constraints: BoxConstraints(
-                  maxHeight: amulet.engine.screen.height - 270,
-                ),
-                child: SingleChildScrollView(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      buildColumnCasteType(CasteType.Sword),
-                      width8,
-                      buildColumnCasteType(CasteType.Bow),
-                      width8,
-                      buildColumnCasteType(CasteType.Staff),
-                      width8,
-                      buildColumnCasteType(CasteType.Caste),
-                      width8,
-                      buildColumnCasteType(CasteType.Passive),
-                    ],
-                  ),
+                // constraints: BoxConstraints(
+                //   maxHeight: amulet.engine.screen.height - 270,
+                // ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    buildColumnCasteType(CasteType.Sword),
+                    width8,
+                    buildColumnCasteType(CasteType.Bow),
+                    width8,
+                    buildColumnCasteType(CasteType.Staff),
+                    width8,
+                    buildColumnCasteType(CasteType.Caste),
+                    width8,
+                    buildColumnCasteType(CasteType.Passive),
+                  ],
                 ),
               ),
             ],
@@ -1350,7 +1348,16 @@ class AmuletUI {
              color: Colors.white70,
              width: 2,
              child: GSContainer(
-                 child: buildTextValue(skillType.name.clean)),
+               constraints: BoxConstraints(
+                 maxWidth: 200,
+               ),
+                 child: Column(
+                   children: [
+                     buildTextValue(skillType.name.clean),
+                     height8,
+                     buildTextValue(skillType.description.clean),
+                   ],
+                 )),
            ),
        );
 
@@ -1384,6 +1391,7 @@ class AmuletUI {
            margin: const EdgeInsets.only(bottom: 6),
            child: Stack(
              clipBehavior: Clip.none,
+             fit: StackFit.passthrough,
              children: [
                assignableContainer,
                assignedContainer,

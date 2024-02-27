@@ -611,16 +611,39 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     );
   }
 
+  int getCharacterWeaponDamage(Character character){
+     if (character is AmuletPlayer){
+       return character.equippedWeaponDamage;
+     }
+     if (character is AmuletFiend) {
+       return character.attackDamage;
+     }
+     throw Exception();
+  }
+
+  double getCharacterWeaponRange(Character character){
+    if (character is AmuletPlayer){
+      if (character.equippedWeaponMelee){
+        return character.equippedWeaponRange?.melee ?? 0;
+      }
+      if (character.equippedWeaponRanged){
+        return character.equippedWeaponRange?.ranged ?? 0;
+      }
+      return 0;
+    }
+    if (character is AmuletFiend) {
+      return character.attackRange;
+    }
+    throw Exception();
+  }
+
   void characterPerformSkillTypeSplitShot(Character character, int skillLevel) {
-    final damage = getCharacterSkillTypeDamage(
-        character: character,
-        skillType: SkillType.Split_Shot,
-    );
-    final range = getCharacterSkillTypeRange(
-        character: character,
-        skillType: SkillType.Split_Shot,
-    );
+
+    final damage = getCharacterWeaponDamage(character);
+    final range = getCharacterWeaponRange(character);
     final angle = character.angle;
+    final totalArrows = 2 + skillLevel;
+    final spread = getSplitShortSpread(totalArrows);
 
     dispatchGameEvent(
       GameEvent.Bow_Released,
@@ -629,10 +652,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       character.z,
     );
 
-    final totalArrows = 2 + skillLevel;
-    final spread = getSplitShortSpread(totalArrows);
-
-    for (var i = 0; i < totalArrows; i++){
+    for (var i = 0; i < totalArrows; i++) {
       spawnProjectileArrow(
         src: character,
         damage: damage,

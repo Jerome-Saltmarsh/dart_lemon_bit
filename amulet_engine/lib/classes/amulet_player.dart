@@ -1112,6 +1112,8 @@ class AmuletPlayer extends IsometricPlayer with
 
   bool get equippedWeaponMelee => equippedWeaponSword || equippedWeaponStaff;
 
+  bool get equippedWeaponRanged => equippedWeaponBow;
+
   void selectSkillTypeLeft(SkillType value) {
     skillTypeLeft = value;
   }
@@ -1212,7 +1214,9 @@ class AmuletPlayer extends IsometricPlayer with
 
   int getSkillTypeMagicCost(SkillType skillType) => skillType.magicCost;
 
-  WeaponRange? get equippedWeaponRange => equippedWeapon?.range;
+  WeaponRange? get equippedWeaponRange {
+    return equippedWeapon?.range;
+  }
 
   WeaponClass? get equippedWeaponClass {
       final weaponType = equippedWeapon?.subType;
