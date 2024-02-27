@@ -162,6 +162,7 @@ enum AmuletItem {
       skills: {
         SkillType.Mighty_Strike: 1,
         SkillType.Heal: 2,
+        SkillType.Attack_Speed: 10,
       }
   ),
   Helm_Steel_Cap(
@@ -172,6 +173,7 @@ enum AmuletItem {
     maxHealth: 8,
       skills: {
         SkillType.Mighty_Strike: 1,
+        SkillType.Attack_Speed: 20,
       }
   ),
   Helm_Full(
@@ -342,6 +344,7 @@ enum AmuletItem {
     maxHealth: 5,
       skills: {
         SkillType.Mighty_Strike: 1,
+        SkillType.Run_Speed: 3,
       }
   ),
   Shoes_Grieves(
@@ -406,6 +409,7 @@ enum AmuletItem {
     maxMagic: 5,
       skills: {
         SkillType.Fireball: 1,
+        SkillType.Run_Speed: 6,
       }
   ),
   Shoes_Striders(
@@ -417,6 +421,7 @@ enum AmuletItem {
     maxMagic: 5,
       skills: {
         SkillType.Fireball: 1,
+        SkillType.Run_Speed: 12,
       }
   ),
   Shoes_Satin_Boots(
@@ -428,6 +433,7 @@ enum AmuletItem {
     maxMagic: 5,
       skills: {
         SkillType.Split_Shot: 1,
+        SkillType.Run_Speed: 20,
       }
   ),
   Consumable_Potion_Magic(

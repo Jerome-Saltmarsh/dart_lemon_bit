@@ -991,6 +991,16 @@ class AmuletUI {
                     ],
                   ),
                 ),
+                        Tooltip(
+                          message: 'Player Perform Frame Velocity',
+                          child: Row(
+                            children: [
+                              buildText('FV'),
+                              width8,
+                              buildWatch(amulet.playerPerformFrameVelocity, buildRowValue),
+                            ],
+                          ),
+                        ),
                 height16,
                 buildEquippedAmuletItems(),
               ],

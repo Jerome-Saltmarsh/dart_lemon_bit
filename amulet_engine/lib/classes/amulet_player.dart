@@ -167,42 +167,39 @@ class AmuletPlayer extends IsometricPlayer with
     writeInteracting();
   }
 
-  // int get weaponDamageMin {
-  //   return equippedWeapon?.damageMin ?? 0;
-  // }
-  //
-  // int get weaponDamageMax {
-  //   return equippedWeapon?.damageMax ?? 0;
-  // }
+  int get regenMagic =>
+      AmuletSettings.Base_Magic_Regen +
+        getAssignedSkillTypeLevel(SkillType.Magic_Regen);
 
-  int get regenMagic => getSkillTypeLevel(SkillType.Magic_Regen);
-
-  int get regenHealth => getSkillTypeLevel(SkillType.Health_Regen);
+  int get regenHealth =>
+      AmuletSettings.Base_Magic_Regen +
+          getAssignedSkillTypeLevel(SkillType.Health_Regen);
 
   @override
   double get runSpeed {
-    var total = baseRunSpeed;
-    // total += equippedWeapon?.runSpeed ?? 0;
-    // total += equippedHelm?.runSpeed ?? 0;
-    // total += equippedArmor?.runSpeed ?? 0;
-    // total += equippedShoes?.runSpeed ?? 0;
-    return total;
+
+    if (!skillTypeAssignedToSkillSlot(SkillType.Run_Speed)){
+      return baseRunSpeed;
+    }
+
+    final level = getSkillTypeLevel(SkillType.Run_Speed);
+    final i = level / AmuletSettings.Max_Skill_Points;
+    return interpolate(baseRunSpeed, AmuletSettings.Max_Run_Speed, i);
   }
 
-  int get agility =>
-      getSkillTypeLevel(SkillType.Agile);
+  int get agility => getAssignedSkillTypeLevel(SkillType.Attack_Speed);
 
   @override
   void writePlayerGame() {
     cleanEquipment();
     writeCameraTarget();
-    writeRegenMagic();
-    writeRegenHealth();
-    writeRunSpeed();
-    writeAgility();
+    // writeRegenMagic();
+    // writeRegenHealth();
+    // writeRunSpeed();
+    // writeAgility();
     writePerformFrameVelocity();
-    writeHealthSteal();
-    writeMagicSteal();
+    // writeHealthSteal();
+    // writeMagicSteal();
 
     if (debugEnabled){
       writeDebug();
@@ -845,7 +842,7 @@ class AmuletPlayer extends IsometricPlayer with
 
     switch (skillActive.casteType) {
       case CasteType.Passive:
-        throw Exception();
+        return;
       case CasteType.Caste:
         setCharacterStateCasting(duration: performDuration);
         break;
@@ -1230,13 +1227,20 @@ class AmuletPlayer extends IsometricPlayer with
       return WeaponClass.fromWeaponType(weaponType);
   }
 
+  int getAssignedSkillTypeLevel(SkillType skillType){
+      if (skillTypeAssignedToSkillSlot(skillType)){
+        return getSkillTypeLevel(skillType);
+      }
+      return 0;
+  }
+
   int getSkillTypeLevel(SkillType skillType){
      var total = 0;
      total += equippedWeapon?.skills[skillType] ?? 0;
      total += equippedHelm?.skills[skillType] ?? 0;
      total += equippedArmor?.skills[skillType] ?? 0;
      total += equippedShoes?.skills[skillType] ?? 0;
-     return total;
+     return min(total, AmuletSettings.Max_Skill_Points);
   }
 
   void writeSkillTypes() {
@@ -1344,7 +1348,11 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   double get performFrameVelocity =>
-      super.frameVelocity + (agility * AmuletSettings.Ratio_Frame_Velocity_Agility);
+      interpolate(
+        AmuletSettings.Min_Perform_Velocity,
+        AmuletSettings.Max_Perform_Velocity,
+        agility / AmuletSettings.Max_Skill_Points,
+      );
 
   void writePerformFrameVelocity() {
     final frameVelocity = performFrameVelocity;

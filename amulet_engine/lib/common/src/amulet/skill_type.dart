@@ -107,7 +107,7 @@ enum SkillType {
     range: 300,
     casteSpeed: AttackSpeed.Fast,
   ),
-  Agile(
+  Attack_Speed(
     description: 'Increases attack and caste speed',
     casteType: CasteType.Passive,
     magicCost: 0,
@@ -139,6 +139,11 @@ enum SkillType {
   ),
   Area_Damage(
     description: 'Effects the amount of enemies effected by a melee attack',
+    casteType: CasteType.Passive,
+    magicCost: 0,
+  ),
+  Run_Speed(
+    description: 'How fast one can run',
     casteType: CasteType.Passive,
     magicCost: 0,
   ),
