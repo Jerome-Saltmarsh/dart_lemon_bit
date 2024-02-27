@@ -3,7 +3,7 @@ import 'package:amulet_engine/common.dart';
 const _srcX = 400.0;
 const iconSizeSkillType = 16.0;
 
-List<double> getSkillTypeSrc(SkillType skillType) =>
+List<double> getSrcSkillType(SkillType skillType) =>
     switch (skillType) {
       SkillType.None => const [_srcX, iconSizeSkillType * 0],
       SkillType.Fireball => const [416, 32, 32 ,32],

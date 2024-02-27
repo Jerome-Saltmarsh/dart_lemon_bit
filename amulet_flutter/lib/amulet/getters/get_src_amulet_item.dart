@@ -34,16 +34,16 @@ const _shoes_black_slippers = [srcx_shoes, 64.0];
 const _shoes_grieves = [srcx_shoes, 32.0];
 const _shoes_treads = [srcx_shoes, 96.0];
 
-List<double> getAmuletItemSrc(AmuletItem amuletItem) {
+List<double> getSrcAmuletItem(AmuletItem amuletItem) {
   return switch (amuletItem) {
       AmuletItem.Weapon_Sword_Short => _weapons_sword_short,
       AmuletItem.Weapon_Sword_Broad => _weapons_sword_broad,
       AmuletItem.Weapon_Sword_Long => _weapons_sword_long,
       AmuletItem.Weapon_Sword_Giant => _weapons_sword_giant,
-      AmuletItem.Weapon_Staff_Wand => [srcx_weapon_staff, 0],
-      AmuletItem.Weapon_Staff_Globe => [srcx_weapon_staff, 32],
-      AmuletItem.Weapon_Staff_Scepter => [srcx_weapon_staff, 64],
-      AmuletItem.Weapon_Staff_Long => [34, 99, 28, 28],
+      AmuletItem.Weapon_Staff_Wand => const [srcx_weapon_staff, 0],
+      AmuletItem.Weapon_Staff_Globe => const [srcx_weapon_staff, 32],
+      AmuletItem.Weapon_Staff_Scepter => const [srcx_weapon_staff, 64],
+      AmuletItem.Weapon_Staff_Long => const [34, 99, 28, 28],
       AmuletItem.Weapon_Bow_Short => _weapons_bow_short,
       AmuletItem.Weapon_Bow_Reflex => _weapons_bow_short,
       AmuletItem.Weapon_Bow_Composite => _weapons_bow_short,
@@ -72,8 +72,8 @@ List<double> getAmuletItemSrc(AmuletItem amuletItem) {
       AmuletItem.Shoes_Warrior_3_Sabatons_Common => _shoes_grieves,
       AmuletItem.Shoes_Soles => _shoes_grieves,
       AmuletItem.Shoes_Satin_Boots => _shoes_grieves,
-      AmuletItem.Consumable_Potion_Health => [srcx_consumable, 0],
-      AmuletItem.Consumable_Potion_Magic => [srcx_consumable, 64],
+      AmuletItem.Consumable_Potion_Health => const [srcx_consumable, 0],
+      AmuletItem.Consumable_Potion_Magic => const [srcx_consumable, 64],
       AmuletItem.Helm_Cowl => throw Exception(),
       AmuletItem.Helm_Cape => throw Exception(),
     };

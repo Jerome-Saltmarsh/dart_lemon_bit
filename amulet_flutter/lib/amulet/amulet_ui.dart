@@ -3,7 +3,7 @@ import 'package:amulet_engine/src.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/amulet/src.dart';
 import 'package:amulet_flutter/amulet/ui/enums/quantify_tab.dart';
-import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_skill_type.dart';
+import 'package:amulet_flutter/amulet/getters/get_src_skill_type.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';
 import 'package:amulet_flutter/website/widgets/gs_fullscreen.dart';
@@ -1561,7 +1561,7 @@ class AmuletUI {
       );
 
   Widget buildIconSkillType(SkillType skillType, {double dstX = 0, double dstY = 0}) =>
-      AmuletImageSrc(src: getSkillTypeSrc(skillType), dstX: dstX, dstY: dstY);
+      AmuletImageSrc(src: getSrcSkillType(skillType), dstX: dstX, dstY: dstY);
 
   Widget buildWindowAmuletItemStats(AmuletItem? amuletItem) {
     if (amuletItem == null) {

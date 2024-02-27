@@ -1,5 +1,5 @@
 import 'package:amulet_engine/common.dart';
-import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_amulet_item.dart';
+import 'package:amulet_flutter/amulet/getters/get_src_amulet_item.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_images.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_scene.dart';
@@ -150,7 +150,7 @@ class RendererGameObjects extends RenderGroup {
     if (isAmuletItem){
       renderBouncingGameObjectShadow(gameObject);
 
-      final src = getAmuletItemSrc(AmuletItem.values[subType]);
+      final src = getSrcAmuletItem(AmuletItem.values[subType]);
       engine.renderSprite(
           image: images.atlas_amulet_items,
           dstX: gameObject.renderX,

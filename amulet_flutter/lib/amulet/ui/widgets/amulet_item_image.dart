@@ -1,5 +1,5 @@
 import 'package:amulet_engine/src.dart';
-import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_amulet_item.dart';
+import 'package:amulet_flutter/amulet/getters/get_src_amulet_item.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_lang/src.dart';
@@ -16,7 +16,7 @@ class AmuletItemImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const size = 32.0;
-    final src = getAmuletItemSrc(amuletItem);
+    final src = getSrcAmuletItem(amuletItem);
     return AmuletImage(
       srcX: src[0],
       srcY: src[1],
