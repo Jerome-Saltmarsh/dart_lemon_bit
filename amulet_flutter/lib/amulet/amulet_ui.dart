@@ -1914,7 +1914,7 @@ class AmuletUI {
       width: 3,
       child: Container(
         child: slot,
-        color: Palette.brown_3,
+        color: Palette.brown_2,
         width: size,
         height: size,
         alignment: Alignment.center,
