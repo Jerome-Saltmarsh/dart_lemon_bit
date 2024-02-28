@@ -2069,6 +2069,8 @@ String? getLevelDescription(SkillType skillType, int level) {
       return 'Attack Speed +${(SkillType.getAttackSpeedPercentage(level) * 100).toInt()}%';
     case SkillType.Health_Steal:
       return SkillType.getHealthSteal(level).toStringPercentage;
+    case SkillType.Magic_Steal:
+      return SkillType.getMagicSteal(level).toStringPercentage;
     default:
       return '';
   }

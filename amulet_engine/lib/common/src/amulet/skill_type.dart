@@ -152,8 +152,8 @@ enum SkillType {
   final String description;
 
   static const Max_Skill_Points = AmuletSettings.Max_Skill_Points;
-  static const Max_Health_Steal = 1.0;
-  static const Max_Magic_Steal = 1.0;
+  static const Max_Health_Steal = 0.5;
+  static const Max_Magic_Steal = 0.5;
 
   const SkillType({
     required this.casteType,

@@ -174,6 +174,9 @@ enum AmuletItem {
       skills: {
         SkillType.Mighty_Strike: 1,
         SkillType.Attack_Speed: 20,
+        SkillType.Health_Steal: 5,
+        SkillType.Magic_Steal: 5,
+
       }
   ),
   Helm_Full(
