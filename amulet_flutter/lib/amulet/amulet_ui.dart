@@ -1532,42 +1532,42 @@ class AmuletUI {
          );
   }
 
-  Widget buildContainerSkillTypeAssigned(
-      SkillType skillType,
-      Function onClickLeft,
-      Function onClickRight,
- ){
-
-    if (skillType == SkillType.None){
-      return nothing;
-    }
-
-     final watchLevel = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());
-
-     const height = 50.0;
-     const width = height;
-
-     return buildWatch(watchLevel, (level) {
-
-       final button = onPressed(
-         action: onClickLeft,
-         onRightClick: onClickRight,
-         child: Container(
-           width: width,
-           height: height,
-           child: buildIconSkillType(skillType),
-         ),
-       );
-
-       return buildMouseOverHint(
-           child: button,
-           panel: buildPanelSkillTypeInformation(skillType, level),
-           bottom: 70,
-           left: -70,
-
-       );
-     });
-  }
+ //  Widget buildContainerSkillTypeAssigned(
+ //      SkillType skillType,
+ //      Function onClickLeft,
+ //      Function onClickRight,
+ // ){
+ //
+ //    if (skillType == SkillType.None){
+ //      return nothing;
+ //    }
+ //
+ //     final watchLevel = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());
+ //
+ //     const height = 50.0;
+ //     const width = height;
+ //
+ //     return buildWatch(watchLevel, (level) {
+ //
+ //       final button = onPressed(
+ //         action: onClickLeft,
+ //         onRightClick: onClickRight,
+ //         child: Container(
+ //           width: width,
+ //           height: height,
+ //           child: buildIconSkillType(skillType),
+ //         ),
+ //       );
+ //
+ //       return buildMouseOverHint(
+ //           child: button,
+ //           panel: buildPanelSkillTypeInformation(skillType, level),
+ //           bottom: 70,
+ //           left: -70,
+ //
+ //       );
+ //     });
+ //  }
 
   Widget buildRowValue(dynamic value) => buildText(value, color: Colors.white70);
 
@@ -1979,11 +1979,39 @@ class AmuletUI {
     const size = 50.0;
 
     final slot = buildWatch(skillSlot, (skillType) {
-      return buildContainerSkillTypeAssigned(
-        skillType, () => amulet.setSkillSlotIndex(index), () {
-        amulet.setSkillSlotIndex(index);
-        amulet.windowVisiblePlayerSkills.setTrue();
+
+      final watchLevel = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());
+      const height = 50.0;
+      const width = height;
+
+      return buildWatch(watchLevel, (level) {
+
+        final button = onPressed(
+          action: () => amulet.setSkillSlotIndex(index),
+          onRightClick: () {
+            amulet.setSkillSlotIndex(index);
+            amulet.windowVisiblePlayerSkills.setTrue();
+          },
+          child: Container(
+            width: width,
+            height: height,
+            child: buildIconSkillType(skillType),
+          ),
+        );
+
+        return buildMouseOverHint(
+          child: button,
+          panel: buildPanelSkillTypeInformation(skillType, level),
+          bottom: 70,
+          left: -70,
+        );
       });
+
+      // return buildContainerSkillTypeAssigned(
+      //   skillType, () => amulet.setSkillSlotIndex(index), () {
+      //   amulet.setSkillSlotIndex(index);
+      //   amulet.windowVisiblePlayerSkills.setTrue();
+      // });
     });
 
     final containerActive = buildBorder(
