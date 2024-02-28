@@ -1,7 +1,6 @@
 
 import 'package:amulet_engine/src.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
-import 'package:amulet_flutter/amulet/amulet_keys.dart';
 import 'package:amulet_flutter/amulet/src.dart';
 import 'package:amulet_flutter/amulet/ui/enums/quantify_tab.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
@@ -1521,63 +1520,34 @@ class AmuletUI {
       Function onClickRight,
 
       ){
+
+    if (skillType == SkillType.None){
+      return nothing;
+    }
+
      final watch = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());
 
-     const infoWidth = 120.0;
      const height = 50.0;
      const width = height;
 
      return buildWatch(watch, (level) {
 
-       final info = Positioned(
-           bottom: height + 5,
-           right: -infoWidth * 0.33,
-           child: buildBorder(
-             color: Colors.white70,
-             width: 2,
-             child: GSContainer(
-                 width: infoWidth,
-                 child: buildTextValue(skillType.name.clean)),
-           ),
-       );
-
-       var showInfo = false;
-
-       Function? refreshFunction;
-
-       final b = buildState(builder: (context, rebuild){
-         refreshFunction = rebuild;
-          if (showInfo && skillType != SkillType.None){
-            return info;
-          }
-          return nothing;
-       });
-
-       return onPressed(
-         onEnter: () {
-            showInfo = true;
-            refreshFunction?.call();
-         },
-         onExit: (){
-           showInfo = false;
-           refreshFunction?.call();
-         },
+       final button = onPressed(
          action: onClickLeft,
          onRightClick: onClickRight,
          child: Container(
            width: width,
            height: height,
-           child: Stack(
-             alignment: Alignment.center,
-             clipBehavior: Clip.none,
-             children: [
-               b,
-               Positioned(
-                 child: buildIconSkillType(skillType),
-               ),
-             ],
-           ),
+           child: buildIconSkillType(skillType),
          ),
+       );
+
+       return buildMouseOverHint(
+           child: button,
+           panel: buildPanelSkillTypeInformation(skillType, level),
+           bottom: 70,
+           left: -70,
+
        );
      });
   }
@@ -2122,6 +2092,3 @@ Color getSkillTypeLevelDescriptionColor(SkillType skillType){
    }
 }
 
-extension DoubleExtension on double {
-  String get toStringPercentage => '${(this * 100).toInt()}%';
-}

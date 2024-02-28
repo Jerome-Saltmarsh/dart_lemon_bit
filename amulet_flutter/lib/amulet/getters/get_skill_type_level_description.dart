@@ -1,5 +1,5 @@
 import 'package:amulet_engine/common.dart';
-import 'package:amulet_flutter/amulet/amulet_ui.dart';
+import 'package:amulet_flutter/amulet/extensions.dart';
 
 String? getSkillTypeLevelDescription(SkillType skillType, int level) {
   switch (skillType) {
