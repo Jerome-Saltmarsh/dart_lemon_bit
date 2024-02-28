@@ -31,6 +31,8 @@ class AmuletUI {
 
   late final iconMagic = buildIconMagic();
 
+  var visibleRightClickedToClear = true;
+
   AmuletUI(this.amulet);
 
   Widget buildAmuletUI() {
@@ -87,8 +89,6 @@ class AmuletUI {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   buildToggleEquipment(),
-                  // width8,
-                  // buildTogglePlayerStats(),
                   width8,
                   buildTogglePlayerSkills(),
                   width8,
@@ -115,16 +115,17 @@ class AmuletUI {
               child: buildHudBottomLeft(),
           ),
 
-          Positioned(
-            bottom: 8,
-            child: buildWindowPlayerSkillSlots(),
-          ),
+
       Positioned(
           bottom: 100,
           child: buildWatchVisible(
             amulet.windowVisiblePlayerSkills,
             buildWindowPlayerSkills(),
           )
+      ),
+      Positioned(
+        bottom: 8,
+        child: buildWindowPlayerSkillSlots(),
       ),
           buildPositionedMessage(),
           buildWindowQuest(),
@@ -1989,6 +1990,7 @@ class AmuletUI {
           }
         },
         onRightClick: () {
+          visibleRightClickedToClear = false;
           amulet.setSkillSlotValue(
             index: index,
             skillType: SkillType.None,
@@ -2009,7 +2011,13 @@ class AmuletUI {
 
       return buildMouseOverHint(
         child: button,
-        panel: buildPanelSkillTypeInformation(skillType),
+        panel: Column(
+          children: [
+            // if (visibleRightClickedToClear)
+              buildText('right click to change'),
+            buildPanelSkillTypeInformation(skillType),
+          ],
+        ),
         bottom: 70,
         left: -70,
       );
