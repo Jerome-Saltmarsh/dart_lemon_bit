@@ -315,16 +315,16 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         characterPerformSkillTypeShootArrow(character);
         return;
       case SkillType.Mighty_Strike:
-        characterPerformSkillTypeMightySwing(character);
+        characterPerformSkillTypeMightySwing(character, level);
         return;
       case SkillType.Split_Shot:
         characterPerformSkillTypeSplitShot(character, level);
         break;
       case SkillType.Fireball:
-        characterPerformSkillTypeFireball(character);
+        characterPerformSkillTypeFireball(character, level);
         break;
       case SkillType.Frostball:
-        characterPerformSkillTypeFrostBall(character);
+        characterPerformSkillTypeFrostBall(character, level);
         break;
       case SkillType.Explode:
         characterPerformSkillTypeExplode(character, level);
@@ -333,10 +333,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         characterPerformSkillTypeHeal(character, level);
         break;
       case SkillType.Ice_Arrow:
-        characterPerformSkillTypeIceArrow(character);
+        characterPerformSkillTypeIceArrow(character, level);
         break;
       case SkillType.Fire_Arrow:
-        characterPerformSkillTypeFireArrow(character);
+        characterPerformSkillTypeFireArrow(character, level);
         break;
       case SkillType.Blind:
         characterPerformSkillTypeBlind(character);
@@ -363,28 +363,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       return 0;
   }
 
-  int getCharacterSkillTypeAilmentDuration({
-    required Character character,
-    required SkillType skillType,
-  }) => ((skillType.ailmentDuration ?? 0) * fps).toInt();
-
-  int getCharacterSkillTypeAilmentDamage({
-    required Character character,
-    required SkillType skillType,
-  }) => skillType.ailmentDamage ?? 0;
-
-  int getCharacterSkillTypeDamage({
-    required Character character,
-    required SkillType skillType,
-  }){
-      if (character is AmuletPlayer) {
-        return character.getSkillTypeDamage(skillType);
-      }
-      if (character is AmuletFiend) {
-        return character.fiendType.damage;
-      }
-      throw Exception();
-  }
+  // int getCharacterSkillTypeAilmentDuration({
+  //   required Character character,
+  //   required SkillType skillType,
+  // }) => ((skillType.ailmentDuration ?? 0) * fps).toInt();
 
   double getCharacterAreaDamage(Character character){
       if (character is AmuletPlayer) {
@@ -442,10 +424,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   void applyHit({
     required Character srcCharacter,
     required Collider target,
-    required int damage,
+    required double damage,
     required DamageType damageType,
     required int ailmentDuration,
-    required int ailmentDamage,
+    required double ailmentDamage,
     double? angle,
     double force = 0,
     bool friendlyFire = false,
@@ -467,7 +449,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     super.applyHit(
         srcCharacter: srcCharacter,
         target: target,
-        damage: (damage * damageMultiplier).toInt(),
+        damage: damage * damageMultiplier,
         damageType: damageType,
         ailmentDuration: ailmentDuration,
         ailmentDamage: ailmentDamage,
@@ -485,38 +467,12 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
             character: character,
             skillType: SkillType.Strike,
         ),
-        damage: getCharacterSkillTypeDamage(
-            character: character,
-            skillType: SkillType.Strike,
-        ),
-        areaDamage: getCharacterSkillTypeAreaDamage(
-            character: character,
-            skillType: SkillType.Strike,
-        ),
+        damage: getCharacterWeaponDamage(character),
+        areaDamage: getCharacterAreaDamage(character),
         ailmentDuration: 0,
         ailmentDamage: 0,
         maxHitRadian: 90 * degreesToRadians,
       );
-  }
-
-  double getCharacterSkillTypeAreaDamage({
-    required Character character,
-    required SkillType skillType,
-  }) {
-     if (character is AmuletPlayer){
-       switch (skillType){
-         case SkillType.Strike:
-           return character.areaDamage;
-         case SkillType.Mighty_Strike:
-           return character.areaDamage;
-         default:
-           return 0;
-       }
-     }
-     if (character is AmuletFiend){
-       return character.fiendType.areaDamage;
-     }
-     throw Exception();
   }
 
   double getCharacterAssignedSkillLevelI(Character character, SkillType skillType) {
@@ -536,15 +492,17 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
 
 
-  void characterPerformSkillTypeMightySwing(Character character) {
+  void characterPerformSkillTypeMightySwing(Character character, int level) {
+
+    final weaponDamage = getCharacterWeaponDamage(character);
+    final percentage = SkillType.getPercentageMightySwing(level);
+    final bonusDamage = weaponDamage + percentage;
+
     applyHitMelee(
         character: character,
         damageType: DamageType.Melee,
         range: getCharacterWeaponRange(character),
-        damage: getCharacterSkillTypeDamage(
-            character: character,
-            skillType: SkillType.Mighty_Strike,
-        ),
+        damage: weaponDamage + bonusDamage,
         areaDamage: getCharacterAreaDamage(character),
         ailmentDuration: 0,
         ailmentDamage: 0,
@@ -561,67 +519,48 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     );
     spawnProjectileArrow(
       src: character,
-      damage: getCharacterSkillTypeDamage(
-        character: character,
-        skillType: SkillType.Shoot_Arrow,
-      ),
-      range: getCharacterSkillTypeRange(
-        character: character,
-        skillType: SkillType.Shoot_Arrow,
-      ),
+      damage: getCharacterWeaponDamage(character),
+      range: getCharacterWeaponRange(character),
       angle: character.angle,
     );
   }
 
-  void characterPerformSkillTypeIceArrow(Character character) {
+  void characterPerformSkillTypeIceArrow(Character character, int level) {
     dispatchGameEventPosition(GameEvent.Bow_Released, character);
+
+    final iceDamage = SkillType.getDamageIceArrow(level);
+    final weaponDamage = getCharacterWeaponDamage(character);
+
     spawnProjectileIceArrow(
       src: character,
-      damage: getCharacterSkillTypeDamage(
-          character: character,
-          skillType: SkillType.Ice_Arrow,
-      ),
-      range: getCharacterSkillTypeRange(
-          character: character,
-          skillType: SkillType.Ice_Arrow,
-      ),
-      ailmentDuration: getCharacterSkillTypeAilmentDuration(
-          character: character,
-          skillType: SkillType.Ice_Arrow,
-      ),
-      ailmentDamage: getCharacterSkillTypeAilmentDamage(
-        character: character,
-        skillType: SkillType.Ice_Arrow,
-      ),
+      damage: iceDamage + weaponDamage,
+      range: getCharacterWeaponRange(character),
+      ailmentDuration: SkillType.getAilmentDurationIceArrow(level),
+      ailmentDamage: SkillType.getAilmentDamageIceArrow(level),
       angle: character.angle,
     );
   }
 
-  void characterPerformSkillTypeFireArrow(Character character) {
+  void characterPerformSkillTypeFireArrow(Character character, int level) {
     dispatchGameEventPosition(GameEvent.Bow_Released, character);
+
+    final fireDamage = SkillType.getDamageFireArrow(level);
+    final weaponDamage = getCharacterWeaponDamage(character);
+
     spawnProjectileFireArrow(
       src: character,
-      damage: getCharacterSkillTypeDamage(
-          character: character,
-          skillType: SkillType.Fire_Arrow,
-      ),
+      damage: fireDamage + weaponDamage,
       range: getCharacterSkillTypeRange(
           character: character,
           skillType: SkillType.Fire_Arrow,
       ),
-      ailmentDuration: getCharacterSkillTypeAilmentDuration(
-          character: character,
-          skillType: SkillType.Fire_Arrow,
-      ),
-      ailmentDamage: getCharacterSkillTypeAilmentDamage(
-          character: character,
-          skillType: SkillType.Fire_Arrow,
-      ),
+      ailmentDuration: SkillType.getAilmentDurationFireArrow(level),
+      ailmentDamage: SkillType.getAilmentDamageFireArrow(level),
       angle: character.angle,
     );
   }
 
-  int getCharacterWeaponDamage(Character character){
+  double getCharacterWeaponDamage(Character character){
      if (character is AmuletPlayer){
        return character.equippedWeaponDamage;
      }
@@ -692,53 +631,35 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     return piEighth;
   }
 
-  void characterPerformSkillTypeFireball(Character character) {
+  void characterPerformSkillTypeFireball(Character character, int level) {
     spawnProjectile(
       src: character,
-      damage: getCharacterSkillTypeDamage(
-        character: character,
-        skillType: SkillType.Fireball,
-      ),
+      damage: SkillType.getDamageFireball(level),
       range: getCharacterSkillTypeRange(
         character: character,
         skillType: SkillType.Fireball,
       ),
       projectileType: ProjectileType.Fireball,
       angle: character.angle,
-      ailmentDuration: getCharacterSkillTypeAilmentDuration(
-          character: character,
-          skillType: SkillType.Fireball,
-      ),
-      ailmentDamage: getCharacterSkillTypeAilmentDamage(
-          character: character,
-          skillType: SkillType.Fireball,
-      ),
+      ailmentDuration: SkillType.getAilmentDurationFireball(level),
+      ailmentDamage: SkillType.getAilmentDamageFireball(level),
     );
   }
 
 
 
-  void characterPerformSkillTypeFrostBall(Character character) =>
+  void characterPerformSkillTypeFrostBall(Character character, int level) =>
       spawnProjectile(
         src: character,
-        damage: getCharacterSkillTypeDamage(
-            character: character,
-            skillType: SkillType.Frostball,
-        ),
+        damage: SkillType.getDamageFrostBall(level),
         range: getCharacterSkillTypeRange(
             character: character,
             skillType: SkillType.Frostball,
         ),
         projectileType: ProjectileType.FrostBall,
         angle: character.angle,
-        ailmentDuration: getCharacterSkillTypeAilmentDuration(
-            character: character,
-            skillType: SkillType.Frostball,
-        ),
-        ailmentDamage: getCharacterSkillTypeAilmentDamage(
-            character: character,
-            skillType: SkillType.Frostball,
-        )
+        ailmentDuration: SkillType.getAilmentDurationFrostBall(level),
+        ailmentDamage: SkillType.getAilmentDamageFrostBall(level),
       );
 
   void characterPerformSkillTypeExplode(Character character, int level) {
@@ -750,18 +671,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         z: character.castePositionZ,
         srcCharacter: character,
         radius: 100,
-        damage: getCharacterSkillTypeDamage(
-            character: character,
-            skillType: SkillType.Explode,
-        ),
-        ailmentDuration: getCharacterSkillTypeAilmentDuration(
-            character: character,
-            skillType: SkillType.Explode,
-        ),
-        ailmentDamage: getCharacterSkillTypeAilmentDamage(
-            character: character,
-            skillType: SkillType.Explode,
-        ),
+        damage: SkillType.getDamageExplode(level),
+        ailmentDuration: 0,
+        ailmentDamage: 0,
       );
       return;
     }
@@ -1255,7 +1167,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   void onDamageApplied({
     required Character src,
     required Character target,
-    required int amount,
+    required double amount,
   }) {
 
     final healthSteal = getCharacterHealthSteal(src);

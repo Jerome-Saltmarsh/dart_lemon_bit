@@ -132,7 +132,7 @@ class IsometricPlayer extends Character with ByteWriter {
   }
 
   @override
-  set maxHealth(int value){
+  set maxHealth(double value){
     if (maxHealth == value) return;
     super.maxHealth = value;
     writePlayerHealth();
@@ -143,7 +143,7 @@ class IsometricPlayer extends Character with ByteWriter {
     writePlayerMode();
   }
 
-  set health (int value) {
+  set health (double value) {
     if (health == value) return;
     super.health = value;
     writePlayerHealth();
@@ -319,8 +319,8 @@ class IsometricPlayer extends Character with ByteWriter {
   void writePlayerHealth(){
     writeByte(NetworkResponse.Player);
     writeByte(NetworkResponsePlayer.Health);
-    writeUInt16(health);
-    writeUInt16(maxHealth);
+    writeUInt16(health.toInt());
+    writeUInt16(maxHealth.toInt());
   }
 
   void writePlayerAlive(){
@@ -963,8 +963,8 @@ class IsometricPlayer extends Character with ByteWriter {
     writeUInt16(gameObject.id);
     writeByte(gameObject.itemType);
     writeUInt16(gameObject.subType);
-    writeUInt16(gameObject.health);
-    writeUInt16(gameObject.healthMax);
+    writeUInt16(gameObject.health.toInt());
+    writeUInt16(gameObject.healthMax.toInt());
     writeIsometricPosition(gameObject);
   }
 
@@ -1068,8 +1068,8 @@ class IsometricPlayer extends Character with ByteWriter {
       writeString(gameObject.runtimeType.toString());
       writeUInt16(gameObject.team);
       writeUInt16(gameObject.radius.toInt());
-      writeUInt16(gameObject.health);
-      writeUInt16(gameObject.healthMax);
+      writeUInt16(gameObject.health.toInt());
+      writeUInt16(gameObject.healthMax.toInt());
       writeIsometricPosition(gameObject);
       writeByte(gameObject.itemType);
       writeByte(gameObject.subType);
@@ -1084,8 +1084,8 @@ class IsometricPlayer extends Character with ByteWriter {
       writeByte(character.goal);
       writeUInt16(character.team);
       writeUInt16(character.radius.toInt());
-      writeUInt16(selectedCollider.health);
-      writeUInt16(selectedCollider.maxHealth);
+      writeUInt16(selectedCollider.health.toInt());
+      writeUInt16(selectedCollider.maxHealth.toInt());
       writeIsometricPosition(character);
       writeInt16(character.runX.toInt());
       writeInt16(character.runY.toInt());
@@ -1097,7 +1097,7 @@ class IsometricPlayer extends Character with ByteWriter {
       writeClampUInt16(character.actionDuration);
       writeClampUInt16(character.frame.toInt());
       writeUInt16(character.weaponType);
-      writeUInt16(character.attackDamage);
+      writeUInt16(character.attackDamage.toInt());
       writeUInt16(character.attackRange.toInt());
       writeByte(0); // TODO
       writeUInt16(0); // TODO

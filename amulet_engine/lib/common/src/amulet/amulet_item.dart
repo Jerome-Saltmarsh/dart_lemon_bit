@@ -460,7 +460,7 @@ enum AmuletItem {
   /// see item_type.dart in commons
   final SlotType slotType;
   final int subType;
-  final int? damage;
+  final double? damage;
   final WeaponRange? range;
   final AttackSpeed? attackSpeed;
   final ItemQuality quality;
@@ -500,12 +500,12 @@ enum AmuletItem {
   bool get isArmor => slotType == SlotType.Armor;
 
   int get quantify {
-    var total = 0;
+    var total = 0.0;
     total += damage ?? 0;
     total += maxHealth ?? 0;
     total += maxMagic ?? 0;
     total += range?.quantify ?? 0;
-    return total;
+    return total.toInt();
   }
 
   static AmuletItem? findByName(String name) =>
@@ -669,9 +669,9 @@ enum WeaponClass {
 
 enum WeaponRange {
   Very_Short(melee: 50, ranged: 150),
-  Short(melee: 70, ranged: 175,),
+  Short(melee: 70, ranged: 175),
   Long(melee: 90, ranged: 200),
-  Very_Long(melee: 110, ranged: 2225);
+  Very_Long(melee: 110, ranged: 225);
 
   final double melee;
   final double ranged;

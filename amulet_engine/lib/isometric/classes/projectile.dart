@@ -12,9 +12,9 @@ class Projectile extends Collider {
   var range = 0.0;
   var type = 0; // ProjectileType.dart
   var friendlyFire = false;
-  var damage = 0;
+  var damage = 0.0;
   var ailmentDuration = 0;
-  var ailmentDamage = 0;
+  var ailmentDamage = 0.0;
 
   Position? target;
   Character? parent;

@@ -107,8 +107,8 @@ class AmuletPlayer extends IsometricPlayer with
   @override
   int get weaponType => equippedWeapon?.subType ?? WeaponType.Unarmed;
 
-  @override
-  int get attackDamage => getSkillTypeDamage(skillActive);
+  // @override
+  // double get attackDamage => getSkillTypeDamage(skillActive);
 
   @override
   double get attackRange => getSkillTypeRange(skillActive);
@@ -117,13 +117,13 @@ class AmuletPlayer extends IsometricPlayer with
   int get helmType => equippedHelm?.subType ?? HelmType.None;
 
   @override
-  int get maxHealth {
+  double get maxHealth {
     var total = baseHealth;
     total += equippedWeapon?.maxHealth ?? 0;
     total += equippedHelm?.maxHealth ?? 0;
     total += equippedArmor?.maxHealth ?? 0;
     total += equippedShoes?.maxHealth ?? 0;
-    return total;
+    return total.toDouble();
   }
 
   @override
@@ -1131,65 +1131,12 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(amuletEvent);
   }
 
-  int getSkillTypeDamageMin(SkillType skillType) =>
-      getSkillTypeDamageDivider(skillType, 4);
-
-  int getSkillTypeDamageMax(SkillType skillType) =>
-      getSkillTypeDamageDivider(skillType, 3);
-
-  int get equippedWeaponDamage {
+  double get equippedWeaponDamage {
     final damage = equippedWeapon?.damage;
     if (damage == null){
        return 0;
     }
     return damage;
-  }
-
-  int getSkillTypeDamageDivider(SkillType skillType, int divider){
-
-    if (skillType == SkillType.Strike) {
-      return equippedWeaponDamage;
-    }
-
-    if (const [
-      SkillType.Shoot_Arrow,
-      SkillType.Split_Shot,
-      SkillType.Ice_Arrow,
-      SkillType.Fire_Arrow,
-    ].contains(skillType)) {
-      return equippedWeaponDamage;
-    }
-
-    switch (skillType) {
-      case SkillType.Mighty_Strike:
-        return equippedWeaponDamage * 2;
-      case SkillType.Frostball:
-        return 5;
-      case SkillType.Fireball:
-        return 5;
-      case SkillType.Explode:
-        return 10;
-      default:
-        return 0;
-    }
-  }
-
-  int getSkillTypeDamage(SkillType skillType) {
-    final minDamage = getSkillTypeDamageMin(skillType);
-    final maxDamage = getSkillTypeDamageMax(skillType);
-
-    if (minDamage == maxDamage) {
-      return minDamage;
-    }
-
-    if (minDamage > maxDamage) {
-      throw Exception('min damage > max damage');
-    }
-
-    return randomInt(
-      minDamage,
-      maxDamage,
-    );
   }
 
   double getSkillTypeRange(SkillType skillType) =>
@@ -1384,9 +1331,8 @@ class AmuletPlayer extends IsometricPlayer with
     tryWriteByte(equippedWeaponAttackSpeed?.index);
   }
 
-  double get areaDamage {
-     return getAssignedSkillTypeLevelI(SkillType.Area_Damage);
-  }
+  double get areaDamage =>
+      getAssignedSkillTypeLevelI(SkillType.Area_Damage);
 
   double get chanceOfCriticalDamage {
     final points = getSkillTypeLevelAssigned(SkillType.Critical_Hit);

@@ -34,26 +34,18 @@ enum SkillType {
       casteType: CasteType.Staff,
       magicCost: 4,
       range: 125,
-      damageMin: 3,
-      damageMax: 5,
   ),
   Fireball(
       description: 'Shoot a ball of fire that scorches enemies',
       casteType: CasteType.Staff,
       magicCost: 5,
       range: 150,
-      damageMin: 4,
-      damageMax: 6,
   ),
   Explode(
       description: 'Create a blast of energy',
       casteType: CasteType.Staff,
       magicCost: 7,
       range: 125,
-      damageMin: 8,
-      damageMax: 12,
-      ailmentDamage: 1,
-      ailmentDuration: 1,
   ),
   Freeze_Target(
       description: 'Slows a single enemy',
@@ -87,14 +79,11 @@ enum SkillType {
       description: 'Shoot an arrow dipped in ice to freeze enemies',
       casteType: CasteType.Bow,
       magicCost: 4,
-      ailmentDuration: 4.5,
   ),
   Fire_Arrow(
       description: 'Shoot an arrow that burns on impact',
       casteType: CasteType.Bow,
       magicCost: 4,
-      ailmentDuration: 3.5,
-      ailmentDamage: 1,
   ),
   // CASTE
   Heal(
@@ -160,11 +149,7 @@ enum SkillType {
   final AttackSpeed? casteSpeed;
   /// if null the weapon range is used
   final double? range;
-  final int? damageMin;
-  final int? damageMax;
   final String description;
-  final double? ailmentDuration;
-  final int? ailmentDamage;
 
   static const Max_Skill_Points = AmuletSettings.Max_Skill_Points;
   static const Max_Health_Steal = 1.0;
@@ -175,10 +160,6 @@ enum SkillType {
     required this.magicCost,
     required this.description,
     this.casteSpeed,
-    this.ailmentDuration,
-    this.ailmentDamage,
-    this.damageMin,
-    this.damageMax,
     this.range,
   });
 
@@ -222,6 +203,63 @@ enum SkillType {
 
   static double getMagicSteal(int level) =>
       interpolate(0, SkillType.Max_Magic_Steal, level / Max_Skill_Points);
+
+  static double getDamageExplode(int level){
+    throw Exception();
+  }
+
+  static double getDamageFireball(int level){
+    throw Exception();
+  }
+
+  static double getDamageIceArrow(int level){
+    throw Exception();
+  }
+
+  static double getDamageFireArrow(int level){
+    throw Exception();
+  }
+
+  static double getDamageFrostBall(int level){
+    throw Exception();
+  }
+
+  static int getAilmentDurationIceArrow(int level){
+    throw Exception();
+  }
+
+  static double getAilmentDamageIceArrow(int level){
+    throw Exception();
+  }
+
+  static int getAilmentDurationFireball(int level){
+    throw Exception();
+  }
+
+  static int getAilmentDurationFireArrow(int level){
+    throw Exception();
+  }
+
+  static int getAilmentDurationFrostBall(int level){
+    throw Exception();
+  }
+
+  static double getAilmentDamageFireArrow(int level){
+    throw Exception();
+  }
+
+  static double getAilmentDamageFireball(int level){
+    throw Exception();
+  }
+
+  static double getAilmentDamageFrostBall(int level){
+    throw Exception();
+  }
+
+  static double getPercentageMightySwing(int level){
+    throw Exception();
+  }
+
 
 }
 

@@ -21,13 +21,13 @@ class Character extends Collider {
 
   /// between 0 and 1. 0 means very accurate and 1 is very inaccurate
   var _angle = 0.0;
-  var _health = 1;
-  var _maxHealth = 1;
+  var _health = 1.0;
+  var _maxHealth = 1.0;
   var _goal = CharacterGoal.Idle;
 
   var reviveTimer = -1;
   var conditionColdDuration = 0;
-  var conditionBurningDamage = 0;
+  var conditionBurningDamage = 0.0;
   var conditionBurningDuration = 0;
   var conditionBurningRadius = 50.0;
   var conditionBlindDuration = 0;
@@ -63,7 +63,7 @@ class Character extends Collider {
   var actionFrame = -1;
   var weaponHitForce = 10.0;
   var weaponType = WeaponType.Unarmed;
-  var attackDamage = 1;
+  var attackDamage = 1.0;
   var attackRange = 20.0;
   var characterState = CharacterState.Idle;
   var frame = 0.0;
@@ -107,7 +107,7 @@ class Character extends Collider {
     required this.attackDamage,
     required this.attackRange,
     required this.attackDuration,
-    required int health,
+    required double health,
     String? name,
     this.runSpeed = 1.0,
     this.roamEnabled = false,
@@ -237,11 +237,11 @@ class Character extends Collider {
 
   int get direction => IsometricDirection.fromRadian(_angle);
 
-  int get health => _health;
+  double get health => _health;
 
-  int get maxHealth => _maxHealth;
+  double get maxHealth => _maxHealth;
 
-  set maxHealth(int value){
+  set maxHealth(double value){
     if (value <= 0) return;
     if (_maxHealth == value) {
       return;
@@ -251,7 +251,7 @@ class Character extends Collider {
       health = _maxHealth;
     }
   }
-  set health (int value) => _health = clamp(value, 0, maxHealth);
+  set health (double value) => _health = clamp(value, 0, maxHealth);
 
   set direction(int value) =>
         angle = IsometricDirection.toRadian(value);

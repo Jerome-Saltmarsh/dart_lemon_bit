@@ -135,7 +135,7 @@ enum FiendType {
 
   final int level;
   final int health;
-  final int damage;
+  final double damage;
   final int attackDuration;
   final int characterType;
   /// how many fiends are spawned per mark

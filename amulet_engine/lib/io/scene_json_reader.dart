@@ -49,7 +49,7 @@ GameObject readGameObjectFromJson(Json gameObjectJson){
    final id = gameObjectJson.getInt('id');
    final team = gameObjectJson.getInt('team');
 
-   var health = 0;
+   var health = 0.0;
 
    switch (itemType){
      case ItemType.Object:
@@ -58,7 +58,7 @@ GameObject readGameObjectFromJson(Json gameObjectJson){
          GameObjectType.Crate_Wooden,
          GameObjectType.Barrel,
        ].contains(subType)){
-         health = 1;
+         health = 1.0;
        }
        break;
    }

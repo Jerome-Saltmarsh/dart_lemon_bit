@@ -13,8 +13,8 @@ class GameObject extends Collider {
   /// this is used for health potions
   // var collectable = false;
   var dirty = true;
-  var health = 0;
-  var healthMax = 0;
+  var health = 0.0;
+  var healthMax = 0.0;
   var deactivationTimer = -1;
   String? label;
 

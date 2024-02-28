@@ -174,10 +174,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   void customOnCharacterKilled(Character target, dynamic src) {}
 
   /// @override
-  void customOnCharacterDamageApplied(Character target, dynamic src,
-      int amount) {}
-
-  /// @override
   void customOnPlayerRevived(T player) {}
 
   /// @override
@@ -408,9 +404,9 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required Character character,
     required DamageType damageType,
     required double range,
-    required int damage,
+    required double damage,
     required int ailmentDuration,
-    required int ailmentDamage,
+    required double ailmentDamage,
     required double maxHitRadian,
     required double areaDamage,
   }){
@@ -525,7 +521,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         ) continue;
 
         final finalRate = areaDamage * otherHitRate;
-        final finalDamage = (damage * finalRate).toInt();
+        final finalDamage = damage * finalRate;
 
         if (finalDamage <= 0) continue;
 
@@ -536,7 +532,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
           damage: finalDamage,
           damageType: damageType,
           ailmentDuration: (ailmentDuration * finalRate).toInt(),
-          ailmentDamage: (ailmentDamage * finalRate).toInt(),
+          ailmentDamage: ailmentDamage * finalRate,
         );
       }
     }
@@ -818,9 +814,9 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required double z,
     required Character srcCharacter,
     required double radius,
-    required int damage,
+    required double damage,
     required int ailmentDuration,
-    required int ailmentDamage,
+    required double ailmentDamage,
   }) {
     if (!scene.inboundsXYZ(x, y, z)) return;
     dispatchGameEvent(GameEvent.Explosion, x, y, z);
@@ -945,15 +941,15 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   void applyDamageToCharacter({
     required Character src,
     required Character target,
-    required int amount,
+    required double amount,
     required DamageType damageType,
     required int ailmentDuration,
-    required int ailmentDamage,
+    required double ailmentDamage,
   }) {
     if (target.dead || target.invincible) return;
 
     if (characterResistsDamageType(target, damageType)) {
-      amount = amount ~/ 2;
+      amount = amount / 2;
     } else {
       if (ailmentDuration > 0){
         if (damageType == DamageType.Ice) {
@@ -986,7 +982,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       setCharacterTarget(target, src);
     }
 
-    customOnCharacterDamageApplied(target, src, damage);
     target.setCharacterStateHurt();
     dispatchGameEventCharacterHurt(target);
   }
@@ -994,7 +989,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   void onDamageApplied({
     required Character src,
     required Character target,
-    required int amount,
+    required double amount,
   }) {
 
   }
@@ -1393,10 +1388,10 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   void applyHit({
     required Character srcCharacter,
     required Collider target,
-    required int damage,
+    required double damage,
     required DamageType damageType,
     required int ailmentDuration,
-    required int ailmentDamage,
+    required double ailmentDamage,
     double? angle,
     double force = 0,
     bool friendlyFire = false,
@@ -1599,7 +1594,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   void spawnProjectileArrow({
     required Character src,
-    required int damage,
+    required double damage,
     required double range,
     Position? target,
     double? angle,
@@ -1620,10 +1615,10 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   void spawnProjectileIceArrow({
     required Character src,
-    required int damage,
+    required double damage,
     required double range,
     required int ailmentDuration,
-    required int ailmentDamage,
+    required double ailmentDamage,
     Position? target,
     double? angle,
 
@@ -1644,10 +1639,10 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   void spawnProjectileFireArrow({
     required Character src,
-    required int damage,
+    required double damage,
     required double range,
     required int ailmentDuration,
-    required int ailmentDamage,
+    required double ailmentDamage,
     Position? target,
     double? angle,
   }) {
@@ -1669,9 +1664,9 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required Character src,
     required double range,
     required int projectileType,
-    required int damage,
+    required double damage,
     required int ailmentDuration,
-    required int ailmentDamage,
+    required double ailmentDamage,
     double? angle = 0,
     Position? target,
   }) {
