@@ -1168,6 +1168,13 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     return 0;
   }
 
+  double getCharacterMagicSteal(Character character){
+    if (character is AmuletPlayer) {
+      return character.magicSteal;
+    }
+    return 0;
+  }
+
   @override
   void onDamageApplied({
     required Character src,
@@ -1181,7 +1188,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       dispatchGameEventPosition(GameEvent.Health_Regained, src);
     }
 
-    final magicSteal = getCharacterHealthSteal(src);
+    final magicSteal = getCharacterMagicSteal(src);
     if (magicSteal > 0) {
       src.magic += (amount * healthSteal).toInt();
       dispatchGameEventPosition(GameEvent.Magic_Regained, src);

@@ -1236,19 +1236,6 @@ class AmuletPlayer extends IsometricPlayer with
        null => null
     };
 
-  // void checkActiveSlotType() {
-  //    final value = activeSlotType;
-  //    if (value == null) return;
-  //    final amuletItem = getEquippedSlotType(activeSlotType);
-  //    if (amuletItem == null){
-  //      clearActiveSlotType();
-  //    }
-  // }
-
-  // void clearActiveSlotType() {
-  //   selectSlotType(null);
-  // }
-
   int getSkillTypePerformDuration(SkillType skillType) =>
       skillType.casteSpeed?.duration ??
       this.equippedWeaponAttackSpeed?.duration ??

@@ -3,17 +3,9 @@ import 'package:lemon_math/src.dart';
 import 'amulet_item.dart';
 import 'amulet_settings.dart';
 
-enum SkillClass {
-  Sword,
-  Bow,
-  Staff,
-  Caste,
-}
-
 enum SkillType {
   None(
       casteType: CasteType.Caste,
-      magicCost: 0,
       range: 0,
       casteSpeed: AttackSpeed.Very_Slow,
   ),
@@ -86,35 +78,27 @@ enum SkillType {
   ),
   Attack_Speed(
     casteType: CasteType.Passive,
-    magicCost: 0,
   ),
   Health_Steal(
     casteType: CasteType.Passive,
-    magicCost: 0,
   ),
   Magic_Steal(
     casteType: CasteType.Passive,
-    magicCost: 0,
   ),
   Critical_Hit(
     casteType: CasteType.Passive,
-    magicCost: 0,
   ),
   Magic_Regen(
     casteType: CasteType.Passive,
-    magicCost: 0,
   ),
   Health_Regen(
     casteType: CasteType.Passive,
-    magicCost: 0,
   ),
   Area_Damage(
     casteType: CasteType.Passive,
-    magicCost: 0,
   ),
   Run_Speed(
     casteType: CasteType.Passive,
-    magicCost: 0,
   ),
   ;
 
@@ -134,7 +118,7 @@ enum SkillType {
 
   const SkillType({
     required this.casteType,
-    required this.magicCost,
+    this.magicCost = 0,
     this.casteSpeed,
     this.range,
   });
