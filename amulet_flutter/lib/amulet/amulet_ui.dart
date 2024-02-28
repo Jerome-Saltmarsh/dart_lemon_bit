@@ -1270,12 +1270,16 @@ class AmuletUI {
   Widget buildMouseOverHint({
     required Widget child,
     required Widget panel,
+    Function? onEnter,
+    Function? onExit,
     double? top,
     double? left,
     double? bottom,
     double? right,
   }) =>
       MouseOver(
+        onEnter: onEnter,
+          onExit: onExit,
           builder: (mouseOver) => Stack(
                 clipBehavior: Clip.none,
                 fit: StackFit.passthrough,
@@ -1360,35 +1364,35 @@ class AmuletUI {
        return buildWatch(watchLevel, (level) {
          final unlocked = level > 0;
 
-         final info = Positioned(
-           top: -70,
-           right: Container_Size + 5,
-           child: buildPanelSkillTypeInformation(skillType),
-         );
+         // final info = Positioned(
+         //   top: -70,
+         //   right: Container_Size + 5,
+         //   child: buildPanelSkillTypeInformation(skillType),
+         // );
 
-         var showInfo = false;
-
-         Function? refreshFunction;
-
-         final b = buildState(builder: (context, rebuild){
-           refreshFunction = rebuild;
-           if (showInfo){
-             return info;
-           }
-           return nothing;
-         });
+         // var showInfo = false;
+         //
+         // Function? refreshFunction;
+         //
+         // final b = buildState(builder: (context, rebuild){
+         //   refreshFunction = rebuild;
+         //   if (showInfo){
+         //     return info;
+         //   }
+         //   return nothing;
+         // });
 
          final child = onPressed(
-           onEnter: () {
-             showInfo = true;
-             refreshFunction?.call();
-             amulet.mouseOverSkillType = skillType;
-           },
-           onExit: (){
-             showInfo = false;
-             refreshFunction?.call();
-             amulet.mouseOverSkillType = null;
-           },
+           // onEnter: () {
+           //   showInfo = true;
+           //   refreshFunction?.call();
+           //   amulet.mouseOverSkillType = skillType;
+           // },
+           // onExit: (){
+           //   showInfo = false;
+           //   refreshFunction?.call();
+           //   amulet.mouseOverSkillType = null;
+           // },
            action: unlocked ? () => amulet.toggleSkillType(skillType) : null,
            child: Container(
              width: Container_Size,
@@ -1403,7 +1407,7 @@ class AmuletUI {
                    height: Container_Size,
                    color: unlocked ? Palette.brown_3 : Colors.transparent,
                  ),
-                 b,
+                 // b,
                  Positioned(
                    child: Container(
                      width: Container_Size,
@@ -1427,15 +1431,29 @@ class AmuletUI {
            ),
          );
 
+         final control =  buildMouseOverHint(
+          onEnter: () {
+            amulet.mouseOverSkillType = skillType;
+          },
+          onExit: () {
+            amulet.mouseOverSkillType = null;
+          },
+          child: child,
+          panel: buildPanelSkillTypeInformation(skillType),
+          top: -70,
+          right: Container_Size + 5,
+        );
+
          if (unlocked){
            return Draggable(
              data: skillType,
              feedback: buildIconSkillType(skillType, dstX: 25, dstY: 25),
-             child: child,
+             child: control,
            );
          }
 
-         return child;
+         return control;
+
        });
      });
 
