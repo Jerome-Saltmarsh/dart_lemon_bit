@@ -298,10 +298,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required SkillType skillType,
   }){
 
-    final level = getCharacterSkillTypeLevel(
-      character: character,
-      skillType: skillType,
-    );
+    final level = getCharacterSkillTypeLevel(character, skillType);
 
     if (level <= 0 && !weaponSkillTypes.contains(skillType)){
       throw Exception();
@@ -1283,17 +1280,29 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     );
   }
 
-  int getCharacterSkillTypeLevel({
-    required Character character,
-    required SkillType skillType,
-  }) {
+  int getCharacterSkillTypeLevel(Character character, SkillType skillType){
     if (character is AmuletPlayer){
-      return character.getSkillTypeLevel(skillType);
+      return character.getSkillTypeLevelAssigned(skillType);
     }
     if (character is AmuletFiend){
-      return character.getSkillTypeLevel(skillType);
+      return character.fiendType.skillTypes[skillType] ?? 0;
     }
-    throw Exception('amuletGame.getCharacterSkillTypeLevel()');
+    return 0;
+  }
+
+  @override
+  double getCharacterDamageTypeResistance(Character character, DamageType damageType) {
+    switch (damageType){
+      case DamageType.Melee:
+        final level = getCharacterSkillTypeLevel(character, SkillType.Resist_Melee);
+        return SkillType.getPercentageDamageResistanceMelee(level);
+      case DamageType.Pierce:
+        throw Exception();
+      case DamageType.Fire:
+        throw Exception();
+      case DamageType.Ice:
+        throw Exception();
+    }
   }
 }
 

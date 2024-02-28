@@ -114,17 +114,18 @@ class AmuletUI {
               left: 8,
               child: buildHudBottomLeft(),
           ),
-          Positioned(
-              bottom: 100,
-              child: buildWatchVisible(
-                  amulet.windowVisiblePlayerSkills,
-                  buildWindowPlayerSkills(),
-              )
-          ),
+
           Positioned(
             bottom: 8,
             child: buildWindowPlayerSkillSlots(),
           ),
+      Positioned(
+          bottom: 100,
+          child: buildWatchVisible(
+            amulet.windowVisiblePlayerSkills,
+            buildWindowPlayerSkills(),
+          )
+      ),
           buildPositionedMessage(),
           buildWindowQuest(),
           buildOverlayScreenColor(),
@@ -502,11 +503,7 @@ class AmuletUI {
     final fiendType = Container(
       margin: const EdgeInsets.symmetric(horizontal: 5),
       child: buildWatch(amulet.aimTargetFiendType, (fiendType) {
-        final resists = fiendType?.resists;
-        if (resists == null){
-          return nothing;
-        }
-        return buildText('resists ${resists.name}', size: 15, color: Colors.white70);
+        return nothing;
       }),
     );
 
@@ -1208,7 +1205,7 @@ class AmuletUI {
   Widget buildWindowPlayerSkills() => buildWindowBorder(
     child: GSContainer(
           width: 314,
-          height: amulet.engine.screen.height - 200,
+          height: amulet.engine.screen.height - 180,
           child: Column(
             children: [
               Row(

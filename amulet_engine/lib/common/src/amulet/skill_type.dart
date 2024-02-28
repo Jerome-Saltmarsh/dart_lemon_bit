@@ -100,6 +100,9 @@ enum SkillType {
   Run_Speed(
     casteType: CasteType.Passive,
   ),
+  Resist_Melee(
+    casteType: CasteType.Passive,
+  ),
   ;
 
 
@@ -115,6 +118,7 @@ enum SkillType {
   static const Max_Magic_Steal = 0.5;
   static const Max_Critical_Hit = 0.5;
   static const Max_Might_Swing = 3.0;
+  static const Max_Resist = 0.5;
 
   const SkillType({
     required this.casteType,
@@ -224,6 +228,11 @@ enum SkillType {
   static double getPercentageCriticalHit(int level){
     final i = level / Max_Skill_Points;
     return interpolate(0, Max_Critical_Hit, i);
+  }
+
+  static double getPercentageDamageResistanceMelee(int level){
+    final i = level / Max_Skill_Points;
+    return interpolate(0, Max_Resist, i);
   }
 }
 

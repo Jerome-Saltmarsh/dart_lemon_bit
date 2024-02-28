@@ -4,6 +4,7 @@ import 'package:amulet_engine/isometric/consts/frames_per_second.dart';
 import 'package:amulet_engine/isometric/consts/physics.dart';
 import 'package:amulet_engine/isometric/enums/damage_type.dart';
 import 'package:amulet_engine/isometric/functions/copy_gameobjects.dart';
+import 'package:lemon_lang/src.dart';
 import 'package:lemon_math/src.dart';
 
 import '../../common/src.dart';
@@ -938,6 +939,10 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
   }
 
+  double getCharacterDamageTypeResistance(Character character, DamageType damageType){
+     return 0;
+  }
+
   void applyDamageToCharacter({
     required Character src,
     required Character target,
@@ -948,22 +953,24 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   }) {
     if (target.dead || target.invincible) return;
 
-    if (characterResistsDamageType(target, damageType)) {
-      amount = amount / 2;
-    } else {
-      if (ailmentDuration > 0){
-        if (damageType == DamageType.Ice) {
-          target.conditionColdDuration += ailmentDuration;
-        }
-        if (damageType == DamageType.Fire) {
-          target.conditionBurningDuration += ailmentDuration;
-          target.ailmentBurningSrc = src;
-          target.conditionBurningDamage = ailmentDamage;
-        }
+    final resistance = getCharacterDamageTypeResistance(target, damageType).clamp01();
+    final resistanceInverted = 1.0 - resistance;
+    final resistedAmount = amount * resistanceInverted;
+    final resistedAilmentDuration = (ailmentDuration * resistanceInverted).toInt();
+
+    if (resistedAilmentDuration > 0){
+      if (damageType == DamageType.Ice) {
+        target.conditionColdDuration += resistedAilmentDuration;
+      }
+      if (damageType == DamageType.Fire) {
+        target.conditionBurningDuration += resistedAilmentDuration;
+        target.ailmentBurningSrc = src;
+        target.conditionBurningDamage = ailmentDamage;
       }
     }
 
-    final damage = min(amount, target.health);
+
+    final damage = min(resistedAmount, target.health);
     target.health -= damage;
     onDamageApplied(
       src: src,
@@ -1397,7 +1404,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     bool friendlyFire = false,
   }) {
     if (!target.hitable) return;
-    // if (!target.active) return;
 
     if (force > 0) {
       target.applyForce(

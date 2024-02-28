@@ -1,5 +1,4 @@
 
-import 'package:amulet_engine/isometric/enums/damage_type.dart';
 import 'package:amulet_engine/src.dart';
 import 'package:lemon_lang/src.dart';
 
@@ -23,6 +22,9 @@ enum FiendType {
     chanceOfDropPotion: 0.15,
     skillType: SkillType.Strike,
     skillLevel: 1,
+    skillTypes: {
+
+    }
   ),
   Wolf(
     level: 2,
@@ -37,7 +39,6 @@ enum FiendType {
     clearTargetOnPerformAction: false,
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 40,
-    resists: DamageType.Ice,
     chanceOfDropCommon: 0.25,
     chanceOfDropRare: 0.05,
     chanceOfDropLegendary: 0.025,
@@ -45,6 +46,9 @@ enum FiendType {
     skillType: SkillType.Strike,
     skillTypeB: SkillType.Blind,
     skillLevel: 1,
+      skillTypes: {
+        SkillType.Resist_Melee: 2,
+      }
   ),
   Skeleton(
     level: 3,
@@ -59,13 +63,15 @@ enum FiendType {
     clearTargetOnPerformAction: false,
     postAttackPauseDurationMin: 30,
     postAttackPauseDurationMax: 80,
-    resists: DamageType.Fire,
     chanceOfDropCommon: 0.25,
     chanceOfDropRare: 0.05,
     chanceOfDropLegendary: 0.025,
     chanceOfDropPotion: 0.15,
     skillType: SkillType.Shoot_Arrow,
     skillLevel: 1,
+      skillTypes: {
+
+      }
   ),
   Zombie(
     level: 4,
@@ -81,7 +87,6 @@ enum FiendType {
     clearTargetOnPerformAction: true,
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 60,
-    resists: DamageType.Melee,
     chanceOfDropCommon: 0.25,
     chanceOfDropRare: 0.05,
     chanceOfDropLegendary: 0.025,
@@ -89,6 +94,9 @@ enum FiendType {
     skillType: SkillType.Strike,
     skillLevel: 1,
     healthSteal: 0.1,
+      skillTypes: {
+
+      }
   ),
   Goblin_Armoured(
     level: 5,
@@ -103,13 +111,16 @@ enum FiendType {
     clearTargetOnPerformAction: true,
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 50,
-    resists: DamageType.Melee,
     chanceOfDropCommon: 0.25,
     chanceOfDropRare: 0.05,
     chanceOfDropLegendary: 0.025,
     chanceOfDropPotion: 0.15,
     skillType: SkillType.Strike,
     skillLevel: 1,
+    chanceOfCriticalDamage: 3,
+      skillTypes: {
+
+      }
   ),
   Gargoyle(
     level: 6,
@@ -124,13 +135,15 @@ enum FiendType {
     clearTargetOnPerformAction: false,
     postAttackPauseDurationMin: 30,
     postAttackPauseDurationMax: 100,
-    resists: DamageType.Pierce,
     chanceOfDropCommon: 0.25,
     chanceOfDropRare: 0.05,
     chanceOfDropLegendary: 0.025,
     chanceOfDropPotion: 0.15,
     skillType: SkillType.Fireball,
     skillLevel: 1,
+      skillTypes: {
+
+      }
   );
 
   final int level;
@@ -151,12 +164,12 @@ enum FiendType {
   final double chanceOfDropRare;
   final double chanceOfDropCommon;
   final double chanceOfDropPotion;
-  final DamageType? resists;
   final SkillType skillType;
   final SkillType? skillTypeB;
   final double areaDamage;
   final double healthSteal;
   final double chanceOfCriticalDamage;
+  final Map<SkillType, int> skillTypes;
 
   const FiendType({
     required this.health,
@@ -177,9 +190,9 @@ enum FiendType {
     required this.chanceOfDropPotion,
     required this.skillType,
     required this.skillLevel,
+    required this.skillTypes,
     this.chanceOfCriticalDamage = 0,
     this.skillTypeB,
-    this.resists,
     this.areaDamage = 0,
     this.healthSteal = 0,
   });
@@ -189,9 +202,6 @@ enum FiendType {
     total += health;
     total += ((damage / attackDuration) * 45).toInt();
     total += weaponRange ~/ 30;
-    if (resists != null) {
-      total += 3;
-    }
     return total;
   }
 

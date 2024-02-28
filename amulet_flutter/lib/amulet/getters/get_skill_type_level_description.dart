@@ -15,6 +15,8 @@ String? getSkillTypeLevelDescription(SkillType skillType, int level) {
       return SkillType.getPercentageCriticalHit(level).toStringPercentage;
     case SkillType.Mighty_Strike:
       return 'damage +${SkillType.getPercentageMightySwing(level).toStringPercentage}';
+    case SkillType.Resist_Melee:
+      return '${SkillType.getPercentageDamageResistanceMelee(level).toStringPercentage}';
     default:
       return '';
   }
