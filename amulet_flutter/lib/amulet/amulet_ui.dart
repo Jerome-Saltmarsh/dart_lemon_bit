@@ -1,6 +1,7 @@
 
 import 'package:amulet_engine/src.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
+import 'package:amulet_flutter/amulet/amulet_keys.dart';
 import 'package:amulet_flutter/amulet/src.dart';
 import 'package:amulet_flutter/amulet/ui/enums/quantify_tab.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
@@ -1212,7 +1213,10 @@ class AmuletUI {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Tooltip(message: 'Skills', child: buildIconSkills()),
+                  buildHint(
+                    child: buildIconSkills(),
+                    text: 'Skills (${amulet.amuletKeys.toggleWindowSkills.name.toUpperCase()})',
+                  ),
                   onPressed(
                     action: filterSkillTypes.toggle,
                     child: Row(
@@ -1248,7 +1252,21 @@ class AmuletUI {
           ),
         ),
   );
-  
+
+  Widget buildHint({
+    required Widget child,
+    required String text,
+  }) =>
+      buildMouseOverHint(
+        child: child,
+        panel: buildBorder(
+            color: Colors.white70,
+            width: 2,
+            child: GSContainer(child: buildText(text))),
+        top: -60,
+        right: -50,
+      );
+
   Widget buildMouseOverHint({
     required Widget child,
     required Widget panel,
@@ -1283,7 +1301,7 @@ class AmuletUI {
             buildMouseOverHint(
                 child: buildIconCasteType(casteType),
                 panel: buildBorder(
-                  width: 3,
+                  width: 2,
                   color: Colors.white70,
                   child: GSContainer(child: Row(
                     children: [
