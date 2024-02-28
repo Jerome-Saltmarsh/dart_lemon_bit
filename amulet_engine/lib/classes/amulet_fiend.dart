@@ -52,11 +52,7 @@ class AmuletFiend extends Character {
   double get maxHealth => fiendType.health.toDouble();
 
   @override
-  double get runSpeed {
-    final level = getSkillTypeLevel(SkillType.Run_Speed);
-    final bonus = super.runSpeed * SkillType.getRunSpeed(level);
-    return super.runSpeed + bonus;
-  }
+  double get runSpeed => fiendType.runSpeed;
 
   @override
   bool get collidable => alive;

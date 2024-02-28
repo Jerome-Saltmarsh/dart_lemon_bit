@@ -1204,7 +1204,7 @@ class AmuletUI {
 
   Widget buildWindowPlayerSkills() => buildWindowBorder(
     child: GSContainer(
-          width: 314,
+          width: 270,
           height: amulet.engine.screen.height - 180,
           child: Column(
             children: [
@@ -1240,8 +1240,8 @@ class AmuletUI {
                     width8,
                     buildColumnCasteType(CasteType.Staff),
                     width8,
-                    buildColumnCasteType(CasteType.Caste),
-                    width8,
+                    // buildColumnCasteType(CasteType.Caste),
+                    // width8,
                     buildColumnCasteType(CasteType.Passive),
                   ],
                 ),
@@ -1250,6 +1250,31 @@ class AmuletUI {
           ),
         ),
   );
+  
+  Widget buildMouseOverHint({
+    required Widget child,
+    required Widget panel,
+    double? top,
+    double? left,
+    double? bottom,
+    double? right,
+  }) =>
+      MouseOver(
+          builder: (mouseOver) => Stack(
+                clipBehavior: Clip.none,
+                fit: StackFit.passthrough,
+                children: [
+                  child,
+                  if (mouseOver)
+                    Positioned(
+                      top: top,
+                      left: left,
+                      bottom: bottom,
+                      right: right,
+                      child: panel,
+                    ),
+                ],
+              ));
 
   Widget buildColumnCasteType(CasteType casteType) =>
       Container(
@@ -1257,7 +1282,22 @@ class AmuletUI {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            buildIconCasteType(casteType),
+            buildMouseOverHint(
+                child: buildIconCasteType(casteType),
+                panel: buildBorder(
+                  width: 3,
+                  color: Colors.white70,
+                  child: GSContainer(child: Row(
+                    children: [
+                      buildText(casteType.name),
+                      width8,
+                      buildText('Skills'),
+                    ],
+                  )),
+                ),
+                right: -40,
+                top: -70,
+            ),
             height32,
             Column(
                 children: SkillType.values
@@ -1269,7 +1309,7 @@ class AmuletUI {
                         ].contains(element) &&
                         element.casteType == casteType)
                     .map((skillType) {
-              final value = buildWindowPlayerSkillsSkillType(skillType);
+              final value = buildWindowPlayerSkillsItem(skillType);
               final watchLevel = amulet.playerSkillTypeLevels[skillType] ??
                   (throw Exception());
               ;
@@ -1295,7 +1335,7 @@ class AmuletUI {
 
   static const Container_Size = 40.0;
 
-  Widget buildWindowPlayerSkillsSkillType(SkillType skillType){
+  Widget buildWindowPlayerSkillsItem(SkillType skillType){
 
     final watchAssigned = amulet.playerSkillTypeSlotAssigned[skillType] ?? (throw Exception());
     final watchLevel = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());
@@ -1307,90 +1347,7 @@ class AmuletUI {
          final info = Positioned(
            top: -70,
            right: Container_Size + 5,
-           child: buildBorder(
-             color: Colors.white70,
-             width: 2,
-             child: GSContainer(
-                 constraints: BoxConstraints(
-                   maxWidth: 200,
-                 ),
-                 child: Column(
-                   crossAxisAlignment: CrossAxisAlignment.start,
-                   children: [
-                     Row(
-                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                       children: [
-                         Container(
-                           color: Colors.black12,
-                           padding: const EdgeInsets.all(8),
-                           child: Row(
-                             crossAxisAlignment: CrossAxisAlignment.center,
-                             children: [
-                               buildIconSkillType(skillType),
-                               width4,
-                               Container(
-                                   // color: Colors.black26,
-                                   // padding: const EdgeInsets.all(4),
-                                   child: buildText(
-                                       skillType.name.clean,
-                                       underline: true,
-                                       color: Colors.white70,
-                                   )
-                               ),
-                               // buildTextValue(skillType.name.clean),
-                             ],
-                           ),
-                         ),
-                       ],
-                     ),
-                     height8,
-                     buildTextValue(getSkillTypeDescription(skillType)),
-                     height8,
-                     if (level > 0)
-                       buildText('level $level - current'),
-                     if (level > 0)
-                     Container(
-                         margin: const EdgeInsets.only(bottom: 8),
-                         child: buildText(
-                             getSkillTypeLevelDescription(skillType, level),
-                             color: getSkillTypeLevelDescriptionColor(skillType),
-                         )),
-                     if (level < 20) // max skill level
-                       buildText('level ${level + 1} - next'),
-                     if (level < 20) // max skill level
-                     buildText(getSkillTypeLevelDescription(skillType, level + 1), color: getSkillTypeLevelDescriptionColor(skillType)),
-
-                     if (skillType.isPassive)
-                       Container(
-                         margin: const EdgeInsets.only(top: 8),
-                         child: Row(
-                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                           children: [
-                             nothing,
-                             Container(
-                                 color: Colors.white10,
-                                 padding: const EdgeInsets.all(4),
-                                 child: buildText('Passive', color: Colors.white70)),
-                           ],
-                         ),
-                       ),
-                     if (skillType.magicCost > 0)
-                       Row(
-                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                         children: [
-                           nothing,
-                           Row(
-                             children: [
-                               iconMagic,
-                               width4,
-                               buildText(skillType.magicCost, color: Palette.red_1),
-                             ],
-                           ),
-                         ],
-                       ),
-                   ],
-                 )),
-           ),
+           child: buildPanelSkillTypeInformation(skillType, level),
          );
 
          var showInfo = false;
@@ -1467,6 +1424,91 @@ class AmuletUI {
      });
 
   }
+
+  Widget buildPanelSkillTypeInformation(SkillType skillType, int level) =>
+      buildBorder(
+           color: Colors.white70,
+           width: 2,
+           child: GSContainer(
+               constraints: BoxConstraints(
+                 maxWidth: 200,
+               ),
+               child: Column(
+                 crossAxisAlignment: CrossAxisAlignment.start,
+                 children: [
+                   Row(
+                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                     children: [
+                       Container(
+                         color: Colors.black12,
+                         padding: const EdgeInsets.all(8),
+                         child: Row(
+                           crossAxisAlignment: CrossAxisAlignment.center,
+                           children: [
+                             buildIconSkillType(skillType),
+                             width4,
+                             Container(
+                                 child: buildText(
+                                     skillType.name.clean,
+                                     underline: true,
+                                     color: Colors.white70,
+                                 )
+                             ),
+                           ],
+                         ),
+                       ),
+                     ],
+                   ),
+                   height8,
+                   buildTextValue(getSkillTypeDescription(skillType)),
+                   height8,
+                   if (level > 0)
+                     buildText('level $level - current'),
+                   if (level > 0)
+                   Container(
+                       margin: const EdgeInsets.only(bottom: 8),
+                       child: buildText(
+                           getSkillTypeLevelDescription(skillType, level),
+                           color: getSkillTypeLevelDescriptionColor(skillType),
+                       )),
+                   if (level < 20) // max skill level
+                     buildText('level ${level + 1} - next'),
+                   if (level < 20) // max skill level
+                   buildText(getSkillTypeLevelDescription(skillType, level + 1), color: getSkillTypeLevelDescriptionColor(skillType)),
+                   Container(
+                     margin: const EdgeInsets.only(top: 8),
+                     child: Row(
+                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                       children: [
+                         nothing,
+                         // buildIconCasteType(skillType.casteType),
+                         Container(
+                             color: Colors.white10,
+                             padding: const EdgeInsets.all(4),
+                             child: buildText(skillType.casteType.name, color: Colors.white70)),
+                       ],
+                     ),
+                   ),
+                   if (skillType.magicCost > 0)
+                     Row(
+                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                       children: [
+                         buildIconCasteType(skillType.casteType),
+                         if (skillType.magicCost > 0)
+                         Row(
+                           children: [
+                             iconMagic,
+                             width4,
+                             buildText(skillType.magicCost, color: Palette.red_1),
+                           ],
+                         ),
+                         if (skillType.magicCost <= 0)
+                           nothing,
+                       ],
+                     ),
+                 ],
+               )),
+         );
 
   Widget buildContainerSkillTypeAssigned(
       SkillType skillType,

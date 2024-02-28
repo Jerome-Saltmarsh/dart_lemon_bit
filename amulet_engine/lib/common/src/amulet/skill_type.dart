@@ -51,7 +51,7 @@ enum SkillType {
   ),
   // CASTE
   Heal(
-      casteType: CasteType.Caste,
+      casteType: CasteType.Staff,
       magicCost: 4,
       casteSpeed: AttackSpeed.Fast,
       range: 0,
