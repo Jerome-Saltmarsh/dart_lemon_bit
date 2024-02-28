@@ -2062,6 +2062,14 @@ Color getSkillTypeLevelDescriptionColor(SkillType skillType){
    switch (skillType){
      case SkillType.Heal:
        return AmuletColors.Health;
+     case SkillType.Magic_Regen:
+       return AmuletColors.Magic;
+     case SkillType.Magic_Steal:
+       return AmuletColors.Magic;
+     case SkillType.Health_Regen:
+       return AmuletColors.Health;
+     case SkillType.Health_Steal:
+       return AmuletColors.Health;
      default:
        return Colors.orange;
    }
