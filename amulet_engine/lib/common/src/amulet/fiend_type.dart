@@ -156,6 +156,7 @@ enum FiendType {
   final SkillType? skillTypeB;
   final double areaDamage;
   final double healthSteal;
+  final double chanceOfCriticalDamage;
 
   const FiendType({
     required this.health,
@@ -176,6 +177,7 @@ enum FiendType {
     required this.chanceOfDropPotion,
     required this.skillType,
     required this.skillLevel,
+    this.chanceOfCriticalDamage = 0,
     this.skillTypeB,
     this.resists,
     this.areaDamage = 0,

@@ -40,6 +40,7 @@ enum AmuletItem {
       skills: {
         SkillType.Mighty_Strike: 1,
         SkillType.Area_Damage: 14,
+        SkillType.Critical_Hit: 3,
       }
   ),
   Weapon_Sword_Giant(
@@ -163,6 +164,7 @@ enum AmuletItem {
         SkillType.Mighty_Strike: 1,
         SkillType.Heal: 2,
         SkillType.Attack_Speed: 10,
+        SkillType.Critical_Hit: 1,
       }
   ),
   Helm_Steel_Cap(

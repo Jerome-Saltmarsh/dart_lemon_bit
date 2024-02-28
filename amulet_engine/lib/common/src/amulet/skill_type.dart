@@ -1,4 +1,3 @@
-import 'package:lemon_lang/src.dart';
 import 'package:lemon_math/src.dart';
 
 import 'amulet_item.dart';
@@ -151,9 +150,10 @@ enum SkillType {
   final double? range;
   final String description;
 
-  static const Max_Skill_Points = AmuletSettings.Max_Skill_Points;
+  static const Max_Skill_Points = 20;
   static const Max_Health_Steal = 0.5;
   static const Max_Magic_Steal = 0.5;
+  static const Max_Critical_Hit = 0.5;
 
   const SkillType({
     required this.casteType,
@@ -192,7 +192,7 @@ enum SkillType {
     final value = interpolate(
       AmuletSettings.Min_Perform_Velocity,
       AmuletSettings.Max_Perform_Velocity,
-      level / AmuletSettings.Max_Skill_Points,
+      level / SkillType.Max_Skill_Points,
     );
 
     return getPercentageDiff(AmuletSettings.Min_Perform_Velocity, value);
@@ -260,6 +260,9 @@ enum SkillType {
     throw Exception();
   }
 
-
+  static double getPercentageCriticalHit(int level){
+    final i = level / Max_Skill_Points;
+    return interpolate(0, Max_Critical_Hit, i);
+  }
 }
 

@@ -416,10 +416,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     super.characterGoalAttackTarget(character);
   }
 
-
-
-
-
   @override
   void applyHit({
     required Character srcCharacter,
@@ -440,11 +436,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
 
     var damageMultiplier = 1.0;
-    if (
-      srcCharacter is AmuletPlayer &&
-      randomChance(srcCharacter.chanceOfCriticalDamage)
-    ) {
+    final chanceOfCritical = getCharacterChanceOfCriticalHit(srcCharacter);
+    if (randomChance(chanceOfCritical)) {
       damageMultiplier = AmuletSettings.Ratio_Critical_Hit_Damage;
+      // TODO Dispatch critical hit
     }
     super.applyHit(
         srcCharacter: srcCharacter,
@@ -456,6 +451,16 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         angle: angle,
         friendlyFire: friendlyFire,
     );
+  }
+
+  double getCharacterChanceOfCriticalHit(Character character){
+     if (character is AmuletPlayer) {
+       return character.chanceOfCriticalDamage;
+     }
+     if (character is AmuletFiend){
+       return character.fiendType.chanceOfCriticalDamage;
+     }
+     return 0;
   }
 
   void characterPerformSkillTypeStrike(Character character) {
@@ -477,7 +482,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   double getCharacterAssignedSkillLevelI(Character character, SkillType skillType) {
     final level = getCharacterAssignedSkillLevel(character, skillType);
-    return interpolate(0, 1.0, level / AmuletSettings.Max_Skill_Points);
+    return interpolate(0, 1.0, level / SkillType.Max_Skill_Points);
 }
 
   int getCharacterAssignedSkillLevel(Character character, SkillType skillType){

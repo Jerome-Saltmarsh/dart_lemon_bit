@@ -2071,6 +2071,8 @@ String? getLevelDescription(SkillType skillType, int level) {
       return SkillType.getHealthSteal(level).toStringPercentage;
     case SkillType.Magic_Steal:
       return SkillType.getMagicSteal(level).toStringPercentage;
+    case SkillType.Critical_Hit:
+      return SkillType.getPercentageCriticalHit(level).toStringPercentage;
     default:
       return '';
   }

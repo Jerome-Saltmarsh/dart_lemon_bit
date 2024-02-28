@@ -183,7 +183,7 @@ class AmuletPlayer extends IsometricPlayer with
     }
 
     final level = getSkillTypeLevel(SkillType.Run_Speed);
-    final i = level / AmuletSettings.Max_Skill_Points;
+    final i = level / SkillType.Max_Skill_Points;
     return interpolate(baseRunSpeed, AmuletSettings.Max_Run_Speed, i);
   }
 
@@ -1181,7 +1181,7 @@ class AmuletPlayer extends IsometricPlayer with
 
   /// returns a number between 0.0 and 1.0
   double getAssignedSkillTypeLevelI(SkillType skillType) =>
-      getSkillTypeLevelAssigned(skillType) / AmuletSettings.Max_Skill_Points;
+      getSkillTypeLevelAssigned(skillType) / SkillType.Max_Skill_Points;
 
   int getSkillTypeLevel(SkillType skillType){
      var total = 0;
@@ -1189,7 +1189,7 @@ class AmuletPlayer extends IsometricPlayer with
      total += equippedHelm?.skills[skillType] ?? 0;
      total += equippedArmor?.skills[skillType] ?? 0;
      total += equippedShoes?.skills[skillType] ?? 0;
-     return min(total, AmuletSettings.Max_Skill_Points);
+     return min(total, SkillType.Max_Skill_Points);
   }
 
   void writeSkillTypes() {
@@ -1334,11 +1334,10 @@ class AmuletPlayer extends IsometricPlayer with
   double get areaDamage =>
       getAssignedSkillTypeLevelI(SkillType.Area_Damage);
 
-  double get chanceOfCriticalDamage {
-    final points = getSkillTypeLevelAssigned(SkillType.Critical_Hit);
-    final i = points / AmuletSettings.Max_Skill_Points;
-    return interpolate(0, AmuletSettings.Max_Critical_Hit_Chance, i);
-  }
+  double get chanceOfCriticalDamage =>
+      SkillType.getPercentageCriticalHit(
+          getSkillTypeLevelAssigned(SkillType.Critical_Hit)
+      );
 
   int get totalCriticalHitPoints =>
       getSkillTypeLevel(SkillType.Critical_Hit);
