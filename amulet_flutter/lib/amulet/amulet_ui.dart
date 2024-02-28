@@ -1440,9 +1440,48 @@ class AmuletUI {
 
   }
 
-  Widget buildPanelSkillTypeInformation(SkillType skillType, int level) =>
-      buildBorder(
-           color: Colors.white70,
+  Widget buildPanelSkillTypeInformation(SkillType skillType, int level) {
+
+    final controlLevel = buildBorder(
+        color: Colors.white70,
+        padding: const EdgeInsets.all(4),
+        child: buildTextHeader('lvl $level')
+    );
+
+    final controlSkillTitle = Container(
+      color: Colors.black26,
+      padding: const EdgeInsets.all(8),
+      alignment: Alignment.center,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          buildIconSkillType(skillType),
+          width4,
+          Container(
+              child: buildText(
+                skillType.name.clean,
+                underline: true,
+                color: Colors.white70,
+              )
+          ),
+        ],
+      ),
+    );
+
+    final controlMagicCost = Container(
+      margin: const EdgeInsets.only(right: 16),
+      child: Row(
+        children: [
+          iconMagic,
+          width4,
+          buildText(skillType.magicCost, color: Palette.red_1),
+        ],
+      ),
+    );
+
+    return buildBorder(
+           color: level > 0 ? Colors.white70 : Colors.red,
            width: 2,
            child: GSContainer(
                constraints: BoxConstraints(
@@ -1452,33 +1491,16 @@ class AmuletUI {
                  crossAxisAlignment: CrossAxisAlignment.start,
                  children: [
                    Row(
-                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                     mainAxisAlignment: MainAxisAlignment.center,
                      children: [
-                       Container(
-                         color: Colors.black12,
-                         padding: const EdgeInsets.all(8),
-                         child: Row(
-                           crossAxisAlignment: CrossAxisAlignment.center,
-                           children: [
-                             buildIconSkillType(skillType),
-                             width4,
-                             Container(
-                                 child: buildText(
-                                     skillType.name.clean,
-                                     underline: true,
-                                     color: Colors.white70,
-                                 )
-                             ),
-                           ],
-                         ),
-                       ),
+                       controlSkillTitle,
                      ],
                    ),
                    height8,
                    buildTextValue(getSkillTypeDescription(skillType)),
                    height8,
                    if (level > 0)
-                     buildText('level $level - current'),
+                     buildText('current'),
                    if (level > 0)
                    Container(
                        margin: const EdgeInsets.only(bottom: 8),
@@ -1487,7 +1509,7 @@ class AmuletUI {
                            color: getSkillTypeLevelDescriptionColor(skillType),
                        )),
                    if (level < 20) // max skill level
-                     buildText('level ${level + 1} - next'),
+                     buildText('next'),
                    if (level < 20) // max skill level
                    buildText(getSkillTypeLevelDescription(skillType, level + 1), color: getSkillTypeLevelDescriptionColor(skillType)),
                      Container(
@@ -1496,16 +1518,9 @@ class AmuletUI {
                          mainAxisAlignment: MainAxisAlignment.end,
                          children: [
                            if (skillType.magicCost > 0)
-                           Container(
-                             margin: const EdgeInsets.only(right: 16),
-                             child: Row(
-                               children: [
-                                 iconMagic,
-                                 width4,
-                                 buildText(skillType.magicCost, color: Palette.red_1),
-                               ],
-                             ),
-                           ),
+                             controlMagicCost,
+                           controlLevel,
+                           width8,
                            buildIconCasteType(skillType.casteType),
                          ],
                        ),
@@ -1513,24 +1528,24 @@ class AmuletUI {
                  ],
                )),
          );
+  }
 
   Widget buildContainerSkillTypeAssigned(
       SkillType skillType,
       Function onClickLeft,
       Function onClickRight,
-
-      ){
+ ){
 
     if (skillType == SkillType.None){
       return nothing;
     }
 
-     final watch = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());
+     final watchLevel = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());
 
      const height = 50.0;
      const width = height;
 
-     return buildWatch(watch, (level) {
+     return buildWatch(watchLevel, (level) {
 
        final button = onPressed(
          action: onClickLeft,
