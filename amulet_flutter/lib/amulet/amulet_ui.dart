@@ -1982,8 +1982,17 @@ class AmuletUI {
     final slot = buildWatch(skillSlot, (skillType) {
 
       final button = onPressed(
-        action: () => amulet.setSkillSlotIndex(index),
+        action: () {
+          amulet.setSkillSlotIndex(index);
+          if (skillType == SkillType.None) {
+            amulet.windowVisiblePlayerSkills.setTrue();
+          }
+        },
         onRightClick: () {
+          amulet.setSkillSlotValue(
+            index: index,
+            skillType: SkillType.None,
+          );
           amulet.setSkillSlotIndex(index);
           amulet.windowVisiblePlayerSkills.setTrue();
         },
