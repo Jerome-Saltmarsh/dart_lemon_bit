@@ -130,6 +130,7 @@ enum SkillType {
   static const Max_Health_Steal = 0.5;
   static const Max_Magic_Steal = 0.5;
   static const Max_Critical_Hit = 0.5;
+  static const Max_Might_Swing = 3.0;
 
   const SkillType({
     required this.casteType,
@@ -232,7 +233,8 @@ enum SkillType {
   }
 
   static double getPercentageMightySwing(int level){
-    throw Exception();
+    final i = level / Max_Skill_Points;
+    return interpolate(0, Max_Might_Swing, i);
   }
 
   static double getPercentageCriticalHit(int level){

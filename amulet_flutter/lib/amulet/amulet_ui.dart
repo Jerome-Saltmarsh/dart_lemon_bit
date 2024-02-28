@@ -1355,13 +1355,13 @@ class AmuletUI {
                      Container(
                          margin: const EdgeInsets.only(bottom: 8),
                          child: buildText(
-                             getLevelDescription(skillType, level),
+                             getSkillTypeLevelDescription(skillType, level),
                              color: getSkillTypeLevelDescriptionColor(skillType),
                          )),
                      if (level < 20) // max skill level
                        buildText('level ${level + 1} - next'),
                      if (level < 20) // max skill level
-                     buildText(getLevelDescription(skillType, level + 1), color: getSkillTypeLevelDescriptionColor(skillType)),
+                     buildText(getSkillTypeLevelDescription(skillType, level + 1), color: getSkillTypeLevelDescriptionColor(skillType)),
 
                      if (skillType.isPassive)
                        Container(
@@ -2060,23 +2060,6 @@ String formatFramesToSeconds(int frames){
 
 Widget buildWatchVisible(Watch<bool> watch, Widget child, {bool condition = true}) =>
     buildWatch(watch, (t) => t == condition ? child : nothing);
-
-String? getLevelDescription(SkillType skillType, int level) {
-  switch (skillType) {
-    case SkillType.Heal:
-      return '+${SkillType.getHealAmount(level)} health';
-    case SkillType.Attack_Speed:
-      return 'Attack Speed +${(SkillType.getAttackSpeedPercentage(level) * 100).toInt()}%';
-    case SkillType.Health_Steal:
-      return SkillType.getHealthSteal(level).toStringPercentage;
-    case SkillType.Magic_Steal:
-      return SkillType.getMagicSteal(level).toStringPercentage;
-    case SkillType.Critical_Hit:
-      return SkillType.getPercentageCriticalHit(level).toStringPercentage;
-    default:
-      return '';
-  }
-}
 
 Color getSkillTypeLevelDescriptionColor(SkillType skillType){
    switch (skillType){
