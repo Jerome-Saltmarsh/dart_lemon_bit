@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+Offset? mouseOverEnterPosition;
+Offset? mouseOverExitPosition;
+
 class MouseOver extends StatelessWidget {
 
   final Widget Function(bool mouseOver) builder;
@@ -14,12 +17,14 @@ class MouseOver extends StatelessWidget {
     return StatefulBuilder(builder: (BuildContext cont, StateSetter setState) {
       return MouseRegion(
           onEnter: (_) {
+            mouseOverEnterPosition = _.position;
             onEnter?.call();
             setState(() {
               mouseOver = true;
             });
           },
           onExit: (_) {
+            mouseOverExitPosition = _.position;
             onExit?.call();
             setState(() {
               mouseOver = false;
@@ -31,35 +36,3 @@ class MouseOver extends StatelessWidget {
 }
 
 
-class AdvancedMouseOver extends StatelessWidget {
-
-  final Widget Function(bool mouseOver, dynamic event) builder;
-  final Function? onEnter;
-  final Function? onExit;
-
-  AdvancedMouseOver({required this.builder, this.onEnter, this.onExit});
-
-  @override
-  Widget build(BuildContext context)  {
-    var mouseOver = false;
-    var event;
-    return StatefulBuilder(builder: (BuildContext cont, StateSetter setState) {
-      return MouseRegion(
-          onEnter: (_) {
-            onEnter?.call();
-            setState(() {
-              event = _;
-              mouseOver = true;
-            });
-          },
-          onExit: (_) {
-            onExit?.call();
-            setState(() {
-              event = _;
-              mouseOver = false;
-            });
-          },
-          child: builder(mouseOver, event));
-    });
-  }
-}
