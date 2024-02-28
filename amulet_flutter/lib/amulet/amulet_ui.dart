@@ -1981,28 +1981,30 @@ class AmuletUI {
     const size = 50.0;
     final slot = buildWatch(skillSlot, (skillType) {
 
-      return buildWatch(amulet.getSkillTypeWatchLevel(skillType), (level) {
+      final button = onPressed(
+        action: () => amulet.setSkillSlotIndex(index),
+        onRightClick: () {
+          amulet.setSkillSlotIndex(index);
+          amulet.windowVisiblePlayerSkills.setTrue();
+        },
+        child: Container(
+          width: size,
+          height: size,
+          child: buildIconSkillType(skillType),
+        ),
+      );
 
-        final button = onPressed(
-          action: () => amulet.setSkillSlotIndex(index),
-          onRightClick: () {
-            amulet.setSkillSlotIndex(index);
-            amulet.windowVisiblePlayerSkills.setTrue();
-          },
-          child: Container(
-            width: size,
-            height: size,
-            child: buildIconSkillType(skillType),
-          ),
-        );
+      if (skillType == SkillType.None) {
+        return button;
+      }
 
-        return buildMouseOverHint(
-          child: button,
-          panel: buildPanelSkillTypeInformation(skillType),
-          bottom: 70,
-          left: -70,
-        );
-      });
+      return buildMouseOverHint(
+        child: button,
+        panel: buildPanelSkillTypeInformation(skillType),
+        bottom: 70,
+        left: -70,
+      );
+
     });
 
     final containerActive = buildBorder(
