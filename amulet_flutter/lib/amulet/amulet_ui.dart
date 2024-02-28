@@ -1442,10 +1442,12 @@ class AmuletUI {
 
   Widget buildPanelSkillTypeInformation(SkillType skillType, int level) {
 
+    final levelColor = level > 0 ? Colors.white70 : Colors.red.withOpacity(0.7);
+
     final controlLevel = buildBorder(
-        color: Colors.white70,
+        color: levelColor,
         padding: const EdgeInsets.all(4),
-        child: buildTextHeader('lvl $level')
+        child: buildText('lvl $level', color: levelColor)
     );
 
     final controlSkillTitle = Container(
@@ -1481,7 +1483,7 @@ class AmuletUI {
     );
 
     return buildBorder(
-           color: level > 0 ? Colors.white70 : Colors.red,
+           color: levelColor,
            width: 2,
            child: GSContainer(
                constraints: BoxConstraints(
@@ -1519,9 +1521,9 @@ class AmuletUI {
                          children: [
                            if (skillType.magicCost > 0)
                              controlMagicCost,
-                           controlLevel,
-                           width8,
                            buildIconCasteType(skillType.casteType),
+                           width8,
+                           controlLevel,
                          ],
                        ),
                      ),
