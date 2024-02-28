@@ -1240,8 +1240,6 @@ class AmuletUI {
                     width8,
                     buildColumnCasteType(CasteType.Staff),
                     width8,
-                    // buildColumnCasteType(CasteType.Caste),
-                    // width8,
                     buildColumnCasteType(CasteType.Passive),
                   ],
                 ),
@@ -1475,36 +1473,25 @@ class AmuletUI {
                      buildText('level ${level + 1} - next'),
                    if (level < 20) // max skill level
                    buildText(getSkillTypeLevelDescription(skillType, level + 1), color: getSkillTypeLevelDescriptionColor(skillType)),
-                   Container(
-                     margin: const EdgeInsets.only(top: 8),
-                     child: Row(
-                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                       children: [
-                         nothing,
-                         // buildIconCasteType(skillType.casteType),
-                         Container(
-                             color: Colors.white10,
-                             padding: const EdgeInsets.all(4),
-                             child: buildText(skillType.casteType.name, color: Colors.white70)),
-                       ],
-                     ),
-                   ),
-                   if (skillType.magicCost > 0)
-                     Row(
-                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                       children: [
-                         buildIconCasteType(skillType.casteType),
-                         if (skillType.magicCost > 0)
-                         Row(
-                           children: [
-                             iconMagic,
-                             width4,
-                             buildText(skillType.magicCost, color: Palette.red_1),
-                           ],
-                         ),
-                         if (skillType.magicCost <= 0)
-                           nothing,
-                       ],
+                     Container(
+                       margin: const EdgeInsets.only(top: 16),
+                       child: Row(
+                         mainAxisAlignment: MainAxisAlignment.end,
+                         children: [
+                           if (skillType.magicCost > 0)
+                           Container(
+                             margin: const EdgeInsets.only(right: 16),
+                             child: Row(
+                               children: [
+                                 iconMagic,
+                                 width4,
+                                 buildText(skillType.magicCost, color: Palette.red_1),
+                               ],
+                             ),
+                           ),
+                           buildIconCasteType(skillType.casteType),
+                         ],
+                       ),
                      ),
                  ],
                )),
