@@ -1362,7 +1362,7 @@ class AmuletUI {
          final info = Positioned(
            top: -70,
            right: Container_Size + 5,
-           child: buildPanelSkillTypeInformation(skillType, level),
+           child: buildPanelSkillTypeInformation(skillType),
          );
 
          var showInfo = false;
@@ -1440,7 +1440,9 @@ class AmuletUI {
 
   }
 
-  Widget buildPanelSkillTypeInformation(SkillType skillType, int level) {
+  Widget buildPanelSkillTypeInformation(SkillType skillType) {
+
+    final level = amulet.getSkillTypeLevel(skillType);
 
     final levelColor = level > 0 ? Colors.white70 : Colors.red.withOpacity(0.7);
 
@@ -1977,14 +1979,9 @@ class AmuletUI {
 
     final index = amulet.getSkillSlotIndex(skillSlot);
     const size = 50.0;
-
     final slot = buildWatch(skillSlot, (skillType) {
 
-      final watchLevel = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());
-      const height = 50.0;
-      const width = height;
-
-      return buildWatch(watchLevel, (level) {
+      return buildWatch(amulet.getSkillTypeWatchLevel(skillType), (level) {
 
         final button = onPressed(
           action: () => amulet.setSkillSlotIndex(index),
@@ -1993,25 +1990,19 @@ class AmuletUI {
             amulet.windowVisiblePlayerSkills.setTrue();
           },
           child: Container(
-            width: width,
-            height: height,
+            width: size,
+            height: size,
             child: buildIconSkillType(skillType),
           ),
         );
 
         return buildMouseOverHint(
           child: button,
-          panel: buildPanelSkillTypeInformation(skillType, level),
+          panel: buildPanelSkillTypeInformation(skillType),
           bottom: 70,
           left: -70,
         );
       });
-
-      // return buildContainerSkillTypeAssigned(
-      //   skillType, () => amulet.setSkillSlotIndex(index), () {
-      //   amulet.setSkillSlotIndex(index);
-      //   amulet.windowVisiblePlayerSkills.setTrue();
-      // });
     });
 
     final containerActive = buildBorder(

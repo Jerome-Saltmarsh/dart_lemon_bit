@@ -91,12 +91,10 @@ class Amulet extends IsometricGame {
   final playerRunSpeed = Watch(0);
   final playerAgility = Watch(0);
 
-  // final activeSlotType = Watch<SlotType?>(null);
   final worldMapLarge = WatchBool(false);
   final amuletScene = Watch<AmuletScene?>(null);
   final questMain = Watch(QuestMain.values.first);
   final windowVisibleQuests = WatchBool(true);
-  // final windowVisiblePlayerStats = WatchBool(true);
   final windowVisibleEquipment = WatchBool(true);
   final windowVisiblePlayerSkills = WatchBool(false);
   final windowVisibleHelp = WatchBool(false);
@@ -856,4 +854,11 @@ class Amulet extends IsometricGame {
       }
       return null;
   }
+
+  int getSkillTypeLevel(SkillType skillType) =>
+      getSkillTypeWatchLevel(skillType).value;
+
+  Watch<int> getSkillTypeWatchLevel(SkillType skillType) =>
+      playerSkillTypeLevels[skillType] ??
+          (throw Exception('amulet.getSkillTypeWatchLevel($skillType'));
 }
