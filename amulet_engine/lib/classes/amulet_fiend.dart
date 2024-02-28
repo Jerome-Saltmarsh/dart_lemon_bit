@@ -52,7 +52,11 @@ class AmuletFiend extends Character {
   double get maxHealth => fiendType.health.toDouble();
 
   @override
-  double get runSpeed => fiendType.runSpeed * (conditionIsCold ? 0.5 : 1.0);
+  double get runSpeed {
+    final level = getSkillTypeLevel(SkillType.Run_Speed);
+    final bonus = super.runSpeed * SkillType.getRunSpeed(level);
+    return super.runSpeed + bonus;
+  }
 
   @override
   bool get collidable => alive;
@@ -68,7 +72,10 @@ class AmuletFiend extends Character {
     );
   }
 
-  int getSkillTypeLevel(SkillType skillType) {
-    return fiendType.skillLevel;
-  }
+  int get regenMagic => getSkillTypeLevel(SkillType.Magic_Regen);
+
+  int get regenHealth => getSkillTypeLevel(SkillType.Health_Regen);
+
+  int getSkillTypeLevel(SkillType skillType) =>
+      fiendType.skillTypes[skillType] ?? 0;
 }

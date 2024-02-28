@@ -21,7 +21,27 @@ String? getSkillTypeLevelDescription(SkillType skillType, int level) {
       return '+$level magic regen';
     case SkillType.Health_Regen:
       return '+$level health regen';
-    default:
+    case SkillType.None:
       return '';
+    case SkillType.Strike:
+      return '-';
+    case SkillType.Frostball:
+      return 'ice damage: ${SkillType.getDamageFrostBall(level)}';
+    case SkillType.Fireball:
+      return 'fire damage: ${SkillType.getDamageFireball(level)}';
+    case SkillType.Explode:
+      return 'damage: ${SkillType.getDamageExplode(level)}';
+    case SkillType.Shoot_Arrow:
+      return '';
+    case SkillType.Split_Shot:
+      return 'total arrows: ${SkillType.getSplitShotTotalArrows(level)}';
+    case SkillType.Ice_Arrow:
+      return 'ice damage: ${SkillType.getDamageIceArrow(level)}';
+    case SkillType.Fire_Arrow:
+      return 'fire damage: ${SkillType.getDamageFireArrow(level)}';
+    case SkillType.Area_Damage:
+      return '${SkillType.getAreaDamage(level).toStringPercentage} area damage';
+    case SkillType.Run_Speed:
+      return '${SkillType.getRunSpeed(level).toStringPercentage} faster';
   }
 }

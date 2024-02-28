@@ -172,10 +172,34 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     nextRegen = secondsPerRegen;
     final characters = this.characters;
     for (final character in characters) {
+
+      final regenHealthLevel = getCharacterSkillTypeLevel(character, SkillType.Health_Regen);
+      final regenMagicLevel = getCharacterSkillTypeLevel(character, SkillType.Magic_Regen);
+
       if (character is AmuletPlayer) {
         character.regenHealthAndMagic();
       }
     }
+  }
+
+  int getCharacterHealthRegen(Character character){
+     if (character is AmuletPlayer){
+       return character.regenHealth;
+     }
+     if (character is AmuletFiend){
+       return character.regenHealth;
+     }
+     return 0;
+  }
+
+  int getCharacterMagicRegen(Character character){
+     if (character is AmuletPlayer){
+       return character.regenMagic;
+     }
+     if (character is AmuletFiend){
+       return character.regenMagic;
+     }
+     return 0;
   }
 
   void spawnFiendsAtSpawnNodes() {
@@ -335,15 +359,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       case SkillType.Fire_Arrow:
         characterPerformSkillTypeFireArrow(character, level);
         break;
-      case SkillType.Blind:
-        characterPerformSkillTypeBlind(character);
-        break;
-      case SkillType.Freeze_Target:
-        throw Exception('not implemented');
-      case SkillType.Freeze_Area:
-        throw Exception('not implemented');
+      // case SkillType.Blind:
+      //   characterPerformSkillTypeBlind(character);
+      //   break;
       default:
-        throw Exception('not implemented');
+        return;
     }
   }
 
@@ -360,20 +380,13 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       return 0;
   }
 
-  // int getCharacterSkillTypeAilmentDuration({
-  //   required Character character,
-  //   required SkillType skillType,
-  // }) => ((skillType.ailmentDuration ?? 0) * fps).toInt();
-
-  double getCharacterAreaDamage(Character character){
-      if (character is AmuletPlayer) {
-         return character.areaDamage;
-      }
-      if (character is AmuletFiend) {
-        return character.fiendType.areaDamage;
-      }
-      return 0;
-  }
+  double getCharacterAreaDamage(Character character) =>
+      SkillType.getAreaDamage(
+          getCharacterSkillTypeLevel(
+            character,
+            SkillType.Area_Damage,
+          )
+      );
 
   double getCharacterMissRatio(Character character){
      if (character.conditionIsBlind) {
@@ -389,25 +402,25 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       return;
     }
 
-    final target = character.target;
+    // final target = character.target;
 
     if (character is! AmuletFiend) {
       super.characterGoalAttackTarget(character);
       return;
     }
 
-    final fiendType = character.fiendType;
-    final skillB = fiendType.skillTypeB;
+    // final fiendType = character.fiendType;
+    // final skillB = fiendType.skillTypeB;
 
-    if (
-      target is Character &&
-      skillB == SkillType.Blind &&
-      !target.conditionIsBlind
-    ) {
-      character.activeSkillType = SkillType.Blind;
-      character.attack();
-      return;
-    }
+    // if (
+    //   target is Character &&
+    //   skillB == SkillType.Blind &&
+    //   !target.conditionIsBlind
+    // ) {
+    //   character.activeSkillType = SkillType.Blind;
+    //   character.attack();
+    //   return;
+    // }
 
     character.activeSkillType = character.fiendType.skillType;
     super.characterGoalAttackTarget(character);
@@ -593,7 +606,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     final damage = getCharacterWeaponDamage(character);
     final range = getCharacterWeaponRange(character);
     final angle = character.angle;
-    final totalArrows = 2 + skillLevel;
+    final totalArrows = SkillType.getSplitShotTotalArrows(skillLevel);
     final spread = getSplitShortSpread(totalArrows);
 
     dispatchGameEvent(

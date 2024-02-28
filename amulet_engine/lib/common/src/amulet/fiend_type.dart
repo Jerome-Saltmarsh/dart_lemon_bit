@@ -44,7 +44,7 @@ enum FiendType {
     chanceOfDropLegendary: 0.025,
     chanceOfDropPotion: 0.15,
     skillType: SkillType.Strike,
-    skillTypeB: SkillType.Blind,
+    // skillTypeB: SkillType.Blind,
     skillLevel: 1,
       skillTypes: {
         SkillType.Resist_Melee: 2,

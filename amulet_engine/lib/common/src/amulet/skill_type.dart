@@ -32,24 +32,10 @@ enum SkillType {
       magicCost: 7,
       range: 125,
   ),
-  Freeze_Target(
-      casteType: CasteType.Staff,
-      magicCost: 8,
-      range: 125,
-  ),
-  Freeze_Area(
-      casteType: CasteType.Staff,
-      magicCost: 5,
-      range: 150,
-  ),
   // BOW
   Shoot_Arrow(
       casteType: CasteType.Bow,
       magicCost: 0,
-  ),
-  Exploding_Arrow(
-      casteType: CasteType.Bow,
-      magicCost: 5,
   ),
   Split_Shot(
       casteType: CasteType.Bow,
@@ -69,12 +55,6 @@ enum SkillType {
       magicCost: 4,
       casteSpeed: AttackSpeed.Fast,
       range: 0,
-  ),
-  Blind(
-    casteType: CasteType.Caste,
-    magicCost: 5,
-    range: 300,
-    casteSpeed: AttackSpeed.Fast,
   ),
   Attack_Speed(
     casteType: CasteType.Passive,
@@ -119,6 +99,7 @@ enum SkillType {
   static const Max_Critical_Hit = 0.5;
   static const Max_Might_Swing = 3.0;
   static const Max_Resist = 0.5;
+  static const Max_Run_Speed = 0.4;
 
   const SkillType({
     required this.casteType,
@@ -169,23 +150,23 @@ enum SkillType {
       interpolate(0, SkillType.Max_Magic_Steal, level / Max_Skill_Points);
 
   static double getDamageExplode(int level){
-    throw Exception();
+    return level * 4.0;
   }
 
   static double getDamageFireball(int level){
-    throw Exception();
+    return level * 2.0;
   }
 
   static double getDamageIceArrow(int level){
-    throw Exception();
+     return level * 2.0;
   }
 
   static double getDamageFireArrow(int level){
-    throw Exception();
+    return level * 2.0;
   }
 
   static double getDamageFrostBall(int level){
-    throw Exception();
+    return level * 2.0;
   }
 
   static int getAilmentDurationIceArrow(int level){
@@ -233,6 +214,19 @@ enum SkillType {
   static double getPercentageDamageResistanceMelee(int level){
     final i = level / Max_Skill_Points;
     return interpolate(0, Max_Resist, i);
+  }
+
+  static int getSplitShotTotalArrows(int level){
+    return 2 + level;
+  }
+
+  static double getAreaDamage(int level){
+    return level / Max_Skill_Points;
+  }
+
+  static double getRunSpeed(int level){
+    final i = level / SkillType.Max_Skill_Points;
+    return interpolate(0, SkillType.Max_Run_Speed, i);
   }
 }
 

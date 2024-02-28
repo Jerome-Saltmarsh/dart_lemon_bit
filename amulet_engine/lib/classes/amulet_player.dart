@@ -177,14 +177,9 @@ class AmuletPlayer extends IsometricPlayer with
 
   @override
   double get runSpeed {
-
-    if (!skillTypeAssignedToSkillSlot(SkillType.Run_Speed)){
-      return baseRunSpeed;
-    }
-
-    final level = getSkillTypeLevel(SkillType.Run_Speed);
-    final i = level / SkillType.Max_Skill_Points;
-    return interpolate(baseRunSpeed, AmuletSettings.Max_Run_Speed, i);
+    final level = getSkillTypeLevelAssigned(SkillType.Run_Speed);
+    final bonus = baseRunSpeed * SkillType.getRunSpeed(level);
+    return baseRunSpeed + bonus;
   }
 
   int get attackSpeed => getSkillTypeLevelAssigned(SkillType.Attack_Speed);

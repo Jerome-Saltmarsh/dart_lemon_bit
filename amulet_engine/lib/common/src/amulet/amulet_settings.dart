@@ -12,7 +12,6 @@ class AmuletSettings {
   static const Player_Revive_Timer = 3;
   static const Min_Perform_Velocity = 1.0;
   static const Max_Perform_Velocity = 2.0;
-  static const Max_Run_Speed = 1.4;
   static const Base_Magic_Regen = 1;
   static const Base_Health_Regen = 1;
   static const Base_Agility = 1.0;
