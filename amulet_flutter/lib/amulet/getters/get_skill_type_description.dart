@@ -1,0 +1,27 @@
+import 'package:amulet_engine/common.dart';
+
+String getSkillTypeDescription(SkillType skillType) => switch (skillType) {
+      SkillType.None => 'None',
+      SkillType.Strike => 'perform a melee attack',
+      SkillType.Mighty_Strike => 'add extra damage to melee attacks',
+      SkillType.Frostball => 'shoot a frozen ball of ice',
+      SkillType.Fireball => 'shoot a blazing ball of fire',
+      SkillType.Explode => 'caste a mighty explosion',
+      SkillType.Freeze_Target => 'freeze a single enemy',
+      SkillType.Freeze_Area => 'freeze an area',
+      SkillType.Shoot_Arrow => 'shoot an arrow',
+      SkillType.Exploding_Arrow => 'shoot an arrow that explodes on impact',
+      SkillType.Split_Shot => 'shoot multiple arrows at once',
+      SkillType.Ice_Arrow => 'shoot a frozen arrow',
+      SkillType.Fire_Arrow => 'shoot a fire arrow',
+      SkillType.Heal => 'recover health',
+      SkillType.Blind => 'causes enemies to miss attacks',
+      SkillType.Attack_Speed => 'increase speed of attacks and spells',
+      SkillType.Health_Steal => 'converts damage applied to health gained',
+      SkillType.Magic_Steal => 'converts damage applied to magic gained',
+      SkillType.Critical_Hit => 'chance of doing double damage',
+      SkillType.Magic_Regen => 'recover magic over time',
+      SkillType.Health_Regen => 'recover health over time',
+      SkillType.Area_Damage => 'melee damage applied in an area',
+      SkillType.Run_Speed => 'increase movement speed',
+    };

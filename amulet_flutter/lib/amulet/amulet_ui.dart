@@ -1347,7 +1347,7 @@ class AmuletUI {
                        ],
                      ),
                      height8,
-                     buildTextValue(skillType.description.clean),
+                     buildTextValue(getSkillTypeDescription(skillType)),
                      height8,
                      if (level > 0)
                        buildText('level $level - current'),
