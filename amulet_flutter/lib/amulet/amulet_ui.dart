@@ -1487,14 +1487,45 @@ class AmuletUI {
       ),
     );
 
+    const cardWidth = 182.0;
+
+    final contents = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        buildTextValue(getSkillTypeDescription(skillType)),
+        height8,
+        if (level > 0)
+          buildText('current'),
+        if (level > 0)
+          Container(
+              margin: const EdgeInsets.only(bottom: 8),
+              child: buildText(
+                getSkillTypeLevelDescription(skillType, level),
+                color: getSkillTypeLevelDescriptionColor(skillType),
+              )),
+        if (level < 20) // max skill level
+          buildText('next'),
+        if (level < 20) // max skill level
+          buildText(getSkillTypeLevelDescription(skillType, level + 1), color: getSkillTypeLevelDescriptionColor(skillType)),
+      ],
+    );
+
+    final bottomRow = Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        if (skillType.magicCost > 0)
+          controlMagicCost,
+        controlLevel,
+      ],
+    );
+
     return buildBorder(
       color: Colors.white70,
-      width: 3,
+      width: 2,
       child: GSContainer(
+          width: cardWidth,
+          height: cardWidth * goldenRatio_1618,
           padding: EdgeInsets.zero,
-          constraints: BoxConstraints(
-            maxWidth: 200,
-          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -1502,38 +1533,13 @@ class AmuletUI {
               controlSkillTitle,
               Container(
                 padding: const EdgeInsets.all(16),
+                alignment: Alignment.center,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    height8,
-                    buildTextValue(getSkillTypeDescription(skillType)),
-                    height8,
-                    if (level > 0)
-                      buildText('current'),
-                    if (level > 0)
-                      Container(
-                          margin: const EdgeInsets.only(bottom: 8),
-                          child: buildText(
-                            getSkillTypeLevelDescription(skillType, level),
-                            color: getSkillTypeLevelDescriptionColor(skillType),
-                          )),
-                    if (level < 20) // max skill level
-                      buildText('next'),
-                    if (level < 20) // max skill level
-                      buildText(getSkillTypeLevelDescription(skillType, level + 1), color: getSkillTypeLevelDescriptionColor(skillType)),
-                    Container(
-                      margin: const EdgeInsets.only(top: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          if (skillType.magicCost > 0)
-                            controlMagicCost,
-                          // buildIconCasteType(skillType.casteType),
-                          // width8,
-                          controlLevel,
-                        ],
-                      ),
-                    ),
+                    contents,
+                    bottomRow,
                   ],
                 ),
               ),
