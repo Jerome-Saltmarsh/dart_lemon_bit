@@ -24,5 +24,5 @@ List<double> getSrcSkillType(SkillType skillType) =>
       SkillType.Health_Regen =>  const [416, 384, 32, 32],
       SkillType.Area_Damage =>  const [416, 288, 32, 32],
       SkillType.Run_Speed =>  const [416, 320, 32, 32],
-      SkillType.Resist_Melee => const [416, 352, 32 ,32],
+      SkillType.Tough => const [416, 352, 32 ,32],
     };

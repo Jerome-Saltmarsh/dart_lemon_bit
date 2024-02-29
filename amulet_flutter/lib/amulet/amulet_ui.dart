@@ -1410,7 +1410,7 @@ class AmuletUI {
             amulet.mouseOverSkillType = null;
           },
           child: child,
-          panel: buildPanelSkillTypeInformation(skillType),
+          panel: buildCardSkillType(skillType),
           getTop: () {
 
             final mouseY = mouseOverEnterPosition?.dy;
@@ -1439,7 +1439,7 @@ class AmuletUI {
 
   }
 
-  Widget buildPanelSkillTypeInformation(SkillType skillType) {
+  Widget buildCardSkillType(SkillType skillType) {
 
     final level = amulet.getSkillTypeLevel(skillType);
 
@@ -1493,6 +1493,7 @@ class AmuletUI {
                child: Column(
                  crossAxisAlignment: CrossAxisAlignment.start,
                  children: [
+                   buildCardHeader('${skillType.casteType.name} Skill'),
                    Row(
                      mainAxisAlignment: MainAxisAlignment.center,
                      children: [
@@ -1533,43 +1534,6 @@ class AmuletUI {
          );
   }
 
- //  Widget buildContainerSkillTypeAssigned(
- //      SkillType skillType,
- //      Function onClickLeft,
- //      Function onClickRight,
- // ){
- //
- //    if (skillType == SkillType.None){
- //      return nothing;
- //    }
- //
- //     final watchLevel = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());
- //
- //     const height = 50.0;
- //     const width = height;
- //
- //     return buildWatch(watchLevel, (level) {
- //
- //       final button = onPressed(
- //         action: onClickLeft,
- //         onRightClick: onClickRight,
- //         child: Container(
- //           width: width,
- //           height: height,
- //           child: buildIconSkillType(skillType),
- //         ),
- //       );
- //
- //       return buildMouseOverHint(
- //           child: button,
- //           panel: buildPanelSkillTypeInformation(skillType, level),
- //           bottom: 70,
- //           left: -70,
- //
- //       );
- //     });
- //  }
-
   Widget buildRowValue(dynamic value) => buildText(value, color: Colors.white70);
 
   static final titleColor =  Colors.orange;
@@ -1592,8 +1556,8 @@ class AmuletUI {
       }
 
       final button = onPressed(
-        onEnter: () => amulet.aimTargetItemType.value = amuletItem,
-        onExit: () => amulet.aimTargetItemType.value = null,
+        // onEnter: () => amulet.aimTargetItemType.value = amuletItem,
+        // onExit: () => amulet.aimTargetItemType.value = null,
         action: () => amulet.dropAmuletItem(amuletItem),
         onRightClick: () => amulet.dropAmuletItem(amuletItem),
         child: Container(
@@ -1607,7 +1571,12 @@ class AmuletUI {
 
       return buildMouseOverHint(
           child: button,
-          panel: buildWindowAmuletItemStats(amuletItem),
+          panel: Column(
+            children: [
+              buildText('right click to drop'),
+              buildWindowAmuletItemStats(amuletItem),
+            ],
+          ),
           left: 90,
           bottom: 0,
       );
@@ -1630,6 +1599,9 @@ class AmuletUI {
         height: 16,
       );
 
+  Widget buildIconSlotType(SlotType slotType) =>
+      AmuletImageSrc(src: getSrcSlotType(slotType));
+
   Widget buildIconSkillType(SkillType skillType, {double dstX = 0, double dstY = 0}) =>
       AmuletImageSrc(src: getSrcSkillType(skillType), dstX: dstX, dstY: dstY);
 
@@ -1645,21 +1617,30 @@ class AmuletUI {
     final attackSpeed = amuletItem.attackSpeed;
     final slotType = amuletItem.slotType;
     final equippedItemType = amulet.getEquippedItemType(slotType);
+    final equipped = equippedItemType == amuletItem;
 
     return GSContainer(
-      width: 170,
+      width: 190,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              AmuletItemImage(amuletItem: amuletItem, scale: 1.0),
-              buildText(slotType.name),
-            ],
+          buildCardHeader(slotType.name),
+          Container(
+            padding: const EdgeInsets.all(4),
+            color: Colors.black26,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AmuletItemImage(amuletItem: amuletItem, scale: 1.0),
+                width8,
+                buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
+                // buildText(slotType.name),
+              ],
+            ),
           ),
-          buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
+          height16,
+          // buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
           if (damage != null)
             buildRow(buildIconDamage(), damage),
           if (range != null)
@@ -1677,19 +1658,25 @@ class AmuletUI {
              width4,
              buildTextValue(e.key.name.clean),
            ],)),
-          if (equippedItemType == amuletItem)
+
+
+          // if (equippedItemType == amuletItem)
             alignRight(
               child: Container(
                 margin: const EdgeInsets.only(top: 8),
-                child: buildText('EQUIPPED', color: Colors.green),
+                child: buildIconSlotType(slotType),
               ),
             ),
         ],
       ),
     );
-
-
   }
+
+  Widget buildCardHeader(String text) => buildBorder(
+            radius: BorderRadius.zero,
+            color: Colors.white70,
+            child: buildTextHeader(text)
+    );
 
   Widget buildRowTitleValue(dynamic title, dynamic value) =>
     Row(
@@ -1992,7 +1979,7 @@ class AmuletUI {
           children: [
             // if (visibleRightClickedToClear)
               buildText('right click to change'),
-            buildPanelSkillTypeInformation(skillType),
+            buildCardSkillType(skillType),
           ],
         ),
         bottom: 70,

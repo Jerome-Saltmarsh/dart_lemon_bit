@@ -47,7 +47,7 @@ enum FiendType {
     // skillTypeB: SkillType.Blind,
     skillLevel: 1,
       skillTypes: {
-        SkillType.Resist_Melee: 2,
+        SkillType.Tough: 2,
       }
   ),
   Skeleton(

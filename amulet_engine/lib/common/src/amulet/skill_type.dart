@@ -80,7 +80,7 @@ enum SkillType {
   Run_Speed(
     casteType: CasteType.Passive,
   ),
-  Resist_Melee(
+  Tough(
     casteType: CasteType.Passive,
   ),
   ;

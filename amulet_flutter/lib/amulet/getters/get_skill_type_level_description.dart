@@ -15,7 +15,7 @@ String? getSkillTypeLevelDescription(SkillType skillType, int level) {
       return '${SkillType.getPercentageCriticalHit(level).toStringPercentage} chance';
     case SkillType.Mighty_Strike:
       return 'damage +${SkillType.getPercentageMightySwing(level).toStringPercentage}';
-    case SkillType.Resist_Melee:
+    case SkillType.Tough:
       return '${SkillType.getPercentageDamageResistanceMelee(level).toStringPercentage} reduced';
     case SkillType.Magic_Regen:
       return '+$level magic regen';

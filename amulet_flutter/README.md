@@ -21,7 +21,16 @@ ctrl + shift + e        : view recent changes
 alt + m                 : go to declaration
 ctrl + []               : move caret to code block
 
+[USERNAME]
+MOPS
+ROMMY
+JEM
+SQUIDI
+
 [COMPANY NAMES]
+OFFSIDE 
+FREEFALL 
+DARKSIDE 
 SKULLBOSS 
 SKULLWARE 
 SKULLSOFT 
