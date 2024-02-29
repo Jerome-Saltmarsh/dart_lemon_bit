@@ -1452,7 +1452,7 @@ class AmuletUI {
     final controlLevel = buildBorder(
         color: levelColor,
         padding: const EdgeInsets.all(4),
-        child: buildText('lvl $level', color: levelColor)
+        child: buildText(level > 0 ? 'lvl $level' : 'locked', color: levelColor)
     );
 
     final controlSkillTitle = Container(
