@@ -103,9 +103,9 @@ class AmuletUI {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  buildWatch(amulet.aimTargetItemTypeComparison, buildWindowAmuletItemStats),
+                  buildWatch(amulet.aimTargetItemTypeComparison, buildWindowAmuletItem),
                   width8,
-                  buildWatch(amulet.aimTargetItemType, buildWindowAmuletItemStats),
+                  buildWatch(amulet.aimTargetItemType, buildWindowAmuletItem),
                 ],
               ),
           ),
@@ -1410,7 +1410,13 @@ class AmuletUI {
             amulet.mouseOverSkillType = null;
           },
           child: child,
-          panel: buildCardSkillType(skillType),
+          panel: Column(
+            children: [
+              if (level > 0)
+                buildText('press A,S,D,F to assign'),
+              buildCardSkillType(skillType),
+            ],
+          ),
           getTop: () {
 
             final mouseY = mouseOverEnterPosition?.dy;
@@ -1460,7 +1466,7 @@ class AmuletUI {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           buildIconSkillType(skillType),
-          width4,
+          width8,
           Container(
               child: buildText(
                 skillType.name.clean,
@@ -1578,7 +1584,7 @@ class AmuletUI {
           panel: Column(
             children: [
               buildText('right click to drop'),
-              buildWindowAmuletItemStats(amuletItem),
+              buildWindowAmuletItem(amuletItem),
             ],
           ),
           left: 90,
@@ -1609,7 +1615,7 @@ class AmuletUI {
   Widget buildIconSkillType(SkillType skillType, {double dstX = 0, double dstY = 0}) =>
       AmuletImageSrc(src: getSrcSkillType(skillType), dstX: dstX, dstY: dstY);
 
-  Widget buildWindowAmuletItemStats(AmuletItem? amuletItem) {
+  Widget buildWindowAmuletItem(AmuletItem? amuletItem) {
     if (amuletItem == null) {
       return nothing;
     }
@@ -1623,8 +1629,9 @@ class AmuletUI {
     final equippedItemType = amulet.getEquippedItemType(slotType);
     final equipped = equippedItemType == amuletItem;
 
-    return GSContainer(
+    return Container(
       width: 190,
+      color: Palette.brownDark,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1632,45 +1639,49 @@ class AmuletUI {
           buildCardHeader(slotType.name),
           Container(
             padding: const EdgeInsets.all(4),
-            color: Colors.black26,
+            color: Colors.black12,
+            height: 60,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 AmuletItemImage(amuletItem: amuletItem, scale: 1.0),
                 width8,
                 buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
-                // buildText(slotType.name),
               ],
             ),
           ),
-          height16,
-          // buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
-          if (damage != null)
-            buildRow(buildIconDamage(), damage),
-          if (range != null)
-            buildBarsRange(range.index),
-          if (attackSpeed != null)
-            buildBarsAttackSpeed(attackSpeed.index),
-          if (maxHealth != null && maxHealth > 0)
-            buildRow(buildIconHealth(), maxHealth),
-          if (maxMagic != null && maxMagic > 0)
-            buildRow(buildIconMagic(), maxMagic),
-           ...amuletItem.skills.entries.map((e) => Row(children: [
-             buildIconSkillType(e.key),
-             width4,
-             buildTextValue('+${e.value}'),
-             width4,
-             buildTextValue(e.key.name.clean),
-           ],)),
+          GSContainer(
+            child: Column(
+              children: [
+                if (damage != null)
+                  buildRow(buildIconDamage(), damage),
+                if (range != null)
+                  buildBarsRange(range.index),
+                if (attackSpeed != null)
+                  buildBarsAttackSpeed(attackSpeed.index),
+                if (maxHealth != null && maxHealth > 0)
+                  buildRow(buildIconHealth(), maxHealth),
+                if (maxMagic != null && maxMagic > 0)
+                  buildRow(buildIconMagic(), maxMagic),
+                ...amuletItem.skills.entries.map((e) => Row(children: [
+                  buildIconSkillType(e.key),
+                  width4,
+                  buildTextValue('+${e.value}'),
+                  width4,
+                  buildTextValue(e.key.name.clean),
+                ],)),
 
 
-          // if (equippedItemType == amuletItem)
-            alignRight(
-              child: Container(
-                margin: const EdgeInsets.only(top: 8),
-                child: buildIconSlotType(slotType),
-              ),
+                // if (equippedItemType == amuletItem)
+                alignRight(
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 8),
+                    child: buildIconSlotType(slotType),
+                  ),
+                ),
+              ],
             ),
+          ),
         ],
       ),
     );
