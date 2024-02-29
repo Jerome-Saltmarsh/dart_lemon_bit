@@ -989,16 +989,16 @@ class AmuletUI {
                     ],
                   ),
                 ),
-                        Tooltip(
-                          message: 'Player Perform Frame Velocity',
-                          child: Row(
-                            children: [
-                              buildText('FV'),
-                              width8,
-                              buildWatch(amulet.playerPerformFrameVelocity, buildRowValue),
-                            ],
-                          ),
-                        ),
+                        // Tooltip(
+                        //   message: 'Player Perform Frame Velocity',
+                        //   child: Row(
+                        //     children: [
+                        //       buildText('FV'),
+                        //       width8,
+                        //       buildWatch(amulet.playerPerformFrameVelocity, buildRowValue),
+                        //     ],
+                        //   ),
+                        // ),
                 height16,
                 buildEquippedAmuletItems(),
               ],
@@ -1579,9 +1579,9 @@ class AmuletUI {
       child: buildText(value, color: titleColor),
   );
 
-  Widget buildWatchAmuletItem(Watch<AmuletItem?> watch, SlotType slotType) {
+  Widget buildWatchAmuletItem(Watch<AmuletItem?> watchAmuletItem, SlotType slotType) {
 
-    return buildWatch(watch, (amuletItem) {
+    return buildWatch(watchAmuletItem, (amuletItem) {
       const size = 50.0;
       if (amuletItem == null){
         return Container(
@@ -1591,14 +1591,9 @@ class AmuletUI {
         );
       }
 
-      return onPressed(
-        onEnter: () {
-          return amulet.aimTargetItemType.value = amuletItem;
-        },
+      final button = onPressed(
+        onEnter: () => amulet.aimTargetItemType.value = amuletItem,
         onExit: () => amulet.aimTargetItemType.value = null,
-        // action: amuletItem == null
-        //     ? null
-        //     : () => amulet.selectSlotType(slotType),
         action: () => amulet.dropAmuletItem(amuletItem),
         onRightClick: () => amulet.dropAmuletItem(amuletItem),
         child: Container(
@@ -1606,31 +1601,15 @@ class AmuletUI {
           height: size,
           alignment: Alignment.center,
           color: Colors.black12,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Positioned(
-                child: AmuletItemImage(amuletItem: amuletItem, scale: size / 32,),
-              ),
-              // if (skillType != null)
-                // Positioned(
-                //   bottom: 2,
-                //   right: 2,
-                //   child: Container(
-                //       color: Colors.black,
-                //       width: 16,
-                //       height: 16,
-                //       child: buildSkillTypeIcon(skillType),
-                //   )
-                // ),
-              // Positioned(
-              //   bottom: 2,
-              //   right: 2,
-              //   child: activeBorder,
-              // ),
-            ],
-          ),
+          child: AmuletItemImage(amuletItem: amuletItem, scale: size / 32,),
         ),
+      );
+
+      return buildMouseOverHint(
+          child: button,
+          panel: buildWindowAmuletItemStats(amuletItem),
+          left: 90,
+          bottom: 0,
       );
     });
   }
