@@ -1672,11 +1672,13 @@ class AmuletUI {
     );
   }
 
-  Widget buildCardHeader(String text) => buildBorder(
-            radius: BorderRadius.zero,
-            color: Colors.white70,
-            child: buildTextHeader(text)
-    );
+  Widget buildCardHeader(String text) => Container(
+    color: Colors.orange,
+    alignment: Alignment.center,
+    child: buildTextHeader(text.toUpperCase()),
+    height: 30,
+  );
+
 
   Widget buildRowTitleValue(dynamic title, dynamic value) =>
     Row(
