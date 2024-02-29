@@ -1404,7 +1404,6 @@ class AmuletUI {
          final control =  buildMouseOverHint(
           onEnter: () {
             amulet.mouseOverSkillType = skillType;
-            print('mouse over position.dy: ${mouseOverEnterPosition?.dy}');
           },
           onExit: () {
             amulet.mouseOverSkillType = null;
@@ -1421,6 +1420,9 @@ class AmuletUI {
 
             final mouseY = mouseOverEnterPosition?.dy;
             if (mouseY != null){
+              if (mouseY > amulet.engine.screen.height * 0.66){
+                return -200;
+              }
               if (mouseY > amulet.engine.screen.height * 0.5){
                 return -140;
               }
@@ -1702,7 +1704,8 @@ class AmuletUI {
             ),
 
           height16,
-          buildTextHeader('SKILLS'),
+          // buildTextHeader('SKILLS'),
+          // height8,
           ...SkillType.values.map((skillType) {
 
             final currentLevel = current.skills[skillType] ?? 0;
@@ -1718,14 +1721,24 @@ class AmuletUI {
               return nothing;
             }
 
-            return buildComparisonRow(
-              lead: Row(children: [
-                buildIconSkillType(skillType),
-                width4,
-                buildText(skillType.name.clean, color: Colors.white70, size: 16),
-              ],),
-              value: nextLevel,
-              diff: levelDiff,
+            return Container(
+              color: Colors.black12,
+              margin: const EdgeInsets.only(bottom: 8),
+              child: buildComparisonRow(
+                lead: Row(children: [
+                  Container(
+                    color: Colors.black12,
+                      width: 24,
+                      height: 24,
+                      alignment: Alignment.center,
+                      child: buildIconSkillType(skillType)
+                  ),
+                  width8,
+                  buildText(skillType.name.clean, color: Colors.white70, size: 15),
+                ],),
+                value: nextLevel,
+                diff: levelDiff,
+              ),
             );
           })
       ],
@@ -1800,13 +1813,23 @@ class AmuletUI {
           buildRow(buildIconHealth(), maxHealth),
         if (maxMagic != null && maxMagic > 0)
           buildRow(buildIconMagic(), maxMagic),
-        ...amuletItem.skills.entries.map((e) => Row(children: [
-          buildIconSkillType(e.key),
-          width4,
-          buildTextValue('+${e.value}'),
-          width4,
-          buildTextValue(e.key.name.clean),
-        ],)),
+        height16,
+        ...amuletItem.skills.entries.map((e) => Container(
+          margin: const EdgeInsets.only(bottom: 8),
+          child: Row(children: [
+            Container(
+                width: 24,
+                height: 24,
+                alignment: Alignment.center,
+                color: Colors.black26,
+                child: buildIconSkillType(e.key)),
+            width8,
+            buildTextValue(e.key.name.clean),
+            // width4,
+            expanded,
+            buildText('+${e.value}', color: Colors.green),
+          ],),
+        )),
         height16,
         alignRight(child: buildBorder(
             color: Colors.green,
