@@ -103,9 +103,9 @@ class AmuletUI {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  buildWatch(amulet.aimTargetItemTypeComparison, buildWindowAmuletItem),
+                  buildWatch(amulet.aimTargetItemTypeComparison, buildCardAmuletItem),
                   width8,
-                  buildWatch(amulet.aimTargetItemType, buildWindowAmuletItem),
+                  buildWatch(amulet.aimTargetItemType, buildCardAmuletItem),
                 ],
               ),
           ),
@@ -1584,7 +1584,7 @@ class AmuletUI {
           panel: Column(
             children: [
               buildText('right click to drop'),
-              buildWindowAmuletItem(amuletItem),
+              buildCardAmuletItem(amuletItem),
             ],
           ),
           left: 90,
@@ -1615,75 +1615,101 @@ class AmuletUI {
   Widget buildIconSkillType(SkillType skillType, {double dstX = 0, double dstY = 0}) =>
       AmuletImageSrc(src: getSrcSkillType(skillType), dstX: dstX, dstY: dstY);
 
-  Widget buildWindowAmuletItem(AmuletItem? amuletItem) {
+  Widget buildCardAmuletItem(AmuletItem? amuletItem) {
     if (amuletItem == null) {
       return nothing;
     }
 
+    final slotType = amuletItem.slotType;
+    final equippedItemType = amulet.getEquippedItemType(slotType);
+    final equipped = equippedItemType == amuletItem;
+
+    return buildBorder(
+      width: 2,
+      color: Colors.white70,
+      child: Container(
+        width: 190,
+        color: Palette.brownDark,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildCardHeader(slotType.name),
+            Container(
+              padding: const EdgeInsets.all(4),
+              color: Colors.black12,
+              height: 60,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AmuletItemImage(amuletItem: amuletItem, scale: 1.0),
+                  width8,
+                  buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
+                ],
+              ),
+            ),
+            if (equipped)
+              Container(
+                  padding: const EdgeInsets.all(8),
+                  child: buildColumnAmuletItemStats(amuletItem)),
+            if (equippedItemType != null && !equipped)
+              buildColumnCompareAmuletItems(equippedItemType, amuletItem),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildColumnCompareAmuletItems(AmuletItem current, AmuletItem next){
+
+    final damageDiff = getDiff(next.damage, current.damage);
+
+    return Column(
+      children: [
+          if (damageDiff != null)
+            buildText('damage ${damageDiff}'),
+      ],
+    );
+  }
+
+  double getDiffDouble(double? a, double? b){
+     return (a ?? 0.0) - (b ?? 0.0);
+  }
+
+  num? getDiff(num? a, num? b){
+    if (a == null && b == null) {
+      return null;
+    }
+    return (a ?? 0.0) - (b ?? 0.0);
+  }
+
+  Widget buildColumnAmuletItemStats(AmuletItem amuletItem){
     final damage = amuletItem.damage;
     final maxHealth = amuletItem.maxHealth;
     final maxMagic = amuletItem.maxMagic;
     final range = amuletItem.range;
     final attackSpeed = amuletItem.attackSpeed;
-    final slotType = amuletItem.slotType;
-    final equippedItemType = amulet.getEquippedItemType(slotType);
-    final equipped = equippedItemType == amuletItem;
 
-    return Container(
-      width: 190,
-      color: Palette.brownDark,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          buildCardHeader(slotType.name),
-          Container(
-            padding: const EdgeInsets.all(4),
-            color: Colors.black12,
-            height: 60,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                AmuletItemImage(amuletItem: amuletItem, scale: 1.0),
-                width8,
-                buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
-              ],
-            ),
-          ),
-          GSContainer(
-            child: Column(
-              children: [
-                if (damage != null)
-                  buildRow(buildIconDamage(), damage),
-                if (range != null)
-                  buildBarsRange(range.index),
-                if (attackSpeed != null)
-                  buildBarsAttackSpeed(attackSpeed.index),
-                if (maxHealth != null && maxHealth > 0)
-                  buildRow(buildIconHealth(), maxHealth),
-                if (maxMagic != null && maxMagic > 0)
-                  buildRow(buildIconMagic(), maxMagic),
-                ...amuletItem.skills.entries.map((e) => Row(children: [
-                  buildIconSkillType(e.key),
-                  width4,
-                  buildTextValue('+${e.value}'),
-                  width4,
-                  buildTextValue(e.key.name.clean),
-                ],)),
-
-
-                // if (equippedItemType == amuletItem)
-                alignRight(
-                  child: Container(
-                    margin: const EdgeInsets.only(top: 8),
-                    child: buildIconSlotType(slotType),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+    return Column(
+      children: [
+        if (damage != null)
+          buildRow(buildIconDamage(), damage),
+        if (range != null)
+          buildBarsRange(range.index),
+        if (attackSpeed != null)
+          buildBarsAttackSpeed(attackSpeed.index),
+        if (maxHealth != null && maxHealth > 0)
+          buildRow(buildIconHealth(), maxHealth),
+        if (maxMagic != null && maxMagic > 0)
+          buildRow(buildIconMagic(), maxMagic),
+        ...amuletItem.skills.entries.map((e) => Row(children: [
+          buildIconSkillType(e.key),
+          width4,
+          buildTextValue('+${e.value}'),
+          width4,
+          buildTextValue(e.key.name.clean),
+        ],)),
+      ],
     );
   }
 

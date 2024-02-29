@@ -954,7 +954,7 @@ extension isometricDebugUI on IsometricDebug {
 
   Widget buildButtonAcquireAmuletItem(AmuletItem amuletItem) => onPressed(
       action: () => amulet.requestAcquireAmuletItem(amuletItem),
-      child: amulet.amuletUI.buildWindowAmuletItem(amuletItem),
+      child: amulet.amuletUI.buildCardAmuletItem(amuletItem),
     );
 
   Widget buildButtonReset() => onPressed(
