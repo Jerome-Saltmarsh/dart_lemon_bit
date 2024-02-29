@@ -1527,22 +1527,22 @@ class AmuletUI {
           height: cardWidth * goldenRatio_1618,
           padding: EdgeInsets.zero,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildCardHeader('${skillType.casteType.name} Skill'),
-              controlSkillTitle,
-              Container(
-                padding: const EdgeInsets.all(16),
-                alignment: Alignment.center,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    contents,
-                    bottomRow,
-                  ],
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildCardHeader('${skillType.casteType.name} Skill'),
+                  controlSkillTitle,
+                  Container(
+                      padding: const EdgeInsets.all(8),
+                      child: contents),
+                ],
               ),
+              Container(
+                  padding: const EdgeInsets.all(8),
+                  child: bottomRow),
             ],
           )),
     );
