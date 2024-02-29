@@ -1130,7 +1130,7 @@ class AmuletUI {
 
   Widget buildBarsRange(int? weaponRange) => Row(
         children: [
-          buildIconRange(),
+          buildText('range'),
           width8,
           buildBars(
             total: 4,
@@ -1141,7 +1141,7 @@ class AmuletUI {
 
   Widget buildBarsAttackSpeed(int? value) => Row(
         children: [
-          buildIconAttackSpeed(),
+          buildText('speed'),
           width8,
           buildBars(
             total: 4,
@@ -1702,7 +1702,7 @@ class AmuletUI {
     return Column(
       children: [
         if (damage != null)
-          buildRow(buildIconDamage(), damage),
+          buildRow(buildText('damage'), damage.toInt()),
         if (range != null)
           buildBarsRange(range.index),
         if (attackSpeed != null)
