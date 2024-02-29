@@ -106,7 +106,7 @@ class Amulet extends IsometricGame {
   final emptyItemSlot = buildText('-');
 
   final aimTargetItemType = Watch<AmuletItem?>(null);
-  final aimTargetItemTypeComparison = Watch<AmuletItem?>(null);
+  // final aimTargetItemTypeComparison = Watch<AmuletItem?>(null);
   final aimTargetItemTypeCurrent = Watch<AmuletItem?>(null);
   final highlightedAmuletItem = Watch<AmuletItem?>(null);
 
@@ -155,46 +155,46 @@ class Amulet extends IsometricGame {
       screenColor.value = Colors.black.withOpacity((1.0 - t).clamp(0, 1.0));
     });
 
-    aimTargetItemType.onChanged((itemType) {
-
-      if (itemType == null){
-        aimTargetItemTypeComparison.value = null;
-        return;
-      }
-
-      if (itemType.isWeapon) {
-        if (itemType == equippedWeapon.value){
-          aimTargetItemTypeComparison.value = null;
-        } else {
-          aimTargetItemTypeComparison.value = equippedWeapon.value;
-        }
-      }
-
-      if (itemType.isHelm) {
-        if (itemType == equippedHelm.value) {
-          aimTargetItemTypeComparison.value = null;
-        } else {
-          aimTargetItemTypeComparison.value = equippedHelm.value;
-        }
-
-      }
-
-      if (itemType.isArmor) {
-        if (itemType == equippedArmor.value) {
-          aimTargetItemTypeComparison.value = null;
-        } else {
-          aimTargetItemTypeComparison.value = equippedArmor.value;
-        }
-      }
-
-      if (itemType.isShoes) {
-        if (itemType == equippedShoes.value){
-          aimTargetItemTypeComparison.value = null;
-        } else {
-          aimTargetItemTypeComparison.value = equippedShoes.value;
-        }
-      }
-    });
+    // aimTargetItemType.onChanged((itemType) {
+    //
+    //   if (itemType == null){
+    //     // aimTargetItemTypeComparison.value = null;
+    //     return;
+    //   }
+    //
+    //   if (itemType.isWeapon) {
+    //     if (itemType == equippedWeapon.value){
+    //       aimTargetItemTypeComparison.value = null;
+    //     } else {
+    //       aimTargetItemTypeComparison.value = equippedWeapon.value;
+    //     }
+    //   }
+    //
+    //   if (itemType.isHelm) {
+    //     if (itemType == equippedHelm.value) {
+    //       aimTargetItemTypeComparison.value = null;
+    //     } else {
+    //       aimTargetItemTypeComparison.value = equippedHelm.value;
+    //     }
+    //
+    //   }
+    //
+    //   if (itemType.isArmor) {
+    //     if (itemType == equippedArmor.value) {
+    //       aimTargetItemTypeComparison.value = null;
+    //     } else {
+    //       aimTargetItemTypeComparison.value = equippedArmor.value;
+    //     }
+    //   }
+    //
+    //   if (itemType.isShoes) {
+    //     if (itemType == equippedShoes.value){
+    //       aimTargetItemTypeComparison.value = null;
+    //     } else {
+    //       aimTargetItemTypeComparison.value = equippedShoes.value;
+    //     }
+    //   }
+    // });
 
     fiendCountAlive.onChanged((t) {
       updateFiendCountTotal();

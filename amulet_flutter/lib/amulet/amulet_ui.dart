@@ -103,8 +103,6 @@ class AmuletUI {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  buildWatch(amulet.aimTargetItemTypeComparison, buildCardAmuletItem),
-                  width8,
                   buildWatch(amulet.aimTargetItemType, buildCardAmuletItem),
                 ],
               ),
@@ -1653,7 +1651,10 @@ class AmuletUI {
                   padding: const EdgeInsets.all(8),
                   child: buildColumnAmuletItemStats(amuletItem)),
             if (equippedItemType != null && !equipped)
-              buildColumnCompareAmuletItems(equippedItemType, amuletItem),
+              Container(
+                padding: const EdgeInsets.all(8),
+                child: buildColumnCompareAmuletItems(equippedItemType, amuletItem),
+              ),
           ],
         ),
       ),
@@ -1662,12 +1663,20 @@ class AmuletUI {
 
   Widget buildColumnCompareAmuletItems(AmuletItem current, AmuletItem next){
 
-    final damageDiff = getDiff(next.damage, current.damage);
+    final damageDiff = getDiff(next.damage, current.damage)?.toInt();
 
     return Column(
       children: [
           if (damageDiff != null)
-            buildText('damage ${damageDiff}'),
+            Row(
+              children: [
+                buildText('damage'),
+                width8,
+                buildText(next.damage?.toInt()),
+                width8,
+                buildText('(${damageDiff > 0 ? "+" : ""}$damageDiff)', color: damageDiff > 0 ? Colors.green : Colors.red),
+              ],
+            ),
       ],
     );
   }
