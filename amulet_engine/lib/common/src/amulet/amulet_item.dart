@@ -160,6 +160,7 @@ enum AmuletItem {
     slotType: SlotType.Helm,
     subType: HelmType.Leather_Cap,
     maxHealth: 5,
+      maxMagic: 3,
       skills: {
         SkillType.Mighty_Strike: 1,
         SkillType.Heal: 2,
@@ -197,7 +198,7 @@ enum AmuletItem {
     slotType: SlotType.Helm,
     subType: HelmType.Pointed_Hat_Purple,
     maxHealth: 1,
-    maxMagic: 3,
+    maxMagic: 10,
       skills: {
         SkillType.Fireball: 1,
       }
@@ -208,10 +209,10 @@ enum AmuletItem {
     slotType: SlotType.Helm,
     subType: HelmType.Pointed_Hat_Black,
     maxHealth: 2,
-    maxMagic: 5,
-      skills: {
-        SkillType.Fireball: 1,
-      }
+    maxMagic: 15,
+    skills: {
+      SkillType.Fireball: 1,
+    }
   ),
   Helm_Cowl(
     label: 'Cowl',

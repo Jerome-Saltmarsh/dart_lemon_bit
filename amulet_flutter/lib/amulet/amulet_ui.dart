@@ -30,6 +30,7 @@ class AmuletUI {
   final iconCheckBoxFalse = AmuletImage(srcX: 560, srcY: 16, width: 16, height: 16);
 
   late final iconMagic = buildIconMagic();
+  late final iconHealth = buildIconHealth();
 
   var visibleRightClickedToClear = true;
 
@@ -506,15 +507,15 @@ class AmuletUI {
       }),
     );
 
-    final itemQuality = Container(
-      margin: const EdgeInsets.symmetric(horizontal: 5),
-      child: buildWatch(amulet.aimTargetItemType, (itemType) {
-        if (itemType == null){
-          return nothing;
-        }
-        return buildText(itemType.quality.name, size: 15, color: Colors.white70);
-      }),
-    );
+    // final itemQuality = Container(
+    //   margin: const EdgeInsets.symmetric(horizontal: 5),
+    //   child: buildWatch(amulet.aimTargetItemType, (itemType) {
+    //     if (itemType == null){
+    //       return nothing;
+    //     }
+    //     return buildText(itemType.quality.name, size: 15, color: Colors.white70);
+    //   }),
+    // );
 
     final name = Container(
       alignment: Alignment.centerLeft,
@@ -546,7 +547,7 @@ class AmuletUI {
                 }),
                 width4,
                 fiendType,
-                itemQuality,
+                // itemQuality,
               ],
             ),
           ),
@@ -1492,7 +1493,10 @@ class AmuletUI {
     final contents = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildTextValue(getSkillTypeDescription(skillType)),
+        Container(
+            padding: const EdgeInsets.all(8),
+            color: Colors.white10,
+            child: buildTextValue(getSkillTypeDescription(skillType))),
         height8,
         if (level > 0)
           buildText('current'),
@@ -1655,11 +1659,11 @@ class AmuletUI {
             if (equipped)
               Container(
                   padding: const EdgeInsets.all(8),
-                  child: buildColumnAmuletItemStats(amuletItem)),
+                  child: buildCardAmuletItemEquipped(amuletItem)),
             if (equippedItemType != null && !equipped)
               Container(
                 padding: const EdgeInsets.all(8),
-                child: buildColumnCompareAmuletItems(equippedItemType, amuletItem),
+                child: buildCardCompareAmuletItems(equippedItemType, amuletItem),
               ),
           ],
         ),
@@ -1667,24 +1671,66 @@ class AmuletUI {
     );
   }
 
-  Widget buildColumnCompareAmuletItems(AmuletItem current, AmuletItem next){
+  Widget buildCardCompareAmuletItems(AmuletItem current, AmuletItem next){
 
     final damageDiff = getDiff(next.damage, current.damage)?.toInt();
+    final healthDiff = getDiff(next.maxHealth, current.maxHealth);
+    final magicDiff = getDiff(next.maxMagic, current.maxMagic);
 
     return Column(
       children: [
+          if (healthDiff != null)
+            buildComparisonRow(
+              lead: iconHealth,
+              value: next.maxHealth,
+              diff: healthDiff,
+            ),
+          if (magicDiff != null)
+            buildComparisonRow(
+              lead: iconMagic,
+              value: next.maxMagic,
+              diff: magicDiff,
+            ),
           if (damageDiff != null)
-            Row(
-              children: [
-                buildText('damage'),
-                width8,
-                buildText(next.damage?.toInt()),
-                width8,
-                buildText('(${damageDiff > 0 ? "+" : ""}$damageDiff)', color: damageDiff > 0 ? Colors.green : Colors.red),
-              ],
+            buildComparisonRow(
+              lead: 'damage',
+              value: next.damage,
+              diff: damageDiff,
             ),
       ],
     );
+  }
+
+  Widget buildComparisonRow({
+    required dynamic lead,
+    required num? value,
+    required num diff,
+  }) =>
+      Row(
+        children: [
+          if (lead is Widget)
+            lead,
+          if (lead is String)
+            buildText(lead),
+          width8,
+          buildText(value?.toInt() ?? '0'),
+          // width8,
+          expanded,
+          buildDiff(diff),
+        ],
+      );
+
+  Widget buildDiff(num diff) =>
+      buildText('${diff > 0 ? "+" : ""}${diff.toInt()}', color: getDiffColor(diff));
+
+  Color getDiffColor(num diff){
+    if (diff < 0) {
+      return Colors.red;
+    }
+    if (diff > 0) {
+      return Colors.green;
+    }
+    return Colors.white54;
   }
 
   double getDiffDouble(double? a, double? b){
@@ -1698,7 +1744,7 @@ class AmuletUI {
     return (a ?? 0.0) - (b ?? 0.0);
   }
 
-  Widget buildColumnAmuletItemStats(AmuletItem amuletItem){
+  Widget buildCardAmuletItemEquipped(AmuletItem amuletItem){
     final damage = amuletItem.damage;
     final maxHealth = amuletItem.maxHealth;
     final maxMagic = amuletItem.maxMagic;
@@ -1724,6 +1770,11 @@ class AmuletUI {
           width4,
           buildTextValue(e.key.name.clean),
         ],)),
+        height16,
+        alignRight(child: buildBorder(
+            color: Colors.green,
+            padding: const EdgeInsets.all(4),
+            child: buildText('EQUIPPED', color: Colors.green)))
       ],
     );
   }
