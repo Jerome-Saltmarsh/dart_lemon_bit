@@ -1704,8 +1704,6 @@ class AmuletUI {
             ),
 
           height16,
-          // buildTextHeader('SKILLS'),
-          // height8,
           ...SkillType.values.map((skillType) {
 
             final currentLevel = current.skills[skillType] ?? 0;
@@ -1723,6 +1721,7 @@ class AmuletUI {
 
             return Container(
               color: Colors.black12,
+              padding: EdgeInsets.symmetric(vertical: 4),
               margin: const EdgeInsets.only(bottom: 8),
               child: buildComparisonRow(
                 lead: Row(children: [

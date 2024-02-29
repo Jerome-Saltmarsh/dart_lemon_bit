@@ -1306,10 +1306,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   double getCharacterDamageTypeResistance(Character character, DamageType damageType) {
     switch (damageType){
       case DamageType.Melee:
-        final level = getCharacterSkillTypeLevel(character, SkillType.Tough);
+        final level = getCharacterSkillTypeLevel(character, SkillType.Shield);
         return SkillType.getPercentageDamageResistanceMelee(level);
       case DamageType.Pierce:
-        final level = getCharacterSkillTypeLevel(character, SkillType.Tough);
+        final level = getCharacterSkillTypeLevel(character, SkillType.Shield);
         return SkillType.getPercentageDamageResistanceMelee(level);
       case DamageType.Fire:
         throw Exception();
