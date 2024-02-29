@@ -17,9 +17,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   final String name;
   final AmuletScene amuletScene;
 
-  final chanceOfDropItemOnGrassCut = 0.25;
-  final gameObjectDeactivationTimer = 5000;
-  final lootDeactivationTimer = 5000;
+
+  final gameObjectDeactivationTimer = 10000;
 
   var cooldownTimer = 0;
   var flatNodes = Uint8List(0);
@@ -733,7 +732,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         spawnAmuletItemAtPosition(
           item: randomItem(AmuletItem.Consumables),
           position: target,
-          deactivationTimer: lootDeactivationTimer,
+          deactivationTimer: gameObjectDeactivationTimer,
         );
       }
 
@@ -886,7 +885,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   void customOnNodeDestroyed(int nodeType, int nodeIndex, int nodeOrientation) {
     switch (nodeType){
       case NodeType.Grass_Long:
-        if (randomChance(chanceOfDropItemOnGrassCut)){
+        if (randomChance(AmuletSettings.Chance_Of_Drop_Item_On_Grass_Cut)){
           spawnRandomConsumableAtIndex(nodeIndex);
         }
         break;

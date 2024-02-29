@@ -33,6 +33,7 @@ class AmuletUI {
   late final iconHealth = buildIconHealth();
 
   var visibleRightClickedToClear = true;
+  var visibleRightClickedToDrop = true;
 
   AmuletUI(this.amulet);
 
@@ -1574,10 +1575,11 @@ class AmuletUI {
       }
 
       final button = onPressed(
-        // onEnter: () => amulet.aimTargetItemType.value = amuletItem,
-        // onExit: () => amulet.aimTargetItemType.value = null,
         action: () => amulet.dropAmuletItem(amuletItem),
-        onRightClick: () => amulet.dropAmuletItem(amuletItem),
+        onRightClick: () {
+          visibleRightClickedToDrop = false;
+          amulet.dropAmuletItem(amuletItem);
+        },
         child: Container(
           width: size,
           height: size,
@@ -1591,7 +1593,8 @@ class AmuletUI {
           child: button,
           panel: Column(
             children: [
-              buildText('right click to drop'),
+              if (visibleRightClickedToDrop)
+                buildText('right click to drop'),
               buildCardAmuletItem(amuletItem),
             ],
           ),
@@ -1642,7 +1645,7 @@ class AmuletUI {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildCardHeader(slotType.name),
+            buildCardHeader('Item ${slotType.name}'),
             Container(
               padding: const EdgeInsets.all(4),
               color: Colors.black12,
@@ -1697,9 +1700,38 @@ class AmuletUI {
               value: next.damage,
               diff: damageDiff,
             ),
+
+          height16,
+          buildTextHeader('SKILLS'),
+          ...SkillType.values.map((skillType) {
+
+            final currentLevel = current.skills[skillType] ?? 0;
+            final nextLevel = next.skills[skillType] ?? 0;
+
+            if (currentLevel == 0 && nextLevel == 0) {
+              return nothing;
+            }
+
+            final levelDiff = getDiff(nextLevel, currentLevel);
+
+            if (levelDiff == null){
+              return nothing;
+            }
+
+            return buildComparisonRow(
+              lead: Row(children: [
+                buildIconSkillType(skillType),
+                width4,
+                buildText(skillType.name.clean, color: Colors.white70, size: 16),
+              ],),
+              value: nextLevel,
+              diff: levelDiff,
+            );
+          })
       ],
     );
   }
+
 
   Widget buildComparisonRow({
     required dynamic lead,
@@ -1741,6 +1773,11 @@ class AmuletUI {
     if (a == null && b == null) {
       return null;
     }
+
+    if (a == 0 && b == 0) {
+      return null;
+    }
+
     return (a ?? 0.0) - (b ?? 0.0);
   }
 
@@ -2086,7 +2123,7 @@ class AmuletUI {
         child: button,
         panel: Column(
           children: [
-            // if (visibleRightClickedToClear)
+            if (visibleRightClickedToClear)
               buildText('right click to change'),
             buildCardSkillType(skillType),
           ],
