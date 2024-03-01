@@ -1378,40 +1378,49 @@ class AmuletUI {
          final unlocked = level > 0;
          final child = onPressed(
            action: unlocked ? () => amulet.toggleSkillType(skillType) : null,
-           child: Container(
-             width: Container_Size,
-             height: Container_Size,
-             margin: const EdgeInsets.only(bottom: 6),
-             child: Stack(
-               clipBehavior: Clip.none,
-               fit: StackFit.passthrough,
-               children: [
-                 Container(
-                   width: Container_Size,
-                   height: Container_Size,
-                   color: unlocked ? Palette.brown_3 : Colors.transparent,
+           child: Column(
+             children: [
+               Container(
+                 width: Container_Size,
+                 height: Container_Size,
+                 child: Stack(
+                   clipBehavior: Clip.none,
+                   fit: StackFit.passthrough,
+                   children: [
+                     Container(
+                       width: Container_Size,
+                       height: Container_Size,
+                       color: unlocked ? Palette.brown_3 : Colors.transparent,
+                     ),
+                     // b,
+                     Positioned(
+                       child: Container(
+                         width: Container_Size,
+                         height: Container_Size,
+                         alignment: Alignment.center,
+                         child: buildIconSkillType(skillType),
+                       ),
+                     ),
+                     if (level > 0)
+                       Positioned(
+                           bottom: 0,
+                           right: 0,
+                           child:   Container(
+                               width: 20,
+                               height: 20,
+                               color: assigned ? Palette.teal_2 : Palette.brown_1,
+                               alignment: Alignment.center,
+                               child: buildText(level)))
+                   ],
                  ),
-                 // b,
-                 Positioned(
-                   child: Container(
-                     width: Container_Size,
-                     height: Container_Size,
-                     alignment: Alignment.center,
-                     child: buildIconSkillType(skillType),
-                   ),
-                 ),
-                 if (level > 0)
-                   Positioned(
-                       bottom: 0,
-                       right: 0,
-                       child:   Container(
-                           width: 20,
-                           height: 20,
-                           color: assigned ? Palette.teal_2 : Palette.brown_1,
-                           alignment: Alignment.center,
-                           child: buildText(level)))
-               ],
-             ),
+               ),
+               Container(
+                   margin: const EdgeInsets.only(bottom: 6),
+                 width: Container_Size,
+                   color: Colors.black87,
+                   alignment: Alignment.center,
+                   child: buildText(level)),
+             ],
            ),
          );
 
