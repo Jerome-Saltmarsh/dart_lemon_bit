@@ -99,21 +99,21 @@ class AmuletUI {
               ),
           ),
           Positioned(
-              top: 8,
-              left: 8,
-              child:
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  buildWatch(amulet.aimTargetItemType, buildCardAmuletItem),
-                ],
-              ),
-          ),
-          Positioned(
               bottom: 64,
               left: 8,
               child: buildHudBottomLeft(),
           ),
+      Positioned(
+        top: 8,
+        left: 8,
+        child:
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildWatch(amulet.aimTargetItemType, buildCardAmuletItem),
+          ],
+        ),
+      ),
 
 
       Positioned(
@@ -1178,12 +1178,21 @@ class AmuletUI {
   }
 
   Widget buildBars({required int total, required int value}) =>
-      Row(children: List.generate(total, (index) => Container(
-         width: 4,
-         height: 4 * goldenRatio_1618,
-         margin: const EdgeInsets.only(right: 4),
-         color: value >= index ? Colors.white70 : Colors.white24,
-       )));
+      Row(
+      children: List.generate(
+          total,
+          (index) =>
+              buildBarBlock(color: value >= index ? Colors.white70 : Colors.white24))
+      );
+
+  Widget buildBarBlock({required Color color}){
+    return Container(
+      width: 8,
+      height: 8,
+      margin: const EdgeInsets.only(right: 4),
+      color: color,
+    );
+  }
 
   Widget buildIconAgility() =>
       AmuletImage(srcX: 768, srcY: 64, width: 16, height: 16);
@@ -1802,15 +1811,13 @@ class AmuletUI {
     }
 
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         buildText(text),
         width8,
         Row(
           children: List.generate(4, (index) {
-            return Container(
-              width: 8,
-              height: 14,
-              margin: const EdgeInsets.only(right: 6),
+            return buildBarBlock(
               color:
                   index <= next && index <= current ? Colors.white :
                   index > current && index > next ? Colors.white12 :
