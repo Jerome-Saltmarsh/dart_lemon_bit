@@ -1702,7 +1702,9 @@ class AmuletUI {
               value: next.damage,
               diff: damageDiff,
             ),
-          buildRangeDiff(current, next),
+          buildCompareBars('range', current.range?.index ?? 0, next.range?.index ?? 0),
+          buildCompareBars('speed', current.attackSpeed?.index ?? 0, next.attackSpeed?.index ?? 0),
+          // buildRangeDiff(current, next),
           height16,
           ...SkillType.values.map((skillType) {
 
@@ -1773,6 +1775,46 @@ class AmuletUI {
                   index <= currentRange && index <= nextRange ? Colors.white :
                   index > currentRange && index > nextRange ? Colors.white12 :
                   currentRange > nextRange ? Colors.red : Colors.green
+              ,
+            );
+          }).toList(growable: false),
+        ),
+        expanded,
+        buildDiff(diff),
+      ],
+    );
+  }
+
+  Widget buildCompareBars(String text, num current, num next){
+
+    if (current == 0 && next == 0){
+      return nothing;
+    }
+
+    final diff = getDiff(next, current);
+
+    if (current == 0 && next == 0){
+      return nothing;
+    }
+
+    if (diff == null){
+      return nothing;
+    }
+
+    return Row(
+      children: [
+        buildText(text),
+        width8,
+        Row(
+          children: List.generate(4, (index) {
+            return Container(
+              width: 8,
+              height: 14,
+              margin: const EdgeInsets.only(right: 6),
+              color:
+                  index <= next && index <= current ? Colors.white :
+                  index > current && index > next ? Colors.white12 :
+                  current > next ? Colors.red.withOpacity(0.7) : Colors.green
               ,
             );
           }).toList(growable: false),
