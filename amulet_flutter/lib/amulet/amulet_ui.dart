@@ -1819,7 +1819,7 @@ class AmuletUI {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         buildText(text),
-        width8,
+        expanded,
         Row(
           children: List.generate(4, (index) {
             if (index <= next && index <= current){
@@ -1834,8 +1834,8 @@ class AmuletUI {
             return barBlockGreen;
           }).toList(growable: false),
         ),
-        expanded,
-        buildDiff(diff),
+        // expanded,
+        // buildDiff(diff),
       ],
     );
 
