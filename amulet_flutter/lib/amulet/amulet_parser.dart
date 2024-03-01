@@ -329,7 +329,7 @@ extension AmuletParser on IsometricParser {
 
     for (var i = 0; i < SkillType.values.length; i++) {
       final skillType = readSkillType();
-       amulet.playerSkillTypeLevels[skillType]?.value = readUInt16();
+       amulet.playerSkillTypeLevels[skillType] = readUInt16();
     }
     amulet.playerSkillTypeLevelNotifier.value++;
   }

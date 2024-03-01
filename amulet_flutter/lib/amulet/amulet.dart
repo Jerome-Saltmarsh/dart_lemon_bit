@@ -78,9 +78,9 @@ class Amulet extends IsometricGame {
   final playerWeaponRange = Watch<int?>(0);
   final playerWeaponAttackSpeed = Watch<int?>(0);
 
-  final playerSkillTypeLevels = SkillType.values.asMapReversed((t) => Watch(0));
+  final playerSkillTypeLevels = Map.fromEntries(SkillType.values.map((skillType) => MapEntry(skillType, 0)));
   final playerSkillTypeLevelNotifier = Watch(0);
-  final playerSkillTypeSlotIndex = SkillType.values.asMapReversed((t) => Watch<int?>(null));
+  // final playerSkillTypeSlotIndex = Map.fromEntries(SkillType.values.map((skillType) => MapEntry(skillType, 0)));
   final playerSkillTypeSlotAssigned = SkillType.values.asMapReversed((t) => Watch(false));
   final playerSkillLeft = Watch(SkillType.Strike);
   final playerSkillRight = Watch(SkillType.Strike);
@@ -230,7 +230,7 @@ class Amulet extends IsometricGame {
   void onChangedSkillSlots(int _){
      for (final skillType in SkillType.values) {
        final index = amulet.getSkillTypeSlotIndex(skillType);
-       amulet.playerSkillTypeSlotIndex[skillType]?.value = index;
+       // amulet.playerSkillTypeSlotIndex[skillType] = index;
        amulet.playerSkillTypeSlotAssigned[skillType]?.value = index != null;
      }
   }
@@ -857,9 +857,5 @@ class Amulet extends IsometricGame {
   }
 
   int getSkillTypeLevel(SkillType skillType) =>
-      getSkillTypeWatchLevel(skillType).value;
-
-  Watch<int> getSkillTypeWatchLevel(SkillType skillType) =>
-      playerSkillTypeLevels[skillType] ??
-          (throw Exception('amulet.getSkillTypeWatchLevel($skillType'));
+      playerSkillTypeLevels[skillType] ?? (throw Exception());
 }
