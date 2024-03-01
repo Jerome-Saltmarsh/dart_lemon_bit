@@ -26,6 +26,7 @@ class AmuletUI {
 
   final Amulet amulet;
   final filterSkillTypes = WatchBool(false);
+  final filterCasteType = Watch(CasteType.Passive);
   final iconCheckBoxTrue = AmuletImage(srcX: 560, srcY: 0, width: 16, height: 16);
   final iconCheckBoxFalse = AmuletImage(srcX: 560, srcY: 16, width: 16, height: 16);
 
@@ -1245,27 +1246,66 @@ class AmuletUI {
                 ],
               ),
               height16,
-              Container(
-                // constraints: BoxConstraints(
-                //   maxHeight: amulet.engine.screen.height - 270,
-                // ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    buildColumnCasteType(CasteType.Sword),
-                    width8,
-                    buildColumnCasteType(CasteType.Bow),
-                    width8,
-                    buildColumnCasteType(CasteType.Staff),
-                    width8,
-                    buildColumnCasteType(CasteType.Passive),
-                  ],
-                ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildColumnCasteType(CasteType.Sword),
+                  width8,
+                  buildColumnCasteType(CasteType.Bow),
+                  width8,
+                  buildColumnCasteType(CasteType.Staff),
+                  width8,
+                  buildColumnCasteType(CasteType.Passive),
+                ],
               ),
+              height32,
+              buildGridSkillTypes(),
             ],
           ),
         ),
   );
+
+  Widget buildGridSkillTypes() =>
+      buildWatch(filterCasteType, (activeCasteType) {
+
+        final filteredSkills = SkillType.values
+            .where((skillType) => skillType.casteType == activeCasteType)
+            .toList(growable: false);
+
+        const columnsPerRow = 4;
+        final totalRows = filteredSkills.length ~/ columnsPerRow;
+
+        var i = 0;
+        final rows = List.generate(totalRows, (rowIndex) {
+
+           final a = filteredSkills.tryGet(i++);
+           final b = filteredSkills.tryGet(i++);
+           final c = filteredSkills.tryGet(i++);
+           final d = filteredSkills.tryGet(i++);
+
+           return Row(
+              children: [
+                 if (a != null)
+                   Container(
+                       margin: const EdgeInsets.only(right: 8),
+                       child: buildWindowPlayerSkillsItem(a)),
+                 if (b != null)
+                   Container(
+                       margin: const EdgeInsets.only(right: 8),
+                       child: buildWindowPlayerSkillsItem(b)),
+                 if (c != null)
+                   Container(
+                       margin: const EdgeInsets.only(right: 8),
+                       child: buildWindowPlayerSkillsItem(c)),
+                 if (d != null)
+                   buildWindowPlayerSkillsItem(d),
+              ],
+           );
+        });
+        return Column(
+          children: rows,
+        );
+      });
 
   Widget buildHint({
     required Widget child,
@@ -1310,14 +1350,55 @@ class AmuletUI {
                 ],
               ));
 
-  Widget buildColumnCasteType(CasteType casteType) =>
-      Container(
+
+  Widget buildColumnCasteType(CasteType casteType) {
+
+    // final column = Column(
+    //     children: SkillType.values
+    //         .where((element) =>
+    //     !const [
+    //       SkillType.None,
+    //       SkillType.Strike,
+    //       SkillType.Shoot_Arrow,
+    //     ].contains(element) &&
+    //         element.casteType == casteType)
+    //         .map((skillType) {
+    //       final value = buildWindowPlayerSkillsItem(skillType);
+    //       final watchLevel = amulet.playerSkillTypeLevels[skillType] ??
+    //           (throw Exception());
+    //
+    //       final unlocked = buildWatch(watchLevel, (level) {
+    //         if (level <= 0) {
+    //           return nothing;
+    //         }
+    //         return value;
+    //       });
+    //
+    //       return buildWatch(filterSkillTypes, (filter) {
+    //         if (filter) {
+    //           return unlocked;
+    //         }
+    //         return value;
+    //       });
+    //     }).toList(growable: false));
+
+    return Container(
         width: 50,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             buildMouseOverHint(
-                child: buildIconCasteType(casteType),
+                child: buildWatch(filterCasteType, (activeCasteType){
+                   return onPressed(
+                     action: () => filterCasteType.value = casteType,
+                     child: Container(
+                         width: 50,
+                         height: 50,
+                         alignment: Alignment.center,
+                         color: activeCasteType == casteType ? Colors.black45 : Colors.black12,
+                         child: buildIconCasteType(casteType)),
+                   );
+                }),
                 panel: buildBorder(
                   width: 2,
                   color: Colors.white70,
@@ -1332,41 +1413,17 @@ class AmuletUI {
                 right: -40,
                 getTop: () => -70,
             ),
-            height32,
-            Column(
-                children: SkillType.values
-                    .where((element) =>
-                        !const [
-                          SkillType.None,
-                          SkillType.Strike,
-                          SkillType.Shoot_Arrow,
-                        ].contains(element) &&
-                        element.casteType == casteType)
-                    .map((skillType) {
-              final value = buildWindowPlayerSkillsItem(skillType);
-              final watchLevel = amulet.playerSkillTypeLevels[skillType] ??
-                  (throw Exception());
-
-              final unlocked = buildWatch(watchLevel, (level) {
-                if (level <= 0) {
-                  return nothing;
-                }
-                return value;
-              });
-
-              return buildWatch(filterSkillTypes, (filter) {
-                if (filter) {
-                  return unlocked;
-                }
-                return value;
-              });
-            }).toList(growable: false)),
+            // height32,
+            // buildWatch(filterCasteType, (activeCasteType) {
+            //   return activeCasteType == casteType ? column : nothing;
+            // })
           ],
         ),
       );
+  }
 
 
-  static const Container_Size = 34.0;
+  static const Container_Size = 50.0;
 
   Widget buildWindowPlayerSkillsItem(SkillType skillType){
 
