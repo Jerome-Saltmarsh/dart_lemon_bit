@@ -29,6 +29,11 @@ class AmuletUI {
   final iconCheckBoxTrue = AmuletImage(srcX: 560, srcY: 0, width: 16, height: 16);
   final iconCheckBoxFalse = AmuletImage(srcX: 560, srcY: 16, width: 16, height: 16);
 
+  final barBlockWhite70 = buildBarBlock(color: Colors.white70);
+  final barBlockWhite24 = buildBarBlock(color: Colors.white24);
+  final barBlockGreen = buildBarBlock(color: Colors.green.withOpacity(0.7));
+  final barBlockRed = buildBarBlock(color: Colors.red.withOpacity(0.7));
+
   late final iconMagic = buildIconMagic();
   late final iconHealth = buildIconHealth();
 
@@ -1182,10 +1187,10 @@ class AmuletUI {
       children: List.generate(
           total,
           (index) =>
-              buildBarBlock(color: value >= index ? Colors.white70 : Colors.white24))
+            value >= index ? barBlockWhite70 : barBlockWhite24)
       );
 
-  Widget buildBarBlock({required Color color}){
+  static Widget buildBarBlock({required Color color}){
     return Container(
       width: 8,
       height: 8,
@@ -1817,13 +1822,16 @@ class AmuletUI {
         width8,
         Row(
           children: List.generate(4, (index) {
-            return buildBarBlock(
-              color:
-                  index <= next && index <= current ? Colors.white :
-                  index > current && index > next ? Colors.white12 :
-                  current > next ? Colors.red.withOpacity(0.7) : Colors.green
-              ,
-            );
+            if (index <= next && index <= current){
+              return barBlockWhite70;
+            }
+            if (index > current && index > next) {
+              return barBlockWhite24;
+            }
+            if (current > next){
+              return barBlockRed;
+            }
+            return barBlockGreen;
           }).toList(growable: false),
         ),
         expanded,
@@ -1906,19 +1914,21 @@ class AmuletUI {
         height16,
         ...amuletItem.skills.entries.map((e) => Container(
           margin: const EdgeInsets.only(bottom: 8),
-          child: Row(children: [
-            Container(
-                width: 24,
-                height: 24,
-                alignment: Alignment.center,
-                color: Colors.black26,
-                child: buildIconSkillType(e.key)),
-            width8,
-            buildTextValue(e.key.name.clean),
-            // width4,
-            expanded,
-            buildText('+${e.value}', color: Colors.green),
-          ],),
+          child: Container(
+            color: Colors.black26,
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            child: Row(children: [
+              Container(
+                  width: 24,
+                  height: 24,
+                  alignment: Alignment.center,
+                  child: buildIconSkillType(e.key)),
+              width8,
+              buildTextValue(e.key.name.clean),
+              expanded,
+              buildText('+${e.value}', color: Colors.green),
+            ],),
+          ),
         )),
         height16,
         alignRight(child: buildBorder(
