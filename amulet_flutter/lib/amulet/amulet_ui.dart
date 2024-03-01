@@ -1366,7 +1366,7 @@ class AmuletUI {
       );
 
 
-  static const Container_Size = 40.0;
+  static const Container_Size = 34.0;
 
   Widget buildWindowPlayerSkillsItem(SkillType skillType){
 
@@ -1383,41 +1383,15 @@ class AmuletUI {
                Container(
                  width: Container_Size,
                  height: Container_Size,
-                 child: Stack(
-                   clipBehavior: Clip.none,
-                   fit: StackFit.passthrough,
-                   children: [
-                     Container(
-                       width: Container_Size,
-                       height: Container_Size,
-                       color: unlocked ? Palette.brown_3 : Colors.transparent,
-                     ),
-                     // b,
-                     Positioned(
-                       child: Container(
-                         width: Container_Size,
-                         height: Container_Size,
-                         alignment: Alignment.center,
-                         child: buildIconSkillType(skillType),
-                       ),
-                     ),
-                     if (level > 0)
-                       Positioned(
-                           bottom: 0,
-                           right: 0,
-                           child:   Container(
-                               width: 20,
-                               height: 20,
-                               color: assigned ? Palette.teal_2 : Palette.brown_1,
-                               alignment: Alignment.center,
-                               child: buildText(level)))
-                   ],
-                 ),
+                 alignment: Alignment.center,
+                 child: buildIconSkillType(skillType),
+                 color: Colors.black26,
                ),
                Container(
                    margin: const EdgeInsets.only(bottom: 6),
-                 width: Container_Size,
-                   color: Colors.black87,
+                   width: Container_Size,
+                   height: Container_Size * goldenRatio_0381,
+                   color: Colors.black54,
                    alignment: Alignment.center,
                    child: buildText(level)),
              ],
