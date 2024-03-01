@@ -1249,13 +1249,13 @@ class AmuletUI {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  buildColumnCasteType(CasteType.Sword),
+                  buildButtonCasteType(CasteType.Sword),
                   width8,
-                  buildColumnCasteType(CasteType.Bow),
+                  buildButtonCasteType(CasteType.Bow),
                   width8,
-                  buildColumnCasteType(CasteType.Staff),
+                  buildButtonCasteType(CasteType.Staff),
                   width8,
-                  buildColumnCasteType(CasteType.Passive),
+                  buildButtonCasteType(CasteType.Passive),
                 ],
               ),
               height32,
@@ -1273,7 +1273,7 @@ class AmuletUI {
             .toList(growable: false);
 
         const columnsPerRow = 4;
-        final totalRows = filteredSkills.length ~/ columnsPerRow;
+        final totalRows = (filteredSkills.length / columnsPerRow).ceil();
 
         var i = 0;
         final rows = List.generate(totalRows, (rowIndex) {
@@ -1351,77 +1351,44 @@ class AmuletUI {
               ));
 
 
-  Widget buildColumnCasteType(CasteType casteType) {
-
-    // final column = Column(
-    //     children: SkillType.values
-    //         .where((element) =>
-    //     !const [
-    //       SkillType.None,
-    //       SkillType.Strike,
-    //       SkillType.Shoot_Arrow,
-    //     ].contains(element) &&
-    //         element.casteType == casteType)
-    //         .map((skillType) {
-    //       final value = buildWindowPlayerSkillsItem(skillType);
-    //       final watchLevel = amulet.playerSkillTypeLevels[skillType] ??
-    //           (throw Exception());
-    //
-    //       final unlocked = buildWatch(watchLevel, (level) {
-    //         if (level <= 0) {
-    //           return nothing;
-    //         }
-    //         return value;
-    //       });
-    //
-    //       return buildWatch(filterSkillTypes, (filter) {
-    //         if (filter) {
-    //           return unlocked;
-    //         }
-    //         return value;
-    //       });
-    //     }).toList(growable: false));
-
-    return Container(
+  Widget buildButtonCasteType(CasteType casteType) =>
+      Container(
         width: 50,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             buildMouseOverHint(
-                child: buildWatch(filterCasteType, (activeCasteType){
-                   return onPressed(
-                     action: () => filterCasteType.value = casteType,
-                     child: Container(
-                         width: 50,
-                         height: 50,
-                         alignment: Alignment.center,
-                         color: activeCasteType == casteType ? Colors.black45 : Colors.black12,
-                         child: buildIconCasteType(casteType)),
-                   );
-                }),
-                panel: buildBorder(
-                  width: 2,
-                  color: Colors.white70,
-                  child: GSContainer(child: Row(
-                    children: [
-                      buildText(casteType.name),
-                      width8,
-                      buildText('Skills'),
-                    ],
-                  )),
-                ),
-                right: -40,
-                getTop: () => -70,
+              child: buildWatch(filterCasteType, (activeCasteType) {
+                return onPressed(
+                  action: () => filterCasteType.value = casteType,
+                  child: Container(
+                      width: 50,
+                      height: 50,
+                      alignment: Alignment.center,
+                      color: activeCasteType == casteType
+                          ? Colors.black45
+                          : Colors.black12,
+                      child: buildIconCasteType(casteType)),
+                );
+              }),
+              panel: buildBorder(
+                width: 2,
+                color: Colors.white70,
+                child: GSContainer(
+                    child: Row(
+                  children: [
+                    buildText(casteType.name),
+                    width8,
+                    buildText('Skills'),
+                  ],
+                )),
+              ),
+              right: -40,
+              getTop: () => -70,
             ),
-            // height32,
-            // buildWatch(filterCasteType, (activeCasteType) {
-            //   return activeCasteType == casteType ? column : nothing;
-            // })
           ],
         ),
       );
-  }
-
 
   static const Container_Size = 50.0;
 
