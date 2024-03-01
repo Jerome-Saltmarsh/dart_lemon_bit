@@ -79,6 +79,7 @@ class Amulet extends IsometricGame {
   final playerWeaponAttackSpeed = Watch<int?>(0);
 
   final playerSkillTypeLevels = SkillType.values.asMapReversed((t) => Watch(0));
+  final playerSkillTypeLevelNotifier = Watch(0);
   final playerSkillTypeSlotIndex = SkillType.values.asMapReversed((t) => Watch<int?>(null));
   final playerSkillTypeSlotAssigned = SkillType.values.asMapReversed((t) => Watch(false));
   final playerSkillLeft = Watch(SkillType.Strike);

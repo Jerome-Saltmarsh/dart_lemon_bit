@@ -1400,10 +1400,10 @@ class AmuletUI {
   Widget buildWindowPlayerSkillsItem(SkillType skillType){
 
     final watchAssigned = amulet.playerSkillTypeSlotAssigned[skillType] ?? (throw Exception());
-    final watchLevel = amulet.playerSkillTypeLevels[skillType] ?? (throw Exception());
 
      return buildWatch(watchAssigned, (assigned) {
-       return buildWatch(watchLevel, (level) {
+       return buildWatch(amulet.playerSkillTypeLevelNotifier, (_) {
+         final level = amulet.getSkillTypeLevel(skillType);
          final unlocked = level > 0;
          final child = onPressed(
            action: unlocked ? () => amulet.toggleSkillType(skillType) : null,
@@ -1443,19 +1443,6 @@ class AmuletUI {
             ],
           ),
           bottom: 0,
-          // getTop: () {
-          //
-          //   final mouseY = mouseOverEnterPosition?.dy;
-          //   if (mouseY != null){
-          //     if (mouseY > amulet.engine.screen.height * 0.66){
-          //       return -200;
-          //     }
-          //     if (mouseY > amulet.engine.screen.height * 0.5){
-          //       return -140;
-          //     }
-          //   }
-          //   return -70;
-          // },
           right: Container_Size + 10,
         );
 
