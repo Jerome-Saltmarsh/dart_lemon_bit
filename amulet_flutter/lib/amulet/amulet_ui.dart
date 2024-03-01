@@ -1702,7 +1702,7 @@ class AmuletUI {
               value: next.damage,
               diff: damageDiff,
             ),
-
+          buildRangeDiff(current, next),
           height16,
           ...SkillType.values.map((skillType) {
 
@@ -1742,6 +1742,48 @@ class AmuletUI {
           })
       ],
     );
+  }
+
+  Widget buildRangeDiff(AmuletItem current, AmuletItem next){
+
+    final currentRange = current.range?.index ?? 0;
+    final nextRange = next.range?.index ?? 0;
+    final diff = getDiff(nextRange, currentRange);
+
+    if (currentRange == 0 && nextRange == 0){
+      return nothing;
+    }
+
+    if (diff == null){
+      return nothing;
+    }
+
+
+    return Row(
+      children: [
+        buildText('range'),
+        width8,
+        Row(
+          children: List.generate(4, (index) {
+            return Container(
+              width: 10,
+              height: 16,
+              margin: const EdgeInsets.only(right: 6),
+              color:
+                  index <= currentRange && index <= nextRange ? Colors.white :
+                  index > currentRange && index > nextRange ? Colors.white12 :
+                  currentRange > nextRange ? Colors.red : Colors.green
+              ,
+            );
+          }).toList(growable: false),
+        ),
+        expanded,
+        buildDiff(diff),
+      ],
+    );
+
+
+
   }
 
 
