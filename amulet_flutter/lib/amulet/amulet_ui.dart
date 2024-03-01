@@ -1218,10 +1218,11 @@ class AmuletUI {
   Widget buildIconHealthRegen() =>
       AmuletImage(srcX: 768, srcY: 32, width: 16, height: 16);
 
+
   Widget buildWindowPlayerSkills() => buildWindowBorder(
     child: GSContainer(
           width: 270,
-          height: amulet.engine.screen.height - 180,
+          height: 270 * goldenRatio_1618,
           child: Column(
             children: [
               Row(
@@ -1232,16 +1233,7 @@ class AmuletUI {
                     child: buildIconSkills(),
                     text: 'Skills (${amulet.amuletKeys.toggleWindowSkills.name.toUpperCase()})',
                   ),
-                  onPressed(
-                    action: filterSkillTypes.toggle,
-                    child: Row(
-                      children: [
-                        buildText('ALL'),
-                        width8,
-                        buildWatch(filterSkillTypes, buildIconCheckBox),
-                      ],
-                    ),
-                  ),
+                  // buildButtonFilterSkills(),
                   buildButtonClose(amulet.windowVisiblePlayerSkills)
                 ],
               ),
@@ -1264,6 +1256,19 @@ class AmuletUI {
           ),
         ),
   );
+
+  Widget buildButtonFilterSkills() {
+    return onPressed(
+                  action: filterSkillTypes.toggle,
+                  child: Row(
+                    children: [
+                      buildText('ALL'),
+                      width8,
+                      buildWatch(filterSkillTypes, buildIconCheckBox),
+                    ],
+                  ),
+                );
+  }
 
   Widget buildGridSkillTypes() =>
       buildWatch(filterCasteType, (activeCasteType) {
@@ -1437,20 +1442,21 @@ class AmuletUI {
               buildCardSkillType(skillType),
             ],
           ),
-          getTop: () {
-
-            final mouseY = mouseOverEnterPosition?.dy;
-            if (mouseY != null){
-              if (mouseY > amulet.engine.screen.height * 0.66){
-                return -200;
-              }
-              if (mouseY > amulet.engine.screen.height * 0.5){
-                return -140;
-              }
-            }
-            return -70;
-          },
-          right: Container_Size + 5,
+          bottom: 0,
+          // getTop: () {
+          //
+          //   final mouseY = mouseOverEnterPosition?.dy;
+          //   if (mouseY != null){
+          //     if (mouseY > amulet.engine.screen.height * 0.66){
+          //       return -200;
+          //     }
+          //     if (mouseY > amulet.engine.screen.height * 0.5){
+          //       return -140;
+          //     }
+          //   }
+          //   return -70;
+          // },
+          right: Container_Size + 10,
         );
 
          if (unlocked){
