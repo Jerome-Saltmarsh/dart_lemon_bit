@@ -618,28 +618,52 @@ class AmuletUI {
         ],
       );
 
-  Widget buildPlayerHealthBar() {
-
-    return IgnorePointer(
-      child: buildWatch(amulet.player.healthPercentage, (healthPercentage) {
-        if (healthPercentage == 0) {
-          return nothing;
-        }
-        return Container(
-          width: barWidth,
-          height: barHeight,
-          color: Colors.black26,
-          padding: const EdgeInsets.all(2),
+  Widget buildPlayerHealthBar() =>
+      IgnorePointer(
+        child: Stack(
           alignment: Alignment.centerLeft,
-          child: Container(
-            width: barWidth * healthPercentage,
-            height: barHeight,
-            color: AmuletColors.Health,
-          ),
-        );
-      }),
-    );
-  }
+          children: [
+            buildWatch(amulet.player.healthPercentage, (healthPercentage) =>
+                AmuletImage(
+                    srcX: 865,
+                    srcY: 111,
+                    width: 96 * healthPercentage,
+                    height: 16,
+                    scale: 0.5,
+                )
+                ),
+                AmuletImage(
+                    srcX: 864,
+                    srcY: 80,
+                    width: 100,
+                    height: 28,
+                    scale: 0.5,
+                ),
+          ],
+        ),
+      );
+  // Widget buildPlayerHealthBar() {
+  //
+  //   return IgnorePointer(
+  //     child: buildWatch(amulet.player.healthPercentage, (healthPercentage) {
+  //       if (healthPercentage == 0) {
+  //         return nothing;
+  //       }
+  //       return Container(
+  //         width: barWidth,
+  //         height: barHeight,
+  //         color: Colors.black26,
+  //         padding: const EdgeInsets.all(2),
+  //         alignment: Alignment.centerLeft,
+  //         child: Container(
+  //           width: barWidth * healthPercentage,
+  //           height: barHeight,
+  //           color: AmuletColors.Health,
+  //         ),
+  //       );
+  //     }),
+  //   );
+  // }
 
   Widget buildPlayerMagicBar() {
     return IgnorePointer(
@@ -1581,7 +1605,7 @@ class AmuletUI {
   Widget buildWatchAmuletItem(Watch<AmuletItem?> watchAmuletItem, SlotType slotType) {
 
     return buildWatch(watchAmuletItem, (amuletItem) {
-      const size = 50.0;
+      const size = 58.0;
       if (amuletItem == null){
         return Container(
           width: size,
@@ -1600,8 +1624,16 @@ class AmuletUI {
           width: size,
           height: size,
           alignment: Alignment.center,
-          color: Colors.black12,
-          child: AmuletItemImage(amuletItem: amuletItem, scale: size / 32,),
+          // color: Colors.black12,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              AmuletImage(srcX: 878, srcY: 30, width: 36, height: 36),
+              Container(
+                  // color: Colors.red,
+                  child: AmuletItemImage(amuletItem: amuletItem, scale: 1.2,)),
+            ],
+          ),
         ),
       );
 
