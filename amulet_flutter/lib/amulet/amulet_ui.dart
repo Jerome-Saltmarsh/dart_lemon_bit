@@ -648,6 +648,37 @@ class AmuletUI {
           ],
         ),
       );
+
+  Widget buildPlayerMagicBar() =>
+      IgnorePointer(
+        child: Stack(
+          clipBehavior: Clip.none,
+          fit: StackFit.passthrough,
+          alignment: Alignment.centerLeft,
+          children: [
+                AmuletImage(
+                    srcX: 840,
+                    srcY: 129,
+                    width: 188,
+                    height: 28,
+                    scale: 0.5,
+                ),
+            buildWatch(amulet.playerMagicPercentage, (percentage) =>
+                Positioned(
+                  left: 12,
+                  // top: -5,
+                  child: AmuletImage(
+                    srcX: 865,
+                    srcY: 159,
+                    width: 160 * percentage,
+                    height: 16,
+                    scale: 0.5,
+                  ),
+                )
+            )
+          ],
+        ),
+      );
   // Widget buildPlayerHealthBar() {
   //
   //   return IgnorePointer(
@@ -671,24 +702,24 @@ class AmuletUI {
   //   );
   // }
 
-  Widget buildPlayerMagicBar() {
-    return IgnorePointer(
-      child: buildWatch(amulet.playerMagicPercentage, (percentage) =>
-        Container(
-          width: barWidth,
-          height: barHeight,
-          color: Colors.black26,
-          padding: const EdgeInsets.all(2),
-          alignment: Alignment.centerLeft,
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 100),
-            width: barWidth * percentage,
-            height: barHeight,
-            color: AmuletColors.Magic,
-          ),
-        )),
-    );
-  }
+  // Widget buildPlayerMagicBar() {
+  //   return IgnorePointer(
+  //     child: buildWatch(amulet.playerMagicPercentage, (percentage) =>
+  //       Container(
+  //         width: barWidth,
+  //         height: barHeight,
+  //         color: Colors.black26,
+  //         padding: const EdgeInsets.all(2),
+  //         alignment: Alignment.centerLeft,
+  //         child: AnimatedContainer(
+  //           duration: const Duration(milliseconds: 100),
+  //           width: barWidth * percentage,
+  //           height: barHeight,
+  //           color: AmuletColors.Magic,
+  //         ),
+  //       )),
+  //   );
+  // }
 
   Widget buildWatchBar({
     required Watch<double> watch,
