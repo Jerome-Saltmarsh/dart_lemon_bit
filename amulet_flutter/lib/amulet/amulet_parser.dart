@@ -2,6 +2,7 @@
 import 'dart:typed_data';
 
 import 'package:amulet_engine/src.dart';
+import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_parser.dart';
 import 'package:lemon_byte/src.dart';
 import 'package:lemon_lang/src.dart';
@@ -290,22 +291,29 @@ extension AmuletParser on IsometricParser {
       return;
     }
 
-    amulet.aimTargetAmuletItem.value = readAmuletItem();
-    final totalEntries = readByte();
+    amulet.aimTargetAmuletItem.value = readAmuletItemSkillPoints();
+  }
 
-    final aimTargetSkillPoints = amulet.aimTargetSkillPoints;
-    aimTargetSkillPoints.clear();
+  AmuletItemSkillPoints readAmuletItemSkillPoints(){
+    final amuletItem = readAmuletItem();
+    final totalEntries = readByte();
+    final skillPoints = <SkillType, int>{};
 
     for (var i = 0; i < totalEntries; i++) {
       final skillType = readSkillType();
-      final skillTypePoints = readUInt16();
-      aimTargetSkillPoints[skillType] = skillTypePoints;
+      final points = readUInt16();
+      skillPoints[skillType] = points;
     }
+
+    return AmuletItemSkillPoints(
+        amuletItem: amuletItem,
+        skillTypePoints: skillPoints,
+    );
   }
 
   AmuletItem? tryReadAmuletItem() => AmuletItem.values.tryGet(readInt16());
 
-  AmuletItem? readAmuletItem() => AmuletItem.values[readUInt16()];
+  AmuletItem readAmuletItem() => AmuletItem.values[readUInt16()];
 
   void readPlayerMagic() {
     amulet.playerMagicMax.value = readUInt16();

@@ -116,7 +116,10 @@ class AmuletUI {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildWatch(amulet.aimTargetAmuletItem, buildCardAmuletItem),
+            buildWatch(amulet.aimTargetAmuletItem, (aimTargetAmuletItem) =>
+              aimTargetAmuletItem == null
+                  ? nothing
+                  : buildCardAmuletItem(aimTargetAmuletItem.amuletItem)),
           ],
         ),
       ),
@@ -548,7 +551,7 @@ class AmuletUI {
                   return FittedBox(
                     child: buildWatch(amulet.player.aimTargetName,
                             (name) => buildText(name.replaceAll('_', ' '),
-                              color: amuletItem == null ? Colors.white : mapItemQualityToColor(amuletItem.quality)
+                              color: Colors.white
                             )),
                   );
                 }),

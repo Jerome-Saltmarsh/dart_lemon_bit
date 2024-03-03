@@ -91,8 +91,7 @@ class Amulet extends IsometricGame {
   final playerRunSpeed = Watch(0);
   final playerAgility = Watch(0);
 
-  final aimTargetSkillPoints = <SkillType, int> {};
-  final aimTargetAmuletItem = Watch<AmuletItem?>(null);
+  final aimTargetAmuletItem = Watch<AmuletItemSkillPoints?>(null);
 
   final worldMapLarge = WatchBool(false);
   final amuletScene = Watch<AmuletScene?>(null);
@@ -862,4 +861,15 @@ class Amulet extends IsometricGame {
   void spawnRandomAmuletItem() {
     sendAmuletRequest(NetworkRequestAmulet.Spawn_Random_Amulet_Item);
   }
+}
+
+
+class AmuletItemSkillPoints {
+  final AmuletItem amuletItem;
+  final Map<SkillType, int> skillTypePoints;
+
+  AmuletItemSkillPoints({
+    required this.amuletItem,
+    required this.skillTypePoints,
+  });
 }
