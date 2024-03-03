@@ -286,7 +286,7 @@ extension AmuletParser on IsometricParser {
   void readAimTargetAmuletItem() {
 
     if (!readBool()){
-      amulet.aimTargetItemType.value = null;
+      amulet.aimTargetAmuletItem.value = null;
       return;
     }
 

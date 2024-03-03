@@ -116,7 +116,7 @@ class AmuletUI {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildWatch(amulet.aimTargetItemType, buildCardAmuletItem),
+            buildWatch(amulet.aimTargetAmuletItem, buildCardAmuletItem),
           ],
         ),
       ),
@@ -544,7 +544,7 @@ class AmuletUI {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                buildWatch(amulet.aimTargetItemType, (amuletItem) {
+                buildWatch(amulet.aimTargetAmuletItem, (amuletItem) {
                   return FittedBox(
                     child: buildWatch(amulet.player.aimTargetName,
                             (name) => buildText(name.replaceAll('_', ' '),
