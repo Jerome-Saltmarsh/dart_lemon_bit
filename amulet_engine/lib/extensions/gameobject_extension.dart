@@ -14,4 +14,6 @@ extension GameObjectExtension on GameObject {
   bool get isAmuletItem => itemType == ItemType.Amulet_Item;
 
   bool get isObject => itemType == ItemType.Object;
+
+
 }

@@ -638,6 +638,9 @@ class AmuletController {
       case NetworkRequestAmulet.Spawn_Random_Enemy:
         amuletGame.spawnRandomEnemy();
         break;
+      case NetworkRequestAmulet.Spawn_Random_Amulet_Item:
+        amuletPlayer.spawnRandomAmuletItem();
+        break;
       case NetworkRequestAmulet.Toggle_Skill_Type:
         final skillTypeIndex = parseArg2(arguments);
         final skillType = SkillType.values.tryGet(skillTypeIndex);

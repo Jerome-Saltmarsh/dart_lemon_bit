@@ -1,4 +1,6 @@
 
+import 'package:lemon_json/src.dart';
+
 import '../../common/src.dart';
 import 'collider.dart';
 
@@ -13,6 +15,7 @@ class GameObject extends Collider {
   var health = 0.0;
   var healthMax = 0.0;
   var deactivationTimer = -1;
+  Json? data;
   String? label;
 
   GameObject({
@@ -27,6 +30,7 @@ class GameObject extends Collider {
     this.health = 0,
     this.healthMax = 0,
     this.deactivationTimer = -1,
+    this.data,
     int? id,
   }) : super(materialType: getMaterialType(itemType, subType)) {
     startPositionX = x;

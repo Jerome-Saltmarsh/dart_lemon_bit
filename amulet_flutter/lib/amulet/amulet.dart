@@ -80,7 +80,6 @@ class Amulet extends IsometricGame {
 
   final playerSkillTypeLevels = Map.fromEntries(SkillType.values.map((skillType) => MapEntry(skillType, 0)));
   final playerSkillTypeLevelNotifier = Watch(0);
-  // final playerSkillTypeSlotIndex = Map.fromEntries(SkillType.values.map((skillType) => MapEntry(skillType, 0)));
   final playerSkillTypeSlotAssigned = SkillType.values.asMapReversed((t) => Watch(false));
   final playerSkillLeft = Watch(SkillType.Strike);
   final playerSkillRight = Watch(SkillType.Strike);
@@ -91,6 +90,9 @@ class Amulet extends IsometricGame {
 
   final playerRunSpeed = Watch(0);
   final playerAgility = Watch(0);
+
+  final aimTargetSkillPoints = <SkillType, int> {};
+  final aimTargetAmuletItem = Watch<AmuletItem?>(null);
 
   final worldMapLarge = WatchBool(false);
   final amuletScene = Watch<AmuletScene?>(null);
@@ -107,7 +109,6 @@ class Amulet extends IsometricGame {
   final emptyItemSlot = buildText('-');
 
   final aimTargetItemType = Watch<AmuletItem?>(null);
-  // final aimTargetItemTypeComparison = Watch<AmuletItem?>(null);
   final aimTargetItemTypeCurrent = Watch<AmuletItem?>(null);
   final highlightedAmuletItem = Watch<AmuletItem?>(null);
 
@@ -858,4 +859,8 @@ class Amulet extends IsometricGame {
 
   int getSkillTypeLevel(SkillType skillType) =>
       playerSkillTypeLevels[skillType] ?? (throw Exception());
+
+  void spawnRandomAmuletItem() {
+    sendAmuletRequest(NetworkRequestAmulet.Spawn_Random_Amulet_Item);
+  }
 }

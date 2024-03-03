@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:lemon_json/src.dart';
 import 'package:lemon_lang/src.dart';
 import 'package:lemon_math/src.dart';
 
@@ -17,9 +18,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   final String name;
   final AmuletScene amuletScene;
 
-
   final gameObjectDeactivationTimer = 10000;
 
+  var secondsPerRegen = 5;
+  var nextRegen = 0;
   var cooldownTimer = 0;
   var flatNodes = Uint8List(0);
   var worldIndex = 255;
@@ -159,9 +161,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     onSecondElapsed();
   }
 
-  var secondsPerRegen = 5;
-  var nextRegen = 0;
-
   void onSecondElapsed(){
 
     nextRegen--;
@@ -171,9 +170,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     nextRegen = secondsPerRegen;
     final characters = this.characters;
     for (final character in characters) {
+      if (character.dead) continue;
 
-      final regenHealthLevel = getCharacterSkillTypeLevel(character, SkillType.Health_Regen);
-      final regenMagicLevel = getCharacterSkillTypeLevel(character, SkillType.Magic_Regen);
+      // TODO
+      // final regenHealthLevel = getCharacterSkillTypeLevel(character, SkillType.Health_Regen);
+      // final regenMagicLevel = getCharacterSkillTypeLevel(character, SkillType.Magic_Regen);
 
       if (character is AmuletPlayer) {
         character.regenHealthAndMagic();
@@ -814,11 +815,35 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
 
     spawnAmuletItem(
-        item: randomItem(values),
+        amuletItem: randomItem(values),
         x: fiend.x,
         y: fiend.y,
         z: fiend.z,
       );
+  }
+
+  Json generateAmuletItemData(AmuletItem amuletItem){
+    final data = Json();
+    final skillPoints = distributeSkillPoints(amuletItem.skillTypes, amuletItem.skillPoints);
+    final indexedSkillPoints = skillPoints.map((key, value) => MapEntry<int, int>(key.index, value));
+    data['skill_points'] = indexedSkillPoints;
+    return data;
+  }
+
+  Map<SkillType, int> distributeSkillPoints(List<SkillType> skillTypes, int points){
+    final skillPoints = <SkillType, int> {};
+
+    if (skillTypes.isEmpty) {
+      return skillPoints;
+    }
+
+    for (var i = 0; i < points; i++) {
+      final skillType = randomItem(skillTypes);
+      final currentPoints = skillPoints[skillType] ?? 0;
+      skillPoints[skillType] = currentPoints + 1;
+    }
+
+    return skillPoints;
   }
 
   void spawnRandomLoot({
@@ -829,7 +854,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       x: x,
       y: y,
       z: z,
-      item: randomItem(AmuletItem.values),
+    amuletItem: randomItem(AmuletItem.values),
   );
 
   /// @deactivationTimer set to -1 to prevent amulet item from deactivating over time
@@ -842,7 +867,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         x: scene.getIndexX(index),
         y: scene.getIndexY(index),
         z: scene.getIndexZ(index),
-        item: item,
+          amuletItem: item,
         deactivationTimer: deactivationTimer
       );
 
@@ -852,14 +877,14 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     int? deactivationTimer
   }) =>
     spawnAmuletItem(
-      item: item,
+      amuletItem: item,
       x: position.x,
       y: position.y,
       z: position.z,
     );
 
   GameObject spawnAmuletItem({
-    required AmuletItem item,
+    required AmuletItem amuletItem,
     required double x,
     required double y,
     required double z,
@@ -870,16 +895,17 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       y: y,
       z: z,
       itemType: ItemType.Amulet_Item,
-      subType: item.index,
+      subType: amuletItem.index,
       team: TeamType.Neutral,
       interactable: true,
       deactivationTimer: deactivationTimer ?? gameObjectDeactivationTimer,
       health: 0,
+      data: generateAmuletItemData(amuletItem),
     );
+
     add(instance);
     return instance;
   }
-
 
   @override
   void customOnNodeDestroyed(int nodeType, int nodeIndex, int nodeOrientation) {

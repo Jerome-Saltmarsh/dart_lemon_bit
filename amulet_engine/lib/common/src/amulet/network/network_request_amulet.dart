@@ -18,4 +18,5 @@ enum NetworkRequestAmulet {
   Consume_Slot,
   Drop_Consumable,
   Toggle_Skill_Type,
+  Spawn_Random_Amulet_Item,
 }

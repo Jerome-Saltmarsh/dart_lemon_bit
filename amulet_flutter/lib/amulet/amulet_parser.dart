@@ -63,10 +63,10 @@ extension AmuletParser on IsometricParser {
          readPlayerSkillsLeftRight();
          break;
        case NetworkResponseAmulet.Player_Equipped:
-         amulet.equippedWeapon.value = readAmuletItem();
-         amulet.equippedHelm.value = readAmuletItem();
-         amulet.equippedArmor.value = readAmuletItem();
-         amulet.equippedShoes.value = readAmuletItem();
+         amulet.equippedWeapon.value = tryReadAmuletItem();
+         amulet.equippedHelm.value = tryReadAmuletItem();
+         amulet.equippedArmor.value = tryReadAmuletItem();
+         amulet.equippedShoes.value = tryReadAmuletItem();
          break;
        case NetworkResponseAmulet.Active_Power_Position:
          readIsometricPosition(amulet.activePowerPosition);
@@ -130,8 +130,8 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Debug:
          readNetworkResponseAmuletDebug();
          break;
-       case NetworkResponseAmulet.Aim_Target_Item_Type:
-         readAimTargetItemType();
+       case NetworkResponseAmulet.Aim_Target_Amulet_Item:
+         readAimTargetAmuletItem();
          break;
        case NetworkResponseAmulet.Player_Magic:
          readPlayerMagic();
@@ -283,15 +283,29 @@ extension AmuletParser on IsometricParser {
   void readQuestMain() =>
       amulet.questMain.value = QuestMain.values[readByte()];
 
-  void readAimTargetItemType() =>
-      amulet.aimTargetItemType.value = readBool()
-          ? readAmuletItem()
-          : null;
+  void readAimTargetAmuletItem() {
 
-  AmuletItem? readAmuletItem() {
-     final index = readInt16();
-     return AmuletItem.values.tryGet(index);
+    if (!readBool()){
+      amulet.aimTargetItemType.value = null;
+      return;
+    }
+
+    amulet.aimTargetAmuletItem.value = readAmuletItem();
+    final totalEntries = readByte();
+
+    final aimTargetSkillPoints = amulet.aimTargetSkillPoints;
+    aimTargetSkillPoints.clear();
+
+    for (var i = 0; i < totalEntries; i++) {
+      final skillType = readSkillType();
+      final skillTypePoints = readUInt16();
+      aimTargetSkillPoints[skillType] = skillTypePoints;
+    }
   }
+
+  AmuletItem? tryReadAmuletItem() => AmuletItem.values.tryGet(readInt16());
+
+  AmuletItem? readAmuletItem() => AmuletItem.values[readUInt16()];
 
   void readPlayerMagic() {
     amulet.playerMagicMax.value = readUInt16();
@@ -392,7 +406,7 @@ extension AmuletParser on IsometricParser {
   }
 
   void readAmuletItemConsumed() {
-    final amuletItem = readAmuletItem();
+    final amuletItem = tryReadAmuletItem();
     if (amuletItem == null){
       return;
     }
@@ -400,7 +414,7 @@ extension AmuletParser on IsometricParser {
   }
 
   void readAmuletItemDropped() {
-    final amuletItem = readAmuletItem();
+    final amuletItem = tryReadAmuletItem();
 
     if (amuletItem != null){
       amulet.onAmuletItemDropped(amuletItem);
@@ -408,7 +422,7 @@ extension AmuletParser on IsometricParser {
   }
 
   void readAmuletItemEquipped() {
-    final amuletItem = readAmuletItem();
+    final amuletItem = tryReadAmuletItem();
 
     if (amuletItem != null){
       amulet.onAmuletItemEquipped(amuletItem);

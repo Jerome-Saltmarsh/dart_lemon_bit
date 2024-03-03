@@ -331,23 +331,9 @@ class AmuletPlayer extends IsometricPlayer with
       x: x + adj(spawnAngle, spawnDistance),
       y: y + opp(spawnAngle, spawnDistance),
       z: z,
-      item: item,
+      amuletItem: item,
     );
   }
-
-  // void deactivateSlotType() => setActiveSlotType(null);
-
-  // void setActiveSlotType(SlotType? value) {
-  //   activeSlotType = value;
-  //   writeByte(NetworkResponse.Amulet);
-  //   writeByte(NetworkResponseAmulet.Active_Slot_Type);
-  //   if (value == null) {
-  //     writeFalse();
-  //     return;
-  //   }
-  //   writeTrue();
-  //   writeByte(value.index);
-  // }
 
   void selectNpcTalkOption(int index) {
      if (index < 0 || index >= npcOptions.length){
@@ -979,7 +965,7 @@ class AmuletPlayer extends IsometricPlayer with
   void onChangedAimTarget() {
     super.onChangedAimTarget();
     writeAimTargetFiendType();
-    writeAimTargetItemType();
+    writeAimTargetAmuletItem();
   }
 
   void writeAimTargetFiendType() {
@@ -1000,9 +986,9 @@ class AmuletPlayer extends IsometricPlayer with
 
   void writeTrue() => writeBool(true);
 
-  void writeAimTargetItemType() {
+  void writeAimTargetAmuletItem() {
     writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Aim_Target_Item_Type);
+    writeByte(NetworkResponseAmulet.Aim_Target_Amulet_Item);
 
      final aimTarget = this.aimTarget;
      if (aimTarget is! GameObject){
@@ -1010,16 +996,32 @@ class AmuletPlayer extends IsometricPlayer with
        return;
      }
 
-    final amuletItem = getGameObjectAmuletItem(aimTarget);
+     final gameObject = aimTarget;
+    final amuletItem = getGameObjectAmuletItem(gameObject);
 
      if (amuletItem == null){
        writeFalse();
        return;
      }
 
+     final indexedSkillPoints = gameObject.data?['skill_points'];
+
+     if (indexedSkillPoints == null || indexedSkillPoints is! Map<int, int>){
+       writeFalse();
+       return;
+     }
+
     writeTrue();
-    writeAmuletItem(amuletItem);
+
+    writeUInt16(amuletItem.index);
+    writeByte(indexedSkillPoints.length);
+    for (final entry in indexedSkillPoints.entries) {
+      writeByte(entry.key); // skill type index
+      writeUInt16(entry.value); // skill type points
+    }
   }
+
+
 
   AmuletItem? getGameObjectAmuletItem(GameObject gameObject){
      if (gameObject.itemType != ItemType.Amulet_Item) {
@@ -1537,5 +1539,8 @@ class AmuletPlayer extends IsometricPlayer with
     skillSlots[index] = skillType;
     notifySkillSlotsDirty();
   }
+
+  void spawnRandomAmuletItem() =>
+      spawnAmuletItem(randomItem(AmuletItem.values));
 }
 

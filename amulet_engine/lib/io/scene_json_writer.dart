@@ -35,5 +35,11 @@ Json writeGameObjectToJson(GameObject gameObject){
   json['deactivation_timer'] = gameObject.deactivationTimer;
   json['team'] = gameObject.team;
   json['id'] = gameObject.id;
+
+  final data = gameObject.data;
+  if (data != null) {
+    json['data'] = data;
+  }
+
   return json;
 }
