@@ -309,7 +309,7 @@ class IsometricRender with IsometricComponent {
     int color = 1,
   }) =>
       renderHealthBar(
-        dstX: position.renderX - 20,
+        dstX: position.renderX - 16,
         dstY: position.renderY - 55,
         percentage: percentage,
         color: color,
@@ -321,8 +321,8 @@ class IsometricRender with IsometricComponent {
     int color = 1,
   }) =>
       renderMagicBar(
-        dstX: position.renderX - 20,
-        dstY: position.renderY - 55 + 6,
+        dstX: position.renderX - 16,
+        dstY: position.renderY - 55 + 3,
         percentage: percentage,
         color: color,
       );
@@ -349,11 +349,13 @@ class IsometricRender with IsometricComponent {
     required int color1,
     required int color2,
   }) {
-    const srcX = 171.0;
-    const srcWidth = 40.0;
-    const srcHeight = 5.44;
+    const srcX = 864.0;
+    const srcY = 176.0;
+    const srcWidth = 160.0;
+    const srcHeight = 16.0;
     const interpolation = 0.6;
-    final image = images.atlas_gameobjects;
+    final image = images.atlas_amulet_items;
+    const scale = 0.2;
 
 
     engine.setBlendModeModulate();
@@ -363,11 +365,12 @@ class IsometricRender with IsometricComponent {
       dstX: dstX,
       dstY: dstY,
       srcX: srcX,
-      srcY: 72,
+      srcY: srcY,
       srcWidth: srcWidth,
       srcHeight: srcHeight,
       anchorX: 0.0,
       color: interpolateColors(color1, Palette.Black.value, interpolation),
+      scale: scale,
     );
 
     engine.renderSprite(
@@ -375,11 +378,12 @@ class IsometricRender with IsometricComponent {
       dstX: dstX,
       dstY: dstY,
       srcX: srcX,
-      srcY: 72,
+      srcY: srcY,
       srcWidth: srcWidth,
       srcHeight: srcHeight,
       anchorX: 0.0,
       color: interpolateColors(color2, Palette.Black.value, interpolation),
+      scale: scale,
     );
 
     engine.renderSprite(
@@ -387,12 +391,12 @@ class IsometricRender with IsometricComponent {
       dstX: dstX,
       dstY: dstY,
       srcX: srcX,
-      srcY: 64,
+      srcY: srcY,
       srcWidth: srcWidth * percentage,
       srcHeight: srcHeight,
       anchorX: 0.0,
       color: color1,
-
+      scale: scale,
     );
 
     engine.renderSprite(
@@ -400,11 +404,12 @@ class IsometricRender with IsometricComponent {
       dstX: dstX,
       dstY: dstY,
       srcX: srcX,
-      srcY: 64,
+      srcY: srcY,
       srcWidth: srcWidth * percentage,
       srcHeight: srcHeight,
       anchorX: 0.0,
       color: color2,
+      scale: scale,
     );
 
     engine.setBlendModeDstATop();
