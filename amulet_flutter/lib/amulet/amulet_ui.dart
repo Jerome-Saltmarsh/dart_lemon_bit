@@ -619,36 +619,33 @@ class AmuletUI {
       );
 
   Widget buildPlayerHealthBar() =>
-      buildHint(
-        text: '',
-        child: IgnorePointer(
-          child: Stack(
-            clipBehavior: Clip.none,
-            fit: StackFit.passthrough,
-            alignment: Alignment.centerLeft,
-            children: [
-                  AmuletImage(
-                      srcX: 840,
-                      srcY: 80,
-                      width: 188,
-                      height: 28,
-                      scale: 0.5,
+      IgnorePointer(
+        child: Stack(
+          clipBehavior: Clip.none,
+          fit: StackFit.passthrough,
+          alignment: Alignment.centerLeft,
+          children: [
+            AmuletImage(
+              srcX: 840,
+              srcY: 80,
+              width: 188,
+              height: 28,
+              scale: 0.5,
+            ),
+            buildWatch(amulet.player.healthPercentage, (healthPercentage) =>
+                Positioned(
+                  left: 12,
+                  // top: -5,
+                  child: AmuletImage(
+                    srcX: 865,
+                    srcY: 111,
+                    width: 160 * healthPercentage,
+                    height: 16,
+                    scale: 0.5,
                   ),
-              buildWatch(amulet.player.healthPercentage, (healthPercentage) =>
-                  Positioned(
-                    left: 12,
-                    // top: -5,
-                    child: AmuletImage(
-                      srcX: 865,
-                      srcY: 111,
-                      width: 160 * healthPercentage,
-                      height: 16,
-                      scale: 0.5,
-                    ),
-                  )
-              )
-            ],
-          ),
+                )
+            )
+          ],
         ),
       );
 
@@ -1049,7 +1046,7 @@ class AmuletUI {
                   message: 'Magic',
                   child: Row(
                     children: [
-                      buildIconMagic(),
+                      iconMagic,
                       width8,
                       buildWatch(amulet.playerMagic, (value) => buildText(value, color: AmuletColors.Magic)),
                       width2,
@@ -1379,6 +1376,8 @@ class AmuletUI {
   Widget buildHint({
     required Widget child,
     required String text,
+    double top = -60,
+    double right = -50,
   }) =>
       buildMouseOverHint(
         child: child,
@@ -1386,8 +1385,8 @@ class AmuletUI {
             color: Colors.white70,
             width: 2,
             child: GSContainer(child: buildText(text))),
-        getTop: () => -60,
-        right: -50,
+        getTop: () => top,
+        right: right,
       );
 
   Widget buildMouseOverHint({

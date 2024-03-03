@@ -340,32 +340,6 @@ class IsometricRender with IsometricComponent {
         color1: AmuletColors.Health.value,
         color2: color,
     );
-    // const srcWidth = 51.0;
-    // const srcHeight = 7.44;
-    // final image = images.atlas_gameobjects;
-    //
-    // engine.renderSprite(
-    //   image: image,
-    //   dstX: dstX,
-    //   dstY: dstY,
-    //   srcX: 171,
-    //   srcY: 24,
-    //   srcWidth: srcWidth,
-    //   srcHeight: srcHeight,
-    //   anchorX: 0.0,
-    //   color: color,
-    // );
-    // engine.renderSprite(
-    //   image: image,
-    //   dstX: dstX,
-    //   dstY: dstY,
-    //   srcX: 171,
-    //   srcY: 16,
-    //   srcWidth: srcWidth * percentage,
-    //   srcHeight: srcHeight,
-    //   anchorX: 0.0,
-    //   color: color,
-    // );
   }
 
   void renderBar({
