@@ -185,6 +185,8 @@ class Amulet {
           rows: 100,
           columns: 100,
           name: amuletScene.name,
+          floorType: NodeType.Empty,
+          nodeOrientation: NodeOrientation.None,
       ),
       time: amuletTime,
       environment: amuletEnvironment,

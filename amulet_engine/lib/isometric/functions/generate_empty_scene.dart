@@ -9,6 +9,8 @@ Scene generateEmptyScene({
   int rows = 50,
   int columns = 50,
   String name = '',
+  int floorType = NodeType.Grass,
+  int nodeOrientation = NodeOrientation.Solid,
 }) {
   final area = rows * columns;
   final total = height * area;
@@ -17,8 +19,8 @@ Scene generateEmptyScene({
   final variations = Uint8List(total);
 
   for (var i = 0; i < area; i++) {
-    nodeTypes[i] = NodeType.Grass;
-    nodeOrientations[i] = NodeOrientation.Solid;
+    nodeTypes[i] = floorType;
+    nodeOrientations[i] = nodeOrientation;
   }
 
   return Scene(

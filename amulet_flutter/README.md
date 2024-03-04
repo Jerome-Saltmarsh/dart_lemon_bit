@@ -54,6 +54,7 @@ REMINDER: IT DOESN'T NEED TO BE PERFECT
 [new] design skill type health steal
 
 ## 05.03.2024
+[fix] remove empty map regions
 [fix] remove shoot bow from skill menu
 [new] skill type sword wind attack
 [fix] cannot pick up items
