@@ -38,17 +38,23 @@ SKULLSOFT
 REMINDER: IT DOESN'T NEED TO BE PERFECT
 
 [RELEASE]
-[new] balance amulet items
-[new] amulet item models
-[new] design skill type icons
-[new] skill type beserk
-[new] skill type thorns
-[ref] common project
+[new] draggable potions
 [new] randomize item health
 [new] randomize item magic
-[fix] remove shoot bow from skill menu
+[ref] common project
+[new] skill type beserk
+[new] skill type thorns
+
+[EARLY_ACCESS]
+[new] balance amulet items
+[new] amulet item models
+[new] design skill type ice arrow
+[new] design skill type fire arrow
+[new] design skill type attack speed
+[new] design skill type health steal
 
 ## 05.03.2024
+[fix] remove shoot bow from skill menu
 [new] skill type sword wind attack
 [fix] cannot pick up items
 

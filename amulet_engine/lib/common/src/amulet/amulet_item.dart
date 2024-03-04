@@ -158,7 +158,7 @@ enum AmuletItem {
       SkillType.Fireball,
       SkillType.Frostball,
       SkillType.Magic_Regen,
-      SkillType.Magic_Steal,
+      SkillType.Warlock,
     ],
     skillPoints: 4,
   ),
@@ -175,7 +175,7 @@ enum AmuletItem {
       SkillType.Fireball,
       SkillType.Heal,
       SkillType.Magic_Regen,
-      SkillType.Magic_Steal,
+      SkillType.Warlock,
     ],
     skillPoints: 4,
   ),
@@ -192,7 +192,7 @@ enum AmuletItem {
         SkillType.Fireball,
         SkillType.Heal,
         SkillType.Magic_Regen,
-        SkillType.Magic_Steal,
+        SkillType.Warlock,
       ],
       ),
   Weapon_Staff_Long(
@@ -208,7 +208,7 @@ enum AmuletItem {
         SkillType.Fireball,
         SkillType.Heal,
         SkillType.Magic_Regen,
-        SkillType.Magic_Steal,
+        SkillType.Warlock,
       ],
   ),
   Helm_Leather_Cap(
@@ -220,7 +220,7 @@ enum AmuletItem {
     maxMagic: 3,
     skillTypes: [
       SkillType.Health_Regen,
-      SkillType.Health_Steal,
+      SkillType.Vampire,
       SkillType.Critical_Hit,
       SkillType.Shield,
     ],
@@ -233,7 +233,7 @@ enum AmuletItem {
     maxHealth: 8,
     skillTypes: [
       SkillType.Health_Regen,
-      SkillType.Health_Steal,
+      SkillType.Vampire,
       SkillType.Critical_Hit,
       SkillType.Shield,
     ],
@@ -246,7 +246,7 @@ enum AmuletItem {
     maxHealth: 11,
     skillTypes: [
       SkillType.Health_Regen,
-      SkillType.Health_Steal,
+      SkillType.Vampire,
       SkillType.Critical_Hit,
       SkillType.Shield,
     ],
@@ -262,7 +262,7 @@ enum AmuletItem {
       SkillType.Magic_Regen,
       SkillType.Fireball,
       SkillType.Frostball,
-      SkillType.Magic_Steal,
+      SkillType.Warlock,
     ],
   ),
   Helm_Pointed_Hat(
@@ -276,7 +276,7 @@ enum AmuletItem {
       SkillType.Magic_Regen,
       SkillType.Fireball,
       SkillType.Frostball,
-      SkillType.Magic_Steal,
+      SkillType.Warlock,
     ],
   ),
   Helm_Cowl(
@@ -290,7 +290,7 @@ enum AmuletItem {
       SkillType.Magic_Regen,
       SkillType.Fireball,
       SkillType.Frostball,
-      SkillType.Magic_Steal,
+      SkillType.Warlock,
     ],
   ),
   Helm_Feathered_Cap(
@@ -300,8 +300,8 @@ enum AmuletItem {
     subType: HelmType.Feather_Cap,
     maxHealth: 3,
     skillTypes: [
-      SkillType.Health_Steal,
-      SkillType.Magic_Steal,
+      SkillType.Vampire,
+      SkillType.Warlock,
       SkillType.Ice_Arrow,
       SkillType.Fire_Arrow,
       SkillType.Split_Shot,
@@ -315,8 +315,8 @@ enum AmuletItem {
     maxHealth: 4,
     maxMagic: 2,
     skillTypes: [
-      SkillType.Health_Steal,
-      SkillType.Magic_Steal,
+      SkillType.Vampire,
+      SkillType.Warlock,
       SkillType.Ice_Arrow,
       SkillType.Fire_Arrow,
       SkillType.Split_Shot,
@@ -330,8 +330,8 @@ enum AmuletItem {
     maxHealth: 4,
     maxMagic: 2,
     skillTypes: [
-      SkillType.Health_Steal,
-      SkillType.Magic_Steal,
+      SkillType.Vampire,
+      SkillType.Warlock,
       SkillType.Ice_Arrow,
       SkillType.Fire_Arrow,
       SkillType.Split_Shot,
@@ -345,8 +345,8 @@ enum AmuletItem {
     maxHealth: 5,
     maxMagic: 5,
     skillTypes: [
-      SkillType.Health_Steal,
-      SkillType.Magic_Steal,
+      SkillType.Vampire,
+      SkillType.Warlock,
       SkillType.Mighty_Strike,
       SkillType.Shield,
       SkillType.Critical_Hit,
@@ -360,8 +360,8 @@ enum AmuletItem {
     subType: ArmorType.Leather,
     maxHealth: 10,
     skillTypes: [
-      SkillType.Health_Steal,
-      SkillType.Magic_Steal,
+      SkillType.Vampire,
+      SkillType.Warlock,
       SkillType.Mighty_Strike,
       SkillType.Shield,
       SkillType.Critical_Hit,
@@ -375,7 +375,7 @@ enum AmuletItem {
     subType: ArmorType.Chainmail,
     maxHealth: 20,
     skillTypes: [
-      SkillType.Health_Steal,
+      SkillType.Vampire,
       SkillType.Mighty_Strike,
       SkillType.Shield,
       SkillType.Critical_Hit,
@@ -389,7 +389,7 @@ enum AmuletItem {
     subType: ArmorType.Platemail,
     maxHealth: 30,
     skillTypes: [
-      SkillType.Health_Steal,
+      SkillType.Vampire,
       SkillType.Mighty_Strike,
       SkillType.Shield,
       SkillType.Critical_Hit,
@@ -404,7 +404,7 @@ enum AmuletItem {
     maxHealth: 5,
     maxMagic: 5,
     skillTypes: [
-      SkillType.Health_Steal,
+      SkillType.Vampire,
       SkillType.Mighty_Strike,
       SkillType.Shield,
       SkillType.Critical_Hit,
@@ -419,7 +419,7 @@ enum AmuletItem {
     maxHealth: 5,
     maxMagic: 5,
     skillTypes: [
-      SkillType.Health_Steal,
+      SkillType.Vampire,
       SkillType.Mighty_Strike,
       SkillType.Shield,
       SkillType.Critical_Hit,
@@ -433,7 +433,7 @@ enum AmuletItem {
     subType: ArmorType.Mantle,
     maxHealth: 9,
     skillTypes: [
-      SkillType.Health_Steal,
+      SkillType.Vampire,
       SkillType.Mighty_Strike,
       SkillType.Shield,
       SkillType.Critical_Hit,
@@ -447,7 +447,7 @@ enum AmuletItem {
     subType: ArmorType.Shroud,
     maxHealth: 9,
     skillTypes: [
-      SkillType.Health_Steal,
+      SkillType.Vampire,
       SkillType.Mighty_Strike,
       SkillType.Shield,
       SkillType.Critical_Hit,
@@ -461,7 +461,7 @@ enum AmuletItem {
     subType: ShoeType.Leather_Boots,
     maxHealth: 5,
     skillTypes: [
-      SkillType.Health_Steal,
+      SkillType.Vampire,
       SkillType.Mighty_Strike,
       SkillType.Shield,
       SkillType.Critical_Hit,
@@ -476,7 +476,7 @@ enum AmuletItem {
     maxHealth: 5,
     skillTypes: [
       SkillType.Run_Speed,
-      SkillType.Attack_Speed,
+      SkillType.Agility,
       SkillType.Area_Damage,
     ],
   ),
@@ -488,7 +488,7 @@ enum AmuletItem {
     maxHealth: 5,
     skillTypes: [
       SkillType.Run_Speed,
-      SkillType.Attack_Speed,
+      SkillType.Agility,
       SkillType.Area_Damage,
     ],
   ),
@@ -501,7 +501,7 @@ enum AmuletItem {
     maxMagic: 5,
     skillTypes: [
       SkillType.Run_Speed,
-      SkillType.Attack_Speed,
+      SkillType.Agility,
       SkillType.Area_Damage,
     ],
   ),
@@ -514,7 +514,7 @@ enum AmuletItem {
     maxMagic: 5,
     skillTypes: [
       SkillType.Run_Speed,
-      SkillType.Attack_Speed,
+      SkillType.Agility,
       SkillType.Area_Damage,
     ],
   ),
@@ -527,7 +527,7 @@ enum AmuletItem {
     maxMagic: 5,
     skillTypes: [
       SkillType.Run_Speed,
-      SkillType.Attack_Speed,
+      SkillType.Agility,
       SkillType.Area_Damage,
     ],
   ),
@@ -540,7 +540,7 @@ enum AmuletItem {
     maxMagic: 5,
     skillTypes: [
       SkillType.Run_Speed,
-      SkillType.Attack_Speed,
+      SkillType.Agility,
       SkillType.Area_Damage,
     ],
   ),
@@ -553,7 +553,7 @@ enum AmuletItem {
     maxMagic: 5,
     skillTypes: [
       SkillType.Run_Speed,
-      SkillType.Attack_Speed,
+      SkillType.Agility,
       SkillType.Area_Damage,
     ],
   ),
@@ -566,7 +566,7 @@ enum AmuletItem {
     maxMagic: 5,
     skillTypes: [
       SkillType.Run_Speed,
-      SkillType.Attack_Speed,
+      SkillType.Agility,
       SkillType.Area_Damage,
     ],
   ),

@@ -181,7 +181,7 @@ class AmuletPlayer extends IsometricPlayer with
     return baseRunSpeed + bonus;
   }
 
-  int get attackSpeed => getSkillTypeLevelAssigned(SkillType.Attack_Speed);
+  int get attackSpeed => getSkillTypeLevelAssigned(SkillType.Agility);
 
   @override
   void writePlayerGame() {
@@ -1265,10 +1265,10 @@ class AmuletPlayer extends IsometricPlayer with
       (throw Exception('amuletPlayer.getSkillTypePerformDuration(skillType: $skillType)'));
 
   double get healthSteal =>
-      SkillType.getHealthSteal(getSkillTypeLevelAssigned(SkillType.Health_Steal));
+      SkillType.getHealthSteal(getSkillTypeLevelAssigned(SkillType.Vampire));
 
   double get magicSteal =>
-      SkillType.getMagicSteal(getSkillTypeLevelAssigned(SkillType.Magic_Steal));
+      SkillType.getMagicSteal(getSkillTypeLevelAssigned(SkillType.Warlock));
 
   void writeFiendCount() {
     writeByte(NetworkResponse.Amulet);
@@ -1307,7 +1307,7 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   double get performFrameVelocity {
-    final attackSpeedLevel = getSkillTypeLevelAssigned(SkillType.Attack_Speed);
+    final attackSpeedLevel = getSkillTypeLevelAssigned(SkillType.Agility);
     final attackSpeedPerc = SkillType.getAttackSpeedPercentage(attackSpeedLevel);
     final base = AmuletSettings.Min_Perform_Velocity;
     return base + (base * attackSpeedPerc);

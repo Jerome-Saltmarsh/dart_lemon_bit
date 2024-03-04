@@ -216,7 +216,7 @@ class AmuletGameWorld11 extends AmuletGame {
                   amuletItem: AmuletItem.Weapon_Sword_Short,
                   skillPoints: {
                     SkillType.Critical_Hit: 1,
-                    SkillType.Health_Steal: 1,
+                    SkillType.Vampire: 1,
                   })
               );
             }

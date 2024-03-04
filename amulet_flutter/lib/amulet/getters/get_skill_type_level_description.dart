@@ -5,18 +5,18 @@ String? getSkillTypeLevelDescription(SkillType skillType, int level) {
   switch (skillType) {
     case SkillType.Heal:
       return '+${SkillType.getHealAmount(level)} health';
-    case SkillType.Attack_Speed:
+    case SkillType.Agility:
       return 'attack speed +${(SkillType.getAttackSpeedPercentage(level) * 100).toInt()}%';
-    case SkillType.Health_Steal:
+    case SkillType.Vampire:
       return '${SkillType.getHealthSteal(level).toStringPercentage} of damage';
-    case SkillType.Magic_Steal:
+    case SkillType.Warlock:
       return '${SkillType.getMagicSteal(level).toStringPercentage} of damage';
     case SkillType.Critical_Hit:
       return '${SkillType.getPercentageCriticalHit(level).toStringPercentage} chance';
     case SkillType.Mighty_Strike:
       return 'damage +${SkillType.getPercentageMightySwing(level).toStringPercentage}';
     case SkillType.Shield:
-      return '${SkillType.getPercentageDamageResistanceMelee(level).toStringPercentage} reduced';
+      return '${SkillType.getPercentageDamageResistanceMelee(level).toStringPercentage} damage reduced';
     case SkillType.Magic_Regen:
       return '+$level magic regen';
     case SkillType.Health_Regen:

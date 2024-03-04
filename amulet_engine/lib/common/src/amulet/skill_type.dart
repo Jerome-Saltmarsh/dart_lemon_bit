@@ -56,13 +56,13 @@ enum SkillType {
       casteSpeed: AttackSpeed.Fast,
       range: 0,
   ),
-  Attack_Speed(
+  Agility(
     casteType: CasteType.Passive,
   ),
-  Health_Steal(
+  Vampire(
     casteType: CasteType.Passive,
   ),
-  Magic_Steal(
+  Warlock(
     casteType: CasteType.Passive,
   ),
   Critical_Hit(

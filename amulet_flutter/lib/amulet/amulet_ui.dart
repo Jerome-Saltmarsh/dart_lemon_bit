@@ -1768,8 +1768,8 @@ class AmuletUI {
 
     final amuletItem = amuletItemObject.amuletItem;
     final slotType = amuletItem.slotType;
-    final equippedItemType = amulet.getEquippedAmuletItemObject(slotType);
-    final equipped = equippedItemType == amuletItem;
+    // final equippedItemType = amulet.getEquippedAmuletItemObject(slotType);
+    // final equipped = equippedItemType == amuletItem;
 
     return buildBorder(
       width: 2,
@@ -1795,14 +1795,14 @@ class AmuletUI {
                 ],
               ),
             ),
-            if (equipped)
-              Container(
-                  padding: const EdgeInsets.all(8),
-                  child: buildCardAmuletItemEquipped(amuletItemObject)),
-            if (equippedItemType != null && !equipped)
+            // if (equipped)
+            //   Container(
+            //       padding: const EdgeInsets.all(8),
+            //       child: buildCardAmuletItemEquipped(amuletItemObject)),
+            // if (equippedItemType != null && !equipped)
               Container(
                 padding: const EdgeInsets.all(8),
-                child: buildCardCompareAmuletItems(equippedItemType, amuletItemObject),
+                child: buildColumnAmuletItemObject(amuletItemObject),
               ),
           ],
         ),
@@ -1810,13 +1810,16 @@ class AmuletUI {
     );
   }
 
-  Widget buildCardCompareAmuletItems(AmuletItemObject current, AmuletItemObject next){
+  Widget buildColumnAmuletItemObject(AmuletItemObject next){
 
+    final current = amulet.getEquippedAmuletItemObject(next.amuletItem.slotType);
     final nextAmuletItem = next.amuletItem;
-    final currentAmuletItem = current.amuletItem;
-    final damageDiff = getDiff(next.damage, current.damage)?.toInt();
-    final healthDiff = getDiff(nextAmuletItem.maxHealth, currentAmuletItem.maxHealth);
-    final magicDiff = getDiff(nextAmuletItem.maxMagic, currentAmuletItem.maxMagic);
+    final currentAmuletItem = current?.amuletItem;
+    final damageDiff = getDiff(next.damage, current?.damage)?.toInt();
+    final healthDiff = getDiff(nextAmuletItem.maxHealth, currentAmuletItem?.maxHealth);
+    final magicDiff = getDiff(nextAmuletItem.maxMagic, currentAmuletItem?.maxMagic);
+
+    final showDiff = current != next;
 
     return Column(
       children: [
@@ -1824,27 +1827,27 @@ class AmuletUI {
             buildComparisonRow(
               lead: iconHealth,
               value: nextAmuletItem.maxHealth,
-              diff: healthDiff,
+              diff: showDiff ? healthDiff : null,
             ),
           if (magicDiff != null)
             buildComparisonRow(
               lead: iconMagic,
               value: nextAmuletItem.maxMagic,
-              diff: magicDiff,
+              diff: showDiff ? magicDiff : null,
             ),
           if (damageDiff != null)
             buildComparisonRow(
               lead: 'damage',
               value: next.damage,
-              diff: damageDiff,
+              diff: showDiff ? damageDiff : null,
             ),
-          buildCompareBars('range', currentAmuletItem.range?.index ?? 0, nextAmuletItem.range?.index ?? 0),
-          buildCompareBars('speed', currentAmuletItem.attackSpeed?.index ?? 0, nextAmuletItem.attackSpeed?.index ?? 0),
+          buildCompareBars('range', currentAmuletItem?.range?.index ?? 0, nextAmuletItem.range?.index ?? 0),
+          buildCompareBars('speed', currentAmuletItem?.attackSpeed?.index ?? 0, nextAmuletItem.attackSpeed?.index ?? 0),
           // buildRangeDiff(current, next),
           height16,
           ...SkillType.values.map((skillType) {
 
-            final currentLevel = current.skillPoints[skillType] ?? 0;
+            final currentLevel = current?.skillPoints[skillType] ?? 0;
             final nextLevel = next.skillPoints[skillType] ?? 0;
 
             if (currentLevel == 0 && nextLevel == 0) {
@@ -1874,7 +1877,7 @@ class AmuletUI {
                   buildText(skillType.name.clean, color: Colors.white70, size: 15),
                 ],),
                 value: nextLevel,
-                diff: levelDiff,
+                diff: showDiff ? levelDiff : null,
               ),
             );
           })
@@ -1969,7 +1972,7 @@ class AmuletUI {
   Widget buildComparisonRow({
     required dynamic lead,
     required num? value,
-    required num diff,
+    required num? diff,
   }) =>
       Row(
         children: [
@@ -1978,9 +1981,13 @@ class AmuletUI {
           if (lead is String)
             buildText(lead),
           width8,
+          if (diff == null)
+            expanded,
           buildText(value?.toInt() ?? '0'),
           // width8,
+          if (diff != null)
           expanded,
+          if (diff != null)
           buildDiff(diff),
         ],
       );
@@ -2493,11 +2500,11 @@ Color getSkillTypeLevelDescriptionColor(SkillType skillType){
        return AmuletColors.Health;
      case SkillType.Magic_Regen:
        return AmuletColors.Magic;
-     case SkillType.Magic_Steal:
+     case SkillType.Warlock:
        return AmuletColors.Magic;
      case SkillType.Health_Regen:
        return AmuletColors.Health;
-     case SkillType.Health_Steal:
+     case SkillType.Vampire:
        return AmuletColors.Health;
      default:
        return Colors.orange;
