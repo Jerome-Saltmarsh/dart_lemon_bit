@@ -1039,11 +1039,15 @@ class AmuletUI {
                     ],
                   ),
                 ),
+                height8,
                 Tooltip(
                   message: 'Magic',
                   child: Row(
                     children: [
-                      iconMagic,
+                      Container(
+                          width: 16,
+                          height: 16,
+                          child: FittedBox(child: iconMagic)),
                       width8,
                       buildWatch(amulet.playerMagic, (value) => buildText(value, color: AmuletColors.Magic)),
                       width2,
@@ -1053,16 +1057,6 @@ class AmuletUI {
                     ],
                   ),
                 ),
-                        // Tooltip(
-                        //   message: 'Player Perform Frame Velocity',
-                        //   child: Row(
-                        //     children: [
-                        //       buildText('FV'),
-                        //       width8,
-                        //       buildWatch(amulet.playerPerformFrameVelocity, buildRowValue),
-                        //     ],
-                        //   ),
-                        // ),
                 height16,
                 buildEquippedAmuletItems(),
               ],
@@ -1271,7 +1265,7 @@ class AmuletUI {
       AmuletImage(srcX: 768, srcY: 320, width: 16, height: 16);
 
   Widget buildIconMagic() =>
-      AmuletImage(srcX: 688, srcY: 160, width: 32, height: 32);
+      AmuletImage(srcX: 784, srcY: 16, width: 16, height: 16);
 
   Widget buildIconHealthRegen() =>
       AmuletImage(srcX: 768, srcY: 32, width: 16, height: 16);
