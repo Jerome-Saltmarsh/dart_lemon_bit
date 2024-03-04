@@ -31,7 +31,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
   );
   final row = Watch(4);
   final complexion = Watch(0);
-  final hairType = Watch(0);
+  final hairType = Watch(1);
   final hairColor = Watch(0);
   final gender = Watch(Gender.male);
   final headType = Watch(0);
