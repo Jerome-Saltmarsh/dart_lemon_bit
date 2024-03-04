@@ -91,7 +91,7 @@ class Amulet extends IsometricGame {
   final playerRunSpeed = Watch(0);
   final playerAgility = Watch(0);
 
-  final aimTargetAmuletItem = Watch<AmuletItemSkillPoints?>(null);
+  final aimTargetAmuletItem = Watch<AmuletItemObject?>(null);
 
   final worldMapLarge = WatchBool(false);
   final amuletScene = Watch<AmuletScene?>(null);
@@ -141,10 +141,10 @@ class Amulet extends IsometricGame {
   final npcName = Watch('');
   final npcOptions = <String>[];
   final npcOptionsReads = Watch(0);
-  final equippedWeapon = Watch<AmuletItem?>(null);
-  final equippedHelm = Watch<AmuletItem?>(null);
-  final equippedArmor = Watch<AmuletItem?>(null);
-  final equippedShoes =  Watch<AmuletItem?>(null);
+  final equippedWeapon = Watch<AmuletItemObject?>(null);
+  final equippedHelm = Watch<AmuletItemObject?>(null);
+  final equippedArmor = Watch<AmuletItemObject?>(null);
+  final equippedShoes =  Watch<AmuletItemObject?>(null);
 
   late final aimTargetFiendType = Watch<FiendType?>(null);
 
@@ -668,7 +668,7 @@ class Amulet extends IsometricGame {
 
   }
 
-  AmuletItem? getEquippedItemType(SlotType itemType) =>
+  AmuletItemObject? getEquippedAmuletItemObject(SlotType itemType) =>
       switch (itemType) {
           SlotType.Weapon => equippedWeapon.value,
           SlotType.Helm => equippedHelm.value,
@@ -861,15 +861,4 @@ class Amulet extends IsometricGame {
   void spawnRandomAmuletItem() {
     sendAmuletRequest(NetworkRequestAmulet.Spawn_Random_Amulet_Item);
   }
-}
-
-
-class AmuletItemSkillPoints {
-  final AmuletItem amuletItem;
-  final Map<SkillType, int> skillTypePoints;
-
-  AmuletItemSkillPoints({
-    required this.amuletItem,
-    required this.skillTypePoints,
-  });
 }

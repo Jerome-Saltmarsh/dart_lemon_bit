@@ -86,7 +86,7 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   AttackSpeed? get equippedWeaponAttackSpeed =>
-      equippedWeapon?.attackSpeed;
+      equippedWeapon?.amuletItem.attackSpeed;
 
   @override
   set magic(int value) {
@@ -105,34 +105,31 @@ class AmuletPlayer extends IsometricPlayer with
   Amulet get amulet => amuletGame.amulet;
 
   @override
-  int get weaponType => equippedWeapon?.subType ?? WeaponType.Unarmed;
-
-  // @override
-  // double get attackDamage => getSkillTypeDamage(skillActive);
+  int get weaponType => equippedWeapon?.amuletItem.subType ?? WeaponType.Unarmed;
 
   @override
   double get attackRange => getSkillTypeRange(skillActive);
 
   @override
-  int get helmType => equippedHelm?.subType ?? HelmType.None;
+  int get helmType => equippedHelm?.amuletItem.subType ?? HelmType.None;
 
   @override
   double get maxHealth {
     var total = baseHealth;
-    total += equippedWeapon?.maxHealth ?? 0;
-    total += equippedHelm?.maxHealth ?? 0;
-    total += equippedArmor?.maxHealth ?? 0;
-    total += equippedShoes?.maxHealth ?? 0;
+    total += equippedWeapon?.amuletItem.maxHealth ?? 0;
+    total += equippedHelm?.amuletItem.maxHealth ?? 0;
+    total += equippedArmor?.amuletItem.maxHealth ?? 0;
+    total += equippedShoes?.amuletItem.maxHealth ?? 0;
     return total.toDouble();
   }
 
   @override
   int get maxMagic {
     var total = baseMagic;
-    total += equippedWeapon?.maxMagic ?? 0;
-    total += equippedHelm?.maxMagic ?? 0;
-    total += equippedArmor?.maxMagic ?? 0;
-    total += equippedShoes?.maxMagic ?? 0;
+    total += equippedWeapon?.amuletItem.maxMagic ?? 0;
+    total += equippedHelm?.amuletItem.maxMagic ?? 0;
+    total += equippedArmor?.amuletItem.maxMagic ?? 0;
+    total += equippedShoes?.amuletItem.maxMagic ?? 0;
     return total;
   }
 
@@ -254,13 +251,13 @@ class AmuletPlayer extends IsometricPlayer with
     writeFalse();
   }
 
-  bool acquireAmuletItem(AmuletItem amuletItem){
+  bool acquireAmuletItemObject(AmuletItemObject amuletItemObject){
     if (deadOrBusy) {
       return false;
     }
     setDestinationToCurrentPosition();
     clearPath();
-    equipAmuletItem(value: amuletItem);
+    equipAmuletItemObject(value: amuletItemObject);
     return true;
   }
 
@@ -324,14 +321,14 @@ class AmuletPlayer extends IsometricPlayer with
     clearTarget();
   }
 
-  void spawnAmuletItem(AmuletItem item){
+  void spawnAmuletItemObject(AmuletItemObject amuletItemObject){
     const spawnDistance = 20.0;
     final spawnAngle = randomAngle();
-    amuletGame.spawnAmuletItem(
+    amuletGame.spawnAmuletItemObject(
       x: x + adj(spawnAngle, spawnDistance),
       y: y + opp(spawnAngle, spawnDistance),
       z: z,
-      amuletItem: item,
+      amuletItemObject: amuletItemObject,
     );
   }
 
@@ -350,11 +347,11 @@ class AmuletPlayer extends IsometricPlayer with
 
 
     health = clamp(health, 0, maxHealth);
-    weaponType = equippedWeapon?.subType ?? WeaponType.Unarmed;
+    weaponType = equippedWeapon?.amuletItem.subType ?? WeaponType.Unarmed;
     equipmentDirty = false;
-    helmType = equippedHelm?.subType ?? HelmType.None;
-    armorType = equippedArmor?.subType ?? 0;
-    shoeType = equippedShoes?.subType ?? ShoeType.None;
+    helmType = equippedHelm?.amuletItem.subType ?? HelmType.None;
+    armorType = equippedArmor?.amuletItem.subType ?? 0;
+    shoeType = equippedShoes?.amuletItem.subType ?? ShoeType.None;
     removeInvalidSkillSlots();
     checkAssignedSkillTypes();
     writeEquipped();
@@ -410,10 +407,10 @@ class AmuletPlayer extends IsometricPlayer with
   void writeEquipped(){
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Equipped);
-    writeAmuletItem(equippedWeapon);
-    writeAmuletItem(equippedHelm);
-    writeAmuletItem(equippedArmor);
-    writeAmuletItem(equippedShoes);
+    writeAmuletItemObject(equippedWeapon);
+    writeAmuletItemObject(equippedHelm);
+    writeAmuletItemObject(equippedArmor);
+    writeAmuletItemObject(equippedShoes);
   }
 
   void writeAmuletItem(AmuletItem? value){
@@ -421,6 +418,22 @@ class AmuletPlayer extends IsometricPlayer with
       writeInt16(-1);
     } else{
       writeInt16(value.index);
+    }
+  }
+
+  void writeAmuletItemObject(AmuletItemObject? value){
+
+    if (value == null){
+      writeFalse();
+      return;
+    }
+
+    writeTrue();
+    writeUInt16(value.amuletItem.index);
+    writeByte(value.skillPoints.length);
+    for (final entry in value.skillPoints.entries) {
+      writeByte(entry.key.index); // skill type index
+      writeUInt16(entry.value); // skill type points
     }
   }
 
@@ -484,29 +497,31 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
 
-  void equipAmuletItem({
-    required AmuletItem value,
+  void equipAmuletItemObject({
+    required AmuletItemObject value,
     bool force = false,
   }) {
+    final amuletItem = value.amuletItem;
 
-    if (value.isConsumable) {
+    if (amuletItem.isConsumable) {
       final availableIndex = getEmptyConsumableSlotIndex();
       if (availableIndex == null){
         writeGameError(GameError.Potion_Slots_Full);
         return;
       }
       setCharacterStateChanging();
-      setConsumableSlot(index: availableIndex, amuletItem: value);
-      writeAmuletItemEquipped(value);
+      setConsumableSlot(index: availableIndex, amuletItem: amuletItem);
+      writeAmuletItemEquipped(amuletItem);
       return;
     }
 
-    final currentlyEquipped = getEquippedAmuletItem(slotType: value.slotType);
+
+    final currentlyEquipped = getEquippedAmuletItem(slotType: amuletItem.slotType);
     if (currentlyEquipped != null) {
-      dropSlotType(currentlyEquipped.slotType);
+      dropSlotType(currentlyEquipped.amuletItem.slotType);
     }
 
-    switch (value.slotType){
+    switch (amuletItem.slotType){
       case SlotType.Weapon:
         equippedWeapon = value;
         if (skillTypeLeft == SkillType.None){
@@ -529,7 +544,7 @@ class AmuletPlayer extends IsometricPlayer with
         break;
     }
 
-    final skills = value.skills.entries;
+    final skills = value.amuletItem.skills.entries;
 
     for (final skill in skills){
       final skillType = skill.key;
@@ -622,8 +637,8 @@ class AmuletPlayer extends IsometricPlayer with
         return;
       }
 
-      spawnAmuletItem(equippedAmuletItem);
-      switch (equippedAmuletItem.slotType) {
+      spawnAmuletItemObject(equippedAmuletItem);
+      switch (equippedAmuletItem.amuletItem.slotType) {
         case SlotType.Weapon:
           equippedWeapon = null;
           break;
@@ -644,7 +659,7 @@ class AmuletPlayer extends IsometricPlayer with
       notifyEquipmentDirty();
   }
 
-  AmuletItem? getEquippedAmuletItem({required SlotType slotType}) =>
+  AmuletItemObject? getEquippedAmuletItem({required SlotType slotType}) =>
       switch (slotType) {
         SlotType.Weapon => equippedWeapon,
         SlotType.Helm => equippedHelm,
@@ -1100,11 +1115,11 @@ class AmuletPlayer extends IsometricPlayer with
     }
   }
 
-  bool get equippedWeaponBow => equippedWeapon?.isWeaponBow ?? false;
+  bool get equippedWeaponBow => equippedWeapon?.amuletItem.isWeaponBow ?? false;
 
-  bool get equippedWeaponStaff => equippedWeapon?.isWeaponStaff ?? false;
+  bool get equippedWeaponStaff => equippedWeapon?.amuletItem.isWeaponStaff ?? false;
 
-  bool get equippedWeaponSword => equippedWeapon?.isWeaponSword ?? false;
+  bool get equippedWeaponSword => equippedWeapon?.amuletItem.isWeaponSword ?? false;
 
   bool get equippedWeaponMelee => equippedWeaponSword || equippedWeaponStaff;
 
@@ -1129,7 +1144,7 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   double get equippedWeaponDamage {
-    final damage = equippedWeapon?.damage;
+    final damage = equippedWeapon?.amuletItem.damage;
     if (damage == null){
        return 0;
     }
@@ -1158,11 +1173,11 @@ class AmuletPlayer extends IsometricPlayer with
   int getSkillTypeMagicCost(SkillType skillType) => skillType.magicCost;
 
   WeaponRange? get equippedWeaponRange {
-    return equippedWeapon?.range;
+    return equippedWeapon?.amuletItem.range;
   }
 
   WeaponClass? get equippedWeaponClass {
-      final weaponType = equippedWeapon?.subType;
+      final weaponType = equippedWeapon?.amuletItem.subType;
       if (weaponType == null){
         return null;
       }
@@ -1182,10 +1197,10 @@ class AmuletPlayer extends IsometricPlayer with
 
   int getSkillTypeLevel(SkillType skillType){
      var total = 0;
-     total += equippedWeapon?.skills[skillType] ?? 0;
-     total += equippedHelm?.skills[skillType] ?? 0;
-     total += equippedArmor?.skills[skillType] ?? 0;
-     total += equippedShoes?.skills[skillType] ?? 0;
+     total += equippedWeapon?.skillPoints[skillType] ?? 0;
+     total += equippedHelm?.skillPoints[skillType] ?? 0;
+     total += equippedArmor?.skillPoints[skillType] ?? 0;
+     total += equippedShoes?.skillPoints[skillType] ?? 0;
      return min(total, SkillType.Max_Skill_Points);
   }
 
@@ -1223,15 +1238,6 @@ class AmuletPlayer extends IsometricPlayer with
   //   writeInt8(activeSlotType?.index ?? -1);
   // }
 
-  AmuletItem? getEquippedSlotType(SlotType? slotType) =>
-    switch (slotType){
-       SlotType.Weapon => equippedWeapon,
-       SlotType.Helm => equippedHelm,
-       SlotType.Armor => equippedArmor,
-       SlotType.Shoes => equippedShoes,
-       SlotType.Consumable => null,
-       null => null
-    };
 
   int getSkillTypePerformDuration(SkillType skillType) =>
       skillType.casteSpeed?.duration ??
@@ -1306,7 +1312,7 @@ class AmuletPlayer extends IsometricPlayer with
   void writeEquippedWeaponRange() {
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Weapon_Range);
-    tryWriteByte(equippedWeapon?.range?.index);
+    tryWriteByte(equippedWeapon?.amuletItem.range?.index);
   }
 
   void writeEquippedWeaponAttackSpeed() {
@@ -1497,7 +1503,9 @@ class AmuletPlayer extends IsometricPlayer with
 
     setCharacterStateChanging();
     setConsumableSlot(index: index, amuletItem: null);
-    spawnAmuletItem(amuletItem);
+    spawnAmuletItemObject(
+      AmuletItemObject(amuletItem: amuletItem, skillPoints: {})
+    );
     writeAmuletItemDropped(amuletItem);
   }
 
@@ -1541,6 +1549,10 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   void spawnRandomAmuletItem() =>
-      spawnAmuletItem(randomItem(AmuletItem.values));
+      spawnAmuletItemObject(
+          amuletGame.generateAmuletItemObject(
+              randomItem(AmuletItem.values)
+          )
+      );
 }
 

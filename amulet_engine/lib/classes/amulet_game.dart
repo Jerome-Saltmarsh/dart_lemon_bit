@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:lemon_json/src.dart';
 import 'package:lemon_lang/src.dart';
 import 'package:lemon_math/src.dart';
 
@@ -730,8 +729,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     if (target is AmuletFiend) {
       if (randomChance(target.fiendType.chanceOfDropPotion)) {
-        spawnAmuletItemAtPosition(
-          item: randomItem(AmuletItem.Consumables),
+        spawnAmuletItemObjectAtPosition(
+          item: generateAmuletItemObject(randomItem(AmuletItem.Consumables)),
           position: target,
           deactivationTimer: gameObjectDeactivationTimer,
         );
@@ -743,19 +742,19 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
             level: amuletScene.level,
         );
         if (items.isNotEmpty) {
-          spawnAmuletItemAtPosition(
-            item: randomItem(items),
+          spawnAmuletItemObjectAtPosition(
+            item: generateAmuletItemObject(randomItem(items)),
             position: target,
           );
         }
 
-        spawnAmuletItemAtPosition(
-          item: AmuletItem.Consumable_Potion_Health,
+        spawnAmuletItemObjectAtPosition(
+          item: AmuletItemObject(amuletItem: AmuletItem.Consumable_Potion_Health, skillPoints: {}),
           position: target,
         );
 
-        spawnAmuletItemAtPosition(
-          item: AmuletItem.Consumable_Potion_Health,
+        spawnAmuletItemObjectAtPosition(
+          item: AmuletItemObject(amuletItem: AmuletItem.Consumable_Potion_Magic, skillPoints: {}),
           position: target,
         );
       }
@@ -814,20 +813,31 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       return;
     }
 
-    spawnAmuletItem(
-        amuletItem: randomItem(values),
+    spawnAmuletItemObject(
+        amuletItemObject: generateAmuletItemObject(randomItem(values)),
         x: fiend.x,
         y: fiend.y,
         z: fiend.z,
       );
   }
 
-  Json generateAmuletItemData(AmuletItem amuletItem){
-    final data = Json();
-    final skillPoints = distributeSkillPoints(amuletItem.skillTypes, amuletItem.skillPoints);
-    final indexedSkillPoints = skillPoints.map((key, value) => MapEntry<int, int>(key.index, value));
-    data['skill_points'] = indexedSkillPoints;
-    return data;
+  AmuletItemObject generateAmuletItemObject(AmuletItem amuletItem){
+    final skillPoints = <SkillType, int> {};
+    final points = amuletItem.skillPoints;
+    final skillTypes = amuletItem.skillTypes;
+
+    if (skillTypes.isNotEmpty) {
+      for (var i = 0; i < points; i++) {
+        final skillType = randomItem(skillTypes);
+        final currentPoints = skillPoints[skillType] ?? 0;
+        skillPoints[skillType] = currentPoints + 1;
+      }
+    }
+
+    return AmuletItemObject(
+      amuletItem: amuletItem,
+      skillPoints: skillPoints,
+    );
   }
 
   Map<SkillType, int> distributeSkillPoints(List<SkillType> skillTypes, int points){
@@ -850,41 +860,41 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required double x,
     required double y,
     required double z,
-  }) => spawnAmuletItem(
+  }) => spawnAmuletItemObject(
       x: x,
       y: y,
       z: z,
-    amuletItem: randomItem(AmuletItem.values),
+    amuletItemObject: generateAmuletItemObject(randomItem(AmuletItem.values)),
   );
 
   /// @deactivationTimer set to -1 to prevent amulet item from deactivating over time
-  GameObject spawnAmuletItemAtIndex({
+  GameObject spawnAmuletItemObjectAtIndex({
     required int index,
-    required AmuletItem item,
+    required AmuletItemObject item,
     int? deactivationTimer
   }) =>
-      spawnAmuletItem(
+      spawnAmuletItemObject(
         x: scene.getIndexX(index),
         y: scene.getIndexY(index),
         z: scene.getIndexZ(index),
-          amuletItem: item,
+          amuletItemObject: item,
         deactivationTimer: deactivationTimer
       );
 
-  GameObject spawnAmuletItemAtPosition({
-    required AmuletItem item,
+  GameObject spawnAmuletItemObjectAtPosition({
+    required AmuletItemObject item,
     required Position position,
     int? deactivationTimer
   }) =>
-    spawnAmuletItem(
-      amuletItem: item,
+    spawnAmuletItemObject(
+      amuletItemObject: item,
       x: position.x,
       y: position.y,
       z: position.z,
     );
 
-  GameObject spawnAmuletItem({
-    required AmuletItem amuletItem,
+  GameObject spawnAmuletItemObject({
+    required AmuletItemObject amuletItemObject,
     required double x,
     required double y,
     required double z,
@@ -895,12 +905,12 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       y: y,
       z: z,
       itemType: ItemType.Amulet_Item,
-      subType: amuletItem.index,
+      subType: amuletItemObject.amuletItem.index,
       team: TeamType.Neutral,
       interactable: true,
       deactivationTimer: deactivationTimer ?? gameObjectDeactivationTimer,
       health: 0,
-      data: generateAmuletItemData(amuletItem),
+      data: mapAmuletItemObjectToJson(amuletItemObject),
     );
 
     add(instance);
@@ -919,9 +929,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   }
 
   void spawnRandomConsumableAtIndex(int nodeIndex) {
-    spawnAmuletItemAtIndex(
+    spawnAmuletItemObjectAtIndex(
         index: nodeIndex,
-        item: randomItem(AmuletItem.Consumables),
+        item: generateAmuletItemObject(randomItem(AmuletItem.Consumables)),
     );
   }
 
@@ -978,7 +988,14 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
      if (amuletItem == null){
        return;
      }
-     if (player.acquireAmuletItem(amuletItem)){
+
+     final amuletItemObject = gameObject.amuletItemObject;
+
+     if (amuletItemObject == null){
+       return;
+     }
+
+     if (player.acquireAmuletItemObject(amuletItemObject)){
        remove(gameObject);
      }
   }
@@ -1165,8 +1182,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       );
 
       if (values.isNotEmpty) {
-        spawnAmuletItemAtPosition(
-          item: randomItem(values),
+        spawnAmuletItemObjectAtPosition(
+          item: generateAmuletItemObject(randomItem(values)),
           position: gameObject,
         );
       }
@@ -1343,6 +1360,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         throw Exception();
     }
   }
+
 }
 
 

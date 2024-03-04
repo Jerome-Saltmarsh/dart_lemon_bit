@@ -2,7 +2,6 @@
 import 'dart:typed_data';
 
 import 'package:amulet_engine/src.dart';
-import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_parser.dart';
 import 'package:lemon_byte/src.dart';
 import 'package:lemon_lang/src.dart';
@@ -64,10 +63,10 @@ extension AmuletParser on IsometricParser {
          readPlayerSkillsLeftRight();
          break;
        case NetworkResponseAmulet.Player_Equipped:
-         amulet.equippedWeapon.value = tryReadAmuletItem();
-         amulet.equippedHelm.value = tryReadAmuletItem();
-         amulet.equippedArmor.value = tryReadAmuletItem();
-         amulet.equippedShoes.value = tryReadAmuletItem();
+         amulet.equippedWeapon.value = tryReadAmuletItemObject();
+         amulet.equippedHelm.value = tryReadAmuletItemObject();
+         amulet.equippedArmor.value = tryReadAmuletItemObject();
+         amulet.equippedShoes.value = tryReadAmuletItemObject();
          break;
        case NetworkResponseAmulet.Active_Power_Position:
          readIsometricPosition(amulet.activePowerPosition);
@@ -284,34 +283,35 @@ extension AmuletParser on IsometricParser {
   void readQuestMain() =>
       amulet.questMain.value = QuestMain.values[readByte()];
 
-  void readAimTargetAmuletItem() {
-
-    if (!readBool()){
-      amulet.aimTargetAmuletItem.value = null;
-      return;
-    }
-
-    amulet.aimTargetAmuletItem.value = readAmuletItemSkillPoints();
-  }
-
-  AmuletItemSkillPoints readAmuletItemSkillPoints(){
-    final amuletItem = readAmuletItem();
-    final totalEntries = readByte();
-    final skillPoints = <SkillType, int>{};
-
-    for (var i = 0; i < totalEntries; i++) {
-      final skillType = readSkillType();
-      final points = readUInt16();
-      skillPoints[skillType] = points;
-    }
-
-    return AmuletItemSkillPoints(
-        amuletItem: amuletItem,
-        skillTypePoints: skillPoints,
-    );
-  }
+  void readAimTargetAmuletItem() =>
+      amulet.aimTargetAmuletItem.value = tryReadAmuletItemObject();
 
   AmuletItem? tryReadAmuletItem() => AmuletItem.values.tryGet(readInt16());
+
+  AmuletItemObject? tryReadAmuletItemObject() {
+
+    if (!readBool()){
+      return null;
+    }
+
+    final amuletItem = readAmuletItem();
+
+    final totalEntries = readByte();
+    final skillTypePoints = <SkillType, int> {
+
+    };
+
+    for (var i = 0; i < totalEntries; i++){
+      final skillType = readSkillType();
+      final skillPoints = readUInt16();
+      skillTypePoints[skillType] = skillPoints;
+    }
+
+    return AmuletItemObject(
+        amuletItem: amuletItem,
+        skillPoints: skillTypePoints,
+    );
+  }
 
   AmuletItem readAmuletItem() => AmuletItem.values[readUInt16()];
 

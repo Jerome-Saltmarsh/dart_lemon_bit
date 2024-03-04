@@ -123,12 +123,15 @@ enum SkillType {
     }
   }
 
-  static SkillType parse(String name){
+  static SkillType parse(String name) =>
+      tryParse(name) ?? (throw Exception('SkillType.parse("$name")'));
+
+  static SkillType? tryParse(String name){
      for (final skillType in values) {
         if (skillType.name == name)
           return skillType;
      }
-     throw Exception('SkillType.parse("$name")');
+     return null;
   }
 
   static int getHealAmount(int level) => 5 * level;

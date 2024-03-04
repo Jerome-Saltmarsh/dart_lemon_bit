@@ -2,8 +2,10 @@
 import 'package:amulet_engine/classes/amulet_fiend.dart';
 import 'package:amulet_engine/classes/amulet_game.dart';
 import 'package:amulet_engine/io/scene_json_writer.dart';
+import 'package:amulet_engine/json/map_amulet_item_object_to_json.dart';
 import 'package:lemon_json/src.dart';
 
+import 'amulet_field.dart';
 import 'character_json.dart';
 import '../classes/amulet_player.dart';
 import '../utils/generate_uuid.dart';
@@ -16,10 +18,25 @@ CharacterJson writeAmuletPlayerToJson(AmuletPlayer player){
   }
 
   json.uuid = player.uuid;
-  json.weapon = player.equippedWeapon?.name ?? '-';
-  json.helm = player.equippedHelm?.name ?? '-';
-  json.armor = player.equippedArmor?.name ?? '-';
-  json.shoes = player.equippedShoes?.name ?? '-';
+
+  final equippedWeapon = player.equippedWeapon;
+  final equippedHelm = player.equippedHelm;
+  final equippedArmor = player.equippedArmor;
+  final equippedShoes = player.equippedShoes;
+
+  if (equippedWeapon != null){
+    json[AmuletField.Equipped_Weapon] = mapAmuletItemObjectToJson(equippedWeapon);
+  }
+  if (equippedHelm != null){
+    json[AmuletField.Equipped_Helm] = mapAmuletItemObjectToJson(equippedHelm);
+  }
+  if (equippedArmor != null){
+    json[AmuletField.Equipped_Armor] = mapAmuletItemObjectToJson(equippedArmor);
+  }
+  if (equippedShoes != null){
+    json[AmuletField.Equipped_Shoes] = mapAmuletItemObjectToJson(equippedShoes);
+  }
+
   json.skillTypeLeft = player.skillTypeLeft;
   json.skillTypeRight = player.skillTypeRight;
   json['x'] = player.x.toInt();

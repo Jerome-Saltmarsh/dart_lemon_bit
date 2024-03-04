@@ -201,10 +201,10 @@ extension WebsiteUI on WebsiteGame {
             children: characters
                 .map((character) {
 
-                  final weapon = AmuletItem.findByName(character.weapon);
-                  final helm = AmuletItem.findByName(character.helm);
-                  final armour = AmuletItem.findByName(character.armor);
-                  final shoes = AmuletItem.findByName(character.shoes);
+                  final weapon = character.equippedWeapon?.amuletItem;
+                  final helm = character.equippedHelm?.amuletItem;
+                  final armour = character.equippedArmor?.amuletItem;
+                  final shoes = character.equippedShoes?.amuletItem;
 
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -2,9 +2,12 @@
 import 'package:amulet_engine/classes/amulet_fiend.dart';
 import 'package:amulet_engine/io/scene_json_reader.dart';
 import 'package:amulet_engine/isometric/classes/character.dart';
+import 'package:amulet_engine/json/map_json_to_amulet_item_object.dart';
 import 'package:amulet_engine/src.dart';
 import 'package:lemon_json/src.dart';
 import 'package:lemon_lang/src.dart';
+
+import 'amulet_field.dart';
 
 void writeJsonToAmuletPlayer(
     CharacterJson json,
@@ -20,10 +23,10 @@ void writeJsonToAmuletPlayer(
   final consumableSlots = json.getListInt('consumable_slots');
 
   player.amuletGame = amulet.findGame(amuletScene);
-  player.equippedWeapon = AmuletItem.findByName(json.weapon);
-  player.equippedHelm = AmuletItem.findByName(json.helm);
-  player.equippedArmor = AmuletItem.findByName(json.armor);
-  player.equippedShoes = AmuletItem.findByName(json.shoes);
+  player.equippedWeapon = mapJsonToAmuletItemObject(json[AmuletField.Equipped_Weapon]);
+  player.equippedHelm = mapJsonToAmuletItemObject(json[AmuletField.Equipped_Helm]);
+  player.equippedArmor = mapJsonToAmuletItemObject(json[AmuletField.Equipped_Armor]);
+  player.equippedShoes = mapJsonToAmuletItemObject(json[AmuletField.Equipped_Shoes]);
   player.equipmentDirty = true;
   player.uuid = json['uuid'] ?? (throw Exception('json[uuid] is null'));
   player.complexion = json['complexion'] ?? 0;
@@ -62,6 +65,7 @@ void writeJsonToAmuletPlayer(
   player.writePlayerHealth();
   player.joinGame(player.amuletGame);
 }
+
 
 void writeJsonAmuletToMemory(Json jsonAmulet, AmuletPlayer player) {
    final amulet = player.amulet;

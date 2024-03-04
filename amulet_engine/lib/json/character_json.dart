@@ -1,5 +1,10 @@
+import 'package:amulet_engine/classes/src.dart';
 import 'package:amulet_engine/common/src.dart';
+import 'package:amulet_engine/json/map_json_to_amulet_item_object.dart';
 import 'package:lemon_json/src.dart';
+
+import 'amulet_field.dart';
+import 'map_amulet_item_object_to_json.dart';
 
 typedef CharacterJson = Json;
 
@@ -14,13 +19,25 @@ extension CharacterJsonExtension on CharacterJson {
   static const FIELD_SKILL_TYPE_LEFT = 'skill_type_left';
   static const FIELD_SKILL_TYPE_RIGHT = 'skill_type_right';
 
-  String get weapon => tryGetString(FIELD_WEAPON) ?? '-';
+  AmuletItemObject? get equippedWeapon =>
+    mapJsonToAmuletItemObject(
+        tryGetChild(AmuletField.Equipped_Weapon)
+    );
 
-  String get helm => tryGetString(FIELD_HELM) ?? '-';
+  AmuletItemObject? get equippedHelm =>
+    mapJsonToAmuletItemObject(
+        tryGetChild(AmuletField.Equipped_Helm)
+    );
 
-  String get armor => tryGetString(FIELD_ARMOR) ?? '-';
+  AmuletItemObject? get equippedArmor =>
+    mapJsonToAmuletItemObject(
+        tryGetChild(AmuletField.Equipped_Armor)
+    );
 
-  String get shoes => tryGetString(FIELD_SHOES) ?? '-';
+  AmuletItemObject? get equippedShoes =>
+    mapJsonToAmuletItemObject(
+        tryGetChild(AmuletField.Equipped_Shoes)
+    );
 
   String get uuid => getString(FIELD_UUID);
 
@@ -29,14 +46,6 @@ extension CharacterJsonExtension on CharacterJson {
   SkillType get skillTypeLeft => SkillType.parse(getString(FIELD_SKILL_TYPE_LEFT));
 
   SkillType get skillTypeRight => SkillType.parse(getString(FIELD_SKILL_TYPE_RIGHT));
-
-  set weapon(String value) => setString(FIELD_WEAPON, value);
-
-  set helm(String value) => setString(FIELD_HELM, value);
-
-  set armor(String value) => setString(FIELD_ARMOR, value);
-
-  set shoes(String value) => setString(FIELD_SHOES, value);
 
   set uuid(String value) => setString(FIELD_UUID, value);
 

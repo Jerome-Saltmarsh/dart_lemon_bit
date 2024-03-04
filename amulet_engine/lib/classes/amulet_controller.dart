@@ -677,7 +677,10 @@ class AmuletController {
           sendServerError('invalid amulet item index');
           return;
         }
-        player.acquireAmuletItem(amuletItem);
+
+        player.acquireAmuletItemObject(
+            amuletGame.generateAmuletItemObject(amuletItem)
+        );
         break;
       case NetworkRequestAmulet.End_Interaction:
         player.endInteraction();

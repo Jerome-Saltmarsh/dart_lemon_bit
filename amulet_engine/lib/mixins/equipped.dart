@@ -1,10 +1,11 @@
 
 
-import 'package:amulet_engine/common/src/amulet/amulet_item.dart';
+import 'package:amulet_engine/classes/amulet_item_object.dart';
 
 mixin Equipped {
-  AmuletItem? equippedWeapon;
-  AmuletItem? equippedHelm;
-  AmuletItem? equippedArmor;
-  AmuletItem? equippedShoes;
+  AmuletItemObject? equippedWeapon;
+  AmuletItemObject? equippedHelm;
+  AmuletItemObject? equippedArmor;
+  AmuletItemObject? equippedShoes;
 }
+

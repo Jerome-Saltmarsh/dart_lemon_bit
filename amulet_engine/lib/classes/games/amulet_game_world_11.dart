@@ -1,6 +1,8 @@
 
 
 
+import 'package:amulet_engine/classes/amulet_item_object.dart';
+
 import '../../common/src.dart';
 import '../../isometric/src.dart';
 import '../amulet_game.dart';
@@ -212,7 +214,13 @@ class AmuletGameWorld11 extends AmuletGame {
               'By the way, Sophie wished to speak with you.',
             onInteractionOver: () {
               player.setQuestMain(QuestMain.Kill_The_Witch);
-              player.acquireAmuletItem(AmuletItem.Weapon_Sword_Short);
+              player.acquireAmuletItemObject(AmuletItemObject(
+                  amuletItem: AmuletItem.Weapon_Sword_Short,
+                  skillPoints: {
+                    SkillType.Critical_Hit: 1,
+                    SkillType.Health_Steal: 1,
+                  })
+              );
             }
         );
         break;
@@ -243,7 +251,9 @@ class AmuletGameWorld11 extends AmuletGame {
           'Good luck!'
           ,
         onInteractionOver: (){
-           player.acquireAmuletItem(AmuletItem.Armor_Tunic);
+           player.acquireAmuletItemObject(
+               generateAmuletItemObject(AmuletItem.Armor_Tunic)
+           );
         }
       );
       return;

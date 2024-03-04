@@ -113,15 +113,10 @@ class AmuletUI {
         top: 8,
         left: 8,
         child:
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            buildWatch(amulet.aimTargetAmuletItem, (aimTargetAmuletItem) =>
-              aimTargetAmuletItem == null
-                  ? nothing
-                  : buildCardAmuletItem(aimTargetAmuletItem.amuletItem)),
-          ],
-        ),
+        buildWatch(amulet.aimTargetAmuletItem, (aimTargetAmuletItem) =>
+          aimTargetAmuletItem == null
+              ? nothing
+              : buildCardAmuletItemSkillPoints(aimTargetAmuletItem)),
       ),
 
 
@@ -611,13 +606,13 @@ class AmuletUI {
   Widget buildEquippedAmuletItems() =>
       Column(
         children: [
-          buildWatchAmuletItem(amulet.equippedWeapon, SlotType.Weapon),
+          buildWatchAmuletItemObject(amulet.equippedWeapon, SlotType.Weapon),
           height8,
-          buildWatchAmuletItem(amulet.equippedHelm, SlotType.Helm),
+          buildWatchAmuletItemObject(amulet.equippedHelm, SlotType.Helm),
           height8,
-          buildWatchAmuletItem(amulet.equippedArmor, SlotType.Armor),
+          buildWatchAmuletItemObject(amulet.equippedArmor, SlotType.Armor),
           height8,
-          buildWatchAmuletItem(amulet.equippedShoes, SlotType.Shoes),
+          buildWatchAmuletItemObject(amulet.equippedShoes, SlotType.Shoes),
         ],
       );
 
@@ -1644,11 +1639,11 @@ class AmuletUI {
       child: buildText(value, color: titleColor),
   );
 
-  Widget buildWatchAmuletItem(Watch<AmuletItem?> watchAmuletItem, SlotType slotType) {
+  Widget buildWatchAmuletItemObject(Watch<AmuletItemObject?> watchAmuletItemObject, SlotType slotType) {
 
-    return buildWatch(watchAmuletItem, (amuletItem) {
+    return buildWatch(watchAmuletItemObject, (amuletItemObject) {
       const size = 58.0;
-      if (amuletItem == null){
+      if (amuletItemObject == null){
         return Container(
           width: size,
           height: size,
@@ -1657,10 +1652,10 @@ class AmuletUI {
       }
 
       final button = onPressed(
-        action: () => amulet.dropAmuletItem(amuletItem),
+        action: () => amulet.dropAmuletItem(amuletItemObject.amuletItem),
         onRightClick: () {
           visibleRightClickedToDrop = false;
-          amulet.dropAmuletItem(amuletItem);
+          amulet.dropAmuletItem(amuletItemObject.amuletItem);
         },
         child: Container(
           width: size,
@@ -1673,7 +1668,10 @@ class AmuletUI {
               AmuletImage(srcX: 878, srcY: 30, width: 36, height: 36),
               Container(
                   // color: Colors.red,
-                  child: AmuletItemImage(amuletItem: amuletItem, scale: 1.2,)),
+                  child: AmuletItemImage(
+                    amuletItem: amuletItemObject.amuletItem,
+                    scale: 1.2,),
+              ),
             ],
           ),
         ),
@@ -1685,7 +1683,7 @@ class AmuletUI {
             children: [
               if (visibleRightClickedToDrop)
                 buildText('right click to drop'),
-              buildCardAmuletItem(amuletItem),
+              buildCardAmuletItem(amuletItemObject.amuletItem),
             ],
           ),
           left: 90,
@@ -1716,13 +1714,12 @@ class AmuletUI {
   Widget buildIconSkillType(SkillType skillType, {double dstX = 0, double dstY = 0}) =>
       AmuletImageSrc(src: getSrcSkillType(skillType), dstX: dstX, dstY: dstY);
 
-  Widget buildCardAmuletItem(AmuletItem? amuletItem) {
-    if (amuletItem == null) {
-      return nothing;
-    }
 
+  Widget buildCardAmuletItemSkillPoints(AmuletItemObject amuletItemObject){
+    final amuletItem = amuletItemObject.amuletItem;
+    final skillPoints = amuletItemObject.skillPoints;
     final slotType = amuletItem.slotType;
-    final equippedItemType = amulet.getEquippedItemType(slotType);
+    final equippedItemType = amulet.getEquippedAmuletItemObject(slotType);
     final equipped = equippedItemType == amuletItem;
 
     return buildBorder(
@@ -1756,7 +1753,56 @@ class AmuletUI {
             if (equippedItemType != null && !equipped)
               Container(
                 padding: const EdgeInsets.all(8),
-                child: buildCardCompareAmuletItems(equippedItemType, amuletItem),
+                child: buildCardCompareAmuletItems(equippedItemType.amuletItem, amuletItem),
+              ),
+          ],
+        ),
+      ),
+    );
+
+  }
+
+  Widget buildCardAmuletItem(AmuletItem? amuletItem) {
+    if (amuletItem == null) {
+      return nothing;
+    }
+
+    final slotType = amuletItem.slotType;
+    final equippedItemType = amulet.getEquippedAmuletItemObject(slotType);
+    final equipped = equippedItemType == amuletItem;
+
+    return buildBorder(
+      width: 2,
+      color: Colors.white70,
+      child: Container(
+        width: 190,
+        color: Palette.brownDark,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildCardHeader('Item ${slotType.name}'),
+            Container(
+              padding: const EdgeInsets.all(4),
+              color: Colors.black12,
+              height: 60,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AmuletItemImage(amuletItem: amuletItem, scale: 1.0),
+                  width8,
+                  buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
+                ],
+              ),
+            ),
+            if (equipped)
+              Container(
+                  padding: const EdgeInsets.all(8),
+                  child: buildCardAmuletItemEquipped(amuletItem)),
+            if (equippedItemType != null && !equipped)
+              Container(
+                padding: const EdgeInsets.all(8),
+                child: buildCardCompareAmuletItems(equippedItemType.amuletItem, amuletItem),
               ),
           ],
         ),
