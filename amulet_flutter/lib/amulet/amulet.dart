@@ -91,7 +91,7 @@ class Amulet extends IsometricGame {
   final playerRunSpeed = Watch(0);
   final playerAgility = Watch(0);
 
-  final aimTargetAmuletItem = Watch<AmuletItemObject?>(null);
+  final aimTargetAmuletItemObject = Watch<AmuletItemObject?>(null);
 
   final worldMapLarge = WatchBool(false);
   final amuletScene = Watch<AmuletScene?>(null);

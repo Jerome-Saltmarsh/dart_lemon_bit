@@ -1,6 +1,7 @@
 
 import 'dart:math';
 
+import 'package:amulet_engine/json/amulet_field.dart';
 import 'package:amulet_engine/src.dart';
 import 'package:lemon_lang/src.dart';
 import 'package:lemon_math/src.dart';
@@ -1019,9 +1020,9 @@ class AmuletPlayer extends IsometricPlayer with
        return;
      }
 
-     final indexedSkillPoints = gameObject.data?['skill_points'];
+     final indexedSkillPoints = gameObject.data?[AmuletField.Skill_Points];
 
-     if (indexedSkillPoints == null || indexedSkillPoints is! Map<int, int>){
+     if (indexedSkillPoints == null){
        writeFalse();
        return;
      }
@@ -1031,7 +1032,9 @@ class AmuletPlayer extends IsometricPlayer with
     writeUInt16(amuletItem.index);
     writeByte(indexedSkillPoints.length);
     for (final entry in indexedSkillPoints.entries) {
-      writeByte(entry.key); // skill type index
+      final skillTypeName = entry.key;
+      final skillType = SkillType.parse(skillTypeName);
+      writeByte(skillType.index); // skill type index
       writeUInt16(entry.value); // skill type points
     }
   }

@@ -284,7 +284,7 @@ extension AmuletParser on IsometricParser {
       amulet.questMain.value = QuestMain.values[readByte()];
 
   void readAimTargetAmuletItem() =>
-      amulet.aimTargetAmuletItem.value = tryReadAmuletItemObject();
+      amulet.aimTargetAmuletItemObject.value = tryReadAmuletItemObject();
 
   AmuletItem? tryReadAmuletItem() => AmuletItem.values.tryGet(readInt16());
 
