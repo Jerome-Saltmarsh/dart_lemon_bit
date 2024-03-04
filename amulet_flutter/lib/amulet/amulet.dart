@@ -8,6 +8,7 @@ import 'package:amulet_flutter/amulet/amulet_keys.dart';
 import 'package:amulet_flutter/amulet/amulet_ui.dart';
 import 'package:amulet_flutter/amulet/classes/item_slot.dart';
 import 'package:amulet_flutter/amulet/ui/enums/quantify_tab.dart';
+import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:amulet_flutter/gamestream/ui/builders/build_watch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -155,46 +156,7 @@ class Amulet extends IsometricGame {
       screenColor.value = Colors.black.withOpacity((1.0 - t).clamp(0, 1.0));
     });
 
-    // aimTargetItemType.onChanged((itemType) {
-    //
-    //   if (itemType == null){
-    //     // aimTargetItemTypeComparison.value = null;
-    //     return;
-    //   }
-    //
-    //   if (itemType.isWeapon) {
-    //     if (itemType == equippedWeapon.value){
-    //       aimTargetItemTypeComparison.value = null;
-    //     } else {
-    //       aimTargetItemTypeComparison.value = equippedWeapon.value;
-    //     }
-    //   }
-    //
-    //   if (itemType.isHelm) {
-    //     if (itemType == equippedHelm.value) {
-    //       aimTargetItemTypeComparison.value = null;
-    //     } else {
-    //       aimTargetItemTypeComparison.value = equippedHelm.value;
-    //     }
-    //
-    //   }
-    //
-    //   if (itemType.isArmor) {
-    //     if (itemType == equippedArmor.value) {
-    //       aimTargetItemTypeComparison.value = null;
-    //     } else {
-    //       aimTargetItemTypeComparison.value = equippedArmor.value;
-    //     }
-    //   }
-    //
-    //   if (itemType.isShoes) {
-    //     if (itemType == equippedShoes.value){
-    //       aimTargetItemTypeComparison.value = null;
-    //     } else {
-    //       aimTargetItemTypeComparison.value = equippedShoes.value;
-    //     }
-    //   }
-    // });
+    questMain.onChanged(onChangedQuestMain);
 
     fiendCountAlive.onChanged((t) {
       updateFiendCountTotal();
@@ -219,6 +181,10 @@ class Amulet extends IsometricGame {
     playerSkillLeft.onChanged(onChangedPlayerSkillType);
     playerSkillRight.onChanged(onChangedPlayerSkillType);
     skillSlotsChangedNotifier.onChanged(onChangedSkillSlots);
+  }
+
+  void onChangedQuestMain(QuestMain questMain){
+    windowVisibleQuests.setTrue();
   }
 
   void onChangedWindowVisiblePlayerSkills(bool value){
@@ -592,6 +558,7 @@ class Amulet extends IsometricGame {
   }
 
   late final colorMap = {
+    NodeType.Empty: Palette.Black,
     NodeType.Water: colors.blue_2,
     NodeType.Grass: colors.sage_2,
     NodeType.Brick: colors.grey_2,
@@ -764,9 +731,8 @@ class Amulet extends IsometricGame {
 
   void onNewCharacterCreated() {
     windowVisibleQuests.setTrue();
-    // windowVisiblePlayerStats.setTrue();
     windowVisibleEquipment.setTrue();
-    windowVisiblePlayerSkills.setTrue();
+    windowVisiblePlayerSkills.setFalse();
   }
 
   void consumeSlotAtIndex(int index){

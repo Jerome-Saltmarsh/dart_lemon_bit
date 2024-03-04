@@ -29,7 +29,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
   final nameController = TextEditingController(
       text: 'Anon${randomInt(9999, 99999).toString()}'
   );
-  final row = Watch(0);
+  final row = Watch(4);
   final complexion = Watch(0);
   final hairType = Watch(0);
   final hairColor = Watch(0);
@@ -71,12 +71,6 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                       ),
                     ],
                   ),
-                  // height4,
-                  // Positioned(
-                  //   bottom: 8,
-                  //   right: 8,
-                  //   child: buildRowNameAndStart(components),
-                  // ),
                 ],
               )),
         );
@@ -135,10 +129,6 @@ class DialogCreateCharacterComputer extends StatelessWidget {
       buildColumnHairStyle(),
       width4,
       buildColumnHairColor(palette),
-      // width4,
-      // buildColumnBodyShape(),
-      // width4,
-      // buildColumnHeadType(),
     ],
   );
 

@@ -212,12 +212,15 @@ class AmuletGameWorld11 extends AmuletGame {
               'By the way, Sophie wished to speak with you.',
             onInteractionOver: () {
               player.setQuestMain(QuestMain.Kill_The_Witch);
-              player.acquireAmuletItemObject(AmuletItemObject(
-                  amuletItem: AmuletItem.Weapon_Sword_Short,
-                  skillPoints: {
-                    SkillType.Critical_Hit: 1,
-                    SkillType.Vampire: 1,
-                  })
+              player.acquireAmuletItemObject(
+                  AmuletItemObject(
+                    damage: 2,
+                    amuletItem: AmuletItem.Weapon_Sword_Short,
+                    skillPoints: {
+                      SkillType.Critical_Hit: 1,
+                      SkillType.Vampire: 1,
+                    },
+                  )
               );
             }
         );

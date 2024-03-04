@@ -46,12 +46,14 @@ REMINDER: IT DOESN'T NEED TO BE PERFECT
 [new] skill type thorns
 
 [EARLY_ACCESS]
-[new] balance amulet items
 [new] amulet item models
 [new] design skill type ice arrow
 [new] design skill type fire arrow
 [new] design skill type attack speed
 [new] design skill type health steal
+[new] balance amulet items
+[new] beat the game
+[fix] empty item slot
 
 ## 05.03.2024
 [fix] remove empty map regions
