@@ -954,9 +954,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
        return;
      }
 
-     final amuletItemObject = gameObject.amuletItemObject;
+     final amuletItemObject = mapGameObjectToAmuletItemObject(gameObject);
 
-     if (amuletItemObject == null){
+     if (amuletItemObject == null){ // fix
        return;
      }
 

@@ -38,13 +38,17 @@ SKULLSOFT
 REMINDER: IT DOESN'T NEED TO BE PERFECT
 
 [RELEASE]
+[new] balance amulet items
+[new] amulet item models
+[new] icon skill types
 [new] skill type beserk
 [new] skill type thorns
 [new] skill type sword wind attack
-[new] amulet item models
-[new] icon skill types
+[ref] common project
 [new] randomize item health
 [new] randomize item magic
+
+## 05.03.2024
 [fix] cannot pick up items
 
 ## 04.03.2024
