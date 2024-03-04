@@ -1,4 +1,3 @@
-import 'package:amulet_engine/classes/src.dart';
 import 'package:amulet_engine/common.dart';
 import 'package:lemon_json/src.dart';
 

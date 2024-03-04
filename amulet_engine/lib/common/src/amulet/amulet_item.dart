@@ -10,10 +10,6 @@ enum AmuletItem {
     attackSpeed: AttackSpeed.Very_Fast,
     range: WeaponRange.Very_Short,
     damage: 3,
-    skills: {
-      SkillType.Mighty_Strike: 1,
-      SkillType.Area_Damage: 0,
-    },
     skillTypes: [
       SkillType.Mighty_Strike,
       SkillType.Area_Damage,
@@ -30,10 +26,6 @@ enum AmuletItem {
     attackSpeed: AttackSpeed.Fast,
     range: WeaponRange.Short,
     damage: 4,
-    skills: {
-      SkillType.Mighty_Strike: 1,
-      SkillType.Area_Damage: 7,
-    },
     skillTypes: [
       SkillType.Mighty_Strike,
       SkillType.Area_Damage,
@@ -50,11 +42,6 @@ enum AmuletItem {
     attackSpeed: AttackSpeed.Slow,
     range: WeaponRange.Long,
     damage: 5,
-    skills: {
-      SkillType.Mighty_Strike: 1,
-      SkillType.Area_Damage: 14,
-      SkillType.Critical_Hit: 3,
-    },
     skillTypes: [
       SkillType.Mighty_Strike,
       SkillType.Area_Damage,
@@ -71,10 +58,6 @@ enum AmuletItem {
     attackSpeed: AttackSpeed.Very_Slow,
     range: WeaponRange.Very_Long,
     damage: 6,
-    skills: {
-      SkillType.Mighty_Strike: 20,
-      SkillType.Area_Damage: 20,
-    },
     skillTypes: [
       SkillType.Mighty_Strike,
       SkillType.Area_Damage,
@@ -91,9 +74,6 @@ enum AmuletItem {
     attackSpeed: AttackSpeed.Fast,
     range: WeaponRange.Very_Short,
     damage: 2,
-    skills: {
-      SkillType.Ice_Arrow: 1,
-    },
     skillTypes: [
       SkillType.Critical_Hit,
       SkillType.Shield,
@@ -111,9 +91,6 @@ enum AmuletItem {
     attackSpeed: AttackSpeed.Fast,
     range: WeaponRange.Short,
     damage: 3,
-    skills: {
-      SkillType.Ice_Arrow: 1,
-    },
     skillTypes: [
       SkillType.Critical_Hit,
       SkillType.Shield,
@@ -131,9 +108,6 @@ enum AmuletItem {
     attackSpeed: AttackSpeed.Slow,
     range: WeaponRange.Long,
     damage: 4,
-    skills: {
-      SkillType.Ice_Arrow: 1,
-    },
     skillTypes: [
       SkillType.Critical_Hit,
       SkillType.Shield,
@@ -151,9 +125,6 @@ enum AmuletItem {
     attackSpeed: AttackSpeed.Very_Slow,
     range: WeaponRange.Very_Long,
     damage: 5,
-    skills: {
-      SkillType.Ice_Arrow: 1,
-    },
     skillTypes: [
       SkillType.Critical_Hit,
       SkillType.Shield,
@@ -171,9 +142,6 @@ enum AmuletItem {
     attackSpeed: AttackSpeed.Very_Fast,
     range: WeaponRange.Very_Short,
     damage: 1,
-    skills: {
-      SkillType.Fireball: 1,
-    },
     skillTypes: [
       SkillType.Critical_Hit,
       SkillType.Shield,
@@ -191,9 +159,6 @@ enum AmuletItem {
     attackSpeed: AttackSpeed.Fast,
     range: WeaponRange.Short,
     damage: 2,
-    skills: {
-      SkillType.Fireball: 1,
-    },
     skillTypes: [
       SkillType.Fireball,
       SkillType.Heal,
@@ -216,9 +181,7 @@ enum AmuletItem {
         SkillType.Magic_Regen,
         SkillType.Magic_Steal,
       ],
-      skills: {
-        SkillType.Fireball: 1,
-      }),
+      ),
   Weapon_Staff_Long(
       label: 'Staff',
       level: 4,
@@ -233,9 +196,7 @@ enum AmuletItem {
         SkillType.Magic_Regen,
         SkillType.Magic_Steal,
       ],
-      skills: {
-        SkillType.Fireball: 1,
-      }),
+  ),
   Helm_Leather_Cap(
     label: 'Leather Cap',
     level: 1,
@@ -243,12 +204,6 @@ enum AmuletItem {
     subType: HelmType.Leather_Cap,
     maxHealth: 5,
     maxMagic: 3,
-    skills: {
-      SkillType.Mighty_Strike: 1,
-      SkillType.Heal: 2,
-      SkillType.Attack_Speed: 10,
-      SkillType.Critical_Hit: 1,
-    },
     skillTypes: [
       SkillType.Health_Regen,
       SkillType.Health_Steal,
@@ -262,12 +217,6 @@ enum AmuletItem {
     slotType: SlotType.Helm,
     subType: HelmType.Steel_Cap,
     maxHealth: 8,
-    skills: {
-      SkillType.Mighty_Strike: 1,
-      SkillType.Attack_Speed: 20,
-      SkillType.Health_Steal: 5,
-      SkillType.Magic_Steal: 5,
-    },
     skillTypes: [
       SkillType.Health_Regen,
       SkillType.Health_Steal,
@@ -281,9 +230,6 @@ enum AmuletItem {
     slotType: SlotType.Helm,
     subType: HelmType.Full_Helm,
     maxHealth: 11,
-    skills: {
-      SkillType.Mighty_Strike: 1,
-    },
     skillTypes: [
       SkillType.Health_Regen,
       SkillType.Health_Steal,
@@ -298,9 +244,6 @@ enum AmuletItem {
     subType: HelmType.Pointed_Hat_Purple,
     maxHealth: 1,
     maxMagic: 10,
-    skills: {
-      SkillType.Fireball: 1,
-    },
     skillTypes: [
       SkillType.Magic_Regen,
       SkillType.Fireball,
@@ -315,9 +258,6 @@ enum AmuletItem {
     subType: HelmType.Pointed_Hat_Black,
     maxHealth: 2,
     maxMagic: 15,
-    skills: {
-      SkillType.Fireball: 1,
-    },
     skillTypes: [
       SkillType.Magic_Regen,
       SkillType.Fireball,
@@ -332,9 +272,6 @@ enum AmuletItem {
     subType: HelmType.Cowl,
     maxHealth: 2,
     maxMagic: 7,
-    skills: {
-      SkillType.Fireball: 1,
-    },
     skillTypes: [
       SkillType.Magic_Regen,
       SkillType.Fireball,
@@ -348,9 +285,6 @@ enum AmuletItem {
     slotType: SlotType.Helm,
     subType: HelmType.Feather_Cap,
     maxHealth: 3,
-    skills: {
-      SkillType.Ice_Arrow: 1,
-    },
     skillTypes: [
       SkillType.Health_Steal,
       SkillType.Magic_Steal,
@@ -366,9 +300,6 @@ enum AmuletItem {
     subType: HelmType.Cape,
     maxHealth: 4,
     maxMagic: 2,
-    skills: {
-      SkillType.Split_Shot: 1,
-    },
     skillTypes: [
       SkillType.Health_Steal,
       SkillType.Magic_Steal,
@@ -384,9 +315,6 @@ enum AmuletItem {
     subType: HelmType.Cape,
     maxHealth: 4,
     maxMagic: 2,
-    skills: {
-      SkillType.Split_Shot: 1,
-    },
     skillTypes: [
       SkillType.Health_Steal,
       SkillType.Magic_Steal,
@@ -402,9 +330,6 @@ enum AmuletItem {
     subType: ArmorType.Tunic,
     maxHealth: 5,
     maxMagic: 5,
-    skills: {
-      SkillType.Split_Shot: 1,
-    },
     skillTypes: [
       SkillType.Health_Steal,
       SkillType.Magic_Steal,
@@ -420,10 +345,6 @@ enum AmuletItem {
     slotType: SlotType.Armor,
     subType: ArmorType.Leather,
     maxHealth: 10,
-    skills: {
-      SkillType.Mighty_Strike: 1,
-      SkillType.Heal: 2,
-    },
     skillTypes: [
       SkillType.Health_Steal,
       SkillType.Magic_Steal,
@@ -439,9 +360,6 @@ enum AmuletItem {
     slotType: SlotType.Armor,
     subType: ArmorType.Chainmail,
     maxHealth: 20,
-    skills: {
-      SkillType.Mighty_Strike: 1,
-    },
     skillTypes: [
       SkillType.Health_Steal,
       SkillType.Mighty_Strike,
@@ -456,9 +374,6 @@ enum AmuletItem {
     slotType: SlotType.Armor,
     subType: ArmorType.Platemail,
     maxHealth: 30,
-    skills: {
-      SkillType.Mighty_Strike: 1,
-    },
     skillTypes: [
       SkillType.Health_Steal,
       SkillType.Mighty_Strike,
@@ -474,10 +389,6 @@ enum AmuletItem {
     subType: ArmorType.Robes,
     maxHealth: 5,
     maxMagic: 5,
-    skills: {
-      SkillType.Fireball: 1,
-      SkillType.Magic_Steal: 2,
-    },
     skillTypes: [
       SkillType.Health_Steal,
       SkillType.Mighty_Strike,
@@ -493,9 +404,6 @@ enum AmuletItem {
     subType: ArmorType.Cloak,
     maxHealth: 5,
     maxMagic: 5,
-    skills: {
-      SkillType.Split_Shot: 1,
-    },
     skillTypes: [
       SkillType.Health_Steal,
       SkillType.Mighty_Strike,
@@ -510,9 +418,6 @@ enum AmuletItem {
     slotType: SlotType.Armor,
     subType: ArmorType.Mantle,
     maxHealth: 9,
-    skills: {
-      SkillType.Split_Shot: 1,
-    },
     skillTypes: [
       SkillType.Health_Steal,
       SkillType.Mighty_Strike,
@@ -527,9 +432,6 @@ enum AmuletItem {
     slotType: SlotType.Armor,
     subType: ArmorType.Shroud,
     maxHealth: 9,
-    skills: {
-      SkillType.Split_Shot: 1,
-    },
     skillTypes: [
       SkillType.Health_Steal,
       SkillType.Mighty_Strike,
@@ -544,10 +446,6 @@ enum AmuletItem {
     slotType: SlotType.Shoes,
     subType: ShoeType.Leather_Boots,
     maxHealth: 5,
-    skills: {
-      SkillType.Mighty_Strike: 1,
-      SkillType.Run_Speed: 3,
-    },
     skillTypes: [
       SkillType.Health_Steal,
       SkillType.Mighty_Strike,
@@ -562,9 +460,6 @@ enum AmuletItem {
     slotType: SlotType.Shoes,
     subType: ShoeType.Grieves,
     maxHealth: 5,
-    skills: {
-      SkillType.Mighty_Strike: 1,
-    },
     skillTypes: [
       SkillType.Run_Speed,
       SkillType.Attack_Speed,
@@ -577,9 +472,6 @@ enum AmuletItem {
     slotType: SlotType.Shoes,
     subType: ShoeType.Sabatons,
     maxHealth: 5,
-    skills: {
-      SkillType.Mighty_Strike: 1,
-    },
     skillTypes: [
       SkillType.Run_Speed,
       SkillType.Attack_Speed,
@@ -593,9 +485,6 @@ enum AmuletItem {
     subType: ShoeType.Black_Slippers,
     maxHealth: 1,
     maxMagic: 5,
-    skills: {
-      SkillType.Fireball: 1,
-    },
     skillTypes: [
       SkillType.Run_Speed,
       SkillType.Attack_Speed,
@@ -609,9 +498,6 @@ enum AmuletItem {
     subType: ShoeType.Footwraps,
     maxHealth: 1,
     maxMagic: 5,
-    skills: {
-      SkillType.Fireball: 1,
-    },
     skillTypes: [
       SkillType.Run_Speed,
       SkillType.Attack_Speed,
@@ -625,9 +511,6 @@ enum AmuletItem {
     subType: ShoeType.Soles,
     maxHealth: 1,
     maxMagic: 5,
-    skills: {
-      SkillType.Fireball: 1,
-    },
     skillTypes: [
       SkillType.Run_Speed,
       SkillType.Attack_Speed,
@@ -641,10 +524,6 @@ enum AmuletItem {
     subType: ShoeType.Treads,
     maxHealth: 1,
     maxMagic: 5,
-    skills: {
-      SkillType.Fireball: 1,
-      SkillType.Run_Speed: 6,
-    },
     skillTypes: [
       SkillType.Run_Speed,
       SkillType.Attack_Speed,
@@ -658,10 +537,6 @@ enum AmuletItem {
     subType: ShoeType.Striders,
     maxHealth: 1,
     maxMagic: 5,
-    skills: {
-      SkillType.Fireball: 1,
-      SkillType.Run_Speed: 12,
-    },
     skillTypes: [
       SkillType.Run_Speed,
       SkillType.Attack_Speed,
@@ -675,10 +550,6 @@ enum AmuletItem {
     subType: ShoeType.Satin_Boots,
     maxHealth: 1,
     maxMagic: 5,
-    skills: {
-      SkillType.Split_Shot: 1,
-      SkillType.Run_Speed: 20,
-    },
     skillTypes: [
       SkillType.Run_Speed,
       SkillType.Attack_Speed,
@@ -690,7 +561,6 @@ enum AmuletItem {
     slotType: SlotType.Consumable,
     subType: ConsumableType.Potion_Blue,
     level: 0,
-    skills: {},
     skillTypes: [],
   ),
   Consumable_Potion_Health(
@@ -698,7 +568,6 @@ enum AmuletItem {
       slotType: SlotType.Consumable,
       subType: ConsumableType.Potion_Red,
       level: 0,
-      skills: {},
       skillTypes: [],
   );
 
@@ -719,7 +588,7 @@ enum AmuletItem {
   final String label;
   final int? maxHealth;
   final int? maxMagic;
-  final Map<SkillType, int> skills;
+  // final Map<SkillType, int> skills;
   final List<SkillType> skillTypes;
   final int skillPoints;
 
@@ -728,7 +597,7 @@ enum AmuletItem {
     required this.subType,
     required this.level,
     required this.label,
-    required this.skills,
+    // required this.skills,
     required this.skillTypes,
     this.skillPoints = 5,
     this.quality = ItemQuality.Common,

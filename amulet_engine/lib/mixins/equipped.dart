@@ -1,6 +1,6 @@
 
 
-import 'package:amulet_engine/classes/amulet_item_object.dart';
+import '../common/src/classes/amulet_item_object.dart';
 
 mixin Equipped {
   AmuletItemObject? equippedWeapon;

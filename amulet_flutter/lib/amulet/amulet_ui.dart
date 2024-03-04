@@ -1683,7 +1683,7 @@ class AmuletUI {
             children: [
               if (visibleRightClickedToDrop)
                 buildText('right click to drop'),
-              buildCardAmuletItem(amuletItemObject.amuletItem),
+              buildCardAmuletItem(amuletItemObject),
             ],
           ),
           left: 90,
@@ -1717,7 +1717,6 @@ class AmuletUI {
 
   Widget buildCardAmuletItemSkillPoints(AmuletItemObject amuletItemObject){
     final amuletItem = amuletItemObject.amuletItem;
-    final skillPoints = amuletItemObject.skillPoints;
     final slotType = amuletItem.slotType;
     final equippedItemType = amulet.getEquippedAmuletItemObject(slotType);
     final equipped = equippedItemType == amuletItem;
@@ -1749,11 +1748,11 @@ class AmuletUI {
             if (equipped)
               Container(
                   padding: const EdgeInsets.all(8),
-                  child: buildCardAmuletItemEquipped(amuletItem)),
+                  child: buildCardAmuletItemEquipped(amuletItemObject)),
             if (equippedItemType != null && !equipped)
               Container(
                 padding: const EdgeInsets.all(8),
-                child: buildCardCompareAmuletItems(equippedItemType.amuletItem, amuletItem),
+                child: buildCardCompareAmuletItems(equippedItemType, amuletItemObject),
               ),
           ],
         ),
@@ -1762,11 +1761,13 @@ class AmuletUI {
 
   }
 
-  Widget buildCardAmuletItem(AmuletItem? amuletItem) {
-    if (amuletItem == null) {
+  Widget buildCardAmuletItem(AmuletItemObject? amuletItemObject) {
+
+    if (amuletItemObject == null){
       return nothing;
     }
 
+    final amuletItem = amuletItemObject.amuletItem;
     final slotType = amuletItem.slotType;
     final equippedItemType = amulet.getEquippedAmuletItemObject(slotType);
     final equipped = equippedItemType == amuletItem;
@@ -1798,11 +1799,11 @@ class AmuletUI {
             if (equipped)
               Container(
                   padding: const EdgeInsets.all(8),
-                  child: buildCardAmuletItemEquipped(amuletItem)),
+                  child: buildCardAmuletItemEquipped(amuletItemObject)),
             if (equippedItemType != null && !equipped)
               Container(
                 padding: const EdgeInsets.all(8),
-                child: buildCardCompareAmuletItems(equippedItemType.amuletItem, amuletItem),
+                child: buildCardCompareAmuletItems(equippedItemType, amuletItemObject),
               ),
           ],
         ),
@@ -1810,40 +1811,42 @@ class AmuletUI {
     );
   }
 
-  Widget buildCardCompareAmuletItems(AmuletItem current, AmuletItem next){
+  Widget buildCardCompareAmuletItems(AmuletItemObject current, AmuletItemObject next){
 
-    final damageDiff = getDiff(next.damage, current.damage)?.toInt();
-    final healthDiff = getDiff(next.maxHealth, current.maxHealth);
-    final magicDiff = getDiff(next.maxMagic, current.maxMagic);
+    final nextAmuletItem = next.amuletItem;
+    final currentAmuletItem = current.amuletItem;
+    final damageDiff = getDiff(nextAmuletItem.damage, currentAmuletItem.damage)?.toInt();
+    final healthDiff = getDiff(nextAmuletItem.maxHealth, currentAmuletItem.maxHealth);
+    final magicDiff = getDiff(nextAmuletItem.maxMagic, currentAmuletItem.maxMagic);
 
     return Column(
       children: [
           if (healthDiff != null)
             buildComparisonRow(
               lead: iconHealth,
-              value: next.maxHealth,
+              value: nextAmuletItem.maxHealth,
               diff: healthDiff,
             ),
           if (magicDiff != null)
             buildComparisonRow(
               lead: iconMagic,
-              value: next.maxMagic,
+              value: nextAmuletItem.maxMagic,
               diff: magicDiff,
             ),
           if (damageDiff != null)
             buildComparisonRow(
               lead: 'damage',
-              value: next.damage,
+              value: nextAmuletItem.damage,
               diff: damageDiff,
             ),
-          buildCompareBars('range', current.range?.index ?? 0, next.range?.index ?? 0),
-          buildCompareBars('speed', current.attackSpeed?.index ?? 0, next.attackSpeed?.index ?? 0),
+          buildCompareBars('range', currentAmuletItem.range?.index ?? 0, nextAmuletItem.range?.index ?? 0),
+          buildCompareBars('speed', currentAmuletItem.attackSpeed?.index ?? 0, nextAmuletItem.attackSpeed?.index ?? 0),
           // buildRangeDiff(current, next),
           height16,
           ...SkillType.values.map((skillType) {
 
-            final currentLevel = current.skills[skillType] ?? 0;
-            final nextLevel = next.skills[skillType] ?? 0;
+            final currentLevel = current.skillPoints[skillType] ?? 0;
+            final nextLevel = next.skillPoints[skillType] ?? 0;
 
             if (currentLevel == 0 && nextLevel == 0) {
               return nothing;
@@ -2012,7 +2015,9 @@ class AmuletUI {
     return (a ?? 0.0) - (b ?? 0.0);
   }
 
-  Widget buildCardAmuletItemEquipped(AmuletItem amuletItem){
+  Widget buildCardAmuletItemEquipped(AmuletItemObject amuletItemObject) {
+
+    final amuletItem = amuletItemObject.amuletItem;
     final damage = amuletItem.damage;
     final maxHealth = amuletItem.maxHealth;
     final maxMagic = amuletItem.maxMagic;
@@ -2032,7 +2037,7 @@ class AmuletUI {
         if (maxMagic != null && maxMagic > 0)
           buildRow(buildIconMagic(), maxMagic),
         height16,
-        ...amuletItem.skills.entries.map((e) => Container(
+        ...amuletItemObject.skillPoints.entries.map((e) => Container(
           margin: const EdgeInsets.only(bottom: 8),
           child: Container(
             color: Colors.black26,

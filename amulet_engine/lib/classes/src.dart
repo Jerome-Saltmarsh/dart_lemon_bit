@@ -9,4 +9,3 @@ export 'amulet_scenes.dart';
 export 'talk_option.dart';
 export 'games/src.dart';
 export 'npcs/src.dart';
-export 'amulet_item_object.dart';

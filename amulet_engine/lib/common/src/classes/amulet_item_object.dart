@@ -1,5 +1,6 @@
-import 'package:amulet_engine/common/src/amulet/amulet_item.dart';
-import 'package:amulet_engine/common/src/amulet/skill_type.dart';
+
+import '../amulet/amulet_item.dart';
+import '../amulet/skill_type.dart';
 
 class AmuletItemObject {
   final AmuletItem amuletItem;

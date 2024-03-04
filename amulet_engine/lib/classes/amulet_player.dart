@@ -544,10 +544,10 @@ class AmuletPlayer extends IsometricPlayer with
         break;
     }
 
-    final skills = value.amuletItem.skills.entries;
+    final skillPoints = value.skillPoints.entries;
 
-    for (final skill in skills){
-      final skillType = skill.key;
+    for (final skillPoint in skillPoints){
+      final skillType = skillPoint.key;
       if (!skillTypeAssignedToSkillSlot(skillType)) {
         tryToAssignSkillTypeToEmptySlot(skillType);
       }

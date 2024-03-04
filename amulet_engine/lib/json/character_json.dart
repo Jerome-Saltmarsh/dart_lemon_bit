@@ -1,10 +1,8 @@
-import 'package:amulet_engine/classes/src.dart';
 import 'package:amulet_engine/common/src.dart';
 import 'package:amulet_engine/json/map_json_to_amulet_item_object.dart';
 import 'package:lemon_json/src.dart';
 
 import 'amulet_field.dart';
-import 'map_amulet_item_object_to_json.dart';
 
 typedef CharacterJson = Json;
 

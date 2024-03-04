@@ -18,3 +18,4 @@ export 'network/src.dart';
 export 'duration_auto_save.dart';
 export 'functions/src.dart';
 export 'consts/src.dart';
+export 'classes/amulet_item_object.dart';

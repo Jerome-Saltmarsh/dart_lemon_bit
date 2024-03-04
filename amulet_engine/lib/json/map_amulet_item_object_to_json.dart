@@ -1,7 +1,8 @@
 
-import 'package:amulet_engine/classes/amulet_item_object.dart';
 import 'package:amulet_engine/json/amulet_field.dart';
 import 'package:lemon_json/src.dart';
+
+import '../common/src/classes/amulet_item_object.dart';
 
 Json mapAmuletItemObjectToJson(AmuletItemObject amuletItemObject){
   final data = Json();
