@@ -6,4 +6,5 @@ class AmuletField {
   static const Equipped_Helm = 'equipped_helm';
   static const Equipped_Armor = 'equipped_armor';
   static const Equipped_Shoes = 'equipped_shoes';
+  static const Damage = 'damage';
 }

@@ -28,5 +28,6 @@ AmuletItemObject? mapJsonToAmuletItemObject(Json? json) {
   return AmuletItemObject(
       amuletItem: amuletItem,
       skillPoints: skillPoints,
+      damage: json.tryGetDouble(AmuletField.Damage),
   );
 }

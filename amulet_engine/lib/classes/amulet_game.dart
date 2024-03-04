@@ -821,41 +821,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       );
   }
 
-  AmuletItemObject generateAmuletItemObject(AmuletItem amuletItem){
-    final skillPoints = <SkillType, int> {};
-    final points = amuletItem.skillPoints;
-    final skillTypes = amuletItem.skillTypes;
-
-    if (skillTypes.isNotEmpty) {
-      for (var i = 0; i < points; i++) {
-        final skillType = randomItem(skillTypes);
-        final currentPoints = skillPoints[skillType] ?? 0;
-        skillPoints[skillType] = currentPoints + 1;
-      }
-    }
-
-    return AmuletItemObject(
-      amuletItem: amuletItem,
-      skillPoints: skillPoints,
-    );
-  }
-
-  Map<SkillType, int> distributeSkillPoints(List<SkillType> skillTypes, int points){
-    final skillPoints = <SkillType, int> {};
-
-    if (skillTypes.isEmpty) {
-      return skillPoints;
-    }
-
-    for (var i = 0; i < points; i++) {
-      final skillType = randomItem(skillTypes);
-      final currentPoints = skillPoints[skillType] ?? 0;
-      skillPoints[skillType] = currentPoints + 1;
-    }
-
-    return skillPoints;
-  }
-
   void spawnRandomLoot({
     required double x,
     required double y,
@@ -1359,6 +1324,34 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       case DamageType.Ice:
         throw Exception();
     }
+  }
+
+  AmuletItemObject generateAmuletItemObject(AmuletItem amuletItem){
+    final skillPoints = <SkillType, int> {};
+    final points = amuletItem.skillPoints;
+    final skillTypes = amuletItem.skillTypes;
+
+    if (skillTypes.isNotEmpty) {
+      for (var i = 0; i < points; i++) {
+        final skillType = randomItem(skillTypes);
+        final currentPoints = skillPoints[skillType] ?? 0;
+        skillPoints[skillType] = currentPoints + 1;
+      }
+    }
+
+    final damageMin = amuletItem.damageMin;
+    final damageMax = amuletItem.damageMax;
+    double? damage;
+
+    if (damageMin != null && damageMax != null){
+      damage = randomBetween(damageMin, damageMax);
+    }
+
+    return AmuletItemObject(
+      amuletItem: amuletItem,
+      skillPoints: skillPoints,
+      damage: damage,
+    );
   }
 
 }

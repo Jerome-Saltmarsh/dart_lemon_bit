@@ -14,6 +14,7 @@ Json mapAmuletItemObjectToJson(AmuletItemObject amuletItemObject){
 
   data[AmuletField.Skill_Points] = skillPoints;
   data[AmuletField.Amulet_Item] = amuletItemObject.amuletItem.name;
+  data[AmuletField.Damage] = amuletItemObject.damage;
   return data;
 }
 

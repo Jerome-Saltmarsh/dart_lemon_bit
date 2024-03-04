@@ -1808,7 +1808,7 @@ class AmuletUI {
 
     final nextAmuletItem = next.amuletItem;
     final currentAmuletItem = current.amuletItem;
-    final damageDiff = getDiff(nextAmuletItem.damage, currentAmuletItem.damage)?.toInt();
+    final damageDiff = getDiff(next.damage, current.damage)?.toInt();
     final healthDiff = getDiff(nextAmuletItem.maxHealth, currentAmuletItem.maxHealth);
     final magicDiff = getDiff(nextAmuletItem.maxMagic, currentAmuletItem.maxMagic);
 
@@ -1829,7 +1829,7 @@ class AmuletUI {
           if (damageDiff != null)
             buildComparisonRow(
               lead: 'damage',
-              value: nextAmuletItem.damage,
+              value: next.damage,
               diff: damageDiff,
             ),
           buildCompareBars('range', currentAmuletItem.range?.index ?? 0, nextAmuletItem.range?.index ?? 0),
@@ -2011,7 +2011,7 @@ class AmuletUI {
   Widget buildCardAmuletItemEquipped(AmuletItemObject amuletItemObject) {
 
     final amuletItem = amuletItemObject.amuletItem;
-    final damage = amuletItem.damage;
+    final damage = amuletItemObject.damage;
     final maxHealth = amuletItem.maxHealth;
     final maxMagic = amuletItem.maxMagic;
     final range = amuletItem.range;

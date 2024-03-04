@@ -5,10 +5,18 @@ import 'type_def_json.dart';
 extension JsonExtension on Json {
 
   double? tryGetDouble(String key){
-    if (!containsKey(key)) {
-      return null;
+    final value = this[key];
+    
+    if (value is num) {
+      return value.toDouble();
     }
-    return getDouble(key);
+    if (value is String) {
+      return double.parse(value);
+    }
+    if (value is bool) {
+      return value ? 0.0 : 1.0;
+    }
+    return null;
   }
 
   Json? tryGetChild(String key){
@@ -69,17 +77,8 @@ extension JsonExtension on Json {
     if (!containsKey(key)) {
       throw Exception("json.getDouble($key). No key");
     }
-    final value = this[key];
-    if (value is num) {
-      return value.toDouble();
-    }
-    if (value is String) {
-      return double.parse(value);
-    }
-    if (value is bool) {
-      return value ? 0.0 : 1.0;
-    }
-    throw Exception("could not parse $value to double");
+    return tryGetDouble(key) ??
+        (throw Exception("could not parse ${this[key]} to double"));
   }
 
   int getInt(String key){

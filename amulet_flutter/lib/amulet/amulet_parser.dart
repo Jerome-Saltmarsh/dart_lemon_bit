@@ -307,9 +307,16 @@ extension AmuletParser on IsometricParser {
       skillTypePoints[skillType] = skillPoints;
     }
 
+    double? damage;
+
+    if (readBool()){
+      damage = readDecimal();
+    }
+
     return AmuletItemObject(
         amuletItem: amuletItem,
         skillPoints: skillTypePoints,
+        damage: damage,
     );
   }
 
@@ -437,5 +444,5 @@ extension AmuletParser on IsometricParser {
     }
   }
 
-
+  double readDecimal() => readUInt16() / 10;
 }

@@ -38,20 +38,18 @@ SKULLSOFT
 REMINDER: IT DOESN'T NEED TO BE PERFECT
 
 [RELEASE]
-[new] redesign crystal
-[new] node type fiend spawn
-[new] mark type fiend count
-[new] balance amulet fiends
-[new] balance amulet items
-[fix] boss fight
-[fix] ai path finding
-[fix] ui amulet item container collision
-[new] skill type progression mage fireball
-[new] skill type progression mage iceball
-[new] skill type progression mage splitshot
-[new] skill type progression mage shield
-[new] skill type rogue passive arrows pierce enemies
-[new] skill type necromancer raise skeleton
+[new] skill type beserk
+[new] skill type thorns
+[new] skill type sword wind attack
+[new] amulet item models
+[new] icon skill types
+[new] randomize item health
+[new] randomize item magic
+[fix] cannot pick up items
+
+## 04.03.2024
+[new] randomize amulet item stats
+[new] randomize item damage
 
 ## 23.02.2024
 [new] render mana bar

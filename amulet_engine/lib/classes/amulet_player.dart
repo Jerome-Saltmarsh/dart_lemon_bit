@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:amulet_engine/json/amulet_field.dart';
 import 'package:amulet_engine/src.dart';
+import 'package:lemon_json/src.dart';
 import 'package:lemon_lang/src.dart';
 import 'package:lemon_math/src.dart';
 
@@ -436,7 +437,18 @@ class AmuletPlayer extends IsometricPlayer with
       writeByte(entry.key.index); // skill type index
       writeUInt16(entry.value); // skill type points
     }
+
+    final damage = value.damage;
+
+    if (damage != null) {
+      writeTrue();
+      writeDecimal(damage);
+    } else {
+      writeFalse();
+    }
   }
+
+  void writeDecimal(double value) => writeUInt16((value * 10).toInt());
 
   void writeInteracting() {
     writeByte(NetworkResponse.Amulet);
@@ -1020,7 +1032,8 @@ class AmuletPlayer extends IsometricPlayer with
        return;
      }
 
-     final indexedSkillPoints = gameObject.data?[AmuletField.Skill_Points];
+     final data = gameObject.data;
+     final indexedSkillPoints = data?[AmuletField.Skill_Points];
 
      if (indexedSkillPoints == null){
        writeFalse();
@@ -1036,6 +1049,15 @@ class AmuletPlayer extends IsometricPlayer with
       final skillType = SkillType.parse(skillTypeName);
       writeByte(skillType.index); // skill type index
       writeUInt16(entry.value); // skill type points
+    }
+
+    final damage = data?.tryGetDouble(AmuletField.Damage);
+
+    if (damage != null){
+      writeTrue();
+      writeDecimal(damage);
+    } else {
+      writeFalse();
     }
   }
 
@@ -1146,13 +1168,8 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(amuletEvent);
   }
 
-  double get equippedWeaponDamage {
-    final damage = equippedWeapon?.amuletItem.damage;
-    if (damage == null){
-       return 0;
-    }
-    return damage;
-  }
+  double get equippedWeaponDamage =>
+      equippedWeapon?.damage ?? 0;
 
   double getSkillTypeRange(SkillType skillType) =>
       switch (skillType.casteType) {

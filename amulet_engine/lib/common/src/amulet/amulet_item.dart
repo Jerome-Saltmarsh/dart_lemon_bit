@@ -9,7 +9,8 @@ enum AmuletItem {
     subType: WeaponType.Sword_Short,
     attackSpeed: AttackSpeed.Very_Fast,
     range: WeaponRange.Very_Short,
-    damage: 3,
+    damageMin: 2,
+    damageMax: 4,
     skillTypes: [
       SkillType.Mighty_Strike,
       SkillType.Area_Damage,
@@ -25,7 +26,8 @@ enum AmuletItem {
     subType: WeaponType.Sword_Broad,
     attackSpeed: AttackSpeed.Fast,
     range: WeaponRange.Short,
-    damage: 4,
+    damageMin: 4,
+    damageMax: 8,
     skillTypes: [
       SkillType.Mighty_Strike,
       SkillType.Area_Damage,
@@ -41,7 +43,8 @@ enum AmuletItem {
     subType: WeaponType.Sword_Long,
     attackSpeed: AttackSpeed.Slow,
     range: WeaponRange.Long,
-    damage: 5,
+    damageMin: 6,
+    damageMax: 12,
     skillTypes: [
       SkillType.Mighty_Strike,
       SkillType.Area_Damage,
@@ -57,7 +60,8 @@ enum AmuletItem {
     subType: WeaponType.Sword_Giant,
     attackSpeed: AttackSpeed.Very_Slow,
     range: WeaponRange.Very_Long,
-    damage: 6,
+    damageMin: 10,
+    damageMax: 20,
     skillTypes: [
       SkillType.Mighty_Strike,
       SkillType.Area_Damage,
@@ -73,7 +77,8 @@ enum AmuletItem {
     subType: WeaponType.Bow_Short,
     attackSpeed: AttackSpeed.Fast,
     range: WeaponRange.Very_Short,
-    damage: 2,
+    damageMin: 2,
+    damageMax: 4,
     skillTypes: [
       SkillType.Critical_Hit,
       SkillType.Shield,
@@ -90,7 +95,8 @@ enum AmuletItem {
     subType: WeaponType.Bow_Reflex,
     attackSpeed: AttackSpeed.Fast,
     range: WeaponRange.Short,
-    damage: 3,
+    damageMin: 3,
+    damageMax: 6,
     skillTypes: [
       SkillType.Critical_Hit,
       SkillType.Shield,
@@ -107,7 +113,8 @@ enum AmuletItem {
     subType: WeaponType.Bow_Composite,
     attackSpeed: AttackSpeed.Slow,
     range: WeaponRange.Long,
-    damage: 4,
+    damageMin: 5,
+    damageMax: 8,
     skillTypes: [
       SkillType.Critical_Hit,
       SkillType.Shield,
@@ -124,7 +131,8 @@ enum AmuletItem {
     subType: WeaponType.Bow_Long,
     attackSpeed: AttackSpeed.Very_Slow,
     range: WeaponRange.Very_Long,
-    damage: 5,
+    damageMin: 8,
+    damageMax: 12,
     skillTypes: [
       SkillType.Critical_Hit,
       SkillType.Shield,
@@ -141,13 +149,14 @@ enum AmuletItem {
     subType: WeaponType.Staff_Wand,
     attackSpeed: AttackSpeed.Very_Fast,
     range: WeaponRange.Very_Short,
-    damage: 1,
+    damageMin: 2,
+    damageMax: 3,
     skillTypes: [
       SkillType.Critical_Hit,
-      SkillType.Shield,
-      SkillType.Split_Shot,
-      SkillType.Ice_Arrow,
-      SkillType.Fire_Arrow,
+      SkillType.Fireball,
+      SkillType.Frostball,
+      SkillType.Magic_Regen,
+      SkillType.Magic_Steal,
     ],
     skillPoints: 4,
   ),
@@ -158,7 +167,8 @@ enum AmuletItem {
     subType: WeaponType.Staff_Globe,
     attackSpeed: AttackSpeed.Fast,
     range: WeaponRange.Short,
-    damage: 2,
+    damageMin: 4,
+    damageMax: 6,
     skillTypes: [
       SkillType.Fireball,
       SkillType.Heal,
@@ -174,7 +184,8 @@ enum AmuletItem {
       subType: WeaponType.Staff_Scepter,
       attackSpeed: AttackSpeed.Slow,
       range: WeaponRange.Long,
-      damage: 3,
+      damageMin: 3,
+      damageMax: 5,
       skillTypes: [
         SkillType.Fireball,
         SkillType.Heal,
@@ -189,7 +200,8 @@ enum AmuletItem {
       subType: WeaponType.Staff_Long,
       attackSpeed: AttackSpeed.Very_Slow,
       range: WeaponRange.Very_Long,
-      damage: 5,
+      damageMin: 5,
+      damageMax: 8,
       skillTypes: [
         SkillType.Fireball,
         SkillType.Heal,
@@ -581,14 +593,15 @@ enum AmuletItem {
   /// see item_type.dart in commons
   final SlotType slotType;
   final int subType;
-  final double? damage;
+  // final double? damage;
+  final double? damageMin;
+  final double? damageMax;
   final WeaponRange? range;
   final AttackSpeed? attackSpeed;
   final ItemQuality quality;
   final String label;
   final int? maxHealth;
   final int? maxMagic;
-  // final Map<SkillType, int> skills;
   final List<SkillType> skillTypes;
   final int skillPoints;
 
@@ -603,9 +616,11 @@ enum AmuletItem {
     this.quality = ItemQuality.Common,
     this.maxHealth = 0,
     this.maxMagic,
-    this.damage,
+    // this.damage,
     this.range,
     this.attackSpeed,
+    this.damageMin,
+    this.damageMax,
   });
 
   bool get isWeapon => slotType == SlotType.Weapon;
@@ -626,7 +641,6 @@ enum AmuletItem {
 
   int get quantify {
     var total = 0.0;
-    total += damage ?? 0;
     total += maxHealth ?? 0;
     total += maxMagic ?? 0;
     total += range?.quantify ?? 0;
@@ -670,9 +684,6 @@ enum AmuletItem {
     if (isWeapon) {
       if ((attackSpeed == null)) {
         throw Exception('$this performDuration of weapon cannot be null');
-      }
-      if (damage == null || damage! <= 0) {
-        throw Exception('$this.damage cannot cannot be null or 0');
       }
       if (range == null) {
         throw Exception('$this.range cannot cannot be null');
