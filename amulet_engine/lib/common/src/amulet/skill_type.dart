@@ -83,6 +83,9 @@ enum SkillType {
   Shield(
     casteType: CasteType.Passive,
   ),
+  Wind_Cut(
+    casteType: CasteType.Sword,
+  ),
   ;
 
 
@@ -100,6 +103,8 @@ enum SkillType {
   static const Max_Might_Swing = 3.0;
   static const Max_Resist = 0.5;
   static const Max_Run_Speed = 0.4;
+  static const Min_Wind_Cut_Range = 50.0;
+  static const Max_Wind_Cut_Range = 200.0;
 
   const SkillType({
     required this.casteType,
@@ -209,6 +214,11 @@ enum SkillType {
     return interpolate(0, Max_Might_Swing, i);
   }
 
+  static double getRangeWindCut(int level){
+    final i = level / Max_Skill_Points;
+    return interpolate(Min_Wind_Cut_Range, Max_Wind_Cut_Range, i);
+  }
+
   static double getPercentageCriticalHit(int level){
     final i = level / Max_Skill_Points;
     return interpolate(0, Max_Critical_Hit, i);
@@ -231,5 +241,18 @@ enum SkillType {
     final i = level / SkillType.Max_Skill_Points;
     return interpolate(0, SkillType.Max_Run_Speed, i);
   }
+
+  static final collectionPassive = findByCasteType(CasteType.Passive);
+  static final collectionSword = findByCasteType(CasteType.Sword);
+  static final collectionStaff = findByCasteType(CasteType.Staff);
+
+  static const valuesBow = [
+    SkillType.Ice_Arrow,
+    SkillType.Fire_Arrow,
+    SkillType.Split_Shot,
+  ];
+
+  static List<SkillType> findByCasteType(CasteType casteType) =>
+      values.where((element) => element.casteType == CasteType.Passive).toList(growable: false);
 }
 

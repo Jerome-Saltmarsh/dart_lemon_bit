@@ -21,4 +21,5 @@ String getSkillTypeDescription(SkillType skillType) => switch (skillType) {
       SkillType.Area_Damage => 'melee damage applied in an area',
       SkillType.Run_Speed => 'increase movement speed',
       SkillType.Shield => 'reduces non magical damage received',
+      SkillType.Wind_Cut => 'cuts the air in front',
     };

@@ -1326,7 +1326,13 @@ class AmuletUI {
       buildWatch(filterCasteType, (activeCasteType) {
 
         final filteredSkills = SkillType.values
-            .where((skillType) => skillType.casteType == activeCasteType)
+            .where((skillType) =>
+                skillType.casteType == activeCasteType &&
+                !const [
+                  SkillType.None,
+                  SkillType.Strike,
+                  SkillType.Shoot_Arrow,
+                ].contains(skillType))
             .toList(growable: false);
 
         const columnsPerRow = 4;

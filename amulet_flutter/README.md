@@ -40,15 +40,16 @@ REMINDER: IT DOESN'T NEED TO BE PERFECT
 [RELEASE]
 [new] balance amulet items
 [new] amulet item models
-[new] icon skill types
+[new] design skill type icons
 [new] skill type beserk
 [new] skill type thorns
-[new] skill type sword wind attack
 [ref] common project
 [new] randomize item health
 [new] randomize item magic
+[fix] remove shoot bow from skill menu
 
 ## 05.03.2024
+[new] skill type sword wind attack
 [fix] cannot pick up items
 
 ## 04.03.2024

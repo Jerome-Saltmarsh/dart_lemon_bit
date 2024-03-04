@@ -334,6 +334,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       case SkillType.Shoot_Arrow:
         characterPerformSkillTypeShootArrow(character);
         return;
+      case SkillType.Wind_Cut:
+        characterPerformSkillTypeWindCut(character);
+        return;
       case SkillType.Mighty_Strike:
         characterPerformSkillTypeMightySwing(character, level);
         return;
@@ -1356,6 +1359,23 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       amuletItem: amuletItem,
       skillPoints: skillPoints,
       damage: damage,
+    );
+  }
+
+  void characterPerformSkillTypeWindCut(Character character) {
+    final weaponDamage = getCharacterWeaponDamage(character);
+    final level = getCharacterSkillTypeLevel(character, SkillType.Wind_Cut);
+    final bonusRange = SkillType.getRangeWindCut(level);
+
+    applyHitMelee(
+      character: character,
+      damageType: DamageType.Melee,
+      range: getCharacterWeaponRange(character) + bonusRange,
+      damage: weaponDamage,
+      areaDamage: getCharacterAreaDamage(character),
+      ailmentDuration: 0,
+      ailmentDamage: 0,
+      maxHitRadian: pi,
     );
   }
 
