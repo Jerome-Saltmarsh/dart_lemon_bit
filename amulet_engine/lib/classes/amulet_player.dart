@@ -1252,13 +1252,6 @@ class AmuletPlayer extends IsometricPlayer with
     activeSkillActiveLeft();
   }
 
-  // void writeActiveSlotType() {
-  //   writeByte(NetworkResponse.Amulet);
-  //   writeByte(NetworkResponseAmulet.Player_Active_Slot_Type);
-  //   writeInt8(activeSlotType?.index ?? -1);
-  // }
-
-
   int getSkillTypePerformDuration(SkillType skillType) =>
       skillType.casteSpeed?.duration ??
       this.equippedWeaponAttackSpeed?.duration ??

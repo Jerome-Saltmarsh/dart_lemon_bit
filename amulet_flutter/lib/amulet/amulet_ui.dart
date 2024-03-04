@@ -1605,7 +1605,8 @@ class AmuletUI {
       width: 2,
       child: GSContainer(
           width: cardWidth,
-          height: cardWidth * goldenRatio_1618,
+          // height: ,
+          constraints: BoxConstraints(minHeight: cardWidth * goldenRatio_1618),
           padding: EdgeInsets.zero,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
