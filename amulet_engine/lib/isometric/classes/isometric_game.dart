@@ -4,6 +4,7 @@ import 'package:amulet_engine/isometric/consts/frames_per_second.dart';
 import 'package:amulet_engine/isometric/consts/physics.dart';
 import 'package:amulet_engine/isometric/enums/damage_type.dart';
 import 'package:amulet_engine/isometric/functions/copy_gameobjects.dart';
+import 'package:amulet_engine/src.dart';
 import 'package:lemon_lang/src.dart';
 import 'package:lemon_math/src.dart';
 
@@ -44,8 +45,9 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required this.environment,
   });
 
-  void loadGameObjectsFromScene() =>
-      setGameObjects(copyGameObjects(scene.gameObjects));
+  void loadGameObjectsFromScene() {
+    setGameObjects(copyGameObjects(scene.gameObjects));
+  }
 
   void setGameObjects(List<GameObject> values){
     clearGameObjects();
@@ -2727,7 +2729,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     final gameObjects = this.gameObjects;
     final sceneGameObjects = scene.gameObjects;
     sceneGameObjects.clear();
-    for (final gameObject in gameObjects){
+    for (final gameObject in gameObjects) {
+      if (gameObject.isAmuletItem) continue;
       sceneGameObjects.add(gameObject);
     }
   }
