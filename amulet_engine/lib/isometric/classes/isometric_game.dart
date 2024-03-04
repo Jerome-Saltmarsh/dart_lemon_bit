@@ -153,11 +153,11 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   /// In seconds
   void customInitPlayer(IsometricPlayer player) {}
 
-  /// @override
-  void customOnCharacterInteractWithGameObject(
-      Character character,
-      GameObject gameObject,
-  ) {}
+  // /// @override
+  // void customOnCharacterInteractWithGameObject(
+  //     Character character,
+  //     GameObject gameObject,
+  // ) {}
 
   /// @override
   void customDownloadScene(IsometricPlayer player) {}
@@ -2615,13 +2615,14 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
 
     if (character.withinInteractRange(target)) {
-      if (target is Character) {
-        customOnInteraction(character, target);
-      }
-      if (target is GameObject) {
-        customOnCharacterInteractWithGameObject(character, target);
-        // target.onInteract?.call(character);
-      }
+      handleInteraction(character, target);
+      // if (target is Character) {
+      //   customOnInteraction(character, target);
+      // }
+      // if (target is GameObject) {
+      //   customOnCharacterInteractWithGameObject(character, target);
+      //   // target.onInteract?.call(character);
+      // }
       character.setCharacterStateIdle();
       character.setDestinationToCurrentPosition();
       return;
@@ -2638,6 +2639,10 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   }
 
+  void handleInteraction(Character src, Position target){
+
+  }
+
   bool characterConditionFollowPathToCollectTarget(Character character) {
      return character.pathFindingEnabled;
   }
@@ -2650,7 +2655,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
      return character.targetWithinCollectRange;
   }
 
-  void customOnInteraction(Character character, Character target) {}
+  // void customOnInteraction(Character character, Character target) {}
 
   bool characterConditionShouldWander(Character character) {
      if (!character.roamEnabled || character.target != null) {

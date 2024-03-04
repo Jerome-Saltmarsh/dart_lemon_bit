@@ -918,34 +918,39 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   }
 
   @override
-  void customOnInteraction(Character character, Character target) {
-    super.customOnInteraction(character, target);
+  void handleInteraction(Character src, Position target) {
+    super.handleInteraction(src, target);
 
-    if (character is AmuletPlayer && target is AmuletNpc){
-       character.interacting = true;
-       target.interact?.call(character, target);
+    if (src is AmuletPlayer) {
+      if (target is GameObject){
+        onAmuletPlayerInteractWithGameObject(src, target);
+      }
+      if (target is AmuletNpc){
+        src.interacting = true;
+        target.interact?.call(src, target);
+      }
     }
   }
 
-  @override
-  void customOnCharacterInteractWithGameObject(
-      Character character,
-      GameObject gameObject,
-  ) {
-    if (character is AmuletPlayer && gameObject.isAmuletItem) {
-      onAmuletPlayerInteractWithAmuletGameObject(character, gameObject);
-    }
-    // if (
-    //   character is AmuletPlayer &&
-    //   gameObject.type == ItemType.Object &&
-    //   gameObject.subType == GameObjectType.Wooden_Chest
-    // ){
-    //   character.toggleInventoryOpen();
-    //   character.clearTarget();
-    // }
-  }
+  // @override
+  // void customOnCharacterInteractWithGameObject(
+  //     Character character,
+  //     GameObject gameObject,
+  // ) {
+  //   if (character is AmuletPlayer && gameObject.isAmuletItem) {
+  //     onAmuletPlayerInteractWithAmuletGameObject(character, gameObject);
+  //   }
+  //   // if (
+  //   //   character is AmuletPlayer &&
+  //   //   gameObject.type == ItemType.Object &&
+  //   //   gameObject.subType == GameObjectType.Wooden_Chest
+  //   // ){
+  //   //   character.toggleInventoryOpen();
+  //   //   character.clearTarget();
+  //   // }
+  // }
 
-  void onAmuletPlayerInteractWithAmuletGameObject(
+  void onAmuletPlayerInteractWithGameObject(
       AmuletPlayer player,
       GameObject gameObject,
   ){
