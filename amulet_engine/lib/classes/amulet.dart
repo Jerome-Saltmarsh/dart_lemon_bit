@@ -7,6 +7,7 @@ import 'package:amulet_engine/isometric/classes/src.dart';
 import 'package:amulet_engine/isometric/functions/generate_empty_scene.dart';
 import 'package:archive/archive.dart';
 import 'package:lemon_byte/src.dart';
+import 'package:lemon_lang/src.dart';
 
 import '../common/src.dart';
 import 'amulet_game.dart';
@@ -445,6 +446,10 @@ class Amulet {
     player.equipmentDirty = true;
     player.controlsEnabled = true;
     player.flags.clear();
+    player.consumableSlots.fill(null);
+    player.consumableSlots[0] = AmuletItem.Consumable_Potion_Health;
+    player.consumableSlots[1] = AmuletItem.Consumable_Potion_Magic;
+    player.consumableSlotsDirty = true;
     player.questMain = QuestMain.values.first;
     player.questTutorial = QuestTutorial.values.first;
     player.characterState = CharacterState.Idle;
