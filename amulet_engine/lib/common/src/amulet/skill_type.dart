@@ -178,31 +178,31 @@ enum SkillType {
   }
 
   static int getAilmentDurationIceArrow(int level){
-    throw Exception();
+    return 5;
   }
 
   static double getAilmentDamageIceArrow(int level){
-    throw Exception();
+    return 0;
   }
 
   static int getAilmentDurationFireball(int level){
-    throw Exception();
+    return 5;
   }
 
   static int getAilmentDurationFireArrow(int level){
-    throw Exception();
+    return 5;
   }
 
   static int getAilmentDurationFrostBall(int level){
-    throw Exception();
+    return 5;
   }
 
   static double getAilmentDamageFireArrow(int level){
-    throw Exception();
+    return 1;
   }
 
   static double getAilmentDamageFireball(int level){
-    throw Exception();
+    return 1;
   }
 
   static double getAilmentDamageFrostBall(int level){

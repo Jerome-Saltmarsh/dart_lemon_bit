@@ -52,6 +52,7 @@ REMINDER: IT DOESN'T NEED TO BE PERFECT
 [new] design skill type attack speed
 [new] design skill type health steal
 [new] balance amulet items
+[new] amulet item satin boots
 [new] beat the game
 [fix] empty item slot
 

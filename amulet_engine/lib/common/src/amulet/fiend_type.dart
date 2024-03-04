@@ -1,4 +1,5 @@
 
+import 'package:amulet_engine/isometric/enums/damage_type.dart';
 import 'package:amulet_engine/src.dart';
 import 'package:lemon_lang/src.dart';
 
@@ -169,6 +170,11 @@ enum FiendType {
   final double areaDamage;
   final double healthSteal;
   final double chanceOfCriticalDamage;
+  /// value between 0.0 and 1.0
+  final double meleeResistance;
+  final double fireResistance;
+  final double iceResistance;
+  final double pierceResistance;
   final Map<SkillType, int> skillTypes;
 
   const FiendType({
@@ -195,6 +201,10 @@ enum FiendType {
     this.skillTypeB,
     this.areaDamage = 0,
     this.healthSteal = 0,
+    this.fireResistance = 0,
+    this.iceResistance = 0,
+    this.pierceResistance = 0,
+    this.meleeResistance = 0,
   });
 
   int get quantify {
@@ -221,6 +231,13 @@ enum FiendType {
     return 0;
   }
 
+  double getDamageTypeResistance(DamageType damageType) =>
+      switch (damageType) {
+        DamageType.Melee => meleeResistance,
+        DamageType.Pierce => pierceResistance,
+        DamageType.Fire => fireResistance,
+        DamageType.Ice => iceResistance
+      };
 }
 
 

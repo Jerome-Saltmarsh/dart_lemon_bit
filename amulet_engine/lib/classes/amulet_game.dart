@@ -17,7 +17,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   final String name;
   final AmuletScene amuletScene;
 
-  final gameObjectDeactivationTimer = 10000;
+  final gameObjectDeactivationTimer = 5000;
 
   var secondsPerRegen = 5;
   var nextRegen = 0;
@@ -1041,7 +1041,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
 
     if (gameObject.isAmuletItem) {
-      gameObject.physical = false;
+      gameObject.physical = true;
+      gameObject.fixed = false;
       gameObject.healthMax = 0;
       gameObject.health = 0;
       gameObject.interactable = true;
@@ -1320,6 +1321,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   @override
   double getCharacterDamageTypeResistance(Character character, DamageType damageType) {
+
+    if (character is AmuletFiend){
+      return character.fiendType.getDamageTypeResistance(damageType);
+    }
+
     switch (damageType){
       case DamageType.Melee:
         final level = getCharacterSkillTypeLevel(character, SkillType.Shield);
@@ -1328,9 +1334,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         final level = getCharacterSkillTypeLevel(character, SkillType.Shield);
         return SkillType.getPercentageDamageResistanceMelee(level);
       case DamageType.Fire:
-        throw Exception();
+        return 0;
       case DamageType.Ice:
-        throw Exception();
+        return 0;
     }
   }
 
