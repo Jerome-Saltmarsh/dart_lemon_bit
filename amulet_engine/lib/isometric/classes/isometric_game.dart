@@ -955,10 +955,12 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   }) {
     if (target.dead || target.invincible) return;
 
+    final ailmentDurationSeconds = ailmentDuration * fps;
+
     final resistance = getCharacterDamageTypeResistance(target, damageType).clamp01();
     final resistanceInverted = 1.0 - resistance;
     final resistedAmount = amount * resistanceInverted;
-    final resistedAilmentDuration = (ailmentDuration * resistanceInverted).toInt();
+    final resistedAilmentDuration = (ailmentDurationSeconds * resistanceInverted).toInt();
 
     if (resistedAilmentDuration > 0){
       if (damageType == DamageType.Ice) {
