@@ -84,7 +84,10 @@ class AmuletUI {
             top: 8,
              child: buildPlayerAimNode(),
           ),
-          buildPlayerAimTarget(),
+          Positioned(
+              top: 8,
+              child: buildPlayerAimTarget(),
+          ),
           Positioned(
               top: 8,
               left: 8,
@@ -496,22 +499,19 @@ class AmuletUI {
     const width = 250.0;
     const height = width * goldenRatio_0381 * goldenRatio_0381;
 
-    final aimTarget = Positioned(
-        top: 16,
-        left: 0,
-        child: IgnorePointer(
-          child: Container(
-            width: amulet.engine.screen.width,
+    final aimTarget = IgnorePointer(
+      child: buildWatch(amulet.aimTargetNotifier, (t) {
+          return Stack(
             alignment: Alignment.center,
-            child: buildWatch(amulet.aimTargetNotifier, (t) {
-                return Container(
-                    width: 200,
-                    height: 50,
-                    alignment: Alignment.center,
-                    child: buildText(amulet.aimTargetText));
-            }),
-          ),
-        )
+            children: [
+              Container(
+                  width: width,
+                  height: height,
+                  alignment: Alignment.center,
+                  child: buildText(amulet.aimTargetText)),
+            ],
+          );
+      }),
     );
 
     return buildWatchVisible(amulet.aimTargetSet, aimTarget);
