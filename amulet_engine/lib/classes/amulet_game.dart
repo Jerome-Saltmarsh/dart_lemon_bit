@@ -149,7 +149,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   void update() {
     super.update();
     updateCooldownTimer();
-    updatePlayerCollectables();
+    // updatePlayerCollectables();
 
   }
 
@@ -970,6 +970,25 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
        return;
      }
 
+     player.setCollectableAmuletItemObject(gameObject);
+     // player.collectableAmuletItemObject = gameObject;
+  }
+
+  void onAmuletPlayerPickupGameObject(
+      AmuletPlayer player,
+      GameObject gameObject,
+  ){
+     final amuletItem = gameObject.amuletItem;
+     if (amuletItem == null){
+       return;
+     }
+
+     final amuletItemObject = mapGameObjectToAmuletItemObject(gameObject);
+
+     if (amuletItemObject == null){ // fix
+       return;
+     }
+
      if (player.acquireAmuletItemObject(amuletItemObject)){
        remove(gameObject);
      }
@@ -1047,7 +1066,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       gameObject.fixed = false;
       gameObject.healthMax = 0;
       gameObject.health = 0;
-      gameObject.interactable = false;
+      gameObject.interactable = true;
       gameObject.dirty = true;
       gameObject.deactivationTimer = gameObjectDeactivationTimer;
       gameObject.hitable = false;
@@ -1387,20 +1406,20 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     );
   }
 
-  void updatePlayerCollectables() {
-    for (final player in players) {
-       GameObject? nearest;
-       var nearestDistance = 60.0;
-       for (final gameObject in gameObjects) {
-          if (!gameObject.isAmuletItem) continue;
-          final distance = player.getDistance(gameObject);
-          if (distance >= nearestDistance) continue;
-          nearest = gameObject;
-          nearestDistance = distance;
-       }
-       player.setCollectableAmuletItemObject(nearest);
-    }
-  }
+  // void updatePlayerCollectables() {
+  //   for (final player in players) {
+  //      GameObject? nearest;
+  //      var nearestDistance = 60.0;
+  //      for (final gameObject in gameObjects) {
+  //         if (!gameObject.isAmuletItem) continue;
+  //         final distance = player.getDistance(gameObject);
+  //         if (distance >= nearestDistance) continue;
+  //         nearest = gameObject;
+  //         nearestDistance = distance;
+  //      }
+  //      player.setCollectableAmuletItemObject(nearest);
+  //   }
+  // }
 
 
 }

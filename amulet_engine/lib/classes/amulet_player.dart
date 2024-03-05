@@ -168,6 +168,7 @@ class AmuletPlayer extends IsometricPlayer with
     super.interacting = value;
 
     if (!value){
+      setCollectableAmuletItemObject(null);
       onInteractionOver?.call();
       onInteractionOver = null;
       cameraTarget = null;
@@ -1585,7 +1586,7 @@ class AmuletPlayer extends IsometricPlayer with
       writeGameError(GameError.Amulet_Item_Null);
       return;
     }
-    amuletGame.onAmuletPlayerInteractWithGameObject(this, item);
+    amuletGame.onAmuletPlayerPickupGameObject(this, item);
   }
 }
 
