@@ -3,6 +3,7 @@ import 'package:amulet_engine/common.dart';
 import 'package:amulet_flutter/amulet/classes/item_slot.dart';
 import 'package:amulet_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:lemon_bit/src.dart';
+import 'package:lemon_lang/src.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:archive/archive.dart';
@@ -357,6 +358,7 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
     amulet.aimTargetText = readString();
     amulet.aimTargetHealthPercentage = readPercentage();
     amulet.aimTargetLevel = tryReadUInt16();
+    amulet.aimTargetItemQuality = tryReadItemQuality();
     amulet.aimTargetNotifier.value++;
   }
 
@@ -853,4 +855,7 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
   void readNetworkResponseGameObjectsCleared() {
     scene.gameObjects.clear();
   }
+
+  ItemQuality? tryReadItemQuality() =>
+      ItemQuality.values.tryGet(tryReadByte());
 }

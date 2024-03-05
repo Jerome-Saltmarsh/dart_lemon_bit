@@ -145,6 +145,7 @@ class Amulet extends IsometricGame {
   final equippedArmor = Watch<AmuletItemObject?>(null);
   final equippedShoes =  Watch<AmuletItemObject?>(null);
 
+  ItemQuality? aimTargetItemQuality;
   var aimTargetText = '';
   var aimTargetHealthPercentage = 0.0;
   int? aimTargetLevel;

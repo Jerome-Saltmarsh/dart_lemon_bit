@@ -503,6 +503,11 @@ class AmuletUI {
       child: buildWatch(amulet.aimTargetNotifier, (t) {
 
           final level = amulet.aimTargetLevel;
+          var textColor = Colors.white;
+          final itemQuality = amulet.aimTargetItemQuality;
+          if (itemQuality != null){
+            textColor = mapItemQualityToColor(itemQuality);
+          }
 
           return Stack(
             alignment: Alignment.centerLeft,
@@ -510,12 +515,12 @@ class AmuletUI {
               Container(
                   width: width,
                   height: height,
-                  color: Palette.red_3,
+                  color: Palette.brown_4,
               ),
               Container(
                   width: width * amulet.aimTargetHealthPercentage,
                   height: height,
-                  color: Palette.red_2,
+                  color: Palette.red_3,
               ),
               Container(
                   width: width,
@@ -523,11 +528,11 @@ class AmuletUI {
                   alignment: Alignment.center,
                   child: FittedBox(child: Row(
                     children: [
-                      buildText(amulet.aimTargetText),
+                      buildText(amulet.aimTargetText, color: textColor),
                       if (level != null)
                         Container(
                             margin: const EdgeInsets.only(left: 8),
-                            child: buildText('lvl $level', color: Colors.white70)),
+                            child: buildText('lvl $level', color: textColor.withOpacity(0.7))),
                     ],
                   ))),
             ],

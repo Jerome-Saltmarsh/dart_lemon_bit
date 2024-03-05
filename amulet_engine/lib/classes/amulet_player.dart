@@ -1146,7 +1146,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeTrue();
 
     var name = aimTarget.name;
-
+    ItemQuality? itemQuality;
     int? level;
     var healthPercentage = 0.0;
 
@@ -1154,14 +1154,14 @@ class AmuletPlayer extends IsometricPlayer with
       healthPercentage = aimTarget.healthPercentage;
     }
     if (aimTarget is GameObject) {
-      healthPercentage = aimTarget.healthPercentage;
       level = aimTarget.level;
-
-      if (aimTarget.isAmuletItem) {
-        final label = aimTarget.amuletItem?.label;
-        if (label != null){
-          name = label;
-        }
+      final amuletItem = aimTarget.amuletItem;
+      if (amuletItem != null) {
+        name = amuletItem.label;
+        itemQuality = amuletItem.quality;
+        healthPercentage = 0;
+      } else {
+        healthPercentage = aimTarget.healthPercentage;
       }
     }
     if (aimTarget is AmuletFiend){
@@ -1171,10 +1171,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeString(name);
     writePercentage(healthPercentage);
     tryWriteUInt16(level);
-
-
-
-
+    tryWriteByte(itemQuality?.index);
   }
 
   double get equippedWeaponDamage =>
