@@ -1144,20 +1144,31 @@ class AmuletPlayer extends IsometricPlayer with
     }
 
     writeTrue();
-    writeString(aimTarget.name);
+
+    var name = aimTarget.name;
 
     int? level;
     var healthPercentage = 0.0;
 
-    if (aimTarget is Character){
+    if (aimTarget is Character) {
       healthPercentage = aimTarget.healthPercentage;
     }
-    if (aimTarget is GameObject){
+    if (aimTarget is GameObject) {
       healthPercentage = aimTarget.healthPercentage;
+      level = aimTarget.level;
+
+      if (aimTarget.isAmuletItem) {
+        final label = aimTarget.amuletItem?.label;
+        if (label != null){
+          name = label;
+        }
+      }
     }
     if (aimTarget is AmuletFiend){
       level = aimTarget.level;
     }
+
+    writeString(name);
     writePercentage(healthPercentage);
     tryWriteUInt16(level);
 
