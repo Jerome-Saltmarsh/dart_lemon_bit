@@ -20,6 +20,21 @@ enum AmuletItem {
     ],
     skillPoints: 4,
   ),
+  Unique_Weapon_Swift_Blade(
+    label: 'Swift Blade',
+    level: 1,
+    slotType: SlotType.Weapon,
+    subType: WeaponType.Sword_Short,
+    attackSpeed: AttackSpeed.Very_Fast,
+    range: WeaponRange.Very_Short,
+    damageMin: 4,
+    damageMax: 6,
+    skillSet: {
+      SkillType.Critical_Hit: 5,
+      SkillType.Agility: 5,
+    },
+    quality: ItemQuality.Rare,
+  ),
   Weapon_Sword_Broad(
     label: 'Broad Sword',
     level: 2,
@@ -402,13 +417,12 @@ enum AmuletItem {
     slotType: SlotType.Armor,
     subType: ArmorType.Robes,
     maxHealth: 5,
-    maxMagic: 5,
+    maxMagic: 10,
     skillTypes: [
-      SkillType.Vampire,
-      SkillType.Mighty_Strike,
-      SkillType.Shield,
-      SkillType.Critical_Hit,
-      SkillType.Area_Damage,
+      SkillType.Magic_Regen,
+      SkillType.Warlock,
+      SkillType.Fireball,
+      SkillType.Frostball,
     ],
   ),
   Armor_Cloak(
@@ -416,7 +430,7 @@ enum AmuletItem {
     level: 1,
     slotType: SlotType.Armor,
     subType: ArmorType.Cloak,
-    maxHealth: 5,
+    maxHealth: 10,
     maxMagic: 5,
     skillTypes: [
       SkillType.Vampire,
@@ -431,13 +445,13 @@ enum AmuletItem {
     level: 2,
     slotType: SlotType.Armor,
     subType: ArmorType.Mantle,
-    maxHealth: 9,
+    maxHealth: 6,
+    maxMagic: 6,
     skillTypes: [
       SkillType.Vampire,
-      SkillType.Mighty_Strike,
-      SkillType.Shield,
       SkillType.Critical_Hit,
-      SkillType.Area_Damage,
+      SkillType.Run_Speed,
+      SkillType.Agility,
     ],
   ),
   Armor_Shroud(
@@ -605,6 +619,7 @@ enum AmuletItem {
   final int? maxHealth;
   final int? maxMagic;
   final List<SkillType> skillTypes;
+  final Map<SkillType, int> skillSet;
   final int skillPoints;
 
   const AmuletItem({
@@ -612,13 +627,12 @@ enum AmuletItem {
     required this.subType,
     required this.level,
     required this.label,
-    // required this.skills,
-    required this.skillTypes,
-    this.skillPoints = 5,
+    this.skillTypes = const [],
+    this.skillPoints = 0,
     this.quality = ItemQuality.Common,
+    this.skillSet = const {},
     this.maxHealth = 0,
     this.maxMagic,
-    // this.damage,
     this.range,
     this.attackSpeed,
     this.damageMin,
@@ -708,58 +722,26 @@ enum AmuletItem {
     }
   }
 
-  int? get expectedValue => itemValues[slotType]?[quality]?[level];
+  int? get expectedValue => itemValues?[quality]?[level];
 
-  static const itemValues = {
-    SlotType.Weapon: const {
-      ItemQuality.Common: {
-        1: 5,
-        2: 10,
-        3: 16,
-        4: 20,
-      },
-      ItemQuality.Unique: {
-        1: 7,
-        2: 13,
-        3: 18,
-        4: 26,
-      },
+  static const itemValues = const {
+    ItemQuality.Common: {
+      1: 5,
+      2: 10,
+      3: 16,
+      4: 20,
     },
-    SlotType.Helm: const {
-      ItemQuality.Common: {
-        1: 5,
-        2: 10,
-        3: 16,
-      },
-      ItemQuality.Unique: {
-        1: 7,
-        2: 13,
-        3: 18,
-      },
+    ItemQuality.Unique: {
+      1: 7,
+      2: 13,
+      3: 18,
+      4: 26,
     },
-    SlotType.Armor: const {
-      ItemQuality.Common: {
-        1: 5,
-        2: 10,
-        3: 16,
-      },
-      ItemQuality.Unique: {
-        1: 7,
-        2: 13,
-        3: 18,
-      },
-    },
-    SlotType.Shoes: const {
-      ItemQuality.Common: {
-        1: 5,
-        2: 10,
-        3: 16,
-      },
-      ItemQuality.Unique: {
-        1: 7,
-        2: 13,
-        3: 18,
-      },
+    ItemQuality.Rare: {
+      1: 12,
+      2: 20,
+      3: 25,
+      4: 35,
     },
   };
 }
@@ -774,6 +756,7 @@ enum CasteType {
 }
 
 enum ItemQuality {
+  Rare,
   Unique,
   Common,
 }

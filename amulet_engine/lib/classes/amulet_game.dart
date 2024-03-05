@@ -1380,6 +1380,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       }
     }
 
+    for (final entry in amuletItem.skillSet.entries){
+      final currentPoints = skillPoints[entry.key] ?? 0;
+      skillPoints[entry.key] = entry.value + currentPoints;
+    }
+
     final damageMin = amuletItem.damageMin;
     final damageMax = amuletItem.damageMax;
     double? damage;

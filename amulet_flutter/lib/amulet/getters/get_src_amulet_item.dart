@@ -76,5 +76,6 @@ List<double> getSrcAmuletItem(AmuletItem amuletItem) {
       AmuletItem.Consumable_Potion_Magic => const [srcx_consumable, 64],
       AmuletItem.Helm_Cowl => _helms_pointed_hat_black,
       AmuletItem.Helm_Cape => _armor_mantle,
+      AmuletItem.Unique_Weapon_Swift_Blade => const [srcx_weapon_sword, 128, 32, 32],
     };
 }

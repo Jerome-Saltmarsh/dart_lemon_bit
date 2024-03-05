@@ -816,10 +816,8 @@ class AmuletUI {
         return Colors.white;
       case ItemQuality.Unique:
         return Colors.blue;
-      // case ItemQuality.Rare:
-      //   return Colors.deepOrange;
-      // case ItemQuality.Legendary:
-      //   return Colors.yellow;
+      case ItemQuality.Rare:
+        return Colors.yellow;
     }
   }
 
@@ -1770,8 +1768,6 @@ class AmuletUI {
 
     final amuletItem = amuletItemObject.amuletItem;
     final slotType = amuletItem.slotType;
-    // final equippedItemType = amulet.getEquippedAmuletItemObject(slotType);
-    // final equipped = equippedItemType == amuletItem;
 
     return buildBorder(
       width: 2,
@@ -1788,12 +1784,22 @@ class AmuletUI {
               padding: const EdgeInsets.all(4),
               color: Colors.black12,
               height: 60,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              child: Stack(
+                alignment: Alignment.center,
                 children: [
-                  AmuletItemImage(amuletItem: amuletItem, scale: 1.0),
-                  width8,
-                  buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
+                  if (amuletItem.quality != ItemQuality.Common)
+                  Positioned(
+                      top: 0,
+                      right: 0,
+                      child: buildText(amuletItem.quality.name.toUpperCase().clean, size: 14, color: mapItemQualityToColor(amuletItem.quality).withOpacity(0.5))),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      AmuletItemImage(amuletItem: amuletItem, scale: 1.0),
+                      width8,
+                      buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -1818,9 +1824,12 @@ class AmuletUI {
     final magicDiff = getDiff(nextAmuletItem.maxMagic, currentAmuletItem?.maxMagic);
 
     final showDiff = current != next;
+    // final itemQuality = nextAmuletItem.quality;
 
     return Column(
       children: [
+          // if (itemQuality != ItemQuality.Common)
+          //   buildText(itemQuality.name, color: mapItemQualityToColor(itemQuality)),
           if (healthDiff != null)
             buildComparisonRow(
               lead: Row(
