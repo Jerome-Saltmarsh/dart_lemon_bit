@@ -502,8 +502,18 @@ class AmuletUI {
     final aimTarget = IgnorePointer(
       child: buildWatch(amulet.aimTargetNotifier, (t) {
           return Stack(
-            alignment: Alignment.center,
+            alignment: Alignment.centerLeft,
             children: [
+              Container(
+                  width: width,
+                  height: height,
+                  color: Palette.red_3,
+              ),
+              Container(
+                  width: width * amulet.aimTargetHealthPercentage,
+                  height: height,
+                  color: Palette.red_3,
+              ),
               Container(
                   width: width,
                   height: height,
