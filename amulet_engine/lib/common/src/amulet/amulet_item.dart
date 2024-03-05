@@ -4,7 +4,6 @@ import 'package:collection/collection.dart';
 enum AmuletItem {
   Weapon_Sword_Short(
     label: 'Short Sword',
-    level: 1,
     slotType: SlotType.Weapon,
     subType: WeaponType.Sword_Short,
     attackSpeed: AttackSpeed.Very_Fast,
@@ -21,7 +20,6 @@ enum AmuletItem {
   ),
   Unique_Weapon_Swift_Blade(
     label: 'Swift Blade',
-    level: 1,
     slotType: SlotType.Weapon,
     subType: WeaponType.Sword_Short,
     attackSpeed: AttackSpeed.Very_Fast,
@@ -36,7 +34,6 @@ enum AmuletItem {
   ),
   Weapon_Sword_Broad(
     label: 'Broad Sword',
-    level: 2,
     slotType: SlotType.Weapon,
     subType: WeaponType.Sword_Broad,
     attackSpeed: AttackSpeed.Fast,
@@ -53,7 +50,6 @@ enum AmuletItem {
   ),
   Weapon_Sword_Long(
     label: 'Long Sword',
-    level: 3,
     slotType: SlotType.Weapon,
     subType: WeaponType.Sword_Long,
     attackSpeed: AttackSpeed.Slow,
@@ -70,7 +66,6 @@ enum AmuletItem {
   ),
   Weapon_Sword_Giant(
     label: 'Giant Sword',
-    level: 4,
     slotType: SlotType.Weapon,
     subType: WeaponType.Sword_Giant,
     attackSpeed: AttackSpeed.Very_Slow,
@@ -87,7 +82,6 @@ enum AmuletItem {
   ),
   Weapon_Bow_Short(
     label: 'Short Bow',
-    level: 1,
     slotType: SlotType.Weapon,
     subType: WeaponType.Bow_Short,
     attackSpeed: AttackSpeed.Fast,
@@ -102,7 +96,6 @@ enum AmuletItem {
   ),
   Weapon_Bow_Reflex(
     label: 'Reflex Bow',
-    level: 2,
     slotType: SlotType.Weapon,
     subType: WeaponType.Bow_Reflex,
     attackSpeed: AttackSpeed.Fast,
@@ -119,7 +112,6 @@ enum AmuletItem {
   ),
   Weapon_Bow_Composite(
     label: 'Composite Bow',
-    level: 3,
     slotType: SlotType.Weapon,
     subType: WeaponType.Bow_Composite,
     attackSpeed: AttackSpeed.Slow,
@@ -136,7 +128,6 @@ enum AmuletItem {
   ),
   Weapon_Bow_Long(
     label: 'Long Bow',
-    level: 4,
     slotType: SlotType.Weapon,
     subType: WeaponType.Bow_Long,
     attackSpeed: AttackSpeed.Very_Slow,
@@ -153,7 +144,6 @@ enum AmuletItem {
   ),
   Weapon_Staff_Wand(
     label: 'Wand',
-    level: 1,
     slotType: SlotType.Weapon,
     subType: WeaponType.Staff_Wand,
     attackSpeed: AttackSpeed.Very_Fast,
@@ -170,7 +160,6 @@ enum AmuletItem {
   ),
   Weapon_Staff_Globe(
     label: 'Globe',
-    level: 2,
     slotType: SlotType.Weapon,
     subType: WeaponType.Staff_Globe,
     attackSpeed: AttackSpeed.Fast,
@@ -186,7 +175,6 @@ enum AmuletItem {
   ),
   Weapon_Staff_Scepter(
       label: 'Scepter',
-      level: 3,
       slotType: SlotType.Weapon,
       subType: WeaponType.Staff_Scepter,
       attackSpeed: AttackSpeed.Slow,
@@ -202,7 +190,6 @@ enum AmuletItem {
       ),
   Weapon_Staff_Long(
       label: 'Staff',
-      level: 4,
       slotType: SlotType.Weapon,
       subType: WeaponType.Staff_Long,
       attackSpeed: AttackSpeed.Very_Slow,
@@ -218,7 +205,6 @@ enum AmuletItem {
   ),
   Helm_Leather_Cap(
     label: 'Leather Cap',
-    level: 1,
     slotType: SlotType.Helm,
     subType: HelmType.Leather_Cap,
     maxHealth: 5,
@@ -232,7 +218,6 @@ enum AmuletItem {
   ),
   Helm_Steel_Cap(
     label: 'Steel Cap',
-    level: 2,
     slotType: SlotType.Helm,
     subType: HelmType.Steel_Cap,
     maxHealth: 8,
@@ -245,7 +230,6 @@ enum AmuletItem {
   ),
   Helm_Full(
     label: 'Full Helm',
-    level: 3,
     slotType: SlotType.Helm,
     subType: HelmType.Full_Helm,
     maxHealth: 11,
@@ -258,7 +242,6 @@ enum AmuletItem {
   ),
   Helm_Crooked_Hat(
     label: 'Crooked Hat',
-    level: 1,
     slotType: SlotType.Helm,
     subType: HelmType.Pointed_Hat_Purple,
     maxHealth: 1,
@@ -272,7 +255,6 @@ enum AmuletItem {
   ),
   Helm_Pointed_Hat(
     label: 'Pointed Hat',
-    level: 2,
     slotType: SlotType.Helm,
     subType: HelmType.Pointed_Hat_Black,
     maxHealth: 2,
@@ -286,7 +268,6 @@ enum AmuletItem {
   ),
   Helm_Cowl(
     label: 'Cowl',
-    level: 3,
     slotType: SlotType.Helm,
     subType: HelmType.Cowl,
     maxHealth: 2,
@@ -300,7 +281,6 @@ enum AmuletItem {
   ),
   Helm_Feathered_Cap(
     label: 'Feather Cap',
-    level: 1,
     slotType: SlotType.Helm,
     subType: HelmType.Feather_Cap,
     maxHealth: 3,
@@ -314,7 +294,6 @@ enum AmuletItem {
   ),
   Helm_Cape(
     label: 'Cape',
-    level: 2,
     slotType: SlotType.Helm,
     subType: HelmType.Cape,
     maxHealth: 4,
@@ -329,7 +308,6 @@ enum AmuletItem {
   ),
   Helm_Veil(
     label: 'Veil',
-    level: 3,
     slotType: SlotType.Helm,
     subType: HelmType.Cape,
     maxHealth: 4,
@@ -344,7 +322,6 @@ enum AmuletItem {
   ),
   Armor_Tunic(
     label: 'Tunic',
-    level: 1,
     slotType: SlotType.Armor,
     subType: ArmorType.Tunic,
     maxHealth: 5,
@@ -360,7 +337,6 @@ enum AmuletItem {
   ),
   Armor_Leather(
     label: 'Leather',
-    level: 1,
     slotType: SlotType.Armor,
     subType: ArmorType.Leather,
     maxHealth: 10,
@@ -375,7 +351,6 @@ enum AmuletItem {
   ),
   Armor_Chainmail(
     label: 'Chainmail',
-    level: 2,
     slotType: SlotType.Armor,
     subType: ArmorType.Chainmail,
     maxHealth: 20,
@@ -389,7 +364,6 @@ enum AmuletItem {
   ),
   Armor_Platemail(
     label: 'Platemail',
-    level: 3,
     slotType: SlotType.Armor,
     subType: ArmorType.Platemail,
     maxHealth: 30,
@@ -403,7 +377,6 @@ enum AmuletItem {
   ),
   Armor_Robes(
     label: 'Robes',
-    level: 1,
     slotType: SlotType.Armor,
     subType: ArmorType.Robes,
     maxHealth: 5,
@@ -417,7 +390,6 @@ enum AmuletItem {
   ),
   Armor_Cloak(
     label: 'Cloak',
-    level: 1,
     slotType: SlotType.Armor,
     subType: ArmorType.Cloak,
     maxHealth: 10,
@@ -432,7 +404,6 @@ enum AmuletItem {
   ),
   Armor_Mantle(
     label: 'Mantle',
-    level: 2,
     slotType: SlotType.Armor,
     subType: ArmorType.Mantle,
     maxHealth: 6,
@@ -446,7 +417,6 @@ enum AmuletItem {
   ),
   Armor_Shroud(
     label: 'Shroud',
-    level: 3,
     slotType: SlotType.Armor,
     subType: ArmorType.Shroud,
     maxHealth: 9,
@@ -460,7 +430,6 @@ enum AmuletItem {
   ),
   Shoes_Leather_Boots(
     label: 'Leather Boots',
-    level: 1,
     slotType: SlotType.Shoes,
     subType: ShoeType.Leather_Boots,
     maxHealth: 5,
@@ -474,7 +443,6 @@ enum AmuletItem {
   ),
   Shoes_Grieves(
     label: 'Grieves',
-    level: 2,
     slotType: SlotType.Shoes,
     subType: ShoeType.Grieves,
     maxHealth: 5,
@@ -486,7 +454,6 @@ enum AmuletItem {
   ),
   Shoes_Warrior_3_Sabatons_Common(
     label: 'Sabatons',
-    level: 3,
     slotType: SlotType.Shoes,
     subType: ShoeType.Sabatons,
     maxHealth: 5,
@@ -498,7 +465,6 @@ enum AmuletItem {
   ),
   Shoes_Black_Slippers(
     label: 'Black Slippers',
-    level: 1,
     slotType: SlotType.Shoes,
     subType: ShoeType.Black_Slippers,
     maxHealth: 1,
@@ -511,7 +477,6 @@ enum AmuletItem {
   ),
   Shoes_Footwraps(
     label: 'Footwraps',
-    level: 2,
     slotType: SlotType.Shoes,
     subType: ShoeType.Footwraps,
     maxHealth: 1,
@@ -524,7 +489,6 @@ enum AmuletItem {
   ),
   Shoes_Soles(
     label: 'Soles',
-    level: 3,
     slotType: SlotType.Shoes,
     subType: ShoeType.Soles,
     maxHealth: 1,
@@ -537,7 +501,6 @@ enum AmuletItem {
   ),
   Shoes_Treads(
     label: 'Treads',
-    level: 1,
     slotType: SlotType.Shoes,
     subType: ShoeType.Treads,
     maxHealth: 1,
@@ -550,7 +513,6 @@ enum AmuletItem {
   ),
   Shoes_Striders(
     label: 'Striders',
-    level: 2,
     slotType: SlotType.Shoes,
     subType: ShoeType.Striders,
     maxHealth: 1,
@@ -563,7 +525,6 @@ enum AmuletItem {
   ),
   Shoes_Satin_Boots(
     label: 'Satin_Boots',
-    level: 3,
     slotType: SlotType.Shoes,
     subType: ShoeType.Satin_Boots,
     maxHealth: 1,
@@ -578,21 +539,19 @@ enum AmuletItem {
     label: 'Magic Potion',
     slotType: SlotType.Consumable,
     subType: ConsumableType.Potion_Blue,
-    level: 0,
     skillTypes: [],
   ),
   Consumable_Potion_Health(
       label: 'Health Potion',
       slotType: SlotType.Consumable,
       subType: ConsumableType.Potion_Red,
-      level: 0,
       skillTypes: [],
   );
 
-  int get levelMax => level + 1;
+  // int get levelMax => level + 1;
 
   /// the minimum level of a fiend that can drop this item
-  final int level;
+  // final int level;
 
   /// the maximum level of fiends that can drop this item
 
@@ -615,7 +574,7 @@ enum AmuletItem {
   const AmuletItem({
     required this.slotType,
     required this.subType,
-    required this.level,
+    // required this.level,
     required this.label,
     this.skillTypes = const [],
     // this.skillPoints = 0,
@@ -659,15 +618,6 @@ enum AmuletItem {
   static final Consumables =
       values.where((element) => element.isConsumable).toList(growable: false);
 
-  static Iterable<AmuletItem> find({
-    required ItemQuality itemQuality,
-    required int level,
-  }) =>
-      values.where((amuletItem) =>
-          amuletItem.quality == itemQuality &&
-          amuletItem.level <= level &&
-          amuletItem.levelMax > level);
-
   static final sortedValues = () {
     final vals = List.of(values);
     vals.sort(sortByQuantify);
@@ -695,18 +645,9 @@ enum AmuletItem {
         throw Exception('$this.range cannot cannot be null');
       }
     }
-
-    if (this.isConsumable) return;
-
-    final value = this.quantify;
-    if (value != skillPoints) {
-      print('$this.validationError '
-          'incorrect value. '
-          '{got: $value, expected: $skillPoints}\n');
-    }
   }
 
-  int get skillPoints {
+  int getSkillPoints(int level) {
     const pointsPerLevel = 3;
     final bonus = getItemQualityBonus(quality);
     return (level * pointsPerLevel * bonus).toInt();
@@ -755,9 +696,13 @@ enum CasteType {
 }
 
 enum ItemQuality {
-  Common,
-  Unique,
-  Rare,
+  Common(bonus: 1.0),
+  Unique(bonus: 1.3),
+  Rare(bonus: 1.61);
+
+  final double bonus;
+  const ItemQuality({required this.bonus});
+
 }
 
 enum WeaponClass {

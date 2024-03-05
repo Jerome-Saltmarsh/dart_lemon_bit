@@ -85,6 +85,15 @@ extension JsonExtension on Json {
     if (!containsKey(key)) {
       throw Exception("json.getInt($key). No key");
     }
+    return 
+        tryGetInt(key) ?? 
+        (throw Exception("could not parse ${this[key]} to int"));
+  }
+
+  String? tryGetString(String key) =>
+      containsKey(key) ? getString(key) : null;
+
+  int? tryGetInt(String key) {
     final value = this[key];
     if (value is num) {
       return value.toInt();
@@ -95,14 +104,8 @@ extension JsonExtension on Json {
     if (value is bool){
       return value ? 1 : 0;
     }
-    throw Exception("could not parse $value to int");
+    return null;
   }
-
-  String? tryGetString(String key) =>
-      containsKey(key) ? getString(key) : null;
-
-  int? tryGetInt(String key) =>
-      containsKey(key) ? getInt(key) : null;
 
   bool? tryGetBool(String key) =>
       containsKey(key) ? getBool(key) : null;

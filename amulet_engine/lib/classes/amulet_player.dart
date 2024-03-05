@@ -1578,7 +1578,9 @@ class AmuletPlayer extends IsometricPlayer with
   void spawnRandomAmuletItem() =>
       spawnAmuletItemObject(
           amuletGame.generateAmuletItemObject(
-              randomItem(AmuletItem.values)
+             amuletItem: randomItem(AmuletItem.values),
+             level: randomInt(1, 99),
+             itemQuality: randomItem(ItemQuality.values),
           )
       );
 

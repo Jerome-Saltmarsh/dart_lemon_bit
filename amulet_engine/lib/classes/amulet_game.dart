@@ -733,35 +733,33 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     dispatchFiendCount();
 
     if (target is AmuletFiend) {
-      if (randomChance(target.fiendType.chanceOfDropPotion)) {
-        spawnAmuletItemObjectAtPosition(
-          item: generateAmuletItemObject(randomItem(AmuletItem.Consumables)),
-          position: target,
-          deactivationTimer: gameObjectDeactivationTimer,
-        );
+      if (randomChance(AmuletSettings.Chance_Of_Drop_Loot_Consumable)) {
+           spawnConsumableAtPosition(target);
       }
 
       if (getFiendCountAlive() == 0){
-        final items = AmuletItem.find(
-            itemQuality: ItemQuality.Unique,
-            level: amuletScene.level,
-        );
-        if (items.isNotEmpty) {
-          spawnAmuletItemObjectAtPosition(
-            item: generateAmuletItemObject(randomItem(items)),
-            position: target,
-          );
-        }
+        // TODO
 
-        spawnAmuletItemObjectAtPosition(
-          item: AmuletItemObject(amuletItem: AmuletItem.Consumable_Potion_Health, skillPoints: {}),
-          position: target,
-        );
-
-        spawnAmuletItemObjectAtPosition(
-          item: AmuletItemObject(amuletItem: AmuletItem.Consumable_Potion_Magic, skillPoints: {}),
-          position: target,
-        );
+        // final items = AmuletItem.find(
+        //     itemQuality: ItemQuality.Unique,
+        //     level: amuletScene.level,
+        // );
+        // if (items.isNotEmpty) {
+        //   spawnAmuletItemObjectAtPosition(
+        //     item: generateAmuletItemObject(randomItem(items)),
+        //     position: target,
+        //   );
+        // }
+        //
+        // spawnAmuletItemObjectAtPosition(
+        //   item: AmuletItemObject(amuletItem: AmuletItem.Consumable_Potion_Health, skillPoints: {}),
+        //   position: target,
+        // );
+        //
+        // spawnAmuletItemObjectAtPosition(
+        //   item: AmuletItemObject(amuletItem: AmuletItem.Consumable_Potion_Magic, skillPoints: {}),
+        //   position: target,
+        // );
       }
 
       // if (randomChance(target.fiendType.chanceOfDropLegendary)) {
@@ -774,13 +772,21 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       //   return;
       // }
 
-      if (randomChance(target.fiendType.chanceOfDropCommon)) {
-        spawnRandomLootAtFiend(target, itemQuality: ItemQuality.Common);
-        return;
-      }
+      final lootQuality = getLootItemQuality(target);
 
+      if (lootQuality != null) {
+        spawnRandomLootAtFiend(
+          amuletFiend: target,
+          itemQuality: lootQuality,
+        );
+      }
     }
   }
+
+  bool shouldDropLoot(Character character) =>
+      randomChance(AmuletSettings.Chance_Of_Drop_Loot);
+
+
 
   int getFiendCountAlive() {
     var totalAlive = 0;
@@ -801,41 +807,39 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
      }
   }
 
-  void spawnRandomLootAtFiend(AmuletFiend fiend, {
+  void spawnRandomLootAtFiend({
+    required AmuletFiend amuletFiend,
     required ItemQuality itemQuality,
   }) {
 
-    final fiendType = fiend.fiendType;
+    final fiendType = amuletFiend.fiendType;
     final fiendLevel = fiendType.level;
-    
-    final values = AmuletItem.values.where((element) =>
-      fiendLevel >= element.level &&
-      fiendLevel < element.levelMax &&
-      element.quality == itemQuality
+    final amuletItemObject = generateAmuletItemObject(
+        amuletItem: randomItem(AmuletItem.values),
+        level: fiendLevel,
+        itemQuality: itemQuality,
     );
-    
-    if (values.isEmpty){
-      return;
-    }
 
     spawnAmuletItemObject(
-        amuletItemObject: generateAmuletItemObject(randomItem(values)),
-        x: fiend.x,
-        y: fiend.y,
-        z: fiend.z,
+        amuletItemObject: amuletItemObject,
+        x: amuletFiend.x,
+        y: amuletFiend.y,
+        z: amuletFiend.z,
       );
   }
 
-  void spawnRandomLoot({
-    required double x,
-    required double y,
-    required double z,
-  }) => spawnAmuletItemObject(
-      x: x,
-      y: y,
-      z: z,
-    amuletItemObject: generateAmuletItemObject(randomItem(AmuletItem.values)),
-  );
+  ItemQuality? getLootItemQuality(Character character){
+     if (randomChance(AmuletSettings.Chance_Of_Drop_Loot_Rare)){
+       return ItemQuality.Rare;
+     }
+     if (randomChance(AmuletSettings.Chance_Of_Drop_Loot_Unique)){
+       return ItemQuality.Unique;
+     }
+     if (randomChance(AmuletSettings.Chance_Of_Drop_Loot_Common)){
+       return ItemQuality.Common;
+     }
+     return null;
+  }
 
   /// @deactivationTimer set to -1 to prevent amulet item from deactivating over time
   GameObject spawnAmuletItemObjectAtIndex({
@@ -892,17 +896,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     switch (nodeType){
       case NodeType.Grass_Long:
         if (randomChance(AmuletSettings.Chance_Of_Drop_Item_On_Grass_Cut)){
-          spawnRandomConsumableAtIndex(nodeIndex);
+          spawnConsumableAtIndex(nodeIndex);
         }
         break;
     }
-  }
-
-  void spawnRandomConsumableAtIndex(int nodeIndex) {
-    spawnAmuletItemObjectAtIndex(
-        index: nodeIndex,
-        item: generateAmuletItemObject(randomItem(AmuletItem.Consumables)),
-    );
   }
 
   @override
@@ -1176,20 +1173,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       GameObjectType.Wooden_Chest,
       GameObjectType.Crate_Wooden,
     ].contains(gameObject.subType)){
-
-      final values = AmuletItem.find(
-        itemQuality: ItemQuality.Common,
-        level: amuletScene.level,
-      );
-
-      if (values.isNotEmpty) {
-        spawnAmuletItemObjectAtPosition(
-          item: generateAmuletItemObject(randomItem(values)),
-          position: gameObject,
-        );
-      }
+      throw Exception('');
     }
-
   }
 
   @override
@@ -1367,9 +1352,22 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
   }
 
-  AmuletItemObject generateAmuletItemObject(AmuletItem amuletItem){
+  int calculatePoints({
+    required int level,
+    required ItemQuality quality,
+  }) =>
+      (level * 5 * quality.bonus).toInt();
+
+  AmuletItemObject generateAmuletItemObject({
+    required AmuletItem amuletItem,
+    required int level,
+    required ItemQuality itemQuality,
+  }){
     final skillPoints = <SkillType, int> {};
-    final points = amuletItem.skillPoints;
+    final points = calculatePoints(
+      level: level,
+      quality: itemQuality,
+    );
     final skillTypes = amuletItem.skillTypes;
 
     if (skillTypes.isNotEmpty) {
@@ -1397,6 +1395,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       amuletItem: amuletItem,
       skillPoints: skillPoints,
       damage: damage,
+      level: level,
+      itemQuality: itemQuality,
     );
   }
 
@@ -1415,6 +1415,14 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       ailmentDamage: 0,
       maxHitRadian: pi,
     );
+  }
+
+  void spawnConsumableAtPosition(AmuletFiend target) {
+    throw Exception();
+  }
+
+  void spawnConsumableAtIndex(int index) {
+    throw Exception();
   }
 
   // void updatePlayerCollectables() {

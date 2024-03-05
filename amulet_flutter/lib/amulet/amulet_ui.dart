@@ -1822,7 +1822,7 @@ class AmuletUI {
     final damageDiff = getDiff(next.damage, current?.damage)?.toInt();
     final healthDiff = getDiff(nextAmuletItem.maxHealth, currentAmuletItem?.maxHealth);
     final magicDiff = getDiff(nextAmuletItem.maxMagic, currentAmuletItem?.maxMagic);
-    final levelDiff = getDiff(nextAmuletItem.level, currentAmuletItem?.level);
+    final levelDiff = getDiff(next.level, current?.level);
     final valueDiff = getDiff(nextAmuletItem.quantify, currentAmuletItem?.quantify);
 
     final showDiff = current != next;
@@ -1835,7 +1835,7 @@ class AmuletUI {
           if (levelDiff != null)
             buildComparisonRow(
               lead: buildText('level'),
-              value: next.amuletItem.level,
+              value: next.level,
               diff: levelDiff,
             ),
           if (valueDiff != null)

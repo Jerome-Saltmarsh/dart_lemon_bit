@@ -253,7 +253,11 @@ class AmuletGameWorld11 extends AmuletGame {
           ,
         onInteractionOver: (){
            player.acquireAmuletItemObject(
-               generateAmuletItemObject(AmuletItem.Armor_Tunic)
+               generateAmuletItemObject(
+                 amuletItem: AmuletItem.Armor_Tunic,
+                 level: 1,
+                 itemQuality: ItemQuality.Common,
+               )
            );
         }
       );

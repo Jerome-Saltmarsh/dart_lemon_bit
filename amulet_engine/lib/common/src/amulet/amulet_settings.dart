@@ -15,4 +15,9 @@ class AmuletSettings {
   static const Base_Agility = 1.0;
 
   static const Chance_Of_Drop_Item_On_Grass_Cut = 0.2;
+  static const Chance_Of_Drop_Loot = 0.25;
+  static const Chance_Of_Drop_Loot_Rare = 0.05;
+  static const Chance_Of_Drop_Loot_Unique = 0.1;
+  static const Chance_Of_Drop_Loot_Common = 0.15;
+  static const Chance_Of_Drop_Loot_Consumable = 0.15;
 }

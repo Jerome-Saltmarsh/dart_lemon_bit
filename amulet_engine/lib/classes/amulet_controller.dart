@@ -682,7 +682,11 @@ class AmuletController {
         }
 
         player.acquireAmuletItemObject(
-            amuletGame.generateAmuletItemObject(amuletItem)
+            amuletGame.generateAmuletItemObject(
+              amuletItem: amuletItem,
+              level: 1,
+              itemQuality: ItemQuality.Common,
+            )
         );
         break;
       case NetworkRequestAmulet.End_Interaction:

@@ -1,5 +1,6 @@
 import 'package:amulet_engine/common.dart';
 import 'package:lemon_json/src.dart';
+import 'package:lemon_lang/src.dart';
 
 import 'amulet_field.dart';
 
@@ -29,5 +30,9 @@ AmuletItemObject? mapJsonToAmuletItemObject(Json? json) {
       amuletItem: amuletItem,
       skillPoints: skillPoints,
       damage: json.tryGetDouble(AmuletField.Damage),
+      level: json.tryGetInt(AmuletField.Level),
+      itemQuality: ItemQuality.values.tryGet(
+          json.tryGetInt(AmuletField.Item_Quality)
+      ),
   );
 }
