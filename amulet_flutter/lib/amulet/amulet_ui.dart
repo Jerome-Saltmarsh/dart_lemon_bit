@@ -1992,7 +1992,7 @@ class AmuletUI {
           width8,
           if (diff == null)
             expanded,
-          buildText(value?.toInt() ?? '0'),
+          buildText('${diff == null ? getOperator(value) : ''}${value?.toInt() ?? '0'}'),
           // width8,
           if (diff != null)
           expanded,
@@ -2471,3 +2471,12 @@ Color getSkillTypeLevelDescriptionColor(SkillType skillType){
    }
 }
 
+String getOperator(num? value){
+  if (value == null || value == 0){
+    return '';
+  }
+  if (value < 0) {
+    return '-';
+  }
+  return '+';
+}
