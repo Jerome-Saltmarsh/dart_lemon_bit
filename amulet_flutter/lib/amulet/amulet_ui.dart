@@ -496,11 +496,14 @@ class AmuletUI {
   }
 
   Widget buildPlayerAimTarget() {
-    const width = 250.0;
+    const width = 200.0;
     const height = width * goldenRatio_0381 * goldenRatio_0381;
 
     final aimTarget = IgnorePointer(
       child: buildWatch(amulet.aimTargetNotifier, (t) {
+
+          final level = amulet.aimTargetLevel;
+
           return Stack(
             alignment: Alignment.centerLeft,
             children: [
@@ -512,13 +515,21 @@ class AmuletUI {
               Container(
                   width: width * amulet.aimTargetHealthPercentage,
                   height: height,
-                  color: Palette.red_3,
+                  color: Palette.red_2,
               ),
               Container(
                   width: width,
                   height: height,
                   alignment: Alignment.center,
-                  child: buildText(amulet.aimTargetText)),
+                  child: FittedBox(child: Row(
+                    children: [
+                      buildText(amulet.aimTargetText),
+                      if (level != null)
+                        Container(
+                            margin: const EdgeInsets.only(left: 8),
+                            child: buildText('lvl $level', color: Colors.white70)),
+                    ],
+                  ))),
             ],
           );
       }),
