@@ -1608,6 +1608,7 @@ class AmuletUI {
           // height: ,
           constraints: BoxConstraints(minHeight: cardWidth * goldenRatio_1618),
           padding: EdgeInsets.zero,
+          alignment: Alignment.topCenter,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
