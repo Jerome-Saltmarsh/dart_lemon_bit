@@ -181,6 +181,13 @@ class Amulet extends IsometricGame {
     playerSkillLeft.onChanged(onChangedPlayerSkillType);
     playerSkillRight.onChanged(onChangedPlayerSkillType);
     skillSlotsChangedNotifier.onChanged(onChangedSkillSlots);
+
+    aimTargetAmuletItemObject.onChanged((t) {
+      if (t != null){
+        audio.click_sounds_35();
+      }
+
+    });
   }
 
   void onChangedQuestMain(QuestMain questMain){
