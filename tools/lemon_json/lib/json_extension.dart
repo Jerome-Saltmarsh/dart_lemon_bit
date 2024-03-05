@@ -147,4 +147,33 @@ extension JsonExtension on Json {
 
     throw Exception("could not parse value $value to bool");
   }
+
+  Float32List getFloat32List(String key) =>
+      tryGetFloat32List(key) ?? (throw Exception('$this.getFloat32List($key)'));
+
+  Float32List? tryGetFloat32List(String name){
+    final doubles = tryGetListDouble(name);
+    if (doubles == null){
+      return null;
+    }
+    return Float32List.fromList(doubles);
+  }
+
+  List<double>? tryGetListDouble(String key) =>
+      tryGetListNum(key)?.map((e) => e.toDouble()).toList();
+
+  List<num>? tryGetListNum(String key){
+     final value = this[key];
+     if (value == null){
+       return null;
+     }
+     if (value is! List){
+       return null;
+     }
+     try {
+       return value.cast<num>();
+     } catch (e){
+       return null;
+     }
+  }
 }

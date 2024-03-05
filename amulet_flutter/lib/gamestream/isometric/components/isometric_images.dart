@@ -5,15 +5,14 @@ import 'dart:ui';
 
 import 'package:amulet_engine/common.dart';
 import 'package:amulet_flutter/gamestream/sprites/character_shader.dart';
+import 'package:lemon_json/src.dart';
 import 'package:lemon_watch/src.dart';
-import 'package:amulet_flutter/packages/utils/parse.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:amulet_flutter/gamestream/sprites/character_sprite_group.dart';
 import 'package:amulet_flutter/gamestream/sprites/human_character_sprites.dart';
 import 'package:lemon_sprite/lib.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:typedef/json.dart';
 
 import 'enums/render_direction.dart';
 import 'types/sprite_group_type.dart';
@@ -473,8 +472,10 @@ class IsometricImages with IsometricComponent {
       image = image ?? await loadImageAsset('$name.png');
       final json = await loadAssetJson('$name.json');
 
-      final src = parse<Float32List>(json['src']);
-      final dst = parse<Float32List>(json['dst']);
+      // final src = parse<Float32List>(json['src']);
+      // final dst = parse<Float32List>(json['dst']);
+      final src = json.getFloat32List('src');
+      final dst = json.getFloat32List('dst');
 
       if (atlasX != 0 || atlasY != 0){
         final length = dst.length;
