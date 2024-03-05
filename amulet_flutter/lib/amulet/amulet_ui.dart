@@ -1894,7 +1894,7 @@ class AmuletUI {
 
         if (showDiff)
           onPressed(
-            action: (){},
+            action: amulet.pickupAmuletItem,
             child: Container(
               margin: const EdgeInsets.only(top: 16),
               color: Colors.green,

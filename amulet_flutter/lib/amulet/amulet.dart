@@ -824,7 +824,9 @@ class Amulet extends IsometricGame {
   int getSkillTypeLevel(SkillType skillType) =>
       playerSkillTypeLevels[skillType] ?? (throw Exception());
 
-  void spawnRandomAmuletItem() {
-    sendAmuletRequest(NetworkRequestAmulet.Spawn_Random_Amulet_Item);
-  }
+  void spawnRandomAmuletItem() =>
+      sendAmuletRequest(NetworkRequestAmulet.Spawn_Random_Amulet_Item);
+
+  void pickupAmuletItem() =>
+      sendAmuletRequest(NetworkRequestAmulet.Pickup_Amulet_Item);
 }

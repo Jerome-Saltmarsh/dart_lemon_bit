@@ -1047,7 +1047,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       gameObject.fixed = false;
       gameObject.healthMax = 0;
       gameObject.health = 0;
-      gameObject.interactable = true;
+      gameObject.interactable = false;
       gameObject.dirty = true;
       gameObject.deactivationTimer = gameObjectDeactivationTimer;
       gameObject.hitable = false;

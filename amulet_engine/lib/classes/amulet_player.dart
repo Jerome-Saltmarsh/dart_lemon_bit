@@ -1577,5 +1577,15 @@ class AmuletPlayer extends IsometricPlayer with
               randomItem(AmuletItem.values)
           )
       );
+
+  void pickupAmuletItem() {
+    final item = collectableAmuletItemObject;
+
+    if (item == null) {
+      writeGameError(GameError.Amulet_Item_Null);
+      return;
+    }
+    amuletGame.onAmuletPlayerInteractWithGameObject(this, item);
+  }
 }
 
