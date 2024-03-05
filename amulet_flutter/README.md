@@ -51,13 +51,14 @@ REMINDER: IT DOESN'T NEED TO BE PERFECT
 [new] design skill type fire arrow
 [new] design skill type attack speed
 [new] design skill type health steal
-[new] balance amulet items
 [new] amulet item satin boots
 [new] amulet item shroud
 [new] beat the game
 [fix] empty item slot
 [new] gameobject health boost
 [new] gameobject magic boost
+[new] tree top transparent
+[new] balance amulet items
 
 ## 05.03.2024
 [fix] prevent amulet item persisting in scene file
