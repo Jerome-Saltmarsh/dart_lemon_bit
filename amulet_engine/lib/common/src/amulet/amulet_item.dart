@@ -18,7 +18,6 @@ enum AmuletItem {
       SkillType.Critical_Hit,
       SkillType.Shield,
     ],
-    skillPoints: 4,
   ),
   Unique_Weapon_Swift_Blade(
     label: 'Swift Blade',
@@ -51,7 +50,6 @@ enum AmuletItem {
       SkillType.Shield,
       SkillType.Wind_Cut,
     ],
-    skillPoints: 4,
   ),
   Weapon_Sword_Long(
     label: 'Long Sword',
@@ -69,7 +67,6 @@ enum AmuletItem {
       SkillType.Shield,
       SkillType.Wind_Cut,
     ],
-    skillPoints: 4,
   ),
   Weapon_Sword_Giant(
     label: 'Giant Sword',
@@ -87,7 +84,6 @@ enum AmuletItem {
       SkillType.Shield,
       SkillType.Wind_Cut,
     ],
-    skillPoints: 4,
   ),
   Weapon_Bow_Short(
     label: 'Short Bow',
@@ -103,7 +99,6 @@ enum AmuletItem {
       SkillType.Critical_Hit,
       SkillType.Shield,
     ],
-    skillPoints: 4,
   ),
   Weapon_Bow_Reflex(
     label: 'Reflex Bow',
@@ -121,7 +116,6 @@ enum AmuletItem {
       SkillType.Ice_Arrow,
       SkillType.Fire_Arrow,
     ],
-    skillPoints: 4,
   ),
   Weapon_Bow_Composite(
     label: 'Composite Bow',
@@ -139,7 +133,6 @@ enum AmuletItem {
       SkillType.Ice_Arrow,
       SkillType.Fire_Arrow,
     ],
-    skillPoints: 4,
   ),
   Weapon_Bow_Long(
     label: 'Long Bow',
@@ -157,7 +150,6 @@ enum AmuletItem {
       SkillType.Ice_Arrow,
       SkillType.Fire_Arrow,
     ],
-    skillPoints: 4,
   ),
   Weapon_Staff_Wand(
     label: 'Wand',
@@ -175,7 +167,6 @@ enum AmuletItem {
       SkillType.Magic_Regen,
       SkillType.Warlock,
     ],
-    skillPoints: 4,
   ),
   Weapon_Staff_Globe(
     label: 'Globe',
@@ -192,7 +183,6 @@ enum AmuletItem {
       SkillType.Magic_Regen,
       SkillType.Warlock,
     ],
-    skillPoints: 4,
   ),
   Weapon_Staff_Scepter(
       label: 'Scepter',
@@ -620,7 +610,7 @@ enum AmuletItem {
   final int? maxMagic;
   final List<SkillType> skillTypes;
   final Map<SkillType, int> skillSet;
-  final int skillPoints;
+  // final int skillPoints;
 
   const AmuletItem({
     required this.slotType,
@@ -628,7 +618,7 @@ enum AmuletItem {
     required this.level,
     required this.label,
     this.skillTypes = const [],
-    this.skillPoints = 0,
+    // this.skillPoints = 0,
     this.quality = ItemQuality.Common,
     this.skillSet = const {},
     this.maxHealth = 0,
@@ -708,21 +698,30 @@ enum AmuletItem {
 
     if (this.isConsumable) return;
 
-    final expectedValue = this.expectedValue;
-
-    if (expectedValue == null) {
-      throw Exception('$this.expectedValue is null');
-    }
-
     final value = this.quantify;
-    if (value != expectedValue) {
+    if (value != skillPoints) {
       print('$this.validationError '
           'incorrect value. '
-          '{got: $value, expected: $expectedValue}\n');
+          '{got: $value, expected: $skillPoints}\n');
     }
   }
 
-  int? get expectedValue => itemValues?[quality]?[level];
+  int get skillPoints {
+    const pointsPerLevel = 3;
+    final bonus = getItemQualityBonus(quality);
+    return (level * pointsPerLevel * bonus).toInt();
+  }
+
+  static double getItemQualityBonus(ItemQuality itemQuality){
+    switch (itemQuality){
+      case ItemQuality.Common:
+        return 1.0;
+      case ItemQuality.Unique:
+        return 1.3;
+      case ItemQuality.Rare:
+        return 1.61;
+    }
+  }
 
   static const itemValues = const {
     ItemQuality.Common: {
@@ -756,9 +755,9 @@ enum CasteType {
 }
 
 enum ItemQuality {
-  Rare,
-  Unique,
   Common,
+  Unique,
+  Rare,
 }
 
 enum WeaponClass {

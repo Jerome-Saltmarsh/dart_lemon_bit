@@ -1822,6 +1822,8 @@ class AmuletUI {
     final damageDiff = getDiff(next.damage, current?.damage)?.toInt();
     final healthDiff = getDiff(nextAmuletItem.maxHealth, currentAmuletItem?.maxHealth);
     final magicDiff = getDiff(nextAmuletItem.maxMagic, currentAmuletItem?.maxMagic);
+    final levelDiff = getDiff(nextAmuletItem.level, currentAmuletItem?.level);
+    final valueDiff = getDiff(nextAmuletItem.quantify, currentAmuletItem?.quantify);
 
     final showDiff = current != next;
     // final itemQuality = nextAmuletItem.quality;
@@ -1830,6 +1832,18 @@ class AmuletUI {
       children: [
           // if (itemQuality != ItemQuality.Common)
           //   buildText(itemQuality.name, color: mapItemQualityToColor(itemQuality)),
+          if (levelDiff != null)
+            buildComparisonRow(
+              lead: buildText('level'),
+              value: next.amuletItem.level,
+              diff: levelDiff,
+            ),
+          if (valueDiff != null)
+            buildComparisonRow(
+              lead: buildText('value'),
+              value: nextAmuletItem.quantify,
+              diff: valueDiff,
+            ),
           if (healthDiff != null)
             buildComparisonRow(
               lead: Row(
