@@ -1890,7 +1890,17 @@ class AmuletUI {
                 diff: showDiff ? levelDiff : null,
               ),
             );
-          })
+          }),
+
+        if (showDiff)
+          onPressed(
+            action: (){},
+            child: Container(
+              margin: const EdgeInsets.only(top: 16),
+              color: Colors.green,
+                padding: const EdgeInsets.all(8),
+                child: buildText('PICKUP')),
+          ),
       ],
     );
   }

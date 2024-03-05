@@ -149,6 +149,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   void update() {
     super.update();
     updateCooldownTimer();
+    updatePlayerCollectables();
+
   }
 
   void updateCooldownTimer() {
@@ -1384,6 +1386,22 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       maxHitRadian: pi,
     );
   }
+
+  void updatePlayerCollectables() {
+    for (final player in players) {
+       GameObject? nearest;
+       var nearestDistance = 60.0;
+       for (final gameObject in gameObjects) {
+          if (!gameObject.isAmuletItem) continue;
+          final distance = player.getDistance(gameObject);
+          if (distance >= nearestDistance) continue;
+          nearest = gameObject;
+          nearestDistance = distance;
+       }
+       player.setCollectableAmuletItemObject(nearest);
+    }
+  }
+
 
 }
 

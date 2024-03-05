@@ -55,9 +55,19 @@ class AmuletPlayer extends IsometricPlayer with
   var skillSlotsDirty = false;
   var consumableSlotsDirty = true;
 
+  GameObject? collectableAmuletItemObject;
+
+  void setCollectableAmuletItemObject(GameObject? gameObject){
+     if (collectableAmuletItemObject == gameObject) return;
+     collectableAmuletItemObject = gameObject;
+     writeAimTargetAmuletItem();
+  }
+
   final sceneShrinesUsed = <AmuletScene, List<int>> {};
   final skillSlots = List.generate(4, (index) => SkillType.None);
   final consumableSlots = List<AmuletItem?>.generate(4, (index) => null);
+
+
 
   Function? onInteractionOver;
   Position? cameraTarget;
@@ -993,7 +1003,7 @@ class AmuletPlayer extends IsometricPlayer with
   void onChangedAimTarget() {
     super.onChangedAimTarget();
     writeAimTargetFiendType();
-    writeAimTargetAmuletItem();
+    // writeAimTargetAmuletItem();
   }
 
   void writeAimTargetFiendType() {
@@ -1018,14 +1028,14 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Aim_Target_Amulet_Item);
 
-     final aimTarget = this.aimTarget;
-     if (aimTarget is! GameObject){
-       writeFalse();
-       return;
-     }
+     final gameObject = collectableAmuletItemObject;
 
-     final gameObject = aimTarget;
-    final amuletItem = getGameObjectAmuletItem(gameObject);
+    if (gameObject == null){
+      writeFalse();
+      return;
+    }
+
+     final amuletItem = getGameObjectAmuletItem(gameObject);
 
      if (amuletItem == null){
        writeFalse();
