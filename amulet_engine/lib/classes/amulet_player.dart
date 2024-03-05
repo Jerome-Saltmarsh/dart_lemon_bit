@@ -1213,7 +1213,7 @@ class AmuletPlayer extends IsometricPlayer with
 
   /// returns a number between 0.0 and 1.0
   double getAssignedSkillTypeLevelI(SkillType skillType) =>
-      getSkillTypeLevelAssigned(skillType) / SkillType.Max_Skill_Points;
+      getSkillTypeLevelAssigned(skillType) / SkillType.Max_Level;
 
   int getSkillTypeLevel(SkillType skillType){
      var total = 0;
@@ -1221,7 +1221,7 @@ class AmuletPlayer extends IsometricPlayer with
      total += equippedHelm?.skillPoints[skillType] ?? 0;
      total += equippedArmor?.skillPoints[skillType] ?? 0;
      total += equippedShoes?.skillPoints[skillType] ?? 0;
-     return min(total, SkillType.Max_Skill_Points);
+     return min(total, SkillType.Max_Level);
   }
 
   void writeSkillTypes() {

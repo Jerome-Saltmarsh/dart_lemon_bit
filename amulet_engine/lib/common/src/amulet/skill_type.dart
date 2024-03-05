@@ -96,15 +96,55 @@ enum SkillType {
   /// if null the weapon range is used
   final double? range;
 
-  static const Max_Skill_Points = 20;
+  static const Max_Level = 20;
   static const Max_Health_Steal = 0.5;
   static const Max_Magic_Steal = 0.5;
   static const Max_Critical_Hit = 0.5;
   static const Max_Might_Swing = 3.0;
   static const Max_Resist = 0.5;
   static const Max_Run_Speed = 0.4;
-  static const Min_Wind_Cut_Range = 50.0;
-  static const Max_Wind_Cut_Range = 200.0;
+
+  static const Range_Min_Wind_Cut = 50.0;
+  static const Range_Max_Wind_Cut = 200.0;
+
+  static const Damage_Max_Fire_Arrow = 20.0;
+  static const Damage_Min_Fire_Arrow = 2.0;
+
+  static const Damage_Max_Ice_Arrow = 20.0;
+  static const Damage_Min_Ice_Arrow = 2.0;
+
+  static const Damage_Min_Fireball = 2.0;
+  static const Damage_Max_Fireball = 20.0;
+
+  static const Damage_Min_Explode = 2.0;
+  static const Damage_Max_Explode = 20.0;
+
+  static const Damage_Min_Frostball = 2.0;
+  static const Damage_Max_Frostball = 20.0;
+
+  static const Ailment_Damage_Min_Ice_Arrow = 1.0;
+  static const Ailment_Damage_Min_Fire_Arrow = 1.0;
+
+  static const Ailment_Damage_Max_Ice_Arrow = 5.0;
+  static const Ailment_Damage_Max_Fire_Arrow = 5.0;
+
+  static const Ailment_Damage_Min_Fireball = 1.0;
+  static const Ailment_Damage_Max_Fireball = 5.0;
+
+  static const Ailment_Damage_Min_Frostball = 0.0;
+  static const Ailment_Damage_Max_Frostball = 1.0;
+
+  static const Ailment_Duration_Min_Ice_Arrow = 1.0;
+  static const Ailment_Duration_Max_Ice_Arrow = 5.0;
+
+  static const Ailment_Duration_Min_Fireball = 1.0;
+  static const Ailment_Duration_Max_Fireball = 5.0;
+
+  static const Ailment_Duration_Min_Fire_Arrow = 1.0;
+  static const Ailment_Duration_Max_Fire_Arrow = 5.0;
+
+  static const Ailment_Duration_Min_Frostball = 1.0;
+  static const Ailment_Duration_Max_Frostball = 5.0;
 
   const SkillType({
     required this.casteType,
@@ -145,102 +185,129 @@ enum SkillType {
     final value = interpolate(
       AmuletSettings.Min_Perform_Velocity,
       AmuletSettings.Max_Perform_Velocity,
-      level / SkillType.Max_Skill_Points,
+      level / SkillType.Max_Level,
     );
 
     return getPercentageDiff(AmuletSettings.Min_Perform_Velocity, value);
   }
 
   static double getHealthSteal(int level) =>
-      interpolate(0, SkillType.Max_Health_Steal, level / Max_Skill_Points);
+      linear(0, SkillType.Max_Health_Steal, level);
 
   static double getMagicSteal(int level) =>
-      interpolate(0, SkillType.Max_Magic_Steal, level / Max_Skill_Points);
+      linear(0, SkillType.Max_Magic_Steal, level);
 
-  static double getDamageExplode(int level){
-    return level * 4.0;
-  }
+  static double getDamageFireball(int level) =>
+      linear(
+        SkillType.Damage_Min_Fireball,
+        SkillType.Damage_Max_Fireball,
+        level,
+      );
 
-  static double getDamageFireball(int level){
-    return level * 2.0;
-  }
+  static double getDamageIceArrow(int level) =>
+      linear(
+        SkillType.Damage_Min_Ice_Arrow,
+        SkillType.Damage_Max_Ice_Arrow,
+        level,
+      );
 
-  static double getDamageIceArrow(int level){
-     return level * 2.0;
-  }
+  static double getDamageFireArrow(int level) =>
+      linear(
+        SkillType.Damage_Min_Fire_Arrow,
+        SkillType.Damage_Max_Fire_Arrow,
+        level,
+      );
 
-  static double getDamageFireArrow(int level){
-    return level * 2.0;
-  }
+  static double getDamageExplode(int level) =>
+      linear(
+        SkillType.Damage_Min_Explode,
+        SkillType.Damage_Max_Explode,
+        level,
+      );
 
-  static double getDamageFrostBall(int level){
-    return level * 2.0;
-  }
+  static double getDamageFrostBall(int level) =>
+      linear(
+        SkillType.Damage_Min_Frostball,
+        SkillType.Damage_Max_Frostball,
+        level,
+      );
 
-  static int getAilmentDurationIceArrow(int level){
-    return 5;
-  }
+  static double getAilmentDurationIceArrow(int level) =>
+      linear(
+        SkillType.Ailment_Duration_Min_Ice_Arrow,
+        SkillType.Ailment_Duration_Max_Ice_Arrow,
+        level,
+      );
 
-  static double getAilmentDamageIceArrow(int level){
-    return 0;
-  }
+  static double getAilmentDamageIceArrow(int level) =>
+      linear(
+        SkillType.Ailment_Damage_Min_Ice_Arrow,
+        SkillType.Ailment_Damage_Max_Ice_Arrow,
+        level,
+      );
 
-  static int getAilmentDurationFireball(int level){
-    return 5;
-  }
+  static double getAilmentDurationFireball(int level) =>
+      linear(
+        SkillType.Ailment_Duration_Min_Fireball,
+        SkillType.Ailment_Duration_Max_Fireball,
+        level,
+      );
 
-  static int getAilmentDurationFireArrow(int level){
-    return 5;
-  }
+  static double getAilmentDurationFireArrow(int level) =>
+      linear(
+        SkillType.Ailment_Duration_Min_Fire_Arrow,
+        SkillType.Ailment_Duration_Max_Fire_Arrow,
+        level,
+      );
 
-  static int getAilmentDurationFrostBall(int level){
-    return 5;
-  }
+  static double getAilmentDurationFrostBall(int level) =>
+      linear(
+        SkillType.Ailment_Duration_Min_Frostball,
+        SkillType.Ailment_Duration_Max_Frostball,
+        level,
+      );
 
-  static double getAilmentDamageFireArrow(int level){
-    return 1;
-  }
+  static double getAilmentDamageFireArrow(int level) =>
+      linear(
+        SkillType.Ailment_Damage_Min_Fire_Arrow,
+        SkillType.Ailment_Damage_Max_Fire_Arrow,
+        level,
+      );
 
-  static double getAilmentDamageFireball(int level){
-    return 1;
-  }
+  static double getAilmentDamageFireball(int level) =>
+      linear(
+        SkillType.Ailment_Damage_Min_Fireball,
+        SkillType.Ailment_Damage_Max_Fireball,
+        level,
+      );
 
-  static double getAilmentDamageFrostBall(int level){
-    throw Exception();
-  }
+  static double getAilmentDamageFrostBall(int level) =>
+      linear(
+        SkillType.Ailment_Damage_Min_Frostball,
+        SkillType.Ailment_Damage_Max_Frostball,
+        level,
+      );
 
-  static double getPercentageMightySwing(int level){
-    final i = level / Max_Skill_Points;
-    return interpolate(0, Max_Might_Swing, i);
-  }
+  static double getPercentageMightySwing(int level) =>
+      linear(0, Max_Might_Swing, level);
 
-  static double getRangeWindCut(int level){
-    final i = level / Max_Skill_Points;
-    return interpolate(Min_Wind_Cut_Range, Max_Wind_Cut_Range, i);
-  }
+  static double getRangeWindCut(int level) =>
+      linear(Range_Min_Wind_Cut, Range_Max_Wind_Cut, level);
 
-  static double getPercentageCriticalHit(int level){
-    final i = level / Max_Skill_Points;
-    return interpolate(0, Max_Critical_Hit, i);
-  }
+  static double getPercentageCriticalHit(int level) =>
+      linear(0, Max_Critical_Hit, level);
 
-  static double getPercentageDamageResistanceMelee(int level){
-    final i = level / Max_Skill_Points;
-    return interpolate(0, Max_Resist, i);
-  }
+  static double getPercentageDamageResistanceMelee(int level) =>
+      linear(0, Max_Resist, level);
 
-  static int getSplitShotTotalArrows(int level){
-    return 2 + level;
-  }
+  static int getSplitShotTotalArrows(int level) =>
+      2 + level;
 
-  static double getAreaDamage(int level){
-    return level / Max_Skill_Points;
-  }
+  static double getAreaDamage(int level) =>
+      level / Max_Level;
 
-  static double getRunSpeed(int level){
-    final i = level / SkillType.Max_Skill_Points;
-    return interpolate(0, SkillType.Max_Run_Speed, i);
-  }
+  static double getRunSpeed(int level) =>
+      linear(0, SkillType.Max_Run_Speed, level);
 
   static final collectionPassive = findByCasteType(CasteType.Passive);
   static final collectionSword = findByCasteType(CasteType.Sword);
@@ -254,5 +321,13 @@ enum SkillType {
 
   static List<SkillType> findByCasteType(CasteType casteType) =>
       values.where((element) => element.casteType == CasteType.Passive).toList(growable: false);
+
+  static double linear(double start, double end, int level) =>
+      interpolate(
+        start,
+        end,
+        level / Max_Level,
+    );
+
 }
 

@@ -1627,7 +1627,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required Character src,
     required double damage,
     required double range,
-    required int ailmentDuration,
+    required double ailmentDuration,
     required double ailmentDamage,
     Position? target,
     double? angle,
@@ -1651,7 +1651,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required Character src,
     required double damage,
     required double range,
-    required int ailmentDuration,
+    required double ailmentDuration,
     required double ailmentDamage,
     Position? target,
     double? angle,
@@ -1670,12 +1670,14 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     );
   }
 
+  int convertSecondsToFrames(double seconds) => (seconds * fps).toInt();
+
   Projectile spawnProjectile({
     required Character src,
     required double range,
     required int projectileType,
     required double damage,
-    required int ailmentDuration,
+    required double ailmentDuration,
     required double ailmentDamage,
     double? angle = 0,
     Position? target,
@@ -1691,7 +1693,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     if (finalAngle == null) {
       finalAngle = target != null ? src.getAngle(target) : src.angle;
     }
-    projectile.ailmentDuration = ailmentDuration;
+
+    projectile.ailmentDuration = convertSecondsToFrames(ailmentDuration);
     projectile.ailmentDamage = ailmentDamage;
     projectile.damage = damage;
     projectile.hitable = true;

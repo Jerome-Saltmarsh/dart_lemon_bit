@@ -494,7 +494,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   double getCharacterAssignedSkillLevelI(Character character, SkillType skillType) {
     final level = getCharacterAssignedSkillLevel(character, skillType);
-    return interpolate(0, 1.0, level / SkillType.Max_Skill_Points);
+    return interpolate(0, 1.0, level / SkillType.Max_Level);
 }
 
   int getCharacterAssignedSkillLevel(Character character, SkillType skillType){
