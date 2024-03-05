@@ -25,6 +25,7 @@ class Amulet {
 
   late final amuletGameLoading = AmuletGame(
       amulet: this,
+      level: 0,
       scene: Scene(
         name: 'loading',
         nodeTypes: Uint8List(0),
@@ -37,7 +38,6 @@ class Amulet {
         marks: [],
         keys: {},
         locations: {},
-
       ),
       time: amuletTime,
       environment: amuletEnvironment,
@@ -134,7 +134,8 @@ class Amulet {
       time: amuletTime,
       environment: amuletEnvironment,
       name: 'Black Woods',
-      amuletScene: AmuletScene.World_01
+      amuletScene: AmuletScene.World_01,
+      level: 3,
     );
 
     amuletGameVillage = AmuletGameWorld11(amulet: this);
@@ -193,6 +194,7 @@ class Amulet {
       environment: amuletEnvironment,
       name: amuletScene.name,
       amuletScene: amuletScene,
+      level: 1,
     );
 
   void _initializeUpdateTimer() {

@@ -13,7 +13,8 @@ class WitchesLair2 extends AmuletGame {
     required super.environment,
   }) : super (
     name: 'Witches lair 2',
-    amuletScene: AmuletScene.Witches_Lair_2
+    amuletScene: AmuletScene.Witches_Lair_2,
+    level: 10,
   ) {
     final indexSpawnWitch = scene.getKey('spawn_witch');
 

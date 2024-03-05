@@ -5,15 +5,14 @@ import 'package:lemon_json/src.dart';
 
 import '../common/src/classes/amulet_item_object.dart';
 
-Json mapAmuletItemObjectToJson(AmuletItemObject amuletItemObject){
-  final data = Json();
-  data[AmuletField.Skill_Points] = mapSkillPointsToJson(amuletItemObject.skillPoints);
-  data[AmuletField.Amulet_Item] = amuletItemObject.amuletItem.name;
-  data[AmuletField.Damage] = amuletItemObject.damage;
-  data[AmuletField.Level] = amuletItemObject.level;
-  data[AmuletField.Item_Quality] = amuletItemObject.itemQuality;
-  return data;
-}
+Json mapAmuletItemObjectToJson(AmuletItemObject amuletItemObject) =>
+    Json()
+      ..[AmuletField.Skill_Points] = mapSkillPointsToJson(amuletItemObject.skillPoints)
+      ..[AmuletField.Amulet_Item] = amuletItemObject.amuletItem.name
+      ..[AmuletField.Damage] = amuletItemObject.damage
+      ..[AmuletField.Level] = amuletItemObject.level
+      ..[AmuletField.Item_Quality] = amuletItemObject.itemQuality
+    ;
 
 Json mapSkillPointsToJson(Map<SkillType, int> skillPoints){
   final json = Json();

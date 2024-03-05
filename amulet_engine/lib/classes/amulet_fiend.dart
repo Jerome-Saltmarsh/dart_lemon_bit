@@ -5,6 +5,7 @@ import '../isometric/src.dart';
 
 class AmuletFiend extends Character {
 
+  final int level;
   FiendType fiendType;
   SkillType? activeSkillType;
 
@@ -14,6 +15,7 @@ class AmuletFiend extends Character {
     required super.z,
     required super.team,
     required this.fiendType,
+    required this.level,
   }) : super (
     characterType: fiendType.characterType,
     weaponType: WeaponType.Unarmed,

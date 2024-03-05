@@ -2159,7 +2159,7 @@ class AmuletUI {
         QuantifyTab.Amulet_Items => AmuletItem.sortedValues
             .map(buildAmuletItemElement)
             .toList(growable: false),
-        QuantifyTab.Fiend_Types => FiendType.sortedValues
+        QuantifyTab.Fiend_Types => FiendType.values
             .map(buildElementFiendType)
             .toList(growable: false)
       };
@@ -2195,8 +2195,8 @@ class AmuletUI {
                 child: buildText(fiendType.name),
             ),
             buildText('quantify: ${fiendType.quantify}'),
-            width16,
-            buildText('lvl: ${fiendType.level}'),
+            // width16,
+            // buildText('lvl: ${fiendType.level}'),
           ],
         ),
     ),

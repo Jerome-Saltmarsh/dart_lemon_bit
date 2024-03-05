@@ -16,4 +16,8 @@ class AmuletItemObject {
     this.damage,
     this.level,
   });
+
+  int get quantify {
+    return skillPoints.length;
+  }
 }

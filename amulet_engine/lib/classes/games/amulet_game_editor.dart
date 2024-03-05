@@ -15,6 +15,7 @@ class AmuletGameEditor extends AmuletGame {
      environment: IsometricEnvironment(enabled: false),
      name: generateRandomName(),
      amuletScene: AmuletScene.Editor,
+     level: 1,
   );
 
   @override

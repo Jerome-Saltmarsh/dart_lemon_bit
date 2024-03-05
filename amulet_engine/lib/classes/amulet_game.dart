@@ -16,6 +16,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   final Amulet amulet;
   final String name;
   final AmuletScene amuletScene;
+  final int level;
 
   final gameObjectDeactivationTimer = 5000;
 
@@ -34,6 +35,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required super.environment,
     required this.name,
     required this.amuletScene,
+    required this.level,
   }) {
     refreshFlatNodes();
   }
@@ -220,6 +222,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         spawnFiendTypeAtIndex(
           fiendType: fiendType,
           index: MarkType.getIndex(markValue),
+          level: level
         );
       }
     }
@@ -228,12 +231,14 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   Character spawnFiendTypeAtIndex({
     required FiendType fiendType,
     required int index,
+    required int level,
   }) =>
       spawnAmuletFiendAtXYZ(
         x: scene.getIndexX(index),
         y: scene.getIndexY(index),
         z: scene.getIndexZ(index),
         fiendType: fiendType,
+        level: level,
       );
 
   AmuletFiend spawnAmuletFiendAtXYZ({
@@ -241,6 +246,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required double y,
     required double z,
     required FiendType fiendType,
+    required int level,
   }) {
     final character = AmuletFiend(
       team: TeamType.Evil,
@@ -248,6 +254,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       y: y,
       z: z,
       fiendType: fiendType,
+      level: level,
     )
       ..weaponHitForce = 2;
 
@@ -813,7 +820,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   }) {
 
     final fiendType = amuletFiend.fiendType;
-    final fiendLevel = fiendType.level;
+    final fiendLevel = amuletFiend.level;
     final amuletItemObject = generateAmuletItemObject(
         amuletItem: randomItem(AmuletItem.values),
         level: fiendLevel,
@@ -1012,6 +1019,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     spawnFiendTypeAtIndex(
       fiendType: FiendType.values[fiendType],
       index: index,
+      level: level,
     );
   }
 
