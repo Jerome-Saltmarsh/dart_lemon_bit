@@ -1176,7 +1176,7 @@ class AmuletPlayer extends IsometricPlayer with
         CasteType.Passive => skillType.range,
         CasteType.Caste => skillType.range,
         CasteType.Bow => equippedWeaponRange?.ranged,
-        CasteType.Staff => equippedWeaponRange?.melee,
+        CasteType.Staff => equippedWeaponRange?.ranged,
         CasteType.Sword => equippedWeaponRange?.melee,
         CasteType.Melee => equippedWeaponRange?.melee,
       } ?? 0;
