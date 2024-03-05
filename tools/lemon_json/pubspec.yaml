@@ -1,6 +1,6 @@
 name: lemon_json
 description: "a utility library for using json"
-version: 1.0.0
+version: 1.0.1
 homepage:
 
 environment:

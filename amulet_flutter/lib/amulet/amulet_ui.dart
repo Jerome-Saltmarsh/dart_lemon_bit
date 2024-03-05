@@ -1713,53 +1713,6 @@ class AmuletUI {
   Widget buildIconSkillType(SkillType skillType, {double dstX = 0, double dstY = 0}) =>
       AmuletImageSrc(src: getSrcSkillType(skillType), dstX: dstX, dstY: dstY);
 
-
-  // Widget buildCardAmuletItemSkillPoints(AmuletItemObject amuletItemObject){
-  //   final amuletItem = amuletItemObject.amuletItem;
-  //   final slotType = amuletItem.slotType;
-  //   final equippedItemType = amulet.getEquippedAmuletItemObject(slotType);
-  //   final equipped = equippedItemType == amuletItem;
-  //
-  //   return buildBorder(
-  //     width: 2,
-  //     color: Colors.white70,
-  //     child: Container(
-  //       width: 190,
-  //       color: Palette.brownDark,
-  //       child: Column(
-  //         mainAxisAlignment: MainAxisAlignment.start,
-  //         crossAxisAlignment: CrossAxisAlignment.start,
-  //         children: [
-  //           buildCardHeader('Item ${slotType.name}'),
-  //           Container(
-  //             padding: const EdgeInsets.all(4),
-  //             color: Colors.black12,
-  //             height: 60,
-  //             child: Row(
-  //               mainAxisAlignment: MainAxisAlignment.center,
-  //               children: [
-  //                 AmuletItemImage(amuletItem: amuletItem, scale: 1.0),
-  //                 width8,
-  //                 buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
-  //               ],
-  //             ),
-  //           ),
-  //           if (equipped)
-  //             Container(
-  //                 padding: const EdgeInsets.all(8),
-  //                 child: buildCardAmuletItemEquipped(amuletItemObject)),
-  //           if (equippedItemType != null && !equipped)
-  //             Container(
-  //               padding: const EdgeInsets.all(8),
-  //               child: buildCardCompareAmuletItems(equippedItemType, amuletItemObject),
-  //             ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  //
-  // }
-
   Widget buildCardAmuletItemObject(AmuletItemObject? amuletItemObject) {
 
     if (amuletItemObject == null){
@@ -1830,8 +1783,6 @@ class AmuletUI {
 
     return Column(
       children: [
-          // if (itemQuality != ItemQuality.Common)
-          //   buildText(itemQuality.name, color: mapItemQualityToColor(itemQuality)),
           if (levelDiff != null)
             buildComparisonRow(
               lead: buildText('level'),
