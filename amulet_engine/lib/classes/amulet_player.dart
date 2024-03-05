@@ -1369,24 +1369,6 @@ class AmuletPlayer extends IsometricPlayer with
   int get totalCriticalHitPoints =>
       getSkillTypeLevel(SkillType.Critical_Hit);
 
-  void tryWriteByte(int? value){
-    if (value == null){
-      writeFalse();
-      return;
-    }
-    writeTrue();
-    writeByte(value);
-  }
-
-  void tryWriteUInt16(int? value){
-    if (value == null){
-      writeFalse();
-      return;
-    }
-    writeTrue();
-    writeUInt16(value);
-  }
-
   void writePlayerCriticalHitPoints() {
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Critical_Hit_Points);
@@ -1611,6 +1593,21 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
     amuletGame.onAmuletPlayerPickupGameObject(this, item);
+  }
+
+  void tryWriteByte(int? value) =>
+      tryWrite(writeByte, value);
+
+  void tryWriteUInt16(int? value) =>
+      tryWrite(writeUInt16, value);
+
+  void tryWrite<T>(Function(T t) write, T? value){
+    if (value == null){
+      writeFalse();
+      return;
+    }
+    writeTrue();
+    write(value);
   }
 }
 
