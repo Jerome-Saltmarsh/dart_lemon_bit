@@ -403,12 +403,13 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   }
 
   /// @areaDamage a value between 0.0 and 1.0
+  /// @ailmentDuration in seconds
   void applyHitMelee({
     required Character character,
     required DamageType damageType,
     required double range,
     required double damage,
-    required int ailmentDuration,
+    required double ailmentDuration,
     required double ailmentDamage,
     required double maxHitRadian,
     required double areaDamage,
@@ -534,7 +535,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
           target: other,
           damage: finalDamage,
           damageType: damageType,
-          ailmentDuration: (ailmentDuration * finalRate).toInt(),
+          ailmentDuration: ailmentDuration * finalRate,
           ailmentDamage: ailmentDamage * finalRate,
         );
       }
@@ -818,7 +819,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required Character srcCharacter,
     required double radius,
     required double damage,
-    required int ailmentDuration,
+    required double ailmentDuration,
     required double ailmentDamage,
   }) {
     if (!scene.inboundsXYZ(x, y, z)) return;
@@ -950,12 +951,12 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required Character target,
     required double amount,
     required DamageType damageType,
-    required int ailmentDuration,
+    required double ailmentDuration,
     required double ailmentDamage,
   }) {
     if (target.dead || target.invincible) return;
 
-    final ailmentDurationSeconds = ailmentDuration * fps;
+    final ailmentDurationSeconds = convertSecondsToFrames(ailmentDuration);
 
     final resistance = getCharacterDamageTypeResistance(target, damageType).clamp01();
     final resistanceInverted = 1.0 - resistance;
@@ -1401,7 +1402,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required Collider target,
     required double damage,
     required DamageType damageType,
-    required int ailmentDuration,
+    required double ailmentDuration,
     required double ailmentDamage,
     double? angle,
     double force = 0,
@@ -1694,7 +1695,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       finalAngle = target != null ? src.getAngle(target) : src.angle;
     }
 
-    projectile.ailmentDuration = convertSecondsToFrames(ailmentDuration);
+    projectile.ailmentDuration = ailmentDuration;
     projectile.ailmentDamage = ailmentDamage;
     projectile.damage = damage;
     projectile.hitable = true;

@@ -434,7 +434,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required Collider target,
     required double damage,
     required DamageType damageType,
-    required int ailmentDuration,
+    required double ailmentDuration,
     required double ailmentDamage,
     double? angle,
     double force = 0,

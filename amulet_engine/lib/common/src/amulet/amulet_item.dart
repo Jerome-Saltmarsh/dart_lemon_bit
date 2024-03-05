@@ -571,14 +571,14 @@ enum AmuletItem {
     ],
   ),
   Consumable_Potion_Magic(
-    label: 'a common tonic',
+    label: 'Magic Potion',
     slotType: SlotType.Consumable,
     subType: ConsumableType.Potion_Blue,
     level: 0,
     skillTypes: [],
   ),
   Consumable_Potion_Health(
-      label: 'a common tonic',
+      label: 'Health Potion',
       slotType: SlotType.Consumable,
       subType: ConsumableType.Potion_Red,
       level: 0,

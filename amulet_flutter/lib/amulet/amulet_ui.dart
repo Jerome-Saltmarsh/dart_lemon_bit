@@ -1797,11 +1797,6 @@ class AmuletUI {
                 ],
               ),
             ),
-            // if (equipped)
-            //   Container(
-            //       padding: const EdgeInsets.all(8),
-            //       child: buildCardAmuletItemEquipped(amuletItemObject)),
-            // if (equippedItemType != null && !equipped)
               Container(
                 padding: const EdgeInsets.all(8),
                 child: buildColumnAmuletItemObject(amuletItemObject),
@@ -1827,13 +1822,25 @@ class AmuletUI {
       children: [
           if (healthDiff != null)
             buildComparisonRow(
-              lead: iconHealth,
+              lead: Row(
+                children: [
+                  iconHealth,
+                  width8,
+                  buildText('health'),
+                ],
+              ),
               value: nextAmuletItem.maxHealth,
               diff: showDiff ? healthDiff : null,
             ),
           if (magicDiff != null)
             buildComparisonRow(
-              lead: iconMagic,
+              lead: Row(
+                children: [
+                  iconMagic,
+                  width8,
+                  buildText('magic'),
+                ],
+              ),
               value: nextAmuletItem.maxMagic,
               diff: showDiff ? magicDiff : null,
             ),
@@ -2021,55 +2028,6 @@ class AmuletUI {
     }
 
     return (a ?? 0.0) - (b ?? 0.0);
-  }
-
-  Widget buildCardAmuletItemEquipped(AmuletItemObject amuletItemObject) {
-
-    final amuletItem = amuletItemObject.amuletItem;
-    final damage = amuletItemObject.damage;
-    final maxHealth = amuletItem.maxHealth;
-    final maxMagic = amuletItem.maxMagic;
-    final range = amuletItem.range;
-    final attackSpeed = amuletItem.attackSpeed;
-
-    return Column(
-      children: [
-        if (damage != null)
-          buildRow(buildText('damage'), damage.toInt()),
-        if (range != null)
-          buildBarsRange(range.index),
-        if (attackSpeed != null)
-          buildBarsAttackSpeed(attackSpeed.index),
-        if (maxHealth != null && maxHealth > 0)
-          buildRow(buildIconHealth(), maxHealth),
-        if (maxMagic != null && maxMagic > 0)
-          buildRow(buildIconMagic(), maxMagic),
-        height16,
-        ...amuletItemObject.skillPoints.entries.map((e) => Container(
-          margin: const EdgeInsets.only(bottom: 8),
-          child: Container(
-            color: Colors.black26,
-            padding: const EdgeInsets.symmetric(vertical: 4),
-            child: Row(children: [
-              Container(
-                  width: 24,
-                  height: 24,
-                  alignment: Alignment.center,
-                  child: buildIconSkillType(e.key)),
-              width8,
-              buildTextValue(e.key.name.clean),
-              expanded,
-              buildText('+${e.value}', color: Colors.green),
-            ],),
-          ),
-        )),
-        height16,
-        alignRight(child: buildBorder(
-            color: Colors.green,
-            padding: const EdgeInsets.all(4),
-            child: buildText('EQUIPPED', color: Colors.green)))
-      ],
-    );
   }
 
   Widget buildCardHeader(String text) => Container(
