@@ -26,13 +26,13 @@ String? getSkillTypeLevelDescription(SkillType skillType, int level) {
     case SkillType.Strike:
       return '-';
     case SkillType.Frostball:
-      return 'ice damage: ${SkillType.getDamageFrostBall(level)}\n'
-          'freeze damage: ${SkillType.getAilmentDamageFrostBall(level)} / sec\n'
-          'freeze duration: ${SkillType.getAilmentDurationFrostBall(level)} / sec';
+      return 'ice damage: ${SkillType.getDamageFrostBall(level).toStringAsFixed(1)}\n'
+          'freeze damage: ${SkillType.getAilmentDamageFrostBall(level).toStringAsFixed(1)}/s\n'
+          'freeze duration: ${SkillType.getAilmentDurationFrostBall(level).toStringAsFixed(1)}s';
     case SkillType.Fireball:
-      return 'fire damage: ${SkillType.getDamageFireball(level).toInt()}\n'
-          'burn damage: ${SkillType.getAilmentDamageFireball(level).toInt()} / sec\n'
-          'burn duration: ${SkillType.getAilmentDurationFireball(level).toInt()} / sec'
+      return 'fire damage: ${SkillType.getDamageFireball(level).toStringAsFixed(1)}\n'
+          'burn damage: ${SkillType.getAilmentDamageFireball(level).toStringAsFixed(1)}/s\n'
+          'burn duration: ${SkillType.getAilmentDurationFireball(level).toStringAsFixed(1)}s'
        ;
     case SkillType.Explode:
       return 'damage: ${SkillType.getDamageExplode(level)}';
