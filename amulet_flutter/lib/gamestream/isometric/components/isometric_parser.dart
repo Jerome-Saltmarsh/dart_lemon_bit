@@ -350,6 +350,16 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
     }
   }
 
+  void readAmuletPlayerAimTarget() {
+    final targetSet = readBool();
+    amulet.aimTargetSet.value = targetSet;
+    if (!targetSet) return;
+    amulet.aimTargetText = readString();
+    amulet.aimTargetHealthPercentage = readPercentage();
+    amulet.aimTargetLevel = tryReadUInt16();
+    amulet.aimTargetNotifier.value++;
+  }
+
   void readNetworkResponseEnvironment() {
     switch (readByte()) {
       case NetworkResponseEnvironment.Rain:

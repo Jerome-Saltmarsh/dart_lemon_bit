@@ -6,7 +6,6 @@ import 'dart:ui';
 import 'package:amulet_engine/src.dart';
 import 'package:amulet_flutter/amulet/amulet_keys.dart';
 import 'package:amulet_flutter/amulet/amulet_ui.dart';
-import 'package:amulet_flutter/amulet/classes/item_slot.dart';
 import 'package:amulet_flutter/amulet/ui/enums/quantify_tab.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:amulet_flutter/gamestream/ui/builders/build_watch.dart';
@@ -105,7 +104,6 @@ class Amulet extends IsometricGame {
 
   late final AmuletUI amuletUI;
 
-  final dragging = Watch<ItemSlot?>(null);
   final emptyItemSlot = buildText('-');
 
   final aimTargetItemTypeCurrent = Watch<AmuletItem?>(null);
@@ -147,8 +145,11 @@ class Amulet extends IsometricGame {
   final equippedArmor = Watch<AmuletItemObject?>(null);
   final equippedShoes =  Watch<AmuletItemObject?>(null);
 
-  final aimTargetFiendType = Watch<FiendType?>(null);
-  final aimTargetFiendLevel = Watch(0);
+  var aimTargetText = '';
+  var aimTargetHealthPercentage = 0.0;
+  int? aimTargetLevel;
+  final aimTargetSet = Watch(false);
+  final aimTargetNotifier = Watch(0);
 
   Amulet(){
     print('Amulet()');
@@ -491,10 +492,7 @@ class Amulet extends IsometricGame {
     engine.zoom = 1.0;
     engine.drawCanvasAfterUpdate = true;
     engine.cursorType.value = CursorType.Basic;
-    clearDragging();
   }
-
-  void clearDragging() => dragging.value = null;
 
   void clearHighlightAmuletItem(){
     highlightedAmuletItem.value = null;

@@ -1,5 +1,6 @@
 
 import 'package:lemon_json/src.dart';
+import 'package:lemon_lang/src.dart';
 
 import '../../common/src.dart';
 import 'collider.dart';
@@ -147,6 +148,9 @@ class GameObject extends Collider {
     }
     return MaterialType.None;
   }
+
+  double get healthPercentage => health.percentageOf(healthMax);
+
 }
 
 

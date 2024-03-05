@@ -90,9 +90,6 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Highlight_Amulet_Item_Clear:
          amulet.clearHighlightAmuletItem();
          break;
-       case NetworkResponseAmulet.Aim_Target_Fiend:
-         readAimTargetFiend();
-         break;
        case NetworkResponseAmulet.Spawn_Confetti:
          final x = readDouble();
          final y = readDouble();
@@ -153,6 +150,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Amulet_Item_Equipped:
          readAmuletItemEquipped();
          break;
+       case NetworkResponseAmulet.Player_Aim_Target:
+         readAmuletPlayerAimTarget();
+         break;
        case NetworkResponseAmulet.Player_Weapon_Range:
          readPlayerWeaponRange();
          break;
@@ -175,16 +175,6 @@ extension AmuletParser on IsometricParser {
          readCameraTarget();
          break;
      }
-  }
-
-  void readAimTargetFiend() {
-    if (readBool()) {
-      final fiendTypeIndex = readByte();
-      amulet.aimTargetFiendType.value = FiendType.values[fiendTypeIndex];
-      amulet.aimTargetFiendLevel.value = readUInt16();
-    } else {
-      amulet.aimTargetFiendType.value = null;
-    }
   }
 
   void readPlayerEquipped() {

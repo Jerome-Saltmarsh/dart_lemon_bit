@@ -496,78 +496,82 @@ class AmuletUI {
     const width = 250.0;
     const height = width * goldenRatio_0381 * goldenRatio_0381;
 
-    final healthPercentageBox = buildWatch(
-        amulet.player.aimTargetHealthPercentage,
-        (healthPercentage) => Container(
-              width: width * healthPercentage,
-              height: height,
-              color: amulet.colors.red_3,
-            ));
-
-    final fiendType = Container(
-      margin: const EdgeInsets.symmetric(horizontal: 5),
-      child: buildWatch(amulet.aimTargetFiendType, (fiendType) {
-        return nothing;
-      }),
-    );
-
-    final fiendLevel = Container(
-      margin: const EdgeInsets.symmetric(horizontal: 5),
-      child: buildWatch(amulet.aimTargetFiendLevel, (fiendLevel) {
-        return buildText('lvl $fiendLevel', color: Colors.white70);
-      }),
-    );
-
-    final name = Container(
-      alignment: Alignment.centerLeft,
-      height: height,
-      color: amulet.colors.brownDark,
-      padding: const EdgeInsets.all(4),
-      width: width,
-      child: Stack(
-        children: [
-          buildWatch(amulet.player.aimTargetAction, (targetAction) {
-            if (targetAction != TargetAction.Attack) return nothing;
-
-            return healthPercentageBox;
-          }),
-          Container(
-            width: width,
-            height: height,
-            alignment: Alignment.center,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                buildWatch(amulet.aimTargetAmuletItemObject, (amuletItem) {
-                  return FittedBox(
-                    child: buildWatch(amulet.player.aimTargetName,
-                            (name) => buildText(name.replaceAll('_', ' '),
-                              color: Colors.white
-                            )),
-                  );
-                }),
-                fiendType,
-                fiendLevel,
-                // itemQuality,
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-    return Positioned(
+    final aimTarget = Positioned(
         top: 16,
         left: 0,
         child: IgnorePointer(
           child: Container(
             width: amulet.engine.screen.width,
             alignment: Alignment.center,
-            child: buildWatch(amulet.player.aimTargetSet, (t) {
-              if (!t) return nothing;
-              return name;
+            child: buildWatch(amulet.aimTargetNotifier, (t) {
+                return Container(
+                    width: 200,
+                    height: 50,
+                    alignment: Alignment.center,
+                    child: buildText(amulet.aimTargetText));
             }),
           ),
-        ));
+        )
+    );
+
+    return buildWatchVisible(amulet.aimTargetSet, aimTarget);
+
+    // final healthPercentageBox = buildWatch(
+    //     amulet.player.aimTargetHealthPercentage,
+    //     (healthPercentage) => Container(
+    //           width: width * healthPercentage,
+    //           height: height,
+    //           color: amulet.colors.red_3,
+    //         ));
+
+    // final name = Container(
+    //   alignment: Alignment.centerLeft,
+    //   height: height,
+    //   color: amulet.colors.brownDark,
+    //   padding: const EdgeInsets.all(4),
+    //   width: width,
+    //   child: Stack(
+    //     children: [
+    //       buildWatch(amulet.player.aimTargetAction, (targetAction) {
+    //         if (targetAction != TargetAction.Attack) return nothing;
+    //
+    //         return healthPercentageBox;
+    //       }),
+    //       Container(
+    //         width: width,
+    //         height: height,
+    //         alignment: Alignment.center,
+    //         child: Row(
+    //           mainAxisAlignment: MainAxisAlignment.center,
+    //           children: [
+    //             buildWatch(amulet.aimTargetAmuletItemObject, (amuletItem) {
+    //               return FittedBox(
+    //                 child: buildWatch(amulet.player.aimTargetName,
+    //                         (name) => buildText(name.replaceAll('_', ' '),
+    //                           color: Colors.white
+    //                         )),
+    //               );
+    //             }),
+    //             // itemQuality,
+    //           ],
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    // );
+    // return Positioned(
+    //     top: 16,
+    //     left: 0,
+    //     child: IgnorePointer(
+    //       child: Container(
+    //         width: amulet.engine.screen.width,
+    //         alignment: Alignment.center,
+    //         child: buildWatch(amulet.player.aimTargetSet, (t) {
+    //           if (!t) return nothing;
+    //           return name;
+    //         }),
+    //       ),
+    //     ));
   }
 
   static Widget buildItemRow(String text, dynamic value) {

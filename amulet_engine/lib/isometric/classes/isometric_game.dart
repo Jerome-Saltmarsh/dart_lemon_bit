@@ -8,7 +8,6 @@ import 'package:amulet_engine/src.dart';
 import 'package:lemon_lang/src.dart';
 import 'package:lemon_math/src.dart';
 
-import '../../common/src.dart';
 import '../consts/isometric_settings.dart';
 import 'character.dart';
 import 'collider.dart';

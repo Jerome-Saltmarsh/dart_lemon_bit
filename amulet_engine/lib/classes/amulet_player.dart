@@ -225,6 +225,8 @@ class AmuletPlayer extends IsometricPlayer with
       consumableSlotsDirty = false;
     }
 
+    writeAmuletPlayerAimTarget();
+
     super.writePlayerGame();
   }
 
@@ -1015,28 +1017,6 @@ class AmuletPlayer extends IsometricPlayer with
     setQuestMain(QuestMain.values[quest.index + 1]);
   }
 
-  @override
-  void onChangedAimTarget() {
-    super.onChangedAimTarget();
-    writeAimTargetFiendType();
-    // writeAimTargetAmuletItem();
-  }
-
-  void writeAimTargetFiendType() {
-    final aimTarget = this.aimTarget;
-    writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Aim_Target_Fiend);
-
-    if (aimTarget is! AmuletFiend) {
-      writeBool(false);
-      return;
-    }
-
-    writeBool(true);
-    writeByte(aimTarget.fiendType.index);
-    writeUInt16(aimTarget.level);
-  }
-
   void writeFalse() => writeBool(false);
 
   void writeTrue() => writeBool(true);
@@ -1150,6 +1130,40 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(NetworkResponseAmulet.Amulet_Event);
     writePosition(position);
     writeByte(amuletEvent);
+  }
+
+  void writeAmuletPlayerAimTarget() {
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Player_Aim_Target);
+
+    final aimTarget = this.aimTarget;
+
+    if (aimTarget == null){
+      writeFalse();
+      return;
+    }
+
+    writeTrue();
+    writeString(aimTarget.name);
+
+    int? level;
+    var healthPercentage = 0.0;
+
+    if (aimTarget is Character){
+      healthPercentage = aimTarget.healthPercentage;
+    }
+    if (aimTarget is GameObject){
+      healthPercentage = aimTarget.healthPercentage;
+    }
+    if (aimTarget is AmuletFiend){
+      level = aimTarget.level;
+    }
+    writePercentage(healthPercentage);
+    tryWriteUInt16(level);
+
+
+
+
   }
 
   double get equippedWeaponDamage =>
