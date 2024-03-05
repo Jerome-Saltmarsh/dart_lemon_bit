@@ -2184,16 +2184,16 @@ class AmuletUI {
     child: Container(
       padding: const EdgeInsets.all(8),
       color: Colors.white12,
+      // width: 500,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
                 alignment: Alignment.centerLeft,
                 width: 300,
                 child: buildText(fiendType.name),
             ),
-            buildText('quantify: ${fiendType.quantify}'),
-            // width16,
-            // buildText('lvl: ${fiendType.level}'),
+            buildText('quantify: ${fiendType.quantify.toStringAsFixed(2)}'),
           ],
         ),
     ),

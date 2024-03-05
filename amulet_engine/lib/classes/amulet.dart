@@ -135,7 +135,7 @@ class Amulet {
       scene: scenes.world_01,
       time: amuletTime,
       environment: amuletEnvironment,
-      name: 'Black Woods',
+      name: 'Marshlands',
       amuletScene: AmuletScene.World_01,
       level: 2,
     );
