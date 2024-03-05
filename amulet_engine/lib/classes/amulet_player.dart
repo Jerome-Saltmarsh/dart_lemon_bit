@@ -59,6 +59,9 @@ class AmuletPlayer extends IsometricPlayer with
 
   void setCollectableAmuletItemObject(GameObject? gameObject){
      if (collectableAmuletItemObject == gameObject) return;
+     if (gameObject != null) {
+       interacting = true;
+     }
      collectableAmuletItemObject = gameObject;
      writeAimTargetAmuletItem();
   }

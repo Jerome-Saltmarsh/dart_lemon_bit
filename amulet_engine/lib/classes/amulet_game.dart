@@ -992,6 +992,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
      if (player.acquireAmuletItemObject(amuletItemObject)){
        remove(gameObject);
      }
+
+     player.setCollectableAmuletItemObject(null);
   }
 
   List<int> getMarkTypes(int markType) =>
@@ -1139,6 +1141,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     if (mouseLeftClicked) {
       final aimTarget = player.aimTarget;
+
+      if (player.interacting){
+        player.endInteraction();
+      }
 
       if (aimTarget != null){
         player.target = aimTarget;
