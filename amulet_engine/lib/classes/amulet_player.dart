@@ -1028,7 +1028,7 @@ class AmuletPlayer extends IsometricPlayer with
   void writeAimTargetFiendType() {
     final aimTarget = this.aimTarget;
     writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Aim_Target_Fiend_Type);
+    writeByte(NetworkResponseAmulet.Aim_Target_Fiend);
 
     if (aimTarget is! AmuletFiend) {
       writeBool(false);
@@ -1037,6 +1037,7 @@ class AmuletPlayer extends IsometricPlayer with
 
     writeBool(true);
     writeByte(aimTarget.fiendType.index);
+    writeUInt16(aimTarget.level);
   }
 
   void writeFalse() => writeBool(false);

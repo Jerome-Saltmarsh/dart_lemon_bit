@@ -511,15 +511,12 @@ class AmuletUI {
       }),
     );
 
-    // final itemQuality = Container(
-    //   margin: const EdgeInsets.symmetric(horizontal: 5),
-    //   child: buildWatch(amulet.aimTargetItemType, (itemType) {
-    //     if (itemType == null){
-    //       return nothing;
-    //     }
-    //     return buildText(itemType.quality.name, size: 15, color: Colors.white70);
-    //   }),
-    // );
+    final fiendLevel = Container(
+      margin: const EdgeInsets.symmetric(horizontal: 5),
+      child: buildWatch(amulet.aimTargetFiendLevel, (fiendLevel) {
+        return buildText('lvl $fiendLevel', color: Colors.white70);
+      }),
+    );
 
     final name = Container(
       alignment: Alignment.centerLeft,
@@ -549,8 +546,8 @@ class AmuletUI {
                             )),
                   );
                 }),
-                width4,
                 fiendType,
+                fiendLevel,
                 // itemQuality,
               ],
             ),

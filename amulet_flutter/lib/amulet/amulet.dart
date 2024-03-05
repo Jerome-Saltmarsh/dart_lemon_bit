@@ -147,7 +147,8 @@ class Amulet extends IsometricGame {
   final equippedArmor = Watch<AmuletItemObject?>(null);
   final equippedShoes =  Watch<AmuletItemObject?>(null);
 
-  late final aimTargetFiendType = Watch<FiendType?>(null);
+  final aimTargetFiendType = Watch<FiendType?>(null);
+  final aimTargetFiendLevel = Watch(0);
 
   Amulet(){
     print('Amulet()');
