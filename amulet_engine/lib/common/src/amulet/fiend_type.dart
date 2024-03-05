@@ -115,7 +115,7 @@ enum FiendType {
       }
   );
 
-  final int health;
+  final double health;
   final double damage;
   final int attackDuration;
   final int characterType;
@@ -165,11 +165,19 @@ enum FiendType {
     this.meleeResistance = 0,
   });
 
-  int get quantify {
-    var total = 0;
+  double get quantify {
+    var total = 0.0;
     total += health;
-    total += ((damage / attackDuration) * 45).toInt();
-    total += weaponRange ~/ 30;
+    total += damage;
+
+    final attackRatio = attackDuration / 50;
+    final rangeRatio = weaponRange / 100;
+
+    total *= rangeRatio;
+    total *= runSpeed;
+    total *= attackRatio;
+
+
     return total;
   }
 

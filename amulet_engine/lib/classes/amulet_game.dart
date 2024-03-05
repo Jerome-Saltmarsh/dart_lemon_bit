@@ -817,25 +817,34 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   void spawnRandomLootAtFiend({
     required AmuletFiend amuletFiend,
     required ItemQuality itemQuality,
+  }) =>
+    spawnRandomLootAtPosition(
+      position: amuletFiend,
+      itemQuality: itemQuality,
+      level: amuletFiend.level,
+    );
+
+  void spawnRandomLootAtPosition({
+    required Position position,
+    required ItemQuality itemQuality,
+    required int level,
   }) {
 
-    final fiendType = amuletFiend.fiendType;
-    final fiendLevel = amuletFiend.level;
     final amuletItemObject = generateAmuletItemObject(
         amuletItem: randomItem(AmuletItem.values),
-        level: fiendLevel,
+        level: level,
         itemQuality: itemQuality,
     );
 
     spawnAmuletItemObject(
         amuletItemObject: amuletItemObject,
-        x: amuletFiend.x,
-        y: amuletFiend.y,
-        z: amuletFiend.z,
+        x: position.x,
+        y: position.y,
+        z: position.z,
       );
   }
 
-  ItemQuality? getLootItemQuality(Character character){
+  ItemQuality? getLootItemQuality(Collider collider){
      if (randomChance(AmuletSettings.Chance_Of_Drop_Loot_Rare)){
        return ItemQuality.Rare;
      }
@@ -1178,12 +1187,24 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   void customOnGameObjectDestroyed(GameObject gameObject) {
     if (gameObject.isObject && const [
       GameObjectType.Barrel,
-      GameObjectType.Wooden_Chest,
       GameObjectType.Crate_Wooden,
     ].contains(gameObject.subType)){
-      throw Exception('');
+      spawnConsumableAtPosition(gameObject);
+    }
+
+    if (
+      gameObject.isObject &&
+      gameObject.subType == GameObjectType.Wooden_Chest
+    ) {
+      spawnRandomLootAtPosition(
+          position: gameObject,
+          itemQuality: getLootItemQuality(gameObject) ?? ItemQuality.Common,
+          level: level,
+      );
     }
   }
+
+
 
   @override
   void performCharacterStart(Character character) {
@@ -1425,12 +1446,32 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     );
   }
 
-  void spawnConsumableAtPosition(AmuletFiend target) {
-    throw Exception();
+  void spawnConsumableAtPosition(Position position) {
+    spawnConsumableAtXYZ(position.x, position.y, position.z);
   }
 
   void spawnConsumableAtIndex(int index) {
-    throw Exception();
+     spawnConsumableAtXYZ(
+         scene.getIndexX(index),
+         scene.getIndexY(index),
+         scene.getIndexZ(index),
+     );
+  }
+
+  void spawnConsumableAtXYZ(double x, double y, double z) {
+
+    final amuletItemObject = generateAmuletItemObject(
+      amuletItem: randomItem(AmuletItem.Consumables),
+      level: 0,
+      itemQuality: ItemQuality.Common,
+    );
+
+    spawnAmuletItemObject(
+      amuletItemObject: amuletItemObject,
+      x: x,
+      y: y,
+      z: z,
+    );
   }
 
   // void updatePlayerCollectables() {

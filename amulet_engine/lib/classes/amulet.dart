@@ -13,7 +13,6 @@ import '../common/src.dart';
 import 'amulet_game.dart';
 import 'amulet_player.dart';
 import 'amulet_scenes.dart';
-import 'games/amulet_game_world_00.dart';
 import 'games/amulet_game_world_11.dart';
 import 'games/witches_lair_1.dart';
 import 'games/witches_lair_2.dart';
@@ -121,11 +120,14 @@ class Amulet {
     worldMap.clear();
     amuletTime.hour = 12;
 
-    amuletGameWorld00 = AmuletGameWorld00(
+    amuletGameWorld00 = AmuletGame(
       amulet: this,
       scene: scenes.world_00,
       time: amuletTime,
       environment: amuletEnvironment,
+      name: 'Lost Swamps',
+      amuletScene: AmuletScene.World_00,
+      level: 3,
     );
 
     amuletGameWorld01 = AmuletGame(
@@ -135,7 +137,7 @@ class Amulet {
       environment: amuletEnvironment,
       name: 'Black Woods',
       amuletScene: AmuletScene.World_01,
-      level: 3,
+      level: 2,
     );
 
     amuletGameVillage = AmuletGameWorld11(amulet: this);

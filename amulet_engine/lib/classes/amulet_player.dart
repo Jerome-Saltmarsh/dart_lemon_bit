@@ -1,16 +1,13 @@
 
 import 'dart:math';
 
-import 'package:amulet_engine/json/amulet_field.dart';
 import 'package:amulet_engine/src.dart';
-import 'package:lemon_json/src.dart';
 import 'package:lemon_lang/src.dart';
 import 'package:lemon_math/src.dart';
 
 import 'amulet.dart';
 import 'amulet_fiend.dart';
 import '../isometric/src.dart';
-
 
 class AmuletPlayer extends IsometricPlayer with
     Equipped,

@@ -36,7 +36,7 @@ class AmuletFiend extends Character {
   int get characterType => fiendType.characterType;
 
   @override
-  double get attackDamage => fiendType.damage;
+  double get attackDamage => fiendType.damage * level;
 
   @override
   int get attackDuration => fiendType.attackDuration;
@@ -51,7 +51,7 @@ class AmuletFiend extends Character {
   String get name => fiendType.name;
 
   @override
-  double get maxHealth => fiendType.health.toDouble();
+  double get maxHealth => fiendType.health * level;
 
   @override
   double get runSpeed => fiendType.runSpeed;
