@@ -1797,6 +1797,7 @@ class AmuletUI {
                 ],
               ),
             ),
+              if (!amuletItemObject.amuletItem.isConsumable)
               Container(
                 padding: const EdgeInsets.all(8),
                 child: buildColumnAmuletItemObject(amuletItemObject),

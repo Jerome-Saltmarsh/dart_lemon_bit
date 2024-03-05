@@ -56,6 +56,8 @@ REMINDER: IT DOESN'T NEED TO BE PERFECT
 [new] amulet item shroud
 [new] beat the game
 [fix] empty item slot
+[new] gameobject health boost
+[new] gameobject magic boost
 
 ## 05.03.2024
 [fix] prevent amulet item persisting in scene file
