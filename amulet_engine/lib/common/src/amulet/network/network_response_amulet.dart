@@ -21,7 +21,7 @@ class NetworkResponseAmulet {
    static const Quest_Main = 31;
    static const Debug = 32;
    static const Aim_Target_Fiend_Type = 34;
-   static const Aim_Target_Amulet_Item = 36;
+   static const Collectable_Amulet_Item_Object = 36;
    static const Player_Magic = 37;
    static const Player_Regen_Magic = 38;
    static const Player_Regen_Health = 39;

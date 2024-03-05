@@ -55,15 +55,25 @@ class AmuletPlayer extends IsometricPlayer with
   var skillSlotsDirty = false;
   var consumableSlotsDirty = true;
 
-  GameObject? collectableAmuletItemObject;
+  GameObject? collectableGameObject;
+  AmuletItemObject? collectableAmuletItemObject;
 
-  void setCollectableAmuletItemObject(GameObject? gameObject){
-     if (collectableAmuletItemObject == gameObject) return;
+  void setCollectableGameObject(GameObject? gameObject){
+
+    if (collectableGameObject == gameObject) {
+       return;
+     }
+
      if (gameObject != null) {
        interacting = true;
+       collectableGameObject = gameObject;
+       collectableAmuletItemObject = mapGameObjectToAmuletItemObject(gameObject);
+     } else {
+       collectableGameObject = null;
+       collectableAmuletItemObject = null;
      }
-     collectableAmuletItemObject = gameObject;
-     writeAimTargetAmuletItem();
+
+     writeCollectableAmuletItemObject();
   }
 
   final sceneShrinesUsed = <AmuletScene, List<int>> {};
@@ -171,7 +181,7 @@ class AmuletPlayer extends IsometricPlayer with
     super.interacting = value;
 
     if (!value){
-      setCollectableAmuletItemObject(null);
+      setCollectableGameObject(null);
       onInteractionOver?.call();
       onInteractionOver = null;
       cameraTarget = null;
@@ -1033,59 +1043,11 @@ class AmuletPlayer extends IsometricPlayer with
 
   void writeTrue() => writeBool(true);
 
-  void writeAimTargetAmuletItem() {
+  void writeCollectableAmuletItemObject() {
     writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Aim_Target_Amulet_Item);
-
-     final gameObject = collectableAmuletItemObject;
-
-    if (gameObject == null){
-      writeFalse();
-      return;
-    }
-
-     final amuletItem = getGameObjectAmuletItem(gameObject);
-
-     if (amuletItem == null){
-       writeFalse();
-       return;
-     }
-
-     final data = gameObject.data;
-     final indexedSkillPoints = data?[AmuletField.Skill_Points];
-
-     if (indexedSkillPoints == null){
-       writeFalse();
-       return;
-     }
-
-    writeTrue();
-
-    writeUInt16(amuletItem.index);
-    writeByte(indexedSkillPoints.length);
-    for (final entry in indexedSkillPoints.entries) {
-      final skillTypeName = entry.key;
-      final skillType = SkillType.parse(skillTypeName);
-      writeByte(skillType.index); // skill type index
-      writeUInt16(entry.value); // skill type points
-    }
-
-    final damage = data?.tryGetDouble(AmuletField.Damage);
-    final level = data?.tryGetInt(AmuletField.Level);
-    final itemQualityIndex = data?.tryGetInt(AmuletField.Item_Quality);
-
-    if (damage != null) {
-      writeTrue();
-      writeDecimal(damage);
-    } else {
-      writeFalse();
-    }
-
-    tryWriteUInt16(level);
-    tryWriteByte(itemQualityIndex);
+    writeByte(NetworkResponseAmulet.Collectable_Amulet_Item_Object);
+    writeAmuletItemObject(collectableAmuletItemObject);
   }
-
-
 
   AmuletItem? getGameObjectAmuletItem(GameObject gameObject){
      if (gameObject.itemType != ItemType.Amulet_Item) {
@@ -1586,7 +1548,7 @@ class AmuletPlayer extends IsometricPlayer with
       );
 
   void pickupAmuletItem() {
-    final item = collectableAmuletItemObject;
+    final item = collectableGameObject;
 
     if (item == null) {
       writeGameError(GameError.Amulet_Item_Null);

@@ -967,7 +967,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
        return;
      }
 
-     player.setCollectableAmuletItemObject(gameObject);
+     player.setCollectableGameObject(gameObject);
      // player.collectableAmuletItemObject = gameObject;
   }
 
@@ -990,7 +990,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
        remove(gameObject);
      }
 
-     player.setCollectableAmuletItemObject(null);
+     player.setCollectableGameObject(null);
   }
 
   List<int> getMarkTypes(int markType) =>

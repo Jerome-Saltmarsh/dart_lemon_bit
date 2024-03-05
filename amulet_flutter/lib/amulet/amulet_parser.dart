@@ -128,8 +128,8 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Debug:
          readNetworkResponseAmuletDebug();
          break;
-       case NetworkResponseAmulet.Aim_Target_Amulet_Item:
-         readAimTargetAmuletItem();
+       case NetworkResponseAmulet.Collectable_Amulet_Item_Object:
+         readCollectableAmuletItemObject();
          break;
        case NetworkResponseAmulet.Player_Magic:
          readPlayerMagic();
@@ -288,7 +288,7 @@ extension AmuletParser on IsometricParser {
   void readQuestMain() =>
       amulet.questMain.value = QuestMain.values[readByte()];
 
-  void readAimTargetAmuletItem() =>
+  void readCollectableAmuletItemObject() =>
       amulet.aimTargetAmuletItemObject.value = tryReadAmuletItemObject();
 
   AmuletItem? tryReadAmuletItem() => AmuletItem.values.tryGet(readInt16());
