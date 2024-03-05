@@ -453,6 +453,8 @@ class AmuletPlayer extends IsometricPlayer with
     }
 
     final damage = value.damage;
+    final level = value.level;
+    final itemQuality = value.itemQuality;
 
     if (damage != null) {
       writeTrue();
@@ -460,6 +462,9 @@ class AmuletPlayer extends IsometricPlayer with
     } else {
       writeFalse();
     }
+
+    tryWriteUInt16(level);
+    tryWriteByte(itemQuality?.index);
   }
 
   void writeDecimal(double value) => writeUInt16((value * 10).toInt());
@@ -1066,13 +1071,18 @@ class AmuletPlayer extends IsometricPlayer with
     }
 
     final damage = data?.tryGetDouble(AmuletField.Damage);
+    final level = data?.tryGetInt(AmuletField.Level);
+    final itemQualityIndex = data?.tryGetInt(AmuletField.Item_Quality);
 
-    if (damage != null){
+    if (damage != null) {
       writeTrue();
       writeDecimal(damage);
     } else {
       writeFalse();
     }
+
+    tryWriteUInt16(level);
+    tryWriteByte(itemQualityIndex);
   }
 
 
@@ -1366,6 +1376,15 @@ class AmuletPlayer extends IsometricPlayer with
     }
     writeTrue();
     writeByte(value);
+  }
+
+  void tryWriteUInt16(int? value){
+    if (value == null){
+      writeFalse();
+      return;
+    }
+    writeTrue();
+    writeUInt16(value);
   }
 
   void writePlayerCriticalHitPoints() {

@@ -2,6 +2,7 @@
 import 'dart:typed_data';
 
 import 'package:amulet_engine/src.dart';
+import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_parser.dart';
 import 'package:lemon_byte/src.dart';
 import 'package:lemon_lang/src.dart';
@@ -63,10 +64,7 @@ extension AmuletParser on IsometricParser {
          readPlayerSkillsLeftRight();
          break;
        case NetworkResponseAmulet.Player_Equipped:
-         amulet.equippedWeapon.value = tryReadAmuletItemObject();
-         amulet.equippedHelm.value = tryReadAmuletItemObject();
-         amulet.equippedArmor.value = tryReadAmuletItemObject();
-         amulet.equippedShoes.value = tryReadAmuletItemObject();
+         readPlayerEquipped();
          break;
        case NetworkResponseAmulet.Active_Power_Position:
          readIsometricPosition(amulet.activePowerPosition);
@@ -185,6 +183,13 @@ extension AmuletParser on IsometricParser {
          readCameraTarget();
          break;
      }
+  }
+
+  void readPlayerEquipped() {
+    amulet.equippedWeapon.value = tryReadAmuletItemObject();
+    amulet.equippedHelm.value = tryReadAmuletItemObject();
+    amulet.equippedArmor.value = tryReadAmuletItemObject();
+    amulet.equippedShoes.value = tryReadAmuletItemObject();
   }
 
   AmuletItem? readMMOItem(){
@@ -313,10 +318,15 @@ extension AmuletParser on IsometricParser {
       damage = readDecimal();
     }
 
+    final level = tryReadUInt16();
+    final itemQualityIndex = tryReadByte();
+
     return AmuletItemObject(
         amuletItem: amuletItem,
         skillPoints: skillTypePoints,
         damage: damage,
+        level: level,
+        itemQuality: ItemQuality.values.tryGet(itemQualityIndex),
     );
   }
 
@@ -372,12 +382,10 @@ extension AmuletParser on IsometricParser {
       amulet.playerPerformFrameVelocity.value = readUInt16() / 1000;
 
   void readPlayerWeaponRange() =>
-      amulet.playerWeaponRange.value = tryReadInt();
+      amulet.playerWeaponRange.value = tryReadByte();
 
   void readPlayerWeaponAttackSpeed() =>
       amulet.playerWeaponAttackSpeed.value = readBool() ? readByte() : null;
-
-  int? tryReadInt() => readBool() ? readByte() : null;
 
   void readPlayerCriticalHitPoints() =>
       amulet.playerCriticalHitPoints.value = readByte();
@@ -445,4 +453,10 @@ extension AmuletParser on IsometricParser {
   }
 
   double readDecimal() => readUInt16() / 10;
+
+  int? tryReadByte() => tryRead(readByte);
+
+  int? tryReadUInt16() => tryRead(readUInt16);
+
+  T? tryRead<T>(T Function() read) => readBool() ? read() : null;
 }
