@@ -220,6 +220,7 @@ class AmuletGameWorld11 extends AmuletGame {
                       SkillType.Critical_Hit: 1,
                       SkillType.Vampire: 1,
                     },
+                    level: 1,
                   )
               );
             }

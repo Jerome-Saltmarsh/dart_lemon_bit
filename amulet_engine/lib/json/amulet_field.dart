@@ -9,4 +9,9 @@ class AmuletField {
   static const Level = 'level';
   static const Item_Quality = 'item_quality';
   static const Difficulty = 'difficulty';
+  static const X = 'x';
+  static const Y = 'y';
+  static const Z = 'z';
+  static const Health = 'health';
+  static const Magic = 'magic';
 }

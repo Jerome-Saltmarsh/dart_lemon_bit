@@ -15,7 +15,9 @@ class AmuletItemObject {
     this.itemQuality,
     this.damage,
     this.level,
-  });
+  }) {
+    assert(amuletItem.isConsumable || level != null);
+  }
 
   int get quantify {
     return skillPoints.length;

@@ -1227,8 +1227,7 @@ class AmuletPlayer extends IsometricPlayer with
   double get equippedWeaponDamage =>
       (equippedWeapon?.damage ?? 0) * equippedWeaponLevel;
 
-  int get equippedWeaponLevel =>
-      equippedWeapon?.level ?? 0;
+  int get equippedWeaponLevel => equippedWeapon?.level ?? 0;
 
   double getSkillTypeRange(SkillType skillType) =>
       switch (skillType.casteType) {
