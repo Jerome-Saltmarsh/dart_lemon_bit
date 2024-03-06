@@ -402,7 +402,16 @@ class Character extends Collider {
   }
 
   void clearTarget(){
+    if (target == null) return;
     target = null;
+    stop();
+  }
+
+  void stop(){
+    setCharacterStateIdle();
+    setDestinationToCurrentPosition();
+    clearPath();
+    clearTarget();
   }
 
   void onTargetDead(){
