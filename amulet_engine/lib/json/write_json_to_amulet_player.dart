@@ -1,8 +1,6 @@
 
 import 'package:amulet_engine/classes/amulet_fiend.dart';
 import 'package:amulet_engine/io/scene_json_reader.dart';
-import 'package:amulet_engine/isometric/classes/character.dart';
-import 'package:amulet_engine/json/map_json_to_amulet_item_object.dart';
 import 'package:amulet_engine/src.dart';
 import 'package:lemon_json/src.dart';
 import 'package:lemon_lang/src.dart';
@@ -101,27 +99,4 @@ void writeJsonAmuletToMemory(Json jsonAmulet, AmuletPlayer player) {
          break;
       }
    }
-}
-
-AmuletFiend mapFiendJsonToAmuletFiend(Json fiendJson) {
-  final amuletFiend = AmuletFiend(
-       x: fiendJson.getDouble('x'),
-       y: fiendJson.getDouble('y'),
-       z: fiendJson.getDouble('z'),
-       level: fiendJson.tryGetInt('level') ?? 1,
-       team: TeamType.Evil,
-       fiendType: FiendType.values.tryGet(fiendJson.getInt('fiend_type')) ?? FiendType.Goblin,
-   )
-     ..health = fiendJson.getDouble('health')
-     ..characterState = fiendJson.getInt('character_state')
-     ..angle = fiendJson.getDouble('angle')
-     ..startPositionX = fiendJson.getDouble('start_x')
-     ..startPositionY = fiendJson.getDouble('start_y')
-     ..startPositionZ = fiendJson.getDouble('start_z');
-
-  if (amuletFiend.dead) {
-    amuletFiend.frame = Character.maxAnimationDeathFrames.toDouble();
-  }
-
-  return amuletFiend;
 }

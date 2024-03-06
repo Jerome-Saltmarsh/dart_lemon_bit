@@ -9,6 +9,7 @@ import 'amulet_field.dart';
 import 'character_json.dart';
 import '../classes/amulet_player.dart';
 import '../utils/generate_uuid.dart';
+import 'map_amulet_fiend_to_json.dart';
 
 CharacterJson writeAmuletPlayerToJson(AmuletPlayer player){
   final json = CharacterJson();
@@ -74,26 +75,11 @@ Json writeAmuletGameToJson(AmuletGame amuletGame, AmuletPlayer amuletPlayer) {
   final fiends = <Json>[];
   for (final character in amuletGame.characters) {
     if (character is! AmuletFiend) continue;
-    fiends.add(writeAmuletFiendToJson(character));
+    fiends.add(mapAmuletFiendToJson(character));
   }
   json['gameobjects'] = writeGameObjectsToJson(amuletGame.gameObjects);
   json['fiends'] = fiends;
   json['scene_index'] = amuletGame.amuletScene.index;
   json['shrines_used'] = amuletPlayer.sceneShrinesUsed[amuletGame.amuletScene] ??  [];
-  return json;
-}
-
-Json writeAmuletFiendToJson(AmuletFiend amuletFiend){
-  final json = Json();
-  json['x'] = amuletFiend.x.toInt();
-  json['y'] = amuletFiend.y.toInt();
-  json['z'] = amuletFiend.z.toInt();
-  json['start_x'] = amuletFiend.startPositionX;
-  json['start_y'] = amuletFiend.startPositionY;
-  json['start_z'] = amuletFiend.startPositionZ;
-  json['fiend_type'] = amuletFiend.fiendType.index;
-  json['health'] = amuletFiend.health;
-  json['character_state'] = amuletFiend.characterState;
-  json['angle'] = amuletFiend.angle.toInt();
   return json;
 }

@@ -129,6 +129,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
             hairColor: hairColor.value,
             gender: Gender.male,
             headType: headType.value,
+            difficulty: difficulty.value,
         );
          onCreated();
         },

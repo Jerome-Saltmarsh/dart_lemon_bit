@@ -138,11 +138,13 @@ class ServerLocal implements Server {
     required int hairColor,
     required int gender,
     required int headType,
+    required Difficulty difficulty,
   }) async {
     await ensureInitialized();
     if (name == FIELD_CHARACTERS) {
       throw Exception('invalid field name');
     }
+    playerServer.difficulty = difficulty;
     playerServer.uuid = generateUUID();
     playerServer.name = name;
     playerServer.complexion = complexion;

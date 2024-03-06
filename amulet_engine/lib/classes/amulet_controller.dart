@@ -240,7 +240,7 @@ class AmuletController {
             break;
           case NetworkRequestEdit.Spawn_AI:
             game.clearSpawnedAI();
-            player.amuletGame.spawnFiendsAtSpawnNodes();
+            player.amuletGame.spawnFiendsAtSpawnNodes(player.difficulty);
             break;
 
           case NetworkRequestEdit.Save:
@@ -636,7 +636,7 @@ class AmuletController {
 
     switch (networkRequestAmulet) {
       case NetworkRequestAmulet.Spawn_Random_Enemy:
-        amuletGame.spawnRandomEnemy();
+        amuletGame.spawnRandomEnemy(player.difficulty);
         break;
       case NetworkRequestAmulet.Pickup_Amulet_Item:
         player.pickupAmuletItem();

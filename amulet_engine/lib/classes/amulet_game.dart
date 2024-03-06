@@ -205,7 +205,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
      return 0;
   }
 
-  void spawnFiendsAtSpawnNodes() {
+  void spawnFiendsAtSpawnNodes(Difficulty difficulty) {
     final marks = scene.marks;
     final length = marks.length;
     for (var i = 0; i < length; i++) {
@@ -222,7 +222,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         spawnFiendTypeAtIndex(
           fiendType: fiendType,
           index: MarkType.getIndex(markValue),
-          level: level
+          level: level,
+          difficulty: difficulty,
+
         );
       }
     }
@@ -232,6 +234,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required FiendType fiendType,
     required int index,
     required int level,
+    required Difficulty difficulty,
   }) =>
       spawnAmuletFiendAtXYZ(
         x: scene.getIndexX(index),
@@ -239,6 +242,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         z: scene.getIndexZ(index),
         fiendType: fiendType,
         level: level,
+        difficulty: difficulty,
       );
 
   AmuletFiend spawnAmuletFiendAtXYZ({
@@ -247,6 +251,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required double z,
     required FiendType fiendType,
     required int level,
+    required Difficulty difficulty,
   }) {
     final character = AmuletFiend(
       team: TeamType.Evil,
@@ -255,6 +260,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       z: z,
       fiendType: fiendType,
       level: level,
+      difficulty: difficulty,
     )
       ..weaponHitForce = 2;
 
@@ -1012,7 +1018,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   List<int> getMarkTypes(int markType) =>
       scene.marks.where((markValue) => MarkType.getType(markValue) == markType).toList(growable: false);
 
-  void spawnRandomEnemy() {
+  void spawnRandomEnemy(Difficulty difficulty) {
     final marks = scene.marks;
     if (marks.isEmpty){
       return;
@@ -1029,6 +1035,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       fiendType: FiendType.values[fiendType],
       index: index,
       level: level,
+      difficulty: difficulty,
     );
   }
 

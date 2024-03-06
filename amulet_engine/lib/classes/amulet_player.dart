@@ -51,6 +51,7 @@ class AmuletPlayer extends IsometricPlayer with
   var skillSlotIndex = 0;
   var skillSlotsDirty = false;
   var consumableSlotsDirty = true;
+  var difficulty = Difficulty.Normal;
 
   GameObject? collectableGameObject;
   AmuletItemObject? collectableAmuletItemObject;

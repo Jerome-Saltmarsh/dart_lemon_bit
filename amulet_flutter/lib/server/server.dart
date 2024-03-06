@@ -1,4 +1,6 @@
 
+import 'package:amulet_engine/common.dart';
+
 abstract class Server {
 
   bool get connected;
@@ -10,6 +12,7 @@ abstract class Server {
     required int hairColor,
     required int gender,
     required int headType,
+    required Difficulty difficulty,
   });
 
   void playCharacter(String characterUuid);

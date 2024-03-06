@@ -235,6 +235,7 @@ class ServerRemote implements Server {
     required int hairColor,
     required int gender,
     required int headType,
+    required Difficulty difficulty,
   }) async {
 
     if (userId.value.isEmpty){

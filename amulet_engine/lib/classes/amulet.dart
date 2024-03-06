@@ -102,9 +102,6 @@ class Amulet {
   }
 
   AmuletGame getAmuletSceneGame(AmuletScene scene) {
-    // if (scene == AmuletScene.Tutorial){
-    //  return buildAmuletGameTutorial();
-    // }
     final games = this.games;
     for (final game in games){
       if (game.amuletScene == scene){
@@ -462,10 +459,11 @@ class Amulet {
     player.clearCache();
     player.clearActionFrame();
 
-    for (final game in games){
-      game.spawnFiendsAtSpawnNodes();
+    for (final game in games) {
+      game.spawnFiendsAtSpawnNodes(player.difficulty);
       game.scene.resetShrines();
     }
+
     playerChangeGameToTown(player);
     player.amuletGame = amuletGameVillage;
     amuletGameVillage.movePositionToIndex(

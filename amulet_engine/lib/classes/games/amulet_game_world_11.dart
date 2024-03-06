@@ -6,7 +6,6 @@ import '../../isometric/src.dart';
 import '../amulet_game.dart';
 import '../amulet_npc.dart';
 import '../amulet_player.dart';
-import '../talk_option.dart';
 
 class AmuletGameWorld11 extends AmuletGame {
 

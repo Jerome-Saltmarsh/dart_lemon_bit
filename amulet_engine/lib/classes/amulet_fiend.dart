@@ -8,6 +8,7 @@ class AmuletFiend extends Character {
   final int level;
   FiendType fiendType;
   SkillType? activeSkillType;
+  final Difficulty difficulty;
 
   AmuletFiend({
     required super.x,
@@ -16,6 +17,7 @@ class AmuletFiend extends Character {
     required super.team,
     required this.fiendType,
     required this.level,
+    required this.difficulty,
   }) : super (
     characterType: fiendType.characterType,
     weaponType: WeaponType.Unarmed,
@@ -36,7 +38,7 @@ class AmuletFiend extends Character {
   int get characterType => fiendType.characterType;
 
   @override
-  double get attackDamage => fiendType.damage * level;
+  double get attackDamage => fiendType.damage * level * difficulty.ratio;
 
   @override
   int get attackDuration => fiendType.attackDuration;
@@ -51,7 +53,7 @@ class AmuletFiend extends Character {
   String get name => fiendType.name;
 
   @override
-  double get maxHealth => fiendType.health * level;
+  double get maxHealth => fiendType.health * level * difficulty.ratio;
 
   @override
   double get runSpeed => fiendType.runSpeed;

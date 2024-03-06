@@ -1,4 +1,3 @@
-
 class AmuletField {
   static const Amulet_Item = 'amulet_item';
   static const Skill_Points = 'skill_points';
@@ -9,4 +8,5 @@ class AmuletField {
   static const Damage = 'damage';
   static const Level = 'level';
   static const Item_Quality = 'item_quality';
+  static const Difficulty = 'difficulty';
 }
