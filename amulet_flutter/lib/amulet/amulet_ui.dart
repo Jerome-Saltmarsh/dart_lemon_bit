@@ -2320,6 +2320,14 @@ class AmuletUI {
         ],
       );
 
+  Widget buildSkillTypeLevel({
+    required SkillType skillType,
+    required Widget Function(int level) builder,
+  }) => buildWatch(
+      amulet.playerSkillTypeLevelNotifier,
+      (t) => builder(amulet.getSkillTypeLevel(skillType)),
+  );
+
   Widget buildSkillSlot(Watch<SkillType> skillSlot){
 
     final index = amulet.getSkillSlotIndex(skillSlot);
@@ -2368,27 +2376,47 @@ class AmuletUI {
 
     });
 
+    final skillLevel =  buildWatch(skillSlot, (skillType) =>
+        buildSkillTypeLevel(
+          skillType: skillType,
+          builder: (level) => Container(
+              color: Palette.brown_4,
+              width: size,
+              alignment: Alignment.center,
+              child: level > 0 ? buildText(level) : null
+          ) ,
+        )
+    );
+
     final containerActive = buildBorder(
       color: Colors.white70,
       width: 3,
-      child: Container(
-        child: slot,
-        color: Palette.brown_2,
-        width: size,
-        height: size,
-        alignment: Alignment.center,
+      child: Column(
+        children: [
+          skillLevel,
+          Container(
+            child: slot,
+            color: Palette.brown_2,
+            alignment: Alignment.center,
+          ),
+        ],
       ),
     );
 
     final containerInactive = buildBorder(
       width: 3,
       color: Palette.brown_4,
-      child: Container(
-        child: slot,
-        color: Palette.brown_3,
-        width: size,
-        height: size,
-        alignment: Alignment.center,
+      child: Column(
+        children: [
+          skillLevel,
+          Container(
+            child: slot,
+            color: Palette.brown_3,
+            // width: size,
+            // height: size,
+            alignment: Alignment.center,
+          ),
+        ],
       ),
     );
 
