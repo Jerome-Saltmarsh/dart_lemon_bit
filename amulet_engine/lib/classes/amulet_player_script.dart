@@ -103,7 +103,7 @@ class AmuletPlayerScript {
   AmuletPlayerScript cameraSetTarget(Position? position) =>
       add(() => player.cameraTarget = position);
 
-  AmuletPlayerScript talk(Collider speaker, String text, {List<TalkOption>? options}) {
+  AmuletPlayerScript talk(Collider speaker, String text, {TalkOptions? options}) {
     var initialized = false;
     return add(() {
       if (initialized) {

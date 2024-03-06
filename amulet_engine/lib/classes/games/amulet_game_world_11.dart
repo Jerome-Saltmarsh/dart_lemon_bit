@@ -265,39 +265,42 @@ class AmuletGameWorld11 extends AmuletGame {
       return;
     }
 
-    player.talk(npc, 'how can I help you?', options: [
-      TalkOption('change skills?', (player) {
+    player.talk(npc, 'how can I help you?', options: {
+      'change skills?': (player) {
         player.talk(npc,
             'Click on the skill menu item to the right side of the heal bar.'
         );
-      }),
-      TalkOption('Nevermind', (player) {
+      },
+      'Nevermind': (player) {
         player.endInteraction();
-      }),
-    ]);
+      },
+    });
 
   }
 
-  void onInteractWithMay(AmuletPlayer player, AmuletNpc may){
-    switch (player.questMain){
-      case QuestMain.Speak_With_Gareth:
-        player.talk(
-            may,
-              'Welcome to our village outsider. '
-              'I believe Gareth wishes to speak with you. '
-              'He is waiting by the camp fire outside.'
-        );
-        break;
-      case QuestMain.Kill_The_Witch:
-        player.talk(may, 'Rumor has it the witch that has been terrorizing our village lives in some greater castle somewhere to the north');
-        break;
-      case QuestMain.Return_To_Gareth:
-        player.talk(may, 'Wow, you really managed to kill her? Gareth will want to thank you.');
-        break;
-      case QuestMain.Completed:
-        player.talk(may, 'Thank you outside for saving us from that horrible witch.');
-        break;
-    }
+  void onInteractWithMay(AmuletPlayer player, AmuletNpc may) {
+    player.talk(
+        may, 'Greetings, how can I help?',
+        options: {
+          'Item Qualities?': (speaker) {
+            player.talk(
+                  may,
+                  'There are three kinds of item quality.'
+                  'common, unique and rare. '
+                  'common items are marked as white.'
+                  'unique items are marked as blue.'
+                  'and rare items are marks as yellow.'
+              );
+          },
+          'Passive Abilities': (speaker) {
+            player.talk(
+                  may,
+                  'Passive abilities effect your characteristics without use magic.'
+                  'They must be assigned to an ability slot to take effect.'
+              );
+          },
+        }
+    );
   }
 
   void onInteractWithTraveller(AmuletPlayer player, AmuletNpc npc){
@@ -327,6 +330,5 @@ class AmuletGameWorld11 extends AmuletGame {
         break;
     }
   }
-
 }
 

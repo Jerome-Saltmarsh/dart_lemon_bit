@@ -315,7 +315,7 @@ class AmuletPlayer extends IsometricPlayer with
   void talk(
       Collider speaker,
       String text, {
-        List<TalkOption>? options,
+        TalkOptions? options,
         Function? onInteractionOver,
       }) {
 
@@ -328,9 +328,9 @@ class AmuletPlayer extends IsometricPlayer with
      npcText = text;
      npcName = speaker.name;
      if (options != null){
-       this.npcOptions = options;
+       npcOptions = options.entries.toList(growable: false);
      } else {
-       this.npcOptions.clear();
+       npcOptions = [];
      }
      writeNpcTalk();
   }
@@ -340,7 +340,7 @@ class AmuletPlayer extends IsometricPlayer with
     interacting = false;
     npcName = '';
     npcText = '';
-    npcOptions.clear();
+    npcOptions = [];
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.End_Interaction);
     clearTarget();
@@ -358,11 +358,12 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   void selectNpcTalkOption(int index) {
-     if (index < 0 || index >= npcOptions.length){
+    final talkOption = npcOptions.tryGet(index);
+     if (talkOption == null){
        writeAmuletError('Invalid talk option index $index');
        return;
      }
-     npcOptions[index].action(this);
+     talkOption.value.call(this);
   }
 
   void cleanEquipment(){
@@ -502,7 +503,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeString(npcText);
     writeByte(npcOptions.length);
     for (final option in npcOptions) {
-      writeString(option.text);
+      writeString(option.key);
     }
   }
 
@@ -1596,3 +1597,8 @@ class AmuletPlayer extends IsometricPlayer with
   }
 }
 
+
+
+typedef TalkOption = MapEntry<String, Function(AmuletPlayer player)>;
+typedef TalkOptions = Map<String, Function(AmuletPlayer player)>;
+// typedef TalkOptionList = List<TalkOption>;
