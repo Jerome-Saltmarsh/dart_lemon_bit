@@ -361,6 +361,7 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
     amulet.aimTargetHealthPercentage = readPercentage();
     amulet.aimTargetLevel = tryReadUInt16();
     amulet.aimTargetItemQuality = tryReadItemQuality();
+    amulet.aimTargetSubtitles = tryReadString();
     amulet.aimTargetNotifier.value++;
     engine.cursorType.value = SystemMouseCursors.grab;
   }

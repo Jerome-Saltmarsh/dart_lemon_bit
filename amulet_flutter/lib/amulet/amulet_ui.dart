@@ -504,6 +504,7 @@ class AmuletUI {
           final level = amulet.aimTargetLevel;
           var textColor = Colors.white;
           final itemQuality = amulet.aimTargetItemQuality;
+          final subtitles = amulet.aimTargetSubtitles;
           if (itemQuality != null){
             textColor = mapItemQualityToColor(itemQuality);
           }
@@ -525,13 +526,21 @@ class AmuletUI {
                   width: width,
                   height: height,
                   alignment: Alignment.center,
-                  child: FittedBox(child: Row(
+                  child: FittedBox(child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      buildText(amulet.aimTargetText, color: textColor),
-                      if (level != null)
-                        Container(
-                            margin: const EdgeInsets.only(left: 8),
-                            child: buildText('lvl $level', color: textColor.withOpacity(0.7))),
+                      Row(
+                        children: [
+                          buildText(amulet.aimTargetText, color: textColor),
+                          if (level != null)
+                            Container(
+                                margin: const EdgeInsets.only(left: 8),
+                                child: buildText('lvl $level', color: textColor.withOpacity(0.7))),
+                        ],
+                      ),
+                      if (subtitles != null && subtitles.isNotEmpty)
+                        buildText(subtitles, italic: true, size: 14, color: textColor.withOpacity(0.7))
                     ],
                   ))),
             ],

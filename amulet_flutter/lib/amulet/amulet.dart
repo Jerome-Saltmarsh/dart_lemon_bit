@@ -146,6 +146,7 @@ class Amulet extends IsometricGame {
 
   ItemQuality? aimTargetItemQuality;
   var aimTargetText = '';
+  String? aimTargetSubtitles;
   var aimTargetHealthPercentage = 0.0;
   int? aimTargetLevel;
   final aimTargetSet = Watch(false);

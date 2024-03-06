@@ -34,6 +34,8 @@ enum FiendType {
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 40,
     skillType: SkillType.Strike,
+    pierceResistance: 0.25,
+    fireResistance: 0.25,
     skillLevel: 1,
       skillTypes: {
         SkillType.Shield: 2,
@@ -52,6 +54,7 @@ enum FiendType {
     postAttackPauseDurationMin: 30,
     postAttackPauseDurationMax: 80,
     skillType: SkillType.Shoot_Arrow,
+    fireResistance: 0.25,
     skillLevel: 1,
       skillTypes: {
 
@@ -73,9 +76,10 @@ enum FiendType {
     skillType: SkillType.Strike,
     skillLevel: 1,
     healthSteal: 0.1,
-      skillTypes: {
+    iceResistance: 0.25,
+    skillTypes: {
 
-      }
+    }
   ),
   Goblin_Armoured(
     health: 27,
@@ -110,9 +114,10 @@ enum FiendType {
     postAttackPauseDurationMax: 100,
     skillType: SkillType.Fireball,
     skillLevel: 1,
-      skillTypes: {
+    meleeResistance: 0.25,
+    skillTypes: {
 
-      }
+    }
   );
 
   final double health;

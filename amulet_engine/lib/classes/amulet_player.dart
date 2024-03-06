@@ -1169,6 +1169,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeTrue();
 
     var name = '';
+    var subtitles = '';
     ItemQuality? itemQuality;
     int? level;
     var healthPercentage = 0.0;
@@ -1207,15 +1208,19 @@ class AmuletPlayer extends IsometricPlayer with
       }
       if (aimTarget is AmuletFiend){
         level = aimTarget.level;
+        final fiendType = aimTarget.fiendType;
+        subtitles = buildResistances(subtitles, 'melee', fiendType.meleeResistance);
+        subtitles = buildResistances(subtitles, 'pierce', fiendType.pierceResistance);
+        subtitles = buildResistances(subtitles, 'fire', fiendType.fireResistance);
+        subtitles = buildResistances(subtitles, 'ice', fiendType.iceResistance);
       }
     }
-
-
 
     writeString(name);
     writePercentage(healthPercentage);
     tryWriteUInt16(level);
     tryWriteByte(itemQuality?.index);
+    tryWrite(writeString, subtitles);
   }
 
   double get equippedWeaponDamage =>
@@ -1640,6 +1645,14 @@ class AmuletPlayer extends IsometricPlayer with
   }
 }
 
+String buildResistances(String text, String name, double resistance){
+   if (resistance == 0)
+     return text;
+   if (text.isNotEmpty) {
+      return '$text, $name';
+   }
+   return 'resists $name';
+}
 
 
 typedef TalkOption = MapEntry<String, Function(AmuletPlayer player)>;
