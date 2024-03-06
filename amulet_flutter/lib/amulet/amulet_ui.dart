@@ -1678,26 +1678,26 @@ class AmuletUI {
 
     return buildWatch(watchAmuletItemObject, (amuletItemObject) {
       const size = 36.0;
-      if (amuletItemObject == null){
-        return amuletWeaponSlot;
-      }
 
       final button = onPressed(
-        action: () => amulet.dropAmuletItem(amuletItemObject.amuletItem),
-        onRightClick: () {
+        action: amuletItemObject == null ? null : () => amulet.dropAmuletItem(amuletItemObject.amuletItem),
+        onRightClick: amuletItemObject == null ? null : () {
           visibleRightClickedToDrop = false;
           amulet.dropAmuletItem(amuletItemObject.amuletItem);
         },
         child: Container(
           width: size,
-          height: size,
-          alignment: Alignment.center,
-          child: Stack(
-            alignment: Alignment.center,
+          color: Colors.black26,
+          child: Column(
             children: [
-              amuletWeaponSlot,
+              if (amuletItemObject != null)
+                buildText(amuletItemObject.level),
               Container(
-                  child: AmuletItemImage(
+                height: 50,
+                  width: 50,
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.only(bottom: 8),
+                  child: amuletItemObject == null ? null : AmuletItemImage(
                     amuletItem: amuletItemObject.amuletItem,
                     scale: 1.2,),
               ),
