@@ -1679,11 +1679,7 @@ class AmuletUI {
     return buildWatch(watchAmuletItemObject, (amuletItemObject) {
       const size = 58.0;
       if (amuletItemObject == null){
-        return Container(
-          width: size,
-          height: size,
-          color: Colors.black12,
-        );
+        return amuletWeaponSlot;
       }
 
       final button = onPressed(
@@ -1700,7 +1696,7 @@ class AmuletUI {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              AmuletImage(srcX: 878, srcY: 30, width: 36, height: 36),
+              amuletWeaponSlot,
               Container(
                   // color: Colors.red,
                   child: AmuletItemImage(
@@ -1726,6 +1722,8 @@ class AmuletUI {
       );
     });
   }
+
+  final amuletWeaponSlot = AmuletImage(srcX: 878, srcY: 30, width: 36, height: 36);
 
   Widget buildIconHealthCost() =>
       AmuletImage(
