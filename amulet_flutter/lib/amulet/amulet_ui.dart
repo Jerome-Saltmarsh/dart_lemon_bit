@@ -166,7 +166,8 @@ class AmuletUI {
         children: [
           buildWatchVisible(
             amulet.windowVisibleEquipment,
-            buildWindowPlayerEquipped(),
+            buildEquippedAmuletItems(),
+            // buildWindowPlayerEquipped(),
           ),
           // buildWatchVisible(
           //   amulet.windowVisiblePlayerStats,
@@ -641,11 +642,11 @@ class AmuletUI {
       Column(
         children: [
           buildWatchAmuletItemObject(amulet.equippedWeapon, SlotType.Weapon),
-          height8,
+          // height8,
           buildWatchAmuletItemObject(amulet.equippedHelm, SlotType.Helm),
-          height8,
+          // height8,
           buildWatchAmuletItemObject(amulet.equippedArmor, SlotType.Armor),
-          height8,
+          // height8,
           buildWatchAmuletItemObject(amulet.equippedShoes, SlotType.Shoes),
         ],
       );
@@ -1041,59 +1042,57 @@ class AmuletUI {
   Widget buildWindowPlayerEquipped() =>
       Container(
         margin: const EdgeInsets.only(right: 8),
-        child: GSContainer(
-            width: 100,
-            child: Column(
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Tooltip(
-                      message: 'Items',
-                      child: buildIconItems(),
-                    ),
-                    buildButtonClose(amulet.windowVisibleEquipment)
-                  ],
-                ),
-                height16,
                 Tooltip(
-                  message: 'Health',
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      buildIconHealth(),
-                      width8,
-                      buildWatch(amulet.player.health, (health) => buildText(health, color: AmuletColors.Health)),
-                      width2,
-                      buildText('/', color: AmuletColors.Health),
-                      width2,
-                      buildWatch(amulet.player.maxHealth, (health) => buildText(health, color: AmuletColors.Health)),
-                    ],
-                  ),
+                  message: 'Items',
+                  child: buildIconItems(),
                 ),
-                height8,
-                Tooltip(
-                  message: 'Magic',
-                  child: Row(
-                    children: [
-                      Container(
-                          width: 16,
-                          height: 16,
-                          child: FittedBox(child: iconMagic)),
-                      width8,
-                      buildWatch(amulet.playerMagic, (value) => buildText(value, color: AmuletColors.Magic)),
-                      width2,
-                      buildText('/', color: AmuletColors.Magic),
-                      width2,
-                      buildWatch(amulet.playerMagicMax, (value) => buildText(value, color: AmuletColors.Magic)),
-                    ],
-                  ),
-                ),
-                height16,
-                buildEquippedAmuletItems(),
+                buildButtonClose(amulet.windowVisibleEquipment)
               ],
-            )),
+            ),
+            height16,
+            Tooltip(
+              message: 'Health',
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  buildIconHealth(),
+                  width8,
+                  buildWatch(amulet.player.health, (health) => buildText(health, color: AmuletColors.Health)),
+                  width2,
+                  buildText('/', color: AmuletColors.Health),
+                  width2,
+                  buildWatch(amulet.player.maxHealth, (health) => buildText(health, color: AmuletColors.Health)),
+                ],
+              ),
+            ),
+            height8,
+            Tooltip(
+              message: 'Magic',
+              child: Row(
+                children: [
+                  Container(
+                      width: 16,
+                      height: 16,
+                      child: FittedBox(child: iconMagic)),
+                  width8,
+                  buildWatch(amulet.playerMagic, (value) => buildText(value, color: AmuletColors.Magic)),
+                  width2,
+                  buildText('/', color: AmuletColors.Magic),
+                  width2,
+                  buildWatch(amulet.playerMagicMax, (value) => buildText(value, color: AmuletColors.Magic)),
+                ],
+              ),
+            ),
+            height16,
+            buildEquippedAmuletItems(),
+          ],
+        ),
       );
 
   // Widget buildWindowPlayerStats() {
@@ -1687,8 +1686,7 @@ class AmuletUI {
         },
         child: Container(
           width: width,
-          color: Colors.black26,
-          // margin: const EdgeInsets.only(bottom: 8),
+          color: Palette.brown_4,
           child: Column(
             children: [
                 Container(
