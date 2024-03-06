@@ -2371,7 +2371,7 @@ class AmuletUI {
             buildCardSkillType(skillType),
           ],
         ),
-        bottom: 70,
+        bottom: 76,
         left: -70,
       );
 
