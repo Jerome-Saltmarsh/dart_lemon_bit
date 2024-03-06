@@ -38,6 +38,7 @@ CharacterJson writeAmuletPlayerToJson(AmuletPlayer player){
     json[AmuletField.Equipped_Shoes] = mapAmuletItemObjectToJson(equippedShoes);
   }
 
+  json[AmuletField.Difficulty] = player.difficulty.index;
   json.skillTypeLeft = player.skillTypeLeft;
   json.skillTypeRight = player.skillTypeRight;
   json['x'] = player.x.toInt();

@@ -1,4 +1,5 @@
 import 'package:amulet_engine/common.dart';
+import 'package:amulet_engine/json/amulet_field.dart';
 import 'package:amulet_engine/json/character_json.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/functions/get_server_mode_text.dart';
 import 'package:amulet_flutter/gamestream/operation_status.dart';
@@ -11,6 +12,7 @@ import 'package:amulet_flutter/website/functions/build_website_page_select_regio
 import 'package:amulet_flutter/website/website_game.dart';
 import 'package:amulet_flutter/website/widgets/gs_button_region.dart';
 import 'package:flutter/material.dart';
+import 'package:lemon_lang/src.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 import 'package:typedef/json.dart';
@@ -205,6 +207,7 @@ extension WebsiteUI on WebsiteGame {
                   final helm = character.equippedHelm?.amuletItem;
                   final armour = character.equippedArmor?.amuletItem;
                   final shoes = character.equippedShoes?.amuletItem;
+                  final difficulty = Difficulty.values.tryGet(character.tryGetInt(AmuletField.Difficulty)) ?? Difficulty.Normal;
 
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -220,7 +223,13 @@ extension WebsiteUI on WebsiteGame {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            buildText(character['name'], size: 22),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                buildText(character['name'], size: 22),
+                                buildText(difficulty.name),
+                              ],
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [

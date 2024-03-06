@@ -24,7 +24,6 @@ class IsometricPlayer extends Character with ByteWriter {
 
   var editEnabled = true;
   var controlsEnabled = true;
-  var persistOnDisconnect = true;
   var userId = "";
   var uuid = "";
   var _playerMode = PlayerMode.playing;
