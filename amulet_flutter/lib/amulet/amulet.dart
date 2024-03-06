@@ -11,7 +11,6 @@ import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:amulet_flutter/gamestream/ui/builders/build_watch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_lang/src.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
@@ -26,7 +25,7 @@ class Amulet extends IsometricGame {
   SkillType? mouseOverSkillType;
   final screenColor = Watch(Colors.transparent);
   final screenColorI = Watch(0.0);
-  final cursor = Watch(SystemMouseCursors.basic);
+  // final cursor = Watch(SystemMouseCursors.basic);
   final fiendCountAlive = Watch(0);
   final fiendCountDead = Watch(0);
   final fiendCountTotal = Watch(0);
@@ -259,7 +258,7 @@ class Amulet extends IsometricGame {
   void update() {
     super.update();
 
-    updateCursor();
+    // updateCursor();
     if (errorTimer > 0) {
       errorTimer--;
       if (errorTimer <= 0){
@@ -492,7 +491,7 @@ class Amulet extends IsometricGame {
     engine.cameraY = 0.0;
     engine.zoom = 1.0;
     engine.drawCanvasAfterUpdate = true;
-    engine.cursorType.value = CursorType.Basic;
+    engine.cursorType.value = SystemMouseCursors.basic;
   }
 
   void clearHighlightAmuletItem(){
@@ -656,18 +655,17 @@ class Amulet extends IsometricGame {
           NetworkRequestAmulet.Toggle_Debug_Enabled
       );
 
-  void updateCursor() => amulet.cursor.value = getCursor();
+  // void updateCursor() => amulet.cursor.value = getCursor();
 
-  SystemMouseCursor getCursor(){
-    if (
-      player.aimTargetSet.value ||
-      player.aimNodeType.value != null
-    ){
-      return SystemMouseCursors.grab;
-    }
-    return SystemMouseCursors.basic;
-  }
-
+  // SystemMouseCursor getCursor(){
+  //   if (
+  //     player.aimTargetSet.value ||
+  //     player.aimNodeType.value != null
+  //   ){
+  //     return SystemMouseCursors.grab;
+  //   }
+  //   return SystemMouseCursors.basic;
+  // }
 
   int getSkillSlotIndex(Watch<SkillType> watch) {
      if (watch == skillSlot0){

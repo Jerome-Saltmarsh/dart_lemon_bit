@@ -97,6 +97,7 @@ class AmuletPlayer extends IsometricPlayer with
     runToDestinationEnabled = true;
     pathFindingEnabled = false;
     equipmentDirty = true;
+
     regainFullHealth();
     regainFullMagic();
     setControlsEnabled(true);
@@ -333,6 +334,27 @@ class AmuletPlayer extends IsometricPlayer with
        npcOptions = [];
      }
      writeNpcTalk();
+  }
+
+  @override
+  int get aimTargetAction {
+    final aimTarget = this.aimTarget;
+
+    if (aimTarget == null){
+      return TargetAction.Run;
+    }
+
+    if (aimTarget is GameObject){
+       if (aimTarget.isAmuletItem){
+         return TargetAction.Collect;
+       }
+    }
+
+    if (aimTarget is AmuletNpc){
+      return TargetAction.Talk;
+    }
+
+    return TargetAction.Attack;
   }
 
   void endInteraction() {
@@ -1138,36 +1160,57 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(NetworkResponseAmulet.Player_Aim_Target);
 
     final aimTarget = this.aimTarget;
+    final targetNodeIndex = this.targetNodeIndex;
 
-    if (aimTarget == null){
+    if (targetNodeIndex == null && aimTarget == null){
       writeFalse();
       return;
     }
-
     writeTrue();
 
-    var name = aimTarget.name;
+    var name = '';
     ItemQuality? itemQuality;
     int? level;
     var healthPercentage = 0.0;
 
-    if (aimTarget is Character) {
-      healthPercentage = aimTarget.healthPercentage;
-    }
-    if (aimTarget is GameObject) {
-      level = aimTarget.level;
-      final amuletItem = aimTarget.amuletItem;
-      if (amuletItem != null) {
-        name = amuletItem.label;
-        itemQuality = amuletItem.quality;
-        healthPercentage = 0;
-      } else {
+
+    if (targetNodeIndex != null) {
+      final nodeType = scene.nodeTypes[targetNodeIndex];
+      if (nodeType == NodeType.Shrine){
+        name = 'Shrine';
+      }
+      if (nodeType == NodeType.Portal){
+         final sceneIndex = scene.variations[targetNodeIndex];
+         final amuletScene = AmuletScene.values.tryGet(sceneIndex);
+         if (amuletScene != null){
+           name = amuletScene.name.clean;
+         } else {
+           name = 'invalid';
+         }
+      }
+
+    } else if (aimTarget != null){
+      name = aimTarget.name;
+      if (aimTarget is Character) {
         healthPercentage = aimTarget.healthPercentage;
       }
+      if (aimTarget is GameObject) {
+        level = aimTarget.level;
+        final amuletItem = aimTarget.amuletItem;
+        if (amuletItem != null) {
+          name = amuletItem.label;
+          itemQuality = amuletItem.quality;
+          healthPercentage = 0;
+        } else {
+          healthPercentage = aimTarget.healthPercentage;
+        }
+      }
+      if (aimTarget is AmuletFiend){
+        level = aimTarget.level;
+      }
     }
-    if (aimTarget is AmuletFiend){
-      level = aimTarget.level;
-    }
+
+
 
     writeString(name);
     writePercentage(healthPercentage);

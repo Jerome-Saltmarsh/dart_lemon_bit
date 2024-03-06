@@ -45,8 +45,8 @@ class AmuletUI {
 
   Widget buildAmuletUI() {
 
-    final basic = MouseRegion(
-      cursor: SystemMouseCursors.basic,
+    final click = MouseRegion(
+      cursor: SystemMouseCursors.click,
       hitTestBehavior: HitTestBehavior.translucent,
     );
 
@@ -55,9 +55,9 @@ class AmuletUI {
       hitTestBehavior: HitTestBehavior.translucent,
     );
 
-    final gestureDetector = GestureDetector(
-      behavior: HitTestBehavior.translucent,
-    );
+    // final gestureDetector = GestureDetector(
+    //   behavior: HitTestBehavior.translucent,
+    // );
 
     return GSFullscreen(
     child: Stack(alignment: Alignment.center, children: [
@@ -65,15 +65,15 @@ class AmuletUI {
         top: 0,
         left: 0,
         child: GSFullscreen(
-          child: buildWatch(amulet.cursor, (cursor){
-            if (cursor == SystemMouseCursors.grab){
-              amulet.engine.cursorType.value = CursorType.Click;
-              return gestureDetector;
+          child: buildWatch(amulet.aimTargetSet, (aimTargetSet){
+            if (aimTargetSet){
+              // amulet.engine.cursorType.value = cursorType.Click;
+              return click;
             }
-            if (cursor == SystemMouseCursors.basic){
-              amulet.engine.cursorType.value = CursorType.Basic;
-              return basic;
-            }
+            // if (cursor == SystemMouseCursors.basic){
+            //   // amulet.engine.cursorType.value = CursorType.Basic;
+            //   return basic;
+            // }
             return translucent;
           }),
         ),

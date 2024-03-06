@@ -34,8 +34,8 @@ class IsometricPlayer extends Character with ByteWriter {
   var mouseRightDownDuration = 0;
   var mouseRightDownIgnore = false;
   var _mouseLeftDown = false;
-  var _aimTargetActionPrevious = -1;
-  var _aimTargetAction = TargetAction.Run;
+  var aimTargetActionPrevious = -1;
+  var aimTargetAction = TargetAction.Run;
 
   var _previousCharacterState = -1;
   var weaponDurationPercentagePrevious = 0.0;
@@ -151,14 +151,14 @@ class IsometricPlayer extends Character with ByteWriter {
 
   Collider? get aimTarget => _aimTarget;
 
-  int get aimTargetCategory => _aimTargetAction;
+  int get aimTargetCategory => aimTargetAction;
 
   @override
   bool get isPlayer => true;
 
   set aimTargetCategory(int value){
-    if (_aimTargetAction == value) return;
-    _aimTargetAction = value;
+    if (aimTargetAction == value) return;
+    aimTargetAction = value;
     writePlayerAimTargetAction();
   }
 
@@ -618,13 +618,13 @@ class IsometricPlayer extends Character with ByteWriter {
   }
 
   void writePlayerAimTargetAction() {
-    if (_aimTargetActionPrevious == _aimTargetAction){
+    if (aimTargetActionPrevious == aimTargetAction){
       return;
     }
-    _aimTargetActionPrevious = _aimTargetAction;
+    aimTargetActionPrevious = aimTargetAction;
     writeByte(NetworkResponse.Player);
     writeByte(NetworkResponsePlayer.Aim_Target_Action);
-    writeByte(_aimTargetAction);
+    writeByte(aimTargetAction);
   }
 
   void writePlayerAimTargetType() {

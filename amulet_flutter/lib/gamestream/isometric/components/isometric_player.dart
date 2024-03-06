@@ -1,5 +1,6 @@
 import 'package:amulet_engine/common.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:amulet_flutter/isometric/classes/character.dart';
@@ -70,6 +71,10 @@ class IsometricPlayer with IsometricComponent {
   late final weaponType = Watch(0);
 
   IsometricPlayer() {
+
+    // aimTargetSet.onChanged((set) {
+    //   engine.cursorType.value = set ? CursorType.Click : CursorType.Basic;
+    // });
 
     health.onChanged((t) {
        if (maxHealth.value <= 0){
