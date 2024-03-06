@@ -1697,7 +1697,7 @@ class AmuletUI {
               Container(
                 height: 50,
                   width: width,
-                  color: Colors.red,
+                  color: Colors.white12,
                   alignment: Alignment.center,
                   child: amuletItemObject == null ? null : AmuletItemImage(
                     amuletItem: amuletItemObject.amuletItem,
