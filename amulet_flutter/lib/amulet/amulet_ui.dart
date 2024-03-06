@@ -1693,7 +1693,7 @@ class AmuletUI {
             children: [
                 Container(
                     height: 20,
-                    child: amuletItemObject == null ? null : buildText(amuletItemObject.level)),
+                    child: amuletItemObject == null ? null : buildText(amuletItemObject.level, color: Colors.white70)),
               Container(
                 height: 50,
                   width: width,
