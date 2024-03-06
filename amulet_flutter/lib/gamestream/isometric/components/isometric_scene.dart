@@ -9,13 +9,13 @@ import 'package:amulet_flutter/gamestream/isometric/components/isometric_compone
 import 'package:amulet_flutter/gamestream/isometric/consts/map_projectile_type_to_emission_ambient.dart';
 import 'package:amulet_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:amulet_flutter/gamestream/isometric/enums/node_visibility.dart';
-import 'package:amulet_flutter/gamestream/isometric/functions/src.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:amulet_flutter/isometric/classes/character.dart';
 import 'package:amulet_flutter/isometric/classes/gameobject.dart';
 import 'package:amulet_flutter/isometric/classes/projectile.dart';
 import 'package:amulet_flutter/isometric/functions/get_render.dart';
+import 'package:amulet_flutter/isometric/functions/sign_to_byte.dart';
 import 'package:amulet_flutter/packages/lemon_components.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_math/src.dart';

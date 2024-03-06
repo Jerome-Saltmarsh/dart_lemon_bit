@@ -3,14 +3,12 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:amulet_engine/common.dart';
+import 'package:amulet_flutter/isometric/classes/src.dart';
 import 'package:amulet_flutter/isometric/functions/get_render.dart';
 
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
-import 'package:amulet_flutter/isometric/classes/position.dart';
 import 'package:amulet_flutter/packages/lemon_components.dart';
 import 'package:lemon_math/src.dart';
-import '../../audio/audio_loop.dart';
-import '../../audio/audio_single.dart';
 import 'package:lemon_watch/src.dart';
 
 class IsometricAudio with IsometricComponent implements Updatable {

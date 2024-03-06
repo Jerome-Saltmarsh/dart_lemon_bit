@@ -9,7 +9,7 @@ import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_sprite/lib.dart';
 
-import '../../functions/generate_colors.dart';
+import '../../../../isometric/functions/generate_colors.dart';
 
 class RendererParticles extends RenderGroup {
 
