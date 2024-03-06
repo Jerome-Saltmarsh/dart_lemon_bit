@@ -57,7 +57,7 @@ String? getSkillTypeLevelDescription(SkillType skillType, int level) {
       );
     case SkillType.Area_Damage:
       return '${SkillType.getAreaDamage(level).toStringPercentage} area damage';
-    case SkillType.Run_Speed:
+    case SkillType.Scout:
       return '${SkillType.getRunSpeed(level).toStringPercentage} faster';
     case SkillType.Wind_Cut:
       return 'range +${SkillType.getRangeWindCut(level).toInt()}';

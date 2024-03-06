@@ -11,3 +11,4 @@ export 'amulet_settings.dart';
 export 'network/network_request_amulet.dart';
 export 'network/network_response_amulet.dart';
 export 'quests/src.dart';
+export 'difficulty.dart';

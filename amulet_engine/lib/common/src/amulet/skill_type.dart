@@ -77,7 +77,7 @@ enum SkillType {
   Area_Damage(
     casteType: CasteType.Passive,
   ),
-  Run_Speed(
+  Scout(
     casteType: CasteType.Passive,
   ),
   Shield(

@@ -10,22 +10,18 @@ import 'package:amulet_flutter/gamestream/ui.dart';
 import 'package:amulet_flutter/website/enums/website_page.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
+import 'package:lemon_lang/src.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
-
-
 
 class DialogCreateCharacterComputer extends StatelessWidget {
 
   final CreateCharacter createCharacter;
   final Function onCreated;
 
-  DialogCreateCharacterComputer({
-    required this.createCharacter,
-    required this.onCreated,
-  });
-
+  final buttonHeight = 64.0;
+  final widthName = 310.0;
   final nameController = TextEditingController(
       text: 'Anon${randomInt(9999, 99999).toString()}'
   );
@@ -36,6 +32,12 @@ class DialogCreateCharacterComputer extends StatelessWidget {
   final gender = Watch(Gender.male);
   final headType = Watch(0);
   final error = Watch('');
+  final difficulty = Watch(Difficulty.Normal);
+
+  DialogCreateCharacterComputer({
+    required this.createCharacter,
+    required this.onCreated,
+  });
 
   @override
   Widget build(BuildContext context) => IsometricBuilder(
@@ -66,7 +68,14 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                           height8,
                           buildControlName(),
                           height8,
-                          buildButtonStart(components),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              buildControlDifficulty(),
+                              width32,
+                              buildButtonStart(),
+                            ],
+                          ),
                         ],
                       ),
                     ],
@@ -77,9 +86,40 @@ class DialogCreateCharacterComputer extends StatelessWidget {
       }
     );
 
-  Widget buildButtonStart(
-      IsometricComponents components,
-  ) =>
+  Widget buildControlDifficulty() => onPressed(
+       action: toggleDifficulty,
+       child: Container(
+         alignment: Alignment.center,
+         // padding: const EdgeInsets.all(8),
+         color: Colors.black12,
+         height: buttonHeight,
+         width: 150,
+         child: buildWatch(difficulty, (difficultyValue) =>
+             Row(
+               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+               crossAxisAlignment: CrossAxisAlignment.center,
+               children: [
+                 Container(
+                     width: 60,
+                     child: buildText(difficultyValue.name)
+                 ),
+                 width16,
+                 Row(
+                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                     children: Difficulty.values
+                         .map((e) => Container(width: 15, height: 15, color: e == difficultyValue ? Colors.white : Colors.white54,))
+                         .toList()
+                 )
+               ],
+             )),
+       ),
+     );
+
+  void toggleDifficulty(){
+     difficulty.value = Difficulty.values.cycle(difficulty.value.index + 1);
+  }
+
+  Widget buildButtonStart() =>
       onPressed(
         action: () {
           createCharacter(
@@ -94,14 +134,12 @@ class DialogCreateCharacterComputer extends StatelessWidget {
         },
         child: Container(
             alignment: Alignment.center,
-            width: widthName,
-            height: 64.0,
+            width: 100,
+            height: buttonHeight,
             color: Colors.green,
             child: buildText('START', size: 34, color: Colors.white),
         ),
       );
-
-  static const widthName = 310.0;
 
   GSKeyEventHandler buildControlName() =>
       GSKeyEventHandler(

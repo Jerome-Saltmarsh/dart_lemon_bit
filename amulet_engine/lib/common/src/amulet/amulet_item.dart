@@ -411,7 +411,7 @@ enum AmuletItem {
     skillTypes: [
       SkillType.Vampire,
       SkillType.Critical_Hit,
-      SkillType.Run_Speed,
+      SkillType.Scout,
       SkillType.Agility,
     ],
   ),
@@ -447,7 +447,7 @@ enum AmuletItem {
     subType: ShoeType.Grieves,
     maxHealth: 5,
     skillTypes: [
-      SkillType.Run_Speed,
+      SkillType.Scout,
       SkillType.Agility,
       SkillType.Area_Damage,
     ],
@@ -458,7 +458,7 @@ enum AmuletItem {
     subType: ShoeType.Sabatons,
     maxHealth: 5,
     skillTypes: [
-      SkillType.Run_Speed,
+      SkillType.Scout,
       SkillType.Agility,
       SkillType.Area_Damage,
     ],
@@ -470,7 +470,7 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillTypes: [
-      SkillType.Run_Speed,
+      SkillType.Scout,
       SkillType.Agility,
       SkillType.Area_Damage,
     ],
@@ -482,7 +482,7 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillTypes: [
-      SkillType.Run_Speed,
+      SkillType.Scout,
       SkillType.Agility,
       SkillType.Area_Damage,
     ],
@@ -494,7 +494,7 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillTypes: [
-      SkillType.Run_Speed,
+      SkillType.Scout,
       SkillType.Agility,
       SkillType.Area_Damage,
     ],
@@ -506,7 +506,7 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillTypes: [
-      SkillType.Run_Speed,
+      SkillType.Scout,
       SkillType.Agility,
       SkillType.Area_Damage,
     ],
@@ -518,7 +518,7 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillTypes: [
-      SkillType.Run_Speed,
+      SkillType.Scout,
       SkillType.Agility,
       SkillType.Area_Damage,
     ],
@@ -530,7 +530,7 @@ enum AmuletItem {
     maxHealth: 1,
     maxMagic: 5,
     skillTypes: [
-      SkillType.Run_Speed,
+      SkillType.Scout,
       SkillType.Agility,
       SkillType.Area_Damage,
     ],

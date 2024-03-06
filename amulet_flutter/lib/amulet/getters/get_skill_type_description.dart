@@ -19,7 +19,7 @@ String getSkillTypeDescription(SkillType skillType) => switch (skillType) {
       SkillType.Magic_Regen => 'increase magic recovered over time',
       SkillType.Health_Regen => 'increase health recovered over time',
       SkillType.Area_Damage => 'melee damage applied in an area',
-      SkillType.Run_Speed => 'increase movement speed',
+      SkillType.Scout => 'increase movement speed',
       SkillType.Shield => 'reduces non magical damage received',
       SkillType.Wind_Cut => 'cuts the air in front',
     };

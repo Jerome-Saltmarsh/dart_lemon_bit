@@ -198,7 +198,7 @@ class AmuletPlayer extends IsometricPlayer with
 
   @override
   double get runSpeed {
-    final level = getSkillTypeLevelAssigned(SkillType.Run_Speed);
+    final level = getSkillTypeLevelAssigned(SkillType.Scout);
     final bonus = baseRunSpeed * SkillType.getRunSpeed(level);
     return baseRunSpeed + bonus;
   }
