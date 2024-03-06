@@ -1677,7 +1677,7 @@ class AmuletUI {
   Widget buildWatchAmuletItemObject(Watch<AmuletItemObject?> watchAmuletItemObject, SlotType slotType) {
 
     return buildWatch(watchAmuletItemObject, (amuletItemObject) {
-      const size = 58.0;
+      const size = 36.0;
       if (amuletItemObject == null){
         return amuletWeaponSlot;
       }
@@ -1692,13 +1692,11 @@ class AmuletUI {
           width: size,
           height: size,
           alignment: Alignment.center,
-          // color: Colors.black12,
           child: Stack(
             alignment: Alignment.center,
             children: [
               amuletWeaponSlot,
               Container(
-                  // color: Colors.red,
                   child: AmuletItemImage(
                     amuletItem: amuletItemObject.amuletItem,
                     scale: 1.2,),
