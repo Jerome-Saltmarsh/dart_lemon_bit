@@ -1503,19 +1503,20 @@ class AmuletUI {
            child: Column(
              children: [
                Container(
+                   width: Container_Size,
+                   height: Container_Size * goldenRatio_0381,
+                   color: Colors.black54,
+                   alignment: Alignment.center,
+                   child: level > 0 ? buildText(level) : null,
+               ),
+               Container(
                  width: Container_Size,
                  height: Container_Size,
                  alignment: Alignment.center,
                  child: buildIconSkillType(skillType),
                  color: Colors.black26,
+                 margin: const EdgeInsets.only(bottom: 6),
                ),
-               Container(
-                   margin: const EdgeInsets.only(bottom: 6),
-                   width: Container_Size,
-                   height: Container_Size * goldenRatio_0381,
-                   color: Colors.black54,
-                   alignment: Alignment.center,
-                   child: buildText(level)),
              ],
            ),
          );
@@ -2382,6 +2383,7 @@ class AmuletUI {
           builder: (level) => Container(
               color: Palette.brown_4,
               width: size,
+              height: 20,
               alignment: Alignment.center,
               child: level > 0 ? buildText(level) : null
           ) ,
