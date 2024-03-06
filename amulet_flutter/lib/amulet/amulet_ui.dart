@@ -1684,24 +1684,28 @@ class AmuletUI {
           visibleRightClickedToDrop = false;
           amulet.dropAmuletItem(amuletItemObject.amuletItem);
         },
-        child: Container(
-          width: width,
+        child: buildBorder(
           color: Palette.brown_4,
-          child: Column(
-            children: [
+          width: 2,
+          child: Container(
+            width: width,
+            color: Palette.brown_3,
+            child: Column(
+              children: [
+                  Container(
+                      height: 20,
+                      child: amuletItemObject == null ? null : buildText(amuletItemObject.level, color: Colors.white70)),
                 Container(
-                    height: 20,
-                    child: amuletItemObject == null ? null : buildText(amuletItemObject.level, color: Colors.white70)),
-              Container(
-                height: 50,
-                  width: width,
-                  color: Colors.white12,
-                  alignment: Alignment.center,
-                  child: amuletItemObject == null ? null : AmuletItemImage(
-                    amuletItem: amuletItemObject.amuletItem,
-                    scale: 1.2,),
-              ),
-            ],
+                  height: 50,
+                    width: width,
+                    color: Colors.white12,
+                    alignment: Alignment.center,
+                    child: amuletItemObject == null ? null : AmuletItemImage(
+                      amuletItem: amuletItemObject.amuletItem,
+                      scale: 1.2,),
+                ),
+              ],
+            ),
           ),
         ),
       );
