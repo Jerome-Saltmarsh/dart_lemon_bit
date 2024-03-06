@@ -1,6 +1,6 @@
 
 import 'package:amulet_flutter/amulet/ui/functions/render_canvas_sprite.dart';
-import 'package:amulet_flutter/gamestream/sprites/human_character_sprites.dart';
+import 'package:amulet_flutter/isometric/classes/human_character_sprites.dart';
 import 'package:flutter/rendering.dart';
 import 'package:lemon_sprite/lib.dart';
 

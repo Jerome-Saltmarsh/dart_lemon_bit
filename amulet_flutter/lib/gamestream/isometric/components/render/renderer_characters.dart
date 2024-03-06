@@ -2,7 +2,7 @@ import 'package:amulet_engine/common.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_images.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/render/functions/map_character_state_to_animation_mode.dart';
-import 'package:amulet_flutter/gamestream/sprites/character_shader.dart';
+import 'package:amulet_flutter/isometric/classes/character_shader.dart';
 import 'package:amulet_flutter/isometric/classes/character.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 
