@@ -2385,7 +2385,7 @@ class AmuletUI {
               width: size,
               height: 20,
               alignment: Alignment.center,
-              child: level > 0 ? buildText(level) : null
+              child: level > 0 ? buildText(level, color: Colors.white70) : null
           ) ,
         )
     );
