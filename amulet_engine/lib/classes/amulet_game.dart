@@ -983,14 +983,16 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
        return;
      }
 
-     final amuletItemObject = mapGameObjectToAmuletItemObject(gameObject);
-
-     if (amuletItemObject == null){ // fix
+     if (amuletItem.isConsumable) {
+       player.acquireGameObject(gameObject);
        return;
      }
 
+     final amuletItemObject = mapGameObjectToAmuletItemObject(gameObject);
+     if (amuletItemObject == null){ // fix
+       return;
+     }
      player.setCollectableGameObject(gameObject);
-     // player.collectableAmuletItemObject = gameObject;
   }
 
   void onAmuletPlayerPickupGameObject(

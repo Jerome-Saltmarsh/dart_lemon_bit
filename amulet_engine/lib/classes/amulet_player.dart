@@ -278,6 +278,38 @@ class AmuletPlayer extends IsometricPlayer with
     writeFalse();
   }
 
+  void acquireGameObject(GameObject gameObject){
+
+    clearTarget();
+    final amuletItem = gameObject.amuletItem;
+
+    if (amuletItem == null){
+      writeGameError(GameError.GameObject_Cannot_Be_Acquired);
+      return;
+    }
+
+    final amuletItemObject = mapGameObjectToAmuletItemObject(gameObject);
+
+    if (amuletItemObject == null) {
+      writeGameError(GameError.Invalid_GameObject_State);
+      return;
+    }
+
+
+    if (amuletItem.isConsumable) {
+      final availableIndex = getEmptyConsumableSlotIndex();
+      if (availableIndex == null){
+        writeGameError(GameError.Potion_Slots_Full);
+        return;
+      }
+      setCharacterStateChanging();
+      setConsumableSlot(index: availableIndex, amuletItem: amuletItem);
+      writeAmuletItemEquipped(amuletItem);
+      amuletGame.remove(gameObject);
+      return;
+    }
+  }
+
   bool acquireAmuletItemObject(AmuletItemObject amuletItemObject){
     if (deadOrBusy) {
       return false;
