@@ -1677,7 +1677,7 @@ class AmuletUI {
   Widget buildWatchAmuletItemObject(Watch<AmuletItemObject?> watchAmuletItemObject, SlotType slotType) {
 
     return buildWatch(watchAmuletItemObject, (amuletItemObject) {
-      const size = 36.0;
+      const width = 50.0;
 
       final button = onPressed(
         action: amuletItemObject == null ? null : () => amulet.dropAmuletItem(amuletItemObject.amuletItem),
@@ -1686,17 +1686,19 @@ class AmuletUI {
           amulet.dropAmuletItem(amuletItemObject.amuletItem);
         },
         child: Container(
-          width: size,
+          width: width,
           color: Colors.black26,
+          // margin: const EdgeInsets.only(bottom: 8),
           child: Column(
             children: [
-              if (amuletItemObject != null)
-                buildText(amuletItemObject.level),
+                Container(
+                    height: 20,
+                    child: amuletItemObject == null ? null : buildText(amuletItemObject.level)),
               Container(
                 height: 50,
-                  width: 50,
+                  width: width,
+                  color: Colors.red,
                   alignment: Alignment.center,
-                  margin: const EdgeInsets.only(bottom: 8),
                   child: amuletItemObject == null ? null : AmuletItemImage(
                     amuletItem: amuletItemObject.amuletItem,
                     scale: 1.2,),
