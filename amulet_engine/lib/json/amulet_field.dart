@@ -14,4 +14,5 @@ class AmuletField {
   static const Health = 'health';
   static const Magic = 'magic';
   static const Consumable_Slots = 'consumable_slots';
+  static const UUID = 'uuid';
 }

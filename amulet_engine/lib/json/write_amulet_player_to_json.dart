@@ -14,12 +14,6 @@ import 'map_amulet_fiend_to_json.dart';
 CharacterJson writeAmuletPlayerToJson(AmuletPlayer player) {
   final json = CharacterJson();
 
-  if (player.uuid.isEmpty){
-    player.uuid = generateUUID();
-  }
-
-  json.uuid = player.uuid;
-
   final equippedWeapon = player.equippedWeapon;
   final equippedHelm = player.equippedHelm;
   final equippedArmor = player.equippedArmor;
@@ -38,14 +32,16 @@ CharacterJson writeAmuletPlayerToJson(AmuletPlayer player) {
     json[AmuletField.Equipped_Shoes] = mapAmuletItemObjectToJson(equippedShoes);
   }
 
+  json[AmuletField.UUID] = player.uuid;
   json[AmuletField.Difficulty] = player.difficulty.index;
-  json.skillTypeLeft = player.skillTypeLeft;
-  json.skillTypeRight = player.skillTypeRight;
   json[AmuletField.X] = player.x.toInt();
   json[AmuletField.Y] = player.y.toInt();
   json[AmuletField.Z] = player.z.toInt();
   json[AmuletField.Health] = player.health;
   json[AmuletField.Magic] = player.magic;
+  
+  json.skillTypeLeft = player.skillTypeLeft;
+  json.skillTypeRight = player.skillTypeRight;
   json.setInt('quest_main', player.questMain.index);
   json['flags'] = player.flags;
   json['name'] = player.name;

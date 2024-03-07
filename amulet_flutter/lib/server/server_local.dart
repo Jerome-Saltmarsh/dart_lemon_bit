@@ -152,6 +152,7 @@ class ServerLocal implements Server {
     playerServer.hairColor = hairColor;
     playerServer.gender = gender;
     playerServer.headType = headType;
+    playerServer.uuid = generateUUID();
     parser.amulet.windowVisibleQuests.value = true;
     amulet.resetPlayer(playerServer);
     parser.amulet.onNewCharacterCreated();
