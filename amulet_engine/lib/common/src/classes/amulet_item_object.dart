@@ -11,7 +11,21 @@ class AmuletItemObject {
     required this.level,
   });
 
-  double? get damageMax => (amuletItem.damage ?? 0) * level;
+  double? get damageMax {
+    final damage = amuletItem.damage;
+    if (damage == null){
+      return null;
+    }
+    return damage * level;
+  }
+
+  double? get damageMin {
+    final damageMax = this.damageMax;
+    if (damageMax == null){
+      return null;
+    }
+    return damageMax * level;
+  }
 
   int getSkillLevel(SkillType skillType) =>
       amuletItem.getSkillTypeValue(
