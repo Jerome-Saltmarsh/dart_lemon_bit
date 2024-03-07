@@ -24,7 +24,11 @@ class AmuletItemObject {
     if (damageMax == null){
       return null;
     }
-    return damageMax * level;
+    final amuletItemDamageMin = amuletItem.damageMin;
+    if (amuletItemDamageMin == null){
+      return null;
+    }
+    return damageMax * amuletItemDamageMin;
   }
 
   int getSkillLevel(SkillType skillType) =>

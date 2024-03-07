@@ -1627,14 +1627,12 @@ class AmuletUI {
 
 
     final damageMaxDiff = getDiff(next.damageMax, current?.damageMax)?.toInt();
-    final damageMinDiff = getDiff(next.damageMax, current?.damageMax)?.toInt();
+    final damageMinDiff = getDiff(next.damageMin, current?.damageMin)?.toInt();
     final healthDiff = getDiff(nextAmuletItem.maxHealth, currentAmuletItem?.maxHealth);
     final magicDiff = getDiff(nextAmuletItem.maxMagic, currentAmuletItem?.maxMagic);
     final levelDiff = getDiff(next.level, current?.level);
     final valueDiff = getDiff(nextAmuletItem.quantify, currentAmuletItem?.quantify);
-
     final showDiff = current != next;
-    // final itemQuality = nextAmuletItem.quality;
 
     return Column(
       children: [
@@ -1674,9 +1672,15 @@ class AmuletUI {
               value: nextAmuletItem.maxMagic,
               diff: showDiff ? magicDiff : null,
             ),
+          if (damageMinDiff != null)
+            buildComparisonRow(
+              lead: 'min-damage',
+              value: next.damageMin,
+              diff: showDiff ? damageMinDiff : null,
+            ),
           if (damageMaxDiff != null)
             buildComparisonRow(
-              lead: 'damage',
+              lead: 'max-damage',
               value: next.damageMax,
               diff: showDiff ? damageMaxDiff : null,
             ),
