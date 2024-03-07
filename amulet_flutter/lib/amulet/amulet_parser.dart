@@ -261,23 +261,10 @@ extension AmuletParser on IsometricParser {
     }
 
     final amuletItem = readAmuletItem();
-
-    final totalEntries = readByte();
-    final skillTypePoints = <SkillType, int> {
-
-    };
-
-    for (var i = 0; i < totalEntries; i++){
-      final skillType = readSkillType();
-      final skillPoints = readUInt16();
-      skillTypePoints[skillType] = skillPoints;
-    }
-
     final level = readUInt16();
 
     return AmuletItemObject(
         amuletItem: amuletItem,
-        skillPoints: skillTypePoints,
         level: level,
     );
   }

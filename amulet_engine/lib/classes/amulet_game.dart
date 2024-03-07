@@ -839,7 +839,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     final amuletItemObject = generateAmuletItemObject(
         amuletItem: randomItem(AmuletItem.values),
         level: level,
-        itemQuality: itemQuality,
     );
 
     spawnAmuletItemObject(
@@ -1393,11 +1392,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   AmuletItemObject generateAmuletItemObject({
     required AmuletItem amuletItem,
     required int level,
-    required ItemQuality itemQuality,
   }) =>
       AmuletItemObject(
         amuletItem: amuletItem,
-        skillPoints: getAmuletItemSkillPoints(amuletItem, level),
         level: level,
       );
 
@@ -1446,7 +1443,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     final amuletItemObject = generateAmuletItemObject(
       amuletItem: randomItem(AmuletItem.Consumables),
       level: 0,
-      itemQuality: ItemQuality.Common,
     );
 
     spawnAmuletItemObject(

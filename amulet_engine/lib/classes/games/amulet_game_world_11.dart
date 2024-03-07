@@ -215,10 +215,6 @@ class AmuletGameWorld11 extends AmuletGame {
               player.acquireAmuletItemObject(
                   AmuletItemObject(
                     amuletItem: AmuletItem.Weapon_Sword_Short,
-                    skillPoints: {
-                      SkillType.Critical_Hit: 1,
-                      SkillType.Vampire: 1,
-                    },
                     level: 1,
                   )
               );
@@ -256,7 +252,6 @@ class AmuletGameWorld11 extends AmuletGame {
                generateAmuletItemObject(
                  amuletItem: AmuletItem.Armor_Tunic,
                  level: 1,
-                 itemQuality: ItemQuality.Common,
                )
            );
         }

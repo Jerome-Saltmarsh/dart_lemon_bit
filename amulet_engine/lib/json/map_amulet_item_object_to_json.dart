@@ -7,7 +7,6 @@ import '../common/src/classes/amulet_item_object.dart';
 
 Json mapAmuletItemObjectToJson(AmuletItemObject amuletItemObject) =>
     Json()
-      ..[AmuletField.Skill_Points] = mapSkillPointsToJson(amuletItemObject.skillPoints)
       ..[AmuletField.Amulet_Item] = amuletItemObject.amuletItem.name
       ..[AmuletField.Level] = amuletItemObject.level
     ;

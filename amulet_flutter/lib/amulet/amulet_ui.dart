@@ -1686,8 +1686,8 @@ class AmuletUI {
           height16,
           ...SkillType.values.map((skillType) {
 
-            final currentLevel = current?.skillPoints[skillType] ?? 0;
-            final nextLevel = next.skillPoints[skillType] ?? 0;
+            final currentLevel = current?.getSkillLevel(skillType) ?? 0;
+            final nextLevel = next.getSkillLevel(skillType);
 
             if (currentLevel == 0 && nextLevel == 0) {
               return nothing;

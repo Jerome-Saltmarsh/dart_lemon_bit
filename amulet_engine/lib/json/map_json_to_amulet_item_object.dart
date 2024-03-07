@@ -27,7 +27,6 @@ AmuletItemObject? mapJsonToAmuletItemObject(Json? json) {
 
   return AmuletItemObject(
       amuletItem: amuletItem,
-      skillPoints: skillPoints,
       level: json.getInt(AmuletField.Level),
   );
 }

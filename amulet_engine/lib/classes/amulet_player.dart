@@ -511,12 +511,6 @@ class AmuletPlayer extends IsometricPlayer with
 
     writeTrue();
     writeUInt16(value.amuletItem.index);
-    writeByte(value.skillPoints.length);
-    for (final entry in value.skillPoints.entries) {
-      writeByte(entry.key.index); // skill type index
-      writeUInt16(entry.value); // skill type points
-    }
-
     writeUInt16(value.level);
   }
 
@@ -629,7 +623,7 @@ class AmuletPlayer extends IsometricPlayer with
         break;
     }
 
-    final skillPoints = value.skillPoints.entries;
+    final skillPoints = value.amuletItem.skillSet.entries;
 
     for (final skillPoint in skillPoints){
       final skillType = skillPoint.key;
@@ -1319,10 +1313,10 @@ class AmuletPlayer extends IsometricPlayer with
 
   int getSkillTypeLevel(SkillType skillType){
      var total = 0;
-     total += equippedWeapon?.skillPoints[skillType] ?? 0;
-     total += equippedHelm?.skillPoints[skillType] ?? 0;
-     total += equippedArmor?.skillPoints[skillType] ?? 0;
-     total += equippedShoes?.skillPoints[skillType] ?? 0;
+     total += equippedWeapon?.getSkillLevel(skillType) ?? 0;
+     total += equippedHelm?.getSkillLevel(skillType) ?? 0;
+     total += equippedArmor?.getSkillLevel(skillType) ?? 0;
+     total += equippedShoes?.getSkillLevel(skillType) ?? 0;
      return min(total, SkillType.Max_Level);
   }
 
@@ -1611,7 +1605,7 @@ class AmuletPlayer extends IsometricPlayer with
     setCharacterStateChanging();
     setConsumableSlot(index: index, amuletItem: null);
     spawnAmuletItemObject(
-      AmuletItemObject(amuletItem: amuletItem, skillPoints: {}, level: 0)
+      AmuletItemObject(amuletItem: amuletItem, level: 0)
     );
     writeAmuletItemDropped(amuletItem);
   }
@@ -1660,7 +1654,6 @@ class AmuletPlayer extends IsometricPlayer with
           amuletGame.generateAmuletItemObject(
              amuletItem: randomItem(AmuletItem.values),
              level: randomInt(1, 99),
-             itemQuality: randomItem(ItemQuality.values),
           )
       );
 

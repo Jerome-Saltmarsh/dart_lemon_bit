@@ -572,43 +572,10 @@ enum AmuletItem {
     }
   }
 
-  int getSkillPoints(int level) {
-    const pointsPerLevel = 3;
-    final bonus = getItemQualityBonus(quality);
-    return (level * pointsPerLevel * bonus).toInt();
-  }
-
-  static double getItemQualityBonus(ItemQuality itemQuality){
-    switch (itemQuality){
-      case ItemQuality.Common:
-        return 1.0;
-      case ItemQuality.Unique:
-        return 1.3;
-      case ItemQuality.Rare:
-        return 1.61;
-    }
-  }
-
-  static const itemValues = const {
-    ItemQuality.Common: {
-      1: 5,
-      2: 10,
-      3: 16,
-      4: 20,
-    },
-    ItemQuality.Unique: {
-      1: 7,
-      2: 13,
-      3: 18,
-      4: 26,
-    },
-    ItemQuality.Rare: {
-      1: 12,
-      2: 20,
-      3: 25,
-      4: 35,
-    },
-  };
+  int getSkillTypeValue({
+    required SkillType skillType,
+    required int level,
+  })=> ((skillSet[skillType] ?? 0) * level).toInt();
 }
 
 enum CasteType {

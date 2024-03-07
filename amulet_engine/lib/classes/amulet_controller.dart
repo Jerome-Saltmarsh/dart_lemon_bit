@@ -685,7 +685,6 @@ class AmuletController {
             amuletGame.generateAmuletItemObject(
               amuletItem: amuletItem,
               level: 1,
-              itemQuality: ItemQuality.Common,
             )
         );
         break;
