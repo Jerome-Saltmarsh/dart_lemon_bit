@@ -2,6 +2,7 @@
 import 'package:amulet_engine/isometric/classes/gameobject.dart';
 import 'package:amulet_engine/isometric/classes/scene.dart';
 import 'package:amulet_engine/isometric/instances/encoder.dart';
+import 'package:amulet_engine/json/amulet_field.dart';
 import 'package:lemon_json/src.dart';
 
 Json writeSceneToJson(Scene scene){
@@ -35,11 +36,6 @@ Json writeGameObjectToJson(GameObject gameObject){
   json['deactivation_timer'] = gameObject.deactivationTimer;
   json['team'] = gameObject.team;
   json['id'] = gameObject.id;
-
-  final data = gameObject.data;
-  if (data != null) {
-    json['data'] = data;
-  }
-
+  json[AmuletField.Level] = gameObject.level;
   return json;
 }

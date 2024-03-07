@@ -8,6 +8,7 @@ import 'package:amulet_engine/common.dart';
 import 'package:amulet_engine/isometric/classes/gameobject.dart';
 import 'package:amulet_engine/isometric/classes/scene.dart';
 import 'package:amulet_engine/isometric/instances/decoder.dart';
+import 'package:amulet_engine/json/amulet_field.dart';
 import 'package:lemon_json/src.dart';
 
 Scene readSceneFromJson(Json json){
@@ -64,7 +65,6 @@ GameObject readGameObjectFromJson(Json gameObjectJson){
    }
 
    final isAmuletItem = itemType == ItemType.Amulet_Item;
-
    return GameObject(
        x: x,
        y: y,
@@ -76,7 +76,7 @@ GameObject readGameObjectFromJson(Json gameObjectJson){
        health: health,
        deactivationTimer: deactivationTimer,
        interactable: isAmuletItem,
-       data: gameObjectJson.tryGetChild('data'),
+       level: gameObjectJson.tryGetInt(AmuletField.Level) ?? 0,
    )
      ..hitable = !isAmuletItem
      ..physical = !isAmuletItem;

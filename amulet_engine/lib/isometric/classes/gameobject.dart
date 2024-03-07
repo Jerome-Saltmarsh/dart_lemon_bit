@@ -1,12 +1,10 @@
 
-import 'package:lemon_json/src.dart';
 import 'package:lemon_lang/src.dart';
 
 import '../../common/src.dart';
 import 'collider.dart';
 
 class GameObject extends Collider {
-  /// Prevents gameobject from being recycled in the object pool until the next frame
   var id = -1;
   var itemType = 0;
   var subType = -1;
@@ -16,7 +14,7 @@ class GameObject extends Collider {
   var health = 0.0;
   var healthMax = 0.0;
   var deactivationTimer = -1;
-  Json? data;
+  var level = 0;
   String? label;
 
   GameObject({
@@ -31,7 +29,7 @@ class GameObject extends Collider {
     this.health = 0,
     this.healthMax = 0,
     this.deactivationTimer = -1,
-    this.data,
+    this.level = 0,
     int? id,
   }) : super(materialType: getMaterialType(itemType, subType)) {
     startPositionX = x;

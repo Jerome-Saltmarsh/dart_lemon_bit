@@ -905,7 +905,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       interactable: true,
       deactivationTimer: deactivationTimer ?? gameObjectDeactivationTimer,
       health: 0,
-      data: mapAmuletItemObjectToJson(amuletItemObject),
+      level: amuletItemObject.level,
     );
 
     add(instance);
