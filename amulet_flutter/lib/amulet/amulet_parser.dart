@@ -325,8 +325,9 @@ extension AmuletParser on IsometricParser {
   AmuletItem readAmuletItem() => AmuletItem.values[readUInt16()];
 
   void readPlayerMagic() {
-    amulet.playerMagicMax.value = readUInt16();
-    amulet.playerMagic.value = readUInt16();
+    amulet.playerMagicMax = readUInt16();
+    amulet.playerMagic = readUInt16();
+    amulet.playerMagicNotifier.value++;
   }
 
   void readPlayerRegenMagic() =>

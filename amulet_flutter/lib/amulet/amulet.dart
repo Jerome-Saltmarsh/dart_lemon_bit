@@ -63,8 +63,9 @@ class Amulet extends IsometricGame {
   var playerWorldX = 0.0;
   var playerWorldY = 0.0;
 
-  final playerMagic = Watch(0);
-  final playerMagicMax = Watch(0);
+  var playerMagic = 0;
+  var playerMagicMax = 0;
+  final playerMagicNotifier = Watch(0);
   final playerMagicPercentage = Watch(0.0);
 
   final playerRegenMagic = Watch(0);
@@ -159,6 +160,8 @@ class Amulet extends IsometricGame {
       screenColor.value = Colors.black.withOpacity((1.0 - t).clamp(0, 1.0));
     });
 
+    playerMagicNotifier.onChanged((t) => updatePlayerMagicPercentage());
+
     questMain.onChanged(onChangedQuestMain);
 
     fiendCountAlive.onChanged((t) {
@@ -179,8 +182,6 @@ class Amulet extends IsometricGame {
     playerInteracting.onChanged(onChangedPlayerInteracting);
     npcTextIndex.onChanged(onChangedNpcTextIndex);
     error.onChanged(onChangedError);
-    playerMagic.onChanged(refreshPlayerMagicPercentage);
-    playerMagicMax.onChanged(refreshPlayerMagicPercentage);
     playerSkillLeft.onChanged(onChangedPlayerSkillType);
     playerSkillRight.onChanged(onChangedPlayerSkillType);
     skillSlotsChangedNotifier.onChanged(onChangedSkillSlots);
@@ -191,6 +192,10 @@ class Amulet extends IsometricGame {
       }
 
     });
+  }
+
+  void updatePlayerMagicPercentage() {
+    playerMagicPercentage.value = playerMagic.percentageOf(playerMagicMax);
   }
 
   void onChangedQuestMain(QuestMain questMain){
@@ -225,18 +230,6 @@ class Amulet extends IsometricGame {
     } else {
       fiendCountPercentage.value = (fiendCountAlive.value / total).clamp(0, 1);
     }
-  }
-
-  void refreshPlayerMagicPercentage(int _){
-    final value = playerMagic.value;
-    final max = playerMagicMax.value;
-    if (max <= 0){
-      playerMagicPercentage.value = 0;
-    }
-    if (value >= max){
-      playerMagicPercentage.value = 1;
-    }
-    playerMagicPercentage.value = value / max;
   }
 
   @override

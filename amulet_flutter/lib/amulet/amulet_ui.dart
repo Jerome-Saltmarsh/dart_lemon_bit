@@ -21,7 +21,7 @@ class AmuletUI {
   static const margin3 = 315.0;
   static const margin4 = 560.0;
   static const barWidth = 136.0;
-  static const barHeight = 10.0;
+  static const barHeight = 20.0;
 
   final Amulet amulet;
   final filterSkillTypes = WatchBool(false);
@@ -642,82 +642,73 @@ class AmuletUI {
       Column(
         children: [
           buildWatchAmuletItemObject(amulet.equippedWeapon, SlotType.Weapon),
-          // height8,
           buildWatchAmuletItemObject(amulet.equippedHelm, SlotType.Helm),
-          // height8,
           buildWatchAmuletItemObject(amulet.equippedArmor, SlotType.Armor),
-          // height8,
           buildWatchAmuletItemObject(amulet.equippedShoes, SlotType.Shoes),
         ],
       );
 
-  Widget buildPlayerHealthBar() {
-
-    const width = 100.0;
-    const height = 20.0;
-
-    return IgnorePointer(
+  Widget buildPlayerHealthBar() => IgnorePointer(
         child: Row(
           children: [
             Stack(
               alignment: Alignment.centerLeft,
               children: [
                 Container(
-                  width: width,
-                  height: height,
+                  width: barWidth,
+                  height: barHeight,
                   color: Palette.brown_4,
                 ),
                 buildWatch(amulet.player.healthPercentage, (percentage) =>
                 Container(
-                    width: width * percentage,
-                    height: height,
+                    width: barWidth * percentage,
+                    height: barHeight,
                     color: Palette.red_3,
                     )
                 ),
                 Container(
                   alignment: Alignment.center,
-                  width: width,
-                  height: height,
+                  width: barWidth,
+                  height: barHeight,
                   child: buildWatch(amulet.player.healthChangedNotifier, (_) =>
-                      buildText('${amulet.player.health}/${amulet.player.maxHealth}')),
+                      buildText('${amulet.player.health}/${amulet.player.maxHealth}', color: Colors.white70)),
                 ),
               ],
             ),
           ],
         ),
       );
-  }
 
-  Widget buildPlayerMagicBar() =>
-      IgnorePointer(
-        child: Stack(
-          clipBehavior: Clip.none,
-          fit: StackFit.passthrough,
+  Widget buildPlayerMagicBar() => IgnorePointer(
+    child: Row(
+      children: [
+        Stack(
           alignment: Alignment.centerLeft,
           children: [
-                AmuletImage(
-                    srcX: 840,
-                    srcY: 129,
-                    width: 188,
-                    height: 28,
-                    scale: 0.5,
-                ),
+            Container(
+              width: barWidth,
+              height: barHeight,
+              color: Palette.brown_4,
+            ),
             buildWatch(amulet.playerMagicPercentage, (percentage) =>
-                Positioned(
-                  left: 12,
-                  // top: -5,
-                  child: AmuletImage(
-                    srcX: 865,
-                    srcY: 159,
-                    width: 160 * percentage,
-                    height: 16,
-                    scale: 0.5,
-                  ),
+                Container(
+                  width: barWidth * percentage,
+                  height: barHeight,
+                  color: Palette.blue_3,
                 )
-            )
+            ),
+            Container(
+              alignment: Alignment.center,
+              width: barWidth,
+              height: barHeight,
+              child: buildWatch(amulet.playerMagicNotifier, (_) =>
+                  buildText('${amulet.playerMagic}/${amulet.playerMagicMax}', color: Colors.white70)),
+            ),
           ],
         ),
-      );
+      ],
+    ),
+  );
   // Widget buildPlayerHealthBar() {
   //
   //   return IgnorePointer(
