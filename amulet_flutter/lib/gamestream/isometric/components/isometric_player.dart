@@ -1,5 +1,6 @@
 import 'package:amulet_engine/common.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:lemon_lang/src.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:amulet_flutter/isometric/classes/character.dart';
@@ -57,9 +58,10 @@ class IsometricPlayer with IsometricComponent {
   final mouseTargetAllie = Watch<bool>(false);
   final mouseTargetHealth = Watch(0.0);
   final target = Position();
-  final health = Watch(0);
-  final maxHealth = Watch(0);
+  var health = 0;
+  var maxHealth = 0;
   final healthPercentage = Watch(0.0);
+  final healthChangedNotifier = Watch(0);
   final weaponCooldown = Watch(1.0);
   final credits = Watch(0);
 
@@ -70,36 +72,14 @@ class IsometricPlayer with IsometricComponent {
   late final weaponType = Watch(0);
 
   IsometricPlayer() {
-
-    // aimTargetSet.onChanged((set) {
-    //   engine.cursorType.value = set ? CursorType.Click : CursorType.Basic;
-    // });
-
-    health.onChanged((t) {
-       if (maxHealth.value <= 0){
-         healthPercentage.value = 0;
-       }
-       healthPercentage.value = t / maxHealth.value;
+    healthChangedNotifier.onChanged((t) {
+       updateHealthPercentage();
     });
-
-    maxHealth.onChanged((maxHealth) {
-       if (maxHealth <= 0){
-         healthPercentage.value = 0;
-       }
-       healthPercentage.value = health.value / maxHealth;
-    });
-
-    // aimTargetSet.onChanged((aimTargetSet) {
-    //   if (aimTargetSet){
-    //     amulet.cursor.value = SystemMouseCursors.grab;
-    //   } else {
-    //     amulet.cursor.value = SystemMouseCursors.basic;
-    //   }
-    // });
-
     controlsEnabled.onChanged(onChangedControlsEnabled);
   }
 
+  void updateHealthPercentage() =>
+      healthPercentage.value = health.percentageOf(maxHealth);
 
   void onChangedControlsEnabled(bool value){
     print('player.onChangedControlsEnabled($value)');

@@ -429,8 +429,9 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
       player.energyPercentage = readPercentage();
 
   void readPlayerHealth() {
-    player.health.value = readUInt16();
-    player.maxHealth.value = readUInt16();
+    player.health = readUInt16();
+    player.maxHealth = readUInt16();
+    player.healthChangedNotifier.value++;
   }
 
   void readNetworkResponseEditorGameObjectSelected() {

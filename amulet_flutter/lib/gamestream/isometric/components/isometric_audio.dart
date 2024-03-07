@@ -356,11 +356,6 @@ class IsometricAudio with IsometricComponent implements Updatable {
     return convertDistanceToVolume(nearestDistance, maxDistance: 100);
   }
 
-  double getVolumeHeartBeat(){
-    if (player.maxHealth.value <= 0) return 0.0;
-    return 1.0 - player.health.value / player.maxHealth.value;
-  }
-
   void playAudioSingle2D(AudioSingle audioSingle, double x, double y){
     if (!enabledSound.value) return;
     final distanceX = engine.screenCenterWorldX - x;
