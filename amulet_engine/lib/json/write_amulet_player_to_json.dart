@@ -8,7 +8,6 @@ import 'package:lemon_json/src.dart';
 import 'amulet_field.dart';
 import 'character_json.dart';
 import '../classes/amulet_player.dart';
-import '../utils/generate_uuid.dart';
 import 'map_amulet_fiend_to_json.dart';
 
 CharacterJson writeAmuletPlayerToJson(AmuletPlayer player) {
@@ -39,21 +38,22 @@ CharacterJson writeAmuletPlayerToJson(AmuletPlayer player) {
   json[AmuletField.Z] = player.z.toInt();
   json[AmuletField.Health] = player.health;
   json[AmuletField.Magic] = player.magic;
-  
+  json[AmuletField.Quest_Main] = player.questMain.index;
+  json[AmuletField.Consumable_Slots] = player.consumableSlots.map((e) => e?.name ?? '').toList(growable: false);
+  json[AmuletField.Skill_Slots] = player.skillSlots.map((e) => e.index).toList(growable: false);
+  json[AmuletField.Flags] = player.flags;
+  json[AmuletField.Name] = player.name;
+  json[AmuletField.Complexion] = player.complexion;
+  json[AmuletField.Gender] = player.gender;
+  json[AmuletField.Hair_Type] = player.hairType;
+  json[AmuletField.Hair_Color] = player.hairColor;
+  json[AmuletField.Initialized] = player.initialized;
+  json[AmuletField.Amulet_Scene_Name] = player.amuletGame.amuletScene.name;
+  json[AmuletField.Amulet] = writeAmuletToJson(player);
+
   json.skillTypeLeft = player.skillTypeLeft;
   json.skillTypeRight = player.skillTypeRight;
-  json.setInt('quest_main', player.questMain.index);
-  json['flags'] = player.flags;
-  json['name'] = player.name;
-  json['complexion'] = player.complexion;
-  json['gender'] = player.gender;
-  json['hairType'] = player.hairType;
-  json['hairColor'] = player.hairColor;
-  json['initialized'] = player.initialized;
-  json['amulet_scene_name'] = player.amuletGame.amuletScene.name;
-  json['skill_slots'] = player.skillSlots.map((e) => e.index).toList(growable: false);
-  json[AmuletField.Consumable_Slots] = player.consumableSlots.map((e) => e?.name ?? '').toList(growable: false);
-  json['amulet'] = writeAmuletToJson(player);
+
   return json;
 }
 

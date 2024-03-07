@@ -15,4 +15,15 @@ class AmuletField {
   static const Magic = 'magic';
   static const Consumable_Slots = 'consumable_slots';
   static const UUID = 'uuid';
+  static const Quest_Main = 'quest_main';
+  static const Skill_Slots = 'skill_slots';
+  static const Flags = 'flags';
+  static const Name = 'name';
+  static const Complexion = 'complexion';
+  static const Gender = 'gender';
+  static const Hair_Type = 'hair_type';
+  static const Hair_Color = 'hair_color';
+  static const Initialized = 'initialized';
+  static const Amulet_Scene_Name = 'amulet_scene_name';
+  static const Amulet = 'amulet';
 }
