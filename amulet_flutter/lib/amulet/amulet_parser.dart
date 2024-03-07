@@ -304,7 +304,7 @@ extension AmuletParser on IsometricParser {
       skillTypePoints[skillType] = skillPoints;
     }
 
-    final level = tryReadUInt16();
+    final level = readUInt16();
 
     return AmuletItemObject(
         amuletItem: amuletItem,

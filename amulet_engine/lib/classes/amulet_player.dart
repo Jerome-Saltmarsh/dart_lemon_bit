@@ -517,8 +517,7 @@ class AmuletPlayer extends IsometricPlayer with
       writeUInt16(entry.value); // skill type points
     }
 
-    final level = value.level;
-    tryWriteUInt16(level);
+    writeUInt16(value.level);
   }
 
   void writeDecimal(double value) => writeUInt16((value * 10).toInt());
@@ -1612,7 +1611,7 @@ class AmuletPlayer extends IsometricPlayer with
     setCharacterStateChanging();
     setConsumableSlot(index: index, amuletItem: null);
     spawnAmuletItemObject(
-      AmuletItemObject(amuletItem: amuletItem, skillPoints: {})
+      AmuletItemObject(amuletItem: amuletItem, skillPoints: {}, level: 0)
     );
     writeAmuletItemDropped(amuletItem);
   }
