@@ -7,12 +7,10 @@ class AmuletItemObject {
   final Map<SkillType, int> skillPoints;
   final double? damage;
   final int? level;
-  final ItemQuality? itemQuality;
 
   AmuletItemObject({
     required this.amuletItem,
     required this.skillPoints,
-    this.itemQuality,
     this.damage,
     this.level,
   }) {

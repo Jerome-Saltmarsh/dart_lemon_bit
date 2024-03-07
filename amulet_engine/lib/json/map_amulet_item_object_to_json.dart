@@ -11,7 +11,6 @@ Json mapAmuletItemObjectToJson(AmuletItemObject amuletItemObject) =>
       ..[AmuletField.Amulet_Item] = amuletItemObject.amuletItem.name
       ..[AmuletField.Damage] = amuletItemObject.damage
       ..[AmuletField.Level] = amuletItemObject.level
-      ..[AmuletField.Item_Quality] = amuletItemObject.itemQuality?.index
     ;
 
 Json mapSkillPointsToJson(Map<SkillType, int> skillPoints){

@@ -519,7 +519,6 @@ class AmuletPlayer extends IsometricPlayer with
 
     final damage = value.damage;
     final level = value.level;
-    final itemQuality = value.itemQuality;
 
     if (damage != null) {
       writeTrue();
@@ -529,7 +528,6 @@ class AmuletPlayer extends IsometricPlayer with
     }
 
     tryWriteUInt16(level);
-    tryWriteByte(itemQuality?.index);
   }
 
   void writeDecimal(double value) => writeUInt16((value * 10).toInt());

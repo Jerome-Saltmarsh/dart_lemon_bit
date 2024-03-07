@@ -1434,7 +1434,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       skillPoints: skillPoints,
       damage: damage,
       level: level,
-      itemQuality: itemQuality,
     );
   }
 

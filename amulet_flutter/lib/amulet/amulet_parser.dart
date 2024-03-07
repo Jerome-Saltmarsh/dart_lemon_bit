@@ -311,14 +311,12 @@ extension AmuletParser on IsometricParser {
     }
 
     final level = tryReadUInt16();
-    final itemQualityIndex = tryReadByte();
 
     return AmuletItemObject(
         amuletItem: amuletItem,
         skillPoints: skillTypePoints,
         damage: damage,
         level: level,
-        itemQuality: ItemQuality.values.tryGet(itemQualityIndex),
     );
   }
 
