@@ -54,11 +54,14 @@ REMINDER: IT DOESN'T NEED TO BE PERFECT
 [new] amulet item satin boots
 [new] amulet item shroud
 [new] beat the game
-[fix] empty item slot
-[new] gameobject health boost
-[new] gameobject magic boost
+[new] collectable gameobject health boost
+[new] collectable gameobject magic boost
 [new] tree top transparent
 [new] balance amulet items
+
+## 07.03.2024
+[new] difficulty settings
+[fix] empty item slot
 
 ## 05.03.2024
 [fix] prevent amulet item persisting in scene file

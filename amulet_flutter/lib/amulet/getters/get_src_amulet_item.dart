@@ -34,8 +34,7 @@ const _shoes_black_slippers = [srcx_shoes, 64.0];
 const _shoes_grieves = [srcx_shoes, 32.0];
 const _shoes_treads = [srcx_shoes, 96.0];
 
-List<double> getSrcAmuletItem(AmuletItem amuletItem) {
-  return switch (amuletItem) {
+List<double> getSrcAmuletItem(AmuletItem amuletItem) => switch (amuletItem) {
       AmuletItem.Weapon_Sword_Short => _weapons_sword_short,
       AmuletItem.Weapon_Sword_Broad => _weapons_sword_broad,
       AmuletItem.Weapon_Sword_Long => _weapons_sword_long,
@@ -76,6 +75,13 @@ List<double> getSrcAmuletItem(AmuletItem amuletItem) {
       AmuletItem.Consumable_Potion_Magic => const [srcx_consumable, 64],
       AmuletItem.Helm_Cowl => _helms_pointed_hat_black,
       AmuletItem.Helm_Cape => _armor_mantle,
-      AmuletItem.Unique_Weapon_Swift_Blade => const [srcx_weapon_sword, 128, 32, 32],
-    };
-}
+      AmuletItem.Unique_Weapon_Swift_Blade => const [
+          srcx_weapon_sword,
+          128,
+          32,
+          32
+        ],
+      AmuletItem.Weapon_Sword_Short_Rusty => _weapons_sword_short,
+      AmuletItem.Weapon_Sword_Short_Unique => _weapons_sword_short,
+      AmuletItem.Assassins_Blade => _weapons_sword_short,
+};

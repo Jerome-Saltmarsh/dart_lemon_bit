@@ -2,6 +2,21 @@ import '../../src.dart';
 import 'package:collection/collection.dart';
 
 enum AmuletItem {
+  Weapon_Sword_Short_Rusty(
+    label: 'Rusted Short Sword',
+    slotType: SlotType.Weapon,
+    subType: WeaponType.Sword_Short,
+    attackSpeed: AttackSpeed.Fast,
+    range: WeaponRange.Very_Short,
+    damageMin: 1,
+    damageMax: 3,
+    skillTypes: [
+      SkillType.Mighty_Strike,
+      SkillType.Wind_Cut,
+      SkillType.Critical_Hit,
+      SkillType.Shield,
+    ],
+  ),
   Weapon_Sword_Short(
     label: 'Short Sword',
     slotType: SlotType.Weapon,
@@ -13,10 +28,38 @@ enum AmuletItem {
     skillTypes: [
       SkillType.Mighty_Strike,
       SkillType.Wind_Cut,
-      SkillType.Area_Damage,
       SkillType.Critical_Hit,
       SkillType.Shield,
     ],
+  ),
+  Weapon_Sword_Short_Unique(
+    label: 'Sharpened Short Sword',
+    slotType: SlotType.Weapon,
+    subType: WeaponType.Sword_Short,
+    attackSpeed: AttackSpeed.Very_Fast,
+    range: WeaponRange.Very_Short,
+    damageMin: 3,
+    damageMax: 5,
+    skillTypes: [
+      SkillType.Mighty_Strike,
+      SkillType.Wind_Cut,
+      SkillType.Critical_Hit,
+      SkillType.Shield,
+    ],
+  ),
+  Assassins_Blade(
+    label: 'Assassins Blade',
+    slotType: SlotType.Weapon,
+    subType: WeaponType.Sword_Short,
+    attackSpeed: AttackSpeed.Very_Fast,
+    range: WeaponRange.Very_Short,
+    damageMin: 3,
+    damageMax: 5,
+    skillSet: {
+      SkillType.Critical_Hit: 5,
+      SkillType.Agility: 5,
+    },
+    quality: ItemQuality.Unique,
   ),
   Unique_Weapon_Swift_Blade(
     label: 'Swift Blade',

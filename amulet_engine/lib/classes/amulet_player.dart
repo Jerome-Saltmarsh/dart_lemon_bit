@@ -1558,23 +1558,24 @@ class AmuletPlayer extends IsometricPlayer with
        return;
      }
 
-     consumeAmuletItem(amuletItem);
+     if (!amuletItem.isConsumable) {
+       writeGameError(GameError.Item_Not_Consumable);
+       return;
+     }
+
+     switch (amuletItem) {
+       case AmuletItem.Consumable_Potion_Health:
+         health = maxHealth;
+         break;
+       case AmuletItem.Consumable_Potion_Magic:
+         magic = maxMagic;
+         break;
+       default:
+         break;
+     }
+
+     writeAmuletItemConsumed(amuletItem);
      setConsumableSlot(index: index, amuletItem: null);
-  }
-
-  void consumeAmuletItem(AmuletItem amuletItem){
-    switch (amuletItem){
-      case AmuletItem.Consumable_Potion_Health:
-        health += 10;
-        break;
-      case AmuletItem.Consumable_Potion_Magic:
-        magic += 10;
-        break;
-      default:
-        throw Exception();
-    }
-
-    writeAmuletItemConsumed(amuletItem);
   }
 
   void writeAmuletItemConsumed(AmuletItem amuletItem){

@@ -113,7 +113,7 @@ class AmuletUI {
           ),
       Positioned(
         top: 8,
-        left: 8,
+        left: 64,
         child: buildWatch(
             amulet.aimTargetAmuletItemObject,
             buildCardAmuletItemObject,
@@ -653,31 +653,36 @@ class AmuletUI {
 
   Widget buildPlayerHealthBar() =>
       IgnorePointer(
-        child: Stack(
-          clipBehavior: Clip.none,
-          fit: StackFit.passthrough,
-          alignment: Alignment.centerLeft,
+        child: Row(
           children: [
-            AmuletImage(
-              srcX: 840,
-              srcY: 80,
-              width: 188,
-              height: 28,
-              scale: 0.5,
-            ),
-            buildWatch(amulet.player.healthPercentage, (healthPercentage) =>
-                Positioned(
-                  left: 12,
-                  // top: -5,
-                  child: AmuletImage(
-                    srcX: 865,
-                    srcY: 111,
-                    width: 160 * healthPercentage,
-                    height: 16,
-                    scale: 0.5,
-                  ),
+            buildText('1/3'),
+            Stack(
+              clipBehavior: Clip.none,
+              fit: StackFit.passthrough,
+              alignment: Alignment.centerLeft,
+              children: [
+                AmuletImage(
+                  srcX: 840,
+                  srcY: 80,
+                  width: 188,
+                  height: 28,
+                  scale: 0.5,
+                ),
+                buildWatch(amulet.player.healthPercentage, (healthPercentage) =>
+                    Positioned(
+                      left: 12,
+                      // top: -5,
+                      child: AmuletImage(
+                        srcX: 865,
+                        srcY: 111,
+                        width: 160 * healthPercentage,
+                        height: 16,
+                        scale: 0.5,
+                      ),
+                    )
                 )
-            )
+              ],
+            ),
           ],
         ),
       );
@@ -1686,7 +1691,7 @@ class AmuletUI {
         },
         child: buildBorder(
           color: Palette.brown_4,
-          width: 2,
+          width: 3,
           child: Container(
             width: width,
             color: Palette.brown_3,
@@ -1714,7 +1719,7 @@ class AmuletUI {
           child: button,
           panel: Column(
             children: [
-              if (visibleRightClickedToDrop)
+              if (amuletItemObject != null && visibleRightClickedToDrop)
                 buildText('right click to drop'),
               buildCardAmuletItemObject(amuletItemObject),
             ],
