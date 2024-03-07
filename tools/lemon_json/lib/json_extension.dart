@@ -28,6 +28,8 @@ extension JsonExtension on Json {
 
   List<String>? tryGetListString(String key) => tryGetList<String>(key);
 
+  List<String> getListString(String key) => getList<String>(key);
+
   List<T>? tryGetList<T>(String key) {
     if (!containsKey(key)){
       return null;

@@ -56,7 +56,7 @@ CharacterJson writeAmuletPlayerToJson(AmuletPlayer player) {
   json['initialized'] = player.initialized;
   json['amulet_scene_name'] = player.amuletGame.amuletScene.name;
   json['skill_slots'] = player.skillSlots.map((e) => e.index).toList(growable: false);
-  json['consumable_slots'] = player.consumableSlots.map((e) => e?.index ?? -1).toList(growable: false);
+  json[AmuletField.Consumable_Slots] = player.consumableSlots.map((e) => e?.name ?? '').toList(growable: false);
   json['amulet'] = writeAmuletToJson(player);
   return json;
 }
