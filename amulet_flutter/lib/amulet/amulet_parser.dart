@@ -38,9 +38,6 @@ extension AmuletParser on IsometricParser {
          amulet.worldRow = readByte();
          amulet.worldColumn = readByte();
          break;
-       case NetworkResponseAmulet.Player_Weapon:
-         readPlayerWeapon();
-         break;
        case NetworkResponseAmulet.Amulet_Event:
          readAmuletEvent();
          break;
@@ -187,34 +184,6 @@ extension AmuletParser on IsometricParser {
   AmuletItem? readMMOItem(){
     final mmoItemIndex = readInt16();
     return mmoItemIndex == -1 ? null : AmuletItem.values[mmoItemIndex];
-  }
-
-  void readPlayerWeapon() {
-    final index = readUInt16();
-    final type = readInt16();
-
-    if (type == -1){
-      // amulet.setWeapon(
-      //   index: index,
-      //   item: null,
-      //   cooldownPercentage: 0,
-      //   charges: 0,
-      //   max: 0,
-      // );
-      return;
-    }
-
-    // final cooldownPercentage = readPercentage();
-    // final charges = readUInt16();
-    // final max = readUInt16();
-    // final item = AmuletItem.values[type];
-    // amulet.setWeapon(
-    //   index: index,
-    //   item: item,
-    //   cooldownPercentage: cooldownPercentage,
-    //   charges: charges,
-    //   max: max,
-    // );
   }
 
   void onPlayAudioType(AudioType audioType) {
