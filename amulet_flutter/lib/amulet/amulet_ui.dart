@@ -1492,7 +1492,7 @@ class AmuletUI {
   Widget buildWatchAmuletItemObject(Watch<AmuletItemObject?> watchAmuletItemObject, SlotType slotType) {
 
     return buildWatch(watchAmuletItemObject, (amuletItemObject) {
-      const width = 50.0;
+      const width = 45.0;
 
       final button = onPressed(
         action: amuletItemObject == null ? null : () => amulet.dropAmuletItem(amuletItemObject.amuletItem),
