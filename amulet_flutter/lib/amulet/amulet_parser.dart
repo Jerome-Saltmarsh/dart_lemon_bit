@@ -254,15 +254,11 @@ extension AmuletParser on IsometricParser {
 
   AmuletItem? tryReadAmuletItem() => AmuletItem.values.tryGet(readInt16());
 
-  AmuletItemObject? tryReadAmuletItemObject() {
+  AmuletItemObject? tryReadAmuletItemObject() => tryRead(readAmuletItemObject);
 
-    if (!readBool()){
-      return null;
-    }
-
+  AmuletItemObject readAmuletItemObject() {
     final amuletItem = readAmuletItem();
     final level = readUInt16();
-
     return AmuletItemObject(
         amuletItem: amuletItem,
         level: level,

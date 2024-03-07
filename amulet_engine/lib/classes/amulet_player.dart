@@ -502,14 +502,10 @@ class AmuletPlayer extends IsometricPlayer with
     }
   }
 
-  void writeAmuletItemObject(AmuletItemObject? value){
+  void writeAmuletItemObject(AmuletItemObject? value) =>
+      tryWrite(tryWriteAmuletItemObject, value);
 
-    if (value == null){
-      writeFalse();
-      return;
-    }
-
-    writeTrue();
+  void tryWriteAmuletItemObject(AmuletItemObject value){
     writeUInt16(value.amuletItem.index);
     writeUInt16(value.level);
   }
