@@ -2,21 +2,6 @@ import '../../src.dart';
 import 'package:collection/collection.dart';
 
 enum AmuletItem {
-  Weapon_Sword_Short_Rusty(
-    label: 'Rusted Short Sword',
-    slotType: SlotType.Weapon,
-    subType: WeaponType.Sword_Short,
-    attackSpeed: AttackSpeed.Fast,
-    range: WeaponRange.Very_Short,
-    damageMin: 1,
-    damageMax: 3,
-    skillTypes: [
-      SkillType.Mighty_Strike,
-      SkillType.Wind_Cut,
-      SkillType.Critical_Hit,
-      SkillType.Shield,
-    ],
-  ),
   Weapon_Sword_Short(
     label: 'Short Sword',
     slotType: SlotType.Weapon,
@@ -25,27 +10,10 @@ enum AmuletItem {
     range: WeaponRange.Very_Short,
     damageMin: 2,
     damageMax: 4,
-    skillTypes: [
-      SkillType.Mighty_Strike,
-      SkillType.Wind_Cut,
-      SkillType.Critical_Hit,
-      SkillType.Shield,
-    ],
-  ),
-  Weapon_Sword_Short_Unique(
-    label: 'Sharpened Short Sword',
-    slotType: SlotType.Weapon,
-    subType: WeaponType.Sword_Short,
-    attackSpeed: AttackSpeed.Very_Fast,
-    range: WeaponRange.Very_Short,
-    damageMin: 3,
-    damageMax: 5,
-    skillTypes: [
-      SkillType.Mighty_Strike,
-      SkillType.Wind_Cut,
-      SkillType.Critical_Hit,
-      SkillType.Shield,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Assassins_Blade(
     label: 'Assassins Blade',
@@ -83,13 +51,10 @@ enum AmuletItem {
     range: WeaponRange.Short,
     damageMin: 4,
     damageMax: 8,
-    skillTypes: [
-      SkillType.Mighty_Strike,
-      SkillType.Area_Damage,
-      SkillType.Critical_Hit,
-      SkillType.Shield,
-      SkillType.Wind_Cut,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Weapon_Sword_Long(
     label: 'Long Sword',
@@ -99,13 +64,10 @@ enum AmuletItem {
     range: WeaponRange.Long,
     damageMin: 6,
     damageMax: 12,
-    skillTypes: [
-      SkillType.Mighty_Strike,
-      SkillType.Area_Damage,
-      SkillType.Critical_Hit,
-      SkillType.Shield,
-      SkillType.Wind_Cut,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Weapon_Sword_Giant(
     label: 'Giant Sword',
@@ -115,13 +77,10 @@ enum AmuletItem {
     range: WeaponRange.Very_Long,
     damageMin: 10,
     damageMax: 20,
-    skillTypes: [
-      SkillType.Mighty_Strike,
-      SkillType.Area_Damage,
-      SkillType.Critical_Hit,
-      SkillType.Shield,
-      SkillType.Wind_Cut,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Weapon_Bow_Short(
     label: 'Short Bow',
@@ -131,11 +90,10 @@ enum AmuletItem {
     range: WeaponRange.Very_Short,
     damageMin: 2,
     damageMax: 4,
-    skillTypes: [
-      ...SkillType.valuesBow,
-      SkillType.Critical_Hit,
-      SkillType.Shield,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Weapon_Bow_Reflex(
     label: 'Reflex Bow',
@@ -145,13 +103,10 @@ enum AmuletItem {
     range: WeaponRange.Short,
     damageMin: 3,
     damageMax: 6,
-    skillTypes: [
-      SkillType.Critical_Hit,
-      SkillType.Shield,
-      SkillType.Split_Shot,
-      SkillType.Ice_Arrow,
-      SkillType.Fire_Arrow,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Weapon_Bow_Composite(
     label: 'Composite Bow',
@@ -161,13 +116,10 @@ enum AmuletItem {
     range: WeaponRange.Long,
     damageMin: 5,
     damageMax: 8,
-    skillTypes: [
-      SkillType.Critical_Hit,
-      SkillType.Shield,
-      SkillType.Split_Shot,
-      SkillType.Ice_Arrow,
-      SkillType.Fire_Arrow,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Weapon_Bow_Long(
     label: 'Long Bow',
@@ -177,13 +129,10 @@ enum AmuletItem {
     range: WeaponRange.Very_Long,
     damageMin: 8,
     damageMax: 12,
-    skillTypes: [
-      SkillType.Critical_Hit,
-      SkillType.Shield,
-      SkillType.Split_Shot,
-      SkillType.Ice_Arrow,
-      SkillType.Fire_Arrow,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Weapon_Staff_Wand(
     label: 'Wand',
@@ -193,13 +142,10 @@ enum AmuletItem {
     range: WeaponRange.Very_Short,
     damageMin: 2,
     damageMax: 3,
-    skillTypes: [
-      SkillType.Critical_Hit,
-      SkillType.Fireball,
-      SkillType.Frostball,
-      SkillType.Magic_Regen,
-      SkillType.Warlock,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Weapon_Staff_Globe(
     label: 'Globe',
@@ -209,12 +155,10 @@ enum AmuletItem {
     range: WeaponRange.Short,
     damageMin: 4,
     damageMax: 6,
-    skillTypes: [
-      SkillType.Fireball,
-      SkillType.Heal,
-      SkillType.Magic_Regen,
-      SkillType.Warlock,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Weapon_Staff_Scepter(
       label: 'Scepter',
@@ -224,12 +168,10 @@ enum AmuletItem {
       range: WeaponRange.Long,
       damageMin: 3,
       damageMax: 5,
-      skillTypes: [
-        SkillType.Fireball,
-        SkillType.Heal,
-        SkillType.Magic_Regen,
-        SkillType.Warlock,
-      ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
       ),
   Weapon_Staff_Long(
       label: 'Staff',
@@ -239,12 +181,10 @@ enum AmuletItem {
       range: WeaponRange.Very_Long,
       damageMin: 5,
       damageMax: 8,
-      skillTypes: [
-        SkillType.Fireball,
-        SkillType.Heal,
-        SkillType.Magic_Regen,
-        SkillType.Warlock,
-      ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Helm_Leather_Cap(
     label: 'Leather Cap',
@@ -252,36 +192,30 @@ enum AmuletItem {
     subType: HelmType.Leather_Cap,
     maxHealth: 5,
     maxMagic: 3,
-    skillTypes: [
-      SkillType.Health_Regen,
-      SkillType.Vampire,
-      SkillType.Critical_Hit,
-      SkillType.Shield,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Helm_Steel_Cap(
     label: 'Steel Cap',
     slotType: SlotType.Helm,
     subType: HelmType.Steel_Cap,
     maxHealth: 8,
-    skillTypes: [
-      SkillType.Health_Regen,
-      SkillType.Vampire,
-      SkillType.Critical_Hit,
-      SkillType.Shield,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Helm_Full(
     label: 'Full Helm',
     slotType: SlotType.Helm,
     subType: HelmType.Full_Helm,
     maxHealth: 11,
-    skillTypes: [
-      SkillType.Health_Regen,
-      SkillType.Vampire,
-      SkillType.Critical_Hit,
-      SkillType.Shield,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Helm_Crooked_Hat(
     label: 'Crooked Hat',
@@ -289,12 +223,10 @@ enum AmuletItem {
     subType: HelmType.Pointed_Hat_Purple,
     maxHealth: 1,
     maxMagic: 10,
-    skillTypes: [
-      SkillType.Magic_Regen,
-      SkillType.Fireball,
-      SkillType.Frostball,
-      SkillType.Warlock,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Helm_Pointed_Hat(
     label: 'Pointed Hat',
@@ -302,12 +234,10 @@ enum AmuletItem {
     subType: HelmType.Pointed_Hat_Black,
     maxHealth: 2,
     maxMagic: 15,
-    skillTypes: [
-      SkillType.Magic_Regen,
-      SkillType.Fireball,
-      SkillType.Frostball,
-      SkillType.Warlock,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Helm_Cowl(
     label: 'Cowl',
@@ -315,25 +245,20 @@ enum AmuletItem {
     subType: HelmType.Cowl,
     maxHealth: 2,
     maxMagic: 7,
-    skillTypes: [
-      SkillType.Magic_Regen,
-      SkillType.Fireball,
-      SkillType.Frostball,
-      SkillType.Warlock,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Helm_Feathered_Cap(
     label: 'Feather Cap',
     slotType: SlotType.Helm,
     subType: HelmType.Feather_Cap,
     maxHealth: 3,
-    skillTypes: [
-      SkillType.Vampire,
-      SkillType.Warlock,
-      SkillType.Ice_Arrow,
-      SkillType.Fire_Arrow,
-      SkillType.Split_Shot,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Helm_Cape(
     label: 'Cape',
@@ -341,13 +266,10 @@ enum AmuletItem {
     subType: HelmType.Cape,
     maxHealth: 4,
     maxMagic: 2,
-    skillTypes: [
-      SkillType.Vampire,
-      SkillType.Warlock,
-      SkillType.Ice_Arrow,
-      SkillType.Fire_Arrow,
-      SkillType.Split_Shot,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Helm_Veil(
     label: 'Veil',
@@ -355,13 +277,10 @@ enum AmuletItem {
     subType: HelmType.Cape,
     maxHealth: 4,
     maxMagic: 2,
-    skillTypes: [
-      SkillType.Vampire,
-      SkillType.Warlock,
-      SkillType.Ice_Arrow,
-      SkillType.Fire_Arrow,
-      SkillType.Split_Shot,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Armor_Tunic(
     label: 'Tunic',
@@ -369,54 +288,40 @@ enum AmuletItem {
     subType: ArmorType.Tunic,
     maxHealth: 5,
     maxMagic: 5,
-    skillTypes: [
-      SkillType.Vampire,
-      SkillType.Warlock,
-      SkillType.Mighty_Strike,
-      SkillType.Shield,
-      SkillType.Critical_Hit,
-      SkillType.Area_Damage,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Armor_Leather(
     label: 'Leather',
     slotType: SlotType.Armor,
     subType: ArmorType.Leather,
     maxHealth: 10,
-    skillTypes: [
-      SkillType.Vampire,
-      SkillType.Warlock,
-      SkillType.Mighty_Strike,
-      SkillType.Shield,
-      SkillType.Critical_Hit,
-      SkillType.Area_Damage,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Armor_Chainmail(
     label: 'Chainmail',
     slotType: SlotType.Armor,
     subType: ArmorType.Chainmail,
     maxHealth: 20,
-    skillTypes: [
-      SkillType.Vampire,
-      SkillType.Mighty_Strike,
-      SkillType.Shield,
-      SkillType.Critical_Hit,
-      SkillType.Area_Damage,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Armor_Platemail(
     label: 'Platemail',
     slotType: SlotType.Armor,
     subType: ArmorType.Platemail,
     maxHealth: 30,
-    skillTypes: [
-      SkillType.Vampire,
-      SkillType.Mighty_Strike,
-      SkillType.Shield,
-      SkillType.Critical_Hit,
-      SkillType.Area_Damage,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Armor_Robes(
     label: 'Robes',
@@ -424,12 +329,10 @@ enum AmuletItem {
     subType: ArmorType.Robes,
     maxHealth: 5,
     maxMagic: 10,
-    skillTypes: [
-      SkillType.Magic_Regen,
-      SkillType.Warlock,
-      SkillType.Fireball,
-      SkillType.Frostball,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Armor_Cloak(
     label: 'Cloak',
@@ -437,13 +340,10 @@ enum AmuletItem {
     subType: ArmorType.Cloak,
     maxHealth: 10,
     maxMagic: 5,
-    skillTypes: [
-      SkillType.Vampire,
-      SkillType.Mighty_Strike,
-      SkillType.Shield,
-      SkillType.Critical_Hit,
-      SkillType.Area_Damage,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Armor_Mantle(
     label: 'Mantle',
@@ -451,60 +351,50 @@ enum AmuletItem {
     subType: ArmorType.Mantle,
     maxHealth: 6,
     maxMagic: 6,
-    skillTypes: [
-      SkillType.Vampire,
-      SkillType.Critical_Hit,
-      SkillType.Scout,
-      SkillType.Agility,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Armor_Shroud(
     label: 'Shroud',
     slotType: SlotType.Armor,
     subType: ArmorType.Shroud,
     maxHealth: 9,
-    skillTypes: [
-      SkillType.Vampire,
-      SkillType.Mighty_Strike,
-      SkillType.Shield,
-      SkillType.Critical_Hit,
-      SkillType.Area_Damage,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Shoes_Leather_Boots(
     label: 'Leather Boots',
     slotType: SlotType.Shoes,
     subType: ShoeType.Leather_Boots,
     maxHealth: 5,
-    skillTypes: [
-      SkillType.Vampire,
-      SkillType.Mighty_Strike,
-      SkillType.Shield,
-      SkillType.Critical_Hit,
-      SkillType.Area_Damage,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Shoes_Grieves(
     label: 'Grieves',
     slotType: SlotType.Shoes,
     subType: ShoeType.Grieves,
     maxHealth: 5,
-    skillTypes: [
-      SkillType.Scout,
-      SkillType.Agility,
-      SkillType.Area_Damage,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Shoes_Warrior_3_Sabatons_Common(
     label: 'Sabatons',
     slotType: SlotType.Shoes,
     subType: ShoeType.Sabatons,
     maxHealth: 5,
-    skillTypes: [
-      SkillType.Scout,
-      SkillType.Agility,
-      SkillType.Area_Damage,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Shoes_Black_Slippers(
     label: 'Black Slippers',
@@ -512,11 +402,10 @@ enum AmuletItem {
     subType: ShoeType.Black_Slippers,
     maxHealth: 1,
     maxMagic: 5,
-    skillTypes: [
-      SkillType.Scout,
-      SkillType.Agility,
-      SkillType.Area_Damage,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Shoes_Footwraps(
     label: 'Footwraps',
@@ -524,11 +413,10 @@ enum AmuletItem {
     subType: ShoeType.Footwraps,
     maxHealth: 1,
     maxMagic: 5,
-    skillTypes: [
-      SkillType.Scout,
-      SkillType.Agility,
-      SkillType.Area_Damage,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Shoes_Soles(
     label: 'Soles',
@@ -536,11 +424,10 @@ enum AmuletItem {
     subType: ShoeType.Soles,
     maxHealth: 1,
     maxMagic: 5,
-    skillTypes: [
-      SkillType.Scout,
-      SkillType.Agility,
-      SkillType.Area_Damage,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Shoes_Treads(
     label: 'Treads',
@@ -548,11 +435,10 @@ enum AmuletItem {
     subType: ShoeType.Treads,
     maxHealth: 1,
     maxMagic: 5,
-    skillTypes: [
-      SkillType.Scout,
-      SkillType.Agility,
-      SkillType.Area_Damage,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Shoes_Striders(
     label: 'Striders',
@@ -560,11 +446,10 @@ enum AmuletItem {
     subType: ShoeType.Striders,
     maxHealth: 1,
     maxMagic: 5,
-    skillTypes: [
-      SkillType.Scout,
-      SkillType.Agility,
-      SkillType.Area_Damage,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Shoes_Satin_Boots(
     label: 'Satin_Boots',
@@ -572,23 +457,24 @@ enum AmuletItem {
     subType: ShoeType.Satin_Boots,
     maxHealth: 1,
     maxMagic: 5,
-    skillTypes: [
-      SkillType.Scout,
-      SkillType.Agility,
-      SkillType.Area_Damage,
-    ],
+    skillSet: {
+      SkillType.Mighty_Strike: 1.0,
+      SkillType.Critical_Hit: 0.8,
+    },
   ),
   Consumable_Potion_Magic(
     label: 'Magic Potion',
     slotType: SlotType.Consumable,
     subType: ConsumableType.Potion_Blue,
-    skillTypes: [],
+    skillSet: {
+    },
   ),
   Consumable_Potion_Health(
       label: 'Health Potion',
       slotType: SlotType.Consumable,
       subType: ConsumableType.Potion_Red,
-      skillTypes: [],
+    skillSet: {
+    },
   );
 
   // int get levelMax => level + 1;
@@ -610,17 +496,14 @@ enum AmuletItem {
   final String label;
   final int? maxHealth;
   final int? maxMagic;
-  final List<SkillType> skillTypes;
-  final Map<SkillType, int> skillSet;
-  // final int skillPoints;
+  // final List<SkillType> skillTypes;
+  final Map<SkillType, double> skillSet;
 
   const AmuletItem({
     required this.slotType,
     required this.subType,
-    // required this.level,
     required this.label,
-    this.skillTypes = const [],
-    // this.skillPoints = 0,
+    // this.skillTypes = const [],
     this.quality = ItemQuality.Common,
     this.skillSet = const {},
     this.maxHealth = 0,
@@ -738,15 +621,7 @@ enum CasteType {
   Passive,
 }
 
-enum ItemQuality {
-  Common(bonus: 1.0),
-  Unique(bonus: 1.3),
-  Rare(bonus: 1.61);
 
-  final double bonus;
-  const ItemQuality({required this.bonus});
-
-}
 
 enum WeaponClass {
   Sword,

@@ -1390,36 +1390,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
   }
 
-  int calculatePoints({
-    required int level,
-    required ItemQuality quality,
-  }) =>
-      (level * 5 * quality.bonus).toInt();
-
   AmuletItemObject generateAmuletItemObject({
     required AmuletItem amuletItem,
     required int level,
     required ItemQuality itemQuality,
   }){
-    final skillPoints = <SkillType, int> {};
-    final points = calculatePoints(
-      level: level,
-      quality: itemQuality,
-    );
-    final skillTypes = amuletItem.skillTypes;
-
-    if (skillTypes.isNotEmpty) {
-      for (var i = 0; i < points; i++) {
-        final skillType = randomItem(skillTypes);
-        final currentPoints = skillPoints[skillType] ?? 0;
-        skillPoints[skillType] = currentPoints + 1;
-      }
-    }
-
-    for (final entry in amuletItem.skillSet.entries){
-      final currentPoints = skillPoints[entry.key] ?? 0;
-      skillPoints[entry.key] = entry.value + currentPoints;
-    }
 
     final damageMin = amuletItem.damageMin;
     final damageMax = amuletItem.damageMax;
@@ -1431,10 +1406,21 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     return AmuletItemObject(
       amuletItem: amuletItem,
-      skillPoints: skillPoints,
+      skillPoints: getAmuletItemSkillPoints(amuletItem, level),
       damage: damage,
       level: level,
     );
+  }
+
+  Map<SkillType, int> getAmuletItemSkillPoints(AmuletItem amuletItem, int level){
+    final skillPoints = <SkillType, int> {};
+    for (final entry in amuletItem.skillSet.entries){
+      final ratio = entry.value;
+      final levelPoints = (level * ratio).toInt();
+      final currentPoints = skillPoints[entry.key] ?? 0;
+      skillPoints[entry.key] = levelPoints + currentPoints;
+    }
+    return skillPoints;
   }
 
   void characterPerformSkillTypeWindCut(Character character) {

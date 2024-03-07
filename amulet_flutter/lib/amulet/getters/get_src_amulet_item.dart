@@ -81,7 +81,5 @@ List<double> getSrcAmuletItem(AmuletItem amuletItem) => switch (amuletItem) {
           32,
           32
         ],
-      AmuletItem.Weapon_Sword_Short_Rusty => _weapons_sword_short,
-      AmuletItem.Weapon_Sword_Short_Unique => _weapons_sword_short,
       AmuletItem.Assassins_Blade => _weapons_sword_short,
 };
