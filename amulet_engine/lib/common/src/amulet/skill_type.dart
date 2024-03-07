@@ -1,7 +1,8 @@
 import 'package:lemon_math/src.dart';
 
-import 'amulet_item.dart';
 import 'amulet_settings.dart';
+import 'attack_speed.dart';
+import 'caste_type.dart';
 
 enum SkillType {
   None(

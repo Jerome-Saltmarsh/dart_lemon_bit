@@ -1288,14 +1288,6 @@ class AmuletPlayer extends IsometricPlayer with
     return equippedWeapon?.amuletItem.range;
   }
 
-  WeaponClass? get equippedWeaponClass {
-      final weaponType = equippedWeapon?.amuletItem.subType;
-      if (weaponType == null){
-        return null;
-      }
-      return WeaponClass.fromWeaponType(weaponType);
-  }
-
   int getSkillTypeLevelAssigned(SkillType skillType){
       if (skillTypeAssignedToSkillSlot(skillType)){
         return getSkillTypeLevel(skillType);

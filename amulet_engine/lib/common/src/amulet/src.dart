@@ -13,3 +13,7 @@ export 'network/network_response_amulet.dart';
 export 'quests/src.dart';
 export 'difficulty.dart';
 export 'item_quality.dart';
+export 'caste_type.dart';
+export 'weapon_range.dart';
+export 'area_damage.dart';
+export 'attack_speed.dart';
