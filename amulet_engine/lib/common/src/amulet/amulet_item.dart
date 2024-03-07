@@ -8,8 +8,8 @@ enum AmuletItem {
     subType: WeaponType.Sword_Short,
     attackSpeed: AttackSpeed.Very_Fast,
     range: WeaponRange.Very_Short,
-    damageMin: 2,
-    damageMax: 4,
+    damageMin: 0.5,
+    damage: 4,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
       SkillType.Critical_Hit: 0.8,
@@ -21,8 +21,8 @@ enum AmuletItem {
     subType: WeaponType.Sword_Short,
     attackSpeed: AttackSpeed.Very_Fast,
     range: WeaponRange.Very_Short,
-    damageMin: 3,
-    damageMax: 5,
+    damageMin: 0.8,
+    damage: 5,
     skillSet: {
       SkillType.Critical_Hit: 5,
       SkillType.Agility: 5,
@@ -35,8 +35,8 @@ enum AmuletItem {
     subType: WeaponType.Sword_Short,
     attackSpeed: AttackSpeed.Very_Fast,
     range: WeaponRange.Very_Short,
-    damageMin: 4,
-    damageMax: 6,
+    damageMin: 0.65,
+    damage: 6,
     skillSet: {
       SkillType.Critical_Hit: 5,
       SkillType.Agility: 5,
@@ -49,8 +49,8 @@ enum AmuletItem {
     subType: WeaponType.Sword_Broad,
     attackSpeed: AttackSpeed.Fast,
     range: WeaponRange.Short,
-    damageMin: 4,
-    damageMax: 8,
+    damageMin: 0.8,
+    damage: 8,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
       SkillType.Critical_Hit: 0.8,
@@ -62,8 +62,8 @@ enum AmuletItem {
     subType: WeaponType.Sword_Long,
     attackSpeed: AttackSpeed.Slow,
     range: WeaponRange.Long,
-    damageMin: 6,
-    damageMax: 12,
+    damageMin: 0.8,
+    damage: 12,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
       SkillType.Critical_Hit: 0.8,
@@ -75,8 +75,8 @@ enum AmuletItem {
     subType: WeaponType.Sword_Giant,
     attackSpeed: AttackSpeed.Very_Slow,
     range: WeaponRange.Very_Long,
-    damageMin: 10,
-    damageMax: 20,
+    damageMin: 0.7,
+    damage: 20,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
       SkillType.Critical_Hit: 0.8,
@@ -88,8 +88,8 @@ enum AmuletItem {
     subType: WeaponType.Bow_Short,
     attackSpeed: AttackSpeed.Fast,
     range: WeaponRange.Very_Short,
-    damageMin: 2,
-    damageMax: 4,
+    damageMin: 0.9,
+    damage: 4,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
       SkillType.Critical_Hit: 0.8,
@@ -101,8 +101,8 @@ enum AmuletItem {
     subType: WeaponType.Bow_Reflex,
     attackSpeed: AttackSpeed.Fast,
     range: WeaponRange.Short,
-    damageMin: 3,
-    damageMax: 6,
+    damageMin: 0.5,
+    damage: 6,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
       SkillType.Critical_Hit: 0.8,
@@ -114,8 +114,8 @@ enum AmuletItem {
     subType: WeaponType.Bow_Composite,
     attackSpeed: AttackSpeed.Slow,
     range: WeaponRange.Long,
-    damageMin: 5,
-    damageMax: 8,
+    damageMin: 0.5,
+    damage: 8,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
       SkillType.Critical_Hit: 0.8,
@@ -127,8 +127,8 @@ enum AmuletItem {
     subType: WeaponType.Bow_Long,
     attackSpeed: AttackSpeed.Very_Slow,
     range: WeaponRange.Very_Long,
-    damageMin: 8,
-    damageMax: 12,
+    damageMin: 0.75,
+    damage: 12,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
       SkillType.Critical_Hit: 0.8,
@@ -140,8 +140,8 @@ enum AmuletItem {
     subType: WeaponType.Staff_Wand,
     attackSpeed: AttackSpeed.Very_Fast,
     range: WeaponRange.Very_Short,
-    damageMin: 2,
-    damageMax: 3,
+    damageMin: 0.85,
+    damage: 3,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
       SkillType.Critical_Hit: 0.8,
@@ -153,8 +153,8 @@ enum AmuletItem {
     subType: WeaponType.Staff_Globe,
     attackSpeed: AttackSpeed.Fast,
     range: WeaponRange.Short,
-    damageMin: 4,
-    damageMax: 6,
+    damageMin: 0.5,
+    damage: 6,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
       SkillType.Critical_Hit: 0.8,
@@ -166,8 +166,8 @@ enum AmuletItem {
       subType: WeaponType.Staff_Scepter,
       attackSpeed: AttackSpeed.Slow,
       range: WeaponRange.Long,
-      damageMin: 3,
-      damageMax: 5,
+      damageMin: 0.6,
+      damage: 5,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
       SkillType.Critical_Hit: 0.8,
@@ -179,8 +179,8 @@ enum AmuletItem {
       subType: WeaponType.Staff_Long,
       attackSpeed: AttackSpeed.Very_Slow,
       range: WeaponRange.Very_Long,
-      damageMin: 5,
-      damageMax: 8,
+      damageMin: 0.8,
+      damage: 8,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
       SkillType.Critical_Hit: 0.8,
@@ -487,9 +487,9 @@ enum AmuletItem {
   /// see item_type.dart in commons
   final SlotType slotType;
   final int subType;
-  // final double? damage;
   final double? damageMin;
-  final double? damageMax;
+  /// per level
+  final double? damage;
   final WeaponRange? range;
   final AttackSpeed? attackSpeed;
   final ItemQuality quality;
@@ -503,7 +503,6 @@ enum AmuletItem {
     required this.slotType,
     required this.subType,
     required this.label,
-    // this.skillTypes = const [],
     this.quality = ItemQuality.Common,
     this.skillSet = const {},
     this.maxHealth = 0,
@@ -511,7 +510,7 @@ enum AmuletItem {
     this.range,
     this.attackSpeed,
     this.damageMin,
-    this.damageMax,
+    this.damage,
   });
 
   bool get isWeapon => slotType == SlotType.Weapon;

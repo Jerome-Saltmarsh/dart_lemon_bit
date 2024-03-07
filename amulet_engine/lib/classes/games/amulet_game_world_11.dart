@@ -214,7 +214,6 @@ class AmuletGameWorld11 extends AmuletGame {
               player.setQuestMain(QuestMain.Kill_The_Witch);
               player.acquireAmuletItemObject(
                   AmuletItemObject(
-                    damage: 2,
                     amuletItem: AmuletItem.Weapon_Sword_Short,
                     skillPoints: {
                       SkillType.Critical_Hit: 1,

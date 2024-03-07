@@ -1394,23 +1394,12 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required AmuletItem amuletItem,
     required int level,
     required ItemQuality itemQuality,
-  }){
-
-    final damageMin = amuletItem.damageMin;
-    final damageMax = amuletItem.damageMax;
-    double? damage;
-
-    if (damageMin != null && damageMax != null){
-      damage = randomBetween(damageMin, damageMax);
-    }
-
-    return AmuletItemObject(
-      amuletItem: amuletItem,
-      skillPoints: getAmuletItemSkillPoints(amuletItem, level),
-      damage: damage,
-      level: level,
-    );
-  }
+  }) =>
+      AmuletItemObject(
+        amuletItem: amuletItem,
+        skillPoints: getAmuletItemSkillPoints(amuletItem, level),
+        level: level,
+      );
 
   Map<SkillType, int> getAmuletItemSkillPoints(AmuletItem amuletItem, int level){
     final skillPoints = <SkillType, int> {};

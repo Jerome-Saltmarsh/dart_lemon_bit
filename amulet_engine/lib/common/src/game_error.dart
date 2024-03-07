@@ -1,4 +1,3 @@
-
 enum GameError {
   Invalid_Client_Request,
   Unable_To_Join_Game,
@@ -87,7 +86,19 @@ enum GameError {
   Insufficient_Magic,
   Invalid_Portal_Scene,
   No_Connecting_Portal,
-  Potion_Slots_Full, Invalid_Consumable_Index, Consumable_Empty, Invalid_Skill_Slot_Index, Invalid_Skill_Type_Index, Skill_Type_Locked, Amulet_Item_Null, GameObject_Cannot_Be_Acquired, Invalid_GameObject_State, Item_Not_Consumable;
+  Potion_Slots_Full,
+  Invalid_Consumable_Index,
+  Consumable_Empty,
+  Invalid_Skill_Slot_Index,
+  Invalid_Skill_Type_Index,
+  Skill_Type_Locked,
+  Amulet_Item_Null,
+  GameObject_Cannot_Be_Acquired,
+  Invalid_GameObject_State,
+  Item_Not_Consumable,
+  Invalid_Object_Level,
+  Invalid_Object_Damage
+  ;
 
   static GameError fromIndex(int index) {
     if (index < 0) throw Exception('$index < 0');

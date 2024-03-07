@@ -6,7 +6,6 @@ import 'package:amulet_flutter/gamestream/operation_status.dart';
 import 'package:amulet_flutter/gamestream/ui/src.dart';
 import 'package:amulet_flutter/packages/lemon_websocket_client.dart';
 import 'package:amulet_flutter/server/src.dart';
-import 'package:amulet_flutter/server/server_mode.dart';
 import 'package:amulet_flutter/website/enums/website_page.dart';
 import 'package:amulet_flutter/website/functions/build_website_page_select_region.dart';
 import 'package:amulet_flutter/website/website_game.dart';

@@ -5,13 +5,11 @@ import '../amulet/skill_type.dart';
 class AmuletItemObject {
   final AmuletItem amuletItem;
   final Map<SkillType, int> skillPoints;
-  final double? damage;
   final int? level;
 
   AmuletItemObject({
     required this.amuletItem,
     required this.skillPoints,
-    this.damage,
     this.level,
   }) {
     assert(amuletItem.isConsumable || level != null);
@@ -19,5 +17,9 @@ class AmuletItemObject {
 
   int get quantify {
     return skillPoints.length;
+  }
+
+  double? get damageMax {
+    return (amuletItem.damage ?? 0) * (level ?? 0);
   }
 }

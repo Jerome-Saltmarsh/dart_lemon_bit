@@ -517,16 +517,7 @@ class AmuletPlayer extends IsometricPlayer with
       writeUInt16(entry.value); // skill type points
     }
 
-    final damage = value.damage;
     final level = value.level;
-
-    if (damage != null) {
-      writeTrue();
-      writeDecimal(damage);
-    } else {
-      writeFalse();
-    }
-
     tryWriteUInt16(level);
   }
 
@@ -1254,8 +1245,32 @@ class AmuletPlayer extends IsometricPlayer with
     tryWrite(writeString, subtitles);
   }
 
-  double get equippedWeaponDamage =>
-      (equippedWeapon?.damage ?? 0) * equippedWeaponLevel;
+  double get equippedWeaponDamage {
+    final equippedWeapon = this.equippedWeapon;
+    if (equippedWeapon == null) {
+      return 0;
+    }
+
+    final level = equippedWeapon.level;
+
+    if (level == null || level <= 0) {
+      writeGameError(GameError.Invalid_Object_Level);
+      return 0.0;
+    }
+
+    final amuletItem = equippedWeapon.amuletItem;
+    final damage = amuletItem.damage;
+
+    if (damage == null || damage <= 0) {
+      writeGameError(GameError.Invalid_Object_Damage);
+      return 0.0;
+    }
+
+    final maxDamage = damage * level;
+    final minDamage = maxDamage * (amuletItem.damageMin ?? 0.61);
+
+    return randomBetween(minDamage, maxDamage);
+  }
 
   int get equippedWeaponLevel => equippedWeapon?.level ?? 0;
 

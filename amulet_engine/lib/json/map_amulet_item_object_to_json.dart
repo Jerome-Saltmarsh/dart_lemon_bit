@@ -9,7 +9,6 @@ Json mapAmuletItemObjectToJson(AmuletItemObject amuletItemObject) =>
     Json()
       ..[AmuletField.Skill_Points] = mapSkillPointsToJson(amuletItemObject.skillPoints)
       ..[AmuletField.Amulet_Item] = amuletItemObject.amuletItem.name
-      ..[AmuletField.Damage] = amuletItemObject.damage
       ..[AmuletField.Level] = amuletItemObject.level
     ;
 
