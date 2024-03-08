@@ -123,6 +123,7 @@ class IsometricImages with IsometricComponent {
   late final Image atlas_nodes;
   late final Image atlas_icons;
   late final Image atlas_amulet_items;
+  late final Image atlas_text;
   late final Image square;
   late final Image template_spinning;
   late final Sprite emptySprite;
@@ -141,6 +142,7 @@ class IsometricImages with IsometricComponent {
     loadPng('atlas_projectiles').then((value) => atlas_projectiles = value);
     loadPng('atlas_icons').then((value) => atlas_icons = value);
     loadPng('atlas_amulet_items').then((value) => atlas_amulet_items = value);
+    loadPng('atlas_text').then((value) => atlas_text = value);
 
     emptySprite = Sprite(
         image: empty,

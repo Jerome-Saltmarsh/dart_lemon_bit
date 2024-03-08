@@ -464,10 +464,24 @@ class IsometricRender with IsometricComponent {
     render.wireFrameRed(editor.row, editor.column, editor.z);
   }
 
-  void renderText({required String value, required double x, required double y}){
-    const charWidth = 4.5;
-    engine.flushBuffer();
-    engine.writeText(value, x - charWidth * value.length, y);
+  void renderText({
+    required String value,
+    required double x,
+    required double y,
+  }){
+    // const charWidth = 4.5;
+    final atlasText = images.atlas_text;
+    engine.renderSprite(
+      image: atlasText,
+      srcX: 0,
+      srcY: 0,
+      srcWidth: 16,
+      srcHeight: 32,
+      dstX: x,
+      dstY: y,
+    );
+    // engine.flushBuffer();
+    // engine.writeText(value, x - charWidth * value.length, y);
   }
 
   void shadowBelowPosition(Position position) =>

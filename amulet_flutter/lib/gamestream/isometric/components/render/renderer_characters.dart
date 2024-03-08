@@ -63,17 +63,16 @@ class RendererCharacters extends RenderGroup {
         if (character.isPlayer){
           render.renderMagicBarCharacter(character);
         }
+
+        if (!character.isPlayer) {
+          render.textPosition(character, character.level, offsetY: -100);
+        }
       }
     }
 
     if (options.renderCharacterAnimationFrame){
       render.textPosition(character, character.animationFrame, offsetY: -100);
     }
-
-    if (!character.isPlayer) {
-      render.textPosition(character, character.level, offsetY: -100);
-    }
-
 
     if (character.spawning) {
       return;
