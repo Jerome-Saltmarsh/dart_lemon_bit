@@ -12,7 +12,7 @@ AmuletFiend mapFiendJsonToAmuletFiend(Json fiendJson) {
     x: fiendJson.getDouble('x'),
     y: fiendJson.getDouble('y'),
     z: fiendJson.getDouble('z'),
-    level: fiendJson.tryGetInt('level') ?? 1,
+    level: fiendJson.getInt(AmuletField.Level),
     team: TeamType.Evil,
     fiendType: FiendType.values.tryGet(fiendJson.getInt('fiend_type')) ?? FiendType.Goblin,
     difficulty: Difficulty.values.tryGet(fiendJson.tryGetInt(AmuletField.Difficulty)) ?? Difficulty.Normal,

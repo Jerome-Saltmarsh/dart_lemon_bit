@@ -15,6 +15,7 @@ Json mapAmuletFiendToJson(AmuletFiend amuletFiend){
   json['health'] = amuletFiend.health;
   json['character_state'] = amuletFiend.characterState;
   json['angle'] = amuletFiend.angle.toInt();
+  json[AmuletField.Level] = amuletFiend.level;
   json[AmuletField.Difficulty] = amuletFiend.difficulty.index;
   return json;
 }
