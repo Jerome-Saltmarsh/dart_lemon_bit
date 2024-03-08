@@ -1,6 +1,8 @@
 
 
 
+import 'package:lemon_lang/src.dart';
+
 import '../../common/src.dart';
 import '../../isometric/src.dart';
 import '../amulet_game.dart';
@@ -212,7 +214,7 @@ class AmuletGameWorld11 extends AmuletGame {
               "It's not much, but please take my old sword."
               'By the way, Sophie wished to speak with you.',
             onInteractionOver: () {
-              player.setQuestMain(QuestMain.Kill_The_Witch);
+              player.setQuestMain(QuestMain.Find_Witches_Lair);
               player.acquireAmuletItemObject(
                   AmuletItemObject(
                     amuletItem: AmuletItem.Weapon_Sword_Short,
@@ -222,8 +224,11 @@ class AmuletGameWorld11 extends AmuletGame {
             }
         );
         break;
+      case QuestMain.Find_Witches_Lair:
+        player.talk(gareth, 'The witches lair is somewhere in ${AmuletScene.Lost_Swamps.name.clean} to the north.');
+        break;
       case QuestMain.Kill_The_Witch:
-        player.talk(gareth, 'The witches lair is somewhere within the spooky woods.');
+        player.talk(gareth, 'Find the witch and kill her.');
         break;
       case QuestMain.Return_To_Gareth:
         player.talk(gareth, 'You killed her! I cannot believe it. Finally we are free of her curse.');
@@ -305,11 +310,16 @@ class AmuletGameWorld11 extends AmuletGame {
             npc, 'The man who calls himself Gareth seems to carry a concerned look about him'
         );
         break;
-      case QuestMain.Kill_The_Witch:
+      case QuestMain.Find_Witches_Lair:
         player.talk(npc,
             'It is said that the witch lives far to the north in her castle.'
             'with her magics she can change her form.'
             'it seems you have a formidable opponents.'
+        );
+        break;
+      case QuestMain.Kill_The_Witch:
+        player.talk(npc,
+            'Have courage friend.'
         );
         break;
       case QuestMain.Return_To_Gareth:

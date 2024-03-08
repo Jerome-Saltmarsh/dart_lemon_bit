@@ -1,8 +1,9 @@
 enum QuestMain {
   Speak_With_Gareth('Speak with Gareth by the campfire in the village'),
-  Kill_The_Witch('Find the witches lair and kill her'),
+  Find_Witches_Lair("Find the entrance to the witch's lair in the Lost Swamps"),
+  Kill_The_Witch("Kill the witch"),
   Return_To_Gareth('Return to the village and speak with Gareth'),
-  Completed('Quest completed');
+  Completed('Demo Completed');
   final String instructions;
   const QuestMain(this.instructions);
 }

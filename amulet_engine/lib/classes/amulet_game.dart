@@ -1363,12 +1363,19 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       return;
     }
 
+    character.onPortalUsed(
+        src: this.amuletScene,
+        dst: amuletScene,
+    );
+
     amulet.playerChangeGame(
         player: character,
         target: targetGame,
         index: targetNodeIndex,
     );
   }
+
+
 
   int getCharacterSkillTypeLevel(Character character, SkillType skillType){
     if (character is AmuletPlayer){

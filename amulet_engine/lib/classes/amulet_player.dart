@@ -1675,6 +1675,17 @@ class AmuletPlayer extends IsometricPlayer with
     writeTrue();
     write(value);
   }
+
+  void onPortalUsed({
+    required AmuletScene src,
+    required AmuletScene dst,
+  }){
+      if (
+      dst == AmuletScene.Witches_Lair_1 &&
+      questMain == QuestMain.Find_Witches_Lair) {
+        questMain = QuestMain.values[QuestMain.Find_Witches_Lair.index + 1];
+      }
+  }
 }
 
 String buildResistances(String text, String name, double resistance){
@@ -1689,4 +1700,3 @@ String buildResistances(String text, String name, double resistance){
 
 typedef TalkOption = MapEntry<String, Function(AmuletPlayer player)>;
 typedef TalkOptions = Map<String, Function(AmuletPlayer player)>;
-// typedef TalkOptionList = List<TalkOption>;
