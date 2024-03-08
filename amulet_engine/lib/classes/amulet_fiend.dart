@@ -24,7 +24,7 @@ class AmuletFiend extends Character {
     attackDamage: fiendType.damage,
     attackRange: fiendType.weaponRange,
     attackDuration: fiendType.attackDuration,
-    health: fiendType.health.toDouble(),
+    health: 1,
   ) {
     respawnDurationTotal = -1;
     weaponHitForce = 2.0;

@@ -275,7 +275,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       difficulty: difficulty,
     )
       ..weaponHitForce = 2;
-
+    character.health = character.maxHealth;
     character.roamEnabled = true;
     add(character);
     return character;

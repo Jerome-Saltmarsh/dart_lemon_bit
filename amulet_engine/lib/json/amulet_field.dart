@@ -25,4 +25,10 @@ class AmuletField {
   static const Initialized = 'initialized';
   static const Amulet_Scene_Name = 'amulet_scene_name';
   static const Amulet = 'amulet';
+  static const Angle = 'angle';
+  static const Character_State = 'character_state';
+  static const Fiend_Type = 'fiend_type';
+  static const Start_X = 'start_x';
+  static const Start_Y = 'start_y';
+  static const Start_Z = 'start_z';
 }
