@@ -76,11 +76,14 @@ void writeJsonAmuletToMemory(Json jsonAmulet, AmuletPlayer player) {
          if (game.amuletScene.index != sceneIndex) continue;
          final characters = game.characters;
          characters.removeWhere((character) => character is AmuletFiend);
-         characters.addAll(
-             sceneJson
-                 .getObjects('fiends')
-                 .map(mapFiendJsonToAmuletFiend)
-         );
+
+         final fiendJsons = sceneJson.getObjects('fiends');
+
+         for (final fiendJson in fiendJsons) {
+           final amuletFiend = mapJsonToAmuletFiend(fiendJson);
+           if (amuletFiend == null) continue;
+           characters.add(amuletFiend);
+         }
          final nodeTypes = game.scene.nodeTypes;
          final nodeTypesLength = nodeTypes.length;
          final variations = game.scene.variations;

@@ -7,22 +7,35 @@ import 'package:lemon_lang/src.dart';
 
 import 'amulet_field.dart';
 
-AmuletFiend mapFiendJsonToAmuletFiend(Json fiendJson) {
+AmuletFiend? mapJsonToAmuletFiend(Json json) {
+
+  final x = json.tryGetDouble(AmuletField.X);
+  final y = json.tryGetDouble(AmuletField.Y);
+  final z = json.tryGetDouble(AmuletField.Z);
+  final level = json.tryGetInt(AmuletField.Level);
+
+  if (
+    x == null ||
+    y == null ||
+    z == null ||
+    level == null
+  ) return null;
+
   final amuletFiend = AmuletFiend(
-    x: fiendJson.getDouble(AmuletField.X),
-    y: fiendJson.getDouble(AmuletField.Y),
-    z: fiendJson.getDouble(AmuletField.Z),
-    level: fiendJson.getInt(AmuletField.Level),
+    x: x,
+    y: y,
+    z: z,
+    level: level,
     team: TeamType.Evil,
-    fiendType: FiendType.values.tryGet(fiendJson.getInt(AmuletField.Fiend_Type)) ?? FiendType.Goblin,
-    difficulty: Difficulty.values.tryGet(fiendJson.tryGetInt(AmuletField.Difficulty)) ?? Difficulty.Normal,
+    fiendType: FiendType.values.tryGet(json.getInt(AmuletField.Fiend_Type)) ?? FiendType.Goblin,
+    difficulty: Difficulty.values.tryGet(json.tryGetInt(AmuletField.Difficulty)) ?? Difficulty.Normal,
   )
-    ..health = fiendJson.getDouble(AmuletField.Health)
-    ..characterState = fiendJson.getInt(AmuletField.Character_State)
-    ..angle = fiendJson.getDouble(AmuletField.Angle)
-    ..startPositionX = fiendJson.getDouble(AmuletField.Start_X)
-    ..startPositionY = fiendJson.getDouble(AmuletField.Start_Y)
-    ..startPositionZ = fiendJson.getDouble(AmuletField.Start_Z);
+    ..health = json.getDouble(AmuletField.Health)
+    ..characterState = json.getInt(AmuletField.Character_State)
+    ..angle = json.getDouble(AmuletField.Angle)
+    ..startPositionX = json.getDouble(AmuletField.Start_X)
+    ..startPositionY = json.getDouble(AmuletField.Start_Y)
+    ..startPositionZ = json.getDouble(AmuletField.Start_Z);
 
   if (amuletFiend.dead) {
     amuletFiend.frame = Character.maxAnimationDeathFrames.toDouble();
