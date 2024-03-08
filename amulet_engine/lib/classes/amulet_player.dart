@@ -623,9 +623,14 @@ class AmuletPlayer extends IsometricPlayer with
 
     for (final skillPoint in skillPoints){
       final skillType = skillPoint.key;
-      if (!skillTypeAssignedToSkillSlot(skillType)) {
-        tryToAssignSkillTypeToEmptySlot(skillType);
-      }
+      final level = getSkillTypeLevel(skillType);
+
+      if (
+        level <= 0 ||
+        skillTypeAssignedToSkillSlot(skillType)
+      ) continue;
+
+      tryToAssignSkillTypeToEmptySlot(skillType);
     }
 
     notifyEquipmentDirty();
@@ -651,6 +656,7 @@ class AmuletPlayer extends IsometricPlayer with
 
   void tryToAssignSkillTypeToEmptySlot(SkillType skillType) {
     final availableIndex = getEmptySkillSlotIndex();
+
     if (availableIndex != null) {
       setSkillSlotValue(
         skillType: skillType,
