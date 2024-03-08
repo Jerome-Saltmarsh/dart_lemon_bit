@@ -470,9 +470,28 @@ class IsometricRender with IsometricComponent {
     required double y,
   }){
     // const charWidth = 4.5;
-    final atlasText = images.atlas_text;
+    final characters = value.characters;
+    var i = 0;
+    for (final character in characters){
+      renderChar(character, x + (i * 16), y);
+      i++;
+    }
+  }
+
+  void renderChar(String char, double x, double y){
+    if (char.length != 1){
+      throw Exception();
+    }
+
+    final number = int.tryParse(char);
+
+    if (number != null){
+      renderInt(number, x, y);
+      return;
+    }
+
     engine.renderSprite(
-      image: atlasText,
+      image: images.atlas_text,
       srcX: 0,
       srcY: 0,
       srcWidth: 16,
@@ -480,9 +499,22 @@ class IsometricRender with IsometricComponent {
       dstX: x,
       dstY: y,
     );
-    // engine.flushBuffer();
-    // engine.writeText(value, x - charWidth * value.length, y);
   }
+
+  void renderInt(int value, double x, double y) =>
+      engine.renderSprite(
+      image: images.atlas_text,
+      srcX: value * 16,
+      srcY: 0,
+      srcWidth: 16,
+      srcHeight: 32,
+      dstX: x,
+      dstY: y,
+    );
+
+
+
+
 
   void shadowBelowPosition(Position position) =>
       shadowBelowXYZ(position.x, position.y, position.z);
