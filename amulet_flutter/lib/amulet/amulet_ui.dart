@@ -1390,12 +1390,17 @@ class AmuletUI {
         children: [
           buildIconSkillType(skillType),
           width8,
-          Container(
-              child: buildText(
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              buildText(
                 skillType.name.clean,
                 underline: true,
                 color: Colors.white70,
-              )
+              ),
+              buildTextLevel(level),
+            ],
           ),
         ],
       ),
@@ -1606,7 +1611,7 @@ class AmuletUI {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
-                          buildText('lvl ${amuletItemObject.level}', color: Colors.white70, size: 16)
+                          buildTextLevel(amuletItemObject.level)
                         ],
                       ),
                     ],
@@ -1624,6 +1629,9 @@ class AmuletUI {
       ),
     );
   }
+
+  Widget buildTextLevel(int level) =>
+      buildText('lvl $level', color: Colors.white70, size: 16);
 
   Widget buildColumnAmuletItemObject(AmuletItemObject next){
 
