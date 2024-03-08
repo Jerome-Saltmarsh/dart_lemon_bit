@@ -124,7 +124,7 @@ class Amulet {
       time: amuletTime,
       environment: amuletEnvironment,
       name: 'Lost Swamps',
-      amuletScene: AmuletScene.World_00,
+      amuletScene: AmuletScene.Lost_Swamps,
       fiendLevelMin: 3,
       fiendLevelMax: 4,
     );
@@ -135,7 +135,7 @@ class Amulet {
       time: amuletTime,
       environment: amuletEnvironment,
       name: 'Marshlands',
-      amuletScene: AmuletScene.World_01,
+      amuletScene: AmuletScene.Marshlands,
       fiendLevelMin: 1,
       fiendLevelMax: 3,
     );

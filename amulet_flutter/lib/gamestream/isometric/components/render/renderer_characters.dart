@@ -70,6 +70,11 @@ class RendererCharacters extends RenderGroup {
       render.textPosition(character, character.animationFrame, offsetY: -100);
     }
 
+    if (!character.isPlayer) {
+      render.textPosition(character, character.level, offsetY: -100);
+    }
+
+
     if (character.spawning) {
       return;
     }

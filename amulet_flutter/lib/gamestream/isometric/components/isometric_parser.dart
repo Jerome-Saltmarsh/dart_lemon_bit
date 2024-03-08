@@ -565,6 +565,13 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
         character.actionComplete = 0;
       }
 
+      final isFiend = readBool();
+      character.isFiend = isFiend;
+      if (isFiend){
+          character.level = readUInt16();
+      }
+
+
       scene.totalCharacters++;
     }
   }

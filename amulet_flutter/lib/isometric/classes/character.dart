@@ -24,6 +24,8 @@ class Character extends Position {
   var name = '';
   var text = '';
   var allie = false;
+  var level = 0;
+  var isFiend = false;
   /// percentage between 0 and 1
   var health = 1.0;
   var colorSouthEast = 0;
