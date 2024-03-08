@@ -24,7 +24,8 @@ class Amulet {
 
   late final amuletGameLoading = AmuletGame(
       amulet: this,
-      level: 0,
+      fiendLevelMin: 0,
+      fiendLevelMax: 0,
       scene: Scene(
         name: 'loading',
         nodeTypes: Uint8List(0),
@@ -124,7 +125,8 @@ class Amulet {
       environment: amuletEnvironment,
       name: 'Lost Swamps',
       amuletScene: AmuletScene.World_00,
-      level: 3,
+      fiendLevelMin: 3,
+      fiendLevelMax: 4,
     );
 
     amuletGameWorld01 = AmuletGame(
@@ -134,7 +136,8 @@ class Amulet {
       environment: amuletEnvironment,
       name: 'Marshlands',
       amuletScene: AmuletScene.World_01,
-      level: 2,
+      fiendLevelMin: 1,
+      fiendLevelMax: 3,
     );
 
     amuletGameVillage = AmuletGameWorld11(amulet: this);
@@ -189,11 +192,12 @@ class Amulet {
           floorType: NodeType.Empty,
           nodeOrientation: NodeOrientation.None,
       ),
+      fiendLevelMax: 1,
+      fiendLevelMin: 1,
       time: amuletTime,
       environment: amuletEnvironment,
       name: amuletScene.name,
       amuletScene: amuletScene,
-      level: 1,
     );
 
   void _initializeUpdateTimer() {

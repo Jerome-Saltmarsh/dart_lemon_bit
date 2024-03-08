@@ -1637,12 +1637,12 @@ class AmuletUI {
 
     return Column(
       children: [
-          if (levelDiff != null)
-            buildComparisonRow(
-              lead: buildText('level'),
-              value: next.level,
-              diff: levelDiff,
-            ),
+          // if (levelDiff != null)
+            // buildComparisonRow(
+            //   lead: buildText('level'),
+            //   value: next.level,
+            //   diff: levelDiff,
+            // ),
           // if (valueDiff != null)
           //   buildComparisonRow(
           //     lead: buildText('value'),

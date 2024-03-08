@@ -11,7 +11,8 @@ class WitchesLair1 extends AmuletGame {
   }) : super (
     name: 'Witches Lair Lvl 1',
     amuletScene: AmuletScene.Witches_Lair_1,
-    level: 4,
+    fiendLevelMin: 3,
+    fiendLevelMax: 5,
   );
 }
 

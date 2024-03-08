@@ -14,7 +14,8 @@ class WitchesLair2 extends AmuletGame {
   }) : super (
     name: 'Witches lair 2',
     amuletScene: AmuletScene.Witches_Lair_2,
-    level: 10,
+    fiendLevelMin: 10,
+    fiendLevelMax: 10
   ) {
     final indexSpawnWitch = scene.getKey('spawn_witch');
 

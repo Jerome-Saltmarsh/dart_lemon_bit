@@ -32,7 +32,8 @@ class AmuletGameWorld11 extends AmuletGame {
       time: amulet.amuletTime,
       environment: amulet.amuletEnvironment,
       scene: amulet.scenes.world_11,
-      level: 1,
+      fiendLevelMin: 1,
+      fiendLevelMax: 1,
   ) {
     indexSpawnPlayer = scene.getKey(keySpawnPlayer);
     final indexSpawnGuard1 = scene.getKey(keySpawnGuard1);

@@ -1248,7 +1248,7 @@ class AmuletPlayer extends IsometricPlayer with
 
     final level = equippedWeapon.level;
 
-    if (level == null || level <= 0) {
+    if (level <= 0) {
       writeGameError(GameError.Invalid_Object_Level);
       return 0.0;
     }
@@ -1647,7 +1647,7 @@ class AmuletPlayer extends IsometricPlayer with
       spawnAmuletItemObject(
           amuletGame.generateAmuletItemObject(
              amuletItem: randomItem(AmuletItem.values),
-             level: amuletGame.level,
+             level: amuletGame.randomLevel,
           )
       );
 

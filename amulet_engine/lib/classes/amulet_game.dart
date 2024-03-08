@@ -16,7 +16,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   final Amulet amulet;
   final String name;
   final AmuletScene amuletScene;
-  final int level;
+  // final int level;
+  final int fiendLevelMin;
+  final int fiendLevelMax;
 
   final gameObjectDeactivationTimer = 5000;
 
@@ -35,7 +37,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     required super.environment,
     required this.name,
     required this.amuletScene,
-    required this.level,
+    required this.fiendLevelMin,
+    required this.fiendLevelMax,
   }) {
     refreshFlatNodes();
   }
@@ -147,6 +150,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   @override
   int get maxPlayers => 64;
 
+  int get randomLevel => randomInt(fiendLevelMin, fiendLevelMax + 1);
+
   @override
   void update() {
     super.update();
@@ -222,7 +227,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         spawnFiendTypeAtIndex(
           fiendType: fiendType,
           index: MarkType.getIndex(markValue),
-          level: level,
+          level: randomLevel,
           difficulty: difficulty,
 
         );
@@ -1035,7 +1040,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     spawnFiendTypeAtIndex(
       fiendType: FiendType.values[fiendType],
       index: index,
-      level: level,
+      level: randomLevel,
       difficulty: difficulty,
     );
   }
@@ -1207,7 +1212,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       spawnRandomLootAtPosition(
           position: gameObject,
           itemQuality: getLootItemQuality(gameObject) ?? ItemQuality.Common,
-          level: level,
+          level: randomLevel,
       );
     }
   }
@@ -1467,6 +1472,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   //      player.setCollectableAmuletItemObject(nearest);
   //   }
   // }
+
 
 
 }
