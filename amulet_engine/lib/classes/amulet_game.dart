@@ -214,13 +214,21 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     final marks = scene.marks;
     final length = marks.length;
     for (var i = 0; i < length; i++) {
+
       final markValue = marks[i];
       final markType = MarkType.getType(markValue);
+
       if (markType != MarkType.Fiend){
         continue;
       }
+
       final markSubType = MarkType.getSubType(markValue);
-      final fiendType = FiendType.values.tryGet(markSubType) ?? FiendType.Goblin;
+      final fiendType = FiendType.values.tryGet(markSubType);
+
+      if (fiendType == null) {
+        continue;
+      }
+
       final quantity = fiendType.quantity;
 
       for (var j = 0; j < quantity; j++){
@@ -229,7 +237,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
           index: MarkType.getIndex(markValue),
           level: randomLevel,
           difficulty: difficulty,
-
         );
       }
     }
@@ -270,7 +277,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       ..weaponHitForce = 2;
 
     character.roamEnabled = true;
-    characters.add(character);
+    add(character);
     return character;
   }
 
