@@ -1372,14 +1372,6 @@ class AmuletUI {
 
     final level = amulet.getSkillTypeLevel(skillType);
 
-    final levelColor = level > 0 ? Colors.white70 : Colors.red.withOpacity(0.7);
-
-    final controlLevel = buildBorder(
-        color: levelColor,
-        padding: const EdgeInsets.all(4),
-        child: buildText(level > 0 ? 'lvl $level' : 'locked', color: levelColor)
-    );
-
     final controlSkillTitle = Container(
       color: Colors.black26,
       alignment: Alignment.center,
@@ -1447,7 +1439,6 @@ class AmuletUI {
       children: [
         if (skillType.magicCost > 0)
           controlMagicCost,
-        controlLevel,
       ],
     );
 
@@ -1456,12 +1447,11 @@ class AmuletUI {
       width: 2,
       child: GSContainer(
           width: cardWidth,
-          // height: ,
           constraints: BoxConstraints(minHeight: cardWidth * goldenRatio_1618),
           padding: EdgeInsets.zero,
           alignment: Alignment.topCenter,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Column(
@@ -1685,13 +1675,13 @@ class AmuletUI {
             ),
           if (damageMinDiff != null)
             buildComparisonRow(
-              lead: 'min-damage',
+              lead: 'min damage',
               value: next.damageMin,
               diff: showDiff ? damageMinDiff : null,
             ),
           if (damageMaxDiff != null)
             buildComparisonRow(
-              lead: 'max-damage',
+              lead: 'max damage',
               value: next.damageMax,
               diff: showDiff ? damageMaxDiff : null,
             ),
