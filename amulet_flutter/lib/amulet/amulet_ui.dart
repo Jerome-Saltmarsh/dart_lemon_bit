@@ -1396,8 +1396,7 @@ class AmuletUI {
             children: [
               buildText(
                 skillType.name.clean,
-                underline: true,
-                color: Colors.white70,
+                color: Colors.white,
               ),
               buildTextLevel(level),
             ],
@@ -1591,7 +1590,7 @@ class AmuletUI {
             buildCardHeader('Item ${slotType.name}'),
             Container(
               padding: const EdgeInsets.all(4),
-              color: Colors.black12,
+              color: Colors.black26,
               height: 60,
               child: Stack(
                 alignment: Alignment.center,
