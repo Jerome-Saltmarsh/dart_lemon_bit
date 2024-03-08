@@ -209,10 +209,10 @@ class IsometricRender with IsometricComponent {
         text: text,
       );
 
-  void textPosition(Position v3, dynamic text, {double offsetY = 0}){
+  void textPosition(Position v3, dynamic text, {double offsetX = 0, double offsetY = 0}){
     renderText(
       value: text.toString(),
-      x: v3.renderX,
+      x: v3.renderX + offsetX,
       y: v3.renderY + offsetY,
     );
   }
@@ -468,6 +468,7 @@ class IsometricRender with IsometricComponent {
     required String value,
     required double x,
     required double y,
+    double scale = 1.0,
   }){
     // const charWidth = 4.5;
     final characters = value.characters;
@@ -510,6 +511,7 @@ class IsometricRender with IsometricComponent {
       srcHeight: 32,
       dstX: x,
       dstY: y,
+        scale: 0.3,
     );
 
 

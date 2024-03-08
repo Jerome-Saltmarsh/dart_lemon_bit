@@ -65,7 +65,12 @@ class RendererCharacters extends RenderGroup {
         }
 
         if (!character.isPlayer) {
-          render.textPosition(character, character.level, offsetY: -100);
+          render.textPosition(
+              character,
+              character.level,
+              offsetX: -18,
+              offsetY: -56,
+          );
         }
       }
     }
