@@ -479,10 +479,10 @@ class AmuletPlayer extends IsometricPlayer with
     if (equippedWeaponBow) {
       return SkillType.Shoot_Arrow;
     }
-    if (equippedWeaponStaff){
+    if (equippedWeaponStaff) {
       return SkillType.Bludgeon;
     }
-    if (equippedWeaponMelee) {
+    if (equippedWeaponSword) {
       return SkillType.Slash;
     }
     return SkillType.None;
@@ -1314,10 +1314,13 @@ class AmuletPlayer extends IsometricPlayer with
     if (skillType == SkillType.None){
       return true;
     }
-    if (skillType == SkillType.Slash){
-      return equippedWeaponMelee;
+    if (skillType == SkillType.Slash) {
+      return equippedWeaponSword;
     }
-    if (skillType == SkillType.Shoot_Arrow){
+    if (skillType == SkillType.Bludgeon) {
+      return equippedWeaponStaff;
+    }
+    if (skillType == SkillType.Shoot_Arrow) {
       return equippedWeaponBow;
     }
     return getSkillTypeLevel(skillType) > 0;
