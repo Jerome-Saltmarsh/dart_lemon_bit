@@ -576,5 +576,21 @@ enum AmuletItem {
     required SkillType skillType,
     required int level,
   })=> ((skillSet[skillType] ?? 0) * level).toInt();
+
+  WeaponClass? get weaponClass {
+     if (!isWeapon){
+       return null;
+     }
+     if (isWeaponBow){
+       return WeaponClass.Bow;
+     }
+     if (isWeaponStaff){
+       return WeaponClass.Staff;
+     }
+     if (isWeaponSword){
+       return WeaponClass.Sword;
+     }
+     throw Exception();
+  }
 }
 

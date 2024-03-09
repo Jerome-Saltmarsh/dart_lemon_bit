@@ -1635,9 +1635,18 @@ class AmuletUI {
     final levelDiff = getDiff(next.level, current?.level);
     final valueDiff = getDiff(nextAmuletItem.quantify, currentAmuletItem?.quantify);
     final showDiff = current != next;
+    final damageType = next.amuletItem.weaponClass?.damageType;
 
     return Column(
       children: [
+        if (damageType != null)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              buildText('damage type'),
+              buildText(damageType.name.clean),
+            ],
+          ),
           // if (levelDiff != null)
             // buildComparisonRow(
             //   lead: buildText('level'),

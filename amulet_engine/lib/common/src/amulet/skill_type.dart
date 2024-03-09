@@ -1,13 +1,19 @@
 import 'package:amulet_engine/common.dart';
+import 'package:amulet_engine/common/src/isometric/damage_type.dart';
 import 'package:lemon_math/src.dart';
 
 
 enum WeaponClass {
-  Sword(isMelee: true),
-  Staff(isMelee: true),
-  Bow(isMelee: false);
+  Sword(isMelee: true, damageType: DamageType.Slash),
+  Staff(isMelee: true, damageType: DamageType.Bludgeon),
+  Bow(isMelee: false, damageType: DamageType.Pierce);
+
   final bool isMelee;
-  const WeaponClass({required this.isMelee});
+  final DamageType damageType;
+  const WeaponClass({
+    required this.isMelee,
+    required this.damageType,
+  });
 }
 
 
