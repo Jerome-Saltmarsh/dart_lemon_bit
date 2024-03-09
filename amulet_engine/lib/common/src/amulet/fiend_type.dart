@@ -15,8 +15,7 @@ enum FiendType {
     clearTargetOnPerformAction: true,
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 50,
-    skillType: SkillType.Strike,
-    skillLevel: 1,
+    skillType: SkillType.Slash,
     skillTypes: {
 
     }
@@ -33,10 +32,9 @@ enum FiendType {
     clearTargetOnPerformAction: false,
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 40,
-    skillType: SkillType.Strike,
+    skillType: SkillType.Slash,
     pierceResistance: 0.25,
     fireResistance: 0.25,
-    skillLevel: 1,
       skillTypes: {
         SkillType.Shield: 2,
       }
@@ -55,7 +53,6 @@ enum FiendType {
     postAttackPauseDurationMax: 80,
     skillType: SkillType.Shoot_Arrow,
     fireResistance: 0.25,
-    skillLevel: 1,
       skillTypes: {
 
       }
@@ -73,8 +70,7 @@ enum FiendType {
     clearTargetOnPerformAction: true,
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 60,
-    skillType: SkillType.Strike,
-    skillLevel: 1,
+    skillType: SkillType.Slash,
     healthSteal: 0.1,
     iceResistance: 0.25,
     skillTypes: {
@@ -93,8 +89,7 @@ enum FiendType {
     clearTargetOnPerformAction: true,
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 50,
-    skillType: SkillType.Strike,
-    skillLevel: 1,
+    skillType: SkillType.Slash,
     chanceOfCriticalDamage: 3,
       skillTypes: {
 
@@ -113,7 +108,6 @@ enum FiendType {
     postAttackPauseDurationMin: 30,
     postAttackPauseDurationMax: 100,
     skillType: SkillType.Fireball,
-    skillLevel: 1,
     meleeResistance: 0.25,
     skillTypes: {
 
@@ -128,8 +122,8 @@ enum FiendType {
   final int quantity;
   final double runSpeed;
   final double chanceOfSetTarget;
+  /// between 0.0 and 1.0
   final double weaponRange;
-  final int skillLevel;
   final bool clearTargetOnPerformAction;
   final int postAttackPauseDurationMin;
   final int postAttackPauseDurationMax;
@@ -158,7 +152,6 @@ enum FiendType {
     required this.postAttackPauseDurationMin,
     required this.postAttackPauseDurationMax,
     required this.skillType,
-    required this.skillLevel,
     required this.skillTypes,
     this.chanceOfCriticalDamage = 0,
     this.skillTypeB,

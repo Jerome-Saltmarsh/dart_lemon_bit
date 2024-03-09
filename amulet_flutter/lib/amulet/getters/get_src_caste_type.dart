@@ -25,13 +25,7 @@ List<double> getSrcCasteType(CasteType casteType){
         width,
         height,
       ],
-    CasteType.Caste => const [
-        x,
-        176,
-        width,
-        height,
-      ],
-    CasteType.Melee => const [
+    CasteType.Self => const [
         x,
         176,
         width,

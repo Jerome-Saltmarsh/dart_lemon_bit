@@ -11,12 +11,15 @@ import '../isometric/src.dart';
 
 class AmuletGame extends IsometricGame<AmuletPlayer> {
 
-  static const weaponSkillTypes = [SkillType.Shoot_Arrow, SkillType.Strike];
+  static const weaponSkillTypes = [
+    SkillType.Shoot_Arrow,
+    SkillType.Slash,
+    SkillType.Bludgeon,
+  ];
 
   final Amulet amulet;
   final String name;
   final AmuletScene amuletScene;
-  // final int level;
   final int fiendLevelMin;
   final int fiendLevelMax;
 
@@ -355,7 +358,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
 
     switch (skillType) {
-      case SkillType.Strike:
+      case SkillType.Slash:
+        characterPerformSkillTypeStrike(character);
+        break;
+      case SkillType.Bludgeon:
         characterPerformSkillTypeStrike(character);
         break;
       case SkillType.Shoot_Arrow:
@@ -509,7 +515,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         damageType: DamageType.Melee,
         range: getCharacterSkillTypeRange(
             character: character,
-            skillType: SkillType.Strike,
+            skillType: SkillType.Slash,
         ),
         damage: getCharacterWeaponDamage(character),
         areaDamage: getCharacterAreaDamage(character),
@@ -529,7 +535,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
        return character.getSkillTypeLevelAssigned(skillType);
      }
      if (character is AmuletFiend){
-       return character.fiendType.skillLevel;
+       return character.getSkillTypeLevel(skillType);
      }
      throw Exception();
   }

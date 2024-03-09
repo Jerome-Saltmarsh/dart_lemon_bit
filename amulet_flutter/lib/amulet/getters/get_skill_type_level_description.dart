@@ -23,7 +23,9 @@ String? getSkillTypeLevelDescription(SkillType skillType, int level) {
       return '+$level health regen';
     case SkillType.None:
       return '';
-    case SkillType.Strike:
+    case SkillType.Slash:
+      return '-';
+    case SkillType.Bludgeon:
       return '-';
     case SkillType.Frostball:
       return formatIceDamage(

@@ -1,17 +1,29 @@
+import 'package:amulet_engine/common.dart';
 import 'package:lemon_math/src.dart';
 
-import 'amulet_settings.dart';
-import 'attack_speed.dart';
-import 'caste_type.dart';
+
+enum WeaponClass {
+  Sword(isMelee: true),
+  Staff(isMelee: true),
+  Bow(isMelee: false);
+  final bool isMelee;
+  const WeaponClass({required this.isMelee});
+}
+
+
 
 enum SkillType {
   None(
-      casteType: CasteType.Caste,
+      casteType: CasteType.Self,
       range: 0,
       casteSpeed: AttackSpeed.Very_Slow,
   ),
-  Strike(
-      casteType: CasteType.Melee,
+  Slash(
+      casteType: CasteType.Sword,
+      magicCost: 0,
+  ),
+  Bludgeon(
+      casteType: CasteType.Staff,
       magicCost: 0,
   ),
   Mighty_Strike(
@@ -35,24 +47,24 @@ enum SkillType {
   ),
   // BOW
   Shoot_Arrow(
-      casteType: CasteType.Bow,
+      casteType: CasteType.Staff,
       magicCost: 0,
   ),
   Split_Shot(
-      casteType: CasteType.Bow,
+    casteType: CasteType.Bow,
       magicCost: 4,
   ),
   Ice_Arrow(
-      casteType: CasteType.Bow,
+    casteType: CasteType.Bow,
       magicCost: 4,
   ),
   Fire_Arrow(
-      casteType: CasteType.Bow,
+    casteType: CasteType.Bow,
       magicCost: 4,
   ),
   // CASTE
   Heal(
-      casteType: CasteType.Staff,
+    casteType: CasteType.Staff,
       magicCost: 4,
       casteSpeed: AttackSpeed.Fast,
       range: 0,
@@ -158,7 +170,7 @@ enum SkillType {
 
   static void validate() {
     for (final skillType in values){
-      if (skillType.casteType == CasteType.Caste){
+      if (skillType.casteType == CasteType.Self){
         if (skillType.range == null){
           throw Exception('$skillType.range cannot be null');
         }

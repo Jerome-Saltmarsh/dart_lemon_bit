@@ -1176,7 +1176,8 @@ class AmuletUI {
                 skillType.casteType == activeCasteType &&
                 !const [
                   SkillType.None,
-                  SkillType.Strike,
+                  SkillType.Slash,
+                  SkillType.Bludgeon,
                   SkillType.Shoot_Arrow,
                 ].contains(skillType))
             .toList(growable: false);

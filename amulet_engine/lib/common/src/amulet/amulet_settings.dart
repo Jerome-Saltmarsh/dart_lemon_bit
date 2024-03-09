@@ -1,3 +1,5 @@
+import 'package:lemon_math/src.dart';
+
 class AmuletSettings {
   static const Amount_Skill_Type_Split_Shot_Base = 3;
   static const Ratio_Critical_Hit_Damage = 2.0;
@@ -20,4 +22,10 @@ class AmuletSettings {
   static const Chance_Of_Drop_Loot_Unique = 0.1;
   static const Chance_Of_Drop_Loot_Common = 0.15;
   static const Chance_Of_Drop_Loot_Consumable = 0.15;
+
+  static const Range_Min_Melee = 5.0;
+  static const Range_Max_Melee = 80.0;
+
+  static double getRangeMelee(double i) =>
+      interpolate(Range_Min_Melee, Range_Max_Melee, i);
 }

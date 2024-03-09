@@ -2,7 +2,8 @@ import 'package:amulet_engine/common.dart';
 
 String getSkillTypeDescription(SkillType skillType) => switch (skillType) {
       SkillType.None => 'None',
-      SkillType.Strike => 'perform a melee attack',
+      SkillType.Slash => 'perform a melee attack with a sharp blade',
+      SkillType.Bludgeon => 'perform a melee attack with a blunt object',
       SkillType.Mighty_Strike => 'add extra damage to melee attacks',
       SkillType.Frostball => 'shoot a frozen ball of ice',
       SkillType.Fireball => 'shoot a blazing ball of fire',

@@ -479,8 +479,11 @@ class AmuletPlayer extends IsometricPlayer with
     if (equippedWeaponBow) {
       return SkillType.Shoot_Arrow;
     }
+    if (equippedWeaponStaff){
+      return SkillType.Bludgeon;
+    }
     if (equippedWeaponMelee) {
-      return SkillType.Strike;
+      return SkillType.Slash;
     }
     return SkillType.None;
   }
@@ -845,12 +848,6 @@ class AmuletPlayer extends IsometricPlayer with
           return false;
         }
         break;
-      case CasteType.Melee:
-        if (!equippedWeaponMelee) {
-          writeGameError(GameError.Melee_Weapon_Required);
-          return false;
-        }
-        break;
       default:
         break;
     }
@@ -891,12 +888,6 @@ class AmuletPlayer extends IsometricPlayer with
           return;
         }
         break;
-      case CasteType.Melee:
-        if (!equippedWeaponMelee) {
-          writeGameError(GameError.Melee_Weapon_Required);
-          return;
-        }
-        break;
       default:
         break;
     }
@@ -914,7 +905,7 @@ class AmuletPlayer extends IsometricPlayer with
     switch (skillActive.casteType) {
       case CasteType.Passive:
         return;
-      case CasteType.Caste:
+      case CasteType.Self:
         setCharacterStateCasting(duration: performDuration);
         break;
       case CasteType.Bow:
@@ -924,9 +915,6 @@ class AmuletPlayer extends IsometricPlayer with
         setCharacterStateStriking(duration: performDuration);
         break;
       case CasteType.Sword:
-        setCharacterStateStriking(duration: performDuration);
-        break;
-      case CasteType.Melee:
         setCharacterStateStriking(duration: performDuration);
         break;
     }
@@ -1272,11 +1260,10 @@ class AmuletPlayer extends IsometricPlayer with
   double getSkillTypeRange(SkillType skillType) =>
       switch (skillType.casteType) {
         CasteType.Passive => skillType.range,
-        CasteType.Caste => skillType.range,
         CasteType.Bow => equippedWeaponRange?.ranged,
         CasteType.Staff => equippedWeaponRange?.ranged,
         CasteType.Sword => equippedWeaponRange?.melee,
-        CasteType.Melee => equippedWeaponRange?.melee,
+        CasteType.Self => skillType.range,
       } ?? 0;
 
   double getSkillTypeRadius(SkillType skillType) {
@@ -1327,7 +1314,7 @@ class AmuletPlayer extends IsometricPlayer with
     if (skillType == SkillType.None){
       return true;
     }
-    if (skillType == SkillType.Strike){
+    if (skillType == SkillType.Slash){
       return equippedWeaponMelee;
     }
     if (skillType == SkillType.Shoot_Arrow){

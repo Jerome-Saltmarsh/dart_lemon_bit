@@ -2,7 +2,6 @@ enum CasteType {
   Bow,
   Sword,
   Staff,
-  Caste,
-  Melee,
+  Self,
   Passive,
 }
