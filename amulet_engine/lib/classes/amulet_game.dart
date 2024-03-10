@@ -659,7 +659,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   double getCharacterWeaponDamage(Character character){
      if (character is AmuletPlayer){
-       return character.equippedWeaponDamage;
+       return character.equippedWeaponDamage ?? 0;
      }
      if (character is AmuletFiend) {
        return character.attackDamage;

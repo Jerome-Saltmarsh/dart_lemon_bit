@@ -32,6 +32,9 @@ class AmuletSettings {
   static const Attack_Speed_Duration_Slowest = 80;
   static const Attack_Speed_Duration_Fastest = 24;
 
+  static const Damage_Min = 1;
+  static const Damage_Max = 20;
+
   static double interpolateRangeMelee(double i) =>
       interpolate(Range_Min_Melee, Range_Max_Melee, i);
 
@@ -40,4 +43,7 @@ class AmuletSettings {
 
   static double interpolateAttackSpeed(double t) =>
       interpolate(Attack_Speed_Duration_Fastest, Attack_Speed_Duration_Slowest, 1.0 - t);
+
+  static double interpolateDamage(double t) =>
+      interpolate(Damage_Min, Damage_Max, t);
 }

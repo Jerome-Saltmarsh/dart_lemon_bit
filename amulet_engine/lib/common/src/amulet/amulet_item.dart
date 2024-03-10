@@ -484,7 +484,7 @@ enum AmuletItem {
   final SlotType slotType;
   final int subType;
   final double? damageMin;
-  /// per level
+  /// between 0.0 and 1.0
   final double? damage;
   /// between 0.0 and 1.0
   final double? range;

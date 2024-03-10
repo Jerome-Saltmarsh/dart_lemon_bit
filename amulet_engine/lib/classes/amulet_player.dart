@@ -1258,43 +1258,34 @@ class AmuletPlayer extends IsometricPlayer with
     tryWrite(writeString, subtitles);
   }
 
-  double get equippedWeaponDamage {
+  double? get equippedWeaponDamage {
     final equippedWeapon = this.equippedWeapon;
     if (equippedWeapon == null) {
-      return 0;
+      return null;
     }
 
     final level = equippedWeapon.level;
 
     if (level <= 0) {
       writeGameError(GameError.Invalid_Object_Level);
-      return 0.0;
+      return 0;
     }
 
     final amuletItem = equippedWeapon.amuletItem;
-    final damage = amuletItem.damage;
+    final damageI = amuletItem.damage;
 
-    if (damage == null || damage <= 0) {
+    if (damageI == null || damageI <= 0) {
       writeGameError(GameError.Invalid_Object_Damage);
-      return 0.0;
+      return null;
     }
 
+    final damage = AmuletSettings.interpolateDamage(damageI);
     final maxDamage = damage * level;
     final minDamage = maxDamage * (amuletItem.damageMin ?? 0.61);
-
     return randomBetween(minDamage, maxDamage);
   }
 
   int get equippedWeaponLevel => equippedWeapon?.level ?? 0;
-
-  // double getSkillTypeRange(SkillType skillType) =>
-  //     switch (skillType.casteType) {
-  //       CasteType.Passive => skillType.range,
-  //       CasteType.Bow => equippedWeaponRange?.ranged,
-  //       CasteType.Staff => equippedWeaponRange?.ranged,
-  //       CasteType.Sword => equippedWeaponRange?.melee,
-  //       CasteType.Self => skillType.range,
-  //     } ?? 0;
 
   double getSkillTypeRadius(SkillType skillType) {
      switch (skillType){
