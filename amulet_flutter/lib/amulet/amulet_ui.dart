@@ -2048,9 +2048,7 @@ class AmuletUI {
              Container(
                constraints: BoxConstraints(maxHeight: amulet.engine.screen.height - 150),
                child: SingleChildScrollView(
-                 child: Column(
-                   children: buildChildrenQuantifyTab(activeQuantifyTab),
-                 ),
+                 child: buildChildrenQuantifyTab(activeQuantifyTab),
                ),
              )
            ],
@@ -2059,23 +2057,29 @@ class AmuletUI {
      );
   }
 
-  List<Widget> buildChildrenQuantifyTab(QuantifyTab quantifyTab) =>
+  Widget buildChildrenQuantifyTab(QuantifyTab quantifyTab) =>
       switch (quantifyTab) {
         QuantifyTab.Amulet_Items => buildQuantifyAmuletItems(),
-        QuantifyTab.Fiend_Types => FiendType.values
+        QuantifyTab.Fiend_Types => Column(
+            children: FiendType.values
             .map(buildElementFiendType)
-            .toList(growable: false)
+            .toList(growable: false))
       };
 
-  List<Widget> buildQuantifyAmuletItems() => [
-       buildText('WEAPONS'),
-       ...AmuletItem.values
-           .where((element) => element.isWeapon)
-           .toList()
-           .sortBy((value) => value.quantify)
-           .map(buildAmuletItemElement)
-           .toList(),
-     ];
+  Widget buildQuantifyAmuletItems() {
+
+    return buildWatch(amulet.windowQuantifyTabSlotType, (slotType) {
+      return Column(children: [
+        buildText('WEAPONS'),
+        ...AmuletItem.values
+            .where((element) => element.isWeapon)
+            .toList()
+            .sortBy((value) => value.quantify)
+            .map(buildAmuletItemElement)
+            .toList(),
+      ]);
+    });
+  }
 
   Widget buildAmuletItemElement(AmuletItem amuletItem) => Container(
     margin: const EdgeInsets.only(top: 8),

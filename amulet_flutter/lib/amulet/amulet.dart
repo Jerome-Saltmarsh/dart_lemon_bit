@@ -85,6 +85,7 @@ class Amulet extends IsometricGame {
   final windowVisibleSkillRight = WatchBool(false);
   final windowVisibleQuantify = WatchBool(false);
   final windowQuantifyTab = Watch(QuantifyTab.values.first);
+  final windowQuantifyTabSlotType = Watch(SlotType.Weapon);
 
   final playerRunSpeed = Watch(0);
   final playerAgility = Watch(0);
