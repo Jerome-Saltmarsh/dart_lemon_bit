@@ -529,10 +529,13 @@ enum AmuletItem {
     var total = 0.0;
     total += maxHealth ?? 0;
     total += maxMagic ?? 0;
-    total += this.damage ?? 0;
-    total += this.damageMin ?? 0;
-    total += this.range ?? 0;
-    total += this.attackSpeed ?? 0;
+    total += damage ?? 0;
+    total += damageMin ?? 0;
+    total += range ?? 0;
+    total += attackSpeed ?? 0;
+    for (final entry in skillSet.entries){
+      total += entry.value;
+    }
     return total.toInt();
   }
 
@@ -541,24 +544,6 @@ enum AmuletItem {
 
   static final Consumables =
       values.where((element) => element.isConsumable).toList(growable: false);
-
-  static final sortedValues = () {
-    final vals = List.of(values);
-    vals.sort(sortByQuantify);
-    return vals;
-  }();
-
-  static int sortByQuantify(AmuletItem a, AmuletItem b) {
-    final aQuantify = a.quantify;
-    final bQuantify = b.quantify;
-    if (aQuantify < bQuantify) {
-      return -1;
-    }
-    if (aQuantify > bQuantify) {
-      return 1;
-    }
-    return 0;
-  }
 
   void validate() {
     if (isWeapon) {
