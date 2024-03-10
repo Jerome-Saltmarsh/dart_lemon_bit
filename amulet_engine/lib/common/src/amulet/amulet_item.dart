@@ -529,6 +529,10 @@ enum AmuletItem {
     var total = 0.0;
     total += maxHealth ?? 0;
     total += maxMagic ?? 0;
+    total += this.damage ?? 0;
+    total += this.damageMin ?? 0;
+    total += this.range ?? 0;
+    total += this.attackSpeed ?? 0;
     return total.toInt();
   }
 

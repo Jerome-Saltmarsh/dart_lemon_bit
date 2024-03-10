@@ -1743,11 +1743,16 @@ class AmuletUI {
               next: nextAmuletItem.range,
               current: currentAmuletItem?.range
           ),
-          buildCompareBars(
-              'speed',
-              currentAmuletItem?.attackSpeed ?? 0,
-              nextAmuletItem.attackSpeed ?? 0,
+           buildComparisonRow01(
+              lead: 'speed',
+              next: nextAmuletItem.attackSpeed,
+              current: currentAmuletItem?.attackSpeed
           ),
+          // buildCompareBars(
+          //     'speed',
+          //     currentAmuletItem?.attackSpeed ?? 0,
+          //     nextAmuletItem.attackSpeed ?? 0,
+          // ),
           height16,
           ...SkillType.values.map((skillType) {
 
@@ -2056,13 +2061,21 @@ class AmuletUI {
 
   List<Widget> buildChildrenQuantifyTab(QuantifyTab quantifyTab) =>
       switch (quantifyTab) {
-        QuantifyTab.Amulet_Items => AmuletItem.sortedValues
-            .map(buildAmuletItemElement)
-            .toList(growable: false),
+        QuantifyTab.Amulet_Items => buildQuantifyAmuletItems(),
         QuantifyTab.Fiend_Types => FiendType.values
             .map(buildElementFiendType)
             .toList(growable: false)
       };
+
+  List<Widget> buildQuantifyAmuletItems() => [
+       buildText('WEAPONS'),
+       ...AmuletItem.values
+           .where((element) => element.isWeapon)
+           .toList()
+           .sortBy((value) => value.quantify)
+           .map(buildAmuletItemElement)
+           .toList(),
+     ];
 
   Widget buildAmuletItemElement(AmuletItem amuletItem) => Container(
     margin: const EdgeInsets.only(top: 8),
