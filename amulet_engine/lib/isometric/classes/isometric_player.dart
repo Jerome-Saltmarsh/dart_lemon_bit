@@ -720,10 +720,6 @@ class IsometricPlayer extends Character with ByteWriter {
     writeFalse();
   }
 
-  void writeTrue() => writeBool(true);
-
-  void writeFalse() => writeBool(false);
-
   void writeGameEvent({
     required int type,
     required double x,

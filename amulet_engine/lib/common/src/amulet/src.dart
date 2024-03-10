@@ -18,3 +18,4 @@ export 'weapon_range.dart';
 export 'area_damage.dart';
 export 'attack_speed.dart';
 export 'attack_type.dart';
+export 'weapon_class.dart';

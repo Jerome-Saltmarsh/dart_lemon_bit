@@ -1651,20 +1651,7 @@ class AmuletPlayer extends IsometricPlayer with
     amuletGame.onAmuletPlayerPickupGameObject(this, item);
   }
 
-  void tryWriteByte(int? value) =>
-      tryWrite(writeByte, value);
 
-  void tryWriteUInt16(int? value) =>
-      tryWrite(writeUInt16, value);
-
-  void tryWrite<T>(Function(T t) write, T? value){
-    if (value == null){
-      writeFalse();
-      return;
-    }
-    writeTrue();
-    write(value);
-  }
 
   void onPortalUsed({
     required AmuletScene src,

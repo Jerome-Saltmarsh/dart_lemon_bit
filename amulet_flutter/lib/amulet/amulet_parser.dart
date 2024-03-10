@@ -390,11 +390,5 @@ extension AmuletParser on IsometricParser {
 
   double readDecimal() => readUInt16() / 10;
 
-  int? tryReadByte() => tryRead(readByte);
 
-  int? tryReadUInt16() => tryRead(readUInt16);
-
-  String? tryReadString() => tryRead(readString);
-
-  T? tryRead<T>(T Function() read) => readBool() ? read() : null;
 }

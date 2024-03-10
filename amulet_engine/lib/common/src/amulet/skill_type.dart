@@ -1,21 +1,5 @@
 import 'package:amulet_engine/common.dart';
-import 'package:amulet_engine/common/src/isometric/damage_type.dart';
 import 'package:lemon_math/src.dart';
-
-
-enum WeaponClass {
-  Sword(isMelee: true, damageType: DamageType.Slash),
-  Staff(isMelee: true, damageType: DamageType.Bludgeon),
-  Bow(isMelee: false, damageType: DamageType.Pierce);
-
-  final bool isMelee;
-  final DamageType damageType;
-  const WeaponClass({
-    required this.isMelee,
-    required this.damageType,
-  });
-}
-
 
 
 enum SkillType {
@@ -39,21 +23,18 @@ enum SkillType {
   Frostball(
       casteType: CasteType.Staff,
       magicCost: 4,
-      range: 125,
   ),
   Fireball(
       casteType: CasteType.Staff,
       magicCost: 5,
-      range: 150,
   ),
   Explode(
       casteType: CasteType.Staff,
       magicCost: 7,
-      range: 125,
   ),
   // BOW
   Shoot_Arrow(
-      casteType: CasteType.Staff,
+      casteType: CasteType.Bow,
       magicCost: 0,
   ),
   Split_Shot(
@@ -70,7 +51,7 @@ enum SkillType {
   ),
   // CASTE
   Heal(
-    casteType: CasteType.Staff,
+      casteType: CasteType.Staff,
       magicCost: 4,
       casteSpeed: AttackSpeed.Fast,
       range: 0,

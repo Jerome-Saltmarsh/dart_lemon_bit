@@ -1,6 +1,8 @@
 import '../../src.dart';
 import 'package:collection/collection.dart';
 
+
+
 enum AmuletItem {
   Weapon_Sword_Short(
     label: 'Short Sword',
@@ -24,8 +26,8 @@ enum AmuletItem {
     damageMin: 0.8,
     damage: 5,
     skillSet: {
-      SkillType.Critical_Hit: 5,
-      SkillType.Agility: 5,
+      SkillType.Critical_Hit: 1,
+      SkillType.Agility: 1,
     },
     quality: ItemQuality.Unique,
   ),
@@ -38,8 +40,8 @@ enum AmuletItem {
     damageMin: 0.65,
     damage: 6,
     skillSet: {
-      SkillType.Critical_Hit: 5,
-      SkillType.Agility: 5,
+      SkillType.Critical_Hit: 1,
+      SkillType.Agility: 1,
     },
     quality: ItemQuality.Rare,
   ),
@@ -91,8 +93,8 @@ enum AmuletItem {
     damageMin: 0.9,
     damage: 4,
     skillSet: {
-      SkillType.Mighty_Strike: 1.0,
-      SkillType.Critical_Hit: 0.8,
+      SkillType.Split_Shot: 1.0,
+      SkillType.Vampire: 0.8,
     },
   ),
   Weapon_Bow_Reflex(
