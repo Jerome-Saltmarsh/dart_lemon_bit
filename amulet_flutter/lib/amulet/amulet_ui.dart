@@ -1675,6 +1675,9 @@ class AmuletUI {
     final valueDiff = getDiff(nextAmuletItem.quantify, currentAmuletItem?.quantify);
     final showDiff = current != next;
     final damageType = next.amuletItem.weaponClass?.damageType;
+    // final rangeDiff = getDiff(nextAmuletItem.range, currentAmuletItem?.range);
+
+
 
     return Column(
       children: [
@@ -1735,11 +1738,16 @@ class AmuletUI {
               diff: showDiff ? damageMaxDiff : null,
             ),
           // buildCompareBars('range', currentAmuletItem?.range? ?? 0, nextAmuletItem.range?.index ?? 0),
-          buildComparisonRow(
+           buildComparisonRow01(
               lead: 'range',
-              value: currentAmuletItem?.range ?? 0,
-              diff: nextAmuletItem.range ?? 0),
-          buildCompareBars('speed', currentAmuletItem?.attackSpeed ?? 0, nextAmuletItem.attackSpeed ?? 0),
+              next: nextAmuletItem.range,
+              current: currentAmuletItem?.range
+          ),
+          buildCompareBars(
+              'speed',
+              currentAmuletItem?.attackSpeed ?? 0,
+              nextAmuletItem.attackSpeed ?? 0,
+          ),
           height16,
           ...SkillType.values.map((skillType) {
 
@@ -1830,11 +1838,7 @@ class AmuletUI {
         // buildDiff(diff),
       ],
     );
-
-
-
   }
-
 
   Widget buildComparisonRow({
     required dynamic lead,
@@ -1851,13 +1855,36 @@ class AmuletUI {
           if (diff == null)
             expanded,
           buildText('${diff == null ? getOperator(value) : ''}${value?.toInt() ?? '0'}'),
-          // width8,
           if (diff != null)
           expanded,
           if (diff != null)
           buildDiff(diff),
         ],
       );
+
+  Widget buildComparisonRow01({
+    required dynamic lead,
+    required double? next,
+    required double? current,
+  }) {
+    if (next == null && current == null){
+      return nothing;
+    }
+
+    int? nextInt;
+    int? currentInt;
+    int? diffInt;
+    if (next != null){
+      nextInt = (next * 100).toInt();
+    }
+    if (current != null){
+      currentInt = (current * 100).toInt();
+    }
+    if (nextInt != null && currentInt != null){
+      diffInt = nextInt - currentInt;
+    }
+    return buildComparisonRow(lead: lead, value: nextInt, diff: diffInt);
+  }
 
   Widget buildDiff(num diff) =>
       buildText('${diff > 0 ? "+" : ""}${diff.toInt()}', color: getDiffColor(diff));
