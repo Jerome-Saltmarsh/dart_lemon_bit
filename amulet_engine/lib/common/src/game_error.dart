@@ -97,7 +97,7 @@ enum GameError {
   Invalid_GameObject_State,
   Item_Not_Consumable,
   Invalid_Object_Level,
-  Invalid_Object_Damage
+  Invalid_Object_Damage, Perform_Duration_Null
   ;
 
   static GameError fromIndex(int index) {

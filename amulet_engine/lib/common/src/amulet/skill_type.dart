@@ -6,7 +6,6 @@ enum SkillType {
   None(
       casteType: CasteType.Self,
       range: 0,
-      casteSpeed: AttackSpeed.Very_Slow,
   ),
   Slash(
       casteType: CasteType.Sword,
@@ -53,7 +52,6 @@ enum SkillType {
   Heal(
       casteType: CasteType.Staff,
       magicCost: 4,
-      casteSpeed: AttackSpeed.Fast,
       range: 0,
   ),
   Agility(
@@ -92,7 +90,6 @@ enum SkillType {
   final CasteType casteType;
   final int magicCost;
   /// if null the weapon perform duration is used
-  final AttackSpeed? casteSpeed;
   /// if null the weapon range is used
   final double? range;
 
@@ -149,7 +146,6 @@ enum SkillType {
   const SkillType({
     required this.casteType,
     this.magicCost = 0,
-    this.casteSpeed,
     this.range,
   });
 
@@ -160,9 +156,6 @@ enum SkillType {
       if (skillType.casteType == CasteType.Self){
         if (skillType.range == null){
           throw Exception('$skillType.range cannot be null');
-        }
-        if (skillType.casteSpeed == null){
-          throw Exception('$skillType.casteDuration cannot be null');
         }
       }
     }

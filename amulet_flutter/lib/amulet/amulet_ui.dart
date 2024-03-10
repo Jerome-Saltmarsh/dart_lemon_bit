@@ -1070,16 +1070,16 @@ class AmuletUI {
         ),
   );
 
-  Widget buildAttackSpeedValue(int value){
-    return Row(children: List.generate(AttackSpeed.values.length, (index) {
-       return Container(
-         width: 4,
-         height: 4 * goldenRatio_1618,
-         margin: const EdgeInsets.only(right: 4),
-         color: value >= index ? Colors.white70 : Colors.white24,
-       );
-    }));
-  }
+  // Widget buildAttackSpeedValue(int value){
+  //   return Row(children: List.generate(AttackSpeed.values.length, (index) {
+  //      return Container(
+  //        width: 4,
+  //        height: 4 * goldenRatio_1618,
+  //        margin: const EdgeInsets.only(right: 4),
+  //        color: value >= index ? Colors.white70 : Colors.white24,
+  //      );
+  //   }));
+  // }
 
   Widget buildBars({required int total, required int value}) =>
       Row(
@@ -1696,8 +1696,7 @@ class AmuletUI {
               diff: showDiff ? damageMaxDiff : null,
             ),
           buildCompareBars('range', currentAmuletItem?.range?.index ?? 0, nextAmuletItem.range?.index ?? 0),
-          buildCompareBars('speed', currentAmuletItem?.attackSpeed?.index ?? 0, nextAmuletItem.attackSpeed?.index ?? 0),
-          // buildRangeDiff(current, next),
+          buildCompareBars('speed', currentAmuletItem?.attackSpeed ?? 0, nextAmuletItem.attackSpeed ?? 0),
           height16,
           ...SkillType.values.map((skillType) {
 

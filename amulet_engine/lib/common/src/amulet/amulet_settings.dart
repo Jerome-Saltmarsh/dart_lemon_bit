@@ -26,6 +26,18 @@ class AmuletSettings {
   static const Range_Min_Melee = 5.0;
   static const Range_Max_Melee = 80.0;
 
-  static double getRangeMelee(double i) =>
+  static const Range_Min_Ranged = 80.0;
+  static const Range_Max_Ranged = 250.0;
+
+  static const Attack_Speed_Duration_Min = 24;
+  static const Attack_Speed_Duration_Max = 80;
+
+  static double interpolateRangeMelee(double i) =>
       interpolate(Range_Min_Melee, Range_Max_Melee, i);
+
+  static double interpolateRangeRanged(double i) =>
+      interpolate(Range_Min_Ranged, Range_Max_Ranged, i);
+
+  static double interpolateAttackSpeed(double t) =>
+      interpolate(Attack_Speed_Duration_Min, Attack_Speed_Duration_Max, t);
 }

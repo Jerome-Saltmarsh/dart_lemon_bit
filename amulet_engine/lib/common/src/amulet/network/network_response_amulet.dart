@@ -34,7 +34,6 @@ class NetworkResponseAmulet {
    static const Player_Agility = 53;
    static const Perform_Frame_Velocity = 54;
    static const Player_Weapon_Range = 57;
-   static const Player_Weapon_Attack_Speed = 58;
    static const Player_Critical_Hit_Points = 60;
    static const Player_Skill_Active_Left = 61;
    static const Player_Debug_Enabled = 62;

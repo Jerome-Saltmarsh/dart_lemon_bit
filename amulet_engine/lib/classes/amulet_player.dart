@@ -109,8 +109,14 @@ class AmuletPlayer extends IsometricPlayer with
     writePlayerComplexion();
   }
 
-  AttackSpeed? get equippedWeaponAttackSpeed =>
-      equippedWeapon?.amuletItem.attackSpeed;
+  /// in frames
+  int? get equippedWeaponPerformDuration {
+    final attackSpeed = equippedWeapon?.amuletItem.attackSpeed;
+    if (attackSpeed == null){
+      return null;
+    }
+    return AmuletSettings.interpolateAttackSpeed(attackSpeed).toInt();
+  }
 
   @override
   set magic(int value) {
@@ -440,7 +446,6 @@ class AmuletPlayer extends IsometricPlayer with
     writePlayerMagic();
     writeSkillTypes();
     writeEquippedWeaponRange();
-    writeEquippedWeaponAttackSpeed();
     writePlayerCriticalHitPoints();
     writeSkillActiveLeft();
   }
@@ -888,6 +893,8 @@ class AmuletPlayer extends IsometricPlayer with
           return;
         }
         break;
+      case CasteType.Passive:
+        return;
       default:
         break;
     }
@@ -899,8 +906,14 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
 
+    final performDuration = equippedWeaponPerformDuration;
+    if (performDuration == null){
+      writeGameError(GameError.Perform_Duration_Null);
+      clearTarget();
+      return;
+    }
+
     magic -= magicCost;
-    final performDuration = getSkillTypePerformDuration(skillActive);
 
     switch (skillActive.casteType) {
       case CasteType.Passive:
@@ -1332,11 +1345,6 @@ class AmuletPlayer extends IsometricPlayer with
     activeSkillActiveLeft();
   }
 
-  int getSkillTypePerformDuration(SkillType skillType) =>
-      skillType.casteSpeed?.duration ??
-      this.equippedWeaponAttackSpeed?.duration ??
-      (throw Exception('amuletPlayer.getSkillTypePerformDuration(skillType: $skillType)'));
-
   double get healthSteal =>
       SkillType.getHealthSteal(getSkillTypeLevelAssigned(SkillType.Vampire));
 
@@ -1406,12 +1414,6 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Weapon_Range);
     tryWriteByte(equippedWeapon?.amuletItem.range?.index);
-  }
-
-  void writeEquippedWeaponAttackSpeed() {
-    writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Player_Weapon_Attack_Speed);
-    tryWriteByte(equippedWeaponAttackSpeed?.index);
   }
 
   double get areaDamage =>
@@ -1651,8 +1653,6 @@ class AmuletPlayer extends IsometricPlayer with
     amuletGame.onAmuletPlayerPickupGameObject(this, item);
   }
 
-
-
   void onPortalUsed({
     required AmuletScene src,
     required AmuletScene dst,
@@ -1663,6 +1663,10 @@ class AmuletPlayer extends IsometricPlayer with
         questMain = QuestMain.values[QuestMain.Find_Witches_Lair.index + 1];
       }
   }
+
+  void tryWritePercentage(double? value) =>
+      tryWrite(writePercentage, value);
+
 }
 
 String buildResistances(String text, String name, double resistance){
