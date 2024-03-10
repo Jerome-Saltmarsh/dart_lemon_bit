@@ -2068,16 +2068,22 @@ class AmuletUI {
 
   Widget buildQuantifyAmuletItems() {
 
-    return buildWatch(amulet.windowQuantifyTabSlotType, (slotType) {
+    return buildWatch(amulet.windowQuantifyTabSlotType, (activeSlotType){
       return Column(children: [
-        buildText('WEAPONS'),
-        ...AmuletItem.values
-            .where((element) => element.isWeapon)
+        Row(
+          children: SlotType.values.map((slotType) => onPressed(
+              action: () => amulet.windowQuantifyTabSlotType.value = slotType,
+              child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 6),
+                  child: buildText(slotType.name, bold: slotType == activeSlotType)))).toList(),
+        ),
+        Column(children: AmuletItem.values
+            .where((element) => element.slotType == activeSlotType)
             .toList()
             .sortBy((value) => value.quantify)
             .map(buildAmuletItemElement)
-            .toList(),
-      ]);
+            .toList())
+      ],);
     });
   }
 
