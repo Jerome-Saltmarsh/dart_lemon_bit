@@ -2087,7 +2087,11 @@ class AmuletUI {
     });
   }
 
-  Widget buildAmuletItemElement(AmuletItem amuletItem) => Container(
+  Widget buildAmuletItemElement(AmuletItem amuletItem) {
+
+    final quantify = amuletItem.quantify;
+
+    return Container(
     margin: const EdgeInsets.only(top: 8),
     child: Container(
       padding: const EdgeInsets.all(8),
@@ -2107,14 +2111,38 @@ class AmuletUI {
                   color: mapItemQualityToColor(amuletItem.quality),
               ),
             ),
+            buildQuantificationCell('damage', amuletItem.damage),
+            buildQuantificationCell('damage-min', amuletItem.damageMin),
             Container(
-                width: 50,
+                width: 60,
                 alignment: Alignment.centerRight,
-                child: buildText(amuletItem.quantify,)),
+                child: Column(
+                  children: [
+                    buildText('quantify'),
+                    buildText(quantify,),
+
+                  ],
+                )),
           ],
         ),
     ),
   );
+  }
+
+  Widget buildQuantificationCell(String name, double? value) {
+    if (value == null) {
+      return nothing;
+    }
+    return Container(
+              padding: const EdgeInsets.all(8),
+              alignment: Alignment.center,
+              child: Column(
+                children: [
+                  buildText(name, color: Colors.white70),
+                  buildText(value, color: Colors.white70),
+                ],
+              ));
+  }
 
   Widget buildElementFiendType(FiendType fiendType) => Container(
     margin: const EdgeInsets.only(top: 8),
