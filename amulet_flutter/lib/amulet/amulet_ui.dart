@@ -2099,7 +2099,18 @@ class AmuletUI {
                 width: 300,
                 child: buildText(amuletItem.name),
             ),
-            buildText(amuletItem.quantify),
+            Container(
+              width: 100,
+              alignment: Alignment.center,
+              child: buildText(
+                  amuletItem.quality.name,
+                  color: mapItemQualityToColor(amuletItem.quality),
+              ),
+            ),
+            Container(
+                width: 50,
+                alignment: Alignment.centerRight,
+                child: buildText(amuletItem.quantify,)),
           ],
         ),
     ),
