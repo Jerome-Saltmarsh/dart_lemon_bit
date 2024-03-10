@@ -11,7 +11,7 @@ enum AmuletItem {
     attackSpeed: 0.7,
     range: 0.2,
     damageMin: 0.5,
-    damage: 4,
+    damage: 0.25,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
       SkillType.Critical_Hit: 0.8,
@@ -23,8 +23,8 @@ enum AmuletItem {
     subType: WeaponType.Sword_Short,
     attackSpeed: 0.75,
     range: 0.2,
-    damageMin: 0.8,
-    damage: 5,
+    damage: 0.35,
+    damageMin: 0.75,
     skillSet: {
       SkillType.Mighty_Strike: 1.1,
       SkillType.Critical_Hit: 1,
@@ -38,8 +38,8 @@ enum AmuletItem {
     subType: WeaponType.Sword_Short,
     attackSpeed: 0.8,
     range: 0.2,
-    damageMin: 0.65,
-    damage: 6,
+    damage: 0.55,
+    damageMin: 0.75,
     skillSet: {
       SkillType.Critical_Hit: 1,
       SkillType.Agility: 1,
@@ -52,8 +52,8 @@ enum AmuletItem {
     subType: WeaponType.Sword_Broad,
     attackSpeed: 0.5,
     range: 0.5,
-    damageMin: 0.8,
-    damage: 8,
+    damage: 0.5,
+    damageMin: 0.75,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
       SkillType.Critical_Hit: 0.8,
@@ -66,7 +66,7 @@ enum AmuletItem {
     attackSpeed: 0.4,
     range: 0.75,
     damageMin: 0.8,
-    damage: 12,
+    damage: 0.7,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
       SkillType.Critical_Hit: 0.8,
@@ -79,7 +79,7 @@ enum AmuletItem {
     attackSpeed: 0.3,
     range: 1.0,
     damageMin: 0.7,
-    damage: 20,
+    damage: 0.85,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
       SkillType.Critical_Hit: 0.8,
@@ -92,7 +92,7 @@ enum AmuletItem {
     attackSpeed: 1.0,
     range: 0.25,
     damageMin: 0.9,
-    damage: 4,
+    damage: 0.25,
     skillSet: {
       SkillType.Split_Shot: 1.0,
       SkillType.Vampire: 0.8,
@@ -105,7 +105,7 @@ enum AmuletItem {
     attackSpeed: 0.7,
     range: 0.4,
     damageMin: 0.5,
-    damage: 6,
+    damage: 0.35,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
       SkillType.Critical_Hit: 0.8,
@@ -118,7 +118,7 @@ enum AmuletItem {
     attackSpeed: 0.5,
     range: 0.75,
     damageMin: 0.5,
-    damage: 8,
+    damage: 0.45,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
       SkillType.Critical_Hit: 0.8,
@@ -131,7 +131,7 @@ enum AmuletItem {
     attackSpeed: 0.4,
     range: 1.0,
     damageMin: 0.75,
-    damage: 12,
+    damage: 0.65,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
       SkillType.Critical_Hit: 0.8,
@@ -144,7 +144,7 @@ enum AmuletItem {
     attackSpeed: 0.7,
     range: 0.1,
     damageMin: 0.85,
-    damage: 3,
+    damage: 0.25,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
       SkillType.Critical_Hit: 0.8,
@@ -157,7 +157,7 @@ enum AmuletItem {
     attackSpeed: 0.6,
     range: 0.4,
     damageMin: 0.5,
-    damage: 6,
+    damage: 0.35,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
       SkillType.Critical_Hit: 0.8,
@@ -170,7 +170,7 @@ enum AmuletItem {
       attackSpeed: 0.5,
       range: 0.7,
       damageMin: 0.6,
-      damage: 5,
+    damage: 0.45,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
       SkillType.Critical_Hit: 0.8,
@@ -183,7 +183,7 @@ enum AmuletItem {
       attackSpeed: 0.4,
       range: 1.0,
       damageMin: 0.8,
-      damage: 8,
+    damage: 0.55,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
       SkillType.Critical_Hit: 0.8,
@@ -525,18 +525,20 @@ enum AmuletItem {
 
   bool get isArmor => slotType == SlotType.Armor;
 
-  int get quantify {
+  double get quantify {
+    const pointsPerDamage = 3;
+
     var total = 0.0;
     total += maxHealth ?? 0;
     total += maxMagic ?? 0;
-    total += damage ?? 0;
-    total += damageMin ?? 0;
+    total += (damage ?? 0) * pointsPerDamage;
+    total += (damageMin ?? 0) * pointsPerDamage;
     total += range ?? 0;
     total += attackSpeed ?? 0;
     for (final entry in skillSet.entries){
       total += entry.value;
     }
-    return total.toInt();
+    return total;
   }
 
   static AmuletItem? findByName(String name) =>

@@ -12,7 +12,7 @@ extension ListExtensions<T> on List<T> {
 
   /// Sorts the list based on the provided value getter function.
   /// Returns the sorted list.
-  List<T> sortBy(int Function(T value) getValue) {
+  List<T> sortBy(num Function(T value) getValue) {
     sort((a, b) => getValue(a).compareTo(getValue(b)));
     return this;
   }

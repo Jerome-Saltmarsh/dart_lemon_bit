@@ -2116,16 +2116,7 @@ class AmuletUI {
             buildQuantificationCell('speed', amuletItem.attackSpeed),
             buildQuantificationCell('range', amuletItem.range),
             buildQuantificationCell('skills', getAmuletItemSkillSetTotal(amuletItem)),
-            Container(
-                width: 60,
-                alignment: Alignment.centerRight,
-                child: Column(
-                  children: [
-                    buildText('quantify'),
-                    buildText(quantify,),
-
-                  ],
-                )),
+            buildQuantificationCell('quantify', amuletItem.quantify),
           ],
         ),
     ),
@@ -2142,7 +2133,7 @@ class AmuletUI {
               child: Column(
                 children: [
                   buildText(name, color: Colors.white70, size: 14),
-                  buildText(value, color: Colors.white70),
+                  buildText(value.toStringAsFixed(2), color: Colors.white70),
                 ],
               ));
   }

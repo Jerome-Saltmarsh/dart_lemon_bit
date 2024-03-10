@@ -7,7 +7,7 @@ description: >
   This package is designed to improve the usability and expressiveness of
   working with lists in Dart projects.
 
-version: 1.0.2
+version: 1.0.3
 
 environment:
   sdk: ^3.2.6
