@@ -2100,7 +2100,7 @@ class AmuletUI {
           children: [
             Container(
                 alignment: Alignment.centerLeft,
-                width: 300,
+                width: 250,
                 child: buildText(amuletItem.name),
             ),
             Container(
@@ -2112,7 +2112,10 @@ class AmuletUI {
               ),
             ),
             buildQuantificationCell('damage', amuletItem.damage),
-            buildQuantificationCell('damage-min', amuletItem.damageMin),
+            buildQuantificationCell('dmg-min', amuletItem.damageMin),
+            buildQuantificationCell('speed', amuletItem.attackSpeed),
+            buildQuantificationCell('range', amuletItem.range),
+            buildQuantificationCell('skills', getAmuletItemSkillSetTotal(amuletItem)),
             Container(
                 width: 60,
                 alignment: Alignment.centerRight,
@@ -2134,11 +2137,11 @@ class AmuletUI {
       return nothing;
     }
     return Container(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(4),
               alignment: Alignment.center,
               child: Column(
                 children: [
-                  buildText(name, color: Colors.white70),
+                  buildText(name, color: Colors.white70, size: 14),
                   buildText(value, color: Colors.white70),
                 ],
               ));
@@ -2455,4 +2458,13 @@ String getOperator(num? value){
     return '-';
   }
   return '+';
+}
+
+
+double getAmuletItemSkillSetTotal(AmuletItem amuletItem) {
+  var total = 0.0;
+  for (final entry in amuletItem.skillSet.values){
+    total += entry;
+  }
+  return total;
 }
