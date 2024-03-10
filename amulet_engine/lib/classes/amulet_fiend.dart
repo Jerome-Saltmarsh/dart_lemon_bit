@@ -44,9 +44,7 @@ class AmuletFiend extends Character {
   int get attackDuration => fiendType.attackDuration;
 
   @override
-  double get attackRange {
-    return fiendType.weaponRange;
-  }
+  double get attackRange => fiendType.weaponRange;
 
   @override
   bool get roamEnabled => true;

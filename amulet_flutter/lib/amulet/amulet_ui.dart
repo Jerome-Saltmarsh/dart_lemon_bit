@@ -1623,6 +1623,45 @@ class AmuletUI {
   Widget buildTextLevel(int level) =>
       buildText('lvl $level', color: Colors.white70, size: 16);
 
+  // Widget buildRangeDiff(AmuletItem current, AmuletItem next){
+  //
+  //   final currentRange = current.range?.index ?? 0;
+  //   final nextRange = next.range?.index ?? 0;
+  //   final diff = getDiff(nextRange, currentRange);
+  //
+  //   if (currentRange == 0 && nextRange == 0){
+  //     return nothing;
+  //   }
+  //
+  //   if (diff == null){
+  //     return nothing;
+  //   }
+  //
+  //
+  //   return Row(
+  //     children: [
+  //       buildText('range'),
+  //       width8,
+  //       Row(
+  //         children: List.generate(4, (index) {
+  //           return Container(
+  //             width: 10,
+  //             height: 16,
+  //             margin: const EdgeInsets.only(right: 6),
+  //             color:
+  //                 index <= currentRange && index <= nextRange ? Colors.white :
+  //                 index > currentRange && index > nextRange ? Colors.white12 :
+  //                 currentRange > nextRange ? Colors.red : Colors.green
+  //             ,
+  //           );
+  //         }).toList(growable: false),
+  //       ),
+  //       expanded,
+  //       buildDiff(diff),
+  //     ],
+  //   );
+  // }
+
   Widget buildColumnAmuletItemObject(AmuletItemObject next){
 
     final current = amulet.getEquippedAmuletItemObject(next.amuletItem.slotType);
@@ -1695,7 +1734,11 @@ class AmuletUI {
               value: next.damageMax,
               diff: showDiff ? damageMaxDiff : null,
             ),
-          buildCompareBars('range', currentAmuletItem?.range?.index ?? 0, nextAmuletItem.range?.index ?? 0),
+          // buildCompareBars('range', currentAmuletItem?.range? ?? 0, nextAmuletItem.range?.index ?? 0),
+          buildComparisonRow(
+              lead: 'range',
+              value: currentAmuletItem?.range ?? 0,
+              diff: nextAmuletItem.range ?? 0),
           buildCompareBars('speed', currentAmuletItem?.attackSpeed ?? 0, nextAmuletItem.attackSpeed ?? 0),
           height16,
           ...SkillType.values.map((skillType) {
@@ -1744,45 +1787,6 @@ class AmuletUI {
                 padding: const EdgeInsets.all(8),
                 child: buildText('PICKUP')),
           ),
-      ],
-    );
-  }
-
-  Widget buildRangeDiff(AmuletItem current, AmuletItem next){
-
-    final currentRange = current.range?.index ?? 0;
-    final nextRange = next.range?.index ?? 0;
-    final diff = getDiff(nextRange, currentRange);
-
-    if (currentRange == 0 && nextRange == 0){
-      return nothing;
-    }
-
-    if (diff == null){
-      return nothing;
-    }
-
-
-    return Row(
-      children: [
-        buildText('range'),
-        width8,
-        Row(
-          children: List.generate(4, (index) {
-            return Container(
-              width: 10,
-              height: 16,
-              margin: const EdgeInsets.only(right: 6),
-              color:
-                  index <= currentRange && index <= nextRange ? Colors.white :
-                  index > currentRange && index > nextRange ? Colors.white12 :
-                  currentRange > nextRange ? Colors.red : Colors.green
-              ,
-            );
-          }).toList(growable: false),
-        ),
-        expanded,
-        buildDiff(diff),
       ],
     );
   }

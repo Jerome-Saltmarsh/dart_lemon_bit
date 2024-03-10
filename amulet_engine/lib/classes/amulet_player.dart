@@ -138,7 +138,19 @@ class AmuletPlayer extends IsometricPlayer with
   int get weaponType => equippedWeapon?.amuletItem.subType ?? WeaponType.Unarmed;
 
   @override
-  double get attackRange => getSkillTypeRange(skillActive);
+  double get attackRange {
+    final rangeI = equippedWeaponRange;
+    if (rangeI == null){
+      return 0;
+    }
+    if (equippedWeaponRanged) {
+      return AmuletSettings.interpolateRangeRanged(rangeI);
+    }
+    if (equippedWeaponMelee) {
+      return AmuletSettings.interpolateRangeMelee(rangeI);
+    }
+    return 0;
+  }
 
   @override
   int get helmType => equippedHelm?.amuletItem.subType ?? HelmType.None;
@@ -445,7 +457,6 @@ class AmuletPlayer extends IsometricPlayer with
     writePlayerHealth();
     writePlayerMagic();
     writeSkillTypes();
-    writeEquippedWeaponRange();
     writePlayerCriticalHitPoints();
     writeSkillActiveLeft();
   }
@@ -557,7 +568,13 @@ class AmuletPlayer extends IsometricPlayer with
   void updateCastePosition() {
     final skillType = skillActive;
     final mouseDistance = getMouseDistance();
-    final maxRange = getSkillTypeRange(skillType);
+    final weaponRange = equippedWeaponRange;
+
+    if (weaponRange == null){
+      return;
+    }
+
+    final maxRange = AmuletSettings.interpolateRangeRanged(weaponRange);
 
     if (mouseDistance <= maxRange){
       castePositionX = mouseSceneX;
@@ -1270,14 +1287,14 @@ class AmuletPlayer extends IsometricPlayer with
 
   int get equippedWeaponLevel => equippedWeapon?.level ?? 0;
 
-  double getSkillTypeRange(SkillType skillType) =>
-      switch (skillType.casteType) {
-        CasteType.Passive => skillType.range,
-        CasteType.Bow => equippedWeaponRange?.ranged,
-        CasteType.Staff => equippedWeaponRange?.ranged,
-        CasteType.Sword => equippedWeaponRange?.melee,
-        CasteType.Self => skillType.range,
-      } ?? 0;
+  // double getSkillTypeRange(SkillType skillType) =>
+  //     switch (skillType.casteType) {
+  //       CasteType.Passive => skillType.range,
+  //       CasteType.Bow => equippedWeaponRange?.ranged,
+  //       CasteType.Staff => equippedWeaponRange?.ranged,
+  //       CasteType.Sword => equippedWeaponRange?.melee,
+  //       CasteType.Self => skillType.range,
+  //     } ?? 0;
 
   double getSkillTypeRadius(SkillType skillType) {
      switch (skillType){
@@ -1290,9 +1307,8 @@ class AmuletPlayer extends IsometricPlayer with
 
   int getSkillTypeMagicCost(SkillType skillType) => skillType.magicCost;
 
-  WeaponRange? get equippedWeaponRange {
-    return equippedWeapon?.amuletItem.range;
-  }
+  /// a value between 0.0 and 1.0
+  double? get equippedWeaponRange => equippedWeapon?.amuletItem.range;
 
   int getSkillTypeLevelAssigned(SkillType skillType){
       if (skillTypeAssignedToSkillSlot(skillType)){
@@ -1408,12 +1424,6 @@ class AmuletPlayer extends IsometricPlayer with
   void clearCache() {
     super.clearCache();
     cachePerformFrameVelocity = -1;
-  }
-
-  void writeEquippedWeaponRange() {
-    writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Player_Weapon_Range);
-    tryWriteByte(equippedWeapon?.amuletItem.range?.index);
   }
 
   double get areaDamage =>

@@ -150,9 +150,6 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Aim_Target:
          readAmuletPlayerAimTarget();
          break;
-       case NetworkResponseAmulet.Player_Weapon_Range:
-         readPlayerWeaponRange();
-         break;
        case NetworkResponseAmulet.Player_Critical_Hit_Points:
          readPlayerCriticalHitPoints();
          break;
@@ -313,9 +310,6 @@ extension AmuletParser on IsometricParser {
 
   void readPlayerPerformFrameVelocity() =>
       amulet.playerPerformFrameVelocity.value = readUInt16() / 1000;
-
-  void readPlayerWeaponRange() =>
-      amulet.playerWeaponRange.value = tryReadByte();
 
   void readPlayerCriticalHitPoints() =>
       amulet.playerCriticalHitPoints.value = readByte();

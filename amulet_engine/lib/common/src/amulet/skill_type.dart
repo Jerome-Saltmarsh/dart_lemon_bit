@@ -285,7 +285,7 @@ enum SkillType {
       linear(0, Max_Might_Swing, level);
 
   static double getRangeWindCut(int level) =>
-      linear(Range_Min_Wind_Cut, Range_Max_Wind_Cut, level);
+      linear(0, 1, level);
 
   static double getPercentageCriticalHit(int level) =>
       linear(0, Max_Critical_Hit, level);

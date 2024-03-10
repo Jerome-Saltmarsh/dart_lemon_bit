@@ -75,7 +75,6 @@ class Amulet extends IsometricGame {
 
   final playerWeaponDamageMin = Watch(0);
   final playerWeaponDamageMax = Watch(0);
-  final playerWeaponRange = Watch<int?>(0);
 
   final playerSkillTypeLevels = Map.fromEntries(SkillType.values.map((skillType) => MapEntry(skillType, 0)));
   final playerSkillTypeLevelNotifier = Watch(0);
