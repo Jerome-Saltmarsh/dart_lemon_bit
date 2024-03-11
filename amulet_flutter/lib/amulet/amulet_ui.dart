@@ -34,7 +34,7 @@ class AmuletUI {
 
   final quantifyTab = Watch(QuantifyTab.values.first);
   final quantifyTabSlotType = Watch(SlotType.Weapon);
-  final quantifyLevel = Watch(1);
+  final quantifyLevel = WatchInt(1);
 
   late final iconMagic = buildIconMagic();
   late final iconHealth = buildIconHealth();
@@ -2038,7 +2038,7 @@ class AmuletUI {
               Row(
                 children: [
                   onPressed(
-                    action: () => quantifyLevel.value--,
+                    action: quantifyLevel.decrement,
                     child: GSContainer(child: buildText('-'), color: Colors.black26),
                   ),
                   width8,
@@ -2047,8 +2047,8 @@ class AmuletUI {
                   buildWatch(quantifyLevel, buildText),
                   width8,
                   onPressed(
-                      action: () => quantifyLevel.value++,
-                      child: GSContainer(child: buildText('+'), color: Colors.black26,),
+                      action: quantifyLevel.increment,
+                      child: GSContainer(child: buildText('+'), color: Colors.black26),
                   )
                 ],
               ),
