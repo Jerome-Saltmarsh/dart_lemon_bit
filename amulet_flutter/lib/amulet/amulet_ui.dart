@@ -2115,7 +2115,21 @@ class AmuletUI {
             buildQuantificationCell('dmg-min', amuletItem.damageMin),
             buildQuantificationCell('speed', amuletItem.attackSpeed),
             buildQuantificationCell('range', amuletItem.range),
-            buildQuantificationCell('skills', getAmuletItemSkillSetTotal(amuletItem)),
+            Container(
+                alignment: Alignment.center,
+                child: Column(
+                  children: [
+                    // buildText('skills'),
+                    ...amuletItem.skillSet.entries.map((entry) => Row(
+                      children: [
+                        Container(
+                            width: 80,
+                            child: buildText(entry.key.name, size: 14, color: Colors.white70)),
+                        buildText(entry.value, size: 14, color: Colors.white70)
+                      ],
+                    ))
+                  ],
+                )),
             buildQuantificationCell('quantify', amuletItem.quantify),
           ],
         ),

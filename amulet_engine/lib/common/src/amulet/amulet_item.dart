@@ -23,7 +23,7 @@ enum AmuletItem {
     subType: WeaponType.Sword_Short,
     attackSpeed: 0.75,
     range: 0.2,
-    damage: 0.35,
+    damage: 0.45,
     damageMin: 0.75,
     skillSet: {
       SkillType.Mighty_Strike: 1.1,
@@ -43,6 +43,7 @@ enum AmuletItem {
     skillSet: {
       SkillType.Critical_Hit: 1,
       SkillType.Agility: 1,
+      SkillType.Vampire: 1,
     },
     quality: ItemQuality.Rare,
   ),
@@ -65,7 +66,7 @@ enum AmuletItem {
     subType: WeaponType.Sword_Long,
     attackSpeed: 0.4,
     range: 0.75,
-    damageMin: 0.8,
+    damageMin: 0.4,
     damage: 0.7,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
@@ -76,9 +77,9 @@ enum AmuletItem {
     label: 'Giant Sword',
     slotType: SlotType.Weapon,
     subType: WeaponType.Sword_Giant,
-    attackSpeed: 0.3,
+    attackSpeed: 0.2,
     range: 1.0,
-    damageMin: 0.7,
+    damageMin: 0.5,
     damage: 0.85,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
