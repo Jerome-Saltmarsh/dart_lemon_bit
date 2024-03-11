@@ -24,8 +24,8 @@ class AmuletUI {
   final filterSkillTypes = WatchBool(false);
   final filterCasteType = Watch(CasteType.Passive);
 
-  late final iconCheckBoxTrue = buildAmuletImage(srcX: 560, srcY: 0, width: 16, height: 16);
-  late final iconCheckBoxFalse = buildAmuletImage(srcX: 560, srcY: 16, width: 16, height: 16);
+  late final iconCheckBoxTrue = buildAmuletImage(srcX: 560, srcY: 16, width: 16, height: 16);
+  late final iconCheckBoxFalse = buildAmuletImage(srcX: 560, srcY: 0, width: 16, height: 16);
 
   final barBlockWhite70 = buildBarBlock(color: Colors.white70);
   final barBlockWhite24 = buildBarBlock(color: Colors.white24);

@@ -94,8 +94,7 @@ class WindowQuantify extends StatelessWidget {
                                   children: [
                                     buildText('Show Value'),
                                     width8,
-                                    buildWatch(
-                                        amuletUI.quantifyShowValue, buildText),
+                                    amuletUI.buildWatchCheckbox(amuletUI.quantifyShowValue),
                                   ],
                                 )),
                           )
@@ -169,7 +168,7 @@ class WindowQuantify extends StatelessWidget {
                 buildQuantificationCell('dmg-max', showValue ? amuletItem.getWeaponDamageMax(level: level) : amuletItem.damage),
               if (damageMin != null)
                 buildQuantificationCell('dmg-min', showValue ? amuletItem.getWeaponDamageMin(level: level) : amuletItem.damageMin),
-              
+
               buildQuantificationCell('speed', amuletItem.attackSpeed),
               buildQuantificationCell('range', amuletItem.range),
               buildQuantificationCell('health', amuletItem.maxHealth, renderNull: !amuletItem.isWeapon),
