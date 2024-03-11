@@ -1751,12 +1751,6 @@ class AmuletPlayer extends IsometricPlayer with
     amuletGame.onAmuletPlayerPickupGameObject(this, item);
   }
 
-  @override
-  void clearTarget() {
-    super.clearTarget();
-    clearCollectableGameObject();
-  }
-
   void sellAmuletItem() {
     final item = collectableGameObject;
     if (item == null) {
@@ -1764,7 +1758,14 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
 
+    writePlayerEvent(PlayerEvent.Item_Sold);
     amuletGame.remove(item);
+  }
+
+  @override
+  void clearTarget() {
+    super.clearTarget();
+    clearCollectableGameObject();
   }
 
   void onPortalUsed({
