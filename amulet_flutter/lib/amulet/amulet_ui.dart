@@ -2116,7 +2116,7 @@ class AmuletUI {
               ],
             ),
             Container(
-              width: 60,
+              width: 80,
               alignment: Alignment.center,
               child: validationError != null ? buildText(validationError.name, color: Colors.red) : null,
             ),
@@ -2124,6 +2124,8 @@ class AmuletUI {
             buildQuantificationCell('dmg-min', amuletItem.damageMin),
             buildQuantificationCell('speed', amuletItem.attackSpeed),
             buildQuantificationCell('range', amuletItem.range),
+            buildQuantificationCell('health', amuletItem.maxHealth),
+            buildQuantificationCell('magic', amuletItem.maxMagic),
             Container(
               width: 150,
                 alignment: Alignment.center,

@@ -8,7 +8,7 @@ enum ValidationError {
 
 ValidationError? getAmuletItemValidationError(AmuletItem amuletItem){
    final amount = amuletItem.quantify;
-   final constraint = getItemQualityConstraint(amuletItem.quality);
+   final constraint = getConstraint(amuletItem.quality, amuletItem.slotType);
    if (amount < constraint.min){
      return ValidationError.Too_Low;
    }
@@ -17,12 +17,31 @@ ValidationError? getAmuletItemValidationError(AmuletItem amuletItem){
    }
 }
 
-Constraint getItemQualityConstraint(ItemQuality itemQuality) =>
-    switch (itemQuality){
-      ItemQuality.Common => const Constraint(min: 1, max: 2.5),
-      ItemQuality.Unique => const Constraint(min: 3, max: 5),
-      ItemQuality.Rare => const Constraint(min: 6, max: 8)
-    };
+
+Constraint getConstraint(ItemQuality itemQuality, SlotType slotType) =>
+    switch (slotType) {
+      SlotType.Weapon => switch (itemQuality){
+          ItemQuality.Common => const Constraint(min: 1, max: 2.5),
+          ItemQuality.Unique => const Constraint(min: 3, max: 5),
+          ItemQuality.Rare => const Constraint(min: 6, max: 8)
+        },
+      SlotType.Helm => switch (itemQuality){
+          ItemQuality.Common => const Constraint(min: 1, max: 2.5),
+          ItemQuality.Unique => const Constraint(min: 3, max: 5),
+          ItemQuality.Rare => const Constraint(min: 6, max: 8)
+        },
+      SlotType.Armor => switch (itemQuality){
+          ItemQuality.Common => const Constraint(min: 1, max: 2.5),
+          ItemQuality.Unique => const Constraint(min: 3, max: 5),
+          ItemQuality.Rare => const Constraint(min: 6, max: 8)
+        },
+      SlotType.Shoes => switch (itemQuality){
+          ItemQuality.Common => const Constraint(min: 1, max: 2.5),
+          ItemQuality.Unique => const Constraint(min: 3, max: 5),
+          ItemQuality.Rare => const Constraint(min: 6, max: 8)
+        },
+      SlotType.Consumable => const Constraint(min: 0, max: 0)
+  };
 
 class Constraint {
   final double min;
