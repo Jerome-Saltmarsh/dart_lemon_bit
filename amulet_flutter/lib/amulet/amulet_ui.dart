@@ -2142,7 +2142,7 @@ class AmuletUI {
       return nothing;
     }
     return Container(
-              padding: const EdgeInsets.all(4),
+              padding: const EdgeInsets.all(8),
               alignment: Alignment.center,
               child: Column(
                 children: [
