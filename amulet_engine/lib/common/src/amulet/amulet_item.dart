@@ -37,7 +37,7 @@ enum AmuletItem {
     subType: WeaponType.Sword_Giant,
     attackSpeed: 0.2,
     range: 1.0,
-    damageMin: 0.5,
+    damageMin: 0.4,
     damage: 0.85,
   ),
   Weapon_Bow_Short(
@@ -71,7 +71,7 @@ enum AmuletItem {
     label: 'Lucky Long Bow of the Flame',
     slotType: SlotType.Weapon,
     subType: WeaponType.Bow_Long,
-    attackSpeed: 0.4,
+    attackSpeed: 0.3,
     range: 1.0,
     damageMin: 0.4,
     damage: 0.8,
@@ -404,11 +404,11 @@ enum AmuletItem {
       subType: WeaponType.Staff_Wand,
       attackSpeed: 0.8,
       range: 0.15,
-      damageMin: 0.5,
+      damageMin: 0.9,
       damage: 0.1,
       quality: ItemQuality.Unique,
       skillSet: {
-        SkillType.Frostball: 1.0,
+        SkillType.Frostball: 1.05,
       }),
   Flame_Wand(
       label: 'Flame Wand',
@@ -416,11 +416,11 @@ enum AmuletItem {
       subType: WeaponType.Staff_Wand,
       attackSpeed: 0.8,
       range: 0.15,
-      damageMin: 0.5,
+      damageMin: 0.9,
       damage: 0.1,
       quality: ItemQuality.Unique,
       skillSet: {
-        SkillType.Fireball: 1.0,
+        SkillType.Frostball: 1.05,
       }),
   Vampire_Knife(
       label: 'Assassins Blade',
@@ -499,14 +499,13 @@ enum AmuletItem {
 
   double get quantify {
     const pointsPerDamage = 3;
-
+    final damageMax = (damage ?? 0) * pointsPerDamage * (attackSpeed ?? 0);
     var total = 0.0;
     total += maxHealth ?? 0;
     total += maxMagic ?? 0;
-    total += (damage ?? 0) * pointsPerDamage;
-    total += (damageMin ?? 0) * pointsPerDamage;
+    total += damageMax;
+    total += (damageMin ?? 0) * damageMax;
     total += range ?? 0;
-    total += attackSpeed ?? 0;
     for (final entry in skillSet.entries) {
       total += entry.value;
     }
