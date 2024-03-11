@@ -486,6 +486,22 @@ class AmuletPlayer extends IsometricPlayer with
     clearTarget();
   }
 
+  void spawnAmuletItem({
+    required AmuletItem amuletItem,
+    required int level,
+  }) {
+    if (level <= 0) {
+      writeGameError(GameError.Invalid_Amulet_Item_Level);
+      return;
+    }
+
+    spawnAmuletItemObject(
+        AmuletItemObject(
+          amuletItem: amuletItem,
+          level: level,
+        ));
+  }
+
   void spawnAmuletItemObject(AmuletItemObject amuletItemObject){
     const spawnDistance = 20.0;
     final spawnAngle = randomAngle();

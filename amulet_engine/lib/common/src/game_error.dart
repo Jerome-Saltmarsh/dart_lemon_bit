@@ -93,11 +93,12 @@ enum GameError {
   Invalid_Skill_Type_Index,
   Skill_Type_Locked,
   Amulet_Item_Null,
+  Amulet_Item_Required,
   GameObject_Cannot_Be_Acquired,
   Invalid_GameObject_State,
   Item_Not_Consumable,
   Invalid_Object_Level,
-  Invalid_Object_Damage, Perform_Duration_Null, Character_Weapon_Range_Null
+  Invalid_Object_Damage, Perform_Duration_Null, Character_Weapon_Range_Null, Level_Required, Invalid_Amulet_Item_Index, Invalid_Amulet_Item_Level
   ;
 
   static GameError fromIndex(int index) {

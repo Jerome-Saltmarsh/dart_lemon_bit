@@ -19,5 +19,6 @@ enum NetworkRequestAmulet {
   Drop_Consumable,
   Toggle_Skill_Type,
   Spawn_Random_Amulet_Item,
+  Spawn_Amulet_Item,
   Pickup_Amulet_Item,
 }

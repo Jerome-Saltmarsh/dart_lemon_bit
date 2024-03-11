@@ -638,6 +638,29 @@ class AmuletController {
       case NetworkRequestAmulet.Spawn_Random_Enemy:
         amuletGame.spawnRandomEnemy(player.difficulty);
         break;
+      case NetworkRequestAmulet.Spawn_Amulet_Item:
+        final amuletItemIndex = arguments.tryGetArgInt(AmuletRequestField.Amulet_Item);
+        final level = arguments.tryGetArgInt(AmuletRequestField.Level);
+        if (level == null){
+          amuletPlayer.writeGameError(GameError.Level_Required);
+          return;
+        }
+        if (amuletItemIndex == null){
+          amuletPlayer.writeGameError(GameError.Amulet_Item_Required);
+          return;
+        }
+
+        final amuletItem = AmuletItem.values.tryGet(amuletItemIndex);
+        if (amuletItem == null) {
+          amuletPlayer.writeGameError(GameError.Invalid_Amulet_Item_Index);
+          return;
+        }
+
+        amuletPlayer.spawnAmuletItem(
+            amuletItem: amuletItem,
+            level: level,
+        );
+        break;
       case NetworkRequestAmulet.Pickup_Amulet_Item:
         player.pickupAmuletItem();
         break;

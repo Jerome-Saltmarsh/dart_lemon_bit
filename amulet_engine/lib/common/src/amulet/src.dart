@@ -10,6 +10,7 @@ export 'skill_type.dart';
 export 'amulet_settings.dart';
 export 'network/network_request_amulet.dart';
 export 'network/network_response_amulet.dart';
+export 'network/amulet_request_field.dart';
 export 'quests/src.dart';
 export 'difficulty.dart';
 export 'item_quality.dart';

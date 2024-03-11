@@ -2074,70 +2074,75 @@ class AmuletUI {
   Widget buildQuantifyAmuletItem(AmuletItem amuletItem, int level) {
 
     final validationError = getAmuletItemValidationError(amuletItem);
-
     final damage = amuletItem.damage;
 
-    return Container(
-    margin: const EdgeInsets.only(top: 8),
-    child: Container(
-      padding: const EdgeInsets.all(8),
-      color: Colors.white12,
-      child: Row(
-          children: [
-            buildIconAmuletItem(amuletItem),
-            width8,
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                    alignment: Alignment.centerLeft,
-                    width: 250,
-                    child: buildText(amuletItem.name.replaceAll('Weapon_', '')),
-                ),
-                buildText(
-                  amuletItem.quality.name,
-                  color: mapItemQualityToColor(amuletItem.quality),
-                ),
-              ],
-            ),
-            Container(
-              width: 80,
-              alignment: Alignment.center,
-              child: validationError != null ? buildText(validationError.name, color: Colors.red) : null,
-            ),
-            if (damage != null)
-            Row(
-              children: [
-                buildQuantificationCell('damage-i', amuletItem.damage),
-                buildQuantificationCell('damage', AmuletSettings.getWeaponDamage(t: damage, level: level)),
-              ],
-            ),
-            buildQuantificationCell('dmg-min', amuletItem.damageMin),
-            buildQuantificationCell('speed', amuletItem.attackSpeed),
-            buildQuantificationCell('range', amuletItem.range),
-            buildQuantificationCell('health', amuletItem.maxHealth, renderNull: !amuletItem.isWeapon),
-            buildQuantificationCell('magic', amuletItem.maxMagic, renderNull: !amuletItem.isWeapon),
-            Container(
-              width: 150,
+    return onPressed(
+      action: () => amulet.spawnAmuletItem(
+          amuletItem: amuletItem,
+          level: level,
+      ),
+      child: Container(
+      margin: const EdgeInsets.only(top: 8),
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        color: Colors.white12,
+        child: Row(
+            children: [
+              buildIconAmuletItem(amuletItem),
+              width8,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                      alignment: Alignment.centerLeft,
+                      width: 250,
+                      child: buildText(amuletItem.name.replaceAll('Weapon_', '')),
+                  ),
+                  buildText(
+                    amuletItem.quality.name,
+                    color: mapItemQualityToColor(amuletItem.quality),
+                  ),
+                ],
+              ),
+              Container(
+                width: 80,
                 alignment: Alignment.center,
-                child: Column(
-                  children: [
-                    // buildText('skills'),
-                    ...amuletItem.skillSet.entries.map((entry) => Row(
-                      children: [
-                        Container(
-                            width: 80,
-                            child: buildText(entry.key.name, size: 14, color: Colors.white70)),
-                        buildText(entry.value, size: 14, color: Colors.white70)
-                      ],
-                    ))
-                  ],
-                )),
-            buildQuantificationCell('quantify', amuletItem.quantify),
-          ],
+                child: validationError != null ? buildText(validationError.name, color: Colors.red) : null,
+              ),
+              if (damage != null)
+              Row(
+                children: [
+                  buildQuantificationCell('damage-i', amuletItem.damage),
+                  buildQuantificationCell('damage', AmuletSettings.getWeaponDamage(t: damage, level: level)),
+                ],
+              ),
+              buildQuantificationCell('dmg-min', amuletItem.damageMin),
+              buildQuantificationCell('speed', amuletItem.attackSpeed),
+              buildQuantificationCell('range', amuletItem.range),
+              buildQuantificationCell('health', amuletItem.maxHealth, renderNull: !amuletItem.isWeapon),
+              buildQuantificationCell('magic', amuletItem.maxMagic, renderNull: !amuletItem.isWeapon),
+              Container(
+                width: 150,
+                  alignment: Alignment.center,
+                  child: Column(
+                    children: [
+                      // buildText('skills'),
+                      ...amuletItem.skillSet.entries.map((entry) => Row(
+                        children: [
+                          Container(
+                              width: 80,
+                              child: buildText(entry.key.name, size: 14, color: Colors.white70)),
+                          buildText(entry.value, size: 14, color: Colors.white70)
+                        ],
+                      ))
+                    ],
+                  )),
+              buildQuantificationCell('quantify', amuletItem.quantify),
+            ],
+          ),
+      ),
         ),
-    ),
-  );
+    );
   }
 
   Widget buildQuantificationCell(String name, double? value, {bool renderNull = false}) {

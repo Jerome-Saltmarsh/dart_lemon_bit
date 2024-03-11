@@ -75,9 +75,11 @@ class Amulet extends IsometricGame {
   final playerWeaponDamageMin = Watch(0);
   final playerWeaponDamageMax = Watch(0);
 
-  final playerSkillTypeLevels = Map.fromEntries(SkillType.values.map((skillType) => MapEntry(skillType, 0)));
+  final playerSkillTypeLevels = Map.fromEntries(
+      SkillType.values.map((skillType) => MapEntry(skillType, 0)));
   final playerSkillTypeLevelNotifier = Watch(0);
-  final playerSkillTypeSlotAssigned = SkillType.values.asMapReversed((t) => Watch(false));
+  final playerSkillTypeSlotAssigned = SkillType.values.asMapReversed((t) =>
+      Watch(false));
   final playerSkillLeft = Watch(SkillType.Slash);
   final playerSkillRight = Watch(SkillType.Slash);
   final windowVisibleSkillLeft = WatchBool(false);
@@ -104,7 +106,7 @@ class Amulet extends IsometricGame {
   final aimTargetItemTypeCurrent = Watch<AmuletItem?>(null);
   final highlightedAmuletItem = Watch<AmuletItem?>(null);
 
-  void onChangedPlayerSkillType(SkillType skillType){
+  void onChangedPlayerSkillType(SkillType skillType) {
     audio.click_sounds_35.play();
   }
 
@@ -138,7 +140,7 @@ class Amulet extends IsometricGame {
   final equippedWeapon = Watch<AmuletItemObject?>(null);
   final equippedHelm = Watch<AmuletItemObject?>(null);
   final equippedArmor = Watch<AmuletItemObject?>(null);
-  final equippedShoes =  Watch<AmuletItemObject?>(null);
+  final equippedShoes = Watch<AmuletItemObject?>(null);
 
   ItemQuality? aimTargetItemQuality;
   var aimTargetText = '';
@@ -148,7 +150,7 @@ class Amulet extends IsometricGame {
   final aimTargetSet = Watch(false);
   final aimTargetNotifier = Watch(0);
 
-  Amulet(){
+  Amulet() {
     print('Amulet()');
 
     screenColorI.onChanged((t) {
@@ -182,10 +184,9 @@ class Amulet extends IsometricGame {
     skillSlotsChangedNotifier.onChanged(onChangedSkillSlots);
 
     aimTargetAmuletItemObject.onChanged((t) {
-      if (t != null){
+      if (t != null) {
         audio.click_sounds_35();
       }
-
     });
   }
 
@@ -193,34 +194,34 @@ class Amulet extends IsometricGame {
     playerMagicPercentage.value = playerMagic.percentageOf(playerMagicMax);
   }
 
-  void onChangedQuestMain(QuestMain questMain){
+  void onChangedQuestMain(QuestMain questMain) {
     windowVisibleQuests.setTrue();
   }
 
-  void onChangedWindowVisiblePlayerSkills(bool value){
+  void onChangedWindowVisiblePlayerSkills(bool value) {
     amulet.mouseOverSkillType = null;
     onWindowVisibilityChanged(value);
   }
 
-  void onChangedSkillSlots(int _){
-     for (final skillType in SkillType.values) {
-       final index = amulet.getSkillTypeSlotIndex(skillType);
-       // amulet.playerSkillTypeSlotIndex[skillType] = index;
-       amulet.playerSkillTypeSlotAssigned[skillType]?.value = index != null;
-     }
+  void onChangedSkillSlots(int _) {
+    for (final skillType in SkillType.values) {
+      final index = amulet.getSkillTypeSlotIndex(skillType);
+      // amulet.playerSkillTypeSlotIndex[skillType] = index;
+      amulet.playerSkillTypeSlotAssigned[skillType]?.value = index != null;
+    }
   }
 
-  void onWindowVisibilityChanged(bool value){
+  void onWindowVisibilityChanged(bool value) {
     audio.click_sounds_35.play();
   }
 
-  void updateFiendCountTotal(){
+  void updateFiendCountTotal() {
     fiendCountTotal.value = fiendCountAlive.value + fiendCountDead.value;
   }
 
   void updateFiendCountPercentage() {
     final total = fiendCountTotal.value;
-    if (total == 0){
+    if (total == 0) {
       fiendCountPercentage.value = 1.0;
     } else {
       fiendCountPercentage.value = (fiendCountAlive.value / total).clamp(0, 1);
@@ -232,7 +233,7 @@ class Amulet extends IsometricGame {
     amuletUI = AmuletUI(this);
   }
 
-  void onChangedError(String value){
+  void onChangedError(String value) {
     if (value.isEmpty)
       return;
 
@@ -250,12 +251,12 @@ class Amulet extends IsometricGame {
     // updateCursor();
     if (errorTimer > 0) {
       errorTimer--;
-      if (errorTimer <= 0){
+      if (errorTimer <= 0) {
         clearError();
       }
     }
 
-    if (screenColorI.value < 1){
+    if (screenColorI.value < 1) {
       screenColorI.value += 0.15;
     }
   }
@@ -301,8 +302,8 @@ class Amulet extends IsometricGame {
 
     if (key == amuletKeys.selectSkill0) {
       final mouseOverSkillType = amulet.mouseOverSkillType;
-      if (mouseOverSkillType != null){
-         setSkillSlotValue(index: 0, skillType: mouseOverSkillType);
+      if (mouseOverSkillType != null) {
+        setSkillSlotValue(index: 0, skillType: mouseOverSkillType);
       }
       setSkillSlotIndex(0);
       return;
@@ -310,7 +311,7 @@ class Amulet extends IsometricGame {
 
     if (key == amuletKeys.selectSkill1) {
       final mouseOverSkillType = amulet.mouseOverSkillType;
-      if (mouseOverSkillType != null){
+      if (mouseOverSkillType != null) {
         setSkillSlotValue(index: 1, skillType: mouseOverSkillType);
       }
       setSkillSlotIndex(1);
@@ -318,7 +319,7 @@ class Amulet extends IsometricGame {
     }
     if (key == amuletKeys.selectSkill2) {
       final mouseOverSkillType = amulet.mouseOverSkillType;
-      if (mouseOverSkillType != null){
+      if (mouseOverSkillType != null) {
         setSkillSlotValue(index: 2, skillType: mouseOverSkillType);
       }
       setSkillSlotIndex(2);
@@ -326,32 +327,33 @@ class Amulet extends IsometricGame {
     }
     if (key == amuletKeys.selectSkill3) {
       final mouseOverSkillType = amulet.mouseOverSkillType;
-      if (mouseOverSkillType != null){
+      if (mouseOverSkillType != null) {
         setSkillSlotValue(index: 3, skillType: mouseOverSkillType);
       }
       setSkillSlotIndex(3);
       return;
     }
 
-    if (key == amuletKeys.consume0){
+    if (key == amuletKeys.consume0) {
       consumeSlotAtIndex(0);
     }
 
-    if (key == amuletKeys.consume1){
+    if (key == amuletKeys.consume1) {
       consumeSlotAtIndex(1);
     }
 
-    if (key == amuletKeys.consume2){
+    if (key == amuletKeys.consume2) {
       consumeSlotAtIndex(2);
     }
 
-    if (key == amuletKeys.consume3){
+    if (key == amuletKeys.consume3) {
       consumeSlotAtIndex(3);
     }
 
-    if (options.developMode){
+    if (options.developMode) {
       if (key == amuletKeys.refillHealthAndMagic) {
-        amulet.sendAmuletRequest(NetworkRequestAmulet.Refill_Player_Health_Magic);
+        amulet.sendAmuletRequest(
+            NetworkRequestAmulet.Refill_Player_Health_Magic);
         return;
       }
     }
@@ -377,7 +379,7 @@ class Amulet extends IsometricGame {
 
   void onChangedPlayerInventoryOpen(bool value) {
     audio.click_sound_8.play();
-    if (!value){
+    if (!value) {
       clearItemHover();
     }
   }
@@ -397,7 +399,7 @@ class Amulet extends IsometricGame {
   // void selectSlotType(SlotType slotType) =>
   //     sendAmuletRequest(NetworkRequestAmulet.Select_Slot_Type, slotType.index);
 
-  void setSkillSlotIndex(int index){
+  void setSkillSlotIndex(int index) {
     sendAmuletRequest(NetworkRequestAmulet.Set_Skill_Slot_Index, index);
   }
 
@@ -413,8 +415,8 @@ class Amulet extends IsometricGame {
     );
   }
 
-  void messageNext(){
-    if (messageIndex.value + 1 >= messages.length){
+  void messageNext() {
+    if (messageIndex.value + 1 >= messages.length) {
       clearMessage();
     } else {
       messageIndex.value++;
@@ -426,14 +428,14 @@ class Amulet extends IsometricGame {
     messages.clear();
   }
 
-  void nextNpcText(){
+  void nextNpcText() {
     npcTextIndex.value++;
   }
 
   void endInteraction() {
     server.sendNetworkRequest(
-        NetworkRequest.Amulet,
-        NetworkRequestAmulet.End_Interaction.index,
+      NetworkRequest.Amulet,
+      NetworkRequestAmulet.End_Interaction.index,
     );
   }
 
@@ -465,7 +467,8 @@ class Amulet extends IsometricGame {
     scene.colorStackIndex = -1;
     scene.ambientStackIndex = -1;
     scene.editEnabled.value = false;
-    scene.nodeVisibility.fillRange(0, scene.nodeVisibility.length, NodeVisibility.opaque);
+    scene.nodeVisibility.fillRange(
+        0, scene.nodeVisibility.length, NodeVisibility.opaque);
     particles.activated.clear();
     particles.deactivated.clear();
     amuletScene.value = null;
@@ -483,23 +486,23 @@ class Amulet extends IsometricGame {
     engine.cursorType.value = SystemMouseCursors.basic;
   }
 
-  void clearHighlightAmuletItem(){
+  void clearHighlightAmuletItem() {
     highlightedAmuletItem.value = null;
   }
 
   void requestSkipTutorial() =>
       server.sendNetworkRequest(
-          NetworkRequest.Amulet,
-          NetworkRequestAmulet.Skip_Tutorial.index,
+        NetworkRequest.Amulet,
+        NetworkRequestAmulet.Skip_Tutorial.index,
       );
 
   void requestReset() =>
       server.sendNetworkRequest(
-          NetworkRequest.Amulet,
-          NetworkRequestAmulet.Reset.index,
+        NetworkRequest.Amulet,
+        NetworkRequestAmulet.Reset.index,
       );
 
-  void buildWorldMapSrcAndDst(){
+  void buildWorldMapSrcAndDst() {
     print('amulet.buildWorldMapSrcAndDst()');
     var index = 0;
     final size = 100;
@@ -563,13 +566,14 @@ class Amulet extends IsometricGame {
     NodeType.Soil: colors.brown_2,
   };
 
-  Color mapNodeTypeToColor(int nodeType){
+  Color mapNodeTypeToColor(int nodeType) {
     return colorMap[nodeType] ?? Colors.black;
   }
 
-  void recordWorldMapPicture(){
+  void recordWorldMapPicture() {
     print('amulet.recordWorldMapPicture()');
-    final paint = Paint()..color = Colors.white;
+    final paint = Paint()
+      ..color = Colors.white;
     final recorder = ui.PictureRecorder();
     final canvas = Canvas(recorder);
     canvas.drawRawAtlas(
@@ -582,15 +586,15 @@ class Amulet extends IsometricGame {
       paint,
     );
 
-     final picture = recorder.endRecording();
-     picture
-         .toImage(
-            (300).toInt(),
-            (300).toInt(),
-          )
-         .then((value) {
-            worldMapPicture = value;
-         });
+    final picture = recorder.endRecording();
+    picture
+        .toImage(
+      (300).toInt(),
+      (300).toInt(),
+    )
+        .then((value) {
+      worldMapPicture = value;
+    });
   }
 
   void onWorldMapChanged() {
@@ -603,22 +607,23 @@ class Amulet extends IsometricGame {
 
   void selectSkillTypeLeft(SkillType value) =>
       sendAmuletRequest(
-          NetworkRequestAmulet.Select_Skill_Type_Left,
-          value.index,
+        NetworkRequestAmulet.Select_Skill_Type_Left,
+        value.index,
       );
 
   void selectSkillTypeRight(SkillType value) =>
       sendAmuletRequest(
-          NetworkRequestAmulet.Select_Skill_Type_Right,
-          value.index,
+        NetworkRequestAmulet.Select_Skill_Type_Right,
+        value.index,
       );
 
-  void sendAmuletRequest(NetworkRequestAmulet request, [dynamic arg1, dynamic arg2]) =>
+  void sendAmuletRequest(NetworkRequestAmulet request,
+      [dynamic arg1, dynamic arg2]) =>
       server.sendNetworkRequest(
-          NetworkRequest.Amulet,
-          request.index,
-          arg1,
-          arg2,
+        NetworkRequest.Amulet,
+        request.index,
+        arg1,
+        arg2,
       );
 
   void onAmuletEvent({
@@ -632,11 +637,11 @@ class Amulet extends IsometricGame {
 
   AmuletItemObject? getEquippedAmuletItemObject(SlotType itemType) =>
       switch (itemType) {
-          SlotType.Weapon => equippedWeapon.value,
-          SlotType.Helm => equippedHelm.value,
-          SlotType.Armor => equippedArmor.value,
-          SlotType.Shoes => equippedShoes.value,
-          SlotType.Consumable => null,
+        SlotType.Weapon => equippedWeapon.value,
+        SlotType.Helm => equippedHelm.value,
+        SlotType.Armor => equippedArmor.value,
+        SlotType.Shoes => equippedShoes.value,
+        SlotType.Consumable => null,
       };
 
   void toggleDebugEnabled() =>
@@ -657,28 +662,29 @@ class Amulet extends IsometricGame {
   // }
 
   int getSkillSlotIndex(Watch<SkillType> watch) {
-     if (watch == skillSlot0){
-       return 0;
-     }
-     if (watch == skillSlot1){
-       return 1;
-     }
-     if (watch == skillSlot2){
-       return 2;
-     }
-     if (watch == skillSlot3){
-       return 3;
-     }
-     throw Exception();
+    if (watch == skillSlot0) {
+      return 0;
+    }
+    if (watch == skillSlot1) {
+      return 1;
+    }
+    if (watch == skillSlot2) {
+      return 2;
+    }
+    if (watch == skillSlot3) {
+      return 3;
+    }
+    throw Exception();
   }
 
   void setSkillSlotValue({
     required int index,
     required SkillType skillType,
-  }) => sendAmuletRequest(
+  }) =>
+      sendAmuletRequest(
         NetworkRequestAmulet.Set_Skill_Slot_Value,
         '$index ${skillType.index}',
-    );
+      );
 
   @override
   List<Widget> buildMenuItems() {
@@ -707,8 +713,8 @@ class Amulet extends IsometricGame {
   //    throw Exception();
   // }
 
-  Watch<SkillType> getSkillSlotAt(int index){
-    switch (index){
+  Watch<SkillType> getSkillSlotAt(int index) {
+    switch (index) {
       case 0:
         return skillSlot0;
       case 1:
@@ -719,7 +725,6 @@ class Amulet extends IsometricGame {
         return skillSlot3;
       default:
         throw Exception('amulet.getSkillSlotAt($index)');
-
     }
   }
 
@@ -729,7 +734,7 @@ class Amulet extends IsometricGame {
     windowVisiblePlayerSkills.setFalse();
   }
 
-  void consumeSlotAtIndex(int index){
+  void consumeSlotAtIndex(int index) {
     final consumableSlot = consumableSlots.tryGet(index);
     if (consumableSlot != null) {
       useConsumableSlot(consumableSlot);
@@ -738,25 +743,25 @@ class Amulet extends IsometricGame {
 
   void useConsumableSlot(Watch<AmuletItem?> slot) {
     final index = consumableSlots.indexOf(slot);
-    if (index == -1){
-       throw Exception('invalid slot');
+    if (index == -1) {
+      throw Exception('invalid slot');
     }
     if (slot.value == null) {
       return;
     }
     sendAmuletRequest(
-        NetworkRequestAmulet.Consume_Slot,
-        index,
+      NetworkRequestAmulet.Consume_Slot,
+      index,
     );
   }
 
-  void onAmuletItemConsumed(AmuletItem amuletItem){
+  void onAmuletItemConsumed(AmuletItem amuletItem) {
     audio.drink.play();
   }
 
   void dropConsumableSlot(Watch<AmuletItem?> itemSlot) {
     final index = consumableSlots.indexOf(itemSlot);
-    if (index == -1){
+    if (index == -1) {
       throw Exception('invalid slot');
     }
     if (itemSlot.value == null) {
@@ -769,50 +774,52 @@ class Amulet extends IsometricGame {
   }
 
   void onAmuletItemDropped(AmuletItem amuletItem) {
-     if (amuletItem.isConsumable){
-       audio.material_struck_glass.play();
-     }
-  }
-
-  void onAmuletItemEquipped(AmuletItem amuletItem) {
-    if (amuletItem.isConsumable){
+    if (amuletItem.isConsumable) {
       audio.material_struck_glass.play();
     }
   }
 
-  PhysicalKeyboardKey? getConsumeSlotPhysicalKeyboardKey(Watch<AmuletItem?> itemSlot) {
-    if (itemSlot == consumableSlots[0]){
+  void onAmuletItemEquipped(AmuletItem amuletItem) {
+    if (amuletItem.isConsumable) {
+      audio.material_struck_glass.play();
+    }
+  }
+
+  PhysicalKeyboardKey? getConsumeSlotPhysicalKeyboardKey(
+      Watch<AmuletItem?> itemSlot) {
+    if (itemSlot == consumableSlots[0]) {
       return amuletKeys.consume0;
     }
-    if (itemSlot == consumableSlots[1]){
+    if (itemSlot == consumableSlots[1]) {
       return amuletKeys.consume1;
     }
-    if (itemSlot == consumableSlots[2]){
+    if (itemSlot == consumableSlots[2]) {
       return amuletKeys.consume2;
     }
-    if (itemSlot == consumableSlots[3]){
+    if (itemSlot == consumableSlots[3]) {
       return amuletKeys.consume3;
     }
     return null;
   }
 
   void toggleSkillType(SkillType skillType) =>
-      sendAmuletRequest(NetworkRequestAmulet.Toggle_Skill_Type, skillType.index);
+      sendAmuletRequest(
+          NetworkRequestAmulet.Toggle_Skill_Type, skillType.index);
 
   int? getSkillTypeSlotIndex(SkillType skillType) {
-      if (skillType == skillSlot0.value){
-        return 0;
-      }
-      if (skillType == skillSlot1.value){
-        return 1;
-      }
-      if (skillType == skillSlot2.value){
-        return 2;
-      }
-      if (skillType == skillSlot3.value){
-        return 3;
-      }
-      return null;
+    if (skillType == skillSlot0.value) {
+      return 0;
+    }
+    if (skillType == skillSlot1.value) {
+      return 1;
+    }
+    if (skillType == skillSlot2.value) {
+      return 2;
+    }
+    if (skillType == skillSlot3.value) {
+      return 3;
+    }
+    return null;
   }
 
   int getSkillTypeLevel(SkillType skillType) =>
@@ -823,4 +830,16 @@ class Amulet extends IsometricGame {
 
   void pickupAmuletItem() =>
       sendAmuletRequest(NetworkRequestAmulet.Pickup_Amulet_Item);
+
+  void spawnAmuletItem({
+    required AmuletItem amuletItem,
+    required int level,
+  }) =>
+      sendAmuletRequest(
+          NetworkRequestAmulet.Spawn_Amulet_Item,
+          '${AmuletRequestField.Level} $level '
+          '${AmuletRequestField.Amulet_Item} ${amuletItem.index}'
+      );
 }
+
+
