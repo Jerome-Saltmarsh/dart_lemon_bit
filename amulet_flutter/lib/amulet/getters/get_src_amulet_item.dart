@@ -9,6 +9,7 @@ const srcx_armor = 192.0;
 const srcx_armor_rogue = 256.0;
 const srcx_shoes = 224.0;
 
+const _weapons_wand = [srcx_weapon_staff, 0.0];
 const _weapons_sword_short = [srcx_weapon_sword, 0.0];
 const _weapons_sword_broad = [srcx_weapon_sword, 32.0];
 const _weapons_sword_long = [srcx_weapon_sword, 64.0];
@@ -34,12 +35,13 @@ const _shoes_black_slippers = [srcx_shoes, 64.0];
 const _shoes_grieves = [srcx_shoes, 32.0];
 const _shoes_treads = [srcx_shoes, 96.0];
 
-List<double> getSrcAmuletItem(AmuletItem amuletItem) => switch (amuletItem) {
+List<double> getSrcAmuletItem(AmuletItem amuletItem) =>
+    switch (amuletItem) {
       AmuletItem.Weapon_Sword_Short => _weapons_sword_short,
       AmuletItem.Weapon_Sword_Broad => _weapons_sword_broad,
       AmuletItem.Weapon_Sword_Long => _weapons_sword_long,
       AmuletItem.Weapon_Sword_Giant => _weapons_sword_giant,
-      AmuletItem.Weapon_Staff_Wand => const [srcx_weapon_staff, 0],
+      AmuletItem.Weapon_Staff_Wand => _weapons_wand,
       AmuletItem.Weapon_Staff_Globe => const [srcx_weapon_staff, 32],
       AmuletItem.Weapon_Staff_Scepter => const [srcx_weapon_staff, 64],
       AmuletItem.Weapon_Staff_Long => const [34, 99, 28, 28],
@@ -75,11 +77,8 @@ List<double> getSrcAmuletItem(AmuletItem amuletItem) => switch (amuletItem) {
       AmuletItem.Consumable_Potion_Magic => const [srcx_consumable, 64],
       AmuletItem.Helm_Cowl => _helms_pointed_hat_black,
       AmuletItem.Helm_Cape => _armor_mantle,
-      AmuletItem.Unique_Weapon_Swift_Blade => const [
-          srcx_weapon_sword,
-          128,
-          32,
-          32
-        ],
+      AmuletItem.Vampire_Knife => _weapons_sword_short,
       AmuletItem.Assassins_Blade => _weapons_sword_short,
+      AmuletItem.Ice_Wand => _weapons_wand,
+      AmuletItem.Fire_Wand => _weapons_wand,
 };

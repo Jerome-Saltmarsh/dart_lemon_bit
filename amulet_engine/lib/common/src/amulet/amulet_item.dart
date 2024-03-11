@@ -1,7 +1,7 @@
 import '../../src.dart';
 import 'package:collection/collection.dart';
 
-
+import '../isometric/damage_type.dart';
 
 enum AmuletItem {
   Weapon_Sword_Short(
@@ -12,40 +12,6 @@ enum AmuletItem {
     range: 0.2,
     damageMin: 0.55,
     damage: 0.25,
-    skillSet: {
-      SkillType.Mighty_Strike: 1.0,
-      SkillType.Critical_Hit: 0.8,
-    },
-  ),
-  Assassins_Blade(
-    label: 'Assassins Blade',
-    slotType: SlotType.Weapon,
-    subType: WeaponType.Sword_Short,
-    attackSpeed: 0.75,
-    range: 0.2,
-    damage: 0.45,
-    damageMin: 0.75,
-    skillSet: {
-      SkillType.Mighty_Strike: 1.1,
-      SkillType.Critical_Hit: 1,
-      SkillType.Agility: 1,
-    },
-    quality: ItemQuality.Unique,
-  ),
-  Unique_Weapon_Swift_Blade(
-    label: 'Swift Blade',
-    slotType: SlotType.Weapon,
-    subType: WeaponType.Sword_Short,
-    attackSpeed: 0.8,
-    range: 0.2,
-    damage: 0.55,
-    damageMin: 0.75,
-    skillSet: {
-      SkillType.Critical_Hit: 1.5,
-      SkillType.Agility: 1.5,
-      SkillType.Health_Steal: 1.5,
-    },
-    quality: ItemQuality.Rare,
   ),
   Weapon_Sword_Broad(
     label: 'Broad Sword',
@@ -55,10 +21,6 @@ enum AmuletItem {
     range: 0.5,
     damage: 0.5,
     damageMin: 0.75,
-    skillSet: {
-      SkillType.Mighty_Strike: 1.0,
-      SkillType.Critical_Hit: 0.8,
-    },
   ),
   Weapon_Sword_Long(
     label: 'Long Sword',
@@ -68,10 +30,6 @@ enum AmuletItem {
     range: 0.75,
     damageMin: 0.4,
     damage: 0.7,
-    skillSet: {
-      SkillType.Mighty_Strike: 1.0,
-      SkillType.Critical_Hit: 0.8,
-    },
   ),
   Weapon_Sword_Giant(
     label: 'Giant Sword',
@@ -81,10 +39,6 @@ enum AmuletItem {
     range: 1.0,
     damageMin: 0.5,
     damage: 0.85,
-    skillSet: {
-      SkillType.Mighty_Strike: 1.0,
-      SkillType.Critical_Hit: 0.8,
-    },
   ),
   Weapon_Bow_Short(
     label: 'Short Bow',
@@ -94,10 +48,6 @@ enum AmuletItem {
     range: 0.25,
     damageMin: 0.9,
     damage: 0.25,
-    skillSet: {
-      SkillType.Split_Shot: 1.0,
-      SkillType.Health_Steal: 0.8,
-    },
   ),
   Weapon_Bow_Reflex(
     label: 'Reflex Bow',
@@ -107,10 +57,6 @@ enum AmuletItem {
     range: 0.4,
     damageMin: 0.5,
     damage: 0.35,
-    skillSet: {
-      SkillType.Split_Shot: 1.0,
-      SkillType.Magic_Steal: 0.8,
-    },
   ),
   Weapon_Bow_Composite(
     label: 'Composite Bow',
@@ -120,23 +66,15 @@ enum AmuletItem {
     range: 0.75,
     damageMin: 0.3,
     damage: 0.6,
-    skillSet: {
-      SkillType.Split_Shot: 1.0,
-      SkillType.Magic_Steal: 0.8,
-    },
   ),
   Weapon_Bow_Long(
-    label: 'Long Bow',
+    label: 'Lucky Long Bow of the Flame',
     slotType: SlotType.Weapon,
     subType: WeaponType.Bow_Long,
     attackSpeed: 0.4,
     range: 1.0,
     damageMin: 0.4,
     damage: 0.8,
-    skillSet: {
-      SkillType.Mighty_Strike: 1.0,
-      SkillType.Critical_Hit: 0.8,
-    },
   ),
   Weapon_Staff_Wand(
     label: 'Wand',
@@ -146,10 +84,6 @@ enum AmuletItem {
     range: 0.15,
     damageMin: 0.5,
     damage: 0.1,
-    skillSet: {
-      SkillType.Magic_Steal: 1.0,
-      SkillType.Frostball: 1.0,
-    },
   ),
   Weapon_Staff_Globe(
     label: 'Globe',
@@ -159,36 +93,24 @@ enum AmuletItem {
     range: 0.4,
     damageMin: 0.2,
     damage: 0.35,
-    skillSet: {
-      SkillType.Magic_Steal: 1.0,
-      SkillType.Fireball: 1.0,
-    },
   ),
   Weapon_Staff_Scepter(
-      label: 'Scepter',
-      slotType: SlotType.Weapon,
-      subType: WeaponType.Staff_Scepter,
-      attackSpeed: 0.5,
-      range: 0.7,
-      damageMin: 0.6,
+    label: 'Scepter',
+    slotType: SlotType.Weapon,
+    subType: WeaponType.Staff_Scepter,
+    attackSpeed: 0.5,
+    range: 0.7,
+    damageMin: 0.6,
     damage: 0.45,
-    skillSet: {
-      SkillType.Mighty_Strike: 1.0,
-      SkillType.Critical_Hit: 0.8,
-    },
-      ),
+  ),
   Weapon_Staff_Long(
-      label: 'Staff',
-      slotType: SlotType.Weapon,
-      subType: WeaponType.Staff_Long,
-      attackSpeed: 0.4,
-      range: 1.0,
-      damageMin: 0.8,
+    label: 'Staff',
+    slotType: SlotType.Weapon,
+    subType: WeaponType.Staff_Long,
+    attackSpeed: 0.4,
+    range: 1.0,
+    damageMin: 0.8,
     damage: 0.55,
-    skillSet: {
-      SkillType.Mighty_Strike: 1.0,
-      SkillType.Critical_Hit: 0.8,
-    },
   ),
   Helm_Leather_Cap(
     label: 'Leather Cap',
@@ -470,23 +392,74 @@ enum AmuletItem {
     label: 'Magic Potion',
     slotType: SlotType.Consumable,
     subType: ConsumableType.Potion_Blue,
-    skillSet: {
-    },
   ),
   Consumable_Potion_Health(
-      label: 'Health Potion',
-      slotType: SlotType.Consumable,
-      subType: ConsumableType.Potion_Red,
+    label: 'Health Potion',
+    slotType: SlotType.Consumable,
+    subType: ConsumableType.Potion_Red,
+  ),
+  Ice_Wand(
+    label: 'Cold Wand',
+    slotType: SlotType.Weapon,
+    subType: WeaponType.Staff_Wand,
+    attackSpeed: 0.8,
+    range: 0.15,
+    damageMin: 0.5,
+    damage: 0.1,
+      quality: ItemQuality.Unique,
     skillSet: {
-    },
+      SkillType.Frostball: 1.0,
+    }
+  ),
+  Fire_Wand(
+    label: 'Fire Wand',
+    slotType: SlotType.Weapon,
+    subType: WeaponType.Staff_Wand,
+    attackSpeed: 0.8,
+    range: 0.15,
+    damageMin: 0.5,
+    damage: 0.1,
+      quality: ItemQuality.Unique,
+    skillSet: {
+      SkillType.Fireball: 1.0,
+    }
+  ),
+  Vampire_Knife(
+    label: 'Assassins Blade',
+    slotType: SlotType.Weapon,
+    subType: WeaponType.Sword_Short,
+    attackSpeed: 0.75,
+    range: 0.2,
+    damage: 0.45,
+    damageMin: 0.75,
+    quality: ItemQuality.Unique,
+    skillSet: {
+      SkillType.Health_Steal: 1.0,
+    }
+  ),
+  Assassins_Blade(
+    label: 'Assassins Blade',
+    slotType: SlotType.Weapon,
+    subType: WeaponType.Sword_Short,
+    attackSpeed: 0.8,
+    range: 0.2,
+    damage: 0.55,
+    damageMin: 0.75,
+    quality: ItemQuality.Rare,
+    skillSet: {
+      SkillType.Critical_Hit: 2.0,
+      SkillType.Agility: 1.0,
+    }
   );
 
   /// see item_type.dart in commons
   final SlotType slotType;
   final int subType;
   final double? damageMin;
+
   /// between 0.0 and 1.0
   final double? damage;
+
   /// between 0.0 and 1.0
   final double? range;
   final double? attackSpeed;
@@ -495,6 +468,7 @@ enum AmuletItem {
   final int? maxHealth;
   final int? maxMagic;
   final Map<SkillType, double> skillSet;
+  final Map<DamageType, double> resistances;
 
   const AmuletItem({
     required this.slotType,
@@ -508,6 +482,7 @@ enum AmuletItem {
     this.attackSpeed,
     this.damageMin,
     this.damage,
+    this.resistances = const {},
   });
 
   bool get isWeapon => slotType == SlotType.Weapon;
@@ -536,7 +511,7 @@ enum AmuletItem {
     total += (damageMin ?? 0) * pointsPerDamage;
     total += range ?? 0;
     total += attackSpeed ?? 0;
-    for (final entry in skillSet.entries){
+    for (final entry in skillSet.entries) {
       total += entry.value;
     }
     return total;
@@ -562,22 +537,22 @@ enum AmuletItem {
   int getSkillTypeValue({
     required SkillType skillType,
     required int level,
-  })=> ((skillSet[skillType] ?? 0) * level).toInt();
+  }) =>
+      ((skillSet[skillType] ?? 0) * level).toInt();
 
   WeaponClass? get weaponClass {
-     if (!isWeapon){
-       return null;
-     }
-     if (isWeaponBow){
-       return WeaponClass.Bow;
-     }
-     if (isWeaponStaff){
-       return WeaponClass.Staff;
-     }
-     if (isWeaponSword){
-       return WeaponClass.Sword;
-     }
-     throw Exception();
+    if (!isWeapon) {
+      return null;
+    }
+    if (isWeaponBow) {
+      return WeaponClass.Bow;
+    }
+    if (isWeaponStaff) {
+      return WeaponClass.Staff;
+    }
+    if (isWeaponSword) {
+      return WeaponClass.Sword;
+    }
+    throw Exception();
   }
 }
-

@@ -2101,7 +2101,7 @@ class AmuletUI {
             Container(
                 alignment: Alignment.centerLeft,
                 width: 250,
-                child: buildText(amuletItem.name),
+                child: buildText(amuletItem.name.replaceAll('Weapon_', '')),
             ),
             Container(
               width: 100,
@@ -2116,6 +2116,7 @@ class AmuletUI {
             buildQuantificationCell('speed', amuletItem.attackSpeed),
             buildQuantificationCell('range', amuletItem.range),
             Container(
+              width: 150,
                 alignment: Alignment.center,
                 child: Column(
                   children: [
