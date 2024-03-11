@@ -1,9 +1,9 @@
 
 import 'package:amulet_engine/src.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
-import 'package:amulet_flutter/amulet/getters/get_amulet_item_validation_error.dart';
 import 'package:amulet_flutter/amulet/src.dart';
 import 'package:amulet_flutter/amulet/ui/enums/quantify_tab.dart';
+import 'package:amulet_flutter/amulet/ui/widgets/window_quantify.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';
 import 'package:amulet_flutter/website/widgets/gs_fullscreen.dart';
@@ -35,6 +35,7 @@ class AmuletUI {
   final quantifyTab = Watch(QuantifyTab.values.first);
   final quantifyAmuletItemSlotType = Watch(SlotType.Weapon);
   final quantifyLevel = WatchInt(1);
+  final quantifyShowValue = WatchBool(false);
 
   late final iconMagic = buildIconMagic();
   late final iconHealth = buildIconHealth();
@@ -145,7 +146,7 @@ class AmuletUI {
             left: 8,
             child:
             buildWatch(amulet.windowVisibleQuantify, (visible){
-              return visible ? buildWindowQuantify() : nothing;
+              return visible ? WindowQuantify(amulet: amulet) : nothing;
             }),
           ),
           Positioned(
@@ -806,17 +807,6 @@ class AmuletUI {
           borderColor: Colors.transparent,
         ),
       );
-
-  static Color mapItemQualityToColor(ItemQuality itemQuality){
-    switch (itemQuality){
-      case ItemQuality.Common:
-        return Colors.white;
-      case ItemQuality.Unique:
-        return Colors.blue;
-      case ItemQuality.Rare:
-        return Colors.yellow;
-    }
-  }
 
   Widget buildIconItems() => AmuletImage(srcX: 725, srcY: 99, width: 22, height: 25);
 
@@ -1992,193 +1982,7 @@ class AmuletUI {
   //   );
   // }
 
-  Widget buildWindowQuantify() =>
-      GSContainer(child: buildWatch(quantifyTab, buildActiveQuantifyTab));
 
-  Widget buildActiveQuantifyTab(QuantifyTab activeQuantifyTab) => Column(
-        children: [
-          Row(
-            children: QuantifyTab.values
-                .map((e) => Container(
-                      width: 120,
-                      height: 50,
-                      color: e == activeQuantifyTab
-                          ? Colors.black38
-                          : Colors.black12,
-                      alignment: Alignment.center,
-                      child: onPressed(
-                        action: () => quantifyTab.value = e,
-                        child: buildText(e.name),
-                      ),
-                    ))
-                .toList(growable: false),
-          ),
-          Container(
-            constraints:
-                BoxConstraints(maxHeight: amulet.engine.screen.height - 150),
-            child: SingleChildScrollView(
-              child: switch (activeQuantifyTab) {
-                QuantifyTab.Amulet_Items => buildQuantifyTabAmuletItems(),
-                QuantifyTab.Fiend_Types => buildQuantifyTabFiendTypes(),
-              },
-            ),
-          )
-        ],
-      );
-
-  Widget buildQuantifyTabFiendTypes() => Column(
-      children:
-          FiendType.values.map(buildElementFiendType).toList(growable: false));
-
-  Widget buildQuantifyTabAmuletItems() =>
-      buildWatch(quantifyLevel, (level) => buildWatch(
-          quantifyAmuletItemSlotType,
-              (activeSlotType) => Column(
-            children: [
-              Row(
-                children: [
-                  onPressed(
-                    action: quantifyLevel.decrement,
-                    child: GSContainer(child: buildText('-'), color: Colors.black26),
-                  ),
-                  width8,
-                  buildText('level $level'),
-                  width8,
-                  onPressed(
-                    action: quantifyLevel.increment,
-                    child: GSContainer(child: buildText('+'), color: Colors.black26),
-                  )
-                ],
-              ),
-              Row(
-                children: SlotType.values
-                    .map((slotType) => onPressed(
-                    action: () =>
-                    quantifyAmuletItemSlotType.value = slotType,
-                    child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 6),
-                        child: buildText(slotType.name,
-                            bold: slotType == activeSlotType))))
-                    .toList(),
-              ),
-              Column(
-                  children: AmuletItem.values
-                      .where((element) => element.slotType == activeSlotType)
-                      .toList()
-                      .sortBy((value) => value.quantify)
-                      .map((amuletItem) => buildQuantifyAmuletItem(amuletItem, level))
-                      .toList())
-            ],
-          )));
-
-  Widget buildQuantifyAmuletItem(AmuletItem amuletItem, int level) {
-
-    final validationError = getAmuletItemValidationError(amuletItem);
-    final damage = amuletItem.damage;
-
-    return onPressed(
-      action: () => amulet.spawnAmuletItem(
-          amuletItem: amuletItem,
-          level: level,
-      ),
-      child: Container(
-      margin: const EdgeInsets.only(top: 8),
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        color: Colors.white12,
-        child: Row(
-            children: [
-              buildIconAmuletItem(amuletItem),
-              width8,
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                      alignment: Alignment.centerLeft,
-                      width: 250,
-                      child: buildText(amuletItem.name.replaceAll('Weapon_', '')),
-                  ),
-                  buildText(
-                    amuletItem.quality.name,
-                    color: mapItemQualityToColor(amuletItem.quality),
-                  ),
-                ],
-              ),
-              Container(
-                width: 80,
-                alignment: Alignment.center,
-                child: validationError != null ? buildText(validationError.name, color: Colors.red) : null,
-              ),
-              if (damage != null)
-              Row(
-                children: [
-                  buildQuantificationCell('damage-i', amuletItem.damage),
-                  buildQuantificationCell('damage', AmuletSettings.getWeaponDamage(t: damage, level: level)),
-                ],
-              ),
-              buildQuantificationCell('dmg-min', amuletItem.damageMin),
-              buildQuantificationCell('speed', amuletItem.attackSpeed),
-              buildQuantificationCell('range', amuletItem.range),
-              buildQuantificationCell('health', amuletItem.maxHealth, renderNull: !amuletItem.isWeapon),
-              buildQuantificationCell('magic', amuletItem.maxMagic, renderNull: !amuletItem.isWeapon),
-              Container(
-                width: 150,
-                  alignment: Alignment.center,
-                  child: Column(
-                    children: [
-                      // buildText('skills'),
-                      ...amuletItem.skillSet.entries.map((entry) => Row(
-                        children: [
-                          Container(
-                              width: 80,
-                              child: buildText(entry.key.name, size: 14, color: Colors.white70)),
-                          buildText(entry.value, size: 14, color: Colors.white70)
-                        ],
-                      ))
-                    ],
-                  )),
-              buildQuantificationCell('quantify', amuletItem.quantify),
-            ],
-          ),
-      ),
-        ),
-    );
-  }
-
-  Widget buildQuantificationCell(String name, double? value, {bool renderNull = false}) {
-    if (value == null && !renderNull) {
-      return nothing;
-    }
-    return Container(
-              padding: const EdgeInsets.all(8),
-              alignment: Alignment.center,
-              child: Column(
-                children: [
-                  buildText(name, color: Colors.white70, size: 14),
-                  buildText(value?.toStringAsFixed(2) ?? 0, color: Colors.white70),
-                ],
-              ));
-  }
-
-  Widget buildElementFiendType(FiendType fiendType) => Container(
-    margin: const EdgeInsets.only(top: 8),
-    child: Container(
-      padding: const EdgeInsets.all(8),
-      color: Colors.white12,
-      // width: 500,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-                alignment: Alignment.centerLeft,
-                width: 300,
-                child: buildText(fiendType.name),
-            ),
-            buildText('quantify: ${fiendType.quantify.toStringAsFixed(2)}'),
-          ],
-        ),
-    ),
-  );
 
   Widget buildIconRange() => AmuletImage(
         srcX: 768,
@@ -2435,6 +2239,9 @@ class AmuletUI {
 
   Widget buildIconCheckBox(bool value) =>
       value ? iconCheckBoxTrue : iconCheckBoxFalse;
+
+  Widget buildWatchBool(WatchBool watch) =>
+    buildWatch(watch, buildIconCheckBox);
 
   Widget buildIconAmuletItem(AmuletItem amuletItem, {
     double scale = 1.0,
