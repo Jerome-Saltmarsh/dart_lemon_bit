@@ -84,6 +84,9 @@ enum AmuletItem {
     range: 0.15,
     damageMin: 0.5,
     damage: 0.1,
+    skillSet: {
+      SkillType.Magic_Regen: 0.5,
+    },
   ),
   Weapon_Staff_Globe(
     label: 'Globe',
@@ -93,6 +96,9 @@ enum AmuletItem {
     range: 0.4,
     damageMin: 0.2,
     damage: 0.35,
+    skillSet: {
+      SkillType.Magic_Regen: 0.5,
+    },
   ),
   Weapon_Staff_Scepter(
     label: 'Scepter',
@@ -102,6 +108,9 @@ enum AmuletItem {
     range: 0.7,
     damageMin: 0.6,
     damage: 0.45,
+    skillSet: {
+      SkillType.Magic_Regen: 0.5,
+    },
   ),
   Weapon_Staff_Long(
     label: 'Staff',
@@ -111,6 +120,9 @@ enum AmuletItem {
     range: 1.0,
     damageMin: 0.8,
     damage: 0.55,
+    skillSet: {
+      SkillType.Magic_Regen: 0.5,
+    },
   ),
   Helm_Leather_Cap(
     label: 'Leather Cap',
@@ -444,6 +456,19 @@ enum AmuletItem {
       range: 0.2,
       damage: 0.55,
       damageMin: 0.75,
+      quality: ItemQuality.Rare,
+      skillSet: {
+        SkillType.Critical_Hit: 2.0,
+        SkillType.Agility: 1.0,
+      }),
+  Bow_Of_Destruction(
+      label: 'Bow of Destruction',
+      slotType: SlotType.Weapon,
+      subType: WeaponType.Bow_Reflex,
+      attackSpeed: 0.3,
+      range: 0.6,
+      damage: 0.75,
+      damageMin: 0.5,
       quality: ItemQuality.Rare,
       skillSet: {
         SkillType.Critical_Hit: 2.0,
