@@ -2100,18 +2100,19 @@ class AmuletUI {
           children: [
             buildIconAmuletItem(amuletItem),
             width8,
-            Container(
-                alignment: Alignment.centerLeft,
-                width: 250,
-                child: buildText(amuletItem.name.replaceAll('Weapon_', '')),
-            ),
-            Container(
-              width: 100,
-              alignment: Alignment.center,
-              child: buildText(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                    alignment: Alignment.centerLeft,
+                    width: 250,
+                    child: buildText(amuletItem.name.replaceAll('Weapon_', '')),
+                ),
+                buildText(
                   amuletItem.quality.name,
                   color: mapItemQualityToColor(amuletItem.quality),
-              ),
+                ),
+              ],
             ),
             buildQuantificationCell('damage', amuletItem.damage),
             buildQuantificationCell('dmg-min', amuletItem.damageMin),

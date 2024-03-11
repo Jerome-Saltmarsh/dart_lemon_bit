@@ -116,8 +116,8 @@ enum AmuletItem {
     label: 'Leather Cap',
     slotType: SlotType.Helm,
     subType: HelmType.Leather_Cap,
-    maxHealth: 5,
-    maxMagic: 3,
+    maxHealth: 0.2,
+    maxMagic: 0,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
       SkillType.Critical_Hit: 0.8,
@@ -127,7 +127,8 @@ enum AmuletItem {
     label: 'Steel Cap',
     slotType: SlotType.Helm,
     subType: HelmType.Steel_Cap,
-    maxHealth: 8,
+    maxHealth: 0.5,
+    maxMagic: 0,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
       SkillType.Critical_Hit: 0.8,
@@ -137,7 +138,8 @@ enum AmuletItem {
     label: 'Full Helm',
     slotType: SlotType.Helm,
     subType: HelmType.Full_Helm,
-    maxHealth: 11,
+    maxHealth: 0.5,
+    maxMagic: 0,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
       SkillType.Critical_Hit: 0.8,
