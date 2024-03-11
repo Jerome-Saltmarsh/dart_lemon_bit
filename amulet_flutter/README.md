@@ -28,6 +28,8 @@ JEM
 SQUIDI
 
 [COMPANY NAMES]
+FLIPSIDE GAMES
+FALLOFF 
 OFFSIDE 
 FREEFALL 
 DARKSIDE 
@@ -35,7 +37,9 @@ SKULLBOSS
 SKULLWARE 
 SKULLSOFT 
 
-REMINDER: IT DOESN'T NEED TO BE PERFECT
+[REMINDER]
+- IT DOESN'T NEED TO BE PERFECT
+- BEAT THE GAME A FEW TIMES
 
 [RELEASE]
 [new] draggable potions
@@ -53,11 +57,15 @@ REMINDER: IT DOESN'T NEED TO BE PERFECT
 [new] design skill type health steal
 [new] amulet item satin boots
 [new] amulet item shroud
-[new] beat the game
 [new] collectable gameobject health boost
 [new] collectable gameobject magic boost
 [new] tree top transparent
-[new] balance amulet items
+[new] balance amulet items helms
+[new] balance amulet items armor
+[new] balance amulet items shoes
+
+## 08.03.2024
+[new] balance amulet items weapons
 
 ## 07.03.2024
 [new] difficulty settings

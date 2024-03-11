@@ -167,7 +167,7 @@ class AmuletPlayer extends IsometricPlayer with
       final weaponI = weapon.amuletItem.maxHealth;
       if (weaponI != null) {
         final level = weapon.level;
-        total += AmuletSettings.interpolateMaxHealth(weaponI) * level;
+        total += AmuletSettings.interpolateMaxHealthWeapon(weaponI) * level;
       }
     }
 
@@ -175,7 +175,7 @@ class AmuletPlayer extends IsometricPlayer with
       final helmI = helm.amuletItem.maxHealth;
       if (helmI != null) {
         final level = helm.level;
-        total += AmuletSettings.interpolateMaxHealth(helmI) * level;
+        total += AmuletSettings.interpolateMaxHealthHelm(helmI) * level;
       }
     }
 
@@ -183,7 +183,7 @@ class AmuletPlayer extends IsometricPlayer with
       final armorI = armor.amuletItem.maxHealth;
       if (armorI != null) {
         final level = armor.level;
-        total += AmuletSettings.interpolateMaxHealth(armorI) * level;
+        total += AmuletSettings.interpolateMaxHealthArmor(armorI) * level;
       }
     }
 
@@ -191,7 +191,7 @@ class AmuletPlayer extends IsometricPlayer with
       final shoesI = shoes.amuletItem.maxHealth;
       if (shoesI != null) {
         final level = shoes.level;
-        total += AmuletSettings.interpolateMaxHealth(shoesI) * level;
+        total += AmuletSettings.interpolateMaxHealthShoes(shoesI) * level;
       }
     }
 
@@ -211,7 +211,7 @@ class AmuletPlayer extends IsometricPlayer with
       final weaponI = weapon.amuletItem.maxMagic;
       if (weaponI != null) {
         final level = weapon.level;
-        total += AmuletSettings.interpolateMaxMagic(weaponI) * level;
+        total += AmuletSettings.interpolateMaxMagicWeapon(weaponI) * level;
       }
     }
 
@@ -219,7 +219,7 @@ class AmuletPlayer extends IsometricPlayer with
       final helmI = helm.amuletItem.maxMagic;
       if (helmI != null) {
         final level = helm.level;
-        total += AmuletSettings.interpolateMaxHealth(helmI) * level;
+        total += AmuletSettings.interpolateMaxMagicHelm(helmI) * level;
       }
     }
 
@@ -227,7 +227,7 @@ class AmuletPlayer extends IsometricPlayer with
       final armorI = armor.amuletItem.maxMagic;
       if (armorI != null) {
         final level = armor.level;
-        total += AmuletSettings.interpolateMaxHealth(armorI) * level;
+        total += AmuletSettings.interpolateMaxMagicArmor(armorI) * level;
       }
     }
 
@@ -235,7 +235,7 @@ class AmuletPlayer extends IsometricPlayer with
       final shoesI = shoes.amuletItem.maxMagic;
       if (shoesI != null) {
         final level = shoes.level;
-        total += AmuletSettings.interpolateMaxHealth(shoesI) * level;
+        total += AmuletSettings.interpolateMaxMagicShoes(shoesI) * level;
       }
     }
 
