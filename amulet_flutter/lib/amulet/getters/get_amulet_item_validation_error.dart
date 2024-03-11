@@ -15,6 +15,7 @@ ValidationError? getAmuletItemValidationError(AmuletItem amuletItem){
    if (amount > constraint.max){
      return ValidationError.Too_High;
    }
+   return null;
 }
 
 

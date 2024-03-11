@@ -3,7 +3,6 @@ import 'package:amulet_engine/src.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/amulet/src.dart';
 import 'package:amulet_flutter/amulet/ui/enums/quantify_tab.dart';
-import 'package:amulet_flutter/amulet/ui/widgets/window_quantify.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';
 import 'package:amulet_flutter/website/widgets/gs_fullscreen.dart';
@@ -24,8 +23,9 @@ class AmuletUI {
   final Amulet amulet;
   final filterSkillTypes = WatchBool(false);
   final filterCasteType = Watch(CasteType.Passive);
-  final iconCheckBoxTrue = AmuletImage(srcX: 560, srcY: 0, width: 16, height: 16);
-  final iconCheckBoxFalse = AmuletImage(srcX: 560, srcY: 16, width: 16, height: 16);
+
+  late final iconCheckBoxTrue = buildAmuletImage(srcX: 560, srcY: 0, width: 16, height: 16);
+  late final iconCheckBoxFalse = buildAmuletImage(srcX: 560, srcY: 16, width: 16, height: 16);
 
   final barBlockWhite70 = buildBarBlock(color: Colors.white70);
   final barBlockWhite24 = buildBarBlock(color: Colors.white24);
