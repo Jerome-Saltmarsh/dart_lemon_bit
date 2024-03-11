@@ -166,9 +166,10 @@ class WindowQuantify extends StatelessWidget {
                 child: validationError != null ? buildText(validationError.name, color: Colors.red) : null,
               ),
               if (damage != null)
-                buildQuantificationCell('dmg-max', showValue ?amuletItem.getWeaponDamageMax(level: level) : amuletItem.damage),
+                buildQuantificationCell('dmg-max', showValue ? amuletItem.getWeaponDamageMax(level: level) : amuletItem.damage),
               if (damageMin != null)
-                buildQuantificationCell('dmg-min', amuletItem.damageMin),
+                buildQuantificationCell('dmg-min', showValue ? amuletItem.getWeaponDamageMin(level: level) : amuletItem.damageMin),
+              
               buildQuantificationCell('speed', amuletItem.attackSpeed),
               buildQuantificationCell('range', amuletItem.range),
               buildQuantificationCell('health', amuletItem.maxHealth, renderNull: !amuletItem.isWeapon),
