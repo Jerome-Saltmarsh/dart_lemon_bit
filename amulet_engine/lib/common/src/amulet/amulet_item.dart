@@ -10,7 +10,7 @@ enum AmuletItem {
     subType: WeaponType.Sword_Short,
     attackSpeed: 0.7,
     range: 0.2,
-    damageMin: 0.5,
+    damageMin: 0.55,
     damage: 0.25,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
@@ -41,9 +41,9 @@ enum AmuletItem {
     damage: 0.55,
     damageMin: 0.75,
     skillSet: {
-      SkillType.Critical_Hit: 1,
-      SkillType.Agility: 1,
-      SkillType.Health_Steal: 1,
+      SkillType.Critical_Hit: 1.5,
+      SkillType.Agility: 1.5,
+      SkillType.Health_Steal: 1.5,
     },
     quality: ItemQuality.Rare,
   ),
@@ -108,8 +108,8 @@ enum AmuletItem {
     damageMin: 0.5,
     damage: 0.35,
     skillSet: {
-      SkillType.Mighty_Strike: 1.0,
-      SkillType.Critical_Hit: 0.8,
+      SkillType.Split_Shot: 1.0,
+      SkillType.Magic_Steal: 0.8,
     },
   ),
   Weapon_Bow_Composite(
@@ -118,11 +118,11 @@ enum AmuletItem {
     subType: WeaponType.Bow_Composite,
     attackSpeed: 0.5,
     range: 0.75,
-    damageMin: 0.5,
-    damage: 0.45,
+    damageMin: 0.3,
+    damage: 0.6,
     skillSet: {
-      SkillType.Mighty_Strike: 1.0,
-      SkillType.Critical_Hit: 0.8,
+      SkillType.Split_Shot: 1.0,
+      SkillType.Magic_Steal: 0.8,
     },
   ),
   Weapon_Bow_Long(
@@ -131,8 +131,8 @@ enum AmuletItem {
     subType: WeaponType.Bow_Long,
     attackSpeed: 0.4,
     range: 1.0,
-    damageMin: 0.75,
-    damage: 0.65,
+    damageMin: 0.4,
+    damage: 0.8,
     skillSet: {
       SkillType.Mighty_Strike: 1.0,
       SkillType.Critical_Hit: 0.8,
@@ -142,13 +142,13 @@ enum AmuletItem {
     label: 'Wand',
     slotType: SlotType.Weapon,
     subType: WeaponType.Staff_Wand,
-    attackSpeed: 0.7,
-    range: 0.1,
+    attackSpeed: 0.8,
+    range: 0.15,
     damageMin: 0.5,
     damage: 0.1,
     skillSet: {
       SkillType.Magic_Steal: 1.0,
-      SkillType.Critical_Hit: 0.8,
+      SkillType.Frostball: 1.0,
     },
   ),
   Weapon_Staff_Globe(
@@ -157,11 +157,11 @@ enum AmuletItem {
     subType: WeaponType.Staff_Globe,
     attackSpeed: 0.6,
     range: 0.4,
-    damageMin: 0.5,
+    damageMin: 0.2,
     damage: 0.35,
     skillSet: {
-      SkillType.Mighty_Strike: 1.0,
-      SkillType.Critical_Hit: 0.8,
+      SkillType.Magic_Steal: 1.0,
+      SkillType.Fireball: 1.0,
     },
   ),
   Weapon_Staff_Scepter(
