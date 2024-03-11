@@ -21,4 +21,5 @@ enum NetworkRequestAmulet {
   Spawn_Random_Amulet_Item,
   Spawn_Amulet_Item,
   Pickup_Amulet_Item,
+  Sell_Amulet_Item,
 }

@@ -664,6 +664,9 @@ class AmuletController {
       case NetworkRequestAmulet.Pickup_Amulet_Item:
         player.pickupAmuletItem();
         break;
+      case NetworkRequestAmulet.Sell_Amulet_Item:
+        player.sellAmuletItem();
+        break;
       case NetworkRequestAmulet.Spawn_Random_Amulet_Item:
         amuletPlayer.spawnRandomAmuletItem();
         break;

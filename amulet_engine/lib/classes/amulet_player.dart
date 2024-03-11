@@ -66,11 +66,15 @@ class AmuletPlayer extends IsometricPlayer with
        collectableGameObject = gameObject;
        collectableAmuletItemObject = mapGameObjectToAmuletItemObject(gameObject);
      } else {
-       collectableGameObject = null;
-       collectableAmuletItemObject = null;
+       clearCollectableGameObject();
      }
 
      writeCollectableAmuletItemObject();
+  }
+
+  void clearCollectableGameObject(){
+    collectableGameObject = null;
+    collectableAmuletItemObject = null;
   }
 
   final sceneShrinesUsed = <AmuletScene, List<int>> {};
@@ -1747,6 +1751,22 @@ class AmuletPlayer extends IsometricPlayer with
     amuletGame.onAmuletPlayerPickupGameObject(this, item);
   }
 
+  @override
+  void clearTarget() {
+    super.clearTarget();
+    clearCollectableGameObject();
+  }
+
+  void sellAmuletItem() {
+    final item = collectableGameObject;
+    if (item == null) {
+      writeGameError(GameError.Amulet_Item_Null);
+      return;
+    }
+
+    amuletGame.remove(item);
+  }
+
   void onPortalUsed({
     required AmuletScene src,
     required AmuletScene dst,
@@ -1760,7 +1780,6 @@ class AmuletPlayer extends IsometricPlayer with
 
   void tryWritePercentage(double? value) =>
       tryWrite(writePercentage, value);
-
 }
 
 String buildResistances(String text, String name, double resistance){

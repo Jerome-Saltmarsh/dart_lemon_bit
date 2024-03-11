@@ -830,6 +830,9 @@ class Amulet extends IsometricGame {
   void pickupAmuletItem() =>
       sendAmuletRequest(NetworkRequestAmulet.Pickup_Amulet_Item);
 
+  void sellAmuletItem() =>
+      sendAmuletRequest(NetworkRequestAmulet.Sell_Amulet_Item);
+
   void spawnAmuletItem({
     required AmuletItem amuletItem,
     required int level,

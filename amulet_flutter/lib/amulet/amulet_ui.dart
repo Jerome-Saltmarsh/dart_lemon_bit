@@ -1748,13 +1748,28 @@ class AmuletUI {
           }),
 
         if (showDiff)
-          onPressed(
-            action: amulet.pickupAmuletItem,
-            child: Container(
-              margin: const EdgeInsets.only(top: 16),
-              color: Colors.green,
-                padding: const EdgeInsets.all(8),
-                child: buildText('PICKUP')),
+          Container(
+            margin: const EdgeInsets.only(top: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                onPressed(
+                  action: amulet.sellAmuletItem,
+                  child: Container(
+                      color: Colors.yellow,
+                      padding: paddingAll8,
+                      child: buildText('SELL')),
+                ),
+                onPressed(
+                  action: amulet.pickupAmuletItem,
+                  child: Container(
+                    color: Colors.green,
+                      padding: paddingAll8,
+                      child: buildText('PICKUP')),
+                ),
+              ],
+            ),
           ),
       ],
     );
