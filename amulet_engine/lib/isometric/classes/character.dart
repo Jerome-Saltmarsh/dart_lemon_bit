@@ -88,7 +88,8 @@ class Character extends Collider {
   var roamRadius = 2;
   var chanceOfSetTarget = 0.5;
   var maxFollowDistance = 500.0;
-  var magic = 0;
+  var magic = 0.0;
+  var maxMagic = 0.0;
 
   final runPosition = Position();
   final path = Uint32List(20);

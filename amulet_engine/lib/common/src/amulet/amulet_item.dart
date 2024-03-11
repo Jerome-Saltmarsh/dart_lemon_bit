@@ -10,8 +10,8 @@ enum AmuletItem {
     subType: WeaponType.Sword_Short,
     attackSpeed: 0.7,
     range: 0.2,
-    damageMin: 0.55,
-    damage: 0.25,
+    damageMin: 0.75,
+    damage: 0.3,
   ),
   Weapon_Sword_Broad(
     label: 'Broad Sword',
@@ -461,8 +461,8 @@ enum AmuletItem {
   final double? attackSpeed;
   final ItemQuality quality;
   final String label;
-  final int? maxHealth;
-  final int? maxMagic;
+  final double? maxHealth;
+  final double? maxMagic;
   final Map<SkillType, double> skillSet;
   final Map<DamageType, double> resistances;
 
@@ -499,15 +499,16 @@ enum AmuletItem {
 
   double get quantify {
     const pointsPerDamage = 3;
-    final damageMax = (damage ?? 0) * pointsPerDamage * (attackSpeed ?? 0);
+    const pointsPerSkill = 2.0;
+    final damageMax = (damage ?? 0) * pointsPerDamage * (attackSpeed ?? 0) * (range ?? 0);
     var total = 0.0;
     total += maxHealth ?? 0;
     total += maxMagic ?? 0;
+    total += attackSpeed ?? 0;
     total += damageMax;
     total += (damageMin ?? 0) * damageMax;
-    total += range ?? 0;
     for (final entry in skillSet.entries) {
-      total += entry.value;
+      total += entry.value * pointsPerSkill;
     }
     return total;
   }

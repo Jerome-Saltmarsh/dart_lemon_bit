@@ -11,15 +11,14 @@ import '../isometric/src.dart';
 
 class AmuletPlayer extends IsometricPlayer with
     Equipped,
-    Skilled,
-    Magic
+    Skilled
 {
   static const Data_Key_Dead_Count = 'dead';
 
   var questTutorial = QuestTutorial.values.first;
   var questMain = QuestMain.values.first;
-  var baseHealth = 10;
-  var baseMagic = 10;
+  var baseHealth = 10.0;
+  var baseMagic = 10.0;
   var baseRegenMagic = 1;
   var baseRegenHealth = 1;
   var baseRunSpeed = 1.0;
@@ -119,7 +118,7 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   @override
-  set magic(int value) {
+  set magic(double value) {
     value = value.clamp(0, maxMagic);
     super.magic = value;
     writePlayerMagic();
@@ -158,20 +157,46 @@ class AmuletPlayer extends IsometricPlayer with
   @override
   double get maxHealth {
     var total = baseHealth;
-    total += equippedWeapon?.amuletItem.maxHealth ?? 0;
-    total += equippedHelm?.amuletItem.maxHealth ?? 0;
-    total += equippedArmor?.amuletItem.maxHealth ?? 0;
-    total += equippedShoes?.amuletItem.maxHealth ?? 0;
-    return total.toDouble();
+    final weaponI = equippedWeapon?.amuletItem.maxHealth;
+    final helmI = equippedHelm?.amuletItem.maxHealth;
+    final armorI = equippedArmor?.amuletItem.maxHealth;
+    final shoesI = equippedShoes?.amuletItem.maxHealth;
+
+    if (weaponI != null) {
+      total += AmuletSettings.interpolateMaxHealth(weaponI);
+    }
+    if (helmI != null) {
+      total += AmuletSettings.interpolateMaxHealth(helmI);
+    }
+    if (armorI != null) {
+      total += AmuletSettings.interpolateMaxHealth(armorI);
+    }
+    if (shoesI != null) {
+      total += AmuletSettings.interpolateMaxHealth(shoesI);
+    }
+    return total;
   }
 
   @override
-  int get maxMagic {
-    var total = baseMagic;
-    total += equippedWeapon?.amuletItem.maxMagic ?? 0;
-    total += equippedHelm?.amuletItem.maxMagic ?? 0;
-    total += equippedArmor?.amuletItem.maxMagic ?? 0;
-    total += equippedShoes?.amuletItem.maxMagic ?? 0;
+  double get maxMagic {
+    var total = baseHealth;
+    final weaponI = equippedWeapon?.amuletItem.maxMagic;
+    final helmI = equippedHelm?.amuletItem.maxMagic;
+    final armorI = equippedArmor?.amuletItem.maxMagic;
+    final shoesI = equippedShoes?.amuletItem.maxMagic;
+
+    if (weaponI != null) {
+      total += AmuletSettings.interpolateMaxMagic(weaponI);
+    }
+    if (helmI != null) {
+      total += AmuletSettings.interpolateMaxMagic(helmI);
+    }
+    if (armorI != null) {
+      total += AmuletSettings.interpolateMaxMagic(armorI);
+    }
+    if (shoesI != null) {
+      total += AmuletSettings.interpolateMaxMagic(shoesI);
+    }
     return total;
   }
 
@@ -1095,8 +1120,8 @@ class AmuletPlayer extends IsometricPlayer with
   void writePlayerMagic() {
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Magic);
-    writeUInt16(maxMagic);
-    writeUInt16(magic);
+    writeUInt16(maxMagic.toInt());
+    writeUInt16(magic.toInt());
   }
 
   void regenHealthAndMagic() {

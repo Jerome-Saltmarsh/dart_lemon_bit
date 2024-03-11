@@ -35,6 +35,12 @@ class AmuletSettings {
   static const Damage_Min = 1;
   static const Damage_Max = 20;
 
+  static const Health_Max = 20;
+  static const Health_Min = 1;
+
+  static const Magic_Max = 20;
+  static const Magic_Min = 1;
+
   static double interpolateRangeMelee(double i) =>
       interpolate(Range_Min_Melee, Range_Max_Melee, i);
 
@@ -46,4 +52,10 @@ class AmuletSettings {
 
   static double interpolateDamage(double t) =>
       interpolate(Damage_Min, Damage_Max, t);
+
+  static double interpolateMaxHealth(double t) =>
+      interpolate(Health_Min, Health_Max, t);
+
+  static double interpolateMaxMagic(double t) =>
+      interpolate(Magic_Min, Magic_Max, t);
 }
