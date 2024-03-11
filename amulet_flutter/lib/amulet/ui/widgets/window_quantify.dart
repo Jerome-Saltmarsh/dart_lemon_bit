@@ -113,15 +113,20 @@ class WindowQuantify extends StatelessWidget {
                                         bold: slotType == activeSlotType))))
                             .toList(),
                       ),
-                      Column(
-                          children: AmuletItem.values
-                              .where((element) =>
-                                  element.slotType == activeSlotType)
-                              .toList()
-                              .sortBy((value) => value.quantify)
-                              .map((amuletItem) => buildQuantifyAmuletItem(
-                                  amuletItem, level, showValue))
-                              .toList())
+                      Container(
+                        height: amulet.engine.screen.height - 100,
+                        child: SingleChildScrollView(
+                          child: Column(
+                              children: AmuletItem.values
+                                  .where((element) =>
+                                      element.slotType == activeSlotType)
+                                  .toList()
+                                  .sortBy((value) => value.quantify)
+                                  .map((amuletItem) => buildQuantifyAmuletItem(
+                                      amuletItem, level, showValue))
+                                  .toList()),
+                        ),
+                      )
                     ],
                   ))));
 
