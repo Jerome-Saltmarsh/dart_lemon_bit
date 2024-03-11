@@ -1992,51 +1992,66 @@ class AmuletUI {
   //   );
   // }
 
-  Widget buildWindowQuantify(){
-     return GSContainer(
-       child: buildWatch(quantifyTab, (activeQuantifyTab) {
-         return Column(
-           children: [
-              Row(
-                children: QuantifyTab.values.map((e) {
-                  return Container(
-                    width: 120,
-                    height: 50,
-                    color: e == activeQuantifyTab ? Colors.black38 : Colors.black12,
-                    alignment: Alignment.center,
-                    child: onPressed(
+  Widget buildWindowQuantify() =>
+      GSContainer(child: buildWatch(quantifyTab, buildActiveQuantifyTab));
+
+  Widget buildActiveQuantifyTab(QuantifyTab activeQuantifyTab) => Column(
+        children: [
+          Row(
+            children: QuantifyTab.values
+                .map((e) => Container(
+                      width: 120,
+                      height: 50,
+                      color: e == activeQuantifyTab
+                          ? Colors.black38
+                          : Colors.black12,
+                      alignment: Alignment.center,
+                      child: onPressed(
                         action: () => quantifyTab.value = e,
                         child: buildText(e.name),
-                    ),
-                  );
-                }).toList(growable: false),
-              ),
-             Container(
-               constraints: BoxConstraints(maxHeight: amulet.engine.screen.height - 150),
-               child: SingleChildScrollView(
-                 child: buildChildrenQuantifyTab(activeQuantifyTab),
-               ),
-             )
-           ],
-         );
-       }),
-     );
-  }
+                      ),
+                    ))
+                .toList(growable: false),
+          ),
+          Container(
+            constraints:
+                BoxConstraints(maxHeight: amulet.engine.screen.height - 150),
+            child: SingleChildScrollView(
+              child: switch (activeQuantifyTab) {
+                QuantifyTab.Amulet_Items => buildQuantifyAmuletItems(),
+                QuantifyTab.Fiend_Types => buildQuantifyTabFiendTypes(),
+              },
+            ),
+          )
+        ],
+      );
 
-  Widget buildChildrenQuantifyTab(QuantifyTab quantifyTab) =>
-      switch (quantifyTab) {
-        QuantifyTab.Amulet_Items => buildQuantifyAmuletItems(),
-        QuantifyTab.Fiend_Types => Column(
-            children: FiendType.values
-            .map(buildElementFiendType)
-            .toList(growable: false))
-      };
+  Widget buildQuantifyTabFiendTypes() => Column(
+      children:
+          FiendType.values.map(buildElementFiendType).toList(growable: false));
 
   Widget buildQuantifyAmuletItems() =>
       buildWatch(
       quantifyTabSlotType,
       (activeSlotType) => Column(
             children: [
+              Row(
+                children: [
+                  onPressed(
+                    action: () => quantifyLevel.value--,
+                    child: GSContainer(child: buildText('-'), color: Colors.black26),
+                  ),
+                  width8,
+                  buildText('level'),
+                  width8,
+                  buildWatch(quantifyLevel, buildText),
+                  width8,
+                  onPressed(
+                      action: () => quantifyLevel.value++,
+                      child: GSContainer(child: buildText('+'), color: Colors.black26,),
+                  )
+                ],
+              ),
               Row(
                 children: SlotType.values
                     .map((slotType) => onPressed(
