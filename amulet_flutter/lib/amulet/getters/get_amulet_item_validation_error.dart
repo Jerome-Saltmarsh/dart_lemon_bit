@@ -31,7 +31,7 @@ Constraint getConstraint(ItemQuality itemQuality, SlotType slotType) =>
           ItemQuality.Rare => const Constraint(min: 6, max: 8)
         },
       SlotType.Armor => switch (itemQuality){
-          ItemQuality.Common => const Constraint(min: 1, max: 2.5),
+          ItemQuality.Common => const Constraint(min: 3, max: 5),
           ItemQuality.Unique => const Constraint(min: 3, max: 5),
           ItemQuality.Rare => const Constraint(min: 6, max: 8)
         },
