@@ -1346,7 +1346,7 @@ class AmuletPlayer extends IsometricPlayer with
       return null;
     }
 
-    final damage = AmuletSettings.interpolateDamage(damageI);
+    final damage = AmuletSettings.getWeaponDamage(t: damageI, level: level);
     final maxDamage = damage * level;
     final minDamage = maxDamage * (amuletItem.damageMin ?? 0.61);
     return randomBetween(minDamage, maxDamage);

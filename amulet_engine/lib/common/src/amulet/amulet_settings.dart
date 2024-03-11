@@ -68,8 +68,8 @@ class AmuletSettings {
   static double interpolateAttackSpeed(double t) =>
       interpolate(Attack_Speed_Duration_Fastest, Attack_Speed_Duration_Slowest, 1.0 - t);
 
-  static double interpolateDamage(double t) =>
-      interpolate(Damage_Min, Damage_Max, t);
+  static double getWeaponDamage({required double t, required int level}) =>
+      interpolate(Damage_Min, Damage_Max, t) * level;
 
   static double interpolateMaxHealthWeapon(double t) =>
       interpolate(Health_Min_Weapon, Health_Max_Weapon, t);
