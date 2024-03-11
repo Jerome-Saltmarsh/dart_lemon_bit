@@ -1,3 +1,5 @@
+import 'package:lemon_math/src.dart';
+
 import '../../src.dart';
 import 'package:collection/collection.dart';
 
@@ -598,4 +600,29 @@ enum AmuletItem {
     }
     throw Exception();
   }
+
+  static const Weapon_Damage_Min = 1;
+  static const Weapon_Damage_Max = 20;
+
+  double? getWeaponDamageMax({required int level}) {
+    final damageI = tryInterpolate(Weapon_Damage_Min, Weapon_Damage_Max, damage);
+    if (damageI == null) return null;
+    return damageI * level;
+  }
+
+  double? getWeaponDamageMin({required int level}) {
+    final damageMin = this.damageMin;
+    if (damageMin == null) return null;
+    final damage = getWeaponDamageMax(level: level);
+    if (damage == null) return null;
+    return damage * damageMin;
+  }
+
+
+  double? tryInterpolate(num start, num end, double? t) {
+    if (t == null) return null;
+    return interpolate(start, end, t);
+  }
+
+
 }

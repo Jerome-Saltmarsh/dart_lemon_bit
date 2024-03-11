@@ -32,8 +32,6 @@ class AmuletSettings {
   static const Attack_Speed_Duration_Slowest = 80;
   static const Attack_Speed_Duration_Fastest = 24;
 
-  static const Damage_Min = 1;
-  static const Damage_Max = 20;
 
   static const Health_Min_Weapon = 1;
   static const Health_Max_Weapon = 20;
@@ -67,9 +65,6 @@ class AmuletSettings {
 
   static double interpolateAttackSpeed(double t) =>
       interpolate(Attack_Speed_Duration_Fastest, Attack_Speed_Duration_Slowest, 1.0 - t);
-
-  static double getWeaponDamage({required double t, required int level}) =>
-      interpolate(Damage_Min, Damage_Max, t) * level;
 
   static double interpolateMaxHealthWeapon(double t) =>
       interpolate(Health_Min_Weapon, Health_Max_Weapon, t);
