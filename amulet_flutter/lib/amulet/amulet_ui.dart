@@ -2098,6 +2098,8 @@ class AmuletUI {
       color: Colors.white12,
       child: Row(
           children: [
+            buildIconAmuletItem(amuletItem),
+            width8,
             Container(
                 alignment: Alignment.centerLeft,
                 width: 250,
@@ -2428,6 +2430,42 @@ class AmuletUI {
 
   Widget buildIconCheckBox(bool value) =>
       value ? iconCheckBoxTrue : iconCheckBoxFalse;
+
+  Widget buildIconAmuletItem(AmuletItem amuletItem, {
+    double scale = 1.0,
+    double dstX = 0,
+    double dstY = 0,
+  }) {
+    const size = 32.0;
+    final src = getSrcAmuletItem(amuletItem);
+    return buildAmuletImage(
+      srcX: src[0],
+      srcY: src[1],
+      width: src.tryGet(2) ?? size,
+      height: src.tryGet(3) ?? size,
+      scale: scale,
+    );
+  }
+
+  Widget buildAmuletImage({
+    required double srcX,
+    required double srcY,
+    required double width,
+    required double height,
+    double dstX = 0,
+    double dstY = 0,
+    double scale = 1.0,
+  }) =>
+      amulet.engine.buildAtlasImage(
+        image: amulet.images.atlas_amulet_items,
+        srcX: srcX,
+        srcY: srcY,
+        srcWidth: width,
+        srcHeight: height,
+        scale: scale,
+        dstX: dstX,
+        dstY: dstY,
+      );
 
 }
 

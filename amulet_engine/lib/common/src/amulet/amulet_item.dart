@@ -398,59 +398,55 @@ enum AmuletItem {
     slotType: SlotType.Consumable,
     subType: ConsumableType.Potion_Red,
   ),
-  Ice_Wand(
-    label: 'Cold Wand',
-    slotType: SlotType.Weapon,
-    subType: WeaponType.Staff_Wand,
-    attackSpeed: 0.8,
-    range: 0.15,
-    damageMin: 0.5,
-    damage: 0.1,
+  Frost_Wand(
+      label: 'Frost Wand',
+      slotType: SlotType.Weapon,
+      subType: WeaponType.Staff_Wand,
+      attackSpeed: 0.8,
+      range: 0.15,
+      damageMin: 0.5,
+      damage: 0.1,
       quality: ItemQuality.Unique,
-    skillSet: {
-      SkillType.Frostball: 1.0,
-    }
-  ),
-  Fire_Wand(
-    label: 'Fire Wand',
-    slotType: SlotType.Weapon,
-    subType: WeaponType.Staff_Wand,
-    attackSpeed: 0.8,
-    range: 0.15,
-    damageMin: 0.5,
-    damage: 0.1,
+      skillSet: {
+        SkillType.Frostball: 1.0,
+      }),
+  Flame_Wand(
+      label: 'Flame Wand',
+      slotType: SlotType.Weapon,
+      subType: WeaponType.Staff_Wand,
+      attackSpeed: 0.8,
+      range: 0.15,
+      damageMin: 0.5,
+      damage: 0.1,
       quality: ItemQuality.Unique,
-    skillSet: {
-      SkillType.Fireball: 1.0,
-    }
-  ),
+      skillSet: {
+        SkillType.Fireball: 1.0,
+      }),
   Vampire_Knife(
-    label: 'Assassins Blade',
-    slotType: SlotType.Weapon,
-    subType: WeaponType.Sword_Short,
-    attackSpeed: 0.75,
-    range: 0.2,
-    damage: 0.45,
-    damageMin: 0.75,
-    quality: ItemQuality.Unique,
-    skillSet: {
-      SkillType.Health_Steal: 1.0,
-    }
-  ),
+      label: 'Assassins Blade',
+      slotType: SlotType.Weapon,
+      subType: WeaponType.Sword_Short,
+      attackSpeed: 0.75,
+      range: 0.2,
+      damage: 0.45,
+      damageMin: 0.75,
+      quality: ItemQuality.Unique,
+      skillSet: {
+        SkillType.Health_Steal: 1.0,
+      }),
   Assassins_Blade(
-    label: 'Assassins Blade',
-    slotType: SlotType.Weapon,
-    subType: WeaponType.Sword_Short,
-    attackSpeed: 0.8,
-    range: 0.2,
-    damage: 0.55,
-    damageMin: 0.75,
-    quality: ItemQuality.Rare,
-    skillSet: {
-      SkillType.Critical_Hit: 2.0,
-      SkillType.Agility: 1.0,
-    }
-  );
+      label: 'Assassins Blade',
+      slotType: SlotType.Weapon,
+      subType: WeaponType.Sword_Short,
+      attackSpeed: 0.8,
+      range: 0.2,
+      damage: 0.55,
+      damageMin: 0.75,
+      quality: ItemQuality.Rare,
+      skillSet: {
+        SkillType.Critical_Hit: 2.0,
+        SkillType.Agility: 1.0,
+      });
 
   /// see item_type.dart in commons
   final SlotType slotType;

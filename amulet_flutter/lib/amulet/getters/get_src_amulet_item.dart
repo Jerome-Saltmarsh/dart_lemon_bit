@@ -79,6 +79,6 @@ List<double> getSrcAmuletItem(AmuletItem amuletItem) =>
       AmuletItem.Helm_Cape => _armor_mantle,
       AmuletItem.Vampire_Knife => _weapons_sword_short,
       AmuletItem.Assassins_Blade => _weapons_sword_short,
-      AmuletItem.Ice_Wand => _weapons_wand,
-      AmuletItem.Fire_Wand => _weapons_wand,
+      AmuletItem.Flame_Wand => _weapons_wand,
+      AmuletItem.Frost_Wand => _weapons_wand,
 };
