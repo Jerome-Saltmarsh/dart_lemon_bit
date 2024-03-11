@@ -25,7 +25,6 @@ class Amulet extends IsometricGame {
   SkillType? mouseOverSkillType;
   final screenColor = Watch(Colors.transparent);
   final screenColorI = Watch(0.0);
-  // final cursor = Watch(SystemMouseCursors.basic);
   final fiendCountAlive = Watch(0);
   final fiendCountDead = Watch(0);
   final fiendCountTotal = Watch(0);
@@ -84,9 +83,6 @@ class Amulet extends IsometricGame {
   final windowVisibleSkillLeft = WatchBool(false);
   final windowVisibleSkillRight = WatchBool(false);
   final windowVisibleQuantify = WatchBool(false);
-  final windowQuantifyTab = Watch(QuantifyTab.values.first);
-  final windowQuantifyTabSlotType = Watch(SlotType.Weapon);
-
   final playerRunSpeed = Watch(0);
   final playerAgility = Watch(0);
 

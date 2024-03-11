@@ -17,10 +17,7 @@ import 'ui/containers/build_container_player_front.dart';
 
 class AmuletUI {
   static const itemImageSize = 64.0;
-  static const margin1 = 16.0;
   static const margin2 = 130.0;
-  static const margin3 = 315.0;
-  static const margin4 = 560.0;
   static const barWidth = 136.0;
   static const barHeight = 20.0;
 
@@ -34,6 +31,10 @@ class AmuletUI {
   final barBlockWhite24 = buildBarBlock(color: Colors.white24);
   final barBlockGreen = buildBarBlock(color: Colors.green.withOpacity(0.7));
   final barBlockRed = buildBarBlock(color: Colors.red.withOpacity(0.7));
+
+  final quantifyTab = Watch(QuantifyTab.values.first);
+  final quantifyTabSlotType = Watch(SlotType.Weapon);
+  final quantifyLevel = Watch(1);
 
   late final iconMagic = buildIconMagic();
   late final iconHealth = buildIconHealth();
@@ -54,10 +55,6 @@ class AmuletUI {
       cursor: SystemMouseCursors.basic,
       hitTestBehavior: HitTestBehavior.translucent,
     );
-
-    // final gestureDetector = GestureDetector(
-    //   behavior: HitTestBehavior.translucent,
-    // );
 
     return GSFullscreen(
     child: Stack(alignment: Alignment.center, children: [
@@ -375,38 +372,6 @@ class AmuletUI {
     return Colors.red;
 
   }
-
-  Widget buildContainerItemType(itemType) {
-        if (itemType == null){
-          return Positioned(child: nothing);
-        }
-
-        final damageMin = itemType.damageMin;
-        final damageMax = itemType.damageMax;
-
-        return Positioned(
-            top: margin1,
-            left: 50,
-            child: Container(
-              width: 200,
-              height: 200,
-              color: amulet.style.containerColor,
-              child: Column(
-                children: [
-                  buildText(itemType.label),
-                  if (damageMin != null && damageMax != null)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        buildText('Damage'),
-                        buildText('$damageMin - $damageMax'),
-                      ],
-                    )
-                ],
-              ),
-            ) ,
-          );
-      }
 
   Widget buildError() {
     final color = Colors.red.withOpacity(0.7);
@@ -2029,7 +1994,7 @@ class AmuletUI {
 
   Widget buildWindowQuantify(){
      return GSContainer(
-       child: buildWatch(amulet.windowQuantifyTab, (activeQuantifyTab) {
+       child: buildWatch(quantifyTab, (activeQuantifyTab) {
          return Column(
            children: [
               Row(
@@ -2040,7 +2005,7 @@ class AmuletUI {
                     color: e == activeQuantifyTab ? Colors.black38 : Colors.black12,
                     alignment: Alignment.center,
                     child: onPressed(
-                        action: () => amulet.windowQuantifyTab.value = e,
+                        action: () => quantifyTab.value = e,
                         child: buildText(e.name),
                     ),
                   );
@@ -2067,26 +2032,31 @@ class AmuletUI {
             .toList(growable: false))
       };
 
-  Widget buildQuantifyAmuletItems() {
-
-    return buildWatch(amulet.windowQuantifyTabSlotType, (activeSlotType){
-      return Column(children: [
-        Row(
-          children: SlotType.values.map((slotType) => onPressed(
-              action: () => amulet.windowQuantifyTabSlotType.value = slotType,
-              child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 6),
-                  child: buildText(slotType.name, bold: slotType == activeSlotType)))).toList(),
-        ),
-        Column(children: AmuletItem.values
-            .where((element) => element.slotType == activeSlotType)
-            .toList()
-            .sortBy((value) => value.quantify)
-            .map(buildAmuletItemElement)
-            .toList())
-      ],);
-    });
-  }
+  Widget buildQuantifyAmuletItems() =>
+      buildWatch(
+      quantifyTabSlotType,
+      (activeSlotType) => Column(
+            children: [
+              Row(
+                children: SlotType.values
+                    .map((slotType) => onPressed(
+                        action: () =>
+                            quantifyTabSlotType.value = slotType,
+                        child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 6),
+                            child: buildText(slotType.name,
+                                bold: slotType == activeSlotType))))
+                    .toList(),
+              ),
+              Column(
+                  children: AmuletItem.values
+                      .where((element) => element.slotType == activeSlotType)
+                      .toList()
+                      .sortBy((value) => value.quantify)
+                      .map(buildAmuletItemElement)
+                      .toList())
+            ],
+          ));
 
   Widget buildAmuletItemElement(AmuletItem amuletItem) {
 
