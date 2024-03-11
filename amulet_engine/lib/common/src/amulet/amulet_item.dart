@@ -11,7 +11,7 @@ enum AmuletItem {
     attackSpeed: 0.7,
     range: 0.2,
     damageMin: 0.75,
-    damage: 0.3,
+    damage: 0.45,
   ),
   Weapon_Sword_Broad(
     label: 'Broad Sword',
@@ -117,7 +117,7 @@ enum AmuletItem {
     slotType: SlotType.Weapon,
     subType: WeaponType.Staff_Long,
     attackSpeed: 0.4,
-    range: 1.0,
+    range: 0.8,
     damageMin: 0.8,
     damage: 0.55,
     skillSet: {
@@ -422,7 +422,7 @@ enum AmuletItem {
       damage: 0.1,
       quality: ItemQuality.Unique,
       skillSet: {
-        SkillType.Frostball: 1.05,
+        SkillType.Frostball: 1.1,
       }),
   Flame_Wand(
       label: 'Flame Wand',
@@ -434,7 +434,7 @@ enum AmuletItem {
       damage: 0.1,
       quality: ItemQuality.Unique,
       skillSet: {
-        SkillType.Frostball: 1.05,
+        SkillType.Frostball: 1.1,
       }),
   Vampire_Knife(
       label: 'Assassins Blade',
