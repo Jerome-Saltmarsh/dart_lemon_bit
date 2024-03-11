@@ -2124,8 +2124,8 @@ class AmuletUI {
             buildQuantificationCell('dmg-min', amuletItem.damageMin),
             buildQuantificationCell('speed', amuletItem.attackSpeed),
             buildQuantificationCell('range', amuletItem.range),
-            buildQuantificationCell('health', amuletItem.maxHealth),
-            buildQuantificationCell('magic', amuletItem.maxMagic),
+            buildQuantificationCell('health', amuletItem.maxHealth, renderNull: !amuletItem.isWeapon),
+            buildQuantificationCell('magic', amuletItem.maxMagic, renderNull: !amuletItem.isWeapon),
             Container(
               width: 150,
                 alignment: Alignment.center,
@@ -2149,8 +2149,8 @@ class AmuletUI {
   );
   }
 
-  Widget buildQuantificationCell(String name, double? value) {
-    if (value == null) {
+  Widget buildQuantificationCell(String name, double? value, {bool renderNull = false}) {
+    if (value == null && !renderNull) {
       return nothing;
     }
     return Container(
@@ -2159,7 +2159,7 @@ class AmuletUI {
               child: Column(
                 children: [
                   buildText(name, color: Colors.white70, size: 14),
-                  buildText(value.toStringAsFixed(2), color: Colors.white70),
+                  buildText(value?.toStringAsFixed(2) ?? 0, color: Colors.white70),
                 ],
               ));
   }
