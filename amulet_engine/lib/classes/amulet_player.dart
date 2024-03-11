@@ -1353,10 +1353,10 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   double get healthSteal =>
-      SkillType.getHealthSteal(getSkillTypeLevelAssigned(SkillType.Vampire));
+      SkillType.getHealthSteal(getSkillTypeLevelAssigned(SkillType.Health_Steal));
 
   double get magicSteal =>
-      SkillType.getMagicSteal(getSkillTypeLevelAssigned(SkillType.Warlock));
+      SkillType.getMagicSteal(getSkillTypeLevelAssigned(SkillType.Magic_Steal));
 
   void writeFiendCount() {
     writeByte(NetworkResponse.Amulet);

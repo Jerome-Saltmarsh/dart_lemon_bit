@@ -43,7 +43,7 @@ enum AmuletItem {
     skillSet: {
       SkillType.Critical_Hit: 1,
       SkillType.Agility: 1,
-      SkillType.Vampire: 1,
+      SkillType.Health_Steal: 1,
     },
     quality: ItemQuality.Rare,
   ),
@@ -96,7 +96,7 @@ enum AmuletItem {
     damage: 0.25,
     skillSet: {
       SkillType.Split_Shot: 1.0,
-      SkillType.Vampire: 0.8,
+      SkillType.Health_Steal: 0.8,
     },
   ),
   Weapon_Bow_Reflex(
@@ -144,10 +144,10 @@ enum AmuletItem {
     subType: WeaponType.Staff_Wand,
     attackSpeed: 0.7,
     range: 0.1,
-    damageMin: 0.85,
-    damage: 0.25,
+    damageMin: 0.5,
+    damage: 0.1,
     skillSet: {
-      SkillType.Mighty_Strike: 1.0,
+      SkillType.Magic_Steal: 1.0,
       SkillType.Critical_Hit: 0.8,
     },
   ),
