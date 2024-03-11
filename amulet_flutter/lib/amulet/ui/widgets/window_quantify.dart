@@ -60,63 +60,73 @@ class WindowQuantify extends StatelessWidget {
       children:
       FiendType.values.map(buildElementFiendType).toList(growable: false));
 
-  Widget buildQuantifyTabAmuletItems() {
-    return buildWatch(amuletUI.quantifyLevel, (level) => buildWatch(
-        amuletUI.quantifyAmuletItemSlotType,
-            (activeSlotType) => Column(
-          children: [
-            Row(
-              children: [
-                onPressed(
-                  action: amuletUI.quantifyLevel.decrement,
-                  child: GSContainer(child: buildText('-'), color: Colors.black26),
-                ),
-                width8,
-                buildText('level $level'),
-                width8,
-                onPressed(
-                  action: amuletUI.quantifyLevel.increment,
-                  child: GSContainer(child: buildText('+'), color: Colors.black26),
-                ),
-                width16,
-                onPressed(
-                  action: amuletUI.quantifyShowValue.toggle,
-                  child: Container(
-                      padding: const EdgeInsets.all(8),
-                      color: Colors.black12,
-                      child: Row(
+  Widget buildQuantifyTabAmuletItems() =>
+      buildWatch(
+      amuletUI.quantifyShowValue,
+      (showValue) => buildWatch(
+          amuletUI.quantifyLevel,
+          (level) => buildWatch(
+              amuletUI.quantifyAmuletItemSlotType,
+              (activeSlotType) => Column(
+                    children: [
+                      Row(
                         children: [
-                          buildText('Show Value'),
+                          onPressed(
+                            action: amuletUI.quantifyLevel.decrement,
+                            child: GSContainer(
+                                child: buildText('-'), color: Colors.black26),
+                          ),
                           width8,
-                          amuletUI.buildWatchBool(amuletUI.quantifyShowValue),
+                          buildText('level $level'),
+                          width8,
+                          onPressed(
+                            action: amuletUI.quantifyLevel.increment,
+                            child: GSContainer(
+                                child: buildText('+'), color: Colors.black26),
+                          ),
+                          width16,
+                          onPressed(
+                            action: amuletUI.quantifyShowValue.toggle,
+                            child: Container(
+                                padding: const EdgeInsets.all(8),
+                                color: Colors.black12,
+                                child: Row(
+                                  children: [
+                                    buildText('Show Value'),
+                                    width8,
+                                    buildWatch(
+                                        amuletUI.quantifyShowValue, buildText),
+                                  ],
+                                )),
+                          )
                         ],
-                      )),
-                )
-              ],
-            ),
-            Row(
-              children: SlotType.values
-                  .map((slotType) => onPressed(
-                  action: () =>
-                  amuletUI.quantifyAmuletItemSlotType.value = slotType,
-                  child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 6),
-                      child: buildText(slotType.name,
-                          bold: slotType == activeSlotType))))
-                  .toList(),
-            ),
-            Column(
-                children: AmuletItem.values
-                    .where((element) => element.slotType == activeSlotType)
-                    .toList()
-                    .sortBy((value) => value.quantify)
-                    .map((amuletItem) => buildQuantifyAmuletItem(amuletItem, level))
-                    .toList())
-          ],
-        )));
-  }
+                      ),
+                      Row(
+                        children: SlotType.values
+                            .map((slotType) => onPressed(
+                                action: () => amuletUI
+                                    .quantifyAmuletItemSlotType
+                                    .value = slotType,
+                                child: Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 6),
+                                    child: buildText(slotType.name,
+                                        bold: slotType == activeSlotType))))
+                            .toList(),
+                      ),
+                      Column(
+                          children: AmuletItem.values
+                              .where((element) =>
+                                  element.slotType == activeSlotType)
+                              .toList()
+                              .sortBy((value) => value.quantify)
+                              .map((amuletItem) => buildQuantifyAmuletItem(
+                                  amuletItem, level, showValue))
+                              .toList())
+                    ],
+                  ))));
 
-  Widget buildQuantifyAmuletItem(AmuletItem amuletItem, int level) {
+  Widget buildQuantifyAmuletItem(AmuletItem amuletItem, int level, bool showValue) {
 
     final validationError = getAmuletItemValidationError(amuletItem);
     final damage = amuletItem.damage;
@@ -155,12 +165,7 @@ class WindowQuantify extends StatelessWidget {
                 child: validationError != null ? buildText(validationError.name, color: Colors.red) : null,
               ),
               if (damage != null)
-                Row(
-                  children: [
-                    buildQuantificationCell('damage-i', amuletItem.damage),
-                    buildQuantificationCell('damage', AmuletSettings.getWeaponDamage(t: damage, level: level)),
-                  ],
-                ),
+                buildQuantificationCell('damage', showValue ? AmuletSettings.getWeaponDamage(t: damage, level: level) : amuletItem.damage),
               buildQuantificationCell('dmg-min', amuletItem.damageMin),
               buildQuantificationCell('speed', amuletItem.attackSpeed),
               buildQuantificationCell('range', amuletItem.range),

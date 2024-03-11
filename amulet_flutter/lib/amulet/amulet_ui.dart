@@ -2240,7 +2240,7 @@ class AmuletUI {
   Widget buildIconCheckBox(bool value) =>
       value ? iconCheckBoxTrue : iconCheckBoxFalse;
 
-  Widget buildWatchBool(WatchBool watch) =>
+  Widget buildWatchCheckbox(WatchBool watch) =>
     buildWatch(watch, buildIconCheckBox);
 
   Widget buildIconAmuletItem(AmuletItem amuletItem, {
