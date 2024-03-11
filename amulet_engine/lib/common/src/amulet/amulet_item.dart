@@ -37,8 +37,8 @@ enum AmuletItem {
     subType: WeaponType.Sword_Giant,
     attackSpeed: 0.2,
     range: 1.0,
-    damageMin: 0.4,
-    damage: 0.85,
+    damageMin: 0.5,
+    damage: 0.9,
   ),
   Weapon_Bow_Short(
     label: 'Short Bow',
@@ -460,6 +460,19 @@ enum AmuletItem {
       skillSet: {
         SkillType.Critical_Hit: 2.0,
         SkillType.Agility: 1.0,
+      }),
+  Blizzard_Globe(
+      label: 'Blizzard Globe',
+      slotType: SlotType.Weapon,
+      subType: WeaponType.Staff_Globe,
+      attackSpeed: 0.6,
+      range: 0.2,
+      damage: 0.55,
+      damageMin: 0.75,
+      quality: ItemQuality.Rare,
+      skillSet: {
+        SkillType.Frostball: 2.0,
+        SkillType.Magic_Steal: 1.0,
       }),
   Bow_Of_Destruction(
       label: 'Bow of Destruction',

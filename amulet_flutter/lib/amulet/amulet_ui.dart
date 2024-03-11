@@ -1,6 +1,7 @@
 
 import 'package:amulet_engine/src.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
+import 'package:amulet_flutter/amulet/getters/get_amulet_item_validation_error.dart';
 import 'package:amulet_flutter/amulet/src.dart';
 import 'package:amulet_flutter/amulet/ui/enums/quantify_tab.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
@@ -2089,7 +2090,7 @@ class AmuletUI {
 
   Widget buildAmuletItemElement(AmuletItem amuletItem) {
 
-    final quantify = amuletItem.quantify;
+    final validationError = getAmuletItemValidationError(amuletItem);
 
     return Container(
     margin: const EdgeInsets.only(top: 8),
@@ -2113,6 +2114,11 @@ class AmuletUI {
                   color: mapItemQualityToColor(amuletItem.quality),
                 ),
               ],
+            ),
+            Container(
+              width: 60,
+              alignment: Alignment.center,
+              child: validationError != null ? buildText(validationError.name, color: Colors.red) : null,
             ),
             buildQuantificationCell('damage', amuletItem.damage),
             buildQuantificationCell('dmg-min', amuletItem.damageMin),

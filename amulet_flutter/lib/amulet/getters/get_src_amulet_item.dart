@@ -10,7 +10,7 @@ const srcx_armor_rogue = 256.0;
 const srcx_shoes = 224.0;
 
 const _weapons_wand = [srcx_weapon_staff, 0.0];
-const _weapons_bow = [srcx_weapon_bow, 0.0];
+const _weapons_globe = [srcx_weapon_staff, 32.0];
 const _weapons_sword_short = [srcx_weapon_sword, 0.0];
 const _weapons_sword_broad = [srcx_weapon_sword, 32.0];
 const _weapons_sword_long = [srcx_weapon_sword, 64.0];
@@ -86,4 +86,5 @@ List<double> getSrcAmuletItem(AmuletItem amuletItem) =>
       AmuletItem.Flame_Wand => _weapons_wand,
       AmuletItem.Frost_Wand => _weapons_wand,
       AmuletItem.Bow_Of_Destruction => _weapons_bow_reflex,
+      AmuletItem.Blizzard_Globe => _weapons_globe,
 };
