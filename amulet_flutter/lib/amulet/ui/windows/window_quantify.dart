@@ -159,14 +159,7 @@ class WindowQuantify extends StatelessWidget {
                   Container(
                     alignment: Alignment.centerLeft,
                     width: 250,
-                    child: buildText(
-                        amuletItem.name
-                            .replaceAll('Weapon_', '')
-                            .replaceAll('Helm_', '')
-                            .replaceAll('Armor_', '')
-                            .replaceAll('Shoes_', '')
-                            .replaceAll('Consumable_', '')
-                    ),
+                    child: buildText(amuletItem.label),
                   ),
                   buildText(
                     amuletItem.quality.name,
@@ -220,6 +213,7 @@ class WindowQuantify extends StatelessWidget {
                       })
                     ],
                   )),
+              buildQuantificationCell('cost', amuletItem.getUpgradeCost(level)),
               buildQuantificationCell('quantify', amuletItem.quantify),
             ],
           ),
