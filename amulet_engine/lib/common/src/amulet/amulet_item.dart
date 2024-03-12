@@ -600,21 +600,11 @@ enum AmuletItem {
     throw Exception();
   }
 
-  double? getMaxHealth(int level){
-    final maxHealth = this.maxHealth;
-    if (maxHealth == null) return null;
-    final constraint = Stat_Health.get(slotType);
-    final healthI = interpolateConstraint(constraint, maxHealth);
-    return healthI * level;
-  }
+  double? getMaxHealth(int level) =>
+      linear(Constraint_Health, maxHealth, level);
 
-  double? getMaxMagic(int level){
-    final maxHealth = this.maxMagic;
-    if (maxHealth == null) return null;
-    final constraint = Stat_Magic.get(slotType);
-    final magicI = interpolateConstraint(constraint, maxHealth);
-    return magicI * level;
-  }
+  double? getMaxMagic(int level) =>
+      linear(Constraint_Magic, maxMagic, level);
 
   double? getWeaponDamageMin(int level) {
     final damageMin = this.damageMin;
@@ -624,12 +614,8 @@ enum AmuletItem {
     return damage * damageMin;
   }
 
-  double? getWeaponDamageMax(int level) {
-    final damage = this.damage;
-    if (damage == null) return null;
-    final damageI = interpolateConstraint(Stat_Weapon_Damage, damage);
-    return damageI * level;
-  }
+  double? getWeaponDamageMax(int level) =>
+      linear(Constraint_Weapon_Damage, damage, level);
 
   double? tryInterpolate(num start, num end, double? t) =>
       t == null ? null : interpolate(start, end, t);
@@ -640,22 +626,13 @@ enum AmuletItem {
   double interpolateConstraint(Constraint constraint, double i) =>
       interpolate(constraint.min, constraint.max, i);
 
-  static const Stat_Health = SlotTypeConstraint(
-      weapon: Constraint(min: 0, max: 20),
-      helm: Constraint(min: 0, max: 20),
-      armor: Constraint(min: 0, max: 20),
-      shoes: Constraint(min: 0, max: 20),
-      consumable: Constraint(min: 0, max: 0),
-  );
+  double? linear(Constraint constraint, double? i, int level) =>
+      i == null
+          ? null
+          : interpolate(constraint.min, constraint.max, i) * level;
 
-  static const Stat_Magic = SlotTypeConstraint(
-      weapon: Constraint(min: 0, max: 20),
-      helm: Constraint(min: 0, max: 20),
-      armor: Constraint(min: 0, max: 20),
-      shoes: Constraint(min: 0, max: 20),
-      consumable: Constraint(min: 0, max: 0),
-  );
-
-  static const Stat_Weapon_Damage = Constraint(min: 1, max: 20);
+  static const Constraint_Health = Constraint(min: 0, max: 20);
+  static const Constraint_Magic = Constraint(min: 0, max: 20);
+  static const Constraint_Weapon_Damage = Constraint(min: 1, max: 20);
 }
 
