@@ -44,10 +44,3 @@ Constraint getConstraint(ItemQuality itemQuality, SlotType slotType) =>
       SlotType.Consumable => const Constraint(min: 0, max: 0)
   };
 
-class Constraint {
-  final double min;
-  final double max;
-  const Constraint({required this.min, required this.max});
-}
-
-

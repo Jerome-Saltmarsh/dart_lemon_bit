@@ -162,90 +162,21 @@ class AmuletPlayer extends IsometricPlayer with
   @override
   double get maxHealth {
     var total = baseHealth;
-
-    final weapon = equippedWeapon;
-    final helm = equippedHelm;
-    final armor = equippedArmor;
-    final shoes = equippedShoes;
-
-    if (weapon != null) {
-      final weaponI = weapon.amuletItem.maxHealth;
-      if (weaponI != null) {
-        final level = weapon.level;
-        total += AmuletSettings.interpolateMaxHealthWeapon(weaponI) * level;
-      }
-    }
-
-    if (helm != null) {
-      final helmI = helm.amuletItem.maxHealth;
-      if (helmI != null) {
-        final level = helm.level;
-        total += AmuletSettings.interpolateMaxHealthHelm(helmI) * level;
-      }
-    }
-
-    if (armor != null) {
-      final armorI = armor.amuletItem.maxHealth;
-      if (armorI != null) {
-        final level = armor.level;
-        total += AmuletSettings.interpolateMaxHealthArmor(armorI) * level;
-      }
-    }
-
-    if (shoes != null) {
-      final shoesI = shoes.amuletItem.maxHealth;
-      if (shoesI != null) {
-        final level = shoes.level;
-        total += AmuletSettings.interpolateMaxHealthShoes(shoesI) * level;
-      }
-    }
-
+    total += equippedWeapon?.maxHealth ?? 0;
+    total += equippedHelm?.maxHealth ?? 0;
+    total += equippedArmor?.maxHealth ?? 0;
+    total += equippedShoes?.maxHealth ?? 0;
     return total;
   }
 
   @override
   double get maxMagic {
     var total = baseMagic;
-
-    final weapon = equippedWeapon;
-    final helm = equippedHelm;
-    final armor = equippedArmor;
-    final shoes = equippedShoes;
-
-    if (weapon != null) {
-      final weaponI = weapon.amuletItem.maxMagic;
-      if (weaponI != null) {
-        final level = weapon.level;
-        total += AmuletSettings.interpolateMaxMagicWeapon(weaponI) * level;
-      }
-    }
-
-    if (helm != null) {
-      final helmI = helm.amuletItem.maxMagic;
-      if (helmI != null) {
-        final level = helm.level;
-        total += AmuletSettings.interpolateMaxMagicHelm(helmI) * level;
-      }
-    }
-
-    if (armor != null) {
-      final armorI = armor.amuletItem.maxMagic;
-      if (armorI != null) {
-        final level = armor.level;
-        total += AmuletSettings.interpolateMaxMagicArmor(armorI) * level;
-      }
-    }
-
-    if (shoes != null) {
-      final shoesI = shoes.amuletItem.maxMagic;
-      if (shoesI != null) {
-        final level = shoes.level;
-        total += AmuletSettings.interpolateMaxMagicShoes(shoesI) * level;
-      }
-    }
-
-    return total;
-  }
+    total += equippedWeapon?.maxMagic ?? 0;
+    total += equippedHelm?.maxMagic ?? 0;
+    total += equippedArmor?.maxMagic ?? 0;
+    total += equippedShoes?.maxMagic ?? 0;
+    return total;  }
 
   @override
   set target(Position? value){
@@ -1367,8 +1298,8 @@ class AmuletPlayer extends IsometricPlayer with
       return null;
     }
 
-    final maxDamage = amuletItem.getWeaponDamageMax(level: level);
-    final minDamage = amuletItem.getWeaponDamageMin(level: level);
+    final maxDamage = amuletItem.getWeaponDamageMax(level);
+    final minDamage = amuletItem.getWeaponDamageMin(level);
 
     if (maxDamage == null){
       writeGameError(GameError.Max_Damage_Null);

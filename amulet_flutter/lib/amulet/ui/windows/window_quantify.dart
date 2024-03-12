@@ -135,6 +135,8 @@ class WindowQuantify extends StatelessWidget {
     final validationError = getAmuletItemValidationError(amuletItem);
     final damage = amuletItem.damage;
     final damageMin = amuletItem.damageMin;
+    final maxHealth = amuletItem.maxHealth;
+    final maxMagic = amuletItem.maxMagic;
 
     return onPressed(
       action: () => amulet.spawnAmuletItem(
@@ -170,13 +172,15 @@ class WindowQuantify extends StatelessWidget {
                 child: validationError != null ? buildText(validationError.name, color: Colors.red) : null,
               ),
               if (damage != null)
-                buildQuantificationCell('dmg-max', showValue ? amuletItem.getWeaponDamageMax(level: level) : amuletItem.damage),
+                buildQuantificationCell('dmg-max', showValue ? amuletItem.getWeaponDamageMax(level) : amuletItem.damage),
               if (damageMin != null)
-                buildQuantificationCell('dmg-min', showValue ? amuletItem.getWeaponDamageMin(level: level) : amuletItem.damageMin),
+                buildQuantificationCell('dmg-min', showValue ? amuletItem.getWeaponDamageMin(level) : amuletItem.damageMin),
 
               buildQuantificationCell('speed', amuletItem.attackSpeed),
               buildQuantificationCell('range', amuletItem.range),
-              buildQuantificationCell('health', amuletItem.maxHealth, renderNull: !amuletItem.isWeapon),
+              buildQuantificationCell('health',
+                  showValue ? amuletItem.getMaxHealth(level) :
+                  amuletItem.maxHealth, renderNull: !amuletItem.isWeapon),
               buildQuantificationCell('magic', amuletItem.maxMagic, renderNull: !amuletItem.isWeapon),
               Container(
                   width: 150,

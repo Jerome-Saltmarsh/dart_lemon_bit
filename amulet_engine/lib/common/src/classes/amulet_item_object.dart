@@ -11,6 +11,10 @@ class AmuletItemObject {
     required this.level,
   });
 
+  double? get maxHealth => amuletItem.getMaxHealth(level);
+
+  double? get maxMagic => amuletItem.getMaxMagic(level);
+
   double? get damageMax {
     final damage = amuletItem.damage;
     if (damage == null){

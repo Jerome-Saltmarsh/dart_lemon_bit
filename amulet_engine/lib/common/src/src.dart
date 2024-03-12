@@ -1,5 +1,6 @@
 library src;
 
+export 'classes/src.dart';
 export 'types/src.dart';
 export 'isometric/src.dart';
 export 'amulet/src.dart';

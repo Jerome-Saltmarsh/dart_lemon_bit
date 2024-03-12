@@ -601,21 +601,35 @@ enum AmuletItem {
     throw Exception();
   }
 
-  static const Weapon_Damage_Min = 1;
-  static const Weapon_Damage_Max = 20;
-
-  double? getWeaponDamageMax({required int level}) {
-    final damageI = tryInterpolate(Weapon_Damage_Min, Weapon_Damage_Max, damage);
-    if (damageI == null) return null;
-    return damageI * level;
+  double? getMaxHealth(int level){
+    final maxHealth = this.maxHealth;
+    if (maxHealth == null) return null;
+    final constraint = Stat_Health.get(slotType);
+    final healthI = interpolateConstraint(constraint, maxHealth);
+    return healthI * level;
   }
 
-  double? getWeaponDamageMin({required int level}) {
+  double? getMaxMagic(int level){
+    final maxHealth = this.maxMagic;
+    if (maxHealth == null) return null;
+    final constraint = Stat_Magic.get(slotType);
+    final magicI = interpolateConstraint(constraint, maxHealth);
+    return magicI * level;
+  }
+
+  double? getWeaponDamageMin(int level) {
     final damageMin = this.damageMin;
     if (damageMin == null) return null;
-    final damage = getWeaponDamageMax(level: level);
+    final damage = getWeaponDamageMax(level);
     if (damage == null) return null;
     return damage * damageMin;
+  }
+
+  double? getWeaponDamageMax(int level) {
+    final damage = this.damage;
+    if (damage == null) return null;
+    final damageI = interpolateConstraint(Stat_Weapon_Damage, damage);
+    return damageI * level;
   }
 
   double? tryInterpolate(num start, num end, double? t) =>
@@ -624,4 +638,50 @@ enum AmuletItem {
   int getUpgradeCost(int level) =>
       (quantify * (level * level)).ceil();
 
+  double interpolateConstraint(Constraint constraint, double i) =>
+      interpolate(constraint.min, constraint.max, i);
+
+
+  static const Stat_Health = SlotTypeConstraint(
+      weapon: Constraint(min: 1, max: 20),
+      helm: Constraint(min: 1, max: 20),
+      armor: Constraint(min: 1, max: 20),
+      shoes: Constraint(min: 1, max: 20),
+      consumable: Constraint(min: 0, max: 0),
+  );
+
+  static const Stat_Magic = SlotTypeConstraint(
+      weapon: Constraint(min: 1, max: 20),
+      helm: Constraint(min: 1, max: 20),
+      armor: Constraint(min: 1, max: 20),
+      shoes: Constraint(min: 1, max: 20),
+      consumable: Constraint(min: 0, max: 0),
+  );
+
+  static const Stat_Weapon_Damage = Constraint(min: 1, max: 20);
+}
+
+class SlotTypeConstraint {
+  final Constraint weapon;
+  final Constraint helm;
+  final Constraint armor;
+  final Constraint shoes;
+  final Constraint consumable;
+
+  const SlotTypeConstraint({
+    required this.weapon,
+    required this.helm,
+    required this.armor,
+    required this.shoes,
+    required this.consumable,
+  });
+
+  Constraint get(SlotType slotType) =>
+      switch (slotType){
+        SlotType.Weapon => weapon,
+        SlotType.Helm => helm,
+        SlotType.Armor => armor,
+        SlotType.Shoes => shoes,
+        SlotType.Consumable => consumable
+      };
 }
