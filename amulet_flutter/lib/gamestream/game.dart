@@ -1,8 +1,8 @@
 import 'package:amulet_engine/common/src.dart';
+import 'package:amulet_flutter/isometric/components/isometric_component.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
-import 'isometric/components/src.dart';
 
 abstract class Game with IsometricComponent
 {

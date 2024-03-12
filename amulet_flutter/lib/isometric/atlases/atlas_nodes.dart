@@ -1,5 +1,5 @@
 import 'package:amulet_engine/common/src.dart';
-import 'package:amulet_flutter/gamestream/isometric/ui/isometric_constants.dart';
+import 'package:amulet_flutter/isometric/ui/isometric_constants.dart';
 
 class AtlasNodeX {
   static const Bau_Haus_Solid = 520.0;

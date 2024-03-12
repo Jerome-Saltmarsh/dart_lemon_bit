@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
+// import 'package:amulet_flutter/isometric/ui/isometric_colors.dart';
 
 class AmuletColors {
   static const Gold = Colors.yellow;

@@ -1,5 +1,5 @@
 
-import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
+import 'package:amulet_flutter/isometric/ui/isometric_colors.dart';
 import 'package:flutter/cupertino.dart';
 
 class GSContainer extends StatelessWidget {

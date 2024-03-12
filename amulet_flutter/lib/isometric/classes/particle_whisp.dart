@@ -1,5 +1,5 @@
 import 'package:amulet_flutter/isometric/classes/particle_roam.dart';
-import 'package:amulet_flutter/gamestream/isometric/components/isometric_particles.dart';
+import 'package:amulet_flutter/isometric/components/isometric_particles.dart';
 
 import 'package:amulet_engine/common.dart';
 import 'package:lemon_math/src.dart';

@@ -1,5 +1,5 @@
 
-import 'package:amulet_flutter/gamestream/isometric/components/types/sprite_group_type.dart';
+import 'package:amulet_flutter/isometric/components/types/sprite_group_type.dart';
 
 import 'character_sprite_group.dart';
 

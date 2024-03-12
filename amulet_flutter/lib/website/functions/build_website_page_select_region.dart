@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:amulet_flutter/gamestream/isometric/components/isometric_options.dart';
+import 'package:amulet_flutter/isometric/components/isometric_options.dart';
 import 'package:amulet_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:amulet_flutter/gamestream/ui/constants/font_size.dart';
 import 'package:amulet_flutter/gamestream/ui/constants/height.dart';

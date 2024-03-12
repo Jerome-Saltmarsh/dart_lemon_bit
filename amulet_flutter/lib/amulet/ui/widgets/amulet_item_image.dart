@@ -1,6 +1,6 @@
 import 'package:amulet_engine/src.dart';
 import 'package:amulet_flutter/amulet/getters/get_src_amulet_item.dart';
-import 'package:amulet_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
+import 'package:amulet_flutter/isometric/ui/widgets/isometric_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_lang/src.dart';
 

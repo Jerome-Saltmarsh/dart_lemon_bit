@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/amulet/ui/functions/render_character_sprites.dart';
-import 'package:amulet_flutter/gamestream/isometric/components/isometric_player.dart';
+import 'package:amulet_flutter/isometric/components/isometric_player.dart';
 import 'package:amulet_flutter/isometric/classes/human_character_sprites.dart';
 
 void renderPlayerCharacterSprites({

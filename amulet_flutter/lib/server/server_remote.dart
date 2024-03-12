@@ -1,6 +1,6 @@
 
 import 'package:amulet_engine/common.dart';
-import 'package:amulet_flutter/gamestream/isometric/components/isometric_parser.dart';
+import 'package:amulet_flutter/isometric/components/isometric_parser.dart';
 import 'package:amulet_flutter/server/server.dart';
 import 'package:amulet_flutter/website/enums/website_page.dart';
 import 'package:gamestream_http_client/src.dart';

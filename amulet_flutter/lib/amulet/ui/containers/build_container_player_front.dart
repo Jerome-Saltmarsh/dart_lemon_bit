@@ -2,8 +2,8 @@
 import 'package:amulet_engine/common/src.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/amulet/ui/functions/render_player_character_sprites.dart';
-import 'package:amulet_flutter/gamestream/isometric/components/isometric_player.dart';
-import 'package:amulet_flutter/gamestream/isometric/ui/widgets/isometric_icon.dart';
+import 'package:amulet_flutter/isometric/components/isometric_player.dart';
+import 'package:amulet_flutter/isometric/ui/widgets/isometric_icon.dart';
 import 'package:amulet_flutter/gamestream/ui/enums/icon_type.dart';
 import 'package:amulet_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:lemon_engine/lemon_engine.dart';

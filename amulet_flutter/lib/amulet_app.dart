@@ -4,9 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'gamestream/isometric/isometric_components.dart';
-import 'gamestream/isometric/ui/isometric_colors.dart';
-import 'gamestream/isometric/ui/widgets/loading_page.dart';
+import 'isometric/components/isometric_components.dart';
+import 'isometric/ui/isometric_colors.dart';
+import 'isometric/ui/widgets/loading_page.dart';
 
 class AmuletApp extends LemonEngine {
 

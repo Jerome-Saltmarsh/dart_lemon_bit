@@ -1,6 +1,6 @@
 // import 'package:amulet_engine/packages/common.dart';
-// import 'package:amulet_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
-// import 'package:amulet_flutter/gamestream/isometric/ui/widgets/item_image.dart';
+// import 'package:amulet_flutter/isometric/ui/widgets/isometric_builder.dart';
+// import 'package:amulet_flutter/isometric/ui/widgets/item_image.dart';
 // import 'package:flutter/material.dart';
 // import 'package:golden_ratio/constants.dart';
 //

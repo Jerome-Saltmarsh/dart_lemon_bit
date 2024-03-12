@@ -1,6 +1,6 @@
 
-import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
-import 'package:amulet_flutter/gamestream/isometric/components/isometric_images.dart';
+import 'package:amulet_flutter/isometric/components/isometric_component.dart';
+import 'package:amulet_flutter/isometric/components/isometric_images.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 
 abstract class RenderGroup with IsometricComponent {

@@ -6,17 +6,15 @@ import 'dart:ui';
 import 'package:amulet_engine/src.dart';
 import 'package:amulet_flutter/amulet/amulet_keys.dart';
 import 'package:amulet_flutter/amulet/amulet_ui.dart';
-import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
+import 'package:amulet_flutter/isometric/enums/node_visibility.dart';
 import 'package:amulet_flutter/gamestream/ui/builders/build_watch.dart';
-import 'package:amulet_flutter/isometric/classes/isometric_game.dart';
-import 'package:amulet_flutter/isometric/classes/position.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_lang/src.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
-import '../gamestream/isometric/src.dart';
+import '../isometric/src.dart';
 import 'amulet_render.dart';
 import 'classes/map_location.dart';
 

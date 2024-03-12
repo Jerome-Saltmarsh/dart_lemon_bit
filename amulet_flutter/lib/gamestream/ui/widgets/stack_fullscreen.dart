@@ -1,6 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
-import 'package:amulet_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
+import 'package:amulet_flutter/isometric/ui/widgets/isometric_builder.dart';
 
 class StackFullscreen extends StatelessWidget {
 

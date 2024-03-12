@@ -2,7 +2,7 @@
 // import 'package:amulet_flutter/gamestream/games/capture_the_flag/capture_the_flag_game.dart';
 // import 'package:amulet_flutter/gamestream/games/mmo/mmo_game.dart';
 // import 'package:amulet_flutter/gamestream/games/moba/moba.dart';
-// import 'package:amulet_flutter/gamestream/isometric/isometric.dart';
+// import 'package:amulet_flutter/isometric/isometric.dart';
 //
 // import '../common.dart';
 // import 'game.dart';

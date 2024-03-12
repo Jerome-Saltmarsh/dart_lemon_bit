@@ -2,10 +2,10 @@
 
 import 'package:amulet_engine/common.dart';
 import 'package:amulet_flutter/gamestream/game.dart';
-import 'package:amulet_flutter/gamestream/isometric/components/debug/isometric_debug_ui.dart';
-import 'package:amulet_flutter/gamestream/isometric/components/editor/isometric_editor_ui.dart';
-import 'package:amulet_flutter/gamestream/isometric/enums/mode.dart';
+import 'package:amulet_flutter/isometric/components/debug/isometric_debug_ui.dart';
+import 'package:amulet_flutter/isometric/enums/mode.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';
+import 'package:amulet_flutter/isometric/src.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_watch/src.dart';

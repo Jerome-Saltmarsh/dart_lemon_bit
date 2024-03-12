@@ -1,5 +1,5 @@
 import 'package:amulet_engine/common.dart';
-import 'package:amulet_flutter/gamestream/isometric/components/render/functions/merge_32_bit_colors.dart';
+import 'package:amulet_flutter/isometric/components/render/functions/merge_32_bit_colors.dart';
 import 'package:amulet_flutter/isometric/classes/position.dart';
 import 'package:lemon_bit/src.dart';
 import 'package:lemon_math/src.dart';

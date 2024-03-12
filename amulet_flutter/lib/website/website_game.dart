@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-// import 'package:amulet_flutter/functions/validate_atlases.dart';
 import 'package:amulet_flutter/gamestream/game.dart';
 import 'package:amulet_flutter/gamestream/operation_status.dart';
 import 'package:amulet_flutter/website/website_ui.dart';
