@@ -181,7 +181,9 @@ class WindowQuantify extends StatelessWidget {
               buildQuantificationCell('health',
                   showValue ? amuletItem.getMaxHealth(level) :
                   amuletItem.maxHealth, renderNull: !amuletItem.isWeapon),
-              buildQuantificationCell('magic', amuletItem.maxMagic, renderNull: !amuletItem.isWeapon),
+              buildQuantificationCell('magic',
+                  showValue ? amuletItem.getMaxMagic(level) :
+                  amuletItem.maxMagic, renderNull: !amuletItem.isWeapon),
               Container(
                   width: 150,
                   alignment: Alignment.center,
