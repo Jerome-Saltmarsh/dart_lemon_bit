@@ -1,7 +1,10 @@
 
-class Constraint {
-  final double min;
-  final double max;
-  const Constraint({required this.min, required this.max});
+class Constraint<T extends num> {
+  final T min;
+  final T max;
+  const Constraint({
+    required this.min,
+    required this.max,
+  });
 }
 
