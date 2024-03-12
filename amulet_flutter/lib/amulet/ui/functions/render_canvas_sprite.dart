@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:amulet_flutter/packages/sprite/render_sprite.dart';
+import 'package:amulet_flutter/amulet/ui/functions/render_sprite.dart';
 import 'package:lemon_sprite/lib.dart';
 
 void renderCanvasSprite({
