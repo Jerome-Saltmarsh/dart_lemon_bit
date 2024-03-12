@@ -189,15 +189,31 @@ class WindowQuantify extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Column(
                     children: [
-                      // buildText('skills'),
-                      ...amuletItem.skillSet.entries.map((entry) => Row(
+                      ...amuletItem.skillSet.entries.map((entry) {
+
+                        if (showValue){
+                          final skillLevel = (entry.value * level).floor();
+                          if (skillLevel <= 0) return nothing;
+
+                          return Row(
+                            children: [
+                              Container(
+                                  width: 80,
+                                  child: buildText(entry.key.name, size: 14, color: Colors.white70)),
+                              buildText(skillLevel, size: 14, color: Colors.white70)
+                            ],
+                          );
+                        }
+
+                        return Row(
                         children: [
                           Container(
                               width: 80,
                               child: buildText(entry.key.name, size: 14, color: Colors.white70)),
                           buildText(entry.value, size: 14, color: Colors.white70)
                         ],
-                      ))
+                      );
+                      })
                     ],
                   )),
               buildQuantificationCell('quantify', amuletItem.quantify),
