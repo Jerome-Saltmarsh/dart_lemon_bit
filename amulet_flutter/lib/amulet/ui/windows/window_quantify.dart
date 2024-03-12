@@ -1,4 +1,6 @@
 
+import 'dart:ffi';
+
 import 'package:amulet_engine/common.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/amulet/amulet_ui.dart';
@@ -179,10 +181,10 @@ class WindowQuantify extends StatelessWidget {
               buildQuantificationCell('speed', amuletItem.attackSpeed),
               buildQuantificationCell('range', amuletItem.range),
               buildQuantificationCell('health',
-                  showValue ? amuletItem.getMaxHealth(level) :
+                  showValue ? amuletItem.getMaxHealth(level)?.floor() :
                   amuletItem.maxHealth, renderNull: !amuletItem.isWeapon),
               buildQuantificationCell('magic',
-                  showValue ? amuletItem.getMaxMagic(level) :
+                  showValue ? amuletItem.getMaxMagic(level)?.floor() :
                   amuletItem.maxMagic, renderNull: !amuletItem.isWeapon),
               Container(
                   width: 150,
@@ -190,16 +192,15 @@ class WindowQuantify extends StatelessWidget {
                   child: Column(
                     children: [
                       ...amuletItem.skillSet.entries.map((entry) {
-
-                        if (showValue){
+                        if (showValue) {
                           final skillLevel = (entry.value * level).floor();
                           if (skillLevel <= 0) return nothing;
-
                           return Row(
                             children: [
                               Container(
                                   width: 80,
-                                  child: buildText(entry.key.name, size: 14, color: Colors.white70)),
+                                  child: buildText(entry.key.name, size: 14, color: Colors.white70),
+                              ),
                               buildText(skillLevel, size: 14, color: Colors.white70)
                             ],
                           );
@@ -209,7 +210,8 @@ class WindowQuantify extends StatelessWidget {
                         children: [
                           Container(
                               width: 80,
-                              child: buildText(entry.key.name, size: 14, color: Colors.white70)),
+                              child: buildText(entry.key.name, size: 14, color: Colors.white70),
+                          ),
                           buildText(entry.value, size: 14, color: Colors.white70)
                         ],
                       );
@@ -224,17 +226,28 @@ class WindowQuantify extends StatelessWidget {
     );
   }
 
-  Widget buildQuantificationCell(String name, double? value, {bool renderNull = false}) {
+  Widget buildQuantificationCell(String name, num? value, {bool renderNull = false}) {
     if (value == null && !renderNull) {
       return nothing;
     }
+
+    dynamic textValue = 0;
+
+    if (value is Double){
+      textValue = value?.toStringAsFixed(2);
+    }
+
+    if (value is int){
+      textValue = value.toString();
+    }
+
     return Container(
         padding: const EdgeInsets.all(8),
         alignment: Alignment.center,
         child: Column(
           children: [
             buildText(name, color: Colors.white70, size: 14),
-            buildText(value?.toStringAsFixed(2) ?? 0, color: Colors.white70),
+            buildText(textValue, color: Colors.white70),
           ],
         ));
   }
