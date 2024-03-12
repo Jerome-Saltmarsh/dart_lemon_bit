@@ -2093,7 +2093,7 @@ class AmuletUI {
       (t) => Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: SkillType.values.map((skillType) {
-              if (skillType.isPassive) return nothing;
+              if (!skillType.isPassive) return nothing;
               final level = amulet.getSkillTypeLevel(skillType);
               if (level <= 0) return nothing;
               return buildEquippedSkillType(skillType);
@@ -2105,7 +2105,7 @@ class AmuletUI {
       (t) => Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: SkillType.values.map((skillType) {
-              if (!skillType.isPassive) return nothing;
+              if (skillType.isPassive) return nothing;
               final level = amulet.getSkillTypeLevel(skillType);
               if (level <= 0) return nothing;
               return buildEquippedSkillType(skillType);
