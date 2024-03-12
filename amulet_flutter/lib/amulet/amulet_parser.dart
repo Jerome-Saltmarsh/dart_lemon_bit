@@ -169,10 +169,11 @@ extension AmuletParser on IsometricParser {
   }
 
   void readPlayerEquipped() {
-    amulet.equippedWeapon.value = tryReadAmuletItemObject();
-    amulet.equippedHelm.value = tryReadAmuletItemObject();
-    amulet.equippedArmor.value = tryReadAmuletItemObject();
-    amulet.equippedShoes.value = tryReadAmuletItemObject();
+    amulet.equippedWeapon = tryReadAmuletItemObject();
+    amulet.equippedHelm = tryReadAmuletItemObject();
+    amulet.equippedArmor = tryReadAmuletItemObject();
+    amulet.equippedShoes = tryReadAmuletItemObject();
+    amulet.equippedChangedNotifier.value++;
   }
 
   AmuletItem? readMMOItem(){

@@ -6,4 +6,4 @@ export 'amulet_world_map.dart';
 export 'build_text_percentage.dart';
 export 'mmo_item_image.dart';
 export 'watch_amulet_item.dart';
-export 'window_quantify.dart';
+export '../windows/window_quantify.dart';

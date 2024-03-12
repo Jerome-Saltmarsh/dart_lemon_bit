@@ -3,6 +3,7 @@ import 'package:amulet_engine/src.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/amulet/src.dart';
 import 'package:amulet_flutter/amulet/ui/enums/quantify_tab.dart';
+import 'package:amulet_flutter/amulet/ui/windows/window_upgrade.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';
 import 'package:amulet_flutter/website/widgets/gs_fullscreen.dart';
@@ -129,6 +130,11 @@ class AmuletUI {
         bottom: 8,
         child: buildWindowPlayerSkillSlots(),
       ),
+          Positioned(
+              bottom: 100,
+              child: buildWatchVisible(
+                  amulet.windowVisibleUpgrade,
+                  WindowUpgrade(amulet: amulet))),
           buildPositionedMessage(),
           buildWindowQuest(),
           buildOverlayScreenColor(),
@@ -164,12 +170,7 @@ class AmuletUI {
           buildWatchVisible(
             amulet.windowVisibleEquipment,
             buildEquippedAmuletItems(),
-            // buildWindowPlayerEquipped(),
           ),
-          // buildWatchVisible(
-          //   amulet.windowVisiblePlayerStats,
-          //   buildWindowPlayerStats(),
-          // ),
         ],
       );
 
@@ -604,14 +605,14 @@ class AmuletUI {
       );
 
   Widget buildEquippedAmuletItems() =>
-      Column(
+      buildWatch(amulet.equippedChangedNotifier, (t) => Column(
         children: [
-          buildWatchAmuletItemObject(amulet.equippedWeapon, SlotType.Weapon),
-          buildWatchAmuletItemObject(amulet.equippedHelm, SlotType.Helm),
-          buildWatchAmuletItemObject(amulet.equippedArmor, SlotType.Armor),
-          buildWatchAmuletItemObject(amulet.equippedShoes, SlotType.Shoes),
+          buildWatchAmuletItemObject(SlotType.Weapon),
+          buildWatchAmuletItemObject(SlotType.Helm),
+          buildWatchAmuletItemObject(SlotType.Armor),
+          buildWatchAmuletItemObject(SlotType.Shoes),
         ],
-      );
+      ));
 
   Widget buildPlayerHealthBar() => IgnorePointer(
         child: Row(
@@ -1438,56 +1439,55 @@ class AmuletUI {
       child: buildText(value, color: titleColor),
   );
 
-  Widget buildWatchAmuletItemObject(Watch<AmuletItemObject?> watchAmuletItemObject, SlotType slotType) {
+  Widget buildWatchAmuletItemObject(SlotType slotType) {
 
-    return buildWatch(watchAmuletItemObject, (amuletItemObject) {
-      const width = 45.0;
+    const width = 45.0;
+    final amuletItemObject = amulet.getEquippedAmuletItemObject(slotType);
 
-      final button = onPressed(
-        action: amuletItemObject == null ? null : () => amulet.dropAmuletItem(amuletItemObject.amuletItem),
-        onRightClick: amuletItemObject == null ? null : () {
-          visibleRightClickedToDrop = false;
-          amulet.dropAmuletItem(amuletItemObject.amuletItem);
-        },
-        child: buildBorder(
-          color: Palette.brown_4,
-          width: 3,
-          child: Container(
-            width: width,
-            color: Palette.brown_3,
-            child: Column(
-              children: [
-                  Container(
-                      height: 20,
-                      child: amuletItemObject == null ? null : buildText(amuletItemObject.level, color: Colors.white70)),
-                Container(
-                  height: 50,
-                    width: width,
-                    color: Colors.white12,
-                    alignment: Alignment.center,
-                    child: amuletItemObject == null ? null : AmuletItemImage(
-                      amuletItem: amuletItemObject.amuletItem,
-                      scale: 1.2,),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-
-      return buildMouseOverHint(
-          child: button,
-          panel: Column(
+    final button = onPressed(
+      action: amuletItemObject == null ? null : () => amulet.dropAmuletItem(amuletItemObject.amuletItem),
+      onRightClick: amuletItemObject == null ? null : () {
+        visibleRightClickedToDrop = false;
+        amulet.dropAmuletItem(amuletItemObject.amuletItem);
+      },
+      child: buildBorder(
+        color: Palette.brown_4,
+        width: 3,
+        child: Container(
+          width: width,
+          color: Palette.brown_3,
+          child: Column(
             children: [
-              if (amuletItemObject != null && visibleRightClickedToDrop)
-                buildText('right click to drop'),
-              tryBuildCardAmuletItemObject(amuletItemObject),
+              Container(
+                  height: 20,
+                  child: amuletItemObject == null ? null : buildText(amuletItemObject.level, color: Colors.white70)),
+              Container(
+                height: 50,
+                width: width,
+                color: Colors.white12,
+                alignment: Alignment.center,
+                child: amuletItemObject == null ? null : AmuletItemImage(
+                  amuletItem: amuletItemObject.amuletItem,
+                  scale: 1.2,),
+              ),
             ],
           ),
-          left: 90,
-          bottom: 0,
-      );
-    });
+        ),
+      ),
+    );
+
+    return buildMouseOverHint(
+      child: button,
+      panel: Column(
+        children: [
+          if (amuletItemObject != null && visibleRightClickedToDrop)
+            buildText('left click to drop'),
+          tryBuildCardAmuletItemObject(amuletItemObject),
+        ],
+      ),
+      left: 90,
+      bottom: 0,
+    );
   }
 
   final amuletWeaponSlot = AmuletImage(srcX: 878, srcY: 30, width: 36, height: 36);

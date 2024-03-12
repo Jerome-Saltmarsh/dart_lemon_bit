@@ -84,6 +84,7 @@ class Amulet extends IsometricGame {
   final windowVisibleSkillLeft = WatchBool(false);
   final windowVisibleSkillRight = WatchBool(false);
   final windowVisibleQuantify = WatchBool(false);
+  final windowVisibleUpgrade = WatchBool(false);
   final playerRunSpeed = Watch(0);
   final playerAgility = Watch(0);
 
@@ -136,10 +137,11 @@ class Amulet extends IsometricGame {
   final npcName = Watch('');
   final npcOptions = <String>[];
   final npcOptionsReads = Watch(0);
-  final equippedWeapon = Watch<AmuletItemObject?>(null);
-  final equippedHelm = Watch<AmuletItemObject?>(null);
-  final equippedArmor = Watch<AmuletItemObject?>(null);
-  final equippedShoes = Watch<AmuletItemObject?>(null);
+  AmuletItemObject? equippedWeapon;
+  AmuletItemObject? equippedHelm;
+  AmuletItemObject? equippedArmor;
+  AmuletItemObject? equippedShoes;
+  final equippedChangedNotifier = Watch(0);
 
   ItemQuality? aimTargetItemQuality;
   var aimTargetText = '';
@@ -296,6 +298,11 @@ class Amulet extends IsometricGame {
 
     if (key == amuletKeys.toggleWindowHelp) {
       windowVisibleHelp.toggle();
+      return;
+    }
+
+    if (key == amuletKeys.toggleWindowUpgrade) {
+      windowVisibleUpgrade.toggle();
       return;
     }
 
@@ -636,10 +643,10 @@ class Amulet extends IsometricGame {
 
   AmuletItemObject? getEquippedAmuletItemObject(SlotType itemType) =>
       switch (itemType) {
-        SlotType.Weapon => equippedWeapon.value,
-        SlotType.Helm => equippedHelm.value,
-        SlotType.Armor => equippedArmor.value,
-        SlotType.Shoes => equippedShoes.value,
+        SlotType.Weapon => equippedWeapon,
+        SlotType.Helm => equippedHelm,
+        SlotType.Armor => equippedArmor,
+        SlotType.Shoes => equippedShoes,
         SlotType.Consumable => null,
       };
 
