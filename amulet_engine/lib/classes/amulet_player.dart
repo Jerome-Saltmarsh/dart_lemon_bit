@@ -1798,6 +1798,15 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
 
+    final upgradeCost = amuletItemObject.amuletItem.getUpgradeCost(amuletItemObject.level);
+
+    if (upgradeCost > gold){
+      writeGameError(GameError.Insufficient_Gold);
+      return;
+    }
+
+    gold -= upgradeCost;
+
     final upgradeAmuletItemObject = AmuletItemObject(
         amuletItem: amuletItemObject.amuletItem,
         level: amuletItemObject.level + 1,

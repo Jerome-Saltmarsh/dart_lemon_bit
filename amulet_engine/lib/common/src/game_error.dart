@@ -13,7 +13,7 @@ enum GameError {
   Insufficient_Energy,
   Insufficient_Ammunition,
   Insufficient_Resources,
-  Insufficient_Credits,
+  Insufficient_Gold,
   Already_Equipped,
   Target_Required,
   CharacterTypeAlreadySelected,
