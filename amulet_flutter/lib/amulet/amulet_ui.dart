@@ -1526,7 +1526,7 @@ class AmuletUI {
 
     return buildBorder(
       width: 2,
-      color: Colors.white70,
+      color: Colors.orange,
       child: Container(
         width: 190,
         color: Palette.brownDark,
@@ -1534,7 +1534,7 @@ class AmuletUI {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildCardHeader('Item ${slotType.name}'),
+            buildCardHeader(slotType.name),
             Container(
               padding: const EdgeInsets.all(4),
               color: Colors.black26,
