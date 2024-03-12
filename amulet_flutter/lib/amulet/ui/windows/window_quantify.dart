@@ -135,10 +135,8 @@ class WindowQuantify extends StatelessWidget {
   Widget buildQuantifyAmuletItem(AmuletItem amuletItem, int level, bool showValue) {
 
     final validationError = getAmuletItemValidationError(amuletItem);
-    final damage = amuletItem.damage;
-    final damageMin = amuletItem.damageMin;
-    final maxHealth = amuletItem.maxHealth;
-    final maxMagic = amuletItem.maxMagic;
+    final damageMax = showValue ? amuletItem.getWeaponDamageMax(level) : amuletItem.damage;
+    final damageMin = showValue ? amuletItem.getWeaponDamageMin(level) : amuletItem.damageMin;
 
     return onPressed(
       action: () => amulet.spawnAmuletItem(
@@ -173,10 +171,10 @@ class WindowQuantify extends StatelessWidget {
                 alignment: Alignment.center,
                 child: validationError != null ? buildText(validationError.name, color: Colors.red) : null,
               ),
-              if (damage != null)
-                buildQuantificationCell('dmg-max', showValue ? amuletItem.getWeaponDamageMax(level) : amuletItem.damage),
+              if (damageMax != null)
+                buildQuantificationCell('dmg-max', damageMax),
               if (damageMin != null)
-                buildQuantificationCell('dmg-min', showValue ? amuletItem.getWeaponDamageMin(level) : amuletItem.damageMin),
+                buildQuantificationCell('dmg-min', damageMin),
 
               buildQuantificationCell('speed', amuletItem.attackSpeed),
               buildQuantificationCell('range', amuletItem.range),
@@ -233,8 +231,8 @@ class WindowQuantify extends StatelessWidget {
 
     dynamic textValue = 0;
 
-    if (value is Double) {
-      textValue = value?.toStringAsFixed(2);
+    if (value is double) {
+      textValue = value.toStringAsFixed(2);
     }
 
     if (value is int) {
