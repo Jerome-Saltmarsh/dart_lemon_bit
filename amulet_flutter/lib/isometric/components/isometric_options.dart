@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:amulet_flutter/isometric/classes/game.dart';
 import 'package:amulet_flutter/isometric/components/isometric_component.dart';
 import 'package:amulet_flutter/isometric/enums/cursor_type.dart';
-import 'package:amulet_flutter/gamestream/network/functions/detect_connection_region.dart';
+import 'package:amulet_flutter/isometric/functions/detect_connection_region.dart';
 import 'package:amulet_flutter/packages/lemon_components.dart';
 
 class IsometricOptions with IsometricComponent implements Updatable {

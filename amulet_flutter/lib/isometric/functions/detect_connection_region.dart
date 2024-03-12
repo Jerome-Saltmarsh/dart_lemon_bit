@@ -1,4 +1,4 @@
-import 'package:amulet_flutter/gamestream/network/enums/connection_region.dart';
+import 'package:amulet_flutter/isometric/enums/connection_region.dart';
 
 ConnectionRegion detectConnectionRegion() {
   final now = DateTime.now();

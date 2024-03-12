@@ -1,6 +1,6 @@
 
 
-import 'package:amulet_flutter/gamestream/network/enums/connection_region.dart';
+import 'package:amulet_flutter/isometric/enums/connection_region.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';

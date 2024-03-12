@@ -6,7 +6,7 @@ import 'package:amulet_flutter/website/enums/website_page.dart';
 import 'package:gamestream_http_client/src.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:typedef/json.dart';
-import 'package:amulet_flutter/gamestream/network/enums/connection_region.dart';
+import 'package:amulet_flutter/isometric/enums/connection_region.dart';
 import 'package:amulet_flutter/packages/lemon_websocket_client.dart';
 
 import '../isometric/enums/operation_status.dart';
