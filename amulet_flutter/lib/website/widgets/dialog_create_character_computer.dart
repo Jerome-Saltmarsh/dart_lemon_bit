@@ -1,4 +1,8 @@
 import 'package:amulet_engine/common.dart';
+import 'package:amulet_flutter/isometric/builders/build_watch.dart';
+import 'package:amulet_flutter/isometric/consts/height.dart';
+import 'package:amulet_flutter/isometric/consts/width.dart';
+import 'package:amulet_flutter/isometric/enums/icon_type.dart';
 import 'package:amulet_flutter/isometric/ui/widgets/gs_container.dart';
 import 'package:amulet_flutter/isometric/ui/widgets/gs_key_event_handler.dart';
 import 'package:amulet_flutter/isometric/ui/widgets/mouse_over.dart';
@@ -9,7 +13,6 @@ import 'package:amulet_flutter/amulet/ui/functions/render_character_sprites.dart
 import 'package:amulet_flutter/isometric/components/isometric_components.dart';
 import 'package:amulet_flutter/isometric/ui/widgets/isometric_builder.dart';
 import 'package:amulet_flutter/isometric/ui/widgets/isometric_icon.dart';
-import 'package:amulet_flutter/gamestream/ui.dart';
 import 'package:amulet_flutter/website/enums/website_page.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';

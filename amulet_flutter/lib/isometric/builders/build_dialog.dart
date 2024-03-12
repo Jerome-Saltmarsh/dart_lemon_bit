@@ -1,5 +1,5 @@
+import 'package:amulet_flutter/isometric/consts/border_radius.dart';
 import 'package:flutter/material.dart';
-import 'package:amulet_flutter/gamestream/ui/constants/border_radius.dart';
 import 'package:amulet_flutter/isometric/ui/widgets/isometric_builder.dart';
 
 Widget buildDialog({

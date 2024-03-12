@@ -1,8 +1,8 @@
+import 'package:amulet_flutter/isometric/consts/font_size.dart';
+import 'package:amulet_flutter/isometric/consts/height.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/isometric/components/isometric_options.dart';
 import 'package:amulet_flutter/isometric/enums/connection_region.dart';
-import 'package:amulet_flutter/gamestream/ui/constants/font_size.dart';
-import 'package:amulet_flutter/gamestream/ui/constants/height.dart';
 import 'package:amulet_flutter/isometric/ui/widgets/mouse_over.dart';
 import 'package:amulet_flutter/website/enums/website_page.dart';
 import 'package:amulet_flutter/website/website_game.dart';

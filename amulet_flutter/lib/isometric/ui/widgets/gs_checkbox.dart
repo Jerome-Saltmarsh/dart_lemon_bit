@@ -1,6 +1,6 @@
 
+import 'package:amulet_flutter/isometric/enums/icon_type.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:amulet_flutter/gamestream/ui/enums/icon_type.dart';
 import 'package:amulet_flutter/isometric/ui/widgets/isometric_builder.dart';
 
 class GSCheckBox extends StatelessWidget {

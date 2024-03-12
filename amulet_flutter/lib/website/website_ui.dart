@@ -1,9 +1,11 @@
 import 'package:amulet_engine/common.dart';
 import 'package:amulet_engine/json/amulet_field.dart';
 import 'package:amulet_engine/json/character_json.dart';
+import 'package:amulet_flutter/isometric/builders/build_watch.dart';
 import 'package:amulet_flutter/isometric/components/functions/get_server_mode_text.dart';
+import 'package:amulet_flutter/isometric/consts/height.dart';
+import 'package:amulet_flutter/isometric/consts/width.dart';
 import 'package:amulet_flutter/isometric/enums/operation_status.dart';
-import 'package:amulet_flutter/gamestream/ui/src.dart';
 import 'package:amulet_flutter/isometric/ui/widgets/build_fullscreen.dart';
 import 'package:amulet_flutter/isometric/ui/widgets/gs_container.dart';
 import 'package:amulet_flutter/packages/lemon_websocket_client.dart';

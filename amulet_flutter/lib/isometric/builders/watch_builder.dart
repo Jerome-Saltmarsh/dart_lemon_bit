@@ -1,8 +1,9 @@
 
 
 import 'package:flutter/cupertino.dart';
-import 'package:amulet_flutter/gamestream/ui.dart';
 import 'package:lemon_watch/src.dart';
+
+import 'build_watch.dart';
 
 class WatchBuilder<T> extends StatelessWidget {
 

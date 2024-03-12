@@ -1,4 +1,4 @@
-import 'package:amulet_flutter/gamestream/ui/enums/icon_type.dart';
+import 'package:amulet_flutter/isometric/enums/icon_type.dart';
 
 /// [srcX, srcY, width, height]
 const atlasSrcIconType = <IconType, List<double>> {

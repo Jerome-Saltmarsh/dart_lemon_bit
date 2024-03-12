@@ -1,8 +1,8 @@
 
 
+import 'package:amulet_flutter/isometric/consts/height.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/isometric/ui/widgets/isometric_builder.dart';
-import 'package:amulet_flutter/gamestream/ui/constants/height.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 class GSTextField extends StatelessWidget {
