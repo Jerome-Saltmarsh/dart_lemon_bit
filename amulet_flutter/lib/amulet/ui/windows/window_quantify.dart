@@ -1,6 +1,4 @@
 
-import 'dart:ffi';
-
 import 'package:amulet_engine/common.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/amulet/amulet_ui.dart';
@@ -137,6 +135,9 @@ class WindowQuantify extends StatelessWidget {
     final validationError = getAmuletItemValidationError(amuletItem);
     final damageMax = showValue ? amuletItem.getWeaponDamageMax(level) : amuletItem.damage;
     final damageMin = showValue ? amuletItem.getWeaponDamageMin(level) : amuletItem.damageMin;
+    final healthMax = showValue ? amuletItem.getMaxHealth(level)?.floor() : amuletItem.maxHealth;
+    final magicMax = showValue ? amuletItem.getMaxMagic(level)?.floor() : amuletItem.maxMagic;
+    final renderNull = !amuletItem.isWeapon;
 
     return onPressed(
       action: () => amulet.spawnAmuletItem(
@@ -158,7 +159,14 @@ class WindowQuantify extends StatelessWidget {
                   Container(
                     alignment: Alignment.centerLeft,
                     width: 250,
-                    child: buildText(amuletItem.name.replaceAll('Weapon_', '')),
+                    child: buildText(
+                        amuletItem.name
+                            .replaceAll('Weapon_', '')
+                            .replaceAll('Helm_', '')
+                            .replaceAll('Armor_', '')
+                            .replaceAll('Shoes_', '')
+                            .replaceAll('Consumable_', '')
+                    ),
                   ),
                   buildText(
                     amuletItem.quality.name,
@@ -178,12 +186,8 @@ class WindowQuantify extends StatelessWidget {
 
               buildQuantificationCell('speed', amuletItem.attackSpeed),
               buildQuantificationCell('range', amuletItem.range),
-              buildQuantificationCell('health',
-                  showValue ? amuletItem.getMaxHealth(level)?.floor() :
-                  amuletItem.maxHealth, renderNull: !amuletItem.isWeapon),
-              buildQuantificationCell('magic',
-                  showValue ? amuletItem.getMaxMagic(level)?.floor() :
-                  amuletItem.maxMagic, renderNull: !amuletItem.isWeapon),
+              buildQuantificationCell('health', healthMax, renderNull: renderNull),
+              buildQuantificationCell('magic', magicMax, renderNull: renderNull),
               Container(
                   width: 150,
                   alignment: Alignment.center,

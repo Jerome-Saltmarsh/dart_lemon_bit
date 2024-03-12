@@ -133,8 +133,8 @@ enum AmuletItem {
     maxHealth: 0.2,
     maxMagic: 0,
     skillSet: {
+      SkillType.Health_Regen: 0.5,
       SkillType.Mighty_Strike: 1.0,
-      SkillType.Critical_Hit: 0.8,
     },
   ),
   Helm_Steel_Cap(
@@ -521,7 +521,7 @@ enum AmuletItem {
     required this.label,
     this.quality = ItemQuality.Common,
     this.skillSet = const {},
-    this.maxHealth = 0,
+    this.maxHealth,
     this.maxMagic,
     this.range,
     this.attackSpeed,
