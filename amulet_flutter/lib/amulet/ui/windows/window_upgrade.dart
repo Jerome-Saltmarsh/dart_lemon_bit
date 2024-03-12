@@ -22,8 +22,16 @@ class WindowUpgrade extends StatelessWidget {
 
   Widget buildWindow() => GSContainer(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          buildText('UPGRADES'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              buildText('UPGRADES'),
+              width16,
+              amuletUI.buildButtonClose(amulet.windowVisibleUpgrade),
+            ],
+          ),
           height16,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -11,7 +11,8 @@ import '../isometric/src.dart';
 
 class AmuletPlayer extends IsometricPlayer with
     Equipped,
-    Skilled
+    Skilled,
+    Gold
 {
   static const Data_Key_Dead_Count = 'dead';
 
@@ -1779,6 +1780,12 @@ class AmuletPlayer extends IsometricPlayer with
       }
   }
 
+  @override
+  set gold(double value) {
+    super.gold = value;
+    writeGold();
+  }
+
   void tryWritePercentage(double? value) =>
       tryWrite(writePercentage, value);
 
@@ -1815,6 +1822,12 @@ class AmuletPlayer extends IsometricPlayer with
     }
 
     notifyEquipmentDirty();
+  }
+
+  void writeGold() {
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Player_Gold);
+    writeUInt24(gold.toInt());
   }
 }
 

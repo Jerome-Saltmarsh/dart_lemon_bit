@@ -2247,6 +2247,7 @@ class AmuletUI {
           buildPlayerHealthBar(),
           buildPlayerMagicBar(),
           buildWindowPotions(),
+          buildWatch(amulet.playerGold, (gold) => buildText('${gold}g', color: AmuletColors.Gold)),
         ],
       );
 

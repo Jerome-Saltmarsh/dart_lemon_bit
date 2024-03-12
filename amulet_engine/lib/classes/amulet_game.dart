@@ -821,6 +821,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     // throw Exception('fiend cannot perform ${SkillType.Teleport}');
   }
 
+  double getAmuletFiendGoldValue(AmuletFiend amuletFiend) =>
+      amuletFiend.level * amuletFiend.fiendType.quantify;
+
   @override
   void customOnCharacterKilled(Character target, src) {
 
@@ -836,6 +839,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     dispatchFiendCount();
 
     if (target is AmuletFiend) {
+
+      if (src is AmuletPlayer){
+        src.gold += getAmuletFiendGoldValue(target);
+      }
+
       if (randomChance(AmuletSettings.Chance_Of_Drop_Loot_Consumable)) {
            spawnConsumableAtPosition(target);
       }

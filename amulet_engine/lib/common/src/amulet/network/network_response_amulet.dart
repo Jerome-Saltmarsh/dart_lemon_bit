@@ -43,4 +43,5 @@ class NetworkResponseAmulet {
    static const Amulet_Item_Dropped = 67;
    static const Amulet_Item_Equipped = 68;
    static const Player_Aim_Target = 69;
+   static const Player_Gold = 70;
 }

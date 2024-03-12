@@ -165,6 +165,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Camera_Target:
          readCameraTarget();
          break;
+       case NetworkResponseAmulet.Player_Gold:
+         readPlayerGold();
+         break;
      }
   }
 
@@ -380,4 +383,7 @@ extension AmuletParser on IsometricParser {
   double readDecimal() => readUInt16() / 10;
 
   double? tryReadPercentage() => tryRead(readPercentage);
+
+  void readPlayerGold() =>
+      amulet.playerGold.value = readUInt24();
 }
