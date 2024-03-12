@@ -641,20 +641,19 @@ enum AmuletItem {
   double interpolateConstraint(Constraint constraint, double i) =>
       interpolate(constraint.min, constraint.max, i);
 
-
   static const Stat_Health = SlotTypeConstraint(
-      weapon: Constraint(min: 1, max: 20),
-      helm: Constraint(min: 1, max: 20),
-      armor: Constraint(min: 1, max: 20),
-      shoes: Constraint(min: 1, max: 20),
+      weapon: Constraint(min: 0, max: 20),
+      helm: Constraint(min: 0, max: 20),
+      armor: Constraint(min: 0, max: 20),
+      shoes: Constraint(min: 0, max: 20),
       consumable: Constraint(min: 0, max: 0),
   );
 
   static const Stat_Magic = SlotTypeConstraint(
-      weapon: Constraint(min: 1, max: 20),
-      helm: Constraint(min: 1, max: 20),
-      armor: Constraint(min: 1, max: 20),
-      shoes: Constraint(min: 1, max: 20),
+      weapon: Constraint(min: 0, max: 20),
+      helm: Constraint(min: 0, max: 20),
+      armor: Constraint(min: 0, max: 20),
+      shoes: Constraint(min: 0, max: 20),
       consumable: Constraint(min: 0, max: 0),
   );
 
