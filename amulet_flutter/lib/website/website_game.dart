@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:amulet_flutter/gamestream/game.dart';
-import 'package:amulet_flutter/gamestream/operation_status.dart';
+import 'package:amulet_flutter/isometric/classes/game.dart';
+import 'package:amulet_flutter/isometric/enums/operation_status.dart';
 import 'package:amulet_flutter/website/website_ui.dart';
 import 'package:amulet_flutter/website/widgets/gs_fullscreen.dart';
 import 'package:intl/intl.dart';

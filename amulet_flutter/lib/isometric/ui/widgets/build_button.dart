@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:amulet_flutter/gamestream/ui/widgets/mouse_over.dart';
+import 'package:amulet_flutter/isometric/ui/widgets/mouse_over.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 Widget buildButton({

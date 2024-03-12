@@ -4,6 +4,7 @@ import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/amulet/amulet_ui.dart';
 import 'package:amulet_flutter/amulet/classes/amulet_colors.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';
+import 'package:amulet_flutter/isometric/ui/widgets/gs_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';

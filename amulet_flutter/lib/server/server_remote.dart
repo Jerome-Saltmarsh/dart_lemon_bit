@@ -9,7 +9,7 @@ import 'package:typedef/json.dart';
 import 'package:amulet_flutter/gamestream/network/enums/connection_region.dart';
 import 'package:amulet_flutter/packages/lemon_websocket_client.dart';
 
-import '../gamestream/operation_status.dart';
+import '../isometric/enums/operation_status.dart';
 
 class ServerRemote implements Server {
 

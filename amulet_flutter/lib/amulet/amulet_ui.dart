@@ -6,6 +6,8 @@ import 'package:amulet_flutter/amulet/ui/enums/quantify_tab.dart';
 import 'package:amulet_flutter/amulet/ui/windows/window_upgrade.dart';
 import 'package:amulet_flutter/isometric/ui/isometric_colors.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';
+import 'package:amulet_flutter/isometric/ui/widgets/gs_container.dart';
+import 'package:amulet_flutter/isometric/ui/widgets/mouse_over.dart';
 import 'package:amulet_flutter/website/widgets/gs_fullscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';

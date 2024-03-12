@@ -9,7 +9,7 @@ import 'package:amulet_flutter/amulet/ui/enums/quantify_tab.dart';
 import 'package:amulet_flutter/amulet/ui/maps/map_item_quality_to_color.dart';
 import 'package:amulet_flutter/gamestream/ui/builders/build_watch.dart';
 import 'package:amulet_flutter/gamestream/ui/constants/width.dart';
-import 'package:amulet_flutter/gamestream/ui/widgets/gs_container.dart';
+import 'package:amulet_flutter/isometric/ui/widgets/gs_container.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_lang/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';

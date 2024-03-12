@@ -4,6 +4,8 @@ import 'package:amulet_flutter/isometric/components/debug/isometric_debug.dart';
 import 'package:amulet_flutter/isometric/components/functions/format_bytes.dart';
 import 'package:amulet_flutter/isometric/enums/mode.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';
+import 'package:amulet_flutter/isometric/ui/widgets/gs_container.dart';
+import 'package:amulet_flutter/isometric/ui/widgets/gs_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:golden_ratio/constants.dart';

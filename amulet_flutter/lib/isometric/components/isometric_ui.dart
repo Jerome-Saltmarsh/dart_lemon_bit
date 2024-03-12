@@ -5,6 +5,7 @@ import 'package:amulet_engine/common.dart';
 import 'package:amulet_flutter/isometric/atlases/atlas.dart';
 import 'package:amulet_flutter/isometric/atlases/atlas_nodes.dart';
 import 'package:amulet_flutter/isometric/atlases/atlas_src_icon_type.dart';
+import 'package:amulet_flutter/isometric/ui/widgets/gs_container.dart';
 import 'package:amulet_flutter/website/widgets/gs_fullscreen.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:golden_ratio/constants.dart';
