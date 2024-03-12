@@ -2114,26 +2114,33 @@ class AmuletUI {
 
   Widget buildEquippedSkillType(SkillType skillType) {
     const size = 50.0;
-    return Container(
-      color: Palette.brown_4,
-      padding: const EdgeInsets.all(4),
-      child: Column(
-        children: [
-          Container(
-            width: size,
-            child: buildText(amulet.getSkillTypeLevel(skillType)),
-            alignment: Alignment.center,
-            color: Colors.white12,
-          ),
-          Container(
+
+    return buildMouseOverHint(
+      bottom: 80,
+      left: -60,
+      panel: buildCardSkillType(skillType),
+      child: Container(
+        color: Palette.brown_4,
+        padding: const EdgeInsets.all(4),
+        child: Column(
+          children: [
+            Container(
               width: size,
-              height: size,
+              child: buildText(amulet.getSkillTypeLevel(skillType)),
               alignment: Alignment.center,
-              color: Colors.white24,
-              child: buildIconSkillType(skillType)),
-        ],
-      ),
+              color: Colors.white12,
+            ),
+            Container(
+                width: size,
+                height: size,
+                alignment: Alignment.center,
+                color: Colors.white24,
+                child: buildIconSkillType(skillType)),
+          ],
+        ),
+      )
     );
+
   }
 
   Widget buildSkillTypeLevel({
