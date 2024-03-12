@@ -133,7 +133,7 @@ class AmuletUI {
       ),
       Positioned(
         bottom: 8,
-        child: buildWindowPlayerSkillSlots(),
+        child: buildRowPlayerPassiveSkills(),
       ),
           Positioned(
               top: 100,
@@ -1271,7 +1271,7 @@ class AmuletUI {
     final watchAssigned = amulet.playerSkillTypeSlotAssigned[skillType] ?? (throw Exception());
 
      return buildWatch(watchAssigned, (assigned) {
-       return buildWatch(amulet.playerSkillTypeLevelNotifier, (_) {
+       return buildWatch(amulet.playerSkillTypesChangedNotifier, (_) {
          final level = amulet.getSkillTypeLevel(skillType);
          final unlocked = level > 0;
          final child = onPressed(
@@ -2087,11 +2087,47 @@ class AmuletUI {
         ],
       );
 
+  Widget buildRowPlayerPassiveSkills() => buildWatch(
+      amulet.playerSkillTypesChangedNotifier,
+      (t) => Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: SkillType.values.map((skillType) {
+              final level = amulet.getSkillTypeLevel(skillType);
+              if (level <= 0) return nothing;
+              return buildEquippedSkillType(skillType);
+            }).toList(growable: false),
+          ));
+
+  Widget buildEquippedSkillType(SkillType skillType) {
+    const size = 50.0;
+
+    return Container(
+      color: Palette.brown_4,
+      padding: const EdgeInsets.all(4),
+      child: Column(
+        children: [
+          Container(
+            width: size,
+            child: buildText(amulet.getSkillTypeLevel(skillType)),
+            alignment: Alignment.center,
+            color: Colors.white12,
+          ),
+          Container(
+              width: size,
+              height: size,
+              alignment: Alignment.center,
+              color: Colors.white24,
+              child: buildIconSkillType(skillType)),
+        ],
+      ),
+    );
+  }
+
   Widget buildSkillTypeLevel({
     required SkillType skillType,
     required Widget Function(int level) builder,
   }) => buildWatch(
-      amulet.playerSkillTypeLevelNotifier,
+      amulet.playerSkillTypesChangedNotifier,
       (t) => builder(amulet.getSkillTypeLevel(skillType)),
   );
 
