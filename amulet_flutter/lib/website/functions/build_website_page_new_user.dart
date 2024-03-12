@@ -1,7 +1,7 @@
 
-import 'package:amulet_flutter/isometric/builders/build_watch.dart';
 import 'package:amulet_flutter/isometric/consts/height.dart';
 import 'package:amulet_flutter/isometric/consts/width.dart';
+import 'package:amulet_flutter/isometric/ui/builders/build_watch.dart';
 import 'package:amulet_flutter/isometric/ui/widgets/gs_container.dart';
 import 'package:amulet_flutter/isometric/ui/widgets/gs_key_event_handler.dart';
 import 'package:amulet_flutter/server/src.dart';

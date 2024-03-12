@@ -1,15 +1,12 @@
 
 
 import 'package:amulet_engine/common.dart';
-import 'package:amulet_flutter/isometric/builders/build_watch.dart';
-import 'package:amulet_flutter/isometric/builders/build_watch_bool.dart';
 import 'package:amulet_flutter/isometric/classes/game.dart';
 import 'package:amulet_flutter/isometric/components/debug/isometric_debug_ui.dart';
 import 'package:amulet_flutter/isometric/src.dart';
 import 'package:amulet_flutter/isometric/ui/widgets/stack_fullscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 class IsometricGame extends Game {
@@ -53,7 +50,7 @@ class IsometricGame extends Game {
       Positioned(
         top: 0,
         left: 0,
-        child: WatchBuilder(options.mode, (mode) =>
+        child: buildWatch(options.mode, (mode) =>
             switch (mode) {
               Mode.play => customBuildUI(context),
               Mode.edit => editor.buildEditor(),

@@ -2,11 +2,11 @@
 import 'package:amulet_engine/common.dart';
 import 'package:amulet_flutter/isometric/atlases/atlas_nodes.dart';
 import 'package:amulet_flutter/isometric/atlases/atlas_src_nodes.dart';
-import 'package:amulet_flutter/isometric/builders/build_watch.dart';
-import 'package:amulet_flutter/isometric/builders/build_watch_bool.dart';
 import 'package:amulet_flutter/isometric/consts/height.dart';
 import 'package:amulet_flutter/isometric/consts/width.dart';
 import 'package:amulet_flutter/isometric/enums/icon_type.dart';
+import 'package:amulet_flutter/isometric/ui/builders/build_watch.dart';
+import 'package:amulet_flutter/isometric/ui/builders/build_watch_bool.dart';
 import 'package:amulet_flutter/isometric/ui/widgets/build_button.dart';
 import 'package:amulet_flutter/isometric/ui/widgets/gs_container.dart';
 import 'package:amulet_flutter/isometric/ui/widgets/gs_refresh.dart';
