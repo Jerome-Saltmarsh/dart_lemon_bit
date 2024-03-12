@@ -131,7 +131,7 @@ class AmuletUI {
         child: buildWindowPlayerSkillSlots(),
       ),
           Positioned(
-              bottom: 100,
+              top: 100,
               child: buildWatchVisible(
                   amulet.windowVisibleUpgrade,
                   WindowUpgrade(amulet: amulet))),

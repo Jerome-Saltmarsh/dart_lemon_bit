@@ -27,6 +27,7 @@ class WindowUpgrade extends StatelessWidget {
           height16,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: amulet.equippableSlotTypes
                 .map(buildSlotType)
                 .toList(growable: false),
@@ -46,15 +47,20 @@ class WindowUpgrade extends StatelessWidget {
     final amuletItem = amuletItemObject.amuletItem;
     final level = amuletItemObject.level;
 
+    final controlCost = buildText('${amuletItem.getUpgradeCost(level)}g', color: AmuletColors.Gold);
+    final controlCard = Container(
+      margin: const EdgeInsets.symmetric(horizontal: 4),
+      child: onPressed(
+        action: () => amulet.upgradeSlotType(amuletItemObject.amuletItem.slotType),
+        child: amuletUI.tryBuildCardAmuletItemObject(amuletItemObject) ,
+      ),
+    );
+
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          // buildText('lvl 3'),
-          // height8,
-          onPressed(
-            action: () => amulet.upgradeSlotType(amuletItemObject.amuletItem.slotType),
-            child: amuletUI.tryBuildCardAmuletItemObject(amuletItemObject) ,
-          ),
-          buildText('${amuletItem.getUpgradeCost(level)}g', color: AmuletColors.Gold),
+          controlCost,
+          controlCard,
         ],
       );
   }
