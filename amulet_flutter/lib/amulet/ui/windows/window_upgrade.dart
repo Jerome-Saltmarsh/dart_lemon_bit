@@ -21,7 +21,6 @@ class WindowUpgrade extends StatelessWidget {
       buildWatch(amulet.equippedChangedNotifier, (t) => buildWindow());
 
   Widget buildWindow() => GSContainer(
-      width: (80) * 4 ,
       child: Column(
         children: [
           buildText('UPGRADES'),
@@ -39,25 +38,22 @@ class WindowUpgrade extends StatelessWidget {
   Widget buildSlotType(SlotType slotType) =>
       buildAmuletItemObject(amulet.getEquipped(slotType));
 
-  Widget buildAmuletItemObject(AmuletItemObject? amuletItemObject) =>
-      Column(
+  Widget buildAmuletItemObject(AmuletItemObject? amuletItemObject) {
+    if (amuletItemObject == null){
+      return nothing;
+    }
+
+    return Column(
         children: [
-          buildText('lvl 3'),
-          height8,
+          // buildText('lvl 3'),
+          // height8,
           onPressed(
-            action: amuletItemObject != null ? () => amulet.upgradeSlotType(amuletItemObject.amuletItem.slotType) : null,
-            child: Container(
-              width: 50,
-              height: 50,
-              color: Colors.black12,
-              alignment: Alignment.center,
-              child: amuletItemObject == null
-                  ? null
-                  : amuletUI.buildIconAmuletItem(amuletItemObject.amuletItem),
-            ),
+            action: () => amulet.upgradeSlotType(amuletItemObject.amuletItem.slotType),
+            child: amuletUI.tryBuildCardAmuletItemObject(amuletItemObject) ,
           ),
           buildText('100g', color: AmuletColors.Gold),
         ],
       );
+  }
 
 }
