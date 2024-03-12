@@ -304,7 +304,7 @@ extension AmuletParser on IsometricParser {
       final skillType = readSkillType();
        amulet.playerSkillTypeLevels[skillType] = readUInt16();
     }
-    amulet.playerSkillTypesChangedNotifier.value++;
+    amulet.playerSkillsNotifier.value++;
   }
 
   void readFiendCount() {

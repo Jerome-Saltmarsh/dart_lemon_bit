@@ -108,16 +108,7 @@ class AmuletUI {
           Positioned(
               bottom: 8,
               left: 8,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  buildToggleEquipment(),
-                  // width8,
-                  // buildTogglePlayerSkills(),
-                  width8,
-                  buildTogglePlayerQuest(),
-                ],
-              ),
+              child: buildTogglePlayerQuest(),
           ),
           Positioned(
               bottom: 64,
@@ -133,7 +124,7 @@ class AmuletUI {
       ),
       Positioned(
         bottom: 8,
-        child: buildRowPlayerPassiveSkills(),
+        child: buildRowPlayerSkills(),
       ),
           Positioned(
               top: 100,
@@ -1271,7 +1262,7 @@ class AmuletUI {
     final watchAssigned = amulet.playerSkillTypeSlotAssigned[skillType] ?? (throw Exception());
 
      return buildWatch(watchAssigned, (assigned) {
-       return buildWatch(amulet.playerSkillTypesChangedNotifier, (_) {
+       return buildWatch(amulet.playerSkillsNotifier, (_) {
          final level = amulet.getSkillTypeLevel(skillType);
          final unlocked = level > 0;
          final child = onPressed(
@@ -2087,11 +2078,34 @@ class AmuletUI {
         ],
       );
 
-  Widget buildRowPlayerPassiveSkills() => buildWatch(
-      amulet.playerSkillTypesChangedNotifier,
+  Widget buildRowPlayerSkills() => buildWatch(
+      amulet.playerSkillsNotifier,
+      (_) => Row(
+            children: [
+              buildRowPlayerSkillsPassive(),
+              width16,
+              buildRowPlayerSkillsActive(),
+            ],
+          ));
+
+  Widget buildRowPlayerSkillsPassive() => buildWatch(
+      amulet.playerSkillsNotifier,
       (t) => Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: SkillType.values.map((skillType) {
+              if (skillType.isPassive) return nothing;
+              final level = amulet.getSkillTypeLevel(skillType);
+              if (level <= 0) return nothing;
+              return buildEquippedSkillType(skillType);
+            }).toList(growable: false),
+          ));
+
+  Widget buildRowPlayerSkillsActive() => buildWatch(
+      amulet.playerSkillsNotifier,
+      (t) => Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: SkillType.values.map((skillType) {
+              if (!skillType.isPassive) return nothing;
               final level = amulet.getSkillTypeLevel(skillType);
               if (level <= 0) return nothing;
               return buildEquippedSkillType(skillType);
@@ -2100,7 +2114,6 @@ class AmuletUI {
 
   Widget buildEquippedSkillType(SkillType skillType) {
     const size = 50.0;
-
     return Container(
       color: Palette.brown_4,
       padding: const EdgeInsets.all(4),
@@ -2127,7 +2140,7 @@ class AmuletUI {
     required SkillType skillType,
     required Widget Function(int level) builder,
   }) => buildWatch(
-      amulet.playerSkillTypesChangedNotifier,
+      amulet.playerSkillsNotifier,
       (t) => builder(amulet.getSkillTypeLevel(skillType)),
   );
 
