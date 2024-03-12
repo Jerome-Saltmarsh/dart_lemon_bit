@@ -804,7 +804,7 @@ class AmuletPlayer extends IsometricPlayer with
     return null;
   }
 
-  void notifyEquipmentDirty(){
+  void notifyEquipmentDirty() {
     if (equipmentDirty) {
       return;
     }
@@ -1781,6 +1781,41 @@ class AmuletPlayer extends IsometricPlayer with
 
   void tryWritePercentage(double? value) =>
       tryWrite(writePercentage, value);
+
+  void upgradeSlotType(SlotType slotType) {
+
+    final amuletItemObject = getEquippedAmuletItem(slotType: slotType);
+
+    if (amuletItemObject == null){
+      writeGameError(GameError.Slot_Type_Empty);
+      return;
+    }
+
+    final upgradeAmuletItemObject = AmuletItemObject(
+        amuletItem: amuletItemObject.amuletItem,
+        level: amuletItemObject.level + 1,
+    );
+
+    switch (slotType) {
+      case SlotType.Weapon:
+        equippedWeapon = upgradeAmuletItemObject;
+        break;
+      case SlotType.Helm:
+        equippedHelm = upgradeAmuletItemObject;
+        break;
+      case SlotType.Armor:
+        equippedArmor = upgradeAmuletItemObject;
+        break;
+      case SlotType.Shoes:
+        equippedShoes = upgradeAmuletItemObject;
+        break;
+      case SlotType.Consumable:
+        writeGameError(GameError.Not_Implemented);
+        break;
+    }
+
+    notifyEquipmentDirty();
+  }
 }
 
 String buildResistances(String text, String name, double resistance){

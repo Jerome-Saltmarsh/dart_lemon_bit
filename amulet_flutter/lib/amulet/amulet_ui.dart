@@ -1442,7 +1442,7 @@ class AmuletUI {
   Widget buildWatchAmuletItemObject(SlotType slotType) {
 
     const width = 45.0;
-    final amuletItemObject = amulet.getEquippedAmuletItemObject(slotType);
+    final amuletItemObject = amulet.getEquipped(slotType);
 
     final button = onPressed(
       action: amuletItemObject == null ? null : () => amulet.dropAmuletItem(amuletItemObject.amuletItem),
@@ -1620,7 +1620,7 @@ class AmuletUI {
 
   Widget buildColumnAmuletItemObject(AmuletItemObject next){
 
-    final current = amulet.getEquippedAmuletItemObject(next.amuletItem.slotType);
+    final current = amulet.getEquipped(next.amuletItem.slotType);
     final nextAmuletItem = next.amuletItem;
     final currentAmuletItem = current?.amuletItem;
     final damageMaxDiff = getDiff(next.damageMax, current?.damageMax)?.toInt();
@@ -1766,7 +1766,7 @@ class AmuletUI {
                   child: Container(
                     color: Colors.green,
                       padding: paddingAll8,
-                      child: buildText('PICKUP')),
+                      child: buildText('EQUIP')),
                 ),
               ],
             ),

@@ -22,4 +22,5 @@ enum NetworkRequestAmulet {
   Spawn_Amulet_Item,
   Pickup_Amulet_Item,
   Sell_Amulet_Item,
+  Upgrade_Slot_Type,
 }

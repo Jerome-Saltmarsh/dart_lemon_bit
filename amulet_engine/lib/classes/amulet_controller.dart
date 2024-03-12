@@ -661,6 +661,20 @@ class AmuletController {
             level: level,
         );
         break;
+      case NetworkRequestAmulet.Upgrade_Slot_Type:
+        final slotTypeIndex = arguments.tryGetArgInt(AmuletRequestField.Slot_Type);
+        if (slotTypeIndex == null){
+          amuletPlayer.writeGameError(GameError.Slot_Type_Required);
+          return;
+        }
+        final slotType = SlotType.values.tryGet(slotTypeIndex);
+        if (slotType == null) {
+          amuletPlayer.writeGameError(GameError.Invalid_Slot_Type_Index);
+          return;
+        }
+
+        amuletPlayer.upgradeSlotType(slotType);
+        break;
       case NetworkRequestAmulet.Pickup_Amulet_Item:
         player.pickupAmuletItem();
         break;

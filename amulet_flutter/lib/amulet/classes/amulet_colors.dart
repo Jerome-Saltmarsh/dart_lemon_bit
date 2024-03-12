@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
 
 class AmuletColors {
+  static const Gold = Colors.yellow;
   static const Health = Endesga32.shade1;
   static const Magic = Endesga32.shade2;
 }

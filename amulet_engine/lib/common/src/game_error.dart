@@ -98,7 +98,18 @@ enum GameError {
   Invalid_GameObject_State,
   Item_Not_Consumable,
   Invalid_Object_Level,
-  Invalid_Object_Damage, Perform_Duration_Null, Character_Weapon_Range_Null, Level_Required, Invalid_Amulet_Item_Index, Invalid_Amulet_Item_Level, Max_Damage_Null, Min_Damage_Null
+  Invalid_Object_Damage,
+  Perform_Duration_Null,
+  Character_Weapon_Range_Null,
+  Level_Required,
+  Invalid_Amulet_Item_Index,
+  Invalid_Amulet_Item_Level,
+  Max_Damage_Null,
+  Min_Damage_Null,
+  Slot_Type_Required,
+  Invalid_Slot_Type_Index,
+  Slot_Type_Empty,
+  Not_Implemented,
   ;
 
   static GameError fromIndex(int index) {

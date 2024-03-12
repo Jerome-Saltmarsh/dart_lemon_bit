@@ -38,6 +38,13 @@ class Amulet extends IsometricGame {
 
   final skillSlotsChangedNotifier = Watch(0);
 
+  final equippableSlotTypes = const [
+    SlotType.Weapon,
+    SlotType.Helm,
+    SlotType.Armor,
+    SlotType.Shoes,
+  ];
+
   final consumableSlots = List.generate(4, (index) => Watch<AmuletItem?>(null));
 
   final playerSkillSlotIndex = Watch(-1);
@@ -641,8 +648,8 @@ class Amulet extends IsometricGame {
 
   }
 
-  AmuletItemObject? getEquippedAmuletItemObject(SlotType itemType) =>
-      switch (itemType) {
+  AmuletItemObject? getEquipped(SlotType slotType) =>
+      switch (slotType) {
         SlotType.Weapon => equippedWeapon,
         SlotType.Helm => equippedHelm,
         SlotType.Armor => equippedArmor,
@@ -849,6 +856,13 @@ class Amulet extends IsometricGame {
           '${AmuletRequestField.Level} $level '
           '${AmuletRequestField.Amulet_Item} ${amuletItem.index}'
       );
+
+  void upgradeSlotType(SlotType slotType) {
+    sendAmuletRequest(
+        NetworkRequestAmulet.Upgrade_Slot_Type,
+        '${AmuletRequestField.Slot_Type} ${slotType.index}'
+    );
+  }
 }
 
 
