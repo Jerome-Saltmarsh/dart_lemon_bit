@@ -233,11 +233,11 @@ class WindowQuantify extends StatelessWidget {
 
     dynamic textValue = 0;
 
-    if (value is Double){
+    if (value is Double) {
       textValue = value?.toStringAsFixed(2);
     }
 
-    if (value is int){
+    if (value is int) {
       textValue = value.toString();
     }
 

@@ -2,14 +2,14 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:amulet_engine/common.dart';
-import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
-import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_nodes_y.dart';
 import 'package:amulet_flutter/gamestream/isometric/classes/render_group.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_images.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_scene.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/render/functions/merge_32_bit_colors.dart';
 import 'package:amulet_flutter/gamestream/isometric/enums/node_visibility.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/isometric_constants.dart';
+import 'package:amulet_flutter/isometric/atlases/atlas_nodes.dart';
+import 'package:amulet_flutter/isometric/atlases/atlas_src_nodes_y.dart';
 import 'package:amulet_flutter/isometric/functions/get_render.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';

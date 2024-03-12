@@ -1,10 +1,10 @@
 
 import 'package:amulet_engine/common.dart';
-import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_nodes.dart';
+import 'package:amulet_flutter/isometric/atlases/atlas_nodes.dart';
+import 'package:amulet_flutter/isometric/atlases/atlas_src_nodes.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:amulet_flutter/gamestream/isometric/enums/src.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/isometric_constants.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';

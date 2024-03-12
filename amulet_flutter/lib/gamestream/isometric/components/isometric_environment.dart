@@ -1,7 +1,7 @@
 
 import 'package:amulet_engine/common.dart';
-import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
+import 'package:amulet_flutter/isometric/atlases/atlas_nodes.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_watch/src.dart';
 

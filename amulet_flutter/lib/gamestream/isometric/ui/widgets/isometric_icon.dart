@@ -1,6 +1,6 @@
 
+import 'package:amulet_flutter/isometric/atlases/atlas_src_icon_type.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:amulet_flutter/gamestream/isometric/atlases/atlas_src_icon_type.dart';
 import 'package:amulet_flutter/gamestream/ui.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/widgets/isometric_builder.dart';
 
