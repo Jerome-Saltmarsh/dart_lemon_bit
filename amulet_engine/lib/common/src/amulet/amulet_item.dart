@@ -478,16 +478,64 @@ enum AmuletItem {
         SkillType.Critical_Hit: 2.0,
         SkillType.Agility: 1.0,
       }),
-  Special_Helm_Igors_Hat(
-      label: 'Igors Hat',
+  Unique_Helm_Of_Fireball(
+      label: 'Roasted Hat',
       slotType: SlotType.Helm,
       subType: HelmType.Pointed_Hat_Purple,
       maxMagic: 1.0,
-      maxHealth: 1.0,
       quality: ItemQuality.Unique,
       skillSet: {
-        SkillType.Fireball: 1.0,
-      })
+        SkillType.Fireball: 1.5,
+      }),
+  Unique_Helm_Of_Frostball(
+      label: 'Frosted Hat',
+      slotType: SlotType.Helm,
+      subType: HelmType.Pointed_Hat_Purple,
+      maxMagic: 1.0,
+      maxHealth: 0.0,
+      quality: ItemQuality.Unique,
+      skillSet: {
+        SkillType.Frostball: 1.5,
+      }),
+  Unique_Helm_Of_Magic_Regen(
+      label: 'Frosted Hat',
+      slotType: SlotType.Helm,
+      subType: HelmType.Pointed_Hat_Purple,
+      maxMagic: 1.0,
+      maxHealth: 0.0,
+      quality: ItemQuality.Unique,
+      skillSet: {
+        SkillType.Magic_Regen: 1.5,
+      }),
+  Rare_Helm_Of_Fireball(
+      label: 'Lost Hat of Flame',
+      slotType: SlotType.Helm,
+      subType: HelmType.Pointed_Hat_Purple,
+      maxMagic: 1.0,
+      quality: ItemQuality.Rare,
+      skillSet: {
+        SkillType.Fireball: 2.5,
+      }),
+  Rare_Helm_Of_Frostball(
+      label: 'Sacred Hat of the Tempest',
+      slotType: SlotType.Helm,
+      subType: HelmType.Pointed_Hat_Purple,
+      maxMagic: 1.0,
+      maxHealth: 0.0,
+      quality: ItemQuality.Rare,
+      skillSet: {
+        SkillType.Frostball: 2.5,
+      }),
+  Rare_Helm_Of_Magic_Regen(
+      label: 'Legendary Hat of Magic',
+      slotType: SlotType.Helm,
+      subType: HelmType.Pointed_Hat_Purple,
+      maxMagic: 1.0,
+      maxHealth: 0.0,
+      quality: ItemQuality.Rare,
+      skillSet: {
+        SkillType.Magic_Regen: 2.5,
+      }),
   ;
 
   /// see item_type.dart in commons

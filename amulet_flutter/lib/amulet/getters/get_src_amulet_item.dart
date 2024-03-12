@@ -88,5 +88,10 @@ List<double> getSrcAmuletItem(AmuletItem amuletItem) =>
       AmuletItem.Special_Weapon_Bow_Of_Destruction => _weapons_bow_reflex,
       AmuletItem.Special_Weapon_Blizzard_Globe => _weapons_globe,
       AmuletItem.Armor_Garb => _armor_robe,
-      AmuletItem.Special_Helm_Igors_Hat => _helms_pointed_hat_black,
+      AmuletItem.Unique_Helm_Of_Fireball => _helms_pointed_hat_black,
+      AmuletItem.Unique_Helm_Of_Frostball => _helms_pointed_hat_black,
+      AmuletItem.Unique_Helm_Of_Magic_Regen => _helms_pointed_hat_black,
+      AmuletItem.Rare_Helm_Of_Fireball => _helms_pointed_hat_black,
+      AmuletItem.Rare_Helm_Of_Frostball => _helms_pointed_hat_black,
+      AmuletItem.Rare_Helm_Of_Magic_Regen => _helms_pointed_hat_black,
 };
