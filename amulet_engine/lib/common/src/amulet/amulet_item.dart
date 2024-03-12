@@ -130,11 +130,11 @@ enum AmuletItem {
     label: 'Leather Cap',
     slotType: SlotType.Helm,
     subType: HelmType.Leather_Cap,
-    maxHealth: 0.5,
-    maxMagic: 0,
+    maxHealth: 0.25,
+    maxMagic: 0.25,
     skillSet: {
-      SkillType.Health_Regen: 0.5,
-      SkillType.Critical_Hit: 0.5,
+      SkillType.Health_Regen: 0.25,
+      SkillType.Critical_Hit: 0.25,
     },
   ),
   Helm_Steel_Cap(
