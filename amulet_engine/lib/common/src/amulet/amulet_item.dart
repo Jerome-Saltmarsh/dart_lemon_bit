@@ -141,20 +141,20 @@ enum AmuletItem {
     label: 'Steel Cap',
     slotType: SlotType.Helm,
     subType: HelmType.Steel_Cap,
-    maxHealth: 0.5,
-    maxMagic: 0,
+    maxHealth: 0.25,
+    maxMagic: 0.25,
     skillSet: {
-      SkillType.Critical_Hit: 1.5,
+      SkillType.Wind_Cut: 0.5,
     },
   ),
   Helm_Full(
     label: 'Full Helm',
     slotType: SlotType.Helm,
     subType: HelmType.Full_Helm,
-    maxHealth: 1.0,
+    maxHealth: 0.5,
     maxMagic: 0,
     skillSet: {
-      SkillType.Mighty_Strike: 1.0,
+      SkillType.Mighty_Strike: 0.5,
     },
   ),
   Helm_Crooked_Hat(
@@ -162,50 +162,48 @@ enum AmuletItem {
     slotType: SlotType.Helm,
     subType: HelmType.Pointed_Hat_Purple,
     maxHealth: 0.0,
-    maxMagic: 1.0,
+    maxMagic: 0.5,
     skillSet: {
-      SkillType.Magic_Regen: 1.0,
+      SkillType.Magic_Regen: 0.5,
     },
   ),
   Helm_Pointed_Hat(
     label: 'Pointed Hat',
     slotType: SlotType.Helm,
     subType: HelmType.Pointed_Hat_Black,
-    maxHealth: 0.5,
     maxMagic: 0.5,
     skillSet: {
-      SkillType.Magic_Regen: 0.5,
-      SkillType.Health_Regen: 0.5,
+      SkillType.Magic_Steal: 0.5,
     },
   ),
   Helm_Cowl(
     label: 'Cowl',
     slotType: SlotType.Helm,
     subType: HelmType.Cowl,
-    maxHealth: 0.5,
+    maxHealth: 0.0,
     maxMagic: 0.5,
     skillSet: {
-      SkillType.Magic_Steal: 1.0,
+      SkillType.Frostball: 0.5,
     },
   ),
   Helm_Feathered_Cap(
     label: 'Feather Cap',
     slotType: SlotType.Helm,
     subType: HelmType.Feather_Cap,
-    maxHealth: 0.5,
-    maxMagic: 0.5,
+    maxHealth: 0.25,
+    maxMagic: 0.25,
     skillSet: {
-      SkillType.Split_Shot: 1.0,
+      SkillType.Split_Shot: 0.5,
     },
   ),
   Helm_Cape(
     label: 'Cape',
     slotType: SlotType.Helm,
     subType: HelmType.Cape,
-    maxHealth: 0.5,
-    maxMagic: 0.5,
+    maxHealth: 0.25,
+    maxMagic: 0.25,
     skillSet: {
-      SkillType.Agility: 1.0,
+      SkillType.Agility: 0.5,
     },
   ),
   Helm_Veil(
@@ -213,9 +211,8 @@ enum AmuletItem {
     slotType: SlotType.Helm,
     subType: HelmType.Cape,
     maxHealth: 0.5,
-    maxMagic: 0.5,
     skillSet: {
-      SkillType.Ice_Arrow: 1.0,
+      SkillType.Health_Steal: 0.5,
     },
   ),
   Armor_Tunic(
@@ -490,7 +487,7 @@ enum AmuletItem {
       subType: HelmType.Pointed_Hat_Purple,
       maxMagic: 1.0,
       maxHealth: 1.0,
-      quality: ItemQuality.Rare,
+      quality: ItemQuality.Unique,
       skillSet: {
         SkillType.Fireball: 1.0,
       })
