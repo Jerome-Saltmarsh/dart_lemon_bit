@@ -43,6 +43,9 @@ class WindowUpgrade extends StatelessWidget {
       return nothing;
     }
 
+    final amuletItem = amuletItemObject.amuletItem;
+    final level = amuletItemObject.level;
+
     return Column(
         children: [
           // buildText('lvl 3'),
@@ -51,7 +54,7 @@ class WindowUpgrade extends StatelessWidget {
             action: () => amulet.upgradeSlotType(amuletItemObject.amuletItem.slotType),
             child: amuletUI.tryBuildCardAmuletItemObject(amuletItemObject) ,
           ),
-          buildText('100g', color: AmuletColors.Gold),
+          buildText('${amuletItem.getUpgradeCost(level)}g', color: AmuletColors.Gold),
         ],
       );
   }

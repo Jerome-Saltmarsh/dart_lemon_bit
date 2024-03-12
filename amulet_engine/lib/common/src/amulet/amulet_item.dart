@@ -618,11 +618,10 @@ enum AmuletItem {
     return damage * damageMin;
   }
 
+  double? tryInterpolate(num start, num end, double? t) =>
+      t == null ? null : interpolate(start, end, t);
 
-  double? tryInterpolate(num start, num end, double? t) {
-    if (t == null) return null;
-    return interpolate(start, end, t);
-  }
-
+  int getUpgradeCost(int level) =>
+      (quantify * (level * level)).ceil();
 
 }
