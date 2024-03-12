@@ -1,5 +1,5 @@
 
-import 'package:amulet_flutter/gamestream/isometric/classes/render_group.dart';
+import 'package:amulet_flutter/isometric/classes/render_group.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
 
 class IsometricCompositor with IsometricComponent {

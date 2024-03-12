@@ -1,5 +1,6 @@
 import 'package:amulet_engine/common.dart';
-import 'package:amulet_flutter/gamestream/isometric/classes/src.dart';
+import 'package:amulet_flutter/gamestream/isometric/components/isometric_particles.dart';
+import 'package:amulet_flutter/isometric/classes/position.dart';
 import 'package:lemon_math/src.dart';
 
 class Particle extends Position {

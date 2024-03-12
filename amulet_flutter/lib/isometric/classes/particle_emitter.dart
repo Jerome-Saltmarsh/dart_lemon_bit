@@ -1,5 +1,8 @@
 
-import 'package:amulet_flutter/gamestream/isometric/classes/src.dart';
+
+import 'package:amulet_flutter/gamestream/isometric/components/isometric_particles.dart';
+
+import 'particle.dart';
 
 class ParticleEmitter extends Particle {
 

@@ -1,6 +1,7 @@
 
 import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/amulet_app.dart';
+import 'package:amulet_flutter/isometric/classes/isometric_game.dart';
 import 'package:amulet_flutter/website/website_game.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_environment.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_screen.dart';
@@ -10,7 +11,6 @@ import 'package:amulet_flutter/gamestream/isometric/components/render/renderer_p
 import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:amulet_flutter/packages/lemon_components.dart';
 
-import 'classes/src.dart';
 import 'components/isometric_options.dart';
 import 'components/isometric_render.dart';
 import 'components/render/renderer_editor.dart';

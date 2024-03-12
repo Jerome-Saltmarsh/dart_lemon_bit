@@ -5,6 +5,8 @@ import 'package:amulet_engine/common.dart';
 import 'package:amulet_flutter/amulet/classes/amulet_colors.dart';
 import 'package:amulet_flutter/gamestream/isometric/ui/isometric_colors.dart';
 import 'package:amulet_flutter/isometric/atlases/atlas_nodes.dart';
+import 'package:amulet_flutter/isometric/classes/character.dart';
+import 'package:amulet_flutter/isometric/classes/position.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/isometric/functions/get_render.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
@@ -13,7 +15,6 @@ import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_sprite/lib.dart';
 
-import '../classes/src.dart';
 import 'render/functions/merge_32_bit_colors.dart';
 
 class IsometricRender with IsometricComponent {

@@ -1,7 +1,7 @@
 
 import 'dart:typed_data';
 import 'package:amulet_engine/common.dart';
-import 'package:amulet_flutter/gamestream/isometric/classes/particle_roam.dart';
+import 'package:amulet_flutter/isometric/classes/particle_roam.dart';
 import 'package:amulet_flutter/packages/lemon_components/updatable.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_math/src.dart';
@@ -11,7 +11,7 @@ import 'package:amulet_flutter/gamestream/isometric/components/isometric_compone
 import 'package:amulet_flutter/isometric/classes/particle.dart';
 import 'package:amulet_flutter/isometric/classes/position.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/debug/debug_tab.dart';
-import 'package:amulet_flutter/gamestream/isometric/classes/particle_whisp.dart';
+import 'package:amulet_flutter/isometric/classes/particle_whisp.dart';
 
 class IsometricDebug with IsometricComponent implements Updatable {
   Particle? particleSelected;

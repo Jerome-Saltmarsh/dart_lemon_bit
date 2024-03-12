@@ -4,7 +4,7 @@ import 'dart:typed_data';
 
 
 import 'package:amulet_engine/common.dart';
-import 'package:amulet_flutter/gamestream/isometric/classes/particle_roam.dart';
+import 'package:amulet_flutter/isometric/classes/particle_roam.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_component.dart';
 import 'package:amulet_flutter/gamestream/isometric/consts/map_projectile_type_to_emission_ambient.dart';
 import 'package:amulet_flutter/gamestream/isometric/enums/emission_type.dart';

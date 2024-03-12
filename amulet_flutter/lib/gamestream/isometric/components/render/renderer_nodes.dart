@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:amulet_engine/common.dart';
-import 'package:amulet_flutter/gamestream/isometric/classes/render_group.dart';
+import 'package:amulet_flutter/isometric/classes/render_group.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_images.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/isometric_scene.dart';
 import 'package:amulet_flutter/gamestream/isometric/components/render/functions/merge_32_bit_colors.dart';
