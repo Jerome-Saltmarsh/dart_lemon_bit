@@ -53,9 +53,6 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Skill_Types:
          readPlayerSkillTypes();
          break;
-       // case NetworkResponseAmulet.Player_Active_Slot_Type:
-       //   readPlayerActiveSlotType();
-       //   break;
        case NetworkResponseAmulet.Player_Skills_Left_Right:
          readPlayerSkillsLeftRight();
          break;
@@ -284,8 +281,9 @@ extension AmuletParser on IsometricParser {
       amulet.playerAgility.value = readUInt16();
 
   void readPlayerSkillsLeftRight() {
-    amulet.playerSkillLeft.value = readSkillType();
-    amulet.playerSkillRight.value = readSkillType();
+    amulet.playerSkillLeft = readSkillType();
+    amulet.playerSkillRight = readSkillType();
+    amulet.notifySkillsChanged();
   }
 
   SkillType readSkillType() => SkillType.values[readByte()];

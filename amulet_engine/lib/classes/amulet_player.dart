@@ -50,6 +50,7 @@ class AmuletPlayer extends IsometricPlayer with
   var flags = <dynamic>[];
   var skillSlotIndex = 0;
   var skillSlotsDirty = false;
+  var active = false;
   var consumableSlotsDirty = true;
   var difficulty = Difficulty.Normal;
 
@@ -585,7 +586,7 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   void updateCastePosition() {
-    final skillType = skillActive;
+    final skillType = activeSkillType;
     final mouseDistance = getMouseDistance();
     final weaponRange = equippedWeaponRange;
 
@@ -906,11 +907,11 @@ class AmuletPlayer extends IsometricPlayer with
 
   @override
   void attack() {
-    if (deadOrBusy || skillActive == SkillType.None) {
+    if (deadOrBusy || activeSkillType == SkillType.None) {
       return;
     }
 
-    switch (skillActive.casteType) {
+    switch (activeSkillType.casteType) {
       case CasteType.Bow:
         if (!equippedWeaponBow) {
           writeGameError(GameError.Bow_Required);
@@ -935,7 +936,7 @@ class AmuletPlayer extends IsometricPlayer with
         break;
     }
 
-    final magicCost = getSkillTypeMagicCost(skillActive);
+    final magicCost = getSkillTypeMagicCost(activeSkillType);
     if (magicCost > magic) {
       writeGameError(GameError.Insufficient_Magic);
       clearTarget();
@@ -951,7 +952,7 @@ class AmuletPlayer extends IsometricPlayer with
 
     magic -= magicCost;
 
-    switch (skillActive.casteType) {
+    switch (activeSkillType.casteType) {
       case CasteType.Passive:
         return;
       case CasteType.Self:

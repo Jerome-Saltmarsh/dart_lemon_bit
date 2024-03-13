@@ -339,7 +339,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     if (character is AmuletPlayer) {
       characterPerformSkillType(
         character: character,
-        skillType: character.skillActive,
+        skillType: character.activeSkillType,
       );
       return;
     }

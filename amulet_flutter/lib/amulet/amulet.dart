@@ -84,8 +84,8 @@ class Amulet extends IsometricGame {
   final playerSkillsNotifier = Watch(0);
   final playerSkillTypeSlotAssigned = SkillType.values.asMapReversed((t) =>
       Watch(false));
-  final playerSkillLeft = Watch(SkillType.Slash);
-  final playerSkillRight = Watch(SkillType.Slash);
+  var playerSkillLeft = SkillType.None;
+  var playerSkillRight = SkillType.None;
   final windowVisibleSkillLeft = WatchBool(false);
   final windowVisibleSkillRight = WatchBool(false);
   final windowVisibleQuantify = WatchBool(false);
@@ -111,10 +111,6 @@ class Amulet extends IsometricGame {
 
   final aimTargetItemTypeCurrent = Watch<AmuletItem?>(null);
   final highlightedAmuletItem = Watch<AmuletItem?>(null);
-
-  void onChangedPlayerSkillType(SkillType skillType) {
-    audio.click_sounds_35.play();
-  }
 
   final slotContainerDefault = Container(
     color: Colors.black12,
@@ -179,15 +175,12 @@ class Amulet extends IsometricGame {
 
     windowVisiblePlayerSkills.onChanged(onChangedWindowVisiblePlayerSkills);
     windowVisibleEquipment.onChanged(onWindowVisibilityChanged);
-    // windowVisiblePlayerStats.onChanged(onWindowVisibilityChanged);
     windowVisibleQuests.onChanged(onWindowVisibilityChanged);
     windowVisibleHelp.onChanged(onWindowVisibilityChanged);
     windowVisibleQuantify.onChanged(onWindowVisibilityChanged);
     playerInteracting.onChanged(onChangedPlayerInteracting);
     npcTextIndex.onChanged(onChangedNpcTextIndex);
     error.onChanged(onChangedError);
-    playerSkillLeft.onChanged(onChangedPlayerSkillType);
-    playerSkillRight.onChanged(onChangedPlayerSkillType);
     skillSlotsChangedNotifier.onChanged(onChangedSkillSlots);
 
     aimTargetAmuletItemObject.onChanged((t) {
@@ -212,9 +205,8 @@ class Amulet extends IsometricGame {
 
   void onChangedSkillSlots(int _) {
     for (final skillType in SkillType.values) {
-      final index = amulet.getSkillTypeSlotIndex(skillType);
-      // amulet.playerSkillTypeSlotIndex[skillType] = index;
-      amulet.playerSkillTypeSlotAssigned[skillType]?.value = index != null;
+      final index = getSkillTypeSlotIndex(skillType);
+      playerSkillTypeSlotAssigned[skillType]?.value = index != null;
     }
   }
 
@@ -862,6 +854,8 @@ class Amulet extends IsometricGame {
         '${AmuletRequestField.Slot_Type} ${slotType.index}'
     );
   }
+
+  void notifySkillsChanged() => playerSkillsNotifier.value++;
 }
 
 

@@ -1300,7 +1300,7 @@ class AmuletUI {
             children: [
               if (level > 0)
                 buildText('press A,S,D,F to assign'),
-              buildCardSkillType(skillType),
+              buildCardLargeSkillType(skillType),
             ],
           ),
           bottom: 0,
@@ -1322,7 +1322,7 @@ class AmuletUI {
 
   }
 
-  Widget buildCardSkillType(SkillType skillType) {
+  Widget buildCardLargeSkillType(SkillType skillType) {
 
     final level = amulet.getSkillTypeLevel(skillType);
 
@@ -2096,7 +2096,7 @@ class AmuletUI {
               if (!skillType.isPassive) return nothing;
               final level = amulet.getSkillTypeLevel(skillType);
               if (level <= 0) return nothing;
-              return buildEquippedSkillType(skillType);
+              return buildCardSmallSkillType(skillType);
             }).toList(growable: false),
           ));
 
@@ -2108,11 +2108,11 @@ class AmuletUI {
               if (skillType.isPassive) return nothing;
               final level = amulet.getSkillTypeLevel(skillType);
               if (level <= 0) return nothing;
-              return buildEquippedSkillType(skillType);
+              return buildCardSmallSkillType(skillType);
             }).toList(growable: false),
           ));
 
-  Widget buildEquippedSkillType(SkillType skillType) {
+  Widget buildCardSmallSkillType(SkillType skillType) {
     const size = 50.0;
 
     return Container(
@@ -2120,9 +2120,9 @@ class AmuletUI {
       child: buildMouseOverHint(
         bottom: 80,
         left: -60,
-        panel: buildCardSkillType(skillType),
+        panel: buildCardLargeSkillType(skillType),
         child: Container(
-          color: Palette.brown_4,
+          color: amulet.playerSkillRight == skillType ? Palette.brown_2 : Palette.brown_4,
           padding: const EdgeInsets.all(4),
           child: Column(
             children: [
@@ -2193,7 +2193,7 @@ class AmuletUI {
           children: [
             if (visibleRightClickedToClear)
               buildText('right click to change'),
-            buildCardSkillType(skillType),
+            buildCardLargeSkillType(skillType),
           ],
         ),
         bottom: 76,

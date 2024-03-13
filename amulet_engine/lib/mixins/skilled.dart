@@ -5,7 +5,7 @@ mixin Skilled {
   var skillTypeRight = SkillType.Fireball;
   var skillActiveLeft = true;
 
-  SkillType get skillActive => skillActiveLeft ? skillTypeLeft : skillTypeRight;
+  SkillType get activeSkillType => skillActiveLeft ? skillTypeLeft : skillTypeRight;
 
   void activeSkillActiveLeft() => setSkillActiveLeft(true);
 
