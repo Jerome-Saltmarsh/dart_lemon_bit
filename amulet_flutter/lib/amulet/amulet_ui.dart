@@ -2332,16 +2332,23 @@ class AmuletUI {
 
   Widget buildTextHeader(String value) => buildText(value, color: Colors.white70);
 
-  Widget buildHudTopLeft() => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          buildPlayerHealthBar(),
-          buildPlayerMagicBar(),
-          buildWindowPotions(),
-          buildWatch(amulet.playerGold, (gold) => buildText('${gold}g', color: AmuletColors.Gold)),
-          buildTogglePlayerQuest(),
-        ],
-      );
+  Widget buildHudTopLeft() => Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              buildPlayerHealthBar(),
+              buildPlayerMagicBar(),
+              buildWindowPotions(),
+            ],
+          ),
+      buildTogglePlayerQuest(),
+      buildControlGold(),
+    ],
+  );
+
+  Widget buildControlGold() => buildWatch(amulet.playerGold, (gold) => buildText('${gold}g', color: AmuletColors.Gold));
 
   Widget buildTextValue(value) => buildText(value, color: Colors.white70);
 
