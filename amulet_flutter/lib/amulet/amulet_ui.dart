@@ -1507,8 +1507,8 @@ class AmuletUI {
               tryBuildCardAmuletItemObject(amuletItemObject),
             ],
           ),
-          left: 90,
-          bottom: 0,
+          left: 0,
+          bottom: 130,
         ),
       ],
     );
