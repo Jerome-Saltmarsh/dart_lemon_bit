@@ -1,5 +1,5 @@
 
-import 'package:amulet_engine/common.dart';
+import 'package:amulet_common/src.dart';
 import 'package:amulet_flutter/isometric/enums/mode.dart';
 import 'package:amulet_flutter/isometric/classes/position.dart';
 import 'package:amulet_flutter/server/server_mode.dart';

@@ -1,6 +1,6 @@
 
 
-import 'package:amulet_engine/common.dart';
+import 'package:amulet_common/src.dart';
 import 'package:amulet_flutter/isometric/classes/game.dart';
 import 'package:amulet_flutter/isometric/components/debug/isometric_debug_ui.dart';
 import 'package:amulet_flutter/isometric/src.dart';

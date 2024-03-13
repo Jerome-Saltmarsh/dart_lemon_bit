@@ -1,7 +1,7 @@
 import 'dart:ui' as ui;
 import 'dart:ui';
 
-import 'package:amulet_engine/common.dart';
+import 'package:amulet_common/src.dart';
 import 'package:amulet_flutter/isometric/atlases/atlas.dart';
 import 'package:amulet_flutter/isometric/atlases/atlas_nodes.dart';
 import 'package:amulet_flutter/isometric/atlases/atlas_src_icon_type.dart';

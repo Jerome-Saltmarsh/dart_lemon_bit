@@ -1,7 +1,7 @@
 
+import 'package:amulet_common/src.dart';
 import 'package:lemon_lang/src.dart';
 
-import '../../common/src.dart';
 import 'collider.dart';
 
 class GameObject extends Collider {

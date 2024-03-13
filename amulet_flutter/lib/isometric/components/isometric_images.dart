@@ -3,7 +3,7 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:amulet_engine/common.dart';
+import 'package:amulet_common/src.dart';
 import 'package:amulet_flutter/isometric/classes/character_shader.dart';
 import 'package:lemon_json/src.dart';
 import 'package:lemon_watch/src.dart';

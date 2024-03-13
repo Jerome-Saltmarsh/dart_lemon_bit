@@ -1,7 +1,7 @@
 
 import 'dart:math';
 
-import 'package:amulet_engine/common.dart';
+import 'package:amulet_common/src.dart';
 import 'package:amulet_flutter/amulet/classes/amulet_colors.dart';
 import 'package:amulet_flutter/isometric/ui/isometric_colors.dart';
 import 'package:amulet_flutter/isometric/atlases/atlas_nodes.dart';

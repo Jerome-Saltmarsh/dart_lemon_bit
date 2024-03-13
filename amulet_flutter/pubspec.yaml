@@ -38,6 +38,8 @@ dependencies:
 
   amulet_engine:
     path: ..\amulet_engine
+  amulet_common:
+    path: ..\amulet_common
   lemon_sprite:
     path: ..\tools\lemon_sprite
   lemon_widgets:

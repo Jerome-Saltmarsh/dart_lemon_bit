@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
+import 'package:amulet_common/src.dart';
 import 'package:amulet_engine/isometric/classes/isometric_player.dart';
-import 'package:amulet_engine/common/src.dart';
 
 void handleRequestModifyCanvasSize(NetworkRequestModifyCanvasSize request, IsometricPlayer player){
   final game = player.game;

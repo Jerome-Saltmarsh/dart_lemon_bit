@@ -1,7 +1,7 @@
 
 import 'dart:async';
 
-import 'package:amulet_engine/common.dart';
+import 'package:amulet_common/src.dart';
 import 'package:amulet_flutter/isometric/components/isometric_component.dart';
 import 'package:lemon_math/src.dart';
 

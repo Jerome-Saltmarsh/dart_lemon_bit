@@ -1,6 +1,6 @@
 
 import 'dart:typed_data';
-import 'package:amulet_engine/common.dart';
+import 'package:amulet_common/src.dart';
 import 'package:amulet_flutter/isometric/classes/particle_roam.dart';
 import 'package:amulet_flutter/packages/lemon_components/updatable.dart';
 import 'package:flutter/services.dart';

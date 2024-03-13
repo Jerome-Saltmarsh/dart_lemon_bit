@@ -1,7 +1,7 @@
 
 import 'dart:typed_data';
 
-import 'package:amulet_engine/common.dart';
+import 'package:amulet_common/src.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/isometric/components/isometric_component.dart';
 

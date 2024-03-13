@@ -1,5 +1,5 @@
 
-import 'package:amulet_engine/common.dart';
+import 'package:amulet_common/src.dart';
 
 class SpriteGroupType {
   static const Armor = 2;

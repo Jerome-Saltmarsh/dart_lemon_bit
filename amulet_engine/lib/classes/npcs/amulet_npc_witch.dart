@@ -1,6 +1,7 @@
 
 
-import '../../common/src.dart';
+import 'package:amulet_common/src.dart';
+
 import '../amulet_npc.dart';
 
 

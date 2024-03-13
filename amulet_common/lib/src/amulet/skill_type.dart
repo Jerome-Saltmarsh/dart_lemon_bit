@@ -1,6 +1,8 @@
-import 'package:amulet_engine/common.dart';
+
 import 'package:lemon_math/src.dart';
 
+import 'amulet_settings.dart';
+import 'caste_type.dart';
 
 enum SkillType {
   None(

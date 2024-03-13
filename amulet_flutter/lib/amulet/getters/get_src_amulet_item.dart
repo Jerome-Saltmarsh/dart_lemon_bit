@@ -1,4 +1,4 @@
-import 'package:amulet_engine/common/src.dart';
+import 'package:amulet_common/src.dart';
 
 const srcx_weapon_staff = 32.0;
 const srcx_weapon_sword = 64.0;

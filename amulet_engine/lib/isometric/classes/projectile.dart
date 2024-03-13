@@ -1,8 +1,8 @@
 
 
-import 'package:amulet_engine/common/src.dart';
+import 'package:amulet_common/src.dart';
+
 import '../consts/physics.dart';
-import '../enums/src.dart';
 import 'character.dart';
 import 'collider.dart';
 import 'position.dart';

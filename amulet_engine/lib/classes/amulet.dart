@@ -8,8 +8,8 @@ import 'package:amulet_engine/isometric/functions/generate_empty_scene.dart';
 import 'package:archive/archive.dart';
 import 'package:lemon_byte/src.dart';
 import 'package:lemon_lang/src.dart';
+import 'package:amulet_common/src.dart';
 
-import '../common/src.dart';
 import 'amulet_game.dart';
 import 'amulet_player.dart';
 import 'amulet_scenes.dart';

@@ -1,7 +1,7 @@
 
 import 'dart:math';
 
-import 'package:amulet_engine/common.dart';
+import 'package:amulet_common/src.dart';
 import 'package:amulet_flutter/isometric/classes/particle_flying.dart';
 import 'package:amulet_flutter/isometric/classes/particle_glow.dart';
 import 'package:amulet_flutter/isometric/classes/particle_roam.dart';

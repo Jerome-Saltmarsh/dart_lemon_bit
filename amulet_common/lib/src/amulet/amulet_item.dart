@@ -1,9 +1,4 @@
-import 'package:lemon_math/src.dart';
-
 import '../../src.dart';
-import 'package:collection/collection.dart';
-
-import '../isometric/damage_type.dart';
 
 enum AmuletItem {
   Weapon_Sword_Short(
@@ -14,6 +9,7 @@ enum AmuletItem {
     range: 0.2,
     damageMin: 0.75,
     damage: 0.45,
+    attackSkill: SkillType.Slash,
   ),
   Weapon_Sword_Broad(
     label: 'Broad Sword',
@@ -23,6 +19,7 @@ enum AmuletItem {
     range: 0.5,
     damage: 0.5,
     damageMin: 0.75,
+    attackSkill: SkillType.Slash,
   ),
   Weapon_Sword_Long(
     label: 'Long Sword',
@@ -32,6 +29,7 @@ enum AmuletItem {
     range: 0.75,
     damageMin: 0.4,
     damage: 0.7,
+    attackSkill: SkillType.Slash,
   ),
   Weapon_Sword_Giant(
     label: 'Giant Sword',
@@ -41,6 +39,7 @@ enum AmuletItem {
     range: 1.0,
     damageMin: 0.5,
     damage: 0.9,
+    attackSkill: SkillType.Slash,
   ),
   Weapon_Bow_Short(
     label: 'Short Bow',
@@ -50,6 +49,7 @@ enum AmuletItem {
     range: 0.25,
     damageMin: 0.9,
     damage: 0.25,
+    attackSkill: SkillType.Shoot_Arrow,
   ),
   Weapon_Bow_Reflex(
     label: 'Reflex Bow',
@@ -59,6 +59,7 @@ enum AmuletItem {
     range: 0.4,
     damageMin: 0.5,
     damage: 0.35,
+    attackSkill: SkillType.Shoot_Arrow,
   ),
   Weapon_Bow_Composite(
     label: 'Composite Bow',
@@ -68,6 +69,7 @@ enum AmuletItem {
     range: 0.75,
     damageMin: 0.3,
     damage: 0.6,
+    attackSkill: SkillType.Shoot_Arrow,
   ),
   Weapon_Bow_Long(
     label: 'Lucky Long Bow of the Flame',
@@ -77,6 +79,7 @@ enum AmuletItem {
     range: 1.0,
     damageMin: 0.4,
     damage: 0.8,
+    attackSkill: SkillType.Shoot_Arrow,
   ),
   Weapon_Staff_Wand(
     label: 'Wand',
@@ -89,6 +92,7 @@ enum AmuletItem {
     skillSet: {
       SkillType.Magic_Regen: 0.5,
     },
+    attackSkill: SkillType.Bludgeon,
   ),
   Weapon_Staff_Globe(
     label: 'Globe',
@@ -101,6 +105,7 @@ enum AmuletItem {
     skillSet: {
       SkillType.Magic_Regen: 0.5,
     },
+    attackSkill: SkillType.Bludgeon,
   ),
   Weapon_Staff_Scepter(
     label: 'Scepter',
@@ -113,6 +118,7 @@ enum AmuletItem {
     skillSet: {
       SkillType.Magic_Regen: 0.5,
     },
+    attackSkill: SkillType.Bludgeon,
   ),
   Weapon_Staff_Long(
     label: 'Staff',
@@ -125,6 +131,7 @@ enum AmuletItem {
     skillSet: {
       SkillType.Magic_Regen: 0.5,
     },
+    attackSkill: SkillType.Bludgeon,
   ),
   Helm_Leather_Cap(
     label: 'Leather Cap',
@@ -385,9 +392,11 @@ enum AmuletItem {
       damageMin: 0.9,
       damage: 0.1,
       quality: ItemQuality.Unique,
+      attackSkill: SkillType.Bludgeon,
       skillSet: {
         SkillType.Frostball: 1.1,
       }),
+
   Special_Weapon_Flame_Wand(
       label: 'Flame Wand',
       slotType: SlotType.Weapon,
@@ -397,6 +406,7 @@ enum AmuletItem {
       damageMin: 0.9,
       damage: 0.1,
       quality: ItemQuality.Unique,
+      attackSkill: SkillType.Bludgeon,
       skillSet: {
         SkillType.Frostball: 1.1,
       }),
@@ -409,6 +419,7 @@ enum AmuletItem {
       damage: 0.45,
       damageMin: 0.75,
       quality: ItemQuality.Unique,
+      attackSkill: SkillType.Slash,
       skillSet: {
         SkillType.Health_Steal: 1.0,
       }),
@@ -421,6 +432,7 @@ enum AmuletItem {
       damage: 0.55,
       damageMin: 0.75,
       quality: ItemQuality.Rare,
+      attackSkill: SkillType.Slash,
       skillSet: {
         SkillType.Critical_Hit: 2.0,
         SkillType.Agility: 1.0,
@@ -434,6 +446,7 @@ enum AmuletItem {
       damage: 0.55,
       damageMin: 0.75,
       quality: ItemQuality.Rare,
+      attackSkill: SkillType.Bludgeon,
       skillSet: {
         SkillType.Frostball: 2.0,
         SkillType.Magic_Steal: 1.0,
@@ -442,6 +455,7 @@ enum AmuletItem {
       label: 'Bow of Destruction',
       slotType: SlotType.Weapon,
       subType: WeaponType.Bow_Reflex,
+      attackSkill: SkillType.Shoot_Arrow,
       attackSpeed: 0.3,
       range: 0.6,
       damage: 0.75,
@@ -524,11 +538,13 @@ enum AmuletItem {
   final String label;
   final Map<SkillType, double> skillSet;
   final Map<DamageType, double> resistances;
+  final SkillType? attackSkill;
 
   const AmuletItem({
     required this.slotType,
     required this.subType,
     required this.label,
+    this.attackSkill,
     this.quality = ItemQuality.Common,
     this.skillSet = const {},
     this.range,
@@ -568,96 +584,59 @@ enum AmuletItem {
     return total;
   }
 
-  static AmuletItem? findByName(String name) =>
-      values.firstWhereOrNull((element) => element.name == name);
+  static AmuletItem? findByName(String name) {
+    for (final value in values){
+      if (value.name == name) return value;
+    }
+    return null;
+  }
+
+  bool isValid() {
+    return !isWeapon || attackSkill != null;
+  }
 
   static final Consumables =
-      values.where((element) => element.isConsumable).toList(growable: false);
+  values.where((element) => element.isConsumable).toList(growable: false);
 
-  void validate() {
-    if (isWeapon) {
-      if ((attackSpeed == null)) {
-        throw Exception('$this performDuration of weapon cannot be null');
-      }
-      if (range == null) {
-        throw Exception('$this.range cannot cannot be null');
-      }
-    }
+  double? getMaxHealth(int level){
+    return getSkillTypeValue(skillType: SkillType.Max_Magic, level: level) * 5;
   }
 
-  int getSkillTypeValue({
-    required SkillType skillType,
-    required int level,
-  }) =>
-      ((skillSet[skillType] ?? 0) * level).toInt();
-
-  WeaponClass? get weaponClass {
-    if (!isWeapon) {
-      return null;
-    }
-    if (isWeaponBow) {
-      return WeaponClass.Bow;
-    }
-    if (isWeaponStaff) {
-      return WeaponClass.Staff;
-    }
-    if (isWeaponSword) {
-      return WeaponClass.Sword;
-    }
-    throw Exception();
+  double? getMaxMagic(int level){
+    return getSkillTypeValue(skillType: SkillType.Max_Health, level: level) * 5;
   }
 
-  double? getMaxHealth(int level) {
-    final skillLevel = getSkillTypeValue(
-          skillType: SkillType.Max_Health,
-          level: level,
-      ).floor();
-    return SkillType.getMaxHealth(skillLevel).toDouble();
+  double getUpgradeCost(int level){
+    return level * level * quantify;
   }
 
-  double? getMaxMagic(int level) {
-    final skillLevel = getSkillTypeValue(
-      skillType: SkillType.Max_Magic,
-      level: level,
-    ).floor();
-    return SkillType.getMaxMagic(skillLevel).toDouble();
+  int getSkillTypeValue({required SkillType skillType, required int level}){
+    final skillValue = skillSet[skillType];
+    if (skillValue == null) return 0;
+    return (skillValue * level).floor();
   }
 
-  double? getWeaponDamageMin(int level) {
+  double? getWeaponDamageMax(int level){
+    return level * Damage_Per_Level;
+  }
+
+  double? getWeaponDamageMin(int level){
     final damageMin = this.damageMin;
     if (damageMin == null) return null;
-    final damage = getWeaponDamageMax(level);
-    if (damage == null) return null;
-    return damage * damageMin;
+    final damageMax = getWeaponDamageMax(level);
+    if (damageMax == null) return null;
+    return damageMax * damageMin;
   }
-
-  double? getWeaponDamageMax(int level) =>
-      linear(Constraint_Weapon_Damage, damage, level);
-
-  double? tryInterpolate(num start, num end, double? t) =>
-      t == null ? null : interpolate(start, end, t);
-
-  int? tryGetUpgradeCost(int? level){
-    if (level == null) {
-      return null;
-    }
-    return getUpgradeCost(level);
-  }
-
-  int getUpgradeCost(int level) =>
-      (quantify * (level * level)).ceil();
-
-  double interpolateConstraint(Constraint constraint, double i) =>
-      interpolate(constraint.min, constraint.max, i);
-
-  double? linear(Constraint constraint, double? i, int level) =>
-      i == null
-          ? null
-          : interpolate(constraint.min, constraint.max, i) * level;
 
   static const Constraint_Weapon_Damage = Constraint(min: 1, max: 20);
   static const Health_Per_Level = 5.0;
   static const Magic_Per_Level = 5.0;
+  static const Damage_Per_Level = 1.0;
+
+  double? tryGetUpgradeCost(int? level){
+     if (level == null) return null;
+     return getUpgradeCost(level);
+  }
 }
 
 

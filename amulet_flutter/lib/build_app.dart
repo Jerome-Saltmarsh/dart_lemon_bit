@@ -1,5 +1,5 @@
 
-import 'package:amulet_engine/common/src.dart';
+import 'package:amulet_common/src.dart';
 import 'package:amulet_flutter/isometric/components/isometric_components.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
@@ -80,7 +80,9 @@ void validateAmulet() {
   }
 
   for (final amuletItem in AmuletItem.values){
-    amuletItem.validate();
+    if (!amuletItem.isValid()){
+      throw Exception();
+    }
   }
   SkillType.validate();
 }

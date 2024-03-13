@@ -1,4 +1,5 @@
 
+import 'package:amulet_common/src.dart';
 import 'package:amulet_engine/classes/amulet_fiend.dart';
 import 'package:amulet_engine/io/scene_json_reader.dart';
 import 'package:amulet_engine/src.dart';

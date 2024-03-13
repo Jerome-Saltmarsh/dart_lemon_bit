@@ -1,12 +1,12 @@
 
 import 'dart:typed_data';
 
+import 'package:amulet_common/src.dart';
 import 'package:lemon_bit/src.dart';
 import 'package:lemon_byte/src.dart';
 import 'package:lemon_lang/src.dart';
 import 'package:lemon_math/src.dart';
 
-import '../common/src.dart';
 import '../editor/randomize_scene.dart';
 import '../isometric/src.dart';
 import 'amulet.dart';

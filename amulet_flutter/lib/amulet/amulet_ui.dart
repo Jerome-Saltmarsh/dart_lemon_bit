@@ -1,5 +1,5 @@
 
-import 'package:amulet_engine/src.dart';
+import 'package:amulet_common/src.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/amulet/src.dart';
 import 'package:amulet_flutter/amulet/ui/enums/quantify_tab.dart';
@@ -1647,26 +1647,23 @@ class AmuletUI {
     final currentAmuletItem = current?.amuletItem;
     final damageMaxDiff = getDiff(next.damageMax, current?.damageMax)?.toInt();
     final damageMinDiff = getDiff(next.damageMin, current?.damageMin)?.toInt();
-    // final healthDiff = getDiff(nextAmuletItem.maxHealth, currentAmuletItem?.maxHealth);
-    // final magicDiff = getDiff(nextAmuletItem.maxMagic, currentAmuletItem?.maxMagic);
     final levelDiff = getDiff(next.level, current?.level);
     final valueDiff = getDiff(nextAmuletItem.quantify, currentAmuletItem?.quantify);
     final showDiff = current != next;
-    final damageType = next.amuletItem.weaponClass?.damageType;
-    // final rangeDiff = getDiff(nextAmuletItem.range, currentAmuletItem?.range);
+    // final damageType = next.amuletItem.attackSkill.?.damageType;
 
 
 
     return Column(
       children: [
-        if (damageType != null)
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              buildText('damage type'),
-              buildText(damageType.name.clean),
-            ],
-          ),
+        // if (damageType != null)
+        //   Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //     children: [
+        //       buildText('damage type'),
+        //       buildText(damageType.name.clean),
+        //     ],
+        //   ),
           // if (levelDiff != null)
             // buildComparisonRow(
             //   lead: buildText('level'),

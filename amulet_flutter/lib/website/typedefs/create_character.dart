@@ -1,4 +1,4 @@
-import 'package:amulet_engine/common.dart';
+import 'package:amulet_common/src.dart';
 
 typedef CreateCharacter = Function({
   required String name,

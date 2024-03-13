@@ -1,4 +1,6 @@
 
+import 'package:amulet_common/src.dart';
+
 import '../../src.dart';
 
 class WitchesLair1 extends AmuletGame {

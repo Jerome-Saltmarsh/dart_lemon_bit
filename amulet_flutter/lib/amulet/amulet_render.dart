@@ -1,5 +1,5 @@
 
-import 'package:amulet_engine/common/src.dart';
+import 'package:amulet_common/src.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
 

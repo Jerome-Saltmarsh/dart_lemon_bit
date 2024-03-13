@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:amulet_common/src.dart';
 import 'package:lemon_lang/src.dart';
 import 'package:lemon_math/src.dart';
 
@@ -359,10 +360,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     switch (skillType) {
       case SkillType.Slash:
-        characterPerformSkillTypeStrike(character);
+        characterPerformSkillTypeSlash(character);
         break;
       case SkillType.Bludgeon:
-        characterPerformSkillTypeStrike(character);
+        characterPerformSkillTypeSlash(character);
         break;
       case SkillType.Shoot_Arrow:
         characterPerformSkillTypeShootArrow(character);
@@ -508,7 +509,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
      return 0;
   }
 
-  void characterPerformSkillTypeStrike(Character character) {
+  void characterPerformSkillTypeSlash(Character character) {
 
     final range = getCharacterWeaponDamageOrDispatchError(character);
 
@@ -518,7 +519,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     applyHitMelee(
         character: character,
-        damageType: DamageType.Melee,
+        damageType: DamageType.Slash,
         range: AmuletSettings.interpolateRangeMelee(range),
         damage: getCharacterWeaponDamage(character),
         areaDamage: getCharacterAreaDamage(character),
@@ -559,7 +560,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     applyHitMelee(
         character: character,
-        damageType: DamageType.Melee,
+        damageType: DamageType.Slash,
         range: AmuletSettings.interpolateRangeMelee(attackRange),
         damage: weaponDamage + bonusDamage,
         areaDamage: getCharacterAreaDamage(character),
@@ -1481,7 +1482,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
 
     switch (damageType){
-      case DamageType.Melee:
+      case DamageType.Slash:
+        final level = getCharacterSkillTypeLevel(character, SkillType.Shield);
+        return SkillType.getPercentageDamageResistanceMelee(level);
+      case DamageType.Bludgeon:
         final level = getCharacterSkillTypeLevel(character, SkillType.Shield);
         return SkillType.getPercentageDamageResistanceMelee(level);
       case DamageType.Pierce:
@@ -1530,7 +1534,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     applyHitMelee(
       character: character,
-      damageType: DamageType.Melee,
+      damageType: DamageType.Slash,
       range: range + bonusRange,
       damage: weaponDamage,
       areaDamage: getCharacterAreaDamage(character),

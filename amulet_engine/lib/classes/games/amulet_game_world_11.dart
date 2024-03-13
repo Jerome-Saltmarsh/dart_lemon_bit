@@ -1,9 +1,9 @@
 
 
 
+import 'package:amulet_common/src.dart';
 import 'package:lemon_lang/src.dart';
 
-import '../../common/src.dart';
 import '../../isometric/src.dart';
 import '../amulet_game.dart';
 import '../amulet_npc.dart';

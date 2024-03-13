@@ -1,5 +1,5 @@
 
-import 'package:amulet_engine/common.dart';
+import 'package:amulet_common/src.dart';
 import 'package:lemon_sprite/lib.dart';
 
 int mapCharacterStateToAnimationMode(int characterState) =>

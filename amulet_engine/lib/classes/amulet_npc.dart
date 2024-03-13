@@ -1,5 +1,5 @@
 
-import 'package:amulet_engine/common/src/isometric/character_type.dart';
+import 'package:amulet_common/src.dart';
 
 import '../isometric/src.dart';
 import 'amulet_player.dart';

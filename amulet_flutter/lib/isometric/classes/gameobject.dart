@@ -1,4 +1,4 @@
-import 'package:amulet_engine/common.dart';
+import 'package:amulet_common/src.dart';
 import 'package:amulet_flutter/isometric/classes/position.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_lang/src.dart';

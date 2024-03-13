@@ -1,4 +1,4 @@
-import 'package:amulet_engine/common.dart';
+import 'package:amulet_common/src.dart';
 
 const _srcX = 400.0;
 const iconSizeSkillType = 16.0;

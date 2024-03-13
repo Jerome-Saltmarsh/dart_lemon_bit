@@ -1,8 +1,8 @@
 
+import 'package:amulet_common/src.dart';
 import 'package:amulet_flutter/isometric/classes/particle_whisp.dart';
 import 'package:amulet_flutter/isometric/components/isometric_particles.dart';
 
-import 'package:amulet_engine/common.dart';
 import 'package:lemon_math/src.dart';
 
 class ParticleGlow extends ParticleWhisp {

@@ -1,4 +1,4 @@
-import 'package:amulet_engine/common.dart';
+import 'package:amulet_common/src.dart';
 
 String getSkillTypeDescription(SkillType skillType) => switch (skillType) {
       SkillType.None => 'None',

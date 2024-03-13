@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:amulet_engine/common/src.dart';
+import 'package:amulet_common/src.dart';
 import 'package:amulet_engine/isometric/classes/scene.dart';
 
 

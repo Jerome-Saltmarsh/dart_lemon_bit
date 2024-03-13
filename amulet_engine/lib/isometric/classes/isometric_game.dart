@@ -1,8 +1,8 @@
 import 'dart:math';
 
+import 'package:amulet_common/src.dart';
 import 'package:amulet_engine/isometric/consts/frames_per_second.dart';
 import 'package:amulet_engine/isometric/consts/physics.dart';
-import 'package:amulet_engine/isometric/enums/damage_type.dart';
 import 'package:amulet_engine/isometric/functions/copy_gameobjects.dart';
 import 'package:amulet_engine/src.dart';
 import 'package:lemon_lang/src.dart';
@@ -494,7 +494,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         target: hitTarget,
         damage: damage,
         srcCharacter: character,
-        damageType: DamageType.Melee,
+        damageType: damageType,
         ailmentDuration: ailmentDuration,
         ailmentDamage: ailmentDamage,
       );
@@ -1557,7 +1557,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
             srcCharacter: character,
             target: target,
             damage: character.attackDamage,
-            damageType: DamageType.Melee,
+            damageType: DamageType.Slash, // TODO
             ailmentDamage: 0,
             ailmentDuration: 0,
           );
@@ -1566,9 +1566,9 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       }
       applyHitMelee(
         character: character,
-        damageType: DamageType.Melee,
+        damageType: DamageType.Slash,
         range: character.attackRange,
-        damage: character.attackDamage,
+        damage: character.attackDamage, // TODO
         areaDamage: 0,
         ailmentDuration: 0,
         ailmentDamage: 0,

@@ -1,6 +1,5 @@
+import 'package:amulet_common/src.dart';
 import 'package:lemon_math/src.dart';
-
-import '../../common/src.dart';
 
 class IsometricEnvironment {
 

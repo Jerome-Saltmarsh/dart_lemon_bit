@@ -1,6 +1,6 @@
 
+import 'package:amulet_common/src.dart';
 import 'package:amulet_engine/classes/amulet_fiend.dart';
-import 'package:amulet_engine/common/src.dart';
 import 'package:amulet_engine/isometric/classes/character.dart';
 import 'package:lemon_json/src.dart';
 import 'package:lemon_lang/src.dart';

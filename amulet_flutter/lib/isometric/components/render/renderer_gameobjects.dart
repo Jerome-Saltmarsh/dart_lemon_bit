@@ -1,4 +1,4 @@
-import 'package:amulet_engine/common.dart';
+import 'package:amulet_common/src.dart';
 import 'package:amulet_flutter/amulet/getters/get_src_amulet_item.dart';
 import 'package:amulet_flutter/isometric/classes/render_group.dart';
 import 'package:amulet_flutter/isometric/components/isometric_images.dart';

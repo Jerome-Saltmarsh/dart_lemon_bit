@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:ui';
 
-import 'package:amulet_engine/src.dart';
+import 'package:amulet_common/src.dart';
 import 'package:amulet_flutter/amulet/amulet_keys.dart';
 import 'package:amulet_flutter/amulet/amulet_ui.dart';
 import 'package:flutter/material.dart';

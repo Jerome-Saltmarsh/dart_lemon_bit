@@ -1,4 +1,4 @@
-import 'package:amulet_engine/common.dart';
+import 'package:amulet_common/src.dart';
 import 'package:amulet_flutter/isometric/classes/render_group.dart';
 import 'package:amulet_flutter/isometric/components/isometric_images.dart';
 import 'package:amulet_flutter/isometric/components/render/functions/map_character_state_to_animation_mode.dart';

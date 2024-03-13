@@ -2,13 +2,13 @@
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:amulet_common/src.dart';
 import 'package:amulet_engine/classes/amulet_fiend.dart';
 import 'package:amulet_engine/isometric/consts/frames_per_second.dart';
 import 'package:lemon_bit/src.dart';
 import 'package:lemon_byte/src.dart';
 import 'package:lemon_math/src.dart';
 
-import '../../common/src.dart';
 import '../consts/isometric_settings.dart';
 import '../instances/encoder.dart';
 import 'character.dart';

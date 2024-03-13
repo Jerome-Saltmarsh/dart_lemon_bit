@@ -1,6 +1,6 @@
 
-import 'package:amulet_engine/isometric/enums/damage_type.dart';
-import 'package:amulet_engine/src.dart';
+import 'package:amulet_common/src.dart';
+import 'package:amulet_common/src/isometric/damage_type.dart';
 
 enum FiendType {
   Goblin(
@@ -197,10 +197,11 @@ enum FiendType {
 
   double getDamageTypeResistance(DamageType damageType) =>
       switch (damageType) {
-        DamageType.Melee => meleeResistance,
+        DamageType.Bludgeon => meleeResistance,
         DamageType.Pierce => pierceResistance,
         DamageType.Fire => fireResistance,
-        DamageType.Ice => iceResistance
+        DamageType.Ice => iceResistance,
+        DamageType.Slash => 0,
       };
 }
 

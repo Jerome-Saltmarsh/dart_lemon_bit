@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:amulet_common/src.dart';
 import 'package:amulet_engine/classes/amulet.dart';
 import 'package:amulet_engine/src.dart';
 import 'package:amulet_flutter/amulet/classes/amulet_scenes_flutter.dart';
