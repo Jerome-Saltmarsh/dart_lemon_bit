@@ -591,6 +591,7 @@ extension isometricDebugUI on IsometricDebug {
           buildButtonSkipTutorial(),
           buildButtonAcquireConsumable(),
           buildButtonSpawnRandomItem(),
+          buildButtonCheatAcquireGold(),
           buildButtonReset(),
         ],
       );
@@ -971,11 +972,13 @@ extension isometricDebugUI on IsometricDebug {
     child: GSContainer(child: buildText('SKIP TUTORIAL')),
   );
 
-  Widget buildButtonSpawnRandomItem() {
-    return onPressed(
+  Widget buildButtonSpawnRandomItem() => onPressed(
         action: amulet.spawnRandomAmuletItem,
         child: buildText('SPAWN RANDOM ITEM'));
-  }
+
+  Widget buildButtonCheatAcquireGold() => onPressed(
+        action: amulet.cheatAcquireGold,
+        child: buildText('ACQUIRE GOLD 100'));
 }
 
 

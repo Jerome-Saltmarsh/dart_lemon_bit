@@ -110,6 +110,7 @@ enum GameError {
   Invalid_Slot_Type_Index,
   Slot_Type_Empty,
   Not_Implemented,
+  Cheats_Disabled,
   ;
 
   static GameError fromIndex(int index) {

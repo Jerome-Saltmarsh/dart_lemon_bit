@@ -23,4 +23,5 @@ enum NetworkRequestAmulet {
   Pickup_Amulet_Item,
   Sell_Amulet_Item,
   Upgrade_Slot_Type,
+  Cheat_Acquire_Gold,
 }

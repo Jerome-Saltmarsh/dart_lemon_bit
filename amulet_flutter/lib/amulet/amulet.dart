@@ -859,6 +859,11 @@ class Amulet extends IsometricGame {
   void notifySkillsChanged() => playerSkillsNotifier.value++;
 
   void notifyEquipmentChanged() => equippedChangedNotifier.value++;
+
+  void cheatAcquireGold() =>
+      sendAmuletRequest(
+          NetworkRequestAmulet.Cheat_Acquire_Gold,
+      );
 }
 
 

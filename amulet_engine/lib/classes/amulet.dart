@@ -19,6 +19,7 @@ import 'games/witches_lair_2.dart';
 
 class Amulet {
 
+  var cheatsEnabled = true;
   var fps = 45;
   var frame = 0;
 

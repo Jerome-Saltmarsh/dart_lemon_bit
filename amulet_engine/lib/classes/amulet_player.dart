@@ -57,6 +57,8 @@ class AmuletPlayer extends IsometricPlayer with
   var consumableSlotsDirty = true;
   var difficulty = Difficulty.Normal;
 
+  bool get canCheat => amulet.cheatsEnabled;
+
   GameObject? collectableGameObject;
   AmuletItemObject? collectableAmuletItemObject;
 
@@ -1788,6 +1790,14 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Can_Upgrade);
     writeBool(canUpgrade);
+  }
+
+  void cheatAcquireGold() {
+     if (!canCheat) {
+       writeGameError(GameError.Cheats_Disabled);
+       return;
+     }
+     gold += 100;
   }
 
 

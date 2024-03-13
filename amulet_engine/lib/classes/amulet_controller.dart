@@ -638,6 +638,9 @@ class AmuletController {
       case NetworkRequestAmulet.Spawn_Random_Enemy:
         amuletGame.spawnRandomEnemy(player.difficulty);
         break;
+      case NetworkRequestAmulet.Cheat_Acquire_Gold:
+        player.cheatAcquireGold();
+        break;
       case NetworkRequestAmulet.Spawn_Amulet_Item:
         final amuletItemIndex = arguments.tryGetArgInt(AmuletRequestField.Amulet_Item);
         final level = arguments.tryGetArgInt(AmuletRequestField.Level);
