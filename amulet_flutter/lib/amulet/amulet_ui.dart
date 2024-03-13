@@ -1482,20 +1482,23 @@ class AmuletUI {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         if (upgradeCost != null)
-          Container(
-            decoration: BoxDecoration(
-              color: Palette.brown_3,
-              border: Border.all(color: Palette.brown_2, width: 2),
-              borderRadius: BorderRadius.zero,
-            ),
-            margin: const EdgeInsets.only(bottom: 8),
-            padding: paddingAll4,
-            alignment: Alignment.center,
-            child: Column(
-              children: [
-                buildText('upgrade', color: AmuletColors.Gold, size: 14),
-                buildText('${upgradeCost}g', color: AmuletColors.Gold),
-              ],
+          onPressed(
+            action: () => amulet.upgradeSlotType(slotType),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Palette.brown_3,
+                border: Border.all(color: Palette.brown_2, width: 2),
+                borderRadius: BorderRadius.zero,
+              ),
+              margin: const EdgeInsets.only(bottom: 8),
+              padding: paddingAll4,
+              alignment: Alignment.center,
+              child: Column(
+                children: [
+                  buildText('upgrade', color: AmuletColors.Gold, size: 13),
+                  buildText('${upgradeCost}g', color: AmuletColors.Gold),
+                ],
+              ),
             ),
           ),
         buildMouseOverHint(
