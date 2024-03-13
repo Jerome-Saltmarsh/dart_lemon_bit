@@ -105,13 +105,13 @@ class AmuletUI {
               tryBuildCardAmuletItemObject,
             ),
           ),
+          // Positioned(
+          //     bottom: 8,
+          //     left: 8,
+          //     child: buildTogglePlayerQuest(),
+          // ),
           Positioned(
               bottom: 8,
-              left: 8,
-              child: buildTogglePlayerQuest(),
-          ),
-          Positioned(
-              bottom: 64,
               left: 8,
               child: buildHudBottomLeft(),
           ),
@@ -160,14 +160,9 @@ class AmuletUI {
   }
 
   Widget buildHudBottomLeft() =>
-      Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          buildWatchVisible(
-            amulet.windowVisibleEquipment,
-            buildEquippedAmuletItems(),
-          ),
-        ],
+      buildWatchVisible(
+        amulet.windowVisibleEquipment,
+        buildEquippedAmuletItems(),
       );
 
   Widget buildWindowPotions() =>
@@ -601,13 +596,13 @@ class AmuletUI {
       );
 
   Widget buildEquippedAmuletItems() =>
-      buildWatch(amulet.equippedChangedNotifier, (t) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      buildWatch(amulet.equippedChangedNotifier, (t) => Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          buildWatchAmuletItemObject(SlotType.Weapon),
-          buildWatchAmuletItemObject(SlotType.Helm),
-          buildWatchAmuletItemObject(SlotType.Armor),
-          buildWatchAmuletItemObject(SlotType.Shoes),
+          buildSlotType(SlotType.Weapon),
+          buildSlotType(SlotType.Helm),
+          buildSlotType(SlotType.Armor),
+          buildSlotType(SlotType.Shoes),
         ],
       ));
 
@@ -1436,7 +1431,7 @@ class AmuletUI {
       child: buildText(value, color: titleColor),
   );
 
-  Widget buildWatchAmuletItemObject(SlotType slotType) {
+  Widget buildSlotType(SlotType slotType) {
 
     const width = 45.0;
     final amuletItemObject = amulet.getEquipped(slotType);
@@ -1476,9 +1471,26 @@ class AmuletUI {
       ),
     );
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
+        if (upgradeCost != null)
+          Container(
+            decoration: BoxDecoration(
+              color: Palette.brown_3,
+              border: Border.all(color: Palette.brown_2, width: 2),
+              borderRadius: BorderRadius.zero,
+            ),
+            margin: const EdgeInsets.only(bottom: 8),
+            padding: paddingAll4,
+            alignment: Alignment.center,
+            child: Column(
+              children: [
+                buildText('upgrade', color: AmuletColors.Gold, size: 14),
+                buildText('${upgradeCost}g', color: AmuletColors.Gold),
+              ],
+            ),
+          ),
         buildMouseOverHint(
           child: button,
           panel: Column(
@@ -1490,23 +1502,6 @@ class AmuletUI {
           ),
           left: 90,
           bottom: 0,
-        ),
-        if (upgradeCost != null)
-        Container(
-          decoration: BoxDecoration(
-            color: Palette.brown_3,
-            border: Border.all(color: Palette.brown_2, width: 2),
-            borderRadius: BorderRadius.zero,
-          ),
-          margin: const EdgeInsets.only(left: 8),
-          padding: paddingAll8,
-          alignment: Alignment.center,
-          child: Column(
-            children: [
-              buildText('upgrade', color: AmuletColors.Gold),
-              buildText('${upgradeCost}g', color: AmuletColors.Gold),
-            ],
-          ),
         ),
       ],
     );
@@ -2106,7 +2101,7 @@ class AmuletUI {
       (_) => Row(
             children: [
               buildRowPlayerSkillsPassive(),
-              width16,
+              width32,
               buildRowPlayerSkillsActive(),
             ],
           ));
@@ -2344,6 +2339,7 @@ class AmuletUI {
           buildPlayerMagicBar(),
           buildWindowPotions(),
           buildWatch(amulet.playerGold, (gold) => buildText('${gold}g', color: AmuletColors.Gold)),
+          buildTogglePlayerQuest(),
         ],
       );
 
