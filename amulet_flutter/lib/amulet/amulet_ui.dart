@@ -83,7 +83,18 @@ class AmuletUI {
         ),
       ),
           buildDialogTalk(),
-          buildPositionedWorldMap(),
+          Positioned(
+              bottom: 8,
+              right: 8,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  buildControlGold(),
+                  buildTogglePlayerQuest(),
+                  buildWorldMap(),
+                ],
+              )
+          ),
           Positioned(
             top: 8,
              child: buildPlayerAimNode(),
@@ -290,22 +301,18 @@ class AmuletUI {
       );
     });
 
-  Positioned buildPositionedWorldMap() => Positioned(
-          bottom: 8,
-          right: 8,
-          child: Builder(
-            builder: (context) {
-              final small = AmuletWorldMap(amulet: amulet, size: 200);
-              final large = AmuletWorldMap(amulet: amulet, size: 400);
-              return onPressed(
-                action: amulet.worldMapLarge.toggle,
-                child: buildWatch(amulet.worldMapLarge, (bool isLarge)
-                  => isLarge ? large : small
-                ),
-              );
-            }
-          ),
-        );
+  Widget buildWorldMap() => Builder(
+    builder: (context) {
+      final small = AmuletWorldMap(amulet: amulet, size: 200);
+      final large = AmuletWorldMap(amulet: amulet, size: 400);
+      return onPressed(
+        action: amulet.worldMapLarge.toggle,
+        child: buildWatch(amulet.worldMapLarge, (bool isLarge)
+          => isLarge ? large : small
+        ),
+      );
+    }
+  );
 
   Positioned buildPositionedMessage() => Positioned(
       top: 0,
@@ -2343,12 +2350,15 @@ class AmuletUI {
               buildWindowPotions(),
             ],
           ),
-      buildTogglePlayerQuest(),
-      buildControlGold(),
     ],
   );
 
-  Widget buildControlGold() => buildWatch(amulet.playerGold, (gold) => buildText('${gold}g', color: AmuletColors.Gold));
+  Widget buildControlGold() => Container(
+      width: 50,
+      height: 50,
+      alignment: Alignment.center,
+      color: Palette.brown_4,
+      child: buildWatch(amulet.playerGold, (gold) => buildText('${gold}g', color: AmuletColors.Gold)));
 
   Widget buildTextValue(value) => buildText(value, color: Colors.white70);
 
