@@ -637,6 +637,13 @@ enum AmuletItem {
   double? tryInterpolate(num start, num end, double? t) =>
       t == null ? null : interpolate(start, end, t);
 
+  int? tryGetUpgradeCost(int? level){
+    if (level == null) {
+      return null;
+    }
+    return getUpgradeCost(level);
+  }
+
   int getUpgradeCost(int level) =>
       (quantify * (level * level)).ceil();
 

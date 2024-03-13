@@ -602,6 +602,7 @@ class AmuletUI {
 
   Widget buildEquippedAmuletItems() =>
       buildWatch(amulet.equippedChangedNotifier, (t) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           buildWatchAmuletItemObject(SlotType.Weapon),
           buildWatchAmuletItemObject(SlotType.Helm),
@@ -1439,12 +1440,15 @@ class AmuletUI {
 
     const width = 45.0;
     final amuletItemObject = amulet.getEquipped(slotType);
+    final amuletItem = amuletItemObject?.amuletItem;
+    final level = amuletItemObject?.level;
+    final upgradeCost = amuletItem?.tryGetUpgradeCost(level);
 
     final button = onPressed(
-      action: amuletItemObject == null ? null : () => amulet.dropAmuletItem(amuletItemObject.amuletItem),
-      onRightClick: amuletItemObject == null ? null : () {
+      action: amuletItem == null ? null : () => amulet.dropAmuletItem(amuletItem),
+      onRightClick: amuletItem == null ? null : () {
         visibleRightClickedToDrop = false;
-        amulet.dropAmuletItem(amuletItemObject.amuletItem);
+        amulet.dropAmuletItem(amuletItem);
       },
       child: buildBorder(
         color: Palette.brown_4,
@@ -1462,8 +1466,8 @@ class AmuletUI {
                 width: width,
                 color: Colors.white12,
                 alignment: Alignment.center,
-                child: amuletItemObject == null ? null : AmuletItemImage(
-                  amuletItem: amuletItemObject.amuletItem,
+                child: amuletItem == null ? null : AmuletItemImage(
+                  amuletItem: amuletItem,
                   scale: 1.2,),
               ),
             ],
@@ -1472,17 +1476,39 @@ class AmuletUI {
       ),
     );
 
-    return buildMouseOverHint(
-      child: button,
-      panel: Column(
-        children: [
-          if (amuletItemObject != null && visibleRightClickedToDrop)
-            buildText('left click to drop'),
-          tryBuildCardAmuletItemObject(amuletItemObject),
-        ],
-      ),
-      left: 90,
-      bottom: 0,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        buildMouseOverHint(
+          child: button,
+          panel: Column(
+            children: [
+              if (amuletItemObject != null && visibleRightClickedToDrop)
+                buildText('left click to drop'),
+              tryBuildCardAmuletItemObject(amuletItemObject),
+            ],
+          ),
+          left: 90,
+          bottom: 0,
+        ),
+        if (upgradeCost != null)
+        Container(
+          decoration: BoxDecoration(
+            color: Palette.brown_3,
+            border: Border.all(color: Palette.brown_2, width: 2),
+            borderRadius: BorderRadius.zero,
+          ),
+          margin: const EdgeInsets.only(left: 8),
+          padding: paddingAll8,
+          alignment: Alignment.center,
+          child: Column(
+            children: [
+              buildText('upgrade', color: AmuletColors.Gold),
+              buildText('${upgradeCost}g', color: AmuletColors.Gold),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
