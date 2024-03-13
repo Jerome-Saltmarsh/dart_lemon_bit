@@ -119,13 +119,13 @@ class AmuletUI {
               left: 8,
               child: buildHudBottomLeft(),
           ),
-      Positioned(
-          bottom: 100,
-          child: buildWatchVisible(
-            amulet.windowVisiblePlayerSkills,
-            buildWindowPlayerSkills(),
-          )
-      ),
+      // Positioned(
+      //     bottom: 100,
+      //     child: buildWatchVisible(
+      //       amulet.windowVisiblePlayerSkills,
+      //       buildWindowPlayerSkills(),
+      //     )
+      // ),
       Positioned(
         bottom: 8,
         child: buildRowPlayerSkills(),
@@ -1075,43 +1075,43 @@ class AmuletUI {
       AmuletImage(srcX: 768, srcY: 32, width: 16, height: 16);
 
 
-  Widget buildWindowPlayerSkills() => buildWindowBorder(
-    child: GSContainer(
-          width: 270,
-          height: 270 * goldenRatio_1618,
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  buildHint(
-                    child: buildIconSkills(),
-                    text: 'Skills (${amulet.amuletKeys.toggleWindowSkills.name.toUpperCase()})',
-                  ),
-                  // buildButtonFilterSkills(),
-                  buildButtonClose(amulet.windowVisiblePlayerSkills)
-                ],
-              ),
-              height16,
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  buildButtonCasteType(CasteType.Sword),
-                  width8,
-                  buildButtonCasteType(CasteType.Bow),
-                  width8,
-                  buildButtonCasteType(CasteType.Staff),
-                  width8,
-                  buildButtonCasteType(CasteType.Passive),
-                ],
-              ),
-              height32,
-              buildGridSkillTypes(),
-            ],
-          ),
-        ),
-  );
+  // Widget buildWindowPlayerSkills() => buildWindowBorder(
+  //   child: GSContainer(
+  //         width: 270,
+  //         height: 270 * goldenRatio_1618,
+  //         child: Column(
+  //           children: [
+  //             Row(
+  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //               crossAxisAlignment: CrossAxisAlignment.center,
+  //               children: [
+  //                 buildHint(
+  //                   child: buildIconSkills(),
+  //                   text: 'Skills (${amulet.amuletKeys.toggleWindowSkills.name.toUpperCase()})',
+  //                 ),
+  //                 // buildButtonFilterSkills(),
+  //                 buildButtonClose(amulet.windowVisiblePlayerSkills)
+  //               ],
+  //             ),
+  //             height16,
+  //             Row(
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               children: [
+  //                 buildButtonCasteType(CasteType.Sword),
+  //                 width8,
+  //                 buildButtonCasteType(CasteType.Bow),
+  //                 width8,
+  //                 buildButtonCasteType(CasteType.Staff),
+  //                 width8,
+  //                 buildButtonCasteType(CasteType.Passive),
+  //               ],
+  //             ),
+  //             height32,
+  //             buildGridSkillTypes(),
+  //           ],
+  //         ),
+  //       ),
+  // );
 
   Widget buildButtonFilterSkills() {
     return onPressed(
@@ -1175,20 +1175,13 @@ class AmuletUI {
         );
       });
 
-  Widget buildHint({
-    required Widget child,
-    required String text,
-    double top = -60,
-    double right = -50,
-  }) =>
-      buildMouseOverHint(
-        child: child,
-        panel: buildBorder(
-            color: Colors.white70,
-            width: 2,
-            child: GSContainer(child: buildText(text))),
-        getTop: () => top,
-        right: right,
+  Widget buildHint(String text) =>
+      buildBorder(
+          color: Colors.white70,
+          width: 2,
+          child: GSContainer(
+            child: buildText(text),
+            width: 150,)
       );
 
   Widget buildMouseOverHint({
@@ -2361,12 +2354,19 @@ class AmuletUI {
     ],
   );
 
-  Widget buildControlGold() => Container(
-      width: 50,
-      height: 50,
-      alignment: Alignment.center,
-      color: Palette.brown_4,
-      child: buildWatch(amulet.playerGold, (gold) => buildText('${gold}g', color: AmuletColors.Gold)));
+  Widget buildControlGold() {
+
+    final child = Container(
+        width: 50,
+        height: 50,
+        alignment: Alignment.center,
+        color: Palette.brown_4,
+        child: buildWatch(amulet.playerGold,
+                (gold) => buildText('${gold}g', color: AmuletColors.Gold)));
+
+    final panel = buildHint('stand near a fireplace to upgrade equipment');
+    return buildMouseOverHint(child: child, panel: panel, bottom: 60);
+  }
 
   Widget buildTextValue(value) => buildText(value, color: Colors.white70);
 
