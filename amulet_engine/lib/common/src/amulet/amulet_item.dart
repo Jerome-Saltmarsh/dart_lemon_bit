@@ -130,9 +130,8 @@ enum AmuletItem {
     label: 'Leather Cap',
     slotType: SlotType.Helm,
     subType: HelmType.Leather_Cap,
-    maxHealth: 0.25,
-    maxMagic: 0.25,
     skillSet: {
+      SkillType.Max_Health: 1.0,
       SkillType.Health_Regen: 0.25,
       SkillType.Critical_Hit: 0.25,
     },
@@ -141,9 +140,8 @@ enum AmuletItem {
     label: 'Steel Cap',
     slotType: SlotType.Helm,
     subType: HelmType.Steel_Cap,
-    maxHealth: 0.25,
-    maxMagic: 0.25,
     skillSet: {
+      SkillType.Max_Health: 1.0,
       SkillType.Wind_Cut: 0.5,
     },
   ),
@@ -151,9 +149,8 @@ enum AmuletItem {
     label: 'Full Helm',
     slotType: SlotType.Helm,
     subType: HelmType.Full_Helm,
-    maxHealth: 0.5,
-    maxMagic: 0,
     skillSet: {
+      SkillType.Max_Health: 1.0,
       SkillType.Mighty_Strike: 0.5,
     },
   ),
@@ -161,9 +158,8 @@ enum AmuletItem {
     label: 'Crooked Hat',
     slotType: SlotType.Helm,
     subType: HelmType.Pointed_Hat_Purple,
-    maxHealth: 0.0,
-    maxMagic: 0.5,
     skillSet: {
+      SkillType.Max_Magic: 1.0,
       SkillType.Magic_Regen: 0.5,
     },
   ),
@@ -171,8 +167,8 @@ enum AmuletItem {
     label: 'Pointed Hat',
     slotType: SlotType.Helm,
     subType: HelmType.Pointed_Hat_Black,
-    maxMagic: 0.5,
     skillSet: {
+      SkillType.Max_Magic: 1.0,
       SkillType.Magic_Steal: 0.5,
     },
   ),
@@ -180,9 +176,8 @@ enum AmuletItem {
     label: 'Cowl',
     slotType: SlotType.Helm,
     subType: HelmType.Cowl,
-    maxHealth: 0.0,
-    maxMagic: 0.5,
     skillSet: {
+      SkillType.Max_Magic: 1.0,
       SkillType.Frostball: 0.5,
     },
   ),
@@ -190,9 +185,8 @@ enum AmuletItem {
     label: 'Feather Cap',
     slotType: SlotType.Helm,
     subType: HelmType.Feather_Cap,
-    maxHealth: 0.25,
-    maxMagic: 0.25,
     skillSet: {
+      SkillType.Max_Health: 1.0,
       SkillType.Split_Shot: 0.5,
     },
   ),
@@ -200,8 +194,6 @@ enum AmuletItem {
     label: 'Cape',
     slotType: SlotType.Helm,
     subType: HelmType.Cape,
-    maxHealth: 0.25,
-    maxMagic: 0.25,
     skillSet: {
       SkillType.Agility: 0.5,
     },
@@ -210,7 +202,6 @@ enum AmuletItem {
     label: 'Veil',
     slotType: SlotType.Helm,
     subType: HelmType.Cape,
-    maxHealth: 0.5,
     skillSet: {
       SkillType.Health_Steal: 0.5,
     },
@@ -219,8 +210,6 @@ enum AmuletItem {
     label: 'Tunic',
     slotType: SlotType.Armor,
     subType: ArmorType.Tunic,
-    maxHealth: 0.5,
-    maxMagic: 0.5,
     skillSet: {
       SkillType.Critical_Hit: 1.0,
     },
@@ -229,9 +218,8 @@ enum AmuletItem {
     label: 'Leather',
     slotType: SlotType.Armor,
     subType: ArmorType.Leather,
-    maxHealth: 0.5,
-    maxMagic: 0.5,
     skillSet: {
+      SkillType.Max_Health: 1.0,
       SkillType.Mighty_Strike: 1.0,
     },
   ),
@@ -239,9 +227,8 @@ enum AmuletItem {
     label: 'Chainmail',
     slotType: SlotType.Armor,
     subType: ArmorType.Chainmail,
-    maxHealth: 1.0,
-    maxMagic: 0,
     skillSet: {
+      SkillType.Max_Health: 1.0,
       SkillType.Area_Damage: 1.0,
     },
   ),
@@ -249,9 +236,8 @@ enum AmuletItem {
     label: 'Platemail',
     slotType: SlotType.Armor,
     subType: ArmorType.Platemail,
-    maxHealth: 0.75,
-    maxMagic: 0.25,
     skillSet: {
+      SkillType.Max_Health: 1.0,
       SkillType.Mighty_Strike: 1.0,
     },
   ),
@@ -259,9 +245,8 @@ enum AmuletItem {
     label: 'Robes',
     slotType: SlotType.Armor,
     subType: ArmorType.Robes,
-    maxHealth: 0.5,
-    maxMagic: 0.5,
     skillSet: {
+      SkillType.Max_Health: 1.0,
       SkillType.Magic_Steal: 1.0,
     },
   ),
@@ -269,9 +254,8 @@ enum AmuletItem {
     label: 'Garb',
     slotType: SlotType.Armor,
     subType: ArmorType.Robes,
-    maxHealth: 0.5,
-    maxMagic: 0.5,
     skillSet: {
+      SkillType.Max_Health: 1.0,
       SkillType.Heal: 1.0,
     },
   ),
@@ -279,9 +263,8 @@ enum AmuletItem {
     label: 'Cloak',
     slotType: SlotType.Armor,
     subType: ArmorType.Cloak,
-    maxHealth: 0.2,
-    maxMagic: 0.8,
     skillSet: {
+      SkillType.Max_Health: 1.0,
       SkillType.Agility: 1.0,
     },
   ),
@@ -289,9 +272,8 @@ enum AmuletItem {
     label: 'Mantle',
     slotType: SlotType.Armor,
     subType: ArmorType.Mantle,
-    maxHealth: 0.5,
-    maxMagic: 0.5,
     skillSet: {
+      SkillType.Max_Health: 1.0,
       SkillType.Shield: 1.0,
     },
   ),
@@ -299,9 +281,8 @@ enum AmuletItem {
     label: 'Shroud',
     slotType: SlotType.Armor,
     subType: ArmorType.Shroud,
-    maxHealth: 0.5,
-    maxMagic: 0.5,
     skillSet: {
+      SkillType.Max_Health: 1.0,
       SkillType.Health_Steal: 1.0,
     },
   ),
@@ -309,18 +290,16 @@ enum AmuletItem {
     label: 'Leather Boots',
     slotType: SlotType.Shoes,
     subType: ShoeType.Leather_Boots,
-    maxHealth: 0.5,
-    maxMagic: 0.5,
     skillSet: {
+      SkillType.Max_Health: 1.0,
     },
   ),
   Shoes_Grieves(
     label: 'Grieves',
     slotType: SlotType.Shoes,
     subType: ShoeType.Grieves,
-    maxHealth: 0.5,
-    maxMagic: 0.0,
     skillSet: {
+      SkillType.Max_Health: 1.0,
       SkillType.Wind_Cut: 0.5,
     },
   ),
@@ -328,9 +307,8 @@ enum AmuletItem {
     label: 'Sabatons',
     slotType: SlotType.Shoes,
     subType: ShoeType.Sabatons,
-    maxHealth: 0.0,
-    maxMagic: 0.0,
     skillSet: {
+      SkillType.Max_Health: 1.0,
       SkillType.Mighty_Strike: 1.0,
     },
   ),
@@ -338,8 +316,8 @@ enum AmuletItem {
     label: 'Black Slippers',
     slotType: SlotType.Shoes,
     subType: ShoeType.Black_Slippers,
-    maxMagic: 0.0,
     skillSet: {
+      SkillType.Max_Health: 1.0,
       SkillType.Magic_Regen: 1.0,
     },
   ),
@@ -347,9 +325,8 @@ enum AmuletItem {
     label: 'Footwraps',
     slotType: SlotType.Shoes,
     subType: ShoeType.Footwraps,
-    maxHealth: 0.0,
-    maxMagic: 0.5,
     skillSet: {
+      SkillType.Max_Health: 1.0,
       SkillType.Magic_Steal: 0.5,
     },
   ),
@@ -357,9 +334,8 @@ enum AmuletItem {
     label: 'Soles',
     slotType: SlotType.Shoes,
     subType: ShoeType.Soles,
-    maxHealth: 0.0,
-    maxMagic: 0.0,
     skillSet: {
+      SkillType.Max_Health: 1.0,
       SkillType.Magic_Regen: 1.0,
     },
   ),
@@ -367,9 +343,8 @@ enum AmuletItem {
     label: 'Treads',
     slotType: SlotType.Shoes,
     subType: ShoeType.Treads,
-    maxHealth: 0.0,
-    maxMagic: 0.0,
     skillSet: {
+      SkillType.Max_Health: 1.0,
       SkillType.Agility: 1.0,
     },
   ),
@@ -377,9 +352,8 @@ enum AmuletItem {
     label: 'Striders',
     slotType: SlotType.Shoes,
     subType: ShoeType.Striders,
-    maxHealth: 0.0,
-    maxMagic: 0.0,
     skillSet: {
+      SkillType.Max_Health: 1.0,
       SkillType.Scout: 1.0,
     },
   ),
@@ -387,9 +361,8 @@ enum AmuletItem {
     label: 'Satin_Boots',
     slotType: SlotType.Shoes,
     subType: ShoeType.Satin_Boots,
-    maxHealth: 0.0,
-    maxMagic: 0.0,
     skillSet: {
+      SkillType.Max_Health: 1.0,
       SkillType.Heal: 1.0,
     },
   ),
@@ -479,61 +452,59 @@ enum AmuletItem {
         SkillType.Agility: 1.0,
       }),
   Unique_Helm_Of_Fireball(
-      label: 'Roasted Hat',
+      label: 'Scorched Hat',
       slotType: SlotType.Helm,
       subType: HelmType.Pointed_Hat_Purple,
-      maxMagic: 1.0,
       quality: ItemQuality.Unique,
       skillSet: {
+        SkillType.Max_Health: 1.0,
+        SkillType.Max_Magic: 1.0,
         SkillType.Fireball: 1.5,
       }),
   Unique_Helm_Of_Frostball(
       label: 'Frosted Hat',
       slotType: SlotType.Helm,
       subType: HelmType.Pointed_Hat_Purple,
-      maxMagic: 1.0,
-      maxHealth: 0.0,
       quality: ItemQuality.Unique,
       skillSet: {
+        SkillType.Max_Health: 1.0,
         SkillType.Frostball: 1.5,
       }),
   Unique_Helm_Of_Magic_Regen(
       label: 'Frosted Hat',
       slotType: SlotType.Helm,
       subType: HelmType.Pointed_Hat_Purple,
-      maxMagic: 1.0,
-      maxHealth: 0.0,
       quality: ItemQuality.Unique,
       skillSet: {
+        SkillType.Max_Health: 1.0,
         SkillType.Magic_Regen: 1.5,
       }),
   Rare_Helm_Of_Fireball(
       label: 'Lost Hat of Flame',
       slotType: SlotType.Helm,
       subType: HelmType.Pointed_Hat_Purple,
-      maxMagic: 1.0,
       quality: ItemQuality.Rare,
       skillSet: {
+        SkillType.Max_Health: 1.0,
         SkillType.Fireball: 2.5,
       }),
   Rare_Helm_Of_Frostball(
       label: 'Sacred Hat of the Tempest',
       slotType: SlotType.Helm,
       subType: HelmType.Pointed_Hat_Purple,
-      maxMagic: 1.0,
-      maxHealth: 0.0,
       quality: ItemQuality.Rare,
       skillSet: {
+        SkillType.Max_Health: 1.0,
+        SkillType.Max_Magic: 1.0,
         SkillType.Frostball: 2.5,
       }),
   Rare_Helm_Of_Magic_Regen(
       label: 'Legendary Hat of Magic',
       slotType: SlotType.Helm,
       subType: HelmType.Pointed_Hat_Purple,
-      maxMagic: 1.0,
-      maxHealth: 0.0,
       quality: ItemQuality.Rare,
       skillSet: {
+        SkillType.Max_Health: 1.0,
         SkillType.Magic_Regen: 2.5,
       }),
   ;
@@ -551,8 +522,6 @@ enum AmuletItem {
   final double? attackSpeed;
   final ItemQuality quality;
   final String label;
-  final double? maxHealth;
-  final double? maxMagic;
   final Map<SkillType, double> skillSet;
   final Map<DamageType, double> resistances;
 
@@ -562,8 +531,6 @@ enum AmuletItem {
     required this.label,
     this.quality = ItemQuality.Common,
     this.skillSet = const {},
-    this.maxHealth,
-    this.maxMagic,
     this.range,
     this.attackSpeed,
     this.damageMin,
@@ -592,8 +559,6 @@ enum AmuletItem {
     const pointsPerSkill = 2.0;
     final damageMax = (damage ?? 0) * pointsPerDamage * (attackSpeed ?? 0) * (range ?? 0);
     var total = 0.0;
-    total += maxHealth ?? 0;
-    total += maxMagic ?? 0;
     total += attackSpeed ?? 0;
     total += damageMax;
     total += (damageMin ?? 0) * damageMax;
@@ -642,11 +607,21 @@ enum AmuletItem {
     throw Exception();
   }
 
-  double? getMaxHealth(int level) =>
-      linear(Constraint_Health, maxHealth, level);
+  double? getMaxHealth(int level) {
+    final skillLevel = getSkillTypeValue(
+          skillType: SkillType.Max_Health,
+          level: level,
+      ).floor();
+    return SkillType.getMaxHealth(skillLevel).toDouble();
+  }
 
-  double? getMaxMagic(int level) =>
-      linear(Constraint_Magic, maxMagic, level);
+  double? getMaxMagic(int level) {
+    final skillLevel = getSkillTypeValue(
+      skillType: SkillType.Max_Magic,
+      level: level,
+    ).floor();
+    return SkillType.getMaxMagic(skillLevel).toDouble();
+  }
 
   double? getWeaponDamageMin(int level) {
     final damageMin = this.damageMin;
@@ -673,8 +648,9 @@ enum AmuletItem {
           ? null
           : interpolate(constraint.min, constraint.max, i) * level;
 
-  static const Constraint_Health = Constraint(min: 0, max: 20);
-  static const Constraint_Magic = Constraint(min: 0, max: 20);
   static const Constraint_Weapon_Damage = Constraint(min: 1, max: 20);
+  static const Health_Per_Level = 5.0;
+  static const Magic_Per_Level = 5.0;
 }
+
 

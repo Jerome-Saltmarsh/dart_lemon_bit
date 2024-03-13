@@ -23,4 +23,6 @@ String getSkillTypeDescription(SkillType skillType) => switch (skillType) {
       SkillType.Scout => 'increase movement speed',
       SkillType.Shield => 'reduces non magical damage received',
       SkillType.Wind_Cut => 'cuts the air in front',
+      SkillType.Max_Health => 'increases total health',
+      SkillType.Max_Magic => 'increases total magic',
     };

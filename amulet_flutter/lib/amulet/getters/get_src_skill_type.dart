@@ -27,4 +27,6 @@ List<double> getSrcSkillType(SkillType skillType) =>
       SkillType.Scout =>  const [416, 640, 32, 32],
       SkillType.Shield => const [416, 352, 32 ,32],
       SkillType.Wind_Cut => const [416, 800, 32 ,32],
+      SkillType.Max_Health => const [416, 832, 32 ,32],
+      SkillType.Max_Magic => const [416, 864, 32 ,32],
     };

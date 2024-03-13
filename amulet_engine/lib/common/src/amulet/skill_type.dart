@@ -54,6 +54,12 @@ enum SkillType {
       magicCost: 4,
       range: 0,
   ),
+  Max_Health(
+    casteType: CasteType.Passive,
+  ),
+  Max_Magic(
+    casteType: CasteType.Passive,
+  ),
   Agility(
     casteType: CasteType.Passive,
   ),
@@ -314,6 +320,15 @@ enum SkillType {
 
   static List<SkillType> findByCasteType(CasteType casteType) =>
       values.where((element) => element.casteType == CasteType.Passive).toList(growable: false);
+
+
+  static int getMaxHealth(int level){
+    return level * 5;
+  }
+
+  static int getMaxMagic(int level){
+    return level * 5;
+  }
 
   static double linear(double start, double end, int level) =>
       interpolate(

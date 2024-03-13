@@ -1621,8 +1621,8 @@ class AmuletUI {
     final currentAmuletItem = current?.amuletItem;
     final damageMaxDiff = getDiff(next.damageMax, current?.damageMax)?.toInt();
     final damageMinDiff = getDiff(next.damageMin, current?.damageMin)?.toInt();
-    final healthDiff = getDiff(nextAmuletItem.maxHealth, currentAmuletItem?.maxHealth);
-    final magicDiff = getDiff(nextAmuletItem.maxMagic, currentAmuletItem?.maxMagic);
+    // final healthDiff = getDiff(nextAmuletItem.maxHealth, currentAmuletItem?.maxHealth);
+    // final magicDiff = getDiff(nextAmuletItem.maxMagic, currentAmuletItem?.maxMagic);
     final levelDiff = getDiff(next.level, current?.level);
     final valueDiff = getDiff(nextAmuletItem.quantify, currentAmuletItem?.quantify);
     final showDiff = current != next;
@@ -1653,30 +1653,30 @@ class AmuletUI {
           //     value: nextAmuletItem.quantify,
           //     diff: valueDiff,
           //   ),
-          if (healthDiff != null)
-            buildComparisonRow(
-              lead: Row(
-                children: [
-                  iconHealth,
-                  width8,
-                  buildText('health'),
-                ],
-              ),
-              value: nextAmuletItem.maxHealth,
-              diff: showDiff ? healthDiff : null,
-            ),
-          if (magicDiff != null)
-            buildComparisonRow(
-              lead: Row(
-                children: [
-                  iconMagic,
-                  width8,
-                  buildText('magic'),
-                ],
-              ),
-              value: nextAmuletItem.maxMagic,
-              diff: showDiff ? magicDiff : null,
-            ),
+          // if (healthDiff != null)
+          //   buildComparisonRow(
+          //     lead: Row(
+          //       children: [
+          //         iconHealth,
+          //         width8,
+          //         buildText('health'),
+          //       ],
+          //     ),
+          //     value: nextAmuletItem.maxHealth,
+          //     diff: showDiff ? healthDiff : null,
+          //   ),
+          // if (magicDiff != null)
+          //   buildComparisonRow(
+          //     lead: Row(
+          //       children: [
+          //         iconMagic,
+          //         width8,
+          //         buildText('magic'),
+          //       ],
+          //     ),
+          //     value: nextAmuletItem.maxMagic,
+          //     diff: showDiff ? magicDiff : null,
+          //   ),
           if (damageMinDiff != null)
             buildComparisonRow(
               lead: 'min damage',
