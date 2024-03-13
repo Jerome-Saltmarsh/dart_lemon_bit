@@ -2115,32 +2115,37 @@ class AmuletUI {
   Widget buildCardSmallSkillType(SkillType skillType) {
     const size = 50.0;
 
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 2),
-      child: buildMouseOverHint(
-        bottom: 80,
-        left: -60,
-        panel: buildCardLargeSkillType(skillType),
-        child: Container(
-          color: amulet.playerSkillRight == skillType ? Palette.brown_2 : Palette.brown_4,
-          padding: const EdgeInsets.all(4),
-          child: Column(
-            children: [
-              Container(
-                width: size,
-                child: buildText(amulet.getSkillTypeLevel(skillType), color: Colors.white70),
-                alignment: Alignment.center,
-                color: Colors.white12,
-              ),
-              Container(
+    return onPressed(
+      action: skillType.isPassive
+          ? null
+          : () => amulet.selectSkillTypeRight(skillType),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 2),
+        child: buildMouseOverHint(
+          bottom: 80,
+          left: -60,
+          panel: buildCardLargeSkillType(skillType),
+          child: Container(
+            color: amulet.playerSkillRight == skillType ? Palette.brown_2 : Palette.brown_4,
+            padding: const EdgeInsets.all(4),
+            child: Column(
+              children: [
+                Container(
                   width: size,
-                  height: size,
+                  child: buildText(amulet.getSkillTypeLevel(skillType), color: Colors.white70),
                   alignment: Alignment.center,
-                  color: Colors.white24,
-                  child: buildIconSkillType(skillType)),
-            ],
-          ),
-        )
+                  color: Colors.white12,
+                ),
+                Container(
+                    width: size,
+                    height: size,
+                    alignment: Alignment.center,
+                    color: Colors.white24,
+                    child: buildIconSkillType(skillType)),
+              ],
+            ),
+          )
+        ),
       ),
     );
 

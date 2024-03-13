@@ -769,9 +769,9 @@ class AmuletController {
         break;
       case NetworkRequestAmulet.Select_Skill_Type_Right:
         final skillTypeIndex = parseArg2(arguments);
-        if (skillTypeIndex == null) return;
         final skillType = SkillType.values.tryGet(skillTypeIndex);
         if (skillType == null){
+          player.writeGameError(GameError.Invalid_Skill_Type_Index);
           return;
         }
         player.selectSkillTypeRight(skillType);
