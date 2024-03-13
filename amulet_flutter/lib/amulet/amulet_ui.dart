@@ -1473,6 +1473,10 @@ class AmuletUI {
       ),
     );
 
+
+    final canAfford = upgradeCost != null && amulet.playerGold.value >= upgradeCost;
+    final upgradeColor = canAfford ? AmuletColors.Gold : AmuletColors.Gold70;
+
     return Container(
       margin: const EdgeInsets.only(right: 4),
       child: Column(
@@ -1492,8 +1496,8 @@ class AmuletUI {
                 alignment: Alignment.center,
                 child: Column(
                   children: [
-                    buildText('upgrade', color: AmuletColors.Gold70, size: 13),
-                    buildText('${upgradeCost}g', color: AmuletColors.Gold70),
+                    buildText('upgrade', color: upgradeColor, size: 13),
+                    buildText('${upgradeCost}g', color: upgradeColor),
                   ],
                 ),
               ),
