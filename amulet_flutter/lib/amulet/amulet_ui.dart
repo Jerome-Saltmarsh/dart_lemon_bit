@@ -1446,7 +1446,7 @@ class AmuletUI {
     final amuletItemObject = amulet.getEquipped(slotType);
     final amuletItem = amuletItemObject?.amuletItem;
     final level = amuletItemObject?.level;
-    final upgradeCost = amuletItem?.tryGetUpgradeCost(level);
+    final upgradeCost = amulet.playerCanUpgrade ? amuletItem?.tryGetUpgradeCost(level) : null;
 
     final button = onPressed(
       action: amuletItem == null ? null : () => amulet.dropAmuletItem(amuletItem),
@@ -1499,8 +1499,8 @@ class AmuletUI {
                 alignment: Alignment.center,
                 child: Column(
                   children: [
-                    buildText('upgrade', color: AmuletColors.Gold, size: 13),
-                    buildText('${upgradeCost}g', color: AmuletColors.Gold),
+                    buildText('upgrade', color: AmuletColors.Gold70, size: 13),
+                    buildText('${upgradeCost}g', color: AmuletColors.Gold70),
                   ],
                 ),
               ),

@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:amulet_common/src.dart';
@@ -632,5 +633,46 @@ class Scene {
       if (nodeType != NodeType.Shrine) continue;
       variations[i] = NodeType.Variation_Shrine_Active;
     }
+  }
+
+  bool getNodeTypeWithinRangePosition({
+    required Position position,
+    required int nodeType,
+    required int distance,
+  }) =>
+      getNodeTypeWithinRange(
+        nodeIndex: getIndexPosition(position),
+        nodeType: nodeType,
+        distance: distance,
+      );
+
+  bool getNodeTypeWithinRange({
+    required int nodeIndex,
+    required int nodeType,
+    required int distance,
+  }) {
+
+    final posRow = getRow(nodeIndex);
+    final posColumn = getColumn(nodeIndex);
+    final posZ = getZ(nodeIndex);
+    final nodeTypes = this.nodeTypes;
+
+    final rowStart = max(posRow - distance, 0);
+    final rowEnd = min(posRow + distance, rows);
+    final columnStart = max(posColumn - distance, 0);
+    final columnEnd = min(posColumn + distance, columns);
+    final zStart = max(posZ - distance, 0);
+    final zEnd = min(posZ + distance, height);
+
+    for (var z = zStart; z < zEnd; z++) {
+      for (var row = rowStart; row < rowEnd; row++){
+         for (var column = columnStart; column < columnEnd; column++){
+           final nodeIndex = getIndex(z, row, column);
+           if (nodeTypes[nodeIndex] != nodeType) continue;
+           return true;
+         }
+      }
+    }
+    return false;
   }
 }

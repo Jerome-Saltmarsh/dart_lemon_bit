@@ -165,6 +165,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Gold:
          readPlayerGold();
          break;
+       case NetworkResponseAmulet.Player_Can_Upgrade:
+         readPlayerCanUpgrade();
+         break;
      }
   }
 
@@ -384,4 +387,9 @@ extension AmuletParser on IsometricParser {
 
   void readPlayerGold() =>
       amulet.playerGold.value = readUInt24();
+
+  void readPlayerCanUpgrade() {
+    amulet.playerCanUpgrade = readBool();
+    amulet.notifyEquipmentChanged();
+  }
 }

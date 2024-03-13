@@ -6,7 +6,6 @@ export 'extensions/src.dart';
 export 'io/src.dart';
 export 'json/src.dart';
 export 'utils/src.dart';
-export 'mixins/src.dart';
 
 
 

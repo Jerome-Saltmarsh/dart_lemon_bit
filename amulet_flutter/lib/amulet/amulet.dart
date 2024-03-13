@@ -152,6 +152,7 @@ class Amulet extends IsometricGame {
   int? aimTargetLevel;
   final aimTargetSet = Watch(false);
   final aimTargetNotifier = Watch(0);
+  var playerCanUpgrade = false;
 
   Amulet() {
     print('Amulet()');
@@ -856,6 +857,8 @@ class Amulet extends IsometricGame {
   }
 
   void notifySkillsChanged() => playerSkillsNotifier.value++;
+
+  void notifyEquipmentChanged() => equippedChangedNotifier.value++;
 }
 
 

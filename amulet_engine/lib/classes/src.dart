@@ -10,3 +10,4 @@ export 'talk_option.dart';
 export 'games/src.dart';
 export 'npcs/src.dart';
 export 'maps/map_gameobject_to_amulet_item_object.dart';
+export 'mixins/src.dart';

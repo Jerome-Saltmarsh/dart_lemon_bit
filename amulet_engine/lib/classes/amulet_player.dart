@@ -2,6 +2,7 @@
 import 'dart:math';
 
 import 'package:amulet_common/src.dart';
+import 'package:amulet_engine/classes/mixins/mixin_can_upgrade.dart';
 import 'package:amulet_engine/src.dart';
 import 'package:lemon_lang/src.dart';
 import 'package:lemon_math/src.dart';
@@ -13,7 +14,8 @@ import '../isometric/src.dart';
 class AmuletPlayer extends IsometricPlayer with
     Equipped,
     Skilled,
-    Gold
+    Gold,
+    MixinCanUpgrade
 {
   static const Data_Key_Dead_Count = 'dead';
 
@@ -994,6 +996,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeDebugEnabled();
     writeSkillSlots();
     writeSkillSlotIndex();
+    writePlayerCanUpgrade();
   }
 
   void writeSceneName() {
@@ -1773,6 +1776,22 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(NetworkResponseAmulet.Player_Gold);
     writeUInt24(gold.toInt());
   }
+
+  @override
+  set canUpgrade(bool value) {
+    if (value == canUpgrade) return;
+    super.canUpgrade = value;
+    writePlayerCanUpgrade();
+  }
+
+  void writePlayerCanUpgrade() {
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Player_Can_Upgrade);
+    writeBool(canUpgrade);
+  }
+
+
+
 }
 
 String buildResistances(String text, String name, double resistance){
