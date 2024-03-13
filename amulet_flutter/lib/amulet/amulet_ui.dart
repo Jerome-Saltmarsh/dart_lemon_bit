@@ -86,14 +86,7 @@ class AmuletUI {
           Positioned(
               bottom: 8,
               right: 8,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  buildControlGold(),
-                  buildTogglePlayerQuest(),
-                  buildWorldMap(),
-                ],
-              )
+              child: buildWorldMap()
           ),
           Positioned(
             top: 8,
@@ -173,7 +166,16 @@ class AmuletUI {
   Widget buildHudBottomLeft() =>
       buildWatchVisible(
         amulet.windowVisibleEquipment,
-        buildEquippedAmuletItems(),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            buildEquippedAmuletItems(),
+            width16,
+            buildControlGold(),
+            width6,
+            buildTogglePlayerQuest(),
+          ],
+        ),
       );
 
   Widget buildWindowPotions() =>
@@ -1478,42 +1480,45 @@ class AmuletUI {
       ),
     );
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        if (upgradeCost != null)
-          onPressed(
-            action: () => amulet.upgradeSlotType(slotType),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Palette.brown_3,
-                border: Border.all(color: Palette.brown_2, width: 2),
-                borderRadius: BorderRadius.zero,
-              ),
-              margin: const EdgeInsets.only(bottom: 8),
-              padding: paddingAll4,
-              alignment: Alignment.center,
-              child: Column(
-                children: [
-                  buildText('upgrade', color: AmuletColors.Gold, size: 13),
-                  buildText('${upgradeCost}g', color: AmuletColors.Gold),
-                ],
+    return Container(
+      margin: const EdgeInsets.only(right: 4),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          if (upgradeCost != null)
+            onPressed(
+              action: () => amulet.upgradeSlotType(slotType),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Palette.brown_3,
+                  border: Border.all(color: Palette.brown_2, width: 2),
+                  borderRadius: BorderRadius.zero,
+                ),
+                margin: const EdgeInsets.only(bottom: 8),
+                padding: paddingAll4,
+                alignment: Alignment.center,
+                child: Column(
+                  children: [
+                    buildText('upgrade', color: AmuletColors.Gold, size: 13),
+                    buildText('${upgradeCost}g', color: AmuletColors.Gold),
+                  ],
+                ),
               ),
             ),
+          buildMouseOverHint(
+            child: button,
+            panel: Column(
+              children: [
+                if (amuletItemObject != null && visibleRightClickedToDrop)
+                  buildText('left click to drop'),
+                tryBuildCardAmuletItemObject(amuletItemObject),
+              ],
+            ),
+            left: 0,
+            bottom: 130,
           ),
-        buildMouseOverHint(
-          child: button,
-          panel: Column(
-            children: [
-              if (amuletItemObject != null && visibleRightClickedToDrop)
-                buildText('left click to drop'),
-              tryBuildCardAmuletItemObject(amuletItemObject),
-            ],
-          ),
-          left: 0,
-          bottom: 130,
-        ),
-      ],
+        ],
+      ),
     );
   }
 
