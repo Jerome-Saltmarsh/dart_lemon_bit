@@ -598,17 +598,24 @@ enum AmuletItem {
   static final Consumables =
   values.where((element) => element.isConsumable).toList(growable: false);
 
-  double? getMaxHealth(int level){
-    return getSkillTypeValue(skillType: SkillType.Max_Magic, level: level) * 5;
+  double? getMaxHealth(int level) =>
+      getSkillTypeValue(
+          skillType: SkillType.Max_Magic,
+          level: level,
+      ) * 5;
+
+  double? getMaxMagic(int level) =>
+      getSkillTypeValue(
+          skillType: SkillType.Max_Health,
+          level: level,
+      ) * 5;
+
+  int? tryGetUpgradeCost(int? level){
+    if (level == null) return null;
+    return getUpgradeCost(level);
   }
 
-  double? getMaxMagic(int level){
-    return getSkillTypeValue(skillType: SkillType.Max_Health, level: level) * 5;
-  }
-
-  double getUpgradeCost(int level){
-    return level * level * quantify;
-  }
+  int getUpgradeCost(int level) => (level * level * quantify).floor();
 
   int getSkillTypeValue({required SkillType skillType, required int level}){
     final skillValue = skillSet[skillType];
@@ -633,10 +640,7 @@ enum AmuletItem {
   static const Magic_Per_Level = 5.0;
   static const Damage_Per_Level = 1.0;
 
-  double? tryGetUpgradeCost(int? level){
-     if (level == null) return null;
-     return getUpgradeCost(level);
-  }
+
 }
 
 

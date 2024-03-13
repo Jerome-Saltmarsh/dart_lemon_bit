@@ -2148,24 +2148,28 @@ class AmuletUI {
           bottom: 80,
           left: -60,
           panel: buildCardLargeSkillType(skillType),
-          child: Container(
-            color: amulet.playerSkillRight == skillType ? Palette.brown_2 : Palette.brown_4,
-            padding: const EdgeInsets.all(4),
-            child: Column(
-              children: [
-                Container(
-                  width: size,
-                  child: buildText(amulet.getSkillTypeLevel(skillType), color: Colors.white70),
-                  alignment: Alignment.center,
-                  color: Colors.white12,
-                ),
-                Container(
+          child: buildBorder(
+            color: amulet.playerSkillRight == skillType ? Colors.white70 : Colors.transparent,
+            width: 3,
+            child: Container(
+              color: Palette.brown_4,
+              padding: const EdgeInsets.all(4),
+              child: Column(
+                children: [
+                  Container(
                     width: size,
-                    height: size,
+                    child: buildText(amulet.getSkillTypeLevel(skillType), color: Palette.brown_0),
                     alignment: Alignment.center,
-                    color: Colors.white24,
-                    child: buildIconSkillType(skillType)),
-              ],
+                    color: Palette.brown_4,
+                  ),
+                  Container(
+                      width: size,
+                      height: size,
+                      alignment: Alignment.center,
+                      color: Palette.brown_3,
+                      child: buildIconSkillType(skillType)),
+                ],
+              ),
             ),
           )
         ),
