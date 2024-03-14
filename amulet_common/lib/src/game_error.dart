@@ -111,6 +111,8 @@ enum GameError {
   Slot_Type_Empty,
   Not_Implemented,
   Cheats_Disabled,
+  Potions_Health_Full,
+  Potions_Magic_Full,
   ;
 
   static GameError fromIndex(int index) {

@@ -583,7 +583,6 @@ extension isometricDebugUI on IsometricDebug {
                   child: buildText(value));
             }),
           ),
-          // buildButtonAcquireItem(),
           buildButtonAcquireWeapon(),
           buildButtonAcquireHelm(),
           buildButtonAcquireArmor(),

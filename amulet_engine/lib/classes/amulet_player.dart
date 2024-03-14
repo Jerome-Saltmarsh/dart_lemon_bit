@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:amulet_common/src.dart';
 import 'package:amulet_engine/classes/mixins/mixin_can_upgrade.dart';
+import 'package:amulet_engine/classes/mixins/mixin_potions.dart';
 import 'package:amulet_engine/src.dart';
 import 'package:lemon_lang/src.dart';
 import 'package:lemon_math/src.dart';
@@ -15,7 +16,8 @@ class AmuletPlayer extends IsometricPlayer with
     Equipped,
     Skilled,
     Gold,
-    MixinCanUpgrade
+    MixinCanUpgrade,
+    MixinPotions
 {
   static const Data_Key_Dead_Count = 'dead';
 
@@ -46,6 +48,7 @@ class AmuletPlayer extends IsometricPlayer with
   var cacheHealthSteal = -1;
   var cacheMagicSteal = -1;
   var debugEnabled = false;
+  var maxPotions = 4;
 
   var npcText = '';
   var npcName = '';
@@ -322,20 +325,29 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
 
+    if (amuletItem == AmuletItem.Consumable_Potion_Magic){
+       if (potionsMagic > maxPotions) {
+         writeGameError(GameError.Potions_Magic_Full);
+         return;
+       }
+       setCharacterStateChanging();
+       amuletGame.remove(gameObject);
+       potionsMagic++;
+       return;
+    }
 
-    if (amuletItem.isConsumable) {
-      final availableIndex = getEmptyConsumableSlotIndex();
-      if (availableIndex == null){
-        writeGameError(GameError.Potion_Slots_Full);
-        return;
-      }
-      setCharacterStateChanging();
-      setConsumableSlot(index: availableIndex, amuletItem: amuletItem);
-      writeAmuletItemEquipped(amuletItem);
-      amuletGame.remove(gameObject);
-      return;
+    if (amuletItem == AmuletItem.Consumable_Potion_Health){
+       if (potionsHealth > maxPotions) {
+         writeGameError(GameError.Potions_Health_Full);
+         return;
+       }
+       setCharacterStateChanging();
+       amuletGame.remove(gameObject);
+       potionsHealth++;
+       return;
     }
   }
+
 
   bool acquireAmuletItemObject(AmuletItemObject amuletItemObject){
     if (deadOrBusy) {
@@ -1800,8 +1812,24 @@ class AmuletPlayer extends IsometricPlayer with
      gold += 100;
   }
 
+  @override
+  set potionsMagic(int value) {
+    super.potionsMagic = value.clamp(0, maxPotions);
+    writePotions();
+  }
 
+  @override
+  set potionsHealth(int value) {
+    super.potionsHealth = value.clamp(0, maxPotions);
+    writePotions();
+  }
 
+  void writePotions(){
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Player_Potions);
+    writeByte(potionsHealth);
+    writeByte(potionsMagic);
+  }
 }
 
 String buildResistances(String text, String name, double resistance){

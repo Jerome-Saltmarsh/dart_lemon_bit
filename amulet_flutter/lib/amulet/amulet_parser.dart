@@ -1,4 +1,5 @@
 
+import 'dart:ffi';
 import 'dart:typed_data';
 
 import 'package:amulet_common/src.dart';
@@ -167,6 +168,9 @@ extension AmuletParser on IsometricParser {
          break;
        case NetworkResponseAmulet.Player_Can_Upgrade:
          readPlayerCanUpgrade();
+         break;
+       case NetworkResponseAmulet.Player_Potions:
+         readPlayerPotions();
          break;
      }
   }
@@ -391,5 +395,10 @@ extension AmuletParser on IsometricParser {
   void readPlayerCanUpgrade() {
     amulet.playerCanUpgrade = readBool();
     amulet.notifyEquipmentChanged();
+  }
+
+  void readPlayerPotions() {
+    amulet.potionsHealth.value = readByte();
+    amulet.potionsMagic.value = readByte();
   }
 }

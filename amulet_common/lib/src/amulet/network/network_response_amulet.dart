@@ -45,4 +45,5 @@ class NetworkResponseAmulet {
    static const Player_Aim_Target = 69;
    static const Player_Gold = 70;
    static const Player_Can_Upgrade = 71;
+   static const Player_Potions = 72;
 }

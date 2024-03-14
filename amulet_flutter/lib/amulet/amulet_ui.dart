@@ -2183,7 +2183,50 @@ class AmuletUI {
         ),
       ),
     );
+  }
 
+  Widget buildCardSmallPotionHealth() =>
+      buildWatch(amulet.potionsHealth, (potions) => buildCardSmallAmuletItem(
+        text: potions.toString(),
+        amuletItem: AmuletItem.Consumable_Potion_Health,
+      ));
+
+  Widget buildCardSmallPotionMagic() =>
+      buildWatch(amulet.potionsMagic, (potionsMagic) => buildCardSmallAmuletItem(
+        text: potionsMagic.toString(),
+        amuletItem: AmuletItem.Consumable_Potion_Magic,
+      ));
+
+  Widget buildCardSmallAmuletItem({
+    required String text,
+    required AmuletItem amuletItem,
+  }) =>
+      buildCardSmall(text: text, child: buildIconAmuletItem(amuletItem));
+
+  Widget buildCardSmall({required String text, required Widget child}) {
+    const size = 50.0;
+
+    return Container(
+      color: Palette.brown_4,
+      padding: const EdgeInsets.all(4),
+      child: Column(
+        children: [
+          Container(
+            width: size,
+            child: buildText(text, color: Palette.brown_0),
+            alignment: Alignment.center,
+            color: Palette.brown_4,
+          ),
+          Container(
+              width: size,
+              height: size,
+              alignment: Alignment.center,
+              color: Palette.brown_3,
+              child: child
+          ),
+        ],
+      ),
+    );
   }
 
   Widget buildSkillTypeLevel({
@@ -2351,9 +2394,19 @@ class AmuletUI {
       Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildPlayerHealthBar(),
-              buildPlayerMagicBar(),
-              buildWindowPotions(),
+              Row(
+                children: [
+                  buildCardSmallPotionHealth(),
+                  buildPlayerHealthBar(),
+                ],
+              ),
+              Row(
+                children: [
+                  buildCardSmallPotionMagic(),
+                  buildPlayerMagicBar(),
+                ],
+              ),
+              // buildWindowPotions(),
             ],
           ),
     ],
