@@ -46,6 +46,12 @@ class AmuletUI {
 
   late final iconMagic = buildIconMagic();
   late final iconHealth = buildIconHealth();
+  late final iconGold = buildAmuletImage(
+      srcX: 720,
+      srcY: 64,
+      width: 32,
+      height: 32,
+  );
 
   var visibleRightClickedToClear = true;
   var visibleRightClickedToDrop = true;
@@ -2390,21 +2396,14 @@ class AmuletUI {
       buildCardSmallPotionMagic(),
       width4,
       buildTogglePlayerQuest(),
-      width16,
+      width4,
       buildControlGold(),
     ],
   );
 
   Widget buildControlGold() {
-
-    final child = Container(
-        width: 50,
-        height: 50,
-        alignment: Alignment.center,
-        color: Palette.brown_4,
-        child: buildWatch(amulet.playerGold,
-                (gold) => buildText('${gold}g', color: AmuletColors.Gold)));
-
+    final title = buildWatch(amulet.playerGold, buildCardTitleText);
+    final child = buildCardSmall(title: title, child: iconGold);
     final panel = buildHint('stand near a fireplace to upgrade equipment');
     return buildMouseOverHint(child: child, panel: panel, bottom: 60);
   }
