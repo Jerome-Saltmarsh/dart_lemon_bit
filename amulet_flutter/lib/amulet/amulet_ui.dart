@@ -18,13 +18,14 @@ import 'package:lemon_lang/src.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
+import 'amulet_style.dart';
 import 'ui/containers/build_container_player_front.dart';
 
 class AmuletUI {
   static const itemImageSize = 64.0;
   static const margin2 = 130.0;
-  static const barWidth = 40.0;
-  static const barHeight = 10.0;
+  static const barWidth = 80.0;
+  static const barHeight = 20.0;
 
   final Amulet amulet;
   final filterSkillTypes = WatchBool(false);
@@ -2134,7 +2135,7 @@ class AmuletUI {
         child: Column(
           children: [
             buildWatch(amulet.potionsHealth, (potions) => buildCardSmallAmuletItem(
-              text: potions.toString(),
+              title: buildCardTitleText(potions),
               amuletItem: AmuletItem.Consumable_Potion_Health,
             )),
             buildPlayerHealthBar(),
@@ -2142,22 +2143,64 @@ class AmuletUI {
         ),
       );
 
+  late final iconPotionEmpty = buildAmuletImage(
+      srcX: 784,
+      srcY: 32,
+      width: 16,
+      height: 16,
+  );
+
+  late final iconPotionHealth = buildAmuletImage(
+      srcX: 784,
+      srcY: 48,
+      width: 16,
+      height: 16,
+  );
+
+  late final iconPotionMagic = buildAmuletImage(
+      srcX: 784,
+      srcY: 64,
+      width: 16,
+      height: 16,
+  );
+
+  Widget buildRowMagicPotions() =>
+      buildWatch(amulet.potionsMagic, (potionsMagic) => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: List.generate(4, (index) =>
+          index >= potionsMagic
+              ? Container(
+              color: Colors.red,
+              child: iconPotionEmpty)
+              : Container(
+              color: Colors.red,
+              child: iconPotionMagic)
+          ).toList(growable: false),
+      ));
+
   Widget buildCardSmallPotionMagic() =>
       onPressed(
         action: amulet.usePotionMagic,
-        child: buildWatch(amulet.potionsMagic, (potionsMagic) => buildCardSmallAmuletItem(
-          text: potionsMagic.toString(),
-          amuletItem: AmuletItem.Consumable_Potion_Magic,
-        )),
+        child: Container(
+          padding: paddingAll4,
+          color: AmuletStyle.colorCardTitle,
+          child: Column(children: [
+            buildRowMagicPotions(),
+            buildPlayerMagicBar(),
+          ],),
+        ),
       );
 
   Widget buildCardSmallAmuletItem({
-    required String text,
+    required Widget title,
     required AmuletItem amuletItem,
   }) =>
-      buildCardSmall(text: text, child: buildIconAmuletItem(amuletItem));
+      buildCardSmall(title: title, child: buildIconAmuletItem(amuletItem));
 
-  Widget buildCardSmall({required String text, required Widget child}) {
+  Widget buildCardTitleText(dynamic value) => buildText(value, color: Palette.brown_0);
+
+  Widget buildCardSmall({required Widget title, required Widget child}) {
     const size = 50.0;
 
     return Container(
@@ -2167,7 +2210,7 @@ class AmuletUI {
         children: [
           Container(
             width: size,
-            child: buildText(text, color: Palette.brown_0),
+            child: title,
             alignment: Alignment.center,
             color: Palette.brown_4,
           ),
