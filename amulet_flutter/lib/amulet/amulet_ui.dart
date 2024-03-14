@@ -1361,7 +1361,7 @@ class AmuletUI {
               child: Container(
                 decoration: BoxDecoration(
                   color: Palette.brown_3,
-                  border: Border.all(color: Colors.white70, width: 2),
+                  border: Border.all(color: Palette.brown_4, width: 2),
                   borderRadius: BorderRadius.zero,
                 ),
                 margin: const EdgeInsets.only(bottom: 8),
@@ -1370,7 +1370,9 @@ class AmuletUI {
                 child: Column(
                   children: [
                     if (level != null)
-                    buildText('lvl ${level + 1}', color: upgradeColor, size: 13),
+                    Container(
+                        color: Colors.black26,
+                        child: buildText('lvl ${level + 1}', color: upgradeColor, size: 13)),
                     buildText('${upgradeCost}g', color: upgradeColor),
                   ],
                 ),
