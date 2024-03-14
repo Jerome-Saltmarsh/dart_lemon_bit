@@ -326,7 +326,7 @@ class AmuletPlayer extends IsometricPlayer with
     }
 
     if (amuletItem == AmuletItem.Consumable_Potion_Magic){
-       if (potionsMagic > maxPotions) {
+       if (potionsMagic >= maxPotions) {
          writeGameError(GameError.Potions_Magic_Full);
          return;
        }
@@ -337,7 +337,7 @@ class AmuletPlayer extends IsometricPlayer with
     }
 
     if (amuletItem == AmuletItem.Consumable_Potion_Health){
-       if (potionsHealth > maxPotions) {
+       if (potionsHealth >= maxPotions) {
          writeGameError(GameError.Potions_Health_Full);
          return;
        }
