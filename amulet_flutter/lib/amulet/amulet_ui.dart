@@ -2080,22 +2080,28 @@ class AmuletUI {
         children: List.generate(potions, (index) => iconPotionHealth).toList(growable: false),
       ));
 
-  Widget buildCardSmallPotionMagic() =>
-      onPressed(
-        action: amulet.usePotionMagic,
-        child: Container(
-          padding: paddingAll4,
-          color: AmuletStyle.colorCardTitle,
-          child: Column(children: [
-            buildPlayerMagicBar(),
-            height4,
-            Container(
-                width: barWidth,
-                height: 16,
-                child: buildRowMagicPotions()),
-          ],),
-        ),
-      );
+  Widget buildCardSmallPotionMagic() {
+    final child = onPressed(
+      action: amulet.usePotionMagic,
+      child: Container(
+        padding: paddingAll4,
+        color: AmuletStyle.colorCardTitle,
+        child: Column(children: [
+          buildPlayerMagicBar(),
+          height4,
+          Container(
+              width: barWidth,
+              height: 16,
+              child: buildRowMagicPotions(),
+          ),
+        ],),
+      ),
+    );
+
+    return buildMouseOverPanel(
+        top: 60,
+        child: child, panel: buildHint('Use Magic Potion (${amulet.amuletKeys.usePotionMagic.name.upper})'));
+  }
 
   Widget buildCardSmallPotionHealth() {
     final child = onPressed(
@@ -2116,7 +2122,7 @@ class AmuletUI {
 
     return buildMouseOverPanel(
         top: 60,
-        child: child, panel: buildHint('Use health Potion (${amulet.amuletKeys.usePotionHealth.name})'));
+        child: child, panel: buildHint('Use health Potion (${amulet.amuletKeys.usePotionHealth.name.upper})'));
   }
 
   Widget buildCardSmallAmuletItem({
