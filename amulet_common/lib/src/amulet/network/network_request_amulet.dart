@@ -15,8 +15,6 @@ enum NetworkRequestAmulet {
   Toggle_Debug_Enabled,
   Set_Skill_Slot_Value,
   Set_Skill_Slot_Index,
-  Consume_Slot,
-  Drop_Consumable,
   Toggle_Skill_Type,
   Spawn_Random_Amulet_Item,
   Spawn_Amulet_Item,
@@ -24,4 +22,6 @@ enum NetworkRequestAmulet {
   Sell_Amulet_Item,
   Upgrade_Slot_Type,
   Cheat_Acquire_Gold,
+  Use_Potion_Health,
+  Use_Potion_Magic,
 }

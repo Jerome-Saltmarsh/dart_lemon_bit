@@ -357,6 +357,9 @@ class IsometricEvents with IsometricComponent {
         final consumableType = parser.readByte();
         onItemConsumed(consumableType);
         break;
+      case PlayerEvent.Potion_Consumed:
+        amulet.onPotionConsumed();
+        break;
       case PlayerEvent.Eat:
         audio.eat();
         break;

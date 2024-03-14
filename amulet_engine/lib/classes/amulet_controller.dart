@@ -697,22 +697,6 @@ class AmuletController {
         }
         amuletPlayer.toggleSkillType(skillType);
         break;
-      case NetworkRequestAmulet.Consume_Slot:
-        final index = parseArg2(arguments);
-        if (index == null) {
-          amuletPlayer.writeGameError(GameError.Invalid_Client_Request);
-          return;
-        }
-        amuletPlayer.consumeSlot(index);
-        break;
-      case NetworkRequestAmulet.Drop_Consumable:
-        final index = parseArg2(arguments);
-        if (index == null) {
-          amuletPlayer.writeGameError(GameError.Invalid_Client_Request);
-          return;
-        }
-        amuletPlayer.dropConsumable(index);
-        break;
       case NetworkRequestAmulet.Toggle_Debug_Enabled:
         amuletPlayer.toggleDebugEnabled();
         break;
@@ -839,6 +823,12 @@ class AmuletController {
           return;
         }
         player.setSkillSlotIndex(index);
+        break;
+      case NetworkRequestAmulet.Use_Potion_Health:
+        player.usePotionHealth();
+        break;
+      case NetworkRequestAmulet.Use_Potion_Magic:
+        player.usePotionMagic();
         break;
     }
   }

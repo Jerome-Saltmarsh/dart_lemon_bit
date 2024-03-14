@@ -87,8 +87,6 @@ enum GameError {
   Invalid_Portal_Scene,
   No_Connecting_Portal,
   Potion_Slots_Full,
-  Invalid_Consumable_Index,
-  Consumable_Empty,
   Invalid_Skill_Slot_Index,
   Invalid_Skill_Type_Index,
   Skill_Type_Locked,
@@ -113,6 +111,8 @@ enum GameError {
   Cheats_Disabled,
   Potions_Health_Full,
   Potions_Magic_Full,
+  Potions_Health_Empty,
+  Potions_Magic_Empty,
   ;
 
   static GameError fromIndex(int index) {

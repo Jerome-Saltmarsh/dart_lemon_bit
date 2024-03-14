@@ -1,5 +1,4 @@
 
-import 'dart:ffi';
 import 'dart:typed_data';
 
 import 'package:amulet_common/src.dart';
@@ -129,9 +128,6 @@ extension AmuletParser on IsometricParser {
          break;
        case NetworkResponseAmulet.Player_Agility:
          readPlayerAgility();
-         break;
-       case NetworkResponseAmulet.Player_Consumable_Slots:
-         readPlayerConsumableSlots();
          break;
        case NetworkResponseAmulet.Perform_Frame_Velocity:
          readPlayerPerformFrameVelocity();
@@ -353,13 +349,6 @@ extension AmuletParser on IsometricParser {
 
   void readPlayerSkillSlotIndex() =>
       amulet.playerSkillSlotIndex.value = readByte();
-
-  void readPlayerConsumableSlots() {
-      for (var i = 0; i < 4; i++){
-        final amuletItemIndex = readInt16();
-        amulet.consumableSlots[i].value = AmuletItem.values.tryGet(amuletItemIndex);
-      }
-  }
 
   void readAmuletItemConsumed() {
     final amuletItem = tryReadAmuletItem();

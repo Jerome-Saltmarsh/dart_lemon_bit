@@ -12,7 +12,6 @@ class AmuletField {
   static const Z = 'z';
   static const Health = 'health';
   static const Magic = 'magic';
-  static const Consumable_Slots = 'consumable_slots';
   static const UUID = 'uuid';
   static const Quest_Main = 'quest_main';
   static const Skill_Slots = 'skill_slots';

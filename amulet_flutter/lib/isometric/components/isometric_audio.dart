@@ -471,6 +471,8 @@ class IsometricAudio with IsometricComponent implements Updatable {
 
   void playAudioError() => playSound(errorSound15);
 
+  void playSoundDrink() => playSound(drink);
+
   void playSound(AudioSingle audioSingle, {double volume = 1.0}){
     if (!enabledSound.value) return;
     audioSingle.play(volume: volume);

@@ -43,8 +43,6 @@ class Amulet extends IsometricGame {
     SlotType.Shoes,
   ];
 
-  final consumableSlots = List.generate(4, (index) => Watch<AmuletItem?>(null));
-
   final playerSkillSlotIndex = Watch(-1);
 
   var worldMapClrs = Int32List(0);
@@ -341,20 +339,12 @@ class Amulet extends IsometricGame {
       return;
     }
 
-    if (key == amuletKeys.consume0) {
-      consumeSlotAtIndex(0);
+    if (key == amuletKeys.consumePotionHealth) {
+      throw Exception('TODO');
     }
 
-    if (key == amuletKeys.consume1) {
-      consumeSlotAtIndex(1);
-    }
-
-    if (key == amuletKeys.consume2) {
-      consumeSlotAtIndex(2);
-    }
-
-    if (key == amuletKeys.consume3) {
-      consumeSlotAtIndex(3);
+    if (key == amuletKeys.consumePotionMagic) {
+      throw Exception('TODO');
     }
 
     if (options.developMode) {
@@ -741,43 +731,8 @@ class Amulet extends IsometricGame {
     windowVisiblePlayerSkills.setFalse();
   }
 
-  void consumeSlotAtIndex(int index) {
-    final consumableSlot = consumableSlots.tryGet(index);
-    if (consumableSlot != null) {
-      useConsumableSlot(consumableSlot);
-    }
-  }
-
-  void useConsumableSlot(Watch<AmuletItem?> slot) {
-    final index = consumableSlots.indexOf(slot);
-    if (index == -1) {
-      throw Exception('invalid slot');
-    }
-    if (slot.value == null) {
-      return;
-    }
-    sendAmuletRequest(
-      NetworkRequestAmulet.Consume_Slot,
-      index,
-    );
-  }
-
   void onAmuletItemConsumed(AmuletItem amuletItem) {
     audio.drink.play();
-  }
-
-  void dropConsumableSlot(Watch<AmuletItem?> itemSlot) {
-    final index = consumableSlots.indexOf(itemSlot);
-    if (index == -1) {
-      throw Exception('invalid slot');
-    }
-    if (itemSlot.value == null) {
-      return;
-    }
-    sendAmuletRequest(
-      NetworkRequestAmulet.Drop_Consumable,
-      index,
-    );
   }
 
   void onAmuletItemDropped(AmuletItem amuletItem) {
@@ -790,23 +745,6 @@ class Amulet extends IsometricGame {
     if (amuletItem.isConsumable) {
       audio.material_struck_glass.play();
     }
-  }
-
-  PhysicalKeyboardKey? getConsumeSlotPhysicalKeyboardKey(
-      Watch<AmuletItem?> itemSlot) {
-    if (itemSlot == consumableSlots[0]) {
-      return amuletKeys.consume0;
-    }
-    if (itemSlot == consumableSlots[1]) {
-      return amuletKeys.consume1;
-    }
-    if (itemSlot == consumableSlots[2]) {
-      return amuletKeys.consume2;
-    }
-    if (itemSlot == consumableSlots[3]) {
-      return amuletKeys.consume3;
-    }
-    return null;
   }
 
   void toggleSkillType(SkillType skillType) =>
@@ -866,6 +804,18 @@ class Amulet extends IsometricGame {
       sendAmuletRequest(
           NetworkRequestAmulet.Cheat_Acquire_Gold,
       );
+
+  void usePotionHealth() =>
+      sendAmuletRequest(
+        NetworkRequestAmulet.Use_Potion_Health,
+      );
+
+  void usePotionMagic() =>
+      sendAmuletRequest(
+        NetworkRequestAmulet.Use_Potion_Magic,
+      );
+
+  void onPotionConsumed() => audio.playSoundDrink();
 }
 
 

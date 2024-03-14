@@ -57,7 +57,6 @@ class AmuletPlayer extends IsometricPlayer with
   var skillSlotIndex = 0;
   var skillSlotsDirty = false;
   var active = false;
-  var consumableSlotsDirty = true;
   var difficulty = Difficulty.Normal;
 
   bool get canCheat => amulet.cheatsEnabled;
@@ -89,8 +88,6 @@ class AmuletPlayer extends IsometricPlayer with
 
   final sceneShrinesUsed = <AmuletScene, List<int>> {};
   final skillSlots = List.generate(4, (index) => SkillType.None);
-  final consumableSlots = List<AmuletItem?>.generate(4, (index) => null);
-
 
 
   Function? onInteractionOver;
@@ -250,11 +247,6 @@ class AmuletPlayer extends IsometricPlayer with
     if (skillSlotsDirty){
       writeSkillSlots();
       skillSlotsDirty = false;
-    }
-
-    if (consumableSlotsDirty) {
-      writeConsumableSlots();
-      consumableSlotsDirty = false;
     }
 
     writeAmuletPlayerAimTarget();
@@ -633,25 +625,15 @@ class AmuletPlayer extends IsometricPlayer with
     writeDouble(castePositionZ);
   }
 
-
   void equipAmuletItemObject({
     required AmuletItemObject value,
     bool force = false,
   }) {
     final amuletItem = value.amuletItem;
 
-    if (amuletItem.isConsumable) {
-      final availableIndex = getEmptyConsumableSlotIndex();
-      if (availableIndex == null){
-        writeGameError(GameError.Potion_Slots_Full);
-        return;
-      }
-      setCharacterStateChanging();
-      setConsumableSlot(index: availableIndex, amuletItem: amuletItem);
-      writeAmuletItemEquipped(amuletItem);
-      return;
+    if (amuletItem.isConsumable){
+      throw Exception();
     }
-
 
     final currentlyEquipped = getEquippedAmuletItem(slotType: amuletItem.slotType);
     if (currentlyEquipped != null) {
@@ -696,24 +678,6 @@ class AmuletPlayer extends IsometricPlayer with
     }
 
     notifyEquipmentDirty();
-  }
-
-  void setConsumableSlot({required int index, AmuletItem? amuletItem}) {
-    if (!consumableSlots.isValidIndex(index)) {
-      writeGameError(GameError.Invalid_Consumable_Index);
-      return;
-    }
-    consumableSlots[index] = amuletItem;
-    consumableSlotsDirty = true;
-  }
-
-  int? getEmptyConsumableSlotIndex(){
-    for (var i = 0; i < consumableSlots.length; i++){
-       if (consumableSlots[i] == null) {
-         return i;
-       }
-    }
-    return null;
   }
 
   void tryToAssignSkillTypeToEmptySlot(SkillType skillType) {
@@ -1580,71 +1544,10 @@ class AmuletPlayer extends IsometricPlayer with
   @override
   double get magicPercentage => (magic.percentageOf(maxMagic)).clamp01();
 
-  void writeConsumableSlots(){
-    writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Player_Consumable_Slots);
-
-    for (var i = 0; i < consumableSlots.length; i++){
-      writeInt16(consumableSlots[i]?.index ?? -1);
-    }
-  }
-
-  void consumeSlot(int index) {
-     if (!consumableSlots.isValidIndex(index)){
-       writeGameError(GameError.Invalid_Consumable_Index);
-       return;
-     }
-
-     final amuletItem = consumableSlots[index];
-     if (amuletItem == null){
-       writeGameError(GameError.Consumable_Empty);
-       return;
-     }
-
-     if (!amuletItem.isConsumable) {
-       writeGameError(GameError.Item_Not_Consumable);
-       return;
-     }
-
-     switch (amuletItem) {
-       case AmuletItem.Consumable_Potion_Health:
-         health = maxHealth;
-         break;
-       case AmuletItem.Consumable_Potion_Magic:
-         magic = maxMagic;
-         break;
-       default:
-         break;
-     }
-
-     writeAmuletItemConsumed(amuletItem);
-     setConsumableSlot(index: index, amuletItem: null);
-  }
-
   void writeAmuletItemConsumed(AmuletItem amuletItem){
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Amulet_Item_Consumed);
     writeAmuletItem(amuletItem);
-  }
-
-  void dropConsumable(int index) {
-    if (!consumableSlots.isValidIndex(index)){
-      writeGameError(GameError.Invalid_Consumable_Index);
-      return;
-    }
-
-    final amuletItem = consumableSlots[index];
-    if (amuletItem == null){
-      writeGameError(GameError.Consumable_Empty);
-      return;
-    }
-
-    setCharacterStateChanging();
-    setConsumableSlot(index: index, amuletItem: null);
-    spawnAmuletItemObject(
-      AmuletItemObject(amuletItem: amuletItem, level: 0)
-    );
-    writeAmuletItemDropped(amuletItem);
   }
 
   void writeAmuletItemDropped(AmuletItem amuletItem) {
@@ -1829,6 +1732,26 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(NetworkResponseAmulet.Player_Potions);
     writeByte(potionsHealth);
     writeByte(potionsMagic);
+  }
+
+  void usePotionHealth() {
+     if (potionsHealth <= 0) {
+       writeGameError(GameError.Potions_Health_Empty);
+       return;
+     }
+     writePlayerEvent(PlayerEvent.Potion_Consumed);
+     potionsHealth--;
+     health = maxHealth;
+  }
+
+  void usePotionMagic() {
+    if (potionsMagic <= 0) {
+      writeGameError(GameError.Potions_Magic_Empty);
+      return;
+    }
+    writePlayerEvent(PlayerEvent.Potion_Consumed);
+    potionsMagic--;
+    magic = maxMagic;
   }
 }
 

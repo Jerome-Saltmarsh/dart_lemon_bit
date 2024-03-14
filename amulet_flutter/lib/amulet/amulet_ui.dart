@@ -178,63 +178,6 @@ class AmuletUI {
         ),
       );
 
-  Widget buildWindowPotions() =>
-      Row(
-        children: amulet.consumableSlots
-            .map(buildSlotConsumable)
-            .toList(growable: false),
-      );
-
-  Widget buildSlotConsumable(Watch<AmuletItem?> itemSlot) {
-    const size = 30.0;
-
-    final control = Positioned(
-      child: buildWatch(itemSlot, (t) =>
-          buildBorder(
-            color: Colors.black26,
-            width: 2,
-            radius: BorderRadius.zero,
-            child: onPressed(
-              onRightClick: t == null ? null : () => amulet.dropConsumableSlot(itemSlot),
-              action: t == null ? null : () => amulet.useConsumableSlot(itemSlot),
-              child: Container(
-                child: t == null ? nothing : AmuletItemImage(amuletItem: t, scale: 1),
-                width: size,
-                height: size,
-                alignment: Alignment.center,
-                color: Colors.black12,
-              ),
-            ),
-          )
-      ),
-    );
-
-    final shortKey = Positioned(
-        bottom: 2,
-        right: 2,
-        child: IgnorePointer(
-          child: Container(
-              width: 16,
-              height: 16,
-              color: Palette.brownDark,
-              alignment: Alignment.center,
-              child: buildText(amulet.getConsumeSlotPhysicalKeyboardKey(itemSlot)?.name)),
-        ));
-
-    return MouseOver(
-      builder: (mouseOver) {
-        return Stack(
-          alignment: Alignment.center,
-          children: [
-            control,
-            if (mouseOver)
-              shortKey,
-          ],
-        );
-      }
-    );
-  }
-
   AmuletImage buildIconPotion() {
     return AmuletImage(
               srcX: 133,
@@ -2186,16 +2129,22 @@ class AmuletUI {
   }
 
   Widget buildCardSmallPotionHealth() =>
-      buildWatch(amulet.potionsHealth, (potions) => buildCardSmallAmuletItem(
-        text: potions.toString(),
-        amuletItem: AmuletItem.Consumable_Potion_Health,
-      ));
+      onPressed(
+        action: amulet.usePotionHealth,
+        child: buildWatch(amulet.potionsHealth, (potions) => buildCardSmallAmuletItem(
+          text: potions.toString(),
+          amuletItem: AmuletItem.Consumable_Potion_Health,
+        )),
+      );
 
   Widget buildCardSmallPotionMagic() =>
-      buildWatch(amulet.potionsMagic, (potionsMagic) => buildCardSmallAmuletItem(
-        text: potionsMagic.toString(),
-        amuletItem: AmuletItem.Consumable_Potion_Magic,
-      ));
+      onPressed(
+        action: amulet.usePotionMagic,
+        child: buildWatch(amulet.potionsMagic, (potionsMagic) => buildCardSmallAmuletItem(
+          text: potionsMagic.toString(),
+          amuletItem: AmuletItem.Consumable_Potion_Magic,
+        )),
+      );
 
   Widget buildCardSmallAmuletItem({
     required String text,
