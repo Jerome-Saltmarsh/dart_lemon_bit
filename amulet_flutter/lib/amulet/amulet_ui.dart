@@ -2166,13 +2166,9 @@ class AmuletUI {
 
   Widget buildRowMagicPotions() =>
       buildWatch(amulet.potionsMagic, (potionsMagic) => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: List.generate(4, (index) =>
-          index >= potionsMagic
-              ? iconPotionEmpty
-              : iconPotionMagic
-          ).toList(growable: false),
+        children: List.generate(potionsMagic, (index) => iconPotionMagic).toList(growable: false),
       ));
 
   Widget buildCardSmallPotionMagic() =>
