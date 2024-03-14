@@ -114,6 +114,7 @@ enum GameError {
   Potions_Health_Empty,
   Potions_Magic_Empty,
   Cannot_Be_Equipped,
+  Cannot_Perform_Passive_Ability,
   ;
 
   static GameError fromIndex(int index) {

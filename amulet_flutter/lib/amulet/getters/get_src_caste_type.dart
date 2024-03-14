@@ -7,27 +7,9 @@ List<double> getSrcCasteType(CasteType casteType){
   const width = 16.0;
   const height = 16.0;
   return switch (casteType){
-    CasteType.Sword => const [
-        x,
-        128,
-        width,
-        height,
-      ],
-    CasteType.Bow => const [
+    CasteType.Ability => const [
         x,
         144,
-        width,
-        height,
-      ],
-    CasteType.Staff => const [
-        x,
-        160,
-        width,
-        height,
-      ],
-    CasteType.Self => const [
-        x,
-        176,
         width,
         height,
       ],

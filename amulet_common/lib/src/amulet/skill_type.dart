@@ -6,56 +6,63 @@ import 'caste_type.dart';
 
 enum SkillType {
   None(
-      casteType: CasteType.Self,
+      casteType: CasteType.Passive,
       range: 0,
   ),
   Slash(
-      casteType: CasteType.Sword,
+      casteType: CasteType.Ability,
       magicCost: 0,
       isBaseAttack: true,
+      requiresMelee: true,
   ),
   Bludgeon(
-      casteType: CasteType.Staff,
+      casteType: CasteType.Ability,
       magicCost: 0,
       isBaseAttack: true,
+      requiresMelee: true,
   ),
   Mighty_Strike(
-      casteType: CasteType.Sword,
+      casteType: CasteType.Ability,
       magicCost: 3,
+      requiresMelee: true,
   ),
   Frostball(
-      casteType: CasteType.Staff,
+      casteType: CasteType.Ability,
       magicCost: 4,
   ),
   Fireball(
-      casteType: CasteType.Staff,
+      casteType: CasteType.Ability,
       magicCost: 5,
   ),
   Explode(
-      casteType: CasteType.Staff,
+      casteType: CasteType.Ability,
       magicCost: 7,
   ),
   // BOW
   Shoot_Arrow(
-      casteType: CasteType.Bow,
+      casteType: CasteType.Ability,
       magicCost: 0,
       isBaseAttack: true,
+      requiresBow: true,
   ),
   Split_Shot(
-    casteType: CasteType.Bow,
-      magicCost: 4,
+    casteType: CasteType.Ability,
+    magicCost: 4,
+    requiresBow: true,
   ),
   Ice_Arrow(
-    casteType: CasteType.Bow,
-      magicCost: 4,
+    casteType: CasteType.Ability,
+    magicCost: 4,
+    requiresBow: true,
   ),
   Fire_Arrow(
-    casteType: CasteType.Bow,
-      magicCost: 4,
+    casteType: CasteType.Ability,
+    magicCost: 4,
+    requiresBow: true,
   ),
   // CASTE
   Heal(
-      casteType: CasteType.Staff,
+      casteType: CasteType.Ability,
       magicCost: 4,
       range: 0,
   ),
@@ -93,13 +100,17 @@ enum SkillType {
     casteType: CasteType.Passive,
   ),
   Wind_Cut(
-    casteType: CasteType.Sword,
+    casteType: CasteType.Ability,
   ),
   ;
 
 
   final int maxLevel;
   final CasteType casteType;
+  final bool requiresBow;
+  final bool requiresSword;
+  final bool requiresStaff;
+  final bool requiresMelee;
   final int magicCost;
   /// if null the weapon perform duration is used
   /// if null the weapon range is used
@@ -162,19 +173,13 @@ enum SkillType {
     this.range,
     this.maxLevel = 20,
     this.isBaseAttack = false,
+    this.requiresBow = false,
+    this.requiresStaff = false,
+    this.requiresSword = false,
+    this.requiresMelee = false,
   });
 
   bool get isPassive => casteType == CasteType.Passive;
-
-  static void validate() {
-    for (final skillType in values){
-      if (skillType.casteType == CasteType.Self){
-        if (skillType.range == null){
-          throw Exception('$skillType.range cannot be null');
-        }
-      }
-    }
-  }
 
   static SkillType parse(String name) =>
       tryParse(name) ?? (throw Exception('SkillType.parse("$name")'));
@@ -317,9 +322,8 @@ enum SkillType {
   static double getRunSpeed(int level) =>
       linear(0, SkillType.Max_Run_Speed, level);
 
-  static final collectionPassive = findByCasteType(CasteType.Passive);
-  static final collectionSword = findByCasteType(CasteType.Sword);
-  static final collectionStaff = findByCasteType(CasteType.Staff);
+  // static final collectionPassive = findByCasteType(CasteType.Passive);
+  // static final collectionAbility = findByCasteType(CasteType.Ability);
 
   static const valuesBow = [
     SkillType.Ice_Arrow,

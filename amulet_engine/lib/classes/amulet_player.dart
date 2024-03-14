@@ -791,70 +791,36 @@ class AmuletPlayer extends IsometricPlayer with
      writeByte(audioType.index);
   }
 
-  bool validateSkillType(SkillType skillType){
-    switch (skillType.casteType) {
-      case CasteType.Bow:
-        if (!equippedWeaponBow) {
-          writeGameError(GameError.Bow_Required);
-          return false;
-        }
-        break;
-      case CasteType.Staff:
-        if (!equippedWeaponStaff) {
-          writeGameError(GameError.Staff_Required);
-          return false;
-        }
-        break;
-      case CasteType.Sword:
-        if (!equippedWeaponSword) {
-          writeGameError(GameError.Sword_Required);
-          return false;
-        }
-        break;
-      default:
-        break;
-    }
-
-    final magicCost = getSkillTypeMagicCost(skillType);
-    if (magicCost > magic) {
-      writeGameError(GameError.Insufficient_Magic);
-      clearTarget();
-      return false;
-    }
-
-    return true;
-
-  }
-
   @override
   void attack() {
+
     if (deadOrBusy || activeSkillType == SkillType.None) {
       return;
     }
 
-    switch (activeSkillType.casteType) {
-      case CasteType.Bow:
-        if (!equippedWeaponBow) {
-          writeGameError(GameError.Bow_Required);
-          return;
-        }
-        break;
-      case CasteType.Staff:
-        if (!equippedWeaponStaff) {
-          writeGameError(GameError.Staff_Required);
-          return;
-        }
-        break;
-      case CasteType.Sword:
-        if (!equippedWeaponSword) {
-          writeGameError(GameError.Sword_Required);
-          return;
-        }
-        break;
-      case CasteType.Passive:
-        return;
-      default:
-        break;
+    if (activeSkillType.casteType == CasteType.Passive){
+      writeGameError(GameError.Cannot_Perform_Passive_Ability);
+      return;
+    }
+
+    if (activeSkillType.requiresSword && !equippedWeaponSword){
+      writeGameError(GameError.Sword_Required);
+      return;
+    }
+
+    if (activeSkillType.requiresStaff && !equippedWeaponStaff){
+      writeGameError(GameError.Staff_Required);
+      return;
+    }
+
+    if (activeSkillType.requiresBow && !equippedWeaponBow){
+      writeGameError(GameError.Bow_Required);
+      return;
+    }
+
+    if (activeSkillType.requiresMelee && !equippedWeaponMelee){
+      writeGameError(GameError.Melee_Weapon_Required);
+      return;
     }
 
     final magicCost = getSkillTypeMagicCost(activeSkillType);
@@ -872,22 +838,10 @@ class AmuletPlayer extends IsometricPlayer with
     }
 
     magic -= magicCost;
-
-    switch (activeSkillType.casteType) {
-      case CasteType.Passive:
-        return;
-      case CasteType.Self:
-        setCharacterStateCasting(duration: performDuration);
-        break;
-      case CasteType.Bow:
-        setCharacterStateFire(duration: performDuration);
-        break;
-      case CasteType.Staff:
-        setCharacterStateStriking(duration: performDuration);
-        break;
-      case CasteType.Sword:
-        setCharacterStateStriking(duration: performDuration);
-        break;
+    if (equippedWeaponBow){
+      setCharacterStateFire(duration: performDuration);
+    } else {
+      setCharacterStateStriking(duration: performDuration);
     }
   }
 
@@ -1091,19 +1045,19 @@ class AmuletPlayer extends IsometricPlayer with
 
   }
 
-  @override
-  void setSkillActiveLeft(bool value) {
-    if (deadOrBusy) return;
-
-    if (value && validateSkillType(skillTypeLeft)){
-      super.setSkillActiveLeft(value);
-      return;
-    }
-    if (!value && validateSkillType(skillTypeRight)){
-      super.setSkillActiveLeft(value);
-      return;
-    }
-  }
+  // @override
+  // void setSkillActiveLeft(bool value) {
+  //   if (deadOrBusy) return;
+  //
+  //   if (value && validateSkillType(skillTypeLeft)){
+  //     super.setSkillActiveLeft(value);
+  //     return;
+  //   }
+  //   if (!value && validateSkillType(skillTypeRight)){
+  //     super.setSkillActiveLeft(value);
+  //     return;
+  //   }
+  // }
 
   bool get equippedWeaponBow => equippedWeapon?.amuletItem.isWeaponBow ?? false;
 

@@ -1082,7 +1082,7 @@ class AmuletUI {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  buildCardHeader('${skillType.casteType.name} Skill'),
+                  buildCardHeader('${skillType.casteType.name}'),
                   controlSkillTitle,
                   Container(
                       padding: const EdgeInsets.all(8),
@@ -1716,7 +1716,7 @@ class AmuletUI {
     const size = 50.0;
 
     return buildMouseOverPanel(
-        bottom: 80,
+        bottom: 90,
         left: -60,
         panel: buildCardLargeSkillType(skillType),
         child: buildBorder(

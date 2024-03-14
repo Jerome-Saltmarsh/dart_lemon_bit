@@ -84,5 +84,4 @@ void validateAmulet() {
       throw Exception();
     }
   }
-  SkillType.validate();
 }
