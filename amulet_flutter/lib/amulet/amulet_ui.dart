@@ -1702,51 +1702,47 @@ class AmuletUI {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: SkillType.values.map((skillType) {
               if (skillType.isPassive) return nothing;
+              if (skillType.isBaseAttack) return nothing;
               final level = amulet.getSkillTypeLevel(skillType);
               if (level <= 0) return nothing;
-              return buildCardSmallSkillType(skillType);
+              return onPressed(
+                  action: () => amulet.selectSkillTypeRight(skillType),
+                  child: buildCardSmallSkillType(skillType),
+              );
             }).toList(growable: false),
           ));
 
   Widget buildCardSmallSkillType(SkillType skillType) {
     const size = 50.0;
 
-    return onPressed(
-      action: skillType.isPassive
-          ? null
-          : () => amulet.selectSkillTypeRight(skillType),
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 2),
-        child: buildMouseOverPanel(
-          bottom: 80,
-          left: -60,
-          panel: buildCardLargeSkillType(skillType),
-          child: buildBorder(
-            color: amulet.playerSkillRight == skillType ? Colors.white70 : Colors.transparent,
-            width: 3,
-            child: Container(
-              color: Palette.brown_4,
-              padding: const EdgeInsets.all(4),
-              child: Column(
-                children: [
-                  Container(
+    return buildMouseOverPanel(
+        bottom: 80,
+        left: -60,
+        panel: buildCardLargeSkillType(skillType),
+        child: buildBorder(
+          color: amulet.playerSkillRight == skillType ? Colors.white70 : Colors.transparent,
+          width: 3,
+          child: Container(
+            color: Palette.brown_4,
+            padding: const EdgeInsets.all(4),
+            child: Column(
+              children: [
+                Container(
+                  width: size,
+                  child: buildText(amulet.getSkillTypeLevel(skillType), color: Palette.brown_0),
+                  alignment: Alignment.center,
+                  color: Palette.brown_4,
+                ),
+                Container(
                     width: size,
-                    child: buildText(amulet.getSkillTypeLevel(skillType), color: Palette.brown_0),
+                    height: size,
                     alignment: Alignment.center,
-                    color: Palette.brown_4,
-                  ),
-                  Container(
-                      width: size,
-                      height: size,
-                      alignment: Alignment.center,
-                      color: Palette.brown_3,
-                      child: buildIconSkillType(skillType)),
-                ],
-              ),
+                    color: Palette.brown_3,
+                    child: buildIconSkillType(skillType)),
+              ],
             ),
-          )
-        ),
-      ),
+          ),
+        )
     );
   }
 
