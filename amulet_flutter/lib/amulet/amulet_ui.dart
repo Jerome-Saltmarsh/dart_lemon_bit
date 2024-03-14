@@ -23,8 +23,8 @@ import 'ui/containers/build_container_player_front.dart';
 class AmuletUI {
   static const itemImageSize = 64.0;
   static const margin2 = 130.0;
-  static const barWidth = 136.0;
-  static const barHeight = 20.0;
+  static const barWidth = 40.0;
+  static const barHeight = 10.0;
 
   final Amulet amulet;
   final filterSkillTypes = WatchBool(false);
@@ -2131,10 +2131,15 @@ class AmuletUI {
   Widget buildCardSmallPotionHealth() =>
       onPressed(
         action: amulet.usePotionHealth,
-        child: buildWatch(amulet.potionsHealth, (potions) => buildCardSmallAmuletItem(
-          text: potions.toString(),
-          amuletItem: AmuletItem.Consumable_Potion_Health,
-        )),
+        child: Column(
+          children: [
+            buildWatch(amulet.potionsHealth, (potions) => buildCardSmallAmuletItem(
+              text: potions.toString(),
+              amuletItem: AmuletItem.Consumable_Potion_Health,
+            )),
+            buildPlayerHealthBar(),
+          ],
+        ),
       );
 
   Widget buildCardSmallPotionMagic() =>
@@ -2340,24 +2345,9 @@ class AmuletUI {
   Widget buildHudTopLeft() => Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  buildCardSmallPotionHealth(),
-                  buildPlayerHealthBar(),
-                ],
-              ),
-              Row(
-                children: [
-                  buildCardSmallPotionMagic(),
-                  buildPlayerMagicBar(),
-                ],
-              ),
-              // buildWindowPotions(),
-            ],
-          ),
+      buildCardSmallPotionHealth(),
+      width4,
+      buildCardSmallPotionMagic(),
     ],
   );
 
