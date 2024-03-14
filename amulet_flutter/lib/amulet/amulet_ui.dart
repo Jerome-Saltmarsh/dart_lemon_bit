@@ -2129,20 +2129,6 @@ class AmuletUI {
     );
   }
 
-  Widget buildCardSmallPotionHealth() =>
-      onPressed(
-        action: amulet.usePotionHealth,
-        child: Column(
-          children: [
-            buildWatch(amulet.potionsHealth, (potions) => buildCardSmallAmuletItem(
-              title: buildCardTitleText(potions),
-              amuletItem: AmuletItem.Consumable_Potion_Health,
-            )),
-            buildPlayerHealthBar(),
-          ],
-        ),
-      );
-
   late final iconPotionEmpty = buildAmuletImage(
       srcX: 784,
       srcY: 32,
@@ -2165,10 +2151,17 @@ class AmuletUI {
   );
 
   Widget buildRowMagicPotions() =>
-      buildWatch(amulet.potionsMagic, (potionsMagic) => Row(
+      buildWatch(amulet.potionsMagic, (potions) => Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: List.generate(potionsMagic, (index) => iconPotionMagic).toList(growable: false),
+        children: List.generate(potions, (index) => iconPotionMagic).toList(growable: false),
+      ));
+
+  Widget buildRowHealthPotions() =>
+      buildWatch(amulet.potionsHealth, (potions) => Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: List.generate(potions, (index) => iconPotionHealth).toList(growable: false),
       ));
 
   Widget buildCardSmallPotionMagic() =>
@@ -2180,9 +2173,27 @@ class AmuletUI {
           child: Column(children: [
             Container(
                 width: barWidth,
+                height: 16,
                 child: buildRowMagicPotions()),
             height4,
             buildPlayerMagicBar(),
+          ],),
+        ),
+      );
+
+  Widget buildCardSmallPotionHealth() =>
+      onPressed(
+        action: amulet.usePotionHealth,
+        child: Container(
+          padding: paddingAll4,
+          color: AmuletStyle.colorCardTitle,
+          child: Column(children: [
+            Container(
+                width: barWidth,
+                height: 16,
+                child: buildRowHealthPotions()),
+            height4,
+            buildPlayerHealthBar(),
           ],),
         ),
       );
