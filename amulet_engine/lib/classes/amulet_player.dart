@@ -589,8 +589,9 @@ class AmuletPlayer extends IsometricPlayer with
   }) {
     final amuletItem = value.amuletItem;
 
-    if (amuletItem.isConsumable){
-      throw Exception();
+    if (amuletItem.isConsumable) {
+      writeGameError(GameError.Cannot_Be_Equipped);
+      return;
     }
 
     final currentlyEquipped = getEquippedAmuletItem(slotType: amuletItem.slotType);
@@ -598,15 +599,9 @@ class AmuletPlayer extends IsometricPlayer with
       dropSlotType(currentlyEquipped.amuletItem.slotType);
     }
 
-    switch (amuletItem.slotType){
+    switch (amuletItem.slotType) {
       case SlotType.Weapon:
         equippedWeapon = value;
-        if (skillTypeLeft == SkillType.None){
-          skillTypeLeft = equippedWeaponDefaultSkillType;
-        }
-        if (skillTypeRight == SkillType.None){
-          skillTypeRight = equippedWeaponDefaultSkillType;
-        }
         break;
       case SlotType.Helm:
         equippedHelm = value;
@@ -629,6 +624,37 @@ class AmuletPlayer extends IsometricPlayer with
       if (level <= 0) continue;
     }
 
+    notifyEquipmentDirty();
+  }
+
+  @override
+  set equippedWeapon(AmuletItemObject? value) {
+
+    if (value == null){
+      super.equippedWeapon = null;
+      return;
+    }
+
+    final amuletItem = value.amuletItem;
+
+    if (amuletItem.slotType != SlotType.Weapon) {
+      writeGameError(GameError.Invalid_Weapon_Type);
+      return;
+    }
+
+    final attackSkill = amuletItem.attackSkill;
+    if (attackSkill == null){
+      writeGameError(GameError.Invalid_Weapon_Type);
+      return;
+    }
+
+    if (skillTypeLeft == SkillType.None){
+      skillTypeLeft = attackSkill;
+    }
+    if (skillTypeRight == SkillType.None){
+      skillTypeRight = equippedWeaponDefaultSkillType;
+    }
+    super.equippedWeapon = value;
     notifyEquipmentDirty();
   }
 

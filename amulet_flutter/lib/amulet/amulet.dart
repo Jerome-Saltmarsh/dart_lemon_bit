@@ -73,8 +73,6 @@ class Amulet extends IsometricGame {
   final playerSkillTypeLevels = Map.fromEntries(
       SkillType.values.map((skillType) => MapEntry(skillType, 0)));
   final playerSkillsNotifier = Watch(0);
-  final playerSkillTypeSlotAssigned = SkillType.values.asMapReversed((t) =>
-      Watch(false));
   var playerSkillLeft = SkillType.None;
   var playerSkillRight = SkillType.None;
   final windowVisibleSkillLeft = WatchBool(false);

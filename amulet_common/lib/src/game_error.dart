@@ -113,6 +113,7 @@ enum GameError {
   Potions_Magic_Full,
   Potions_Health_Empty,
   Potions_Magic_Empty,
+  Cannot_Be_Equipped,
   ;
 
   static GameError fromIndex(int index) {

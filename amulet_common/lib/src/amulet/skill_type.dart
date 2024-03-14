@@ -12,10 +12,12 @@ enum SkillType {
   Slash(
       casteType: CasteType.Sword,
       magicCost: 0,
+      isBaseAttack: true,
   ),
   Bludgeon(
       casteType: CasteType.Staff,
       magicCost: 0,
+      isBaseAttack: true,
   ),
   Mighty_Strike(
       casteType: CasteType.Sword,
@@ -37,6 +39,7 @@ enum SkillType {
   Shoot_Arrow(
       casteType: CasteType.Bow,
       magicCost: 0,
+      isBaseAttack: true,
   ),
   Split_Shot(
     casteType: CasteType.Bow,
@@ -101,6 +104,7 @@ enum SkillType {
   /// if null the weapon perform duration is used
   /// if null the weapon range is used
   final double? range;
+  final bool isBaseAttack;
 
   static const Max_Level = 20;
   static const Max_Health_Steal = 0.5;
@@ -157,6 +161,7 @@ enum SkillType {
     this.magicCost = 0,
     this.range,
     this.maxLevel = 20,
+    this.isBaseAttack = false,
   });
 
   bool get isPassive => casteType == CasteType.Passive;
