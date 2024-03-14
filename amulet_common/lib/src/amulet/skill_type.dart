@@ -62,7 +62,7 @@ enum SkillType {
   Max_Magic(
     casteType: CasteType.Passive,
   ),
-  Agility(
+  Attack_Speed(
     casteType: CasteType.Passive,
   ),
   Health_Steal(
@@ -95,6 +95,7 @@ enum SkillType {
   ;
 
 
+  final int maxLevel;
   final CasteType casteType;
   final int magicCost;
   /// if null the weapon perform duration is used
@@ -155,6 +156,7 @@ enum SkillType {
     required this.casteType,
     this.magicCost = 0,
     this.range,
+    this.maxLevel = 20,
   });
 
   bool get isPassive => casteType == CasteType.Passive;

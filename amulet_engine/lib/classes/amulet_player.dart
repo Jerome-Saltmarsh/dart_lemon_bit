@@ -118,11 +118,7 @@ class AmuletPlayer extends IsometricPlayer with
 
   /// in frames
   int? get equippedWeaponPerformDuration {
-    final attackSpeed = equippedWeapon?.amuletItem.attackSpeed;
-    if (attackSpeed == null){
-      return null;
-    }
-    return AmuletSettings.interpolateAttackSpeed(attackSpeed).toInt();
+    return AmuletSettings.interpolateAttackSpeed(attackSpeedI).toInt();
   }
 
   @override
@@ -215,20 +211,22 @@ class AmuletPlayer extends IsometricPlayer with
 
   int get regenMagic =>
       AmuletSettings.Base_Magic_Regen +
-        getSkillTypeLevelAssigned(SkillType.Magic_Regen);
+        getSkillTypeLevel(SkillType.Magic_Regen);
 
   int get regenHealth =>
       AmuletSettings.Base_Magic_Regen +
-          getSkillTypeLevelAssigned(SkillType.Health_Regen);
+          getSkillTypeLevel(SkillType.Health_Regen);
 
   @override
   double get runSpeed {
-    final level = getSkillTypeLevelAssigned(SkillType.Scout);
+    final level = getSkillTypeLevel(SkillType.Scout);
     final bonus = baseRunSpeed * SkillType.getRunSpeed(level);
     return baseRunSpeed + bonus;
   }
 
-  int get attackSpeed => getSkillTypeLevelAssigned(SkillType.Agility);
+  int get attackSpeed => getSkillTypeLevel(SkillType.Attack_Speed);
+  
+  double get attackSpeedI => attackSpeed / SkillType.Attack_Speed.maxLevel;
 
   @override
   void writePlayerGame() {
@@ -1230,12 +1228,9 @@ class AmuletPlayer extends IsometricPlayer with
   /// a value between 0.0 and 1.0
   double? get equippedWeaponRange => equippedWeapon?.amuletItem.range;
 
-  int getSkillTypeLevelAssigned(SkillType skillType) =>
-      getSkillTypeLevel(skillType);
-
   /// returns a number between 0.0 and 1.0
   double getAssignedSkillTypeLevelI(SkillType skillType) =>
-      getSkillTypeLevelAssigned(skillType) / SkillType.Max_Level;
+      getSkillTypeLevel(skillType) / SkillType.Max_Level;
 
   int getSkillTypeLevel(SkillType skillType){
      var total = 0;
@@ -1278,10 +1273,10 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   double get healthSteal =>
-      SkillType.getHealthSteal(getSkillTypeLevelAssigned(SkillType.Health_Steal));
+      SkillType.getHealthSteal(getSkillTypeLevel(SkillType.Health_Steal));
 
   double get magicSteal =>
-      SkillType.getMagicSteal(getSkillTypeLevelAssigned(SkillType.Magic_Steal));
+      SkillType.getMagicSteal(getSkillTypeLevel(SkillType.Magic_Steal));
 
   void writeFiendCount() {
     writeByte(NetworkResponse.Amulet);
@@ -1320,7 +1315,7 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   double get performFrameVelocity {
-    final attackSpeedLevel = getSkillTypeLevelAssigned(SkillType.Agility);
+    final attackSpeedLevel = getSkillTypeLevel(SkillType.Attack_Speed);
     final attackSpeedPerc = SkillType.getAttackSpeedPercentage(attackSpeedLevel);
     final base = AmuletSettings.Min_Perform_Velocity;
     return base + (base * attackSpeedPerc);
@@ -1347,7 +1342,7 @@ class AmuletPlayer extends IsometricPlayer with
 
   double get chanceOfCriticalDamage =>
       SkillType.getPercentageCriticalHit(
-          getSkillTypeLevelAssigned(SkillType.Critical_Hit)
+          getSkillTypeLevel(SkillType.Critical_Hit)
       );
 
   int get totalCriticalHitPoints =>

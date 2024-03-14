@@ -1601,11 +1601,11 @@ class AmuletUI {
               next: nextAmuletItem.range,
               current: currentAmuletItem?.range
           ),
-           buildComparisonRow01(
-              lead: 'speed',
-              next: nextAmuletItem.attackSpeed,
-              current: currentAmuletItem?.attackSpeed
-          ),
+          //  buildComparisonRow01(
+          //     lead: 'speed',
+          //     next: nextAmuletItem.attackSpeed,
+          //     current: currentAmuletItem?.attackSpeed
+          // ),
           // buildCompareBars(
           //     'speed',
           //     currentAmuletItem?.attackSpeed ?? 0,

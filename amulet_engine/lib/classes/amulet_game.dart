@@ -536,7 +536,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   int getCharacterAssignedSkillLevel(Character character, SkillType skillType){
      if (character is AmuletPlayer){
-       return character.getSkillTypeLevelAssigned(skillType);
+       return character.getSkillTypeLevel(skillType);
      }
      if (character is AmuletFiend){
        return character.getSkillTypeLevel(skillType);
@@ -1466,7 +1466,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
   int getCharacterSkillTypeLevel(Character character, SkillType skillType){
     if (character is AmuletPlayer){
-      return character.getSkillTypeLevelAssigned(skillType);
+      return character.getSkillTypeLevel(skillType);
     }
     if (character is AmuletFiend){
       return character.fiendType.skillTypes[skillType] ?? 0;

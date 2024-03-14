@@ -36,7 +36,7 @@ class AmuletItemObject {
   }
 
   int getSkillLevel(SkillType skillType) =>
-      amuletItem.getSkillTypeValue(
+      amuletItem.getSkillTypeLevel(
           skillType: skillType,
           level: level,
       );

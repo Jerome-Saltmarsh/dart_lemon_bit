@@ -9,7 +9,7 @@ extension AmuletItemObjectExtension on AmuletItemObject {
   double? get maxMagic => amuletItem.getMaxMagic(level);
 
   int getSkillLevel(SkillType skillType) =>
-      amuletItem.getSkillTypeValue(
+      amuletItem.getSkillTypeLevel(
         skillType: skillType,
         level: level,
       );

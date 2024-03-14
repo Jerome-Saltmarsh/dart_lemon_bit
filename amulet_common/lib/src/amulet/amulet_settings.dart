@@ -40,5 +40,4 @@ class AmuletSettings {
 
   static double interpolateAttackSpeed(double t) =>
       interpolate(Attack_Speed_Duration_Fastest, Attack_Speed_Duration_Slowest, 1.0 - t);
-
 }

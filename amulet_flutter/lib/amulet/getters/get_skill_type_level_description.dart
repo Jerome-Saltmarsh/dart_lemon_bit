@@ -5,7 +5,7 @@ String? getSkillTypeLevelDescription(SkillType skillType, int level) {
   switch (skillType) {
     case SkillType.Heal:
       return '+${SkillType.getHealAmount(level)} health';
-    case SkillType.Agility:
+    case SkillType.Attack_Speed:
       return 'attack speed +${(SkillType.getAttackSpeedPercentage(level) * 100).toInt()}%';
     case SkillType.Health_Steal:
       return '${SkillType.getHealthSteal(level).toStringPercentage} of damage';

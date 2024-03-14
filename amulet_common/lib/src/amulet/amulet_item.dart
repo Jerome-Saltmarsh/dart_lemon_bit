@@ -5,37 +5,42 @@ enum AmuletItem {
     label: 'Short Sword',
     slotType: SlotType.Weapon,
     subType: WeaponType.Sword_Short,
-    attackSpeed: 0.7,
     range: 0.2,
     damageMin: 0.75,
     damage: 0.45,
     attackSkill: SkillType.Slash,
+    skillBase: {
+      SkillType.Attack_Speed: 5,
+    }
   ),
   Weapon_Sword_Broad(
     label: 'Broad Sword',
     slotType: SlotType.Weapon,
     subType: WeaponType.Sword_Broad,
-    attackSpeed: 0.5,
     range: 0.5,
     damage: 0.5,
     damageMin: 0.75,
     attackSkill: SkillType.Slash,
+      skillBase: {
+        SkillType.Attack_Speed: 5,
+      }
   ),
   Weapon_Sword_Long(
     label: 'Long Sword',
     slotType: SlotType.Weapon,
     subType: WeaponType.Sword_Long,
-    attackSpeed: 0.4,
     range: 0.75,
     damageMin: 0.4,
     damage: 0.7,
     attackSkill: SkillType.Slash,
+    skillBase: {
+      SkillType.Attack_Speed: 1,
+    }
   ),
   Weapon_Sword_Giant(
     label: 'Giant Sword',
     slotType: SlotType.Weapon,
     subType: WeaponType.Sword_Giant,
-    attackSpeed: 0.2,
     range: 1.0,
     damageMin: 0.5,
     damage: 0.9,
@@ -45,7 +50,7 @@ enum AmuletItem {
     label: 'Short Bow',
     slotType: SlotType.Weapon,
     subType: WeaponType.Bow_Short,
-    attackSpeed: 1.0,
+    // attackSpeed: 1.0,
     range: 0.25,
     damageMin: 0.9,
     damage: 0.25,
@@ -55,7 +60,7 @@ enum AmuletItem {
     label: 'Reflex Bow',
     slotType: SlotType.Weapon,
     subType: WeaponType.Bow_Reflex,
-    attackSpeed: 0.7,
+    // attackSpeed: 0.7,
     range: 0.4,
     damageMin: 0.5,
     damage: 0.35,
@@ -65,7 +70,7 @@ enum AmuletItem {
     label: 'Composite Bow',
     slotType: SlotType.Weapon,
     subType: WeaponType.Bow_Composite,
-    attackSpeed: 0.5,
+    // attackSpeed: 0.5,
     range: 0.75,
     damageMin: 0.3,
     damage: 0.6,
@@ -75,7 +80,7 @@ enum AmuletItem {
     label: 'Lucky Long Bow of the Flame',
     slotType: SlotType.Weapon,
     subType: WeaponType.Bow_Long,
-    attackSpeed: 0.3,
+    // attackSpeed: 0.3,
     range: 1.0,
     damageMin: 0.4,
     damage: 0.8,
@@ -85,7 +90,7 @@ enum AmuletItem {
     label: 'Wand',
     slotType: SlotType.Weapon,
     subType: WeaponType.Staff_Wand,
-    attackSpeed: 0.8,
+    // attackSpeed: 0.8,
     range: 0.15,
     damageMin: 0.5,
     damage: 0.1,
@@ -98,7 +103,7 @@ enum AmuletItem {
     label: 'Globe',
     slotType: SlotType.Weapon,
     subType: WeaponType.Staff_Globe,
-    attackSpeed: 0.6,
+    // attackSpeed: 0.6,
     range: 0.4,
     damageMin: 0.2,
     damage: 0.35,
@@ -111,7 +116,7 @@ enum AmuletItem {
     label: 'Scepter',
     slotType: SlotType.Weapon,
     subType: WeaponType.Staff_Scepter,
-    attackSpeed: 0.5,
+    // attackSpeed: 0.5,
     range: 0.7,
     damageMin: 0.6,
     damage: 0.45,
@@ -124,7 +129,7 @@ enum AmuletItem {
     label: 'Staff',
     slotType: SlotType.Weapon,
     subType: WeaponType.Staff_Long,
-    attackSpeed: 0.4,
+    // attackSpeed: 0.4,
     range: 0.8,
     damageMin: 0.8,
     damage: 0.55,
@@ -202,7 +207,7 @@ enum AmuletItem {
     slotType: SlotType.Helm,
     subType: HelmType.Cape,
     skillSet: {
-      SkillType.Agility: 0.5,
+      SkillType.Attack_Speed: 0.5,
     },
   ),
   Helm_Veil(
@@ -272,7 +277,7 @@ enum AmuletItem {
     subType: ArmorType.Cloak,
     skillSet: {
       SkillType.Max_Health: 1.0,
-      SkillType.Agility: 1.0,
+      SkillType.Attack_Speed: 1.0,
     },
   ),
   Armor_Mantle(
@@ -352,7 +357,7 @@ enum AmuletItem {
     subType: ShoeType.Treads,
     skillSet: {
       SkillType.Max_Health: 1.0,
-      SkillType.Agility: 1.0,
+      SkillType.Attack_Speed: 1.0,
     },
   ),
   Shoes_Striders(
@@ -387,7 +392,6 @@ enum AmuletItem {
       label: 'Frost Wand',
       slotType: SlotType.Weapon,
       subType: WeaponType.Staff_Wand,
-      attackSpeed: 0.8,
       range: 0.15,
       damageMin: 0.9,
       damage: 0.1,
@@ -395,13 +399,17 @@ enum AmuletItem {
       attackSkill: SkillType.Bludgeon,
       skillSet: {
         SkillType.Frostball: 1.1,
-      }),
+      },
+      skillBase: {
+        SkillType.Attack_Speed: 5,
+      }
+  ),
 
   Special_Weapon_Flame_Wand(
       label: 'Flame Wand',
       slotType: SlotType.Weapon,
       subType: WeaponType.Staff_Wand,
-      attackSpeed: 0.8,
+      // attackSpeed: 0.8,
       range: 0.15,
       damageMin: 0.9,
       damage: 0.1,
@@ -414,7 +422,7 @@ enum AmuletItem {
       label: 'Assassins Blade',
       slotType: SlotType.Weapon,
       subType: WeaponType.Sword_Short,
-      attackSpeed: 0.75,
+      // attackSpeed: 0.75,
       range: 0.2,
       damage: 0.45,
       damageMin: 0.75,
@@ -427,7 +435,7 @@ enum AmuletItem {
       label: 'Assassins Blade',
       slotType: SlotType.Weapon,
       subType: WeaponType.Sword_Short,
-      attackSpeed: 0.8,
+      // attackSpeed: 0.8,
       range: 0.2,
       damage: 0.55,
       damageMin: 0.75,
@@ -435,13 +443,13 @@ enum AmuletItem {
       attackSkill: SkillType.Slash,
       skillSet: {
         SkillType.Critical_Hit: 2.0,
-        SkillType.Agility: 1.0,
+        SkillType.Attack_Speed: 1.0,
       }),
   Special_Weapon_Blizzard_Globe(
       label: 'Blizzard Globe',
       slotType: SlotType.Weapon,
       subType: WeaponType.Staff_Globe,
-      attackSpeed: 0.6,
+      // attackSpeed: 0.6,
       range: 0.2,
       damage: 0.55,
       damageMin: 0.75,
@@ -456,14 +464,14 @@ enum AmuletItem {
       slotType: SlotType.Weapon,
       subType: WeaponType.Bow_Reflex,
       attackSkill: SkillType.Shoot_Arrow,
-      attackSpeed: 0.3,
+      // attackSpeed: 0.3,
       range: 0.6,
       damage: 0.75,
       damageMin: 0.5,
       quality: ItemQuality.Rare,
       skillSet: {
         SkillType.Critical_Hit: 2.0,
-        SkillType.Agility: 1.0,
+        SkillType.Attack_Speed: 1.0,
       }),
   Unique_Helm_Of_Fireball(
       label: 'Scorched Hat',
@@ -533,10 +541,11 @@ enum AmuletItem {
 
   /// between 0.0 and 1.0
   final double? range;
-  final double? attackSpeed;
+  // final double? attackSpeed;
   final ItemQuality quality;
   final String label;
   final Map<SkillType, double> skillSet;
+  final Map<SkillType, int> skillBase;
   final Map<DamageType, double> resistances;
   final SkillType? attackSkill;
 
@@ -548,10 +557,11 @@ enum AmuletItem {
     this.quality = ItemQuality.Common,
     this.skillSet = const {},
     this.range,
-    this.attackSpeed,
+    // this.attackSpeed,
     this.damageMin,
     this.damage,
     this.resistances = const {},
+    this.skillBase = const {},
   });
 
   bool get isWeapon => slotType == SlotType.Weapon;
@@ -573,9 +583,9 @@ enum AmuletItem {
   double get quantify {
     const pointsPerDamage = 3;
     const pointsPerSkill = 2.0;
-    final damageMax = (damage ?? 0) * pointsPerDamage * (attackSpeed ?? 0) * (range ?? 0);
+    final damageMax = (damage ?? 0) * pointsPerDamage * (range ?? 0);
     var total = 0.0;
-    total += attackSpeed ?? 0;
+    // total += attackSpeed ?? 0;
     total += damageMax;
     total += (damageMin ?? 0) * damageMax;
     for (final entry in skillSet.entries) {
@@ -599,13 +609,13 @@ enum AmuletItem {
   values.where((element) => element.isConsumable).toList(growable: false);
 
   double? getMaxHealth(int level) =>
-      getSkillTypeValue(
+      getSkillTypeLevel(
           skillType: SkillType.Max_Magic,
           level: level,
       ) * 5;
 
   double? getMaxMagic(int level) =>
-      getSkillTypeValue(
+      getSkillTypeLevel(
           skillType: SkillType.Max_Health,
           level: level,
       ) * 5;
@@ -617,15 +627,27 @@ enum AmuletItem {
 
   int getUpgradeCost(int level) => (level * level * quantify).floor();
 
-  int getSkillTypeValue({required SkillType skillType, required int level}){
+  int getSkillTypeLevel({required SkillType skillType, required int level}) =>
+      getSkillTypeLevelSet(skillType: skillType, level: level) +
+      getSkillTypeLevelBase(skillType: skillType, level: level);
+
+  int getSkillTypeLevelSet({
+    required SkillType skillType,
+    required int level,
+  }){
     final skillValue = skillSet[skillType];
     if (skillValue == null) return 0;
     return (skillValue * level).floor();
   }
 
-  double? getWeaponDamageMax(int level){
-    return level * Damage_Per_Level;
-  }
+  int getSkillTypeLevelBase({
+    required SkillType skillType,
+    required int level,
+  }) =>
+      skillBase[skillType] ?? 0;
+
+  double? getWeaponDamageMax(int level) =>
+      level * Damage_Per_Level;
 
   double? getWeaponDamageMin(int level){
     final damageMin = this.damageMin;
