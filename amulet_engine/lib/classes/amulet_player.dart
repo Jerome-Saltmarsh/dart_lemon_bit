@@ -55,7 +55,6 @@ class AmuletPlayer extends IsometricPlayer with
   var npcOptions = <TalkOption>[];
   var flags = <dynamic>[];
   var skillSlotIndex = 0;
-  var skillSlotsDirty = false;
   var active = false;
   var difficulty = Difficulty.Normal;
 
@@ -87,8 +86,6 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   final sceneShrinesUsed = <AmuletScene, List<int>> {};
-  final skillSlots = List.generate(4, (index) => SkillType.None);
-
 
   Function? onInteractionOver;
   Position? cameraTarget;
@@ -242,11 +239,6 @@ class AmuletPlayer extends IsometricPlayer with
 
     if (debugEnabled){
       writeDebug();
-    }
-
-    if (skillSlotsDirty){
-      writeSkillSlots();
-      skillSlotsDirty = false;
     }
 
     writeAmuletPlayerAimTarget();
@@ -480,44 +472,12 @@ class AmuletPlayer extends IsometricPlayer with
     helmType = equippedHelm?.amuletItem.subType ?? HelmType.None;
     armorType = equippedArmor?.amuletItem.subType ?? 0;
     shoeType = equippedShoes?.amuletItem.subType ?? ShoeType.None;
-    removeInvalidSkillSlots();
-    checkAssignedSkillTypes();
     writeEquipped();
     writePlayerHealth();
     writePlayerMagic();
     writeSkillTypes();
     writePlayerCriticalHitPoints();
     writeSkillActiveLeft();
-  }
-
-  void checkAssignedSkillTypes() {
-
-    for (var i = 0; i < skillSlots.length; i++){
-      final skillType = skillSlots[i];
-      final skillLevel = getSkillTypeLevel(skillType);
-
-      if (skillLevel <= 0) {
-        skillSlots[i] = SkillType.None;
-        notifySkillSlotsDirty();
-      }
-    }
-
-    if (!skillTypeUnlocked(skillTypeLeft)) {
-      skillTypeLeft = equippedWeaponDefaultSkillType;
-    }
-
-    if (skillTypeUnlocked(skillTypeRight)) {
-      return;
-    }
-
-    for (var i = SkillType.values.length - 1; i >= 0; i--) {
-      final skillType = SkillType.values[i];
-      if (skillTypeUnlocked(skillType)) {
-        skillTypeRight = skillType;
-        return;
-      }
-    }
-    skillTypeRight = equippedWeaponDefaultSkillType;
   }
 
   SkillType get equippedWeaponDefaultSkillType {
@@ -668,54 +628,10 @@ class AmuletPlayer extends IsometricPlayer with
     for (final skillPoint in skillPoints){
       final skillType = skillPoint.key;
       final level = getSkillTypeLevel(skillType);
-
-      if (
-        level <= 0 ||
-        skillTypeAssignedToSkillSlot(skillType)
-      ) continue;
-
-      tryToAssignSkillTypeToEmptySlot(skillType);
+      if (level <= 0) continue;
     }
 
     notifyEquipmentDirty();
-  }
-
-  void tryToAssignSkillTypeToEmptySlot(SkillType skillType) {
-    final availableIndex = getEmptySkillSlotIndex();
-
-    if (availableIndex != null) {
-      setSkillSlotValue(
-        skillType: skillType,
-        index: availableIndex,
-      );
-    }
-  }
-
-  void removeInvalidSkillSlots() {
-    for (var i = 0; i < skillSlots.length; i++) {
-      final skillSlot = skillSlots[i];
-      if (skillTypeUnlocked(skillSlot)) continue;
-      setSkillSlotValue(
-          index: i,
-          skillType: SkillType.None,
-      );
-    }
-  }
-
-  void notifySkillSlotsDirty() => skillSlotsDirty = true;
-
-  bool skillTypeAssignedToSkillSlot(SkillType skillType) {
-     return getSkillTypeSlotIndex(skillType) != null;
-  }
-
-  int? getEmptySkillSlotIndex() => getSkillTypeSlotIndex(SkillType.None);
-
-  int? getSkillTypeSlotIndex(SkillType skillType) {
-    for (var i = 0; i < skillSlots.length; i++) {
-      if (skillType != skillSlots[i]) continue;
-      return i;
-    }
-    return null;
   }
 
   void notifyEquipmentDirty() {
@@ -972,7 +888,6 @@ class AmuletPlayer extends IsometricPlayer with
     writeSkillTypes();
     writeFiendCount();
     writeDebugEnabled();
-    writeSkillSlots();
     writeSkillSlotIndex();
     writePlayerCanUpgrade();
   }
@@ -1315,12 +1230,8 @@ class AmuletPlayer extends IsometricPlayer with
   /// a value between 0.0 and 1.0
   double? get equippedWeaponRange => equippedWeapon?.amuletItem.range;
 
-  int getSkillTypeLevelAssigned(SkillType skillType){
-      if (skillTypeAssignedToSkillSlot(skillType)){
-        return getSkillTypeLevel(skillType);
-      }
-      return 0;
-  }
+  int getSkillTypeLevelAssigned(SkillType skillType) =>
+      getSkillTypeLevel(skillType);
 
   /// returns a number between 0.0 and 1.0
   double getAssignedSkillTypeLevelI(SkillType skillType) =>
@@ -1486,59 +1397,10 @@ class AmuletPlayer extends IsometricPlayer with
     }
   }
 
-  void writeSkillSlots() {
-    writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Player_Skill_Slots);
-    for (final skillSlot in skillSlots) {
-      writeByte(skillSlot.index);
-    }
-  }
-
-  void setSkillSlotValue({
-    required int index,
-    required SkillType skillType,
-  }) {
-    if (!skillSlots.isValidIndex(index)) {
-      writeGameError(GameError.Invalid_Skill_Slot_Index);
-      return;
-    }
-
-    if (skillType != SkillType.None) {
-
-      if (skillType != SkillType.None && getSkillTypeLevel(skillType) <= 0) {
-        writeGameError(GameError.Skill_Type_Locked);
-        return;
-      }
-
-      final previousSkillTypeIndex = getSkillTypeSlotIndex(skillType);
-
-      if (previousSkillTypeIndex != null) {
-        final existingSkillAtIndex = skillSlots[index];
-        skillSlots[previousSkillTypeIndex] = existingSkillAtIndex;
-      }
-    }
-
-    skillSlots[index] = skillType;
-    notifySkillSlotsDirty();
-  }
-
   void writeSkillSlotIndex(){
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Skill_Slot_Index);
     writeByte(skillSlotIndex);
-  }
-
-  void setSkillSlotIndex(int value) {
-
-    if (dead) return;
-    if (busy && !skillActiveLeft) return;
-
-    if (!skillSlots.isValidIndex(value)) {
-      writeGameError(GameError.Invalid_Skill_Slot_Index);
-      return;
-    };
-    skillSlotIndex = value;
-    writeSkillSlotIndex();
   }
 
   @override
@@ -1564,29 +1426,7 @@ class AmuletPlayer extends IsometricPlayer with
 
   void toggleSkillType(SkillType skillType) {
 
-    if (!skillTypeUnlocked(skillType)){
-      writeGameError(GameError.Skill_Type_Locked);
-      return;
-    }
-
-    final slotIndex = getSkillTypeSlotIndex(skillType);
-
-    if (slotIndex != null) {
-      clearSkillSlot(slotIndex);
-    }
-
-    setSkillSlotValue(
-        index: skillSlotIndex,
-        skillType: skillType,
-    );
-  }
-
-  void clearSkillSlot(int index) =>
-      assignSkillSlot(index, SkillType.None);
-
-  void assignSkillSlot(int index, SkillType skillType){
-    skillSlots[index] = skillType;
-    notifySkillSlotsDirty();
+    throw Exception();
   }
 
   void spawnRandomAmuletItem() =>

@@ -39,7 +39,6 @@ CharacterJson writeAmuletPlayerToJson(AmuletPlayer player) {
   json[AmuletField.Health] = player.health;
   json[AmuletField.Magic] = player.magic;
   json[AmuletField.Quest_Main] = player.questMain.index;
-  json[AmuletField.Skill_Slots] = player.skillSlots.map((e) => e.index).toList(growable: false);
   json[AmuletField.Flags] = player.flags;
   json[AmuletField.Name] = player.name;
   json[AmuletField.Complexion] = player.complexion;

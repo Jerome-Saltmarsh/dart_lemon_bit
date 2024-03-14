@@ -29,13 +29,6 @@ class Amulet extends IsometricGame {
   final playerDebugEnabled = WatchBool(false);
   final playerPerformFrameVelocity = Watch(0.0);
 
-  final skillSlot0 = Watch(SkillType.None);
-  final skillSlot1 = Watch(SkillType.None);
-  final skillSlot2 = Watch(SkillType.None);
-  final skillSlot3 = Watch(SkillType.None);
-
-  final skillSlotsChangedNotifier = Watch(0);
-
   final equippableSlotTypes = const [
     SlotType.Weapon,
     SlotType.Helm,
@@ -87,7 +80,6 @@ class Amulet extends IsometricGame {
   final windowVisibleSkillLeft = WatchBool(false);
   final windowVisibleSkillRight = WatchBool(false);
   final windowVisibleQuantify = WatchBool(false);
-  final windowVisibleUpgrade = WatchBool(false);
   final playerRunSpeed = Watch(0);
   final playerAgility = Watch(0);
   final playerGold = Watch(0);
@@ -98,8 +90,6 @@ class Amulet extends IsometricGame {
   final amuletScene = Watch<AmuletScene?>(null);
   final questMain = Watch(QuestMain.values.first);
   final windowVisibleQuests = WatchBool(true);
-  final windowVisibleEquipment = WatchBool(true);
-  final windowVisiblePlayerSkills = WatchBool(false);
   final windowVisibleHelp = WatchBool(false);
   final amuletKeys = AmuletKeys();
 
@@ -174,15 +164,12 @@ class Amulet extends IsometricGame {
       updateFiendCountPercentage();
     });
 
-    windowVisiblePlayerSkills.onChanged(onChangedWindowVisiblePlayerSkills);
-    windowVisibleEquipment.onChanged(onWindowVisibilityChanged);
     windowVisibleQuests.onChanged(onWindowVisibilityChanged);
     windowVisibleHelp.onChanged(onWindowVisibilityChanged);
     windowVisibleQuantify.onChanged(onWindowVisibilityChanged);
     playerInteracting.onChanged(onChangedPlayerInteracting);
     npcTextIndex.onChanged(onChangedNpcTextIndex);
     error.onChanged(onChangedError);
-    skillSlotsChangedNotifier.onChanged(onChangedSkillSlots);
 
     aimTargetAmuletItemObject.onChanged((t) {
       if (t != null) {
@@ -197,18 +184,6 @@ class Amulet extends IsometricGame {
 
   void onChangedQuestMain(QuestMain questMain) {
     windowVisibleQuests.setTrue();
-  }
-
-  void onChangedWindowVisiblePlayerSkills(bool value) {
-    amulet.mouseOverSkillType = null;
-    onWindowVisibilityChanged(value);
-  }
-
-  void onChangedSkillSlots(int _) {
-    for (final skillType in SkillType.values) {
-      final index = getSkillTypeSlotIndex(skillType);
-      playerSkillTypeSlotAssigned[skillType]?.value = index != null;
-    }
   }
 
   void onWindowVisibilityChanged(bool value) {
@@ -275,21 +250,6 @@ class Amulet extends IsometricGame {
     if (options.editing)
       return;
 
-    if (key == amuletKeys.toggleWindowEquipment) {
-      windowVisibleEquipment.toggle();
-      return;
-    }
-
-    // if (key == amuletKeys.toggleWindowPlayerStats) {
-    //   windowVisiblePlayerStats.toggle();
-    //   return;
-    // }
-
-    if (key == amuletKeys.toggleWindowSkills) {
-      windowVisiblePlayerSkills.toggle();
-      return;
-    }
-
     if (key == amuletKeys.toggleWindowQuest) {
       windowVisibleQuests.toggle();
       return;
@@ -300,51 +260,14 @@ class Amulet extends IsometricGame {
       return;
     }
 
-    if (key == amuletKeys.toggleWindowUpgrade) {
-      windowVisibleUpgrade.toggle();
+    if (key == amuletKeys.usePotionHealth) {
+      amulet.usePotionHealth();
       return;
     }
 
-    if (key == amuletKeys.selectSkill0) {
-      final mouseOverSkillType = amulet.mouseOverSkillType;
-      if (mouseOverSkillType != null) {
-        setSkillSlotValue(index: 0, skillType: mouseOverSkillType);
-      }
-      setSkillSlotIndex(0);
+    if (key == amuletKeys.usePotionMagic) {
+      amulet.usePotionMagic();
       return;
-    }
-
-    if (key == amuletKeys.selectSkill1) {
-      final mouseOverSkillType = amulet.mouseOverSkillType;
-      if (mouseOverSkillType != null) {
-        setSkillSlotValue(index: 1, skillType: mouseOverSkillType);
-      }
-      setSkillSlotIndex(1);
-      return;
-    }
-    if (key == amuletKeys.selectSkill2) {
-      final mouseOverSkillType = amulet.mouseOverSkillType;
-      if (mouseOverSkillType != null) {
-        setSkillSlotValue(index: 2, skillType: mouseOverSkillType);
-      }
-      setSkillSlotIndex(2);
-      return;
-    }
-    if (key == amuletKeys.selectSkill3) {
-      final mouseOverSkillType = amulet.mouseOverSkillType;
-      if (mouseOverSkillType != null) {
-        setSkillSlotValue(index: 3, skillType: mouseOverSkillType);
-      }
-      setSkillSlotIndex(3);
-      return;
-    }
-
-    if (key == amuletKeys.consumePotionHealth) {
-      throw Exception('TODO');
-    }
-
-    if (key == amuletKeys.consumePotionMagic) {
-      throw Exception('TODO');
     }
 
     if (options.developMode) {
@@ -392,13 +315,6 @@ class Amulet extends IsometricGame {
         NetworkRequestAmulet.Drop_Item_Type,
         slotType.index,
       );
-
-  // void selectSlotType(SlotType slotType) =>
-  //     sendAmuletRequest(NetworkRequestAmulet.Select_Slot_Type, slotType.index);
-
-  void setSkillSlotIndex(int index) {
-    sendAmuletRequest(NetworkRequestAmulet.Set_Skill_Slot_Index, index);
-  }
 
   void spawnRandomEnemy() =>
       server.sendNetworkRequestAmulet(
@@ -646,43 +562,6 @@ class Amulet extends IsometricGame {
           NetworkRequestAmulet.Toggle_Debug_Enabled
       );
 
-  // void updateCursor() => amulet.cursor.value = getCursor();
-
-  // SystemMouseCursor getCursor(){
-  //   if (
-  //     player.aimTargetSet.value ||
-  //     player.aimNodeType.value != null
-  //   ){
-  //     return SystemMouseCursors.grab;
-  //   }
-  //   return SystemMouseCursors.basic;
-  // }
-
-  int getSkillSlotIndex(Watch<SkillType> watch) {
-    if (watch == skillSlot0) {
-      return 0;
-    }
-    if (watch == skillSlot1) {
-      return 1;
-    }
-    if (watch == skillSlot2) {
-      return 2;
-    }
-    if (watch == skillSlot3) {
-      return 3;
-    }
-    throw Exception();
-  }
-
-  void setSkillSlotValue({
-    required int index,
-    required SkillType skillType,
-  }) =>
-      sendAmuletRequest(
-        NetworkRequestAmulet.Set_Skill_Slot_Value,
-        '$index ${skillType.index}',
-      );
-
   @override
   List<Widget> buildMenuItems() {
     return [
@@ -710,25 +589,23 @@ class Amulet extends IsometricGame {
   //    throw Exception();
   // }
 
-  Watch<SkillType> getSkillSlotAt(int index) {
-    switch (index) {
-      case 0:
-        return skillSlot0;
-      case 1:
-        return skillSlot1;
-      case 2:
-        return skillSlot2;
-      case 3:
-        return skillSlot3;
-      default:
-        throw Exception('amulet.getSkillSlotAt($index)');
-    }
-  }
+  // Watch<SkillType> getSkillSlotAt(int index) {
+  //   switch (index) {
+  //     case 0:
+  //       return skillSlot0;
+  //     case 1:
+  //       return skillSlot1;
+  //     case 2:
+  //       return skillSlot2;
+  //     case 3:
+  //       return skillSlot3;
+  //     default:
+  //       throw Exception('amulet.getSkillSlotAt($index)');
+  //   }
+  // }
 
   void onNewCharacterCreated() {
     windowVisibleQuests.setTrue();
-    windowVisibleEquipment.setTrue();
-    windowVisiblePlayerSkills.setFalse();
   }
 
   void onAmuletItemConsumed(AmuletItem amuletItem) {
@@ -750,22 +627,6 @@ class Amulet extends IsometricGame {
   void toggleSkillType(SkillType skillType) =>
       sendAmuletRequest(
           NetworkRequestAmulet.Toggle_Skill_Type, skillType.index);
-
-  int? getSkillTypeSlotIndex(SkillType skillType) {
-    if (skillType == skillSlot0.value) {
-      return 0;
-    }
-    if (skillType == skillSlot1.value) {
-      return 1;
-    }
-    if (skillType == skillSlot2.value) {
-      return 2;
-    }
-    if (skillType == skillSlot3.value) {
-      return 3;
-    }
-    return null;
-  }
 
   int getSkillTypeLevel(SkillType skillType) =>
       playerSkillTypeLevels[skillType] ?? (throw Exception());

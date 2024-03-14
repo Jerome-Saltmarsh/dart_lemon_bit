@@ -13,8 +13,6 @@ enum NetworkRequestAmulet {
   Select_Skill_Type_Right,
   Refill_Player_Health_Magic,
   Toggle_Debug_Enabled,
-  Set_Skill_Slot_Value,
-  Set_Skill_Slot_Index,
   Toggle_Skill_Type,
   Spawn_Random_Amulet_Item,
   Spawn_Amulet_Item,

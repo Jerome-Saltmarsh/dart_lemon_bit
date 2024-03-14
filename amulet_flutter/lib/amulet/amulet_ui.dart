@@ -3,7 +3,6 @@ import 'package:amulet_common/src.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/amulet/src.dart';
 import 'package:amulet_flutter/amulet/ui/enums/quantify_tab.dart';
-import 'package:amulet_flutter/amulet/ui/windows/window_upgrade.dart';
 import 'package:amulet_flutter/isometric/consts/height.dart';
 import 'package:amulet_flutter/isometric/consts/padding.dart';
 import 'package:amulet_flutter/isometric/consts/width.dart';
@@ -136,11 +135,11 @@ class AmuletUI {
         bottom: 8,
         child: buildRowPlayerSkills(),
       ),
-          Positioned(
-              top: 100,
-              child: buildWatchVisible(
-                  amulet.windowVisibleUpgrade,
-                  WindowUpgrade(amulet: amulet))),
+          // Positioned(
+          //     top: 100,
+          //     child: buildWatchVisible(
+          //         amulet.windowVisibleUpgrade,
+          //         WindowUpgrade(amulet: amulet))),
           buildPositionedMessage(),
           buildWindowQuest(),
           buildOverlayScreenColor(),
@@ -169,11 +168,7 @@ class AmuletUI {
   );
   }
 
-  Widget buildHudBottomLeft() =>
-      buildWatchVisible(
-        amulet.windowVisibleEquipment,
-        buildEquippedAmuletItems(),
-      );
+  Widget buildHudBottomLeft() => buildEquippedAmuletItems();
 
   AmuletImage buildIconPotion() {
     return AmuletImage(
@@ -754,28 +749,6 @@ class AmuletUI {
 
   Widget buildIconItemsGrey() => AmuletImage(srcX: 693, srcY: 99, width: 22, height: 25);
 
-  Widget buildToggleEquipment() {
-
-    final active = buildToggleContainer(
-      child: buildIconItems(),
-      active: true,
-    );
-
-    final notActive = buildToggleContainer(
-      child: buildIconItemsGrey(),
-      active: false,
-    );
-    return onPressed(
-      hint: 'Items (Q)',
-      action: amulet.windowVisibleEquipment.toggle,
-      child: buildWatch(
-          amulet.windowVisibleEquipment,
-              (windowVisibleEquipment) =>
-          windowVisibleEquipment ? active : notActive),
-    );
-  }
-
-
   Widget buildIconPlayerStats() =>
       AmuletImage(srcX: 723, srcY: 131, width: 26, height: 26);
 
@@ -830,27 +803,27 @@ class AmuletUI {
         scale: scale,
       );
 
-  Widget buildTogglePlayerSkills() {
-
-    final active = buildToggleContainer(
-      child: buildIconSkills(),
-      active: true,
-    );
-
-    final notActive = buildToggleContainer(
-      child: buildIconSkillsGrey(),
-      active: false,
-    );
-
-    return onPressed(
-      hint: 'Skills (E)',
-      action: amulet.windowVisiblePlayerSkills.toggle,
-      child: buildWatch(
-          amulet.windowVisiblePlayerSkills,
-              (windowVisibleEquipment) =>
-          windowVisibleEquipment ? active : notActive),
-    );
-  }
+  // Widget buildTogglePlayerSkills() {
+  //
+  //   final active = buildToggleContainer(
+  //     child: buildIconSkills(),
+  //     active: true,
+  //   );
+  //
+  //   final notActive = buildToggleContainer(
+  //     child: buildIconSkillsGrey(),
+  //     active: false,
+  //   );
+  //
+  //   return onPressed(
+  //     hint: 'Skills (E)',
+  //     action: amulet.windowVisiblePlayerSkills.toggle,
+  //     child: buildWatch(
+  //         amulet.windowVisiblePlayerSkills,
+  //             (windowVisibleEquipment) =>
+  //         windowVisibleEquipment ? active : notActive),
+  //   );
+  // }
 
   Widget buildIconQuestGrey() =>
       AmuletImage(srcX: 691, srcY: 3, width: 26, height: 25);
@@ -1996,19 +1969,6 @@ class AmuletUI {
     });
   }
 
-  Widget buildWindowPlayerSkillSlots() => Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          buildSkillSlot(amulet.skillSlot0),
-          width8,
-          buildSkillSlot(amulet.skillSlot1),
-          width8,
-          buildSkillSlot(amulet.skillSlot2),
-          width8,
-          buildSkillSlot(amulet.skillSlot3),
-        ],
-      );
-
   Widget buildRowPlayerSkills() => buildWatch(
       amulet.playerSkillsNotifier,
       (_) => Row(
@@ -2137,22 +2097,27 @@ class AmuletUI {
         ),
       );
 
-  Widget buildCardSmallPotionHealth() =>
-      onPressed(
-        action: amulet.usePotionHealth,
-        child: Container(
-          padding: paddingAll4,
-          color: AmuletStyle.colorCardTitle,
-          child: Column(children: [
-            buildPlayerHealthBar(),
-            height4,
-            Container(
-                width: barWidth,
-                height: 16,
-                child: buildRowHealthPotions()),
-          ],),
-        ),
-      );
+  Widget buildCardSmallPotionHealth() {
+    final child = onPressed(
+      action: amulet.usePotionHealth,
+      child: Container(
+        padding: paddingAll4,
+        color: AmuletStyle.colorCardTitle,
+        child: Column(children: [
+          buildPlayerHealthBar(),
+          height4,
+          Container(
+              width: barWidth,
+              height: 16,
+              child: buildRowHealthPotions()),
+        ],),
+      ),
+    );
+
+    return buildMouseOverPanel(
+        top: 60,
+        child: child, panel: buildHint('Use health Potion (${amulet.amuletKeys.usePotionHealth.name})'));
+  }
 
   Widget buildCardSmallAmuletItem({
     required Widget title,
@@ -2196,141 +2161,141 @@ class AmuletUI {
       (t) => builder(amulet.getSkillTypeLevel(skillType)),
   );
 
-  Widget buildSkillSlot(Watch<SkillType> skillSlot){
-
-    final index = amulet.getSkillSlotIndex(skillSlot);
-    const size = 50.0;
-    final slot = buildWatch(skillSlot, (skillType) {
-
-      final button = onPressed(
-        action: () {
-          amulet.setSkillSlotIndex(index);
-          if (skillType == SkillType.None) {
-            amulet.windowVisiblePlayerSkills.setTrue();
-          }
-        },
-        onRightClick: () {
-          visibleRightClickedToClear = false;
-          amulet.setSkillSlotValue(
-            index: index,
-            skillType: SkillType.None,
-          );
-          amulet.setSkillSlotIndex(index);
-          amulet.windowVisiblePlayerSkills.setTrue();
-        },
-        child: Container(
-          width: size,
-          height: size,
-          child: buildIconSkillType(skillType),
-        ),
-      );
-
-      if (skillType == SkillType.None) {
-        return button;
-      }
-
-      return buildMouseOverPanel(
-        child: button,
-        panel: Column(
-          children: [
-            if (visibleRightClickedToClear)
-              buildText('right click to change'),
-            buildCardLargeSkillType(skillType),
-          ],
-        ),
-        bottom: 76,
-        left: -70,
-      );
-
-    });
-
-    final skillLevel =  buildWatch(skillSlot, (skillType) =>
-        buildSkillTypeLevel(
-          skillType: skillType,
-          builder: (level) => Container(
-              color: Palette.brown_4,
-              width: size,
-              height: 20,
-              alignment: Alignment.center,
-              child: level > 0 ? buildText(level, color: Colors.white70) : null
-          ) ,
-        )
-    );
-
-    final containerActive = buildBorder(
-      color: Colors.white70,
-      width: 3,
-      child: Column(
-        children: [
-          skillLevel,
-          Container(
-            child: slot,
-            color: Palette.brown_2,
-            alignment: Alignment.center,
-          ),
-        ],
-      ),
-    );
-
-    final containerInactive = buildBorder(
-      width: 3,
-      color: Palette.brown_4,
-      child: Column(
-        children: [
-          skillLevel,
-          Container(
-            child: slot,
-            color: Palette.brown_3,
-            // width: size,
-            // height: size,
-            alignment: Alignment.center,
-          ),
-        ],
-      ),
-    );
-
-    final key = Positioned(
-        bottom: 4,
-        right: 4,
-        child: buildText(const['A', 'S', 'D', 'F',].tryGet(index), size: 20));
-
-
-    final child = buildWatch(amulet.playerSkillSlotIndex, (selectedIndex) =>
-    selectedIndex == index ? containerActive : containerInactive);
-
-    return buildWatch(skillSlot, (skillType) {
-
-      final feedback = buildIconSkillType(skillType, dstX: 25, dstY: 25);
-      return Draggable(
-        data: skillSlot.value,
-        feedback: feedback,
-        child: DragTarget<SkillType>(
-          onAccept: (value){
-            amulet.setSkillSlotValue(
-              index: index,
-              skillType: value,
-            );
-          },
-          builder: (context, candidateData, rejectData) {
-            return MouseOver(
-                builder: (mouseOver) {
-                  return Stack(
-                    fit: StackFit.passthrough,
-                    alignment: Alignment.center,
-                    children: [
-                      child,
-                      if (mouseOver)
-                        key,
-                    ],
-                  );
-                }
-            );
-          },
-        ),
-      );
-    });
-
-  }
+  // Widget buildSkillSlot(Watch<SkillType> skillSlot){
+  //
+  //   final index = amulet.getSkillSlotIndex(skillSlot);
+  //   const size = 50.0;
+  //   final slot = buildWatch(skillSlot, (skillType) {
+  //
+  //     final button = onPressed(
+  //       action: () {
+  //         amulet.setSkillSlotIndex(index);
+  //         if (skillType == SkillType.None) {
+  //           amulet.windowVisiblePlayerSkills.setTrue();
+  //         }
+  //       },
+  //       onRightClick: () {
+  //         visibleRightClickedToClear = false;
+  //         amulet.setSkillSlotValue(
+  //           index: index,
+  //           skillType: SkillType.None,
+  //         );
+  //         amulet.setSkillSlotIndex(index);
+  //         amulet.windowVisiblePlayerSkills.setTrue();
+  //       },
+  //       child: Container(
+  //         width: size,
+  //         height: size,
+  //         child: buildIconSkillType(skillType),
+  //       ),
+  //     );
+  //
+  //     if (skillType == SkillType.None) {
+  //       return button;
+  //     }
+  //
+  //     return buildMouseOverPanel(
+  //       child: button,
+  //       panel: Column(
+  //         children: [
+  //           if (visibleRightClickedToClear)
+  //             buildText('right click to change'),
+  //           buildCardLargeSkillType(skillType),
+  //         ],
+  //       ),
+  //       bottom: 76,
+  //       left: -70,
+  //     );
+  //
+  //   });
+  //
+  //   final skillLevel =  buildWatch(skillSlot, (skillType) =>
+  //       buildSkillTypeLevel(
+  //         skillType: skillType,
+  //         builder: (level) => Container(
+  //             color: Palette.brown_4,
+  //             width: size,
+  //             height: 20,
+  //             alignment: Alignment.center,
+  //             child: level > 0 ? buildText(level, color: Colors.white70) : null
+  //         ) ,
+  //       )
+  //   );
+  //
+  //   final containerActive = buildBorder(
+  //     color: Colors.white70,
+  //     width: 3,
+  //     child: Column(
+  //       children: [
+  //         skillLevel,
+  //         Container(
+  //           child: slot,
+  //           color: Palette.brown_2,
+  //           alignment: Alignment.center,
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  //
+  //   final containerInactive = buildBorder(
+  //     width: 3,
+  //     color: Palette.brown_4,
+  //     child: Column(
+  //       children: [
+  //         skillLevel,
+  //         Container(
+  //           child: slot,
+  //           color: Palette.brown_3,
+  //           // width: size,
+  //           // height: size,
+  //           alignment: Alignment.center,
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  //
+  //   final key = Positioned(
+  //       bottom: 4,
+  //       right: 4,
+  //       child: buildText(const['A', 'S', 'D', 'F',].tryGet(index), size: 20));
+  //
+  //
+  //   final child = buildWatch(amulet.playerSkillSlotIndex, (selectedIndex) =>
+  //   selectedIndex == index ? containerActive : containerInactive);
+  //
+  //   return buildWatch(skillSlot, (skillType) {
+  //
+  //     final feedback = buildIconSkillType(skillType, dstX: 25, dstY: 25);
+  //     return Draggable(
+  //       data: skillSlot.value,
+  //       feedback: feedback,
+  //       child: DragTarget<SkillType>(
+  //         onAccept: (value){
+  //           amulet.setSkillSlotValue(
+  //             index: index,
+  //             skillType: value,
+  //           );
+  //         },
+  //         builder: (context, candidateData, rejectData) {
+  //           return MouseOver(
+  //               builder: (mouseOver) {
+  //                 return Stack(
+  //                   fit: StackFit.passthrough,
+  //                   alignment: Alignment.center,
+  //                   children: [
+  //                     child,
+  //                     if (mouseOver)
+  //                       key,
+  //                   ],
+  //                 );
+  //               }
+  //           );
+  //         },
+  //       ),
+  //     );
+  //   });
+  //
+  // }
 
   Widget buildToggle(WatchBool watch, String text, {String? hint}) => onPressed(
     hint: hint,

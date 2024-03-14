@@ -14,7 +14,6 @@ class AmuletField {
   static const Magic = 'magic';
   static const UUID = 'uuid';
   static const Quest_Main = 'quest_main';
-  static const Skill_Slots = 'skill_slots';
   static const Flags = 'flags';
   static const Name = 'name';
   static const Complexion = 'complexion';

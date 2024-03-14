@@ -797,33 +797,6 @@ class AmuletController {
         player.questTutorial = QuestTutorial.Finished;
         amulet.playerChangeGameToTown(player);
         break;
-      case NetworkRequestAmulet.Set_Skill_Slot_Value:
-        final index = parseArg2(arguments);
-        final skillTypeIndex = parseArg3(arguments);
-        final skillType = SkillType.values.tryGet(skillTypeIndex);
-
-        if (skillType == null){
-          player.writeGameError(GameError.Invalid_Skill_Type_Index);
-          return;
-        }
-
-        if (index == null || !player.skillSlots.isValidIndex(index)) {
-          player.writeGameError(GameError.Invalid_Skill_Slot_Index);
-          return;
-        }
-
-        player.setSkillSlotValue(
-            index: index,
-            skillType: skillType,
-        );
-        break;
-      case NetworkRequestAmulet.Set_Skill_Slot_Index:
-        final index = parseArg2(arguments);
-        if (index == null){
-          return;
-        }
-        player.setSkillSlotIndex(index);
-        break;
       case NetworkRequestAmulet.Use_Potion_Health:
         player.usePotionHealth();
         break;

@@ -32,7 +32,7 @@ class WindowUpgrade extends StatelessWidget {
             children: [
               buildText('UPGRADES'),
               width16,
-              amuletUI.buildButtonClose(amulet.windowVisibleUpgrade),
+              // amuletUI.buildButtonClose(amulet.windowVisibleUpgrade),
             ],
           ),
           height16,

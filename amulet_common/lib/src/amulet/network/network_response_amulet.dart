@@ -36,7 +36,6 @@ class NetworkResponseAmulet {
    static const Player_Critical_Hit_Points = 60;
    static const Player_Skill_Active_Left = 61;
    static const Player_Debug_Enabled = 62;
-   static const Player_Skill_Slots = 63;
    static const Player_Skill_Slot_Index = 64;
    static const Amulet_Item_Consumed = 66;
    static const Amulet_Item_Dropped = 67;

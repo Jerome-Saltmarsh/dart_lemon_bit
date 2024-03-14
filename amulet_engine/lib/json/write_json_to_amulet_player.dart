@@ -4,7 +4,6 @@ import 'package:amulet_engine/classes/amulet_fiend.dart';
 import 'package:amulet_engine/io/scene_json_reader.dart';
 import 'package:amulet_engine/src.dart';
 import 'package:lemon_json/src.dart';
-import 'package:lemon_lang/src.dart';
 
 import 'amulet_field.dart';
 
@@ -39,17 +38,6 @@ void writeJsonToAmuletPlayer(
   player.z = json.getDouble('z');
   player.skillTypeLeft = json.skillTypeLeft;
   player.skillTypeRight = json.skillTypeRight;
-  player.skillSlots.fill(SkillType.None);
-
-  if (skillSlotInts.length == player.skillSlots.length){
-    for (var i = 0; i < skillSlotInts.length; i++){
-       final skillSlotIndex = skillSlotInts[i];
-       if (SkillType.values.isValidIndex(skillSlotIndex)){
-          player.skillSlots[i] = SkillType.values[skillSlotIndex];
-       }
-    }
-  }
-
   player.setQuestMain(QuestMain.values[json.tryGetInt('quest_main') ?? 0]);
   writeJsonAmuletToMemory(jsonAmulet, player);
   player.writePlayerHealth();

@@ -190,7 +190,6 @@ class ServerLocal implements Server {
       writeJsonToAmuletPlayer(character, playerServer);
       playerServer.writePlayerMoved();
       amulet.resumeUpdateTimer();
-      playerServer.checkAssignedSkillTypes();
       parser.server.onServerConnectionEstablished();
       connected = true;
     }).catchError((error) {
