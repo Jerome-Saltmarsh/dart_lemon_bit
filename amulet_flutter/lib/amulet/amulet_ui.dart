@@ -167,16 +167,7 @@ class AmuletUI {
   Widget buildHudBottomLeft() =>
       buildWatchVisible(
         amulet.windowVisibleEquipment,
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            buildEquippedAmuletItems(),
-            width16,
-            buildControlGold(),
-            width6,
-            buildTogglePlayerQuest(),
-          ],
-        ),
+        buildEquippedAmuletItems(),
       );
 
   AmuletImage buildIconPotion() {
@@ -2397,6 +2388,10 @@ class AmuletUI {
       buildCardSmallPotionHealth(),
       width4,
       buildCardSmallPotionMagic(),
+      width4,
+      buildTogglePlayerQuest(),
+      width16,
+      buildControlGold(),
     ],
   );
 
