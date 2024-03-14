@@ -45,7 +45,6 @@ class AmuletUI {
   final quantifyShowValue = WatchBool(false);
 
   late final iconMagic = buildIconMagic();
-  late final iconHealth = buildIconHealth();
   late final iconGold = buildAmuletImage(
       srcX: 720,
       srcY: 64,
@@ -1125,12 +1124,12 @@ class AmuletUI {
             width: 150,)
       );
 
-  Widget buildMouseOverHint({
+  Widget buildMouseOverPanel({
     required Widget child,
     required Widget panel,
     Function? onEnter,
     Function? onExit,
-    double Function()? getTop,
+    double? top,
     double? left,
     double? bottom,
     double? right,
@@ -1145,7 +1144,7 @@ class AmuletUI {
                   child,
                   if (mouseOver)
                     Positioned(
-                      top: getTop?.call(),
+                      top: top,
                       left: left,
                       bottom: bottom,
                       right: right,
@@ -1153,46 +1152,6 @@ class AmuletUI {
                     ),
                 ],
               ));
-
-
-  Widget buildButtonCasteType(CasteType casteType) =>
-      Container(
-        width: 50,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            buildMouseOverHint(
-              child: buildWatch(filterCasteType, (activeCasteType) {
-                return onPressed(
-                  action: () => filterCasteType.value = casteType,
-                  child: Container(
-                      width: 50,
-                      height: 50,
-                      alignment: Alignment.center,
-                      color: activeCasteType == casteType
-                          ? Colors.black45
-                          : Colors.black12,
-                      child: buildIconCasteType(casteType)),
-                );
-              }),
-              panel: buildBorder(
-                width: 2,
-                color: Colors.white70,
-                child: GSContainer(
-                    child: Row(
-                  children: [
-                    buildText(casteType.name),
-                    width8,
-                    buildText('Skills'),
-                  ],
-                )),
-              ),
-              right: -40,
-              getTop: () => -70,
-            ),
-          ],
-        ),
-      );
 
   static const Container_Size = 50.0;
 
@@ -1227,7 +1186,7 @@ class AmuletUI {
            ),
          );
 
-         final control =  buildMouseOverHint(
+         final control =  buildMouseOverPanel(
           onEnter: () {
             amulet.mouseOverSkillType = skillType;
           },
@@ -1444,7 +1403,7 @@ class AmuletUI {
                 ),
               ),
             ),
-          buildMouseOverHint(
+          buildMouseOverPanel(
             child: button,
             panel: Column(
               children: [
@@ -2093,7 +2052,7 @@ class AmuletUI {
           : () => amulet.selectSkillTypeRight(skillType),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 2),
-        child: buildMouseOverHint(
+        child: buildMouseOverPanel(
           bottom: 80,
           left: -60,
           panel: buildCardLargeSkillType(skillType),
@@ -2270,7 +2229,7 @@ class AmuletUI {
         return button;
       }
 
-      return buildMouseOverHint(
+      return buildMouseOverPanel(
         child: button,
         panel: Column(
           children: [
@@ -2404,8 +2363,8 @@ class AmuletUI {
   Widget buildControlGold() {
     final title = buildWatch(amulet.playerGold, buildCardTitleText);
     final child = buildCardSmall(title: title, child: iconGold);
-    final panel = buildHint('stand near a fireplace to upgrade equipment');
-    return buildMouseOverHint(child: child, panel: panel, bottom: 60);
+    final panel = buildHint('Stand near a fireplace to upgrade equipment');
+    return buildMouseOverPanel(child: child, panel: panel, top: 60);
   }
 
   Widget buildTextValue(value) => buildText(value, color: Colors.white70);
