@@ -2171,12 +2171,12 @@ class AmuletUI {
           padding: paddingAll4,
           color: AmuletStyle.colorCardTitle,
           child: Column(children: [
+            buildPlayerMagicBar(),
+            height4,
             Container(
                 width: barWidth,
                 height: 16,
                 child: buildRowMagicPotions()),
-            height4,
-            buildPlayerMagicBar(),
           ],),
         ),
       );
@@ -2188,12 +2188,12 @@ class AmuletUI {
           padding: paddingAll4,
           color: AmuletStyle.colorCardTitle,
           child: Column(children: [
+            buildPlayerHealthBar(),
+            height4,
             Container(
                 width: barWidth,
                 height: 16,
                 child: buildRowHealthPotions()),
-            height4,
-            buildPlayerHealthBar(),
           ],),
         ),
       );
