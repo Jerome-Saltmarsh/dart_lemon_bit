@@ -599,7 +599,7 @@ class AmuletUI {
             Container(
               width: barWidth,
               height: barHeight,
-              color: Palette.brown_4,
+              color: Palette.blue_3.withOpacity(0.3),
             ),
             buildWatch(amulet.playerMagicPercentage, (percentage) =>
                 Container(
@@ -2170,12 +2170,8 @@ class AmuletUI {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: List.generate(4, (index) =>
           index >= potionsMagic
-              ? Container(
-              color: Colors.red,
-              child: iconPotionEmpty)
-              : Container(
-              color: Colors.red,
-              child: iconPotionMagic)
+              ? iconPotionEmpty
+              : iconPotionMagic
           ).toList(growable: false),
       ));
 
@@ -2186,7 +2182,10 @@ class AmuletUI {
           padding: paddingAll4,
           color: AmuletStyle.colorCardTitle,
           child: Column(children: [
-            buildRowMagicPotions(),
+            Container(
+                width: barWidth,
+                child: buildRowMagicPotions()),
+            height4,
             buildPlayerMagicBar(),
           ],),
         ),
