@@ -45,10 +45,10 @@ class AmuletUI {
 
   late final iconMagic = buildIconMagic();
   late final iconGold = buildAmuletImage(
-      srcX: 720,
-      srcY: 64,
-      width: 32,
-      height: 32,
+      srcX: 784,
+      srcY: 80,
+      width: 16,
+      height: 16,
   );
 
   var visibleRightClickedToClear = true;
@@ -2159,6 +2159,32 @@ class AmuletUI {
     );
   }
 
+  Widget buildCardSmallHalf({required Widget title, required Widget child}) {
+    const size = 50.0;
+
+    return Container(
+      color: Palette.brown_4,
+      padding: const EdgeInsets.all(4),
+      child: Column(
+        children: [
+          Container(
+            width: size,
+            child: title,
+            alignment: Alignment.center,
+            color: Palette.brown_4,
+          ),
+          Container(
+              width: size,
+              height: size * 0.5,
+              alignment: Alignment.center,
+              color: Palette.brown_3,
+              child: child
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget buildSkillTypeLevel({
     required SkillType skillType,
     required Widget Function(int level) builder,
@@ -2325,15 +2351,15 @@ class AmuletUI {
       width4,
       buildCardSmallPotionMagic(),
       width4,
-      buildTogglePlayerQuest(),
-      width4,
       buildControlGold(),
+      width4,
+      buildTogglePlayerQuest(),
     ],
   );
 
   Widget buildControlGold() {
     final title = buildWatch(amulet.playerGold, buildCardTitleText);
-    final child = buildCardSmall(title: title, child: iconGold);
+    final child = buildCardSmallHalf(title: title, child: iconGold);
     final panel = buildHint('Stand near a fireplace to upgrade equipment');
     return buildMouseOverPanel(child: child, panel: panel, top: 60);
   }
