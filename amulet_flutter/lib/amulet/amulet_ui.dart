@@ -1004,29 +1004,10 @@ class AmuletUI {
 
     final level = amulet.getSkillTypeLevel(skillType);
 
-    final controlSkillTitle = Container(
-      color: Colors.black26,
-      alignment: Alignment.center,
-      height: 60,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          buildIconSkillType(skillType),
-          width8,
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildText(
-                skillType.name.clean,
-                color: Colors.white,
-              ),
-              buildTextLevel(level),
-            ],
-          ),
-        ],
-      ),
+    final controlSkillTitle = buildCardLargeHeaderTemplate(
+      icon: buildIconSkillType(skillType),
+      name: skillType.name.clean,
+      subtitle: 'lvl $level',
     );
 
     final controlMagicCost = Container(
@@ -1326,7 +1307,7 @@ class AmuletUI {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
-                          buildTextLevel(amuletItemObject.level)
+                          buildTextSubtitle(amuletItemObject.level)
                         ],
                       ),
                     ],
@@ -1345,8 +1326,8 @@ class AmuletUI {
     );
   }
 
-  Widget buildTextLevel(int level) =>
-      buildText('lvl $level', color: Colors.white70, size: 16);
+  Widget buildTextSubtitle(dynamic value) =>
+      buildText('$value', color: Colors.white70, size: 16);
 
   Widget buildColumnAmuletItemObject(AmuletItemObject next){
 
@@ -1569,6 +1550,31 @@ class AmuletUI {
         alignment: Alignment.center,
         child: child,
         height: 30,
+      );
+
+  Widget buildCardLargeHeaderTemplate({
+    required Widget icon,
+    required String name,
+    required dynamic subtitle,
+  }) =>
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          icon,
+          width8,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              buildText(
+                name,
+                color: Colors.white,
+              ),
+              buildTextSubtitle(subtitle),
+            ],
+          ),
+        ],
       );
 
   Widget buildCardLargeTitle({required Widget child}) =>
