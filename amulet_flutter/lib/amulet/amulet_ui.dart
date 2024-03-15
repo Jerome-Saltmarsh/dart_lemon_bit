@@ -3,6 +3,7 @@ import 'package:amulet_common/src.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/amulet/src.dart';
 import 'package:amulet_flutter/amulet/ui/enums/quantify_tab.dart';
+import 'package:amulet_flutter/isometric/consts/border_radius.dart';
 import 'package:amulet_flutter/isometric/consts/height.dart';
 import 'package:amulet_flutter/isometric/consts/padding.dart';
 import 'package:amulet_flutter/isometric/consts/width.dart';
@@ -27,6 +28,7 @@ class AmuletUI {
   static const barHeight = 20.0;
 
   final Amulet amulet;
+  final amuletStyle = AmuletStyle();
 
   late final iconCheckBoxTrue = buildAmuletImage(srcX: 560, srcY: 16, width: 16, height: 16);
   late final iconCheckBoxFalse = buildAmuletImage(srcX: 560, srcY: 0, width: 16, height: 16);
@@ -109,13 +111,15 @@ class AmuletUI {
             left: 64,
             child: buildWatch(
               amulet.aimTargetAmuletItemObject,
-              tryBuildCardAmuletItemObject,
+              (amuletItemObject) => amuletItemObject == null
+                  ? nothing
+                  : buildCardLargeAmuletItemObject(amuletItemObject),
             ),
           ),
           Positioned(
               bottom: 8,
               left: 8,
-              child: buildEquippedAmuletItems(),
+              child: buildEquippedSlotTypes(),
           ),
       Positioned(
         bottom: 8,
@@ -518,13 +522,16 @@ class AmuletUI {
         padding: const EdgeInsets.all(2),
       );
 
-  Widget buildEquippedAmuletItems() =>
+  Widget buildEquippedSlotTypes() =>
       buildWatch(amulet.equippedChangedNotifier, (t) => Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           buildSlotType(SlotType.Weapon),
+          width2,
           buildSlotType(SlotType.Helm),
+          width2,
           buildSlotType(SlotType.Armor),
+          width2,
           buildSlotType(SlotType.Shoes),
         ],
       ));
@@ -1033,7 +1040,7 @@ class AmuletUI {
       ),
     );
 
-    const cardWidth = 182.0;
+    // const cardWidth = 182.0;
 
     final contents = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1067,37 +1074,77 @@ class AmuletUI {
       ],
     );
 
-    return buildBorder(
-      color: Colors.white70,
-      width: 2,
-      child: GSContainer(
-          width: cardWidth,
-          constraints: BoxConstraints(minHeight: cardWidth * goldenRatio_1618),
-          padding: EdgeInsets.zero,
-          alignment: Alignment.topCenter,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  buildCardHeader('${skillType.casteType.name}'),
-                  controlSkillTitle,
-                  Container(
-                      padding: const EdgeInsets.all(8),
-                      child: contents),
-                ],
-              ),
-              Container(
-                  padding: const EdgeInsets.all(8),
-                  child: bottomRow),
-            ],
-          )),
+    return buildCardLarge(
+        header: buildCardLargeHeader(
+          child: buildCardLargeHeaderText(skillType.casteType.name),
+        ),
+        title: buildCardLargeTitle(child: controlSkillTitle),
+        content: buildCardLargeContent(child: contents),
     );
+
+    // return buildBorder(
+    //   color: Colors.white70,
+    //   width: 2,
+    //   child: GSContainer(
+    //       width: cardWidth,
+    //       constraints: BoxConstraints(minHeight: cardWidth * goldenRatio_1618),
+    //       padding: EdgeInsets.zero,
+    //       alignment: Alignment.topCenter,
+    //       child: Column(
+    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //         crossAxisAlignment: CrossAxisAlignment.start,
+    //         children: [
+    //           Column(
+    //             crossAxisAlignment: CrossAxisAlignment.start,
+    //             children: [
+    //               buildCardLargeHeader('${skillType.casteType.name}'),
+    //               controlSkillTitle,
+    //               Container(
+    //                   padding: const EdgeInsets.all(8),
+    //                   child: contents),
+    //             ],
+    //           ),
+    //           Container(
+    //               padding: const EdgeInsets.all(8),
+    //               child: bottomRow),
+    //         ],
+    //       )),
+    // );
   }
 
+  Widget buildCardLargeAmuletItemObject(AmuletItemObject amuletItemObject) =>
+      buildCardLarge(
+        header: buildCardLargeHeaderText(amuletItemObject.amuletItem.slotType.name),
+        title: buildCardTitleText(amuletItemObject.amuletItem.label),
+        content: buildText('content'),
+      );
+
   Widget buildRowValue(dynamic value) => buildText(value, color: Colors.white70);
+
+  Widget buildCardLarge({
+    required Widget header,
+    required Widget title,
+    required Widget content,
+  }) {
+    return Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.white70, width: 2),
+          borderRadius: borderRadius2,
+        ),
+        width: amuletStyle.widthCardLarge,
+        constraints: BoxConstraints(minHeight: amuletStyle.widthCardLarge * goldenRatio_1618),
+        padding: EdgeInsets.zero,
+        alignment: Alignment.topCenter,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildCardLargeHeader(child: header),
+            buildCardLargeTitle(child: title),
+            buildCardLargeContent(child: content),
+          ],
+        ));
+
+  }
 
   static final titleColor =  Colors.orange;
 
@@ -1108,91 +1155,100 @@ class AmuletUI {
 
   Widget buildSlotType(SlotType slotType) {
 
-    const width = 45.0;
     final amuletItemObject = amulet.getEquipped(slotType);
-    final amuletItem = amuletItemObject?.amuletItem;
-    final level = amuletItemObject?.level;
-    final upgradeCost = amulet.playerCanUpgrade ? amuletItem?.tryGetUpgradeCost(level) : null;
 
-    final button = onPressed(
-      action: amuletItem == null ? null : () => amulet.dropAmuletItem(amuletItem),
-      onRightClick: amuletItem == null ? null : () {
-        visibleRightClickedToDrop = false;
-        amulet.dropAmuletItem(amuletItem);
-      },
-      child: buildBorder(
-        color: Palette.brown_4,
-        width: 3,
-        child: Container(
-          width: width,
-          color: Palette.brown_3,
-          child: Column(
-            children: [
-              Container(
-                  height: 20,
-                  child: amuletItemObject == null ? null : buildText(amuletItemObject.level, color: Colors.white70)),
-              Container(
-                height: 50,
-                width: width,
-                color: Colors.white12,
-                alignment: Alignment.center,
-                child: amuletItem == null ? null : AmuletItemImage(
-                  amuletItem: amuletItem,
-                  scale: 1.2,),
-              ),
-            ],
-          ),
-        ),
-      ),
+    if (amuletItemObject == null){
+      return buildCardSmallEmpty();
+    }
+
+    final amuletItem = amuletItemObject.amuletItem;
+    // final level = amuletItemObject.level;
+    // final upgradeCost = amulet.playerCanUpgrade ? amuletItem?.tryGetUpgradeCost(level) : null;
+
+    return onPressed(
+        action: () => amulet.dropAmuletItem(amuletItem),
+        child: buildCardSmallAmuletItemObject(amuletItemObject),
     );
 
+    // final button = onPressed(
+    //   action: amuletItem == null ? null : () => amulet.dropAmuletItem(amuletItem),
+    //   onRightClick: amuletItem == null ? null : () {
+    //     visibleRightClickedToDrop = false;
+    //     amulet.dropAmuletItem(amuletItem);
+    //   },
+    //   child: buildBorder(
+    //     color: Palette.brown_4,
+    //     width: 3,
+    //     child: Container(
+    //       width: width,
+    //       color: Palette.brown_3,
+    //       child: Column(
+    //         children: [
+    //           Container(
+    //               height: 20,
+    //               child: amuletItemObject == null ? null : buildText(amuletItemObject.level, color: Colors.white70)),
+    //           Container(
+    //             height: 50,
+    //             width: width,
+    //             color: Colors.white12,
+    //             alignment: Alignment.center,
+    //             child: amuletItem == null ? null : AmuletItemImage(
+    //               amuletItem: amuletItem,
+    //               scale: 1.2,),
+    //           ),
+    //         ],
+    //       ),
+    //     ),
+    //   ),
+    // );
 
-    final canAfford = upgradeCost != null && amulet.playerGold.value >= upgradeCost;
-    final upgradeColor = canAfford ? AmuletColors.Gold : AmuletColors.Gold70;
 
-    return Container(
-      margin: const EdgeInsets.only(right: 4),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          if (upgradeCost != null)
-            onPressed(
-              action: () => amulet.upgradeSlotType(slotType),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Palette.brown_3,
-                  border: Border.all(color: Palette.brown_4, width: 2),
-                  borderRadius: BorderRadius.zero,
-                ),
-                margin: const EdgeInsets.only(bottom: 8),
-                padding: paddingAll4,
-                alignment: Alignment.center,
-                child: Column(
-                  children: [
-                    if (level != null)
-                    Container(
-                        color: Colors.black26,
-                        child: buildText('lvl ${level + 1}', color: upgradeColor, size: 13)),
-                    buildText('${upgradeCost}g', color: upgradeColor),
-                  ],
-                ),
-              ),
-            ),
-          buildMouseOverPanel(
-            child: button,
-            panel: Column(
-              children: [
-                if (amuletItemObject != null && visibleRightClickedToDrop)
-                  buildText('left click to drop'),
-                tryBuildCardAmuletItemObject(amuletItemObject),
-              ],
-            ),
-            left: 0,
-            bottom: 130,
-          ),
-        ],
-      ),
-    );
+    // final canAfford = upgradeCost != null && amulet.playerGold.value >= upgradeCost;
+    // final upgradeColor = canAfford ? AmuletColors.Gold : AmuletColors.Gold70;
+    //
+    // return Container(
+    //   margin: const EdgeInsets.only(right: 4),
+    //   child: Column(
+    //     mainAxisAlignment: MainAxisAlignment.end,
+    //     children: [
+    //       if (upgradeCost != null)
+    //         onPressed(
+    //           action: () => amulet.upgradeSlotType(slotType),
+    //           child: Container(
+    //             decoration: BoxDecoration(
+    //               color: Palette.brown_3,
+    //               border: Border.all(color: Palette.brown_4, width: 2),
+    //               borderRadius: BorderRadius.zero,
+    //             ),
+    //             margin: const EdgeInsets.only(bottom: 8),
+    //             padding: paddingAll4,
+    //             alignment: Alignment.center,
+    //             child: Column(
+    //               children: [
+    //                 if (level != null)
+    //                 Container(
+    //                     color: Colors.black26,
+    //                     child: buildText('lvl ${level + 1}', color: upgradeColor, size: 13)),
+    //                 buildText('${upgradeCost}g', color: upgradeColor),
+    //               ],
+    //             ),
+    //           ),
+    //         ),
+    //       buildMouseOverPanel(
+    //         child: button,
+    //         panel: Column(
+    //           children: [
+    //             if (amuletItemObject != null && visibleRightClickedToDrop)
+    //               buildText('left click to drop'),
+    //             tryBuildCardAmuletItemObject(amuletItemObject),
+    //           ],
+    //         ),
+    //         left: 0,
+    //         bottom: 130,
+    //       ),
+    //     ],
+    //   ),
+    // );
   }
 
   Widget buildIconHealthCost() =>
@@ -1217,15 +1273,15 @@ class AmuletUI {
   Widget buildIconSkillType(SkillType skillType, {double dstX = 0, double dstY = 0}) =>
       AmuletImageSrc(src: getSrcSkillType(skillType), dstX: dstX, dstY: dstY);
 
-  Widget tryBuildCardAmuletItemObject(AmuletItemObject? amuletItemObject) {
-     if (amuletItemObject == null) return nothing;
-     return buildCardAmuletItemObject(amuletItemObject);
-  }
-
   Widget buildCardAmuletItemObject(AmuletItemObject amuletItemObject) {
 
     final amuletItem = amuletItemObject.amuletItem;
     final slotType = amuletItem.slotType;
+
+    final header = buildCardLargeHeader(
+        child: buildCardLargeHeaderText(slotType.name)
+    );
+
 
     return buildBorder(
       width: 2,
@@ -1237,7 +1293,9 @@ class AmuletUI {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildCardHeader(slotType.name),
+            buildCardLargeHeader(
+                child: buildCardLargeHeaderText(slotType.name)
+            ),
             Container(
               padding: const EdgeInsets.all(4),
               color: Colors.black26,
@@ -1494,12 +1552,34 @@ class AmuletUI {
     return (a ?? 0.0) - (b ?? 0.0);
   }
 
-  Widget buildCardHeader(String text) => Container(
-    color: Colors.orange,
-    alignment: Alignment.center,
-    child: buildText(text.toUpperCase(), color: Colors.black87),
-    height: 30,
-  );
+  Widget buildCardLargeHeaderText(dynamic value) =>
+      buildText(value.toString().upper, color: Colors.black);
+
+  Widget buildCardLargeHeader({required Widget child}) =>
+      Container(
+        color: Colors.orange,
+        alignment: Alignment.center,
+        child: child,
+        height: 30,
+      );
+
+  Widget buildCardLargeTitle({required Widget child}){
+    return Container(
+      color: amuletStyle.colorCardTitle,
+      alignment: Alignment.center,
+      child: child,
+      height: 30,
+    );
+  }
+
+  Widget buildCardLargeContent({required Widget child}) =>
+      Container(
+        color: amuletStyle.colorCardLargeContent,
+        child: child,
+      );
+
+  Widget buildCardHeaderText(dynamic value) =>
+      buildText(value.toUpperCase(), color: Colors.black87);
 
 
   Widget buildRowTitleValue(dynamic title, dynamic value) =>
@@ -1746,6 +1826,21 @@ class AmuletUI {
     );
   }
 
+  Widget buildCardSmallEmpty(){
+    return buildCardSmall(title: nothing, child: nothing);
+  }
+
+  Widget buildCardSmallAmuletItemObject(AmuletItemObject amuletItemObject) =>
+      buildMouseOverPanel(
+        bottom: 90,
+        left: -60,
+        panel: buildCardLargeAmuletItemObject(amuletItemObject),
+        child: buildCardSmall(
+            title: buildCardTitleText(amuletItemObject.level),
+            child: buildIconAmuletItem(amuletItemObject.amuletItem),
+        )
+      );
+
   late final iconPotionEmpty = buildAmuletImage(
       srcX: 784,
       srcY: 32,
@@ -1786,7 +1881,7 @@ class AmuletUI {
       action: amulet.usePotionMagic,
       child: Container(
         padding: paddingAll4,
-        color: AmuletStyle.colorCardTitle,
+        color: amuletStyle.colorCardTitle,
         child: Column(children: [
           buildPlayerMagicBar(),
           height4,
@@ -1809,7 +1904,7 @@ class AmuletUI {
       action: amulet.usePotionHealth,
       child: Container(
         padding: paddingAll4,
-        color: AmuletStyle.colorCardTitle,
+        color: amuletStyle.colorCardTitle,
         child: Column(children: [
           buildPlayerHealthBar(),
           height4,
@@ -1844,6 +1939,7 @@ class AmuletUI {
         children: [
           Container(
             width: size,
+            height: size * goldenRatio_0381,
             child: title,
             alignment: Alignment.center,
             color: Palette.brown_4,
