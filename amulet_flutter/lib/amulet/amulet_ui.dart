@@ -1262,7 +1262,7 @@ class AmuletUI {
       subtitle: 'lvl ${amuletItemObject.level}',
     );
 
-    final content = buildText('content');
+    final content = buildColumnAmuletItemObject(amuletItemObject);
 
     return buildCardLarge(
         header: header,
@@ -1332,32 +1332,18 @@ class AmuletUI {
     final current = amulet.getEquipped(next.amuletItem.slotType);
     final nextAmuletItem = next.amuletItem;
     final currentAmuletItem = current?.amuletItem;
-    // final damageMaxDiff = getDiff(next.damageMax, current?.damageMax)?.toInt();
-    // final damageMinDiff = getDiff(next.damageMin, current?.damageMin)?.toInt();
     final levelDiff = getDiff(next.level, current?.level);
     final valueDiff = getDiff(nextAmuletItem.quantify, currentAmuletItem?.quantify);
     final showDiff = current != next;
 
     return Column(
       children: [
-          // if (damageMinDiff != null)
-          //   buildComparisonRow(
-          //     lead: 'min damage',
-          //     value: next.damageMin,
-          //     diff: showDiff ? damageMinDiff : null,
-          //   ),
-          // if (damageMaxDiff != null)
-          //   buildComparisonRow(
-          //     lead: 'max damage',
-          //     value: next.damageMax,
-          //     diff: showDiff ? damageMaxDiff : null,
-          //   ),
            buildComparisonRow01(
               lead: 'range',
               next: nextAmuletItem.range,
               current: currentAmuletItem?.range
           ),
-          height16,
+          // height16,
           ...SkillType.values.map((skillType) {
 
             final currentLevel = current?.getSkillLevel(skillType) ?? 0;
@@ -1375,7 +1361,7 @@ class AmuletUI {
 
             return Container(
               color: Colors.black12,
-              padding: EdgeInsets.symmetric(vertical: 4),
+              padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
               margin: const EdgeInsets.only(bottom: 8),
               child: buildComparisonRow(
                 lead: Row(children: [
