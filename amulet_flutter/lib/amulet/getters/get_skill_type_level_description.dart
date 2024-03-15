@@ -32,9 +32,11 @@ String? getSkillTypeLevelDescription(SkillType skillType, int level) {
     case SkillType.None:
       return '';
     case SkillType.Slash:
-      return '-';
+      return formatDamage(SkillType.Slash, level);
     case SkillType.Bludgeon:
-      return '-';
+      return formatDamage(SkillType.Bludgeon, level);
+    case SkillType.Shoot_Arrow:
+      return formatDamage(SkillType.Shoot_Arrow, level);
     case SkillType.Ice_Ball:
       return formatIceDamage(
         damage: SkillType.getDamageIceBall(level),
@@ -49,8 +51,6 @@ String? getSkillTypeLevelDescription(SkillType skillType, int level) {
       );
     case SkillType.Explode:
       return 'damage: ${SkillType.getDamageExplode(level)}';
-    case SkillType.Shoot_Arrow:
-      return '';
     case SkillType.Split_Shot:
       return 'total arrows: ${SkillType.getSplitShotTotalArrows(level)}';
     case SkillType.Ice_Arrow:
@@ -77,6 +77,10 @@ String? getSkillTypeLevelDescription(SkillType skillType, int level) {
       return 'magic +${SkillType.getMaxMagic(level).toInt()}';
   }
 }
+
+String formatDamage(SkillType skillType, int level) =>
+    'damage ${skillType.getDamageMin(level)?.toStringAsFixed(1)}'
+        '-${skillType.getDamageMax(level)?.toStringAsFixed(1)}';
 
 String formatFireDamage({
   required double damage,
