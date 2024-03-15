@@ -1004,7 +1004,7 @@ class AmuletUI {
 
     final level = amulet.getSkillTypeLevel(skillType);
 
-    final controlSkillTitle = buildCardLargeHeaderTemplate(
+    final title = buildCardLargeTitleTemplate(
       icon: buildIconSkillType(skillType),
       name: skillType.name.clean,
       subtitle: 'lvl $level',
@@ -1020,8 +1020,6 @@ class AmuletUI {
         ],
       ),
     );
-
-    // const cardWidth = 182.0;
 
     final contents = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1047,65 +1045,20 @@ class AmuletUI {
       ],
     );
 
-    final bottomRow = Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        if (skillType.magicCost > 0)
-          controlMagicCost,
-      ],
-    );
+    // final bottomRow = Row(
+    //   mainAxisAlignment: MainAxisAlignment.end,
+    //   children: [
+    //     if (skillType.magicCost > 0)
+    //       controlMagicCost,
+    //   ],
+    // );
 
     return buildCardLarge(
-        header: buildCardLargeHeader(
-          child: buildCardLargeHeaderText(skillType.casteType.name),
-        ),
-        title: buildCardLargeTitle(child: controlSkillTitle),
-        content: buildCardLargeContent(child: contents),
+        header: buildCardLargeHeaderText(skillType.casteType.name),
+        title: title,
+        content: contents,
     );
-
-    // return buildBorder(
-    //   color: Colors.white70,
-    //   width: 2,
-    //   child: GSContainer(
-    //       width: cardWidth,
-    //       constraints: BoxConstraints(minHeight: cardWidth * goldenRatio_1618),
-    //       padding: EdgeInsets.zero,
-    //       alignment: Alignment.topCenter,
-    //       child: Column(
-    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //         crossAxisAlignment: CrossAxisAlignment.start,
-    //         children: [
-    //           Column(
-    //             crossAxisAlignment: CrossAxisAlignment.start,
-    //             children: [
-    //               buildCardLargeHeader('${skillType.casteType.name}'),
-    //               controlSkillTitle,
-    //               Container(
-    //                   padding: const EdgeInsets.all(8),
-    //                   child: contents),
-    //             ],
-    //           ),
-    //           Container(
-    //               padding: const EdgeInsets.all(8),
-    //               child: bottomRow),
-    //         ],
-    //       )),
-    // );
   }
-
-  Widget buildCardLargeAmuletItemObject(AmuletItemObject amuletItemObject) =>
-      buildCardLarge(
-        header: buildCardLargeHeaderText(amuletItemObject.amuletItem.slotType.name),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            buildIconAmuletItem(amuletItemObject.amuletItem),
-            width8,
-            buildCardTitleText(amuletItemObject.amuletItem.label),
-          ],
-        ),
-        content: buildText('content'),
-      );
 
   Widget buildRowValue(dynamic value) => buildText(value, color: Colors.white70);
 
@@ -1262,68 +1215,78 @@ class AmuletUI {
   Widget buildIconSkillType(SkillType skillType, {double dstX = 0, double dstY = 0}) =>
       AmuletImageSrc(src: getSrcSkillType(skillType), dstX: dstX, dstY: dstY);
 
-  Widget buildCardAmuletItemObject(AmuletItemObject amuletItemObject) {
+  Widget buildCardLargeAmuletItemObject(AmuletItemObject amuletItemObject) {
 
     final amuletItem = amuletItemObject.amuletItem;
-    final slotType = amuletItem.slotType;
 
-    final header = buildCardLargeHeader(
-        child: buildCardLargeHeaderText(slotType.name)
+    final header = buildCardLargeHeaderText(amuletItem.slotType.name.clean);
+
+    final title = buildCardLargeTitleTemplate(
+      icon: buildIconAmuletItem(amuletItem),
+      name: amuletItem.label,
+      subtitle: 'lvl ${amuletItemObject.level}',
     );
 
+    final content = buildText('content');
 
-    return buildBorder(
-      width: 2,
-      color: Colors.orange,
-      child: Container(
-        width: 190,
-        color: Palette.brownDark,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            buildCardLargeHeader(
-                child: buildCardLargeHeaderText(slotType.name)
-            ),
-            Container(
-              padding: const EdgeInsets.all(4),
-              color: Colors.black26,
-              height: 60,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  if (amuletItem.quality != ItemQuality.Common)
-                  Positioned(
-                      top: 0,
-                      right: 0,
-                      child: buildText(amuletItem.quality.name.toUpperCase().clean, size: 14, color: mapItemQualityToColor(amuletItem.quality).withOpacity(0.5))),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      AmuletItemImage(amuletItem: amuletItem, scale: 1.0),
-                      width8,
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
-                          buildTextSubtitle(amuletItemObject.level)
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-              if (!amuletItemObject.amuletItem.isConsumable)
-              Container(
-                padding: const EdgeInsets.all(8),
-                child: buildColumnAmuletItemObject(amuletItemObject),
-              ),
-          ],
-        ),
-      ),
+    return buildCardLarge(
+        header: header,
+        title: title,
+        content: content,
     );
+
+    // return buildBorder(
+    //   width: 2,
+    //   color: Colors.orange,
+    //   child: Container(
+    //     width: 190,
+    //     color: Palette.brownDark,
+    //     child: Column(
+    //       mainAxisAlignment: MainAxisAlignment.start,
+    //       crossAxisAlignment: CrossAxisAlignment.start,
+    //       children: [
+    //         buildCardLargeHeader(
+    //             child: buildCardLargeHeaderText(slotType.name)
+    //         ),
+    //         Container(
+    //           padding: const EdgeInsets.all(4),
+    //           color: Colors.black26,
+    //           height: 60,
+    //           child: Stack(
+    //             alignment: Alignment.center,
+    //             children: [
+    //               if (amuletItem.quality != ItemQuality.Common)
+    //               Positioned(
+    //                   top: 0,
+    //                   right: 0,
+    //                   child: buildText(amuletItem.quality.name.toUpperCase().clean, size: 14, color: mapItemQualityToColor(amuletItem.quality).withOpacity(0.5))),
+    //               Row(
+    //                 mainAxisAlignment: MainAxisAlignment.center,
+    //                 children: [
+    //                   AmuletItemImage(amuletItem: amuletItem, scale: 1.0),
+    //                   width8,
+    //                   Column(
+    //                     mainAxisAlignment: MainAxisAlignment.center,
+    //                     crossAxisAlignment: CrossAxisAlignment.start,
+    //                     children: [
+    //                       buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
+    //                       buildTextSubtitle(amuletItemObject.level)
+    //                     ],
+    //                   ),
+    //                 ],
+    //               ),
+    //             ],
+    //           ),
+    //         ),
+    //           if (!amuletItemObject.amuletItem.isConsumable)
+    //           Container(
+    //             padding: const EdgeInsets.all(8),
+    //             child: buildColumnAmuletItemObject(amuletItemObject),
+    //           ),
+    //       ],
+    //     ),
+    //   ),
+    // );
   }
 
   Widget buildTextSubtitle(dynamic value) =>
@@ -1542,7 +1505,7 @@ class AmuletUI {
   }
 
   Widget buildCardLargeHeaderText(dynamic value) =>
-      buildText(value.toString().upper, color: Colors.black);
+      buildText(value.toString().upper, color: Colors.black54);
 
   Widget buildCardLargeHeader({required Widget child}) =>
       Container(
@@ -1552,7 +1515,7 @@ class AmuletUI {
         height: 30,
       );
 
-  Widget buildCardLargeHeaderTemplate({
+  Widget buildCardLargeTitleTemplate({
     required Widget icon,
     required String name,
     required dynamic subtitle,
