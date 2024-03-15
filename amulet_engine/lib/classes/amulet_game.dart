@@ -395,26 +395,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       case SkillType.Fire_Arrow:
         characterPerformSkillTypeFireArrow(character, level);
         break;
-      // case SkillType.Blind:
-      //   characterPerformSkillTypeBlind(character);
-      //   break;
       default:
         return;
     }
   }
-
-  // double getCharacterSkillTypeRange({
-  //   required Character character,
-  //   required SkillType skillType,
-  // }){
-  //     if (character is AmuletPlayer) {
-  //       return character.getSkillTypeRange(skillType);
-  //     }
-  //     if (character is AmuletFiend) {
-  //       return character.fiendType.weaponRange;
-  //     }
-  //     return 0;
-  // }
 
   double getCharacterAreaDamage(Character character) =>
       SkillType.getAreaDamage(

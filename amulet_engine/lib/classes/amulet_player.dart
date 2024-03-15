@@ -802,20 +802,23 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
 
-    if (equippedWeaponSword && !activeSkillType.enabledSword){
-      writeGameError(GameError.Invalid_Weapon_Type);
-      return;
+    if (!activeSkillType.isCaste){
+      if (equippedWeaponSword && !activeSkillType.enabledSword){
+        writeGameError(GameError.Invalid_Weapon_Type);
+        return;
+      }
+
+      if (equippedWeaponStaff && !activeSkillType.enabledStaff){
+        writeGameError(GameError.Invalid_Weapon_Type);
+        return;
+      }
+
+      if (equippedWeaponBow && !activeSkillType.enabledBow){
+        writeGameError(GameError.Invalid_Weapon_Type);
+        return;
+      }
     }
 
-    if (equippedWeaponStaff && !activeSkillType.enabledStaff){
-      writeGameError(GameError.Invalid_Weapon_Type);
-      return;
-    }
-
-    if (equippedWeaponBow && !activeSkillType.enabledBow){
-      writeGameError(GameError.Invalid_Weapon_Type);
-      return;
-    }
 
     final magicCost = getSkillTypeMagicCost(activeSkillType);
     if (magicCost > magic) {
@@ -832,6 +835,12 @@ class AmuletPlayer extends IsometricPlayer with
     }
 
     magic -= magicCost;
+
+    if (activeSkillType.isCaste){
+      setCharacterStateCasting(duration: performDuration);
+      return;
+    }
+
     if (equippedWeaponBow){
       setCharacterStateFire(duration: performDuration);
     } else {

@@ -92,9 +92,7 @@ enum SkillType {
       casteType: CasteType.Ability,
       magicCost: 4,
       range: 0,
-      enabledBow: true,
-      enabledSword: true,
-      enabledStaff: true,
+      isCaste: true,
   ),
   Max_Health(
     casteType: CasteType.Passive,
@@ -166,6 +164,7 @@ enum SkillType {
   final bool isBaseAttack;
   final Constraint? damageMin; 
   final Constraint? damageMax;
+  final bool isCaste;
 
   static const Constraint_Health_Steal = Constraint(min: 0, max: 0.5);
   static const Constraint_Magic_Steal = Constraint(min: 0, max: 0.5);
@@ -206,6 +205,7 @@ enum SkillType {
     this.enabledSword = false,
     this.damageMin,
     this.damageMax,
+    this.isCaste = false,
   });
 
   bool get isPassive => casteType == CasteType.Passive;
