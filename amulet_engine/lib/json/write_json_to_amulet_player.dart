@@ -17,8 +17,6 @@ void writeJsonToAmuletPlayer(
   final jsonAmulet = json.getChild('amulet');
   final amuletSceneName = json['amulet_scene_name'];
   final amuletScene = AmuletScene.findByName(amuletSceneName);
-  final skillSlotInts = json.getListInt('skill_slots');
-
   player.amuletGame = amulet.findGame(amuletScene);
   player.equippedWeapon = mapJsonToAmuletItemObject(json[AmuletField.Equipped_Weapon]);
   player.equippedHelm = mapJsonToAmuletItemObject(json[AmuletField.Equipped_Helm]);
@@ -36,8 +34,6 @@ void writeJsonToAmuletPlayer(
   player.x = json.getDouble('x');
   player.y = json.getDouble('y');
   player.z = json.getDouble('z');
-  player.skillTypeLeft = json.skillTypeLeft;
-  player.skillTypeRight = json.skillTypeRight;
   player.setQuestMain(QuestMain.values[json.tryGetInt('quest_main') ?? 0]);
   writeJsonAmuletToMemory(jsonAmulet, player);
   player.writePlayerHealth();

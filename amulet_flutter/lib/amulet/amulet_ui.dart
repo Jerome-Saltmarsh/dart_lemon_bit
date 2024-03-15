@@ -1974,8 +1974,8 @@ class AmuletUI {
 
   Widget buildPlayerSkillAttack() {
     final skillType = amulet.playerSkillLeft;
-    final level = amulet.getSkillTypeLevel(skillType);
-    if (level <= 0) return nothing;
+    // final level = amulet.getSkillTypeLevel(skillType);
+    // if (level <= 0) return nothing;
     return buildCardSmallSkillType(skillType);
   }
 

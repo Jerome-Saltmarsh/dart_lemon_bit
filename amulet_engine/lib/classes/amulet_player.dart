@@ -36,6 +36,7 @@ class AmuletPlayer extends IsometricPlayer with
   var admin = false;
   var previousCameraTarget = false;
   var equipmentDirty = true;
+  var skillsLeftRightDirty = true;
 
   var cacheRegenMagic = 0;
   var cacheRegenHealth = 0;
@@ -232,6 +233,7 @@ class AmuletPlayer extends IsometricPlayer with
   void writePlayerGame() {
 
     cleanEquipment();
+    cleanSkillsLeftRight();
     writeCameraTarget();
     writePerformFrameVelocity();
 
@@ -240,7 +242,6 @@ class AmuletPlayer extends IsometricPlayer with
     }
 
     writeAmuletPlayerAimTarget();
-
     super.writePlayerGame();
   }
 
@@ -476,7 +477,6 @@ class AmuletPlayer extends IsometricPlayer with
     writeSkillTypes();
     writePlayerCriticalHitPoints();
     writeSkillActiveLeft();
-    writeSkillsLeftRight();
   }
 
   SkillType get equippedWeaponDefaultSkillType {
@@ -861,8 +861,8 @@ class AmuletPlayer extends IsometricPlayer with
     writeSceneName();
     writeOptionsSetTimeVisible(false);
     writeOptionsSetHighlightIconInventory(false);
-    writeSkillsLeftRight();
     writeSkillTypes();
+    // writeSkillsLeftRight();
     writeFiendCount();
     writeDebugEnabled();
     writeSkillSlotIndex();
@@ -1006,7 +1006,17 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
     super.skillTypeLeft = value;
-    writeSkillsLeftRight();
+    markSkillsLeftRightDirty();
+  }
+
+  void cleanSkillsLeftRight(){
+     if (!skillsLeftRightDirty) return;
+     writeSkillsLeftRight();
+     skillsLeftRightDirty = false;
+  }
+
+  void markSkillsLeftRightDirty(){
+    skillsLeftRightDirty = true;
   }
 
   // @override
@@ -1019,7 +1029,7 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
     super.skillTypeRight = value;
-    writeSkillsLeftRight();
+    markSkillsLeftRightDirty();
   }
 
   void writeSkillsLeftRight(){

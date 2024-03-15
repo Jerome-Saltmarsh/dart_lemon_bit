@@ -48,10 +48,6 @@ CharacterJson writeAmuletPlayerToJson(AmuletPlayer player) {
   json[AmuletField.Initialized] = player.initialized;
   json[AmuletField.Amulet_Scene_Name] = player.amuletGame.amuletScene.name;
   json[AmuletField.Amulet] = writeAmuletToJson(player);
-
-  json.skillTypeLeft = player.skillTypeLeft;
-  json.skillTypeRight = player.skillTypeRight;
-
   return json;
 }
 
