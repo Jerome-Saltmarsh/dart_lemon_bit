@@ -1287,26 +1287,26 @@ class AmuletUI {
     final current = amulet.getEquipped(next.amuletItem.slotType);
     final nextAmuletItem = next.amuletItem;
     final currentAmuletItem = current?.amuletItem;
-    final damageMaxDiff = getDiff(next.damageMax, current?.damageMax)?.toInt();
-    final damageMinDiff = getDiff(next.damageMin, current?.damageMin)?.toInt();
+    // final damageMaxDiff = getDiff(next.damageMax, current?.damageMax)?.toInt();
+    // final damageMinDiff = getDiff(next.damageMin, current?.damageMin)?.toInt();
     final levelDiff = getDiff(next.level, current?.level);
     final valueDiff = getDiff(nextAmuletItem.quantify, currentAmuletItem?.quantify);
     final showDiff = current != next;
 
     return Column(
       children: [
-          if (damageMinDiff != null)
-            buildComparisonRow(
-              lead: 'min damage',
-              value: next.damageMin,
-              diff: showDiff ? damageMinDiff : null,
-            ),
-          if (damageMaxDiff != null)
-            buildComparisonRow(
-              lead: 'max damage',
-              value: next.damageMax,
-              diff: showDiff ? damageMaxDiff : null,
-            ),
+          // if (damageMinDiff != null)
+          //   buildComparisonRow(
+          //     lead: 'min damage',
+          //     value: next.damageMin,
+          //     diff: showDiff ? damageMinDiff : null,
+          //   ),
+          // if (damageMaxDiff != null)
+          //   buildComparisonRow(
+          //     lead: 'max damage',
+          //     value: next.damageMax,
+          //     diff: showDiff ? damageMaxDiff : null,
+          //   ),
            buildComparisonRow01(
               lead: 'range',
               next: nextAmuletItem.range,

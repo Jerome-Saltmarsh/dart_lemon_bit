@@ -17,6 +17,6 @@ enum AreaDamage {
   }
 
   int get quantify {
-    return (this.value * 6).toInt();
+    return (value * 6).toInt();
   }
 }

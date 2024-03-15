@@ -6,8 +6,8 @@ const iconSizeSkillType = 16.0;
 List<double> getSrcSkillType(SkillType skillType) =>
     switch (skillType) {
       SkillType.None => const [_srcX, 0],
-      SkillType.Fireball => const [416, 32, 32 ,32],
-      SkillType.Frostball => const [416, 64, 32 ,32],
+      SkillType.Fire_Ball => const [416, 32, 32 ,32],
+      SkillType.Ice_Ball => const [416, 64, 32 ,32],
       SkillType.Slash => const [_srcX, iconSizeSkillType * 4],
       SkillType.Bludgeon => const [416, 896, 32, 32],
       SkillType.Shoot_Arrow => const [_srcX, iconSizeSkillType * 5],
@@ -24,9 +24,13 @@ List<double> getSrcSkillType(SkillType skillType) =>
       SkillType.Magic_Regen =>  const [416, 704, 32, 32],
       SkillType.Health_Regen =>  const [416, 384, 32, 32],
       SkillType.Area_Damage =>  const [416, 288, 32, 32],
-      SkillType.Scout =>  const [416, 640, 32, 32],
-      SkillType.Shield => const [416, 352, 32 ,32],
+      SkillType.Run_Speed =>  const [416, 640, 32, 32],
       SkillType.Wind_Cut => const [416, 800, 32 ,32],
       SkillType.Max_Health => const [416, 832, 32 ,32],
       SkillType.Max_Magic => const [416, 864, 32 ,32],
+      SkillType.Resist_Ice => const [416, 352, 32 ,32],
+      SkillType.Resist_Fire => const [416, 352, 32 ,32],
+      SkillType.Resist_Pierce => const [416, 352, 32 ,32],
+      SkillType.Resist_Slash => const [416, 352, 32 ,32],
+      SkillType.Resist_Bludgeon => const [416, 352, 32 ,32],
     };

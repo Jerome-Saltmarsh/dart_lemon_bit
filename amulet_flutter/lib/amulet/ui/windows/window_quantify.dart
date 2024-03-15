@@ -133,8 +133,8 @@ class WindowQuantify extends StatelessWidget {
   Widget buildQuantifyAmuletItem(AmuletItem amuletItem, int level, bool showValue) {
 
     final validationError = getAmuletItemValidationError(amuletItem);
-    final damageMax = showValue ? amuletItem.getWeaponDamageMax(level) : amuletItem.damage;
-    final damageMin = showValue ? amuletItem.getWeaponDamageMin(level) : amuletItem.damageMin;
+    // final damageMax = showValue ? amuletItem.getWeaponDamageMax(level) : amuletItem.damage;
+    // final damageMin = showValue ? amuletItem.getWeaponDamageMin(level) : amuletItem.damageMin;
     // final healthMax = showValue ? amuletItem.getMaxHealth(level)?.floor() : amuletItem.maxHealth;
     // final magicMax = showValue ? amuletItem.getMaxMagic(level)?.floor() : amuletItem.maxMagic;
     final renderNull = !amuletItem.isWeapon;
@@ -172,10 +172,10 @@ class WindowQuantify extends StatelessWidget {
                 alignment: Alignment.center,
                 child: validationError != null ? buildText(validationError.name, color: Colors.red) : null,
               ),
-              if (damageMax != null)
-                buildQuantificationCell('dmg-max', damageMax),
-              if (damageMin != null)
-                buildQuantificationCell('dmg-min', damageMin),
+              // if (damageMax != null)
+              //   buildQuantificationCell('dmg-max', damageMax),
+              // if (damageMin != null)
+              //   buildQuantificationCell('dmg-min', damageMin),
 
               // buildQuantificationCell('speed', amuletItem.attackSpeed),
               buildQuantificationCell('range', amuletItem.range),

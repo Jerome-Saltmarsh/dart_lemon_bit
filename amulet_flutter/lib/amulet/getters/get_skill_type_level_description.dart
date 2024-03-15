@@ -6,7 +6,7 @@ String? getSkillTypeLevelDescription(SkillType skillType, int level) {
     case SkillType.Heal:
       return '+${SkillType.getHealAmount(level)} health';
     case SkillType.Attack_Speed:
-      return 'attack speed +${(SkillType.getAttackSpeedPercentage(level) * 100).toInt()}%';
+      return 'attack speed +${SkillType.getAttackSpeed(level).toStringPercentage}';
     case SkillType.Health_Steal:
       return '${SkillType.getHealthSteal(level).toStringPercentage} of damage';
     case SkillType.Magic_Steal:
@@ -15,8 +15,16 @@ String? getSkillTypeLevelDescription(SkillType skillType, int level) {
       return '${SkillType.getPercentageCriticalHit(level).toStringPercentage} chance';
     case SkillType.Mighty_Strike:
       return 'damage +${SkillType.getPercentageMightySwing(level).toStringPercentage}';
-    case SkillType.Shield:
-      return '${SkillType.getPercentageDamageResistanceMelee(level).toStringPercentage} damage reduced';
+    case SkillType.Resist_Fire:
+      return '${SkillType.getResistFire(level).toStringPercentage} damage reduced';
+    case SkillType.Resist_Ice:
+      return '${SkillType.getResistIce(level).toStringPercentage} damage reduced';
+    case SkillType.Resist_Pierce:
+      return '${SkillType.getResistPierce(level).toStringPercentage} damage reduced';
+    case SkillType.Resist_Bludgeon:
+      return '${SkillType.getResistBludgeon(level).toStringPercentage} damage reduced';
+    case SkillType.Resist_Slash:
+      return '${SkillType.getResistSlash(level).toStringPercentage} damage reduced';
     case SkillType.Magic_Regen:
       return '+$level magic regen';
     case SkillType.Health_Regen:
@@ -27,15 +35,15 @@ String? getSkillTypeLevelDescription(SkillType skillType, int level) {
       return '-';
     case SkillType.Bludgeon:
       return '-';
-    case SkillType.Frostball:
+    case SkillType.Ice_Ball:
       return formatIceDamage(
-        damage: SkillType.getDamageFrostBall(level),
-        duration: SkillType.getAilmentDurationFrostBall(level),
-        durationDamage: SkillType.getAilmentDamageFrostBall(level),
+        damage: SkillType.getDamageIceBall(level),
+        duration: SkillType.getAilmentDurationIceBall(level),
+        durationDamage: SkillType.getAilmentDamageIceBall(level),
       );
-    case SkillType.Fireball:
+    case SkillType.Fire_Ball:
       return formatFireDamage(
-        damage: SkillType.getDamageFireball(level),
+        damage: SkillType.getDamageFireBall(level),
         duration: SkillType.getAilmentDurationFireball(level),
         durationDamage: SkillType.getAilmentDamageFireball(level),
       );
@@ -59,7 +67,7 @@ String? getSkillTypeLevelDescription(SkillType skillType, int level) {
       );
     case SkillType.Area_Damage:
       return '${SkillType.getAreaDamage(level).toStringPercentage} area damage';
-    case SkillType.Scout:
+    case SkillType.Run_Speed:
       return '${SkillType.getRunSpeed(level).toStringPercentage} faster';
     case SkillType.Wind_Cut:
       return 'range +${SkillType.getRangeWindCut(level).toInt()}';

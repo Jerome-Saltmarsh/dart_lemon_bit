@@ -219,7 +219,7 @@ class AmuletPlayer extends IsometricPlayer with
 
   @override
   double get runSpeed {
-    final level = getSkillTypeLevel(SkillType.Scout);
+    final level = getSkillTypeLevel(SkillType.Run_Speed);
     final bonus = baseRunSpeed * SkillType.getRunSpeed(level);
     return baseRunSpeed + bonus;
   }
@@ -476,6 +476,7 @@ class AmuletPlayer extends IsometricPlayer with
     writeSkillTypes();
     writePlayerCriticalHitPoints();
     writeSkillActiveLeft();
+    writeSkillsLeftRight();
   }
 
   SkillType get equippedWeaponDefaultSkillType {
@@ -632,6 +633,7 @@ class AmuletPlayer extends IsometricPlayer with
 
     if (value == null){
       super.equippedWeapon = null;
+      notifyEquipmentDirty();
       return;
     }
 
@@ -647,14 +649,11 @@ class AmuletPlayer extends IsometricPlayer with
       writeGameError(GameError.Invalid_Weapon_Type);
       return;
     }
-
-    if (skillTypeLeft == SkillType.None){
-      skillTypeLeft = attackSkill;
-    }
+    super.equippedWeapon = value;
+    skillTypeLeft = attackSkill;
     if (skillTypeRight == SkillType.None){
       skillTypeRight = equippedWeaponDefaultSkillType;
     }
-    super.equippedWeapon = value;
     notifyEquipmentDirty();
   }
 
@@ -1045,20 +1044,6 @@ class AmuletPlayer extends IsometricPlayer with
 
   }
 
-  // @override
-  // void setSkillActiveLeft(bool value) {
-  //   if (deadOrBusy) return;
-  //
-  //   if (value && validateSkillType(skillTypeLeft)){
-  //     super.setSkillActiveLeft(value);
-  //     return;
-  //   }
-  //   if (!value && validateSkillType(skillTypeRight)){
-  //     super.setSkillActiveLeft(value);
-  //     return;
-  //   }
-  // }
-
   bool get equippedWeaponBow => equippedWeapon?.amuletItem.isWeaponBow ?? false;
 
   bool get equippedWeaponStaff => equippedWeapon?.amuletItem.isWeaponStaff ?? false;
@@ -1155,41 +1140,34 @@ class AmuletPlayer extends IsometricPlayer with
     tryWrite(writeString, subtitles);
   }
 
-  double? get equippedWeaponDamage {
+  double? get randomEquippedWeaponDamage {
+
     final equippedWeapon = this.equippedWeapon;
     if (equippedWeapon == null) {
       return null;
     }
 
-    final level = equippedWeapon.level;
-
-    if (level <= 0) {
-      writeGameError(GameError.Invalid_Object_Level);
-      return 0;
-    }
-
-    final amuletItem = equippedWeapon.amuletItem;
-    final damageI = amuletItem.damage;
-
-    if (damageI == null || damageI <= 0) {
-      writeGameError(GameError.Invalid_Object_Damage);
+    final attackSkill = equippedWeapon.amuletItem.attackSkill;
+    if (attackSkill == null) {
+      assert(false);
       return null;
     }
 
-    final maxDamage = amuletItem.getWeaponDamageMax(level);
-    final minDamage = amuletItem.getWeaponDamageMin(level);
+    final attackSkillLevel = getSkillTypeLevel(attackSkill);
 
-    if (maxDamage == null){
-      writeGameError(GameError.Max_Damage_Null);
+    if (attackSkillLevel <= 0){
       return null;
     }
 
-    if (minDamage == null){
-      writeGameError(GameError.Min_Damage_Null);
+    final damageMin = attackSkill.getDamageMin(attackSkillLevel);
+    final damageMax = attackSkill.getDamageMin(attackSkillLevel);
+
+    if (damageMin == null || damageMax == null){
+      assert(false);
       return null;
     }
 
-    return randomBetween(minDamage, maxDamage);
+    return randomBetween(damageMin, damageMax);
   }
 
   int get equippedWeaponLevel => equippedWeapon?.level ?? 0;
@@ -1208,17 +1186,13 @@ class AmuletPlayer extends IsometricPlayer with
   /// a value between 0.0 and 1.0
   double? get equippedWeaponRange => equippedWeapon?.amuletItem.range;
 
-  /// returns a number between 0.0 and 1.0
-  double getAssignedSkillTypeLevelI(SkillType skillType) =>
-      getSkillTypeLevel(skillType) / SkillType.Max_Level;
-
   int getSkillTypeLevel(SkillType skillType){
      var total = 0;
      total += equippedWeapon?.getSkillLevel(skillType) ?? 0;
      total += equippedHelm?.getSkillLevel(skillType) ?? 0;
      total += equippedArmor?.getSkillLevel(skillType) ?? 0;
      total += equippedShoes?.getSkillLevel(skillType) ?? 0;
-     return min(total, SkillType.Max_Level);
+     return min(total, skillType.maxLevel);
   }
 
   void writeSkillTypes() {
@@ -1230,21 +1204,9 @@ class AmuletPlayer extends IsometricPlayer with
     }
   }
 
-  bool skillTypeUnlocked(SkillType skillType) {
-    if (skillType == SkillType.None){
-      return true;
-    }
-    if (skillType == SkillType.Slash) {
-      return equippedWeaponSword;
-    }
-    if (skillType == SkillType.Bludgeon) {
-      return equippedWeaponStaff;
-    }
-    if (skillType == SkillType.Shoot_Arrow) {
-      return equippedWeaponBow;
-    }
-    return getSkillTypeLevel(skillType) > 0;
-  }
+  bool skillTypeUnlocked(SkillType skillType) =>
+    skillType == SkillType.None ||
+    getSkillTypeLevel(skillType) > 0;
 
   @override
   void setCharacterStateHurt({int duration = 10}) {
@@ -1296,7 +1258,7 @@ class AmuletPlayer extends IsometricPlayer with
 
   double get performFrameVelocity {
     final attackSpeedLevel = getSkillTypeLevel(SkillType.Attack_Speed);
-    final attackSpeedPerc = SkillType.getAttackSpeedPercentage(attackSpeedLevel);
+    final attackSpeedPerc = SkillType.getAttackSpeed(attackSpeedLevel);
     final base = AmuletSettings.Min_Perform_Velocity;
     return base + (base * attackSpeedPerc);
   }
@@ -1317,8 +1279,10 @@ class AmuletPlayer extends IsometricPlayer with
     cachePerformFrameVelocity = -1;
   }
 
-  double get areaDamage =>
-      getAssignedSkillTypeLevelI(SkillType.Area_Damage);
+  double get areaDamage {
+    final level = getSkillTypeLevel(SkillType.Area_Damage);
+    return SkillType.Area_Damage.getLinear(level);
+  }
 
   double get chanceOfCriticalDamage =>
       SkillType.getPercentageCriticalHit(
@@ -1567,6 +1531,27 @@ class AmuletPlayer extends IsometricPlayer with
     writePlayerEvent(PlayerEvent.Potion_Consumed);
     potionsMagic--;
     magic = maxMagic;
+  }
+
+  double getCharacterDamageTypeResistance(DamageType damageType) {
+
+    switch (damageType){
+      case DamageType.Slash:
+        final level = getSkillTypeLevel(SkillType.Resist_Slash);
+        return SkillType.getResistSlash(level);
+      case DamageType.Bludgeon:
+        final level = getSkillTypeLevel(SkillType.Resist_Bludgeon);
+        return SkillType.getResistBludgeon(level);
+      case DamageType.Pierce:
+        final level = getSkillTypeLevel(SkillType.Resist_Pierce);
+        return SkillType.getResistPierce(level);
+      case DamageType.Fire:
+        final level = getSkillTypeLevel(SkillType.Resist_Fire);
+        return SkillType.getResistFire(level);
+      case DamageType.Ice:
+        final level = getSkillTypeLevel(SkillType.Resist_Ice);
+        return SkillType.getResistIce(level);
+    }
   }
 }
 

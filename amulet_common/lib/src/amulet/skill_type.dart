@@ -1,21 +1,24 @@
 
+import 'package:amulet_common/src.dart';
 import 'package:lemon_math/src.dart';
-
-import 'amulet_settings.dart';
-import 'caste_type.dart';
 
 enum SkillType {
   None(
       casteType: CasteType.Passive,
       range: 0,
+      maxLevel: 0,
   ),
   Slash(
+      damageMin: Constraint(min: 1, max: 20),
+      damageMax: Constraint(min: 1, max: 20),
       casteType: CasteType.Ability,
       magicCost: 0,
       isBaseAttack: true,
       requiresMelee: true,
   ),
   Bludgeon(
+      damageMin: Constraint(min: 1, max: 20),
+      damageMax: Constraint(min: 1, max: 20),
       casteType: CasteType.Ability,
       magicCost: 0,
       isBaseAttack: true,
@@ -26,11 +29,11 @@ enum SkillType {
       magicCost: 3,
       requiresMelee: true,
   ),
-  Frostball(
+  Ice_Ball(
       casteType: CasteType.Ability,
       magicCost: 4,
   ),
-  Fireball(
+  Fire_Ball(
       casteType: CasteType.Ability,
       magicCost: 5,
   ),
@@ -40,6 +43,8 @@ enum SkillType {
   ),
   // BOW
   Shoot_Arrow(
+      damageMin: Constraint(min: 1, max: 20),
+      damageMax: Constraint(min: 1, max: 20),
       casteType: CasteType.Ability,
       magicCost: 0,
       isBaseAttack: true,
@@ -93,11 +98,29 @@ enum SkillType {
   Area_Damage(
     casteType: CasteType.Passive,
   ),
-  Scout(
+  Run_Speed(
     casteType: CasteType.Passive,
+    constraint: Constraint(min: 0, max: 3.0),
   ),
-  Shield(
+  Resist_Pierce(
     casteType: CasteType.Passive,
+    constraint: Constraint_Resist,
+  ),
+  Resist_Slash(
+    casteType: CasteType.Passive,
+    constraint: Constraint_Resist,
+  ),
+  Resist_Fire(
+    casteType: CasteType.Passive,
+    constraint: Constraint_Resist,
+  ),
+  Resist_Ice(
+    casteType: CasteType.Passive,
+    constraint: Constraint_Resist,
+  ),
+  Resist_Bludgeon(
+    casteType: CasteType.Passive,
+    constraint: Constraint_Resist,
   ),
   Wind_Cut(
     casteType: CasteType.Ability,
@@ -112,63 +135,44 @@ enum SkillType {
   final bool requiresStaff;
   final bool requiresMelee;
   final int magicCost;
+  final Constraint? constraint;
   /// if null the weapon perform duration is used
   /// if null the weapon range is used
   final double? range;
   final bool isBaseAttack;
+  final Constraint? damageMin; 
+  final Constraint? damageMax;
 
-  static const Max_Level = 20;
-  static const Max_Health_Steal = 0.5;
-  static const Max_Magic_Steal = 0.5;
-  static const Max_Critical_Hit = 0.5;
-  static const Max_Might_Swing = 3.0;
-  static const Max_Resist = 0.5;
-  static const Max_Run_Speed = 0.4;
+  static const Constraint_Health_Steal = Constraint(min: 0, max: 0.5);
+  static const Constraint_Magic_Steal = Constraint(min: 0, max: 0.5);
+  static const Constraint_Critical_Hit = Constraint(min: 0, max: 0.5);
+  static const Constraint_Might_Swing = Constraint(min: 0.0, max: 3.0);
+  static const Constraint_Run_Speed = Constraint(min: 0.0, max: 4.0);
 
-  static const Range_Min_Wind_Cut = 50.0;
-  static const Range_Max_Wind_Cut = 200.0;
+  static const Constraint_Damage_Ice_Arrow = Constraint(min: 0.0, max: 80.0);
+  static const Constraint_Damage_Ice_Ball = Constraint(min: 0.0, max: 100.0);
+  static const Constraint_Damage_Fire_Arrow = Constraint(min: 0.0, max: 120.0);
+  static const Constraint_Damage_Fire_Ball = Constraint(min: 0.0, max: 150.0);
+  static const Constraint_Damage_Explode = Constraint(min: 0.0, max: 200.0);
 
-  static const Damage_Max_Fire_Arrow = 20.0;
-  static const Damage_Min_Fire_Arrow = 2.0;
+  static const Constraint_Ailment_Damage_Ice_Arrow = Constraint(min: 0.0, max: 5.0);
+  static const Constraint_Ailment_Damage_Ice_Ball = Constraint(min: 0.0, max: 5.0);
+  static const Constraint_Ailment_Damage_Fire_Arrow = Constraint(min: 0.0, max: 5.0);
+  static const Constraint_Ailment_Damage_Fire_Ball = Constraint(min: 0.0, max: 5.0);
 
-  static const Damage_Max_Ice_Arrow = 20.0;
-  static const Damage_Min_Ice_Arrow = 2.0;
+  static const Constraint_Ailment_Duration_Ice_Arrow = Constraint(min: 0.0, max: 5.0);
+  static const Constraint_Ailment_Duration_Ice_Ball = Constraint(min: 0.0, max: 5.0);
+  static const Constraint_Ailment_Duration_Fire_Arrow = Constraint(min: 0.0, max: 5.0);
+  static const Constraint_Ailment_Duration_Fire_Ball = Constraint(min: 0.0, max: 5.0);
 
-  static const Damage_Min_Fireball = 2.0;
-  static const Damage_Max_Fireball = 20.0;
+  static const Constraint_Range_Wind_Cut = Constraint(min: 50.0, max: 200.0);
+  static const Constraint_Resist_Damage_Type = Constraint(min: 0.0, max: 0.5);
 
-  static const Damage_Min_Explode = 2.0;
-  static const Damage_Max_Explode = 20.0;
-
-  static const Damage_Min_Frostball = 2.0;
-  static const Damage_Max_Frostball = 20.0;
-
-  static const Ailment_Damage_Min_Ice_Arrow = 1.0;
-  static const Ailment_Damage_Min_Fire_Arrow = 1.0;
-
-  static const Ailment_Damage_Max_Ice_Arrow = 5.0;
-  static const Ailment_Damage_Max_Fire_Arrow = 5.0;
-
-  static const Ailment_Damage_Min_Fireball = 1.0;
-  static const Ailment_Damage_Max_Fireball = 5.0;
-
-  static const Ailment_Damage_Min_Frostball = 0.0;
-  static const Ailment_Damage_Max_Frostball = 1.0;
-
-  static const Ailment_Duration_Min_Ice_Arrow = 1.0;
-  static const Ailment_Duration_Max_Ice_Arrow = 5.0;
-
-  static const Ailment_Duration_Min_Fireball = 1.0;
-  static const Ailment_Duration_Max_Fireball = 5.0;
-
-  static const Ailment_Duration_Min_Fire_Arrow = 1.0;
-  static const Ailment_Duration_Max_Fire_Arrow = 5.0;
-
-  static const Ailment_Duration_Min_Frostball = 1.0;
-  static const Ailment_Duration_Max_Frostball = 5.0;
+  static const Constraint_Resist = Constraint(min: 0, max: 0.5);
 
   const SkillType({
     required this.casteType,
+    this.constraint,
     this.magicCost = 0,
     this.range,
     this.maxLevel = 20,
@@ -177,16 +181,18 @@ enum SkillType {
     this.requiresStaff = false,
     this.requiresSword = false,
     this.requiresMelee = false,
+    this.damageMin,
+    this.damageMax,
   });
 
   bool get isPassive => casteType == CasteType.Passive;
 
   static SkillType parse(String name) =>
-      tryParse(name) ?? (throw Exception('SkillType.parse("$name")'));
+      tryParse(name) ?? (throw Exception('parse("$name")'));
 
   static SkillType? tryParse(String name){
      for (final skillType in values) {
-        if (skillType.name == name)
+        if (name == name)
           return skillType;
      }
      return null;
@@ -194,146 +200,105 @@ enum SkillType {
 
   static int getHealAmount(int level) => 5 * level;
 
-  static double getAttackSpeedPercentage(int level){
-    final value = interpolate(
-      AmuletSettings.Min_Perform_Velocity,
-      AmuletSettings.Max_Perform_Velocity,
-      level / SkillType.Max_Level,
-    );
-
-    return getPercentageDiff(AmuletSettings.Min_Perform_Velocity, value);
-  }
+  // static double getAttackSpeedPercentage(int level){
+  //   final value = interpolate(
+  //     AmuletSettings.Min_Perform_Velocity,
+  //     AmuletSettings.Max_Perform_Velocity,
+  //     level / Max_Level,
+  //   );
+  //
+  //   return getPercentageDiff(AmuletSettings.Min_Perform_Velocity, value);
+  // }
 
   static double getHealthSteal(int level) =>
-      linear(0, SkillType.Max_Health_Steal, level);
+      Health_Steal.linearConstraint(SkillType.Constraint_Health_Steal, level);
 
   static double getMagicSteal(int level) =>
-      linear(0, SkillType.Max_Magic_Steal, level);
-
-  static double getDamageFireball(int level) =>
-      linear(
-        SkillType.Damage_Min_Fireball,
-        SkillType.Damage_Max_Fireball,
-        level,
-      );
+      Magic_Steal.linearConstraint(SkillType.Constraint_Health_Steal, level);
 
   static double getDamageIceArrow(int level) =>
-      linear(
-        SkillType.Damage_Min_Ice_Arrow,
-        SkillType.Damage_Max_Ice_Arrow,
-        level,
-      );
+      Ice_Arrow.linearConstraint(SkillType.Constraint_Damage_Ice_Arrow, level);
+
+  static double getDamageIceBall(int level)  =>
+      Ice_Ball.linearConstraint(SkillType.Constraint_Damage_Ice_Ball, level);
 
   static double getDamageFireArrow(int level) =>
-      linear(
-        SkillType.Damage_Min_Fire_Arrow,
-        SkillType.Damage_Max_Fire_Arrow,
-        level,
-      );
+      Fire_Arrow.linearConstraint(SkillType.Constraint_Damage_Fire_Arrow, level);
 
-  static double getDamageExplode(int level) =>
-      linear(
-        SkillType.Damage_Min_Explode,
-        SkillType.Damage_Max_Explode,
-        level,
-      );
+  static double getDamageFireBall(int level) =>
+      Fire_Ball.linearConstraint(SkillType.Constraint_Damage_Fire_Ball, level);
 
-  static double getDamageFrostBall(int level) =>
-      linear(
-        SkillType.Damage_Min_Frostball,
-        SkillType.Damage_Max_Frostball,
-        level,
-      );
+  static double getDamageExplode(int level)  =>
+      Explode.linearConstraint(SkillType.Constraint_Damage_Explode, level);
 
   static double getAilmentDurationIceArrow(int level) =>
-      linear(
-        SkillType.Ailment_Duration_Min_Ice_Arrow,
-        SkillType.Ailment_Duration_Max_Ice_Arrow,
-        level,
+      Ice_Arrow.linearConstraint(
+          Constraint_Ailment_Duration_Ice_Arrow,
+          level,
       );
 
   static double getAilmentDamageIceArrow(int level) =>
-      linear(
-        SkillType.Ailment_Damage_Min_Ice_Arrow,
-        SkillType.Ailment_Damage_Max_Ice_Arrow,
+      Ice_Arrow.linearConstraint(
+        Constraint_Ailment_Damage_Ice_Arrow,
         level,
       );
 
   static double getAilmentDurationFireball(int level) =>
-      linear(
-        SkillType.Ailment_Duration_Min_Fireball,
-        SkillType.Ailment_Duration_Max_Fireball,
+      Fire_Ball.linearConstraint(
+        Constraint_Ailment_Duration_Ice_Arrow,
         level,
       );
 
   static double getAilmentDurationFireArrow(int level) =>
-      linear(
-        SkillType.Ailment_Duration_Min_Fire_Arrow,
-        SkillType.Ailment_Duration_Max_Fire_Arrow,
+      Fire_Arrow.linearConstraint(
+        Constraint_Ailment_Duration_Fire_Arrow,
         level,
       );
 
-  static double getAilmentDurationFrostBall(int level) =>
-      linear(
-        SkillType.Ailment_Duration_Min_Frostball,
-        SkillType.Ailment_Duration_Max_Frostball,
+  static double getAilmentDurationIceBall(int level) =>
+      Ice_Ball.linearConstraint(
+        Constraint_Ailment_Duration_Ice_Ball,
         level,
       );
 
   static double getAilmentDamageFireArrow(int level) =>
-      linear(
-        SkillType.Ailment_Damage_Min_Fire_Arrow,
-        SkillType.Ailment_Damage_Max_Fire_Arrow,
+      Fire_Arrow.linearConstraint(
+        Constraint_Ailment_Damage_Fire_Arrow,
         level,
       );
 
   static double getAilmentDamageFireball(int level) =>
-      linear(
-        SkillType.Ailment_Damage_Min_Fireball,
-        SkillType.Ailment_Damage_Max_Fireball,
+      Fire_Ball.linearConstraint(
+        Constraint_Ailment_Damage_Fire_Ball,
         level,
       );
 
-  static double getAilmentDamageFrostBall(int level) =>
-      linear(
-        SkillType.Ailment_Damage_Min_Frostball,
-        SkillType.Ailment_Damage_Max_Frostball,
+  static double getAilmentDamageIceBall(int level) =>
+      Ice_Ball.linearConstraint(
+        Constraint_Ailment_Damage_Fire_Ball,
         level,
       );
 
   static double getPercentageMightySwing(int level) =>
-      linear(0, Max_Might_Swing, level);
+      Critical_Hit.linearConstraint(Constraint_Might_Swing, level);
 
   static double getRangeWindCut(int level) =>
-      linear(0, 1, level);
+      Critical_Hit.linearConstraint(Constraint_Range_Wind_Cut, level);
 
   static double getPercentageCriticalHit(int level) =>
-      linear(0, Max_Critical_Hit, level);
-
-  static double getPercentageDamageResistanceMelee(int level) =>
-      linear(0, Max_Resist, level);
+      Critical_Hit.linearConstraint(Constraint_Critical_Hit, level);
 
   static int getSplitShotTotalArrows(int level) =>
       2 + level;
 
   static double getAreaDamage(int level) =>
-      level / Max_Level;
+      level / Area_Damage.maxLevel;
 
   static double getRunSpeed(int level) =>
-      linear(0, SkillType.Max_Run_Speed, level);
-
-  // static final collectionPassive = findByCasteType(CasteType.Passive);
-  // static final collectionAbility = findByCasteType(CasteType.Ability);
-
-  static const valuesBow = [
-    SkillType.Ice_Arrow,
-    SkillType.Fire_Arrow,
-    SkillType.Split_Shot,
-  ];
+      Run_Speed.linearConstraint(Constraint_Run_Speed, level);
 
   static List<SkillType> findByCasteType(CasteType casteType) =>
       values.where((element) => element.casteType == CasteType.Passive).toList(growable: false);
-
 
   static int getMaxHealth(int level){
     return level * 5;
@@ -343,12 +308,41 @@ enum SkillType {
     return level * 5;
   }
 
-  static double linear(double start, double end, int level) =>
+  double? getDamageMin(int? level) => tryLinearConstraint(damageMin, level);
+  
+  double? getDamageMax(int? level) => tryLinearConstraint(damageMax, level);
+  
+  double getLinear(int level) => tryLinearConstraint(constraint, level) ?? 0;
+
+  double? tryLinearConstraint(Constraint? constraint, int? level) {
+     if (constraint == null) {
+       return null;
+     }
+     if (level == null){
+       return null;
+     }
+     return linearConstraint(constraint, level);
+  }
+
+  double linearConstraint(Constraint constraint, int level) =>
       interpolate(
-        start,
-        end,
-        level / Max_Level,
+        constraint.min,
+        constraint.max,
+        level / maxLevel,
     );
 
+  static double getResistSlash(int level) => Resist_Slash.getLinear(level);
+
+  static double getResistBludgeon(int level) => Resist_Bludgeon.getLinear(level);
+
+  static double getResistPierce(int level) => Resist_Pierce.getLinear(level);
+
+  static double getResistFire(int level) => Resist_Fire.getLinear(level);
+
+  static double getResistIce(int level) => Resist_Ice.getLinear(level);
+
+  static double getAttackSpeed(int level){
+    return Run_Speed.getLinear(level);
+  }
 }
 

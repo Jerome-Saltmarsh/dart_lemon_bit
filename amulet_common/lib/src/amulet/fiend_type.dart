@@ -1,6 +1,5 @@
 
 import 'package:amulet_common/src.dart';
-import 'package:amulet_common/src/isometric/damage_type.dart';
 
 enum FiendType {
   Goblin(
@@ -16,9 +15,6 @@ enum FiendType {
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 50,
     skillType: SkillType.Slash,
-    skillTypes: {
-
-    }
   ),
   Wolf(
     health: 10,
@@ -35,9 +31,6 @@ enum FiendType {
     skillType: SkillType.Slash,
     pierceResistance: 0.25,
     fireResistance: 0.25,
-      skillTypes: {
-        SkillType.Shield: 2,
-      }
   ),
   Skeleton(
     health: 10,
@@ -53,9 +46,6 @@ enum FiendType {
     postAttackPauseDurationMax: 80,
     skillType: SkillType.Shoot_Arrow,
     fireResistance: 0.25,
-      skillTypes: {
-
-      }
   ),
   Zombie(
     health: 19,
@@ -70,12 +60,9 @@ enum FiendType {
     clearTargetOnPerformAction: true,
     postAttackPauseDurationMin: 20,
     postAttackPauseDurationMax: 60,
-    skillType: SkillType.Slash,
+    skillType: SkillType.Bludgeon,
     healthSteal: 0.1,
     iceResistance: 0.25,
-    skillTypes: {
-
-    }
   ),
   Goblin_Armoured(
     health: 27,
@@ -91,9 +78,6 @@ enum FiendType {
     postAttackPauseDurationMax: 50,
     skillType: SkillType.Slash,
     chanceOfCriticalDamage: 3,
-      skillTypes: {
-
-      }
   ),
   Gargoyle(
     health: 34,
@@ -107,11 +91,8 @@ enum FiendType {
     clearTargetOnPerformAction: false,
     postAttackPauseDurationMin: 30,
     postAttackPauseDurationMax: 100,
-    skillType: SkillType.Fireball,
+    skillType: SkillType.Fire_Ball,
     meleeResistance: 0.25,
-    skillTypes: {
-
-    }
   );
 
   final double health;
@@ -152,7 +133,7 @@ enum FiendType {
     required this.postAttackPauseDurationMin,
     required this.postAttackPauseDurationMax,
     required this.skillType,
-    required this.skillTypes,
+    this.skillTypes = const {},
     this.chanceOfCriticalDamage = 0,
     this.skillTypeB,
     this.areaDamage = 0,

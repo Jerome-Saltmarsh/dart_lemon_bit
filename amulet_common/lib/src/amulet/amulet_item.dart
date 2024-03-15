@@ -6,8 +6,8 @@ enum AmuletItem {
     slotType: SlotType.Weapon,
     subType: WeaponType.Sword_Short,
     range: 0.2,
-    damageMin: 0.75,
-    damage: 0.45,
+    // damageMin: 0.75,
+    // damage: 0.45,
     skillBase: {
       SkillType.Slash: 5,
       SkillType.Attack_Speed: 5,
@@ -18,10 +18,10 @@ enum AmuletItem {
     slotType: SlotType.Weapon,
     subType: WeaponType.Sword_Broad,
     range: 0.5,
-    damage: 0.5,
-    damageMin: 0.75,
+    // damage: 0.5,
+    // damageMin: 0.75,
       skillBase: {
-        SkillType.Slash: 5,
+        SkillType.Slash: 7,
         SkillType.Attack_Speed: 5,
       }
   ),
@@ -30,10 +30,10 @@ enum AmuletItem {
     slotType: SlotType.Weapon,
     subType: WeaponType.Sword_Long,
     range: 0.75,
-    damageMin: 0.4,
-    damage: 0.7,
+    // damageMin: 0.4,
+    // damage: 0.7,
     skillBase: {
-      SkillType.Slash: 5,
+      SkillType.Slash: 8,
       SkillType.Attack_Speed: 1,
     }
   ),
@@ -42,10 +42,10 @@ enum AmuletItem {
     slotType: SlotType.Weapon,
     subType: WeaponType.Sword_Giant,
     range: 1.0,
-    damageMin: 0.5,
-    damage: 0.9,
+    // damageMin: 0.5,
+    // damage: 0.9,
       skillBase: {
-        SkillType.Slash: 5,
+        SkillType.Slash: 12,
         SkillType.Attack_Speed: 1,
       }
   ),
@@ -53,22 +53,19 @@ enum AmuletItem {
     label: 'Short Bow',
     slotType: SlotType.Weapon,
     subType: WeaponType.Bow_Short,
-    // attackSpeed: 1.0,
     range: 0.25,
-    damageMin: 0.9,
-    damage: 0.25,
-      skillBase: {
-        SkillType.Shoot_Arrow: 5,
-        SkillType.Attack_Speed: 1,
-      }
+    skillBase: {
+      SkillType.Shoot_Arrow: 5,
+      SkillType.Attack_Speed: 1,
+    }
   ),
   Weapon_Bow_Reflex(
     label: 'Reflex Bow',
     slotType: SlotType.Weapon,
     subType: WeaponType.Bow_Reflex,
     range: 0.4,
-    damageMin: 0.5,
-    damage: 0.35,
+    // damageMin: 0.5,
+    // damage: 0.35,
       skillBase: {
         SkillType.Shoot_Arrow: 5,
         SkillType.Attack_Speed: 1,
@@ -79,8 +76,8 @@ enum AmuletItem {
     slotType: SlotType.Weapon,
     subType: WeaponType.Bow_Composite,
     range: 0.75,
-    damageMin: 0.3,
-    damage: 0.6,
+    // damageMin: 0.3,
+    // damage: 0.6,
       skillBase: {
         SkillType.Shoot_Arrow: 5,
         SkillType.Attack_Speed: 1,
@@ -92,8 +89,8 @@ enum AmuletItem {
     subType: WeaponType.Bow_Long,
     // attackSpeed: 0.3,
     range: 1.0,
-    damageMin: 0.4,
-    damage: 0.8,
+    // damageMin: 0.4,
+    // damage: 0.8,
       skillBase: {
         SkillType.Shoot_Arrow: 5,
         SkillType.Attack_Speed: 1,
@@ -104,8 +101,8 @@ enum AmuletItem {
     slotType: SlotType.Weapon,
     subType: WeaponType.Staff_Wand,
     range: 0.15,
-    damageMin: 0.5,
-    damage: 0.1,
+    // damageMin: 0.5,
+    // damage: 0.1,
     skillSet: {
       SkillType.Magic_Regen: 0.5,
     },
@@ -119,8 +116,8 @@ enum AmuletItem {
     slotType: SlotType.Weapon,
     subType: WeaponType.Staff_Globe,
     range: 0.4,
-    damageMin: 0.2,
-    damage: 0.35,
+    // damageMin: 0.2,
+    // damage: 0.35,
     skillSet: {
       SkillType.Magic_Regen: 0.5,
     },
@@ -135,8 +132,8 @@ enum AmuletItem {
     subType: WeaponType.Staff_Scepter,
     // attackSpeed: 0.5,
     range: 0.7,
-    damageMin: 0.6,
-    damage: 0.45,
+    // damageMin: 0.6,
+    // damage: 0.45,
     skillSet: {
       SkillType.Magic_Regen: 0.5,
     },
@@ -151,8 +148,8 @@ enum AmuletItem {
     subType: WeaponType.Staff_Long,
     // attackSpeed: 0.4,
     range: 0.8,
-    damageMin: 0.8,
-    damage: 0.55,
+    // damageMin: 0.8,
+    // damage: 0.55,
     skillSet: {
       SkillType.Magic_Regen: 0.5,
     },
@@ -213,7 +210,7 @@ enum AmuletItem {
     subType: HelmType.Cowl,
     skillSet: {
       SkillType.Max_Magic: 1.0,
-      SkillType.Frostball: 0.5,
+      SkillType.Ice_Ball: 0.5,
     },
   ),
   Helm_Feathered_Cap(
@@ -309,7 +306,7 @@ enum AmuletItem {
     subType: ArmorType.Mantle,
     skillSet: {
       SkillType.Max_Health: 1.0,
-      SkillType.Shield: 1.0,
+      SkillType.Resist_Fire: 1.0,
     },
   ),
   Armor_Shroud(
@@ -389,7 +386,7 @@ enum AmuletItem {
     subType: ShoeType.Striders,
     skillSet: {
       SkillType.Max_Health: 1.0,
-      SkillType.Scout: 1.0,
+      SkillType.Run_Speed: 1.0,
     },
   ),
   Shoes_Satin_Boots(
@@ -416,11 +413,11 @@ enum AmuletItem {
       slotType: SlotType.Weapon,
       subType: WeaponType.Staff_Wand,
       range: 0.15,
-      damageMin: 0.9,
-      damage: 0.1,
+      // damageMin: 0.9,
+      // damage: 0.1,
       quality: ItemQuality.Unique,
       skillSet: {
-        SkillType.Frostball: 1.1,
+        SkillType.Ice_Ball: 1.1,
       },
       skillBase: {
         SkillType.Bludgeon: 1,
@@ -434,11 +431,11 @@ enum AmuletItem {
       subType: WeaponType.Staff_Wand,
       // attackSpeed: 0.8,
       range: 0.15,
-      damageMin: 0.9,
-      damage: 0.1,
+      // damageMin: 0.9,
+      // damage: 0.1,
       quality: ItemQuality.Unique,
       skillSet: {
-        SkillType.Frostball: 1.1,
+        SkillType.Ice_Ball: 1.1,
       },
       skillBase: {
         SkillType.Bludgeon: 1,
@@ -450,8 +447,8 @@ enum AmuletItem {
       slotType: SlotType.Weapon,
       subType: WeaponType.Sword_Short,
       range: 0.2,
-      damage: 0.45,
-      damageMin: 0.75,
+      // damage: 0.45,
+      // damageMin: 0.75,
       quality: ItemQuality.Unique,
       skillSet: {
         SkillType.Health_Steal: 1.0,
@@ -467,8 +464,8 @@ enum AmuletItem {
       subType: WeaponType.Sword_Short,
       // attackSpeed: 0.8,
       range: 0.2,
-      damage: 0.55,
-      damageMin: 0.75,
+      // damage: 0.55,
+      // damageMin: 0.75,
       quality: ItemQuality.Rare,
       skillSet: {
         SkillType.Critical_Hit: 2.0,
@@ -485,11 +482,11 @@ enum AmuletItem {
       subType: WeaponType.Staff_Globe,
       // attackSpeed: 0.6,
       range: 0.2,
-      damage: 0.55,
-      damageMin: 0.75,
+      // damage: 0.55,
+      // damageMin: 0.75,
       quality: ItemQuality.Rare,
       skillSet: {
-        SkillType.Frostball: 2.0,
+        SkillType.Ice_Ball: 2.0,
         SkillType.Magic_Steal: 1.0,
       },
       skillBase: {
@@ -502,8 +499,8 @@ enum AmuletItem {
       slotType: SlotType.Weapon,
       subType: WeaponType.Bow_Reflex,
       range: 0.6,
-      damage: 0.75,
-      damageMin: 0.5,
+      // damage: 0.75,
+      // damageMin: 0.5,
       quality: ItemQuality.Rare,
       skillSet: {
         SkillType.Critical_Hit: 2.0,
@@ -522,7 +519,7 @@ enum AmuletItem {
       skillSet: {
         SkillType.Max_Health: 1.0,
         SkillType.Max_Magic: 1.0,
-        SkillType.Fireball: 1.5,
+        SkillType.Fire_Ball: 1.5,
       },
   ),
   Unique_Helm_Of_Frostball(
@@ -532,7 +529,7 @@ enum AmuletItem {
       quality: ItemQuality.Unique,
       skillSet: {
         SkillType.Max_Health: 1.0,
-        SkillType.Frostball: 1.5,
+        SkillType.Ice_Ball: 1.5,
       }),
   Unique_Helm_Of_Magic_Regen(
       label: 'Frosted Hat',
@@ -550,7 +547,7 @@ enum AmuletItem {
       quality: ItemQuality.Rare,
       skillSet: {
         SkillType.Max_Health: 1.0,
-        SkillType.Fireball: 2.5,
+        SkillType.Fire_Ball: 2.5,
       }),
   Rare_Helm_Of_Frostball(
       label: 'Sacred Hat of the Tempest',
@@ -560,7 +557,7 @@ enum AmuletItem {
       skillSet: {
         SkillType.Max_Health: 1.0,
         SkillType.Max_Magic: 1.0,
-        SkillType.Frostball: 2.5,
+        SkillType.Ice_Ball: 2.5,
       }),
   Rare_Helm_Of_Magic_Regen(
       label: 'Legendary Hat of Magic',
@@ -576,30 +573,24 @@ enum AmuletItem {
   /// see item_type.dart in commons
   final SlotType slotType;
   final int subType;
-  final double? damageMin;
-
-  /// between 0.0 and 1.0
-  final double? damage;
-
   /// between 0.0 and 1.0
   final double? range;
-  // final double? attackSpeed;
   final ItemQuality quality;
   final String label;
   final Map<SkillType, double> skillSet;
   final Map<SkillType, int> skillBase;
-  final Map<DamageType, double> resistances;
+  // final Map<DamageType, double> resistances;
 
   const AmuletItem({
     required this.slotType,
     required this.subType,
     required this.label,
     this.quality = ItemQuality.Common,
-    this.skillSet = const {},
     this.range,
-    this.damageMin,
-    this.damage,
-    this.resistances = const {},
+    this.skillSet = const {},
+    // this.damageMin,
+    // this.damage,
+    // this.resistances = const {},
     this.skillBase = const {},
   });
 
@@ -620,13 +611,8 @@ enum AmuletItem {
   bool get isArmor => slotType == SlotType.Armor;
 
   double get quantify {
-    const pointsPerDamage = 3;
-    const pointsPerSkill = 2.0;
-    final damageMax = (damage ?? 0) * pointsPerDamage * (range ?? 0);
+    const pointsPerSkill = 1.0;
     var total = 0.0;
-    // total += attackSpeed ?? 0;
-    total += damageMax;
-    total += (damageMin ?? 0) * damageMax;
     for (final entry in skillSet.entries) {
       total += entry.value * pointsPerSkill;
     }
@@ -702,17 +688,6 @@ enum AmuletItem {
     required SkillType skillType,
   }) =>
       skillBase[skillType] ?? 0;
-
-  double? getWeaponDamageMax(int level) =>
-      level * Damage_Per_Level;
-
-  double? getWeaponDamageMin(int level){
-    final damageMin = this.damageMin;
-    if (damageMin == null) return null;
-    final damageMax = getWeaponDamageMax(level);
-    if (damageMax == null) return null;
-    return damageMax * damageMin;
-  }
 
   static const Constraint_Weapon_Damage = Constraint(min: 1, max: 20);
   static const Health_Per_Level = 5.0;

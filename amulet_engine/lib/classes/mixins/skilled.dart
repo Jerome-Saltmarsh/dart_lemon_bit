@@ -3,7 +3,7 @@ import 'package:amulet_common/src.dart';
 
 mixin Skilled {
   var skillTypeLeft = SkillType.Slash;
-  var skillTypeRight = SkillType.Fireball;
+  var skillTypeRight = SkillType.None;
   var skillActiveLeft = true;
 
   SkillType get activeSkillType => skillActiveLeft ? skillTypeLeft : skillTypeRight;
