@@ -802,23 +802,18 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
 
-    if (activeSkillType.requiresSword && !equippedWeaponSword){
-      writeGameError(GameError.Sword_Required);
+    if (equippedWeaponSword && !activeSkillType.enabledSword){
+      writeGameError(GameError.Invalid_Weapon_Type);
       return;
     }
 
-    if (activeSkillType.requiresStaff && !equippedWeaponStaff){
-      writeGameError(GameError.Staff_Required);
+    if (equippedWeaponStaff && !activeSkillType.enabledStaff){
+      writeGameError(GameError.Invalid_Weapon_Type);
       return;
     }
 
-    if (activeSkillType.requiresBow && !equippedWeaponBow){
-      writeGameError(GameError.Bow_Required);
-      return;
-    }
-
-    if (activeSkillType.requiresMelee && !equippedWeaponMelee){
-      writeGameError(GameError.Melee_Weapon_Required);
+    if (equippedWeaponBow && !activeSkillType.enabledBow){
+      writeGameError(GameError.Invalid_Weapon_Type);
       return;
     }
 

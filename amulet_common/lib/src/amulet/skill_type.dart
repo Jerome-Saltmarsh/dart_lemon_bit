@@ -14,7 +14,9 @@ enum SkillType {
       casteType: CasteType.Ability,
       magicCost: 0,
       isBaseAttack: true,
-      requiresMelee: true,
+      enabledBow: false,
+      enabledSword: true,
+      enabledStaff: false,
   ),
   Bludgeon(
       damageMin: Constraint(min: 1, max: 20),
@@ -22,24 +24,37 @@ enum SkillType {
       casteType: CasteType.Ability,
       magicCost: 0,
       isBaseAttack: true,
-      requiresMelee: true,
+      enabledBow: false,
+      enabledSword: true,
+      enabledStaff: false,
   ),
   Mighty_Strike(
       casteType: CasteType.Ability,
       magicCost: 3,
-      requiresMelee: true,
+      enabledBow: false,
+      enabledSword: true,
+      enabledStaff: false,
   ),
   Ice_Ball(
       casteType: CasteType.Ability,
       magicCost: 4,
+      enabledBow: false,
+      enabledSword: true,
+      enabledStaff: true,
   ),
   Fire_Ball(
       casteType: CasteType.Ability,
       magicCost: 5,
+      enabledBow: false,
+      enabledSword: true,
+      enabledStaff: true,
   ),
   Explode(
       casteType: CasteType.Ability,
       magicCost: 7,
+      enabledBow: false,
+      enabledSword: true,
+      enabledStaff: true,
   ),
   // BOW
   Shoot_Arrow(
@@ -48,28 +63,38 @@ enum SkillType {
       casteType: CasteType.Ability,
       magicCost: 0,
       isBaseAttack: true,
-      requiresBow: true,
+      enabledBow: true,
+      enabledSword: false,
+      enabledStaff: false,
   ),
   Split_Shot(
     casteType: CasteType.Ability,
     magicCost: 4,
-    requiresBow: true,
+    enabledBow: true,
+    enabledSword: false,
+    enabledStaff: false,
   ),
   Ice_Arrow(
     casteType: CasteType.Ability,
     magicCost: 4,
-    requiresBow: true,
+    enabledBow: true,
+    enabledSword: false,
+    enabledStaff: false,
   ),
   Fire_Arrow(
     casteType: CasteType.Ability,
     magicCost: 4,
-    requiresBow: true,
+    enabledBow: true,
+    enabledSword: false,
+    enabledStaff: false,
   ),
-  // CASTE
   Heal(
       casteType: CasteType.Ability,
       magicCost: 4,
       range: 0,
+      enabledBow: true,
+      enabledSword: true,
+      enabledStaff: true,
   ),
   Max_Health(
     casteType: CasteType.Passive,
@@ -130,10 +155,9 @@ enum SkillType {
 
   final int maxLevel;
   final CasteType casteType;
-  final bool requiresBow;
-  final bool requiresSword;
-  final bool requiresStaff;
-  final bool requiresMelee;
+  final bool enabledBow;
+  final bool enabledSword;
+  final bool enabledStaff;
   final int magicCost;
   final Constraint? constraint;
   /// if null the weapon perform duration is used
@@ -177,10 +201,9 @@ enum SkillType {
     this.range,
     this.maxLevel = 20,
     this.isBaseAttack = false,
-    this.requiresBow = false,
-    this.requiresStaff = false,
-    this.requiresSword = false,
-    this.requiresMelee = false,
+    this.enabledBow = false,
+    this.enabledStaff = false,
+    this.enabledSword = false,
     this.damageMin,
     this.damageMax,
   });
