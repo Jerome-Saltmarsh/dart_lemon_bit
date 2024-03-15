@@ -876,7 +876,7 @@ class AmuletUI {
       active: false,
     );
     return onPressed(
-      hint: 'Inventory (Tab)',
+      hint: 'Inventory (${amulet.amuletKeys.toggleWindowInventory.name.upper})',
       action: amulet.windowVisibleInventory.toggle,
       child: buildWatch(
           amulet.windowVisibleInventory,
