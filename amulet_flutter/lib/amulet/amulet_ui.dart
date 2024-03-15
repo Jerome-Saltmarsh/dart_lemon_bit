@@ -1115,7 +1115,14 @@ class AmuletUI {
   Widget buildCardLargeAmuletItemObject(AmuletItemObject amuletItemObject) =>
       buildCardLarge(
         header: buildCardLargeHeaderText(amuletItemObject.amuletItem.slotType.name),
-        title: buildCardTitleText(amuletItemObject.amuletItem.label),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            buildIconAmuletItem(amuletItemObject.amuletItem),
+            width8,
+            buildCardTitleText(amuletItemObject.amuletItem.label),
+          ],
+        ),
         content: buildText('content'),
       );
 
@@ -1564,14 +1571,13 @@ class AmuletUI {
         height: 30,
       );
 
-  Widget buildCardLargeTitle({required Widget child}){
-    return Container(
-      color: amuletStyle.colorCardTitle,
-      alignment: Alignment.center,
-      child: child,
-      height: 30,
-    );
-  }
+  Widget buildCardLargeTitle({required Widget child}) =>
+      Container(
+        color: amuletStyle.colorCardTitle,
+        alignment: Alignment.center,
+        child: child,
+        height: 50,
+      );
 
   Widget buildCardLargeContent({required Widget child}) =>
       Container(
