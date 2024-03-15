@@ -9,6 +9,7 @@ class AmuletKeys {
 
   var usePotionHealth = PhysicalKeyboardKey.keyE;
   var usePotionMagic = PhysicalKeyboardKey.keyR;
+  var toggleWindowInventory = PhysicalKeyboardKey.keyV;
   var toggleWindowQuest = PhysicalKeyboardKey.keyW;
   var toggleWindowHelp = PhysicalKeyboardKey.keyQ;
 

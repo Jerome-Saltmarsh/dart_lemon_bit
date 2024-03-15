@@ -88,6 +88,7 @@ class Amulet extends IsometricGame {
   final amuletScene = Watch<AmuletScene?>(null);
   final questMain = Watch(QuestMain.values.first);
   final windowVisibleQuests = WatchBool(true);
+  final windowVisibleInventory = WatchBool(true);
   final windowVisibleHelp = WatchBool(false);
   final amuletKeys = AmuletKeys();
 
@@ -250,6 +251,11 @@ class Amulet extends IsometricGame {
 
     if (key == amuletKeys.toggleWindowQuest) {
       windowVisibleQuests.toggle();
+      return;
+    }
+
+    if (key == amuletKeys.toggleWindowInventory) {
+      windowVisibleInventory.toggle();
       return;
     }
 

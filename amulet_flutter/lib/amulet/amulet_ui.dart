@@ -522,19 +522,23 @@ class AmuletUI {
         padding: const EdgeInsets.all(2),
       );
 
-  Widget buildEquippedSlotTypes() =>
-      buildWatch(amulet.equippedChangedNotifier, (t) => Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          buildSlotType(SlotType.Weapon),
-          width2,
-          buildSlotType(SlotType.Helm),
-          width2,
-          buildSlotType(SlotType.Armor),
-          width2,
-          buildSlotType(SlotType.Shoes),
-        ],
-      ));
+  Widget buildEquippedSlotTypes() {
+
+    final content = buildWatch(amulet.equippedChangedNotifier, (t) => Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        buildSlotType(SlotType.Weapon),
+        width2,
+        buildSlotType(SlotType.Helm),
+        width2,
+        buildSlotType(SlotType.Armor),
+        width2,
+        buildSlotType(SlotType.Shoes),
+      ],
+    ));
+
+    return buildWatchVisible(amulet.windowVisibleInventory, content);
+  }
 
   Widget buildPlayerHealthBar() => IgnorePointer(
         child: Row(
@@ -845,6 +849,37 @@ class AmuletUI {
       action: amulet.windowVisibleQuests.toggle,
       child: buildWatch(
           amulet.windowVisibleQuests,
+          (windowVisibleEquipment) =>
+              windowVisibleEquipment ? active : notActive),
+    );
+  }
+
+  Widget buildToggleInventory() {
+
+    final active = buildToggleContainer(
+        child: buildAmuletImage(
+            srcX: 688,
+            srcY: 96,
+            width: 32,
+            height: 32,
+        ),
+        active: true,
+    );
+
+    final notActive = buildToggleContainer(
+      child: buildAmuletImage(
+        srcX: 688,
+        srcY: 96,
+        width: 32,
+        height: 32,
+      ),
+      active: false,
+    );
+    return onPressed(
+      hint: 'Inventory (Tab)',
+      action: amulet.windowVisibleInventory.toggle,
+      child: buildWatch(
+          amulet.windowVisibleInventory,
           (windowVisibleEquipment) =>
               windowVisibleEquipment ? active : notActive),
     );
@@ -1732,25 +1767,34 @@ class AmuletUI {
       amulet.playerSkillsNotifier,
       (_) => Row(
             children: [
-              buildPlayerSkillAttack(),
-              width32,
+              Container(
+                  margin: EdgeInsets.only(right: 32),
+                  child: buildPlayerSkillAttack()),
+              // width32,
               buildRowPlayerSkillsPassive(),
-              width32,
+              // width32,
               buildRowPlayerSkillsActive(),
             ],
           ));
 
   Widget buildRowPlayerSkillsPassive() => buildWatch(
       amulet.playerSkillsNotifier,
-      (t) => Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: SkillType.values.map((skillType) {
-              if (!skillType.isPassive) return nothing;
-              final level = amulet.getSkillTypeLevel(skillType);
-              if (level <= 0) return nothing;
-              return buildCardSmallSkillType(skillType);
-            }).toList(growable: false),
-          ));
+      (t) {
+        final content = Container(
+          margin: const EdgeInsets.only(right: 32),
+          child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: SkillType.values.map((skillType) {
+                if (!skillType.isPassive) return nothing;
+                final level = amulet.getSkillTypeLevel(skillType);
+                if (level <= 0) return nothing;
+                return buildCardSmallSkillType(skillType);
+              }).toList(growable: false),
+            ),
+        );
+
+        return buildWatchVisible(amulet.windowVisibleInventory, content);
+      });
 
   Widget buildRowPlayerSkillsActive() => buildWatch(
       amulet.playerSkillsNotifier,
@@ -1990,6 +2034,8 @@ class AmuletUI {
       buildControlGold(),
       width4,
       buildTogglePlayerQuest(),
+      width4,
+      buildToggleInventory(),
     ],
   );
 
