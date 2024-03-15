@@ -1130,6 +1130,7 @@ class AmuletUI {
         decoration: BoxDecoration(
           border: Border.all(color: Colors.white70, width: 2),
           borderRadius: borderRadius2,
+          color: amuletStyle.colorCardLargeContent,
         ),
         width: amuletStyle.widthCardLarge,
         constraints: BoxConstraints(minHeight: amuletStyle.widthCardLarge * goldenRatio_1618),
