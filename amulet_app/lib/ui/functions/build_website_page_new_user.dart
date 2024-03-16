@@ -1,4 +1,5 @@
 
+import 'package:amulet_app/amulet_app.dart';
 import 'package:amulet_app/classes/connection_remote.dart';
 import 'package:amulet_app/ui/enums/website_page.dart';
 import 'package:amulet_app/ui/widgets/gs_textfield.dart';
@@ -9,8 +10,6 @@ import 'package:amulet_flutter/isometric/ui/widgets/gs_container.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 import 'package:lemon_watch/src.dart';
-
-import '../../amulet_app.dart';
 
 
 Widget buildContainerAuthenticate(AmuletApp amuletApp, ConnectionRemote serverRemote){

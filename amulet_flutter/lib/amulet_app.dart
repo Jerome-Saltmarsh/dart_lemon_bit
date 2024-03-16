@@ -8,15 +8,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'isometric/components/isometric_components.dart';
 import 'isometric/ui/isometric_colors.dart';
 
-// import '../../amulet_app/lib/isometric/components/isometric_components.dart';
-// import '../../amulet_app/lib/isometric/ui/isometric_colors.dart';
-// import '../../amulet_app/lib/isometric/ui/widgets/loading_page.dart';
-
 class AmuletApp extends LemonEngine {
 
-  late IsometricComponents components;
+  final IsometricComponents components;
 
-  AmuletApp() : super(
+  AmuletApp(this.components) : super(
     title: 'AMULET',
     // themeData: ThemeData(fontFamily: 'PixelOperatorHBSC'),
     themeData: ThemeData(fontFamily: 'VT323-Regular'),
@@ -113,13 +109,13 @@ class AmuletApp extends LemonEngine {
       return;
     }
 
-    if (key == PhysicalKeyboardKey.escape){
-      components.engine.fullscreenToggle();
-    }
+    // if (key == PhysicalKeyboardKey.escape){
+    //   components.engine.fullscreenToggle();
+    // }
 
-    if (key == PhysicalKeyboardKey.enter){
-      components.engine.fullscreenToggle();
-    }
+    // if (key == PhysicalKeyboardKey.enter){
+    //   components.engine.fullscreenToggle();
+    // }
 
     components.amulet.onKeyPressed(key);
   }

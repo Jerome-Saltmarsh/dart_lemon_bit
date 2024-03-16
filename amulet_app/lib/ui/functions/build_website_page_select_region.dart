@@ -11,7 +11,7 @@ import '../enums/website_page.dart';
 
 
 Widget buildWebsitePageSelectRegion({
-  required AmuletApp website,
+  required AmuletApp amuletApp,
 }) => Column(
   mainAxisAlignment: MainAxisAlignment.center,
   children: [
@@ -19,7 +19,7 @@ Widget buildWebsitePageSelectRegion({
     height16,
     Container(
       width: 300,
-      child: WatchBuilder(website.connectionRegion, (activeRegion) {
+      child: WatchBuilder(amuletApp.connectionRegion, (activeRegion) {
         return SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -28,8 +28,8 @@ Widget buildWebsitePageSelectRegion({
                 .map((ConnectionRegion region) =>
                 onPressed(
                   action: () {
-                    website.connectionRegion.value = region;
-                    website.websitePage.value = WebsitePage.Select_Character;
+                    amuletApp.connectionRegion.value = region;
+                    amuletApp.websitePage.value = WebsitePage.Select_Character;
                   },
                   child: MouseOver(builder: (bool mouseOver) {
                     return Container(

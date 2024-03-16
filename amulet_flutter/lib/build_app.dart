@@ -14,7 +14,6 @@ import 'package:amulet_flutter/isometric/components/render/renderer_gameobjects.
 import 'package:amulet_flutter/isometric/components/render/renderer_nodes.dart';
 import 'package:amulet_flutter/isometric/components/render/renderer_particles.dart';
 import 'package:amulet_flutter/isometric/components/render/renderer_projectiles.dart';
-import 'package:provider/provider.dart';
 
 import 'isometric/src.dart';
 
@@ -23,7 +22,6 @@ Widget buildApp(){
 
   validateAmulet();
   WidgetsFlutterBinding.ensureInitialized();
-  final engine = AmuletApp();
 
   final components = IsometricComponents(
       images: IsometricImages(),
@@ -58,14 +56,10 @@ Widget buildApp(){
       lighting: IsometricLighting(),
       colors: IsometricColors(),
       style: IsometricStyle(),
-      engine: engine,
+      isometricEditor: IsometricGame(),
   );
 
-  engine.components = components;
-  return Provider<IsometricComponents>(
-    create: (context) => components,
-    child: engine,
-  );
+  return AmuletApp(components);
 }
 
 void validateAmulet() {
