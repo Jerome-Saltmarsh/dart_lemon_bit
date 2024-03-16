@@ -1,6 +1,5 @@
 
 import 'package:amulet_flutter/amulet/amulet.dart';
-import 'package:amulet_flutter/website/website_game.dart';
 import 'package:amulet_flutter/isometric/components/isometric_environment.dart';
 import 'package:amulet_flutter/isometric/components/isometric_options.dart';
 import 'package:amulet_flutter/isometric/src.dart';
@@ -43,7 +42,7 @@ mixin IsometricComponent implements Component {
   late final IsometricEvents events;
   late final IsometricOptions options;
   late final IsometricParser parser;
-  late final WebsiteGame website;
+  // late final WebsiteGame website;
   late final Amulet amulet;
   late final IsometricIO io;
   late final IsometricImages images;

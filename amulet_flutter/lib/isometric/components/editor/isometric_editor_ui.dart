@@ -16,7 +16,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:amulet_flutter/isometric/enums/src.dart';
 import 'package:amulet_flutter/isometric/ui/isometric_constants.dart';
-import 'package:amulet_flutter/isometric/ui/widgets/isometric_builder.dart';
 import 'package:amulet_flutter/isometric/classes/gameobject.dart';
 import 'package:amulet_flutter/packages/utils.dart';
 import 'package:golden_ratio/constants.dart';
@@ -92,14 +91,10 @@ extension IsometricEditorUI on IsometricEditor {
   }
 
   Widget buildPage({required List<Widget> children}) =>
-      IsometricBuilder(
-        builder: (context, isometric) {
-          return Container(
-              width: engine.screen.width,
-              height: engine.screen.height,
-              child: Stack(children: children)
-          );
-        }
+      Container(
+          width: engine.screen.width,
+          height: engine.screen.height,
+          child: Stack(children: children)
       );
 
   Widget buildUI(EditorTab activeEditTab) => buildPage(

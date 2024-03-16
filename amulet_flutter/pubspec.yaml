@@ -36,8 +36,8 @@ dependencies:
   url_launcher: ^6.1.10
   lemon_watch: ^1.1.1
 
-  amulet_engine:
-    path: ..\amulet_engine
+#  amulet_engine:
+#    path: ..\amulet_engine
   amulet_common:
     path: ..\amulet_common
   lemon_sprite:

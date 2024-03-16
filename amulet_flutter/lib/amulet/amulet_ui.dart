@@ -11,7 +11,6 @@ import 'package:amulet_flutter/isometric/ui/builders/build_watch.dart';
 import 'package:amulet_flutter/isometric/ui/isometric_colors.dart';
 import 'package:amulet_flutter/isometric/ui/widgets/gs_container.dart';
 import 'package:amulet_flutter/isometric/ui/widgets/mouse_over.dart';
-import 'package:amulet_flutter/website/widgets/gs_fullscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_lang/src.dart';
@@ -68,12 +67,16 @@ class AmuletUI {
       hitTestBehavior: HitTestBehavior.translucent,
     );
 
-    return GSFullscreen(
+    return Container(
+      width: amulet.engine.screen.width,
+      height: amulet.engine.screen.height,
     child: Stack(alignment: Alignment.center, children: [
       Positioned(
         top: 0,
         left: 0,
-        child: GSFullscreen(
+        child: Container(
+          width: amulet.engine.screen.width,
+          height: amulet.engine.screen.height,
           child: buildWatch(amulet.aimTargetSet, (aimTargetSet){
             if (aimTargetSet){
               // amulet.engine.cursorType.value = cursorType.Click;
@@ -153,14 +156,12 @@ class AmuletUI {
   );
   }
 
-  AmuletImage buildIconPotion() {
-    return AmuletImage(
+  Widget buildIconPotion() => buildAmuletImage(
               srcX: 133,
               srcY: 163,
               width: 22,
               height: 26,
             );
-  }
 
   Positioned buildOverlayScreenColor() {
     return Positioned(
@@ -242,7 +243,9 @@ class AmuletUI {
           return nothing;
         }
         final messages = amulet.messages;
-        return GSFullscreen(
+        return Container(
+          width: amulet.engine.screen.width,
+          height: amulet.engine.screen.height,
           alignment: Alignment.center,
           child: GSContainer(
             width: 400,
@@ -735,15 +738,15 @@ class AmuletUI {
         ),
       );
 
-  Widget buildIconItems() => AmuletImage(srcX: 725, srcY: 99, width: 22, height: 25);
+  Widget buildIconItems() => buildAmuletImage(srcX: 725, srcY: 99, width: 22, height: 25);
 
-  Widget buildIconItemsGrey() => AmuletImage(srcX: 693, srcY: 99, width: 22, height: 25);
+  Widget buildIconItemsGrey() => buildAmuletImage(srcX: 693, srcY: 99, width: 22, height: 25);
 
   Widget buildIconPlayerStats() =>
-      AmuletImage(srcX: 723, srcY: 131, width: 26, height: 26);
+      buildAmuletImage(srcX: 723, srcY: 131, width: 26, height: 26);
 
   Widget buildIconPlayerStatsGrey() =>
-      AmuletImage(srcX: 691, srcY: 131, width: 26, height: 26);
+      buildAmuletImage(srcX: 691, srcY: 131, width: 26, height: 26);
 
   // Widget buildTogglePlayerStats() {
   //
@@ -782,10 +785,10 @@ class AmuletUI {
   //   );
   // }
 
-  Widget buildIconSkills() => AmuletImage(srcX: 723, srcY: 39, width: 26, height: 20);
+  Widget buildIconSkills() => buildAmuletImage(srcX: 723, srcY: 39, width: 26, height: 20);
 
   Widget buildIconSkillsGrey({double scale = 1.0}) =>
-      AmuletImage(
+      buildAmuletImage(
         srcX: 691,
         srcY: 39,
         width: 26,
@@ -816,10 +819,10 @@ class AmuletUI {
   // }
 
   Widget buildIconQuestGrey() =>
-      AmuletImage(srcX: 691, srcY: 3, width: 26, height: 25);
+      buildAmuletImage(srcX: 691, srcY: 3, width: 26, height: 25);
 
   Widget buildIconQuest() =>
-      AmuletImage(srcX: 723, srcY: 3, width: 26, height: 25);
+      buildAmuletImage(srcX: 723, srcY: 3, width: 26, height: 25);
 
 
   Widget buildToggleContainer({required Widget child, required bool active}){
@@ -980,22 +983,22 @@ class AmuletUI {
   }
 
   Widget buildIconAgility() =>
-      AmuletImage(srcX: 768, srcY: 64, width: 16, height: 16);
+      buildAmuletImage(srcX: 768, srcY: 64, width: 16, height: 16);
 
   Widget buildIconMagicRegen() =>
-      AmuletImage(srcX: 768, srcY: 48, width: 16, height: 16);
+      buildAmuletImage(srcX: 768, srcY: 48, width: 16, height: 16);
 
   Widget buildIconHealth() =>
-      AmuletImage(srcX: 768, srcY: 0, width: 16, height: 16);
+      buildAmuletImage(srcX: 768, srcY: 0, width: 16, height: 16);
 
   Widget buildIconHealAmount() =>
-      AmuletImage(srcX: 768, srcY: 320, width: 16, height: 16);
+      buildAmuletImage(srcX: 768, srcY: 320, width: 16, height: 16);
 
   Widget buildIconMagic() =>
-      AmuletImage(srcX: 784, srcY: 16, width: 16, height: 16);
+      buildAmuletImage(srcX: 784, srcY: 16, width: 16, height: 16);
 
   Widget buildIconHealthRegen() =>
-      AmuletImage(srcX: 768, srcY: 32, width: 16, height: 16);
+      buildAmuletImage(srcX: 768, srcY: 32, width: 16, height: 16);
 
   Widget buildHint(String text) =>
       buildBorder(
@@ -1229,7 +1232,7 @@ class AmuletUI {
   }
 
   Widget buildIconHealthCost() =>
-      AmuletImage(
+      buildAmuletImage(
         srcX: 768,
         srcY: 208,
         width: 16,
@@ -1237,7 +1240,7 @@ class AmuletUI {
       );
 
   Widget buildIconMagicCost() =>
-      AmuletImage(
+      buildAmuletImage(
         srcX: 768,
         srcY: 224,
         width: 16,
@@ -1245,10 +1248,10 @@ class AmuletUI {
       );
 
   Widget buildIconSlotType(SlotType slotType) =>
-      AmuletImageSrc(src: getSrcSlotType(slotType));
+      buildAmuletImageSrc(getSrcSlotType(slotType));
 
   Widget buildIconSkillType(SkillType skillType, {double dstX = 0, double dstY = 0}) =>
-      AmuletImageSrc(src: getSrcSkillType(skillType), dstX: dstX, dstY: dstY);
+      buildAmuletImageSrc(getSrcSkillType(skillType), dstX: dstX, dstY: dstY);
 
   Widget buildCardLargeAmuletItemObject(AmuletItemObject amuletItemObject) {
 
@@ -1586,7 +1589,7 @@ class AmuletUI {
       ],
     );
 
-  Widget buildIconDamage() => AmuletImage(
+  Widget buildIconDamage() => buildAmuletImage(
         srcX: 768,
         srcY: 208,
         width: 16,
@@ -1594,7 +1597,7 @@ class AmuletUI {
     );
 
   Widget buildIconCasteType(CasteType casteType) =>
-      AmuletImageSrc(src: getSrcCasteType(casteType));
+      buildAmuletImageSrc(getSrcCasteType(casteType));
 
   static const containerSkillTypeWidth = 94.0;
 
@@ -1679,7 +1682,7 @@ class AmuletUI {
 
 
 
-  Widget buildIconRange() => AmuletImage(
+  Widget buildIconRange() => buildAmuletImage(
         srcX: 768,
         srcY: 112,
         width: 16,
@@ -1698,7 +1701,7 @@ class AmuletUI {
   Widget buildIconSkillTypeAmount(SkillType skillType) =>
       switch (skillType) {
         SkillType.Heal => buildIconHealAmount(),
-        SkillType.Split_Shot => AmuletImage(
+        SkillType.Split_Shot => buildAmuletImage(
               srcX: 768,
               srcY: 240,
               width: 16,
@@ -1708,19 +1711,19 @@ class AmuletUI {
       };
 
   Widget buildIconHealthSteal() =>
-      AmuletImage(srcX: 768, srcY: 256, width: 16, height: 16);
+      buildAmuletImage(srcX: 768, srcY: 256, width: 16, height: 16);
 
   Widget buildIconMagicSteal() =>
-      AmuletImage(srcX: 768, srcY: 272, width: 16, height: 16);
+      buildAmuletImage(srcX: 768, srcY: 272, width: 16, height: 16);
 
   Widget buildIconAttackSpeed() =>
-      AmuletImage(srcX: 768, srcY: 288, width: 16, height: 16);
+      buildAmuletImage(srcX: 768, srcY: 288, width: 16, height: 16);
 
   Widget buildIconAreaDamage() =>
-      AmuletImage(srcX: 768, srcY: 304, width: 16, height: 16);
+      buildAmuletImage(srcX: 768, srcY: 304, width: 16, height: 16);
 
   Widget buildIconCriticalHitPoints() =>
-      AmuletImage(srcX: 768, srcY: 336, width: 16, height: 16);
+      buildAmuletImage(srcX: 768, srcY: 336, width: 16, height: 16);
 
   String getAimNodeText(int index){
      final nodeType = amulet.scene.nodeTypes[index];
@@ -2055,6 +2058,18 @@ class AmuletUI {
       scale: scale,
     );
   }
+
+  Widget buildAmuletImageSrc(List<num> src,
+  { double dstX = 0,
+    double dstY = 0,
+    double scale = 1.0,}
+   ) =>
+      buildAmuletImage(
+        srcX: src[0].toDouble(),
+        srcY: src[1].toDouble(),
+        width: src[2].toDouble(),
+        height: src[3].toDouble(),
+      );
 
   Widget buildAmuletImage({
     required double srcX,

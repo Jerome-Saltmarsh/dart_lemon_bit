@@ -2,11 +2,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_engine/lemon_engine.dart';
+import 'package:lemon_widgets/lemon_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'isometric/components/isometric_components.dart';
 import 'isometric/ui/isometric_colors.dart';
-import 'isometric/ui/widgets/loading_page.dart';
+
+// import '../../amulet_app/lib/isometric/components/isometric_components.dart';
+// import '../../amulet_app/lib/isometric/ui/isometric_colors.dart';
+// import '../../amulet_app/lib/isometric/ui/widgets/loading_page.dart';
 
 class AmuletApp extends LemonEngine {
 
@@ -18,7 +22,8 @@ class AmuletApp extends LemonEngine {
     themeData: ThemeData(fontFamily: 'VT323-Regular'),
     backgroundColor: IsometricColors.Black,
     // backgroundColor: Colors.black,
-    buildLoadingScreen: (context) => LoadingPage(),
+    // buildLoadingScreen: (context) => LoadingPage(),
+    buildLoadingScreen: (context) => buildText('loading'),
   ) {
     zoomMin = 0.3;
   }
@@ -90,7 +95,7 @@ class AmuletApp extends LemonEngine {
     if (!components.ready){
       return;
     }
-    components.options.game.value.onLeftClicked();
+    components.options.amulet.onLeftClicked();
   }
 
   @override
@@ -98,7 +103,7 @@ class AmuletApp extends LemonEngine {
     if (!components.ready){
       return;
     }
-    components.options.game.value.onRightClicked();
+    components.options.amulet.onRightClicked();
   }
 
   @override
@@ -116,6 +121,6 @@ class AmuletApp extends LemonEngine {
       components.engine.fullscreenToggle();
     }
 
-    components.options.game.value.onKeyPressed(key);
+    components.amulet.onKeyPressed(key);
   }
 }

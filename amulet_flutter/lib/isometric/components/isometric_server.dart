@@ -1,37 +1,34 @@
 
 import 'package:amulet_common/src.dart';
-import 'package:amulet_engine/json/src.dart';
+// import 'package:amulet_engine/json/src.dart';
+import 'package:amulet_flutter/isometric/classes/connection.dart';
 import 'package:amulet_flutter/isometric/components/isometric_component.dart';
 import 'package:amulet_flutter/isometric/enums/mode.dart';
 import 'package:amulet_flutter/isometric/classes/gameobject.dart';
-import 'package:amulet_flutter/server/src.dart';
+// import 'package:amulet_flutter/server/src.dart';
 
 class IsometricServer with IsometricComponent {
 
-  late final ServerLocal local;
-  late final ServerRemote remote;
+  Connection? connection;
+  // late final ServerRemote remote;
 
-  ServerMode? get serverMode => options.serverMode.value;
+  // ServerMode? get serverMode => options.serverMode.value;
 
-  bool get connected => switch (serverMode) {
-      ServerMode.remote => remote.connected,
-      ServerMode.local => local.connected,
-      _ => false
-    };
+  bool get connected => connection?.connected ?? false;
 
-  @override
-  Future onComponentInit(sharedPreferences) async {
-    local = ServerLocal(
-      parser: parser,
-      playerClient: player,
-      sharedPreferences: sharedPreferences,
-    );
-
-    remote = ServerRemote(
-      parser: parser,
-    );
-
-  }
+  // @override
+  // Future onComponentInit(sharedPreferences) async {
+  //   local = ServerLocal(
+  //     parser: parser,
+  //     playerClient: player,
+  //     sharedPreferences: sharedPreferences,
+  //   );
+  //
+  //   remote = ServerRemote(
+  //     parser: parser,
+  //   );
+  //
+  // }
 
   void sendIsometricRequestRevive() =>
       sendIsometricRequest(NetworkRequestIsometric.Revive);
@@ -109,27 +106,28 @@ class IsometricServer with IsometricComponent {
       send(
           '${networkRequest} ${arg1 ?? ""} ${arg2 ?? ""} ${arg3 ?? ""}'.trim());
 
-  void send(dynamic data) => activeServer.send(data);
+  void send(dynamic data) => connection?.send(data);
 
   Future disconnect() async {
-    switch (serverMode) {
-      case ServerMode.local:
-        await local.disconnect();
-        break;
-      case ServerMode.remote:
-        remote.disconnect();
-        break;
-      default:
-        print('no server connected');
-        return;
-    }
-    options.game.value = options.website;
+    // switch (serverMode) {
+    //   case ServerMode.local:
+    //     await local.disconnect();
+    //     break;
+    //   case ServerMode.remote:
+    //     remote.disconnect();
+    //     break;
+    //   default:
+    //     print('no server connected');
+    //     return;
+    // }
+    connection?.disconnect();
+    // options.game.value = options.website;
     parser.amulet.clearAllState();
   }
 
   void onServerConnectionEstablished() {
     options.mode.value = Mode.play;
-    options.game.value = options.amulet;
+    // options.game.value = options.amulet;
     options.setModePlay();
     options.activateCameraPlay();
     engine.zoomOnScroll = true;
@@ -139,17 +137,17 @@ class IsometricServer with IsometricComponent {
     camera.target = options.cameraPlay;
   }
 
-  void playCharacter(CharacterJson character) =>
-      activeServer.playCharacter(character.uuid);
+  void playCharacter(String characterUuid) =>
+      connection?.playCharacter(characterUuid);
 
-  Future deleteCharacter(String uuid) =>
-      activeServer.deleteCharacter(uuid);
+  Future deleteCharacter(String uuid) async =>
+      connection?.deleteCharacter(uuid);
 
-  Server get activeServer =>
-      switch (serverMode) {
-        ServerMode.local => local,
-        ServerMode.remote => remote,
-        _ => throw Exception('server mode is null')
-      };
+  // Connection get activeServer =>
+  //     switch (serverMode) {
+  //       ServerMode.local => local,
+  //       ServerMode.remote => remote,
+  //       _ => throw Exception('server mode is null')
+  //     };
 }
 

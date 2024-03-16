@@ -10,7 +10,6 @@ import 'package:amulet_flutter/isometric/consts/width.dart';
 import 'package:amulet_flutter/isometric/enums/icon_type.dart';
 import 'package:amulet_flutter/isometric/ui/builders/build_watch.dart';
 import 'package:amulet_flutter/isometric/ui/widgets/gs_container.dart';
-import 'package:amulet_flutter/website/widgets/gs_fullscreen.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:http/http.dart';
@@ -20,7 +19,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:amulet_flutter/isometric/components/isometric_component.dart';
 import 'package:amulet_flutter/packages/utils.dart';
-import 'package:amulet_flutter/isometric/ui/widgets/isometric_builder.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 
@@ -39,12 +37,14 @@ class IsometricUI with IsometricComponent {
 
   @override
   void onComponentReady() {
-    gameUI.value = website.buildUI;
+    // gameUI.value = website.buildUI;
     print('isometric_ui.onComponentReady()');
     // engine.fullScreenEnter();
   }
 
-  Widget buildUI(BuildContext context) => GSFullscreen(
+  Widget buildUI(BuildContext context) => Container(
+      width: engine.screen.width,
+      height: engine.screen.height,
       child: Stack(
         children: [
               Positioned(
@@ -56,7 +56,9 @@ class IsometricUI with IsometricComponent {
                  top: 0,
                  left: 0,
                  child: buildWatch(dialog, (dialog) => dialog == null
-                     ? nothing : GSFullscreen(
+                     ? nothing : Container(
+                     width: engine.screen.width,
+                     height: engine.screen.height,
                      alignment: Alignment.center,
                      color: Colors.black45,
                      child: dialog)
@@ -72,7 +74,9 @@ class IsometricUI with IsometricComponent {
 
   Widget buildError() => buildWatch(error, (error) => error == null
                  ? nothing
-                 : GSFullscreen(
+                 : Container(
+    width: engine.screen.width,
+    height: engine.screen.height,
              alignment: Alignment.center,
             color: Colors.black45,
              child: buildBorder(
@@ -147,63 +151,59 @@ class IsometricUI with IsometricComponent {
           alignment: Alignment.center,
           color: style.containerColor,
           padding: style.containerPadding,
-          child: IsometricBuilder(
-            builder: (context, isometric) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  onPressed(
-                    action: audio.toggleMutedSound,
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          buildText('SOUND', size: 20, color: Colors.white70),
-                          buildWatch(audio.enabledSound, buildIconCheckbox),
-                        ],
-                      ),
-                    ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              onPressed(
+                action: audio.toggleMutedSound,
+                child: Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      buildText('SOUND', size: 20, color: Colors.white70),
+                      buildWatch(audio.enabledSound, buildIconCheckbox),
+                    ],
                   ),
-                  height6,
-                  onPressed(
-                    action: audio.toggleMutedMusic,
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          buildText('MUSIC', size: 20, color: Colors.white70),
-                          buildWatch(audio.mutedMusic, (bool muted) => buildIconCheckbox(!muted)),
-                        ],
-                      ),
-                    ),
+                ),
+              ),
+              height6,
+              onPressed(
+                action: audio.toggleMutedMusic,
+                child: Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      buildText('MUSIC', size: 20, color: Colors.white70),
+                      buildWatch(audio.mutedMusic, (bool muted) => buildIconCheckbox(!muted)),
+                    ],
                   ),
-                  height6,
-                  onPressed(
-                    action: isometric.engine.fullscreenToggle,
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          buildText('FULLSCREEN', size: 20, color: Colors.white70),
-                          buildWatch(isometric.engine.fullScreen, buildIconCheckbox),
-                        ],
-                      ),
-                    ),
+                ),
+              ),
+              height6,
+              onPressed(
+                action: engine.fullscreenToggle,
+                child: Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      buildText('FULLSCREEN', size: 20, color: Colors.white70),
+                      buildWatch(engine.fullScreen, buildIconCheckbox),
+                    ],
                   ),
-                  if (children != null)
-                    height6,
-                  if (children != null)
-                    ...children,
-                  height24,
-                  onPressed(
-                    action: server.disconnect,
-                    child: buildText('DISCONNECT', size: 25),
-                  ),
-                  height24,
-                ],
-              );
-            }
+                ),
+              ),
+              if (children != null)
+                height6,
+              if (children != null)
+                ...children,
+              height24,
+              onPressed(
+                action: server.disconnect,
+                child: buildText('DISCONNECT', size: 25),
+              ),
+              height24,
+            ],
           ),
         ),
     );
@@ -519,14 +519,13 @@ class IsometricUI with IsometricComponent {
       );
 
   Widget buildImageFromSrc(ui.Image image, List<double> src) =>
-      IsometricBuilder(builder: (context, isometric) =>
-          isometric.engine.buildAtlasImage(
-            image: image,
-            srcX: src[Atlas.SrcX],
-            srcY: src[Atlas.SrcY],
-            srcWidth: src[Atlas.SrcWidth],
-            srcHeight: src[Atlas.SrcHeight],
-          ));
+      engine.buildAtlasImage(
+        image: image,
+        srcX: src[Atlas.SrcX],
+        srcY: src[Atlas.SrcY],
+        srcWidth: src[Atlas.SrcWidth],
+        srcHeight: src[Atlas.SrcHeight],
+      );
 
   void showDialogGetString({
     required Function(String value) onSelected,

@@ -148,7 +148,7 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
     final errorTypeIndex = readByte();
     final gameError = GameError.fromIndex(errorTypeIndex);
     options.gameError.value = gameError;
-    options.game.value.onGameError(gameError);
+    // options.game.value.onGameError(gameError);
     options.clearErrorTimer = 200;
     audio.playAudioError();
   }
@@ -844,7 +844,7 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
   }
 
   void readNetworkResponseSceneChanged() {
-    options.game.value = options.amulet;
+    // options.game.value = options.amulet;
     final scene = this.scene;
     scene.clearVisited();
     scene.colorStack.fillRange(0, scene.colorStack.length, scene.ambientColor);

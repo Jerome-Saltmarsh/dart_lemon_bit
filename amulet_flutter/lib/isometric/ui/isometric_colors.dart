@@ -334,6 +334,85 @@ class Palette {
   static const peach_3 = Color.fromRGBO(240, 79, 120, 1);
   static const peach_4 = Color.fromRGBO(195, 36, 84, 1);
   static const peach_5 = Color.fromRGBO(131, 28, 93, 1);
+  
+  static const values = [
+    brown_4,
+    brown_3,
+    brown_2,
+    brown_1,
+    brown_0,
+
+    grey_0,
+    grey_1,
+    grey_2,
+    grey_3,
+    grey_4,
+
+    red_0,
+    red_1,
+    red_2,
+    red_3,
+
+    orange_0,
+    orange_1,
+    orange_2,
+    orange_3,
+    orange_4,
+
+    apricot_0,
+    apricot_1,
+    apricot_2,
+    apricot_3,
+    apricot_4,
+
+    butter_0,
+    butter_1,
+    butter_2,
+    butter_3,
+    butter_4,
+
+    teal_0,
+    teal_1,
+    teal_2,
+    teal_3,
+    teal_4,
+
+    sage_0,
+    sage_1,
+    sage_2,
+    sage_3,
+    sage_4,
+
+    aqua_1,
+    aqua_2,
+    aqua_3,
+    aqua_4,
+    aqua_5,
+
+    blue_0,
+    blue_1,
+    blue_2,
+    blue_3,
+    blue_4,
+
+    purple_0,
+    purple_1,
+    purple_2,
+    purple_3,
+    purple_4,
+
+    pink_0,
+    pink_1,
+    pink_2,
+    pink_3,
+
+    peach_0,
+    peach_1,
+    peach_2,
+    peach_3,
+    peach_4,
+    peach_5,
+  ];
 
   static const brownDark = Color.fromRGBO(36, 33, 38, 1);
   static const brownDarkX = Color.fromRGBO(29, 27, 31, 1.0);

@@ -127,7 +127,7 @@ class IsometricRender with IsometricComponent {
     }
 
     debugger.drawCanvas();
-    options.game.value.drawCanvas(canvas, size);
+    options.amulet.drawCanvas(canvas, size);
     options.rendersSinceUpdate.value++;
   }
 
@@ -191,7 +191,7 @@ class IsometricRender with IsometricComponent {
     //   io.touchController.drawCanvas(canvas);
     // }
 
-    options.game.value.renderForeground(canvas, size);
+    amulet.renderForeground(canvas, size);
   }
 
   void textIndex(dynamic text, int index) =>

@@ -129,10 +129,10 @@ extension isometricDebugUI on IsometricDebug {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          buildWatch(server.remote.websocket.connectionStatus, (connectionStatus) => buildText('connection-status: ${connectionStatus.name}')),
-          GSRefresh(() => buildText(
-              'connection-duration: ${formattedConnectionDuration}\n'
-          )),
+          // buildWatch(server.remote.websocket.connectionStatus, (connectionStatus) => buildText('connection-status: ${connectionStatus.name}')),
+          // GSRefresh(() => buildText(
+          //     'connection-duration: ${formattedConnectionDuration}\n'
+          // )),
           buildText('network-server-fps: $serverFPS'),
           buildWatch(server.parser.bufferSize, (int bytes) => buildText('network-bytes: $bytes')),
           buildWatch(server.parser.bufferSize, (int bytes) => buildText('network-bytes-per-frame: ${formatBytes(bytes)}')),
@@ -494,17 +494,18 @@ extension isometricDebugUI on IsometricDebug {
       ],
     );
 
-  String get formattedConnectionDuration {
-    final duration = server.remote.websocket.connectionDuration;
-    if (duration == null) return 'not connected';
-    final seconds = duration.inSeconds % 60;
-    final minutes = duration.inMinutes;
-    return 'minutes: $minutes, seconds: $seconds';
-  }
+  // String get formattedConnectionDuration {
+  //   final duration = server.remote.websocket.connectionDuration;
+  //   if (duration == null) return 'not connected';
+  //   final seconds = duration.inSeconds % 60;
+  //   final minutes = duration.inMinutes;
+  //   return 'minutes: $minutes, seconds: $seconds';
+  // }
 
   String formatAverageBufferSize(int bytes){
-    final duration = server.remote.websocket.connectionDuration;
-    if (duration == null) return 'not connected';
+    // final duration = server.remote.websocket.connectionDuration;
+    final duration = Duration.zero;
+    // if (duration == null) return 'not connected';
     final seconds = duration.inSeconds;
     final bytesPerSecond = (bytes / seconds).round();
     final bytesPerMinute = bytesPerSecond * 60;
@@ -516,24 +517,28 @@ extension isometricDebugUI on IsometricDebug {
   }
 
   String formatAverageBytePerSecond(int bytes){
-    final duration = server.remote.websocket.connectionDuration;
-    if (duration == null) return 'not connected';
-    if (duration.inSeconds <= 0) return '-';
-    return formatBytes((bytes / duration.inSeconds).round());
+    // final duration = server.remote.websocket.connectionDuration;
+    // if (duration == null) return 'not connected';
+    // if (duration.inSeconds <= 0) return '-';
+    // return formatBytes((bytes / duration.inSeconds).round());
+    return 'not implemented';
   }
 
   String formatAverageBytePerMinute(int bytes){
-    final duration = server.remote.websocket.connectionDuration;
-    if (duration == null) return 'not connected';
-    if (duration.inSeconds <= 0) return '-';
-    return formatBytes((bytes / duration.inSeconds).round() * 60);
+    // final duration = server.remote.websocket.connectionDuration;
+    // if (duration == null) return 'not connected';
+    // if (duration.inSeconds <= 0) return '-';
+    // return formatBytes((bytes / duration.inSeconds).round() * 60);
+    return 'not implemented';
   }
 
   String formatAverageBytePerHour(int bytes){
-    final duration = server.remote.websocket.connectionDuration;
-    if (duration == null) return 'not connected';
-    if (duration.inSeconds <= 0) return '-';
-    return formatBytes((bytes / duration.inSeconds).round() * 3600);
+    // final duration = server.remote.websocket.connectionDuration;
+    // if (duration == null) return 'not connected';
+    // if (duration.inSeconds <= 0) return '-';
+    // return formatBytes((bytes / duration.inSeconds).round() * 3600);
+    return 'not implemented';
+
   }
 
   Widget buildTabPlayer() =>

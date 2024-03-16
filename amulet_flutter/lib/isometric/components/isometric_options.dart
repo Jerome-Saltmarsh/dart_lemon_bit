@@ -2,15 +2,13 @@
 import 'package:amulet_common/src.dart';
 import 'package:amulet_flutter/isometric/enums/mode.dart';
 import 'package:amulet_flutter/isometric/classes/position.dart';
-import 'package:amulet_flutter/server/server_mode.dart';
+// import 'package:amulet_flutter/server/server_mode.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
-import 'package:amulet_flutter/isometric/classes/game.dart';
 import 'package:amulet_flutter/isometric/components/isometric_component.dart';
 import 'package:amulet_flutter/isometric/enums/cursor_type.dart';
-import 'package:amulet_flutter/isometric/functions/detect_connection_region.dart';
 import 'package:amulet_flutter/packages/lemon_components.dart';
 
 class IsometricOptions with IsometricComponent implements Updatable {
@@ -42,7 +40,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
   final cameraPlay = Position();
   final cameraEdit = Position();
   final cameraDebug = Position();
-  final serverMode = Watch(ServerMode.local);
+  // final serverMode = Watch(ServerMode.local);
   final mode = Watch(Mode.play);
   final highlightIconInventory = WatchBool(false);
   final timeVisible = WatchBool(false);
@@ -62,7 +60,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
   final filterQuality = Watch(FilterQuality.none);
 
   late final List<ColorFilter> colorFilters;
-  late final Watch<Game> game;
+  // late final Watch<Game> game;
 
   static const colorFiltersLength = 48;
 
@@ -101,8 +99,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
   @override
   Future onComponentInit(sharedPreferences) async {
     print('uri-base-host: ${Uri.base.host}');
-    print('region-detected: ${detectConnectionRegion()}');
-    game = Watch<Game>(website, onChanged: _onChangedGame);
+    // game = Watch<Game>(website, onChanged: _onChangedGame);
     engine.durationPerUpdate.value = convertFramesPerSecondToDuration(45);
     engine.cursorType.value = SystemMouseCursors.basic;
     engine.paint.colorFilter = ColorFilter.mode(Colors.orange, BlendMode.modulate);
@@ -120,26 +117,26 @@ class IsometricOptions with IsometricComponent implements Updatable {
        return ColorFilter.mode(color ?? (throw Exception('invalid color')), BlendMode.modulate);
     });
 
-    var cacheLoaded = false;
-    server.remote.userId.onChanged((t) {
-      if (t.isEmpty){
-        sharedPreferences.remove('userId');
-      } else {
-        sharedPreferences.setString('userId', t);
-      }
-    });
-    serverMode.onChanged((value){
-      if (cacheLoaded){
-        return;
-      }
-      cacheLoaded = true;
-      if (value == ServerMode.remote){
-        final userId = sharedPreferences.getString('userId');
-        if (userId != null) {
-          server.remote.userId.value = userId;
-        }
-      }
-    });
+    // var cacheLoaded = false;
+    // server.remote.userId.onChanged((t) {
+    //   if (t.isEmpty){
+    //     sharedPreferences.remove('userId');
+    //   } else {
+    //     sharedPreferences.setString('userId', t);
+    //   }
+    // });
+    // serverMode.onChanged((value){
+    //   if (cacheLoaded){
+    //     return;
+    //   }
+    //   cacheLoaded = true;
+    //   if (value == ServerMode.remote){
+    //     final userId = sharedPreferences.getString('userId');
+    //     if (userId != null) {
+    //       server.remote.userId.value = userId;
+    //     }
+    //   }
+    // });
   }
 
   void onMouseEnterCanvas(){
@@ -173,11 +170,11 @@ class IsometricOptions with IsometricComponent implements Updatable {
     }
   }
 
-  void _onChangedGame(Game game) {
-    print('options.onChangedGame($game)');
-    ui.gameUI.value = game.buildUI;
-    game.onActivated();
-  }
+  // void _onChangedGame(Game game) {
+  //   print('options.onChangedGame($game)');
+  //   ui.gameUI.value = game.buildUI;
+  //   game.onActivated();
+  // }
 
   void toggleEditMode() {
     if (editing){
@@ -239,7 +236,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
 
   void onComponentUpdate() {
 
-    game.value.update();
+    // game.value.update();
 
     if (cameraPlayFollowPlayer){
       cameraPlay.copy(player.position);
@@ -274,11 +271,11 @@ class IsometricOptions with IsometricComponent implements Updatable {
     triggerAlarmNoMessageReceivedFromServer.value = value > 200;
   }
 
-  Game mapGameTypeToGame(GameType gameType) => switch (gameType) {
-    GameType.Website => website,
-    GameType.Amulet => amulet,
-    _ => throw Exception('mapGameTypeToGame($gameType)')
-  };
+  // Game mapGameTypeToGame(GameType gameType) => switch (gameType) {
+  //   GameType.Website => website,
+  //   GameType.Amulet => amulet,
+  //   _ => throw Exception('mapGameTypeToGame($gameType)')
+  // };
 
   void toggleRenderCharacterAnimationFrame() =>
       renderCharacterAnimationFrame = !renderCharacterAnimationFrame;
@@ -309,8 +306,8 @@ class IsometricOptions with IsometricComponent implements Updatable {
     server.disconnect();
   }
 
-  bool get playModeMulti => serverMode.value == ServerMode.remote;
+  // bool get playModeMulti => serverMode.value == ServerMode.remote;
 
-  bool get playModeSingle => serverMode.value == ServerMode.local;
+  // bool get playModeSingle => serverMode.value == ServerMode.local;
 
 }

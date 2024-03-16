@@ -1,0 +1,27 @@
+name: amulet_app
+description: "A launcher for amulet"
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.2.6 <4.0.0'
+
+dependencies:
+  intl: ^0.17.0
+  flutter:
+    sdk: flutter
+  amulet_engine:
+    path: ..\amulet_engine
+  amulet_flutter:
+    path: ..\amulet_flutter
+  amulet_common:
+    path: ..\amulet_common
+  lemon_json:
+    path: ..\tools\lemon_json
+  lemon_lang:
+    path: ..\tools\lemon_lang
+  lemon_widgets:
+    path: ..\tools\lemon_widgets
+
+flutter:
+  assets:
+    - assets/images/

@@ -2,7 +2,6 @@
 import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/amulet_app.dart';
 import 'package:amulet_flutter/isometric/classes/isometric_game.dart';
-import 'package:amulet_flutter/website/website_game.dart';
 import 'package:amulet_flutter/isometric/components/isometric_environment.dart';
 import 'package:amulet_flutter/isometric/components/isometric_screen.dart';
 import 'package:amulet_flutter/isometric/components/render/renderer_characters.dart';
@@ -23,7 +22,7 @@ import '../ui/game_isometric_minimap.dart';
 class IsometricComponents extends ComponentContainer {
   var ready = false;
   final AmuletApp engine;
-  final WebsiteGame website;
+  // final WebsiteGame website;
   final Amulet amulet;
   final IsometricRender render;
   final IsometricOptions options;
@@ -86,7 +85,7 @@ class IsometricComponents extends ComponentContainer {
     required this.options,
     required this.particles,
     required this.compositor,
-    required this.website,
+    // required this.website,
     required this.amulet,
     required this.animation,
     required this.screen,
@@ -124,7 +123,7 @@ class IsometricComponents extends ComponentContainer {
     components.add(responseReader);
     components.add(options);
     components.add(compositor);
-    components.add(website);
+    // components.add(website);
     components.add(amulet);
     components.add(isometricEditor);
     components.add(animation);
@@ -160,7 +159,7 @@ class IsometricComponents extends ComponentContainer {
       component.actions = action;
       component.events = events;
       component.parser = responseReader;
-      component.website = website;
+      // component.website = website;
       component.amulet = amulet;
       component.options = options;
       component.animation = animation;

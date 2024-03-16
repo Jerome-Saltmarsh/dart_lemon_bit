@@ -1,11 +1,8 @@
 
 import 'package:amulet_common/src.dart';
-import 'package:amulet_flutter/isometric/enums/icon_type.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/amulet/ui/functions/render_player_character_sprites.dart';
 import 'package:amulet_flutter/isometric/components/isometric_player.dart';
-import 'package:amulet_flutter/isometric/ui/widgets/isometric_icon.dart';
-import 'package:amulet_flutter/isometric/ui/widgets/mouse_over.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
@@ -47,15 +44,15 @@ Widget buildContainerPlayerFront({
                   }
               ),
             ),
-            Positioned(
-              top: 8,
-              right: 8,
-              child: MouseOver(builder: (mouseOver) => IsometricIcon(
-                iconType: IconType.Turn_Right,
-                scale: 0.2,
-                color: mouseOver ? Colors.green.value : Colors.white38.value,
-              ),),
-            ),
+            // Positioned(
+            //   top: 8,
+            //   right: 8,
+            //   child: MouseOver(builder: (mouseOver) => IsometricIcon(
+            //     iconType: IconType.Turn_Right,
+            //     scale: 0.2,
+            //     color: mouseOver ? Colors.green.value : Colors.white38.value,
+            //   ),),
+            // ),
             if (nameController != null)
               Positioned(
                 top: 0,

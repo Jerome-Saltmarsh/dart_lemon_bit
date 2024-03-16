@@ -4,7 +4,6 @@ import 'package:amulet_flutter/isometric/components/isometric_components.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/amulet_app.dart';
-import 'package:amulet_flutter/website/website_game.dart';
 import 'package:amulet_flutter/isometric/components/isometric_environment.dart';
 import 'package:amulet_flutter/isometric/components/isometric_options.dart';
 import 'package:amulet_flutter/isometric/components/isometric_render.dart';
@@ -16,6 +15,7 @@ import 'package:amulet_flutter/isometric/components/render/renderer_nodes.dart';
 import 'package:amulet_flutter/isometric/components/render/renderer_particles.dart';
 import 'package:amulet_flutter/isometric/components/render/renderer_projectiles.dart';
 import 'package:provider/provider.dart';
+
 import 'isometric/src.dart';
 
 Widget buildApp(){
@@ -23,9 +23,7 @@ Widget buildApp(){
 
   validateAmulet();
   WidgetsFlutterBinding.ensureInitialized();
-
   final engine = AmuletApp();
-  // engine.fullScreenEnter();
 
   final components = IsometricComponents(
       images: IsometricImages(),
@@ -54,14 +52,12 @@ Widget buildApp(){
       audio: IsometricAudio(),
       options: IsometricOptions(),
       compositor: IsometricCompositor(),
-      website: WebsiteGame(),
       amulet: Amulet(),
       animation: IsometricAnimation(),
       screen: IsometricScreen(),
       lighting: IsometricLighting(),
       colors: IsometricColors(),
       style: IsometricStyle(),
-      // user: UserServiceHttp(),
       engine: engine,
   );
 
