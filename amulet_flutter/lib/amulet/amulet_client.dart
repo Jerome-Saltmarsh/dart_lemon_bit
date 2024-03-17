@@ -89,8 +89,8 @@ class AmuletClient extends LemonEngine {
   }
 
   @override
-  Widget buildUI(BuildContext buildContext) {
-    return components.ui.buildUI(buildContext);
+  Widget buildUI(BuildContext context) {
+    return components.amulet.amuletUI.buildAmuletUI();
   }
 
   @override
