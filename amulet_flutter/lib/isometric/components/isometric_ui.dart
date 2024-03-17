@@ -12,10 +12,8 @@ import 'package:amulet_flutter/isometric/ui/builders/build_watch.dart';
 import 'package:amulet_flutter/isometric/ui/widgets/gs_container.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:golden_ratio/constants.dart';
-import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:amulet_flutter/isometric/components/isometric_component.dart';
 import 'package:amulet_flutter/packages/utils.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
@@ -34,70 +32,6 @@ class IsometricUI with IsometricComponent {
     onPressed(
       action: closeDialog,
       child: buildText('OKAY'),
-    );
-
-  Widget buildWindowMenu({List<Widget>? children, double width = 200}) =>
-      GSContainer(
-        child: Container(
-          width: width,
-          alignment: Alignment.center,
-          color: style.containerColor,
-          padding: style.containerPadding,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              onPressed(
-                action: audio.toggleMutedSound,
-                child: Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      buildText('SOUND', size: 20, color: Colors.white70),
-                      buildWatch(audio.enabledSound, buildIconCheckbox),
-                    ],
-                  ),
-                ),
-              ),
-              height6,
-              onPressed(
-                action: audio.toggleMutedMusic,
-                child: Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      buildText('MUSIC', size: 20, color: Colors.white70),
-                      buildWatch(audio.mutedMusic, (bool muted) => buildIconCheckbox(!muted)),
-                    ],
-                  ),
-                ),
-              ),
-              height6,
-              onPressed(
-                action: engine.fullscreenToggle,
-                child: Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      buildText('FULLSCREEN', size: 20, color: Colors.white70),
-                      buildWatch(engine.fullScreen, buildIconCheckbox),
-                    ],
-                  ),
-                ),
-              ),
-              if (children != null)
-                height6,
-              if (children != null)
-                ...children,
-              height24,
-              onPressed(
-                action: server.disconnect,
-                child: buildText('DISCONNECT', size: 25),
-              ),
-              height24,
-            ],
-          ),
-        ),
     );
 
   Positioned buildPositionedMessageStatus() => Positioned(

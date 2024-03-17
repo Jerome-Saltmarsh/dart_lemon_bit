@@ -2143,22 +2143,36 @@ class AmuletUI {
 
   Widget buildIconCog() => onPressed(
       action: options.windowOpenMenu.toggle,
-      child: buildAmuletImage(
-          srcX: 864,
-          srcY: 208,
-          width: 64,
-          height: 64,
+      child: Container(
+        width: 16,
+        height: 16,
+        child: FittedBox(
+          fit: BoxFit.contain,
+          child: buildAmuletImage(
+              srcX: 864,
+              srcY: 208,
+              width: 64,
+              height: 64,
+          ),
+        ),
       )
   );
 
-  Widget buildIconCogTurned() => onPressed(
-      action: options.windowOpenMenu.toggle,
-      child: buildAmuletImage(
-        srcX: 929,
-        srcY: 208,
-        width: 64,
-        height: 64,
-      )
+  Widget buildIconCogTurned() => Container(
+    width: 16,
+    height: 16,
+    child: FittedBox(
+      fit: BoxFit.contain,
+      child: onPressed(
+          action: options.windowOpenMenu.toggle,
+          child: buildAmuletImage(
+            srcX: 929,
+            srcY: 208,
+            width: 64,
+            height: 64,
+          )
+      ),
+    ),
   );
 
   Widget buildSceneName() =>
