@@ -74,7 +74,6 @@ class ConnectionWebsocket implements Connection {
       userId: userId.value,
     ).catchError((error) async {
         print(error);
-        parser.ui.handleException(error);
         return Json();
     });
     setOperationStatusDone();
@@ -94,7 +93,7 @@ class ConnectionWebsocket implements Connection {
     if (response.statusCode == 200){
       userId.value = response.body;
     } else {
-      parser.ui.error.value = response.body;
+      // parser.ui.error.value = response.body;
     }
   }
 
@@ -112,7 +111,7 @@ class ConnectionWebsocket implements Connection {
     if (response.statusCode == 200){
       userId.value = response.body.replaceAll('\"', '');
     } else {
-      parser.ui.error.value = response.body;
+      // parser.ui.error.value = response.body;
     }
   }
 
@@ -128,11 +127,11 @@ class ConnectionWebsocket implements Connection {
       );
 
       if (response.statusCode != 200) {
-        parser.ui.error.value = response.body;
+        // parser.ui.error.value = response.body;
       }
 
     } catch (error) {
-      parser.ui.handleException(error);
+      // parser.ui.handleException(error);
     }
     await loadUser();
     setOperationStatusDone();
@@ -205,16 +204,16 @@ class ConnectionWebsocket implements Connection {
   }
 
   void onWebsocketConnectionError() {
-    parser.ui.error.value = 'Connection Error';
+    // parser.ui.error.value = 'Connection Error';
     // parser.options.game.value = parser.options.website;
   }
 
   void onWebsocketInvalidConnection() {
-    parser.ui.error.value = 'Invalid Connection';
+    // parser.ui.error.value = 'Invalid Connection';
   }
 
   void onWebsocketFailedToConnect() {
-    parser.ui.error.value = 'Failed to connect';
+    // parser.ui.error.value = 'Failed to connect';
   }
 
   void onWebsocketConnected() {
@@ -267,11 +266,11 @@ class ConnectionWebsocket implements Connection {
       if (response.statusCode == 200) {
         playCharacter(response.body);
       } else {
-        parser.ui.error.value = response.body;
+        // parser.ui.error.value = response.body;
       }
     } catch (error){
       setOperationStatusDone();
-      parser.ui.handleException(error);
+      // parser.ui.handleException(error);
     }
   }
 
@@ -302,7 +301,7 @@ class ConnectionWebsocket implements Connection {
     }
     print(error.toString());
     print(stack);
-    parser.ui.error.value = error.toString();
+    // parser.ui.error.value = error.toString();
   }
 
   void setOperationStatusDone(){

@@ -131,7 +131,6 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
     if (debugging) return;
     print('isometricParser.debugParseValues()');
     print(values);
-    ui.error.value = 'failed to parse response from server';
     debugging = true;
     parseValues();
   }
@@ -775,7 +774,6 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
 
   void readNetworkServerError() {
     final message = readString();
-    ui.error.value = message;
   }
 
   void readNetworkResponseSceneKeys() {

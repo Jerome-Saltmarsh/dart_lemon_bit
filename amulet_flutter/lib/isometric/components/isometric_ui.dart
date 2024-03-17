@@ -12,7 +12,6 @@ import 'package:amulet_flutter/isometric/ui/builders/build_watch.dart';
 import 'package:amulet_flutter/isometric/ui/widgets/gs_container.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:golden_ratio/constants.dart';
-import 'package:http/http.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
@@ -28,121 +27,14 @@ class IsometricUI with IsometricComponent {
   final dialog = Watch<Widget?>(null, onChanged: (value){
     print('isometricUI.onChangedDialog()');
   });
-  final gameUI = Watch<WidgetBuilder?>(null, onChanged: (value){
-    print('isometricUI.onChangedGameUI($value)');
-  });
-  final error = Watch<String?>(null, onChanged: (value){
-    print('isometricUI.onChangedError()');
-  });
 
-  @override
-  void onComponentReady() {
-    // gameUI.value = website.buildUI;
-    print('isometric_ui.onComponentReady()');
-    // engine.fullScreenEnter();
-  }
-
-  Widget buildUI(BuildContext context) => Container(
-      width: engine.screen.width,
-      height: engine.screen.height,
-      child: Stack(
-        children: [
-              Positioned(
-                top: 0,
-                left: 0,
-                child: buildWatch(gameUI, (builder) => builder?.call(context) ?? nothing),
-              ),
-             Positioned(
-                 top: 0,
-                 left: 0,
-                 child: buildWatch(dialog, (dialog) => dialog == null
-                     ? nothing : Container(
-                     width: engine.screen.width,
-                     height: engine.screen.height,
-                     alignment: Alignment.center,
-                     color: Colors.black45,
-                     child: dialog)
-                 ),
-             ),
-             Positioned(
-               top: 0,
-               child: buildError(),
-             ),
-        ],
-      ),
-    );
-
-  Widget buildError() => buildWatch(error, (error) => error == null
-                 ? nothing
-                 : Container(
-    width: engine.screen.width,
-    height: engine.screen.height,
-             alignment: Alignment.center,
-            color: Colors.black45,
-             child: buildBorder(
-               color: style.containerColorDark,
-               child: GSContainer(
-                   width: 350,
-                   height: 350 * goldenRatio_0618,
-                   child: Column(
-                     crossAxisAlignment: CrossAxisAlignment.end,
-                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                     children: [
-                       SingleChildScrollView(
-                         child: Container(
-                           constraints: BoxConstraints(
-                           maxHeight: 200,
-                           ),
-                           child: buildText(error, color: Colors.red)),
-                       ),
-                       height16,
-                       onPressed(
-                         action: () => this.error.value = null,
-                         child: GSContainer(
-                           color: Colors.white12,
-                           width: 80,
-                           child: buildText('Okay'),
-                         ),
-                       )
-                     ],
-                   )),
-             ),
-           ));
-
-  void closeDialog() {
-    dialog.value = null;
-  }
+  void closeDialog() => dialog.value = null;
 
   Widget buildButtonCloseDialog() =>
     onPressed(
       action: closeDialog,
       child: buildText('OKAY'),
     );
-
-  Widget buildMapCircle({required double size}) {
-    return IgnorePointer(
-      child: Container(
-        width: size + 3,
-        height: size + 3,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: Colors.black38, width: 3),
-            color: Colors.black38
-        ),
-        child: ClipOval(
-          child: Container(
-              alignment: Alignment.topLeft,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-              ),
-              width: size,
-              height: size,
-              child: buildGeneratedMiniMap(translate: size / 4.0)),
-        ),
-      ),
-    );
-  }
 
   Widget buildWindowMenu({List<Widget>? children, double width = 200}) =>
       GSContainer(
@@ -208,44 +100,6 @@ class IsometricUI with IsometricComponent {
         ),
     );
 
-  /// old map
-  Widget buildGeneratedMiniMap({required double translate}) =>
-      buildWatch(scene.nodesChangedNotifier, (_) =>
-          engine.buildCanvas(paint: (Canvas canvas, Size size) {
-            const scale = 2.0;
-            canvas.scale(scale, scale);
-            final screenCenterX = size.width * 0.5;
-            final screenCenterY = size.height * 0.5;
-            const ratio = 2 / 48.0;
-
-            final chaseTarget = camera.target;
-            if (chaseTarget != null){
-              final targetX = chaseTarget.renderX * ratio;
-              final targetY = chaseTarget.renderY * ratio;
-              final cameraX = targetX - (screenCenterX / scale) - translate;
-              final cameraY = targetY - (screenCenterY / scale) - translate;
-              canvas.translate(-cameraX, -cameraY);
-            }
-
-            final totalCharacters = scene.totalCharacters;
-            final characters = scene.characters;
-            for (var i = 0; i < totalCharacters; i++) {
-              final character = characters[i];
-              final isPlayer = player.isCharacter(character);
-              renderCanvas(
-                  canvas: canvas,
-                  image: images.atlas_gameobjects,
-                  srcX: 0,
-                  srcY: isPlayer ? 96 : character.allie ? 81 : 72,
-                  srcWidth: 8,
-                  srcHeight: 8,
-                  dstX: character.renderX * ratio,
-                  dstY: character.renderY * ratio,
-                  scale: 0.25
-              );
-            }
-      }));
-
   Positioned buildPositionedMessageStatus() => Positioned(
     bottom: 150,
     child: IgnorePointer(
@@ -283,7 +137,6 @@ class IsometricUI with IsometricComponent {
               buildText('Warning: No message received from server $frames')));
 
   Widget buildMainMenu({List<Widget>? children}) {
-    // final controlTime = buildTime();
     return MouseRegion(
       onEnter: (PointerEnterEvent event) {
         options.windowOpenMenu.value = true;
@@ -841,14 +694,5 @@ class IsometricUI with IsometricComponent {
       action: onClosed,
       child: child,
     );
-  }
-
-  Future handleException(Object exception) async {
-    if (exception is ClientException){
-      error.value = exception.message;
-    } else {
-      error.value = exception.toString();
-    }
-
   }
 }

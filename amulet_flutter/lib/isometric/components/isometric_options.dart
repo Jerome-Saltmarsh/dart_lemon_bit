@@ -161,11 +161,9 @@ class IsometricOptions with IsometricComponent implements Updatable {
 
     switch (gameError) {
       case GameError.Unable_To_Join_Game:
-        ui.error.value = 'unable to join game';
         server.disconnect();
         break;
       case GameError.PlayerNotFound:
-        ui.error.value = 'player character could not be found';
         server.disconnect();
         break;
       default:
