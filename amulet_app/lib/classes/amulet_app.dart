@@ -1,3 +1,4 @@
+import 'package:amulet_app/classes/connection_local.dart';
 import 'package:amulet_app/enums/src.dart';
 import 'package:amulet_flutter/amulet_client.dart';
 import 'package:amulet_flutter/isometric/classes/connection.dart';
@@ -22,4 +23,16 @@ class AmuletApp {
   final connectionRegion = Watch<ConnectionRegion?>(null);
   final connection = Watch<Connection?>(null);
   final error = Watch<dynamic>(null);
+  final AmuletClient amuletClient;
+
+  AmuletApp(this.amuletClient);
+
+
+  void setConnectionSinglePlayer() {
+    // connection.value = ConnectionLocal(
+    //     parser: parser,
+    //     playerClient: playerClient,
+    //     sharedPreferences: sharedPreferences,
+    // );
+  }
 }

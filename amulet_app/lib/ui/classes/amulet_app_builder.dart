@@ -19,39 +19,24 @@ import '../enums/website_page.dart';
 import 'package:lemon_watch/src.dart';
 
 
-enum AppMode {
-  Game,
-  Menu,
-  Load,
-}
-
 class AmuletAppBuilder extends StatelessWidget {
 
   final AmuletApp amuletApp;
-  final appMode = Watch(AppMode.Menu);
 
   AmuletAppBuilder({super.key, required this.amuletApp});
 
   @override
   Widget build(BuildContext context) {
     WidgetsFlutterBinding.ensureInitialized();
-    final menu = buildPageWebsiteDesktop(context);
-    final amuletClient = AmuletClient();
     return MaterialApp(
         title: 'AMULET',
         home: Scaffold(
-          body: buildWatch(appMode, (appMode) =>
-          appMode == AppMode.Menu
-              ? menu
-              : amuletClient
-          ),
+          body: buildScaffoldBody(context),
         ),
     );
   }
 
-
-
-  onChangedVisitCount(int value){
+  void onChangedVisitCount(int value){
     print('visit-count: $value');
   }
 
@@ -70,13 +55,6 @@ class AmuletAppBuilder extends StatelessWidget {
   void showWebsitePageGames(){
     amuletApp.websitePage.value = WebsitePage.Select_Character;
   }
-  //
-  // void openUrlYoutube() =>
-  //     launchUrl(Uri.parse('https://www.youtube.com/@gamestream.online'));
-  //
-  // void openUrlDiscord() =>
-  //     launchUrl(Uri.parse('https://discord.com/channels/888728235653885962/888728235653885965'));
-
 
   void connectToCustomGame(String customGame){
     _log('connectToCustomGame');
@@ -107,14 +85,12 @@ class AmuletAppBuilder extends StatelessWidget {
   }
 
   void checkForLatestVersion() async {
-    // await saveVisitDateTime();
     amuletApp.operationStatus.value = OperationStatus.Checking_For_Updates;
-    // engine.refreshPage();
   }
 
   void showPageNewCharacter() => amuletApp.websitePage.value = WebsitePage.New_Character;
 
-  Widget buildPageWebsiteDesktop(BuildContext context) {
+  Widget buildScaffoldBody(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -130,7 +106,7 @@ class AmuletAppBuilder extends StatelessWidget {
               Stack(
                 alignment: Alignment.center,
                 children: [
-                  Positioned(child: AmuletClient()),
+                  Positioned(child: amuletApp.amuletClient),
                   Positioned(
                     top: 8,
                     right: 8,
@@ -153,7 +129,7 @@ class AmuletAppBuilder extends StatelessWidget {
                           buildWatch(amuletApp.connection, (connection) {
 
                             if (connection == null){
-                              return buildText('connection required');
+                              return buildPageSelectConnection();
                             }
 
                             return FutureBuilder(
@@ -231,6 +207,17 @@ class AmuletAppBuilder extends StatelessWidget {
       }),
     );
   }
+
+  Widget buildPageSelectConnection() => Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        onPressed(
+            action: amuletApp.setConnectionSinglePlayer,
+            child: buildText('Singleplayer')),
+        width32,
+        buildText('Multiplayer'),
+      ],
+    );
 
   Widget buildTogglePlayMode() {
     return WatchBuilder(amuletApp.serverMode, (activeServerMode) {

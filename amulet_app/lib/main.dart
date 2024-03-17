@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 
 void main() {
   print('main()');
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
       AmuletAppBuilder(
-        amuletApp: AmuletApp(),
+        amuletApp: AmuletApp(AmuletClient()),
   ));
 }
 
