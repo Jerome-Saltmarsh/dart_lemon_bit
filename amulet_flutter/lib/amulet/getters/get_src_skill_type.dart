@@ -5,7 +5,7 @@ const iconSizeSkillType = 16.0;
 
 List<double> getSrcSkillType(SkillType skillType) =>
     switch (skillType) {
-      SkillType.None => const [_srcX, 0],
+      SkillType.None => const [_srcX, 0, 32, 32],
       SkillType.Fire_Ball => const [416, 32, 32 ,32],
       SkillType.Ice_Ball => const [416, 64, 32 ,32],
       SkillType.Slash => const [416, 928, 32, 32],

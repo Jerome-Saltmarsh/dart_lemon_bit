@@ -27,6 +27,7 @@ class AmuletAppBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    initialize();
     final mainMenu = MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'AMULET',
@@ -40,6 +41,10 @@ class AmuletAppBuilder extends StatelessWidget {
         amuletApp.gameRunning,
         (gameRunning) => gameRunning ? amuletApp.amuletClient : mainMenu
     );
+  }
+
+  Future initialize()  {
+     return amuletApp.initialize();
   }
 
   void onChangedVisitCount(int value){

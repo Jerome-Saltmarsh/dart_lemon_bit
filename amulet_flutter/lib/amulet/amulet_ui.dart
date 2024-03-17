@@ -59,7 +59,7 @@ class AmuletUI {
 
   IsometricOptions get options => amulet.options;
 
-  Widget buildAmuletUI() {
+  Widget buildUI(BuildContext buildContext) {
 
     final click = MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -154,7 +154,7 @@ class AmuletUI {
             left: 8,
             child:
             buildWatch(amulet.windowVisibleQuantify, (visible){
-              return visible ? WindowQuantify(amulet: amulet) : nothing;
+              return visible ? WindowQuantify(amuletUI: this) : nothing;
             }),
           ),
           Positioned(
@@ -2134,8 +2134,8 @@ class AmuletUI {
                     width16,
                   ]
               ),
-              // if (menuVisible)
-              //   buildWindowMenu(children: children),
+              if (menuVisible)
+                ...buildMenuOpen(),
             ],
           ),
         )),
@@ -2187,6 +2187,12 @@ class AmuletUI {
           // buildControlFiendsRemaining(),
         ],
       );
+
+  List<Widget> buildMenuOpen() {
+    return [
+
+    ];
+  }
 }
 
 String formatFramesToSeconds(int frames){

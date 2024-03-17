@@ -5,7 +5,6 @@ import 'package:amulet_common/src.dart';
 import 'package:amulet_flutter/isometric/atlases/atlas.dart';
 import 'package:amulet_flutter/isometric/atlases/atlas_nodes.dart';
 import 'package:amulet_flutter/isometric/atlases/atlas_src_icon_type.dart';
-import 'package:amulet_flutter/isometric/consts/height.dart';
 import 'package:amulet_flutter/isometric/consts/width.dart';
 import 'package:amulet_flutter/isometric/enums/icon_type.dart';
 import 'package:amulet_flutter/isometric/ui/builders/build_watch.dart';

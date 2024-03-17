@@ -38,10 +38,14 @@ import '../isometric/components/isometric_style.dart';
 import '../isometric/components/isometric_ui.dart';
 import '../isometric/ui/game_isometric_minimap.dart';
 import '../isometric/ui/isometric_colors.dart';
+import 'amulet_ui.dart';
 
 class AmuletClient extends LemonEngine {
 
   late IsometricComponents components;
+  var initializing = false;
+  var initialized = false;
+  late AmuletUI amuletUI;
 
   AmuletClient() : super(
     title: 'AMULET',
@@ -85,17 +89,16 @@ class AmuletClient extends LemonEngine {
       style: IsometricStyle(),
       isometricEditor: IsometricGame(),
     );
+
+    amuletUI = AmuletUI(components.amulet);
   }
 
   @override
-  Widget buildUI(BuildContext context) {
-    return components.amulet.amuletUI.buildAmuletUI();
-  }
+  Widget buildUI(BuildContext context) =>
+       amuletUI.buildUI(context);
 
   @override
-  void onDispose() {
-    components.onDispose();
-  }
+  void onDispose() => components.onDispose();
 
   @override
   void onDrawCanvas(Canvas canvas, Size size) {
@@ -112,9 +115,12 @@ class AmuletClient extends LemonEngine {
 
   @override
   Future onInit(SharedPreferences sharedPreferences)  async {
+     if (initializing || initialized) return;
+     print('amulet_client.onInit()');
+     initializing = true;
      await components.init(sharedPreferences);
+     initialized = true;
    }
-
 
   @override
   void onUpdate(double delta) {
@@ -172,15 +178,6 @@ class AmuletClient extends LemonEngine {
     if (!components.ready){
       return;
     }
-
-    // if (key == PhysicalKeyboardKey.escape){
-    //   components.engine.fullscreenToggle();
-    // }
-
-    // if (key == PhysicalKeyboardKey.enter){
-    //   components.engine.fullscreenToggle();
-    // }
-
     components.amulet.onKeyPressed(key);
   }
 }

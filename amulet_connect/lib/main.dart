@@ -4,7 +4,6 @@ import 'package:amulet_flutter/amulet/amulet_client.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  print('main()');
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
       AmuletAppBuilder(

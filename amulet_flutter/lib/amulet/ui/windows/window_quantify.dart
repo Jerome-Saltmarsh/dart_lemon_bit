@@ -13,11 +13,11 @@ import 'package:lemon_lang/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 class WindowQuantify extends StatelessWidget {
-  final Amulet amulet;
+  final AmuletUI amuletUI;
 
-  const WindowQuantify({super.key, required this.amulet});
+  Amulet get amulet => amuletUI.amulet;
 
-  AmuletUI get amuletUI => amulet.amuletUI;
+  const WindowQuantify({super.key, required this.amuletUI});
 
   @override
   Widget build(BuildContext context) =>

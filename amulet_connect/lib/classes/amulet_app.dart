@@ -63,4 +63,9 @@ class AmuletApp {
   void showError(String message) => error.value = message;
 
   void clearError() => error.value = null;
+
+  Future initialize() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    amuletClient.onInit(sharedPreferences);
+  }
 }

@@ -5,7 +5,6 @@ import 'dart:ui';
 
 import 'package:amulet_common/src.dart';
 import 'package:amulet_flutter/amulet/amulet_keys.dart';
-import 'package:amulet_flutter/amulet/amulet_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_lang/src.dart';
@@ -92,7 +91,6 @@ class Amulet extends IsometricGame {
   final windowVisibleHelp = WatchBool(false);
   final amuletKeys = AmuletKeys();
 
-  late final AmuletUI amuletUI;
 
   final emptyItemSlot = buildText('-');
 
@@ -202,10 +200,10 @@ class Amulet extends IsometricGame {
     }
   }
 
-  @override
-  void onComponentReady() {
-    amuletUI = AmuletUI(this);
-  }
+  // @override
+  // void onComponentReady() {
+  //   amuletUI = AmuletUI(this);
+  // }
 
   void onChangedError(String value) {
     if (value.isEmpty)
@@ -239,8 +237,16 @@ class Amulet extends IsometricGame {
     error.value = '';
   }
 
-  @override
-  Widget customBuildUI(BuildContext context) => amuletUI.buildAmuletUI();
+  // @override
+  // Widget customBuildUI(BuildContext context) =>
+  //     buildWatch(options.mode, (mode) => buildMode(mode, context));
+  //
+  // Widget buildMode(Mode mode, BuildContext context) =>
+  //     switch (mode){
+  //       Mode.play => amuletUI.buildUI(context),
+  //       Mode.edit => editor.buildEditor(),
+  //       Mode.debug => debugger.buildUI()
+  //     };
 
   @override
   void onKeyPressed(PhysicalKeyboardKey key) {
