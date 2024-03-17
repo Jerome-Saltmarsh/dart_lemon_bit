@@ -1,6 +1,6 @@
 import 'package:amulet_app/classes/connection_local.dart';
 import 'package:amulet_app/enums/src.dart';
-import 'package:amulet_flutter/amulet_client.dart';
+import 'package:amulet_flutter/amulet/amulet_client.dart';
 import 'package:amulet_flutter/isometric/classes/connection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -35,4 +35,18 @@ class AmuletApp {
         sharedPreferences: amuletClient.components.engine.sharedPreferences,
     );
   }
+
+  void playCharacter(String uuid){
+    showError('connection');
+    // final connection = this.connection.value;
+    // if (connection == null) {
+    //   showError('connection required');
+    //   return;
+    // }
+    // connection.playCharacter(uuid);
+  }
+
+  void showError(String message) => error.value = message;
+
+  void clearError() => error.value = null;
 }

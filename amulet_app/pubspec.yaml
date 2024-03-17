@@ -7,6 +7,7 @@ environment:
 
 dependencies:
   intl: ^0.17.0
+  golden_ratio: 1.0.6
   flutter:
     sdk: flutter
   amulet_engine:

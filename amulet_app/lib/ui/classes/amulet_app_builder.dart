@@ -5,9 +5,9 @@ import 'package:amulet_app/ui/widgets/dialog_create_character_computer.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_engine/json/amulet_field.dart';
 import 'package:amulet_engine/json/src.dart';
-import 'package:amulet_flutter/amulet_client.dart';
 import 'package:amulet_flutter/isometric/src.dart';
 import 'package:flutter/material.dart';
+import 'package:golden_ratio/constants.dart';
 import 'package:lemon_json/src.dart';
 import 'package:lemon_lang/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
@@ -29,6 +29,7 @@ class AmuletAppBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     WidgetsFlutterBinding.ensureInitialized();
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'AMULET',
         home: Scaffold(
           body: buildScaffoldBody(context),
@@ -102,88 +103,8 @@ class AmuletAppBuilder extends StatelessWidget {
 
         final page = WatchBuilder(amuletApp.websitePage, (websitePage) =>
         switch (websitePage) {
-          WebsitePage.Select_Character =>
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                  Positioned(child: amuletApp.amuletClient),
-                  Positioned(
-                    top: 8,
-                    right: 8,
-                    child: onPressed(
-                      // action: engine.window.close,
-                      child: buildText('EXIT'),
-                    ),
-                  ),
-                  Positioned(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        // buildText('AMULET', size: 120),
-                        Image.asset('assets/images/main_header.png'),
-                        height32,
-                        // if (options.developMode)
-                        //   buildTogglePlayMode(),
-                        if (serverMode == ServerMode.local)
-                          buildWatch(amuletApp.connection, (connection) {
-
-                            if (connection == null){
-                              return buildPageSelectConnection();
-                            }
-
-                            return FutureBuilder(
-                              future: connection.getCharacters(),
-                              builder: (context, snapshot) {
-                                final data = snapshot.data;
-                                if (data == null) {
-                                  return buildText('loading');
-                                }
-
-                                return buildTableCharacters(
-                                  data,
-                                      (){}, // TODO
-                                );
-                              },
-                            );
-                          }),
-
-                        // if (serverMode == ServerMode.remote)
-                        // buildWatch(server.remote.userId, (userId) {
-                        //   final authenticated = userId.isNotEmpty;
-                        //   if (authenticated) {
-                        //     return buildContainerAuthenticated(server.remote);
-                        //   }
-                        //   return buildContainerAuthenticate(this, server.remote);
-                        // }),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-          WebsitePage.New_Character => Stack(
-            alignment: Alignment.center,
-            children: [
-              DialogCreateCharacterComputer(
-                app: this,
-                createCharacter: amuletApp.connection.value?.createNewCharacter ?? (throw Exception()),
-                onCreated: showPageSelectCharacter,
-              ),
-              Positioned(
-                top: 8,
-                left: 8,
-                child: onPressed(
-                  action: showPageSelectCharacter,
-                  child: Container(
-                      color: Colors.white12,
-                      width: 100,
-                      height: 30,
-                      alignment: Alignment.center,
-                      child: buildText('<- BACK')),
-                ),
-              )
-            ],
-          ),
+          WebsitePage.Select_Character => buildPageSelectCharacter(serverMode),
+          WebsitePage.New_Character => buildPageNewCharacter(context),
           WebsitePage.Select_Region => throw Exception(),
         });
 
@@ -203,10 +124,137 @@ class AmuletAppBuilder extends StatelessWidget {
         //   });
         // }
 
-        return page;
+        return Stack(
+          children: [
+            Positioned(child: page),
+            Positioned(
+                top: 0,
+                left: 0,
+                child: buildError(context))
+          ],
+        );
       }),
     );
   }
+
+  Widget buildError(BuildContext context) => buildWatch(amuletApp.error, (error) {
+    if (error == null) return nothing;
+    const width = 300.0;
+    return maximize(
+      context: context,
+      alignment: Alignment.center,
+      color: Colors.black26,
+      child: Container(
+        width: width,
+        height: width * goldenRatio_0618,
+        color: Palette.brown_4,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Positioned(child: buildText(error)),
+            Positioned(
+                bottom: 8,
+                right: 8,
+                child: onPressed(
+                  action: amuletApp.clearError,
+                  child: Container(
+                    color: Colors.white12,
+                      padding: const EdgeInsets.all(8),
+                      child: buildText('Okay')),
+                )),
+          ],
+        ),
+      ),
+    );
+
+  });
+
+  Stack buildPageSelectCharacter(ServerMode serverMode) {
+    return Stack(
+              alignment: Alignment.center,
+              children: [
+                Positioned(child: amuletApp.amuletClient),
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: buildButtonExit(),
+                ),
+                Positioned(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      buildImageMainHeader(),
+                      height32,
+                      if (serverMode == ServerMode.local)
+                        buildWatch(amuletApp.connection, (connection) {
+
+                          if (connection == null){
+                            return buildPageSelectConnection();
+                          }
+
+                          return FutureBuilder(
+                            future: connection.getCharacters(),
+                            builder: (context, snapshot) {
+                              final data = snapshot.data;
+                              if (data == null) {
+                                return buildText('loading');
+                              }
+
+                              return buildTableCharacters(
+                                data,
+                                    (){}, // TODO
+                              );
+                            },
+                          );
+                        }),
+
+                      // if (serverMode == ServerMode.remote)
+                      // buildWatch(server.remote.userId, (userId) {
+                      //   final authenticated = userId.isNotEmpty;
+                      //   if (authenticated) {
+                      //     return buildContainerAuthenticated(server.remote);
+                      //   }
+                      //   return buildContainerAuthenticate(this, server.remote);
+                      // }),
+                    ],
+                  ),
+                ),
+              ],
+            );
+  }
+
+  Stack buildPageNewCharacter(BuildContext context) {
+    return Stack(
+          alignment: Alignment.center,
+          children: [
+            DialogCreateCharacterComputer(
+              app: this,
+              createCharacter: amuletApp.connection.value?.createNewCharacter ?? (throw Exception()),
+              onCreated: showPageSelectCharacter,
+            ),
+            Positioned(
+              top: 8,
+              left: 8,
+              child: onPressed(
+                action: showPageSelectCharacter,
+                child: Container(
+                    color: Colors.white12,
+                    width: 100,
+                    height: 30,
+                    alignment: Alignment.center,
+                    child: buildText('<- BACK')),
+              ),
+            ),
+          ],
+        );
+  }
+
+  Image buildImageMainHeader() => Image.asset('assets/images/main_header.png');
+
+  Widget buildButtonExit() => onPressed(
+        child: buildText('EXIT'),
+      );
 
   Widget buildPageSelectConnection() => Row(
     mainAxisAlignment: MainAxisAlignment.center,
@@ -215,43 +263,40 @@ class AmuletAppBuilder extends StatelessWidget {
             action: amuletApp.setConnectionSinglePlayer,
             child: buildText('Singleplayer')),
         width32,
-        buildText('Multiplayer'),
+        buildText('Multiplayer', color: Colors.white38),
       ],
     );
 
-  Widget buildTogglePlayMode() {
-    return WatchBuilder(amuletApp.serverMode, (activeServerMode) {
-      return Container(
-        width: 500,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [...ServerMode.values.map((serverMode) {
-            return onPressed(
-              action: () => this.amuletApp.serverMode.value = serverMode,
-              child: Container(
-                alignment: Alignment.center,
-                width: 80,
-                height: 30,
-                color: activeServerMode == serverMode
-                    ? Colors.green
-                    : Colors.green.withOpacity(0.25),
-                child: buildText(getServerModeText(serverMode),
-                    color: activeServerMode == serverMode
-                        ? Colors.white
-                        : Colors.white60),
-              ),
-            );
-          }).toList(growable: false),
-            if (activeServerMode == ServerMode.remote)
-              const Expanded(child: const SizedBox()),
-            if (activeServerMode == ServerMode.remote)
-              buildOnlineRow(),
-
-          ],
-        ),
-      );
-    });
-  }
+  Widget buildTogglePlayMode() => WatchBuilder(
+      amuletApp.serverMode,
+      (activeServerMode) => Container(
+            width: 500,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                ...ServerMode.values.map((serverMode) {
+                  return onPressed(
+                    action: () => this.amuletApp.serverMode.value = serverMode,
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: 80,
+                      height: 30,
+                      color: activeServerMode == serverMode
+                          ? Colors.green
+                          : Colors.green.withOpacity(0.25),
+                      child: buildText(getServerModeText(serverMode),
+                          color: activeServerMode == serverMode
+                              ? Colors.white
+                              : Colors.white60),
+                    ),
+                  );
+                }).toList(growable: false),
+                if (activeServerMode == ServerMode.remote)
+                  const Expanded(child: const SizedBox()),
+                if (activeServerMode == ServerMode.remote) buildOnlineRow(),
+              ],
+            ),
+          ));
 
   Widget buildOnlineRow(){
     return Row(
@@ -306,7 +351,7 @@ class AmuletAppBuilder extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     onPressed(
-                      action: () => amuletApp.connection.value?.playCharacter(uuid),
+                      action: () => amuletApp.playCharacter(uuid),
                       child: Container(
                           alignment: Alignment.center,
                           width: 360,
