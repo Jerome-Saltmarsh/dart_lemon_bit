@@ -92,49 +92,29 @@ class AmuletAppBuilder extends StatelessWidget {
   void showPageNewCharacter() => amuletApp.websitePage.value = WebsitePage.New_Character;
 
   Widget buildScaffoldBody(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/library_hero.png'), // Replace with your image path
-          fit: BoxFit.cover, // Adjust the fit as per your requirement
-        ),
-      ),
-      child: WatchBuilder(amuletApp.serverMode, (ServerMode serverMode) {
+    final mainMenu = buildMainMenu(context);
+    return buildWatch(amuletApp.gameRunning, (gameRunning) =>
+      gameRunning ? amuletApp.amuletClient : mainMenu);
+  }
 
-        final page = WatchBuilder(amuletApp.websitePage, (websitePage) =>
-        switch (websitePage) {
-          WebsitePage.Select_Character => buildPageSelectCharacter(serverMode),
+  WatchBuilder<ServerMode> buildMainMenu(BuildContext context) {
+    return WatchBuilder(amuletApp.serverMode, (ServerMode serverMode) {
+    final page = WatchBuilder(
+        amuletApp.websitePage,
+            (websitePage) => switch (websitePage) {
+          WebsitePage.Select_Character =>
+              buildPageSelectCharacter(serverMode),
           WebsitePage.New_Character => buildPageNewCharacter(context),
           WebsitePage.Select_Region => throw Exception(),
         });
 
-        // if (serverMode == ServerMode.remote){
-        //   return buildWatch(operationStatus, (operationStatus){
-        //     return operationStatus != OperationStatus.None
-        //       ? buildFullScreen(child: buildText(operationStatus.name.replaceAll('_', ' ')))
-        //       : buildWatch(server.remote.websocket.connectionStatus, (connectionStatus){
-        //         return switch (connectionStatus) {
-        //           ConnectionStatus.Connected =>
-        //               buildPageConnectionStatus(connectionStatus.name),
-        //           ConnectionStatus.Connecting =>
-        //               buildPageConnectionStatus(connectionStatus.name),
-        //           _ => page
-        //         };
-        //     });
-        //   });
-        // }
-
-        return Stack(
-          children: [
-            Positioned(child: page),
-            Positioned(
-                top: 0,
-                left: 0,
-                child: buildError(context))
-          ],
-        );
-      }),
+    return Stack(
+      children: [
+        Positioned(child: page),
+        Positioned(top: 0, left: 0, child: buildError(context))
+      ],
     );
+  });
   }
 
   Widget buildError(BuildContext context) => buildWatch(amuletApp.error, (error) {

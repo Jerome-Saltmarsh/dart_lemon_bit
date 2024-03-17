@@ -23,6 +23,7 @@ class AmuletApp {
   final connectionRegion = Watch<ConnectionRegion?>(null);
   final connection = Watch<Connection?>(null);
   final error = Watch<dynamic>(null);
+  final gameRunning = WatchBool(false);
   final AmuletClient amuletClient;
 
   AmuletApp(this.amuletClient);
@@ -37,13 +38,18 @@ class AmuletApp {
   }
 
   void playCharacter(String uuid){
-    showError('connection');
-    // final connection = this.connection.value;
-    // if (connection == null) {
-    //   showError('connection required');
-    //   return;
-    // }
-    // connection.playCharacter(uuid);
+    final connection = this.connection.value;
+    if (connection == null) {
+      showError('connection required');
+      return;
+    }
+    try {
+      connection.playCharacter(uuid);
+      gameRunning.value = true;
+    } catch(error) {
+      showError(error.toString());
+      gameRunning.value = false;
+    }
   }
 
   void showError(String message) => error.value = message;

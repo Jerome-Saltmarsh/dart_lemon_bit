@@ -196,9 +196,6 @@ class ConnectionLocal implements Connection {
       amulet.resumeUpdateTimer();
       parser.server.onServerConnectionEstablished();
       connected = true;
-    }).catchError((error) {
-      print(error);
-      parser.options.ui.error.value = error.toString();
     });
   }
 
