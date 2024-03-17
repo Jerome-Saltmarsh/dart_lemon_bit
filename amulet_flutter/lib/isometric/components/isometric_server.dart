@@ -109,25 +109,12 @@ class IsometricServer with IsometricComponent {
   void send(dynamic data) => connection?.send(data);
 
   Future disconnect() async {
-    // switch (serverMode) {
-    //   case ServerMode.local:
-    //     await local.disconnect();
-    //     break;
-    //   case ServerMode.remote:
-    //     remote.disconnect();
-    //     break;
-    //   default:
-    //     print('no server connected');
-    //     return;
-    // }
     connection?.disconnect();
-    // options.game.value = options.website;
     parser.amulet.clearAllState();
   }
 
   void onServerConnectionEstablished() {
     options.mode.value = Mode.play;
-    // options.game.value = options.amulet;
     options.setModePlay();
     options.activateCameraPlay();
     engine.zoomOnScroll = true;

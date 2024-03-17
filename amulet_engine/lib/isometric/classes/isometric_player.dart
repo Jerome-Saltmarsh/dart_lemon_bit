@@ -414,21 +414,21 @@ class IsometricPlayer extends Character with ByteWriter {
 
       final character = characters[i];
 
-      final renderX = character.renderX;
+      // final renderX = character.renderX;
+      //
+      // if (renderX < screenLeftPadded || renderX > screenRightPadded) {
+      //   continue;
+      // }
+      //
+      // final renderY = character.renderY;
 
-      if (renderX < screenLeftPadded || renderX > screenRightPadded) {
-        continue;
-      }
-
-      final renderY = character.renderY;
-
-      if (renderY < screenTopPadded) {
-        continue;
-      }
-
-      if (renderY > screenBottomPadded) {
-        continue;
-      }
+      // if (renderY < screenTopPadded) {
+      //   continue;
+      // }
+      //
+      // if (renderY > screenBottomPadded) {
+      //   continue;
+      // }
 
       final characterX = character.x.toInt();
       final characterY = character.y.toInt();

@@ -193,6 +193,7 @@ class ConnectionEmbedded implements Connection {
     }
 
     ensureInitialized().then((value) {
+      playerClient.server.connection = this;
       writeJsonToAmuletPlayer(character, playerServer);
       playerServer.writePlayerMoved();
       amulet.resumeUpdateTimer();
