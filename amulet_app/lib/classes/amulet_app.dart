@@ -5,6 +5,7 @@ import 'package:amulet_flutter/isometric/classes/connection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lemon_watch/src.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../ui/enums/website_dialog.dart';
 import '../ui/enums/website_page.dart';
@@ -34,12 +35,14 @@ class AmuletApp {
   }
 
   void setConnectionSinglePlayer() {
-    connection.value = ConnectionLocal(
+    SharedPreferences.getInstance().then((sharedPreferences) {
+      connection.value = ConnectionLocal(
         onDisconnect: onConnectionLost,
         parser: amuletClient.components.responseReader,
         playerClient: amuletClient.components.player,
-        sharedPreferences: amuletClient.components.engine.sharedPreferences,
-    );
+        sharedPreferences: sharedPreferences,
+      );
+    });
   }
 
   void playCharacter(String uuid){

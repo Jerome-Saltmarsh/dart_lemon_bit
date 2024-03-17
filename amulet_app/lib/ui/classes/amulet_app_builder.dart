@@ -27,13 +27,18 @@ class AmuletAppBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsFlutterBinding.ensureInitialized();
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'AMULET',
-        home: Scaffold(
-          body: buildScaffoldBody(context),
-        ),
+    final mainMenu = MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'AMULET',
+      home: Scaffold(
+        backgroundColor: Palette.black,
+        body: buildMainMenu(context),
+      ),
+    );
+
+    return buildWatch(
+        amuletApp.gameRunning,
+        (gameRunning) => gameRunning ? amuletApp.amuletClient : mainMenu
     );
   }
 
@@ -91,11 +96,11 @@ class AmuletAppBuilder extends StatelessWidget {
 
   void showPageNewCharacter() => amuletApp.websitePage.value = WebsitePage.New_Character;
 
-  Widget buildScaffoldBody(BuildContext context) {
-    final mainMenu = buildMainMenu(context);
-    return buildWatch(amuletApp.gameRunning, (gameRunning) =>
-      gameRunning ? amuletApp.amuletClient : mainMenu);
-  }
+  // Widget buildScaffoldBody(BuildContext context) {
+  //   final mainMenu = buildMainMenu(context);
+  //   return buildWatch(amuletApp.gameRunning, (gameRunning) =>
+  //     gameRunning ? amuletApp.amuletClient : mainMenu);
+  // }
 
   WatchBuilder<ServerMode> buildMainMenu(BuildContext context) {
     return WatchBuilder(amuletApp.serverMode, (ServerMode serverMode) {
@@ -153,7 +158,6 @@ class AmuletAppBuilder extends StatelessWidget {
     return Stack(
               alignment: Alignment.center,
               children: [
-                Positioned(child: amuletApp.amuletClient),
                 Positioned(
                   top: 8,
                   right: 8,

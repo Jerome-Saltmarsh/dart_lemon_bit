@@ -2,7 +2,6 @@
 import 'package:amulet_common/src.dart';
 import 'package:amulet_flutter/isometric/enums/mode.dart';
 import 'package:amulet_flutter/isometric/classes/position.dart';
-// import 'package:amulet_flutter/server/server_mode.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
@@ -40,7 +39,6 @@ class IsometricOptions with IsometricComponent implements Updatable {
   final cameraPlay = Position();
   final cameraEdit = Position();
   final cameraDebug = Position();
-  // final serverMode = Watch(ServerMode.local);
   final mode = Watch(Mode.play);
   final highlightIconInventory = WatchBool(false);
   final timeVisible = WatchBool(false);
@@ -58,8 +56,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
   final colorFilterDay = Watch(Colors.white);
   final colorFilterNight = Watch(Color.lerp(Color.fromRGBO(247, 150, 23, 1.0), Colors.white, goldenRatio_0381) ?? (throw Exception()));
   final filterQuality = Watch(FilterQuality.none);
-
-  late final List<ColorFilter> colorFilters;
+  final colorFilters = List.generate(colorFiltersLength, (index) => ColorFilter.mode(Colors.white, BlendMode.modulate));
   // late final Watch<Game> game;
 
   static const colorFiltersLength = 48;
@@ -97,6 +94,12 @@ class IsometricOptions with IsometricComponent implements Updatable {
   }
 
   @override
+  void onComponentReady() {
+    super.onComponentReady();
+    rebuildColorFilters();
+  }
+
+  @override
   Future onComponentInit(sharedPreferences) async {
     print('uri-base-host: ${Uri.base.host}');
     // game = Watch<Game>(website, onChanged: _onChangedGame);
@@ -111,11 +114,11 @@ class IsometricOptions with IsometricComponent implements Updatable {
       return true;
     }());
 
-    colorFilters = List.generate(colorFiltersLength, (index) {
-       final i = index / colorFiltersLength;
-       final color = Color.lerp(colorFilterDay.value, colorFilterNight.value, i);
-       return ColorFilter.mode(color ?? (throw Exception('invalid color')), BlendMode.modulate);
-    });
+    // colorFilters = List.generate(colorFiltersLength, (index) {
+    //    final i = index / colorFiltersLength;
+    //    final color = Color.lerp(colorFilterDay.value, colorFilterNight.value, i);
+    //    return ColorFilter.mode(color ?? (throw Exception('invalid color')), BlendMode.modulate);
+    // });
 
     // var cacheLoaded = false;
     // server.remote.userId.onChanged((t) {

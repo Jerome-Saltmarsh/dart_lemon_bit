@@ -14,6 +14,7 @@ import 'package:amulet_flutter/isometric/components/render/renderer_projectiles.
 
 import 'package:flutter/services.dart';
 import 'package:lemon_engine/lemon_engine.dart';
+import 'package:lemon_widgets/lemon_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../isometric/classes/isometric_game.dart';
@@ -88,8 +89,9 @@ class AmuletClient extends LemonEngine {
   }
 
   @override
-  Widget buildUI(BuildContext buildContext) =>
-      components.ui.buildUI(buildContext);
+  Widget buildUI(BuildContext buildContext) {
+    return components.ui.buildUI(buildContext);
+  }
 
   @override
   void onDispose() {
