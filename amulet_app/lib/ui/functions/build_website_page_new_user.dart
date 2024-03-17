@@ -1,5 +1,5 @@
 
-import 'package:amulet_app/amulet_app.dart';
+import 'package:amulet_app/classes/amulet_app.dart';
 import 'package:amulet_app/classes/connection_remote.dart';
 import 'package:amulet_app/ui/enums/website_page.dart';
 import 'package:amulet_app/ui/widgets/gs_textfield.dart';

@@ -1,4 +1,4 @@
-import 'package:amulet_app/amulet_app_ui.dart';
+import 'package:amulet_app/ui/classes/amulet_app_builder.dart';
 import 'package:amulet_app/ui/typedefs/create_character.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_flutter/isometric/src.dart';
@@ -17,7 +17,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
 
   final CreateCharacter createCharacter;
   final Function onCreated;
-  final AmuletAppUI app;
+  final AmuletAppBuilder app;
 
   final buttonHeight = 64.0;
   final widthName = 310.0;

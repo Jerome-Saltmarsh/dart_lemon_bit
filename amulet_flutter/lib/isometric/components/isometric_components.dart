@@ -8,6 +8,7 @@ import 'package:amulet_flutter/isometric/components/render/renderer_gameobjects.
 import 'package:amulet_flutter/isometric/components/render/renderer_particles.dart';
 import 'package:amulet_flutter/isometric/ui/isometric_colors.dart';
 import 'package:amulet_flutter/packages/lemon_components.dart';
+import 'package:lemon_engine/lemon_engine.dart';
 
 import 'isometric_options.dart';
 import 'isometric_render.dart';
@@ -20,7 +21,7 @@ import '../ui/game_isometric_minimap.dart';
 
 class IsometricComponents extends ComponentContainer {
   var ready = false;
-  // final AmuletApp engine;
+  final LemonEngine engine;
   final Amulet amulet;
   final IsometricRender render;
   final IsometricOptions options;
@@ -56,6 +57,7 @@ class IsometricComponents extends ComponentContainer {
   final IsometricGame isometricEditor;
 
   IsometricComponents({
+    required this.engine,
     required this.images,
     required this.environment,
     required this.rendererNodes,
@@ -89,11 +91,8 @@ class IsometricComponents extends ComponentContainer {
     required this.colors,
     required this.style,
     required this.isometricEditor,
-    // required this.engine,
   }) {
     print('IsometricComponents()');
-    // engine.onError = onError;
-
     components.add(images);
     components.add(scene);
     components.add(environment);
@@ -156,7 +155,6 @@ class IsometricComponents extends ComponentContainer {
       component.actions = action;
       component.events = events;
       component.parser = responseReader;
-      // component.website = website;
       component.amulet = amulet;
       component.options = options;
       component.animation = animation;
@@ -166,7 +164,7 @@ class IsometricComponents extends ComponentContainer {
       component.compositor = compositor;
       component.lighting = lighting;
       component.style = style;
-      // component.engine = engine;
+      component.engine = engine;
     }
     ready = true;
   }
