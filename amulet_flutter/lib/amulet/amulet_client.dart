@@ -14,7 +14,6 @@ import 'package:amulet_flutter/isometric/components/render/renderer_projectiles.
 
 import 'package:flutter/services.dart';
 import 'package:lemon_engine/lemon_engine.dart';
-import 'package:lemon_widgets/lemon_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../isometric/classes/isometric_game.dart';

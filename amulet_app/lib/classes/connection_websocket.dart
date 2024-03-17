@@ -8,7 +8,7 @@ import 'package:lemon_json/src.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:amulet_flutter/packages/lemon_websocket_client.dart';
 
-class ConnectionRemote implements Connection {
+class ConnectionWebsocket implements Connection {
 
   late final WebsocketClient websocket;
 
@@ -26,7 +26,7 @@ class ConnectionRemote implements Connection {
   @override
   bool get connected => websocket.connected;
 
-  ConnectionRemote({required this.parser}){
+  ConnectionWebsocket({required this.parser}){
     userId.onChanged(onChangedUserId);
     userJson.onChanged(onChangedUserJson);
 

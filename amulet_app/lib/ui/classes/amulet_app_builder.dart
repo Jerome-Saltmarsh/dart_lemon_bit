@@ -12,7 +12,7 @@ import 'package:lemon_json/src.dart';
 import 'package:lemon_lang/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
-import '../../classes/connection_remote.dart';
+import '../../classes/connection_websocket.dart';
 import '../../functions/get_server_mode_text.dart';
 import '../enums/website_dialog.dart';
 import '../enums/website_page.dart';
@@ -423,7 +423,7 @@ class AmuletAppBuilder extends StatelessWidget {
     ),
   );
 
-  Widget buildControlUser(ConnectionRemote serverRemote) => onPressed(
+  Widget buildControlUser(ConnectionWebsocket serverRemote) => onPressed(
     action: serverRemote.logout,
     hint: 'LOGOUT',
     child: Container(

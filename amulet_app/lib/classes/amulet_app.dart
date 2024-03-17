@@ -1,4 +1,4 @@
-import 'package:amulet_app/classes/connection_local.dart';
+import 'package:amulet_app/classes/connection_embedded.dart';
 import 'package:amulet_app/enums/src.dart';
 import 'package:amulet_flutter/amulet/amulet_client.dart';
 import 'package:amulet_flutter/isometric/classes/connection.dart';
@@ -36,7 +36,7 @@ class AmuletApp {
 
   void setConnectionSinglePlayer() {
     SharedPreferences.getInstance().then((sharedPreferences) {
-      connection.value = ConnectionLocal(
+      connection.value = ConnectionEmbedded(
         onDisconnect: onConnectionLost,
         parser: amuletClient.components.responseReader,
         playerClient: amuletClient.components.player,

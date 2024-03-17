@@ -13,8 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'amulet_scenes_flutter.dart';
 
-
-class ConnectionLocal implements Connection {
+class ConnectionEmbedded implements Connection {
 
   var initialized = false;
   var connected = false;
@@ -31,7 +30,7 @@ class ConnectionLocal implements Connection {
 
   static const FIELD_CHARACTERS = '46700e18-b438-441b-ae2f-9139652901c5';
 
-  ConnectionLocal({
+  ConnectionEmbedded({
     required this.onDisconnect,
     required this.parser,
     required this.playerClient,

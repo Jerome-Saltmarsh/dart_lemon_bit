@@ -1,6 +1,6 @@
 
 import 'package:amulet_app/classes/amulet_app.dart';
-import 'package:amulet_app/classes/connection_remote.dart';
+import 'package:amulet_app/classes/connection_websocket.dart';
 import 'package:amulet_app/ui/enums/website_page.dart';
 import 'package:amulet_app/ui/widgets/gs_textfield.dart';
 import 'package:amulet_flutter/isometric/consts/height.dart';
@@ -12,7 +12,7 @@ import 'package:lemon_widgets/lemon_widgets.dart';
 import 'package:lemon_watch/src.dart';
 
 
-Widget buildContainerAuthenticate(AmuletApp amuletApp, ConnectionRemote serverRemote){
+Widget buildContainerAuthenticate(AmuletApp amuletApp, ConnectionWebsocket serverRemote){
   final loginPage = WatchBool(true);
   return GSContainer(
     width: 500,
@@ -57,7 +57,7 @@ Widget buildContainerAuthenticate(AmuletApp amuletApp, ConnectionRemote serverRe
   );
 }
 
-Widget buildContainerLogin(ConnectionRemote user){
+Widget buildContainerLogin(ConnectionWebsocket user){
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -90,7 +90,7 @@ Widget buildContainerLogin(ConnectionRemote user){
   );
 }
 
-Widget buildContainerRegister(ConnectionRemote serverRemote){
+Widget buildContainerRegister(ConnectionWebsocket serverRemote){
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
 
