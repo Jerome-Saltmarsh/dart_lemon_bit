@@ -3,6 +3,7 @@ import 'package:amulet_common/src.dart';
 import 'package:amulet_flutter/amulet/amulet.dart';
 import 'package:amulet_flutter/amulet/src.dart';
 import 'package:amulet_flutter/amulet/ui/enums/quantify_tab.dart';
+import 'package:amulet_flutter/isometric/components/isometric_options.dart';
 import 'package:amulet_flutter/isometric/consts/border_radius.dart';
 import 'package:amulet_flutter/isometric/consts/height.dart';
 import 'package:amulet_flutter/isometric/consts/padding.dart';
@@ -12,6 +13,7 @@ import 'package:amulet_flutter/isometric/ui/isometric_colors.dart';
 import 'package:amulet_flutter/isometric/ui/widgets/gs_container.dart';
 import 'package:amulet_flutter/isometric/ui/widgets/mouse_over.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_lang/src.dart';
 import 'package:lemon_watch/src.dart';
@@ -55,6 +57,8 @@ class AmuletUI {
 
   AmuletUI(this.amulet);
 
+  IsometricOptions get options => amulet.options;
+
   Widget buildAmuletUI() {
 
     final click = MouseRegion(
@@ -89,6 +93,11 @@ class AmuletUI {
             return translucent;
           }),
         ),
+      ),
+      Positioned(
+        top: 16,
+        right: 16,
+        child: buildMainMenu(),
       ),
           buildDialogTalk(),
           Positioned(
@@ -2098,6 +2107,72 @@ class AmuletUI {
     return buildCardSmallSkillType(skillType);
   }
 
+  Widget buildMainMenu() => MouseRegion(
+      onEnter: (PointerEnterEvent event) {
+        options.windowOpenMenu.value = true;
+      },
+      onExit: (PointerExitEvent event) {
+        options.windowOpenMenu.value = false;
+      },
+      child: buildWatch(options.windowOpenMenu, (bool menuVisible) =>
+          Container(
+          color: menuVisible ? amulet.style.containerColor : Colors.transparent,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              height16,
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    buildSceneName(),
+                    // width8,
+                    // buildFiendCount(),
+                    // width16,
+                    // buildWatchBool(options.timeVisible, () => controlTime),
+                    width32,
+                    menuVisible ? buildIconCogTurned() : buildIconCog(),
+                    width16,
+                  ]
+              ),
+              // if (menuVisible)
+              //   buildWindowMenu(children: children),
+            ],
+          ),
+        )),
+    );
+
+  Widget buildIconCog() => onPressed(
+      action: options.windowOpenMenu.toggle,
+      child: buildAmuletImage(
+          srcX: 864,
+          srcY: 208,
+          width: 64,
+          height: 64,
+      )
+  );
+
+  Widget buildIconCogTurned() => onPressed(
+      action: options.windowOpenMenu.toggle,
+      child: buildAmuletImage(
+        srcX: 929,
+        srcY: 208,
+        width: 64,
+        height: 64,
+      )
+  );
+
+  Widget buildSceneName() =>
+      Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          buildWatch(
+              options.sceneName,
+                  (sceneName) =>
+                  buildText(sceneName, color: Colors.white70, size: 22)),
+          // width8,
+          // buildControlFiendsRemaining(),
+        ],
+      );
 }
 
 String formatFramesToSeconds(int frames){

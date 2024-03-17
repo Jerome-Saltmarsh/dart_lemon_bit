@@ -136,55 +136,7 @@ class IsometricUI with IsometricComponent {
               (int frames) =>
               buildText('Warning: No message received from server $frames')));
 
-  Widget buildMainMenu({List<Widget>? children}) {
-    return MouseRegion(
-      onEnter: (PointerEnterEvent event) {
-        options.windowOpenMenu.value = true;
-      },
-      onExit: (PointerExitEvent event) {
-        options.windowOpenMenu.value = false;
-      },
-      child: buildWatch(options.windowOpenMenu, (bool menuVisible){
-        return Container(
-          color: menuVisible ? style.containerColor : Colors.transparent,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              height16,
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    buildSceneName(),
-                    // width8,
-                    // buildFiendCount(),
-                    // width16,
-                    // buildWatchBool(options.timeVisible, () => controlTime),
-                    width32,
-                    menuVisible ? buildIconCogTurned() : buildIconCog(),
-                    width16,
-                  ]
-              ),
-              if (menuVisible)
-                buildWindowMenu(children: children),
-            ],
-          ),
-        );
-      }),
-    );
-  }
 
-  Widget buildSceneName() =>
-      Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          buildWatch(
-              options.sceneName,
-              (sceneName) =>
-                  buildText(sceneName, color: Colors.white70, size: 22)),
-          // width8,
-          // buildControlFiendsRemaining(),
-        ],
-      );
 
   Container buildControlFiendsRemaining() {
     return Container(
@@ -251,22 +203,6 @@ class IsometricUI with IsometricComponent {
       child: Container(
         width: 32,
         child: buildAtlasIconType(IconType.Home),
-      )
-  );
-
-  Widget buildIconCog() => onPressed(
-      action: options.windowOpenMenu.toggle,
-      child: Container(
-        width: 20,
-        child: buildAtlasIconType(IconType.Cog, color: Colors.white54.value),
-      )
-  );
-
-  Widget buildIconCogTurned() => onPressed(
-      action: options.windowOpenMenu.toggle,
-      child: Container(
-        width: 20,
-        child: buildAtlasIconType(IconType.Cog_Turned),
       )
   );
 

@@ -63,11 +63,7 @@ class IsometricGame extends Game {
       //     left: 16,
       //     child: debug.buildUI()
       // ),
-      Positioned(
-          top: 16,
-          right: 16,
-          child: ui.buildMainMenu(children: buildMenuItems()),
-      ),
+
       Positioned(
         top: 8,
         left: 0,
