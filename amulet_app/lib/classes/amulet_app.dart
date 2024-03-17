@@ -29,8 +29,13 @@ class AmuletApp {
   AmuletApp(this.amuletClient);
 
 
+  void onConnectionLost() {
+    gameRunning.value = false;
+  }
+
   void setConnectionSinglePlayer() {
     connection.value = ConnectionLocal(
+        onDisconnect: onConnectionLost,
         parser: amuletClient.components.responseReader,
         playerClient: amuletClient.components.player,
         sharedPreferences: amuletClient.components.engine.sharedPreferences,

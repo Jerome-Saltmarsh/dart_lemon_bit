@@ -27,9 +27,12 @@ class ConnectionLocal implements Connection {
   late final AmuletController controller;
   late final Amulet amulet;
 
+  Function onDisconnect;
+
   static const FIELD_CHARACTERS = '46700e18-b438-441b-ae2f-9139652901c5';
 
   ConnectionLocal({
+    required this.onDisconnect,
     required this.parser,
     required this.playerClient,
     required this.sharedPreferences,
@@ -117,9 +120,9 @@ class ConnectionLocal implements Connection {
     playerServer.amuletGame = amulet.amuletGameLoading;
     playerServer.setDestinationToCurrentPosition();
     parser.amulet.clearAllState();
-    // parser.options.game.value = parser.website;
     amulet.updateTimer?.cancel();
     amulet.timerRefreshUserCharacterLocks?.cancel();
+    onDisconnect();
   }
 
   Future persistPlayerServer(){
