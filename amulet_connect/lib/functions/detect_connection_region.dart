@@ -1,5 +1,5 @@
 
-import 'package:amulet_app/enums/connection_region.dart';
+import 'package:amulet_connect/enums/connection_region.dart';
 
 ConnectionRegion detectConnectionRegion() {
   final now = DateTime.now();

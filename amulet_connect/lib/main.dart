@@ -1,5 +1,5 @@
-import 'package:amulet_app/classes/amulet_app.dart';
-import 'package:amulet_app/ui/classes/amulet_app_builder.dart';
+import 'package:amulet_connect/classes/amulet_app.dart';
+import 'package:amulet_connect/ui/classes/amulet_app_builder.dart';
 import 'package:amulet_flutter/amulet/amulet_client.dart';
 import 'package:flutter/material.dart';
 

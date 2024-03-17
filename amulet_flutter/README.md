@@ -63,6 +63,7 @@ SKULLSOFT
 [new] balance amulet items helms
 [new] balance amulet items armor
 [new] balance amulet items shoes
+[ref] new project amulet launcher
 
 ## 08.03.2024
 [new] balance amulet items weapons

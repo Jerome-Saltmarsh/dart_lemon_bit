@@ -1,5 +1,5 @@
-import 'package:amulet_app/classes/amulet_app.dart';
-import 'package:amulet_app/enums/src.dart';
+import 'package:amulet_connect/classes/amulet_app.dart';
+import 'package:amulet_connect/enums/src.dart';
 import 'package:amulet_flutter/isometric/consts/font_size.dart';
 import 'package:amulet_flutter/isometric/consts/height.dart';
 import 'package:flutter/material.dart';

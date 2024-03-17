@@ -1,6 +1,6 @@
 
 
-import 'package:amulet_app/enums/src.dart';
+import 'package:amulet_connect/enums/src.dart';
 import 'package:amulet_flutter/isometric/ui/builders/build_watch.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';

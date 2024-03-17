@@ -1,5 +1,5 @@
-import 'package:amulet_app/ui/classes/amulet_app_builder.dart';
-import 'package:amulet_app/ui/typedefs/create_character.dart';
+import 'package:amulet_connect/ui/classes/amulet_app_builder.dart';
+import 'package:amulet_connect/ui/typedefs/create_character.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_flutter/isometric/src.dart';
 import 'package:flutter/material.dart';
