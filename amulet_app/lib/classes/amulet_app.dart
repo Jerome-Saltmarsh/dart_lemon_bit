@@ -29,10 +29,10 @@ class AmuletApp {
 
 
   void setConnectionSinglePlayer() {
-    // connection.value = ConnectionLocal(
-    //     parser: parser,
-    //     playerClient: playerClient,
-    //     sharedPreferences: sharedPreferences,
-    // );
+    connection.value = ConnectionLocal(
+        parser: amuletClient.components.responseReader,
+        playerClient: amuletClient.components.player,
+        sharedPreferences: amuletClient.components.engine.sharedPreferences,
+    );
   }
 }
