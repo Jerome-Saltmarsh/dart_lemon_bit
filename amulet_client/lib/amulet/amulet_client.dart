@@ -94,14 +94,11 @@ class AmuletClient {
     amuletUI = AmuletUI(components.amulet);
   }
 
-  @override
   Widget buildUI(BuildContext context) =>
        amuletUI.buildUI(context);
 
-  // @override
-  // void onDispose() => components.onDispose();
+  void dispose() => components.onDispose();
 
-  @override
   void onDrawCanvas(Canvas canvas, Size size) {
     if (!components.ready){
       return;
@@ -109,12 +106,10 @@ class AmuletClient {
     components.render.drawCanvas(canvas, size);
   }
 
-  @override
   void onDrawForeground(Canvas canvas, Size size) {
     // components.render.drawForeground(canvas, size);
   }
 
-  @override
   Future onInit(SharedPreferences sharedPreferences)  async {
      if (initializing || initialized) return;
      print('amulet_client.onInit()');
@@ -124,7 +119,6 @@ class AmuletClient {
      initialized = true;
    }
 
-  @override
   void onUpdate(double delta) {
     if (!components.ready){
       return;
@@ -132,7 +126,6 @@ class AmuletClient {
     components.update(delta);
   }
 
-  @override
   void onMouseEnterCanvas() {
     if (!components.ready){
       return;
@@ -140,7 +133,6 @@ class AmuletClient {
     components.options.onMouseEnterCanvas();
   }
 
-  @override
   void onMouseExitCanvas() {
     if (!components.ready){
       return;
@@ -148,7 +140,6 @@ class AmuletClient {
     components.options.onMouseExitCanvas();
   }
 
-  @override
   void onLeftClicked() {
     if (!components.ready){
       return;
@@ -156,7 +147,6 @@ class AmuletClient {
     components.options.amulet.onLeftClicked();
   }
 
-  @override
   void onRightClicked() {
     if (!components.ready){
       return;
@@ -164,7 +154,6 @@ class AmuletClient {
     components.options.amulet.onRightClicked();
   }
 
-  @override
   void onKeyPressed(PhysicalKeyboardKey key) {
 
     if (!components.ready){

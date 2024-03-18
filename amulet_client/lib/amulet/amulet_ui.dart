@@ -1156,7 +1156,12 @@ class AmuletUI {
 
     return onPressed(
         action: () => amulet.dropAmuletItem(amuletItem),
-        child: buildCardSmallAmuletItemObject(amuletItemObject),
+        child: buildMouseOverPanel(
+            bottom: 90,
+            left: -60,
+            panel: buildCardLargeAmuletItemObject(amuletItemObject),
+            child: buildCardSmallAmuletItemObject(amuletItemObject)
+        ),
     );
 
     // final button = onPressed(
@@ -1859,15 +1864,21 @@ class AmuletUI {
   }
 
   Widget buildCardSmallAmuletItemObject(AmuletItemObject amuletItemObject) =>
-      buildMouseOverPanel(
-        bottom: 90,
-        left: -60,
-        panel: buildCardLargeAmuletItemObject(amuletItemObject),
-        child: buildCardSmall(
-            title: buildCardTitleText(amuletItemObject.level),
-            child: buildIconAmuletItem(amuletItemObject.amuletItem),
-        )
+      buildCardSmallAmuletItemLevel(
+        amuletItem: amuletItemObject.amuletItem,
+        level: amuletItemObject.level,
       );
+
+
+  Widget buildCardSmallAmuletItemLevel({
+    required AmuletItem amuletItem,
+    required int level,
+  }) =>
+      buildCardSmall(
+        title: buildCardTitleText(level),
+        child: buildIconAmuletItem(amuletItem),
+      );
+
 
   late final iconPotionEmpty = buildAmuletImage(
       srcX: 784,
