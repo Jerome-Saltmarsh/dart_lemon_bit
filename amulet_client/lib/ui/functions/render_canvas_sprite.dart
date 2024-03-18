@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:amulet_client/amulet/ui/functions/render_sprite.dart';
 import 'package:lemon_sprite/lib.dart';
+
+import 'render_sprite.dart';
 
 void renderCanvasSprite({
   required Canvas canvas,

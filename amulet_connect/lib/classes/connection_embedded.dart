@@ -2,7 +2,7 @@
 
 import 'dart:convert';
 
-import 'package:amulet_client/amulet/amulet_client.dart';
+import 'package:amulet_client/classes/amulet_client.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_server/classes/amulet.dart';
 import 'package:amulet_server/src.dart';

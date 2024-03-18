@@ -6,7 +6,7 @@ import 'package:amulet_client/isometric/components/isometric_parser.dart';
 import 'package:lemon_byte/src.dart';
 import 'package:lemon_lang/src.dart';
 
-import 'classes/map_location.dart';
+import 'map_location.dart';
 
 extension AmuletParser on IsometricParser {
 

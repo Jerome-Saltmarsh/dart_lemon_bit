@@ -1,5 +1,5 @@
+import 'package:amulet_client/getters/src.dart';
 import 'package:amulet_common/src.dart';
-import 'package:amulet_client/amulet/getters/get_src_amulet_item.dart';
 import 'package:amulet_client/isometric/classes/render_group.dart';
 import 'package:amulet_client/isometric/components/isometric_images.dart';
 import 'package:amulet_client/isometric/components/isometric_scene.dart';

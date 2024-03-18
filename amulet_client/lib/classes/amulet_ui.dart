@@ -1,8 +1,15 @@
 
+import 'package:amulet_client/classes/amulet_colors.dart';
+import 'package:amulet_client/extensions/physical_keyboardkey_extension.dart';
+import 'package:amulet_client/getters/get_src_skill_type.dart';
+import 'package:amulet_client/getters/src.dart';
+import 'package:amulet_client/ui/containers/build_container_player_front.dart';
+import 'package:amulet_client/ui/enums/quantify_tab.dart';
+import 'package:amulet_client/ui/maps/map_item_quality_to_color.dart';
+import 'package:amulet_client/ui/widgets/amulet_world_map.dart';
+import 'package:amulet_client/ui/windows/window_quantify.dart';
 import 'package:amulet_common/src.dart';
-import 'package:amulet_client/amulet/amulet.dart';
-import 'package:amulet_client/amulet/src.dart';
-import 'package:amulet_client/amulet/ui/enums/quantify_tab.dart';
+import 'package:amulet_client/classes/amulet.dart';
 import 'package:amulet_client/isometric/components/isometric_options.dart';
 import 'package:amulet_client/isometric/consts/border_radius.dart';
 import 'package:amulet_client/isometric/consts/height.dart';
@@ -20,7 +27,6 @@ import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 import 'amulet_style.dart';
-import 'ui/containers/build_container_player_front.dart';
 
 class AmuletUI {
   static const itemImageSize = 64.0;

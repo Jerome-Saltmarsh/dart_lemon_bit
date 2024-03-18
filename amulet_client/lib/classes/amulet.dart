@@ -4,7 +4,7 @@ import 'dart:ui' as ui;
 import 'dart:ui';
 
 import 'package:amulet_common/src.dart';
-import 'package:amulet_client/amulet/amulet_keys.dart';
+import 'package:amulet_client/classes/amulet_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_lang/src.dart';
@@ -13,7 +13,7 @@ import 'package:lemon_widgets/lemon_widgets.dart';
 
 import '../isometric/src.dart';
 import 'amulet_render.dart';
-import 'classes/map_location.dart';
+import 'map_location.dart';
 
 
 class Amulet extends IsometricGame {

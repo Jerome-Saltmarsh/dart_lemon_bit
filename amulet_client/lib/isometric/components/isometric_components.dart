@@ -1,5 +1,5 @@
 
-import 'package:amulet_client/amulet/amulet.dart';
+import 'package:amulet_client/classes/amulet.dart';
 import 'package:amulet_client/isometric/classes/isometric_game.dart';
 import 'package:amulet_client/isometric/components/isometric_environment.dart';
 import 'package:amulet_client/isometric/components/isometric_screen.dart';

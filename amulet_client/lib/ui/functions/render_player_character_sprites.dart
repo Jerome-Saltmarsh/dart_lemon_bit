@@ -1,8 +1,9 @@
 
 import 'package:flutter/material.dart';
-import 'package:amulet_client/amulet/ui/functions/render_character_sprites.dart';
 import 'package:amulet_client/isometric/components/isometric_player.dart';
 import 'package:amulet_client/isometric/classes/human_character_sprites.dart';
+
+import 'render_character_sprites.dart';
 
 void renderPlayerCharacterSprites({
   required IsometricPlayer player,

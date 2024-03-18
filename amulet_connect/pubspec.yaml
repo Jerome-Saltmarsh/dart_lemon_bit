@@ -12,7 +12,6 @@ flutter_launcher_icons:
   windows:
     generate: true
     image_path: "assets/images/loading-icon.png"
-#    icon_size: 48 # min:48, max:256, default: 48
 
 dependencies:
   web_socket_channel: ^2.1.0

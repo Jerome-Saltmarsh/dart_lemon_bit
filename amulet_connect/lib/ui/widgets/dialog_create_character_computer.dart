@@ -1,10 +1,9 @@
 import 'package:amulet/ui/classes/amulet_connect_ui.dart';
 import 'package:amulet/ui/typedefs/create_character.dart';
+import 'package:amulet_client/ui/src.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/isometric/src.dart';
 import 'package:flutter/material.dart';
-import 'package:amulet_client/amulet/ui/functions/build_color_wheel.dart';
-import 'package:amulet_client/amulet/ui/functions/render_character_sprites.dart';
 import 'package:amulet_client/isometric/components/isometric_components.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
@@ -14,6 +13,7 @@ import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 class DialogCreateCharacterComputer extends StatelessWidget {
+
 
   final CreateCharacter createCharacter;
   final Function onCreated;

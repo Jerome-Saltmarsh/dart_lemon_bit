@@ -1,10 +1,10 @@
 
 import 'dart:math';
 
+import 'package:amulet_client/atlases/atlas_nodes.dart';
 import 'package:amulet_common/src.dart';
-import 'package:amulet_client/amulet/classes/amulet_colors.dart';
+import 'package:amulet_client/classes/amulet_colors.dart';
 import 'package:amulet_client/isometric/ui/isometric_colors.dart';
-import 'package:amulet_client/isometric/atlases/atlas_nodes.dart';
 import 'package:amulet_client/isometric/classes/character.dart';
 import 'package:amulet_client/isometric/classes/position.dart';
 import 'package:flutter/material.dart';

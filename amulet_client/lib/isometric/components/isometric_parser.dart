@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:amulet_common/src.dart';
-import 'package:amulet_client/amulet/classes/item_slot.dart';
+import 'package:amulet_client/classes/item_slot.dart';
 import 'package:amulet_client/isometric/enums/emission_type.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:lemon_bit/src.dart';
@@ -8,7 +8,7 @@ import 'package:lemon_lang/src.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:archive/archive.dart';
-import 'package:amulet_client/amulet/amulet_parser.dart';
+import 'package:amulet_client/classes/amulet_parser.dart';
 import 'package:amulet_client/isometric/classes/character.dart';
 import 'package:amulet_client/isometric/classes/position.dart';
 import 'package:amulet_client/isometric/classes/projectile.dart';

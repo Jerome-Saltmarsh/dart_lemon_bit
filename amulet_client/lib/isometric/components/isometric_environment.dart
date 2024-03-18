@@ -1,6 +1,6 @@
 
+import 'package:amulet_client/atlases/atlas_nodes.dart';
 import 'package:amulet_common/src.dart';
-import 'package:amulet_client/isometric/atlases/atlas_nodes.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_watch/src.dart';
 

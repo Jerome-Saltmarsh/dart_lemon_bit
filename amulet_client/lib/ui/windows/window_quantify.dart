@@ -1,10 +1,10 @@
 
+import 'package:amulet_client/getters/src.dart';
+import 'package:amulet_client/ui/enums/quantify_tab.dart';
+import 'package:amulet_client/ui/src.dart';
 import 'package:amulet_common/src.dart';
-import 'package:amulet_client/amulet/amulet.dart';
-import 'package:amulet_client/amulet/amulet_ui.dart';
-import 'package:amulet_client/amulet/getters/get_amulet_item_validation_error.dart';
-import 'package:amulet_client/amulet/ui/enums/quantify_tab.dart';
-import 'package:amulet_client/amulet/ui/maps/map_item_quality_to_color.dart';
+import 'package:amulet_client/classes/amulet.dart';
+import 'package:amulet_client/classes/amulet_ui.dart';
 import 'package:amulet_client/isometric/consts/width.dart';
 import 'package:amulet_client/isometric/ui/builders/build_watch.dart';
 import 'package:amulet_client/isometric/ui/widgets/gs_container.dart';

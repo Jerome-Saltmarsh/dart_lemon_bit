@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+import 'package:amulet_client/atlases/atlas_nodes.dart';
+import 'package:amulet_client/atlases/atlas_src_nodes_y.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/isometric/classes/render_group.dart';
 import 'package:amulet_client/isometric/components/isometric_images.dart';
@@ -8,8 +10,6 @@ import 'package:amulet_client/isometric/components/isometric_scene.dart';
 import 'package:amulet_client/isometric/components/render/functions/merge_32_bit_colors.dart';
 import 'package:amulet_client/isometric/enums/node_visibility.dart';
 import 'package:amulet_client/isometric/ui/isometric_constants.dart';
-import 'package:amulet_client/isometric/atlases/atlas_nodes.dart';
-import 'package:amulet_client/isometric/atlases/atlas_src_nodes_y.dart';
 import 'package:amulet_client/isometric/functions/get_render.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
@@ -212,6 +212,8 @@ class RendererNodes extends RenderGroup {
               srcY = nodeTypeSrcY[nodeType];
 
               if (srcY != null) {
+
+
 
                 final visibility = nodeVisibility[nodeIndex];
                 if (visibility != NodeVisibility.invisible) {

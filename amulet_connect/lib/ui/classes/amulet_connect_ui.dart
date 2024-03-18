@@ -2,7 +2,7 @@
 import 'package:amulet/classes/amulet_connect.dart';
 import 'package:amulet/enums/src.dart';
 import 'package:amulet/ui/widgets/dialog_create_character_computer.dart';
-import 'package:amulet_client/amulet/amulet_client.dart';
+import 'package:amulet_client/classes/amulet_client.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_server/json/amulet_field.dart';
 import 'package:amulet_server/json/src.dart';

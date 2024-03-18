@@ -1,6 +1,6 @@
 import 'package:amulet_client/isometric/components/isometric_components.dart';
 import 'package:flutter/material.dart';
-import 'package:amulet_client/amulet/amulet.dart';
+import 'package:amulet_client/classes/amulet.dart';
 import 'package:amulet_client/isometric/components/isometric_environment.dart';
 import 'package:amulet_client/isometric/components/isometric_options.dart';
 import 'package:amulet_client/isometric/components/isometric_render.dart';

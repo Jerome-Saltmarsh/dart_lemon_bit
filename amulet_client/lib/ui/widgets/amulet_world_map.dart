@@ -1,5 +1,5 @@
 
-import 'package:amulet_client/amulet/amulet.dart';
+import 'package:amulet_client/classes/amulet.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/lemon_engine.dart';

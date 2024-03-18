@@ -1,5 +1,5 @@
+import 'package:amulet_client/extensions/double_extension.dart';
 import 'package:amulet_common/src.dart';
-import 'package:amulet_client/amulet/extensions.dart';
 
 String? getSkillTypeLevelDescription(SkillType skillType, int level) {
   switch (skillType) {
