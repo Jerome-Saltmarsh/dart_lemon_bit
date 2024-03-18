@@ -2,9 +2,9 @@
 
 import 'package:amulet/enums/src.dart';
 import 'package:amulet_client/isometric/ui/builders/build_watch.dart';
+import 'package:lemon_lang/src.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
-import 'package:amulet_client/packages/utils/format_enum_name.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 class GSButtonRegion extends StatelessWidget {
@@ -29,7 +29,7 @@ class GSButtonRegion extends StatelessWidget {
             width: 100,
             alignment: Alignment.center,
             color: Colors.white12,
-            child: buildText(formatEnumName(region.name)),
+            child: buildText(region.name.clean),
           ),
         ));
   }

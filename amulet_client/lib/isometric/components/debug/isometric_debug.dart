@@ -2,7 +2,7 @@
 import 'dart:typed_data';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/isometric/classes/particle_roam.dart';
-import 'package:amulet_client/packages/lemon_components/updatable.dart';
+import 'package:amulet_client/libs/lemon_components/updatable.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_watch/src.dart';

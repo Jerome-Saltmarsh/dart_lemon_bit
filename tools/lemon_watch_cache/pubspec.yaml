@@ -1,0 +1,11 @@
+name: lemon_watch_cache
+description: A starting point for Dart libraries or applications.
+version: 1.0.0
+
+environment:
+  sdk: ^3.2.6
+
+dependencies:
+   lemon_watch: ^1.1.1
+   shared_preferences: ^2.2.2
+

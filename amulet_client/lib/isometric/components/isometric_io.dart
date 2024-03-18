@@ -1,7 +1,7 @@
 
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/isometric/components/isometric_component.dart';
-import 'package:amulet_client/packages/lemon_components/src.dart';
+import 'package:amulet_client/libs/lemon_components/src.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_bit/src.dart';
 import 'package:lemon_byte/byte_writer.dart';

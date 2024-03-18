@@ -14,7 +14,6 @@ import 'package:golden_ratio/constants.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_client/isometric/components/isometric_component.dart';
-import 'package:amulet_client/packages/utils.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 
@@ -216,6 +215,7 @@ class IsometricUI with IsometricComponent {
           buildText(padZero(minutes), size: 22)),
     ],
   );
+
 
   int getItemTypeIconColor(int itemType){
     return const <int, int> {
@@ -564,4 +564,10 @@ class IsometricUI with IsometricComponent {
       child: child,
     );
   }
+}
+
+String padZero(num value) {
+  String t = value.toInt().toString();
+  if (t.length >= 2) return t;
+  return '0$t';
 }

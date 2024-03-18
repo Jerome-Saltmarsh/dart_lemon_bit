@@ -9,7 +9,7 @@ import 'package:amulet_client/isometric/classes/particle_whisp.dart';
 import 'package:amulet_client/isometric/components/isometric_scene.dart';
 import 'package:amulet_client/isometric/enums/node_visibility.dart';
 import 'package:amulet_client/isometric/ui/isometric_colors.dart';
-import 'package:amulet_client/packages/lemon_components.dart';
+import 'package:amulet_client/libs/lemon_components.dart';
 import 'package:lemon_math/src.dart';
 
 import '../../../isometric/classes/particle.dart';

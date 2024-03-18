@@ -8,7 +8,7 @@ import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_client/isometric/components/isometric_component.dart';
 import 'package:amulet_client/isometric/enums/cursor_type.dart';
-import 'package:amulet_client/packages/lemon_components.dart';
+import 'package:amulet_client/libs/lemon_components.dart';
 
 class IsometricOptions with IsometricComponent implements Updatable {
   var renderNorth = true;

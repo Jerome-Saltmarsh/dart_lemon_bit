@@ -1,5 +1,5 @@
 import 'package:amulet_common/src.dart';
-import 'package:amulet_client/packages/lemon_components/updatable.dart';
+import 'package:amulet_client/libs/lemon_components/updatable.dart';
 
 class IsometricAnimation implements Updatable {
   var frameWater = 0;

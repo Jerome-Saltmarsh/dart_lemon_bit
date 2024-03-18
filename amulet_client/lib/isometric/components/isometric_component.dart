@@ -10,7 +10,7 @@ import 'package:amulet_client/isometric/components/render/renderer_gameobjects.d
 import 'package:amulet_client/isometric/components/render/renderer_nodes.dart';
 import 'package:amulet_client/isometric/components/render/renderer_particles.dart';
 import 'package:amulet_client/isometric/components/render/renderer_projectiles.dart';
-import 'package:amulet_client/packages/lemon_components.dart';
+import 'package:amulet_client/libs/lemon_components.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
