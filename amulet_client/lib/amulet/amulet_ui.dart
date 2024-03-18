@@ -2126,19 +2126,16 @@ class AmuletUI {
       },
       child: buildWatch(options.windowOpenMenu, (bool menuVisible) =>
           Container(
+            padding: paddingAll8,
           color: menuVisible ? amulet.style.containerColor : Colors.transparent,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               height16,
               Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     buildSceneName(),
-                    // width8,
-                    // buildFiendCount(),
-                    // width16,
-                    // buildWatchBool(options.timeVisible, () => controlTime),
                     width32,
                     menuVisible ? buildIconCogTurned() : buildIconCog(),
                     width16,
@@ -2199,6 +2196,18 @@ class AmuletUI {
       );
 
   List<Widget> buildMenuVisible() => [
+       onPressed(
+         action: options.audio.enabledSound.toggle,
+         child: buildWatch(options.audio.enabledSound, (enabled) {
+           return buildText('Sound Enabled: $enabled');
+         }),
+       ),
+       onPressed(
+         action: options.audio.enabledMusic.toggle,
+         child: buildWatch(options.audio.enabledMusic, (enabled) {
+           return buildText('Music Enabled: $enabled');
+         }),
+       ),
        buildButtonDisconnect(),
     ];
 

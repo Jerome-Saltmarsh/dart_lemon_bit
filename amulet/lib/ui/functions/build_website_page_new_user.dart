@@ -1,8 +1,8 @@
 
-import 'package:amulet_connect/classes/amulet_app.dart';
-import 'package:amulet_connect/classes/connection_websocket.dart';
-import 'package:amulet_connect/ui/enums/website_page.dart';
-import 'package:amulet_connect/ui/widgets/gs_textfield.dart';
+import 'package:amulet/classes/amulet_app.dart';
+import 'package:amulet/classes/connection_websocket.dart';
+import 'package:amulet/ui/enums/website_page.dart';
+import 'package:amulet/ui/widgets/gs_textfield.dart';
 import 'package:amulet_client/isometric/consts/height.dart';
 import 'package:amulet_client/isometric/consts/width.dart';
 import 'package:amulet_client/isometric/ui/builders/build_watch.dart';

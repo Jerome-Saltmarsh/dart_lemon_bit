@@ -13,21 +13,22 @@ import 'package:lemon_watch/src.dart';
 
 class IsometricAudio with IsometricComponent implements Updatable {
 
-  late final mutedMusic = Watch(false, onChanged: (bool muted){
-    print('music muted: $muted');
-  });
+  final enabledMusic = WatchBool(true);
+  final enabledSound = WatchBool(true);
 
-  late final enabledSound = Watch(true, onChanged: (bool soundEnabled){
-    print('sound enabled: $soundEnabled');
-    for (final audioLoop in audioLoops) {
-      audioLoop.setVolume(0);
-      if (soundEnabled) {
-        audioLoop.audioPlayer.resume();
-      } else {
-        audioLoop.audioPlayer.pause();
+  IsometricAudio(){
+    enabledSound.onChanged((enabled) {
+      print('sound enabled: $enabled');
+      for (final audioLoop in audioLoops) {
+        audioLoop.setVolume(0);
+        if (enabled) {
+          audioLoop.audioPlayer.resume();
+        } else {
+          audioLoop.audioPlayer.pause();
+        }
       }
-    }
-  });
+    });
+  }
 
   var nextCharacterNoise = 100;
   var nextRandomSound = 0;
@@ -478,12 +479,8 @@ class IsometricAudio with IsometricComponent implements Updatable {
     audioSingle.play(volume: volume);
   }
 
-  void toggleMutedSound() => enabledSound.value = !enabledSound.value;
-
-  void toggleMutedMusic() => mutedMusic.value = !mutedMusic.value;
-
   void musicPlay(){
-    if (mutedMusic.value) return;
+    if (enabledMusic.value) return;
     // audioTracks.play();
   }
 
@@ -532,5 +529,5 @@ class IsometricAudio with IsometricComponent implements Updatable {
         _ => null
       };
 
-  double getVolumeMusic() => mutedMusic.value ? 0 : 1;
+  double getVolumeMusic() => enabledMusic.value ? 1 : 0;
 }

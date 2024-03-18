@@ -96,28 +96,28 @@ class IsometricUI with IsometricComponent {
      );
   }
 
-  Widget buildIconAudioSound() =>
-      onPressed(
-        hint: 'toggle sound',
-        action: audio.toggleMutedSound,
-        child: Container(
-          width: 32,
-          child: buildWatch(audio.enabledSound, (bool t) =>
-              buildAtlasIconType(t ? IconType.Sound_Enabled : IconType.Sound_Disabled, scale: Icon_Scale)
-          ),
-        ),
-      );
+  // Widget buildIconAudioSound() =>
+  //     onPressed(
+  //       hint: 'toggle sound',
+  //       action: audio.toggleMutedSound,
+  //       child: Container(
+  //         width: 32,
+  //         child: buildWatch(audio.enabledSound, (bool t) =>
+  //             buildAtlasIconType(t ? IconType.Sound_Enabled : IconType.Sound_Disabled, scale: Icon_Scale)
+  //         ),
+  //       ),
+  //     );
 
-  Widget buildIconAudioMusic() =>
-      onPressed(
-        hint: 'toggle music',
-        action: audio.toggleMutedMusic,
-        child: buildWatch(audio.mutedMusic, (bool musicMuted) =>
-            Container(
-                width: 32,
-                child: buildAtlasIconType(musicMuted ? IconType.Music_Disabled : IconType.Music_Enabled))
-        ),
-      );
+  // Widget buildIconAudioMusic() =>
+  //     onPressed(
+  //       hint: 'toggle music',
+  //       action: audio.toggleMutedMusic,
+  //       child: buildWatch(audio.mutedMusic, (bool musicMuted) =>
+  //           Container(
+  //               width: 32,
+  //               child: buildAtlasIconType(musicMuted ? IconType.Music_Disabled : IconType.Music_Enabled))
+  //       ),
+  //     );
 
   Widget buildIconFullscreen() => buildWatch(
       engine.fullScreen,
