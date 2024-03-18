@@ -124,7 +124,6 @@ class AmuletAppBuilder extends StatelessWidget {
 
 
     final body = maximize(
-      context: context,
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -149,7 +148,6 @@ class AmuletAppBuilder extends StatelessWidget {
     if (error == null) return nothing;
     const width = 300.0;
     return maximize(
-      context: context,
       alignment: Alignment.center,
       color: Colors.black26,
       child: Container(
