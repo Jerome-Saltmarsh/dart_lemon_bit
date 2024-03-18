@@ -436,26 +436,25 @@ class AmuletAppBuilder extends StatelessWidget {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            onPressed(
-              action: showPageNewCharacter,
-              child: Container(
-                  color: Colors.black12,
-                  width: 200,
-                  margin: const EdgeInsets.symmetric(vertical: 4),
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.all(4),
-                  child: buildText('NEW CHARACTER', color: Colors.orange)),
-            ),
-          ],
-        ),
+        buildButtonNewCharacter(),
+        height8,
         buildCharacters(characters, rebuild),
       ],
     ),
   );
+
+  Widget buildButtonNewCharacter() => onPressed(
+        action: showPageNewCharacter,
+        child: buildBorder(
+          color: Colors.black26,
+          width: 3,
+          child: Container(
+              color: Colors.black12,
+              alignment: Alignment.center,
+              padding: paddingAll8,
+              child: buildText('NEW CHARACTER', color: Colors.orange)),
+        ),
+      );
 
   Widget buildControlUser(ConnectionWebsocket serverRemote) => onPressed(
     action: serverRemote.logout,
