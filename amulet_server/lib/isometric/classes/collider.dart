@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:amulet_common/src.dart';
-import 'package:amulet_engine/isometric/consts/src.dart';
+import 'package:amulet_server/isometric/consts/src.dart';
 import 'package:lemon_math/src.dart';
 
 import 'character.dart';

@@ -1,6 +1,6 @@
 
-import 'package:amulet_engine/classes/amulet_fiend.dart';
-import 'package:amulet_engine/json/amulet_field.dart';
+import 'package:amulet_server/classes/amulet_fiend.dart';
+import 'package:amulet_server/json/amulet_field.dart';
 import 'package:lemon_json/src.dart';
 
 Json mapAmuletFiendToJson(AmuletFiend amuletFiend) => Json()

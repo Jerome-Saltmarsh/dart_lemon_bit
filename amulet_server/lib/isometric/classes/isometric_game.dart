@@ -1,10 +1,10 @@
 import 'dart:math';
 
 import 'package:amulet_common/src.dart';
-import 'package:amulet_engine/isometric/consts/frames_per_second.dart';
-import 'package:amulet_engine/isometric/consts/physics.dart';
-import 'package:amulet_engine/isometric/functions/copy_gameobjects.dart';
-import 'package:amulet_engine/src.dart';
+import 'package:amulet_server/isometric/consts/frames_per_second.dart';
+import 'package:amulet_server/isometric/consts/physics.dart';
+import 'package:amulet_server/isometric/functions/copy_gameobjects.dart';
+import 'package:amulet_server/src.dart';
 import 'package:lemon_lang/src.dart';
 import 'package:lemon_math/src.dart';
 

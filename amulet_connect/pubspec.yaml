@@ -10,8 +10,8 @@ dependencies:
   golden_ratio: 1.0.6
   flutter:
     sdk: flutter
-  amulet_engine:
-    path: ..\amulet_engine
+  amulet_server:
+    path: ..\amulet_server
   amulet_flutter:
     path: ..\amulet_flutter
   amulet_common:

@@ -1,6 +1,6 @@
 
 import 'package:amulet_common/src.dart';
-// import 'package:amulet_engine/json/src.dart';
+// import 'package:amulet_server/json/src.dart';
 import 'package:amulet_flutter/isometric/classes/connection.dart';
 import 'package:amulet_flutter/isometric/components/isometric_component.dart';
 import 'package:amulet_flutter/isometric/enums/mode.dart';

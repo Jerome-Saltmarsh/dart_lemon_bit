@@ -3,8 +3,8 @@
 import 'dart:convert';
 
 import 'package:amulet_common/src.dart';
-import 'package:amulet_engine/classes/amulet.dart';
-import 'package:amulet_engine/src.dart';
+import 'package:amulet_server/classes/amulet.dart';
+import 'package:amulet_server/src.dart';
 import 'package:amulet_flutter/isometric/classes/connection.dart';
 import 'package:amulet_flutter/isometric/components/isometric_parser.dart';
 import 'package:amulet_flutter/isometric/components/isometric_player.dart' as PlayerClient;

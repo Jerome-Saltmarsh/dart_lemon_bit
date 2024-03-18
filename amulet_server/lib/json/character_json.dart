@@ -1,5 +1,5 @@
 import 'package:amulet_common/src.dart';
-import 'package:amulet_engine/json/map_json_to_amulet_item_object.dart';
+import 'package:amulet_server/json/map_json_to_amulet_item_object.dart';
 import 'package:lemon_json/src.dart';
 
 import 'amulet_field.dart';

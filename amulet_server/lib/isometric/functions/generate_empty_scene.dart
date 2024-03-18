@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:amulet_common/src.dart';
-import 'package:amulet_engine/isometric/classes/scene.dart';
+import 'package:amulet_server/isometric/classes/scene.dart';
 
 
 Scene generateEmptyScene({

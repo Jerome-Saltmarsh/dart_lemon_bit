@@ -1,8 +1,8 @@
 
-import 'package:amulet_engine/classes/amulet_fiend.dart';
-import 'package:amulet_engine/classes/amulet_game.dart';
-import 'package:amulet_engine/io/scene_json_writer.dart';
-import 'package:amulet_engine/json/map_amulet_item_object_to_json.dart';
+import 'package:amulet_server/classes/amulet_fiend.dart';
+import 'package:amulet_server/classes/amulet_game.dart';
+import 'package:amulet_server/io/scene_json_writer.dart';
+import 'package:amulet_server/json/map_amulet_item_object_to_json.dart';
 import 'package:lemon_json/src.dart';
 
 import 'amulet_field.dart';

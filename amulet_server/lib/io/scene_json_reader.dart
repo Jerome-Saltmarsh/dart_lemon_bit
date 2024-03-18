@@ -5,10 +5,10 @@
 import 'dart:typed_data';
 
 import 'package:amulet_common/src.dart';
-import 'package:amulet_engine/isometric/classes/gameobject.dart';
-import 'package:amulet_engine/isometric/classes/scene.dart';
-import 'package:amulet_engine/isometric/instances/decoder.dart';
-import 'package:amulet_engine/json/amulet_field.dart';
+import 'package:amulet_server/isometric/classes/gameobject.dart';
+import 'package:amulet_server/isometric/classes/scene.dart';
+import 'package:amulet_server/isometric/instances/decoder.dart';
+import 'package:amulet_server/json/amulet_field.dart';
 import 'package:lemon_json/src.dart';
 
 Scene readSceneFromJson(Json json){

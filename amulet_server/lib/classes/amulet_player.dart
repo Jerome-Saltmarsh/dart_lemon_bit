@@ -2,9 +2,9 @@
 import 'dart:math';
 
 import 'package:amulet_common/src.dart';
-import 'package:amulet_engine/classes/mixins/mixin_can_upgrade.dart';
-import 'package:amulet_engine/classes/mixins/mixin_potions.dart';
-import 'package:amulet_engine/src.dart';
+import 'package:amulet_server/classes/mixins/mixin_can_upgrade.dart';
+import 'package:amulet_server/classes/mixins/mixin_potions.dart';
+import 'package:amulet_server/src.dart';
 import 'package:lemon_lang/src.dart';
 import 'package:lemon_math/src.dart';
 

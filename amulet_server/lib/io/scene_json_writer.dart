@@ -1,8 +1,8 @@
 
-import 'package:amulet_engine/isometric/classes/gameobject.dart';
-import 'package:amulet_engine/isometric/classes/scene.dart';
-import 'package:amulet_engine/isometric/instances/encoder.dart';
-import 'package:amulet_engine/json/amulet_field.dart';
+import 'package:amulet_server/isometric/classes/gameobject.dart';
+import 'package:amulet_server/isometric/classes/scene.dart';
+import 'package:amulet_server/isometric/instances/encoder.dart';
+import 'package:amulet_server/json/amulet_field.dart';
 import 'package:lemon_json/src.dart';
 
 Json writeSceneToJson(Scene scene){
