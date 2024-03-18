@@ -7,7 +7,7 @@ import 'package:amulet_client/isometric/components/render/renderer_characters.da
 import 'package:amulet_client/isometric/components/render/renderer_gameobjects.dart';
 import 'package:amulet_client/isometric/components/render/renderer_particles.dart';
 import 'package:amulet_client/isometric/ui/isometric_colors.dart';
-import 'package:amulet_client/libs/lemon_components.dart';
+import 'package:amulet_client/components.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 
 import 'isometric_options.dart';

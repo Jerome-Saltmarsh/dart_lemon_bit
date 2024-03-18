@@ -1,5 +1,5 @@
 
-import 'package:amulet_client/libs/lemon_components.dart';
+import 'package:amulet_client/components.dart';
 import 'package:lemon_math/src.dart';
 
 class IsometricLighting implements Updatable {

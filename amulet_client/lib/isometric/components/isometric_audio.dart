@@ -7,7 +7,7 @@ import 'package:amulet_client/isometric/classes/src.dart';
 import 'package:amulet_client/isometric/functions/get_render.dart';
 
 import 'package:amulet_client/isometric/components/isometric_component.dart';
-import 'package:amulet_client/libs/lemon_components.dart';
+import 'package:amulet_client/components/src.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_watch/src.dart';
 
