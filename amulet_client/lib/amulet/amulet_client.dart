@@ -119,7 +119,7 @@ class AmuletClient extends LemonEngine {
      print('amulet_client.onInit()');
      initializing = true;
      await components.init(sharedPreferences);
-     components.engine.fullScreenEnter();
+     // components.engine.fullScreenEnter();
      initialized = true;
    }
 

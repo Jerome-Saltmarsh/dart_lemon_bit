@@ -119,14 +119,14 @@ class IsometricUI with IsometricComponent {
   //       ),
   //     );
 
-  Widget buildIconFullscreen() => buildWatch(
-      engine.fullScreen,
-          (bool fullscreen) => onPressed(
-          hint: 'toggle fullscreen',
-          action: engine.fullscreenToggle,
-          child: Container(
-              width: 32,
-              child: buildAtlasIconType(IconType.Fullscreen, scale: Icon_Scale))));
+  // Widget buildIconFullscreen() => buildWatch(
+  //     engine.fullScreen,
+  //         (bool fullscreen) => onPressed(
+  //         hint: 'toggle fullscreen',
+  //         action: engine.fullscreenToggle,
+  //         child: Container(
+  //             width: 32,
+  //             child: buildAtlasIconType(IconType.Fullscreen, scale: Icon_Scale))));
 
   Widget buildIconZoom() => onPressed(
       action: actions.toggleZoom, child: buildAtlasIconType(IconType.Zoom, scale: Icon_Scale));

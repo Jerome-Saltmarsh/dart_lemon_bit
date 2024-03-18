@@ -8,6 +8,8 @@ environment:
 dependencies:
   intl: ^0.17.0
   golden_ratio: 1.0.6
+  window_manager: ^0.3.7
+  universal_io: ^2.2.2
   flutter:
     sdk: flutter
   amulet_server:

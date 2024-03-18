@@ -11,6 +11,7 @@ import 'package:golden_ratio/constants.dart';
 import 'package:lemon_json/src.dart';
 import 'package:lemon_lang/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
+import 'package:window_manager/window_manager.dart';
 
 import '../../classes/connection_websocket.dart';
 import '../../functions/get_server_mode_text.dart';
@@ -256,8 +257,9 @@ class AmuletAppBuilder extends StatelessWidget {
   Image buildImageMainHeader() => Image.asset('assets/images/main_header.png');
 
   Widget buildButtonExit() => onPressed(
-        child: buildText('EXIT'),
-      );
+    action: amuletApp.exitApplication,
+    child: buildText('EXIT'),
+  );
 
   Widget buildPageSelectConnection() => Row(
     mainAxisAlignment: MainAxisAlignment.center,

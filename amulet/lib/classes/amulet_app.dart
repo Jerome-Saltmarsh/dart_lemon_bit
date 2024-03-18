@@ -1,3 +1,4 @@
+
 import 'package:amulet/classes/connection_embedded.dart';
 import 'package:amulet/enums/src.dart';
 import 'package:amulet_client/amulet/amulet_client.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:universal_io/io.dart';
 
 import '../ui/enums/website_dialog.dart';
 import '../ui/enums/website_page.dart';
@@ -69,4 +71,6 @@ class AmuletApp {
     final sharedPreferences = await SharedPreferences.getInstance();
     await amuletClient.onInit(sharedPreferences);
   }
+
+  void exitApplication() => exit(0);
 }
