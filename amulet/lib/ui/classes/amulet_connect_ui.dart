@@ -1,5 +1,5 @@
 
-import 'package:amulet/classes/amulet_app.dart';
+import 'package:amulet/classes/amulet_connect.dart';
 import 'package:amulet/enums/src.dart';
 import 'package:amulet/ui/widgets/dialog_create_character_computer.dart';
 import 'package:amulet_common/src.dart';
@@ -20,11 +20,11 @@ import '../enums/website_page.dart';
 import 'package:lemon_watch/src.dart';
 
 
-class AmuletAppBuilder extends StatelessWidget {
+class AmuletConnectUI extends StatelessWidget {
 
-  final AmuletApp amuletApp;
+  final AmuletConnect amuletApp;
 
-  AmuletAppBuilder({super.key, required this.amuletApp});
+  AmuletConnectUI({super.key, required this.amuletApp});
 
   @override
   Widget build(BuildContext context) =>

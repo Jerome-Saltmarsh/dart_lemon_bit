@@ -1,5 +1,5 @@
 
-import 'package:amulet/classes/amulet_app.dart';
+import 'package:amulet/classes/amulet_connect.dart';
 import 'package:amulet/classes/connection_websocket.dart';
 import 'package:amulet/ui/enums/website_page.dart';
 import 'package:amulet/ui/widgets/gs_textfield.dart';
@@ -12,7 +12,7 @@ import 'package:lemon_widgets/lemon_widgets.dart';
 import 'package:lemon_watch/src.dart';
 
 
-Widget buildContainerAuthenticate(AmuletApp amuletApp, ConnectionWebsocket serverRemote){
+Widget buildContainerAuthenticate(AmuletConnect amuletApp, ConnectionWebsocket serverRemote){
   final loginPage = WatchBool(true);
   return GSContainer(
     width: 500,

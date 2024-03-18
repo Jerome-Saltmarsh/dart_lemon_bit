@@ -12,7 +12,7 @@ import 'package:universal_io/io.dart';
 import '../ui/enums/website_dialog.dart';
 import '../ui/enums/website_page.dart';
 
-class AmuletApp {
+class AmuletConnect {
   final websitePage = Watch(WebsitePage.Select_Character);
   final signInSuggestionVisible = Watch(false);
   final dialog = Watch(WebsiteDialog.Games);
@@ -29,7 +29,7 @@ class AmuletApp {
   final gameRunning = WatchBool(false);
   final AmuletClient amuletClient;
 
-  AmuletApp(this.amuletClient);
+  AmuletConnect(this.amuletClient);
 
 
   void onConnectionLost() {

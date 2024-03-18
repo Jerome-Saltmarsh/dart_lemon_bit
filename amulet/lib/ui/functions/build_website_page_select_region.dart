@@ -1,4 +1,4 @@
-import 'package:amulet/classes/amulet_app.dart';
+import 'package:amulet/classes/amulet_connect.dart';
 import 'package:amulet/enums/src.dart';
 import 'package:amulet_client/isometric/consts/font_size.dart';
 import 'package:amulet_client/isometric/consts/height.dart';
@@ -11,7 +11,7 @@ import '../enums/website_page.dart';
 
 
 Widget buildWebsitePageSelectRegion({
-  required AmuletApp amuletApp,
+  required AmuletConnect amuletApp,
 }) => Column(
   mainAxisAlignment: MainAxisAlignment.center,
   children: [
