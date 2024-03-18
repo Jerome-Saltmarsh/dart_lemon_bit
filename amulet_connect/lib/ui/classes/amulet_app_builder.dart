@@ -123,11 +123,15 @@ class AmuletAppBuilder extends StatelessWidget {
         });
 
 
-    final body = Stack(
-      children: [
-        Positioned(child: page),
-        Positioned(top: 0, left: 0, child: buildError(context))
-      ],
+    final body = maximize(
+      context: context,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Positioned(child: page),
+          Positioned(top: 0, left: 0, child: buildError(context))
+        ],
+      ),
     );
 
     return MaterialApp(
@@ -173,8 +177,7 @@ class AmuletAppBuilder extends StatelessWidget {
 
   });
 
-  Stack buildPageSelectCharacter(ServerMode serverMode) {
-    return Stack(
+  Stack buildPageSelectCharacter(ServerMode serverMode) => Stack(
               alignment: Alignment.center,
               children: [
                 Positioned(
@@ -225,7 +228,6 @@ class AmuletAppBuilder extends StatelessWidget {
                 ),
               ],
             );
-  }
 
   Stack buildPageNewCharacter(BuildContext context) {
     return Stack(
