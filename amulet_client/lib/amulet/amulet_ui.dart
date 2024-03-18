@@ -2129,7 +2129,7 @@ class AmuletUI {
             padding: paddingAll8,
           color: menuVisible ? amulet.style.containerColor : Colors.transparent,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               height16,
               Row(
@@ -2196,6 +2196,7 @@ class AmuletUI {
       );
 
   List<Widget> buildMenuVisible() => [
+       height16,
        onPressed(
          action: options.audio.enabledSound.toggle,
          child: buildWatch(options.audio.enabledSound, (enabled) {
@@ -2208,6 +2209,7 @@ class AmuletUI {
            return buildText('Music Enabled: $enabled');
          }),
        ),
+       height16,
        buildButtonDisconnect(),
     ];
 
