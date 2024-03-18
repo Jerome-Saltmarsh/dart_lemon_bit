@@ -15,7 +15,6 @@ dependencies:
   archive: ^3.3.6
   flutter_colorpicker: ^1.0.3
   file_picker: ^5.0.1
-  universal_html: ^2.0.8
   golden_ratio: 1.0.6
   lemon_watch: ^1.1.1
 
