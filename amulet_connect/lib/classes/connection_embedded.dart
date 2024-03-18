@@ -71,7 +71,7 @@ class ConnectionEmbedded implements Connection {
     );
     await amulet.construct(initializeUpdateTimer: true);
     playerServer = AmuletPlayer(
-        amuletGame: amulet.amuletGameLoading,
+        amuletGame: amulet.amuletGameVillage,
         itemLength: 6,
         x: 0,
         y: 0,
@@ -116,7 +116,7 @@ class ConnectionEmbedded implements Connection {
     playerServer.target = null;
     playerServer.interacting = false;
     playerServer.controlsEnabled = true;
-    playerServer.amuletGame = amulet.amuletGameLoading;
+    // playerServer.amuletGame = amulet.amuletGameLoading;
     playerServer.setDestinationToCurrentPosition();
     parser.amulet.clearAllState();
     amulet.updateTimer?.cancel();

@@ -13,8 +13,7 @@ enum AmuletScene {
   World_20 (level: 1),
   World_21 (level: 1),
   World_22 (level: 1),
-  Editor (level: 1),
-  Loading (level: 0);
+  Editor (level: 1);
 
   final int level;
   const AmuletScene({required this.level});

@@ -28,8 +28,11 @@ JEM
 SQUIDI
 
 [CHARACTERS]
-MOPPS
-    It is said that when one does stare into the void that the void does stare back
+MOPS
+    When one does look into the void it is said that the void does look back    
+    make of that what you will
+    It is said that when one does look into the void that the void does look back
+    when one does take care of the future it does become inevitable for the past to take care of the present
 
 [COMPANY NAMES]
 FLIPSIDE GAMES

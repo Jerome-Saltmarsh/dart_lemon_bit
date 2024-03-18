@@ -22,29 +22,6 @@ class Amulet {
   var fps = 45;
   var frame = 0;
 
-  late final amuletGameLoading = AmuletGame(
-      amulet: this,
-      fiendLevelMin: 0,
-      fiendLevelMax: 0,
-      scene: Scene(
-        name: 'loading',
-        nodeTypes: Uint8List(0),
-        nodeOrientations: Uint8List(0),
-        variations: Uint8List(0),
-        height: 0,
-        rows: 0,
-        columns: 0,
-        gameObjects: [],
-        marks: [],
-        keys: {},
-        locations: {},
-      ),
-      time: amuletTime,
-      environment: amuletEnvironment,
-      name: 'loading',
-      amuletScene: AmuletScene.Loading,
-  );
-
   final amuletTime = IsometricTime();
   final amuletEnvironment = IsometricEnvironment();
   final games = <AmuletGame>[];
