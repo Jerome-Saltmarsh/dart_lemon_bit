@@ -1,12 +1,12 @@
 
 import 'package:amulet_common/src.dart';
 import 'package:amulet_connect/enums/src.dart';
-import 'package:amulet_flutter/isometric/classes/connection.dart';
-import 'package:amulet_flutter/isometric/components/isometric_parser.dart';
+import 'package:amulet_client/isometric/classes/connection.dart';
+import 'package:amulet_client/isometric/components/isometric_parser.dart';
 import 'package:gamestream_http_client/src.dart';
 import 'package:lemon_json/src.dart';
 import 'package:lemon_watch/src.dart';
-import 'package:amulet_flutter/packages/lemon_websocket_client.dart';
+import 'package:amulet_client/packages/lemon_websocket_client.dart';
 
 class ConnectionWebsocket implements Connection {
 

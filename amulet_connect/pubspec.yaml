@@ -12,8 +12,8 @@ dependencies:
     sdk: flutter
   amulet_server:
     path: ..\amulet_server
-  amulet_flutter:
-    path: ..\amulet_flutter
+  amulet_client:
+    path: ..\amulet_client
   amulet_common:
     path: ..\amulet_common
   lemon_json:

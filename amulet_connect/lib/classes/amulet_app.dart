@@ -1,7 +1,7 @@
 import 'package:amulet_connect/classes/connection_embedded.dart';
 import 'package:amulet_connect/enums/src.dart';
-import 'package:amulet_flutter/amulet/amulet_client.dart';
-import 'package:amulet_flutter/isometric/classes/connection.dart';
+import 'package:amulet_client/amulet/amulet_client.dart';
+import 'package:amulet_client/isometric/classes/connection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lemon_watch/src.dart';
@@ -41,6 +41,7 @@ class AmuletApp {
         parser: amuletClient.components.responseReader,
         playerClient: amuletClient.components.player,
         sharedPreferences: sharedPreferences,
+        amuletClient: amuletClient,
       );
     });
   }

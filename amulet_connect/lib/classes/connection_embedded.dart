@@ -2,12 +2,13 @@
 
 import 'dart:convert';
 
+import 'package:amulet_client/amulet/amulet_client.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_server/classes/amulet.dart';
 import 'package:amulet_server/src.dart';
-import 'package:amulet_flutter/isometric/classes/connection.dart';
-import 'package:amulet_flutter/isometric/components/isometric_parser.dart';
-import 'package:amulet_flutter/isometric/components/isometric_player.dart' as PlayerClient;
+import 'package:amulet_client/isometric/classes/connection.dart';
+import 'package:amulet_client/isometric/components/isometric_parser.dart';
+import 'package:amulet_client/isometric/components/isometric_player.dart' as PlayerClient;
 import 'package:lemon_json/src.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,6 +26,7 @@ class ConnectionEmbedded implements Connection {
   late final PlayerClient.IsometricPlayer playerClient;
   late final AmuletController controller;
   late final Amulet amulet;
+  final AmuletClient amuletClient;
 
   Function onDisconnect;
 
@@ -35,6 +37,7 @@ class ConnectionEmbedded implements Connection {
     required this.parser,
     required this.playerClient,
     required this.sharedPreferences,
+    required this.amuletClient,
   });
 
   Future<List<Json>> getCharacters() async =>
@@ -193,7 +196,7 @@ class ConnectionEmbedded implements Connection {
     }
 
     ensureInitialized().then((value) {
-      playerClient.server.connection = this;
+      amuletClient.components.network.connection = this;
       writeJsonToAmuletPlayer(character, playerServer);
       playerServer.writePlayerMoved();
       amulet.resumeUpdateTimer();

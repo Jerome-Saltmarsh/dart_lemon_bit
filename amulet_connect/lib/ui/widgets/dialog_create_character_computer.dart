@@ -1,11 +1,11 @@
 import 'package:amulet_connect/ui/classes/amulet_app_builder.dart';
 import 'package:amulet_connect/ui/typedefs/create_character.dart';
 import 'package:amulet_common/src.dart';
-import 'package:amulet_flutter/isometric/src.dart';
+import 'package:amulet_client/isometric/src.dart';
 import 'package:flutter/material.dart';
-import 'package:amulet_flutter/amulet/ui/functions/build_color_wheel.dart';
-import 'package:amulet_flutter/amulet/ui/functions/render_character_sprites.dart';
-import 'package:amulet_flutter/isometric/components/isometric_components.dart';
+import 'package:amulet_client/amulet/ui/functions/build_color_wheel.dart';
+import 'package:amulet_client/amulet/ui/functions/render_character_sprites.dart';
+import 'package:amulet_client/isometric/components/isometric_components.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_lang/src.dart';

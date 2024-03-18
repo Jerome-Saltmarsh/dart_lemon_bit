@@ -5,7 +5,7 @@ import 'package:amulet_connect/ui/widgets/dialog_create_character_computer.dart'
 import 'package:amulet_common/src.dart';
 import 'package:amulet_server/json/amulet_field.dart';
 import 'package:amulet_server/json/src.dart';
-import 'package:amulet_flutter/isometric/src.dart';
+import 'package:amulet_client/isometric/src.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_json/src.dart';

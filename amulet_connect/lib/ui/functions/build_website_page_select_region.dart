@@ -1,9 +1,9 @@
 import 'package:amulet_connect/classes/amulet_app.dart';
 import 'package:amulet_connect/enums/src.dart';
-import 'package:amulet_flutter/isometric/consts/font_size.dart';
-import 'package:amulet_flutter/isometric/consts/height.dart';
+import 'package:amulet_client/isometric/consts/font_size.dart';
+import 'package:amulet_client/isometric/consts/height.dart';
 import 'package:flutter/material.dart';
-import 'package:amulet_flutter/isometric/ui/widgets/mouse_over.dart';
+import 'package:amulet_client/isometric/ui/widgets/mouse_over.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 import 'package:lemon_watch/src.dart';
 

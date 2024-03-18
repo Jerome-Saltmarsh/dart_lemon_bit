@@ -1,10 +1,10 @@
 
 
 import 'package:amulet_connect/enums/src.dart';
-import 'package:amulet_flutter/isometric/ui/builders/build_watch.dart';
+import 'package:amulet_client/isometric/ui/builders/build_watch.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
-import 'package:amulet_flutter/packages/utils/format_enum_name.dart';
+import 'package:amulet_client/packages/utils/format_enum_name.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 class GSButtonRegion extends StatelessWidget {
