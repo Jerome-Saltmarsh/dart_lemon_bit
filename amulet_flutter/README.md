@@ -27,6 +27,10 @@ ROMMY
 JEM
 SQUIDI
 
+[CHARACTERS]
+MOPPS
+    It is said that when one does stare into the void that the void does stare back
+
 [COMPANY NAMES]
 FLIPSIDE GAMES
 FALLOFF 

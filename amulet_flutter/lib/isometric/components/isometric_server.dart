@@ -108,10 +108,7 @@ class IsometricServer with IsometricComponent {
 
   void send(dynamic data) => connection?.send(data);
 
-  Future disconnect() async {
-    connection?.disconnect();
-    parser.amulet.clearAllState();
-  }
+  Future disconnect() async => connection?.disconnect();
 
   void onServerConnectionEstablished() {
     options.mode.value = Mode.play;

@@ -1,11 +1,8 @@
 import 'package:amulet_common/src.dart';
 
-const _srcX = 400.0;
-const iconSizeSkillType = 16.0;
-
 List<double> getSrcSkillType(SkillType skillType) =>
     switch (skillType) {
-      SkillType.None => const [_srcX, 0],
+      SkillType.None => const [400, 0, 32, 32],
       SkillType.Fire_Ball => const [416, 32],
       SkillType.Ice_Ball => const [416, 64],
       SkillType.Slash => const [416, 928],
@@ -16,8 +13,8 @@ List<double> getSrcSkillType(SkillType skillType) =>
       SkillType.Explode => const [416, 96, 32 ,32],
       SkillType.Split_Shot => const [416, 512, 32, 32],
       SkillType.Ice_Arrow => const [416, 732, 32, 32],
-      SkillType.Fire_Arrow => const [_srcX, 272, 32, 32],
-      SkillType.Attack_Speed => const [768, 64, 32, 32],
+      SkillType.Fire_Arrow => const [400, 272, 32, 32],
+      SkillType.Attack_Speed => const [416, 992, 32, 32],
       SkillType.Health_Steal => const [416, 576, 32, 32],
       SkillType.Magic_Steal => const [416, 768, 32, 32],
       SkillType.Critical_Hit =>  const [416, 448, 32, 32],

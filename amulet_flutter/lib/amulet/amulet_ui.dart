@@ -1261,11 +1261,12 @@ class AmuletUI {
 
   Widget buildIconSkillType(SkillType skillType, {double dstX = 0, double dstY = 0}) {
     final src = getSrcSkillType(skillType);
+    const size = 32.0;
     return buildAmuletImage(
           srcX: src[0],
           srcY: src[1],
-          width: 32,
-          height: 32,
+          width: src.tryGet(2) ?? size,
+          height: src.tryGet(3) ?? size,
           dstX: dstX,
           dstY: dstY,
     );
@@ -2144,7 +2145,7 @@ class AmuletUI {
                   ]
               ),
               if (menuVisible)
-                ...buildMenuOpen(),
+                ...buildMenuVisible(),
             ],
           ),
         )),
@@ -2197,11 +2198,13 @@ class AmuletUI {
         ],
       );
 
-  List<Widget> buildMenuOpen() {
-    return [
-
+  List<Widget> buildMenuVisible() => [
+       buildButtonDisconnect(),
     ];
-  }
+
+  Widget buildButtonDisconnect() => onPressed(
+      action: amulet.disconnect,
+      child: buildText('DISCONNECT'));
 }
 
 String formatFramesToSeconds(int frames){

@@ -303,11 +303,11 @@ class AmuletGameWorld11 extends AmuletGame {
     );
   }
 
-  void onInteractWithTraveller(AmuletPlayer player, AmuletNpc npc){
+  void onInteractWithTraveller(AmuletPlayer player, AmuletNpc npc) {
     switch (player.questMain){
       case QuestMain.Speak_With_Gareth:
         player.talk(
-            npc, 'The man who calls himself Gareth seems to carry a concerned look about him'
+            npc, 'it is said that when one does stare into the void that the void does stare back'
         );
         break;
       case QuestMain.Find_Witches_Lair:

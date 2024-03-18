@@ -687,6 +687,11 @@ class Amulet extends IsometricGame {
       );
 
   void onPotionConsumed() => audio.playSoundDrink();
+
+  void disconnect() {
+    server.disconnect();
+    clearAllState();
+  }
 }
 
 
