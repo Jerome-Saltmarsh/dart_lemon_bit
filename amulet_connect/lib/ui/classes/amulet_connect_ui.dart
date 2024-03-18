@@ -177,57 +177,59 @@ class AmuletConnectUI extends StatelessWidget {
 
   });
 
-  Stack buildPageSelectCharacter(ServerMode serverMode) => Stack(
-              alignment: Alignment.center,
-              children: [
-                Positioned(
-                  top: 8,
-                  right: 8,
-                  child: buildButtonExit(),
-                ),
-                Positioned(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      buildImageMainHeader(),
-                      height32,
-                      if (serverMode == ServerMode.local)
-                        buildWatch(amuletApp.connection, (connection) {
-
-                          if (connection == null){
-                            return buildPageSelectConnection();
-                          }
-
-                          return FutureBuilder(
-                            future: connection.getCharacters(),
-                            builder: (context, snapshot) {
-                              final data = snapshot.data;
-                              if (data == null) {
-                                return buildText('loading');
-                              }
-
-                              return buildTableCharacters(
-                                data,
-                                    (){}, // TODO
-                              );
-                            },
-                          );
-                        }),
-
-                      // if (serverMode == ServerMode.remote)
-                      // buildWatch(server.remote.userId, (userId) {
-                      //   final authenticated = userId.isNotEmpty;
-                      //   if (authenticated) {
-                      //     return buildContainerAuthenticated(server.remote);
-                      //   }
-                      //   return buildContainerAuthenticate(this, server.remote);
-                      // }),
-                    ],
+  Widget buildPageSelectCharacter(ServerMode serverMode) => maximize(
+    child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Positioned(
+                    top: 8,
+                    right: 8,
+                    child: buildButtonExit(),
                   ),
-                ),
-              ],
-            );
+                  Positioned(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        buildImageMainHeader(),
+                        height32,
+                        if (serverMode == ServerMode.local)
+                          buildWatch(amuletApp.connection, (connection) {
+
+                            if (connection == null){
+                              return buildPageSelectConnection();
+                            }
+
+                            return FutureBuilder(
+                              future: connection.getCharacters(),
+                              builder: (context, snapshot) {
+                                final data = snapshot.data;
+                                if (data == null) {
+                                  return buildText('loading');
+                                }
+
+                                return buildTableCharacters(
+                                  data,
+                                      (){}, // TODO
+                                );
+                              },
+                            );
+                          }),
+
+                        // if (serverMode == ServerMode.remote)
+                        // buildWatch(server.remote.userId, (userId) {
+                        //   final authenticated = userId.isNotEmpty;
+                        //   if (authenticated) {
+                        //     return buildContainerAuthenticated(server.remote);
+                        //   }
+                        //   return buildContainerAuthenticate(this, server.remote);
+                        // }),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+  );
 
   Stack buildPageNewCharacter(BuildContext context) {
     return Stack(
