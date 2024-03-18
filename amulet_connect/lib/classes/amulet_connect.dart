@@ -41,9 +41,9 @@ class AmuletConnect {
       connection.value = ConnectionEmbedded(
         onDisconnect: onConnectionLost,
         parser: amuletClient.components.responseReader,
-        playerClient: amuletClient.components.player,
+        clientPlayer: amuletClient.components.player,
         sharedPreferences: sharedPreferences,
-        amuletClient: amuletClient,
+        clientAmulet: amuletClient,
       );
     });
   }

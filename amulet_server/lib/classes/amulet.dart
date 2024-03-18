@@ -468,4 +468,11 @@ class Amulet {
      }
      throw Exception('amulet.findGame($amuletScene) - 404');
   }
+  
+  void stop(){
+    games.clear();
+    worldMap.clear();
+    updateTimer?.cancel();
+    timerRefreshUserCharacterLocks?.cancel();
+  }
 }

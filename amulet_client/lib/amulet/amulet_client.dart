@@ -40,21 +40,22 @@ import '../isometric/ui/game_isometric_minimap.dart';
 import '../isometric/ui/isometric_colors.dart';
 import 'amulet_ui.dart';
 
-class AmuletClient extends LemonEngine {
+class AmuletClient {
 
   late IsometricComponents components;
   var initializing = false;
   var initialized = false;
   late AmuletUI amuletUI;
+  final LemonEngine engine;
 
-  AmuletClient() : super(
-    title: 'AMULET',
-    themeData: ThemeData(fontFamily: 'VT323-Regular'),
-    backgroundColor: IsometricColors.Black,
+  AmuletClient(this.engine) : super(
+    // title: 'AMULET',
+    // themeData: ThemeData(fontFamily: 'VT323-Regular'),
+    // backgroundColor: IsometricColors.Black,
   ) {
-    zoomMin = 0.3;
+    engine.zoomMin = 0.3;
     components = IsometricComponents(
-      engine: this,
+      engine: engine,
       images: IsometricImages(),
       environment: IsometricEnvironment(),
       render: IsometricRender(),
@@ -97,8 +98,8 @@ class AmuletClient extends LemonEngine {
   Widget buildUI(BuildContext context) =>
        amuletUI.buildUI(context);
 
-  @override
-  void onDispose() => components.onDispose();
+  // @override
+  // void onDispose() => components.onDispose();
 
   @override
   void onDrawCanvas(Canvas canvas, Size size) {
@@ -129,16 +130,6 @@ class AmuletClient extends LemonEngine {
       return;
     }
     components.update(delta);
-  }
-
-  @override
-  void onScreenSizeChanged(
-      double previousWidth,
-      double previousHeight,
-      double newWidth,
-      double newHeight,
-  ) {
-
   }
 
   @override

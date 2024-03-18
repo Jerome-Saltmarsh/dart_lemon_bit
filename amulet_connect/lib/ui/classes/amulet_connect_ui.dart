@@ -2,15 +2,18 @@
 import 'package:amulet/classes/amulet_connect.dart';
 import 'package:amulet/enums/src.dart';
 import 'package:amulet/ui/widgets/dialog_create_character_computer.dart';
+import 'package:amulet_client/amulet/amulet_client.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_server/json/amulet_field.dart';
 import 'package:amulet_server/json/src.dart';
 import 'package:amulet_client/isometric/src.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
+import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_json/src.dart';
 import 'package:lemon_lang/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../classes/connection_websocket.dart';
 import '../../functions/get_server_mode_text.dart';
 import '../enums/website_dialog.dart';
@@ -18,65 +21,74 @@ import '../enums/website_page.dart';
 import 'package:lemon_watch/src.dart';
 
 
-class AmuletConnectUI extends StatelessWidget {
+class AmuletConnectUI extends LemonEngine {
 
-  final AmuletConnect amuletApp;
+  late final AmuletConnect amuletConnect;
 
-  AmuletConnectUI({super.key, required this.amuletApp});
+  AmuletClient get amuletClient => amuletConnect.amuletClient;
 
-  @override
-  Widget build(BuildContext context) =>
-      FutureBuilder(
-        future: initialize(),
-        builder: buildInitialize,
-      );
+  AmuletConnectUI() {
+    amuletConnect = AmuletConnect(AmuletClient(this));
+  }
 
-  Widget buildInitialize(BuildContext context, AsyncSnapshot snapshot) =>
-      snapshot.connectionState != ConnectionState.done
-          ? buildLoadingPage()
-          : buildWatchGameRunning(context);
+  // @override
+  // Widget build(BuildContext context) =>
+  //     FutureBuilder(
+  //       future: initialize(),
+  //       builder: buildInitialize,
+  //     );
+
+  // Widget buildInitialize(BuildContext context, AsyncSnapshot snapshot) =>
+  //     snapshot.connectionState != ConnectionState.done
+  //         ? doBuildLoadingPage()
+  //         : buildWatchGameRunning(context);
 
   Widget buildWatchGameRunning(BuildContext context){
     final mainMenu = buildMainMenu(context);
     return buildWatch(
-        amuletApp.gameRunning,
-            (gameRunning) => gameRunning ? amuletApp.amuletClient : mainMenu
+        amuletConnect.gameRunning,
+            (gameRunning) => gameRunning ? amuletConnect.amuletClient.buildUI(context) : mainMenu
     );
   }
 
-  Widget buildLoadingPage() =>
-      MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'LOADING AMULET',
-        theme: ThemeData(
-          fontFamily: 'VT323-Regular'
-        ),
-        home: Scaffold(
-          backgroundColor: Palette.black,
-          body: LoadingPage(images: amuletApp.amuletClient.components.images,),
-        ),
-      );
+  @override
+  Widget buildLoadingPage(BuildContext context) {
+    return LoadingPage(images: amuletConnect.amuletClient.components.images,);
+  }
 
-  Future initialize() => amuletApp.initialize();
+  // Widget doBuildLoadingPage() =>
+  //     MaterialApp(
+  //       debugShowCheckedModeBanner: false,
+  //       title: 'LOADING AMULET',
+  //       theme: ThemeData(
+  //         fontFamily: 'VT323-Regular'
+  //       ),
+  //       home: Scaffold(
+  //         backgroundColor: Palette.black,
+  //         body: LoadingPage(images: amuletApp.amuletClient.components.images,),
+  //       ),
+  //     );
+
+  // Future initialize() => amuletApp.initialize();
 
   void onChangedVisitCount(int value){
     print('visit-count: $value');
   }
 
   String formatDate(DateTime value){
-    return amuletApp.dateFormat.format(value.toLocal());
+    return amuletConnect.dateFormat.format(value.toLocal());
   }
 
   void setError(String message){
-    amuletApp.error.value = message;
+    amuletConnect.error.value = message;
   }
 
   void showWebsitePageRegion(){
-    amuletApp.websitePage.value = WebsitePage.Select_Region;
+    amuletConnect.websitePage.value = WebsitePage.Select_Region;
   }
 
   void showWebsitePageGames(){
-    amuletApp.websitePage.value = WebsitePage.Select_Character;
+    amuletConnect.websitePage.value = WebsitePage.Select_Character;
   }
 
   void connectToCustomGame(String customGame){
@@ -88,35 +100,35 @@ class AmuletConnectUI extends StatelessWidget {
   }
 
   void showDialogChangeRegion(){
-    amuletApp.dialog.value = WebsiteDialog.Change_Region;
+    amuletConnect.dialog.value = WebsiteDialog.Change_Region;
   }
 
   void showDialogSubscription(){
-    amuletApp.dialog.value = WebsiteDialog.Account;
+    amuletConnect.dialog.value = WebsiteDialog.Account;
   }
 
   void showDialogLogin(){
-    amuletApp.dialog.value = WebsiteDialog.Login;
+    amuletConnect.dialog.value = WebsiteDialog.Login;
   }
 
   void showDialogGames(){
-    amuletApp.dialog.value = WebsiteDialog.Games;
+    amuletConnect.dialog.value = WebsiteDialog.Games;
   }
 
   void closeErrorMessage(){
-    amuletApp.error.value = null;
+    amuletConnect.error.value = null;
   }
 
   void checkForLatestVersion() async {
-    amuletApp.operationStatus.value = OperationStatus.Checking_For_Updates;
+    amuletConnect.operationStatus.value = OperationStatus.Checking_For_Updates;
   }
 
-  void showPageNewCharacter() => amuletApp.websitePage.value = WebsitePage.New_Character;
+  void showPageNewCharacter() => amuletConnect.websitePage.value = WebsitePage.New_Character;
 
   Widget buildMainMenu(BuildContext context) {
-    return WatchBuilder(amuletApp.serverMode, (ServerMode serverMode) {
+    return WatchBuilder(amuletConnect.serverMode, (ServerMode serverMode) {
     final page = WatchBuilder(
-        amuletApp.websitePage,
+        amuletConnect.websitePage,
             (websitePage) => switch (websitePage) {
           WebsitePage.Select_Character =>
               buildPageSelectCharacter(serverMode),
@@ -146,7 +158,7 @@ class AmuletConnectUI extends StatelessWidget {
   });
   }
 
-  Widget buildError(BuildContext context) => buildWatch(amuletApp.error, (error) {
+  Widget buildError(BuildContext context) => buildWatch(amuletConnect.error, (error) {
     if (error == null) return nothing;
     const width = 300.0;
     return maximize(
@@ -164,7 +176,7 @@ class AmuletConnectUI extends StatelessWidget {
                 bottom: 8,
                 right: 8,
                 child: onPressed(
-                  action: amuletApp.clearError,
+                  action: amuletConnect.clearError,
                   child: Container(
                     color: Colors.white12,
                       padding: const EdgeInsets.all(8),
@@ -194,7 +206,7 @@ class AmuletConnectUI extends StatelessWidget {
                         buildImageMainHeader(),
                         height32,
                         if (serverMode == ServerMode.local)
-                          buildWatch(amuletApp.connection, (connection) {
+                          buildWatch(amuletConnect.connection, (connection) {
 
                             if (connection == null){
                               return buildPageSelectConnection();
@@ -237,7 +249,7 @@ class AmuletConnectUI extends StatelessWidget {
           children: [
             DialogCreateCharacterComputer(
               app: this,
-              createCharacter: amuletApp.connection.value?.createNewCharacter ?? (throw Exception()),
+              createCharacter: amuletConnect.connection.value?.createNewCharacter ?? (throw Exception()),
               onCreated: showPageSelectCharacter,
             ),
             Positioned(
@@ -260,7 +272,7 @@ class AmuletConnectUI extends StatelessWidget {
   Image buildImageMainHeader() => Image.asset('assets/images/main_header.png');
 
   Widget buildButtonExit() => onPressed(
-    action: amuletApp.exitApplication,
+    action: amuletConnect.exitApplication,
     child: buildText('EXIT'),
   );
 
@@ -268,7 +280,7 @@ class AmuletConnectUI extends StatelessWidget {
     mainAxisAlignment: MainAxisAlignment.center,
       children: [
         onPressed(
-            action: amuletApp.setConnectionSinglePlayer,
+            action: amuletConnect.setConnectionSinglePlayer,
             child: buildText('Singleplayer')),
         width32,
         buildText('Multiplayer', color: Colors.white38),
@@ -276,7 +288,7 @@ class AmuletConnectUI extends StatelessWidget {
     );
 
   Widget buildTogglePlayMode() => WatchBuilder(
-      amuletApp.serverMode,
+      amuletConnect.serverMode,
       (activeServerMode) => Container(
             width: 500,
             child: Row(
@@ -284,7 +296,7 @@ class AmuletConnectUI extends StatelessWidget {
               children: [
                 ...ServerMode.values.map((serverMode) {
                   return onPressed(
-                    action: () => this.amuletApp.serverMode.value = serverMode,
+                    action: () => this.amuletConnect.serverMode.value = serverMode,
                     child: Container(
                       alignment: Alignment.center,
                       width: 80,
@@ -371,7 +383,7 @@ class AmuletConnectUI extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               onPressed(
-                                action: () => amuletApp.playCharacter(uuid),
+                                action: () => amuletConnect.playCharacter(uuid),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
@@ -485,5 +497,32 @@ class AmuletConnectUI extends StatelessWidget {
     //     });
   }
 
-  void showPageSelectCharacter() => amuletApp.websitePage.value = WebsitePage.Select_Character;
+  void showPageSelectCharacter() => amuletConnect.websitePage.value = WebsitePage.Select_Character;
+
+  @override
+  Widget buildUI(BuildContext context) {
+    return buildWatchGameRunning(context);
+  }
+
+  @override
+  void onDispose() {
+    // return amuletClient.onDisp(canvas, size);
+  }
+
+  @override
+  void onDrawCanvas(Canvas canvas, Size size) {
+    if (!amuletConnect.gameRunning.value) return;
+    return amuletClient.onDrawCanvas(canvas, size);
+  }
+
+  @override
+  Future onInit(SharedPreferences sharedPreferences) {
+    return amuletClient.onInit(sharedPreferences);
+  }
+
+  @override
+  void onUpdate(double delta) {
+    if (!amuletConnect.gameRunning.value) return;
+    amuletConnect.amuletClient.onUpdate(delta);
+  }
 }

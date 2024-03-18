@@ -22,11 +22,11 @@ class ConnectionEmbedded implements Connection {
   final IsometricParser parser;
   final SharedPreferences sharedPreferences;
 
-  late final AmuletPlayer playerServer;
-  late final PlayerClient.IsometricPlayer playerClient;
-  late final AmuletController controller;
-  late final Amulet amulet;
-  final AmuletClient amuletClient;
+  late final AmuletPlayer serverPlayer;
+  late final PlayerClient.IsometricPlayer clientPlayer;
+  late final AmuletController serverRequestParser;
+  late final Amulet serverAmulet;
+  final AmuletClient clientAmulet;
 
   Function onDisconnect;
 
@@ -35,9 +35,9 @@ class ConnectionEmbedded implements Connection {
   ConnectionEmbedded({
     required this.onDisconnect,
     required this.parser,
-    required this.playerClient,
+    required this.clientPlayer,
     required this.sharedPreferences,
-    required this.amuletClient,
+    required this.clientAmulet,
   });
 
   Future<List<Json>> getCharacters() async =>
@@ -53,11 +53,11 @@ class ConnectionEmbedded implements Connection {
     if (!initialized){
       return;
     }
-    parser.add(playerServer.compile());
+    parser.add(serverPlayer.compile());
   }
 
   void send(dynamic data) {
-     controller.onData(data);
+     serverRequestParser.onData(data);
   }
 
   Future ensureInitialized() async {
@@ -66,22 +66,22 @@ class ConnectionEmbedded implements Connection {
     }
     final scenes = AmuletScenesFlutter();
 
-    amulet = Amulet(
+    serverAmulet = Amulet(
       onFixedUpdate: onFixedUpdate,
       isLocalMachine: true,
       scenes: scenes,
       fps: 45,
     );
-    await amulet.construct(initializeUpdateTimer: true);
-    playerServer = AmuletPlayer(
-        amuletGame: amulet.amuletGameVillage,
+    await serverAmulet.construct(initializeUpdateTimer: true);
+    serverPlayer = AmuletPlayer(
+        amuletGame: serverAmulet.amuletGameVillage,
         itemLength: 6,
         x: 0,
         y: 0,
         z: 0,
     );
-    controller = AmuletController(
-      player: playerServer,
+    serverRequestParser = AmuletController(
+      player: serverPlayer,
       isAdmin: true,
       sink: parser,
       handleClientRequestJoin: handleClientRequestJoin,
@@ -96,39 +96,35 @@ class ConnectionEmbedded implements Connection {
   Future disconnect() async {
     await persistPlayerServer();
     connected = false;
-    amulet.games.clear();
-    amulet.worldMap.clear();
-    playerServer.flags.clear();
-    playerServer.sceneShrinesUsed.clear();
-    playerServer.clearCache();
-    playerServer.x = 0.0;
-    playerServer.y = 0;
-    playerServer.z = 0;
-    playerServer.mouseX = 0;
-    playerServer.mouseY = 0;
-    playerServer.positionCacheX = 0;
-    playerServer.positionCacheY = 0;
-    playerServer.positionCacheZ = 0;
-    playerServer.screenLeft = 0;
-    playerServer.screenTop = 0;
-    playerServer.screenRight = 0;
-    playerServer.screenBottom = 0;
-    playerServer.sceneDownloaded = false;
-    playerServer.initialized = false;
-    playerServer.characterState = CharacterState.Idle;
-    playerServer.target = null;
-    playerServer.interacting = false;
-    playerServer.controlsEnabled = true;
-    // playerServer.amuletGame = amulet.amuletGameLoading;
-    playerServer.setDestinationToCurrentPosition();
+    serverAmulet.stop();
+    serverPlayer.flags.clear();
+    serverPlayer.sceneShrinesUsed.clear();
+    serverPlayer.clearCache();
+    serverPlayer.x = 0.0;
+    serverPlayer.y = 0;
+    serverPlayer.z = 0;
+    serverPlayer.mouseX = 0;
+    serverPlayer.mouseY = 0;
+    serverPlayer.positionCacheX = 0;
+    serverPlayer.positionCacheY = 0;
+    serverPlayer.positionCacheZ = 0;
+    serverPlayer.screenLeft = 0;
+    serverPlayer.screenTop = 0;
+    serverPlayer.screenRight = 0;
+    serverPlayer.screenBottom = 0;
+    serverPlayer.sceneDownloaded = false;
+    serverPlayer.initialized = false;
+    serverPlayer.characterState = CharacterState.Idle;
+    serverPlayer.target = null;
+    serverPlayer.interacting = false;
+    serverPlayer.controlsEnabled = true;
+    serverPlayer.setDestinationToCurrentPosition();
     parser.amulet.clearAllState();
-    amulet.updateTimer?.cancel();
-    amulet.timerRefreshUserCharacterLocks?.cancel();
     onDisconnect();
   }
 
   Future persistPlayerServer(){
-    final playerJson = writeAmuletPlayerToJson(playerServer);
+    final playerJson = writeAmuletPlayerToJson(serverPlayer);
     final characters = getCharacterSync();
     final index = characters.indexWhere((element) => element.uuid == playerJson.uuid);
     if (index != -1){
@@ -154,23 +150,23 @@ class ConnectionEmbedded implements Connection {
     if (name == FIELD_CHARACTERS) {
       throw Exception('invalid field name');
     }
-    playerServer.difficulty = difficulty;
-    playerServer.uuid = generateUUID();
-    playerServer.name = name;
-    playerServer.complexion = complexion;
-    playerServer.hairType = hairType;
-    playerServer.hairColor = hairColor;
-    playerServer.gender = gender;
-    playerServer.headType = headType;
-    playerServer.uuid = generateUUID();
+    serverPlayer.difficulty = difficulty;
+    serverPlayer.uuid = generateUUID();
+    serverPlayer.name = name;
+    serverPlayer.complexion = complexion;
+    serverPlayer.hairType = hairType;
+    serverPlayer.hairColor = hairColor;
+    serverPlayer.gender = gender;
+    serverPlayer.headType = headType;
+    serverPlayer.uuid = generateUUID();
     parser.amulet.windowVisibleQuests.value = true;
-    amulet.resetPlayer(playerServer);
+    serverAmulet.resetPlayer(serverPlayer);
     parser.amulet.onNewCharacterCreated();
-    final json = writeAmuletPlayerToJson(playerServer);
+    final json = writeAmuletPlayerToJson(serverPlayer);
     final characters = getCharacterSync();
     characters.add(json);
     await persistCharacters(characters);
-    playCharacter(playerServer.uuid);
+    playCharacter(serverPlayer.uuid);
   }
 
   Future persistCharacters(List<Json> characters) =>
@@ -196,10 +192,10 @@ class ConnectionEmbedded implements Connection {
     }
 
     ensureInitialized().then((value) {
-      amuletClient.components.network.connection = this;
-      writeJsonToAmuletPlayer(character, playerServer);
-      playerServer.writePlayerMoved();
-      amulet.resumeUpdateTimer();
+      clientAmulet.components.network.connection = this;
+      writeJsonToAmuletPlayer(character, serverPlayer);
+      serverPlayer.writePlayerMoved();
+      serverAmulet.resumeUpdateTimer();
       parser.server.onServerConnectionEstablished();
       connected = true;
     });
