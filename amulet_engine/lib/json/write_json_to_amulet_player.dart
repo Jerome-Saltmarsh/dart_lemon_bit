@@ -16,7 +16,7 @@ void writeJsonToAmuletPlayer(
 
   final jsonAmulet = json.getChild('amulet');
   final amuletSceneName = json['amulet_scene_name'];
-  final amuletScene = AmuletScene.findByName(amuletSceneName);
+  final amuletScene = AmuletScene.findByName(amuletSceneName) ?? AmuletScene.Village;
   player.amuletGame = amulet.findGame(amuletScene);
   player.equippedWeapon = mapJsonToAmuletItemObject(json[AmuletField.Equipped_Weapon]);
   player.equippedHelm = mapJsonToAmuletItemObject(json[AmuletField.Equipped_Helm]);
