@@ -51,7 +51,7 @@ class AmuletAppBuilder extends StatelessWidget {
         title: 'LOADING AMULET',
         home: Scaffold(
           backgroundColor: Palette.black,
-          body: buildText('LOADING AMULET'),
+          body: LoadingPage(images: amuletApp.amuletClient.components.images,),
         ),
       );
 

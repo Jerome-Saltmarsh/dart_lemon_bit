@@ -13,10 +13,7 @@ class LoadingPage extends StatelessWidget {
   const LoadingPage({super.key, required this.images});
 
   @override
-  Widget build(BuildContext context) {
-    final totalImages = buildWatch(images.totalImages, buildText);
-    final totalImagesLoaded = buildWatch(images.totalImagesLoaded, buildText);
-    return Container(
+  Widget build(BuildContext context) => Container(
       color: IsometricColors.Black,
       alignment: Alignment.center,
       child: Column(
@@ -25,15 +22,9 @@ class LoadingPage extends StatelessWidget {
         children: [
           buildText('AMULET', size: 25),
           height16,
-          // Image.asset('assets/images/loading-icon.png'),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // buildText('Images '),
-              // totalImagesLoaded,
-              // buildText('/'),
-              // totalImages,
-              // width8,
               buildBorder(
                 color: Colors.white,
                 padding: const EdgeInsets.all(4),
@@ -55,5 +46,4 @@ class LoadingPage extends StatelessWidget {
         ],
       ),
     );
-  }
 }
