@@ -2200,13 +2200,25 @@ class AmuletUI {
        onPressed(
          action: options.audio.enabledSound.toggle,
          child: buildWatch(options.audio.enabledSound, (enabled) {
-           return buildText('Sound Enabled: $enabled');
+           return Row(
+             children: [
+               buildText('Sound $enabled'),
+               width8,
+               buildIconCheckBox(enabled),
+             ],
+           );
          }),
        ),
        onPressed(
          action: options.audio.enabledMusic.toggle,
          child: buildWatch(options.audio.enabledMusic, (enabled) {
-           return buildText('Music Enabled: $enabled');
+           return Row(
+             children: [
+               buildText('Music $enabled'),
+               width8,
+               buildIconCheckBox(enabled),
+             ],
+           );
          }),
        ),
        height16,
