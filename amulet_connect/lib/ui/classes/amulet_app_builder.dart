@@ -350,46 +350,61 @@ class AmuletAppBuilder extends StatelessWidget {
                 final difficulty = Difficulty.values.tryGet(character.tryGetInt(AmuletField.Difficulty)) ?? Difficulty.Normal;
                 final uuid = character.getString('uuid');
 
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    onPressed(
-                      action: () => amuletApp.playCharacter(uuid),
-                      child: Container(
-                          alignment: Alignment.center,
-                          width: 360,
-                          color: Colors.white12,
-                          padding: const EdgeInsets.all(4),
-                          margin: const EdgeInsets.only(bottom: 4),
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 4),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      buildBorder(
+                        color: Colors.black26,
+                        width: 4,
+                        child: Container(
+                          width: 250,
+                          color: Colors.black12,
+                          padding: paddingAll8,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  buildText(character['name'], size: 22),
-                                  buildText(difficulty.name),
-                                ],
+                              onPressed(
+                                action: () => amuletApp.playCharacter(uuid),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        buildText(character['name'], size: 22),
+                                        buildText(difficulty.name),
+                                      ],
+                                    ),
+                                    // Row(
+                                    //   mainAxisAlignment: MainAxisAlignment.center,
+                                    //   children: [
+                                    //     buildContainerAmuletItem(amuletItem: weapon),
+                                    //     buildContainerAmuletItem(amuletItem: helm),
+                                    //     buildContainerAmuletItem(amuletItem: armour),
+                                    //     buildContainerAmuletItem(amuletItem: shoes),
+                                    //   ],
+                                    // )
+                                  ],
+                                ),
                               ),
-                              // Row(
-                              //   mainAxisAlignment: MainAxisAlignment.center,
-                              //   children: [
-                              //     buildContainerAmuletItem(amuletItem: weapon),
-                              //     buildContainerAmuletItem(amuletItem: helm),
-                              //     buildContainerAmuletItem(amuletItem: armour),
-                              //     buildContainerAmuletItem(amuletItem: shoes),
-                              //   ],
-                              // )
+                              if (characterIsLocked(character))
+                                buildText('LOCKED', color: Colors.red),
                             ],
-                          )),
-                    ),
-                    if (characterIsLocked(character))
-                      buildText('LOCKED', color: Colors.red),
-                    onPressed(
-                      action: () => showDialogDeleteCharacter(character, onDeleted: rebuild),
-                      child: buildText('delete'),
-                    ),
-                  ],
+                          ),
+                        ),
+                      ),
+                      width16,
+                      onPressed(
+                        action: () => showDialogDeleteCharacter(character, onDeleted: rebuild),
+                        child: Container(
+                            padding: paddingAll8,
+                            color: Colors.white12,
+                            child: buildText('delete')),
+                      ),
+                    ],
+                  ),
                 );
               })
                   .toList(growable: false)),
@@ -428,7 +443,7 @@ class AmuletAppBuilder extends StatelessWidget {
             onPressed(
               action: showPageNewCharacter,
               child: Container(
-                  color: Colors.white12,
+                  color: Colors.black12,
                   width: 200,
                   margin: const EdgeInsets.symmetric(vertical: 4),
                   alignment: Alignment.centerLeft,
