@@ -11,8 +11,6 @@ import 'package:golden_ratio/constants.dart';
 import 'package:lemon_json/src.dart';
 import 'package:lemon_lang/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
-import 'package:window_manager/window_manager.dart';
-
 import '../../classes/connection_websocket.dart';
 import '../../functions/get_server_mode_text.dart';
 import '../enums/website_dialog.dart';
@@ -50,6 +48,9 @@ class AmuletConnectUI extends StatelessWidget {
       MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'LOADING AMULET',
+        theme: ThemeData(
+          fontFamily: 'VT323-Regular'
+        ),
         home: Scaffold(
           backgroundColor: Palette.black,
           body: LoadingPage(images: amuletApp.amuletClient.components.images,),
