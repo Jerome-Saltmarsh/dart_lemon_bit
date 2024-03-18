@@ -66,6 +66,6 @@ class AmuletApp {
 
   Future initialize() async {
     final sharedPreferences = await SharedPreferences.getInstance();
-    return amuletClient.onInit(sharedPreferences);
+    await amuletClient.onInit(sharedPreferences);
   }
 }

@@ -55,9 +55,7 @@ class AmuletAppBuilder extends StatelessWidget {
         ),
       );
 
-  Future initialize()  {
-     return amuletApp.initialize();
-  }
+  Future initialize() => amuletApp.initialize();
 
   void onChangedVisitCount(int value){
     print('visit-count: $value');
