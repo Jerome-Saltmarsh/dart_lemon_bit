@@ -16,9 +16,6 @@ dependencies:
   flutter_colorpicker: ^1.0.3
   file_picker: ^5.0.1
   universal_html: ^2.0.8
-  web_socket_channel: ^2.1.0
-  shelf_web_socket: ^1.0.1
-  shelf_router: ^1.1.2
   golden_ratio: 1.0.6
   http: ^1.1.2
   intl: ^0.17.0
