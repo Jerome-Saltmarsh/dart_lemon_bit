@@ -26,22 +26,34 @@ class AmuletAppBuilder extends StatelessWidget {
   AmuletAppBuilder({super.key, required this.amuletApp});
 
   @override
-  Widget build(BuildContext context) {
-    initialize();
-    final mainMenu = MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'AMULET',
-      home: Scaffold(
-        backgroundColor: Palette.black,
-        body: buildMainMenu(context),
-      ),
-    );
+  Widget build(BuildContext context) =>
+      FutureBuilder(
+        future: initialize(),
+        builder: buildInitialize,
+      );
 
+  Widget buildInitialize(BuildContext context, AsyncSnapshot snapshot) =>
+      snapshot.connectionState != ConnectionState.done
+          ? buildLoadingPage()
+          : buildWatchGameRunning(context);
+
+  Widget buildWatchGameRunning(BuildContext context){
+    final mainMenu = buildMainMenu(context);
     return buildWatch(
         amuletApp.gameRunning,
-        (gameRunning) => gameRunning ? amuletApp.amuletClient : mainMenu
+            (gameRunning) => gameRunning ? amuletApp.amuletClient : mainMenu
     );
   }
+
+  Widget buildLoadingPage() =>
+      MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'LOADING AMULET',
+        home: Scaffold(
+          backgroundColor: Palette.black,
+          body: buildText('LOADING AMULET'),
+        ),
+      );
 
   Future initialize()  {
      return amuletApp.initialize();
@@ -101,13 +113,7 @@ class AmuletAppBuilder extends StatelessWidget {
 
   void showPageNewCharacter() => amuletApp.websitePage.value = WebsitePage.New_Character;
 
-  // Widget buildScaffoldBody(BuildContext context) {
-  //   final mainMenu = buildMainMenu(context);
-  //   return buildWatch(amuletApp.gameRunning, (gameRunning) =>
-  //     gameRunning ? amuletApp.amuletClient : mainMenu);
-  // }
-
-  WatchBuilder<ServerMode> buildMainMenu(BuildContext context) {
+  Widget buildMainMenu(BuildContext context) {
     return WatchBuilder(amuletApp.serverMode, (ServerMode serverMode) {
     final page = WatchBuilder(
         amuletApp.websitePage,
@@ -118,11 +124,21 @@ class AmuletAppBuilder extends StatelessWidget {
           WebsitePage.Select_Region => throw Exception(),
         });
 
-    return Stack(
+
+    final body = Stack(
       children: [
         Positioned(child: page),
         Positioned(top: 0, left: 0, child: buildError(context))
       ],
+    );
+
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'AMULET',
+      home: Scaffold(
+        backgroundColor: Palette.black,
+        body: body,
+      ),
     );
   });
   }
