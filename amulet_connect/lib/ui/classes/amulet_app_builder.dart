@@ -430,8 +430,8 @@ class AmuletAppBuilder extends StatelessWidget {
     return lockDuration.inSeconds <= durationAutoSave.inSeconds;
   }
 
-  Widget buildTableCharacters(List<Json> characters, Function rebuild) => GSContainer(
-    color: Colors.black12,
+  Widget buildTableCharacters(List<Json> characters, Function rebuild) => Container(
+    // color: Colors.black12,
     width: 500,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,

@@ -1259,8 +1259,17 @@ class AmuletUI {
   Widget buildIconSlotType(SlotType slotType) =>
       buildAmuletImageSrc(getSrcSlotType(slotType));
 
-  Widget buildIconSkillType(SkillType skillType, {double dstX = 0, double dstY = 0}) =>
-      buildAmuletImageSrc(getSrcSkillType(skillType), dstX: dstX, dstY: dstY);
+  Widget buildIconSkillType(SkillType skillType, {double dstX = 0, double dstY = 0}) {
+    final src = getSrcSkillType(skillType);
+    return buildAmuletImage(
+          srcX: src[0],
+          srcY: src[1],
+          width: 32,
+          height: 32,
+          dstX: dstX,
+          dstY: dstY,
+    );
+  }
 
   Widget buildCardLargeAmuletItemObject(AmuletItemObject amuletItemObject) {
 
