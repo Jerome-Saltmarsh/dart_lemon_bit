@@ -1,8 +1,8 @@
 import 'package:amulet_common/src.dart';
-import 'package:amulet_client/isometric/classes/position.dart';
+import 'package:amulet_client/classes/position.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_lang/src.dart';
-import '../../isometric/enums/emission_type.dart';
+import '../isometric/enums/emission_type.dart';
 
 class GameObject extends Position {
   final int id;

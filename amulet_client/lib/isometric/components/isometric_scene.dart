@@ -4,15 +4,15 @@ import 'dart:typed_data';
 
 
 import 'package:amulet_common/src.dart';
-import 'package:amulet_client/isometric/classes/particle_roam.dart';
+import 'package:amulet_client/classes/particle_roam.dart';
 import 'package:amulet_client/isometric/components/isometric_component.dart';
 import 'package:amulet_client/isometric/enums/emission_type.dart';
 import 'package:amulet_client/isometric/enums/node_visibility.dart';
 import 'package:amulet_client/isometric/ui/isometric_colors.dart';
 import 'package:amulet_client/isometric/ui/isometric_constants.dart';
-import 'package:amulet_client/isometric/classes/character.dart';
-import 'package:amulet_client/isometric/classes/gameobject.dart';
-import 'package:amulet_client/isometric/classes/projectile.dart';
+import 'package:amulet_client/classes/character.dart';
+import 'package:amulet_client/classes/gameobject.dart';
+import 'package:amulet_client/classes/projectile.dart';
 import 'package:amulet_client/isometric/consts/map_projectile_type_to_emission_ambient.dart';
 import 'package:amulet_client/isometric/functions/get_render.dart';
 import 'package:amulet_client/isometric/functions/sign_to_byte.dart';
@@ -21,7 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_watch/src.dart';
 
-import '../../../isometric/classes/position.dart';
+import '../../classes/position.dart';
 import 'functions/convert_seconds_to_ambient_alpha.dart';
 import 'render/classes/bool_list.dart';
 import 'render/functions/merge_32_bit_colors.dart';

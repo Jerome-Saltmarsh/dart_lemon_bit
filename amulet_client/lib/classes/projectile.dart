@@ -1,5 +1,5 @@
 
-import 'package:amulet_client/isometric/classes/position.dart';
+import 'package:amulet_client/classes/position.dart';
 
 class Projectile extends Position {
   var type = 0;

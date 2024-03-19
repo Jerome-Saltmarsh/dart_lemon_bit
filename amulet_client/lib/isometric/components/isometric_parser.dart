@@ -9,9 +9,9 @@ import 'package:lemon_math/src.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:archive/archive.dart';
 import 'package:amulet_client/classes/amulet_parser.dart';
-import 'package:amulet_client/isometric/classes/character.dart';
-import 'package:amulet_client/isometric/classes/position.dart';
-import 'package:amulet_client/isometric/classes/projectile.dart';
+import 'package:amulet_client/classes/character.dart';
+import 'package:amulet_client/classes/position.dart';
+import 'package:amulet_client/classes/projectile.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 

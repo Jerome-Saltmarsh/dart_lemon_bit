@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/isometric/components/isometric_component.dart';
 import 'package:lemon_math/src.dart';
-import '../../../isometric/classes/position.dart';
+import '../../classes/position.dart';
 
 class IsometricCamera with IsometricComponent {
   var chaseStrength = 0.001;

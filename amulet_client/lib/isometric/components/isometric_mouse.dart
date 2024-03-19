@@ -1,6 +1,6 @@
 
 
-import 'package:amulet_client/isometric/classes/position.dart';
+import 'package:amulet_client/classes/position.dart';
 import 'package:amulet_client/isometric/functions/get_render.dart';
 import 'package:lemon_math/src.dart';
 import 'isometric_component.dart';

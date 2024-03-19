@@ -1,5 +1,5 @@
 
-import 'package:amulet_client/isometric/classes/render_group.dart';
+import 'package:amulet_client/classes/render_group.dart';
 import 'package:amulet_client/isometric/components/isometric_component.dart';
 
 class IsometricCompositor with IsometricComponent {

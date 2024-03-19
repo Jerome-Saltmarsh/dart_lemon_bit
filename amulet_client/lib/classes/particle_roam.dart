@@ -1,6 +1,6 @@
 
 
-import 'package:amulet_client/isometric/classes/particle.dart';
+import 'package:amulet_client/classes/particle.dart';
 import 'package:lemon_math/src.dart';
 
 abstract class ParticleRoam extends Particle {

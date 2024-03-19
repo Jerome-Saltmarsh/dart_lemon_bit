@@ -4,7 +4,7 @@ import 'dart:ui' as ui;
 import 'package:amulet_client/atlases/atlas_nodes.dart';
 import 'package:amulet_client/atlases/atlas_src_nodes_y.dart';
 import 'package:amulet_common/src.dart';
-import 'package:amulet_client/isometric/classes/render_group.dart';
+import 'package:amulet_client/classes/render_group.dart';
 import 'package:amulet_client/isometric/components/isometric_images.dart';
 import 'package:amulet_client/isometric/components/isometric_scene.dart';
 import 'package:amulet_client/isometric/components/render/functions/merge_32_bit_colors.dart';

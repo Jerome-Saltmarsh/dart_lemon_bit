@@ -2,8 +2,8 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:amulet_client/classes/src.dart';
 import 'package:amulet_common/src.dart';
-import 'package:amulet_client/isometric/classes/src.dart';
 import 'package:amulet_client/isometric/functions/get_render.dart';
 
 import 'package:amulet_client/isometric/components/isometric_component.dart';

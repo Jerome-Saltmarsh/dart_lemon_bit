@@ -1,7 +1,7 @@
 
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/isometric/enums/mode.dart';
-import 'package:amulet_client/isometric/classes/position.dart';
+import 'package:amulet_client/classes/position.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';

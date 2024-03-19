@@ -1,6 +1,6 @@
 
 import 'package:amulet_client/isometric/components/isometric_component.dart';
-import 'package:amulet_client/isometric/classes/position.dart';
+import 'package:amulet_client/classes/position.dart';
 
 class IsometricScreen with IsometricComponent  {
 

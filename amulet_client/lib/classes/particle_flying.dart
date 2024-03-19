@@ -5,7 +5,7 @@ import 'dart:math';
 
 import 'package:amulet_common/src.dart';
 import 'package:lemon_math/src.dart';
-import 'package:amulet_client/isometric/classes/particle_roam.dart';
+import 'package:amulet_client/classes/particle_roam.dart';
 import 'package:amulet_client/isometric/components/isometric_particles.dart';
 import 'package:amulet_client/isometric/components/isometric_scene.dart';
 

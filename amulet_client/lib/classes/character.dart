@@ -1,6 +1,6 @@
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/isometric/components/render/functions/merge_32_bit_colors.dart';
-import 'package:amulet_client/isometric/classes/position.dart';
+import 'package:amulet_client/classes/position.dart';
 import 'package:lemon_bit/src.dart';
 import 'package:lemon_math/src.dart';
 

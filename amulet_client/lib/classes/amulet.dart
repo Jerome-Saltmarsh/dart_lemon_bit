@@ -15,6 +15,7 @@ import 'package:lemon_widgets/lemon_widgets.dart';
 import '../isometric/src.dart';
 import 'amulet_render.dart';
 import 'map_location.dart';
+import 'position.dart';
 
 
 class Amulet extends Updatable with IsometricComponent  {

@@ -1,7 +1,7 @@
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/isometric/components/isometric_images.dart';
-import 'package:amulet_client/isometric/classes/projectile.dart';
-import 'package:amulet_client/isometric/classes/render_group.dart';
+import 'package:amulet_client/classes/projectile.dart';
+import 'package:amulet_client/classes/render_group.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
 

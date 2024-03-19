@@ -1,5 +1,5 @@
 
-import 'package:amulet_client/isometric/classes/human_character_sprites.dart';
+import 'package:amulet_client/classes/human_character_sprites.dart';
 import 'package:flutter/rendering.dart';
 import 'package:lemon_sprite/lib.dart';
 

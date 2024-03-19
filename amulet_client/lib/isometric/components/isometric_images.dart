@@ -4,12 +4,12 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:amulet_common/src.dart';
-import 'package:amulet_client/isometric/classes/character_shader.dart';
+import 'package:amulet_client/classes/character_shader.dart';
 import 'package:lemon_json/src.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:amulet_client/isometric/components/isometric_component.dart';
-import 'package:amulet_client/isometric/classes/character_sprite_group.dart';
-import 'package:amulet_client/isometric/classes/human_character_sprites.dart';
+import 'package:amulet_client/classes/character_sprite_group.dart';
+import 'package:amulet_client/classes/human_character_sprites.dart';
 import 'package:lemon_sprite/lib.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';

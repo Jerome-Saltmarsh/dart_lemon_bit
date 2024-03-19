@@ -1,6 +1,5 @@
 
 import 'package:amulet_client/getters/src.dart';
-import 'package:amulet_client/ui/enums/quantify_tab.dart';
 import 'package:amulet_client/ui/src.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/classes/amulet.dart';

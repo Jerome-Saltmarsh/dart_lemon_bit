@@ -1,9 +1,9 @@
 import 'package:amulet_common/src.dart';
-import 'package:amulet_client/isometric/classes/render_group.dart';
+import 'package:amulet_client/classes/render_group.dart';
 import 'package:amulet_client/isometric/components/isometric_images.dart';
 import 'package:amulet_client/isometric/components/render/functions/map_character_state_to_animation_mode.dart';
-import 'package:amulet_client/isometric/classes/character_shader.dart';
-import 'package:amulet_client/isometric/classes/character.dart';
+import 'package:amulet_client/classes/character_shader.dart';
+import 'package:amulet_client/classes/character.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 
 import 'functions/merge_32_bit_colors.dart';

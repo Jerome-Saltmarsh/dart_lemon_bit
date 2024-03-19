@@ -2,7 +2,7 @@
 import 'package:amulet/classes/connection_embedded.dart';
 import 'package:amulet/enums/src.dart';
 import 'package:amulet_client/classes/amulet_client.dart';
-import 'package:amulet_client/isometric/classes/connection.dart';
+import 'package:amulet_client/interfaces/src.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lemon_watch/src.dart';

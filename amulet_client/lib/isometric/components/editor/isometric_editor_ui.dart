@@ -17,7 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:amulet_client/isometric/enums/src.dart';
 import 'package:amulet_client/isometric/ui/isometric_constants.dart';
-import 'package:amulet_client/isometric/classes/gameobject.dart';
+import 'package:amulet_client/classes/gameobject.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';

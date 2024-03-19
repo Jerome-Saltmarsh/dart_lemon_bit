@@ -1,34 +1,15 @@
 
 import 'package:amulet_common/src.dart';
-// import 'package:amulet_server/json/src.dart';
-import 'package:amulet_client/isometric/classes/connection.dart';
+import 'package:amulet_client/interfaces/connection.dart';
 import 'package:amulet_client/isometric/components/isometric_component.dart';
 import 'package:amulet_client/isometric/enums/mode.dart';
-import 'package:amulet_client/isometric/classes/gameobject.dart';
-// import 'package:amulet_client/server/src.dart';
+import 'package:amulet_client/classes/gameobject.dart';
 
 class IsometricServer with IsometricComponent {
 
   Connection? connection;
-  // late final ServerRemote remote;
-
-  // ServerMode? get serverMode => options.serverMode.value;
 
   bool get connected => connection?.connected ?? false;
-
-  // @override
-  // Future onComponentInit(sharedPreferences) async {
-  //   local = ServerLocal(
-  //     parser: parser,
-  //     playerClient: player,
-  //     sharedPreferences: sharedPreferences,
-  //   );
-  //
-  //   remote = ServerRemote(
-  //     parser: parser,
-  //   );
-  //
-  // }
 
   void sendIsometricRequestRevive() =>
       sendIsometricRequest(NetworkRequestIsometric.Revive);
