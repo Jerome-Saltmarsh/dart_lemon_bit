@@ -7,8 +7,8 @@ import 'package:amulet_client/interfaces/connection.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_server/classes/amulet.dart';
 import 'package:amulet_server/src.dart';
-import 'package:amulet_client/isometric/components/isometric_parser.dart';
-import 'package:amulet_client/isometric/components/isometric_player.dart' as PlayerClient;
+import 'package:amulet_client/components/isometric_parser.dart';
+import 'package:amulet_client/components/isometric_player.dart' as PlayerClient;
 import 'package:lemon_json/src.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

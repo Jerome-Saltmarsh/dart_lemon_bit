@@ -1,6 +1,6 @@
 
 
-import 'package:amulet_client/isometric/components/isometric_particles.dart';
+import 'package:amulet_client/components/isometric_particles.dart';
 
 import 'particle.dart';
 

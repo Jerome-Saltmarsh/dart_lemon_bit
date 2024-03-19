@@ -1,5 +1,6 @@
 
 import 'package:amulet_client/classes/amulet_colors.dart';
+import 'package:amulet_client/components/isometric_options.dart';
 import 'package:amulet_client/extensions/physical_keyboardkey_extension.dart';
 import 'package:amulet_client/getters/get_src_skill_type.dart';
 import 'package:amulet_client/getters/src.dart';
@@ -10,7 +11,6 @@ import 'package:amulet_client/ui/widgets/amulet_world_map.dart';
 import 'package:amulet_client/ui/windows/window_quantify.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/classes/amulet.dart';
-import 'package:amulet_client/isometric/components/isometric_options.dart';
 import 'package:amulet_client/isometric/ui/builders/build_watch.dart';
 import 'package:amulet_client/isometric/ui/isometric_colors.dart';
 import 'package:amulet_client/isometric/ui/widgets/gs_container.dart';

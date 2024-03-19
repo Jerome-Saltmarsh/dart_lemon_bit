@@ -3,7 +3,7 @@ import 'package:amulet/functions/convert_url_http_to_wss.dart';
 import 'package:amulet_client/interfaces/connection.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet/enums/src.dart';
-import 'package:amulet_client/isometric/components/isometric_parser.dart';
+import 'package:amulet_client/components/isometric_parser.dart';
 import 'package:gamestream_http_client/src.dart';
 import 'package:lemon_json/src.dart';
 import 'package:lemon_watch/src.dart';

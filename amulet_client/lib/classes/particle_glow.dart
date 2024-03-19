@@ -1,7 +1,7 @@
 
+import 'package:amulet_client/components/isometric_particles.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/classes/particle_whisp.dart';
-import 'package:amulet_client/isometric/components/isometric_particles.dart';
 
 import 'package:lemon_math/src.dart';
 

@@ -1,8 +1,8 @@
 
 import 'dart:typed_data';
 
+import 'package:amulet_client/components/isometric_parser.dart';
 import 'package:amulet_common/src.dart';
-import 'package:amulet_client/isometric/components/isometric_parser.dart';
 import 'package:lemon_byte/src.dart';
 import 'package:lemon_lang/src.dart';
 

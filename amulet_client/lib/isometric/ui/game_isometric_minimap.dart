@@ -1,9 +1,9 @@
 
 import 'dart:typed_data';
 
+import 'package:amulet_client/components/isometric_component.dart';
 import 'package:amulet_common/src.dart';
 import 'package:flutter/material.dart';
-import 'package:amulet_client/isometric/components/isometric_component.dart';
 
 class IsometricMinimap with IsometricComponent {
   var src = Float32List(0);

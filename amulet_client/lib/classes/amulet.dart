@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:ui';
 
+import 'package:amulet_client/components/isometric_component.dart';
 import 'package:amulet_client/components/updatable.dart';
 import 'package:amulet_client/enums/node_visibility.dart';
 import 'package:amulet_common/src.dart';
