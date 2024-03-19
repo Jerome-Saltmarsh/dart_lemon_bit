@@ -1,8 +1,8 @@
 
+import 'package:amulet_client/enums/mode.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/isometric/components/debug/isometric_debug.dart';
 import 'package:amulet_client/isometric/components/functions/format_bytes.dart';
-import 'package:amulet_client/isometric/enums/mode.dart';
 import 'package:amulet_client/isometric/ui/builders/build_watch.dart';
 import 'package:amulet_client/isometric/ui/widgets/gs_container.dart';
 import 'package:amulet_client/isometric/ui/widgets/gs_refresh.dart';

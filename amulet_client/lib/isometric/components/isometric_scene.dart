@@ -3,11 +3,11 @@ import 'dart:math';
 import 'dart:typed_data';
 
 
+import 'package:amulet_client/enums/emission_type.dart';
+import 'package:amulet_client/enums/node_visibility.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/classes/particle_roam.dart';
 import 'package:amulet_client/isometric/components/isometric_component.dart';
-import 'package:amulet_client/isometric/enums/emission_type.dart';
-import 'package:amulet_client/isometric/enums/node_visibility.dart';
 import 'package:amulet_client/isometric/ui/isometric_colors.dart';
 import 'package:amulet_client/isometric/ui/isometric_constants.dart';
 import 'package:amulet_client/classes/character.dart';

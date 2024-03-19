@@ -1,9 +1,11 @@
 
 import 'package:amulet_client/atlases/atlas_nodes.dart';
 import 'package:amulet_client/atlases/atlas_src_nodes.dart';
+import 'package:amulet_client/enums/editor_dialog.dart';
+import 'package:amulet_client/enums/emission_type.dart';
+import 'package:amulet_client/enums/icon_type.dart';
 import 'package:amulet_client/isometric/components/isometric_ui.dart';
 import 'package:amulet_common/src.dart';
-import 'package:amulet_client/isometric/enums/icon_type.dart';
 import 'package:amulet_client/isometric/ui/builders/build_watch.dart';
 import 'package:amulet_client/isometric/ui/builders/build_watch_bool.dart';
 import 'package:amulet_client/isometric/ui/widgets/build_button.dart';
@@ -13,7 +15,6 @@ import 'package:amulet_client/isometric/ui/widgets/mouse_over.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:amulet_client/isometric/enums/src.dart';
 import 'package:amulet_client/isometric/ui/isometric_constants.dart';
 import 'package:amulet_client/classes/gameobject.dart';
 import 'package:golden_ratio/constants.dart';

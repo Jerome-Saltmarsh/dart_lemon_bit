@@ -1,7 +1,7 @@
 import 'dart:typed_data';
+import 'package:amulet_client/enums/emission_type.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/classes/item_slot.dart';
-import 'package:amulet_client/isometric/enums/emission_type.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:lemon_bit/src.dart';
 import 'package:lemon_lang/src.dart';

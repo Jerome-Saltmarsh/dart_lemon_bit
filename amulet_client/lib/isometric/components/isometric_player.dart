@@ -1,3 +1,4 @@
+import 'package:amulet_client/enums/game_dialog.dart';
 import 'package:amulet_common/src.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:lemon_lang/src.dart';
@@ -5,7 +6,6 @@ import 'package:lemon_watch/src.dart';
 import 'package:amulet_client/isometric/components/isometric_component.dart';
 import 'package:amulet_client/classes/character.dart';
 
-import '../enums/game_dialog.dart';
 import '../../classes/position.dart';
 
 class IsometricPlayer with IsometricComponent {

@@ -1,4 +1,5 @@
-import 'package:amulet_client/isometric/enums/icon_type.dart';
+
+import 'package:amulet_client/enums/icon_type.dart';
 
 /// [srcX, srcY, width, height]
 const atlasSrcIconType = <IconType, List<double>> {

@@ -1,8 +1,8 @@
 
+import 'package:amulet_client/enums/mode.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/interfaces/connection.dart';
 import 'package:amulet_client/isometric/components/isometric_component.dart';
-import 'package:amulet_client/isometric/enums/mode.dart';
 import 'package:amulet_client/classes/gameobject.dart';
 
 class IsometricServer with IsometricComponent {

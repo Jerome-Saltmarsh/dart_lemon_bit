@@ -1,13 +1,13 @@
 
 import 'dart:math';
 
+import 'package:amulet_client/enums/node_visibility.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/classes/particle_flying.dart';
 import 'package:amulet_client/classes/particle_glow.dart';
 import 'package:amulet_client/classes/particle_roam.dart';
 import 'package:amulet_client/classes/particle_whisp.dart';
 import 'package:amulet_client/isometric/components/isometric_scene.dart';
-import 'package:amulet_client/isometric/enums/node_visibility.dart';
 import 'package:amulet_client/isometric/ui/isometric_colors.dart';
 import 'package:amulet_client/components.dart';
 import 'package:lemon_math/src.dart';

@@ -1,13 +1,13 @@
 
+import 'package:amulet_client/enums/cursor_type.dart';
+import 'package:amulet_client/enums/mode.dart';
 import 'package:amulet_common/src.dart';
-import 'package:amulet_client/isometric/enums/mode.dart';
 import 'package:amulet_client/classes/position.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_client/isometric/components/isometric_component.dart';
-import 'package:amulet_client/isometric/enums/cursor_type.dart';
 import 'package:amulet_client/components/src.dart';
 
 class IsometricOptions with IsometricComponent implements Updatable {

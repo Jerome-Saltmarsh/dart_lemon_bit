@@ -1,12 +1,12 @@
 
+import 'package:amulet_client/enums/editor_dialog.dart';
+import 'package:amulet_client/enums/emission_type.dart';
 import 'package:amulet_common/src.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:amulet_client/isometric/components/isometric_component.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_watch/src.dart';
 import '../../../classes/gameobject.dart';
-import '../../enums/editor_dialog.dart';
-import '../../enums/emission_type.dart';
 import 'editor_tab.dart';
 
 
