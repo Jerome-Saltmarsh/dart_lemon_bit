@@ -4,7 +4,6 @@ import 'package:amulet_client/components/isometric_options.dart';
 import 'package:amulet_client/extensions/physical_keyboardkey_extension.dart';
 import 'package:amulet_client/getters/get_src_skill_type.dart';
 import 'package:amulet_client/getters/src.dart';
-import 'package:amulet_client/ui/builders/build_watch.dart';
 import 'package:amulet_client/ui/containers/build_container_player_front.dart';
 import 'package:amulet_client/ui/enums/quantify_tab.dart';
 import 'package:amulet_client/ui/isometric_colors.dart';

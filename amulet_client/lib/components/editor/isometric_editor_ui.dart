@@ -5,7 +5,6 @@ import 'package:amulet_client/enums/editor_dialog.dart';
 import 'package:amulet_client/enums/emission_type.dart';
 import 'package:amulet_client/enums/icon_type.dart';
 import 'package:amulet_client/components/isometric_ui.dart';
-import 'package:amulet_client/ui/builders/build_watch.dart';
 import 'package:amulet_client/ui/builders/build_watch_bool.dart';
 import 'package:amulet_client/ui/isometric_constants.dart';
 import 'package:amulet_client/ui/widgets/build_button.dart';

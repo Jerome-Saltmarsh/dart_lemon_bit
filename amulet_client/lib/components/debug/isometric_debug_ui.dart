@@ -3,7 +3,6 @@ import 'package:amulet_client/enums/mode.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/components/debug/isometric_debug.dart';
 import 'package:amulet_client/components/functions/format_bytes.dart';
-import 'package:amulet_client/ui/builders/build_watch.dart';
 import 'package:amulet_client/ui/widgets/gs_container.dart';
 import 'package:amulet_client/ui/widgets/gs_refresh.dart';
 import 'package:flutter/material.dart';

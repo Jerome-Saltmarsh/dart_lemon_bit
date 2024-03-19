@@ -5,7 +5,6 @@ import 'package:amulet_client/atlases/atlas.dart';
 import 'package:amulet_client/atlases/atlas_nodes.dart';
 import 'package:amulet_client/atlases/atlas_src_icon_type.dart';
 import 'package:amulet_client/enums/icon_type.dart';
-import 'package:amulet_client/ui/builders/build_watch.dart';
 import 'package:amulet_client/ui/widgets/gs_container.dart';
 import 'package:amulet_common/src.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';

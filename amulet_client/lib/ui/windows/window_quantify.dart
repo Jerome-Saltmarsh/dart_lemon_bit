@@ -7,6 +7,7 @@ import 'package:amulet_client/classes/amulet.dart';
 import 'package:amulet_client/classes/amulet_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_lang/src.dart';
+import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
 class WindowQuantify extends StatelessWidget {
