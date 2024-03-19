@@ -1,3 +1,4 @@
+import 'package:amulet_client/functions/generate_colors.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/isometric/components/isometric_particles.dart';
 import 'package:amulet_client/classes/particle.dart';
@@ -10,8 +11,6 @@ import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_sprite/lib.dart';
-
-import '../../../../isometric/functions/generate_colors.dart';
 
 class RendererParticles extends RenderGroup {
 

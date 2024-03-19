@@ -5,6 +5,8 @@ import 'dart:typed_data';
 
 import 'package:amulet_client/enums/emission_type.dart';
 import 'package:amulet_client/enums/node_visibility.dart';
+import 'package:amulet_client/functions/get_render.dart';
+import 'package:amulet_client/functions/sign_to_byte.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/classes/particle_roam.dart';
 import 'package:amulet_client/isometric/components/isometric_component.dart';
@@ -13,8 +15,6 @@ import 'package:amulet_client/isometric/ui/isometric_constants.dart';
 import 'package:amulet_client/classes/character.dart';
 import 'package:amulet_client/classes/gameobject.dart';
 import 'package:amulet_client/classes/projectile.dart';
-import 'package:amulet_client/isometric/functions/get_render.dart';
-import 'package:amulet_client/isometric/functions/sign_to_byte.dart';
 import 'package:amulet_client/components.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_math/src.dart';
