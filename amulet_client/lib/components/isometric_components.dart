@@ -5,9 +5,9 @@ import 'package:amulet_client/components/isometric_screen.dart';
 import 'package:amulet_client/components/render/renderer_characters.dart';
 import 'package:amulet_client/components/render/renderer_gameobjects.dart';
 import 'package:amulet_client/components/render/renderer_particles.dart';
-import 'package:amulet_client/isometric/ui/game_isometric_minimap.dart';
-import 'package:amulet_client/isometric/ui/isometric_colors.dart';
 import 'package:amulet_client/components.dart';
+import 'package:amulet_client/ui/game_isometric_minimap.dart';
+import 'package:amulet_client/ui/isometric_colors.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 
 import 'debug/isometric_debug.dart';

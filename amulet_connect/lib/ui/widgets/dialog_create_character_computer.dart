@@ -1,8 +1,9 @@
 import 'package:amulet/ui/classes/amulet_connect_ui.dart';
 import 'package:amulet/ui/typedefs/create_character.dart';
+import 'package:amulet_client/ui/isometric_colors.dart';
 import 'package:amulet_client/ui/src.dart';
+import 'package:amulet_client/ui/widgets/gs_container.dart';
 import 'package:amulet_common/src.dart';
-import 'package:amulet_client/isometric/src.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_client/components/isometric_components.dart';
 import 'package:golden_ratio/constants.dart';

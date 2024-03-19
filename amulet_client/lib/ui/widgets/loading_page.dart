@@ -1,7 +1,7 @@
 
 import 'package:amulet_client/components/isometric_images.dart';
-import 'package:amulet_client/isometric/ui/builders/build_watch.dart';
-import 'package:amulet_client/isometric/ui/isometric_colors.dart';
+import 'package:amulet_client/ui/builders/build_watch.dart';
+import 'package:amulet_client/ui/isometric_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 

@@ -6,6 +6,8 @@ import 'dart:ui';
 import 'package:amulet_client/components/isometric_component.dart';
 import 'package:amulet_client/components/updatable.dart';
 import 'package:amulet_client/enums/node_visibility.dart';
+import 'package:amulet_client/ui/builders/build_watch.dart';
+import 'package:amulet_client/ui/isometric_colors.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/classes/amulet_keys.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +16,6 @@ import 'package:lemon_lang/src.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
-import '../isometric/src.dart';
 import 'amulet_render.dart';
 import 'map_location.dart';
 import 'position.dart';

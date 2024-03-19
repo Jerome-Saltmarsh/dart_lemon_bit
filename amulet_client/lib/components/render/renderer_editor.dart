@@ -1,8 +1,8 @@
 
 import 'package:amulet_client/components/editor/editor_tab.dart';
 import 'package:amulet_client/components/isometric_images.dart';
+import 'package:amulet_client/ui/isometric_colors.dart';
 import 'package:amulet_common/src.dart';
-import 'package:amulet_client/isometric/ui/isometric_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_client/classes/render_group.dart';
 import 'package:lemon_engine/lemon_engine.dart';

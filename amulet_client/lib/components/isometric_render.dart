@@ -3,14 +3,14 @@ import 'dart:math';
 
 import 'package:amulet_client/atlases/atlas_nodes.dart';
 import 'package:amulet_client/functions/get_render.dart';
+import 'package:amulet_client/ui/isometric_colors.dart';
+import 'package:amulet_client/ui/isometric_constants.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/classes/amulet_colors.dart';
-import 'package:amulet_client/isometric/ui/isometric_colors.dart';
 import 'package:amulet_client/classes/character.dart';
 import 'package:amulet_client/classes/position.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_client/components/isometric_component.dart';
-import 'package:amulet_client/isometric/ui/isometric_constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_sprite/lib.dart';

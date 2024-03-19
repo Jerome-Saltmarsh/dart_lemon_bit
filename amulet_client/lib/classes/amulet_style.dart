@@ -1,5 +1,5 @@
 
-import 'package:amulet_client/isometric/ui/isometric_colors.dart';
+import 'package:amulet_client/ui/isometric_colors.dart';
 
 class AmuletStyle {
   final colorCardTitle = Palette.brown_4;

@@ -1,11 +1,10 @@
 
 import 'package:amulet_client/getters/src.dart';
 import 'package:amulet_client/ui/src.dart';
+import 'package:amulet_client/ui/widgets/gs_container.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/classes/amulet.dart';
 import 'package:amulet_client/classes/amulet_ui.dart';
-import 'package:amulet_client/isometric/ui/builders/build_watch.dart';
-import 'package:amulet_client/isometric/ui/widgets/gs_container.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_lang/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';

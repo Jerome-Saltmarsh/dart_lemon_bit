@@ -28,6 +28,8 @@ import 'package:amulet_client/components/render/renderer_gameobjects.dart';
 import 'package:amulet_client/components/render/renderer_nodes.dart';
 import 'package:amulet_client/components/render/renderer_particles.dart';
 import 'package:amulet_client/components/render/renderer_projectiles.dart';
+import 'package:amulet_client/ui/game_isometric_minimap.dart';
+import 'package:amulet_client/ui/isometric_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_client/classes/amulet.dart';
 
@@ -35,8 +37,6 @@ import 'package:flutter/services.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../isometric/ui/game_isometric_minimap.dart';
-import '../isometric/ui/isometric_colors.dart';
 import 'amulet_ui.dart';
 
 class AmuletClient {
