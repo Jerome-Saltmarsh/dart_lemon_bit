@@ -307,7 +307,7 @@ class AmuletGameWorld11 extends AmuletGame {
     switch (player.questMain){
       case QuestMain.Speak_With_Gareth:
         player.talk(
-            npc, 'it is said that when one does stare into the void that the void does stare back'
+            npc, 'it is said that when one does look into the void that the void does look back'
         );
         break;
       case QuestMain.Find_Witches_Lair:

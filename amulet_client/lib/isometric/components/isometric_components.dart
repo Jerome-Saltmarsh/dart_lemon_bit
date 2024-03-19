@@ -1,6 +1,5 @@
 
 import 'package:amulet_client/classes/amulet.dart';
-import 'package:amulet_client/isometric/classes/isometric_game.dart';
 import 'package:amulet_client/isometric/components/isometric_environment.dart';
 import 'package:amulet_client/isometric/components/isometric_screen.dart';
 import 'package:amulet_client/isometric/components/render/renderer_characters.dart';
@@ -54,7 +53,7 @@ class IsometricComponents extends ComponentContainer {
   final IsometricLighting lighting;
   final IsometricColors colors;
   final IsometricStyle style;
-  final IsometricGame isometricEditor;
+  // final IsometricGame isometricEditor;
 
   IsometricComponents({
     required this.engine,
@@ -90,7 +89,7 @@ class IsometricComponents extends ComponentContainer {
     required this.lighting,
     required this.colors,
     required this.style,
-    required this.isometricEditor,
+    // required this.isometricEditor,
   }) {
     print('IsometricComponents()');
     components.add(images);
@@ -121,7 +120,7 @@ class IsometricComponents extends ComponentContainer {
     components.add(compositor);
     // components.add(website);
     components.add(amulet);
-    components.add(isometricEditor);
+    // components.add(isometricEditor);
     components.add(animation);
     components.add(screen);
     components.add(lighting);

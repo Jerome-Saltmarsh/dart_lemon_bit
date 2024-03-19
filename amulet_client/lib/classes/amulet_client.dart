@@ -16,7 +16,6 @@ import 'package:flutter/services.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../isometric/classes/isometric_game.dart';
 import '../isometric/components/debug/isometric_debug.dart';
 import '../isometric/components/editor/isometric_editor.dart';
 import '../isometric/components/isometric_actions.dart';
@@ -88,7 +87,7 @@ class AmuletClient {
       lighting: IsometricLighting(),
       colors: IsometricColors(),
       style: IsometricStyle(),
-      isometricEditor: IsometricGame(),
+      // isometricEditor: IsometricGame(),
     );
 
     amuletUI = AmuletUI(components.amulet);
@@ -144,14 +143,14 @@ class AmuletClient {
     if (!components.ready){
       return;
     }
-    components.options.amulet.onLeftClicked();
+    // components.options.amulet.onLeftClicked();
   }
 
   void onRightClicked() {
     if (!components.ready){
       return;
     }
-    components.options.amulet.onRightClicked();
+    // components.options.amulet.onRightClicked();
   }
 
   void onKeyPressed(PhysicalKeyboardKey key) {

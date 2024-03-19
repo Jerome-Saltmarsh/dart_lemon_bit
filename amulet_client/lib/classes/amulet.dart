@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:ui';
 
+import 'package:amulet_client/components/updatable.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/classes/amulet_keys.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ import 'amulet_render.dart';
 import 'map_location.dart';
 
 
-class Amulet extends IsometricGame {
+class Amulet extends Updatable with IsometricComponent  {
 
   SkillType? mouseOverSkillType;
   final screenColor = Watch(Colors.transparent);
@@ -216,23 +217,6 @@ class Amulet extends IsometricGame {
 
   var cameraZoom = 0;
 
-  @override
-  void update() {
-    super.update();
-
-    // updateCursor();
-    if (errorTimer > 0) {
-      errorTimer--;
-      if (errorTimer <= 0) {
-        clearError();
-      }
-    }
-
-    if (screenColorI.value < 1) {
-      screenColorI.value += 0.15;
-    }
-  }
-
   void clearError() {
     error.value = '';
   }
@@ -248,9 +232,9 @@ class Amulet extends IsometricGame {
   //       Mode.debug => debugger.buildUI()
   //     };
 
-  @override
+  // @override
   void onKeyPressed(PhysicalKeyboardKey key) {
-    super.onKeyPressed(key);
+    // super.onKeyPressed(key);
 
     if (options.editing)
       return;
@@ -289,18 +273,15 @@ class Amulet extends IsometricGame {
     }
   }
 
-  @override
   void drawCanvas(Canvas canvas, Size size) {
-    super.drawCanvas(canvas, size);
+    // super.drawCanvas(canvas, size);
     renderAmulet(canvas, size);
   }
 
-  @override
   void onMouseExit() {
 
   }
 
-  @override
   void onMouseEnter() => clearItemHover();
 
   void onAnyChanged(int value) => clearItemHover();
@@ -572,9 +553,7 @@ class Amulet extends IsometricGame {
           NetworkRequestAmulet.Toggle_Debug_Enabled
       );
 
-  @override
-  List<Widget> buildMenuItems() {
-    return [
+  List<Widget> buildMenuItems() => [
       onPressed(
         action: amulet.windowVisibleHelp.toggle,
         child: Container(
@@ -588,7 +567,6 @@ class Amulet extends IsometricGame {
         ),
       )
     ];
-  }
 
   // SkillTypeStats getSkillTypeStats(SkillType skillType){
   //    for (final skillTypeStats in playerSkillTypeStats){
@@ -691,6 +669,20 @@ class Amulet extends IsometricGame {
   void disconnect() {
     server.disconnect();
     clearAllState();
+  }
+
+  @override
+  void onComponentUpdate() {
+    if (errorTimer > 0) {
+      errorTimer--;
+      if (errorTimer <= 0) {
+        clearError();
+      }
+    }
+
+    if (screenColorI.value < 1) {
+      screenColorI.value += 0.15;
+    }
   }
 }
 

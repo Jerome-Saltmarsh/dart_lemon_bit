@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:lemon_bit/src.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_watch/src.dart';
-import 'classes/touch_controller.dart';
 
 class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
 
@@ -41,11 +40,11 @@ class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
   final panDistance = Watch(0.0);
   final panDirection = Watch(0.0);
   final inputMode = Watch(InputMode.Keyboard);
-  late final TouchController touchController;
+  // late final TouchController touchController;
 
   @override
   Future onComponentInit(sharedPreferences) async {
-    touchController = TouchController();
+    // touchController = TouchController();
     engine.deviceType.onChanged(onDeviceTypeChanged);
     // engine.onScreenSizeChanged = onScreenSizeChanged;
   }
@@ -89,11 +88,6 @@ class IsometricIO with ByteWriter, IsometricComponent implements Updatable {
     var hex = getDirection();
 
     if (engine.watchMouseLeftDown.value) {
-      hex = hex | ByteHex.Hex_16;
-    }
-
-    if (touchController.attack) {
-      touchController.attack = false;
       hex = hex | ByteHex.Hex_16;
     }
 

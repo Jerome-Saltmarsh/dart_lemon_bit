@@ -191,7 +191,7 @@ class IsometricRender with IsometricComponent {
     //   io.touchController.drawCanvas(canvas);
     // }
 
-    amulet.renderForeground(canvas, size);
+    // amulet.renderForeground(canvas, size);
   }
 
   void textIndex(dynamic text, int index) =>
