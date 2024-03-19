@@ -11,10 +11,6 @@ import 'package:amulet_client/ui/windows/window_quantify.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/classes/amulet.dart';
 import 'package:amulet_client/isometric/components/isometric_options.dart';
-import 'package:amulet_client/isometric/consts/border_radius.dart';
-import 'package:amulet_client/isometric/consts/height.dart';
-import 'package:amulet_client/isometric/consts/padding.dart';
-import 'package:amulet_client/isometric/consts/width.dart';
 import 'package:amulet_client/isometric/ui/builders/build_watch.dart';
 import 'package:amulet_client/isometric/ui/isometric_colors.dart';
 import 'package:amulet_client/isometric/ui/widgets/gs_container.dart';
@@ -24,7 +20,7 @@ import 'package:flutter/services.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_lang/src.dart';
 import 'package:lemon_watch/src.dart';
-import 'package:lemon_widgets/lemon_widgets.dart';
+import 'package:lemon_widgets/src.dart';
 
 import 'amulet_style.dart';
 

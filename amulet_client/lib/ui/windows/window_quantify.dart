@@ -4,7 +4,6 @@ import 'package:amulet_client/ui/src.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/classes/amulet.dart';
 import 'package:amulet_client/classes/amulet_ui.dart';
-import 'package:amulet_client/isometric/consts/width.dart';
 import 'package:amulet_client/isometric/ui/builders/build_watch.dart';
 import 'package:amulet_client/isometric/ui/widgets/gs_container.dart';
 import 'package:flutter/material.dart';

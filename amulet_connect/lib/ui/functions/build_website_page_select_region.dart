@@ -1,7 +1,5 @@
 import 'package:amulet/classes/amulet_connect.dart';
 import 'package:amulet/enums/src.dart';
-import 'package:amulet_client/isometric/consts/font_size.dart';
-import 'package:amulet_client/isometric/consts/height.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_client/isometric/ui/widgets/mouse_over.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
@@ -15,7 +13,7 @@ Widget buildWebsitePageSelectRegion({
 }) => Column(
   mainAxisAlignment: MainAxisAlignment.center,
   children: [
-    buildText('Select Your Region', size: FontSize.large),
+    buildText('Select Your Region', size: 20),
     height16,
     Container(
       width: 300,

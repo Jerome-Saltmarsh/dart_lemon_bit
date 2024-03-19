@@ -1,6 +1,5 @@
 
 import 'package:amulet_client/isometric/components/isometric_images.dart';
-import 'package:amulet_client/isometric/consts/height.dart';
 import 'package:amulet_client/isometric/ui/builders/build_watch.dart';
 import 'package:amulet_client/isometric/ui/isometric_colors.dart';
 import 'package:flutter/material.dart';

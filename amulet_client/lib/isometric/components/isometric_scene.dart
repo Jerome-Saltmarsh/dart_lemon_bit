@@ -13,7 +13,6 @@ import 'package:amulet_client/isometric/ui/isometric_constants.dart';
 import 'package:amulet_client/classes/character.dart';
 import 'package:amulet_client/classes/gameobject.dart';
 import 'package:amulet_client/classes/projectile.dart';
-import 'package:amulet_client/isometric/consts/map_projectile_type_to_emission_ambient.dart';
 import 'package:amulet_client/isometric/functions/get_render.dart';
 import 'package:amulet_client/isometric/functions/sign_to_byte.dart';
 import 'package:amulet_client/components.dart';
@@ -1465,6 +1464,15 @@ class IsometricScene with IsometricComponent implements Updatable {
   }
 
   void applyProjectileEmissionAmbient(Projectile projectile) {
+
+    const mapProjectileTypeEmissionToEmissionAmbient = {
+      ProjectileType.Arrow: 70,
+      ProjectileType.Fireball: 0,
+      ProjectileType.FrostBall: 50,
+      ProjectileType.Fire_Arrow: 0,
+      ProjectileType.Ice_Arrow: 50,
+    };
+
     final alpha = mapProjectileTypeEmissionToEmissionAmbient[projectile.type];
 
     if (alpha == null){

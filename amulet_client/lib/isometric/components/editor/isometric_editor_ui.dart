@@ -3,8 +3,6 @@ import 'package:amulet_client/atlases/atlas_nodes.dart';
 import 'package:amulet_client/atlases/atlas_src_nodes.dart';
 import 'package:amulet_client/isometric/components/isometric_ui.dart';
 import 'package:amulet_common/src.dart';
-import 'package:amulet_client/isometric/consts/height.dart';
-import 'package:amulet_client/isometric/consts/width.dart';
 import 'package:amulet_client/isometric/enums/icon_type.dart';
 import 'package:amulet_client/isometric/ui/builders/build_watch.dart';
 import 'package:amulet_client/isometric/ui/builders/build_watch_bool.dart';
