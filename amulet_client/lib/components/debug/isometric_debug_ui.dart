@@ -22,45 +22,50 @@ extension isometricDebugUI on IsometricDebug {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               buildDebugTabs(),
+              height8,
               buildActiveTabContent(),
             ],
           )
       );
 
-  Widget buildActiveTabContent() => buildWatch(
-      tab,
-      (activeTab) => GSContainer(
-        child: Container(
-              constraints: BoxConstraints(
-                  minWidth: 300,
-                  maxWidth: 400,
-                  minHeight: 300,
-                  maxHeight: engine.screen.height - 150),
-              child: SingleChildScrollView(
-                child: switch (activeTab) {
-                  DebugTab.Selected => buildTabSelected(),
-                  DebugTab.Network => buildTabNetwork(),
-                  DebugTab.Stats => buildTabStats(),
-                  DebugTab.Lighting => buildTabLighting(),
-                  DebugTab.Engine => buildTabEngine(),
-                  DebugTab.Objects => buildTabObjects(),
-                  DebugTab.Isometric => buildTabIsometric(),
-                  DebugTab.Player => buildTabPlayer(),
-                  DebugTab.Options => buildTabOptions(),
-                  DebugTab.Particles => buildTabParticles(),
-                  DebugTab.Environment => buildTabEnvironment(),
-                  DebugTab.Scene => buildTabScene(),
-                  DebugTab.Amulet => buildTabAmulet(),
-                  DebugTab.Server => buildTabServer(),
-                },
+  Widget buildActiveTabContent() => Container(
+    width: 400,
+    child: buildWatch(
+        tab,
+        (activeTab) => GSContainer(
+          child: Container(
+                constraints: BoxConstraints(
+                    minWidth: 300,
+                    maxWidth: 400,
+                    minHeight: 300,
+                    maxHeight: engine.screen.height - 150),
+                child: SingleChildScrollView(
+                  child: switch (activeTab) {
+                    DebugTab.Selected => buildTabSelected(),
+                    DebugTab.Network => buildTabNetwork(),
+                    DebugTab.Stats => buildTabStats(),
+                    DebugTab.Lighting => buildTabLighting(),
+                    DebugTab.Engine => buildTabEngine(),
+                    DebugTab.Objects => buildTabObjects(),
+                    DebugTab.Isometric => buildTabIsometric(),
+                    DebugTab.Player => buildTabPlayer(),
+                    DebugTab.Options => buildTabOptions(),
+                    DebugTab.Particles => buildTabParticles(),
+                    DebugTab.Environment => buildTabEnvironment(),
+                    DebugTab.Scene => buildTabScene(),
+                    DebugTab.Amulet => buildTabAmulet(),
+                    DebugTab.Server => buildTabServer(),
+                  },
+                ),
               ),
-            ),
-      ));
+        )),
+  );
 
   Widget buildDebugTabs() => GSContainer(
     child: buildWatch(
         tab,
         (activeTab) => Row(
+          mainAxisAlignment: MainAxisAlignment.center,
             children: DebugTab.values
                 .map((e) => onPressed(
                     action: () => tab.value = e,
