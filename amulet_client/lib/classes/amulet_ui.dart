@@ -79,9 +79,7 @@ class AmuletUI {
       Positioned(
         top: 0,
         left: 0,
-        child: Container(
-          width: amulet.engine.screen.width,
-          height: amulet.engine.screen.height,
+        child: maximize(
           child: buildWatch(amulet.aimTargetSet, (aimTargetSet){
             if (aimTargetSet){
               // amulet.engine.cursorType.value = cursorType.Click;

@@ -5,6 +5,7 @@ import 'dart:ui';
 
 import 'package:amulet_client/components/isometric_component.dart';
 import 'package:amulet_client/components/updatable.dart';
+import 'package:amulet_client/enums/mode.dart';
 import 'package:amulet_client/enums/node_visibility.dart';
 import 'package:amulet_client/ui/isometric_colors.dart';
 import 'package:amulet_common/src.dart';
@@ -225,23 +226,7 @@ class Amulet extends Updatable with IsometricComponent  {
   }
 
   // @override
-  // Widget customBuildUI(BuildContext context) =>
-  //     buildWatch(options.mode, (mode) => buildMode(mode, context));
-  //
-  // Widget buildMode(Mode mode, BuildContext context) =>
-  //     switch (mode){
-  //       Mode.play => amuletUI.buildUI(context),
-  //       Mode.edit => editor.buildEditor(),
-  //       Mode.debug => debugger.buildUI()
-  //     };
-
-  // @override
   void onKeyPressed(PhysicalKeyboardKey key) {
-    // super.onKeyPressed(key);
-
-    if (options.editing)
-      return;
-
     if (key == amuletKeys.toggleWindowQuest) {
       windowVisibleQuests.toggle();
       return;
@@ -277,7 +262,6 @@ class Amulet extends Updatable with IsometricComponent  {
   }
 
   void drawCanvas(Canvas canvas, Size size) {
-    // super.drawCanvas(canvas, size);
     renderAmulet(canvas, size);
   }
 

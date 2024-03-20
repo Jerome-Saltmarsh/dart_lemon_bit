@@ -1,5 +1,7 @@
 import 'package:amulet_client/components/debug/isometric_debug.dart';
+import 'package:amulet_client/components/debug/isometric_debug_ui.dart';
 import 'package:amulet_client/components/editor/isometric_editor.dart';
+import 'package:amulet_client/components/editor/isometric_editor_ui.dart';
 import 'package:amulet_client/components/isometric_actions.dart';
 import 'package:amulet_client/components/isometric_animation.dart';
 import 'package:amulet_client/components/isometric_audio.dart';
@@ -28,6 +30,7 @@ import 'package:amulet_client/components/render/renderer_gameobjects.dart';
 import 'package:amulet_client/components/render/renderer_nodes.dart';
 import 'package:amulet_client/components/render/renderer_particles.dart';
 import 'package:amulet_client/components/render/renderer_projectiles.dart';
+import 'package:amulet_client/enums/mode.dart';
 import 'package:amulet_client/ui/game_isometric_minimap.dart';
 import 'package:amulet_client/ui/isometric_colors.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +38,7 @@ import 'package:amulet_client/classes/amulet.dart';
 
 import 'package:flutter/services.dart';
 import 'package:lemon_engine/lemon_engine.dart';
+import 'package:lemon_watch/src.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'amulet_ui.dart';
@@ -47,11 +51,7 @@ class AmuletClient {
   late AmuletUI amuletUI;
   final LemonEngine engine;
 
-  AmuletClient(this.engine) : super(
-    // title: 'AMULET',
-    // themeData: ThemeData(fontFamily: 'VT323-Regular'),
-    // backgroundColor: IsometricColors.Black,
-  ) {
+  AmuletClient(this.engine) {
     engine.zoomMin = 0.3;
     components = IsometricComponents(
       engine: engine,
@@ -87,14 +87,20 @@ class AmuletClient {
       lighting: IsometricLighting(),
       colors: IsometricColors(),
       style: IsometricStyle(),
-      // isometricEditor: IsometricGame(),
     );
 
     amuletUI = AmuletUI(components.amulet);
   }
 
   Widget buildUI(BuildContext context) =>
-       amuletUI.buildUI(context);
+      buildWatch(options.mode, (mode) =>
+        switch (mode) {
+          Mode.play => amuletUI.buildUI(context),
+          Mode.edit => components.editor.buildEditor(),
+          Mode.debug => components.debug.buildUI()
+        });
+
+  IsometricOptions get options => components.options;
 
   void dispose() => components.onDispose();
 
@@ -114,7 +120,6 @@ class AmuletClient {
      print('amulet_client.onInit()');
      initializing = true;
      await components.init(sharedPreferences);
-     // components.engine.fullScreenEnter();
      initialized = true;
    }
 
@@ -129,14 +134,14 @@ class AmuletClient {
     if (!components.ready){
       return;
     }
-    components.options.onMouseEnterCanvas();
+    options.onMouseEnterCanvas();
   }
 
   void onMouseExitCanvas() {
     if (!components.ready){
       return;
     }
-    components.options.onMouseExitCanvas();
+    options.onMouseExitCanvas();
   }
 
   void onLeftClicked() {
@@ -158,6 +163,35 @@ class AmuletClient {
     if (!components.ready){
       return;
     }
-    components.amulet.onKeyPressed(key);
+
+    final mode = options.mode.value;
+
+    if (key == PhysicalKeyboardKey.digit0){
+      if (mode == Mode.debug){
+         options.mode.value = Mode.play;
+      } else {
+        options.mode.value = Mode.debug;
+      }
+    }
+
+    if (key == PhysicalKeyboardKey.tab){
+      if (mode == Mode.edit){
+         options.mode.value = Mode.play;
+      } else {
+        options.mode.value = Mode.edit;
+      }
+    }
+
+    switch (mode){
+      case Mode.play:
+        components.amulet.onKeyPressed(key);
+        break;
+      case Mode.edit:
+        components.editor.onKeyPressed(key);
+        break;
+      case Mode.debug:
+        components.debug.onKeyPressed(key);
+        break;
+    }
   }
 }
