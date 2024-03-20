@@ -1150,14 +1150,12 @@ class AmuletUI {
     }
 
     final amuletItem = amuletItemObject.amuletItem;
-    // final level = amuletItemObject.level;
-    // final upgradeCost = amulet.playerCanUpgrade ? amuletItem?.tryGetUpgradeCost(level) : null;
 
     return onPressed(
         action: () => amulet.dropAmuletItem(amuletItem),
         child: buildMouseOverPanel(
             bottom: 90,
-            left: -60,
+            left: 0,
             panel: buildCardLargeAmuletItemObject(amuletItemObject),
             child: buildCardSmallAmuletItemObject(amuletItemObject)
         ),
