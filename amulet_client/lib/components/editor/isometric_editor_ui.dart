@@ -618,36 +618,11 @@ extension IsometricEditorUI on IsometricEditor {
   }
 
   Widget buildButtonSelectNodeType(int nodeType) {
-
-    final entry = atlasSrcNodes[nodeType];
-
-    if (entry == null){
-      return onPressed(
-        action: () => paint(nodeType: nodeType),
-        child: WatchBuilder(nodeSelectedType, (int selectedNodeType){
-          return buildText(NodeType.getName(nodeType), color: selectedNodeType == nodeType ? Colors.green : Colors.white);
-        }),
-      );
-    }
-
-    final image = engine.buildAtlasImage(
-      image: images.atlas_nodes,
-      srcX: entry[0],
-      srcY: entry[1],
-      srcWidth: 48,
-      srcHeight: 48,
-    );
-
     return onPressed(
-      hint: NodeType.getName(nodeType),
       action: () => paint(nodeType: nodeType),
-      child: WatchBuilder(nodeSelectedType, (int selectedNodeType) =>
-          Container(
-              color: selectedNodeType == nodeType ? Colors.green : Colors.white,
-              child: image,
-          ),
-
-      ),
+      child: WatchBuilder(nodeSelectedType, (int selectedNodeType){
+        return buildText(NodeType.getName(nodeType), color: selectedNodeType == nodeType ? Colors.green : Colors.white);
+      }),
     );
   }
 
