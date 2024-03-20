@@ -1282,8 +1282,8 @@ class AmuletUI {
   Widget buildCardLargeAmuletItemObject(AmuletItemObject amuletItemObject) {
 
     final amuletItem = amuletItemObject.amuletItem;
-
     final header = buildCardLargeHeaderText(amuletItem.slotType.name.clean);
+    final content = buildCardLargeAmuletItemObjectContent(amuletItemObject);
 
     final title = buildCardLargeTitleTemplate(
       icon: buildIconAmuletItem(amuletItem),
@@ -1291,150 +1291,101 @@ class AmuletUI {
       subtitle: 'lvl ${amuletItemObject.level}',
     );
 
-    final content = buildColumnAmuletItemObject(amuletItemObject);
-
     return buildCardLarge(
         header: header,
         title: title,
         content: content,
     );
-
-    // return buildBorder(
-    //   width: 2,
-    //   color: Colors.orange,
-    //   child: Container(
-    //     width: 190,
-    //     color: Palette.brownDark,
-    //     child: Column(
-    //       mainAxisAlignment: MainAxisAlignment.start,
-    //       crossAxisAlignment: CrossAxisAlignment.start,
-    //       children: [
-    //         buildCardLargeHeader(
-    //             child: buildCardLargeHeaderText(slotType.name)
-    //         ),
-    //         Container(
-    //           padding: const EdgeInsets.all(4),
-    //           color: Colors.black26,
-    //           height: 60,
-    //           child: Stack(
-    //             alignment: Alignment.center,
-    //             children: [
-    //               if (amuletItem.quality != ItemQuality.Common)
-    //               Positioned(
-    //                   top: 0,
-    //                   right: 0,
-    //                   child: buildText(amuletItem.quality.name.toUpperCase().clean, size: 14, color: mapItemQualityToColor(amuletItem.quality).withOpacity(0.5))),
-    //               Row(
-    //                 mainAxisAlignment: MainAxisAlignment.center,
-    //                 children: [
-    //                   AmuletItemImage(amuletItem: amuletItem, scale: 1.0),
-    //                   width8,
-    //                   Column(
-    //                     mainAxisAlignment: MainAxisAlignment.center,
-    //                     crossAxisAlignment: CrossAxisAlignment.start,
-    //                     children: [
-    //                       buildText(amuletItem.label, color: mapItemQualityToColor(amuletItem.quality)),
-    //                       buildTextSubtitle(amuletItemObject.level)
-    //                     ],
-    //                   ),
-    //                 ],
-    //               ),
-    //             ],
-    //           ),
-    //         ),
-    //           if (!amuletItemObject.amuletItem.isConsumable)
-    //           Container(
-    //             padding: const EdgeInsets.all(8),
-    //             child: buildColumnAmuletItemObject(amuletItemObject),
-    //           ),
-    //       ],
-    //     ),
-    //   ),
-    // );
   }
 
   Widget buildTextSubtitle(dynamic value) =>
       buildText('$value', color: Colors.white70, size: 16);
 
-  Widget buildColumnAmuletItemObject(AmuletItemObject next){
-
+  Widget buildCardLargeAmuletItemObjectContent(AmuletItemObject next){
     final current = amulet.getEquipped(next.amuletItem.slotType);
-    final nextAmuletItem = next.amuletItem;
-    final currentAmuletItem = current?.amuletItem;
-    final levelDiff = getDiff(next.level, current?.level);
-    final valueDiff = getDiff(nextAmuletItem.quantify, currentAmuletItem?.quantify);
+    // final nextAmuletItem = next.amuletItem;
+    // final currentAmuletItem = current?.amuletItem;
+    // final levelDiff = getDiff(next.level, current?.level);
+    // final valueDiff = getDiff(nextAmuletItem.quantify, currentAmuletItem?.quantify);
     final showDiff = current != next;
 
-    return Column(
-      children: [
-          //  buildComparisonRow01(
-          //     lead: 'range',
-          //     next: nextAmuletItem.range,
-          //     current: currentAmuletItem?.range
-          // ),
-          // height16,
-          ...SkillType.values.map((skillType) {
+    return Container(
+      padding: paddingAll8,
+      child: Column(
+        children: [
+            ...SkillType.values.map((skillType) {
 
-            final currentLevel = current?.getSkillLevel(skillType) ?? 0;
-            final nextLevel = next.getSkillLevel(skillType);
 
-            if (currentLevel == 0 && nextLevel == 0) {
-              return nothing;
-            }
+              final currentLevel = current?.getSkillLevel(skillType) ?? 0;
+              final nextLevel = next.getSkillLevel(skillType);
 
-            final levelDiff = getDiff(nextLevel, currentLevel);
+              if (currentLevel == 0 && nextLevel == 0) {
+                return nothing;
+              }
 
-            if (levelDiff == null){
-              return nothing;
-            }
+              final levelDiff = getDiff(nextLevel, currentLevel);
 
-            return Container(
-              color: Colors.black12,
-              padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-              margin: const EdgeInsets.only(bottom: 8),
-              child: buildComparisonRow(
-                lead: Row(children: [
-                  Container(
-                    color: Colors.black12,
-                      width: 24,
-                      height: 24,
-                      alignment: Alignment.center,
-                      child: buildIconSkillType(skillType)
+              if (levelDiff == null){
+                return nothing;
+              }
+
+              final icon = Container(
+                  color: Colors.black12,
+                  width: 24,
+                  height: 24,
+                  alignment: Alignment.center,
+                  child: buildIconSkillType(skillType)
+              );
+
+              final controlLevel =   buildText('+$nextLevel', color: Colors.green);
+              final controlName = buildText(skillType.name.clean, color: Colors.white70, size: 15);
+
+              return Container(
+                margin: const EdgeInsets.only(bottom: 6),
+                color: Colors.black26,
+                padding: paddingAll4,
+                child: Row(
+                  children: [
+                    icon,
+                    width8,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        controlName,
+                        controlLevel,
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            }),
+
+          if (showDiff)
+            Container(
+              margin: const EdgeInsets.only(top: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  onPressed(
+                    action: amulet.sellAmuletItem,
+                    child: Container(
+                        color: Colors.yellow,
+                        padding: paddingAll8,
+                        child: buildText('SELL')),
                   ),
-                  width8,
-                  buildText(skillType.name.clean, color: Colors.white70, size: 15),
-                ],),
-                value: nextLevel,
-                diff: showDiff ? levelDiff : null,
+                  onPressed(
+                    action: amulet.pickupAmuletItem,
+                    child: Container(
+                      color: Colors.green,
+                        padding: paddingAll8,
+                        child: buildText('EQUIP')),
+                  ),
+                ],
               ),
-            );
-          }),
-
-        if (showDiff)
-          Container(
-            margin: const EdgeInsets.only(top: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                onPressed(
-                  action: amulet.sellAmuletItem,
-                  child: Container(
-                      color: Colors.yellow,
-                      padding: paddingAll8,
-                      child: buildText('SELL')),
-                ),
-                onPressed(
-                  action: amulet.pickupAmuletItem,
-                  child: Container(
-                    color: Colors.green,
-                      padding: paddingAll8,
-                      child: buildText('EQUIP')),
-                ),
-              ],
             ),
-          ),
-      ],
+        ],
+      ),
     );
   }
 
