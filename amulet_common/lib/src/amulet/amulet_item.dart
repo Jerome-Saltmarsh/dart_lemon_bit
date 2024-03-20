@@ -1,161 +1,140 @@
+import 'package:lemon_math/src.dart';
+
 import '../../src.dart';
+
+
 
 enum AmuletItem {
   Weapon_Sword_Short(
     label: 'Short Sword',
     slotType: SlotType.Weapon,
     subType: WeaponType.Sword_Short,
-    range: 0.2,
-    // damageMin: 0.75,
-    // damage: 0.45,
     skillBase: {
       SkillType.Slash: 5,
       SkillType.Attack_Speed: 5,
+      SkillType.Attack_Range: 1,
     }
   ),
   Weapon_Sword_Broad(
     label: 'Broad Sword',
     slotType: SlotType.Weapon,
     subType: WeaponType.Sword_Broad,
-    range: 0.5,
-    // damage: 0.5,
-    // damageMin: 0.75,
       skillBase: {
         SkillType.Slash: 7,
         SkillType.Attack_Speed: 5,
+        SkillType.Attack_Range: 2,
       }
   ),
   Weapon_Sword_Long(
     label: 'Long Sword',
     slotType: SlotType.Weapon,
     subType: WeaponType.Sword_Long,
-    range: 0.75,
-    // damageMin: 0.4,
-    // damage: 0.7,
     skillBase: {
       SkillType.Slash: 8,
       SkillType.Attack_Speed: 1,
+      SkillType.Attack_Range: 3,
     }
   ),
   Weapon_Sword_Giant(
     label: 'Giant Sword',
     slotType: SlotType.Weapon,
     subType: WeaponType.Sword_Giant,
-    range: 1.0,
-    // damageMin: 0.5,
-    // damage: 0.9,
       skillBase: {
         SkillType.Slash: 12,
         SkillType.Attack_Speed: 1,
+        SkillType.Attack_Range: 4,
       }
   ),
   Weapon_Bow_Short(
     label: 'Short Bow',
     slotType: SlotType.Weapon,
     subType: WeaponType.Bow_Short,
-    range: 0.25,
     skillBase: {
       SkillType.Shoot_Arrow: 5,
       SkillType.Attack_Speed: 1,
+      SkillType.Attack_Range: 1,
     }
   ),
   Weapon_Bow_Reflex(
     label: 'Reflex Bow',
     slotType: SlotType.Weapon,
     subType: WeaponType.Bow_Reflex,
-    range: 0.4,
-    // damageMin: 0.5,
-    // damage: 0.35,
       skillBase: {
         SkillType.Shoot_Arrow: 5,
         SkillType.Attack_Speed: 1,
+        SkillType.Attack_Range: 2,
       }
   ),
   Weapon_Bow_Composite(
     label: 'Composite Bow',
     slotType: SlotType.Weapon,
     subType: WeaponType.Bow_Composite,
-    range: 0.75,
-    // damageMin: 0.3,
-    // damage: 0.6,
       skillBase: {
         SkillType.Shoot_Arrow: 5,
         SkillType.Attack_Speed: 1,
+        SkillType.Attack_Range: 3,
       }
   ),
   Weapon_Bow_Long(
     label: 'Lucky Long Bow of the Flame',
     slotType: SlotType.Weapon,
     subType: WeaponType.Bow_Long,
-    // attackSpeed: 0.3,
-    range: 1.0,
-    // damageMin: 0.4,
-    // damage: 0.8,
       skillBase: {
         SkillType.Shoot_Arrow: 5,
         SkillType.Attack_Speed: 1,
+        SkillType.Attack_Range: 4,
       }
   ),
   Weapon_Staff_Wand(
     label: 'Wand',
     slotType: SlotType.Weapon,
     subType: WeaponType.Staff_Wand,
-    range: 0.15,
-    // damageMin: 0.5,
-    // damage: 0.1,
     skillSet: {
       SkillType.Magic_Regen: 0.5,
     },
     skillBase: {
       SkillType.Bludgeon: 5,
       SkillType.Attack_Speed: 1,
+      SkillType.Attack_Range: 1,
     },
   ),
   Weapon_Staff_Globe(
     label: 'Globe',
     slotType: SlotType.Weapon,
     subType: WeaponType.Staff_Globe,
-    range: 0.4,
-    // damageMin: 0.2,
-    // damage: 0.35,
     skillSet: {
       SkillType.Magic_Regen: 0.5,
     },
     skillBase: {
       SkillType.Bludgeon: 5,
       SkillType.Attack_Speed: 1,
+      SkillType.Attack_Range: 2,
     },
   ),
   Weapon_Staff_Scepter(
     label: 'Scepter',
     slotType: SlotType.Weapon,
     subType: WeaponType.Staff_Scepter,
-    // attackSpeed: 0.5,
-    range: 0.7,
-    // damageMin: 0.6,
-    // damage: 0.45,
     skillSet: {
       SkillType.Magic_Regen: 0.5,
     },
     skillBase: {
       SkillType.Bludgeon: 5,
       SkillType.Attack_Speed: 1,
+      SkillType.Attack_Range: 3,
     },
   ),
   Weapon_Staff_Long(
     label: 'Staff',
     slotType: SlotType.Weapon,
     subType: WeaponType.Staff_Long,
-    // attackSpeed: 0.4,
-    range: 0.8,
-    // damageMin: 0.8,
-    // damage: 0.55,
     skillSet: {
       SkillType.Magic_Regen: 0.5,
     },
     skillBase: {
       SkillType.Bludgeon: 5,
       SkillType.Attack_Speed: 1,
+      SkillType.Attack_Range: 4,
     },
   ),
   Helm_Leather_Cap(
@@ -412,9 +391,6 @@ enum AmuletItem {
       label: 'Frost Wand',
       slotType: SlotType.Weapon,
       subType: WeaponType.Staff_Wand,
-      range: 0.15,
-      // damageMin: 0.9,
-      // damage: 0.1,
       quality: ItemQuality.Unique,
       skillSet: {
         SkillType.Ice_Ball: 1.1,
@@ -429,10 +405,6 @@ enum AmuletItem {
       label: 'Flame Wand',
       slotType: SlotType.Weapon,
       subType: WeaponType.Staff_Wand,
-      // attackSpeed: 0.8,
-      range: 0.15,
-      // damageMin: 0.9,
-      // damage: 0.1,
       quality: ItemQuality.Unique,
       skillSet: {
         SkillType.Ice_Ball: 1.1,
@@ -440,15 +412,13 @@ enum AmuletItem {
       skillBase: {
         SkillType.Bludgeon: 1,
         SkillType.Attack_Speed: 5,
+        SkillType.Attack_Range: 1,
       }
   ),
   Special_Weapon_Vampire_Knife(
       label: 'Assassins Blade',
       slotType: SlotType.Weapon,
       subType: WeaponType.Sword_Short,
-      range: 0.2,
-      // damage: 0.45,
-      // damageMin: 0.75,
       quality: ItemQuality.Unique,
       skillSet: {
         SkillType.Health_Steal: 1.0,
@@ -456,16 +426,13 @@ enum AmuletItem {
       skillBase: {
         SkillType.Slash: 1,
         SkillType.Attack_Speed: 5,
+        SkillType.Attack_Range: 1,
       }
     ),
   Special_Weapon_Assassins_Blade(
       label: 'Assassins Blade',
       slotType: SlotType.Weapon,
       subType: WeaponType.Sword_Short,
-      // attackSpeed: 0.8,
-      range: 0.2,
-      // damage: 0.55,
-      // damageMin: 0.75,
       quality: ItemQuality.Rare,
       skillSet: {
         SkillType.Critical_Hit: 2.0,
@@ -474,16 +441,13 @@ enum AmuletItem {
       skillBase: {
         SkillType.Slash: 1,
         SkillType.Attack_Speed: 5,
+        SkillType.Attack_Range: 1,
       }
   ),
   Special_Weapon_Blizzard_Globe(
       label: 'Blizzard Globe',
       slotType: SlotType.Weapon,
       subType: WeaponType.Staff_Globe,
-      // attackSpeed: 0.6,
-      range: 0.2,
-      // damage: 0.55,
-      // damageMin: 0.75,
       quality: ItemQuality.Rare,
       skillSet: {
         SkillType.Ice_Ball: 2.0,
@@ -492,15 +456,13 @@ enum AmuletItem {
       skillBase: {
         SkillType.Bludgeon: 1,
         SkillType.Attack_Speed: 5,
+        SkillType.Attack_Range: 2,
       }
   ),
   Special_Weapon_Bow_Of_Destruction(
       label: 'Bow of Destruction',
       slotType: SlotType.Weapon,
       subType: WeaponType.Bow_Reflex,
-      range: 0.6,
-      // damage: 0.75,
-      // damageMin: 0.5,
       quality: ItemQuality.Rare,
       skillSet: {
         SkillType.Critical_Hit: 2.0,
@@ -509,6 +471,7 @@ enum AmuletItem {
       skillBase: {
         SkillType.Shoot_Arrow: 1,
         SkillType.Attack_Speed: 5,
+        SkillType.Attack_Range: 2,
       },
   ),
   Unique_Helm_Of_Fireball(
@@ -573,24 +536,17 @@ enum AmuletItem {
   /// see item_type.dart in commons
   final SlotType slotType;
   final int subType;
-  /// between 0.0 and 1.0
-  final double? range;
   final ItemQuality quality;
   final String label;
   final Map<SkillType, double> skillSet;
   final Map<SkillType, int> skillBase;
-  // final Map<DamageType, double> resistances;
 
   const AmuletItem({
     required this.slotType,
     required this.subType,
     required this.label,
     this.quality = ItemQuality.Common,
-    this.range,
     this.skillSet = const {},
-    // this.damageMin,
-    // this.damage,
-    // this.resistances = const {},
     this.skillBase = const {},
   });
 
@@ -644,6 +600,12 @@ enum AmuletItem {
       if (getSkillTypeLevelBase(skillType: attackSkill) == 0){
         throw Exception('$this attack skill base level is 0');
       }
+
+      if (getSkillTypeLevelBase(skillType: SkillType.Attack_Range) == 0){
+        throw Exception('$this SkillType.Attack required');
+      }
+
+
     }
 
     return !isWeapon || attackSkill != null;
@@ -689,7 +651,41 @@ enum AmuletItem {
   }) =>
       skillBase[skillType] ?? 0;
 
+
+  double getRange(int level){
+    final i = level / SkillType.Attack_Range.maxLevel;
+
+    if (isWeaponBow) {
+      return interpolate(
+          Constraint_Range_Bow.min,
+          Constraint_Range_Bow.max,
+          i,
+      );
+    }
+
+    if (isWeaponSword) {
+      return interpolate(
+        Constraint_Range_Sword.min,
+        Constraint_Range_Sword.max,
+          i,
+      );
+    }
+
+    if (isWeaponStaff) {
+      return interpolate(
+        Constraint_Range_Staff.min,
+        Constraint_Range_Staff.max,
+          i,
+      );
+    }
+
+    return 0;
+  }
+
   static const Constraint_Weapon_Damage = Constraint(min: 1, max: 20);
+  static const Constraint_Range_Sword = Constraint(min: 50, max: 100);
+  static const Constraint_Range_Staff = Constraint(min: 40, max: 80);
+  static const Constraint_Range_Bow = Constraint(min: 100, max: 250);
   static const Health_Per_Level = 5.0;
   static const Magic_Per_Level = 5.0;
   static const Damage_Per_Level = 1.0;

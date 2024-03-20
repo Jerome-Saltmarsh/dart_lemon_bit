@@ -145,6 +145,10 @@ enum SkillType {
     casteType: CasteType.Passive,
     constraint: Constraint_Resist,
   ),
+  Attack_Range(
+    casteType: CasteType.Passive,
+    maxLevel: 10
+  ),
   Wind_Cut(
     casteType: CasteType.Ability,
   ),
@@ -305,9 +309,6 @@ enum SkillType {
   static double getPercentageMightySwing(int level) =>
       Critical_Hit.linearConstraint(Constraint_Might_Swing, level);
 
-  static double getRangeWindCut(int level) =>
-      Critical_Hit.linearConstraint(Constraint_Range_Wind_Cut, level);
-
   static double getPercentageCriticalHit(int level) =>
       Critical_Hit.linearConstraint(Constraint_Critical_Hit, level);
 
@@ -330,6 +331,9 @@ enum SkillType {
   static int getMaxMagic(int level){
     return level * 5;
   }
+
+  /// returns between 0.0 and 1.0
+  static double getAttackRange(int level) => Attack_Range.linear(level);
 
   double? getDamageMin(int? level) => tryLinearConstraint(damageMin, level);
   
@@ -354,6 +358,13 @@ enum SkillType {
         level / maxLevel,
     );
 
+  double linear(int level){
+    if (maxLevel <= 0) {
+      throw Exception();
+    }
+    return (level / maxLevel).clamp(0, 1);
+  }
+
   static double getResistSlash(int level) => Resist_Slash.getLinear(level);
 
   static double getResistBludgeon(int level) => Resist_Bludgeon.getLinear(level);
@@ -366,6 +377,16 @@ enum SkillType {
 
   static double getAttackSpeed(int level){
     return Run_Speed.getLinear(level);
+  }
+
+  static double getRangeWindCut(int level){
+    final i = level / SkillType.Wind_Cut.maxLevel;
+    return const Constraint(min: 1.0, max: 10.0).linearInterp(i);
+  }
+
+  static double getDamageWindCut(int level){
+    final i = level / SkillType.Wind_Cut.maxLevel;
+    return const Constraint(min: 80.0, max: 200.0).linearInterp(i);
   }
 }
 

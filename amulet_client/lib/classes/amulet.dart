@@ -5,7 +5,6 @@ import 'dart:ui';
 
 import 'package:amulet_client/components/isometric_component.dart';
 import 'package:amulet_client/components/updatable.dart';
-import 'package:amulet_client/enums/mode.dart';
 import 'package:amulet_client/enums/node_visibility.dart';
 import 'package:amulet_client/ui/isometric_colors.dart';
 import 'package:amulet_common/src.dart';
@@ -256,6 +255,10 @@ class Amulet extends Updatable with IsometricComponent  {
       if (key == amuletKeys.refillHealthAndMagic) {
         amulet.sendAmuletRequest(
             NetworkRequestAmulet.Refill_Player_Health_Magic);
+        return;
+      }
+      if (key == amuletKeys.toggleWindowQuantify) {
+        amulet.windowVisibleQuantify.toggle();
         return;
       }
     }

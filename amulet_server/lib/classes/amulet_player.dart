@@ -143,17 +143,7 @@ class AmuletPlayer extends IsometricPlayer with
 
   @override
   double get attackRange {
-    final rangeI = equippedWeaponRange;
-    if (rangeI == null){
-      return 0;
-    }
-    if (equippedWeaponRanged) {
-      return AmuletSettings.interpolateRangeRanged(rangeI);
-    }
-    if (equippedWeaponMelee) {
-      return AmuletSettings.interpolateRangeMelee(rangeI);
-    }
-    return 0;
+    return equippedWeaponRange ?? 0;
   }
 
   @override
@@ -562,16 +552,15 @@ class AmuletPlayer extends IsometricPlayer with
       return;
     }
 
-    final maxRange = AmuletSettings.interpolateRangeRanged(weaponRange);
 
-    if (mouseDistance <= maxRange){
+    if (mouseDistance <= weaponRange){
       castePositionX = mouseSceneX;
       castePositionY = mouseSceneY;
       castePositionZ = mouseSceneZ;
     } else {
       final mouseAngle = getMouseAngle() + pi;
-      castePositionX = x + adj(mouseAngle, maxRange);
-      castePositionY = y + opp(mouseAngle, maxRange);
+      castePositionX = x + adj(mouseAngle, weaponRange);
+      castePositionY = y + opp(mouseAngle, weaponRange);
       castePositionZ = z;
     }
   }
@@ -1197,8 +1186,10 @@ class AmuletPlayer extends IsometricPlayer with
 
   int getSkillTypeMagicCost(SkillType skillType) => skillType.magicCost;
 
-  /// a value between 0.0 and 1.0
-  double? get equippedWeaponRange => equippedWeapon?.amuletItem.range;
+  double? get equippedWeaponRange {
+    return equippedWeapon?.amuletItem.getRange(
+        getSkillTypeLevel(SkillType.Attack_Range));
+  }
 
   int getSkillTypeLevel(SkillType skillType){
      var total = 0;

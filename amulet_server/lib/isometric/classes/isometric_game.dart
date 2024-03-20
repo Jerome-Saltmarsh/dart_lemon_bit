@@ -413,6 +413,15 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     required double maxHitRadian,
     required double areaDamage,
   }){
+
+    if (range <= 0){
+      return;
+    }
+
+    if (damage <= 0){
+      return;
+    }
+
     areaDamage = areaDamage.clamp(0, 1);
 
     final characterAngle = character.angle;

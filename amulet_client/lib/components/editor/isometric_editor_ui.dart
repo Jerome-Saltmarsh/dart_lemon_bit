@@ -1,6 +1,5 @@
 
 import 'package:amulet_client/atlases/atlas_nodes.dart';
-import 'package:amulet_client/atlases/atlas_src_nodes.dart';
 import 'package:amulet_client/enums/editor_dialog.dart';
 import 'package:amulet_client/enums/emission_type.dart';
 import 'package:amulet_client/enums/icon_type.dart';

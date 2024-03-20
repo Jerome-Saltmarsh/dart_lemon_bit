@@ -12,6 +12,7 @@ class AmuletKeys {
   var toggleWindowInventory = PhysicalKeyboardKey.keyV;
   var toggleWindowQuest = PhysicalKeyboardKey.keyW;
   var toggleWindowHelp = PhysicalKeyboardKey.keyQ;
+  var toggleWindowQuantify = PhysicalKeyboardKey.digit8;
 
   var refillHealthAndMagic = PhysicalKeyboardKey.digit9;
 }

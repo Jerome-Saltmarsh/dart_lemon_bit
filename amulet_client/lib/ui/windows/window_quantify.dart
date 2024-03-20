@@ -176,7 +176,7 @@ class WindowQuantify extends StatelessWidget {
               //   buildQuantificationCell('dmg-min', damageMin),
 
               // buildQuantificationCell('speed', amuletItem.attackSpeed),
-              buildQuantificationCell('range', amuletItem.range),
+              // buildQuantificationCell('range', amuletItem.range),
               Container(
                   width: 150,
                   alignment: Alignment.center,

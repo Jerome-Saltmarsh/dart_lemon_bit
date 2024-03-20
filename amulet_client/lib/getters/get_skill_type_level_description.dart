@@ -32,11 +32,11 @@ String? getSkillTypeLevelDescription(SkillType skillType, int level) {
     case SkillType.None:
       return '';
     case SkillType.Slash:
-      return formatDamage('Slash Damage', SkillType.Slash, level);
+      return formatDamage('Damage', SkillType.Slash, level);
     case SkillType.Bludgeon:
-      return formatDamage('Bludgeon Damage', SkillType.Bludgeon, level);
+      return formatDamage('Damage', SkillType.Bludgeon, level);
     case SkillType.Shoot_Arrow:
-      return formatDamage('Pierce Damage', SkillType.Shoot_Arrow, level);
+      return formatDamage('Damage', SkillType.Shoot_Arrow, level);
     case SkillType.Ice_Ball:
       return formatIceDamage(
         damage: SkillType.getDamageIceBall(level),
@@ -75,6 +75,8 @@ String? getSkillTypeLevelDescription(SkillType skillType, int level) {
       return 'health +${SkillType.getMaxHealth(level).toInt()}';
     case SkillType.Max_Magic:
       return 'magic +${SkillType.getMaxMagic(level).toInt()}';
+    case SkillType.Attack_Range:
+      return 'range +${SkillType.getAttackRange(level).toInt()}';
   }
 }
 

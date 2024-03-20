@@ -1056,16 +1056,7 @@ class AmuletUI {
       subtitle: 'lvl $level',
     );
 
-    final controlMagicCost = Container(
-      margin: const EdgeInsets.only(right: 16),
-      child: Row(
-        children: [
-          iconMagic,
-          width4,
-          buildText(skillType.magicCost, color: Palette.red_1),
-        ],
-      ),
-    );
+    final magicCost = skillType.magicCost;
 
     final contents = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1075,6 +1066,17 @@ class AmuletUI {
             color: Colors.white10,
             child: buildTextValue(getSkillTypeDescription(skillType))),
         height8,
+        if (magicCost > 0)
+          Container(
+            margin: const EdgeInsets.only(right: 16),
+            child: Row(
+              children: [
+                iconMagic,
+                width4,
+                buildText(magicCost, color: Palette.red_1),
+              ],
+            ),
+          ),
         if (level > 0)
           buildText('current'),
         if (level > 0)
@@ -1362,11 +1364,11 @@ class AmuletUI {
 
     return Column(
       children: [
-           buildComparisonRow01(
-              lead: 'range',
-              next: nextAmuletItem.range,
-              current: currentAmuletItem?.range
-          ),
+          //  buildComparisonRow01(
+          //     lead: 'range',
+          //     next: nextAmuletItem.range,
+          //     current: currentAmuletItem?.range
+          // ),
           // height16,
           ...SkillType.values.map((skillType) {
 
