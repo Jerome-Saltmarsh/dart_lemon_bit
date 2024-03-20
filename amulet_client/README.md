@@ -73,6 +73,7 @@ SKULLSOFT
 
 
 ## 21.03.2024
+[fix] font families
 [fix] edit and debug mode
 
 ## 19.03.2024

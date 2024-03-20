@@ -1,10 +1,10 @@
 
 import 'package:amulet/classes/amulet_connect.dart';
 import 'package:amulet/enums/src.dart';
+import 'package:amulet/ui/consts/font_families.dart';
 import 'package:amulet/ui/widgets/dialog_create_character_computer.dart';
 import 'package:amulet_client/classes/amulet_client.dart';
 import 'package:amulet_client/ui/isometric_colors.dart';
-import 'package:amulet_client/ui/src.dart';
 import 'package:amulet_client/ui/widgets/loading_page.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_server/json/amulet_field.dart';
@@ -30,7 +30,11 @@ class AmuletConnectUI extends LemonEngine {
 
   AmuletClient get amuletClient => amuletConnect.amuletClient;
 
-  AmuletConnectUI() {
+  AmuletConnectUI() : super(
+      themeData: ThemeData(
+        fontFamily: FontFamilies.VT323_Regular
+      ),
+  ) {
     amuletConnect = AmuletConnect(AmuletClient(this));
   }
 
