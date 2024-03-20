@@ -1330,9 +1330,9 @@ class AmuletUI {
               }
 
               final icon = Container(
-                  color: Colors.black12,
-                  width: 24,
-                  height: 24,
+                  // color: Colors.black12,
+                  width: 32,
+                  height: 32,
                   alignment: Alignment.center,
                   child: buildIconSkillType(skillType)
               );
@@ -1342,7 +1342,7 @@ class AmuletUI {
 
               return Container(
                 margin: const EdgeInsets.only(bottom: 6),
-                color: Colors.black26,
+                // color: Colors.black26,
                 padding: paddingAll4,
                 child: Row(
                   children: [
