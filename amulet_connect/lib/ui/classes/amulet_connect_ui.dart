@@ -31,6 +31,7 @@ class AmuletConnectUI extends LemonEngine {
   AmuletClient get amuletClient => amuletConnect.amuletClient;
 
   AmuletConnectUI() : super(
+    backgroundColor: Palette.black,
       themeData: ThemeData(
         fontFamily: FontFamilies.VT323_Regular
       ),

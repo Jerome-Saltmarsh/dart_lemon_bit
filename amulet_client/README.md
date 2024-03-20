@@ -71,8 +71,8 @@ SKULLSOFT
 [new] balance amulet items armor
 [new] balance amulet items shoes
 
-
 ## 21.03.2024
+[new] skill type attack range
 [fix] font families
 [fix] edit and debug mode
 

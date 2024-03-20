@@ -1341,9 +1341,13 @@ class AmuletUI {
               final controlName = buildText(skillType.name.clean, color: Colors.white70, size: 15);
 
               return Container(
+                color: Colors.black12,
                 margin: const EdgeInsets.only(bottom: 6),
-                // color: Colors.black26,
                 padding: paddingAll4,
+                // decoration: BoxDecoration(
+                //   border: Border.all(color: Colors.black26, width: 2),
+                //   borderRadius: BorderRadius.zero,
+                // ),
                 child: Row(
                   children: [
                     icon,
