@@ -10,6 +10,7 @@ import 'package:amulet_common/src.dart';
 import 'package:amulet_server/json/amulet_field.dart';
 import 'package:amulet_server/json/src.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_json/src.dart';
@@ -33,18 +34,6 @@ class AmuletConnectUI extends LemonEngine {
     amuletConnect = AmuletConnect(AmuletClient(this));
   }
 
-  // @override
-  // Widget build(BuildContext context) =>
-  //     FutureBuilder(
-  //       future: initialize(),
-  //       builder: buildInitialize,
-  //     );
-
-  // Widget buildInitialize(BuildContext context, AsyncSnapshot snapshot) =>
-  //     snapshot.connectionState != ConnectionState.done
-  //         ? doBuildLoadingPage()
-  //         : buildWatchGameRunning(context);
-
   Widget buildWatchGameRunning(BuildContext context){
     final mainMenu = buildMainMenu(context);
     return buildWatch(
@@ -54,32 +43,8 @@ class AmuletConnectUI extends LemonEngine {
   }
 
   @override
-  Widget buildLoadingPage(BuildContext context) {
-    return LoadingPage(images: amuletConnect.amuletClient.components.images,);
-  }
-
-  // Widget doBuildLoadingPage() =>
-  //     MaterialApp(
-  //       debugShowCheckedModeBanner: false,
-  //       title: 'LOADING AMULET',
-  //       theme: ThemeData(
-  //         fontFamily: 'VT323-Regular'
-  //       ),
-  //       home: Scaffold(
-  //         backgroundColor: Palette.black,
-  //         body: LoadingPage(images: amuletApp.amuletClient.components.images,),
-  //       ),
-  //     );
-
-  // Future initialize() => amuletApp.initialize();
-
-  void onChangedVisitCount(int value){
-    print('visit-count: $value');
-  }
-
-  String formatDate(DateTime value){
-    return amuletConnect.dateFormat.format(value.toLocal());
-  }
+  Widget buildLoadingPage(BuildContext context) =>
+      LoadingPage(images: amuletConnect.amuletClient.components.images);
 
   void setError(String message){
     amuletConnect.error.value = message;
@@ -529,7 +494,15 @@ class AmuletConnectUI extends LemonEngine {
 
   @override
   void onUpdate(double delta) {
-    if (!amuletConnect.gameRunning.value) return;
+    if (!gameRunning) return;
     amuletConnect.amuletClient.onUpdate(delta);
   }
+
+  @override
+  void onKeyPressed(PhysicalKeyboardKey keyCode) {
+    if (!gameRunning) return;
+    amuletClient.onKeyPressed(keyCode);
+  }
+
+  bool get gameRunning => amuletConnect.gameRunning.value;
 }
