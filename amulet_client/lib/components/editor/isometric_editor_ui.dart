@@ -117,7 +117,7 @@ extension IsometricEditorUI on IsometricEditor {
         if (activeEditTab == EditorTab.Nodes)
           Positioned(
             left: 0,
-            top: 80,
+            top: 60,
             child: buildEditorTabNodes(),
           ),
         if (activeEditTab == EditorTab.File)
