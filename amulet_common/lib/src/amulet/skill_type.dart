@@ -147,10 +147,11 @@ enum SkillType {
   ),
   Attack_Range(
     casteType: CasteType.Passive,
-    maxLevel: 10
+    maxLevel: 10,
   ),
   Wind_Cut(
     casteType: CasteType.Ability,
+    maxLevel: 20,
   ),
   ;
 
@@ -376,7 +377,7 @@ enum SkillType {
   static double getResistIce(int level) => Resist_Ice.getLinear(level);
 
   static double getAttackSpeed(int level){
-    return Run_Speed.getLinear(level);
+    return Attack_Speed.getLinear(level);
   }
 
   static double getRangeWindCut(int level){

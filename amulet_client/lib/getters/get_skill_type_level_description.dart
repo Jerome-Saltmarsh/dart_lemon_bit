@@ -70,13 +70,14 @@ String? getSkillTypeLevelDescription(SkillType skillType, int level) {
     case SkillType.Run_Speed:
       return '${SkillType.getRunSpeed(level).toStringPercentage} faster';
     case SkillType.Wind_Cut:
-      return 'range +${SkillType.getRangeWindCut(level).toInt()}';
+      return 'range +${SkillType.getRangeWindCut(level).toInt()}\n' +
+       'damage +${SkillType.getDamageWindCut(level).toInt()}\n';
     case SkillType.Max_Health:
       return 'health +${SkillType.getMaxHealth(level).toInt()}';
     case SkillType.Max_Magic:
       return 'magic +${SkillType.getMaxMagic(level).toInt()}';
     case SkillType.Attack_Range:
-      return 'range +${SkillType.getAttackRange(level).toInt()}';
+      return 'range +${SkillType.getAttackRange(level).toStringPercentage}';
   }
 }
 
