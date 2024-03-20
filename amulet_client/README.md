@@ -70,6 +70,12 @@ SKULLSOFT
 [new] balance amulet items helms
 [new] balance amulet items armor
 [new] balance amulet items shoes
+
+
+## 21.03.2024
+[fix] edit and debug mode
+
+## 19.03.2024
 [ref] new project amulet launcher
 
 ## 08.03.2024
