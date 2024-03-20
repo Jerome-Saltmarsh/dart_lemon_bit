@@ -85,68 +85,63 @@ extension IsometricEditorUI on IsometricEditor {
   ];
 
   Widget buildEditor(){
-    return buildWatch(editorTab, buildUI);
+    return buildWatch(editorTab, buildEditorTab);
   }
 
-  Widget buildPage({required List<Widget> children}) =>
-      Container(
-          width: engine.screen.width,
-          height: engine.screen.height,
-          child: Stack(children: children)
-      );
-
-  Widget buildUI(EditorTab activeEditTab) => buildPage(
-    children: [
-      buildWatch(editorDialog, buildWatchEditorDialog),
-      Positioned(
-          bottom: 10,
-          child: Container(
-              alignment: Alignment.center,
-              width: engine.screen.width,
-              child: buildRowWeatherControls()
-          )
-      ),
-      buildWindowAIControls(),
-      if (activeEditTab == EditorTab.Objects)
+  Widget buildEditorTab(EditorTab activeEditTab) => maximize(
+    child: Stack(
+      children: [
+        buildWatch(editorDialog, buildWatchEditorDialog),
         Positioned(
-          left: 0,
-          top: 80,
-          child: Container(
-              height: engine.screen.height - 100,
-              child: buildEditorTabGameObjects()),
-        ),
-      if (activeEditTab == EditorTab.Marks)
-        Positioned(
-          left: 0,
-          top: 80,
-          child: buildEditorTabMarks(),
-        ),
-      if (activeEditTab == EditorTab.Nodes)
-        Positioned(
-          left: 0,
-          top: 80,
-          child: buildEditorTabNodes(),
-        ),
-      if (activeEditTab == EditorTab.File)
-        Positioned(
-            top: 100,
-            left: 0,
+            bottom: 10,
             child: Container(
-              alignment: Alignment.center,
-              child: buildColumnFile(),
-            ),
+                alignment: Alignment.center,
+                width: engine.screen.width,
+                child: buildRowWeatherControls()
+            )
         ),
-      if (activeEditTab == EditorTab.Keys)
-        buildEditorTabKeys(),
-      Positioned(
-        left: 0,
-        top: 0,
-        child: buildEditorMenu(activeEditTab),
-      ),
-      buildWatchBool(windowEnabledScene, buildWindowEditScene),
-      buildWatchBool(windowEnabledCanvasSize, buildWindowEditCanvasSize),
-      buildWatchBool(windowEnabledGenerate, buildWindowGenerateScene),
-    ],
+        buildWindowAIControls(),
+        if (activeEditTab == EditorTab.Objects)
+          Positioned(
+            left: 0,
+            top: 80,
+            child: Container(
+                height: engine.screen.height - 100,
+                child: buildEditorTabGameObjects()),
+          ),
+        if (activeEditTab == EditorTab.Marks)
+          Positioned(
+            left: 0,
+            top: 80,
+            child: buildEditorTabMarks(),
+          ),
+        if (activeEditTab == EditorTab.Nodes)
+          Positioned(
+            left: 0,
+            top: 80,
+            child: buildEditorTabNodes(),
+          ),
+        if (activeEditTab == EditorTab.File)
+          Positioned(
+              top: 100,
+              left: 0,
+              child: Container(
+                alignment: Alignment.center,
+                child: buildColumnFile(),
+              ),
+          ),
+        if (activeEditTab == EditorTab.Keys)
+          buildEditorTabKeys(),
+        Positioned(
+          left: 0,
+          top: 0,
+          child: buildEditorMenu(activeEditTab),
+        ),
+        buildWatchBool(windowEnabledScene, buildWindowEditScene),
+        buildWatchBool(windowEnabledCanvasSize, buildWindowEditCanvasSize),
+        buildWatchBool(windowEnabledGenerate, buildWindowGenerateScene),
+      ],
+    ),
   );
 
   Widget buildColumnFile() => Column(
@@ -1109,7 +1104,7 @@ extension IsometricEditorUI on IsometricEditor {
   Widget buildPaintType(int type) =>
       buildButton(child: NodeType.getName(type));
 
-  Widget buildEditorMenu(EditorTab activeEditTab) => GSContainer(
+  Widget buildEditorMenu(EditorTab activeEditTab) => Container(
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
