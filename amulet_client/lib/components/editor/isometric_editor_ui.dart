@@ -6,6 +6,7 @@ import 'package:amulet_client/enums/emission_type.dart';
 import 'package:amulet_client/enums/icon_type.dart';
 import 'package:amulet_client/components/isometric_ui.dart';
 import 'package:amulet_client/ui/builders/build_watch_bool.dart';
+import 'package:amulet_client/ui/isometric_colors.dart';
 import 'package:amulet_client/ui/isometric_constants.dart';
 import 'package:amulet_client/ui/widgets/build_button.dart';
 import 'package:amulet_client/ui/widgets/gs_container.dart';
@@ -63,9 +64,6 @@ extension IsometricEditorUI on IsometricEditor {
     NodeType.Shadow,
     NodeType.Shrine,
     NodeType.Portal,
-  ];
-
-  static const nodeTypesColumn2 = [
     NodeType.Grass,
     NodeType.Grass_Long,
     NodeType.Grass_Short,
@@ -83,6 +81,7 @@ extension IsometricEditorUI on IsometricEditor {
     NodeType.Fireplace,
     NodeType.Tree_Stump,
   ];
+
 
   Widget buildEditor(){
     return buildWatch(editorTab, buildEditorTab);
@@ -1245,7 +1244,9 @@ extension IsometricEditorUI on IsometricEditor {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            height: engine.screen.height - 70,
+            padding: paddingAll8,
+            color: Palette.brown_3,
+            height: engine.screen.height - 150,
             child: SingleChildScrollView(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -1254,11 +1255,6 @@ extension IsometricEditorUI on IsometricEditor {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: nodeTypesColumn1.map(buildButtonSelectNodeType).toList(),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: nodeTypesColumn2.map(buildButtonSelectNodeType).toList(),
                   ),
                 ],
               ),
