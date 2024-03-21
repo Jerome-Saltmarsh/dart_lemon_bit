@@ -308,7 +308,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
   }) => Container(
     child:   Column(
       children: [
-        buildText(title, color: Colors.white.withOpacity(0.8)),
+        buildText(title, color: Colors.white.withOpacity(0.8), size: 14),
         height8,
         Container(
           height: 200,
