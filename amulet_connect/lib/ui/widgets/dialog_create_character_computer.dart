@@ -1,6 +1,5 @@
 import 'package:amulet/ui/classes/amulet_connect_ui.dart';
 import 'package:amulet/ui/typedefs/create_character.dart';
-import 'package:amulet_client/ui/isometric_colors.dart';
 import 'package:amulet_client/ui/src.dart';
 import 'package:amulet_client/ui/widgets/gs_container.dart';
 import 'package:amulet_common/src.dart';
@@ -40,9 +39,10 @@ class DialogCreateCharacterComputer extends StatelessWidget {
     required this.app,
   });
 
+  List<Color> get palette => app.amuletClient.components.colors.palette;
+
   @override
   Widget build(BuildContext context) {
-    // final palette = components.colors.palette;
     complexion.value = 50;
     const width = 700.0;
     return buildBorder(
@@ -64,7 +64,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      buildControls(Palette.values),
+                      buildControls(palette),
                       height8,
                       buildControlName(),
                       height8,
@@ -160,16 +160,15 @@ class DialogCreateCharacterComputer extends StatelessWidget {
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      buildColumnComplexion(palette),
+      buildPaletteComplexion(palette),
       width4,
-      buildColumnHairStyle(),
+      buildHairStyle(),
       width4,
-      buildColumnHairColor(palette),
+      buildPaletteHairColor(palette),
     ],
   );
 
   Widget buildCharacterCanvas(IsometricComponents components) {
-    final palette = components.colors.palette;
     const width = 275.0;
     return onPressed(
                 action: (){
@@ -208,15 +207,11 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                           },
                         ),
                       ),
-                      // Positioned(
-                      //   top: 8,
-                      //   right: 8,
-                      //   child: MouseOver(builder: (mouseOver) => IsometricIcon(
-                      //     iconType: IconType.Turn_Right,
-                      //     scale: 0.2,
-                      //     color: mouseOver ? Colors.green.value : Colors.white38.value,
-                      //   )),
-                      // ),
+                      Positioned(
+                        top: 8,
+                        right: 8,
+                        child: buildText('TURN'),
+                      ),
                     ],
                   ),
                 ),
@@ -266,7 +261,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                         buildText(value == Gender.male ? 'Square' : 'Curved'))),
               )));
 
-  Widget buildColumnHairColor(List<Color> palette) =>
+  Widget buildPaletteHairColor(List<Color> palette) =>
       buildWatch(hairColor, (activeHairColor) => buildColumn(
           title: 'HAIR-COLOR',
           children: [
@@ -278,7 +273,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
           ])
       );
 
-  Widget buildColumnHairStyle() =>
+  Widget buildHairStyle() =>
       buildWatch(hairType, (activeHairType) => buildColumn(
           title: 'HAIR-STYLE',
           children: HairType.values.map((type) => onPressed(
@@ -295,7 +290,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
           ))));
 
 
-  Widget buildColumnComplexion(List<Color> palette) =>
+  Widget buildPaletteComplexion(List<Color> palette) =>
       buildWatch(complexion, (activeComplexion) => buildColumn(
           title: 'COMPLEXION',
           children: [
