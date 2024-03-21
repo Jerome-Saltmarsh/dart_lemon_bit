@@ -50,7 +50,9 @@ class RendererProjectiles extends RenderGroup {
         scale: 1,
         dstX: dstX,
         dstY: dstY,
-        rotation: rotation,
+        rotation: rotation - piQuarter,
+        anchorX: 0.5,
+        anchorY: 0.5,
     );
   }
 
