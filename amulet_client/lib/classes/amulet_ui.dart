@@ -62,36 +62,12 @@ class AmuletUI {
 
   Widget buildUI(BuildContext buildContext) {
 
-    final click = MouseRegion(
-      cursor: SystemMouseCursors.click,
-      hitTestBehavior: HitTestBehavior.translucent,
-    );
-
-    final translucent = MouseRegion(
-      cursor: SystemMouseCursors.basic,
-      hitTestBehavior: HitTestBehavior.translucent,
-    );
-
-    return Container(
-      width: amulet.engine.screen.width,
-      height: amulet.engine.screen.height,
+    return maximize(
     child: Stack(alignment: Alignment.center, children: [
       Positioned(
         top: 0,
         left: 0,
-        child: maximize(
-          child: buildWatch(amulet.aimTargetSet, (aimTargetSet){
-            if (aimTargetSet){
-              // amulet.engine.cursorType.value = cursorType.Click;
-              return click;
-            }
-            // if (cursor == SystemMouseCursors.basic){
-            //   // amulet.engine.cursorType.value = CursorType.Basic;
-            //   return basic;
-            // }
-            return translucent;
-          }),
-        ),
+        child: buildMouseCursorCatcher(),
       ),
       Positioned(
         top: 16,
@@ -162,6 +138,23 @@ class AmuletUI {
           )
         ]),
   );
+  }
+
+  Widget buildMouseCursorCatcher() {
+    final click = MouseRegion(
+      cursor: SystemMouseCursors.click,
+      hitTestBehavior: HitTestBehavior.translucent,
+    );
+
+    final translucent = MouseRegion(
+      cursor: SystemMouseCursors.basic,
+      hitTestBehavior: HitTestBehavior.translucent,
+    );
+
+    return maximize(
+      child: buildWatch(amulet.aimTargetSet, (aimTargetSet) =>
+        aimTargetSet ? click : translucent),
+    );
   }
 
   Widget buildIconPotion() => buildAmuletImage(

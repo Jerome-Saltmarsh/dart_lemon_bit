@@ -53,9 +53,7 @@ SKULLSOFT
 [new] beat the game and balance items and enemies
 
 [BLOCK]
-[new] amulet item models
-[new] amulet item satin boots
-[new] amulet item shroud
+[new] model missing amulet items 
 
 [BLOCK]
 [new] collectable gameobject health boost
@@ -63,8 +61,8 @@ SKULLSOFT
 [new] side quest rats in the cellar
 
 [BLOCK]
-[opt] render mini map text
 [new] improve ice ball animation
+[opt] render mini map text
 
 ## 22.03.2024
 [new] tree top transparent

@@ -45,7 +45,6 @@ import 'amulet_ui.dart';
 
 class AmuletClient extends IsometricComponents {
 
-
   late AmuletUI amuletUI;
   final LemonEngine engine;
 
