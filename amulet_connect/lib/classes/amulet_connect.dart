@@ -6,6 +6,7 @@ import 'package:amulet_client/classes/amulet_client.dart';
 import 'package:amulet_client/interfaces/src.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lemon_json/src.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_io/io.dart';
@@ -28,13 +29,29 @@ class AmuletConnect {
   final connection = Watch<Connection?>(null);
   final error = Watch<dynamic>(null);
   final gameRunning = WatchBool(false);
+  final characters = Watch<List<Json>>([]);
   final AmuletClient amuletClient;
 
-  AmuletConnect(this.amuletClient);
+  AmuletConnect(this.amuletClient) {
+    connection.onChanged(onChangedConnection);
+  }
 
+  void onChangedConnection(Connection? connection){
+    refreshCharacters();
+  }
 
   void onConnectionLost() {
     gameRunning.value = false;
+    refreshCharacters();
+  }
+
+  Future refreshCharacters() async {
+     final connection = this.connection.value;
+     if (connection == null){
+       characters.value = [];
+       return;
+     }
+     characters.value = await connection.getCharacters();
   }
 
   void setConnectionSinglePlayer() {
@@ -94,6 +111,8 @@ class AmuletConnect {
        )
       .then(playCharacter)
       .catchError(handleError);
+
+    refreshCharacters();
   }
 
   void handleError(dynamic value) => error.value = value;
@@ -104,6 +123,7 @@ class AmuletConnect {
       handleError('connection required');
       return;
     }
-    return connection.deleteCharacter(uuid);
+    await connection.deleteCharacter(uuid);
+    await refreshCharacters();
   }
 }

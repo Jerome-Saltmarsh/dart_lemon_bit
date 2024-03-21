@@ -184,20 +184,7 @@ class AmuletConnectUI extends LemonEngine {
                               return buildPageSelectConnection();
                             }
 
-                            return FutureBuilder(
-                              future: connection.getCharacters(),
-                              builder: (context, snapshot) {
-                                final data = snapshot.data;
-                                if (data == null) {
-                                  return buildText('loading');
-                                }
-
-                                return buildTableCharacters(
-                                  data,
-                                      (){}, // TODO
-                                );
-                              },
-                            );
+                            return buildWatch(amuletConnect.characters, buildTableCharacters);
                           }),
 
                         // if (serverMode == ServerMode.remote)
@@ -323,7 +310,7 @@ class AmuletConnectUI extends LemonEngine {
   //         buildTableCharacters(characters, (){})
   //     );
 
-  Widget buildCharacters(List<CharacterJson> characters, Function rebuild) =>
+  Widget buildCharacters(List<CharacterJson> characters) =>
       Container(
         height: 200,
         child: SingleChildScrollView(
@@ -390,7 +377,7 @@ class AmuletConnectUI extends LemonEngine {
                       ),
                       width16,
                       onPressed(
-                        action: () => showDialogDeleteCharacter(character, onDeleted: rebuild),
+                        action: () => showDialogDeleteCharacter(character),
                         child: Container(
                             padding: paddingAll8,
                             color: Colors.white12,
@@ -423,15 +410,14 @@ class AmuletConnectUI extends LemonEngine {
     return lockDuration.inSeconds <= durationAutoSave.inSeconds;
   }
 
-  Widget buildTableCharacters(List<Json> characters, Function rebuild) => Container(
-    // color: Colors.black12,
+  Widget buildTableCharacters(List<Json> characters) => Container(
     width: 500,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         buildButtonNewCharacter(),
         height8,
-        buildCharacters(characters, rebuild),
+        buildCharacters(characters),
       ],
     ),
   );

@@ -365,6 +365,7 @@ class IsometricUI with IsometricComponent {
   }
 
   Widget buildDialog({required Widget child}) => Container(
+     padding: paddingAll16,
       width: 300,
       height: 200,
       alignment: Alignment.center,
