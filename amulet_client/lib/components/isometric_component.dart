@@ -53,7 +53,7 @@ mixin IsometricComponent implements Component {
   late final RendererEditor rendererEditor;
   late final IsometricEditor editor;
   late final IsometricDebug debugger;
-  late final IsometricMinimap minimap;
+  // late final IsometricMinimap minimap;
   late final IsometricCamera camera;
   late final IsometricMouse mouse;
   late final IsometricUI ui;

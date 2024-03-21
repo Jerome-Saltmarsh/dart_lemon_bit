@@ -214,18 +214,17 @@ class AmuletUI {
       );
     });
 
-  Widget buildWorldMap() => Builder(
-    builder: (context) {
-      final small = AmuletWorldMap(amulet: amulet, size: 200);
-      final large = AmuletWorldMap(amulet: amulet, size: 400);
-      return onPressed(
-        action: amulet.worldMapLarge.toggle,
-        child: buildWatch(amulet.worldMapLarge, (bool isLarge)
-          => isLarge ? large : small
-        ),
-      );
-    }
-  );
+  Widget buildWorldMap() {
+    final small = AmuletWorldMap(amulet: amulet, size: 200);
+    final large = AmuletWorldMap(amulet: amulet, size: 400);
+    return onPressed(
+      action: amulet.worldMapLarge.toggle,
+      child: buildWatch(amulet.worldMapLarge, (bool isLarge)
+      => isLarge ? large : small
+      ),
+    );
+
+  }
 
   Widget buildMessageIndex() => buildWatch(amulet.messageIndex, (int messageIndex) {
     if (messageIndex == -1) {

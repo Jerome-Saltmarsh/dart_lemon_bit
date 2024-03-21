@@ -31,8 +31,8 @@ import 'package:amulet_client/components/render/renderer_nodes.dart';
 import 'package:amulet_client/components/render/renderer_particles.dart';
 import 'package:amulet_client/components/render/renderer_projectiles.dart';
 import 'package:amulet_client/enums/mode.dart';
-import 'package:amulet_client/ui/game_isometric_minimap.dart';
 import 'package:amulet_client/ui/isometric_colors.dart';
+// import 'package:amulet_client/ui/game_isometric_minimap.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_client/classes/amulet.dart';
 
@@ -61,7 +61,7 @@ class AmuletClient extends IsometricComponents {
     rendererEditor: RendererEditor(),
     editor: IsometricEditor(),
     debug: IsometricDebug(),
-    minimap: IsometricMinimap(),
+    // minimap: IsometricMinimap(),
     mouse: IsometricMouse(),
     ui: IsometricUI(),
     action: IsometricActions(),

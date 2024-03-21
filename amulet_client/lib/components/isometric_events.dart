@@ -26,7 +26,7 @@ class IsometricEvents with IsometricComponent {
 
   void onChangedNodes(){
     scene.onChangedNodes();
-    minimap.generateSrcDst();
+    // minimap.generateSrcDst();
     editor.refreshNodeSelectedIndex();
   }
 

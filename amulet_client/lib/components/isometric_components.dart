@@ -52,7 +52,7 @@ class IsometricComponents extends ComponentContainer {
   final IsometricScene scene;
   final IsometricDebug debug;
   final IsometricEditor editor;
-  final IsometricMinimap minimap;
+  // final IsometricMinimap minimap;
   final IsometricCamera camera;
   final IsometricMouse mouse;
   final IsometricPlayer player;
@@ -86,7 +86,7 @@ class IsometricComponents extends ComponentContainer {
     required this.rendererEditor,
     required this.editor,
     required this.debug,
-    required this.minimap,
+    // required this.minimap,
     required this.mouse,
     required this.ui,
     required this.render,
@@ -124,7 +124,7 @@ class IsometricComponents extends ComponentContainer {
     components.add(particles);
     components.add(editor);
     components.add(debug);
-    components.add(minimap);
+    // components.add(minimap);
     components.add(camera);
     components.add(mouse);
     components.add(ui);
@@ -160,7 +160,7 @@ class IsometricComponents extends ComponentContainer {
       component.particles = particles;
       component.editor = editor;
       component.debugger = debug;
-      component.minimap = minimap;
+      // component.minimap = minimap;
       component.camera = camera;
       component.mouse = mouse;
       component.ui = ui;
