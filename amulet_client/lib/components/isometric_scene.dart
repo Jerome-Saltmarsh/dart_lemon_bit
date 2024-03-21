@@ -16,6 +16,7 @@ import 'package:amulet_client/classes/gameobject.dart';
 import 'package:amulet_client/classes/projectile.dart';
 import 'package:amulet_client/components.dart';
 import 'package:flutter/material.dart';
+import 'package:golden_ratio/constants.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_watch/src.dart';
 
@@ -1431,10 +1432,10 @@ class IsometricScene with IsometricComponent implements Updatable {
     applyEmissionAmbientGameObjects();
     applyEmissionAmbientProjectiles();
     applyEmissionEditorSelectedNode();
+    applyEmissionColorProjectiles();
     applyEmissionColorNodes();
     applyEmissionColorParticles();
     applyEmissionColorGameObjects();
-    // updateCharacterColors();
   }
 
   void applyEmissionAmbientNodes() {
@@ -1458,7 +1459,6 @@ class IsometricScene with IsometricComponent implements Updatable {
     const mapProjectileTypeEmissionToEmissionAmbient = {
       ProjectileType.Arrow: 70,
       ProjectileType.Fireball: 0,
-      ProjectileType.FrostBall: 50,
       ProjectileType.Fire_Arrow: 0,
       ProjectileType.Ice_Arrow: 50,
     };
@@ -2569,5 +2569,27 @@ class IsometricScene with IsometricComponent implements Updatable {
       nodeColors[indexSouth1],
       nodeColors[indexSouth2],
     );
+  }
+
+  void applyEmissionColorProjectiles() {
+      final total = totalProjectiles;
+
+      for (var i = 0; i < total; i++){
+        final projectile = projectiles[i];
+
+        switch (projectile.type){
+          case ProjectileType.FrostBall:
+            emitLight(
+              index: getIndexPosition(projectile),
+              value: Palette.blue_0.value,
+              intensity: goldenRatio_0381,
+              ambient: false,
+            );
+            break;
+          default:
+            continue;
+        }
+
+      }
   }
 }

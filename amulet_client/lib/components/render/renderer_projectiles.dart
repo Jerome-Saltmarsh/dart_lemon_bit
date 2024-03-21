@@ -52,7 +52,7 @@ class RendererProjectiles extends RenderGroup {
         dstY: dstY,
         rotation: rotation - piQuarter,
         anchorX: 0.5,
-        anchorY: 0.5,
+        anchorY: 0.1,
     );
   }
 
