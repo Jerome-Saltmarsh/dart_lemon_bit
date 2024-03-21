@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:amulet/ui/classes/amulet_connect_ui.dart';
 import 'package:amulet/ui/typedefs/create_character.dart';
 import 'package:amulet_client/ui/src.dart';
@@ -32,6 +34,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
   final headType = Watch(0);
   final error = Watch('');
   final difficulty = Watch(Difficulty.Normal);
+  final frame = ValueNotifier(0);
 
   DialogCreateCharacterComputer({
     required this.createCharacter,
@@ -45,45 +48,53 @@ class DialogCreateCharacterComputer extends StatelessWidget {
   Widget build(BuildContext context) {
     complexion.value = palette.length - 1;
     const width = 750.0;
-    return buildBorder(
-      color: Colors.black12,
-      width: 3,
-      child: GSContainer(
-          width: width,
-          height: width * goldenRatio_0618,
-          border: Border.all(color: Colors.black12, width: 3),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              height8,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  buildCharacterCanvas(app.amuletClient.components),
-                  width16,
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      buildControls(palette),
-                      height8,
-                      buildControlName(),
-                      height8,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          buildControlDifficulty(),
-                          width32,
-                          buildButtonStart(),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          )),
+
+    final update = Timer.periodic(Duration(milliseconds: 10), (timer) {
+      frame.value++;
+    });
+
+    return OnDisposed(
+      action: update.cancel,
+      child: buildBorder(
+        color: Colors.black12,
+        width: 3,
+        child: GSContainer(
+            width: width,
+            height: width * goldenRatio_0618,
+            border: Border.all(color: Colors.black12, width: 3),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                height8,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    buildCharacterCanvas(app.amuletClient.components),
+                    width16,
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        buildControls(palette),
+                        height8,
+                        buildControlName(),
+                        height8,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            buildControlDifficulty(),
+                            width32,
+                            buildButtonStart(),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            )),
+      ),
     );
 
   }
@@ -187,8 +198,8 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                       Positioned(
                         top: 180,
                         child: CustomCanvas(
+                          frame: frame,
                           paint: (canvas, size) {
-
                             renderCharacterSprites(
                               canvas: canvas,
                               sprites: components.images.kidCharacterSpritesIsometricDiffuse,
