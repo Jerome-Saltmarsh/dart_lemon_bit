@@ -5,6 +5,7 @@ import 'package:amulet_client/atlases/atlas.dart';
 import 'package:amulet_client/atlases/atlas_nodes.dart';
 import 'package:amulet_client/atlases/atlas_src_icon_type.dart';
 import 'package:amulet_client/enums/icon_type.dart';
+import 'package:amulet_client/ui/isometric_colors.dart';
 import 'package:amulet_client/ui/widgets/gs_container.dart';
 import 'package:amulet_common/src.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -363,6 +364,14 @@ class IsometricUI with IsometricComponent {
     ));
   }
 
+  Widget buildDialog({required Widget child}) => Container(
+      width: 300,
+      height: 200,
+      alignment: Alignment.center,
+      child: child,
+      color: Palette.brown_3,
+    );
+
   void showDialogGetBool({
     required Function(bool value) onSelected,
     String text = '',
@@ -370,9 +379,7 @@ class IsometricUI with IsometricComponent {
     String textFalse = 'NO',
   }) {
     showDialog(
-      child: GSContainer(
-        width: 300,
-        height: 200,
+      child: buildDialog(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

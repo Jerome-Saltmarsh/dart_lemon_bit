@@ -461,23 +461,38 @@ class AmuletConnectUI extends LemonEngine {
   );
 
   void showDialogDeleteCharacter(Json character, {Function? onDeleted}) {
-    // ui.showDialogGetBool(
-    //     text: 'Are you sure you want to delete ${character['name']}?',
-    //     textFalse: 'Cancel',
-    //     textTrue: 'CONFIRM',
-    //     onSelected: (bool value) async {
-    //       if (value){
-    //         await server.deleteCharacter(character.uuid);
-    //         onDeleted?.call();
-    //       }
-    //     });
+    amuletClient.components.ui.showDialogGetBool(
+        text: 'Are you sure you want to delete ${character['name']}?',
+        textFalse: 'Cancel',
+        textTrue: 'CONFIRM',
+        onSelected: (bool value) async {
+          if (value){
+            await amuletConnect.deleteCharacter(character.uuid);
+            onDeleted?.call();
+          }
+        });
   }
 
   void showPageSelectCharacter() => amuletConnect.websitePage.value = WebsitePage.Select_Character;
 
   @override
   Widget buildUI(BuildContext context) {
-    return buildWatchGameRunning(context);
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        buildWatchGameRunning(context),
+        buildWatch(amuletClient.components.ui.dialog, (dialog) {
+          if (dialog == null) return nothing;
+          return maximize(
+            color: Colors.black26,
+          );
+        }),
+        buildWatch(amuletClient.components.ui.dialog, (dialog) {
+          if (dialog == null) return nothing;
+          return dialog;
+        })
+      ],
+    );
   }
 
   @override

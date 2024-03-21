@@ -97,4 +97,13 @@ class AmuletConnect {
   }
 
   void handleError(dynamic value) => error.value = value;
+
+  Future deleteCharacter(String uuid) async {
+    final connection = this.connection.value;
+    if (connection == null){
+      handleError('connection required');
+      return;
+    }
+    return connection.deleteCharacter(uuid);
+  }
 }
