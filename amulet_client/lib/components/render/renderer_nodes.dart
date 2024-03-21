@@ -49,7 +49,6 @@ class RendererNodes extends RenderGroup {
   var windType = 0;
   var rainType = 0;
   var lightningColor = 0;
-  var previousNodeTransparent = false;
   var lightningFlashing = false;
   var totalNodes = 0;
   var totalRows = 0;
@@ -101,7 +100,6 @@ class RendererNodes extends RenderGroup {
   @override
   void renderFunction(LemonEngine engine, IsometricImages images) {
     engine.bufferImage = atlasNodes;
-    previousNodeTransparent = false;
 
     final scene = this.scene;
     final totalNodes = scene.totalNodes;

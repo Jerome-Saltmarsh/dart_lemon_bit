@@ -2177,24 +2177,13 @@ class IsometricScene with IsometricComponent implements Updatable {
     var j = 0;
 
     var space = false;
+    // store the value on the stack
+    var visited3DStackIndex = this.visited3DStackIndex;
 
     while (index < totalNodes){
        if (hide || nodeOrientations[index] != NodeOrientation.None){
          hide = true;
          if (j >= 1) {
-
-           // if (j == 1){
-           //   final indexAbove = index + area;
-           //   if (indexAbove < totalNodes){
-           //     if (nodeOrientations[indexAbove] == NodeOrientation.None) {
-           //       index += area;
-           //       j++;
-           //       continue;
-           //     }
-           //   }
-           // }
-
-
            nodeVisibility[index] = (space || j >= 2) ? NodeVisibility.invisible : NodeVisibility.transparent;
            visited3DStack[visited3DStackIndex++] = index;
          }
@@ -2204,6 +2193,8 @@ class IsometricScene with IsometricComponent implements Updatable {
        index += area;
        j++;
     }
+    // shift the value back to the heap
+    this.visited3DStackIndex = visited3DStackIndex;
   }
 
   void generateEmptyNodes() {
