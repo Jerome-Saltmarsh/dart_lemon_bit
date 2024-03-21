@@ -48,30 +48,23 @@ SKULLSOFT
 - IT DOESN'T NEED TO BE PERFECT
 - BEAT THE GAME A FEW TIMES
 
-[RELEASE]
-[new] draggable potions
-[new] randomize item health
-[new] randomize item magic
-[ref] common project
-[new] skill type beserk
-[new] skill type thorns
-
 [EARLY_ACCESS]
+[new] beat the game 
 [new] amulet item models
-[new] design skill type ice arrow
-[new] design skill type fire arrow
-[new] design skill type attack speed
-[new] design skill type health steal
 [new] amulet item satin boots
 [new] amulet item shroud
 [new] collectable gameobject health boost
 [new] collectable gameobject magic boost
-[new] tree top transparent
 [new] balance amulet items helms
 [new] balance amulet items armor
 [new] balance amulet items shoes
+[new] side quest rats in the cellar
+
+[new] improve ice ball animation
+[new] tree top transparent
 
 ## 21.03.2024
+[fix] create new character
 [new] skill type attack range
 [fix] font families
 [fix] edit and debug mode

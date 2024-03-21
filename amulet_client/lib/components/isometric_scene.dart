@@ -6,7 +6,6 @@ import 'dart:typed_data';
 import 'package:amulet_client/enums/emission_type.dart';
 import 'package:amulet_client/enums/node_visibility.dart';
 import 'package:amulet_client/functions/get_render.dart';
-import 'package:amulet_client/functions/sign_to_byte.dart';
 import 'package:amulet_client/ui/isometric_colors.dart';
 import 'package:amulet_client/ui/isometric_constants.dart';
 import 'package:amulet_common/src.dart';
@@ -55,9 +54,10 @@ class IsometricScene with IsometricComponent implements Updatable {
   var ambientResetIndex = 0;
   var colorFilter = Colors.orange;
   var ambientStack = Uint16List(0);
-  var ambientStackIndex = -1;
+  // var ambientStackIndex = -1;
   var colorStack = Uint16List(0);
   var colorStackIndex = -1;
+  var ambientStackIndex = 0;
   var smokeSources = Uint16List(500);
   var smokeSourcesTotal = 0;
   var nodeLightSources = Uint16List(1000);
@@ -360,7 +360,7 @@ class IsometricScene with IsometricComponent implements Updatable {
       nodeColors[index] = ambientColor;
       stackI--;
     }
-    this.ambientStackIndex = -1;
+    this.ambientStackIndex = 0;
   }
 
   int getTorchIndex(int nodeIndex){
@@ -744,14 +744,14 @@ class IsometricScene with IsometricComponent implements Updatable {
     required int ambientAlpha,
     required Uint32List nodeColors,
     required Uint16List ambientStack,
-    required int ambientStackIndex,
+    // required int ambientStackIndex,
   }){
     final currentColor = nodeColors[index];
     final currentAlpha =  getAlpha(currentColor);
     if (currentAlpha <= alpha) {
       return;
     }
-    ambientStack[ambientStackIndex] = index;
+    ambientStack[ambientStackIndex++] = index;
     nodeColors[index] = setAlpha(currentColor, alpha);
   }
 
@@ -885,40 +885,41 @@ class IsometricScene with IsometricComponent implements Updatable {
       }
     }
 
-    final brightness = 7;
-    final stackA = this.emitLightBeamStackA;
-    final stackB = this.emitLightBeamStackB;
+    // final brightness = 7;
+    // final stackA = this.emitLightBeamStackA;
+    // final stackB = this.emitLightBeamStackB;
 
-    this.emitLightBeamStackTotal = 0;
-    var total = 0;
+    // this.emitLightBeamStackTotal = 0;
+    // var total = 0;
+    final recordMode = bakeStackRecording;
 
     for (var vz = -1; vz <= 1; vz++){
-      final vzByte = signToByte(vz) << 4;
       for (var vy = vyStart; vy <= vyEnd; vy++){
-        final vyByte = signToByte(vy) << 2;
         for (var vx = vxStart; vx <= vxEnd; vx++){
-          stackB[total++] =
-          signToByte(vx) |
-          vyByte |
-          vzByte ;
+          emitLightBeam(
+            value: value,
+            brightness: 7,
+            intensity: intensity,
+            ambient: ambient,
+            minRenderX: minRenderX,
+            maxRenderX: maxRenderX,
+            minRenderY: minRenderY,
+            maxRenderY: maxRenderY,
+            recordMode: recordMode,
+            row: row,
+            column: column,
+            z: z,
+            vx: vx,
+            vy: vy,
+            vz: vz,
+          );
         }
       }
     }
 
-    stackA.fillRange(0, total, row | column << 8 | z << 16 | brightness << 24);
-    emitLightBeamStackTotal = total;
-
-    emitLightBeam(
-      value: value,
-      intensity: intensity,
-      ambient: ambient,
-      minRenderX: minRenderX,
-      maxRenderX: maxRenderX,
-      minRenderY: minRenderY,
-      maxRenderY: maxRenderY,
-      recordMode: bakeStackRecording,
-    );
-    emitLightBeamStackTotal = 0;
+    // stackA.fillRange(0, total, row | column << 8 | z << 16 | brightness << 24);
+    // emitLightBeamStackTotal = total;
+    // emitLightBeamStackTotal = 0;
 
   }
 
@@ -979,7 +980,7 @@ class IsometricScene with IsometricComponent implements Updatable {
         final brightness = bakeStackBrightness[j];
         final index = bakeStackIndex[j];
         final intensity = brightness > 5 ? 1.0 : interpolations[brightness];
-        ambientStackIndex++;
+        // ambientStackIndex++;
         applyAmbient(
           index: index,
           alpha: interpolate(ambient, alpha, intensity).toInt().clamp(0, 255),
@@ -987,7 +988,7 @@ class IsometricScene with IsometricComponent implements Updatable {
           ambientRGB: ambientRGB,
           nodeColors: nodeColors,
           ambientStack: ambientStack,
-          ambientStackIndex: ambientStackIndex,
+          // ambientStackIndex: ambientStackIndex,
         );
       }
     }
@@ -1007,12 +1008,9 @@ class IsometricScene with IsometricComponent implements Updatable {
     }
   }
 
-  final emitLightBeamStackA = Uint32List(100000);
-  final emitLightBeamStackB = Uint32List(100000);
-  var emitLightBeamStackTotal = 0;
-
   void emitLightBeam({
     required int value,
+    required int brightness,
     required double intensity,
     required double minRenderX,
     required double maxRenderX,
@@ -1020,6 +1018,12 @@ class IsometricScene with IsometricComponent implements Updatable {
     required double maxRenderY,
     required bool recordMode,
     required bool ambient,
+    required int row,
+    required int column,
+    required int z,
+    required int vx,
+    required int vy,
+    required int vz,
   }){
     final area = this.area;
     final rows = totalRows;
@@ -1033,371 +1037,374 @@ class IsometricScene with IsometricComponent implements Updatable {
     final interpolations = this.interpolations;
     final nodeTypes = this.nodeTypes;
     final nodeOrientations = this.nodeOrientations;
-    final stackA = this.emitLightBeamStackA;
-    final stackB = this.emitLightBeamStackB;
 
-    var stackFrame = 0;
-    var stackValueA = -1;
-    var stackValueB = -1;
+    // var ambientStackIndex = this.ambientStackIndex;
+    // var colorStackIndex = this.colorStackIndex;
 
-    var row = -1;
-    var column = -1;
-    var z = -1;
-    var brightness = -1;
-    var vxByte = -1;
-    var vyByte = -1;
-    var vzByte = -1;
+    var velocity = vx.abs() + vy.abs() + vz.abs();
+    brightness -= velocity;
 
-    var vx = -1;
-    var vy = -1;
-    var vz = -1;
-    var stackTotal = this.emitLightBeamStackTotal;
+    if (brightness < 0) {
+      return;
+    }
 
-    var velocity = -1;
-
-    var ambientStackIndex = this.ambientStackIndex;
-    var colorStackIndex = this.colorStackIndex;
-
-    while (stackFrame < stackTotal) {
-      
-      stackValueA = stackA[stackFrame];
-      stackValueB = stackB[stackFrame++];
-
-      row = stackValueA & 0xFF;
-      column = (stackValueA >> 8) & 0xFF;
-      z = (stackValueA >> 16) & 0xFF;
-      brightness = (stackValueA >> 24) & 0xFF;
-
-      vxByte = (stackValueB) & 0x3;
-      vyByte = (stackValueB >> 2) & 0x3;
-      vzByte = (stackValueB >> 4) & 0x3;
-
-      vx = vxByte == 2 ? -1 : vxByte;
-      vy = vyByte == 2 ? -1 : vyByte;
-      vz = vzByte == 2 ? -1 : vzByte;
-      
-      velocity = vx.abs() + vy.abs() + vz.abs();
-      brightness -= velocity;
-
-      if (brightness < 0) {
-        continue;
-      }
-
-      if (vx != 0) {
-        row += vx;
-        if (row < 0 || row >= rows) {
-          continue;
-        }
-      }
-
-      if (vy != 0) {
-        column += vy;
-        if (column < 0 || column >= columns){
-          continue;
-        }
-      }
-
-      if (vz != 0) {
-        z += vz;
-        if (z < 0 || z >= zs) {
-          continue;
-        }
-      }
-
-      final index = (z * area) + (row * columns) + column;
-
-      if (!recordMode) {
-        final row =  (index % area) ~/ columns;
-        final column = index % columns;
-        final renderX = (row - column) * Node_Size_Half;
-
-        if (renderX < minRenderX && (vx < 0 || vy > 0))
-          continue;
-
-        if (renderX > maxRenderX && (vx > 0 || vy < 0))
-          continue;
-
-        final renderY = getRenderYOfRowColumnZ(
-            row,
-            column,
-            index ~/ area,
-        );
-
-        if (renderY < minRenderY && (vx < 0 || vy < 0 || vz > 0))
-          continue;
-
-        if (renderY > maxRenderY && (vx > 0 || vy > 0))
-          continue;
-      }
-
-      final nodeType = nodeTypes[index];
-      final nodeOrientation = nodeOrientations[index];
-
-      if (!isNodeTypeTransparent(nodeType)) {
-        if (nodeOrientation == NodeOrientation.Solid){
-          continue;
-        }
-
-        if (vx < 0) {
-          if (const [
-            NodeOrientation.Half_South,
-            NodeOrientation.Corner_South_East,
-            NodeOrientation.Corner_South_West,
-          ].contains(nodeOrientation)) continue;
-
-          if (nodeOrientation == NodeOrientation.Slope_South && vz == 0){
-            continue;
-          }
-
-          if (const [
-            NodeOrientation.Half_North,
-            NodeOrientation.Corner_North_East,
-            NodeOrientation.Corner_North_West,
-            NodeOrientation.Slope_North,
-          ].contains(nodeOrientation)) vx = 0;
-        } else if (vx > 0) {
-          if (const [
-            NodeOrientation.Half_North,
-            NodeOrientation.Corner_North_East,
-            NodeOrientation.Corner_North_West,
-          ].contains(nodeOrientation)) continue;
-
-          if (NodeOrientation.Slope_North == nodeOrientation && vz == 0){
-            continue;
-          }
-
-          if (const [
-            NodeOrientation.Half_South,
-            NodeOrientation.Corner_South_East,
-            NodeOrientation.Corner_South_West,
-            NodeOrientation.Slope_South,
-          ].contains(nodeOrientation)){
-            vx = 0;
-          }
-        }
-
-        if (vy < 0) {
-          if (const [
-            NodeOrientation.Half_West,
-            NodeOrientation.Corner_North_West,
-            NodeOrientation.Corner_South_West,
-          ].contains(nodeOrientation)) {
-            continue;
-          }
-
-          if (nodeOrientation == NodeOrientation.Slope_West && vz == 0){
-            continue;
-          }
-
-          if (const [
-            NodeOrientation.Half_East,
-            NodeOrientation.Corner_South_East,
-            NodeOrientation.Corner_North_East,
-            NodeOrientation.Slope_East,
-          ].contains(nodeOrientation)) vy = 0;
-        } else if (vy > 0) {
-          if (const [
-            NodeOrientation.Half_East,
-            NodeOrientation.Corner_South_East,
-            NodeOrientation.Corner_North_East,
-          ].contains(nodeOrientation)) continue;
-
-          if (nodeOrientation == NodeOrientation.Slope_East && vz == 0){
-            continue;
-          }
-
-          if (const [
-            NodeOrientation.Half_West,
-            NodeOrientation.Corner_South_West,
-            NodeOrientation.Corner_North_West,
-            NodeOrientation.Slope_West,
-          ].contains(nodeOrientation)) vy = 0;
-        }
-
-        if (vz < 0) {
-          if (const [
-            NodeOrientation.Half_Vertical_Bottom,
-          ].contains(nodeOrientation)) {
-            continue;
-          }
-
-          if (const [
-            NodeOrientation.Half_Vertical_Bottom,
-            NodeOrientation.Half_Vertical_Center,
-            NodeOrientation.Slope_North,
-            NodeOrientation.Slope_East,
-            NodeOrientation.Slope_South,
-            NodeOrientation.Slope_West,
-          ].contains(nodeOrientation)) {
-            vz = 0;
-          }
-        }
-
-        if (vz > 0) {
-          if (const [
-            NodeOrientation.Half_Vertical_Top,
-            NodeOrientation.Slope_North,
-            NodeOrientation.Slope_East,
-            NodeOrientation.Slope_South,
-            NodeOrientation.Slope_West,
-          ].contains(nodeOrientation)) {
-            vz = 0;
-          }
-
-          // if (const [
-          //   NodeOrientation.Half_Vertical_Top,
-          //   NodeOrientation.Half_Vertical_Center,
-          // ].contains(nodeOrientation)) {
-          //   vz = 0;
-          // }
-        }
-      }
-
-      if (ambient){
-        ambientStackIndex++;
-        applyAmbient(
-          index: index,
-          alpha: interpolate(ambientAlpha, value, brightness > 5 ? 1.0 : interpolations[brightness]).toInt(),
-          ambientRGB: ambientRGB,
-          ambientAlpha: ambientAlpha,
-          nodeColors: nodeColors,
-          ambientStack: ambientStack,
-          ambientStackIndex: ambientStackIndex,
-        );
-      } else {
-        applyColor(
-          index: index,
-          intensity: (brightness > 5 ? 1.0 : interpolations[brightness]) * intensity,
-          color: value,
-          nodeColors: nodeColors,
-          ambientAlpha: ambientAlpha,
-        );
-        colorStackIndex++;
-        colorStack[colorStackIndex] = index;
-      }
-
-      if (recordMode) {
-        final bakeStackTotal = this.bakeStackTotal;
-        bakeStackIndex[bakeStackTotal] = index;
-        bakeStackBrightness[bakeStackTotal] = brightness;
-        this.bakeStackTotal++;
-      }
-
-      if (const [
-        NodeType.Grass_Long,
-        NodeType.Tree_Bottom,
-        NodeType.Tree_Top,
-        NodeType.Boulder,
-      ].contains(nodeType)) {
-        brightness -= 2;
-        if (brightness < 0){
-          continue;
-        }
-      }
-
-      velocity = vx.abs() + vy.abs() + vz.abs();
-
-      if (velocity <= 0) {
-        continue;
-      }
-
-      vxByte = vx == -1 ? 2 : vx;
-      vyByte = vy == -1 ? 2 : vy;
-      vzByte = vz == -1 ? 2 : vz;
-
-      assert (vxByte <= 2);
-      assert (vyByte <= 2);
-      assert (vzByte <= 2);
-
-      if (vx.abs() + vy.abs() + vz.abs() == 3) {
-
-        stackA[stackTotal] =
-          row |
-          column << 8 |
-          z << 16 |
-          brightness << 24 ;
-
-        stackB[stackTotal++] =
-          vxByte << 0 |
-          vyByte << 2 |
-          vzByte << 4 ;
-
-      }
-
-      if (vx.abs() + vy.abs() == 2) {
-        stackA[stackTotal] =
-          row |
-          column << 8 |
-          z << 16 |
-          brightness << 24 ;
-
-        stackB[stackTotal++] =
-          vxByte << 0 |
-          vyByte << 2 ;
-      }
-
-      if (vx.abs() + vz.abs() == 2) {
-        stackA[stackTotal] =
-          row |
-          column << 8 |
-          z << 16 |
-          brightness << 24 ;
-
-        stackB[stackTotal++] =
-          vxByte << 0 |
-          // signToByte(0) << 2 |
-          vzByte << 4 ;
-      }
-
-      if (vy.abs() + vz.abs() == 2) {
-        stackA[stackTotal] =
-          row |
-          column << 8 |
-          z << 16 |
-          brightness << 24 ;
-
-        stackB[stackTotal++] =
-          vyByte << 2 |
-          vzByte << 4 ;
-      }
-
-      if (vx != 0) {
-
-        stackA[stackTotal] =
-          row |
-          column << 8 |
-          z << 16 |
-          brightness << 24 ;
-
-        stackB[stackTotal++] =
-          vxByte << 0 ;
-      }
-
-      if (vy != 0) {
-        stackA[stackTotal] =
-          row |
-          column << 8 |
-          z << 16 |
-          brightness << 24 ;
-
-        stackB[stackTotal++] =
-          vyByte << 2;
-      }
-
-      if (vz != 0) {
-        stackA[stackTotal] =
-          row |
-          column << 8 |
-          z << 16 |
-          brightness << 24 ;
-
-        stackB[stackTotal++] =
-          vzByte << 4 ;
+    if (vx != 0) {
+      row += vx;
+      if (row < 0 || row >= rows) {
+        return;
       }
     }
 
-    this.ambientStackIndex = ambientStackIndex;
-    this.colorStackIndex = colorStackIndex;
+    if (vy != 0) {
+      column += vy;
+      if (column < 0 || column >= columns){
+        return;
+      }
+    }
+
+    if (vz != 0) {
+      z += vz;
+      if (z < 0 || z >= zs) {
+        return;
+      }
+    }
+
+    final index = (z * area) + (row * columns) + column;
+
+    if (!recordMode) {
+      final row =  (index % area) ~/ columns;
+      final column = index % columns;
+      final renderX = (row - column) * Node_Size_Half;
+
+      if (renderX < minRenderX && (vx < 0 || vy > 0)) {
+        return;
+      }
+
+      if (renderX > maxRenderX && (vx > 0 || vy < 0)) {
+        return;
+      }
+
+      final renderY = getRenderYOfRowColumnZ(
+        row,
+        column,
+        index ~/ area,
+      );
+
+      if (renderY < minRenderY && (vx < 0 || vy < 0 || vz > 0)) {
+        return;
+      }
+
+      if (renderY > maxRenderY && (vx > 0 || vy > 0)) {
+        return;
+      }
+    }
+
+    final nodeType = nodeTypes[index];
+    final nodeOrientation = nodeOrientations[index];
+
+    if (!isNodeTypeTransparent(nodeType)) {
+      if (nodeOrientation == NodeOrientation.Solid){
+        return;
+      }
+
+      if (vx < 0) {
+        if (const [
+          NodeOrientation.Half_South,
+          NodeOrientation.Corner_South_East,
+          NodeOrientation.Corner_South_West,
+        ].contains(nodeOrientation)) return;
+
+        if (nodeOrientation == NodeOrientation.Slope_South && vz == 0){
+          return;
+        }
+
+        if (const [
+          NodeOrientation.Half_North,
+          NodeOrientation.Corner_North_East,
+          NodeOrientation.Corner_North_West,
+          NodeOrientation.Slope_North,
+        ].contains(nodeOrientation)) vx = 0;
+      } else if (vx > 0) {
+        if (const [
+          NodeOrientation.Half_North,
+          NodeOrientation.Corner_North_East,
+          NodeOrientation.Corner_North_West,
+        ].contains(nodeOrientation)) return;
+
+        if (NodeOrientation.Slope_North == nodeOrientation && vz == 0){
+          return;
+        }
+
+        if (const [
+          NodeOrientation.Half_South,
+          NodeOrientation.Corner_South_East,
+          NodeOrientation.Corner_South_West,
+          NodeOrientation.Slope_South,
+        ].contains(nodeOrientation)){
+          vx = 0;
+        }
+      }
+
+      if (vy < 0) {
+        if (const [
+          NodeOrientation.Half_West,
+          NodeOrientation.Corner_North_West,
+          NodeOrientation.Corner_South_West,
+        ].contains(nodeOrientation)) {
+          return;
+        }
+
+        if (nodeOrientation == NodeOrientation.Slope_West && vz == 0){
+          return;
+        }
+
+        if (const [
+          NodeOrientation.Half_East,
+          NodeOrientation.Corner_South_East,
+          NodeOrientation.Corner_North_East,
+          NodeOrientation.Slope_East,
+        ].contains(nodeOrientation)) vy = 0;
+      } else if (vy > 0) {
+        if (const [
+          NodeOrientation.Half_East,
+          NodeOrientation.Corner_South_East,
+          NodeOrientation.Corner_North_East,
+        ].contains(nodeOrientation)) return;
+
+        if (nodeOrientation == NodeOrientation.Slope_East && vz == 0){
+          return;
+        }
+
+        if (const [
+          NodeOrientation.Half_West,
+          NodeOrientation.Corner_South_West,
+          NodeOrientation.Corner_North_West,
+          NodeOrientation.Slope_West,
+        ].contains(nodeOrientation)) vy = 0;
+      }
+
+      if (vz < 0) {
+        if (const [
+          NodeOrientation.Half_Vertical_Bottom,
+        ].contains(nodeOrientation)) {
+          return;
+        }
+
+        if (const [
+          NodeOrientation.Half_Vertical_Bottom,
+          NodeOrientation.Half_Vertical_Center,
+          NodeOrientation.Slope_North,
+          NodeOrientation.Slope_East,
+          NodeOrientation.Slope_South,
+          NodeOrientation.Slope_West,
+        ].contains(nodeOrientation)) {
+          vz = 0;
+        }
+      }
+
+      if (vz > 0) {
+        if (const [
+          NodeOrientation.Half_Vertical_Top,
+          NodeOrientation.Slope_North,
+          NodeOrientation.Slope_East,
+          NodeOrientation.Slope_South,
+          NodeOrientation.Slope_West,
+        ].contains(nodeOrientation)) {
+          vz = 0;
+        }
+      }
+    }
+
+    if (ambient){
+      // ambientStackIndex++;
+      applyAmbient(
+        index: index,
+        alpha: interpolate(ambientAlpha, value, brightness > 5 ? 1.0 : interpolations[brightness]).toInt(),
+        ambientRGB: ambientRGB,
+        ambientAlpha: ambientAlpha,
+        nodeColors: nodeColors,
+        ambientStack: ambientStack,
+        // ambientStackIndex: ambientStackIndex,
+      );
+    } else {
+      applyColor(
+        index: index,
+        intensity: (brightness > 5 ? 1.0 : interpolations[brightness]) * intensity,
+        color: value,
+        nodeColors: nodeColors,
+        ambientAlpha: ambientAlpha,
+      );
+      colorStackIndex++;
+      colorStack[colorStackIndex] = index;
+    }
+
+    if (recordMode) {
+      final bakeStackTotal = this.bakeStackTotal;
+      bakeStackIndex[bakeStackTotal] = index;
+      bakeStackBrightness[bakeStackTotal] = brightness;
+      this.bakeStackTotal++;
+    }
+
+    if (const [
+      NodeType.Grass_Long,
+      NodeType.Tree_Bottom,
+      NodeType.Tree_Top,
+      NodeType.Boulder,
+    ].contains(nodeType)) {
+      brightness -= 2;
+      if (brightness < 0){
+        return;
+      }
+    }
+
+    velocity = vx.abs() + vy.abs() + vz.abs();
+
+    if (velocity <= 0) {
+      return;
+    }
+
+    if (vx != 0 && vy != 0 && vz != 0) {
+       emitLightBeam(
+           value: value,
+           brightness: brightness,
+           intensity: intensity,
+           minRenderX: minRenderX,
+           maxRenderX: maxRenderX,
+           minRenderY: minRenderY,
+           maxRenderY: maxRenderY,
+           recordMode: recordMode,
+           ambient: ambient,
+           row: row,
+           column: column,
+           z: z,
+           vx: vx,
+           vy: vy,
+           vz: vz,
+       );
+
+    }
+
+    if (vx != 0 && vy != 0) {
+      emitLightBeam(
+        value: value,
+        brightness: brightness,
+        intensity: intensity,
+        minRenderX: minRenderX,
+        maxRenderX: maxRenderX,
+        minRenderY: minRenderY,
+        maxRenderY: maxRenderY,
+        recordMode: recordMode,
+        ambient: ambient,
+        row: row,
+        column: column,
+        z: z,
+        vx: vx,
+        vy: vy,
+        vz: 0,
+      );
+    }
+
+    if (vx != 0 && vz != 0) {
+      emitLightBeam(
+        value: value,
+        brightness: brightness,
+        intensity: intensity,
+        minRenderX: minRenderX,
+        maxRenderX: maxRenderX,
+        minRenderY: minRenderY,
+        maxRenderY: maxRenderY,
+        recordMode: recordMode,
+        ambient: ambient,
+        row: row,
+        column: column,
+        z: z,
+        vx: vx,
+        vy: 0,
+        vz: vz,
+      );
+    }
+
+    if (vy != 0 && vz != 0) {
+      emitLightBeam(
+        value: value,
+        brightness: brightness,
+        intensity: intensity,
+        minRenderX: minRenderX,
+        maxRenderX: maxRenderX,
+        minRenderY: minRenderY,
+        maxRenderY: maxRenderY,
+        recordMode: recordMode,
+        ambient: ambient,
+        row: row,
+        column: column,
+        z: z,
+        vx: 0,
+        vy: vy,
+        vz: vz,
+      );
+    }
+
+    if (vx != 0) {
+
+      emitLightBeam(
+        value: value,
+        brightness: brightness,
+        intensity: intensity,
+        minRenderX: minRenderX,
+        maxRenderX: maxRenderX,
+        minRenderY: minRenderY,
+        maxRenderY: maxRenderY,
+        recordMode: recordMode,
+        ambient: ambient,
+        row: row,
+        column: column,
+        z: z,
+        vx: vx,
+        vy: 0,
+        vz: 0,
+      );
+    }
+
+    if (vy != 0) {
+      emitLightBeam(
+        value: value,
+        brightness: brightness,
+        intensity: intensity,
+        minRenderX: minRenderX,
+        maxRenderX: maxRenderX,
+        minRenderY: minRenderY,
+        maxRenderY: maxRenderY,
+        recordMode: recordMode,
+        ambient: ambient,
+        row: row,
+        column: column,
+        z: z,
+        vx: 0,
+        vy: vy,
+        vz: 0,
+      );
+    }
+
+    if (vz != 0) {
+      emitLightBeam(
+        value: value,
+        brightness: brightness,
+        intensity: intensity,
+        minRenderX: minRenderX,
+        maxRenderX: maxRenderX,
+        minRenderY: minRenderY,
+        maxRenderY: maxRenderY,
+        recordMode: recordMode,
+        ambient: ambient,
+        row: row,
+        column: column,
+        z: z,
+        vx: 0,
+        vy: 0,
+        vz: vz,
+      );
+    }
+
   }
 
   void recordBakeStack() {
