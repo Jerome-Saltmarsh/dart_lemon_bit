@@ -39,7 +39,7 @@ import 'src.dart';
 
 
 class IsometricComponents extends ComponentContainer {
-  var ready = false;
+  var componentsConnected = false;
   final LemonEngine engine;
   final Amulet amulet;
   final IsometricRender render;
@@ -180,7 +180,7 @@ class IsometricComponents extends ComponentContainer {
       component.style = style;
       component.engine = engine;
     }
-    ready = true;
+    componentsConnected = true;
   }
 }
 

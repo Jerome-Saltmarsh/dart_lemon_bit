@@ -45,8 +45,7 @@ import 'amulet_ui.dart';
 
 class AmuletClient extends IsometricComponents {
 
-  var initializing = false;
-  var initialized = false;
+
   late AmuletUI amuletUI;
   final LemonEngine engine;
 
@@ -100,7 +99,7 @@ class AmuletClient extends IsometricComponents {
   void dispose() => onDispose();
 
   void onDrawCanvas(Canvas canvas, Size size) {
-    if (!ready){
+    if (!initialized){
       return;
     }
     render.drawCanvas(canvas, size);
@@ -111,43 +110,39 @@ class AmuletClient extends IsometricComponents {
   }
 
   Future onInit(SharedPreferences sharedPreferences)  async {
-     if (initializing || initialized) return;
-     print('amulet_client.onInit()');
-     initializing = true;
      await init(sharedPreferences);
-     initialized = true;
    }
 
   void onUpdate(double delta) {
-    if (!ready){
+    if (!initialized){
       return;
     }
     update(delta);
   }
 
   void onMouseEnterCanvas() {
-    if (!ready){
+    if (!initialized){
       return;
     }
     options.onMouseEnterCanvas();
   }
 
   void onMouseExitCanvas() {
-    if (!ready){
+    if (!initialized){
       return;
     }
     options.onMouseExitCanvas();
   }
 
   void onLeftClicked() {
-    if (!ready){
+    if (!initialized){
       return;
     }
     // components.options.amulet.onLeftClicked();
   }
 
   void onRightClicked() {
-    if (!ready){
+    if (!initialized){
       return;
     }
     // components.options.amulet.onRightClicked();
@@ -155,7 +150,7 @@ class AmuletClient extends IsometricComponents {
 
   void onKeyPressed(PhysicalKeyboardKey key) {
 
-    if (!ready){
+    if (!initialized){
       return;
     }
 
