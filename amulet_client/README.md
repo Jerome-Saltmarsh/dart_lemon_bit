@@ -49,19 +49,16 @@ SKULLSOFT
 - IT DOESN'T NEED TO BE PERFECT
 - BEAT THE GAME A FEW TIMES
 
-[BLOCK]
-[new] beat the game and balance items and enemies
-
-[BLOCK]
-[new] model missing amulet items
-[new] improve ice ball animation
-
-[BLOCK]
+[FULL_RELEASE]
+[new] side quest rats in the cellar
 [new] collectable gameobject health boost
 [new] collectable gameobject magic boost
 
-[BLOCK]
-[new] side quest rats in the cellar
+[EARLY_ACCESS]
+[new] model missing amulet items
+[new] beat the game and balance items and enemies
+[new] improve ice ball animation
+
 
 ## 22.03.2024
 [opt] render mini map text

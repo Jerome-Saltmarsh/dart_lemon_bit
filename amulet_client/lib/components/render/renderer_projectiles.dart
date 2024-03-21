@@ -31,19 +31,27 @@ class RendererProjectiles extends RenderGroup {
         renderFireball(dstX: dstX, dstY: dstY);
         break;
       case ProjectileType.FrostBall:
-        engine.renderSprite(
-            image: images.atlas_projectiles,
-            srcX: 36,
-            srcY: 4,
-            srcWidth: 24,
-            srcHeight: 24,
-            dstX: dstX,
-            dstY: dstY,
-        );
+        renderFrostBall(dstX: dstX, dstY: dstY, rotation: angle);
         break;
       default:
         return;
     }
+  }
+
+  void renderFrostBall({
+    required double dstX,
+    required double dstY,
+    required double rotation,
+  }) {
+    render.sprite(
+        sprite: images.iceball,
+        frame: 0,
+        color: 0,
+        scale: 1,
+        dstX: dstX,
+        dstY: dstY,
+        rotation: rotation,
+    );
   }
 
   @override
