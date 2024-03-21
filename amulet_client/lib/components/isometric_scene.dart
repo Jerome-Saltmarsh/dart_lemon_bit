@@ -300,10 +300,10 @@ class IsometricScene with IsometricComponent implements Updatable {
 
       if (nodeOrientations[i] != NodeOrientation.None) {
         if (!const [
-          NodeType.Tree_Bottom,
-          NodeType.Tree_Top,
+          // NodeType.Tree_Bottom,
+          // NodeType.Tree_Top,
           NodeType.Torch,
-          NodeType.Boulder,
+          // NodeType.Boulder,
         ].contains(nodeTypes[i])) {
           return z;
         }
