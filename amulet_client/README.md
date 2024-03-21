@@ -62,9 +62,9 @@ SKULLSOFT
 
 [BLOCK]
 [new] improve ice ball animation
-[opt] render mini map text
 
 ## 22.03.2024
+[opt] render mini map text
 [new] tree top transparent
 
 ## 21.03.2024

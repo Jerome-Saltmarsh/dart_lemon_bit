@@ -76,11 +76,8 @@ class AmuletWorldMap extends StatelessWidget {
           canvas.translate(-cameraX + screenCenterWorldX, -cameraY + screenCenterWorldY);
           canvas.rotate(piQuarter);
           canvas.translate(-cameraX, -cameraY);
-          /// TODO Memory leak
-          // final targetOffset = Offset(cameraX, cameraY);
           canvas.drawImage(worldMapPicture, const Offset(0, 0), paint);
 
-          // amulet.engine.render
           renderCanvas(
               canvas: canvas,
               image: amulet.images.atlas_amulet_items,
