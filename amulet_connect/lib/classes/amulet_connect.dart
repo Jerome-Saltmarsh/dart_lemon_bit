@@ -76,6 +76,7 @@ class AmuletConnect {
   void exitApplication() => exit(0);
 
   void onNewCharacterCreated(CharacterProfile characterProfile){
+    websitePage.value = WebsitePage.Select_Character;
     final connection = this.connection.value;
     if (connection == null){
       handleError('connection required');
