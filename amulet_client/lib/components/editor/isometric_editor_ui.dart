@@ -7,6 +7,7 @@ import 'package:amulet_client/components/isometric_ui.dart';
 import 'package:amulet_client/ui/builders/build_watch_bool.dart';
 import 'package:amulet_client/ui/isometric_colors.dart';
 import 'package:amulet_client/ui/isometric_constants.dart';
+import 'package:amulet_client/ui/src.dart';
 import 'package:amulet_client/ui/widgets/build_button.dart';
 import 'package:amulet_client/ui/widgets/gs_container.dart';
 import 'package:amulet_client/ui/widgets/gs_refresh.dart';
@@ -1244,16 +1245,19 @@ extension IsometricEditorUI on IsometricEditor {
 
                     if (selectedNodeType == NodeType.Portal){
                       return buildWatch(nodeSelectedVariation, (variation){
-                        return Column(
-                          children: AmuletScene.values
-                              .map((e) => onPressed(
-                                action: () => setNode(
-                                  index: selectedIndex,
-                                  variation: e.index,
-                                ),
-                                child: Container(child: buildText(e.name, bold: variation == e.index))
-                          ))
-                              .toList(growable: false),
+                        return AmuletWindow(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: AmuletScene.values
+                                .map((e) => onPressed(
+                                  action: () => setNode(
+                                    index: selectedIndex,
+                                    variation: e.index,
+                                  ),
+                                  child: Container(child: buildText(e.name, bold: variation == e.index))
+                            ))
+                                .toList(growable: false),
+                          ),
                         );
                       });
                     }
