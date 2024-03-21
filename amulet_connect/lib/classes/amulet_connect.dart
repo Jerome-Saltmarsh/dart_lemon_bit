@@ -1,6 +1,7 @@
 
 import 'package:amulet/classes/connection_embedded.dart';
 import 'package:amulet/enums/src.dart';
+import 'package:amulet/ui/classes/character_profile.dart';
 import 'package:amulet_client/classes/amulet_client.dart';
 import 'package:amulet_client/interfaces/src.dart';
 import 'package:flutter/material.dart';
@@ -73,4 +74,26 @@ class AmuletConnect {
   }
 
   void exitApplication() => exit(0);
+
+  void onNewCharacterCreated(CharacterProfile characterProfile){
+    final connection = this.connection.value;
+    if (connection == null){
+      handleError('connection required');
+      return;
+    }
+    connection
+       .createNewCharacter(
+         name: characterProfile.name,
+         complexion: characterProfile.complexion,
+         hairColor: characterProfile.hairColor,
+         hairType: characterProfile.hairType,
+         gender: characterProfile.gender,
+         difficulty: characterProfile.difficulty,
+         headType: characterProfile.headType,
+       )
+      .then(playCharacter)
+      .catchError(handleError);
+  }
+
+  void handleError(dynamic value) => error.value = value;
 }

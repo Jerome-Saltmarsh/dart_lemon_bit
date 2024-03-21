@@ -137,7 +137,7 @@ class ConnectionEmbedded implements Connection {
   }
 
   @override
-  Future createNewCharacter({
+  Future<String> createNewCharacter({
     required String name,
     required int complexion,
     required int hairType,
@@ -151,7 +151,6 @@ class ConnectionEmbedded implements Connection {
       throw Exception('invalid field name');
     }
     serverPlayer.difficulty = difficulty;
-    serverPlayer.uuid = generateUUID();
     serverPlayer.name = name;
     serverPlayer.complexion = complexion;
     serverPlayer.hairType = hairType;
@@ -166,7 +165,7 @@ class ConnectionEmbedded implements Connection {
     final characters = getCharacterSync();
     characters.add(json);
     await persistCharacters(characters);
-    playCharacter(serverPlayer.uuid);
+    return serverPlayer.uuid;
   }
 
   Future persistCharacters(List<Json> characters) =>

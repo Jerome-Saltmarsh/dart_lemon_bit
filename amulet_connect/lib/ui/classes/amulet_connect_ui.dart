@@ -221,8 +221,7 @@ class AmuletConnectUI extends LemonEngine {
           children: [
             DialogCreateCharacterComputer(
               app: this,
-              createCharacter: amuletConnect.connection.value?.createNewCharacter ?? (throw Exception()),
-              onCreated: showPageSelectCharacter,
+              onCreated: amuletConnect.onNewCharacterCreated,
             ),
             Positioned(
               top: 8,

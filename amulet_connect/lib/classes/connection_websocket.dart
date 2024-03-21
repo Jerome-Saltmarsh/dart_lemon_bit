@@ -226,7 +226,7 @@ class ConnectionWebsocket implements Connection {
     parser.amulet.clearAllState();
   }
 
-  Future createNewCharacter({
+  Future<String> createNewCharacter({
     required String name,
     required int complexion,
     required int hairType,
@@ -236,21 +236,7 @@ class ConnectionWebsocket implements Connection {
     required Difficulty difficulty,
   }) async {
 
-    if (userId.value.isEmpty){
-      playCharacterCustom(
-        name: name,
-        complexion: complexion,
-        hairType: hairType,
-        hairColor: hairColor,
-        gender: gender,
-        headType: headType,
-      );
-      // parser.website.websitePage.value = WebsitePage.Select_Character;
-      return;
-    }
-
     setOperationStatus(OperationStatus.Creating_Character);
-    // parser.website.websitePage.value = WebsitePage.Select_Character;
     try {
       final response = await GameStreamHttpClient.createCharacter(
         url: userServiceUrl.value,
@@ -266,13 +252,13 @@ class ConnectionWebsocket implements Connection {
       setOperationStatusDone();
       loadUser();
       if (response.statusCode == 200) {
-        playCharacter(response.body);
+        return response.body;
       } else {
-        // parser.ui.error.value = response.body;
+        throw Exception(response);
       }
     } catch (error){
       setOperationStatusDone();
-      // parser.ui.handleException(error);
+      throw Exception(error);
     }
   }
 

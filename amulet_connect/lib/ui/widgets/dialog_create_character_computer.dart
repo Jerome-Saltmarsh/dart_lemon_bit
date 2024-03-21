@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:amulet/ui/classes/amulet_connect_ui.dart';
+import 'package:amulet/ui/classes/character_profile.dart';
 import 'package:amulet/ui/typedefs/create_character.dart';
 import 'package:amulet_client/ui/src.dart';
 import 'package:amulet_client/ui/widgets/gs_container.dart';
@@ -16,9 +17,7 @@ import 'package:lemon_widgets/lemon_widgets.dart';
 
 class DialogCreateCharacterComputer extends StatelessWidget {
 
-
-  final CreateCharacter createCharacter;
-  final Function onCreated;
+  final Function(CharacterProfile) onCreated;
   final AmuletConnectUI app;
 
   final buttonHeight = 64.0;
@@ -37,7 +36,6 @@ class DialogCreateCharacterComputer extends StatelessWidget {
   final frame = ValueNotifier(0);
 
   DialogCreateCharacterComputer({
-    required this.createCharacter,
     required this.onCreated,
     required this.app,
   });
@@ -99,33 +97,39 @@ class DialogCreateCharacterComputer extends StatelessWidget {
 
   }
 
-  Widget buildControlDifficulty() => onPressed(
-       action: toggleDifficulty,
-       child: Container(
-         alignment: Alignment.center,
-         color: Colors.black12,
-         height: buttonHeight,
-         width: 150,
-         child: buildWatch(difficulty, (difficultyValue) =>
-             Row(
-               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-               crossAxisAlignment: CrossAxisAlignment.center,
-               children: [
-                 Container(
-                     width: 70,
-                     child: buildText(difficultyValue.name)
-                 ),
-                 width16,
+  Widget buildControlDifficulty() => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      buildText('DIFFICULTY', color: Colors.white70),
+      onPressed(
+           action: toggleDifficulty,
+           child: Container(
+             alignment: Alignment.center,
+             color: Colors.black12,
+             height: buttonHeight,
+             width: 150,
+             child: buildWatch(difficulty, (difficultyValue) =>
                  Row(
-                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                     children: Difficulty.values
-                         .map((e) => Container(width: 15, height: 15, color: e == difficultyValue ? Colors.white : Colors.white54,))
-                         .toList()
-                 )
-               ],
-             )),
-       ),
-     );
+                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                   crossAxisAlignment: CrossAxisAlignment.center,
+                   children: [
+                     Container(
+                         width: 70,
+                         child: buildText(difficultyValue.name)
+                     ),
+                     width16,
+                     Row(
+                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                         children: Difficulty.values
+                             .map((e) => Container(width: 15, height: 15, color: e == difficultyValue ? Colors.white : Colors.white54,))
+                             .toList()
+                     )
+                   ],
+                 )),
+           ),
+         ),
+    ],
+  );
 
   void toggleDifficulty(){
      difficulty.value = Difficulty.values.cycle(difficulty.value.index + 1);
@@ -134,40 +138,47 @@ class DialogCreateCharacterComputer extends StatelessWidget {
   Widget buildButtonStart() =>
       onPressed(
         action: () {
-          createCharacter(
-            name: nameController.text,
-            complexion: complexion.value,
-            hairType: hairType.value,
-            hairColor: hairColor.value,
-            gender: Gender.male,
-            headType: headType.value,
-            difficulty: difficulty.value,
+          onCreated(
+            CharacterProfile(
+                name: nameController.text,
+                complexion: complexion.value,
+                hairType:  hairType.value,
+                hairColor: hairColor.value,
+                gender: Gender.male,
+                headType: headType.value,
+                difficulty: difficulty.value,
+            )
         );
-         onCreated();
         },
         child: Container(
             alignment: Alignment.center,
             width: 100,
             height: buttonHeight,
             color: Colors.green,
-            child: buildText('START', size: 34, color: Colors.white),
+            child: buildText('START', size: 28, color: Colors.white),
         ),
       );
 
   Widget buildControlName() =>
-      Container(
-          width: widthName,
-          padding: const EdgeInsets.all(8),
-          color: Colors.black12,
-          child: TextField(
-            autofocus: true,
-            controller: nameController,
-            decoration: InputDecoration(border: InputBorder.none),
-            style: TextStyle(
-              color: Colors.orange,
-              fontSize: 25,
-            ),
-          ));
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          buildText('NAME', color: Colors.white70),
+          Container(
+              width: widthName,
+              padding: const EdgeInsets.all(8),
+              color: Colors.black12,
+              child: TextField(
+                autofocus: true,
+                controller: nameController,
+                decoration: InputDecoration(border: InputBorder.none),
+                style: TextStyle(
+                  color: Colors.orange,
+                  fontSize: 25,
+                ),
+              )),
+        ],
+      );
 
   Widget buildControls(List<Color> palette) => Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -6,7 +6,7 @@ abstract class Connection {
 
   bool get connected;
 
-  Future createNewCharacter({
+  Future<String> createNewCharacter({
     required String name,
     required int complexion,
     required int hairType,
