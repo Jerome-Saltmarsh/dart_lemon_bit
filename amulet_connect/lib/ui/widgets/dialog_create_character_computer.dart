@@ -90,7 +90,6 @@ class DialogCreateCharacterComputer extends StatelessWidget {
        action: toggleDifficulty,
        child: Container(
          alignment: Alignment.center,
-         // padding: const EdgeInsets.all(8),
          color: Colors.black12,
          height: buttonHeight,
          width: 150,
@@ -100,7 +99,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                crossAxisAlignment: CrossAxisAlignment.center,
                children: [
                  Container(
-                     width: 60,
+                     width: 70,
                      child: buildText(difficultyValue.name)
                  ),
                  width16,
