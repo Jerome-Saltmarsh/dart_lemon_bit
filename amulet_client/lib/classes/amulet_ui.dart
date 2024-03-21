@@ -60,38 +60,33 @@ class AmuletUI {
 
   IsometricOptions get options => amulet.options;
 
-  Widget buildUI(BuildContext buildContext) {
-
-    return maximize(
-    child: Stack(alignment: Alignment.center, children: [
-      Positioned(
-        top: 0,
-        left: 0,
-        child: buildMouseCursorCatcher(),
-      ),
-      Positioned(
-        top: 16,
-        right: 16,
-        child: buildMainMenu(),
-      ),
-          buildDialogTalk(),
+  Widget buildUI(BuildContext buildContext) =>
+      maximize(
+        child: Stack(alignment: Alignment.center, children: [
           Positioned(
-              bottom: 8,
-              right: 8,
-              child: buildWorldMap()
+            top: 0,
+            left: 0,
+            child: buildMouseCursorCatcher(),
+          ),
+          Positioned(
+            top: 16,
+            right: 16,
+            child: buildMainMenu(),
+          ),
+          Positioned(bottom: margin2 + 10, child: buildDialogTalk()),
+          Positioned(bottom: 8, right: 8, child: buildWorldMap()),
+          Positioned(
+            top: 8,
+            child: buildPlayerAimNode(),
           ),
           Positioned(
             top: 8,
-             child: buildPlayerAimNode(),
+            child: buildPlayerAimTarget(),
           ),
           Positioned(
-              top: 8,
-              child: buildPlayerAimTarget(),
-          ),
-          Positioned(
-              top: 8,
-              left: 8,
-              child: buildHudTopLeft(),
+            top: 8,
+            left: 8,
+            child: buildHudTopLeft(),
           ),
           Positioned(
             top: 8,
@@ -104,17 +99,25 @@ class AmuletUI {
             ),
           ),
           Positioned(
-              bottom: 8,
-              left: 8,
-              child: buildEquippedSlotTypes(),
+            bottom: 8,
+            left: 8,
+            child: buildEquippedSlotTypes(),
           ),
-      Positioned(
-        bottom: 8,
-        child: buildRowPlayerSkills(),
-      ),
-          buildPositionedMessage(),
-          buildWindowQuest(),
-          buildOverlayScreenColor(),
+          Positioned(
+            bottom: 8,
+            child: buildRowPlayerSkills(),
+          ),
+          Positioned(
+              top: 0,
+              left: 0,
+              child: buildMessageIndex()),
+          Positioned(
+              top: 8,
+              child: buildWindowQuest()),
+          Positioned(
+              top: 0,
+              left: 0,
+              child: buildOverlayScreenColor()),
           Positioned(
             top: margin2,
             child: Container(
@@ -123,22 +126,19 @@ class AmuletUI {
               child: buildError(),
             ),
           ),
-
           Positioned(
             top: 8,
             left: 8,
-            child:
-            buildWatch(amulet.windowVisibleQuantify, (visible){
+            child: buildWatch(amulet.windowVisibleQuantify, (visible) {
               return visible ? WindowQuantify(amuletUI: this) : nothing;
             }),
           ),
           Positioned(
               top: 50,
-              child: buildWatch(amulet.windowVisibleHelp, (t) => t ? buildWindowHelp() : nothing)
-          )
+              child: buildWatch(amulet.windowVisibleHelp,
+                  (t) => t ? buildWindowHelp() : nothing))
         ]),
-  );
-  }
+      );
 
   Widget buildMouseCursorCatcher() {
     final click = MouseRegion(
@@ -164,21 +164,15 @@ class AmuletUI {
               height: 26,
             );
 
-  Positioned buildOverlayScreenColor() {
-    return Positioned(
-            top: 0,
-            left: 0,
-            child: IgnorePointer(
-              child: buildWatch(amulet.screenColor, (color) => Container(
-                    width: amulet.engine.screen.width,
-                    height: amulet.engine.screen.height,
-                    color: color,
+  Widget buildOverlayScreenColor() => IgnorePointer(
+      child: buildWatch(amulet.screenColor, (color) => Container(
+            width: amulet.engine.screen.width,
+            height: amulet.engine.screen.height,
+            color: color,
 
-                  )
-              ),
-            )
-        );
-  }
+          )
+      ),
+    );
 
   Widget buildWindowBorder({required Widget child}) {
     return buildBorder(
@@ -192,32 +186,29 @@ class AmuletUI {
       if (!visible){
         return nothing;
       }
-      return Positioned(
-        top: 8,
-        child: buildWindowBorder(
-          child: GSContainer(
-            width: 300,
-            height: 200,
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Tooltip(
-                        message: 'Quest',
-                        child: buildIconQuest(),
-                    ),
-                    buildButtonClose(amulet.windowVisibleQuests),
-                  ],
-                ),
-                alignCenter(
-                  child: buildWatch(
-                    amulet.questMain,
-                    (questMain) => buildText(questMain.instructions, color: Colors.white70)
+      return buildWindowBorder(
+        child: GSContainer(
+          width: 300,
+          height: 200,
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Tooltip(
+                      message: 'Quest',
+                      child: buildIconQuest(),
                   ),
+                  buildButtonClose(amulet.windowVisibleQuests),
+                ],
+              ),
+              alignCenter(
+                child: buildWatch(
+                  amulet.questMain,
+                  (questMain) => buildText(questMain.instructions, color: Colors.white70)
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       );
@@ -236,45 +227,42 @@ class AmuletUI {
     }
   );
 
-  Positioned buildPositionedMessage() => Positioned(
-      top: 0,
-      left: 0,
-      child: buildWatch(amulet.messageIndex, (int messageIndex) {
-        if (messageIndex == -1) {
-          return nothing;
-        }
-        final messages = amulet.messages;
-        return Container(
-          width: amulet.engine.screen.width,
-          height: amulet.engine.screen.height,
-          alignment: Alignment.center,
-          child: GSContainer(
-            width: 400,
-            height: 400 * goldenRatio_0618,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+  Widget buildMessageIndex() => buildWatch(amulet.messageIndex, (int messageIndex) {
+    if (messageIndex == -1) {
+      return nothing;
+    }
+    final messages = amulet.messages;
+    return Container(
+      width: amulet.engine.screen.width,
+      height: amulet.engine.screen.height,
+      alignment: Alignment.center,
+      child: GSContainer(
+        width: 400,
+        height: 400 * goldenRatio_0618,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+                child: Center(
+                    child: buildText(messages[messageIndex],
+                        color: Colors.white70))),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Expanded(
-                    child: Center(
-                        child: buildText(messages[messageIndex],
-                            color: Colors.white70))),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    onPressed(
-                      action: amulet.messageNext,
-                      child: buildText(messageIndex + 1 >= messages.length
-                          ? 'Okay'
-                          : 'Next'),
-                    ),
-                  ],
+                onPressed(
+                  action: amulet.messageNext,
+                  child: buildText(messageIndex + 1 >= messages.length
+                      ? 'Okay'
+                      : 'Next'),
                 ),
               ],
             ),
-          ),
-        );
-      }));
+          ],
+        ),
+      ),
+    );
+  });
 
   static Color compareIntGreater(int? a, int? b){
     if (a == b){
@@ -304,7 +292,7 @@ class AmuletUI {
             amulet.error, (error) => buildText(error, color: color)));
   }
 
-  Positioned buildDialogTalk() {
+  Widget buildDialogTalk() {
     const width = 296.0;
     const height = width * goldenRatio_0618;
 
@@ -347,40 +335,38 @@ class AmuletUI {
       );
     });
 
-    return Positioned(
-        bottom: margin2 + 10,
-        child: buildWatch(
-          amulet.playerInteracting,
-          (interacting) => !interacting
-              ? nothing
-              : buildWatch(amulet.npcTextIndex, (npcTextIndex) {
-                  if (npcTextIndex < 0) {
-                    return nothing;
-                  }
+    return buildWatch(
+      amulet.playerInteracting,
+      (interacting) => !interacting
+          ? nothing
+          : buildWatch(amulet.npcTextIndex, (npcTextIndex) {
+              if (npcTextIndex < 0) {
+                return nothing;
+              }
 
-                  if (npcTextIndex >= npcText.length) {
-                    return nothing;
-                  }
+              if (npcTextIndex >= npcText.length) {
+                return nothing;
+              }
 
-                  return GSContainer(
-                    width: width,
-                    height: height,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        alignLeft(child: npcName),
-                        Expanded(
-                            child: Center(
-                                child: buildText(npcText[npcTextIndex],
-                                    color: Colors.white70))),
-                        if (npcTextIndex + 1 < npcText.length) optionsNext,
-                        if (npcTextIndex + 1 >= npcText.length) options,
-                      ],
-                    ),
-                  );
-                }),
-        ));
+              return GSContainer(
+                width: width,
+                height: height,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    alignLeft(child: npcName),
+                    Expanded(
+                        child: Center(
+                            child: buildText(npcText[npcTextIndex],
+                                color: Colors.white70))),
+                    if (npcTextIndex + 1 < npcText.length) optionsNext,
+                    if (npcTextIndex + 1 >= npcText.length) options,
+                  ],
+                ),
+              );
+            }),
+    );
   }
 
   Widget buildPlayerAimTarget() {
