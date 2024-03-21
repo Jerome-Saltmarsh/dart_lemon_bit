@@ -49,7 +49,7 @@ class AmuletConnectUI extends LemonEngine {
 
   @override
   Widget buildLoadingPage(BuildContext context) =>
-      LoadingPage(images: amuletConnect.amuletClient.components.images);
+      LoadingPage(images: amuletConnect.amuletClient.images);
 
   void setError(String message){
     amuletConnect.error.value = message;
@@ -447,7 +447,7 @@ class AmuletConnectUI extends LemonEngine {
   );
 
   void showDialogDeleteCharacter(Json character, {Function? onDeleted}) {
-    amuletClient.components.ui.showDialogGetBool(
+    amuletClient.ui.showDialogGetBool(
         text: 'Are you sure you want to delete ${character['name']}?',
         textFalse: 'Cancel',
         textTrue: 'CONFIRM',
@@ -467,13 +467,13 @@ class AmuletConnectUI extends LemonEngine {
       alignment: Alignment.center,
       children: [
         buildWatchGameRunning(context),
-        buildWatch(amuletClient.components.ui.dialog, (dialog) {
+        buildWatch(amuletClient.ui.dialog, (dialog) {
           if (dialog == null) return nothing;
           return maximize(
             color: Colors.black26,
           );
         }),
-        buildWatch(amuletClient.components.ui.dialog, (dialog) {
+        buildWatch(amuletClient.ui.dialog, (dialog) {
           if (dialog == null) return nothing;
           return dialog;
         })

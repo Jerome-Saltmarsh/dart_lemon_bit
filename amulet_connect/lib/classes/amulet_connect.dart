@@ -58,8 +58,8 @@ class AmuletConnect {
     SharedPreferences.getInstance().then((sharedPreferences) {
       connection.value = ConnectionEmbedded(
         onDisconnect: onConnectionLost,
-        parser: amuletClient.components.responseReader,
-        clientPlayer: amuletClient.components.player,
+        parser: amuletClient.responseReader,
+        clientPlayer: amuletClient.player,
         sharedPreferences: sharedPreferences,
         clientAmulet: amuletClient,
       );

@@ -43,72 +43,67 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'amulet_ui.dart';
 
-class AmuletClient {
+class AmuletClient extends IsometricComponents {
 
-  late IsometricComponents components;
   var initializing = false;
   var initialized = false;
   late AmuletUI amuletUI;
   final LemonEngine engine;
 
-  AmuletClient(this.engine) {
+  AmuletClient(this.engine) : super(
+    engine: engine,
+    images: IsometricImages(),
+    environment: IsometricEnvironment(),
+    render: IsometricRender(),
+    rendererCharacters: RendererCharacters(),
+    rendererGameObjects: RendererGameObjects(),
+    rendererNodes: RendererNodes(),
+    rendererParticles: RendererParticles(),
+    rendererProjectiles: RendererProjectiles(),
+    rendererEditor: RendererEditor(),
+    editor: IsometricEditor(),
+    debug: IsometricDebug(),
+    minimap: IsometricMinimap(),
+    mouse: IsometricMouse(),
+    ui: IsometricUI(),
+    action: IsometricActions(),
+    events: IsometricEvents(),
+    responseReader: IsometricParser(),
+    camera: IsometricCamera(),
+    particles: IsometricParticles(),
+    player: IsometricPlayer(),
+    scene: IsometricScene(),
+    io: IsometricIO(),
+    network: IsometricServer(),
+    audio: IsometricAudio(),
+    options: IsometricOptions(),
+    compositor: IsometricCompositor(),
+    amulet: Amulet(),
+    animation: IsometricAnimation(),
+    screen: IsometricScreen(),
+    lighting: IsometricLighting(),
+    colors: IsometricColors(),
+    style: IsometricStyle(),
+  ) {
     engine.zoomMin = 0.3;
-    components = IsometricComponents(
-      engine: engine,
-      images: IsometricImages(),
-      environment: IsometricEnvironment(),
-      render: IsometricRender(),
-      rendererCharacters: RendererCharacters(),
-      rendererGameObjects: RendererGameObjects(),
-      rendererNodes: RendererNodes(),
-      rendererParticles: RendererParticles(),
-      rendererProjectiles: RendererProjectiles(),
-      rendererEditor: RendererEditor(),
-      editor: IsometricEditor(),
-      debug: IsometricDebug(),
-      minimap: IsometricMinimap(),
-      mouse: IsometricMouse(),
-      ui: IsometricUI(),
-      action: IsometricActions(),
-      events: IsometricEvents(),
-      responseReader: IsometricParser(),
-      camera: IsometricCamera(),
-      particles: IsometricParticles(),
-      player: IsometricPlayer(),
-      scene: IsometricScene(),
-      io: IsometricIO(),
-      network: IsometricServer(),
-      audio: IsometricAudio(),
-      options: IsometricOptions(),
-      compositor: IsometricCompositor(),
-      amulet: Amulet(),
-      animation: IsometricAnimation(),
-      screen: IsometricScreen(),
-      lighting: IsometricLighting(),
-      colors: IsometricColors(),
-      style: IsometricStyle(),
-    );
-
-    amuletUI = AmuletUI(components.amulet);
+    amuletUI = AmuletUI(amulet);
   }
 
   Widget buildUI(BuildContext context) =>
       buildWatch(options.mode, (mode) =>
         switch (mode) {
           Mode.play => amuletUI.buildUI(context),
-          Mode.edit => components.editor.buildEditor(),
-          Mode.debug => components.debug.buildUI()
+          Mode.edit => editor.buildEditor(),
+          Mode.debug => debug.buildUI()
         });
 
-  IsometricOptions get options => components.options;
-
-  void dispose() => components.onDispose();
+  void dispose() => onDispose();
 
   void onDrawCanvas(Canvas canvas, Size size) {
-    if (!components.ready){
+    if (!ready){
       return;
     }
-    components.render.drawCanvas(canvas, size);
+    render.drawCanvas(canvas, size);
   }
 
   void onDrawForeground(Canvas canvas, Size size) {
@@ -119,40 +114,40 @@ class AmuletClient {
      if (initializing || initialized) return;
      print('amulet_client.onInit()');
      initializing = true;
-     await components.init(sharedPreferences);
+     await init(sharedPreferences);
      initialized = true;
    }
 
   void onUpdate(double delta) {
-    if (!components.ready){
+    if (!ready){
       return;
     }
-    components.update(delta);
+    update(delta);
   }
 
   void onMouseEnterCanvas() {
-    if (!components.ready){
+    if (!ready){
       return;
     }
     options.onMouseEnterCanvas();
   }
 
   void onMouseExitCanvas() {
-    if (!components.ready){
+    if (!ready){
       return;
     }
     options.onMouseExitCanvas();
   }
 
   void onLeftClicked() {
-    if (!components.ready){
+    if (!ready){
       return;
     }
     // components.options.amulet.onLeftClicked();
   }
 
   void onRightClicked() {
-    if (!components.ready){
+    if (!ready){
       return;
     }
     // components.options.amulet.onRightClicked();
@@ -160,7 +155,7 @@ class AmuletClient {
 
   void onKeyPressed(PhysicalKeyboardKey key) {
 
-    if (!components.ready){
+    if (!ready){
       return;
     }
 
@@ -184,13 +179,13 @@ class AmuletClient {
 
     switch (mode){
       case Mode.play:
-        components.amulet.onKeyPressed(key);
+        amulet.onKeyPressed(key);
         break;
       case Mode.edit:
-        components.editor.onKeyPressed(key);
+        editor.onKeyPressed(key);
         break;
       case Mode.debug:
-        components.debug.onKeyPressed(key);
+        debug.onKeyPressed(key);
         break;
     }
   }

@@ -108,9 +108,7 @@ class IsometricComponents extends ComponentContainer {
     required this.lighting,
     required this.colors,
     required this.style,
-    // required this.isometricEditor,
   }) {
-    print('IsometricComponents()');
     components.add(images);
     components.add(scene);
     components.add(environment);
@@ -137,9 +135,7 @@ class IsometricComponents extends ComponentContainer {
     components.add(responseReader);
     components.add(options);
     components.add(compositor);
-    // components.add(website);
     components.add(amulet);
-    // components.add(isometricEditor);
     components.add(animation);
     components.add(screen);
     components.add(lighting);

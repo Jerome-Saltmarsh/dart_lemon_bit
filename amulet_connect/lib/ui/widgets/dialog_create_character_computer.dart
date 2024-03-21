@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:amulet/ui/classes/amulet_connect_ui.dart';
 import 'package:amulet/ui/classes/character_profile.dart';
-import 'package:amulet/ui/typedefs/create_character.dart';
 import 'package:amulet_client/ui/src.dart';
 import 'package:amulet_client/ui/widgets/gs_container.dart';
 import 'package:amulet_common/src.dart';
@@ -40,7 +39,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
     required this.app,
   });
 
-  List<Color> get palette => app.amuletClient.components.colors.palette;
+  List<Color> get palette => app.amuletClient.colors.palette;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +67,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    buildCharacterCanvas(app.amuletClient.components),
+                    buildCharacterCanvas(app.amuletClient),
                     width16,
                     Column(
                       mainAxisAlignment: MainAxisAlignment.start,

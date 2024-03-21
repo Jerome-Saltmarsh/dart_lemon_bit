@@ -3,7 +3,6 @@ import 'package:amulet/classes/amulet_connect.dart';
 import 'package:amulet/classes/connection_websocket.dart';
 import 'package:amulet/ui/enums/website_page.dart';
 import 'package:amulet/ui/widgets/gs_textfield.dart';
-import 'package:amulet_client/ui/builders/build_watch.dart';
 import 'package:amulet_client/ui/widgets/gs_container.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
