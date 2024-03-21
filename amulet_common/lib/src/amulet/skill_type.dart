@@ -102,6 +102,7 @@ enum SkillType {
   ),
   Attack_Speed(
     casteType: CasteType.Passive,
+    maxLevel: 10,
   ),
   Health_Steal(
     casteType: CasteType.Passive,
@@ -377,7 +378,8 @@ enum SkillType {
   static double getResistIce(int level) => Resist_Ice.getLinear(level);
 
   static double getAttackSpeed(int level){
-    return Attack_Speed.getLinear(level);
+    final i = level / SkillType.Attack_Speed.maxLevel;
+    return const Constraint(min: 1.0, max: 2.2).linearInterp(i);
   }
 
   static double getRangeWindCut(int level){

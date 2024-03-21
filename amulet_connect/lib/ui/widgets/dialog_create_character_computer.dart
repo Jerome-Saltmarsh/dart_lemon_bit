@@ -59,7 +59,7 @@ class DialogCreateCharacterComputer extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // buildCharacterCanvas(components),
+                  buildCharacterCanvas(app.amuletClient.components),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,

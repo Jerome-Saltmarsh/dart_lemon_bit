@@ -572,6 +572,15 @@ enum AmuletItem {
     for (final entry in skillSet.entries) {
       total += entry.value * pointsPerSkill;
     }
+    total += quantifyBase;
+    return total;
+  }
+
+  int get quantifyBase {
+    var total = 0;
+    for (final entry in skillBase.entries) {
+      total += entry.value;
+    }
     return total;
   }
 
