@@ -32,7 +32,6 @@ import 'package:amulet_client/components/render/renderer_particles.dart';
 import 'package:amulet_client/components/render/renderer_projectiles.dart';
 import 'package:amulet_client/enums/mode.dart';
 import 'package:amulet_client/ui/isometric_colors.dart';
-// import 'package:amulet_client/ui/game_isometric_minimap.dart';
 import 'package:flutter/material.dart';
 import 'package:amulet_client/classes/amulet.dart';
 
@@ -133,18 +132,40 @@ class AmuletClient extends IsometricComponents {
     options.onMouseExitCanvas();
   }
 
+  Mode get mode => options.mode.value;
+
   void onLeftClicked() {
     if (!initialized){
       return;
     }
-    // components.options.amulet.onLeftClicked();
+
+    switch (mode) {
+      case Mode.play:
+        break;
+      case Mode.edit:
+        editor.onMouseLeftClicked();
+        break;
+      case Mode.debug:
+        debug.onMouseLeftClicked();
+        break;
+    }
   }
 
   void onRightClicked() {
-    if (!initialized){
+    if (!initialized) {
       return;
     }
-    // components.options.amulet.onRightClicked();
+
+    switch (mode) {
+      case Mode.play:
+        break;
+      case Mode.edit:
+        editor.onMouseRightClicked();
+        break;
+      case Mode.debug:
+        debug.onMouseRightClicked();
+        break;
+    }
   }
 
   void onKeyPressed(PhysicalKeyboardKey key) {
@@ -152,8 +173,6 @@ class AmuletClient extends IsometricComponents {
     if (!initialized){
       return;
     }
-
-    final mode = options.mode.value;
 
     if (key == PhysicalKeyboardKey.digit0){
       if (mode == Mode.debug){

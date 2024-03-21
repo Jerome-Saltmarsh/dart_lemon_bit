@@ -509,5 +509,17 @@ class AmuletConnectUI extends LemonEngine {
     amuletClient.onKeyPressed(keyCode);
   }
 
+  @override
+  void onLeftClicked() {
+    if (!gameRunning) return;
+    amuletClient.onLeftClicked();
+  }
+
+  @override
+  void onRightClicked() {
+    if (!gameRunning) return;
+    amuletClient.onRightClicked();
+  }
+
   bool get gameRunning => amuletConnect.gameRunning.value;
 }

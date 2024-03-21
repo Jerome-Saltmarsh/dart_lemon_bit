@@ -53,15 +53,15 @@ SKULLSOFT
 [new] beat the game and balance items and enemies
 
 [BLOCK]
-[new] model missing amulet items 
+[new] model missing amulet items
+[new] improve ice ball animation
 
 [BLOCK]
 [new] collectable gameobject health boost
 [new] collectable gameobject magic boost
-[new] side quest rats in the cellar
 
 [BLOCK]
-[new] improve ice ball animation
+[new] side quest rats in the cellar
 
 ## 22.03.2024
 [opt] render mini map text
