@@ -54,7 +54,6 @@ class IsometricScene with IsometricComponent implements Updatable {
   var ambientResetIndex = 0;
   var colorFilter = Colors.orange;
   var ambientStack = Uint16List(0);
-  // var ambientStackIndex = -1;
   var colorStack = Uint16List(0);
   var colorStackIndex = -1;
   var ambientStackIndex = 0;
@@ -715,6 +714,9 @@ class IsometricScene with IsometricComponent implements Updatable {
     required int ambientAlpha,
     required Uint32List nodeColors,
   }){
+    final i = colorStackIndex++;
+    colorStack[i + 1] = index;
+
     final ambientIntensity = ambientAlpha / 255;
     final interpolation = intensity * ambientIntensity;
 
@@ -744,7 +746,6 @@ class IsometricScene with IsometricComponent implements Updatable {
     required int ambientAlpha,
     required Uint32List nodeColors,
     required Uint16List ambientStack,
-    // required int ambientStackIndex,
   }){
     final currentColor = nodeColors[index];
     final currentAlpha =  getAlpha(currentColor);
@@ -948,12 +949,6 @@ class IsometricScene with IsometricComponent implements Updatable {
     final interpolations = this.interpolations;
     final nodeColors = this.nodeColors;
     final ambientStack = this.ambientStack;
-    final bakeStackStartIndex = this.bakeStackStartIndex;
-    final bakeStackTorchSize = this.bakeStackTorchSize;
-
-    var ambientStackIndex = this.ambientStackIndex;
-
-    final totalColumns = this.totalColumns;
     final area = this.area;
 
     for (var i = 0; i < total; i++){
@@ -980,7 +975,6 @@ class IsometricScene with IsometricComponent implements Updatable {
         final brightness = bakeStackBrightness[j];
         final index = bakeStackIndex[j];
         final intensity = brightness > 5 ? 1.0 : interpolations[brightness];
-        // ambientStackIndex++;
         applyAmbient(
           index: index,
           alpha: interpolate(ambient, alpha, intensity).toInt().clamp(0, 255),
@@ -988,12 +982,9 @@ class IsometricScene with IsometricComponent implements Updatable {
           ambientRGB: ambientRGB,
           nodeColors: nodeColors,
           ambientStack: ambientStack,
-          // ambientStackIndex: ambientStackIndex,
         );
       }
     }
-
-    this.ambientStackIndex = ambientStackIndex;
   }
 
   void applyEmissionEditorSelectedNode() {
@@ -1033,13 +1024,9 @@ class IsometricScene with IsometricComponent implements Updatable {
     final ambientRGB = this.ambientRGB;
     final nodeColors = this.nodeColors;
     final ambientStack = this.ambientStack;
-    final colorStack = this.colorStack;
     final interpolations = this.interpolations;
     final nodeTypes = this.nodeTypes;
     final nodeOrientations = this.nodeOrientations;
-
-    // var ambientStackIndex = this.ambientStackIndex;
-    // var colorStackIndex = this.colorStackIndex;
 
     var velocity = vx.abs() + vy.abs() + vz.abs();
     brightness -= velocity;
@@ -1216,7 +1203,6 @@ class IsometricScene with IsometricComponent implements Updatable {
     }
 
     if (ambient){
-      // ambientStackIndex++;
       applyAmbient(
         index: index,
         alpha: interpolate(ambientAlpha, value, brightness > 5 ? 1.0 : interpolations[brightness]).toInt(),
@@ -1224,7 +1210,6 @@ class IsometricScene with IsometricComponent implements Updatable {
         ambientAlpha: ambientAlpha,
         nodeColors: nodeColors,
         ambientStack: ambientStack,
-        // ambientStackIndex: ambientStackIndex,
       );
     } else {
       applyColor(
@@ -1234,8 +1219,6 @@ class IsometricScene with IsometricComponent implements Updatable {
         nodeColors: nodeColors,
         ambientAlpha: ambientAlpha,
       );
-      colorStackIndex++;
-      colorStack[colorStackIndex] = index;
     }
 
     if (recordMode) {

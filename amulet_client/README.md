@@ -59,11 +59,11 @@ SKULLSOFT
 [new] balance amulet items armor
 [new] balance amulet items shoes
 [new] side quest rats in the cellar
-
 [new] improve ice ball animation
 [new] tree top transparent
 
 ## 21.03.2024
+[ref] implement emit light beam with recursion
 [fix] create new character
 [new] skill type attack range
 [fix] font families
