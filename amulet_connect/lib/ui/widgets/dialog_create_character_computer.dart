@@ -43,8 +43,8 @@ class DialogCreateCharacterComputer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    complexion.value = 50;
-    const width = 700.0;
+    complexion.value = palette.length - 1;
+    const width = 750.0;
     return buildBorder(
       color: Colors.black12,
       width: 3,
@@ -52,14 +52,16 @@ class DialogCreateCharacterComputer extends StatelessWidget {
           width: width,
           height: width * goldenRatio_0618,
           border: Border.all(color: Colors.black12, width: 3),
-          child: Stack(
-            alignment: Alignment.center,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              height8,
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   buildCharacterCanvas(app.amuletClient.components),
+                  width16,
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
