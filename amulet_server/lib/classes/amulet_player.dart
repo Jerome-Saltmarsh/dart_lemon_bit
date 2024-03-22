@@ -1615,6 +1615,23 @@ class AmuletPlayer extends IsometricPlayer with
 
   var cacheSufficientMagic = false;
 
+  @override
+  bool canAimAt(GameObject gameObject) {
+    final amuletItem = gameObject.amuletItem;
+
+    if (amuletItem == null){
+      return super.canAimAt(gameObject);
+    }
+
+    if (const[
+      AmuletItem.Consumable_Meat,
+    ].contains(amuletItem)){
+      return false;
+    }
+
+    return super.canAimAt(gameObject);
+  }
+
   void writeSufficientMagicForSkillRight() {
     final skillRightCost = skillTypeRight.magicCost;
     final sufficientMagic = magic >= skillRightCost;

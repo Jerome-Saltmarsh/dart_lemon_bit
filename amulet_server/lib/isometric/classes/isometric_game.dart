@@ -363,9 +363,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
     final gameObjects = this.gameObjects;
     for (final gameObject in gameObjects) {
-      // if (gameObject.ignorePointer) continue;
       if (!player.canAimAt(gameObject)) continue;
-
       final radius = max(Min_Radius, gameObject.radius);
       if ((mouseX - gameObject.x).abs() > radius) continue;
       if ((mouseY - gameObject.y).abs() > radius) continue;
