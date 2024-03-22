@@ -1046,10 +1046,8 @@ extension IsometricEditorUI on IsometricEditor {
                         buildWatchFixed(),
                         buildWatchCollectable(),
                         buildWatchPhysical(),
-                        // buildWatchPersistable(),
                         buildWatchInteractable(),
                         buildWatchCollidable(),
-                        buildWatchEmission(),
                       ],
                     ))),
       );
@@ -1616,65 +1614,6 @@ extension IsometricEditorUI on IsometricEditor {
   //           ],
   //         ),
   //       ));
-
-  Widget buildWatchEmission() => buildWatch(
-        gameObjectSelectedEmission,
-            (int emissionType) => onPressed(
-          action: () => gameObject
-              .value!.emissionType =
-          ((gameObject.value!.emissionType +
-              1) %
-              3),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment:
-                MainAxisAlignment
-                    .spaceBetween,
-                children: [
-                  buildText('Emission'),
-                  buildText(emissionType),
-                ],
-              ),
-              buildText('Intensity'),
-              buildWatch(
-                  gameObjectSelectedEmissionIntensity,
-                      (double value) => Slider(
-                    value: gameObject.value
-                        ?.emissionIntensity ??
-                        0,
-                    onChanged:
-                    setSelectedObjectedIntensity,
-                  )),
-              if (emissionType == EmissionType.Color)
-                ColorPicker(
-                  portraitOnly: true,
-                  pickerColor: Color(gameObject
-                      .value!.emissionColor),
-                  onColorChanged: (color) {
-                    final gameObject =
-                        this.gameObject.value;
-                    if (gameObject == null)
-                      return;
-                    final hsv =
-                    HSVColor.fromColor(color);
-                    gameObject.emissionAlp =
-                        (hsv.alpha * 255).round();
-                    gameObject.emissionHue =
-                        (hsv.hue).round();
-                    gameObject.emissionSat =
-                        (hsv.saturation * 100)
-                            .round();
-                    gameObject.emissionVal =
-                        (hsv.value * 100).round();
-
-                    refreshGameObjectEmissionColor(gameObject);
-                  },
-                )
-            ],
-          ),
-        ));
-
 
   void refreshGameObjectEmissionColor(GameObject gameObject){
     // TODO

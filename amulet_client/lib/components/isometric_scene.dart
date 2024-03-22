@@ -246,10 +246,8 @@ class IsometricScene with IsometricComponent implements Updatable {
     interpolationPadding = ((scene.interpolationLength + 1) * Node_Size) / engine.zoom;
 
     updateNodeColorsToAmbient();
-    // jobBatchResetNodeColorsToAmbient();
     updateProjectiles();
     updateCharacters();
-    updateGameObjects();
     updateParticleSmokeEmitters();
     updateParticleFireEmitters();
 
@@ -990,7 +988,7 @@ class IsometricScene with IsometricComponent implements Updatable {
 
   void applyEmissionEditorSelectedNode() {
     if (!options.editing) return;
-    if (( editor.gameObject.value == null ||  editor.gameObject.value!.emissionType == EmissionType.None)){
+    if (( editor.gameObject.value == null)){
       emitLight(
         index:  editor.nodeSelectedIndex.value,
         value: 0,
@@ -1590,13 +1588,6 @@ class IsometricScene with IsometricComponent implements Updatable {
 
   void removeGameObjectById(int id )=>
       gameObjects.removeWhere((element) => element.id == id);
-
-  void updateGameObjects() {
-    final gameObjects = this.gameObjects;
-    for (final gameObject in gameObjects){
-      gameObject.update();
-    }
-  }
 
   void applyEmissionColorNodes() {
 

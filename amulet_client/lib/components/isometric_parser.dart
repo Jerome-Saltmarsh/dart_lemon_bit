@@ -405,11 +405,6 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
     gameObject.health = readUInt16();
     gameObject.maxHealth = readUInt16();
     readIsometricPosition(gameObject);
-
-    if (gameObject.type == ItemType.Object && gameObject.subType == GameObjectType.Crystal_Glowing_False){
-      gameObject.emissionType = EmissionType.Zero;
-    }
-
   }
 
   void readMap(Map<int, int> map){
@@ -446,9 +441,6 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
     editor.gameObjectSelectedCollidable.value = readBool();
     editor.gameObjectSelectedType.value          = gameObject.type;
     editor.gameObjectSelectedSubType.value       = gameObject.subType;
-
-    editor.gameObjectSelectedEmission.value = gameObject.emissionType;
-    editor.gameObjectSelectedEmissionIntensity.value = gameObject.emissionIntensity;
   }
 
   var bytesSaved = 0;

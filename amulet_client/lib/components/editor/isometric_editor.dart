@@ -45,12 +45,6 @@ class IsometricEditor with IsometricComponent {
   final gameObjectSelectedParticleType = Watch(0);
   final gameObjectSelectedParticleSpawnRate = Watch(0);
   final gameObjectSelectedSpawnType = Watch(0);
-  final gameObjectSelectedEmission = Watch(EmissionType.None);
-
-  late final gameObjectSelectedEmissionIntensity = Watch(
-      1.0, onChanged: (double value) {
-    gameObject.value?.emissionIntensity = value;
-  });
 
   late final editorDialog = Watch<EditorDialog?>(
       null, onChanged: onChangedEditorDialog);
@@ -493,9 +487,6 @@ class IsometricEditor with IsometricComponent {
   void setTabNodes() => editorTab.value = EditorTab.Nodes;
 
   void onChangedEditTab(EditorTab editTab) => sendGameObjectRequestDeselect();
-
-  void setSelectedObjectedIntensity(double value) =>
-      gameObject.value?.emissionIntensity = value;
 
   void onMouseLeftClicked() {
     switch (editorTab.value) {

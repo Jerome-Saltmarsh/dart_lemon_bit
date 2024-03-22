@@ -10,18 +10,6 @@ class GameObject extends Position {
   var subType = -1;
   var health = -1;
   var maxHealth = -1;
-  var emissionType = EmissionType.None;
-  var emissionHue = 0;
-  var emissionSat = 0;
-  var emissionVal = 0;
-  var emissionAlp = 0;
-  var emissionColor = 0;
-  var _emission_intensity = 1.0;
-  var emission_intensity_start = 0.15;
-  var emission_intensity_end = 1.0;
-  var emission_intensity_t = 0.0;
-  var emission_intensity_vel = 0.00;
-  var highlight = false;
 
   GameObject(this.id); // PROPERTIES
   
@@ -30,30 +18,6 @@ class GameObject extends Position {
   AmuletItem? get amuletItem {
     if (type != ItemType.Amulet_Item) return null;
     return AmuletItem.values.tryGet(subType);
-  }
-
-  double get emissionIntensity => _emission_intensity;
-
-  set emissionIntensity(double value){
-    _emission_intensity = value.clamp01();
-  }
-
-  // METHODS
-
-  void update(){
-    if (emission_intensity_vel == 0) return;
-    emission_intensity_t += emission_intensity_vel;
-
-    if (emission_intensity_t < emission_intensity_start || emission_intensity_t > emission_intensity_end){
-      emission_intensity_t = clamp(emission_intensity_t, emission_intensity_start, emission_intensity_end);
-      emission_intensity_vel = -emission_intensity_vel;
-    }
-
-    emissionIntensity = interpolate(
-      emission_intensity_start,
-      emission_intensity_end,
-      emission_intensity_t,
-    );
   }
 
   @override
