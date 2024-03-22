@@ -44,6 +44,9 @@ class RendererProjectiles extends RenderGroup {
     required double dstY,
     required double rotation,
   }) {
+
+
+
     render.sprite(
         sprite: images.iceball,
         frame: animation.frameRate2 % 4,
