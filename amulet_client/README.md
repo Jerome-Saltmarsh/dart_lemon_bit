@@ -56,10 +56,10 @@ SKULLSOFT
 [EARLY_ACCESS]
 [new] beat the game and balance items and enemies
 [new] model missing amulet items
-[new] collectable gameobject health boost
 [new] collectable gameobject magic boost
 
 ## 22.03.2024
+[new] collectable gameobject health boost
 [new] shortcut key change skills
 [fix] game error text
 [fix] auto assign skill type
