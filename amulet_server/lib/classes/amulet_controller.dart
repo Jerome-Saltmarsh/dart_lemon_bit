@@ -638,6 +638,9 @@ class AmuletController {
       case NetworkRequestAmulet.Spawn_Random_Enemy:
         amuletGame.spawnRandomEnemy(player.difficulty);
         break;
+      case NetworkRequestAmulet.End_Upgrade_Mode:
+        amuletPlayer.endUpgradeMode();
+        break;
       case NetworkRequestAmulet.Cheat_Acquire_Gold:
         player.cheatAcquireGold();
         break;

@@ -157,7 +157,15 @@ class AmuletUI {
         return buildWatch(amulet.equippedChangedNotifier, (t) {
           return AmuletWindow(child: Column(
             children: [
-              buildText('UPGRADE'),
+              Row(
+                children: [
+                  buildText('UPGRADE'),
+                  onPressed(
+                      action: amulet.endUpgradeMode,
+                      child: buildText('CLOSE')),
+                ],
+              ),
+              height16,
               Row(
                 children: [
                   buildCardUpgradeAmuletItemObject(amulet.equippedWeapon),

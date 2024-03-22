@@ -728,6 +728,10 @@ class Amulet extends Updatable with IsometricComponent  {
       selectSkillTypeRight(skillType);
     }
   }
+
+  void endUpgradeMode() {
+    sendAmuletRequest(NetworkRequestAmulet.End_Upgrade_Mode);
+  }
 }
 
 

@@ -1708,6 +1708,10 @@ class AmuletPlayer extends AmuletPlayerBase {
       }
     }
   }
+
+  void endUpgradeMode() {
+    upgradeMode = false;
+  }
 }
 
 String buildResistances(String text, String name, double resistance){

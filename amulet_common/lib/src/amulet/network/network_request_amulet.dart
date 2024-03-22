@@ -22,4 +22,5 @@ enum NetworkRequestAmulet {
   Cheat_Acquire_Gold,
   Use_Potion_Health,
   Use_Potion_Magic,
+  End_Upgrade_Mode,
 }
