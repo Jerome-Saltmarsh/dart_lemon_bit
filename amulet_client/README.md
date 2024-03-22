@@ -57,9 +57,9 @@ SKULLSOFT
 [new] model missing amulet items
 [new] collectable gameobject health boost
 [new] collectable gameobject magic boost
-[new] shortcut key change skills
 
 ## 22.03.2024
+[new] shortcut key change skills
 [fix] game error text
 [fix] auto assign skill type
 [new] ui skill type can afford border color
