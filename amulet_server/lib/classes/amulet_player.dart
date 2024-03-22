@@ -226,6 +226,7 @@ class AmuletPlayer extends IsometricPlayer with
     cleanSkillsLeftRight();
     writeCameraTarget();
     writePerformFrameVelocity();
+    writeSufficientMagicForSkillRight();
 
     if (debugEnabled){
       writeDebug();
@@ -1023,6 +1024,7 @@ class AmuletPlayer extends IsometricPlayer with
       writeGameError(GameError.Skill_Type_Locked);
       return;
     }
+
     super.skillTypeRight = value;
     markSkillsLeftRightDirty();
   }
@@ -1609,8 +1611,24 @@ class AmuletPlayer extends IsometricPlayer with
        return skillType.enabledSword;
      }
      return skillType.enabledUnarmed;
-
   }
+
+  var cacheSufficientMagic = false;
+
+  void writeSufficientMagicForSkillRight() {
+    final skillRightCost = skillTypeRight.magicCost;
+    final sufficientMagic = magic >= skillRightCost;
+
+    if (sufficientMagic == cacheSufficientMagic){
+      return;
+    }
+
+    cacheSufficientMagic = sufficientMagic;
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Player_Sufficient_Magic_For_Skill_Right);
+    writeBool(sufficientMagic);
+  }
+
 }
 
 String buildResistances(String text, String name, double resistance){

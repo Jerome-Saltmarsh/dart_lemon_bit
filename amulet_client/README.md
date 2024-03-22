@@ -60,6 +60,7 @@ SKULLSOFT
 [fix] auto assign skill type
 
 ## 22.03.2024
+[new] ui skill type can afford border color
 [new] improve ice ball animation
 [new] render sprite rotated
 [opt] render mini map text

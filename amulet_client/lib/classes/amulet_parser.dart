@@ -165,6 +165,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Potions:
          readPlayerPotions();
          break;
+       case NetworkResponseAmulet.Player_Sufficient_Magic_For_Skill_Right:
+         readPlayerSufficientMagicForSkillRight();
+         break;
      }
   }
 
@@ -378,5 +381,10 @@ extension AmuletParser on IsometricParser {
   void readPlayerPotions() {
     amulet.potionsHealth.value = readByte();
     amulet.potionsMagic.value = readByte();
+  }
+
+  void readPlayerSufficientMagicForSkillRight() {
+    amulet.playerSufficientMagicForSkillRight = readBool();
+    amulet.notifySkillsChanged();
   }
 }

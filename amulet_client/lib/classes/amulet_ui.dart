@@ -1771,34 +1771,45 @@ class AmuletUI {
   Widget buildCardSmallSkillType(SkillType skillType) {
     const size = 50.0;
 
+    final child = Container(
+      color: Palette.brown_4,
+      padding: const EdgeInsets.all(4),
+      child: Column(
+        children: [
+          Container(
+            width: size,
+            child: buildText(amulet.getSkillTypeLevel(skillType), color: Palette.brown_0),
+            alignment: Alignment.center,
+            color: Palette.brown_4,
+          ),
+          Container(
+              width: size,
+              height: size,
+              alignment: Alignment.center,
+              color: Palette.brown_3,
+              child: buildIconSkillType(skillType)),
+        ],
+      ),
+    );
+
+    final borderActive = buildBorder(
+      color: amulet.playerSufficientMagicForSkillRight
+          ? Colors.white70 : Colors.red.withOpacity(0.7),
+      width: 3,
+      child: child,
+    );
+
+    final borderNotActive = buildBorder(
+      color: Colors.transparent,
+      width: 3,
+      child: child,
+    );
+
     return buildMouseOverPanel(
         bottom: 90,
         left: -60,
         panel: buildCardLargeSkillType(skillType),
-        child: buildBorder(
-          color: amulet.playerSkillRight == skillType ? Colors.white70 : Colors.transparent,
-          width: 3,
-          child: Container(
-            color: Palette.brown_4,
-            padding: const EdgeInsets.all(4),
-            child: Column(
-              children: [
-                Container(
-                  width: size,
-                  child: buildText(amulet.getSkillTypeLevel(skillType), color: Palette.brown_0),
-                  alignment: Alignment.center,
-                  color: Palette.brown_4,
-                ),
-                Container(
-                    width: size,
-                    height: size,
-                    alignment: Alignment.center,
-                    color: Palette.brown_3,
-                    child: buildIconSkillType(skillType)),
-              ],
-            ),
-          ),
-        )
+        child: amulet.playerSkillRight == skillType ? borderActive : borderNotActive,
     );
   }
 

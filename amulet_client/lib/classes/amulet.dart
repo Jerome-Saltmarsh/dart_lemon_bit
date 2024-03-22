@@ -145,6 +145,7 @@ class Amulet extends Updatable with IsometricComponent  {
   var playerCanUpgrade = false;
   final potionsHealth = Watch(0);
   final potionsMagic = Watch(0);
+  var playerSufficientMagicForSkillRight = false;
 
   Amulet() {
     print('Amulet()');
