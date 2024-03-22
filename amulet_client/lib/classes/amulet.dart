@@ -142,7 +142,7 @@ class Amulet extends Updatable with IsometricComponent  {
   int? aimTargetLevel;
   final aimTargetSet = Watch(false);
   final aimTargetNotifier = Watch(0);
-  var playerCanUpgrade = false;
+  final playerCanUpgrade = Watch(false);
   final potionsHealth = Watch(0);
   final potionsMagic = Watch(0);
   var playerSufficientMagicForSkillRight = false;

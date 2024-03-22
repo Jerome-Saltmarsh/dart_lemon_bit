@@ -3,7 +3,6 @@ import 'dart:math';
 import 'dart:typed_data';
 
 
-import 'package:amulet_client/enums/emission_type.dart';
 import 'package:amulet_client/enums/node_visibility.dart';
 import 'package:amulet_client/functions/get_render.dart';
 import 'package:amulet_client/ui/isometric_colors.dart';

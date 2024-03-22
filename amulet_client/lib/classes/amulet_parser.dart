@@ -374,8 +374,8 @@ extension AmuletParser on IsometricParser {
       amulet.playerGold.value = readUInt24();
 
   void readPlayerCanUpgrade() {
-    amulet.playerCanUpgrade = readBool();
-    amulet.notifyEquipmentChanged();
+    amulet.playerCanUpgrade.value = readBool();
+    // amulet.notifyEquipmentChanged();
   }
 
   void readPlayerPotions() {

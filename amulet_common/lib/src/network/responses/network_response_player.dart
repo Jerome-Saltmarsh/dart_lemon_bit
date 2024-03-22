@@ -20,8 +20,6 @@ class NetworkResponsePlayer {
   static const Health = 17;
   static const Alive = 18;
   static const Aim_Angle = 19;
-  static const Aim_Target_Type = 21;
-  static const Aim_Target_Quantity = 22;
   static const Target_Position = 23;
   static const Id = 25;
   static const Active = 26;

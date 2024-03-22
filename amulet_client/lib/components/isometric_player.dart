@@ -12,8 +12,6 @@ class IsometricPlayer with IsometricComponent {
 
   var energyPercentage = 0.0;
   var runningToTarget = false;
-  var aimTargetType = 0;
-  var aimTargetQuantity = 0;
   var mouseAngle = 0.0;
   var indexZ = 0;
   var indexRow = 0;
@@ -212,12 +210,6 @@ class IsometricPlayer with IsometricComponent {
         break;
       case NetworkResponsePlayer.Aim_Angle:
         mouseAngle = parser.readAngle();
-        break;
-      case NetworkResponsePlayer.Aim_Target_Type:
-        aimTargetType = parser.readUInt16();
-        break;
-      case NetworkResponsePlayer.Aim_Target_Quantity:
-        aimTargetQuantity = parser.readUInt16();
         break;
       case NetworkResponsePlayer.Target_Position:
         runningToTarget = true;

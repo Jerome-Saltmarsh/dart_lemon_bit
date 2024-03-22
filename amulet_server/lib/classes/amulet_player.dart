@@ -2,6 +2,7 @@
 import 'dart:math';
 
 import 'package:amulet_common/src.dart';
+import 'package:amulet_server/classes/mixins/aim_target_text.dart';
 import 'package:amulet_server/classes/mixins/mixin_can_upgrade.dart';
 import 'package:amulet_server/classes/mixins/mixin_potions.dart';
 import 'package:amulet_server/src.dart';
@@ -17,7 +18,8 @@ class AmuletPlayer extends IsometricPlayer with
     Skilled,
     Gold,
     MixinCanUpgrade,
-    MixinPotions
+    MixinPotions,
+    AimTargetText
 {
   static const Data_Key_Dead_Count = 'dead';
 
@@ -1084,9 +1086,9 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(NetworkResponseAmulet.Player_Aim_Target);
 
     final aimTarget = this.aimTarget;
-    final targetNodeIndex = this.targetNodeIndex;
+    final aimNodeIndex = this.aimNodeIndex;
 
-    if (targetNodeIndex == null && aimTarget == null){
+    if (aimNodeIndex == null && aimTarget == null){
       writeFalse();
       return;
     }
@@ -1099,19 +1101,23 @@ class AmuletPlayer extends IsometricPlayer with
     var healthPercentage = 0.0;
 
 
-    if (targetNodeIndex != null) {
-      final nodeType = scene.nodeTypes[targetNodeIndex];
+    if (aimNodeIndex != null) {
+      final nodeType = scene.nodeTypes[aimNodeIndex];
       if (nodeType == NodeType.Shrine){
         name = 'Shrine';
       }
       if (nodeType == NodeType.Portal){
-         final sceneIndex = scene.variations[targetNodeIndex];
+         final sceneIndex = scene.variations[aimNodeIndex];
          final amuletScene = AmuletScene.values.tryGet(sceneIndex);
          if (amuletScene != null){
            name = amuletScene.name.clean;
          } else {
            name = 'invalid';
          }
+      }
+
+      if (nodeType == NodeType.Fireplace) {
+        name = 'upgrade';
       }
 
     } else if (aimTarget != null){
@@ -1341,6 +1347,8 @@ class AmuletPlayer extends IsometricPlayer with
         final variation = scene.variations[index];
         return variation == NodeType.Variation_Shrine_Active;
       case NodeType.Portal:
+        return true;
+      case NodeType.Fireplace:
         return true;
       default:
         return false;
@@ -1646,6 +1654,8 @@ class AmuletPlayer extends IsometricPlayer with
     writeByte(NetworkResponseAmulet.Player_Sufficient_Magic_For_Skill_Right);
     writeBool(sufficientMagic);
   }
+
+
 
 }
 

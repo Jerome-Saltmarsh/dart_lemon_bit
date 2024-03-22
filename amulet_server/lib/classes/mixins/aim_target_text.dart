@@ -1,0 +1,4 @@
+
+mixin AimTargetText {
+  String? aimTargetText;
+}

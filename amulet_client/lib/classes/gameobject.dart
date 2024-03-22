@@ -1,7 +1,5 @@
-import 'package:amulet_client/enums/emission_type.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/classes/position.dart';
-import 'package:lemon_math/src.dart';
 import 'package:lemon_lang/src.dart';
 
 class GameObject extends Position {

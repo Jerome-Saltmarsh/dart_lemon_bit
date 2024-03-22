@@ -50,13 +50,14 @@ SKULLSOFT
 - BEAT THE GAME A FEW TIMES
 
 [FULL_RELEASE]
-[new] main plot
+[new] main plot and characters
 [new] side quest rats in the cellar
 
 [EARLY_ACCESS]
 [new] beat the game and balance items and enemies
 [new] model missing amulet items
 [new] run to ability target
+[new] ui show max skill level
 [fix] upgrade amulet items near fireplace
 
 ## 22.03.2024

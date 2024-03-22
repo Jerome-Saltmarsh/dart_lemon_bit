@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-import 'package:amulet_client/enums/emission_type.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/classes/item_slot.dart';
 import 'package:flutter/cupertino.dart';

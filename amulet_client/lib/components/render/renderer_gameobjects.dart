@@ -1,6 +1,5 @@
 import 'package:amulet_client/components/isometric_images.dart';
 import 'package:amulet_client/components/isometric_scene.dart';
-import 'package:amulet_client/enums/emission_type.dart';
 import 'package:amulet_client/getters/src.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/classes/render_group.dart';

@@ -634,29 +634,6 @@ class IsometricPlayer extends Character with ByteWriter {
     writeByte(aimTargetAction);
   }
 
-  void writePlayerAimTargetType() {
-    final aimTarget = this.aimTarget;
-    if (aimTarget == null) return;
-    if (aimTarget is GameObject){
-      writeByte(NetworkResponse.Player);
-      writeByte(NetworkResponsePlayer.Aim_Target_Type);
-      writeUInt16(aimTarget.itemType);
-    }
-    if (aimTarget is Character) {
-      writeByte(NetworkResponse.Player);
-      writeByte(NetworkResponsePlayer.Aim_Target_Type);
-      writeUInt16(aimTarget.characterType);
-    }
-  }
-
-  void writePlayerAimTargetQuantity() {
-    final aimTarget = this.aimTarget;
-    if (aimTarget is! GameObject) return;
-    writeByte(NetworkResponse.Player);
-    writeByte(NetworkResponsePlayer.Aim_Target_Quantity);
-    writeUInt16(aimTarget.quantity);
-  }
-
   int getTargetAction(Position? value){
 
     if (value == null) {
@@ -667,9 +644,6 @@ class IsometricPlayer extends Character with ByteWriter {
       if (value.interactable) {
         return TargetAction.Talk;
       }
-      // if (value.collectable){
-      //   return TargetAction.Collect;
-      // }
       if (value.physical && value.hitable){
         return TargetAction.Attack;
       }
@@ -1502,7 +1476,6 @@ class IsometricPlayer extends Character with ByteWriter {
     final rows = scene.rows;
     final columns = scene.columns;
     final height = scene.height;
-    final nodeTypes = scene.nodeTypes;
 
     while (z >= 0) {
       final row = convertRenderToRow(mouseWorldX, mouseWorldY, z * Node_Height);

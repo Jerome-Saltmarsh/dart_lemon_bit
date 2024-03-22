@@ -73,7 +73,7 @@ class AmuletUI {
             right: 16,
             child: buildMainMenu(),
           ),
-          Positioned(bottom: margin2 + 10, child: buildDialogTalk()),
+          Positioned(bottom: 140, child: buildDialogTalk()),
           Positioned(bottom: 8, right: 8, child: buildWorldMap()),
           Positioned(
             top: 8,
@@ -111,6 +111,14 @@ class AmuletUI {
               top: 0,
               left: 0,
               child: buildMessageIndex()),
+          Positioned(
+            bottom: 100,
+            left: 50,
+            child: buildWatch(amulet.playerCanUpgrade, (playerCanUpgrade) {
+               if (!playerCanUpgrade) return nothing;
+               return buildText('UPGRADE EQUIPMENT');
+            }),
+          ),
           Positioned(
               top: 8,
               child: buildWindowQuest()),

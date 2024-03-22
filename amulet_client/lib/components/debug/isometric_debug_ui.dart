@@ -161,7 +161,6 @@ extension isometricDebugUI on IsometricDebug {
               'mouse-world: x: ${engine.mouseWorldX.toInt()}, y: ${engine.mouseWorldY.toInt()}\n'
               'mouse-screen: x: ${engine.mousePositionX.toInt()}, y: ${engine.mousePositionY.toInt()}\n'
               'aim-target-action: ${TargetAction.getName(player.aimTargetAction.value)}\n'
-              'aim-target-type: ${player.aimTargetType}\n'
               'aim-target-position: ${player.aimTargetPosition}\n'
               'target-position: ${player.targetPosition}\n'
               'audio-volume-flame: ${audio.audioLoopFire.volume}\n'
