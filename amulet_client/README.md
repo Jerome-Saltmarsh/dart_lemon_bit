@@ -57,9 +57,9 @@ SKULLSOFT
 [EARLY_ACCESS]
 [new] beat the game and balance items and enemies
 [new] model missing amulet items
-[new] improve ice ball animation
 
 ## 22.03.2024
+[new] improve ice ball animation
 [new] render sprite rotated
 [opt] render mini map text
 [new] tree top transparent
