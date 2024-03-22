@@ -57,6 +57,7 @@ SKULLSOFT
 [EARLY_ACCESS]
 [new] beat the game and balance items and enemies
 [new] model missing amulet items
+[fix] auto assign skill type
 
 ## 22.03.2024
 [new] improve ice ball animation

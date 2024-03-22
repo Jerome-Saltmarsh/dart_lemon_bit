@@ -455,6 +455,8 @@ class AmuletPlayer extends IsometricPlayer with
     }
 
 
+    checkAssignedSkills();
+
     health = clamp(health, 0, maxHealth);
     weaponType = equippedWeapon?.amuletItem.subType ?? WeaponType.Unarmed;
     equipmentDirty = false;
@@ -1209,6 +1211,8 @@ class AmuletPlayer extends IsometricPlayer with
     }
   }
 
+  bool skillTypeLocked(SkillType skillType)=> !skillTypeUnlocked(skillType);
+
   bool skillTypeUnlocked(SkillType skillType) =>
     skillType == SkillType.None ||
     getSkillTypeLevel(skillType) > 0;
@@ -1556,6 +1560,38 @@ class AmuletPlayer extends IsometricPlayer with
       case DamageType.Ice:
         final level = getSkillTypeLevel(SkillType.Resist_Ice);
         return SkillType.getResistIce(level);
+    }
+  }
+
+  void checkAssignedSkills() {
+
+
+    final attackSkill = equippedWeapon?.amuletItem.attackSkill;
+
+    if (skillTypeLocked(skillTypeLeft)){
+      skillTypeLeft = SkillType.None;
+    }
+
+    if (skillTypeLeft == SkillType.None && attackSkill != null) {
+      skillTypeLeft = attackSkill;
+    }
+
+    if (skillTypeLocked(skillTypeRight)){
+      skillTypeRight = SkillType.None;
+    }
+
+    if (skillTypeRight == SkillType.None) {
+      final skillSet = equippedWeapon?.amuletItem.skillSet;
+      if (skillSet != null) {
+         for (final skillType in SkillType.values){
+           if (
+            skillType.isPassive ||
+            skillTypeLocked(skillType) ||
+            skillType == attackSkill
+           ) continue;
+           skillTypeRight = skillType;
+         }
+      }
     }
   }
 }
