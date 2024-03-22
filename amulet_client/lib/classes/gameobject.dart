@@ -27,6 +27,11 @@ class GameObject extends Position {
   
   double get healthPercentage => health.percentageOf(maxHealth);
 
+  AmuletItem? get amuletItem {
+    if (type != ItemType.Amulet_Item) return null;
+    return AmuletItem.values.tryGet(subType);
+  }
+
   double get emissionIntensity => _emission_intensity;
 
   set emissionIntensity(double value){

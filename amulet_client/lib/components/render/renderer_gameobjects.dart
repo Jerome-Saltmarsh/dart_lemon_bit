@@ -8,6 +8,7 @@ import 'package:amulet_client/classes/gameobject.dart';
 import 'package:amulet_client/classes/position.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
+import 'package:lemon_lang/src.dart';
 import 'package:lemon_sprite/lib.dart';
 
 class SurfaceIndex {
@@ -129,28 +130,15 @@ class RendererGameObjects extends RenderGroup {
       return;
     }
 
-    // if (
-    //   type == ItemType.Object &&
-    //   const [
-    //     GameObjectType.Crystal_Glowing_False,
-    //     GameObjectType.Crystal_Glowing_True,
-    //   ].contains(subType)
-    // ){
-    //   renderCrystal(
-    //       dstX: gameObject.renderX,
-    //       dstY: gameObject.renderY,
-    //       colorEast: colorEast,
-    //       glowing: subType == GameObjectType.Crystal_Glowing_True,
-    //
-    //   );
-    // }
-
     final isAmuletItem = type == ItemType.Amulet_Item;
 
     if (isAmuletItem){
       renderBouncingGameObjectShadow(gameObject);
 
       final src = getSrcAmuletItem(AmuletItem.values[subType]);
+      final amuletItem = AmuletItem.values.tryGet(subType);
+
+
       engine.renderSprite(
           image: images.atlas_amulet_items,
           dstX: gameObject.renderX,
@@ -160,13 +148,12 @@ class RendererGameObjects extends RenderGroup {
           srcWidth: 32,
           srcHeight: 32,
           scale: 1.0,
-          color: switch (gameObject.emissionType){
-            EmissionType.None => scene.getRenderColorPosition(gameObject),
-            EmissionType.Ambient => scene.getRenderColorPosition(gameObject),
-            EmissionType.Color => gameObject.emissionColor,
-            EmissionType.Zero => 0,
-            _ => throw Exception()
-          }
+          color: const [
+            AmuletItem.Consumable_Sapphire,
+            AmuletItem.Consumable_Meat,
+            AmuletItem.Consumable_Potion_Health,
+            AmuletItem.Consumable_Potion_Magic,
+          ].contains(amuletItem) ? 0 : scene.getRenderColorPosition(gameObject),
       );
       return;
     }

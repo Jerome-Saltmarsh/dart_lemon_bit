@@ -1477,14 +1477,15 @@ class IsometricScene with IsometricComponent implements Updatable {
   void applyEmissionAmbientGameObjects() {
     final gameObjects = this.gameObjects;
     for (final gameObject in gameObjects) {
-      if (gameObject.emissionType != EmissionType.Ambient)
-        continue;
+      final amuletItem = gameObject.amuletItem;
 
-      applyVector3EmissionAmbient(
-        gameObject,
-        alpha: gameObject.emissionAlp,
-        intensity: gameObject.emissionIntensity,
-      );
+      if (amuletItem == null) {
+        continue;
+      }
+
+      if (amuletItem.isConsumable) {
+        applyVector3EmissionAmbient(gameObject, alpha: 50 );
+      }
     }
   }
 
@@ -2249,17 +2250,17 @@ class IsometricScene with IsometricComponent implements Updatable {
     final gameObjects = this.gameObjects;
     for (final gameObject in gameObjects) {
 
-      if (gameObject.type == ItemType.Amulet_Item &&
-          gameObject.subType == AmuletItem.Consumable_Sapphire.index
-      ){
-        emitLight(
-          index: getIndexPosition(gameObject),
-          value: colors.blue_0.value,
-          intensity: 0.15,
-          ambient: false,
-        );
-        continue;
-      }
+      // if (gameObject.type == ItemType.Amulet_Item &&
+      //     gameObject.subType == AmuletItem.Consumable_Sapphire.index
+      // ){
+      //   emitLight(
+      //     index: getIndexPosition(gameObject),
+      //     value: colors.blue_0.value,
+      //     intensity: 0.15,
+      //     ambient: false,
+      //   );
+      //   continue;
+      // }
 
       if (
         gameObject.type == ItemType.Object &&
