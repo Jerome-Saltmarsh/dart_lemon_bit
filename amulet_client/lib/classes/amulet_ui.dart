@@ -75,10 +75,10 @@ class AmuletUI {
           ),
           Positioned(bottom: 140, child: buildDialogTalk()),
           Positioned(bottom: 8, right: 8, child: buildWorldMap()),
-          Positioned(
-            top: 8,
-            child: buildPlayerAimNode(),
-          ),
+          // Positioned(
+          //   top: 8,
+          //   child: buildPlayerAimNode(),
+          // ),
           Positioned(
             top: 8,
             child: buildPlayerAimTarget(),
@@ -1714,18 +1714,18 @@ class AmuletUI {
      }
   }
 
-  Widget buildPlayerAimNode() {
-    return buildWatch(amulet.player.aimNodeIndex, (aimNodeIndex) {
-       if (aimNodeIndex == null) {
-         return nothing;
-       }
-       return IgnorePointer(
-           child: GSContainer(
-               child: buildText(getAimNodeText(aimNodeIndex))
-           )
-       );
-    });
-  }
+  // Widget buildPlayerAimNode() {
+  //   return buildWatch(amulet.player.aimNodeIndex, (aimNodeIndex) {
+  //      if (aimNodeIndex == null) {
+  //        return nothing;
+  //      }
+  //      return IgnorePointer(
+  //          child: GSContainer(
+  //              child: buildText(getAimNodeText(aimNodeIndex))
+  //          )
+  //      );
+  //   });
+  // }
 
   Widget buildRowPlayerSkills() => buildWatch(
       amulet.playerSkillsNotifier,

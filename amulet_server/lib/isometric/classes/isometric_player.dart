@@ -578,7 +578,7 @@ class IsometricPlayer extends Character with ByteWriter {
     writeWeather();
     writeGameObjects();
     writeFPS();
-    writeAimNodeIndex();
+    // writeAimNodeIndex();
     game.customDownloadScene(this);
     writePlayerEvent(PlayerEvent.Scene_Changed);
     sceneDownloaded = true;
@@ -1504,21 +1504,21 @@ class IsometricPlayer extends Character with ByteWriter {
   void setAimNodeIndex(int? value){
     if (aimNodeIndex == value) return;
     aimNodeIndex = value;
-    writeAimNodeIndex();
+    // writeAimNodeIndex();
   }
 
-  void writeAimNodeIndex(){
-    writeByte(NetworkResponse.Isometric);
-    writeByte(NetworkResponseIsometric.Aim_Node_Index);
-    final aimNodeIndex = this.aimNodeIndex;
-    if (aimNodeIndex == null){
-      writeFalse();
-      return;
-    }
-    writeTrue();
-    writeUInt16(aimNodeIndex);
-    writeByte(scene.nodeTypes[aimNodeIndex]);
-  }
+  // void writeAimNodeIndex(){
+  //   writeByte(NetworkResponse.Isometric);
+  //   writeByte(NetworkResponseIsometric.Aim_Node_Index);
+  //   final aimNodeIndex = this.aimNodeIndex;
+  //   if (aimNodeIndex == null){
+  //     writeFalse();
+  //     return;
+  //   }
+  //   writeTrue();
+  //   writeUInt16(aimNodeIndex);
+  //   writeByte(scene.nodeTypes[aimNodeIndex]);
+  // }
 
   @override
   set targetNodeIndex(int? value) {

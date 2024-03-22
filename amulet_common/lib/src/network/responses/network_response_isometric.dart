@@ -9,5 +9,5 @@ class NetworkResponseIsometric {
  static const Edit_Enabled = 12;
  static const Zoom = 13;
  static const Seconds_Per_Frame = 14;
- static const Aim_Node_Index = 15;
+ // static const Aim_Node_Index = 15;
 }

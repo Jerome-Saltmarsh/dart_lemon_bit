@@ -23,8 +23,8 @@ class IsometricPlayer with IsometricComponent {
   var areaNodeIndex = 0;
   var characterState = 0;
 
-  final aimNodeIndex = Watch<int?>(null);
-  final aimNodeType = Watch<int?>(null);
+  // final aimNodeIndex = Watch<int?>(null);
+  // final aimNodeType = Watch<int?>(null);
   final controlsEnabled = Watch(true);
   final name = Watch('');
   final runToDestinationEnabled = Watch(false);
