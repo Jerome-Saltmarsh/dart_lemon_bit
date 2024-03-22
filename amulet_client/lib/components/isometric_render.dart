@@ -88,23 +88,22 @@ class IsometricRender with IsometricComponent {
     final spriteSrc = sprite.src;
     final spriteDst = sprite.dst;
     final f = frame * 4;
-    final srcLeft = spriteSrc[f + 0];
-    final srcTop = spriteSrc[f + 1];
 
-    final tx = (srcLeft * scale) - (sprite.srcWidth * anchorX * scale);
-    final ty = (srcTop * scale) - (sprite.srcHeight * anchorY * scale);
+    final tx = (spriteSrc[f + 0] * scale) - (sprite.srcWidth * anchorX * scale);
+    final ty = (spriteSrc[f + 1] * scale) - (sprite.srcHeight * anchorY * scale);
+
+    final srcLeft = spriteDst[f + 0];
+    final srcTop = spriteDst[f + 1];
+    final srcRight = spriteDst[f + 2];
+    final srcBottom = spriteDst[f + 3];
 
     if (rotation != null){
-
-      final srcRight = spriteSrc[f + 2];
-      final srcBottom = spriteSrc[f + 3];
-
 
       engine.renderSpriteRotated(
         image: sprite.image,
         color: color,
-        srcX: srcLeft,
-        srcY: srcTop,
+        srcX: spriteDst[f + 0],
+        srcY: spriteDst[f + 1],
         srcWidth: srcRight - srcLeft,
         srcHeight: srcBottom - srcTop,
         scale: scale,
@@ -120,10 +119,10 @@ class IsometricRender with IsometricComponent {
     engine.bufferImage = sprite.image;
     engine.render(
         color: color,
-        srcLeft: spriteDst[f + 0],
-        srcTop: spriteDst[f + 1],
-        srcRight: spriteDst[f + 2],
-        srcBottom: spriteDst[f + 3],
+        srcLeft: srcLeft,
+        srcTop: srcTop,
+        srcRight: srcRight,
+        srcBottom: srcBottom,
         scale: scale,
         rotation: 0,
         dstX: dstX + tx,
