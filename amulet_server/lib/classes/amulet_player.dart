@@ -1699,7 +1699,7 @@ class AmuletPlayer extends AmuletPlayerBase {
   void update() {
     super.update();
 
-    if (!characterStateIdle) {
+    if (!characterStateIdle && !characterStateChanging) {
       if (interacting){
         endInteraction();
       }
