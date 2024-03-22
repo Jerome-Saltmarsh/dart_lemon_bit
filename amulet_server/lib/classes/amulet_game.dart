@@ -926,12 +926,27 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   }
 
   @override
-  void customOnCollisionBetweenPlayerAndGameObject(AmuletPlayer player, GameObject gameObject) {
+  void customOnCollisionBetweenPlayerAndGameObject(
+      AmuletPlayer player,
+      GameObject gameObject,
+      ) {
 
     final amuletItem = gameObject.amuletItem;
 
     if (amuletItem == null) {
       return;
+    }
+
+    switch (amuletItem) {
+      case AmuletItem.Consumable_Meat:
+        if (player.health < player.maxHealth){
+          player.health += 5;
+          player.writePlayerEvent(PlayerEvent.Eat);
+          remove(gameObject);
+        }
+        break;
+      default:
+        break;
     }
 
     // if (amuletItem.isConsumable) {

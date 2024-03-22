@@ -79,6 +79,7 @@ List<double> getSrcAmuletItem(AmuletItem amuletItem) =>
       AmuletItem.Shoes_Satin_Boots => _shoes_grieves,
       AmuletItem.Consumable_Potion_Health => const [srcx_consumable, 0],
       AmuletItem.Consumable_Potion_Magic => const [srcx_consumable, 64],
+      AmuletItem.Consumable_Meat => const [128, 128, 32, 32],
       AmuletItem.Helm_Cowl => _helms_pointed_hat_black,
       AmuletItem.Helm_Cape => _armor_mantle,
       AmuletItem.Special_Weapon_Vampire_Knife => _weapons_sword_short,

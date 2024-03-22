@@ -387,6 +387,11 @@ enum AmuletItem {
     slotType: SlotType.Consumable,
     subType: ConsumableType.Potion_Red,
   ),
+  Consumable_Meat(
+    label: 'Meat',
+    slotType: SlotType.Consumable,
+    subType: ConsumableType.Meat_Drumstick,
+  ),
   Special_Weapon_Frost_Wand(
       label: 'Frost Wand',
       slotType: SlotType.Weapon,

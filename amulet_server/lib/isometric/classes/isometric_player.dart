@@ -1575,4 +1575,7 @@ class IsometricPlayer extends Character with ByteWriter {
     editState.selectedGameObject = null;
     writePlayerEvent(PlayerEvent.GameObject_Deselected);
   }
+
+  bool canAimAt(GameObject gameObject) =>
+      gameObject.interactable || gameObject.hitable;
 }

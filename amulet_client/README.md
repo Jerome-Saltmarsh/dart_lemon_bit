@@ -50,6 +50,7 @@ SKULLSOFT
 - BEAT THE GAME A FEW TIMES
 
 [FULL_RELEASE]
+[new] main plot
 [new] side quest rats in the cellar
 
 [EARLY_ACCESS]

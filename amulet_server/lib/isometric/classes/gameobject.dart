@@ -77,22 +77,9 @@ class GameObject extends Collider {
   @override
   int get materialType => getMaterialType(itemType, subType);
 
-  bool get ignorePointer =>
-      (
-          // !collectable &&
-              !interactable &&
-              !hitable
-      );
-
   String get typeName => ItemType.getName(itemType);
 
   String get subTypeName => ItemType.getNameSubType(itemType, subType);
-
-  // void synchronizePrevious(){
-  //   previousX = x;
-  //   previousY = y;
-  //   previousZ = z;
-  // }
 
   @override
   String toString() {
