@@ -60,7 +60,6 @@ class AmuletClient extends IsometricComponents {
     rendererEditor: RendererEditor(),
     editor: IsometricEditor(),
     debug: IsometricDebug(),
-    // minimap: IsometricMinimap(),
     mouse: IsometricMouse(),
     ui: IsometricUI(),
     action: IsometricActions(),

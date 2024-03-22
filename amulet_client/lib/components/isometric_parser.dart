@@ -146,10 +146,8 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
   void readNetworkResponseGameError() {
     final errorTypeIndex = readByte();
     final gameError = GameError.fromIndex(errorTypeIndex);
-    options.gameError.value = gameError;
-    // options.game.value.onGameError(gameError);
-    options.clearErrorTimer = 200;
-    audio.playAudioError();
+    amulet.setGameError(gameError);
+
   }
 
   void readGameObjectDeleted() {

@@ -31,6 +31,7 @@ class Amulet extends Updatable with IsometricComponent  {
   final fiendCountPercentage = Watch(0.0);
   final playerDebugEnabled = WatchBool(false);
   final playerPerformFrameVelocity = Watch(0.0);
+  final gameError = Watch<GameError?>(null);
 
   final equippableSlotTypes = const [
     SlotType.Weapon,
@@ -673,6 +674,12 @@ class Amulet extends Updatable with IsometricComponent  {
     if (screenColorI.value < 1) {
       screenColorI.value += 0.15;
     }
+  }
+
+  void setGameError(GameError gameError) {
+    this.gameError.value = gameError;
+    options.clearErrorTimer = 200;
+    audio.playAudioError();
   }
 }
 

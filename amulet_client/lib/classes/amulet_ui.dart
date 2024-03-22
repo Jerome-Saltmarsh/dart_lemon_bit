@@ -115,6 +115,9 @@ class AmuletUI {
               top: 8,
               child: buildWindowQuest()),
           Positioned(
+              top: 16,
+              child: buildWindowAmuletError()),
+          Positioned(
               top: 0,
               left: 0,
               child: buildOverlayScreenColor()),
@@ -139,6 +142,11 @@ class AmuletUI {
                   (t) => t ? buildWindowHelp() : nothing))
         ]),
       );
+
+  Widget buildWindowAmuletError() => buildWatch(amulet.gameError, (gameError){
+    if (gameError == null) return nothing;
+    return buildText(gameError.name.clean);
+  });
 
   Widget buildMouseCursorCatcher() {
     final click = MouseRegion(

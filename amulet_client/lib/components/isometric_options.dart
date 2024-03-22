@@ -51,7 +51,6 @@ class IsometricOptions with IsometricComponent implements Updatable {
   final rendersSinceUpdate = Watch(0);
   final triggerAlarmNoMessageReceivedFromServer = Watch(false);
   final messageStatus = Watch('');
-  final gameError = Watch<GameError?>(null);
   final colorFilterColor = Watch(Colors.white);
   final colorFilterBlendMode = Watch(BlendMode.modulate);
   final colorFilterDay = Watch(Colors.white);
@@ -65,7 +64,6 @@ class IsometricOptions with IsometricComponent implements Updatable {
   IsometricOptions(){
     mode.onChanged(onChangedMode);
     messageStatus.onChanged(_onChangedMessageStatus);
-    gameError.onChanged(_onChangedGameError);
     rendersSinceUpdate.onChanged(_onChangedRendersSinceUpdate);
     sceneName.onChanged((t) {print('scene.name = $t');});
     colorFilterColor.onChanged((t) {
@@ -155,7 +153,7 @@ class IsometricOptions with IsometricComponent implements Updatable {
     renderHealthBars = !renderHealthBars;
   }
 
-  void _onChangedGameError(GameError? gameError){
+  void onChangedGameError(GameError? gameError){
     print('_onChangedGameError($gameError)');
     if (gameError == null)
       return;
@@ -254,19 +252,19 @@ class IsometricOptions with IsometricComponent implements Updatable {
     if (clearErrorTimer > 0) {
       clearErrorTimer--;
       if (clearErrorTimer <= 0)
-        gameError.value = null;
+        amulet.gameError.value = null;
     }
 
-    switch (mode.value){
-      case Mode.edit:
-        editor.update();
-        break;
-      case Mode.play:
-        break;
-      case Mode.debug:
-        debugger.update();
-        break;
-    }
+    // switch (mode.value){
+    //   case Mode.edit:
+    //     editor.update();
+    //     break;
+    //   case Mode.play:
+    //     break;
+    //   case Mode.debug:
+    //     debugger.update();
+    //     break;
+    // }
   }
 
   void _onChangedRendersSinceUpdate(int value){
