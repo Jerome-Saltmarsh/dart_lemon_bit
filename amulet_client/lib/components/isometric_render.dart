@@ -96,8 +96,8 @@ class IsometricRender with IsometricComponent {
 
     if (rotation != null){
 
-      final srcRight = spriteDst[f + 2];
-      final srcBottom = spriteDst[f + 3];
+      final srcRight = spriteSrc[f + 2];
+      final srcBottom = spriteSrc[f + 3];
 
 
       engine.renderSpriteRotated(
@@ -111,8 +111,6 @@ class IsometricRender with IsometricComponent {
         rotation: rotation,
         anchorX: anchorX,
         anchorY: anchorY,
-        // dstX: dstX + tx,
-        // dstY: dstY + ty,
         dstX: dstX,
         dstY: dstY,
       );

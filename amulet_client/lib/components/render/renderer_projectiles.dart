@@ -45,7 +45,7 @@ class RendererProjectiles extends RenderGroup {
   }) {
     render.sprite(
         sprite: images.iceball,
-        frame: 0,
+        frame: animation.frameRate2 % 4,
         color: 0,
         scale: 1,
         dstX: dstX,
