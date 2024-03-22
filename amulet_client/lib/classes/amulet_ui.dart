@@ -154,30 +154,27 @@ class AmuletUI {
   Widget buildWindowUpgradeMode() {
     return buildWatch(amulet.playerUpgradeMode, (upgradeMode) {
         if (!upgradeMode) return nothing;
-
-        final weapon = amulet.equippedWeapon;
-        final helm = amulet.equippedHelm;
-        final armor = amulet.equippedArmor;
-        final shoes = amulet.equippedShoes;
-
         return AmuletWindow(child: Column(
           children: [
             buildText('UPGRADE'),
             Row(
               children: [
-                if (weapon != null)
-                buildCardLargeAmuletItemObject(weapon),
-                if (helm != null)
-                buildCardLargeAmuletItemObject(helm),
-                if (armor != null)
-                buildCardLargeAmuletItemObject(armor),
-                if (shoes != null)
-                buildCardLargeAmuletItemObject(shoes),
+                  buildCardUpgradeAmuletItemObject(amulet.equippedWeapon),
+                  buildCardUpgradeAmuletItemObject(amulet.equippedHelm),
+                  buildCardUpgradeAmuletItemObject(amulet.equippedArmor),
+                  buildCardUpgradeAmuletItemObject(amulet.equippedShoes),
               ],
             )
           ],
         ));
     });
+  }
+
+  Widget buildCardUpgradeAmuletItemObject(AmuletItemObject? amuletItemObject){
+    if (amuletItemObject == null) return nothing;
+    return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 4),
+        child: buildCardLargeAmuletItemObject(amuletItemObject));
   }
 
   Widget buildWindowAmuletError() => buildWatch(amulet.gameError, (gameError){
