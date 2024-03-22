@@ -1580,7 +1580,7 @@ class AmuletPlayer extends IsometricPlayer with
       skillTypeRight = SkillType.None;
     }
 
-    if (skillTypeRight == SkillType.None) {
+    if (skillTypeRight == SkillType.None || skillTypeRight == attackSkill) {
       final skillSet = equippedWeapon?.amuletItem.skillSet;
       if (skillSet != null) {
          for (final skillType in SkillType.values){
