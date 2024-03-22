@@ -172,9 +172,35 @@ class AmuletUI {
 
   Widget buildCardUpgradeAmuletItemObject(AmuletItemObject? amuletItemObject){
     if (amuletItemObject == null) return nothing;
-    return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 4),
-        child: buildCardLargeAmuletItemObject(amuletItemObject));
+
+    final amuletItem = amuletItemObject.amuletItem;
+    final level = amuletItemObject.level;
+    final cost = amuletItem.getUpgradeCost(level);
+
+    return onPressed(
+      action: () => amulet.upgradeSlotType(amuletItem.slotType),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            color: Colors.black12,
+            padding: paddingAll8,
+            child: Row(
+              children: [
+                buildText('lvl ${level + 1}'),
+                width8,
+                buildText('${cost}g', color: AmuletColors.Gold70),
+              ],
+            ),
+          ),
+          height8,
+          Container(
+              margin: const EdgeInsets.symmetric(horizontal: 4),
+              child: buildCardLargeAmuletItemObject(amuletItemObject)),
+
+        ],
+      ),
+    );
   }
 
   Widget buildWindowAmuletError() => buildWatch(amulet.gameError, (gameError){
