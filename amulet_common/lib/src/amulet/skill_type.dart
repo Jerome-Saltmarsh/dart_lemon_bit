@@ -25,8 +25,8 @@ enum SkillType {
       magicCost: 0,
       isBaseAttack: true,
       enabledBow: false,
-      enabledSword: true,
-      enabledStaff: false,
+      enabledSword: false,
+      enabledStaff: true,
   ),
   Mighty_Strike(
       casteType: CasteType.Ability,

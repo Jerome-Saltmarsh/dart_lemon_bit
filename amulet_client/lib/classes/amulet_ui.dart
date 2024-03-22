@@ -1369,7 +1369,7 @@ class AmuletUI {
                     child: Container(
                       color: Colors.green,
                         padding: paddingAll8,
-                        child: buildText('EQUIP')),
+                        child: buildText('TAKE')),
                   ),
                 ],
               ),

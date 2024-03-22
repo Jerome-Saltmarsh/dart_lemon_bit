@@ -57,6 +57,7 @@ SKULLSOFT
 [new] beat the game and balance items and enemies
 [new] model missing amulet items
 [new] run to ability target
+[fix] upgrade amulet items near fireplace
 
 ## 22.03.2024
 [new] collectable gameobject magic boost
