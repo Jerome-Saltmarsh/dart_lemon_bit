@@ -154,19 +154,21 @@ class AmuletUI {
   Widget buildWindowUpgradeMode() {
     return buildWatch(amulet.playerUpgradeMode, (upgradeMode) {
         if (!upgradeMode) return nothing;
-        return AmuletWindow(child: Column(
-          children: [
-            buildText('UPGRADE'),
-            Row(
-              children: [
+        return buildWatch(amulet.equippedChangedNotifier, (t) {
+          return AmuletWindow(child: Column(
+            children: [
+              buildText('UPGRADE'),
+              Row(
+                children: [
                   buildCardUpgradeAmuletItemObject(amulet.equippedWeapon),
                   buildCardUpgradeAmuletItemObject(amulet.equippedHelm),
                   buildCardUpgradeAmuletItemObject(amulet.equippedArmor),
                   buildCardUpgradeAmuletItemObject(amulet.equippedShoes),
-              ],
-            )
-          ],
-        ));
+                ],
+              )
+            ],
+          ));
+        });
     });
   }
 
