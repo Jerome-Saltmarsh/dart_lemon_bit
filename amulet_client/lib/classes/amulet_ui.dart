@@ -4,14 +4,10 @@ import 'package:amulet_client/components/isometric_options.dart';
 import 'package:amulet_client/extensions/physical_keyboardkey_extension.dart';
 import 'package:amulet_client/getters/get_src_skill_type.dart';
 import 'package:amulet_client/getters/src.dart';
-import 'package:amulet_client/ui/containers/build_container_player_front.dart';
-import 'package:amulet_client/ui/enums/quantify_tab.dart';
 import 'package:amulet_client/ui/isometric_colors.dart';
-import 'package:amulet_client/ui/maps/map_item_quality_to_color.dart';
-import 'package:amulet_client/ui/widgets/amulet_world_map.dart';
+import 'package:amulet_client/ui/src.dart';
 import 'package:amulet_client/ui/widgets/gs_container.dart';
 import 'package:amulet_client/ui/widgets/mouse_over.dart';
-import 'package:amulet_client/ui/windows/window_quantify.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/classes/amulet.dart';
 import 'package:flutter/material.dart';
@@ -120,6 +116,10 @@ class AmuletUI {
             }),
           ),
           Positioned(
+            top: 100,
+            child: buildWindowUpgradeMode(),
+          ),
+          Positioned(
               top: 8,
               child: buildWindowQuest()),
           Positioned(
@@ -150,6 +150,35 @@ class AmuletUI {
                   (t) => t ? buildWindowHelp() : nothing))
         ]),
       );
+
+  Widget buildWindowUpgradeMode() {
+    return buildWatch(amulet.playerUpgradeMode, (upgradeMode) {
+        if (!upgradeMode) return nothing;
+
+        final weapon = amulet.equippedWeapon;
+        final helm = amulet.equippedHelm;
+        final armor = amulet.equippedArmor;
+        final shoes = amulet.equippedShoes;
+
+        return AmuletWindow(child: Column(
+          children: [
+            buildText('UPGRADE'),
+            Row(
+              children: [
+                if (weapon != null)
+                buildCardLargeAmuletItemObject(weapon),
+                if (helm != null)
+                buildCardLargeAmuletItemObject(helm),
+                if (armor != null)
+                buildCardLargeAmuletItemObject(armor),
+                if (shoes != null)
+                buildCardLargeAmuletItemObject(shoes),
+              ],
+            )
+          ],
+        ));
+    });
+  }
 
   Widget buildWindowAmuletError() => buildWatch(amulet.gameError, (gameError){
     if (gameError == null) return nothing;

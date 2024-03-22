@@ -23,20 +23,8 @@ class AmuletSettings {
   static const Chance_Of_Drop_Loot_Common = 0.15;
   static const Chance_Of_Drop_Loot_Consumable = 0.15;
 
-  // static const Range_Min_Melee = 5.0;
-  // static const Range_Max_Melee = 80.0;
-  //
-  // static const Range_Min_Ranged = 80.0;
-  // static const Range_Max_Ranged = 250.0;
-
   static const Attack_Speed_Duration_Slowest = 80;
   static const Attack_Speed_Duration_Fastest = 24;
-
-  // static double interpolateRangeMelee(double i) =>
-  //     interpolate(Range_Min_Melee, Range_Max_Melee, i);
-  //
-  // static double interpolateRangeRanged(double i) =>
-  //     interpolate(Range_Min_Ranged, Range_Max_Ranged, i);
 
   static double interpolateAttackSpeed(double t) =>
       interpolate(Attack_Speed_Duration_Fastest, Attack_Speed_Duration_Slowest, 1.0 - t);

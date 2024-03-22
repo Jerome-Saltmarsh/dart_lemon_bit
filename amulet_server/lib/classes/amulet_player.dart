@@ -2,9 +2,6 @@
 import 'dart:math';
 
 import 'package:amulet_common/src.dart';
-import 'package:amulet_server/classes/mixins/aim_target_text.dart';
-import 'package:amulet_server/classes/mixins/mixin_can_upgrade.dart';
-import 'package:amulet_server/classes/mixins/mixin_potions.dart';
 import 'package:amulet_server/src.dart';
 import 'package:lemon_lang/src.dart';
 import 'package:lemon_math/src.dart';
@@ -13,16 +10,19 @@ import 'amulet.dart';
 import 'amulet_fiend.dart';
 import '../isometric/src.dart';
 
-class AmuletPlayer extends IsometricPlayer with
-    Equipped,
-    Skilled,
-    Gold,
-    MixinCanUpgrade,
-    MixinPotions,
-    AimTargetText
-{
-  static const Data_Key_Dead_Count = 'dead';
+abstract class AmuletPlayerBase extends IsometricPlayer {
 
+  AmuletItemObject? equippedWeapon;
+  AmuletItemObject? equippedHelm;
+  AmuletItemObject? equippedArmor;
+  AmuletItemObject? equippedShoes;
+  var skillTypeLeft = SkillType.Slash;
+  var skillTypeRight = SkillType.None;
+  var skillActiveLeft = true;
+  var potionsHealth = 0;
+  var potionsMagic = 0;
+  var canUpgrade = false;
+  var gold = 0.0;
   var questTutorial = QuestTutorial.values.first;
   var questMain = QuestMain.values.first;
   var baseHealth = 10.0;
@@ -30,16 +30,13 @@ class AmuletPlayer extends IsometricPlayer with
   var baseRegenMagic = 1;
   var baseRegenHealth = 1;
   var baseRunSpeed = 1.0;
-
   var castePositionX = 0.0;
   var castePositionY = 0.0;
   var castePositionZ = 0.0;
-
   var admin = false;
   var previousCameraTarget = false;
   var equipmentDirty = true;
   var skillsLeftRightDirty = true;
-
   var cacheRegenMagic = 0;
   var cacheRegenHealth = 0;
   var cacheRunSpeed = 0.0;
@@ -52,7 +49,7 @@ class AmuletPlayer extends IsometricPlayer with
   var cacheMagicSteal = -1;
   var debugEnabled = false;
   var maxPotions = 4;
-
+  var upgradeMode = false;
   var npcText = '';
   var npcName = '';
   var npcOptions = <TalkOption>[];
@@ -60,13 +57,61 @@ class AmuletPlayer extends IsometricPlayer with
   var skillSlotIndex = 0;
   var active = false;
   var difficulty = Difficulty.Normal;
-
-  bool get canCheat => amulet.cheatsEnabled;
-
   GameObject? collectableGameObject;
   AmuletItemObject? collectableAmuletItemObject;
 
-  void setCollectableGameObject(GameObject? gameObject){
+  AmuletPlayerBase({
+    required super.game,
+    required super.x,
+    required super.y,
+    required super.z,
+    required super.health,
+    required super.team,
+  });
+}
+
+class AmuletPlayer extends AmuletPlayerBase {
+
+  final sceneShrinesUsed = <AmuletScene, List<int>> {};
+  Function? onInteractionOver;
+  Position? cameraTarget;
+  AmuletGame amuletGame;
+
+  AmuletPlayer({
+    required this.amuletGame,
+    required int itemLength,
+    required super.x,
+    required super.y,
+    required super.z,
+  }) : super(game: amuletGame, health: 10, team: TeamType.Good) {
+    respawnDurationTotal = -1;
+    characterType = CharacterType.Human;
+    hurtable = false;
+    hurtStateBusy = false;
+    runToDestinationEnabled = true;
+    pathFindingEnabled = false;
+    equipmentDirty = true;
+    regainFullHealth();
+    regainFullMagic();
+    setControlsEnabled(true);
+    writeWorldMapBytes();
+    writeWorldMapLocations();
+    writeInteracting();
+    writeGender();
+    writePlayerComplexion();
+  }
+
+  SkillType get activeSkillType => skillActiveLeft ? skillTypeLeft : skillTypeRight;
+
+  bool get canCheat => amulet.cheatsEnabled;
+
+  void activeSkillActiveLeft() => setSkillActiveLeft(true);
+
+  void activeSkillActiveRight() => setSkillActiveLeft(false);
+
+  void setSkillActiveLeft(bool value) => skillActiveLeft = value;
+
+  void setCollectableGameObject(GameObject? gameObject) {
 
     if (collectableGameObject == gameObject) {
        return;
@@ -88,36 +133,6 @@ class AmuletPlayer extends IsometricPlayer with
     collectableAmuletItemObject = null;
   }
 
-  final sceneShrinesUsed = <AmuletScene, List<int>> {};
-
-  Function? onInteractionOver;
-  Position? cameraTarget;
-  AmuletGame amuletGame;
-
-  AmuletPlayer({
-    required this.amuletGame,
-    required int itemLength,
-    required super.x,
-    required super.y,
-    required super.z,
-  }) : super(game: amuletGame, health: 10, team: TeamType.Good) {
-    respawnDurationTotal = -1;
-    characterType = CharacterType.Human;
-    hurtable = false;
-    hurtStateBusy = false;
-    runToDestinationEnabled = true;
-    pathFindingEnabled = false;
-    equipmentDirty = true;
-
-    regainFullHealth();
-    regainFullMagic();
-    setControlsEnabled(true);
-    writeWorldMapBytes();
-    writeWorldMapLocations();
-    writeInteracting();
-    writeGender();
-    writePlayerComplexion();
-  }
 
   /// in frames
   int? get equippedWeaponPerformDuration {
@@ -549,7 +564,6 @@ class AmuletPlayer extends IsometricPlayer with
   }
 
   void updateCastePosition() {
-    final skillType = activeSkillType;
     final mouseDistance = getMouseDistance();
     final weaponRange = equippedWeaponRange;
 
@@ -1655,8 +1669,29 @@ class AmuletPlayer extends IsometricPlayer with
     writeBool(sufficientMagic);
   }
 
+  void useFireplace() {
+    if (deadOrBusy) return;
+    stop();
+    upgradeMode = true;
+  }
 
+  @override
+  set upgradeMode(bool value) {
+    super.upgradeMode = value;
+    writeUpgradeMode();
+  }
 
+  void writeUpgradeMode() {
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Player_Upgrade_Mode);
+    writeBool(upgradeMode);
+  }
+
+  void upgrade() {
+    if (upgradeMode && !characterStateIdle) {
+      upgradeMode = false;
+    }
+  }
 }
 
 String buildResistances(String text, String name, double resistance){

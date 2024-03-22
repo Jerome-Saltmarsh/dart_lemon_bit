@@ -1,4 +1,0 @@
-
-mixin AimTargetText {
-  String? aimTargetText;
-}

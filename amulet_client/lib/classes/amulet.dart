@@ -133,19 +133,21 @@ class Amulet extends Updatable with IsometricComponent  {
   AmuletItemObject? equippedHelm;
   AmuletItemObject? equippedArmor;
   AmuletItemObject? equippedShoes;
-  final equippedChangedNotifier = Watch(0);
 
   ItemQuality? aimTargetItemQuality;
   var aimTargetText = '';
-  String? aimTargetSubtitles;
   var aimTargetHealthPercentage = 0.0;
+  String? aimTargetSubtitles;
   int? aimTargetLevel;
+  var playerSufficientMagicForSkillRight = false;
+  final equippedChangedNotifier = Watch(0);
   final aimTargetSet = Watch(false);
   final aimTargetNotifier = Watch(0);
   final playerCanUpgrade = Watch(false);
   final potionsHealth = Watch(0);
   final potionsMagic = Watch(0);
-  var playerSufficientMagicForSkillRight = false;
+  final playerUpgradeMode = WatchBool(false);
+
 
   Amulet() {
     print('Amulet()');

@@ -179,10 +179,6 @@ class IsometricParser with ByteReader, IsometricComponent implements Sink<Uint8L
         readGameRunning();
         break;
 
-      // case NetworkResponseIsometric.Aim_Node_Index:
-      //   readAimNodeIndex();
-      //   break;
-
       case NetworkResponseIsometric.Player_Aim_Target:
         readPlayerAimTarget();
         break;

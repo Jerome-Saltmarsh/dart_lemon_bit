@@ -160,8 +160,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   void update() {
     super.update();
     updateCooldownTimer();
-    // updatePlayerCollectables();
-    updatePlayersCanUpgrade();
+    updatePlayers();
   }
 
   void updateCooldownTimer() {
@@ -1351,6 +1350,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       case NodeType.Portal:
         usePortal(character, targetNodeIndex);
         break;
+      case NodeType.Fireplace:
+        playerUseFireplace(character);
+        break;
     }
   }
 
@@ -1481,8 +1483,9 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     );
   }
 
-  void updatePlayersCanUpgrade() {
-    for (final player in players){
+  void updatePlayers() {
+    for (final player in players) {
+        player.upgrade();
         updatePlayerCanUpgrade(player);
     }
   }
@@ -1495,24 +1498,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     );
   }
 
-
-  // void updatePlayerCollectables() {
-  //   for (final player in players) {
-  //      GameObject? nearest;
-  //      var nearestDistance = 60.0;
-  //      for (final gameObject in gameObjects) {
-  //         if (!gameObject.isAmuletItem) continue;
-  //         final distance = player.getDistance(gameObject);
-  //         if (distance >= nearestDistance) continue;
-  //         nearest = gameObject;
-  //         nearestDistance = distance;
-  //      }
-  //      player.setCollectableAmuletItemObject(nearest);
-  //   }
-  // }
-
-
-
+  void playerUseFireplace(AmuletPlayer player) {
+     player.upgradeMode = true;
+     player.writeUpgradeMode();
+  }
 }
 
 

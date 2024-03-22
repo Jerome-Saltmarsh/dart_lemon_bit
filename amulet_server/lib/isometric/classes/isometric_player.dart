@@ -1465,7 +1465,7 @@ class IsometricPlayer extends Character with ByteWriter {
   void updateAimNodeIndex(){
 
     if (aimTarget != null) {
-      setAimNodeIndex(null);
+      aimNodeIndex = null;
       return;
     }
 
@@ -1491,21 +1491,15 @@ class IsometricPlayer extends Character with ByteWriter {
 
       final index = scene.getIndex(z, row, column);
       if (canInteractWithNodeAtIndex(index)) {
-         setAimNodeIndex(index);
+         aimNodeIndex = index;
          return;
       }
       z--;
     }
-    setAimNodeIndex(null);
+    aimNodeIndex = null;
   }
 
   bool canInteractWithNodeAtIndex(int index) => false;
-
-  void setAimNodeIndex(int? value){
-    if (aimNodeIndex == value) return;
-    aimNodeIndex = value;
-    // writeAimNodeIndex();
-  }
 
   // void writeAimNodeIndex(){
   //   writeByte(NetworkResponse.Isometric);
