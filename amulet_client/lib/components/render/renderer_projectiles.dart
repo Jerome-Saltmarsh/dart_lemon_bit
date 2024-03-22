@@ -2,6 +2,7 @@ import 'package:amulet_client/components/isometric_images.dart';
 import 'package:amulet_common/src.dart';
 import 'package:amulet_client/classes/projectile.dart';
 import 'package:amulet_client/classes/render_group.dart';
+import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_math/src.dart';
 
@@ -47,7 +48,7 @@ class RendererProjectiles extends RenderGroup {
         sprite: images.iceball,
         frame: animation.frameRate2 % 4,
         color: 0,
-        scale: 1,
+        scale: goldenRatio_0618,
         dstX: dstX,
         dstY: dstY,
         rotation: rotation - piQuarter,

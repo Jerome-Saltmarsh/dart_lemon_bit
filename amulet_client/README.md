@@ -55,12 +55,12 @@ SKULLSOFT
 [new] collectable gameobject magic boost
 
 [EARLY_ACCESS]
-[new] model missing amulet items
 [new] beat the game and balance items and enemies
+[new] model missing amulet items
 [new] improve ice ball animation
 
-
 ## 22.03.2024
+[new] render sprite rotated
 [opt] render mini map text
 [new] tree top transparent
 
