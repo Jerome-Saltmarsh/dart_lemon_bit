@@ -545,7 +545,18 @@ class Amulet extends Updatable with IsometricComponent  {
     required double z,
     required int amuletEvent,
   }) {
-
+      switch (amuletEvent){
+        case AmuletEvent.Sapphire_Consumed:
+          audio.play(audio.collect_star_3, x, y, z);
+          for (var i = 0; i < 5; i++) {
+            particles.spawnParticleMagic(
+                x,
+                y,
+                z,
+            );
+          }
+          break;
+      }
   }
 
   AmuletItemObject? getEquipped(SlotType slotType) =>

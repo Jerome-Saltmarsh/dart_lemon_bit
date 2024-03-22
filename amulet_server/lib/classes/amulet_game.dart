@@ -948,19 +948,13 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       case AmuletItem.Consumable_Sapphire:
         if (player.magic < player.maxMagic){
           player.magic += 5;
+          dispatchAmuletEvent(gameObject, AmuletEvent.Sapphire_Consumed);
           remove(gameObject);
         }
         break;
       default:
         break;
     }
-
-    // if (amuletItem.isConsumable) {
-    //   player.writePlayerEventItemTypeConsumed(amuletItem.subType);
-    //   player.health += amuletItem.health ?? 0;
-    //   player.magic += amuletItem.maxMagic ?? 0;
-    //   remove(gameObject);
-    // }
   }
 
   @override
