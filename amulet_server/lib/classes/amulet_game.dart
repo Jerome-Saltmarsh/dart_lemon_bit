@@ -945,6 +945,12 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
           remove(gameObject);
         }
         break;
+      case AmuletItem.Consumable_Sapphire:
+        if (player.magic < player.maxMagic){
+          player.magic += 5;
+          remove(gameObject);
+        }
+        break;
       default:
         break;
     }

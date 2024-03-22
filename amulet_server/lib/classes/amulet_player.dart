@@ -1625,6 +1625,7 @@ class AmuletPlayer extends IsometricPlayer with
 
     if (const[
       AmuletItem.Consumable_Meat,
+      AmuletItem.Consumable_Sapphire,
     ].contains(amuletItem)){
       return false;
     }
