@@ -1587,12 +1587,29 @@ class AmuletPlayer extends IsometricPlayer with
            if (
             skillType.isPassive ||
             skillTypeLocked(skillType) ||
-            skillType == attackSkill
+            skillType == attackSkill ||
+            !canAssignSkillType(skillType)
            ) continue;
            skillTypeRight = skillType;
          }
       }
     }
+  }
+
+  bool canAssignSkillType(SkillType skillType) {
+     if (skillType == SkillType.None) return true;
+     if (skillTypeLocked(skillType)) return false;
+     if (equippedWeaponBow) {
+       return skillType.enabledBow;
+     }
+     if (equippedWeaponStaff){
+       return skillType.enabledStaff;
+     }
+     if (equippedWeaponSword) {
+       return skillType.enabledSword;
+     }
+     return skillType.enabledUnarmed;
+
   }
 }
 

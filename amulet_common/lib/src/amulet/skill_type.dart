@@ -41,6 +41,7 @@ enum SkillType {
       enabledBow: false,
       enabledSword: true,
       enabledStaff: true,
+      enabledUnarmed: true,
   ),
   Fire_Ball(
       casteType: CasteType.Ability,
@@ -48,6 +49,7 @@ enum SkillType {
       enabledBow: false,
       enabledSword: true,
       enabledStaff: true,
+      enabledUnarmed: true,
   ),
   Explode(
       casteType: CasteType.Ability,
@@ -55,6 +57,7 @@ enum SkillType {
       enabledBow: false,
       enabledSword: true,
       enabledStaff: true,
+      enabledUnarmed: true,
   ),
   // BOW
   Shoot_Arrow(
@@ -93,6 +96,7 @@ enum SkillType {
       magicCost: 4,
       range: 0,
       isCaste: true,
+      enabledUnarmed: true,
   ),
   Max_Health(
     casteType: CasteType.Passive,
@@ -162,6 +166,7 @@ enum SkillType {
   final bool enabledBow;
   final bool enabledSword;
   final bool enabledStaff;
+  final bool enabledUnarmed;
   final int magicCost;
   final Constraint? constraint;
   /// if null the weapon perform duration is used
@@ -209,6 +214,7 @@ enum SkillType {
     this.enabledBow = false,
     this.enabledStaff = false,
     this.enabledSword = false,
+    this.enabledUnarmed = false,
     this.damageMin,
     this.damageMax,
     this.isCaste = false,
