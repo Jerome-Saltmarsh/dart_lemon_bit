@@ -121,6 +121,9 @@ class IsometricEvents with IsometricComponent {
       case GameEvent.Node_Struck:
         onNodeStruck(x, y, z);
         break;
+      case GameEvent.Ice_Ball_Spawned:
+        audio.play(audio.magical_impact_28, x, y, z);
+        break;
       case GameEvent.Character_Vanished:
         particles.emitFlames(
           x: x,

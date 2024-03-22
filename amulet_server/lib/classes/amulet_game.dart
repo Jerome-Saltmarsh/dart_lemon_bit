@@ -676,11 +676,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   }
 
   void characterPerformSkillTypeIceBall(Character character, int level) {
-
+    dispatchGameEventPosition(GameEvent.Ice_Ball_Spawned, character);
     spawnProjectile(
         src: character,
         damage: SkillType.getDamageIceBall(level),
-        range: 200.0,
+        range: 200.0, // TODO
         projectileType: ProjectileType.FrostBall,
         angle: character.angle,
         ailmentDuration: SkillType.getAilmentDurationIceBall(level),
