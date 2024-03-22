@@ -248,6 +248,23 @@ class Amulet extends Updatable with IsometricComponent  {
       return;
     }
 
+    if (key == amuletKeys.selectSkill0) {
+      amulet.selectSkillRight(0);
+      return;
+    }
+    if (key == amuletKeys.selectSkill1) {
+      amulet.selectSkillRight(1);
+      return;
+    }
+    if (key == amuletKeys.selectSkill2) {
+      amulet.selectSkillRight(2);
+      return;
+    }
+    if (key == amuletKeys.selectSkill3) {
+      amulet.selectSkillRight(3);
+      return;
+    }
+
     if (key == amuletKeys.usePotionMagic) {
       amulet.usePotionMagic();
       return;
@@ -681,6 +698,22 @@ class Amulet extends Updatable with IsometricComponent  {
     this.gameError.value = gameError;
     options.clearErrorTimer = 200;
     audio.playAudioError();
+  }
+
+  void selectSkillRight(int i) {
+
+    final activeSkills = SkillType.values.where((skillType) {
+      if (skillType.isPassive) return false;
+      if (skillType.isBaseAttack) return false;
+      final level = amulet.getSkillTypeLevel(skillType);
+      return level > 0;
+    }).toList(growable: false);
+
+    final index = i - activeSkills.length;
+    final skillType = activeSkills.tryGet(index);
+    if (skillType != null){
+      selectSkillTypeRight(skillType);
+    }
   }
 }
 

@@ -2,10 +2,10 @@
 import 'package:flutter/services.dart';
 
 class AmuletKeys {
-  var selectSkill0 = PhysicalKeyboardKey.keyA;
-  var selectSkill1 = PhysicalKeyboardKey.keyS;
-  var selectSkill2 = PhysicalKeyboardKey.keyD;
-  var selectSkill3 = PhysicalKeyboardKey.keyF;
+  var selectSkill0 = PhysicalKeyboardKey.keyF;
+  var selectSkill1 = PhysicalKeyboardKey.keyD;
+  var selectSkill2 = PhysicalKeyboardKey.keyS;
+  var selectSkill3 = PhysicalKeyboardKey.keyA;
 
   var usePotionHealth = PhysicalKeyboardKey.keyE;
   var usePotionMagic = PhysicalKeyboardKey.keyR;

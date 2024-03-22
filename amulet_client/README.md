@@ -51,15 +51,17 @@ SKULLSOFT
 
 [FULL_RELEASE]
 [new] side quest rats in the cellar
-[new] collectable gameobject health boost
-[new] collectable gameobject magic boost
 
 [EARLY_ACCESS]
 [new] beat the game and balance items and enemies
 [new] model missing amulet items
-[fix] auto assign skill type
+[new] collectable gameobject health boost
+[new] collectable gameobject magic boost
+[new] shortcut key change skills
 
 ## 22.03.2024
+[fix] game error text
+[fix] auto assign skill type
 [new] ui skill type can afford border color
 [new] improve ice ball animation
 [new] render sprite rotated
