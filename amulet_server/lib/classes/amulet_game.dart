@@ -1109,7 +1109,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
 
     if (gameObject.isAmuletItem) {
-      gameObject.physical = true;
+      gameObject.physical = !const [
+          AmuletItem.Consumable_Sapphire,
+          AmuletItem.Consumable_Meat
+      ].contains(gameObject.amuletItem);
       gameObject.fixed = false;
       gameObject.healthMax = 0;
       gameObject.health = 0;
