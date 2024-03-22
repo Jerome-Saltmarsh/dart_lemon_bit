@@ -1545,4 +1545,20 @@ class IsometricPlayer extends Character with ByteWriter {
 
   bool canAimAt(GameObject gameObject) =>
       gameObject.interactable || gameObject.hitable;
+
+
+  void markAimTarget(){
+
+    if (aimTarget != null){
+      target = aimTarget;
+      return;
+    }
+
+    if (aimNodeIndex != null) {
+      targetNodeIndex = aimNodeIndex;
+      return;
+    }
+
+    setDestinationToMouse();
+  }
 }

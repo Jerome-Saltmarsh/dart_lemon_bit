@@ -1165,8 +1165,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       return;
     }
 
-    if (keyDownShift){
-      if (mouseLeftDown){
+    if (keyDownShift) {
+      if (mouseLeftDown) {
         player.performSkillLeft();
       } else {
         player.setCharacterStateIdle();
@@ -1180,24 +1180,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
 
     if (mouseLeftClicked) {
-      final aimTarget = player.aimTarget;
-
-
-
-      if (aimTarget != null){
-        player.target = aimTarget;
-        return;
-      }
-
-      final aimNodeIndex = player.aimNodeIndex;
-      if (aimNodeIndex != null) {
-        player.targetNodeIndex = aimNodeIndex;
-        return;
-      }
-
-      player.setDestinationToMouse();
+      player.markAimTarget();
     }
-
   }
 
   @override

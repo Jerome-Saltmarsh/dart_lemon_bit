@@ -1698,7 +1698,6 @@ class AmuletPlayer extends AmuletPlayerBase {
   @override
   void update() {
     super.update();
-    // updateCanUpgrade();
 
     if (!characterStateIdle) {
       if (interacting){
