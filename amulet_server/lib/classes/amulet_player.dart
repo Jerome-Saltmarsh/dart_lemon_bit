@@ -1687,9 +1687,26 @@ class AmuletPlayer extends AmuletPlayerBase {
     writeBool(upgradeMode);
   }
 
-  void upgrade() {
-    if (upgradeMode && !characterStateIdle) {
-      upgradeMode = false;
+  void updateCanUpgrade(AmuletPlayer player){
+    canUpgrade = scene.getNodeTypeWithinRangePosition(
+      position: player,
+      nodeType: NodeType.Fireplace,
+      distance: 4,
+    );
+  }
+
+  @override
+  void update() {
+    super.update();
+    // updateCanUpgrade();
+
+    if (!characterStateIdle) {
+      if (interacting){
+        endInteraction();
+      }
+      if (upgradeMode){
+        upgradeMode = false;
+      }
     }
   }
 }

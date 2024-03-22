@@ -160,7 +160,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   void update() {
     super.update();
     updateCooldownTimer();
-    updatePlayers();
   }
 
   void updateCooldownTimer() {
@@ -1183,9 +1182,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     if (mouseLeftClicked) {
       final aimTarget = player.aimTarget;
 
-      if (player.interacting){
-        player.endInteraction();
-      }
+
 
       if (aimTarget != null){
         player.target = aimTarget;
@@ -1480,21 +1477,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       x: x,
       y: y,
       z: z,
-    );
-  }
-
-  void updatePlayers() {
-    for (final player in players) {
-        player.upgrade();
-        updatePlayerCanUpgrade(player);
-    }
-  }
-
-  void updatePlayerCanUpgrade(AmuletPlayer player){
-    player.canUpgrade = scene.getNodeTypeWithinRangePosition(
-        position: player,
-        nodeType: NodeType.Fireplace,
-        distance: 4,
     );
   }
 
