@@ -56,10 +56,10 @@ SKULLSOFT
 [EARLY_ACCESS]
 [new] beat the game
 [new] balance items and enemies
+[fix] ai pathfinding
 [new] model missing amulet items
 [new] ability punch
 [new] run to ability target
-[fix] ai pathfinding
 [new] ui show max skill level
 
 ## 23.03.2024

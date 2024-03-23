@@ -1137,11 +1137,6 @@ class AmuletUI {
   Widget buildCardLargeSkillType(SkillType skillType) {
 
     final level = amulet.getSkillTypeLevel(skillType);
-
-    final levelP = level.percentageOf(skillType.maxLevel);
-    const levelWidth = 60.0;
-    const levelHeight = 6.0;
-
     final title = buildCardLargeTitleTemplate(
       icon: buildIconSkillType(skillType),
       name: skillType.name.clean,
@@ -1149,21 +1144,7 @@ class AmuletUI {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           buildTextSubtitle('lvl $level'),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                width: levelP * levelWidth,
-                height: levelHeight,
-                color: Colors.white70,
-              ),
-              Container(
-                width: (1.0 - levelP) * levelWidth,
-                height: levelHeight,
-                color: Colors.white24,
-              ),
-            ],
-          )
+          buildSkillTypeLevelBar(skillType)
         ],
       ),
     );
@@ -1221,6 +1202,30 @@ class AmuletUI {
         title: title,
         content: contents,
     );
+  }
+
+  Row buildSkillTypeLevelBar(SkillType skillType) {
+
+    final level = amulet.getSkillTypeLevel(skillType);
+    final levelPercentage = level.percentageOf(skillType.maxLevel);
+    const levelWidth = 40.0;
+    const levelHeight = 6.0;
+
+    return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: levelPercentage * levelWidth,
+              height: levelHeight,
+              color: Colors.white70,
+            ),
+            Container(
+              width: (1.0 - levelPercentage) * levelWidth,
+              height: levelHeight,
+              color: Colors.white24,
+            ),
+          ],
+        );
   }
 
   Widget buildRowValue(dynamic value) => buildText(value, color: Colors.white70);
@@ -1978,10 +1983,19 @@ class AmuletUI {
       color: Palette.brown_4,
       padding: const EdgeInsets.all(4),
       child: Column(
+
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
             width: size,
-            child: buildText(amulet.getSkillTypeLevel(skillType), color: Palette.brown_0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                buildText(amulet.getSkillTypeLevel(skillType), color: Palette.brown_0),
+                buildSkillTypeLevelBar(skillType),
+                height2,
+              ],
+            ),
             alignment: Alignment.center,
             color: Palette.brown_4,
           ),
