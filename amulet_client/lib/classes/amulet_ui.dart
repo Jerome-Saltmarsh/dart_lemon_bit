@@ -95,6 +95,10 @@ class AmuletUI {
             ),
           ),
           Positioned(
+            top: 100,
+            child: buildWindowUpgradeMode(),
+          ),
+          Positioned(
             bottom: 8,
             left: 8,
             child: buildEquippedSlotTypes(),
@@ -114,10 +118,6 @@ class AmuletUI {
                if (!playerCanUpgrade) return nothing;
                return buildText('UPGRADE EQUIPMENT');
             }),
-          ),
-          Positioned(
-            top: 100,
-            child: buildWindowUpgradeMode(),
           ),
           Positioned(
               top: 8,
@@ -187,16 +187,20 @@ class AmuletUI {
     final level = amuletItemObject.level;
     final cost = amuletItem.getUpgradeCost(level);
 
-    final controlCost = Container(
-      padding: paddingAll8,
-      child: Column(
-        children: [
-          buildText('lvl ${level + 1}', color: Colors.white70),
-          width8,
-          buildText('${cost}g', color: AmuletColors.Gold70, size: 22),
-        ],
-      ),
-    );
+
+
+    final controlCost = buildWatch(amulet.playerGold, (playerGold) {
+      return Container(
+        padding: paddingAll8,
+        child: Column(
+          children: [
+            buildText('lvl ${level + 1}', color: Colors.white70),
+            width8,
+            buildText('${cost}g', color: playerGold >= cost ? AmuletColors.Gold : Palette.apricot_2, size: 22),
+          ],
+        ),
+      );
+    });
 
     return onPressed(
       action: () => amulet.upgradeSlotType(amuletItem.slotType),
@@ -205,10 +209,14 @@ class AmuletUI {
         children: [
           controlCost,
           // height8,
-          Container(
-              margin: const EdgeInsets.symmetric(horizontal: 4),
-              child: buildCardLargeAmuletItemObject(amuletItemObject, compareLevels: true)),
-
+          buildWatch(amulet.playerGold, (playerGold) {
+            return Container(
+                margin: const EdgeInsets.symmetric(horizontal: 4),
+                child: buildCardLargeAmuletItemObject(
+                  amuletItemObject, compareLevels: true,
+                  borderColor: playerGold >= cost ? Colors.green : Colors.orange
+                ));
+          }),
         ],
       ),
     );
@@ -1174,10 +1182,11 @@ class AmuletUI {
     required Widget header,
     required Widget title,
     required Widget content,
+    Color? borderColor,
   }) {
     return Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.white70, width: 2),
+          border: Border.all(color: borderColor ?? Colors.orange, width: 2),
           borderRadius: borderRadius2,
           color: amuletStyle.colorCardLargeContent,
         ),
@@ -1338,6 +1347,7 @@ class AmuletUI {
 
   Widget buildCardLargeAmuletItemObject(AmuletItemObject amuletItemObject, {
     bool compareLevels = false,
+    Color? borderColor,
   }) {
 
     final amuletItem = amuletItemObject.amuletItem;
@@ -1362,6 +1372,7 @@ class AmuletUI {
         header: header,
         title: title,
         content: content,
+        borderColor: borderColor,
     );
   }
 
