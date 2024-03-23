@@ -599,7 +599,7 @@ class IsometricPlayer extends Character with ByteWriter {
   }
 
   void writePlayerDestination(){
-    if (!runToDestinationEnabled || arrivedAtDestination) {
+    if (arrivedAtDestination) {
       return;
     }
 
@@ -1008,7 +1008,6 @@ class IsometricPlayer extends Character with ByteWriter {
 
   void setDestinationToMouse() {
     setRunDestination(mouseSceneX, mouseSceneY, mouseSceneZ);
-    runToDestinationEnabled = true;
     pathFindingEnabled = false;
     target = null;
   }
@@ -1177,7 +1176,6 @@ class IsometricPlayer extends Character with ByteWriter {
 
     if (aimTarget == null) {
       setDestinationToMouse();
-      runToDestinationEnabled = true;
       pathFindingEnabled = false;
       target = null;
       return;
@@ -1188,7 +1186,6 @@ class IsometricPlayer extends Character with ByteWriter {
 
   void setTargetToAimTarget() {
     target = aimTarget;
-    runToDestinationEnabled = true;
     pathFindingEnabled = false;
   }
 

@@ -58,7 +58,10 @@ SKULLSOFT
 [new] model missing amulet items
 [new] run to ability target
 [new] ui show max skill level
-[fix] upgrade amulet items near fireplace
+[fix] upgrade amulet items window
+
+## 23.03.2024
+[fix] fix mouse aim cursor for target node index 
 
 ## 22.03.2024
 [new] collectable gameobject magic boost

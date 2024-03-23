@@ -465,9 +465,6 @@ class Character extends Collider {
   }
 
   void setRunDestination(double x, double y, double z) {
-    if (!runToDestinationEnabled) {
-      return;
-    }
     runPosition.x = x;
     runPosition.y = y;
     runPosition.z = z;
