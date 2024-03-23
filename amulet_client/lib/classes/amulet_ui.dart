@@ -160,6 +160,12 @@ class AmuletUI {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
+                    buildBorder(
+                      width: 3,
+                      color: Colors.white60,
+                      child: buildPlayerGold()
+                    ),
+                    width32,
                     onPressed(
                         action: amulet.endUpgradeMode,
                         child: buildText('CLOSE X')),
@@ -2160,7 +2166,7 @@ class AmuletUI {
       width4,
       buildCardSmallPotionMagic(),
       width4,
-      buildControlGold(),
+      buildPlayerGold(),
       width4,
       buildTogglePlayerQuest(),
       width4,
@@ -2168,7 +2174,7 @@ class AmuletUI {
     ],
   );
 
-  Widget buildControlGold() {
+  Widget buildPlayerGold() {
     final title = buildWatch(amulet.playerGold, buildCardTitleText);
     final child = buildCardSmallHalf(title: title, child: iconGold);
     final panel = buildHint('Use a fireplace to upgrade equipment');
