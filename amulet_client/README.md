@@ -60,6 +60,10 @@ SKULLSOFT
 [new] model missing amulet items
 [new] ability punch
 [new] run to ability target
+[fix] caste ability
+
+## 24.03.2024
+[ref] update character action
 [new] ui show max skill level
 
 ## 23.03.2024
