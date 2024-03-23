@@ -1475,6 +1475,8 @@ class AmuletUI {
                   level: amuletItemObject.level + 1
               );
 
+              final diff = skillLevelNext - skillLevel;
+
               if (skillLevel <= 0 && skillLevelNext <= 0) return nothing;
 
               final icon = Container(
@@ -1485,7 +1487,7 @@ class AmuletUI {
               );
 
               final controlLevel = buildText('+$skillLevel', color: Colors.green);
-              final controlLevelNext = buildText('+$skillLevelNext', color: Colors.green);
+              final controlLevelNext = buildText('+$diff', color: Colors.green);
               final controlName = buildText(skillType.name.clean, color: Colors.white70, size: 15);
 
               return Container(
@@ -1504,7 +1506,9 @@ class AmuletUI {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             controlLevel,
+                            if (diff > 0)
                             buildText(' > ', color: Colors.white60),
+                            if (diff > 0)
                             controlLevelNext,
                           ],
                         )
