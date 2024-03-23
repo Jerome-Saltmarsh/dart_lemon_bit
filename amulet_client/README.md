@@ -58,9 +58,9 @@ SKULLSOFT
 [new] model missing amulet items
 [new] run to ability target
 [new] ui show max skill level
-[fix] upgrade amulet items window
 
 ## 23.03.2024
+[fix] upgrade amulet items window
 [fix] fix mouse aim cursor for target node index 
 
 ## 22.03.2024
