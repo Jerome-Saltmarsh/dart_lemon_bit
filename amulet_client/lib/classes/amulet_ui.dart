@@ -188,7 +188,6 @@ class AmuletUI {
     final cost = amuletItem.getUpgradeCost(level);
 
     final controlCost = Container(
-      // color: Colors.black12,
       padding: paddingAll8,
       child: Column(
         children: [
@@ -208,7 +207,7 @@ class AmuletUI {
           // height8,
           Container(
               margin: const EdgeInsets.symmetric(horizontal: 4),
-              child: buildCardLargeAmuletItemObject(amuletItemObject)),
+              child: buildCardLargeAmuletItemObject(amuletItemObject, compareLevels: true)),
 
         ],
       ),
@@ -1337,11 +1336,21 @@ class AmuletUI {
     );
   }
 
-  Widget buildCardLargeAmuletItemObject(AmuletItemObject amuletItemObject) {
+  Widget buildCardLargeAmuletItemObject(AmuletItemObject amuletItemObject, {
+    bool compareLevels = false,
+  }) {
 
     final amuletItem = amuletItemObject.amuletItem;
-    final header = buildCardLargeHeaderText(amuletItem.slotType.name.clean);
-    final content = buildCardLargeAmuletItemObjectContent(amuletItemObject);
+
+    final header = buildCardLargeHeaderText(
+        amuletItem.slotType.name.clean
+    );
+
+    final content = compareLevels
+        ? buildCardLargeAmuletItemObjectContentCompareLevel(amuletItemObject)
+        : buildCardLargeAmuletItemObjectContent(
+          amuletItemObject,
+    );
 
     final title = buildCardLargeTitleTemplate(
       icon: buildIconAmuletItem(amuletItem),
@@ -1446,6 +1455,66 @@ class AmuletUI {
                 ],
               ),
             ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildCardLargeAmuletItemObjectContentCompareLevel(AmuletItemObject amuletItemObject){
+
+    final amuletItem = amuletItemObject.amuletItem;
+    return Container(
+      padding: paddingAll8,
+      child: Column(
+        children: [
+            ...SkillType.values.map((skillType) {
+
+              final skillLevel = amuletItemObject.getSkillLevel(skillType);
+              final skillLevelNext = amuletItem.getSkillTypeLevel(
+                  skillType: skillType,
+                  level: amuletItemObject.level + 1
+              );
+
+              if (skillLevel <= 0 && skillLevelNext <= 0) return nothing;
+
+              final icon = Container(
+                  width: 32,
+                  height: 32,
+                  alignment: Alignment.center,
+                  child: buildIconSkillType(skillType)
+              );
+
+              final controlLevel = buildText('+$skillLevel', color: Colors.green);
+              final controlLevelNext = buildText('+$skillLevelNext', color: Colors.green);
+              final controlName = buildText(skillType.name.clean, color: Colors.white70, size: 15);
+
+              return Container(
+                color: Colors.black12,
+                margin: const EdgeInsets.only(bottom: 6),
+                padding: paddingAll4,
+                child: Row(
+                  children: [
+                    icon,
+                    width8,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        controlName,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            controlLevel,
+                            buildText(' > ', color: Colors.white60),
+                            controlLevelNext,
+                          ],
+                        )
+
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            }),
         ],
       ),
     );
