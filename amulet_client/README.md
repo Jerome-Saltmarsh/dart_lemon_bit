@@ -54,10 +54,12 @@ SKULLSOFT
 [new] side quest rats in the cellar
 
 [EARLY_ACCESS]
-[new] beat the game and balance items and enemies
+[new] beat the game
+[new] balance items and enemies
 [new] model missing amulet items
-[new] run to ability target
+[new] ability punch
 [new] ui show max skill level
+[new] run to ability target
 
 ## 23.03.2024
 [fix] upgrade amulet items window

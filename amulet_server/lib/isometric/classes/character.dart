@@ -24,7 +24,6 @@ class Character extends Collider {
   var _angle = 0.0;
   var _health = 1.0;
   var _maxHealth = 1.0;
-  var _goal = CharacterGoal.Idle;
 
   var reviveTimer = -1;
   var conditionColdDuration = 0;
@@ -135,15 +134,6 @@ class Character extends Collider {
     }
   }
 
-  int get goal => _goal;
-
-  set goal(int value){
-    if (_goal == value) {
-      return;
-    }
-    _goal = value;
-  }
-
   int get animationFrame => (frame ~/ 3).toInt() % maxAnimationFrames;
 
   double get actionCompletionPercentage =>
@@ -191,8 +181,6 @@ class Character extends Collider {
       characterType == CharacterType.Human;
 
   bool get dead => characterState == CharacterState.Dead;
-
-  bool get deadOrInactive => dead;
 
   bool get alive => !dead;
 
@@ -590,7 +578,7 @@ class Character extends Collider {
 
   void setCharacterStateIdle({int duration = 0}){
     if (
-      deadOrInactive ||
+      dead ||
           (characterStateIdle && actionDuration >= duration)
     ) return;
 

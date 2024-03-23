@@ -413,36 +413,36 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
      return 0;
   }
 
-  @override
-  void characterGoalAttackTarget(Character character) {
-
-    if (character.deadOrBusy) {
-      return;
-    }
-
-    // final target = character.target;
-
-    if (character is! AmuletFiend) {
-      super.characterGoalAttackTarget(character);
-      return;
-    }
-
-    // final fiendType = character.fiendType;
-    // final skillB = fiendType.skillTypeB;
-
-    // if (
-    //   target is Character &&
-    //   skillB == SkillType.Blind &&
-    //   !target.conditionIsBlind
-    // ) {
-    //   character.activeSkillType = SkillType.Blind;
-    //   character.attack();
-    //   return;
-    // }
-
-    character.activeSkillType = character.fiendType.skillType;
-    super.characterGoalAttackTarget(character);
-  }
+  // @override
+  // void characterGoalAttackTarget(Character character) {
+  //
+  //   if (character.deadOrBusy) {
+  //     return;
+  //   }
+  //
+  //   // final target = character.target;
+  //
+  //   if (character is! AmuletFiend) {
+  //     super.characterGoalAttackTarget(character);
+  //     return;
+  //   }
+  //
+  //   // final fiendType = character.fiendType;
+  //   // final skillB = fiendType.skillTypeB;
+  //
+  //   // if (
+  //   //   target is Character &&
+  //   //   skillB == SkillType.Blind &&
+  //   //   !target.conditionIsBlind
+  //   // ) {
+  //   //   character.activeSkillType = SkillType.Blind;
+  //   //   character.attack();
+  //   //   return;
+  //   // }
+  //
+  //   character.activeSkillType = character.fiendType.skillType;
+  //   super.characterGoalAttackTarget(character);
+  // }
 
   @override
   void applyHit({

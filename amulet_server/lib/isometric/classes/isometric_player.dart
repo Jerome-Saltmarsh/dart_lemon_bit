@@ -1057,7 +1057,8 @@ class IsometricPlayer extends Character with ByteWriter {
       writeByte(IsometricType.Character);
       writeString(character.runtimeType.toString());
       writeByte(character.action);
-      writeByte(character.goal);
+      // writeByte(character.goal);
+      writeByte(0);
       writeUInt16(character.team);
       writeUInt16(character.radius.toInt());
       writeUInt16(selectedCollider.health.toInt());
@@ -1419,7 +1420,7 @@ class IsometricPlayer extends Character with ByteWriter {
       return;
     }
     lookAtMouse();
-    game.characterGoalForceAttack(this);
+    game.performingForceAttack(this);
   }
 
   void writeFPS() {
