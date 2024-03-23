@@ -2087,7 +2087,7 @@ class AmuletUI {
   Widget buildControlGold() {
     final title = buildWatch(amulet.playerGold, buildCardTitleText);
     final child = buildCardSmallHalf(title: title, child: iconGold);
-    final panel = buildHint('Stand near a fireplace to upgrade equipment');
+    final panel = buildHint('Use a fireplace to upgrade equipment');
     return buildMouseOverPanel(child: child, panel: panel, top: 60);
   }
 
