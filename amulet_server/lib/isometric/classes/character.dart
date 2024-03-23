@@ -411,6 +411,7 @@ class Character extends Collider {
   void stop(){
     setCharacterStateIdle();
     setDestinationToCurrentPosition();
+    targetNodeIndex = null;
     clearPath();
     clearTarget();
   }

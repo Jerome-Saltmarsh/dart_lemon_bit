@@ -2786,8 +2786,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         IsometricSettings.Interact_Radius,
     )){
       handleCharacterInteractWithTargetNode(character);
-      character.targetNodeIndex = null;
-      character.setCharacterStateIdle();
+      character.stop();
       return true;
     }
 
