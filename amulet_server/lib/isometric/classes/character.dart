@@ -623,7 +623,6 @@ class Character extends Collider {
 
   void attack() {
     clearPath();
-    forceAttack = false;
 
     if (WeaponType.isBow(weaponType)) {
       setCharacterStateFire(

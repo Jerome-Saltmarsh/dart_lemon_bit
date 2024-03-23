@@ -2342,7 +2342,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       return;
     }
 
-    if (pursueGoalAttack(character)) {
+    if (pursueGoalForceAttack(character)) {
       return;
     }
 
@@ -2377,8 +2377,9 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
   }
 
-  bool pursueGoalAttack(Character character) {
+  bool pursueGoalForceAttack(Character character) {
     if (!character.forceAttack) return false;
+    character.forceAttack = false;
     character.faceTarget();
     character.attack();
     return true;

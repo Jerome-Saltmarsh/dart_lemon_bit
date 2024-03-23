@@ -1421,7 +1421,7 @@ class IsometricPlayer extends Character with ByteWriter {
       return;
     }
     lookAtMouse();
-    game.pursueGoalAttack(this);
+    forceAttack = true;
   }
 
   void writeFPS() {
