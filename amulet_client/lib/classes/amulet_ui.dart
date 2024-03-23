@@ -157,13 +157,15 @@ class AmuletUI {
         return buildWatch(amulet.equippedChangedNotifier, (t) {
           return AmuletWindow(child: Column(
             children: [
-              Row(
-                children: [
-                  buildText('UPGRADE'),
-                  onPressed(
-                      action: amulet.endUpgradeMode,
-                      child: buildText('CLOSE')),
-                ],
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    onPressed(
+                        action: amulet.endUpgradeMode,
+                        child: buildText('CLOSE X')),
+                  ],
+                ),
               ),
               height16,
               Row(
@@ -2307,4 +2309,21 @@ double getAmuletItemSkillSetTotal(AmuletItem amuletItem) {
     total += entry;
   }
   return total;
+}
+
+Widget buildPostFrameCallback({required WidgetBuilder builder}){
+  var set = false;
+  return StatefulBuilder(builder: (context, setState){
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (set) return;
+      setState(() {
+        set = true;
+      });
+    });
+
+    if (set){
+      return builder(context);
+    }
+    return nothing;
+  });
 }

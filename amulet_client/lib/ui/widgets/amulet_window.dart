@@ -10,8 +10,12 @@ class AmuletWindow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-      color: Palette.brown_4,
       padding: paddingAll8,
       child: child,
+     decoration: BoxDecoration(
+       color: Palette.brown_4,
+       border: Border.all(color: Palette.black, width: 6),
+       borderRadius: borderRadius2,
+     )
     );
 }
