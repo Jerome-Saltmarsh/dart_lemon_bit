@@ -1056,8 +1056,9 @@ class IsometricPlayer extends Character with ByteWriter {
       final character = selectedCollider;
       writeByte(IsometricType.Character);
       writeString(character.runtimeType.toString());
-      writeByte(character.action);
+      // writeByte(character.action);
       // writeByte(character.goal);
+      writeByte(0);
       writeByte(0);
       writeUInt16(character.team);
       writeUInt16(character.radius.toInt());
@@ -1095,11 +1096,11 @@ class IsometricPlayer extends Character with ByteWriter {
   }
 
   void writeCharacterPath(Character character){
-    writeInt16(character.pathCurrent);
-    writeInt16(character.pathStart);
-    writeInt16(character.pathTargetIndex);
-    for (var j = 0; j < character.pathStart; j++){
-      writeUInt16(character.path[j]);
+    final path = character.path;
+    final length = character.pathStart;
+    writeUInt16(length);
+    for (var j = 0; j < length; j++){
+      writeUInt16(path[j]);
     }
   }
 
@@ -1420,7 +1421,7 @@ class IsometricPlayer extends Character with ByteWriter {
       return;
     }
     lookAtMouse();
-    game.performingForceAttack(this);
+    game.pursueGoalAttack(this);
   }
 
   void writeFPS() {

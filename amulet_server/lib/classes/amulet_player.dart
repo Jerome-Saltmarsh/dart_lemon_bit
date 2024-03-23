@@ -296,6 +296,10 @@ class AmuletPlayer extends AmuletPlayerBase {
         writePosition(character);
         writePosition(target);
     }
+    for (final character in characters) {
+        writeTrue();
+        writeCharacterPath(character);
+    }
     writeFalse();
   }
 

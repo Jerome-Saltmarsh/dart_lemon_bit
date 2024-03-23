@@ -393,7 +393,7 @@ extension isometricDebugUI on IsometricDebug {
           ),
         ),
         buildRowWatchString(text: 'runtime-type', watch: runTimeType),
-        buildRow('action', buildWatch(characterAction, (t) => buildText(CharacterAction.getName(t)))),
+        // buildRow('action', buildWatch(characterAction, (t) => buildText(CharacterAction.getName(t)))),
         buildRow('goal', buildWatch(goal, (t) => buildText(CharacterGoal.getName(t)))),
         buildRowWatchInt(text: 'team', watch: team),
         buildRowWatchInt(text: 'radius', watch: radius),

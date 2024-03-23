@@ -75,7 +75,6 @@ class Character extends Collider {
   var pathStart = -1;
   var pathTargetIndex = -1;
   var pathTargetIndexPrevious = -1;
-  var action = CharacterAction.Idle;
   var forceAttack = false;
   var arrivedAtDestination = false;
   var runToDestinationEnabled = true;
@@ -367,7 +366,6 @@ class Character extends Collider {
   }
 
   void runStraightToTarget(){
-    action = CharacterAction.Run_To_Target;
     if (pathFindingEnabled){
       clearPath();
     }
@@ -625,6 +623,7 @@ class Character extends Collider {
 
   void attack() {
     clearPath();
+    forceAttack = false;
 
     if (WeaponType.isBow(weaponType)) {
       setCharacterStateFire(

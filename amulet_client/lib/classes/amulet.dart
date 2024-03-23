@@ -250,6 +250,16 @@ class Amulet extends Updatable with IsometricComponent  {
       return;
     }
 
+    if (key == amuletKeys.usePotionHealth) {
+      amulet.usePotionHealth();
+      return;
+    }
+
+    if (key == amuletKeys.toggleDebug) {
+      amulet.toggleDebugEnabled();
+      return;
+    }
+
     if (key == amuletKeys.selectSkill0) {
       amulet.selectSkillRight(0);
       return;
