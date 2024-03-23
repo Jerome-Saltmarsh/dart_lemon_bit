@@ -1117,14 +1117,55 @@ class AmuletUI {
                 ],
               ));
 
+
+  Widget skillBoxActive = Container(
+    width: 5,
+    height: 5,
+    color: Colors.white,
+    margin: const EdgeInsets.only(right: 4),
+  );
+
+  Widget skillBoxInactive = Container(
+    width: 5,
+    height: 5,
+    color: Colors.white24,
+    margin: const EdgeInsets.only(right: 4),
+  );
+
+
+
   Widget buildCardLargeSkillType(SkillType skillType) {
 
     final level = amulet.getSkillTypeLevel(skillType);
 
+    final levelP = level.percentageOf(skillType.maxLevel);
+    const levelWidth = 60.0;
+    const levelHeight = 6.0;
+
     final title = buildCardLargeTitleTemplate(
       icon: buildIconSkillType(skillType),
       name: skillType.name.clean,
-      subtitle: 'lvl $level',
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          buildTextSubtitle('lvl $level'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                width: levelP * levelWidth,
+                height: levelHeight,
+                color: Colors.white70,
+              ),
+              Container(
+                width: (1.0 - levelP) * levelWidth,
+                height: levelHeight,
+                color: Colors.white24,
+              ),
+            ],
+          )
+        ],
+      ),
     );
 
     final magicCost = skillType.magicCost;
@@ -1371,7 +1412,7 @@ class AmuletUI {
     final title = buildCardLargeTitleTemplate(
       icon: buildIconAmuletItem(amuletItem),
       name: amuletItem.label,
-      subtitle: 'lvl ${amuletItemObject.level}',
+      subtitle: buildTextSubtitle('lvl ${amuletItemObject.level}'),
     );
 
     return buildCardLarge(
@@ -1671,7 +1712,7 @@ class AmuletUI {
   Widget buildCardLargeTitleTemplate({
     required Widget icon,
     required String name,
-    required dynamic subtitle,
+    required Widget subtitle,
   }) =>
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -1687,7 +1728,7 @@ class AmuletUI {
                 name,
                 color: Colors.white,
               ),
-              buildTextSubtitle(subtitle),
+              subtitle,
             ],
           ),
         ],

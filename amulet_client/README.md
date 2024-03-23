@@ -58,8 +58,9 @@ SKULLSOFT
 [new] balance items and enemies
 [new] model missing amulet items
 [new] ability punch
-[new] ui show max skill level
 [new] run to ability target
+[fix] ai pathfinding
+[new] ui show max skill level
 
 ## 23.03.2024
 [fix] upgrade amulet items window
