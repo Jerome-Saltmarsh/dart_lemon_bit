@@ -1141,7 +1141,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     if (
       player.deadOrBusy ||
       player.debugging ||
-      !player.controlsEnabled
+      !player.controlsEnabled ||
+      player.upgradeMode
     ) return;
 
     final mouseLeftClicked = mouseLeftDown && player.mouseLeftDownDuration == 0;
@@ -1174,7 +1175,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       return;
     }
 
-    if (mouseLeftHeld && !player.targetSet){
+    if (mouseLeftHeld && !player.targetSet && player.targetNodeIndex == null){
       player.setDestinationToMouse();
       return;
     }
