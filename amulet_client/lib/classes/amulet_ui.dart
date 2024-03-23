@@ -1197,7 +1197,7 @@ class AmuletUI {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildCardLargeHeader(child: header),
+            buildCardLargeHeader(child: header, color: borderColor),
             buildCardLargeTitle(child: title),
             buildCardLargeContent(child: content),
           ],
@@ -1654,9 +1654,9 @@ class AmuletUI {
   Widget buildCardLargeHeaderText(dynamic value) =>
       buildText(value.toString().upper, color: Colors.black54);
 
-  Widget buildCardLargeHeader({required Widget child}) =>
+  Widget buildCardLargeHeader({required Widget child, Color? color}) =>
       Container(
-        color: Colors.orange,
+        color: color ?? Colors.orange,
         alignment: Alignment.center,
         child: child,
         height: 30,
