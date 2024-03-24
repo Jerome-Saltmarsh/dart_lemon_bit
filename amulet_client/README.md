@@ -58,9 +58,9 @@ SKULLSOFT
 [new] balance items and enemies
 [new] model missing amulet items
 [new] ability punch
-[fix] ai pathfinding
 
 ## 24.03.2024
+[fix] ai pathfinding
 [new] render ai path lines
 [ref] update character action
 [new] ui show max skill level
