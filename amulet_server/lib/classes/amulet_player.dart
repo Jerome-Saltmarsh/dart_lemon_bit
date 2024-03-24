@@ -1648,6 +1648,7 @@ class AmuletPlayer extends AmuletPlayerBase {
     if (const[
       AmuletItem.Consumable_Meat,
       AmuletItem.Consumable_Sapphire,
+      AmuletItem.Consumable_Gold,
     ].contains(amuletItem)){
       return false;
     }

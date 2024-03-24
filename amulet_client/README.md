@@ -57,9 +57,12 @@ SKULLSOFT
 [new] beat the game
 [new] balance items and enemies
 [new] model missing amulet items
-[new] ability punch
+[new] improve render health bar design
+[new] model spinning sapphire gem for magic
+[new] collectable gameobject gold
 
 ## 25.03.2024
+[new] ability punch
 [fix] pickup item
 
 ## 24.03.2024

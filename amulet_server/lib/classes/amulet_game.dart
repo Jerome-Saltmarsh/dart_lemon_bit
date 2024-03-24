@@ -756,9 +756,17 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     if (target is AmuletFiend) {
 
-      if (src is AmuletPlayer){
-        src.gold += getAmuletFiendGoldValue(target);
-      }
+      // if (src is AmuletPlayer){
+      //   src.gold += getAmuletFiendGoldValue(target);
+      // }
+
+      spawnAmuletItemObjectAtPosition(
+          item: generateAmuletItemObject(
+              amuletItem: AmuletItem.Consumable_Gold,
+              level: target.level,
+          ),
+          position: target,
+      );
 
       if (randomChance(AmuletSettings.Chance_Of_Drop_Loot_Consumable)) {
            spawnConsumableAtPosition(target);
@@ -962,6 +970,10 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         player.magic += 5;
         dispatchAmuletEvent(gameObject, AmuletEvent.Sapphire_Consumed);
         remove(gameObject);
+      case AmuletItem.Consumable_Gold:
+        player.gold += gameObject.level;
+        dispatchAmuletEvent(gameObject, AmuletEvent.Consumed_Gold);
+        remove(gameObject);
         break;
       default:
         break;
@@ -1116,6 +1128,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     if (gameObject.isAmuletItem) {
       gameObject.physical = !const [
           AmuletItem.Consumable_Sapphire,
+          AmuletItem.Consumable_Gold,
           AmuletItem.Consumable_Meat
       ].contains(gameObject.amuletItem);
       gameObject.fixed = false;

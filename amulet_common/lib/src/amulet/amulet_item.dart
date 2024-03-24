@@ -397,6 +397,11 @@ enum AmuletItem {
     slotType: SlotType.Consumable,
     subType: ConsumableType.Sapphire,
   ),
+  Consumable_Gold (
+    label: 'Gold',
+    slotType: SlotType.Consumable,
+    subType: ConsumableType.Gold,
+  ),
   Special_Weapon_Frost_Wand(
       label: 'Frost Wand',
       slotType: SlotType.Weapon,

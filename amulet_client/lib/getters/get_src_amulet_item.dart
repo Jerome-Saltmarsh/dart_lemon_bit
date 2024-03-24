@@ -96,4 +96,5 @@ List<double> getSrcAmuletItem(AmuletItem amuletItem) =>
       AmuletItem.Rare_Helm_Of_Fireball => _helms_pointed_hat_black,
       AmuletItem.Rare_Helm_Of_Frostball => _helms_pointed_hat_black,
       AmuletItem.Rare_Helm_Of_Magic_Regen => _helms_pointed_hat_black,
+      AmuletItem.Consumable_Gold => const [288, 0, 32, 32],
 };
