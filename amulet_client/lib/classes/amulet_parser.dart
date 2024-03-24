@@ -108,6 +108,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Debug:
          readNetworkResponseAmuletDebug();
          break;
+       case NetworkResponseAmulet.Debug_Paths:
+         readNetworkResponseAmuletDebugPaths();
+         break;
        case NetworkResponseAmulet.Collectable_Amulet_Item_Object:
          readCollectableAmuletItemObject();
          break;
@@ -337,6 +340,19 @@ extension AmuletParser on IsometricParser {
        debugLines[i++] = readInt16();
      }
      amulet.debugLinesTotal = i ~/ 6;
+  }
+
+  void readNetworkResponseAmuletDebugPaths() {
+     final pathLines = amulet.debugPathLines;
+     var i = 0;
+     while (readBool()) {
+       final length = readUInt16();
+       i++;
+       for (var j = 0; j < length; j++){
+         pathLines[i++] = readUInt16();
+       }
+     }
+     amulet.debugPathLinesTotal = i;
   }
 
   void readPlayerDebugEnabled() =>

@@ -12,10 +12,9 @@ extension AmuletRender on Amulet {
       renderPlayerRunLine();
     }
 
-    // renderActivatedPower();
-
     if (amulet.playerDebugEnabled.value){
-      renderDebug();
+      renderDebugLines();
+      renderDebugPathLines();
     }
   }
 
@@ -100,7 +99,7 @@ extension AmuletRender on Amulet {
         radius: radius,
       );
 
-  void renderDebug() {
+  void renderDebugLines() {
 
     final total = amulet.debugLinesTotal;
     final debugLines = amulet.debugLines;
@@ -115,6 +114,22 @@ extension AmuletRender on Amulet {
            debugLines[j + 4].toDouble(),
            debugLines[j + 5].toDouble(),
        );
+    }
+  }
+
+  void renderDebugPathLines() {
+    engine.setPaintColor(Colors.purple);
+
+    final total = amulet.debugPathLinesTotal;
+    final lines = amulet.debugPathLines;
+    var i = 0;
+    while (i < total) {
+      final length = lines[i++];
+      for (var j = 0; j < length; j++){
+         final indexA = lines[i++];
+         final indexB = lines[i++];
+         render.lineBetweenIndexes(indexA, indexB);
+      }
     }
   }
 }

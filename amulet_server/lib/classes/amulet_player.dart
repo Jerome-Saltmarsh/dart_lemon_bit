@@ -247,6 +247,7 @@ class AmuletPlayer extends AmuletPlayerBase {
 
     if (debugEnabled){
       writeDebug();
+      writeDebugPaths();
     }
 
     writeAmuletPlayerAimTarget();
@@ -296,7 +297,15 @@ class AmuletPlayer extends AmuletPlayerBase {
         writePosition(character);
         writePosition(target);
     }
+    writeFalse();
+  }
+
+  void writeDebugPaths() {
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Debug_Paths);
+    final characters = game.characters;
     for (final character in characters) {
+        if (!character.pathSet) continue;
         writeTrue();
         writeCharacterPath(character);
     }

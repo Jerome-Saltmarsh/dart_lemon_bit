@@ -19,6 +19,7 @@ class NetworkResponseAmulet {
    static const Player_World_Positioned = 30;
    static const Quest_Main = 31;
    static const Debug = 32;
+   static const Debug_Paths = 33;
    static const Collectable_Amulet_Item_Object = 36;
    static const Player_Magic = 37;
    static const Player_Regen_Magic = 38;

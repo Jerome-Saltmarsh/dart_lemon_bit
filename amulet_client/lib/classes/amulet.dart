@@ -47,7 +47,9 @@ class Amulet extends Updatable with IsometricComponent  {
   var worldMapSrcs = Float32List(0);
 
   var debugLinesTotal = 0;
+  var debugPathLinesTotal = 0;
   final debugLines = Int16List(10000);
+  final debugPathLines = Uint16List(100000);
 
   var worldRow = 0;
   var worldColumn = 0;
