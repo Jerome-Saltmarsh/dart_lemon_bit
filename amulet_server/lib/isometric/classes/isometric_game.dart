@@ -1490,11 +1490,14 @@ abstract class IsometricGame<T extends IsometricPlayer> {
        }
     }
 
+    if (character.atRunDestination) {
+      character.setDestinationToCurrentPosition();
+    }
+
     updateCharacterTarget(character);
     updateCharacterTargetPerceptible(character);
     updateColliderPhysics(character);
     updateCharacterAction(character);
-    // updateCharacterPath(character);
     updateCharacterState(character);
     character.update();
   }

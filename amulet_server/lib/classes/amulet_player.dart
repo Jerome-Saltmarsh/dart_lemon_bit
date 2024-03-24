@@ -1713,11 +1713,6 @@ class AmuletPlayer extends AmuletPlayerBase {
   void endUpgradeMode() {
     upgradeMode = false;
   }
-
-  @override
-  void setCharacterStateRunning() {
-    super.setCharacterStateRunning();
-  }
 }
 
 String buildResistances(String text, String name, double resistance){

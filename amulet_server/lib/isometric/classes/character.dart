@@ -383,9 +383,6 @@ class Character extends Collider {
     if (atRunDestination) return;
     faceRunPosition();
     setCharacterStateRunning();
-    if (atRunDestination) {
-      setDestinationToCurrentPosition();
-    }
   }
 
   void faceRunPosition() {
