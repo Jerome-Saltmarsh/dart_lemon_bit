@@ -2473,31 +2473,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     character.setCharacterStateRunning();
   }
 
-  bool characterShouldRunToTarget(Character character) {
-    final target = character.target;
-    if (target == null) return false;
-
-    if (!character.pathFindingEnabled) {
-      if (character.isEnemy(target)) {
-        return !character.withinWeaponRange(target);
-      }
-      if (character.isAlly(target)){
-        return !character.withinInteractRange(target);
-      }
-      return !character.withinRadiusPosition(target, 7);
-    }
-
-    if (scene.isPerceptible(character, target)) {
-      if (character.isEnemy(target)) {
-        return !character.withinWeaponRange(target);
-      }
-      if (character.isAlly(target)){
-        return !character.withinInteractRange(target);
-      }
-    }
-    return false;
-  }
-
   bool pursueGoalInteractWithTarget(Character character) {
     final target = character.target;
 

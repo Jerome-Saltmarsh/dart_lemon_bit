@@ -402,7 +402,7 @@ class Scene {
     var positionX = a.x;
     var positionY = a.y;
     var positionZ = a.z;
-    var angle = a.getAngle(b);
+    var angle = b.getAngle(a);
 
     final distance = a.getDistance(b);
 
