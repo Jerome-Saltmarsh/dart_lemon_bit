@@ -59,12 +59,12 @@ SKULLSOFT
 [new] model missing amulet items
 [new] improve render health bar design
 [new] model spinning sapphire gem for magic
-[fix] character turns around on arrive at destination 
 [new] collectable gameobject gold
 
 ## 25.03.2024
 [new] ability punch
 [fix] pickup item
+[fix] character turns around on arrive at destination
 
 ## 24.03.2024
 [fix] ai pathfinding
