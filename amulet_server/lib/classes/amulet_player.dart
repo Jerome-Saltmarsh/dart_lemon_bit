@@ -293,6 +293,7 @@ class AmuletPlayer extends AmuletPlayerBase {
         final target = character.target;
         if (target == null) continue;
         writeTrue();
+        writeBool(character.targetPerceptible);
         writePosition(character);
         writePosition(target);
     }

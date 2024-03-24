@@ -331,7 +331,9 @@ extension AmuletParser on IsometricParser {
   void readNetworkResponseAmuletDebug() {
      final debugLines = amulet.debugLines;
      var i = 0;
+     var j = 0;
      while (readBool()) {
+       amulet.debugLinePerceptable[j++] = readBool();
        debugLines[i++] = readInt16();
        debugLines[i++] = readInt16();
        debugLines[i++] = readInt16();

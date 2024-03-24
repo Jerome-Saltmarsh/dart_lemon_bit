@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 import 'dart:ui';
 
 import 'package:amulet_client/components/isometric_component.dart';
+import 'package:amulet_client/components/render/classes/bool_list.dart';
 import 'package:amulet_client/components/updatable.dart';
 import 'package:amulet_client/enums/node_visibility.dart';
 import 'package:amulet_client/ui/isometric_colors.dart';
@@ -48,6 +49,7 @@ class Amulet extends Updatable with IsometricComponent  {
 
   var debugLinesTotal = 0;
   var debugPathLinesTotal = 0;
+  final debugLinePerceptable = BoolList(1000);
   final debugLines = Int16List(10000);
   final debugPathLines = Uint16List(100000);
 

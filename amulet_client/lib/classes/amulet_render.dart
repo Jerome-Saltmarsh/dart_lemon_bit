@@ -103,9 +103,13 @@ extension AmuletRender on Amulet {
 
     final total = amulet.debugLinesTotal;
     final debugLines = amulet.debugLines;
-    engine.setPaintColorWhite();
     for (var i = 0; i < total; i++) {
        final j = i * 6;
+       if (debugLinePerceptable[i]){
+         engine.setPaintColor(Colors.green);
+       } else {
+         engine.setPaintColor(Colors.red);
+       }
        render.line(
            debugLines[j + 0].toDouble(),
            debugLines[j + 1].toDouble(),

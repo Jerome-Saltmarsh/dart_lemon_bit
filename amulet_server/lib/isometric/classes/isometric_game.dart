@@ -2342,7 +2342,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       return;
     }
 
-    if (pursueGoalForceAttack(character)) {
+    if (pursueGoalPerformAttack(character)) {
       return;
     }
 
@@ -2377,8 +2377,23 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
   }
 
-  bool pursueGoalForceAttack(Character character) {
-    if (!character.forceAttack) return false;
+  bool pursueGoalPerformAttack(Character character) {
+
+    if (!character.forceAttack) {
+
+      if (character.target == null) {
+        return false;
+      }
+
+      if (!character.targetWithinAttackRange){
+        return false;
+      }
+
+      if (character.pathFindingEnabled && !character.targetPerceptible) {
+        return false;
+      }
+    }
+
     character.forceAttack = false;
     character.faceTarget();
     character.attack();
@@ -2412,11 +2427,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
        return false;
      }
 
-     if (performingAttackTargetStrike(character)){
-       return true;
-     }
-
-     if (performingRunTowardsEnemy(character)){
+     if (pursueGoalRunTowardsTarget(character)){
        return true;
      }
 
@@ -2425,19 +2436,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
      }
 
      return false;
-  }
-
-  bool performingAttackTargetStrike(Character character) {
-    if (
-      character.target != null &&
-      character.targetWithinAttackRange &&
-      (!character.pathFindingEnabled || character.targetPerceptible)
-    ){
-      character.attackTargetEnemy(this);
-      return true;
-    }
-
-    return false;
   }
 
   bool pursueGoalFollowPath(Character character) {
@@ -2555,23 +2553,9 @@ abstract class IsometricGame<T extends IsometricPlayer> {
      character.targetPerceptible = scene.isPerceptible(character, target);
   }
 
-  bool performingRunTowardsEnemy(Character character) {
-    if (
-       (!character.pathFindingEnabled || character.targetPerceptible) &&
-       !character.targetWithinAttackRange) {
-      character.runStraightToTarget();
-      return true;
-    }
-    return false;
-  }
-
   bool characterConditionRunTowardsCollectTarget(Character character) =>
        (!character.pathFindingEnabled || character.targetPerceptible) &&
        !character.targetWithinCollectRange;
-
-  void actionCharacterRunTowardsEnemy(Character character) {
-    character.runStraightToTarget();
-  }
 
   bool pursueGoalRunTowardsTarget(Character character) {
 
