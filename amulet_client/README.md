@@ -61,6 +61,7 @@ SKULLSOFT
 [fix] ai pathfinding
 
 ## 24.03.2024
+[new] render ai path lines
 [ref] update character action
 [new] ui show max skill level
 
