@@ -969,23 +969,12 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       return;
     }
 
-    switch (amuletItem) {
-      case AmuletItem.Consumable_Meat:
-        player.health += 5;
-        player.writePlayerEvent(PlayerEvent.Eat);
-        remove(gameObject);
-        break;
-      case AmuletItem.Consumable_Sapphire:
-        player.magic += 5;
-        dispatchAmuletEvent(gameObject, AmuletEvent.Sapphire_Consumed);
-        remove(gameObject);
-      case AmuletItem.Consumable_Gold:
-        player.gold += gameObject.level;
-        dispatchAmuletEvent(gameObject, AmuletEvent.Consumed_Gold);
-        remove(gameObject);
-        break;
-      default:
-        break;
+    if (const [
+      AmuletItem.Consumable_Meat,
+      AmuletItem.Consumable_Sapphire,
+      AmuletItem.Consumable_Gold,
+    ].contains(amuletItem)) {
+      player.acquireGameObject(gameObject);
     }
   }
 
@@ -1047,7 +1036,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
      if (equipped == null) {
        onAmuletPlayerPickupGameObject(player, gameObject);
-       // player.equipAmuletItemObject(value: amuletItemObject);
        return;
      }
      player.setCollectableGameObject(gameObject);
@@ -1143,19 +1131,21 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     }
 
     if (gameObject.isAmuletItem) {
+
       gameObject.physical = !const [
           AmuletItem.Consumable_Sapphire,
           AmuletItem.Consumable_Gold,
           AmuletItem.Consumable_Meat
       ].contains(gameObject.amuletItem);
+
+      gameObject.interactable = true;
+      gameObject.collidable = true;
+      gameObject.hitable = false;
       gameObject.fixed = false;
       gameObject.healthMax = 0;
       gameObject.health = 0;
-      gameObject.interactable = true;
       gameObject.dirty = true;
       gameObject.deactivationTimer = gameObjectDeactivationTimer;
-      gameObject.hitable = false;
-      gameObject.collidable = true;
     }
 
   }

@@ -41,6 +41,7 @@ abstract class AmuletPlayerBase extends IsometricPlayer {
   var cacheRegenHealth = 0;
   var cacheRunSpeed = 0.0;
   var cacheAgility = 0;
+  var cacheSufficientMagic = false;
   var cacheWeaponDamageMin = 0;
   var cacheWeaponDamageMax = 0;
   var cacheWeaponRange = 0;
@@ -323,33 +324,41 @@ class AmuletPlayer extends AmuletPlayerBase {
       return;
     }
 
-    final amuletItemObject = mapGameObjectToAmuletItemObject(gameObject);
-
-    if (amuletItemObject == null) {
-      writeGameError(GameError.Invalid_GameObject_State);
-      return;
-    }
-
-    if (amuletItem == AmuletItem.Consumable_Potion_Magic){
-       if (potionsMagic >= maxPotions) {
-         writeGameError(GameError.Potions_Magic_Full);
-         return;
-       }
-       setCharacterStateChanging();
-       amuletGame.remove(gameObject);
-       potionsMagic++;
-       return;
-    }
-
-    if (amuletItem == AmuletItem.Consumable_Potion_Health){
-       if (potionsHealth >= maxPotions) {
-         writeGameError(GameError.Potions_Health_Full);
-         return;
-       }
-       setCharacterStateChanging();
-       amuletGame.remove(gameObject);
-       potionsHealth++;
-       return;
+    switch (amuletItem) {
+      case AmuletItem.Consumable_Meat:
+        health += 5;
+        writePlayerEvent(PlayerEvent.Eat);
+        amuletGame.remove(gameObject);
+        break;
+      case AmuletItem.Consumable_Sapphire:
+        magic += 5;
+        amuletGame.dispatchAmuletEvent(gameObject, AmuletEvent.Sapphire_Consumed);
+        amuletGame.remove(gameObject);
+      case AmuletItem.Consumable_Gold:
+        gold += gameObject.level;
+        amuletGame.dispatchAmuletEvent(gameObject, AmuletEvent.Consumed_Gold);
+        amuletGame.remove(gameObject);
+        break;
+      case AmuletItem.Consumable_Potion_Magic:
+        if (potionsMagic >= maxPotions) {
+          writeGameError(GameError.Potions_Magic_Full);
+          return;
+        }
+        setCharacterStateChanging();
+        amuletGame.remove(gameObject);
+        potionsMagic++;
+        break;
+      case AmuletItem.Consumable_Potion_Health:
+        if (potionsHealth >= maxPotions) {
+          writeGameError(GameError.Potions_Health_Full);
+          return;
+        }
+        setCharacterStateChanging();
+        amuletGame.remove(gameObject);
+        potionsHealth++;
+        break;
+      default:
+        break;
     }
   }
 
@@ -1636,26 +1645,24 @@ class AmuletPlayer extends AmuletPlayerBase {
      return skillType.enabledUnarmed;
   }
 
-  var cacheSufficientMagic = false;
-
-  @override
-  bool canAimAt(GameObject gameObject) {
-    final amuletItem = gameObject.amuletItem;
-
-    if (amuletItem == null){
-      return super.canAimAt(gameObject);
-    }
-
-    if (const[
-      AmuletItem.Consumable_Meat,
-      AmuletItem.Consumable_Sapphire,
-      AmuletItem.Consumable_Gold,
-    ].contains(amuletItem)){
-      return false;
-    }
-
-    return super.canAimAt(gameObject);
-  }
+  // @override
+  // bool canAimAt(GameObject gameObject) {
+  //   final amuletItem = gameObject.amuletItem;
+  //
+  //   if (amuletItem == null){
+  //     return super.canAimAt(gameObject);
+  //   }
+  //
+  //   // if (const[
+  //   //   AmuletItem.Consumable_Meat,
+  //   //   AmuletItem.Consumable_Sapphire,
+  //   //   AmuletItem.Consumable_Gold,
+  //   // ].contains(amuletItem)){
+  //   //   return true;
+  //   // }
+  //
+  //   return super.canAimAt(gameObject);
+  // }
 
   void writeSufficientMagicForSkillRight() {
     final skillRightCost = skillTypeRight.magicCost;
