@@ -413,5 +413,9 @@ enum SkillType {
   static double getDamagePunch(int level){
     return level.toDouble();
   }
+
+  static double getRangePunch(int level){
+    return 50.0;
+  }
 }
 

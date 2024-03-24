@@ -392,9 +392,11 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         break;
       case SkillType.Fire_Arrow:
         characterPerformSkillTypeFireArrow(character, level);
+      case SkillType.Punch:
+        characterPerformSkillTypePunch(character, level);
         break;
       default:
-        return;
+        throw Exception('characterPerformSkillType($skillType)');
     }
   }
 
@@ -578,6 +580,18 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       angle: character.angle,
     );
   }
+
+  void characterPerformSkillTypePunch(Character character, int level) =>
+      applyHitMelee(
+        character: character,
+        damageType: DamageType.Bludgeon,
+        range: SkillType.getRangePunch(level),
+        damage: SkillType.getDamagePunch(level),
+        areaDamage: getCharacterAreaDamage(character),
+        ailmentDuration: 0,
+        ailmentDamage: 0,
+        maxHitRadian: pi,
+      );
 
   void characterPerformSkillTypeFireArrow(Character character, int level) {
 

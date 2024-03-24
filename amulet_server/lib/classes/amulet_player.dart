@@ -1183,17 +1183,7 @@ class AmuletPlayer extends AmuletPlayerBase {
 
   double? get randomEquippedWeaponDamage {
 
-    final equippedWeapon = this.equippedWeapon;
-    if (equippedWeapon == null) {
-      return null;
-    }
-
-    final attackSkill = equippedWeapon.amuletItem.attackSkill;
-    if (attackSkill == null) {
-      assert(false);
-      return null;
-    }
-
+    final attackSkill = equippedWeapon?.amuletItem.attackSkill ?? SkillType.Punch;
     final attackSkillLevel = getSkillTypeLevel(attackSkill);
 
     if (attackSkillLevel <= 0){
@@ -1211,31 +1201,22 @@ class AmuletPlayer extends AmuletPlayerBase {
     return randomBetween(damageMin, damageMax);
   }
 
-  int get equippedWeaponLevel => equippedWeapon?.level ?? 0;
-
-  double getSkillTypeRadius(SkillType skillType) {
-     switch (skillType){
-       case SkillType.Explode:
-         return 50;
-       default:
-         return 0;
-     }
-  }
-
   int getSkillTypeMagicCost(SkillType skillType) => skillType.magicCost;
 
-  double? get equippedWeaponRange {
-    return equippedWeapon?.amuletItem.getRange(
-        getSkillTypeLevel(SkillType.Attack_Range));
-  }
+  double get equippedWeaponRange =>
+      equippedWeapon?.amuletItem.getRange(
+        getSkillTypeLevel(SkillType.Attack_Range)
+      )
+          ?? SkillType.getRangePunch(getSkillTypeLevel(SkillType.Punch));
 
   int getSkillTypeLevel(SkillType skillType){
 
-    if (skillType == SkillType.Punch){
-      return 1;
+    var total = 0;
+
+    if (skillType == SkillType.Punch && equippedWeapon == null){
+      total = 1;
     }
 
-     var total = 0;
      total += equippedWeapon?.getSkillLevel(skillType) ?? 0;
      total += equippedHelm?.getSkillLevel(skillType) ?? 0;
      total += equippedArmor?.getSkillLevel(skillType) ?? 0;
