@@ -347,7 +347,7 @@ extension AmuletParser on IsometricParser {
      var i = 0;
      while (readBool()) {
        final length = readUInt16();
-       i++;
+       pathLines[i++] = length;
        for (var j = 0; j < length; j++){
          pathLines[i++] = readUInt16();
        }

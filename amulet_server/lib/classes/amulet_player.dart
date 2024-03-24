@@ -306,6 +306,7 @@ class AmuletPlayer extends AmuletPlayerBase {
     final characters = game.characters;
     for (final character in characters) {
         if (!character.pathSet) continue;
+        if (character.pathStart <= 0) continue;
         writeTrue();
         writeCharacterPath(character);
     }
