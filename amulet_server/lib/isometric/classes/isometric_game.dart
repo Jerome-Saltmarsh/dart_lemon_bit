@@ -2439,13 +2439,19 @@ abstract class IsometricGame<T extends IsometricPlayer> {
        return false;
      }
 
+     if (character.targetWithinAttackRange){
+        if (character.targetPerceptible || !character.pathFindingEnabled){
+          character.faceTarget();
+          character.attack();
+          return true;
+        }
+     }
+
      if (pursueGoalRunTowardsTarget(character)){
         return true;
      }
 
-     character.faceTarget();
-     character.attack();
-     return true;
+      return false;
   }
 
   bool pursueGoalFollowPath(Character character) {
@@ -2506,12 +2512,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       return false;
     }
 
-    // if (character.interacting) {
-    //   character.setCharacterStateIdle();
-    //   character.setDestinationToCurrentPosition();
-    //   return;
-    // }
-
     if (character.withinInteractRange(target)) {
       handleInteraction(character, target);
       character.setCharacterStateIdle();
@@ -2520,10 +2520,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
 
     if (pursueGoalRunTowardsTarget(character)){
-      return true;
-    }
-
-    if (pursueGoalFollowPathToTarget(character)){
       return true;
     }
 
@@ -2560,9 +2556,27 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       return pursueGoalFollowPathToTarget(character);
     }
 
-    if (character.targetWithinAttackRange){
+    character.runStraightToTarget();
+    return true;
+  }
+
+  bool pursueGoalFollowPathToTarget2(Character character) {
+
+    if (character.target == null) {
       return false;
     }
+
+    if (character.targetPerceptible){
+      return false;
+    }
+
+    if (!character.targetPerceptible && character.pathFindingEnabled) {
+      return pursueGoalFollowPathToTarget(character);
+    }
+
+    // if (character.targetWithinAttackRange){
+    //   return false;
+    // }
 
     character.runStraightToTarget();
     return true;
@@ -2584,6 +2598,15 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   }
 
   bool pursueGoalFollowPathToTarget(Character character) {
+
+    if (!character.pathFindingEnabled){
+      return false;
+    }
+
+    if (character.targetPerceptible){
+      return false;
+    }
+
     final target = character.target;
 
     if (target == null) {
