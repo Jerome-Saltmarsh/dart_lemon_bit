@@ -2346,7 +2346,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       return;
     }
 
-    if (pursueGoalAttackTarget(character)) {
+    if (pursueGoalTarget(character)){
       return;
     }
 
@@ -2354,16 +2354,11 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       return;
     }
 
-    if (pursueGoalInteractWithTarget(character)){
-      return;
-    }
-
     if (pursueGoalFollowPath(character)){
       return;
     }
 
-    if (characterConditionRunToDestination(character)) {
-      characterActionRunToDestination(character);
+    if (pursueGoalRunToDestination(character)) {
       return;
     }
 
@@ -2438,6 +2433,24 @@ abstract class IsometricGame<T extends IsometricPlayer> {
      return false;
   }
 
+  bool pursueGoalTarget(Character character) {
+     final target = character.target;
+
+     if (target == null) {
+       return false;
+     }
+
+     if (pursueGoalAttackTarget(character)) {
+       return true;
+     }
+
+     if (pursueGoalInteractWithTarget(character)){
+       return true;
+     }
+
+     return false;
+  }
+
   bool pursueGoalFollowPath(Character character) {
 
     if (!character.pathFindingEnabled){
@@ -2465,8 +2478,16 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     );
   }
 
-  bool characterConditionRunToDestination(Character character) =>
-      !character.arrivedAtDestination;
+  bool pursueGoalRunToDestination(Character character) {
+
+    if (character.arrivedAtDestination){
+      return false;
+    }
+
+    character.faceRunPosition();
+    character.setCharacterStateRunning();
+    return true;
+  }
 
   void characterActionRunToDestination(Character character) {
     character.faceRunPosition();

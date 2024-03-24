@@ -59,6 +59,9 @@ SKULLSOFT
 [new] model missing amulet items
 [new] ability punch
 
+## 25.03.2024
+[fix] pickup item
+
 ## 24.03.2024
 [fix] ai pathfinding
 [new] render ai path lines
