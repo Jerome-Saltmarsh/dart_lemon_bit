@@ -1040,6 +1040,16 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
      if (amuletItemObject == null){ // fix
        return;
      }
+
+     final equipped = player.getEquippedAmuletItem(
+         slotType: amuletItemObject.amuletItem.slotType
+     );
+
+     if (equipped == null) {
+       onAmuletPlayerPickupGameObject(player, gameObject);
+       // player.equipAmuletItemObject(value: amuletItemObject);
+       return;
+     }
      player.setCollectableGameObject(gameObject);
   }
 
@@ -1061,8 +1071,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
      if (player.acquireAmuletItemObject(amuletItemObject)){
        remove(gameObject);
      }
-
-     player.setCollectableGameObject(null);
   }
 
   List<int> getMarkTypes(int markType) =>

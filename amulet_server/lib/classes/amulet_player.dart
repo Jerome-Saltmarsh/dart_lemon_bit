@@ -360,8 +360,8 @@ class AmuletPlayer extends AmuletPlayerBase {
     }
     setDestinationToCurrentPosition();
     clearPath();
-    equipAmuletItemObject(value: amuletItemObject);
-    return true;
+    setCollectableGameObject(null);
+    return equipAmuletItemObject(value: amuletItemObject);
   }
 
   @override
@@ -606,7 +606,7 @@ class AmuletPlayer extends AmuletPlayerBase {
     writeDouble(castePositionZ);
   }
 
-  void equipAmuletItemObject({
+  bool equipAmuletItemObject({
     required AmuletItemObject value,
     bool force = false,
   }) {
@@ -614,7 +614,7 @@ class AmuletPlayer extends AmuletPlayerBase {
 
     if (amuletItem.isConsumable) {
       writeGameError(GameError.Cannot_Be_Equipped);
-      return;
+      return false;
     }
 
     final currentlyEquipped = getEquippedAmuletItem(slotType: amuletItem.slotType);
@@ -648,6 +648,7 @@ class AmuletPlayer extends AmuletPlayerBase {
     }
 
     notifyEquipmentDirty();
+    return true;
   }
 
   @override
