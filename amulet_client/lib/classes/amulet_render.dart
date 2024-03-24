@@ -126,8 +126,9 @@ extension AmuletRender on Amulet {
     while (i < total) {
       final length = lines[i++];
       for (var j = 0; j < length; j++){
-         final indexA = lines[i++];
-         final indexB = lines[i++];
+         final indexA = lines[i + 0];
+         final indexB = lines[i + 1];
+         i++;
          render.lineBetweenIndexes(indexA, indexB);
       }
     }
