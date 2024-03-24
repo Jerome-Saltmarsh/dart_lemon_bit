@@ -908,7 +908,7 @@ class IsometricParticles with IsometricComponent implements Updatable {
         rotation: randomAngle(),
         speed: randomBetween(0, 2),
         weight: 0,
-        scaleV: -0.1,
+        scaleV: -0.05,
         duration: 25,
         scale: 1,
       )

@@ -61,10 +61,10 @@ SKULLSOFT
 [new] model spinning sapphire gem for magic
 [fix] character turns around on arrive at destination 
 [new] collectable gameobject gold
+[fix] pickup item
 
 ## 25.03.2024
 [new] ability punch
-[fix] pickup item
 
 ## 24.03.2024
 [fix] ai pathfinding
