@@ -24,8 +24,6 @@ class NetworkResponsePlayer {
   static const Id = 25;
   static const Active = 26;
   static const Team = 27;
-  static const Destination = 28;
-  static const Arrived_At_Destination = 29;
   static const Debugging = 31;
   static const Cache_Cleared = 32;
   static const Position_Absolute = 33;

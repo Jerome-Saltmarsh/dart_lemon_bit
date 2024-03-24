@@ -8,29 +8,10 @@ extension AmuletRender on Amulet {
   void renderAmulet(Canvas canvas, Size size) {
     renderPlayerHoverItemRange();
 
-    if (options.renderRunLine){
-      renderPlayerRunLine();
-    }
-
     if (amulet.playerDebugEnabled.value){
       renderDebugLines();
       renderDebugPathLines();
     }
-  }
-
-  void renderPlayerRunLine({Color color = Colors.purple}) {
-    if (player.arrivedAtDestination.value)
-      return;
-
-    engine.color = color;
-    render.line(
-      player.x,
-      player.y,
-      player.z,
-      player.runX,
-      player.runY,
-      player.runZ,
-    );
   }
 
   void renderPlayerHoverItemRange() {

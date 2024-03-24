@@ -17,9 +17,6 @@ class IsometricPlayer with IsometricComponent {
   var indexRow = 0;
   var indexColumn = 0;
   var nodeIndex = 0;
-  var runX = 0.0;
-  var runY = 0.0;
-  var runZ = 0.0;
   var areaNodeIndex = 0;
   var characterState = 0;
 
@@ -27,7 +24,6 @@ class IsometricPlayer with IsometricComponent {
   // final aimNodeType = Watch<int?>(null);
   final controlsEnabled = Watch(true);
   final name = Watch('');
-  final arrivedAtDestination = Watch(false);
   final aimTargetSet = Watch(false);
   final aimTargetName = Watch('');
   final aimTargetHealthPercentage = Watch(0.0);
@@ -222,14 +218,6 @@ class IsometricPlayer with IsometricComponent {
         break;
       case NetworkResponsePlayer.Team:
         player.team.value = parser.readByte();
-        break;
-      case NetworkResponsePlayer.Destination:
-        player.runX = parser.readDouble();
-        player.runY = parser.readDouble();
-        player.runZ = parser.readDouble();
-        break;
-      case NetworkResponsePlayer.Arrived_At_Destination:
-        player.arrivedAtDestination.value = parser.readBool();
         break;
       case NetworkResponsePlayer.Debugging:
         final value = parser.readBool();

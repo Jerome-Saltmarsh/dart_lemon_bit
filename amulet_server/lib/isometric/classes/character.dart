@@ -76,7 +76,7 @@ class Character extends Collider {
   var pathTargetIndex = -1;
   var pathTargetIndexPrevious = -1;
   var forceAttack = false;
-  var arrivedAtDestination = false;
+  // var arrivedAtDestination = false;
   // var runToDestinationEnabled = true;
   var pathFindingEnabled = true;
   var helmType = HelmType.None;
@@ -339,14 +339,18 @@ class Character extends Collider {
 
     updateAilments();
 
-    if (
-      // runToDestinationEnabled &&
-      !arrivedAtDestination &&
-      withinRadiusXYZ(runX, runY, runZ, 8)
-    ){
-       setDestinationToCurrentPosition();
-    }
+    // if (
+    //   !arrivedAtDestination &&
+    //   withinRadiusOfRunDestination(8)
+    // ){
+    //    setDestinationToCurrentPosition();
+    // }
   }
+
+  bool get atRunDestination => withinRadiusOfRunDestination(8);
+
+  bool withinRadiusOfRunDestination(double radius) =>
+      withinRadiusXYZ(runX, runY, runZ, radius);
 
   void updateAilments() {
      if (conditionColdDuration > 0) {
@@ -419,7 +423,7 @@ class Character extends Collider {
   }
 
   void setDestinationToCurrentPosition(){
-    arrivedAtDestination = true;
+    setRunDestination(x, y, z);
   }
 
   void setRunDestinationToStart() =>
@@ -452,10 +456,10 @@ class Character extends Collider {
   }
 
   void setRunDestination(double x, double y, double z) {
+    final runPosition = this.runPosition;
     runPosition.x = x;
     runPosition.y = y;
     runPosition.z = z;
-    arrivedAtDestination = false;
   }
 
   void clearAction(){

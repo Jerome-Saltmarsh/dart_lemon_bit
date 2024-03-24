@@ -101,7 +101,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     player.aimTarget = null;
     player.target = null;
     player.aimNodeIndex = null;
-    player.arrivedAtDestination = true;
     player.clearVelocity();
     player.setDestinationToCurrentPosition();
     if (players.remove(player)) {
@@ -2480,7 +2479,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   bool pursueGoalRunToDestination(Character character) {
 
-    if (character.arrivedAtDestination){
+    if (character.atRunDestination){
       return false;
     }
 

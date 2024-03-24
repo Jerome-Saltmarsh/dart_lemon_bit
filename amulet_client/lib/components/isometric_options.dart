@@ -19,7 +19,6 @@ class IsometricOptions with IsometricComponent implements Updatable {
   var charactersEffectParticles = false;
   var renderWindVelocity = false;
   var renderCameraTargets = false;
-  var renderRunLine = false;
   var renderVisibilityBeams = false;
   var renderHeightMap = false;
   var renderCharacterAnimationFrame = false;

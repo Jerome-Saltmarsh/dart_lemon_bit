@@ -707,11 +707,6 @@ extension isometricDebugUI on IsometricDebug {
              value: () => options.renderHeightMap,
           ),
           buildRowToggle(
-             text: 'render run line',
-             action: () => options.renderRunLine = !options.renderRunLine,
-             value: () => options.renderRunLine,
-          ),
-          buildRowToggle(
              text: 'render visibility beams',
              action: () => options.renderVisibilityBeams = !options.renderVisibilityBeams,
              value: () => options.renderVisibilityBeams,

@@ -112,16 +112,6 @@ class IsometricPlayer extends Character with ByteWriter {
   bool get debugging => _debugging;
 
   @override
-  set arrivedAtDestination(bool value){
-    if (super.arrivedAtDestination == value) {
-      return;
-    }
-
-    super.arrivedAtDestination = value;
-    writePlayerArrivedAtDestination();
-  }
-
-  @override
   set maxHealth(double value){
     if (maxHealth == value) return;
     super.maxHealth = value;
@@ -354,7 +344,7 @@ class IsometricPlayer extends Character with ByteWriter {
     writePlayerTargetPosition();
     writePlayerAimTargetPosition();
     writePlayerAimTargetAction();
-    writePlayerDestination();
+    // writePlayerDestination();
     writePlayerCharacterState();
     // writeSelectedCollider();
     writeCharacters();
@@ -586,24 +576,6 @@ class IsometricPlayer extends Character with ByteWriter {
     writeByte(NetworkResponse.Player);
     writeByte(NetworkResponsePlayer.Target_Position);
     writeIsometricPosition(target);
-  }
-
-  void writePlayerDestination(){
-    if (arrivedAtDestination) {
-      return;
-    }
-
-    writeByte(NetworkResponse.Player);
-    writeByte(NetworkResponsePlayer.Destination);
-    writeDouble(runX);
-    writeDouble(runY);
-    writeDouble(runZ);
-  }
-
-  void writePlayerArrivedAtDestination(){
-    writeByte(NetworkResponse.Player);
-    writeByte(NetworkResponsePlayer.Arrived_At_Destination);
-    writeBool(arrivedAtDestination);
   }
 
   void writePlayerAimTargetPosition() {
@@ -1071,7 +1043,8 @@ class IsometricPlayer extends Character with ByteWriter {
       writeUInt16(0); // TODO
       writeBool(character.autoTarget);
       writeBool(character.pathFindingEnabled);
-      writeBool(character.arrivedAtDestination);
+      // writeBool(character.arrivedAtDestination);
+      writeBool(false);
 
       final selectedCharacterTarget = character.target;
       if (selectedCharacterTarget == null){

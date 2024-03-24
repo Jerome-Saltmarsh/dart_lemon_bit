@@ -1731,11 +1731,6 @@ class AmuletPlayer extends AmuletPlayerBase {
   void setCharacterStateRunning() {
     super.setCharacterStateRunning();
   }
-
-  @override
-  set arrivedAtDestination(bool value) {
-    super.arrivedAtDestination = value;
-  }
 }
 
 String buildResistances(String text, String name, double resistance){

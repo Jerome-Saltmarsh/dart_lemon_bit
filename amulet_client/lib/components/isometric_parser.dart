@@ -3,7 +3,6 @@ import 'package:amulet_common/src.dart';
 import 'package:amulet_client/classes/item_slot.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:lemon_bit/src.dart';
-import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_lang/src.dart';
 import 'package:lemon_math/src.dart';
 import 'package:lemon_watch/src.dart';
