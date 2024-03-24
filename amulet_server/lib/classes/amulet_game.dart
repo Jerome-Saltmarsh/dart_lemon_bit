@@ -871,6 +871,15 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       );
   }
 
+  @override
+  void onGameObjectRemoved(GameObject gameObject) {
+    final amuletItem = gameObject.amuletItem;
+    if (amuletItem == null) return;
+    dispatchAmuletEvent(gameObject, AmuletEvent.Amulet_Object_Removed);
+    dispatchUInt16(amuletItem.index);
+  }
+
+
   ItemQuality? getLootItemQuality(Collider collider){
      if (randomChance(AmuletSettings.Chance_Of_Drop_Loot_Rare)){
        return ItemQuality.Rare;

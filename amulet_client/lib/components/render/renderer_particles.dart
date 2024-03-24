@@ -362,6 +362,9 @@ class RendererParticles extends RenderGroup {
             scale: particle.scale,
           );
           break;
+        case ParticleType.Gold:
+          renderParticleGold(particle);
+          break;
         case ParticleType.Shadow:
           engine.renderSprite(
               image: images.atlas_particles,
@@ -472,5 +475,14 @@ class RendererParticles extends RenderGroup {
       color: color,
     );
     engine.setBlendModeDstATop();
+  }
+
+  void renderParticleGold(Particle particle) {
+    renderModulateSquare(
+      dstX: particle.renderX,
+      dstY: particle.renderY,
+      color: Palette.butter_0.value,
+      scale: 1.0,
+    );
   }
 }

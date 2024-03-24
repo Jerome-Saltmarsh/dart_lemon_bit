@@ -893,6 +893,29 @@ class IsometricParticles with IsometricComponent implements Updatable {
         ..blownByWind = true
   ;
 
+  Particle spawnParticleGold(
+    double x,
+    double y,
+    double z,
+  ) =>
+      spawnParticle(
+        particleType: ParticleType.Gold,
+        x: x,
+        y: y,
+        z: z,
+        zv: 0.6,
+        angle: 0,
+        rotation: randomAngle(),
+        speed: randomBetween(0, 1),
+        weight: 0,
+        scaleV: -(1.0 / Water_Duration),
+        duration: Water_Duration,
+        scale: 1,
+      )
+        ..emitsLight = false
+        ..blownByWind = true
+  ;
+
   Particle emitIce({
     required double x,
     required double y,

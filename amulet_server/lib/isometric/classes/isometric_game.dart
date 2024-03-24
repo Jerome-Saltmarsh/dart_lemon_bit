@@ -1290,7 +1290,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
 
     if (instance is GameObject) {
-      gameObjects.remove(instance);
+
       for (final player in players) {
 
         if (player.editState.selectedGameObject == instance){
@@ -1298,6 +1298,9 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         }
 
         player.writeGameObjectDeleted(instance);
+      }
+      if (gameObjects.remove(instance)) {
+        onGameObjectRemoved(instance);
       }
       return;
     }
@@ -1310,6 +1313,10 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
 
     throw Exception();
+  }
+
+  void onGameObjectRemoved(GameObject gameObject){
+
   }
 
   void clearTarget(Position position){

@@ -572,6 +572,34 @@ class Amulet extends Updatable with IsometricComponent  {
             );
           }
           break;
+        case AmuletEvent.Consumed_Gold:
+          audio.play(audio.coins, x, y, z);
+          break;
+        case AmuletEvent.Amulet_Object_Removed:
+          final amuletItemIndex = parser.readUInt16(); // TODO ILLEGAL REFERENCE 'PARSER'
+          final amuletItem = AmuletItem.values.tryGet(amuletItemIndex);
+          if (amuletItem == null) return;
+
+          switch (amuletItem){
+            case AmuletItem.Consumable_Gold:
+              for (var i = 0; i < 5; i++){
+                particles.spawnParticleGold(x, y, z);
+              }
+              break;
+            case AmuletItem.Consumable_Sapphire:
+              for (var i = 0; i < 5; i++){
+                particles.spawnParticleMagic(x, y, z);
+              }
+              break;
+            case AmuletItem.Consumable_Meat:
+              for (var i = 0; i < 5; i++){
+                particles.spawnParticleHealth(x, y, z);
+              }
+              break;
+            default:
+              break;
+          }
+          break;
       }
   }
 
