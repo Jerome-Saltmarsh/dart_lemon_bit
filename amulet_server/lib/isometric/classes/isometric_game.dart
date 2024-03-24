@@ -2467,7 +2467,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
 
     characterSetDestinationToPathNodeIndex(character);
-    characterActionRunToDestination(character);
+    character.runToDestination();
     return true;
   }
 
@@ -2486,15 +2486,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     if (character.atRunDestination){
       return false;
     }
-
-    character.faceRunPosition();
-    character.setCharacterStateRunning();
+    character.runToDestination();
     return true;
-  }
-
-  void characterActionRunToDestination(Character character) {
-    character.faceRunPosition();
-    character.setCharacterStateRunning();
   }
 
   bool pursueGoalInteractWithTarget(Character character) {
