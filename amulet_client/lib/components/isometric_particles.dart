@@ -903,13 +903,13 @@ class IsometricParticles with IsometricComponent implements Updatable {
         x: x,
         y: y,
         z: z,
-        zv: 0.6,
+        zv: 1.5,
         angle: 0,
         rotation: randomAngle(),
-        speed: randomBetween(0, 1),
+        speed: randomBetween(0, 2),
         weight: 0,
-        scaleV: -(1.0 / Water_Duration),
-        duration: Water_Duration,
+        scaleV: -0.1,
+        duration: 25,
         scale: 1,
       )
         ..emitsLight = false

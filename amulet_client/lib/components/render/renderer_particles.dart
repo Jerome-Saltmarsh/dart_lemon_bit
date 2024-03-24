@@ -1,3 +1,4 @@
+import 'package:amulet_client/classes/amulet_colors.dart';
 import 'package:amulet_client/components/isometric_images.dart';
 import 'package:amulet_client/components/isometric_particles.dart';
 import 'package:amulet_client/functions/generate_colors.dart';
@@ -455,6 +456,19 @@ class RendererParticles extends RenderGroup {
 
   static int getFrame(double percentage, int total) => ((1.0 - percentage) * total).round();
 
+  void renderParticleGold(Particle particle) =>
+      renderParticleColorSquare(
+        particle, AmuletColors.Gold.value,
+      );
+
+  void renderParticleColorSquare(Particle particle, int color) =>
+      renderModulateSquare(
+        dstX: particle.renderX,
+        dstY: particle.renderY,
+        color: color,
+        scale: particle.scale,
+      );
+
   void renderModulateSquare({
     required double dstX,
     required double dstY,
@@ -477,12 +491,4 @@ class RendererParticles extends RenderGroup {
     engine.setBlendModeDstATop();
   }
 
-  void renderParticleGold(Particle particle) {
-    renderModulateSquare(
-      dstX: particle.renderX,
-      dstY: particle.renderY,
-      color: Palette.butter_0.value,
-      scale: 1.0,
-    );
-  }
 }
