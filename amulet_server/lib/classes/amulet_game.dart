@@ -969,11 +969,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       return;
     }
 
-    if (const [
-      AmuletItem.Consumable_Meat,
-      AmuletItem.Consumable_Sapphire,
-      AmuletItem.Consumable_Gold,
-    ].contains(amuletItem)) {
+    if (amuletItem.isConsumable && player.hasSpaceFor(amuletItem)){
       player.acquireGameObject(gameObject);
     }
   }

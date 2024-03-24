@@ -314,6 +314,17 @@ class AmuletPlayer extends AmuletPlayerBase {
     writeFalse();
   }
 
+  bool hasSpaceFor(AmuletItem amuletItem){
+     switch (amuletItem){
+       case AmuletItem.Consumable_Potion_Magic:
+         return potionsMagic < maxPotions;
+       case AmuletItem.Consumable_Potion_Health:
+         return potionsHealth < maxPotions;
+       default:
+         return true;
+     }
+  }
+
   void acquireGameObject(GameObject gameObject){
 
     clearTarget();
