@@ -78,6 +78,8 @@ String? getSkillTypeLevelDescription(SkillType skillType, int level) {
       return 'magic +${SkillType.getMaxMagic(level).toInt()}';
     case SkillType.Attack_Range:
       return 'range +${SkillType.getAttackRange(level).toStringPercentage}';
+    case SkillType.Punch:
+      return 'damage +${SkillType.getDamagePunch(level)}';
   }
 }
 

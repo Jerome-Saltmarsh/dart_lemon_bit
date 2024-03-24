@@ -31,4 +31,5 @@ List<double> getSrcSkillType(SkillType skillType) =>
       SkillType.Resist_Slash => const [416, 352, 32 ,32],
       SkillType.Resist_Bludgeon => const [416, 352, 32 ,32],
       SkillType.Attack_Range => const [448, 0, 32 ,32],
+      SkillType.Punch => const [448, 32, 32 ,32],
     };

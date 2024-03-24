@@ -8,6 +8,18 @@ enum SkillType {
       range: 0,
       maxLevel: 0,
   ),
+  Punch(
+    damageMin: Constraint(min: 1, max: 1),
+    damageMax: Constraint(min: 1, max: 1),
+    maxLevel: 1,
+    casteType: CasteType.Ability,
+    magicCost: 0,
+    isBaseAttack: true,
+    enabledBow: false,
+    enabledSword: false,
+    enabledStaff: false,
+    enabledUnarmed: true,
+  ),
   Slash(
       damageMin: Constraint(min: 1, max: 20),
       damageMax: Constraint(min: 1, max: 20),
@@ -396,6 +408,10 @@ enum SkillType {
   static double getDamageWindCut(int level){
     final i = level / SkillType.Wind_Cut.maxLevel;
     return const Constraint(min: 80.0, max: 200.0).linearInterp(i);
+  }
+
+  static double getDamagePunch(int level){
+    return level.toDouble();
   }
 }
 

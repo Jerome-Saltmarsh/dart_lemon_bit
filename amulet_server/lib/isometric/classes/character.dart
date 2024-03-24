@@ -76,8 +76,6 @@ class Character extends Collider {
   var pathTargetIndex = -1;
   var pathTargetIndexPrevious = -1;
   var forceAttack = false;
-  // var arrivedAtDestination = false;
-  // var runToDestinationEnabled = true;
   var pathFindingEnabled = true;
   var helmType = HelmType.None;
   var armorType = ArmorType.None;
@@ -184,6 +182,10 @@ class Character extends Collider {
   bool get alive => !dead;
 
   bool get targetIsEnemy => target == null ? false : isEnemy(target);
+
+  bool get targetIsAttackable => target == null ? false : isEnemy(target);
+
+  bool get targetIsInteractable => target == null ? false : isEnemy(target);
 
   bool get targetIsAlly => target == null ? false : isAlly(target);
 

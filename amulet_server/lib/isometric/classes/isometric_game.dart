@@ -2335,6 +2335,35 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     character.pathStart = character.pathCurrent;
   }
 
+  CharacterAction getNextCharacterAction(Character character){
+
+    if (character.deadOrBusy){
+       return CharacterAction.Busy;
+     }
+
+     if (character.forceAttack) {
+       return CharacterAction.Attack_Now;
+     }
+
+     if (character.targetIsAttackable) {
+       return CharacterAction.Attack_Target;
+     }
+
+     if (character.targetIsInteractable){
+       return CharacterAction.Interact_With_Target;
+     }
+
+     if (!character.atRunDestination) {
+       return CharacterAction.Run_To_Position;
+     }
+
+     return CharacterAction.Idle;
+  }
+
+  void pursueCharacterAction(){
+
+  }
+
   void updateCharacterAction(Character character) {
 
     if (character.deadOrBusy) {
@@ -2370,6 +2399,8 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       characterActionIdle(character);
     }
   }
+
+
 
   bool pursueGoalPerformAttack(Character character) {
 
@@ -2747,4 +2778,12 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   void onAddedProjectile(Projectile value) {}
 }
 
-
+enum CharacterAction {
+  Busy,
+  Idle,
+  Run_To_Position,
+  Follow_Path,
+  Attack_Target,
+  Attack_Now,
+  Interact_With_Target,
+}

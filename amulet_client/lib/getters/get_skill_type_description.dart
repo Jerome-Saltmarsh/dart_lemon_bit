@@ -30,4 +30,5 @@ String getSkillTypeDescription(SkillType skillType) => switch (skillType) {
       SkillType.Wind_Cut => 'cuts the air in front',
       SkillType.Max_Health => 'increases total health',
       SkillType.Attack_Range => 'the range of the attack',
+      SkillType.Punch => 'punch an enemy with your bare hands',
     };

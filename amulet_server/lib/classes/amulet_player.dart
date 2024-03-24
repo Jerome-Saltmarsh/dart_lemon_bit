@@ -513,7 +513,7 @@ class AmuletPlayer extends AmuletPlayerBase {
     if (equippedWeaponSword) {
       return SkillType.Slash;
     }
-    return SkillType.None;
+    return SkillType.Punch;
   }
 
   void writeEquipped(){
@@ -1230,6 +1230,11 @@ class AmuletPlayer extends AmuletPlayerBase {
   }
 
   int getSkillTypeLevel(SkillType skillType){
+
+    if (skillType == SkillType.Punch){
+      return 1;
+    }
+
      var total = 0;
      total += equippedWeapon?.getSkillLevel(skillType) ?? 0;
      total += equippedHelm?.getSkillLevel(skillType) ?? 0;
@@ -1607,10 +1612,10 @@ class AmuletPlayer extends AmuletPlayerBase {
     final attackSkill = equippedWeapon?.amuletItem.attackSkill;
 
     if (skillTypeLocked(skillTypeLeft)){
-      skillTypeLeft = SkillType.None;
+      skillTypeLeft = SkillType.Punch;
     }
 
-    if (skillTypeLeft == SkillType.None && attackSkill != null) {
+    if (skillTypeLeft == SkillType.Punch && attackSkill != null) {
       skillTypeLeft = attackSkill;
     }
 
