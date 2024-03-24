@@ -186,16 +186,9 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   /// @override
   void customOnGameStarted() {}
 
-  /// @override
-  void customOnCollisionBetweenColliders(Collider a, Collider b) {}
+  void handleCollision(Collider a, Collider b) {}
 
-  /// @override
-  void customOnCollisionBetweenPlayerAndOther(T player,
-      Collider collider) {}
-
-  /// @override
-  void customOnCollisionBetweenPlayerAndGameObject(T player,
-      GameObject gameObject) {}
+  void handlePlayerCollision(T player, Collider collider) {}
 
   /// @override
   void customOnPlayerWeaponChanged(IsometricPlayer player,
@@ -1133,18 +1126,13 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
 
     if (a is T) {
-      if (b is GameObject) {
-        customOnCollisionBetweenPlayerAndGameObject(a, b);
-      }
-      customOnCollisionBetweenPlayerAndOther(a, b);
+      handlePlayerCollision(a, b);
     }
     if (b is T) {
-      if (a is GameObject) {
-        customOnCollisionBetweenPlayerAndGameObject(b, a);
-      }
-      customOnCollisionBetweenPlayerAndOther(b, a);
+      handlePlayerCollision(b, a);
     }
-    customOnCollisionBetweenColliders(a, b);
+
+    handleCollision(a, b);
   }
 
   void resolveCollisionPhysics(Collider a, Collider b) {

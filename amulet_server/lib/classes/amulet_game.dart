@@ -938,11 +938,14 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   }
 
   @override
-  void customOnCollisionBetweenPlayerAndGameObject(
+  void handlePlayerCollision(
       AmuletPlayer player,
-      GameObject gameObject,
-      ) {
+      Collider collider,
+  ) {
 
+    if (collider is! GameObject) return;
+
+    final gameObject = collider;
     final amuletItem = gameObject.amuletItem;
 
     if (amuletItem == null) {
@@ -951,18 +954,14 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     switch (amuletItem) {
       case AmuletItem.Consumable_Meat:
-        if (player.health < player.maxHealth){
-          player.health += 5;
-          player.writePlayerEvent(PlayerEvent.Eat);
-          remove(gameObject);
-        }
+        player.health += 5;
+        player.writePlayerEvent(PlayerEvent.Eat);
+        remove(gameObject);
         break;
       case AmuletItem.Consumable_Sapphire:
-        if (player.magic < player.maxMagic){
-          player.magic += 5;
-          dispatchAmuletEvent(gameObject, AmuletEvent.Sapphire_Consumed);
-          remove(gameObject);
-        }
+        player.magic += 5;
+        dispatchAmuletEvent(gameObject, AmuletEvent.Sapphire_Consumed);
+        remove(gameObject);
         break;
       default:
         break;
