@@ -77,7 +77,7 @@ class Character extends Collider {
   var pathTargetIndexPrevious = -1;
   var forceAttack = false;
   var arrivedAtDestination = false;
-  var runToDestinationEnabled = true;
+  // var runToDestinationEnabled = true;
   var pathFindingEnabled = true;
   var helmType = HelmType.None;
   var armorType = ArmorType.None;
@@ -340,7 +340,7 @@ class Character extends Collider {
     updateAilments();
 
     if (
-      runToDestinationEnabled &&
+      // runToDestinationEnabled &&
       !arrivedAtDestination &&
       withinRadiusXYZ(runX, runY, runZ, 8)
     ){

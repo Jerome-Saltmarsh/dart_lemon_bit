@@ -279,11 +279,6 @@ class IsometricDebug with IsometricComponent implements Updatable {
           NetworkRequestIsometric.Debug_Character_Toggle_Path_Finding_Enabled
       );
 
-  void sendIsometricRequestDebugCharacterToggleRunToDestination() =>
-      server.sendIsometricRequest(
-          NetworkRequestIsometric.Debug_Character_Toggle_Run_To_Destination
-      );
-
   void sendIsometricRequestDebugCharacterDebugUpdate() =>
       server.sendIsometricRequest(
           NetworkRequestIsometric.Debug_Character_Debug_Update

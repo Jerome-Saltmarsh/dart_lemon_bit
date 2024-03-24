@@ -517,12 +517,6 @@ class AmuletController {
         debugCharacter.clearPath();
         break;
 
-      case NetworkRequestIsometric.Debug_Character_Toggle_Run_To_Destination:
-        final debugCharacter = player.selectedCollider;
-        if (debugCharacter is! Character) return;
-        debugCharacter.runToDestinationEnabled = !debugCharacter.runToDestinationEnabled;
-        break;
-
       case NetworkRequestIsometric.Debug_Character_Debug_Update:
         final debugCharacter = player.selectedCollider;
         if (debugCharacter is! Character) return;

@@ -112,16 +112,6 @@ class IsometricPlayer extends Character with ByteWriter {
   bool get debugging => _debugging;
 
   @override
-  set runToDestinationEnabled(bool value){
-    if (super.runToDestinationEnabled == value) {
-      return;
-    }
-
-    super.runToDestinationEnabled = value;
-    writeRunToDestinationEnabled();
-  }
-
-  @override
   set arrivedAtDestination(bool value){
     if (super.arrivedAtDestination == value) {
       return;
@@ -1081,7 +1071,6 @@ class IsometricPlayer extends Character with ByteWriter {
       writeUInt16(0); // TODO
       writeBool(character.autoTarget);
       writeBool(character.pathFindingEnabled);
-      writeBool(character.runToDestinationEnabled);
       writeBool(character.arrivedAtDestination);
 
       final selectedCharacterTarget = character.target;
@@ -1139,14 +1128,11 @@ class IsometricPlayer extends Character with ByteWriter {
       return;
     }
 
-    if (selectedCollider.runToDestinationEnabled) {
-      selectedCollider.setRunDestination(
-          mouseSceneX,
-          mouseSceneY,
-          mouseSceneZ,
-      );
-      return;
-    }
+    selectedCollider.setRunDestination(
+      mouseSceneX,
+      mouseSceneY,
+      mouseSceneZ,
+    );
   }
 
   void lookAtMouse(){
@@ -1189,12 +1175,6 @@ class IsometricPlayer extends Character with ByteWriter {
   void setTargetToAimTarget() {
     target = aimTarget;
     pathFindingEnabled = false;
-  }
-
-  void writeRunToDestinationEnabled() {
-    writeByte(NetworkResponse.Player);
-    writeByte(NetworkResponsePlayer.Run_To_Destination_Enabled);
-    writeBool(runToDestinationEnabled);
   }
 
   void writeDebugging() {

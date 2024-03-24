@@ -88,7 +88,6 @@ class AmuletPlayer extends AmuletPlayerBase {
     characterType = CharacterType.Human;
     hurtable = false;
     hurtStateBusy = false;
-    runToDestinationEnabled = true;
     pathFindingEnabled = false;
     equipmentDirty = true;
     regainFullHealth();

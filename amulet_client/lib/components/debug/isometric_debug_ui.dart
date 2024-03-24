@@ -426,10 +426,6 @@ extension isometricDebugUI on IsometricDebug {
             action: sendIsometricRequestDebugCharacterTogglePathFindingEnabled,
             child: buildRowWatchBool(text: 'path-finding-enabled', watch: pathFindingEnabled)
         ),
-        onPressed(
-            action: sendIsometricRequestDebugCharacterToggleRunToDestination,
-            child: buildRowWatchBool(text: 'run-to-destination', watch: runToDestinationEnabled)
-        ),
         buildTarget(),
         buildText('EQUIPPED'),
         // Row(

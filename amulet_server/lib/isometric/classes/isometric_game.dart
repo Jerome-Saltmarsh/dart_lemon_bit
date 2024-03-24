@@ -2468,7 +2468,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   }
 
   bool characterConditionRunToDestination(Character character) =>
-      character.runToDestinationEnabled &&
       !character.arrivedAtDestination;
 
   void characterActionRunToDestination(Character character) {
@@ -2557,7 +2556,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   }
 
   bool performingRunTowardsEnemy(Character character) {
-    if (character.runToDestinationEnabled &&
+    if (
        (!character.pathFindingEnabled || character.targetPerceptible) &&
        !character.targetWithinAttackRange) {
       character.runStraightToTarget();
@@ -2567,7 +2566,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   }
 
   bool characterConditionRunTowardsCollectTarget(Character character) =>
-       character.runToDestinationEnabled &&
        (!character.pathFindingEnabled || character.targetPerceptible) &&
        !character.targetWithinCollectRange;
 

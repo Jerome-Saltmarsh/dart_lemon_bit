@@ -27,7 +27,6 @@ class IsometricPlayer with IsometricComponent {
   // final aimNodeType = Watch<int?>(null);
   final controlsEnabled = Watch(true);
   final name = Watch('');
-  final runToDestinationEnabled = Watch(false);
   final arrivedAtDestination = Watch(false);
   final aimTargetSet = Watch(false);
   final aimTargetName = Watch('');
@@ -231,9 +230,6 @@ class IsometricPlayer with IsometricComponent {
         break;
       case NetworkResponsePlayer.Arrived_At_Destination:
         player.arrivedAtDestination.value = parser.readBool();
-        break;
-      case NetworkResponsePlayer.Run_To_Destination_Enabled:
-        player.runToDestinationEnabled.value = parser.readBool();
         break;
       case NetworkResponsePlayer.Debugging:
         final value = parser.readBool();
