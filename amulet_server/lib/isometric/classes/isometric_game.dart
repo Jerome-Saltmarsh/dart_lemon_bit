@@ -2369,7 +2369,11 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       return;
     }
 
-    if (pursueGoalTarget(character)){
+    if (pursueGoalAttackTarget(character)) {
+      return;
+    }
+
+    if (pursueGoalInteractWithTarget(character)){
       return;
     }
 
@@ -2399,25 +2403,13 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
   bool pursueGoalPerformAttack(Character character) {
 
-    if (!character.forceAttack) {
-
-      if (character.target == null) {
-        return false;
-      }
-
-      if (!character.targetWithinAttackRange){
-        return false;
-      }
-
-      if (character.pathFindingEnabled && !character.targetPerceptible) {
-        return false;
-      }
+    if (character.forceAttack) {
+      character.forceAttack = false;
+      // character.faceTarget();
+      character.attack();
+      return true;
     }
-
-    character.forceAttack = false;
-    character.faceTarget();
-    character.attack();
-    return true;
+    return false;
   }
 
   void characterActionIdle(Character character) {
@@ -2448,32 +2440,12 @@ abstract class IsometricGame<T extends IsometricPlayer> {
      }
 
      if (pursueGoalRunTowardsTarget(character)){
-       return true;
+        return true;
      }
 
-     if (pursueGoalFollowPathToTarget(character)){
-       return true;
-     }
-
-     return false;
-  }
-
-  bool pursueGoalTarget(Character character) {
-     final target = character.target;
-
-     if (target == null) {
-       return false;
-     }
-
-     if (pursueGoalAttackTarget(character)) {
-       return true;
-     }
-
-     if (pursueGoalInteractWithTarget(character)){
-       return true;
-     }
-
-     return false;
+     character.faceTarget();
+     character.attack();
+     return true;
   }
 
   bool pursueGoalFollowPath(Character character) {
@@ -2585,6 +2557,10 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
 
     if (!character.targetPerceptible && character.pathFindingEnabled) {
+      return pursueGoalFollowPathToTarget(character);
+    }
+
+    if (character.targetWithinAttackRange){
       return false;
     }
 
