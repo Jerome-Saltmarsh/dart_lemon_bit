@@ -993,6 +993,8 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     super.handleInteraction(src, target);
 
     if (src is AmuletPlayer) {
+      if (src.interacting) return;
+
       if (target is GameObject){
         onAmuletPlayerInteractWithGameObject(src, target);
       }
