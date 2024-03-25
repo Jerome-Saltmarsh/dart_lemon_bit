@@ -35,6 +35,7 @@ class RendererProjectiles extends RenderGroup {
         renderFrostBall(dstX: dstX, dstY: dstY, rotation: angle);
         break;
       case ProjectileType.Orb_Gold:
+        render.shadowBelowPosition(projectile);
         renderOrbGold(dstX: dstX, dstY: dstY);
         break;
       default:

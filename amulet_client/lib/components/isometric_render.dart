@@ -574,18 +574,21 @@ class IsometricRender with IsometricComponent {
     }
 
     renderShadow(
-      x,
-      y,
-      scene.getIndexPositionZ(nodeBelowIndex) + Node_Height_Half,
+      dstX: getRenderX(x, y),
+      dstY: getRenderY(x, y, scene.getIndexPositionZ(nodeBelowIndex) + Node_Height_Half),
       scale: 1.0 / (height * 0.125),
     );
   }
 
-  void renderShadow(double x, double y, double z, {double scale = 1}) =>
+  void renderShadow({
+    required double dstX,
+    required double dstY,
+    double scale = 1,
+  }) =>
       engine.renderSprite(
         image: images.atlas_gameobjects,
-        dstX: (x - y) * 0.5,
-        dstY: ((y + x) * 0.5) - z,
+        dstX: dstX,
+        dstY: dstY,
         srcX: 0,
         srcY: 32,
         srcWidth: 8,

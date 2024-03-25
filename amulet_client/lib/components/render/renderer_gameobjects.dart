@@ -357,12 +357,11 @@ class RendererGameObjects extends RenderGroup {
   void renderBouncingGameObjectShadow(Position gameObject){
     const shadowScale = 1.5;
     const shadowScaleHeight = 0.15;
-
+    final scale = shadowScale + (shadowScaleHeight * animation.frameWaterHeight.toDouble());
     render.renderShadow(
-        gameObject.x,
-        gameObject.y,
-        gameObject.z - 15,
-        scale: shadowScale + (shadowScaleHeight * animation.frameWaterHeight.toDouble())
+      dstX: gameObject.renderX,
+      dstY: gameObject.renderY + 15,
+      scale: scale
     );
   }
 }

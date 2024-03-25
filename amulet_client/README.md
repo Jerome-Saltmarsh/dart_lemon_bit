@@ -59,11 +59,11 @@ SKULLSOFT
 [new] model missing amulet items
 [new] improve render health bar design
 [new] model spinning sapphire gem for magic
-[new] health orb
-[new] magic orb
-[new] golden orb
+[new] projectile orb health
+[new] projectile orb magic
 
 ## 25.03.2024
+[new] projectile orb gold
 [new] collectable gameobject gold
 [new] auto acquire consumables
 [new] ability punch
