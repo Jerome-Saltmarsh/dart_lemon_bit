@@ -4,8 +4,8 @@ import 'package:amulet_server/isometric/classes/projectile.dart';
 
 class ProjectileOrb extends Projectile {
 
-  var speed = 0.0;
-  var acceleration = 0.01;
+  var speed = -0.8;
+  var acceleration = 0.011;
 
   ProjectileOrb({
     required super.target,
@@ -15,7 +15,8 @@ class ProjectileOrb extends Projectile {
     required super.z,
     required super.materialType,
   }) : super(projectileType: ProjectileType.Orb_Gold) {
-    assert (target != null);
+    final target = this.target;
+    if (target == null) throw Exception();
   }
 
   @override
