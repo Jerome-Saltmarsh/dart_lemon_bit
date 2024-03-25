@@ -1285,11 +1285,9 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     if (instance is GameObject) {
 
       for (final player in players) {
-
         if (player.editState.selectedGameObject == instance){
           player.editorDeselectGameObject();
         }
-
         player.writeGameObjectDeleted(instance);
       }
       if (gameObjects.remove(instance)) {
@@ -1299,8 +1297,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
 
     if (instance is Projectile) {
-      // instance.parent = null;
-      // instance.target = null;
       if (projectiles.remove(instance)){
         onRemovedProjectile(instance);
       }

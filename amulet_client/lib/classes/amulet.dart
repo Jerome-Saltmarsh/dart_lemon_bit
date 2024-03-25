@@ -188,6 +188,12 @@ class Amulet extends Updatable with IsometricComponent  {
     });
   }
 
+  bool get nothingEquipped =>
+      equippedWeapon == null &&
+          equippedHelm == null &&
+          equippedArmor == null &&
+          equippedShoes == null;
+
   void updatePlayerMagicPercentage() {
     playerMagicPercentage.value = playerMagic.percentageOf(playerMagicMax);
   }

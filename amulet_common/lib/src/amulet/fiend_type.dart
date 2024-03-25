@@ -3,7 +3,7 @@ import 'package:amulet_common/src.dart';
 
 enum FiendType {
   Goblin(
-    health: 100,
+    health: 8,
     damage: 2,
     characterType: CharacterType.Fallen,
     attackDuration: 20,

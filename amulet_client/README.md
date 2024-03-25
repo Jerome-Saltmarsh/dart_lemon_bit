@@ -56,11 +56,11 @@ SKULLSOFT
 [EARLY_ACCESS]
 [new] beat the game
 [new] balance items and enemies
-[new] model missing amulet items
 [new] improve render health bar design
 [new] model spinning sapphire gem for magic
 [new] projectile orb health
 [new] projectile orb magic
+[new] model missing amulet items
 
 ## 25.03.2024
 [fix] player runs at enemy instead of attacking

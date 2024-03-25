@@ -151,40 +151,44 @@ class AmuletUI {
         ]),
       );
 
-  Widget buildWindowUpgradeMode() => buildWatch(amulet.playerUpgradeMode, (upgradeMode) {
-        if (!upgradeMode) return nothing;
-        return buildWatch(amulet.equippedChangedNotifier, (t) {
-          return AmuletWindow(child: Column(
-            children: [
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    buildBorder(
-                      width: 3,
-                      color: Colors.white60,
-                      child: buildPlayerGold()
-                    ),
-                    width32,
-                    onPressed(
-                        action: amulet.endUpgradeMode,
-                        child: buildText('CLOSE X')),
-                  ],
+  Widget buildWindowUpgradeMode() {
+
+    final child = buildWatch(amulet.equippedChangedNotifier, (t) =>
+        AmuletWindow(child: Column(
+        children: [
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                buildBorder(
+                    width: 3,
+                    color: Colors.white60,
+                    child: buildPlayerGold()
                 ),
-              ),
-              height16,
-              Row(
-                children: [
-                  buildCardUpgradeAmuletItemObject(amulet.equippedWeapon),
-                  buildCardUpgradeAmuletItemObject(amulet.equippedHelm),
-                  buildCardUpgradeAmuletItemObject(amulet.equippedArmor),
-                  buildCardUpgradeAmuletItemObject(amulet.equippedShoes),
-                ],
-              )
+                width32,
+                onPressed(
+                    action: amulet.endUpgradeMode,
+                    child: buildText('CLOSE X')),
+              ],
+            ),
+          ),
+          height16,
+          if (amulet.nothingEquipped)
+            buildText('No items equipped to upgrade'),
+          if (!amulet.nothingEquipped)
+          Row(
+            children: [
+              buildCardUpgradeAmuletItemObject(amulet.equippedWeapon),
+              buildCardUpgradeAmuletItemObject(amulet.equippedHelm),
+              buildCardUpgradeAmuletItemObject(amulet.equippedArmor),
+              buildCardUpgradeAmuletItemObject(amulet.equippedShoes),
             ],
-          ));
-        });
-    });
+          )
+        ],
+      )));
+
+    return buildWatchVisible(amulet.playerUpgradeMode, child);
+  }
 
   Widget buildCardUpgradeAmuletItemObject(AmuletItemObject? amuletItemObject){
     if (amuletItemObject == null) return nothing;
@@ -2430,6 +2434,9 @@ String formatFramesToSeconds(int frames){
 
 Widget buildWatchVisible(Watch<bool> watch, Widget child, {bool condition = true}) =>
     buildWatch(watch, (t) => t == condition ? child : nothing);
+
+Widget buildWatchNull<T>(Watch<T?> watch, Widget Function(T t) build) =>
+    buildWatch(watch, (t) => t == null ? nothing : nothing);
 
 Color getSkillTypeLevelDescriptionColor(SkillType skillType){
    switch (skillType){

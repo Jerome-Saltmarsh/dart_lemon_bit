@@ -7,7 +7,8 @@ Widget buildWatchBool(
     Watch<bool> watch,
     Widget Function() builder,
     {bool match = true}
-    ) =>
-    WatchBuilder(watch, (bool value) => value == match ? builder() : nothing);
+    ) {
+  return WatchBuilder(watch, (bool value) => value == match ? builder() : nothing);
+}
 
 
