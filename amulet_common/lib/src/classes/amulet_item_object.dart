@@ -1,6 +1,7 @@
 
 import '../amulet/amulet_item.dart';
 import '../amulet/skill_type.dart';
+import 'package:lemon_lang/src.dart';
 
 class AmuletItemObject {
   final AmuletItem amuletItem;
@@ -10,6 +11,8 @@ class AmuletItemObject {
     required this.amuletItem,
     required this.level,
   });
+
+  double get levelPercentage => level.percentageOf(amuletItem.maxLevel);
 
   double? get maxHealth => amuletItem.getMaxHealth(level);
 

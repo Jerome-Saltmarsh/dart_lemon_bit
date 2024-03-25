@@ -8,6 +8,8 @@ environment:
 dependencies:
   lemon_math:
     path: ..\tools\lemon_math
+  lemon_lang:
+    path: ..\tools\lemon_lang
 
 dev_dependencies:
   lints: ^2.1.0

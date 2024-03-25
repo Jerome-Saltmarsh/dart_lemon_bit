@@ -1426,7 +1426,12 @@ class AmuletUI {
     final title = buildCardLargeTitleTemplate(
       icon: buildIconAmuletItem(amuletItem),
       name: amuletItem.label,
-      subtitle: buildTextSubtitle('lvl ${amuletItemObject.level}'),
+      subtitle: Column(
+        children: [
+          buildTextSubtitle('lvl ${amuletItemObject.level}/${amuletItemObject.amuletItem.maxLevel}'),
+          buildLevelBar(amuletItemObject.levelPercentage),
+        ],
+      ),
     );
 
     return buildCardLarge(
