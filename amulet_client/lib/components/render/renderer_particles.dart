@@ -43,6 +43,14 @@ class RendererParticles extends RenderGroup {
     colorD: Colors.transparent,
   );
 
+  final colorsBlood = generateColorInterpolation4(
+    length: IsometricParticles.Water_Duration,
+    colorA: Palette.red_1.withOpacity(0.5),
+    colorB: Palette.red_2,
+    colorC: Palette.red_3,
+    colorD: Colors.transparent,
+  );
+
   final colorsHealth = generateColorInterpolation4(
     length: IsometricParticles.Water_Duration,
     colorA: Palette.teal_0.withOpacity(0.5),
@@ -332,6 +340,15 @@ class RendererParticles extends RenderGroup {
             dstX: dstX,
             dstY: dstY,
             colors: colorsWater,
+            i: 1.0 - particle.duration01,
+            scale: particle.scale,
+          );
+          break;
+        case ParticleType.Blood_Rising:
+          renderSquareInterpolation(
+            dstX: dstX,
+            dstY: dstY,
+            colors: colorsBlood,
             i: 1.0 - particle.duration01,
             scale: particle.scale,
           );

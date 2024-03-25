@@ -28,6 +28,7 @@ class ParticleType {
   static const Health = 52;
   static const Magic = 53;
   static const Gold = 54;
+  static const Blood_Rising = 55;
 
 
   static String getName(int particleType) => const {
@@ -49,6 +50,7 @@ class ParticleType {
       Health: 'Health',
       Magic: 'Magic',
       Gold: 'Gold',
+      Blood_Rising: 'Blood_Rising'
     }[particleType] ?? 'unknown-$particleType';
 
   static const nodeCollidable = [

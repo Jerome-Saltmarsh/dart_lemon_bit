@@ -286,7 +286,16 @@ class IsometricEvents with IsometricComponent {
         break;
       case MaterialType.Flesh:
         audio.play(audio.material_struck_flesh, x, y, z);
-        particles.emitFlame(x: x, y: y, z: z);
+        for (var i = 0; i < 4; i++){
+          particles.spawnParticleBloodRising(
+              x: x,
+              y: y,
+              z: z,
+              scale: 1.0,
+          );
+        }
+        // particles.emitFlame(x: x, y: y, z: z);
+        // particles.spawnBlood(x, y, z)
         break;
       case MaterialType.Stone:
         audio.play(audio.material_struck_stone, x, y, z);
@@ -440,13 +449,15 @@ class IsometricEvents with IsometricComponent {
   void onCharacterDeath(int characterType, double x, double y, double z, double angle) {
     audio.play(randomItem(audio.bloody_punches), x, y, z);
     audio.play(audio.heavy_punch_13, x, y, z);
-    particles.emitFlames(
-      x: x,
-      y: y,
-      z: z,
-      count: 8,
-      radius: 10,
-    );
+
+    for (var i = 0; i < 8; i++){
+      particles.spawnParticleBloodRising(
+        x: x + giveOrTake(5),
+        y: y + giveOrTake(5),
+        z: z,
+      );
+    }
+
 
     final audioClip = audio.getCharacterTypeAudioDeath(characterType);
 
