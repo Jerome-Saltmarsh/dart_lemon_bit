@@ -1189,7 +1189,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     ) return;
 
     final mouseLeftClicked = mouseLeftDown && player.mouseLeftDownDuration == 0;
-    final mouseLeftHeld = mouseLeftDown && player.mouseLeftDownDuration > 0;
+    final mouseLeftHeld = mouseLeftDown && player.mouseLeftDownDuration > 4;
     final mouseRightClicked = mouseRightDown && player.mouseRightDownDuration == 0;
 
     if (mouseRightDown){
@@ -1218,14 +1218,16 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       return;
     }
 
+    if (mouseLeftClicked) {
+      player.markAimTarget();
+      return;
+    }
+
     if (mouseLeftHeld && !player.targetSet && player.targetNodeIndex == null){
       player.setDestinationToMouse();
       return;
     }
 
-    if (mouseLeftClicked) {
-      player.markAimTarget();
-    }
   }
 
   @override
