@@ -10,7 +10,7 @@ import 'package:lemon_math/src.dart' as lemon_math;
 
 class Projectile extends Collider {
   var range = 0.0;
-  var type = 0; // ProjectileType.dart
+  var projectileType = 0; // ProjectileType.dart
   var friendlyFire = false;
   var damage = 0.0;
   var ailmentDuration = 0.0;
@@ -19,14 +19,17 @@ class Projectile extends Collider {
   Position? target;
   Character? parent;
 
-  DamageType get damageType => DamageType.fromProjectileType(type);
+  DamageType get damageType => DamageType.fromProjectileType(projectileType);
 
   Projectile({
+    required this.projectileType,
     required super.team,
     required super.x,
     required super.y,
     required super.z,
     required super.materialType,
+    this.target,
+    this.parent,
   }) : super(radius: Physics.Projectile_Radius);
 
   bool get overRange => distanceTravelled > range;
@@ -43,7 +46,7 @@ class Projectile extends Collider {
   }
 
   @override
-  String get name => ProjectileType.getName(type);
+  String get name => ProjectileType.getName(projectileType);
 
   @override
   bool onSameTeam(dynamic target) =>
@@ -51,6 +54,10 @@ class Projectile extends Collider {
 
   void clearTarget() {
     target = null;
+  }
+
+  void update(){
+
   }
 
 }

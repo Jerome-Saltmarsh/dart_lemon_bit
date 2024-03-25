@@ -1732,6 +1732,12 @@ class AmuletPlayer extends AmuletPlayerBase {
   void endUpgradeMode() {
     upgradeMode = false;
   }
+
+  void acquireGold(int amount) {
+    if (amount <= 0) return;
+    gold += amount;
+    writePlayerEvent(PlayerEvent.Gold_Acquired);
+  }
 }
 
 String buildResistances(String text, String name, double resistance){

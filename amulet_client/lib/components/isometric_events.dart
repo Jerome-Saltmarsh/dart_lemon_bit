@@ -341,6 +341,9 @@ class IsometricEvents with IsometricComponent {
         camera.centerOnChaseTarget();
         io.recenterCursor();
         break;
+      case PlayerEvent.Gold_Acquired:
+        audio.playSound(audio.coins);
+        break;
       case PlayerEvent.Puzzle_Solved:
         audio.notification_sound_10.play();
         break;

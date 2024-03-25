@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:amulet_common/src.dart';
+import 'package:amulet_server/classes/projectile_orb.dart';
 import 'package:lemon_lang/src.dart';
 import 'package:lemon_math/src.dart';
 
@@ -760,6 +761,19 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       //   src.gold += getAmuletFiendGoldValue(target);
       // }
 
+      if (src is AmuletPlayer) {
+        final orb = ProjectileOrb(
+          materialType: MaterialType.None,
+          x: target.x,
+          y: target.y,
+          z: target.z,
+          team: src.team,
+          target: src,
+        );
+        orb.collidable = false;
+        add(orb);
+      }
+
       spawnAmuletItemObjectAtPosition(
           item: generateAmuletItemObject(
               amuletItem: AmuletItem.Consumable_Gold,
@@ -872,7 +886,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   }
 
   @override
-  void onGameObjectRemoved(GameObject gameObject) {
+  void onRemovedGameObject(GameObject gameObject) {
     final amuletItem = gameObject.amuletItem;
     if (amuletItem == null) return;
     dispatchAmuletEvent(gameObject, AmuletEvent.Amulet_Object_Removed);
@@ -1497,6 +1511,27 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
   void playerUseFireplace(AmuletPlayer player) {
      player.upgradeMode = true;
      player.writeUpgradeMode();
+  }
+
+  @override
+  void handleProjectileHit(Projectile projectile, Position target) {
+
+    if (projectile.projectileType == ProjectileType.Orb_Gold){
+      if (projectile.target == target){
+        if (target is AmuletPlayer){
+          target.acquireGold(1);
+        }
+        remove(projectile);
+        return;
+      }
+    }
+
+    super.handleProjectileHit(projectile, target);
+  }
+
+  @override
+  void onRemovedProjectile(Projectile projectile) {
+    super.onRemovedProjectile(projectile);
   }
 }
 

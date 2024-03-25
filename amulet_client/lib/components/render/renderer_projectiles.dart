@@ -34,9 +34,29 @@ class RendererProjectiles extends RenderGroup {
       case ProjectileType.FrostBall:
         renderFrostBall(dstX: dstX, dstY: dstY, rotation: angle);
         break;
+      case ProjectileType.Orb_Gold:
+        renderOrbGold(dstX: dstX, dstY: dstY);
+        break;
       default:
         return;
     }
+  }
+
+  void renderOrbGold({
+    required double dstX,
+    required double dstY,
+  }) {
+    engine.renderSpriteRotated(
+        image: images.atlas_amulet_items,
+        srcX: 748,
+        srcY: 172,
+        srcWidth: 8,
+        srcHeight: 8,
+        dstX: dstX,
+        dstY: dstY,
+        rotation: 0,
+        scale: 1,
+    );
   }
 
   void renderFrostBall({
@@ -44,9 +64,6 @@ class RendererProjectiles extends RenderGroup {
     required double dstY,
     required double rotation,
   }) {
-
-
-
     render.sprite(
         sprite: images.iceball,
         frame: animation.frameRate2 % 4,

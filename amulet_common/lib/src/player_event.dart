@@ -26,4 +26,5 @@ class PlayerEvent {
   static const Portal_Used              = 25;
   static const Game_Finished            = 26;
   static const Potion_Consumed            = 27;
+  static const Gold_Acquired            = 28;
 }

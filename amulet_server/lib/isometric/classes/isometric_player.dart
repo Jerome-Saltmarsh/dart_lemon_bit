@@ -650,7 +650,7 @@ class IsometricPlayer extends Character with ByteWriter {
       // if (!projectile.active) continue;
       writeTrue();
       writePosition(projectile);
-      writeByte(projectile.type);
+      writeByte(projectile.projectileType);
       writeAngle(projectile.velocityAngle);
     }
     writeFalse();

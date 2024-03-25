@@ -709,7 +709,7 @@ enum AmuletItem {
   static const Constraint_Weapon_Damage = Constraint(min: 1, max: 20);
   static const Constraint_Range_Sword = Constraint(min: 50, max: 100);
   static const Constraint_Range_Staff = Constraint(min: 40, max: 80);
-  static const Constraint_Range_Bow = Constraint(min: 100, max: 250);
+  static const Constraint_Range_Bow = Constraint(min: 150, max: 250);
   static const Health_Per_Level = 5.0;
   static const Magic_Per_Level = 5.0;
   static const Damage_Per_Level = 1.0;

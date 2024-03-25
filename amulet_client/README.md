@@ -59,9 +59,13 @@ SKULLSOFT
 [new] model missing amulet items
 [new] improve render health bar design
 [new] model spinning sapphire gem for magic
-[new] collectable gameobject gold
+[new] health orb
+[new] magic orb
+[new] golden orb
 
 ## 25.03.2024
+[new] collectable gameobject gold
+[new] auto acquire consumables
 [new] ability punch
 [fix] pickup item
 [fix] character turns around on arrive at destination

@@ -1222,32 +1222,25 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     setCharacterStateDead(character);
   }
 
-  // void deactivateProjectile(Projectile projectile) {
-  //   // assert (projectile.active);
-  //   // projectile.active = false;
-  //   projectile.parent = null;
-  //   projectile.target = null;
-  //
-  // }
-
   void updateProjectiles() {
     final projectiles = this.projectiles;
+
     for (var i = 0; i < projectiles.length; i++) {
       final projectile = projectiles[i];
-      // if (!projectile.active) continue;
+      projectile.update();
       projectile.x += projectile.velocityX;
       projectile.y += projectile.velocityY;
       final target = projectile.target;
       if (target != null) {
         projectile.reduceDistanceZFrom(target);
       } else if (projectile.overRange) {
-        // deactivateProjectile(projectile);
         remove(projectile);
       }
     }
+
     for (var i = 0; i < projectiles.length; i++) {
       final projectile = projectiles[i];
-      // if (!projectile.active) continue;
+      if (!projectile.collidable) continue;
       if (!scene.getCollisionAt(projectile.x, projectile.y, projectile.z)) {
         continue;
       }
@@ -1300,22 +1293,28 @@ abstract class IsometricGame<T extends IsometricPlayer> {
         player.writeGameObjectDeleted(instance);
       }
       if (gameObjects.remove(instance)) {
-        onGameObjectRemoved(instance);
+        onRemovedGameObject(instance);
       }
       return;
     }
 
     if (instance is Projectile) {
-      instance.parent = null;
-      instance.target = null;
-      projectiles.remove(instance);
+      // instance.parent = null;
+      // instance.target = null;
+      if (projectiles.remove(instance)){
+        onRemovedProjectile(instance);
+      }
       return;
     }
 
     throw Exception();
   }
 
-  void onGameObjectRemoved(GameObject gameObject){
+  void onRemovedProjectile(Projectile projectile){
+
+  }
+
+  void onRemovedGameObject(GameObject gameObject){
 
   }
 
@@ -1327,7 +1326,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
     final projectiles = this.projectiles;
     for (final projectile in projectiles) {
-      if (projectile.target == position) continue;
+      if (projectile.target != position) continue;
       projectile.clearTarget();
     }
   }
@@ -1339,7 +1338,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     final projectiles = this.projectiles;
     for (var i = 0; i < projectiles.length; i++) {
       final projectile = projectiles[i];
-      // if (!projectile.active) continue;
       if (!projectile.hitable) continue;
       final target = projectile.target;
       if (target != null) {
@@ -1359,7 +1357,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
       for (var j = 0; j < colliders.length; j++) {
         final collider = colliders[j];
         if (projectileParent == collider) continue;
-        // if (!collider.active) continue;
         if (!collider.hitable) continue;
         final combinedRadius = collider.radius + projectileRadius;
         if ((collider.x - projectileX).abs() > combinedRadius) continue;
@@ -1373,9 +1370,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
   }
 
   void handleProjectileHit(Projectile projectile, Position target) {
-    // assert (projectile.active);
-    assert (projectile != target);
-    assert (projectile.parent != target);
 
     final owner = projectile.parent;
     if (owner == null) return;
@@ -1393,7 +1387,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     }
 
     remove(projectile);
-    if (projectile.type == ProjectileType.Arrow) {
+    if (projectile.projectileType == ProjectileType.Arrow) {
       dispatchGameEvent(GameEvent.Arrow_Hit, target.x, target.y, target.z);
     }
   }
@@ -1688,8 +1682,14 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     Position? target,
   }) {
     assert (range > 0);
-    assert (damage > 0);
-    final projectile = getInstanceProjectile();
+    final projectile = Projectile(
+      x: 0,
+      y: 0,
+      z: 0,
+      team: 0,
+      materialType: MaterialType.None,
+      projectileType: projectileType,
+    );
 
     dispatchGameEvent(GameEvent.Projectile_Fired, src.x, src.y, src.z);
     dispatchByte(projectileType);
@@ -1703,7 +1703,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     projectile.ailmentDamage = ailmentDamage;
     projectile.damage = damage;
     projectile.hitable = true;
-    // projectile.active = true;
     if (target is Position) {
       projectile.target = target;
     }
@@ -1717,22 +1716,10 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     projectile.parent = src;
     projectile.team = src.team;
     projectile.range = range;
-    projectile.type = projectileType;
+    projectile.projectileType = projectileType;
     projectile.radius = ProjectileType.getRadius(projectileType);
     projectile.setVelocity(finalAngle, ProjectileType.getSpeed(projectileType));
-
-    return projectile;
-  }
-
-  Projectile getInstanceProjectile() {
-    final projectile = Projectile(
-      x: 0,
-      y: 0,
-      z: 0,
-      team: 0,
-      materialType: MaterialType.None,
-    );
-    projectiles.add(projectile);
+    add(projectile);
     return projectile;
   }
 
@@ -1742,36 +1729,6 @@ abstract class IsometricGame<T extends IsometricPlayer> {
     position.y = scene.getIndexY(index);
     position.z = scene.getIndexZ(index);
   }
-
-  // GameObject spawnGameObject({
-  //   required double x,
-  //   required double y,
-  //   required double z,
-  //   required int type,
-  //   required int subType,
-  //   required int team,
-  //   required int health,
-  //   required bool interactable,
-  //   required int deactivationTimer,
-  // }) {
-  //   final instance = GameObject(
-  //     x: x,
-  //     y: y,
-  //     z: z,
-  //     itemType: type,
-  //     subType: subType,
-  //     id: generateUniqueGameObjectId(),
-  //     team: team,
-  //     health: health,
-  //     interactable: interactable,
-  //     deactivationTimer: deactivationTimer,
-  //   );
-  //
-  //   instance.dirty = true;
-  //   gameObjects.add(instance);
-  //   onGameObjectSpawned(instance);
-  //   return instance;
-  // }
 
   void dispatchByte(int byte){
     if (byte < 0 || byte > 255){
