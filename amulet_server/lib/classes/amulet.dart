@@ -417,8 +417,8 @@ class Amulet {
     amuletTime.hour = 12;
 
     player.skillActiveLeft = true;
-    player.skillTypeLeft = SkillType.None;
-    player.skillTypeRight = SkillType.None;
+    // player.skillTypeLeft = SkillType.Punch;
+    // player.skillTypeRight = SkillType.None;
     player.sceneShrinesUsed.clear();
     player.sceneDownloaded = false;
     player.equippedWeapon = null;
@@ -435,6 +435,7 @@ class Amulet {
     player.magic = player.maxMagic;
     player.clearCache();
     player.clearActionFrame();
+    player.checkAssignedSkills();
 
     for (final game in games) {
       game.spawnFiendsAtSpawnNodes(player.difficulty);
