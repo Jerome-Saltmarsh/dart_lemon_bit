@@ -1746,6 +1746,33 @@ class AmuletPlayer extends AmuletPlayerBase {
     gold += amount;
     writePlayerEvent(PlayerEvent.Gold_Acquired);
   }
+
+  void reset(){
+    skillActiveLeft = true;
+    sceneShrinesUsed.clear();
+    sceneDownloaded = false;
+    equippedWeapon = null;
+    equippedHelm = null;
+    equippedArmor = null;
+    equippedShoes = null;
+    equipmentDirty = true;
+    controlsEnabled = true;
+    flags.clear();
+    questMain = QuestMain.values.first;
+    questTutorial = QuestTutorial.values.first;
+    characterState = CharacterState.Idle;
+    health = maxHealth;
+    magic = maxMagic;
+    clearCache();
+    clearActionFrame();
+    checkAssignedSkills();
+    amulet.playerChangeGameToTown(this);
+    amuletGame = amulet.amuletGameVillage;
+    amulet.amuletGameVillage.movePositionToIndex(
+      this,
+      amulet.amuletGameVillage.indexSpawnPlayer,
+    );
+  }
 }
 
 String buildResistances(String text, String name, double resistance){

@@ -414,40 +414,12 @@ class Amulet {
 
   void resetPlayer(AmuletPlayer player) {
     resetGames();
+    player.reset();
     amuletTime.hour = 12;
-
-    player.skillActiveLeft = true;
-    // player.skillTypeLeft = SkillType.Punch;
-    // player.skillTypeRight = SkillType.None;
-    player.sceneShrinesUsed.clear();
-    player.sceneDownloaded = false;
-    player.equippedWeapon = null;
-    player.equippedHelm = null;
-    player.equippedArmor = null;
-    player.equippedShoes = null;
-    player.equipmentDirty = true;
-    player.controlsEnabled = true;
-    player.flags.clear();
-    player.questMain = QuestMain.values.first;
-    player.questTutorial = QuestTutorial.values.first;
-    player.characterState = CharacterState.Idle;
-    player.health = player.maxHealth;
-    player.magic = player.maxMagic;
-    player.clearCache();
-    player.clearActionFrame();
-    player.checkAssignedSkills();
-
     for (final game in games) {
       game.spawnFiendsAtSpawnNodes(player.difficulty);
       game.scene.resetShrines();
     }
-
-    playerChangeGameToTown(player);
-    player.amuletGame = amuletGameVillage;
-    amuletGameVillage.movePositionToIndex(
-      player,
-      amuletGameVillage.indexSpawnPlayer,
-    );
   }
 
   void revivePlayer(AmuletPlayer player) {
