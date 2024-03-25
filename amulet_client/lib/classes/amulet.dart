@@ -585,7 +585,16 @@ class Amulet extends Updatable with IsometricComponent  {
                 z,
             );
           }
-
+          break;
+        case AmuletEvent.Magic_Gained:
+          for (var i = 0; i < 4; i++){
+            const radius = 10.0;
+            particles.spawnParticleMagic(
+                x + giveOrTake(radius),
+                y + giveOrTake(radius),
+                z,
+            );
+          }
           break;
         case AmuletEvent.Amulet_Object_Removed:
           final amuletItemIndex = parser.readUInt16(); // TODO ILLEGAL REFERENCE 'PARSER'

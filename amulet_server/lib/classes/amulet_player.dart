@@ -1575,7 +1575,10 @@ class AmuletPlayer extends AmuletPlayerBase {
      writePlayerEvent(PlayerEvent.Potion_Consumed);
      potionsHealth--;
      health = maxHealth;
-     amuletGame.dispatchAmuletEvent(this, AmuletEvent.Health_Gained);
+     amuletGame.dispatchAmuletEvent(
+         this,
+         AmuletEvent.Health_Gained,
+     );
   }
 
   void usePotionMagic() {
@@ -1586,6 +1589,10 @@ class AmuletPlayer extends AmuletPlayerBase {
     writePlayerEvent(PlayerEvent.Potion_Consumed);
     potionsMagic--;
     magic = maxMagic;
+    amuletGame.dispatchAmuletEvent(
+      this,
+      AmuletEvent.Magic_Gained,
+    );
   }
 
   double getCharacterDamageTypeResistance(DamageType damageType) {
