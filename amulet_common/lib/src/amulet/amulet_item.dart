@@ -10,8 +10,8 @@ enum AmuletItem {
     slotType: SlotType.Weapon,
     subType: WeaponType.Sword_Short,
     skillBase: {
-      SkillType.Slash: 5,
-      SkillType.Attack_Speed: 5,
+      SkillType.Slash: 1,
+      SkillType.Attack_Speed: 4,
       SkillType.Attack_Range: 1,
     }
   ),

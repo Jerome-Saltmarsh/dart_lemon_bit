@@ -166,9 +166,11 @@ class AmuletUI {
                     child: buildPlayerGold()
                 ),
                 width32,
+                buildDialogTitle('UPGRADE EQUIPMENT'),
+                width32,
                 onPressed(
                     action: amulet.endUpgradeMode,
-                    child: buildText('CLOSE X')),
+                    child: buildText('CLOSE X', underline: true)),
               ],
             ),
           ),
