@@ -1149,7 +1149,7 @@ class AmuletUI {
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildTextSubtitle('lvl $level'),
+          buildTextSubtitle('lvl $level/${skillType.maxLevel}'),
           buildSkillTypeLevelBar(skillType)
         ],
       ),
