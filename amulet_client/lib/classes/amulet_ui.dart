@@ -2167,7 +2167,6 @@ class AmuletUI {
           ),
           height4,
           buildLevelBar(value),
-          height4,
         ],
       ),
     );
