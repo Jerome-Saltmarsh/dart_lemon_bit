@@ -202,16 +202,7 @@ class AmuletUI {
 
 
     final controlCost = buildWatch(amulet.playerGold, (playerGold) {
-      return Container(
-        padding: paddingAll8,
-        child: Column(
-          children: [
-            buildText('lvl ${level + 1}', color: Colors.white70),
-            width8,
-            buildText('${cost}g', color: playerGold >= cost ? AmuletColors.Gold : Palette.apricot_2, size: 22),
-          ],
-        ),
-      );
+      return buildText(cost, color: playerGold >= cost ? AmuletColors.Gold : Palette.apricot_2, size: 22);
     });
 
     return onPressed(
@@ -219,8 +210,6 @@ class AmuletUI {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          controlCost,
-          // height8,
           buildWatch(amulet.playerGold, (playerGold) {
             return Container(
                 margin: const EdgeInsets.symmetric(horizontal: 4),
@@ -229,6 +218,18 @@ class AmuletUI {
                   borderColor: playerGold >= cost ? Colors.green : Colors.orange
                 ));
           }),
+          height8,
+          Container(
+              color: Colors.white12,
+              padding: paddingAll8,
+              child: Row(
+                children: [
+                  buildText('UPGRADE'),
+                  width8,
+                  controlCost,
+                  iconGold,
+                ],
+              )),
         ],
       ),
     );
