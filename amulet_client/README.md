@@ -61,6 +61,7 @@ SKULLSOFT
 [new] model spinning sapphire gem for magic
 [new] projectile orb health
 [new] projectile orb magic
+[fix] player runs at enemy instead of attacking
 
 ## 25.03.2024
 [new] projectile orb gold
