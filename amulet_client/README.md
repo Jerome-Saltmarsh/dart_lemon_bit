@@ -54,13 +54,16 @@ SKULLSOFT
 [new] side quest rats in the cellar
 
 [EARLY_ACCESS]
-[new] beat the game
-[new] balance items and enemies
 [new] improve render health bar design
 [new] model spinning sapphire gem for magic
 [new] projectile orb health
 [new] projectile orb magic
 [new] model missing amulet items
+[new] balance items and enemies
+[new] beat the game
+
+## 26.03.2024
+[fix] inter
 
 ## 25.03.2024
 [fix] player runs at enemy instead of attacking

@@ -1757,6 +1757,8 @@ class AmuletPlayer extends AmuletPlayerBase {
     equippedShoes = null;
     equipmentDirty = true;
     controlsEnabled = true;
+    potionsHealth = 2;
+    potionsMagic = 2;
     flags.clear();
     questMain = QuestMain.values.first;
     questTutorial = QuestTutorial.values.first;

@@ -266,11 +266,6 @@ class AmuletGameWorld11 extends AmuletGame {
     }
 
     player.talk(npc, 'how can I help you?', options: {
-      'change skills?': (player) {
-        player.talk(npc,
-            'Click on the skill menu item to the right side of the heal bar.'
-        );
-      },
       'Nevermind': (player) {
         player.endInteraction();
       },
@@ -282,21 +277,10 @@ class AmuletGameWorld11 extends AmuletGame {
     player.talk(
         may, 'Greetings, how can I help?',
         options: {
-          'Item Qualities?': (speaker) {
+          'Upgrades': (speaker) {
             player.talk(
                   may,
-                  'There are three kinds of item quality.'
-                  'common, unique and rare. '
-                  'common items are marked as white.'
-                  'unique items are marked as blue.'
-                  'and rare items are marks as yellow.'
-              );
-          },
-          'Passive Abilities': (speaker) {
-            player.talk(
-                  may,
-                  'Passive abilities effect your characteristics without use magic.'
-                  'They must be assigned to an ability slot to take effect.'
+                  'Use the campfire to upgrade your items.'
               );
           },
         }
