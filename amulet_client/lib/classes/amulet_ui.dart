@@ -2038,35 +2038,23 @@ class AmuletUI {
     );
   }
 
-  Widget buildCardSmallEmpty(){
-    return buildCardSmall(title: nothing, child: nothing);
-  }
+  Widget buildCardSmallEmpty() => buildCardSmall(title: nothing, child: nothing, value: 0);
 
   Widget buildCardSmallAmuletItemObject(AmuletItemObject amuletItemObject) =>
-      buildCardSmallAmuletItemLevel(
+      buildCardSmallAmuletItem(
         amuletItem: amuletItemObject.amuletItem,
         level: amuletItemObject.level,
       );
 
 
-  Widget buildCardSmallAmuletItemLevel({
+  Widget buildCardSmallAmuletItem({
     required AmuletItem amuletItem,
     required int level,
   }) =>
       buildCardSmall(
         title: buildCardTitleText(level),
-        child: Column(
-          children: [
-            Container(
-                width: 50,
-                height: 50,
-                alignment: Alignment.center,
-                child: buildIconAmuletItem(amuletItem)),
-            buildLevelBar(
-              level.percentageOf(amuletItem.maxLevel),
-            )
-          ],
-        ),
+        value: level.percentageOf(amuletItem.maxLevel),
+        child: buildIconAmuletItem(amuletItem),
       );
 
 
@@ -2150,17 +2138,14 @@ class AmuletUI {
         child: child, panel: buildHint('Use health Potion (${amulet.amuletKeys.usePotionHealth.name.upper})'));
   }
 
-  Widget buildCardSmallAmuletItem({
-    required Widget title,
-    required AmuletItem amuletItem,
-  }) =>
-      buildCardSmall(title: title, child: buildIconAmuletItem(amuletItem));
-
   Widget buildCardTitleText(dynamic value) => buildText(value, color: Palette.brown_0);
 
-  Widget buildCardSmall({required Widget title, required Widget child}) {
+  Widget buildCardSmall({
+    required Widget title,
+    required Widget child,
+    required double value,
+  }) {
     const size = 50.0;
-
     return Container(
       color: Palette.brown_4,
       padding: const EdgeInsets.all(4),
@@ -2180,6 +2165,9 @@ class AmuletUI {
               color: Palette.brown_3,
               child: child
           ),
+          height4,
+          buildLevelBar(value),
+          height4,
         ],
       ),
     );
