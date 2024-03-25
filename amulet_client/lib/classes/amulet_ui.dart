@@ -179,6 +179,7 @@ class AmuletUI {
             buildText('No items equipped to upgrade'),
           if (!amulet.nothingEquipped)
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               buildCardUpgradeAmuletItemObject(amulet.equippedWeapon),
               buildCardUpgradeAmuletItemObject(amulet.equippedHelm),
@@ -198,16 +199,31 @@ class AmuletUI {
     final amuletItem = amuletItemObject.amuletItem;
     final level = amuletItemObject.level;
     final cost = amuletItem.getUpgradeCost(level);
+    final fullyUpgraded = level >= amuletItem.maxLevel;
 
+    final controlButton = fullyUpgraded ?  buildText('MAX LEVEL')
+        : buildWatch(amulet.playerGold, (playerGold) {
 
+      final canAfford = playerGold >= cost;
+      final costText = buildText(cost, color: canAfford ? AmuletColors.Gold : Palette.apricot_2, size: 22);
 
-    final controlCost = buildWatch(amulet.playerGold, (playerGold) {
-      return buildText(cost, color: playerGold >= cost ? AmuletColors.Gold : Palette.apricot_2, size: 22);
+      return Container(
+          color: canAfford ? Colors.green : Colors.white12,
+          padding: paddingAll8,
+          child: Row(
+            children: [
+              buildText('UPGRADE'),
+              width8,
+              costText,
+              iconGold,
+            ],
+          ));
     });
 
     return onPressed(
       action: () => amulet.upgradeSlotType(amuletItem.slotType),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           buildWatch(amulet.playerGold, (playerGold) {
@@ -215,21 +231,11 @@ class AmuletUI {
                 margin: const EdgeInsets.symmetric(horizontal: 4),
                 child: buildCardLargeAmuletItemObject(
                   amuletItemObject, compareLevels: true,
-                  borderColor: playerGold >= cost ? Colors.green : Colors.orange
+                  borderColor: Colors.orange
                 ));
           }),
           height8,
-          Container(
-              color: Colors.white12,
-              padding: paddingAll8,
-              child: Row(
-                children: [
-                  buildText('UPGRADE'),
-                  width8,
-                  controlCost,
-                  iconGold,
-                ],
-              )),
+          controlButton,
         ],
       ),
     );
