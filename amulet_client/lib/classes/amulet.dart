@@ -13,6 +13,7 @@ import 'package:amulet_client/classes/amulet_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_lang/src.dart';
+import 'package:lemon_math/src.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:lemon_widgets/lemon_widgets.dart';
 
@@ -574,6 +575,17 @@ class Amulet extends Updatable with IsometricComponent  {
           break;
         case AmuletEvent.Consumed_Gold:
           audio.play(audio.coins, x, y, z);
+          break;
+        case AmuletEvent.Health_Gained:
+          for (var i = 0; i < 4; i++){
+            const radius = 10.0;
+            particles.spawnParticleHealth(
+                x + giveOrTake(radius),
+                y + giveOrTake(radius),
+                z,
+            );
+          }
+
           break;
         case AmuletEvent.Amulet_Object_Removed:
           final amuletItemIndex = parser.readUInt16(); // TODO ILLEGAL REFERENCE 'PARSER'

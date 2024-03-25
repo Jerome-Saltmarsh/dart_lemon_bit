@@ -1575,6 +1575,7 @@ class AmuletPlayer extends AmuletPlayerBase {
      writePlayerEvent(PlayerEvent.Potion_Consumed);
      potionsHealth--;
      health = maxHealth;
+     amuletGame.dispatchAmuletEvent(this, AmuletEvent.Health_Gained);
   }
 
   void usePotionMagic() {
