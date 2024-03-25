@@ -254,8 +254,11 @@ class WindowQuantify extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           buildCell('name', fiendType.name.clean, 150),
+          buildCell('health', fiendType.health, 100),
           buildCell('damage', fiendType.damage, 100),
           buildCell('attack duration', fiendType.attackDuration, 120),
+          buildCell('dps', fiendType.damage / fiendType.attackDuration, 120),
+          buildCell('run speed', fiendType.runSpeed, 120),
           buildCell('quantify', fiendType.quantify.toStringAsFixed(2), 80),
         ],
       ),
