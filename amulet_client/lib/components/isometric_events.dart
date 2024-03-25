@@ -343,6 +343,13 @@ class IsometricEvents with IsometricComponent {
         break;
       case PlayerEvent.Gold_Acquired:
         audio.playSound(audio.coins);
+        for (var i = 0; i < 5; i++){
+          particles.spawnParticleGold(
+            player.x,
+            player.y,
+            player.z,
+          );
+        }
         break;
       case PlayerEvent.Puzzle_Solved:
         audio.notification_sound_10.play();
