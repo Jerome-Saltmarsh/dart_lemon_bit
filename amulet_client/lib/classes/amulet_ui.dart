@@ -1150,7 +1150,7 @@ class AmuletUI {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           buildTextSubtitle('lvl $level/${skillType.maxLevel}'),
-          buildSkillTypeLevelBar(skillType)
+          buildLevelBarSkillType(skillType)
         ],
       ),
     );
@@ -1210,10 +1210,13 @@ class AmuletUI {
     );
   }
 
-  Widget buildSkillTypeLevelBar(SkillType skillType) {
-
+  Widget buildLevelBarSkillType(SkillType skillType) {
     final level = amulet.getSkillTypeLevel(skillType);
     final levelPercentage = level.percentageOf(skillType.maxLevel);
+    return buildLevelBar(levelPercentage);
+  }
+
+  Widget buildLevelBar(double value) {
     const levelWidth = 50.0;
     const levelHeight = 5.0;
 
@@ -1221,12 +1224,12 @@ class AmuletUI {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: levelPercentage * levelWidth,
+              width: value * levelWidth,
               height: levelHeight,
               color: Colors.white70,
             ),
             Container(
-              width: (1.0 - levelPercentage) * levelWidth,
+              width: (1.0 - value) * levelWidth,
               height: levelHeight,
               color: Colors.white24,
             ),
@@ -1989,7 +1992,6 @@ class AmuletUI {
       color: Palette.brown_4,
       padding: const EdgeInsets.all(4),
       child: Column(
-
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
@@ -2003,25 +2005,14 @@ class AmuletUI {
             alignment: Alignment.center,
             color: Palette.brown_4,
           ),
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              Positioned(
-                child: Container(
-                    width: size,
-                    height: size,
-                    alignment: Alignment.center,
-                    color: Palette.brown_3,
-                    child: buildIconSkillType(skillType)),
-              ),
-
-              // Positioned(
-              //     bottom: 2,
-              //     child: buildSkillTypeLevelBar(skillType)),
-            ],
-          ),
+          Container(
+              width: size,
+              height: size,
+              alignment: Alignment.center,
+              color: Palette.brown_3,
+              child: buildIconSkillType(skillType)),
           height2,
-          buildSkillTypeLevelBar(skillType),
+          buildLevelBarSkillType(skillType),
         ],
       ),
     );
@@ -2064,7 +2055,18 @@ class AmuletUI {
   }) =>
       buildCardSmall(
         title: buildCardTitleText(level),
-        child: buildIconAmuletItem(amuletItem),
+        child: Column(
+          children: [
+            Container(
+                width: 50,
+                height: 50,
+                alignment: Alignment.center,
+                child: buildIconAmuletItem(amuletItem)),
+            buildLevelBar(
+              level.percentageOf(amuletItem.maxLevel),
+            )
+          ],
+        ),
       );
 
 
