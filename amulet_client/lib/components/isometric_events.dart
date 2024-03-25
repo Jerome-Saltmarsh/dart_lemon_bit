@@ -286,14 +286,12 @@ class IsometricEvents with IsometricComponent {
         break;
       case MaterialType.Flesh:
         audio.play(audio.material_struck_flesh, x, y, z);
-        for (var i = 0; i < 4; i++){
-          particles.spawnParticleBloodRising(
-              x: x,
-              y: y,
-              z: z,
-              scale: 1.0,
-          );
-        }
+        particles.spawnParticleBloodRising(
+          x: x,
+          y: y,
+          z: z,
+          total: 4,
+        );
         // particles.emitFlame(x: x, y: y, z: z);
         // particles.spawnBlood(x, y, z)
         break;
@@ -450,15 +448,6 @@ class IsometricEvents with IsometricComponent {
     audio.play(randomItem(audio.bloody_punches), x, y, z);
     audio.play(audio.heavy_punch_13, x, y, z);
 
-    for (var i = 0; i < 8; i++){
-      particles.spawnParticleBloodRising(
-        x: x + giveOrTake(5),
-        y: y + giveOrTake(5),
-        z: z,
-      );
-    }
-
-
     final audioClip = audio.getCharacterTypeAudioDeath(characterType);
 
     if (audioClip != null){
@@ -472,15 +461,12 @@ class IsometricEvents with IsometricComponent {
         }
         break;
       default:
-        for (var i = 0; i < 4; i++){
-          particles.spawnBlood(
-            x: x,
-            y: y,
-            z: z,
-            angle: angle + giveOrTake(piQuarter),
-            speed: randomBetween(1.5, 2.5),
-          );
-        }
+        particles.spawnParticleBloodRising(
+          x: x,
+          y: y,
+          z: z,
+          total: 4,
+        );
         break;
     }
   }
@@ -531,15 +517,15 @@ class IsometricEvents with IsometricComponent {
     audio.play(randomItem(audio.bloody_punches), x, y, z);
     audio.play(audio.heavy_punch_13, x, y, z);
 
-    for (var i = 0; i < 4; i++){
-      particles.spawnBlood(
-        x: x,
-        y: y,
-        z: z,
-        angle: angle + giveOrTake(piQuarter),
-        speed: randomBetween(1.5, 2.5),
-      );
-    }
+    // for (var i = 0; i < 4; i++){
+    //   particles.spawnBlood(
+    //     x: x,
+    //     y: y,
+    //     z: z,
+    //     angle: angle + giveOrTake(piQuarter),
+    //     speed: randomBetween(1.5, 2.5),
+    //   );
+    // }
 
     final hurtAudio = audio.getCharacterTypeAudioHurt(type);
     if (hurtAudio != null) {

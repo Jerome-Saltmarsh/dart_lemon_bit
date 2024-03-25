@@ -823,16 +823,20 @@ class IsometricParticles with IsometricComponent implements Updatable {
         ..blownByWind = true
   ;
 
-  Particle spawnParticleBloodRising({
+  void spawnParticleBloodRising({
     required double x,
     required double y,
     required double z,
-    double scale = 1.0
-  }) =>
+    double scale = 1.0,
+    int total = 1,
+  }) {
+
+    for (var i = 0; i < total; i++){
+      const radius = 10.0;
       spawnParticle(
         particleType: ParticleType.Blood_Rising,
-        x: x,
-        y: y,
+        x: x + giveOrTake(radius),
+        y: y + giveOrTake(radius),
         z: z,
         zv: 1.2,
         angle: 0,
@@ -844,8 +848,9 @@ class IsometricParticles with IsometricComponent implements Updatable {
         scale: scale,
       )
         ..emitsLight = false
-        ..blownByWind = true
-  ;
+        ..blownByWind = true;
+    }
+  }
 
   Particle emitWater({
     required double x,
