@@ -61,9 +61,9 @@ SKULLSOFT
 [new] model spinning sapphire gem for magic
 [new] projectile orb health
 [new] projectile orb magic
-[fix] player runs at enemy instead of attacking
 
 ## 25.03.2024
+[fix] player runs at enemy instead of attacking
 [new] projectile orb gold
 [new] collectable gameobject gold
 [new] auto acquire consumables

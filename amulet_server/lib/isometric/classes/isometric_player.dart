@@ -23,6 +23,7 @@ class IsometricPlayer extends Character with ByteWriter {
 
   static const Cache_Length = 250;
 
+  var ignoreLeftMouse = false;
   var editEnabled = true;
   var controlsEnabled = true;
   var userId = "";
@@ -1503,11 +1504,13 @@ class IsometricPlayer extends Character with ByteWriter {
 
     if (aimTarget != null){
       target = aimTarget;
+      ignoreLeftMouse = true;
       return;
     }
 
     if (aimNodeIndex != null) {
       targetNodeIndex = aimNodeIndex;
+      ignoreLeftMouse = true;
       return;
     }
 
