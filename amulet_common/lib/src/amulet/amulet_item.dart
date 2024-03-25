@@ -9,372 +9,387 @@ enum AmuletItem {
     label: 'Short Sword',
     slotType: SlotType.Weapon,
     subType: WeaponType.Sword_Short,
-    skillBase: {
-      SkillType.Slash: 1,
-      SkillType.Attack_Speed: 4,
-      SkillType.Attack_Range: 1,
+    maxLevel: 5,
+    skills: {
+      SkillType.Slash: Constraint(min: 0.1, max: 0.3),
+      SkillType.Attack_Speed: Constraint(min: 0.3, max: 0.3),
+      SkillType.Attack_Range: Constraint(min: 0.5, max: 0.5),
     }
   ),
   Weapon_Sword_Broad(
     label: 'Broad Sword',
     slotType: SlotType.Weapon,
     subType: WeaponType.Sword_Broad,
-      skillBase: {
-        SkillType.Slash: 7,
-        SkillType.Attack_Speed: 5,
-        SkillType.Attack_Range: 2,
-      }
+    skills: {
+      SkillType.Slash: Constraint(min: 0.2, max: 0.4),
+      SkillType.Attack_Speed: Constraint(min: 0.3, max: 0.3),
+      SkillType.Attack_Range: Constraint(min: 0.5, max: 0.5),
+    }
   ),
   Weapon_Sword_Long(
     label: 'Long Sword',
     slotType: SlotType.Weapon,
     subType: WeaponType.Sword_Long,
-    skillBase: {
-      SkillType.Slash: 8,
-      SkillType.Attack_Speed: 1,
-      SkillType.Attack_Range: 3,
-    }
+      skills: {
+        SkillType.Slash: Constraint(min: 0.2, max: 0.5),
+        SkillType.Attack_Speed: Constraint(min: 0.3, max: 0.3),
+        SkillType.Attack_Range: Constraint(min: 0.6, max: 0.6),
+      }
   ),
   Weapon_Sword_Giant(
     label: 'Giant Sword',
     slotType: SlotType.Weapon,
     subType: WeaponType.Sword_Giant,
-      skillBase: {
-        SkillType.Slash: 12,
-        SkillType.Attack_Speed: 1,
-        SkillType.Attack_Range: 4,
-      }
+    skills: {
+        SkillType.Slash: Constraint(min: 0.3, max: 0.6),
+        SkillType.Attack_Speed: Constraint(min: 0.2, max: 0.2),
+        SkillType.Attack_Range: Constraint(min: 0.7, max: 0.7),
+    }
   ),
   Weapon_Bow_Short(
     label: 'Short Bow',
     slotType: SlotType.Weapon,
     subType: WeaponType.Bow_Short,
-    skillBase: {
-      SkillType.Shoot_Arrow: 5,
-      SkillType.Attack_Speed: 1,
-      SkillType.Attack_Range: 1,
-    }
+    skills: {
+      SkillType.Shoot_Arrow: Constraint(min: 0.1, max: 0.3),
+      SkillType.Attack_Speed: Constraint(min: 0.7, max: 0.8),
+      SkillType.Attack_Range: Constraint(min: 0.25, max: 0.25),
+    },
   ),
   Weapon_Bow_Reflex(
     label: 'Reflex Bow',
     slotType: SlotType.Weapon,
     subType: WeaponType.Bow_Reflex,
-      skillBase: {
-        SkillType.Shoot_Arrow: 5,
-        SkillType.Attack_Speed: 1,
-        SkillType.Attack_Range: 2,
-      }
+    skills: {
+      SkillType.Shoot_Arrow: Constraint(min: 0.1, max: 0.3),
+      SkillType.Attack_Speed: Constraint(min: 0.7, max: 0.8),
+      SkillType.Attack_Range: Constraint(min: 0.25, max: 0.25),
+    },
   ),
   Weapon_Bow_Composite(
     label: 'Composite Bow',
     slotType: SlotType.Weapon,
     subType: WeaponType.Bow_Composite,
-      skillBase: {
-        SkillType.Shoot_Arrow: 5,
-        SkillType.Attack_Speed: 1,
-        SkillType.Attack_Range: 3,
-      }
+    skills: {
+      SkillType.Shoot_Arrow: Constraint(min: 0.1, max: 0.3),
+      SkillType.Attack_Speed: Constraint(min: 0.7, max: 0.8),
+      SkillType.Attack_Range: Constraint(min: 0.25, max: 0.25),
+    },
   ),
   Weapon_Bow_Long(
-    label: 'Lucky Long Bow of the Flame',
+    label: 'Long Bow',
     slotType: SlotType.Weapon,
     subType: WeaponType.Bow_Long,
-      skillBase: {
-        SkillType.Shoot_Arrow: 5,
-        SkillType.Attack_Speed: 1,
-        SkillType.Attack_Range: 4,
-      }
+    skills: {
+      SkillType.Shoot_Arrow: Constraint(min: 0.1, max: 0.3),
+      SkillType.Attack_Speed: Constraint(min: 0.7, max: 0.8),
+      SkillType.Attack_Range: Constraint(min: 0.25, max: 0.25),
+    },
   ),
   Weapon_Staff_Wand(
     label: 'Wand',
     slotType: SlotType.Weapon,
     subType: WeaponType.Staff_Wand,
-    skillSet: {
-      SkillType.Magic_Regen: 0.5,
-    },
-    skillBase: {
-      SkillType.Bludgeon: 5,
-      SkillType.Attack_Speed: 1,
-      SkillType.Attack_Range: 1,
+    skills: {
+      SkillType.Ice_Ball: Constraint(min: 0.1, max: 0.4),
+      SkillType.Max_Magic: Constraint(min: 0.7, max: 0.8),
     },
   ),
   Weapon_Staff_Globe(
     label: 'Globe',
     slotType: SlotType.Weapon,
     subType: WeaponType.Staff_Globe,
-    skillSet: {
-      SkillType.Magic_Regen: 0.5,
-    },
-    skillBase: {
-      SkillType.Bludgeon: 5,
-      SkillType.Attack_Speed: 1,
-      SkillType.Attack_Range: 2,
+    skills: {
+      SkillType.Ice_Ball: Constraint(min: 0.1, max: 0.4),
+      SkillType.Max_Magic: Constraint(min: 0.7, max: 0.8),
     },
   ),
   Weapon_Staff_Scepter(
     label: 'Scepter',
     slotType: SlotType.Weapon,
     subType: WeaponType.Staff_Scepter,
-    skillSet: {
-      SkillType.Magic_Regen: 0.5,
-    },
-    skillBase: {
-      SkillType.Bludgeon: 5,
-      SkillType.Attack_Speed: 1,
-      SkillType.Attack_Range: 3,
+    skills: {
+      SkillType.Ice_Ball: Constraint(min: 0.1, max: 0.4),
+      SkillType.Max_Magic: Constraint(min: 0.7, max: 0.8),
     },
   ),
   Weapon_Staff_Long(
     label: 'Staff',
     slotType: SlotType.Weapon,
     subType: WeaponType.Staff_Long,
-    skillSet: {
-      SkillType.Magic_Regen: 0.5,
-    },
-    skillBase: {
-      SkillType.Bludgeon: 5,
-      SkillType.Attack_Speed: 1,
-      SkillType.Attack_Range: 4,
+    skills: {
+      SkillType.Ice_Ball: Constraint(min: 0.1, max: 0.4),
+      SkillType.Max_Magic: Constraint(min: 0.7, max: 0.8),
     },
   ),
   Helm_Leather_Cap(
     label: 'Leather Cap',
     slotType: SlotType.Helm,
     subType: HelmType.Leather_Cap,
-    skillSet: {
-      SkillType.Max_Health: 1.0,
-      SkillType.Health_Regen: 0.25,
-      SkillType.Critical_Hit: 0.25,
+    skills: {
+      SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+      SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
+      SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
     },
   ),
   Helm_Steel_Cap(
     label: 'Steel Cap',
     slotType: SlotType.Helm,
     subType: HelmType.Steel_Cap,
-    skillSet: {
-      SkillType.Max_Health: 1.0,
-      SkillType.Wind_Cut: 0.5,
+    skills: {
+      SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+      SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
+      SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
     },
   ),
   Helm_Full(
     label: 'Full Helm',
     slotType: SlotType.Helm,
     subType: HelmType.Full_Helm,
-    skillSet: {
-      SkillType.Max_Health: 1.0,
-      SkillType.Mighty_Strike: 0.5,
+    skills: {
+      SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+      SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
+      SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
     },
   ),
   Helm_Crooked_Hat(
     label: 'Crooked Hat',
     slotType: SlotType.Helm,
     subType: HelmType.Pointed_Hat_Purple,
-    skillSet: {
-      SkillType.Max_Magic: 1.0,
-      SkillType.Magic_Regen: 0.5,
+    skills: {
+      SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+      SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
+      SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
     },
   ),
   Helm_Pointed_Hat(
     label: 'Pointed Hat',
     slotType: SlotType.Helm,
     subType: HelmType.Pointed_Hat_Black,
-    skillSet: {
-      SkillType.Max_Magic: 1.0,
-      SkillType.Magic_Steal: 0.5,
+    skills: {
+      SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+      SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
+      SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
     },
   ),
   Helm_Cowl(
     label: 'Cowl',
     slotType: SlotType.Helm,
     subType: HelmType.Cowl,
-    skillSet: {
-      SkillType.Max_Magic: 1.0,
-      SkillType.Ice_Ball: 0.5,
+    skills: {
+      SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+      SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
+      SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
     },
   ),
   Helm_Feathered_Cap(
     label: 'Feather Cap',
     slotType: SlotType.Helm,
     subType: HelmType.Feather_Cap,
-    skillSet: {
-      SkillType.Max_Health: 1.0,
-      SkillType.Split_Shot: 0.5,
+    skills: {
+      SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+      SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
+      SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
     },
   ),
   Helm_Cape(
     label: 'Cape',
     slotType: SlotType.Helm,
     subType: HelmType.Cape,
-    skillSet: {
-      SkillType.Attack_Speed: 0.5,
+    skills: {
+      SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+      SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
+      SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
     },
   ),
   Helm_Veil(
     label: 'Veil',
     slotType: SlotType.Helm,
     subType: HelmType.Cape,
-    skillSet: {
-      SkillType.Health_Steal: 0.5,
+    skills: {
+      SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+      SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
+      SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
     },
   ),
   Armor_Tunic(
     label: 'Tunic',
     slotType: SlotType.Armor,
     subType: ArmorType.Tunic,
-    skillSet: {
-      SkillType.Critical_Hit: 1.0,
+    skills: {
+      SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+      SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
+      SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
     },
   ),
   Armor_Leather(
     label: 'Leather',
     slotType: SlotType.Armor,
     subType: ArmorType.Leather,
-    skillSet: {
-      SkillType.Max_Health: 1.0,
-      SkillType.Mighty_Strike: 1.0,
+    skills: {
+      SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+      SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
+      SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
     },
   ),
   Armor_Chainmail(
     label: 'Chainmail',
     slotType: SlotType.Armor,
     subType: ArmorType.Chainmail,
-    skillSet: {
-      SkillType.Max_Health: 1.0,
-      SkillType.Area_Damage: 1.0,
+    skills: {
+      SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+      SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
+      SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
     },
   ),
   Armor_Platemail(
     label: 'Platemail',
     slotType: SlotType.Armor,
     subType: ArmorType.Platemail,
-    skillSet: {
-      SkillType.Max_Health: 1.0,
-      SkillType.Mighty_Strike: 1.0,
+    skills: {
+      SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+      SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
+      SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
     },
   ),
   Armor_Robes(
     label: 'Robes',
     slotType: SlotType.Armor,
     subType: ArmorType.Robes,
-    skillSet: {
-      SkillType.Max_Health: 1.0,
-      SkillType.Magic_Steal: 1.0,
+    skills: {
+      SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+      SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
+      SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
     },
   ),
   Armor_Garb(
     label: 'Garb',
     slotType: SlotType.Armor,
     subType: ArmorType.Robes,
-    skillSet: {
-      SkillType.Max_Health: 1.0,
-      SkillType.Heal: 1.0,
+    skills: {
+      SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+      SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
+      SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
     },
   ),
   Armor_Cloak(
     label: 'Cloak',
     slotType: SlotType.Armor,
     subType: ArmorType.Cloak,
-    skillSet: {
-      SkillType.Max_Health: 1.0,
-      SkillType.Attack_Speed: 1.0,
+    skills: {
+      SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+      SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
+      SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
     },
   ),
   Armor_Mantle(
     label: 'Mantle',
     slotType: SlotType.Armor,
     subType: ArmorType.Mantle,
-    skillSet: {
-      SkillType.Max_Health: 1.0,
-      SkillType.Resist_Fire: 1.0,
+    skills: {
+      SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+      SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
+      SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
     },
   ),
   Armor_Shroud(
     label: 'Shroud',
     slotType: SlotType.Armor,
     subType: ArmorType.Shroud,
-    skillSet: {
-      SkillType.Max_Health: 1.0,
-      SkillType.Health_Steal: 1.0,
+    skills: {
+      SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+      SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
+      SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
     },
   ),
   Shoes_Leather_Boots(
     label: 'Leather Boots',
     slotType: SlotType.Shoes,
     subType: ShoeType.Leather_Boots,
-    skillSet: {
-      SkillType.Max_Health: 1.0,
+    skills: {
+      SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+      SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
+      SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
     },
   ),
   Shoes_Grieves(
     label: 'Grieves',
     slotType: SlotType.Shoes,
     subType: ShoeType.Grieves,
-    skillSet: {
-      SkillType.Max_Health: 1.0,
-      SkillType.Wind_Cut: 0.5,
+    skills: {
+      SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+      SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
+      SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
     },
   ),
   Shoes_Sabatons(
     label: 'Sabatons',
     slotType: SlotType.Shoes,
     subType: ShoeType.Sabatons,
-    skillSet: {
-      SkillType.Max_Health: 1.0,
-      SkillType.Mighty_Strike: 1.0,
+    skills: {
+      SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+      SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
+      SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
     },
   ),
   Shoes_Black_Slippers(
     label: 'Black Slippers',
     slotType: SlotType.Shoes,
     subType: ShoeType.Black_Slippers,
-    skillSet: {
-      SkillType.Max_Health: 1.0,
-      SkillType.Magic_Regen: 1.0,
+    skills: {
+      SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+      SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
+      SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
     },
   ),
   Shoes_Footwraps(
     label: 'Footwraps',
     slotType: SlotType.Shoes,
     subType: ShoeType.Footwraps,
-    skillSet: {
-      SkillType.Max_Health: 1.0,
-      SkillType.Magic_Steal: 0.5,
+    skills: {
+      SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+      SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
+      SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
     },
   ),
   Shoes_Soles(
     label: 'Soles',
     slotType: SlotType.Shoes,
     subType: ShoeType.Soles,
-    skillSet: {
-      SkillType.Max_Health: 1.0,
-      SkillType.Magic_Regen: 1.0,
+    skills: {
+      SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+      SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
+      SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
     },
   ),
   Shoes_Treads(
     label: 'Treads',
     slotType: SlotType.Shoes,
     subType: ShoeType.Treads,
-    skillSet: {
-      SkillType.Max_Health: 1.0,
-      SkillType.Attack_Speed: 1.0,
+    skills: {
+      SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+      SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
+      SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
     },
   ),
   Shoes_Striders(
     label: 'Striders',
     slotType: SlotType.Shoes,
     subType: ShoeType.Striders,
-    skillSet: {
-      SkillType.Max_Health: 1.0,
-      SkillType.Run_Speed: 1.0,
+    skills: {
+      SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+      SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
+      SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
     },
   ),
   Shoes_Satin_Boots(
     label: 'Satin_Boots',
     slotType: SlotType.Shoes,
     subType: ShoeType.Satin_Boots,
-    skillSet: {
-      SkillType.Max_Health: 1.0,
-      SkillType.Heal: 1.0,
+    skills: {
+      SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+      SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
+      SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
     },
   ),
   Consumable_Potion_Magic(
@@ -407,13 +422,11 @@ enum AmuletItem {
       slotType: SlotType.Weapon,
       subType: WeaponType.Staff_Wand,
       quality: ItemQuality.Unique,
-      skillSet: {
-        SkillType.Ice_Ball: 1.1,
+      skills: {
+        SkillType.Bludgeon: Constraint(min: 0.1, max: 0.4),
+        SkillType.Fire_Ball: Constraint(min: 0.1, max: 0.4),
+        SkillType.Magic_Steal: Constraint(min: 0.1, max: 0.4),
       },
-      skillBase: {
-        SkillType.Bludgeon: 1,
-        SkillType.Attack_Speed: 5,
-      }
   ),
 
   Special_Weapon_Flame_Wand(
@@ -421,72 +434,54 @@ enum AmuletItem {
       slotType: SlotType.Weapon,
       subType: WeaponType.Staff_Wand,
       quality: ItemQuality.Unique,
-      skillSet: {
-        SkillType.Ice_Ball: 1.1,
+      skills: {
+        SkillType.Bludgeon: Constraint(min: 0.1, max: 0.4),
+        SkillType.Fire_Ball: Constraint(min: 0.1, max: 0.4),
+        SkillType.Magic_Steal: Constraint(min: 0.1, max: 0.4),
       },
-      skillBase: {
-        SkillType.Bludgeon: 1,
-        SkillType.Attack_Speed: 5,
-        SkillType.Attack_Range: 1,
-      }
   ),
   Special_Weapon_Vampire_Knife(
       label: 'Assassins Blade',
       slotType: SlotType.Weapon,
       subType: WeaponType.Sword_Short,
       quality: ItemQuality.Unique,
-      skillSet: {
-        SkillType.Health_Steal: 1.0,
+      skills: {
+        SkillType.Bludgeon: Constraint(min: 0.1, max: 0.4),
+        SkillType.Fire_Ball: Constraint(min: 0.1, max: 0.4),
+        SkillType.Magic_Steal: Constraint(min: 0.1, max: 0.4),
       },
-      skillBase: {
-        SkillType.Slash: 1,
-        SkillType.Attack_Speed: 5,
-        SkillType.Attack_Range: 1,
-      }
     ),
   Special_Weapon_Assassins_Blade(
       label: 'Assassins Blade',
       slotType: SlotType.Weapon,
       subType: WeaponType.Sword_Short,
       quality: ItemQuality.Rare,
-      skillSet: {
-        SkillType.Critical_Hit: 2.0,
-        SkillType.Attack_Speed: 1.0,
+      skills: {
+        SkillType.Bludgeon: Constraint(min: 0.1, max: 0.4),
+        SkillType.Fire_Ball: Constraint(min: 0.1, max: 0.4),
+        SkillType.Magic_Steal: Constraint(min: 0.1, max: 0.4),
       },
-      skillBase: {
-        SkillType.Slash: 1,
-        SkillType.Attack_Speed: 5,
-        SkillType.Attack_Range: 1,
-      }
   ),
   Special_Weapon_Blizzard_Globe(
       label: 'Blizzard Globe',
       slotType: SlotType.Weapon,
       subType: WeaponType.Staff_Globe,
       quality: ItemQuality.Rare,
-      skillSet: {
-        SkillType.Ice_Ball: 2.0,
-        SkillType.Magic_Steal: 1.0,
+      skills: {
+        SkillType.Bludgeon: Constraint(min: 0.1, max: 0.4),
+        SkillType.Fire_Ball: Constraint(min: 0.1, max: 0.4),
+        SkillType.Magic_Steal: Constraint(min: 0.1, max: 0.4),
       },
-      skillBase: {
-        SkillType.Bludgeon: 1,
-        SkillType.Attack_Speed: 5,
-        SkillType.Attack_Range: 2,
-      }
   ),
   Special_Weapon_Bow_Of_Destruction(
       label: 'Bow of Destruction',
       slotType: SlotType.Weapon,
       subType: WeaponType.Bow_Reflex,
       quality: ItemQuality.Rare,
-      skillSet: {
-        SkillType.Critical_Hit: 2.0,
-        SkillType.Attack_Speed: 1.0,
-      },
-      skillBase: {
-        SkillType.Shoot_Arrow: 1,
-        SkillType.Attack_Speed: 5,
-        SkillType.Attack_Range: 2,
+      skills: {
+        SkillType.Bludgeon: Constraint(min: 0.1, max: 0.4),
+        SkillType.Fire_Ball: Constraint(min: 0.1, max: 0.4),
+        SkillType.Magic_Steal: Constraint(min: 0.1, max: 0.4),
       },
   ),
   Unique_Helm_Of_Fireball(
@@ -494,10 +489,10 @@ enum AmuletItem {
       slotType: SlotType.Helm,
       subType: HelmType.Pointed_Hat_Purple,
       quality: ItemQuality.Unique,
-      skillSet: {
-        SkillType.Max_Health: 1.0,
-        SkillType.Max_Magic: 1.0,
-        SkillType.Fire_Ball: 1.5,
+      skills: {
+        SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+        SkillType.Max_Magic: Constraint(min: 0.1, max: 0.4),
+        SkillType.Fire_Ball: Constraint(min: 0.1, max: 0.4),
       },
   ),
   Unique_Helm_Of_Frostball(
@@ -505,47 +500,56 @@ enum AmuletItem {
       slotType: SlotType.Helm,
       subType: HelmType.Pointed_Hat_Purple,
       quality: ItemQuality.Unique,
-      skillSet: {
-        SkillType.Max_Health: 1.0,
-        SkillType.Ice_Ball: 1.5,
-      }),
+      skills: {
+        SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+        SkillType.Max_Magic: Constraint(min: 0.1, max: 0.4),
+        SkillType.Fire_Ball: Constraint(min: 0.1, max: 0.4),
+      },
+  ),
   Unique_Helm_Of_Magic_Regen(
       label: 'Frosted Hat',
       slotType: SlotType.Helm,
       subType: HelmType.Pointed_Hat_Purple,
       quality: ItemQuality.Unique,
-      skillSet: {
-        SkillType.Max_Health: 1.0,
-        SkillType.Magic_Regen: 1.5,
-      }),
+      skills: {
+        SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+        SkillType.Max_Magic: Constraint(min: 0.1, max: 0.4),
+        SkillType.Fire_Ball: Constraint(min: 0.1, max: 0.4),
+      },
+  ),
   Rare_Helm_Of_Fireball(
       label: 'Lost Hat of Flame',
       slotType: SlotType.Helm,
       subType: HelmType.Pointed_Hat_Purple,
       quality: ItemQuality.Rare,
-      skillSet: {
-        SkillType.Max_Health: 1.0,
-        SkillType.Fire_Ball: 2.5,
-      }),
+      skills: {
+        SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+        SkillType.Max_Magic: Constraint(min: 0.1, max: 0.4),
+        SkillType.Fire_Ball: Constraint(min: 0.1, max: 0.4),
+      },
+  ),
   Rare_Helm_Of_Frostball(
       label: 'Sacred Hat of the Tempest',
       slotType: SlotType.Helm,
       subType: HelmType.Pointed_Hat_Purple,
       quality: ItemQuality.Rare,
-      skillSet: {
-        SkillType.Max_Health: 1.0,
-        SkillType.Max_Magic: 1.0,
-        SkillType.Ice_Ball: 2.5,
-      }),
+      skills: {
+        SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+        SkillType.Max_Magic: Constraint(min: 0.1, max: 0.4),
+        SkillType.Fire_Ball: Constraint(min: 0.1, max: 0.4),
+      },
+  ),
   Rare_Helm_Of_Magic_Regen(
       label: 'Legendary Hat of Magic',
       slotType: SlotType.Helm,
       subType: HelmType.Pointed_Hat_Purple,
       quality: ItemQuality.Rare,
-      skillSet: {
-        SkillType.Max_Health: 1.0,
-        SkillType.Magic_Regen: 2.5,
-      }),
+      skills: {
+        SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
+        SkillType.Max_Magic: Constraint(min: 0.1, max: 0.4),
+        SkillType.Fire_Ball: Constraint(min: 0.1, max: 0.4),
+      },
+  ),
   ;
 
   /// see item_type.dart in commons
@@ -553,16 +557,18 @@ enum AmuletItem {
   final int subType;
   final ItemQuality quality;
   final String label;
-  final Map<SkillType, double> skillSet;
-  final Map<SkillType, int> skillBase;
+  // final Map<SkillType, double> skillSet;
+  // final Map<SkillType, int> skillBase;
+  final Map<SkillType, Constraint<double>> skills;
+  final int maxLevel;
 
   const AmuletItem({
     required this.slotType,
     required this.subType,
     required this.label,
     this.quality = ItemQuality.Common,
-    this.skillSet = const {},
-    this.skillBase = const {},
+    this.skills = const {},
+    this.maxLevel = 5,
   });
 
   bool get isWeapon => slotType == SlotType.Weapon;
@@ -582,20 +588,23 @@ enum AmuletItem {
   bool get isArmor => slotType == SlotType.Armor;
 
   double get quantify {
-    const pointsPerSkill = 1.0;
+    return (quantifyMin + quantifyMax).toDouble();
+  }
+
+  double get quantifyMin {
     var total = 0.0;
-    for (final entry in skillSet.entries) {
-      total += entry.value * pointsPerSkill;
+    for (final skill in skills.entries) {
+      total += skill.value.min;
     }
-    total += quantifyBase;
     return total;
   }
 
-  int get quantifyBase {
-    var total = 0;
-    for (final entry in skillBase.entries) {
-      total += entry.value;
+  double get quantifyMax {
+    var total = 0.0;
+    for (final skill in skills.entries) {
+      total += skill.value.max;
     }
+
     return total;
   }
 
@@ -607,9 +616,9 @@ enum AmuletItem {
   }
 
   SkillType? get attackSkill {
-    for (final skillType in skillBase.keys){
-      if (skillType.isBaseAttack) {
-        return skillType;
+    for (final entry in skills.entries){
+      if (entry.key.isBaseAttack) {
+        return entry.key;
       }
     }
     return null;
@@ -621,15 +630,6 @@ enum AmuletItem {
       if (attackSkill == null){
         throw Exception('$this attackSkill is null');
       }
-      if (getSkillTypeLevelBase(skillType: attackSkill) == 0){
-        throw Exception('$this attack skill base level is 0');
-      }
-
-      if (getSkillTypeLevelBase(skillType: SkillType.Attack_Range) == 0){
-        throw Exception('$this SkillType.Attack required');
-      }
-
-
     }
 
     return !isWeapon || attackSkill != null;
@@ -657,24 +657,18 @@ enum AmuletItem {
 
   int getUpgradeCost(int level) => (level * level * quantify).floor();
 
-  int getSkillTypeLevel({required SkillType skillType, required int level}) =>
-      getSkillTypeLevelSet(skillType: skillType, level: level) +
-      getSkillTypeLevelBase(skillType: skillType);
-
-  int getSkillTypeLevelSet({
+  int getSkillTypeLevel({
     required SkillType skillType,
     required int level,
-  }){
-    final skillValue = skillSet[skillType];
-    if (skillValue == null) return 0;
-    return (skillValue * level).floor();
+  }) {
+    final entry = skills[skillType];
+    if (entry == null) return 0;
+    final levelClamped = level.clamp(1, maxLevel);
+    final i = levelClamped / maxLevel;
+    final t = interpolate(entry.min, entry.max, i);
+    final maxLevelI = interpolate(0, skillType.maxLevel, t);
+    return maxLevelI.floor();
   }
-
-  int getSkillTypeLevelBase({
-    required SkillType skillType,
-  }) =>
-      skillBase[skillType] ?? 0;
-
 
   double getRange(int level){
     final i = level / SkillType.Attack_Range.maxLevel;

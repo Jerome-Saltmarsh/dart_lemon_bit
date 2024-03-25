@@ -2468,14 +2468,6 @@ String getOperator(num? value){
 }
 
 
-double getAmuletItemSkillSetTotal(AmuletItem amuletItem) {
-  var total = 0.0;
-  for (final entry in amuletItem.skillSet.values){
-    total += entry;
-  }
-  return total;
-}
-
 Widget buildPostFrameCallback({required WidgetBuilder builder}){
   var set = false;
   return StatefulBuilder(builder: (context, setState){

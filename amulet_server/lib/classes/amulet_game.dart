@@ -1453,17 +1453,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
         level: level,
       );
 
-  Map<SkillType, int> getAmuletItemSkillPoints(AmuletItem amuletItem, int level){
-    final skillPoints = <SkillType, int> {};
-    for (final entry in amuletItem.skillSet.entries){
-      final ratio = entry.value;
-      final levelPoints = (level * ratio).toInt();
-      final currentPoints = skillPoints[entry.key] ?? 0;
-      skillPoints[entry.key] = levelPoints + currentPoints;
-    }
-    return skillPoints;
-  }
-
   void characterPerformSkillTypeWindCut(
       Character character,
       int level,

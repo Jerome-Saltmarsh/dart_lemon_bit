@@ -659,14 +659,6 @@ class AmuletPlayer extends AmuletPlayerBase {
         break;
     }
 
-    final skillPoints = value.amuletItem.skillSet.entries;
-
-    for (final skillPoint in skillPoints){
-      final skillType = skillPoint.key;
-      final level = getSkillTypeLevel(skillType);
-      if (level <= 0) continue;
-    }
-
     notifyEquipmentDirty();
     return true;
   }
@@ -1634,8 +1626,8 @@ class AmuletPlayer extends AmuletPlayerBase {
     }
 
     if (skillTypeRight == SkillType.None || skillTypeRight == attackSkill) {
-      final skillSet = equippedWeapon?.amuletItem.skillSet;
-      if (skillSet != null) {
+      final skills = equippedWeapon?.amuletItem.skills;
+      if (skills != null) {
          for (final skillType in SkillType.values){
            if (
             skillType.isPassive ||

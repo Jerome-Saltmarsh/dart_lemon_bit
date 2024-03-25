@@ -170,21 +170,18 @@ class WindowQuantify extends StatelessWidget {
                 alignment: Alignment.center,
                 child: validationError != null ? buildText(validationError.name, color: Colors.red) : null,
               ),
-              // if (damageMax != null)
-              //   buildQuantificationCell('dmg-max', damageMax),
-              // if (damageMin != null)
-              //   buildQuantificationCell('dmg-min', damageMin),
-
-              // buildQuantificationCell('speed', amuletItem.attackSpeed),
-              // buildQuantificationCell('range', amuletItem.range),
               Container(
                   width: 150,
                   alignment: Alignment.center,
                   child: Column(
                     children: [
-                      ...amuletItem.skillSet.entries.map((entry) {
+                      ...amuletItem.skills.entries.map((entry) {
                         if (showValue) {
-                          final skillLevel = (entry.value * level).floor();
+                          final skillLevel = amuletItem.getSkillTypeLevel(
+                              skillType: entry.key,
+                              level: level,
+                          );
+
                           if (skillLevel <= 0) return nothing;
                           return Row(
                             children: [
@@ -254,11 +251,11 @@ class WindowQuantify extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           buildCell('name', fiendType.name.clean, 150),
-          buildCell('health', fiendType.health, 100),
-          buildCell('damage', fiendType.damage, 100),
-          buildCell('attack duration', fiendType.attackDuration, 120),
-          buildCell('dps', fiendType.damage / fiendType.attackDuration, 120),
-          buildCell('run speed', fiendType.runSpeed, 120),
+          buildCell('health', fiendType.health, 80),
+          buildCell('damage', fiendType.damage, 80),
+          buildCell('attack dur', fiendType.attackDuration, 100),
+          buildCell('dps', fiendType.damage / fiendType.attackDuration, 60),
+          buildCell('run speed', fiendType.runSpeed, 90),
           buildCell('quantify', fiendType.quantify.toStringAsFixed(2), 80),
         ],
       ),
