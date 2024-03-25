@@ -56,7 +56,7 @@ class WindowQuantify extends StatelessWidget {
 
   Widget buildQuantifyTabFiendTypes() => Column(
       children:
-      FiendType.values.map(buildElementFiendType).toList(growable: false));
+      FiendType.values.map(buildRowFiendType).toList(growable: false));
 
   Widget buildQuantifyTabAmuletItems() =>
       buildWatch(
@@ -244,23 +244,35 @@ class WindowQuantify extends StatelessWidget {
         ));
   }
 
-  Widget buildElementFiendType(FiendType fiendType) => Container(
+  Widget buildRowFiendType(FiendType fiendType) => Container(
     margin: const EdgeInsets.only(top: 8),
     child: Container(
       padding: const EdgeInsets.all(8),
       color: Colors.white12,
       // width: 500,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Container(
-            alignment: Alignment.centerLeft,
-            width: 300,
-            child: buildText(fiendType.name),
-          ),
-          buildText('quantify: ${fiendType.quantify.toStringAsFixed(2)}'),
+          buildCell('name', fiendType.name.clean, 150),
+          buildCell('damage', fiendType.damage, 100),
+          buildCell('attack duration', fiendType.attackDuration, 120),
+          buildCell('quantify', fiendType.quantify.toStringAsFixed(2), 80),
         ],
       ),
     ),
   );
+
+  Widget buildCell(String title, dynamic value, double width) => Container(
+      color: Colors.white10,
+      padding: paddingAll4,
+      margin: paddingAll4,
+      width: width,
+      alignment: Alignment.center,
+      child: Column(
+        children: [
+          buildText(title, color: Colors.orange),
+          buildText(value),
+        ],
+      ),
+    );
 }

@@ -156,25 +156,8 @@ enum FiendType {
     total *= runSpeed;
     total *= attackRatio;
 
-
     return total;
   }
-
-  // static final sortedValues = (){
-  //   return List.of(values).sortBy((f) => f.level);
-  // }();
-
-  // static int sortByLevel(FiendType a, FiendType b){
-  //   final aQuantify = a.level;
-  //   final bQuantify = b.level;
-  //   if (aQuantify < bQuantify){
-  //     return -1;
-  //   }
-  //   if (aQuantify > bQuantify){
-  //     return 1;
-  //   }
-  //   return 0;
-  // }
 
   double getDamageTypeResistance(DamageType damageType) =>
       switch (damageType) {
