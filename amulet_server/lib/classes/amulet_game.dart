@@ -1176,8 +1176,7 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
     if (
       player.deadOrBusy ||
       player.debugging ||
-      !player.controlsEnabled ||
-      player.upgradeMode
+      !player.controlsEnabled
     ) return;
 
     final mouseLeftClicked = mouseLeftDown && player.mouseLeftDownDuration == 0;
@@ -1374,9 +1373,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       case NodeType.Portal:
         usePortal(character, targetNodeIndex);
         break;
-      case NodeType.Fireplace:
-        playerUseFireplace(character);
-        break;
     }
   }
 
@@ -1494,11 +1490,6 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
       y: y,
       z: z,
     );
-  }
-
-  void playerUseFireplace(AmuletPlayer player) {
-     player.upgradeMode = true;
-     player.writeUpgradeMode();
   }
 
   @override

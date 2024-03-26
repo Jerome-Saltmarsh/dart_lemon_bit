@@ -46,6 +46,5 @@ class NetworkResponseAmulet {
    static const Player_Can_Upgrade = 71;
    static const Player_Potions = 72;
    static const Player_Sufficient_Magic_For_Skill_Right = 73;
-   static const Player_Upgrade_Mode = 74;
    static const Player_Stash = 75;
 }

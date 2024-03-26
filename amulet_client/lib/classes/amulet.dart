@@ -154,7 +154,6 @@ class Amulet extends Updatable with IsometricComponent  {
   final playerCanUpgrade = Watch(false);
   final potionsHealth = Watch(0);
   final potionsMagic = Watch(0);
-  final playerUpgradeMode = WatchBool(false);
 
 
   Amulet() {
@@ -798,10 +797,6 @@ class Amulet extends Updatable with IsometricComponent  {
     if (skillType != null){
       selectSkillTypeRight(skillType);
     }
-  }
-
-  void endUpgradeMode() {
-    sendAmuletRequest(NetworkRequestAmulet.End_Upgrade_Mode);
   }
 
   void sellStashItem(AmuletItemObject amuletItemObject) {

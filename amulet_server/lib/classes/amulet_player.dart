@@ -50,7 +50,6 @@ abstract class AmuletPlayerBase extends IsometricPlayer {
   var cacheMagicSteal = -1;
   var debugEnabled = false;
   var maxPotions = 4;
-  var upgradeMode = false;
   var npcText = '';
   var npcName = '';
   var npcOptions = <TalkOption>[];
@@ -1758,24 +1757,6 @@ class AmuletPlayer extends AmuletPlayerBase {
     writeBool(sufficientMagic);
   }
 
-  void useFireplace() {
-    if (deadOrBusy) return;
-    stop();
-    upgradeMode = true;
-  }
-
-  @override
-  set upgradeMode(bool value) {
-    super.upgradeMode = value;
-    writeUpgradeMode();
-  }
-
-  void writeUpgradeMode() {
-    writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Player_Upgrade_Mode);
-    writeBool(upgradeMode);
-  }
-
   void updateCanUpgrade(){
     nearStash = scene.getNodeTypeWithinRangePosition(
       position: this,
@@ -1792,16 +1773,9 @@ class AmuletPlayer extends AmuletPlayerBase {
       if (interacting){
         endInteraction();
       }
-      if (upgradeMode){
-        upgradeMode = false;
-      }
     }
 
     updateCanUpgrade();
-  }
-
-  void endUpgradeMode() {
-    upgradeMode = false;
   }
 
   void acquireGold(int amount) {

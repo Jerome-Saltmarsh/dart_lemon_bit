@@ -148,10 +148,6 @@ class AmuletUI {
             child: buildWatchVisible(amulet.playerCanUpgrade, buildWindowStash()),
           ),
           Positioned(
-            top: 100,
-            child: buildWindowUpgradeMode(),
-          ),
-          Positioned(
             bottom: 8,
             left: 8,
             child: buildEquippedSlotTypes(),
@@ -196,54 +192,54 @@ class AmuletUI {
         ]),
       );
 
-  Widget buildWindowUpgradeMode() {
-
-    final child = buildWatch(amulet.equippedChangedNotifier, (t) =>
-        AmuletWindow(child: Column(
-        children: [
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                buildBorder(
-                    width: 3,
-                    color: Colors.white60,
-                    child: buildPlayerGold()
-                ),
-                width32,
-                buildDialogTitle('UPGRADE EQUIPMENT'),
-                width32,
-                onPressed(
-                    action: amulet.endUpgradeMode,
-                    child: buildText('CLOSE X', underline: true)),
-              ],
-            ),
-          ),
-          height16,
-          if (amulet.nothingEquipped)
-            buildText('No items equipped to upgrade'),
-          if (!amulet.nothingEquipped)
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildCardUpgradeAmuletItemObject(amulet.equippedWeapon),
-              buildCardUpgradeAmuletItemObject(amulet.equippedHelm),
-              buildCardUpgradeAmuletItemObject(amulet.equippedArmor),
-              buildCardUpgradeAmuletItemObject(amulet.equippedShoes),
-            ],
-          )
-        ],
-      )));
-
-    return buildWatchVisible(amulet.playerUpgradeMode, Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        child,
-        // width8,
-        // buildWindowStash(),
-      ],
-    ));
-  }
+  // Widget buildWindowUpgradeMode() {
+  //
+  //   final child = buildWatch(amulet.equippedChangedNotifier, (t) =>
+  //       AmuletWindow(child: Column(
+  //       children: [
+  //         Container(
+  //           child: Row(
+  //             mainAxisAlignment: MainAxisAlignment.end,
+  //             children: [
+  //               buildBorder(
+  //                   width: 3,
+  //                   color: Colors.white60,
+  //                   child: buildPlayerGold()
+  //               ),
+  //               width32,
+  //               buildDialogTitle('UPGRADE EQUIPMENT'),
+  //               width32,
+  //               // onPressed(
+  //               //     action: amulet.endUpgradeMode,
+  //               //     child: buildText('CLOSE X', underline: true)),
+  //             ],
+  //           ),
+  //         ),
+  //         height16,
+  //         if (amulet.nothingEquipped)
+  //           buildText('No items equipped to upgrade'),
+  //         if (!amulet.nothingEquipped)
+  //         Row(
+  //           crossAxisAlignment: CrossAxisAlignment.start,
+  //           children: [
+  //             buildCardUpgradeAmuletItemObject(amulet.equippedWeapon),
+  //             buildCardUpgradeAmuletItemObject(amulet.equippedHelm),
+  //             buildCardUpgradeAmuletItemObject(amulet.equippedArmor),
+  //             buildCardUpgradeAmuletItemObject(amulet.equippedShoes),
+  //           ],
+  //         )
+  //       ],
+  //     )));
+  //
+  //   return buildWatchVisible(amulet.playerUpgradeMode, Row(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       child,
+  //       // width8,
+  //       // buildWindowStash(),
+  //     ],
+  //   ));
+  // }
 
   Widget buildWindowStash() => Container(
     padding: paddingAll8,
@@ -414,9 +410,12 @@ class AmuletUI {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Tooltip(
-                      message: 'Quest',
-                      child: buildIconQuest(),
+                  Row(
+                    children: [
+                      buildIconQuest(),
+                      width8,
+                      buildDialogTitle('QUEST'),
+                    ],
                   ),
                   buildButtonClose(amulet.windowVisibleQuests),
                 ],

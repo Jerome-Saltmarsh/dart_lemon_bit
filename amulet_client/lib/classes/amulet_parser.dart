@@ -174,9 +174,6 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Sufficient_Magic_For_Skill_Right:
          readPlayerSufficientMagicForSkillRight();
          break;
-       case NetworkResponseAmulet.Player_Upgrade_Mode:
-         readPlayerUpgradeMode();
-         break;
      }
   }
 
@@ -410,10 +407,6 @@ extension AmuletParser on IsometricParser {
   void readPlayerSufficientMagicForSkillRight() {
     amulet.playerSufficientMagicForSkillRight = readBool();
     amulet.notifySkillsChanged();
-  }
-
-  void readPlayerUpgradeMode() {
-    amulet.playerUpgradeMode.value = readBool();
   }
 
   void readPlayerStash() {
