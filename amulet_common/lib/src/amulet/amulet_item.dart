@@ -435,9 +435,10 @@ enum AmuletItem {
       subType: WeaponType.Staff_Wand,
       quality: ItemQuality.Unique,
       skills: {
-        SkillType.Bludgeon: Constraint(min: 0.1, max: 0.4),
+        // SkillType.Bludgeon: Constraint(min: 0.1, max: 0.4),
         SkillType.Fire_Ball: Constraint(min: 0.1, max: 0.4),
         SkillType.Magic_Steal: Constraint(min: 0.1, max: 0.4),
+        SkillType.Health_Regen: Constraint(min: 0.2, max: 0.4),
       },
   ),
   Special_Weapon_Vampire_Knife(

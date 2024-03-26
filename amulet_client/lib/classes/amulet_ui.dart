@@ -109,14 +109,8 @@ class AmuletUI {
          final itemLevel = amuletItemObject.getSkillLevel(skillType);
          final level = amulet.getSkillTypeLevel(skillType);
          final newLevel = level - equippedLevel + itemLevel;
-
-         if (newLevel > level) {
-           skillTypeLevels[skillType] = newLevel;
-           skillTypeLevelsDelta[skillType] = level;
-         } else {
-           skillTypeLevels[skillType] = level;
-           skillTypeLevelsDelta[skillType] = newLevel;
-         }
+         skillTypeLevels[skillType] = level;
+         skillTypeLevelsDelta[skillType] = newLevel;
        }
        notifierSkillTypes.increment();
     });
