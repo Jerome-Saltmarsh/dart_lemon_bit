@@ -29,4 +29,5 @@ class AmuletField {
   static const Start_X = 'start_x';
   static const Start_Y = 'start_y';
   static const Start_Z = 'start_z';
+  static const Stash = 'stash';
 }

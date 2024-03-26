@@ -11,13 +11,14 @@ AmuletItemObject? mapJsonToAmuletItemObject(Json? json) {
 
   final amuletItemName = json.getString(AmuletField.Amulet_Item);
   final amuletItem = AmuletItem.findByName(amuletItemName);
+  final level = json.tryGetInt(AmuletField.Level);
 
-  if (amuletItem == null) {
+  if (amuletItem == null || level == null) {
     return null;
   }
 
   return AmuletItemObject(
       amuletItem: amuletItem,
-      level: json.getInt(AmuletField.Level),
+      level: level,
   );
 }

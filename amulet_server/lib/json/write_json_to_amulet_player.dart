@@ -4,6 +4,7 @@ import 'package:amulet_server/classes/amulet_fiend.dart';
 import 'package:amulet_server/io/scene_json_reader.dart';
 import 'package:amulet_server/src.dart';
 import 'package:lemon_json/src.dart';
+import 'package:lemon_lang/src.dart';
 
 import 'amulet_field.dart';
 
@@ -17,6 +18,17 @@ void writeJsonToAmuletPlayer(
   final jsonAmulet = json.getChild('amulet');
   final amuletSceneName = json['amulet_scene_name'];
   final amuletScene = AmuletScene.findByName(amuletSceneName) ?? AmuletScene.Village;
+
+  player.stash.clear();
+  final jsonStash = json.tryGetObjects(AmuletField.Stash);
+
+  if (jsonStash != null) {
+    for (final child in jsonStash){
+      player.stash.tryAdd(mapJsonToAmuletItemObject(child));
+    }
+  }
+
+
   player.amuletGame = amulet.findGame(amuletScene);
   player.equippedWeapon = mapJsonToAmuletItemObject(json[AmuletField.Equipped_Weapon]);
   player.equippedHelm = mapJsonToAmuletItemObject(json[AmuletField.Equipped_Helm]);

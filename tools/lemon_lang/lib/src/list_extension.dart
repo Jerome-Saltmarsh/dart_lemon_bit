@@ -10,6 +10,12 @@ extension ListExtensions<T> on List<T> {
           ? null
           : this[index];
 
+  bool tryAdd(T? value) {
+    if (value == null) return false;
+    add(value);
+    return true;
+  }
+
   /// Sorts the list based on the provided value getter function.
   /// Returns the sorted list.
   List<T> sortBy(num Function(T value) getValue) {
@@ -23,8 +29,8 @@ extension ListExtensions<T> on List<T> {
   /// Checks if the provided index is a valid index within the list bounds.
   bool isValidIndex(int? index) =>
       index != null &&
-          index >= 0 &&
-          index <= length;
+      index >= 0 &&
+      index < length;
 
   /// Maps each element of the list to a value using the provided builder function and
   /// returns the resulting map. The keys are the elements of the list and the values

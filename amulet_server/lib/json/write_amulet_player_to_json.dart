@@ -47,6 +47,7 @@ CharacterJson writeAmuletPlayerToJson(AmuletPlayer player) {
   json[AmuletField.Hair_Color] = player.hairColor;
   json[AmuletField.Initialized] = player.initialized;
   json[AmuletField.Amulet_Scene_Name] = player.amuletGame.amuletScene.name;
+  json[AmuletField.Stash] = player.stash.map(mapAmuletItemObjectToJson).toList(growable: false);
   json[AmuletField.Amulet] = writeAmuletToJson(player);
   return json;
 }
