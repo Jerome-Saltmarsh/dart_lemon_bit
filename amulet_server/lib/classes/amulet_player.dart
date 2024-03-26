@@ -338,14 +338,19 @@ class AmuletPlayer extends AmuletPlayerBase {
      addToStash(amuletItemObject);
   }
 
-  void addToStash(AmuletItemObject amuletItemObject) {
+  void addToStash(AmuletItemObject amuletItemObject, {int? index}) {
 
     if (stash.contains(amuletItemObject)) {
       writeGameError(GameError.Already_Stashed);
       return;
     }
 
-    stash.add(amuletItemObject);
+    if (index != null && index < stash.length){
+      stash.insert(index, amuletItemObject);
+    } else {
+      stash.add(amuletItemObject);
+    }
+
     markStashDirty();
   }
 
@@ -1853,33 +1858,30 @@ class AmuletPlayer extends AmuletPlayerBase {
 
     final value = stash.removeAt(index);
 
-    final equipped = getEquippedAmuletItem(slotType: value.amuletItem.slotType);
+    final slotType = value.amuletItem.slotType;
+    final equipped = getEquippedAmuletItem(slotType: slotType);
 
     if (equipped != null){
-      addToStash(equipped);
+      clearEquipped(slotType);
+      addToStash(equipped, index: index);
     }
 
-    stashEquipped(value.amuletItem.slotType);
     acquireAmuletItemObject(value);
     markStashDirty();
   }
 
-  void stashEquipped(SlotType slotType) {
+  void clearEquipped(SlotType slotType) {
     switch (slotType) {
       case SlotType.Weapon:
-        tryAddToStash(equippedWeapon);
         equippedWeapon = null;
         break;
       case SlotType.Helm:
-        tryAddToStash(equippedHelm);
         equippedHelm = null;
         break;
       case SlotType.Armor:
-        tryAddToStash(equippedArmor);
         equippedArmor = null;
         break;
       case SlotType.Shoes:
-        tryAddToStash(equippedShoes);
         equippedShoes = null;
         break;
       case SlotType.Consumable:

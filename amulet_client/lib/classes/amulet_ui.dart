@@ -219,7 +219,7 @@ class AmuletUI {
   Widget buildStashRow(AmuletItemObject amuletItemObject) => onPressed(
     action: () => amulet.equipStashItem(amuletItemObject),
     child: Container(
-      width: 200,
+      width: 280,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
