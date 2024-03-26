@@ -221,16 +221,12 @@ class AmuletUI {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        // buildCardSmallAmuletItemObject(amuletItemObject),
                         buildCardLargeAmuletItemObjectTitle(amuletItemObject),
-                        // Column(
-                        //   children: [
-                        //     buildText(amuletItemObject.level),
-                        //     buildIconAmuletItem(amuletItemObject.amuletItem),
-                        //   ],
-                        // ),
-                        buildCardSmallHalfGold(amuletItemObject.sellValue),
-                        // buildText('EQUIP'),
+                        onPressed(
+                            action: () {
+                              amulet.sellStashItem(amuletItemObject);
+                            },
+                            child: buildCardSmallHalfGold(amuletItemObject.sellValue)),
                       ],
                     ),
   );

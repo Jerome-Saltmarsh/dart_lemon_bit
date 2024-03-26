@@ -1,7 +1,6 @@
 
 enum NetworkRequestAmulet {
   End_Interaction,
-  // Select_Slot_Type,
   Select_Talk_Option,
   Spawn_Random_Enemy,
   Acquire_Amulet_Item,
@@ -23,4 +22,5 @@ enum NetworkRequestAmulet {
   Use_Potion_Health,
   Use_Potion_Magic,
   End_Upgrade_Mode,
+  Stash_Sell,
 }

@@ -803,6 +803,16 @@ class Amulet extends Updatable with IsometricComponent  {
   void endUpgradeMode() {
     sendAmuletRequest(NetworkRequestAmulet.End_Upgrade_Mode);
   }
+
+  void sellStashItem(AmuletItemObject amuletItemObject) {
+    final index = playerStash.indexOf(amuletItemObject);
+    if (index < 0) return;
+
+    sendAmuletRequest(
+        NetworkRequestAmulet.Stash_Sell,
+        'index $index',
+    );
+  }
 }
 
 

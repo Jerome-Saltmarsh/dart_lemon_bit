@@ -341,12 +341,10 @@ class AmuletPlayer extends AmuletPlayerBase {
     }
 
     stash.add(amuletItemObject);
-    notifyStashDirty();
+    markStashDirty();
   }
 
-  void notifyStashDirty() {
-    stashDirty = true;
-  }
+  void markStashDirty() => stashDirty = true;
 
   void writeStash() {
     writeByte(NetworkResponse.Amulet);
@@ -1819,7 +1817,7 @@ class AmuletPlayer extends AmuletPlayerBase {
     health = maxHealth;
     magic = maxMagic;
     stash.clear();
-    notifyStashDirty();
+    markStashDirty();
     clearCache();
     clearActionFrame();
     checkAssignedSkills();
@@ -1829,6 +1827,17 @@ class AmuletPlayer extends AmuletPlayerBase {
       this,
       amulet.amuletGameVillage.indexSpawnPlayer,
     );
+  }
+
+  void sellStashItemAtIndex(int index) {
+    if (!stash.isValidIndex(index)){
+      writeGameError(GameError.Invalid_Stash_Index);
+      return;
+    }
+
+    final value = stash.removeAt(index);
+    markStashDirty();
+    acquireGold(value.sellValue);
   }
 }
 

@@ -18,7 +18,7 @@ class AmuletItemObject {
 
   double? get maxMagic => amuletItem.getMaxMagic(level);
 
-  int get sellValue => (amuletItem.getUpgradeCost(level) * 0.25).floor();
+  int get sellValue => (amuletItem.getUpgradeCost(level) * 0.25).floor().atLeast(1);
 
   int getSkillLevel(SkillType skillType) =>
       amuletItem.getSkillTypeLevel(

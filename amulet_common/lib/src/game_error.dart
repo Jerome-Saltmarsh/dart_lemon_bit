@@ -115,6 +115,7 @@ enum GameError {
   Cannot_Perform_Passive_Ability,
   Already_Stashed,
   Cannot_Be_Acquired,
+  Invalid_Stash_Index,
   ;
 
   static GameError fromIndex(int index) {

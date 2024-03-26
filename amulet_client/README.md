@@ -61,9 +61,12 @@ SKULLSOFT
 [new] model missing amulet items
 [new] balance items and enemies
 [new] beat the game
+[new] player stash equip 
+[new] player stash sell 
 
 ## 26.03.2024
-[fix] inter
+[new] amulet item structure
+[new] player stash
 
 ## 25.03.2024
 [fix] player runs at enemy instead of attacking
