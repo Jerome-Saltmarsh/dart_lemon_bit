@@ -116,7 +116,7 @@ class AmuletUI {
             left: 50,
             child: buildWatch(amulet.playerCanUpgrade, (playerCanUpgrade) {
                if (!playerCanUpgrade) return nothing;
-               return buildText('UPGRADE EQUIPMENT');
+               return buildText('UPGRADE');
             }),
           ),
           Positioned(
@@ -209,18 +209,28 @@ class AmuletUI {
         buildNotifier(amulet.playerStashNotifier, () => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
               children: amulet.playerStash
-                  .map((amuletItemObject) => Row(
-                    children: [
-                      buildIconAmuletItem(amuletItemObject.amuletItem),
-                      buildText(amuletItemObject.amuletItem.label),
-                      buildText(amuletItemObject.level),
-                    ],
-                  ))
+                  .map(buildStashRow)
                   .toList(growable: false),
             )),
       ],
     ),
   );
+
+  Widget buildStashRow(AmuletItemObject amuletItemObject) => Row(
+                    children: [
+                      // buildCardSmallAmuletItemObject(amuletItemObject),
+                      buildCardLargeAmuletItemObjectTitle(amuletItemObject),
+                      // Column(
+                      //   children: [
+                      //     buildText(amuletItemObject.level),
+                      //     buildIconAmuletItem(amuletItemObject.amuletItem),
+                      //   ],
+                      // ),
+                      width8,
+                      buildCardSmallHalfGold(amuletItemObject.sellValue),
+                      // buildText('EQUIP'),
+                    ],
+                  );
 
   Widget buildCardUpgradeAmuletItemObject(AmuletItemObject? amuletItemObject){
     if (amuletItemObject == null) return nothing;
@@ -1328,86 +1338,6 @@ class AmuletUI {
             child: buildCardSmallAmuletItemObject(amuletItemObject)
         ),
     );
-
-    // final button = onPressed(
-    //   action: amuletItem == null ? null : () => amulet.dropAmuletItem(amuletItem),
-    //   onRightClick: amuletItem == null ? null : () {
-    //     visibleRightClickedToDrop = false;
-    //     amulet.dropAmuletItem(amuletItem);
-    //   },
-    //   child: buildBorder(
-    //     color: Palette.brown_4,
-    //     width: 3,
-    //     child: Container(
-    //       width: width,
-    //       color: Palette.brown_3,
-    //       child: Column(
-    //         children: [
-    //           Container(
-    //               height: 20,
-    //               child: amuletItemObject == null ? null : buildText(amuletItemObject.level, color: Colors.white70)),
-    //           Container(
-    //             height: 50,
-    //             width: width,
-    //             color: Colors.white12,
-    //             alignment: Alignment.center,
-    //             child: amuletItem == null ? null : AmuletItemImage(
-    //               amuletItem: amuletItem,
-    //               scale: 1.2,),
-    //           ),
-    //         ],
-    //       ),
-    //     ),
-    //   ),
-    // );
-
-
-    // final canAfford = upgradeCost != null && amulet.playerGold.value >= upgradeCost;
-    // final upgradeColor = canAfford ? AmuletColors.Gold : AmuletColors.Gold70;
-    //
-    // return Container(
-    //   margin: const EdgeInsets.only(right: 4),
-    //   child: Column(
-    //     mainAxisAlignment: MainAxisAlignment.end,
-    //     children: [
-    //       if (upgradeCost != null)
-    //         onPressed(
-    //           action: () => amulet.upgradeSlotType(slotType),
-    //           child: Container(
-    //             decoration: BoxDecoration(
-    //               color: Palette.brown_3,
-    //               border: Border.all(color: Palette.brown_4, width: 2),
-    //               borderRadius: BorderRadius.zero,
-    //             ),
-    //             margin: const EdgeInsets.only(bottom: 8),
-    //             padding: paddingAll4,
-    //             alignment: Alignment.center,
-    //             child: Column(
-    //               children: [
-    //                 if (level != null)
-    //                 Container(
-    //                     color: Colors.black26,
-    //                     child: buildText('lvl ${level + 1}', color: upgradeColor, size: 13)),
-    //                 buildText('${upgradeCost}g', color: upgradeColor),
-    //               ],
-    //             ),
-    //           ),
-    //         ),
-    //       buildMouseOverPanel(
-    //         child: button,
-    //         panel: Column(
-    //           children: [
-    //             if (amuletItemObject != null && visibleRightClickedToDrop)
-    //               buildText('left click to drop'),
-    //             tryBuildCardAmuletItemObject(amuletItemObject),
-    //           ],
-    //         ),
-    //         left: 0,
-    //         bottom: 130,
-    //       ),
-    //     ],
-    //   ),
-    // );
   }
 
   Widget buildIconHealthCost() =>
@@ -1442,6 +1372,20 @@ class AmuletUI {
     );
   }
 
+  Widget buildCardLargeAmuletItemObjectTitle(AmuletItemObject amuletItemObject){
+    final amuletItem = amuletItemObject.amuletItem;
+    return buildCardLargeTitleTemplate(
+      icon: buildIconAmuletItem(amuletItem),
+      name: amuletItem.label,
+      subtitle: Column(
+        children: [
+          buildTextSubtitle('lvl ${amuletItemObject.level}/${amuletItem.maxLevel}'),
+          buildLevelBar(amuletItemObject.levelPercentage),
+        ],
+      ),
+    );
+  }
+
   Widget buildCardLargeAmuletItemObject(AmuletItemObject amuletItemObject, {
     bool compareLevels = false,
     Color? borderColor,
@@ -1459,16 +1403,7 @@ class AmuletUI {
           amuletItemObject,
     );
 
-    final title = buildCardLargeTitleTemplate(
-      icon: buildIconAmuletItem(amuletItem),
-      name: amuletItem.label,
-      subtitle: Column(
-        children: [
-          buildTextSubtitle('lvl ${amuletItemObject.level}/${amuletItemObject.amuletItem.maxLevel}'),
-          buildLevelBar(amuletItemObject.levelPercentage),
-        ],
-      ),
-    );
+    final title = buildCardLargeAmuletItemObjectTitle(amuletItemObject);
 
     return buildCardLarge(
         header: header,
@@ -2282,6 +2217,12 @@ class AmuletUI {
     final panel = buildHint('Use a fireplace to upgrade equipment');
     return buildMouseOverPanel(child: child, panel: panel, top: 60);
   }
+
+  Widget buildCardSmallHalfGold(int amount) =>
+      buildCardSmallHalf(
+          title: buildText(amount),
+          child: iconGold,
+      );
 
   Widget buildTextValue(value) => buildText(value, color: Colors.white70);
 
