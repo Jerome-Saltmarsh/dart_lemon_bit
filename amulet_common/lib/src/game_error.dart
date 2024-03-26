@@ -117,6 +117,7 @@ enum GameError {
   Already_Stashed,
   Cannot_Be_Acquired,
   Invalid_Stash_Index,
+  Stash_Unavailabe,
   ;
 
   static GameError fromIndex(int index) {

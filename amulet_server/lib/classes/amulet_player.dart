@@ -21,7 +21,7 @@ abstract class AmuletPlayerBase extends IsometricPlayer {
   var skillActiveLeft = true;
   var potionsHealth = 0;
   var potionsMagic = 0;
-  var canUpgrade = false;
+  var nearStash = false;
   var gold = 0.0;
   var questTutorial = QuestTutorial.values.first;
   var questMain = QuestMain.values.first;
@@ -1589,16 +1589,16 @@ class AmuletPlayer extends AmuletPlayerBase {
   }
 
   @override
-  set canUpgrade(bool value) {
-    if (value == canUpgrade) return;
-    super.canUpgrade = value;
+  set nearStash(bool value) {
+    if (value == nearStash) return;
+    super.nearStash = value;
     writePlayerCanUpgrade();
   }
 
   void writePlayerCanUpgrade() {
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Can_Upgrade);
-    writeBool(canUpgrade);
+    writeBool(nearStash);
   }
 
   void cheatAcquireGold() {
@@ -1776,11 +1776,11 @@ class AmuletPlayer extends AmuletPlayerBase {
     writeBool(upgradeMode);
   }
 
-  void updateCanUpgrade(AmuletPlayer player){
-    canUpgrade = scene.getNodeTypeWithinRangePosition(
-      position: player,
+  void updateCanUpgrade(){
+    nearStash = scene.getNodeTypeWithinRangePosition(
+      position: this,
       nodeType: NodeType.Fireplace,
-      distance: 4,
+      distance: 2,
     );
   }
 
@@ -1796,6 +1796,8 @@ class AmuletPlayer extends AmuletPlayerBase {
         upgradeMode = false;
       }
     }
+
+    updateCanUpgrade();
   }
 
   void endUpgradeMode() {
@@ -1840,6 +1842,12 @@ class AmuletPlayer extends AmuletPlayerBase {
   }
 
   void sellStashItemAtIndex(int index) {
+
+    if (!nearStash){
+      writeGameError(GameError.Stash_Unavailabe);
+      return;
+    }
+
     if (!stash.isValidIndex(index)){
       writeGameError(GameError.Invalid_Stash_Index);
       return;
@@ -1851,6 +1859,12 @@ class AmuletPlayer extends AmuletPlayerBase {
   }
 
   void equipStashItemAtIndex(int index) {
+
+    if (!nearStash){
+      writeGameError(GameError.Stash_Unavailabe);
+      return;
+    }
+
     if (!stash.isValidIndex(index)){
       writeGameError(GameError.Invalid_Stash_Index);
       return;

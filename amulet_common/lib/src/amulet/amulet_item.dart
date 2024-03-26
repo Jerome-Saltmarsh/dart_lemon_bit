@@ -446,7 +446,7 @@ enum AmuletItem {
       },
   ),
   Special_Weapon_Vampire_Knife(
-      label: 'Assassins Blade',
+      label: 'Vampire Knife',
       slotType: SlotType.Weapon,
       subType: WeaponType.Sword_Short,
       quality: ItemQuality.Unique,
@@ -466,6 +466,7 @@ enum AmuletItem {
         SkillType.Slash: Constraint(min: 0.3, max: 0.5),
         SkillType.Magic_Steal: Constraint(min: 0.1, max: 0.4),
         SkillType.Attack_Speed: Constraint(min: 0.2, max: 0.4),
+        SkillType.Mighty_Strike: Constraint(min: 0.2, max: 0.4),
       },
   ),
   Special_Weapon_Blizzard_Globe(

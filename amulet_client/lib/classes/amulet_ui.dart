@@ -174,12 +174,9 @@ class AmuletUI {
               left: 0,
               child: buildMessageIndex()),
           Positioned(
-            bottom: 100,
-            left: 50,
-            child: buildWatch(amulet.playerCanUpgrade, (playerCanUpgrade) {
-               if (!playerCanUpgrade) return nothing;
-               return buildText('UPGRADE');
-            }),
+            top: 70,
+            left: 10,
+            child: buildWatchVisible(amulet.playerCanUpgrade, buildWindowStash()),
           ),
           Positioned(
               top: 8,
@@ -256,8 +253,8 @@ class AmuletUI {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         child,
-        width8,
-        buildWindowStash(),
+        // width8,
+        // buildWindowStash(),
       ],
     ));
   }
