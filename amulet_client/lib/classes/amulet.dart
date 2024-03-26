@@ -91,7 +91,7 @@ class Amulet extends Updatable with IsometricComponent  {
   final playerAgility = Watch(0);
   final playerGold = Watch(0);
 
-  final aimTargetAmuletItemObject = Watch<AmuletItemObject?>(null);
+  // final aimTargetAmuletItemObject = Watch<AmuletItemObject?>(null);
 
   final worldMapLarge = WatchBool(false);
   final amuletScene = Watch<AmuletScene?>(null);
@@ -183,11 +183,11 @@ class Amulet extends Updatable with IsometricComponent  {
     npcTextIndex.onChanged(onChangedNpcTextIndex);
     error.onChanged(onChangedError);
 
-    aimTargetAmuletItemObject.onChanged((t) {
-      if (t != null) {
-        audio.click_sounds_35();
-      }
-    });
+    // aimTargetAmuletItemObject.onChanged((t) {
+    //   if (t != null) {
+    //     audio.click_sounds_35();
+    //   }
+    // });
   }
 
   bool get nothingEquipped =>

@@ -8,4 +8,5 @@ class AmuletStyle {
 
   final widthCardLarge = 182.0;
 
+  final containerColor = Palette.brown_3;
 }

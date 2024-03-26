@@ -676,10 +676,10 @@ class AmuletController {
         amuletPlayer.upgradeSlotType(slotType);
         break;
       case NetworkRequestAmulet.Pickup_Amulet_Item:
-        player.pickupAmuletItem();
+        // player.pickupAmuletItem();
         break;
       case NetworkRequestAmulet.Sell_Amulet_Item:
-        player.sellAmuletItem();
+        // player.sellAmuletItem();
         break;
       case NetworkRequestAmulet.Spawn_Random_Amulet_Item:
         amuletPlayer.spawnRandomAmuletItem();

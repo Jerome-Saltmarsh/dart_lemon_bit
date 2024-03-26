@@ -58,8 +58,8 @@ abstract class AmuletPlayerBase extends IsometricPlayer {
   var skillSlotIndex = 0;
   var active = false;
   var difficulty = Difficulty.Normal;
-  GameObject? collectableGameObject;
-  AmuletItemObject? collectableAmuletItemObject;
+  // GameObject? collectableGameObject;
+  // AmuletItemObject? collectableAmuletItemObject;
 
   final stash = <AmuletItemObject>[];
   var stashDirty = true;
@@ -114,27 +114,27 @@ class AmuletPlayer extends AmuletPlayerBase {
 
   void setSkillActiveLeft(bool value) => skillActiveLeft = value;
 
-  void setCollectableGameObject(GameObject? gameObject) {
+  // void setCollectableGameObject(GameObject? gameObject) {
+  //
+  //   if (collectableGameObject == gameObject) {
+  //      return;
+  //    }
+  //
+  //    if (gameObject != null) {
+  //      interacting = true;
+  //      collectableGameObject = gameObject;
+  //      collectableAmuletItemObject = mapGameObjectToAmuletItemObject(gameObject);
+  //    } else {
+  //      clearCollectableGameObject();
+  //    }
+  //
+  //    writeCollectableAmuletItemObject();
+  // }
 
-    if (collectableGameObject == gameObject) {
-       return;
-     }
-
-     if (gameObject != null) {
-       interacting = true;
-       collectableGameObject = gameObject;
-       collectableAmuletItemObject = mapGameObjectToAmuletItemObject(gameObject);
-     } else {
-       clearCollectableGameObject();
-     }
-
-     writeCollectableAmuletItemObject();
-  }
-
-  void clearCollectableGameObject(){
-    collectableGameObject = null;
-    collectableAmuletItemObject = null;
-  }
+  // void clearCollectableGameObject(){
+  //   collectableGameObject = null;
+  //   collectableAmuletItemObject = null;
+  // }
 
 
   /// in frames
@@ -211,7 +211,7 @@ class AmuletPlayer extends AmuletPlayerBase {
     super.interacting = value;
 
     if (!value){
-      setCollectableGameObject(null);
+      // setCollectableGameObject(null);
       onInteractionOver?.call();
       onInteractionOver = null;
       cameraTarget = null;
@@ -333,54 +333,6 @@ class AmuletPlayer extends AmuletPlayerBase {
      }
   }
 
-  void acquireGameObject(GameObject gameObject){
-
-    clearTarget();
-    final amuletItem = gameObject.amuletItem;
-
-    if (amuletItem == null){
-      writeGameError(GameError.GameObject_Cannot_Be_Acquired);
-      return;
-    }
-
-    switch (amuletItem) {
-      case AmuletItem.Consumable_Meat:
-        health += 5;
-        writePlayerEvent(PlayerEvent.Eat);
-        amuletGame.remove(gameObject);
-        break;
-      case AmuletItem.Consumable_Sapphire:
-        magic += 5;
-        amuletGame.dispatchAmuletEvent(gameObject, AmuletEvent.Sapphire_Consumed);
-        amuletGame.remove(gameObject);
-      case AmuletItem.Consumable_Gold:
-        gold += gameObject.level;
-        amuletGame.dispatchAmuletEvent(gameObject, AmuletEvent.Consumed_Gold);
-        amuletGame.remove(gameObject);
-        break;
-      case AmuletItem.Consumable_Potion_Magic:
-        if (potionsMagic >= maxPotions) {
-          writeGameError(GameError.Potions_Magic_Full);
-          return;
-        }
-        setCharacterStateChanging();
-        amuletGame.remove(gameObject);
-        potionsMagic++;
-        break;
-      case AmuletItem.Consumable_Potion_Health:
-        if (potionsHealth >= maxPotions) {
-          writeGameError(GameError.Potions_Health_Full);
-          return;
-        }
-        setCharacterStateChanging();
-        amuletGame.remove(gameObject);
-        potionsHealth++;
-        break;
-      default:
-        break;
-    }
-  }
-
   void addToStash(AmuletItemObject amuletItemObject) {
 
     if (stash.contains(amuletItemObject)) {
@@ -403,24 +355,94 @@ class AmuletPlayer extends AmuletPlayerBase {
     stash.forEach(writeAmuletItemObject);
   }
 
-  bool acquireAmuletItemObject(AmuletItemObject amuletItemObject){
+  void acquireGameObject(GameObject gameObject){
     if (deadOrBusy) {
-      return false;
+      return;
     }
+
+    final amuletItem = gameObject.amuletItem;
+
+    if (amuletItem == null) {
+      writeGameError(GameError.Cannot_Be_Acquired);
+      return;
+    }
+
     setDestinationToCurrentPosition();
     clearPath();
-    setCollectableGameObject(null);
+
+    final amuletItemObject = AmuletItemObject(
+        amuletItem: amuletItem,
+        level: gameObject.level,
+    );
+
+    if (acquireAmuletItemObject(amuletItemObject)) {
+      amuletGame.remove(gameObject);
+    }
+  }
+
+  bool acquireAmuletItemObject(AmuletItemObject amuletItemObject){
+
+    final amuletItem = amuletItemObject.amuletItem;
+    final level = amuletItemObject.level;
 
     final currentlyEquipped = getEquippedAmuletItem(
-        slotType: amuletItemObject.amuletItem.slotType
+        slotType: amuletItem.slotType
     );
 
     if (currentlyEquipped != null) {
-       addToStash(amuletItemObject);
-       return true;
+      addToStash(amuletItemObject);
+      return true;
     }
 
-    return equipAmuletItemObject(value: amuletItemObject);
+    notifyEquipmentDirty();
+
+    switch (amuletItem.slotType) {
+      case SlotType.Weapon:
+        equippedWeapon = amuletItemObject;
+        return true;
+      case SlotType.Helm:
+        equippedHelm = amuletItemObject;
+        return true;
+      case SlotType.Armor:
+        equippedArmor = amuletItemObject;
+        return true;
+      case SlotType.Shoes:
+        equippedShoes = amuletItemObject;
+        return true;
+      case SlotType.Consumable:
+        switch (amuletItem) {
+          case AmuletItem.Consumable_Meat:
+            health += 5;
+            writePlayerEvent(PlayerEvent.Eat);
+            return true;
+          case AmuletItem.Consumable_Sapphire:
+            magic += 5;
+            return true;
+          case AmuletItem.Consumable_Gold:
+            acquireGold(level);
+            return true;
+          case AmuletItem.Consumable_Potion_Magic:
+            if (potionsMagic >= maxPotions) {
+              writeGameError(GameError.Potions_Magic_Full);
+              return false;
+            }
+            setCharacterStateChanging();
+            potionsMagic++;
+            return true;
+          case AmuletItem.Consumable_Potion_Health:
+            if (potionsHealth >= maxPotions) {
+              writeGameError(GameError.Potions_Health_Full);
+              return false;
+            }
+            setCharacterStateChanging();
+            potionsHealth++;
+            return true;
+          default:
+            writeGameError(GameError.Cannot_Be_Acquired);
+            return false;
+        }
+    }
+    // notifyEquipmentDirty();
   }
 
   @override
@@ -665,42 +687,42 @@ class AmuletPlayer extends AmuletPlayerBase {
     writeDouble(castePositionZ);
   }
 
-  bool equipAmuletItemObject({
-    required AmuletItemObject value,
-    bool force = false,
-  }) {
-    final amuletItem = value.amuletItem;
-
-    if (amuletItem.isConsumable) {
-      writeGameError(GameError.Cannot_Be_Equipped);
-      return false;
-    }
-
-    final currentlyEquipped = getEquippedAmuletItem(slotType: amuletItem.slotType);
-    if (currentlyEquipped != null) {
-      dropSlotType(currentlyEquipped.amuletItem.slotType);
-    }
-
-    switch (amuletItem.slotType) {
-      case SlotType.Weapon:
-        equippedWeapon = value;
-        break;
-      case SlotType.Helm:
-        equippedHelm = value;
-        break;
-      case SlotType.Armor:
-        equippedArmor = value;
-        break;
-      case SlotType.Shoes:
-        equippedShoes = value;
-        break;
-      case SlotType.Consumable:
-        break;
-    }
-
-    notifyEquipmentDirty();
-    return true;
-  }
+  // bool equipAmuletItemObject({
+  //   required AmuletItemObject value,
+  //   bool force = false,
+  // }) {
+  //   final amuletItem = value.amuletItem;
+  //
+  //   if (amuletItem.isConsumable) {
+  //     writeGameError(GameError.Cannot_Be_Equipped);
+  //     return false;
+  //   }
+  //
+  //   final currentlyEquipped = getEquippedAmuletItem(slotType: amuletItem.slotType);
+  //   if (currentlyEquipped != null) {
+  //     dropSlotType(currentlyEquipped.amuletItem.slotType);
+  //   }
+  //
+  //   switch (amuletItem.slotType) {
+  //     case SlotType.Weapon:
+  //       equippedWeapon = value;
+  //       break;
+  //     case SlotType.Helm:
+  //       equippedHelm = value;
+  //       break;
+  //     case SlotType.Armor:
+  //       equippedArmor = value;
+  //       break;
+  //     case SlotType.Shoes:
+  //       equippedShoes = value;
+  //       break;
+  //     case SlotType.Consumable:
+  //       break;
+  //   }
+  //
+  //   notifyEquipmentDirty();
+  //   return true;
+  // }
 
   @override
   set equippedWeapon(AmuletItemObject? value) {
@@ -1051,11 +1073,11 @@ class AmuletPlayer extends AmuletPlayerBase {
 
   void writeTrue() => writeBool(true);
 
-  void writeCollectableAmuletItemObject() {
-    writeByte(NetworkResponse.Amulet);
-    writeByte(NetworkResponseAmulet.Collectable_Amulet_Item_Object);
-    tryWriteAmuletItemObject(collectableAmuletItemObject);
-  }
+  // void writeCollectableAmuletItemObject() {
+  //   writeByte(NetworkResponse.Amulet);
+  //   writeByte(NetworkResponseAmulet.Collectable_Amulet_Item_Object);
+  //   tryWriteAmuletItemObject(collectableAmuletItemObject);
+  // }
 
   AmuletItem? getGameObjectAmuletItem(GameObject gameObject){
      if (gameObject.itemType != ItemType.Amulet_Item) {
@@ -1461,32 +1483,32 @@ class AmuletPlayer extends AmuletPlayerBase {
           )
       );
 
-  void pickupAmuletItem() {
-    final item = collectableGameObject;
+  // void pickupAmuletItem() {
+  //   final item = collectableGameObject;
+  //
+  //   if (item == null) {
+  //     writeGameError(GameError.Amulet_Item_Null);
+  //     return;
+  //   }
+  //   amuletGame.onAmuletPlayerPickupGameObject(this, item);
+  // }
 
-    if (item == null) {
-      writeGameError(GameError.Amulet_Item_Null);
-      return;
-    }
-    amuletGame.onAmuletPlayerPickupGameObject(this, item);
-  }
+  // void sellAmuletItem() {
+  //   final item = collectableGameObject;
+  //   if (item == null) {
+  //     writeGameError(GameError.Amulet_Item_Null);
+  //     return;
+  //   }
+  //
+  //   writePlayerEvent(PlayerEvent.Item_Sold);
+  //   amuletGame.remove(item);
+  // }
 
-  void sellAmuletItem() {
-    final item = collectableGameObject;
-    if (item == null) {
-      writeGameError(GameError.Amulet_Item_Null);
-      return;
-    }
-
-    writePlayerEvent(PlayerEvent.Item_Sold);
-    amuletGame.remove(item);
-  }
-
-  @override
-  void clearTarget() {
-    super.clearTarget();
-    clearCollectableGameObject();
-  }
+  // @override
+  // void clearTarget() {
+  //   super.clearTarget();
+  //   // clearCollectableGameObject();
+  // }
 
   void onPortalUsed({
     required AmuletScene src,

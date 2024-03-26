@@ -994,12 +994,13 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
 
     if (src is AmuletPlayer) {
       if (src.interacting) return;
+      src.interacting = true;
 
       if (target is GameObject){
         onAmuletPlayerInteractWithGameObject(src, target);
       }
+
       if (target is AmuletNpc){
-        src.interacting = true;
         target.interact?.call(src, target);
       }
     }
@@ -1032,25 +1033,14 @@ class AmuletGame extends IsometricGame<AmuletPlayer> {
        return;
      }
 
-     if (amuletItem.isConsumable) {
-       player.acquireGameObject(gameObject);
-       return;
-     }
-
      final amuletItemObject = mapGameObjectToAmuletItemObject(gameObject);
      if (amuletItemObject == null){ // fix
        return;
      }
 
-     final equipped = player.getEquippedAmuletItem(
-         slotType: amuletItemObject.amuletItem.slotType
-     );
-
-     if (equipped == null) {
-       onAmuletPlayerPickupGameObject(player, gameObject);
-       return;
+     if (player.acquireAmuletItemObject(amuletItemObject)){
+        remove(gameObject);
      }
-     player.setCollectableGameObject(gameObject);
   }
 
   void onAmuletPlayerPickupGameObject(

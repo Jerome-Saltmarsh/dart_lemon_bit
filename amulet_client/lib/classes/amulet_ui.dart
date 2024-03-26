@@ -84,16 +84,16 @@ class AmuletUI {
             left: 8,
             child: buildHudTopLeft(),
           ),
-          Positioned(
-            top: 8,
-            left: 64,
-            child: buildWatch(
-              amulet.aimTargetAmuletItemObject,
-              (amuletItemObject) => amuletItemObject == null
-                  ? nothing
-                  : buildCardLargeAmuletItemObject(amuletItemObject),
-            ),
-          ),
+          // Positioned(
+          //   top: 8,
+          //   left: 64,
+          //   child: buildWatch(
+          //     amulet.aimTargetAmuletItemObject,
+          //     (amuletItemObject) => amuletItemObject == null
+          //         ? nothing
+          //         : buildCardLargeAmuletItemObject(amuletItemObject),
+          //   ),
+          // ),
           Positioned(
             top: 100,
             child: buildWindowUpgradeMode(),
@@ -191,28 +191,35 @@ class AmuletUI {
       )));
 
     return buildWatchVisible(amulet.playerUpgradeMode, Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         child,
+        width8,
         buildWindowStash(),
       ],
     ));
   }
 
-  Widget buildWindowStash() => Column(
-    children: [
-      buildText('STASH'),
-      buildNotifier(amulet.playerStashNotifier, () => Column(
-            children: amulet.playerStash
-                .map((amuletItemObject) => Row(
-                  children: [
-                    buildIconAmuletItem(amuletItemObject.amuletItem),
-                    buildText(amuletItemObject.amuletItem.label),
-                    buildText(amuletItemObject.level),
-                  ],
-                ))
-                .toList(growable: false),
-          )),
-    ],
+  Widget buildWindowStash() => Container(
+    padding: paddingAll8,
+    color: amuletStyle.containerColor,
+    child: Column(
+      children: [
+        buildText('STASH'),
+        buildNotifier(amulet.playerStashNotifier, () => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+              children: amulet.playerStash
+                  .map((amuletItemObject) => Row(
+                    children: [
+                      buildIconAmuletItem(amuletItemObject.amuletItem),
+                      buildText(amuletItemObject.amuletItem.label),
+                      buildText(amuletItemObject.level),
+                    ],
+                  ))
+                  .toList(growable: false),
+            )),
+      ],
+    ),
   );
 
   Widget buildCardUpgradeAmuletItemObject(AmuletItemObject? amuletItemObject){
