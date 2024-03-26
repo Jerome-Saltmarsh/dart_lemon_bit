@@ -13,7 +13,7 @@ enum AmuletItem {
     skills: {
       SkillType.Slash: Constraint(min: 0.1, max: 0.3),
       SkillType.Attack_Speed: Constraint(min: 0.3, max: 0.3),
-      SkillType.Attack_Range: Constraint(min: 0.5, max: 0.5),
+      SkillType.Attack_Range: Constraint(min: 0.3, max: 0.3),
     }
   ),
   Weapon_Sword_Broad(
@@ -22,7 +22,7 @@ enum AmuletItem {
     subType: WeaponType.Sword_Broad,
     skills: {
       SkillType.Slash: Constraint(min: 0.2, max: 0.4),
-      SkillType.Attack_Speed: Constraint(min: 0.3, max: 0.3),
+      SkillType.Attack_Speed: Constraint(min: 0.2, max: 0.2),
       SkillType.Attack_Range: Constraint(min: 0.5, max: 0.5),
     }
   ),
@@ -31,7 +31,7 @@ enum AmuletItem {
     slotType: SlotType.Weapon,
     subType: WeaponType.Sword_Long,
       skills: {
-        SkillType.Slash: Constraint(min: 0.2, max: 0.5),
+        SkillType.Slash: Constraint(min: 0.3, max: 0.5),
         SkillType.Attack_Speed: Constraint(min: 0.3, max: 0.3),
         SkillType.Attack_Range: Constraint(min: 0.6, max: 0.6),
       }
@@ -41,9 +41,9 @@ enum AmuletItem {
     slotType: SlotType.Weapon,
     subType: WeaponType.Sword_Giant,
     skills: {
-        SkillType.Slash: Constraint(min: 0.3, max: 0.6),
-        SkillType.Attack_Speed: Constraint(min: 0.2, max: 0.2),
-        SkillType.Attack_Range: Constraint(min: 0.7, max: 0.7),
+        SkillType.Slash: Constraint(min: 0.4, max: 0.6),
+        SkillType.Attack_Speed: Constraint(min: 0.2, max: 0.3),
+        SkillType.Attack_Range: Constraint(min: 0.7, max: 0.9),
     }
   ),
   Weapon_Bow_Short(
@@ -52,8 +52,8 @@ enum AmuletItem {
     subType: WeaponType.Bow_Short,
     skills: {
       SkillType.Shoot_Arrow: Constraint(min: 0.1, max: 0.3),
-      SkillType.Attack_Speed: Constraint(min: 0.7, max: 0.8),
-      SkillType.Attack_Range: Constraint(min: 0.25, max: 0.25),
+      SkillType.Attack_Speed: Constraint(min: 0.3, max: 0.5),
+      SkillType.Attack_Range: Constraint(min: 0.25, max: 0.4),
     },
   ),
   Weapon_Bow_Reflex(
@@ -92,7 +92,7 @@ enum AmuletItem {
     subType: WeaponType.Staff_Wand,
     skills: {
       SkillType.Ice_Ball: Constraint(min: 0.1, max: 0.4),
-      SkillType.Max_Magic: Constraint(min: 0.7, max: 0.8),
+      SkillType.Max_Magic: Constraint(min: 0.2, max: 0.5),
     },
   ),
   Weapon_Staff_Globe(
@@ -101,7 +101,7 @@ enum AmuletItem {
     subType: WeaponType.Staff_Globe,
     skills: {
       SkillType.Ice_Ball: Constraint(min: 0.1, max: 0.4),
-      SkillType.Max_Magic: Constraint(min: 0.7, max: 0.8),
+      SkillType.Max_Magic: Constraint(min: 0.3, max: 0.6),
     },
   ),
   Weapon_Staff_Scepter(

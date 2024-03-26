@@ -111,11 +111,11 @@ class AmuletUI {
          final newLevel = level - equippedLevel + itemLevel;
 
          if (newLevel > level) {
-           skillTypeLevels[skillType] = level;
-           skillTypeLevelsDelta[skillType] = newLevel;
-         } else {
            skillTypeLevels[skillType] = newLevel;
            skillTypeLevelsDelta[skillType] = level;
+         } else {
+           skillTypeLevels[skillType] = level;
+           skillTypeLevelsDelta[skillType] = newLevel;
          }
        }
        notifierSkillTypes.increment();
@@ -284,23 +284,38 @@ class AmuletUI {
     ),
   );
 
-  Widget buildStashRow(AmuletItemObject amuletItemObject) => onPressed(
-    action: () => amulet.equipStashItem(amuletItemObject),
-    child: Container(
-      width: 280,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          buildCardLargeAmuletItemObjectTitle(amuletItemObject),
-                          onPressed(
-                              action: () {
-                                amulet.sellStashItem(amuletItemObject);
-                              },
-                              child: buildCardSmallHalfGold(amuletItemObject.sellValue)),
-                        ],
-                      ),
-    ),
-  );
+  Widget buildStashRow(AmuletItemObject amuletItemObject) {
+
+    final child = onPressed(
+      action: () => amulet.equipStashItem(amuletItemObject),
+      child: Container(
+        width: 280,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            buildCardLargeAmuletItemObjectTitle(amuletItemObject),
+            onPressed(
+                action: () {
+                  amulet.sellStashItem(amuletItemObject);
+                },
+                child: buildCardSmallHalfGold(amuletItemObject.sellValue)),
+          ],
+        ),
+      ),
+    );
+
+    return MouseRegion(
+      child: child,
+      onEnter: (_) {
+        amuletItemObjectHover.value = amuletItemObject;
+      },
+      onExit: (_) {
+        if (amuletItemObjectHover.value == amuletItemObject){
+          amuletItemObjectHover.value = null;
+        }
+      },
+    );
+  }
 
   Widget buildCardUpgradeAmuletItemObject(AmuletItemObject? amuletItemObject){
     if (amuletItemObject == null) return nothing;
