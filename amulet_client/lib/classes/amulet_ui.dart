@@ -1393,6 +1393,8 @@ class AmuletUI {
 
     final amuletItem = amuletItemObject.amuletItem;
     final canUpgrade = amulet.playerCanUpgrade.value;
+    final playerGold = amulet.playerGold.value;
+    final canAfford = playerGold >= amuletItemObject.upgradeCost;
 
     return Column(
       children: [
@@ -1421,7 +1423,7 @@ class AmuletUI {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          buildText(amuletItemObject.upgradeCost, color: Colors.black54),
+                          buildText(amuletItemObject.upgradeCost, color: canAfford ? Colors.green : Colors.red),
                           iconGold,
                         ],
                       ),
