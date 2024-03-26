@@ -190,8 +190,30 @@ class AmuletUI {
         ],
       )));
 
-    return buildWatchVisible(amulet.playerUpgradeMode, child);
+    return buildWatchVisible(amulet.playerUpgradeMode, Row(
+      children: [
+        child,
+        buildWindowStash(),
+      ],
+    ));
   }
+
+  Widget buildWindowStash() => Column(
+    children: [
+      buildText('STASH'),
+      buildNotifier(amulet.playerStashNotifier, () => Column(
+            children: amulet.playerStash
+                .map((amuletItemObject) => Row(
+                  children: [
+                    buildIconAmuletItem(amuletItemObject.amuletItem),
+                    buildText(amuletItemObject.amuletItem.label),
+                    buildText(amuletItemObject.level),
+                  ],
+                ))
+                .toList(growable: false),
+          )),
+    ],
+  );
 
   Widget buildCardUpgradeAmuletItemObject(AmuletItemObject? amuletItemObject){
     if (amuletItemObject == null) return nothing;
@@ -2485,3 +2507,5 @@ Widget buildPostFrameCallback({required WidgetBuilder builder}){
     return nothing;
   });
 }
+
+Widget buildNotifier(Watch watch, Widget Function() build) => buildWatch(watch, (t) => build());

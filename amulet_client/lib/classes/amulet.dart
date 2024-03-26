@@ -134,6 +134,8 @@ class Amulet extends Updatable with IsometricComponent  {
   final npcName = Watch('');
   final npcOptions = <String>[];
   final npcOptionsReads = Watch(0);
+  final playerStash = <AmuletItemObject> [];
+  final playerStashNotifier = Watch(0);
   AmuletItemObject? equippedWeapon;
   AmuletItemObject? equippedHelm;
   AmuletItemObject? equippedArmor;

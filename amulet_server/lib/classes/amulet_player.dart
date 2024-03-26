@@ -61,6 +61,9 @@ abstract class AmuletPlayerBase extends IsometricPlayer {
   GameObject? collectableGameObject;
   AmuletItemObject? collectableAmuletItemObject;
 
+  final stash = <AmuletItemObject>[];
+  var stashDirty = true;
+
   AmuletPlayerBase({
     required super.game,
     required super.x,
@@ -245,6 +248,11 @@ class AmuletPlayer extends AmuletPlayerBase {
     writePerformFrameVelocity();
     writeSufficientMagicForSkillRight();
 
+    if (stashDirty){
+      stashDirty = false;
+      writeStash();
+    }
+
     if (debugEnabled){
       writeDebug();
       writeDebugPaths();
@@ -373,6 +381,27 @@ class AmuletPlayer extends AmuletPlayerBase {
     }
   }
 
+  void addToStash(AmuletItemObject amuletItemObject) {
+
+    if (stash.contains(amuletItemObject)) {
+      writeGameError(GameError.Already_Stashed);
+      return;
+    }
+
+    stash.add(amuletItemObject);
+    notifyStashDirty();
+  }
+
+  void notifyStashDirty() {
+    stashDirty = true;
+  }
+
+  void writeStash() {
+    writeByte(NetworkResponse.Amulet);
+    writeByte(NetworkResponseAmulet.Player_Stash);
+    writeUInt16(stash.length);
+    stash.forEach(writeAmuletItemObject);
+  }
 
   bool acquireAmuletItemObject(AmuletItemObject amuletItemObject){
     if (deadOrBusy) {
@@ -381,6 +410,16 @@ class AmuletPlayer extends AmuletPlayerBase {
     setDestinationToCurrentPosition();
     clearPath();
     setCollectableGameObject(null);
+
+    final currentlyEquipped = getEquippedAmuletItem(
+        slotType: amuletItemObject.amuletItem.slotType
+    );
+
+    if (currentlyEquipped != null) {
+       addToStash(amuletItemObject);
+       return true;
+    }
+
     return equipAmuletItemObject(value: amuletItemObject);
   }
 
@@ -539,10 +578,10 @@ class AmuletPlayer extends AmuletPlayerBase {
   void writeEquipped(){
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Equipped);
-    writeAmuletItemObject(equippedWeapon);
-    writeAmuletItemObject(equippedHelm);
-    writeAmuletItemObject(equippedArmor);
-    writeAmuletItemObject(equippedShoes);
+    tryWriteAmuletItemObject(equippedWeapon);
+    tryWriteAmuletItemObject(equippedHelm);
+    tryWriteAmuletItemObject(equippedArmor);
+    tryWriteAmuletItemObject(equippedShoes);
   }
 
   void writeAmuletItem(AmuletItem? value){
@@ -553,10 +592,10 @@ class AmuletPlayer extends AmuletPlayerBase {
     }
   }
 
-  void writeAmuletItemObject(AmuletItemObject? value) =>
-      tryWrite(tryWriteAmuletItemObject, value);
+  void tryWriteAmuletItemObject(AmuletItemObject? value) =>
+      tryWrite(writeAmuletItemObject, value);
 
-  void tryWriteAmuletItemObject(AmuletItemObject value){
+  void writeAmuletItemObject(AmuletItemObject value){
     writeUInt16(value.amuletItem.index);
     writeUInt16(value.level);
   }
@@ -1015,7 +1054,7 @@ class AmuletPlayer extends AmuletPlayerBase {
   void writeCollectableAmuletItemObject() {
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Collectable_Amulet_Item_Object);
-    writeAmuletItemObject(collectableAmuletItemObject);
+    tryWriteAmuletItemObject(collectableAmuletItemObject);
   }
 
   AmuletItem? getGameObjectAmuletItem(GameObject gameObject){
@@ -1757,6 +1796,8 @@ class AmuletPlayer extends AmuletPlayerBase {
     characterState = CharacterState.Idle;
     health = maxHealth;
     magic = maxMagic;
+    stash.clear();
+    notifyStashDirty();
     clearCache();
     clearActionFrame();
     checkAssignedSkills();

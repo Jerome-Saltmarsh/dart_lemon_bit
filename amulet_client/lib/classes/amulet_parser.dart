@@ -18,6 +18,9 @@ extension AmuletParser on IsometricParser {
        case NetworkResponseAmulet.Player_Interacting:
          amulet.playerInteracting.value = readBool();
          break;
+       case NetworkResponseAmulet.Player_Stash:
+         readPlayerStash();
+         break;
        case NetworkResponseAmulet.Npc_Talk:
          amulet.npcText.clear();
          amulet.npcName.value = readString();
@@ -411,5 +414,15 @@ extension AmuletParser on IsometricParser {
 
   void readPlayerUpgradeMode() {
     amulet.playerUpgradeMode.value = readBool();
+  }
+
+  void readPlayerStash() {
+    final length = readUInt16();
+    final stash = amulet.playerStash;
+    stash.clear();
+    for (var i = 0; i < length; i++){
+      stash.add(readAmuletItemObject());
+    }
+    amulet.playerStashNotifier.value++;
   }
 }
