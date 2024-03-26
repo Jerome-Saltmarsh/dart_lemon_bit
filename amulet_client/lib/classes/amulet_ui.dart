@@ -61,12 +61,21 @@ class AmuletUI {
       SkillType.values.map((skillType) => MapEntry(skillType, 0)));
 
   final notifierSkillTypes = WatchInt(0);
+  final notifierEquipment = WatchInt(0);
   final amuletItemObjectHover = Watch<AmuletItemObject?>(null);
 
   AmuletUI(this.amulet) {
 
     amulet.playerSkillsNotifier.onChanged((t) {
       notifierSkillTypes.increment();
+    });
+
+    amulet.equippedChangedNotifier.onChanged((t) {
+      notifierEquipment.increment();
+    });
+
+    amulet.playerCanUpgrade.onChanged((t) {
+      notifierEquipment.increment();
     });
 
     amuletItemObjectHover.onChanged((amuletItemObject) {
@@ -248,14 +257,14 @@ class AmuletUI {
       children: [
         Row(
           children: [
-            buildDialogTitle('STASH'),
-            width16,
             buildIconStash(),
+            width8,
+            buildDialogTitle('STASH'),
           ],
         ),
         height16,
         buildNotifier(amulet.playerStashNotifier, () => Container(
-          height: amulet.engine.screen.height - 280,
+          height: amulet.engine.screen.height - 320,
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -641,63 +650,6 @@ class AmuletUI {
     );
 
     return buildWatchVisible(amulet.aimTargetSet, aimTarget);
-
-    // final healthPercentageBox = buildWatch(
-    //     amulet.player.aimTargetHealthPercentage,
-    //     (healthPercentage) => Container(
-    //           width: width * healthPercentage,
-    //           height: height,
-    //           color: amulet.colors.red_3,
-    //         ));
-
-    // final name = Container(
-    //   alignment: Alignment.centerLeft,
-    //   height: height,
-    //   color: amulet.colors.brownDark,
-    //   padding: const EdgeInsets.all(4),
-    //   width: width,
-    //   child: Stack(
-    //     children: [
-    //       buildWatch(amulet.player.aimTargetAction, (targetAction) {
-    //         if (targetAction != TargetAction.Attack) return nothing;
-    //
-    //         return healthPercentageBox;
-    //       }),
-    //       Container(
-    //         width: width,
-    //         height: height,
-    //         alignment: Alignment.center,
-    //         child: Row(
-    //           mainAxisAlignment: MainAxisAlignment.center,
-    //           children: [
-    //             buildWatch(amulet.aimTargetAmuletItemObject, (amuletItem) {
-    //               return FittedBox(
-    //                 child: buildWatch(amulet.player.aimTargetName,
-    //                         (name) => buildText(name.replaceAll('_', ' '),
-    //                           color: Colors.white
-    //                         )),
-    //               );
-    //             }),
-    //             // itemQuality,
-    //           ],
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    // );
-    // return Positioned(
-    //     top: 16,
-    //     left: 0,
-    //     child: IgnorePointer(
-    //       child: Container(
-    //         width: amulet.engine.screen.width,
-    //         alignment: Alignment.center,
-    //         child: buildWatch(amulet.player.aimTargetSet, (t) {
-    //           if (!t) return nothing;
-    //           return name;
-    //         }),
-    //       ),
-    //     ));
   }
 
   static Widget buildItemRow(String text, dynamic value) {
@@ -731,7 +683,7 @@ class AmuletUI {
 
   Widget buildEquippedSlotTypes() {
 
-    final content = buildWatch(amulet.equippedChangedNotifier, (t) => Row(
+    final content = buildWatch(notifierEquipment, (t) => Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         buildSlotType(SlotType.Weapon),
@@ -1440,17 +1392,56 @@ class AmuletUI {
     }
 
     final amuletItem = amuletItemObject.amuletItem;
+    final canUpgrade = amulet.playerCanUpgrade.value;
 
-    return onPressed(
-        action: () => amulet.dropAmuletItem(amuletItem),
-        child: buildMouseOverPanel(
-            onEnter: () => amuletItemObjectHover.value = amuletItemObject,
-            onExit: () => amuletItemObjectHover.value = null,
-            bottom: 90,
-            left: 0,
-            panel: buildCardLargeAmuletItemObject(amuletItemObject),
-            child: buildCardSmallAmuletItemObject(amuletItemObject)
+    return Column(
+      children: [
+        if (canUpgrade)
+          onPressed(
+            action: () {
+              amulet.upgradeSlotType(amuletItemObject.amuletItem.slotType);
+            },
+            child: Container(
+                width: 50,
+                height: 50,
+                margin: const EdgeInsets.only(bottom: 8),
+                color: AmuletColors.Gold,
+                alignment: Alignment.center,
+                child: Column(
+                  children: [
+                    Container(
+                        alignment: Alignment.center,
+                        width: 50,
+                        height: 20,
+                        color: Colors.orange,
+                        child: buildText('lvl ${amuletItemObject.level + 1}', size: 18, color: Colors.white70)),
+                    Container(
+                      height: 30,
+                      alignment: Alignment.center,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          buildText(amuletItemObject.upgradeCost, color: Colors.black54),
+                          iconGold,
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+            ),
+          ),
+        onPressed(
+            action: () => amulet.dropAmuletItem(amuletItem),
+            child: buildMouseOverPanel(
+                onEnter: () => amuletItemObjectHover.value = amuletItemObject,
+                onExit: () => amuletItemObjectHover.value = null,
+                bottom: 90,
+                left: 0,
+                panel: buildCardLargeAmuletItemObject(amuletItemObject),
+                child: buildCardSmallAmuletItemObject(amuletItemObject)
+            ),
         ),
+      ],
     );
   }
 
