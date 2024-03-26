@@ -91,6 +91,7 @@ enum AmuletItem {
     slotType: SlotType.Weapon,
     subType: WeaponType.Staff_Wand,
     skills: {
+      SkillType.Bludgeon: Constraint(min: 0.1, max: 0.2),
       SkillType.Ice_Ball: Constraint(min: 0.1, max: 0.4),
       SkillType.Max_Magic: Constraint(min: 0.2, max: 0.5),
     },
@@ -100,6 +101,7 @@ enum AmuletItem {
     slotType: SlotType.Weapon,
     subType: WeaponType.Staff_Globe,
     skills: {
+      SkillType.Bludgeon: Constraint(min: 0.1, max: 0.2),
       SkillType.Ice_Ball: Constraint(min: 0.1, max: 0.4),
       SkillType.Max_Magic: Constraint(min: 0.3, max: 0.6),
     },
@@ -109,6 +111,7 @@ enum AmuletItem {
     slotType: SlotType.Weapon,
     subType: WeaponType.Staff_Scepter,
     skills: {
+      SkillType.Bludgeon: Constraint(min: 0.1, max: 0.2),
       SkillType.Ice_Ball: Constraint(min: 0.1, max: 0.4),
       SkillType.Max_Magic: Constraint(min: 0.7, max: 0.8),
     },
@@ -118,6 +121,7 @@ enum AmuletItem {
     slotType: SlotType.Weapon,
     subType: WeaponType.Staff_Long,
     skills: {
+      SkillType.Bludgeon: Constraint(min: 0.1, max: 0.2),
       SkillType.Ice_Ball: Constraint(min: 0.1, max: 0.4),
       SkillType.Max_Magic: Constraint(min: 0.7, max: 0.8),
     },
@@ -423,7 +427,7 @@ enum AmuletItem {
       subType: WeaponType.Staff_Wand,
       quality: ItemQuality.Unique,
       skills: {
-        SkillType.Bludgeon: Constraint(min: 0.1, max: 0.4),
+        SkillType.Bludgeon: Constraint(min: 0.1, max: 0.2),
         SkillType.Fire_Ball: Constraint(min: 0.1, max: 0.4),
         SkillType.Magic_Steal: Constraint(min: 0.1, max: 0.4),
       },
@@ -435,7 +439,7 @@ enum AmuletItem {
       subType: WeaponType.Staff_Wand,
       quality: ItemQuality.Unique,
       skills: {
-        // SkillType.Bludgeon: Constraint(min: 0.1, max: 0.4),
+        SkillType.Bludgeon: Constraint(min: 0.1, max: 0.1),
         SkillType.Fire_Ball: Constraint(min: 0.1, max: 0.4),
         SkillType.Magic_Steal: Constraint(min: 0.1, max: 0.4),
         SkillType.Health_Regen: Constraint(min: 0.2, max: 0.4),
@@ -447,9 +451,10 @@ enum AmuletItem {
       subType: WeaponType.Sword_Short,
       quality: ItemQuality.Unique,
       skills: {
-        SkillType.Bludgeon: Constraint(min: 0.1, max: 0.4),
-        SkillType.Fire_Ball: Constraint(min: 0.1, max: 0.4),
+        SkillType.Slash: Constraint(min: 0.1, max: 0.4),
         SkillType.Magic_Steal: Constraint(min: 0.1, max: 0.4),
+        SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
+        SkillType.Attack_Speed: Constraint(min: 0.1, max: 0.4),
       },
     ),
   Special_Weapon_Assassins_Blade(
@@ -458,9 +463,9 @@ enum AmuletItem {
       subType: WeaponType.Sword_Short,
       quality: ItemQuality.Rare,
       skills: {
-        SkillType.Bludgeon: Constraint(min: 0.1, max: 0.4),
-        SkillType.Fire_Ball: Constraint(min: 0.1, max: 0.4),
+        SkillType.Slash: Constraint(min: 0.3, max: 0.5),
         SkillType.Magic_Steal: Constraint(min: 0.1, max: 0.4),
+        SkillType.Attack_Speed: Constraint(min: 0.2, max: 0.4),
       },
   ),
   Special_Weapon_Blizzard_Globe(
@@ -480,7 +485,7 @@ enum AmuletItem {
       subType: WeaponType.Bow_Reflex,
       quality: ItemQuality.Rare,
       skills: {
-        SkillType.Bludgeon: Constraint(min: 0.1, max: 0.4),
+        SkillType.Shoot_Arrow: Constraint(min: 0.1, max: 0.4),
         SkillType.Fire_Ball: Constraint(min: 0.1, max: 0.4),
         SkillType.Magic_Steal: Constraint(min: 0.1, max: 0.4),
       },
