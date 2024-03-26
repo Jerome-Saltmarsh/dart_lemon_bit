@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:amulet_client/classes/amulet_colors.dart';
 import 'package:amulet_client/components/isometric_options.dart';
 import 'package:amulet_client/extensions/physical_keyboardkey_extension.dart';
@@ -52,7 +54,73 @@ class AmuletUI {
   var visibleRightClickedToClear = true;
   var visibleRightClickedToDrop = true;
 
-  AmuletUI(this.amulet);
+  final skillTypeLevels = Map.fromEntries(
+      SkillType.values.map((skillType) => MapEntry(skillType, 0)));
+
+  final skillTypeLevelsDelta = Map.fromEntries(
+      SkillType.values.map((skillType) => MapEntry(skillType, 0)));
+
+  final notifierSkillTypes = WatchInt(0);
+  final amuletItemObjectHover = Watch<AmuletItemObject?>(null);
+
+  AmuletUI(this.amulet) {
+
+    amulet.playerSkillsNotifier.onChanged((t) {
+      notifierSkillTypes.increment();
+    });
+
+    amuletItemObjectHover.onChanged((amuletItemObject) {
+
+       if (amuletItemObject == null){
+         for (final skillType in SkillTypes) {
+           final level = amulet.getSkillTypeLevel(skillType);
+           skillTypeLevels[skillType] = level;
+           skillTypeLevelsDelta[skillType] = level;
+         }
+         notifierSkillTypes.increment();
+         return;
+       }
+
+       if (amulet.isEquipped(amuletItemObject)){
+         for (final skillType in SkillTypes) {
+           final itemLevel = amuletItemObject.getSkillLevel(skillType);
+           final level = amulet.getSkillTypeLevel(skillType);
+           skillTypeLevels[skillType] = level - itemLevel;
+           skillTypeLevelsDelta[skillType] = level;
+         }
+         notifierSkillTypes.increment();
+         return;
+       }
+
+       final equipped = amulet.getEquipped(amuletItemObject.amuletItem.slotType);
+       if (equipped == null) {
+         for (final skillType in SkillTypes) {
+           final itemLevel = amuletItemObject.getSkillLevel(skillType);
+           final level = amulet.getSkillTypeLevel(skillType);
+           skillTypeLevels[skillType] = level;
+           skillTypeLevelsDelta[skillType] = itemLevel;
+         }
+         notifierSkillTypes.increment();
+         return;
+       }
+
+       for (final skillType in SkillTypes) {
+         final equippedLevel = equipped.getSkillLevel(skillType);
+         final itemLevel = amuletItemObject.getSkillLevel(skillType);
+         final level = amulet.getSkillTypeLevel(skillType);
+         final newLevel = level - equippedLevel + itemLevel;
+
+         if (newLevel > level) {
+           skillTypeLevels[skillType] = level;
+           skillTypeLevelsDelta[skillType] = newLevel;
+         } else {
+           skillTypeLevels[skillType] = newLevel;
+           skillTypeLevelsDelta[skillType] = level;
+         }
+       }
+       notifierSkillTypes.increment();
+    });
+  }
 
   IsometricOptions get options => amulet.options;
 
@@ -1258,10 +1326,15 @@ class AmuletUI {
     );
   }
 
+
+
   Widget buildLevelBarSkillType(SkillType skillType) {
-    final level = amulet.getSkillTypeLevel(skillType);
-    final levelPercentage = level.percentageOf(skillType.maxLevel);
-    return buildLevelBar(levelPercentage);
+    final level = skillTypeLevels[skillType] ?? (throw Exception());
+    final delta = skillTypeLevelsDelta[skillType] ?? (throw Exception());
+    final maxLevel = skillType.maxLevel;
+    final levelPercentage = level.percentageOf(maxLevel);
+    final deltaPercentage = delta.percentageOf(maxLevel);
+    return buildLevelBarDelta(levelPercentage, deltaPercentage);
   }
 
   Widget buildLevelBar(double value) {
@@ -1278,6 +1351,40 @@ class AmuletUI {
             ),
             Container(
               width: (1.0 - value) * levelWidth,
+              height: levelHeight,
+              color: Colors.white24,
+            ),
+          ],
+        );
+  }
+
+  Widget buildLevelBarDelta(double a, double b) {
+    const levelWidth = 50.0;
+    const levelHeight = 5.0;
+
+    final start = min(a, b);
+    final end = max(a, b);
+    final diff = end - start;
+
+    final widthA = levelWidth * start;
+    final widthB = levelWidth * diff;
+    final widthC = levelWidth - widthA - widthB;
+
+    return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: widthA,
+              height: levelHeight,
+              color: Colors.white70,
+            ),
+            Container(
+              width: widthB,
+              height: levelHeight,
+              color: b > a ? Colors.green.withOpacity(0.7) : Colors.red.withOpacity(0.7),
+            ),
+            Container(
+              width: widthC,
               height: levelHeight,
               color: Colors.white24,
             ),
@@ -1334,6 +1441,8 @@ class AmuletUI {
     return onPressed(
         action: () => amulet.dropAmuletItem(amuletItem),
         child: buildMouseOverPanel(
+            onEnter: () => amuletItemObjectHover.value = amuletItemObject,
+            onExit: () => amuletItemObjectHover.value = null,
             bottom: 90,
             left: 0,
             panel: buildCardLargeAmuletItemObject(amuletItemObject),
@@ -1915,22 +2024,19 @@ class AmuletUI {
   // }
 
   Widget buildRowPlayerSkills() => buildWatch(
-      amulet.playerSkillsNotifier,
+      notifierSkillTypes,
       (_) => Row(
             children: [
               Container(
                   margin: EdgeInsets.only(right: 32),
                   child: buildPlayerSkillAttack()),
-              // width32,
               buildRowPlayerSkillsPassive(),
-              // width32,
               buildRowPlayerSkillsActive(),
             ],
           ));
 
-  Widget buildRowPlayerSkillsPassive() => buildWatch(
-      amulet.playerSkillsNotifier,
-      (t) {
+  Widget buildRowPlayerSkillsPassive() => buildNotifier(
+      amulet.playerSkillsNotifier, () {
         final content = Container(
           margin: const EdgeInsets.only(right: 32),
           child: Row(

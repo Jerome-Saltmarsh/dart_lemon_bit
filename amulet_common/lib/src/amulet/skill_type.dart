@@ -2,6 +2,8 @@
 import 'package:amulet_common/src.dart';
 import 'package:lemon_math/src.dart';
 
+const SkillTypes = SkillType.values;
+
 enum SkillType {
   None(
       casteType: CasteType.Passive,

@@ -81,6 +81,7 @@ class Amulet extends Updatable with IsometricComponent  {
 
   final playerSkillTypeLevels = Map.fromEntries(
       SkillType.values.map((skillType) => MapEntry(skillType, 0)));
+
   final playerSkillsNotifier = Watch(0);
   var playerSkillLeft = SkillType.None;
   var playerSkillRight = SkillType.None;
@@ -158,7 +159,6 @@ class Amulet extends Updatable with IsometricComponent  {
 
   Amulet() {
     print('Amulet()');
-
     screenColorI.onChanged((t) {
       screenColor.value = Colors.black.withOpacity((1.0 - t).clamp(0, 1.0));
     });
@@ -822,6 +822,12 @@ class Amulet extends Updatable with IsometricComponent  {
       'index $index',
     );
   }
+
+  bool isEquipped(AmuletItemObject? amuletItemObject) =>
+      equippedWeapon == amuletItemObject ||
+      equippedHelm == amuletItemObject ||
+      equippedArmor == amuletItemObject ||
+      equippedShoes == amuletItemObject ;
 }
 
 

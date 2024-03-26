@@ -61,6 +61,8 @@ SKULLSOFT
 [new] model missing amulet items
 [new] balance items and enemies
 [new] beat the game
+[fix] path finding for half side
+[new] visualize amulet item deltas
 
 ## 26.03.2024
 [new] player stash sell
