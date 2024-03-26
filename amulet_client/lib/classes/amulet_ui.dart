@@ -133,10 +133,6 @@ class AmuletUI {
           ),
           Positioned(bottom: 140, child: buildDialogTalk()),
           Positioned(bottom: 8, right: 8, child: buildWorldMap()),
-          // Positioned(
-          //   top: 8,
-          //   child: buildPlayerAimNode(),
-          // ),
           Positioned(
             top: 8,
             child: buildPlayerAimTarget(),
@@ -146,16 +142,11 @@ class AmuletUI {
             left: 8,
             child: buildHudTopLeft(),
           ),
-          // Positioned(
-          //   top: 8,
-          //   left: 64,
-          //   child: buildWatch(
-          //     amulet.aimTargetAmuletItemObject,
-          //     (amuletItemObject) => amuletItemObject == null
-          //         ? nothing
-          //         : buildCardLargeAmuletItemObject(amuletItemObject),
-          //   ),
-          // ),
+          Positioned(
+            top: 70,
+            left: 10,
+            child: buildWatchVisible(amulet.playerCanUpgrade, buildWindowStash()),
+          ),
           Positioned(
             top: 100,
             child: buildWindowUpgradeMode(),
@@ -173,11 +164,6 @@ class AmuletUI {
               top: 0,
               left: 0,
               child: buildMessageIndex()),
-          Positioned(
-            top: 70,
-            left: 10,
-            child: buildWatchVisible(amulet.playerCanUpgrade, buildWindowStash()),
-          ),
           Positioned(
               top: 8,
               child: buildWindowQuest()),
