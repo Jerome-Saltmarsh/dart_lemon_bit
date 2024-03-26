@@ -637,6 +637,14 @@ class AmuletController {
         }
         amuletPlayer.sellStashItemAtIndex(index);
         break;
+      case NetworkRequestAmulet.Stash_Equip:
+        final index = arguments.tryGetArgInt(AmuletRequestField.Index);
+        if (index == null){
+          amuletPlayer.writeGameError(GameError.Invalid_Client_Request);
+          return;
+        }
+        amuletPlayer.equipStashItemAtIndex(index);
+        break;
       case NetworkRequestAmulet.Spawn_Random_Enemy:
         amuletGame.spawnRandomEnemy(player.difficulty);
         break;

@@ -333,6 +333,11 @@ class AmuletPlayer extends AmuletPlayerBase {
      }
   }
 
+  void tryAddToStash(AmuletItemObject? amuletItemObject) {
+     if (amuletItemObject == null) return;
+     addToStash(amuletItemObject);
+  }
+
   void addToStash(AmuletItemObject amuletItemObject) {
 
     if (stash.contains(amuletItemObject)) {
@@ -1838,6 +1843,49 @@ class AmuletPlayer extends AmuletPlayerBase {
     final value = stash.removeAt(index);
     markStashDirty();
     acquireGold(value.sellValue);
+  }
+
+  void equipStashItemAtIndex(int index) {
+    if (!stash.isValidIndex(index)){
+      writeGameError(GameError.Invalid_Stash_Index);
+      return;
+    }
+
+    final value = stash.removeAt(index);
+
+    final equipped = getEquippedAmuletItem(slotType: value.amuletItem.slotType);
+
+    if (equipped != null){
+      addToStash(equipped);
+    }
+
+    stashEquipped(value.amuletItem.slotType);
+    acquireAmuletItemObject(value);
+    markStashDirty();
+  }
+
+  void stashEquipped(SlotType slotType) {
+    switch (slotType) {
+      case SlotType.Weapon:
+        tryAddToStash(equippedWeapon);
+        equippedWeapon = null;
+        break;
+      case SlotType.Helm:
+        tryAddToStash(equippedHelm);
+        equippedHelm = null;
+        break;
+      case SlotType.Armor:
+        tryAddToStash(equippedArmor);
+        equippedArmor = null;
+        break;
+      case SlotType.Shoes:
+        tryAddToStash(equippedShoes);
+        equippedShoes = null;
+        break;
+      case SlotType.Consumable:
+        writeGameError(GameError.Invalid_Slot_Type);
+        break;
+    }
   }
 }
 

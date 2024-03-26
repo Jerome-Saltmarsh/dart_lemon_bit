@@ -216,19 +216,22 @@ class AmuletUI {
     ),
   );
 
-  Widget buildStashRow(AmuletItemObject amuletItemObject) => Container(
-    width: 200,
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        buildCardLargeAmuletItemObjectTitle(amuletItemObject),
-                        onPressed(
-                            action: () {
-                              amulet.sellStashItem(amuletItemObject);
-                            },
-                            child: buildCardSmallHalfGold(amuletItemObject.sellValue)),
-                      ],
-                    ),
+  Widget buildStashRow(AmuletItemObject amuletItemObject) => onPressed(
+    action: () => amulet.equipStashItem(amuletItemObject),
+    child: Container(
+      width: 200,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          buildCardLargeAmuletItemObjectTitle(amuletItemObject),
+                          onPressed(
+                              action: () {
+                                amulet.sellStashItem(amuletItemObject);
+                              },
+                              child: buildCardSmallHalfGold(amuletItemObject.sellValue)),
+                        ],
+                      ),
+    ),
   );
 
   Widget buildCardUpgradeAmuletItemObject(AmuletItemObject? amuletItemObject){

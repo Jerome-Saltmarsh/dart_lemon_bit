@@ -104,6 +104,7 @@ enum GameError {
   Min_Damage_Null,
   Slot_Type_Required,
   Invalid_Slot_Type_Index,
+  Invalid_Slot_Type,
   Slot_Type_Empty,
   Not_Implemented,
   Cheats_Disabled,

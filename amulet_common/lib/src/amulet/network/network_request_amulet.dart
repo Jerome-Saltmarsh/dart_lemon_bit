@@ -23,4 +23,5 @@ enum NetworkRequestAmulet {
   Use_Potion_Magic,
   End_Upgrade_Mode,
   Stash_Sell,
+  Stash_Equip,
 }
