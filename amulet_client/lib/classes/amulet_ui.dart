@@ -1518,14 +1518,24 @@ class AmuletUI {
     return buildCardLargeTitleTemplate(
       icon: buildIconAmuletItem(amuletItem),
       name: amuletItem.label,
-      subtitle: Column(
-        children: [
-          buildTextSubtitle('lvl ${amuletItemObject.level}/${amuletItem.maxLevel}'),
-          buildLevelBar(amuletItemObject.levelPercentage),
-        ],
+      subtitle: buildBars(
+          total: amuletItem.maxLevel,
+          value: amuletItemObject.level,
       ),
+      // subtitle: Column(
+      //   children: [
+      //     buildTextSubtitle('lvl ${amuletItemObject.level}/${amuletItem.maxLevel}'),
+      //     buildLevelBar(amuletItemObject.levelPercentage),
+      //   ],
+      // ),
     );
   }
+
+  Widget buildBarBlocks(int current, int max) =>
+      Row(
+        children: List.generate(max,
+            (index) => index < current ? barBlockWhite70 : barBlockWhite24),
+      );
 
   Widget buildCardLargeAmuletItemObject(AmuletItemObject amuletItemObject, {
     bool compareLevels = false,
