@@ -304,24 +304,28 @@ class AmuletUI {
 
   Widget buildStashRow(AmuletItemObject amuletItemObject) {
 
-    final buttonEquip = Container(
-      alignment: Alignment.centerLeft,
-      width: 200,
-      padding: paddingAll8,
-      color: Colors.black12,
-      child: onPressed(
-        onEnter: () {
-          amuletItemObjectHover.value = amuletItemObject;
-          amuletItemObjectHoverUpgrade = false;
-        },
-        onExit: () {
-          if (amuletItemObjectHover.value == amuletItemObject){
-            amuletItemObjectHover.value = null;
-          }
-        },
-        action: () => amulet.equipStashItem(amuletItemObject),
-        child: buildCardLargeAmuletItemObjectTitle(amuletItemObject),
-      ),
+    final buttonEquip = MouseOver(
+      builder: (mouseOver) {
+        return Container(
+          alignment: Alignment.centerLeft,
+          width: 200,
+          padding: paddingAll8,
+          color: mouseOver ? Colors.black26 : Colors.black12,
+          child: onPressed(
+            onEnter: () {
+              amuletItemObjectHover.value = amuletItemObject;
+              amuletItemObjectHoverUpgrade = false;
+            },
+            onExit: () {
+              if (amuletItemObjectHover.value == amuletItemObject){
+                amuletItemObjectHover.value = null;
+              }
+            },
+            action: () => amulet.equipStashItem(amuletItemObject),
+            child: buildCardLargeAmuletItemObjectTitle(amuletItemObject),
+          ),
+        );
+      }
     );
 
     final buttonSell = onPressed(
