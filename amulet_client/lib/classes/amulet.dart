@@ -98,7 +98,7 @@ class Amulet extends Updatable with IsometricComponent  {
   final amuletScene = Watch<AmuletScene?>(null);
   final questMain = Watch(QuestMain.values.first);
   final windowVisibleQuests = WatchBool(true);
-  final windowVisibleInventory = WatchBool(true);
+  final windowVisibleInventory = WatchBool(false);
   final windowVisibleHelp = WatchBool(false);
   final amuletKeys = AmuletKeys();
 
@@ -165,6 +165,10 @@ class Amulet extends Updatable with IsometricComponent  {
     playerMagicNotifier.onChanged((t) => updatePlayerMagicPercentage());
 
     questMain.onChanged(onChangedQuestMain);
+
+    playerCanUpgrade.onChanged((t) {
+      windowVisibleInventory.value = t;
+    });
 
     fiendCountAlive.onChanged((t) {
       updateFiendCountTotal();
