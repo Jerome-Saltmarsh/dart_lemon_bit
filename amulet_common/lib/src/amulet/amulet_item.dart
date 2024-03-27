@@ -191,8 +191,8 @@ enum AmuletItem {
     slotType: SlotType.Helm,
     subType: HelmType.Feather_Cap,
     skills: {
+      SkillType.Shoot_Arrow: Constraint(min: 0.1, max: 0.15),
       SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
-      SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
       SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
     },
   ),
@@ -311,6 +311,7 @@ enum AmuletItem {
     slotType: SlotType.Shoes,
     subType: ShoeType.Leather_Boots,
     skills: {
+      SkillType.Run_Speed: Constraint(min: 0.1, max: 0.25),
       SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
       SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
       SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
@@ -321,6 +322,7 @@ enum AmuletItem {
     slotType: SlotType.Shoes,
     subType: ShoeType.Grieves,
     skills: {
+      SkillType.Run_Speed: Constraint(min: 0.1, max: 0.25),
       SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
       SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
       SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
@@ -331,6 +333,7 @@ enum AmuletItem {
     slotType: SlotType.Shoes,
     subType: ShoeType.Sabatons,
     skills: {
+      SkillType.Run_Speed: Constraint(min: 0.1, max: 0.25),
       SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
       SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
       SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
@@ -341,6 +344,7 @@ enum AmuletItem {
     slotType: SlotType.Shoes,
     subType: ShoeType.Black_Slippers,
     skills: {
+      SkillType.Run_Speed: Constraint(min: 0.1, max: 0.25),
       SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
       SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
       SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
@@ -351,6 +355,7 @@ enum AmuletItem {
     slotType: SlotType.Shoes,
     subType: ShoeType.Footwraps,
     skills: {
+      SkillType.Run_Speed: Constraint(min: 0.1, max: 0.25),
       SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
       SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
       SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
@@ -361,6 +366,7 @@ enum AmuletItem {
     slotType: SlotType.Shoes,
     subType: ShoeType.Soles,
     skills: {
+      SkillType.Run_Speed: Constraint(min: 0.1, max: 0.25),
       SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
       SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
       SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
@@ -371,6 +377,7 @@ enum AmuletItem {
     slotType: SlotType.Shoes,
     subType: ShoeType.Treads,
     skills: {
+      SkillType.Run_Speed: Constraint(min: 0.1, max: 0.25),
       SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
       SkillType.Health_Regen: Constraint(min: 0.1, max: 0.4),
       SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.4),
@@ -428,7 +435,7 @@ enum AmuletItem {
       quality: ItemQuality.Unique,
       skills: {
         SkillType.Bludgeon: Constraint(min: 0.1, max: 0.2),
-        SkillType.Fire_Ball: Constraint(min: 0.1, max: 0.4),
+        SkillType.Ice_Ball: Constraint(min: 0.1, max: 0.4),
         SkillType.Magic_Steal: Constraint(min: 0.1, max: 0.4),
       },
   ),
@@ -476,7 +483,7 @@ enum AmuletItem {
       quality: ItemQuality.Rare,
       skills: {
         SkillType.Bludgeon: Constraint(min: 0.1, max: 0.4),
-        SkillType.Fire_Ball: Constraint(min: 0.1, max: 0.4),
+        SkillType.Ice_Ball: Constraint(min: 0.1, max: 0.4),
         SkillType.Magic_Steal: Constraint(min: 0.1, max: 0.4),
       },
   ),
@@ -486,9 +493,9 @@ enum AmuletItem {
       subType: WeaponType.Bow_Reflex,
       quality: ItemQuality.Rare,
       skills: {
-        SkillType.Shoot_Arrow: Constraint(min: 0.1, max: 0.4),
-        SkillType.Fire_Ball: Constraint(min: 0.1, max: 0.4),
-        SkillType.Magic_Steal: Constraint(min: 0.1, max: 0.4),
+        SkillType.Shoot_Arrow: Constraint(min: 0.2, max: 0.4),
+        SkillType.Split_Shot: Constraint(min: 0.1, max: 0.4),
+        SkillType.Critical_Hit: Constraint(min: 0.1, max: 0.15),
       },
   ),
   Unique_Helm_Of_Fireball(
@@ -510,7 +517,7 @@ enum AmuletItem {
       skills: {
         SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
         SkillType.Max_Magic: Constraint(min: 0.1, max: 0.4),
-        SkillType.Fire_Ball: Constraint(min: 0.1, max: 0.4),
+        SkillType.Ice_Ball: Constraint(min: 0.1, max: 0.4),
       },
   ),
   Unique_Helm_Of_Magic_Regen(
@@ -519,9 +526,8 @@ enum AmuletItem {
       subType: HelmType.Pointed_Hat_Purple,
       quality: ItemQuality.Unique,
       skills: {
-        SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
         SkillType.Max_Magic: Constraint(min: 0.1, max: 0.4),
-        SkillType.Fire_Ball: Constraint(min: 0.1, max: 0.4),
+        SkillType.Magic_Regen: Constraint(min: 0.2, max: 0.4),
       },
   ),
   Rare_Helm_Of_Fireball(
@@ -543,7 +549,7 @@ enum AmuletItem {
       skills: {
         SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
         SkillType.Max_Magic: Constraint(min: 0.1, max: 0.4),
-        SkillType.Fire_Ball: Constraint(min: 0.1, max: 0.4),
+        SkillType.Ice_Ball: Constraint(min: 0.1, max: 0.4),
       },
   ),
   Rare_Helm_Of_Magic_Regen(
@@ -554,7 +560,7 @@ enum AmuletItem {
       skills: {
         SkillType.Max_Health: Constraint(min: 0.1, max: 0.4),
         SkillType.Max_Magic: Constraint(min: 0.1, max: 0.4),
-        SkillType.Fire_Ball: Constraint(min: 0.1, max: 0.4),
+        SkillType.Magic_Regen: Constraint(min: 0.1, max: 0.4),
       },
   ),
   ;
