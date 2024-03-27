@@ -2107,47 +2107,34 @@ class AmuletUI {
     final b = skillTypeLevelsDelta[skillType] ?? (throw Exception());
     final c = b - a;
 
-    final child = Column(
-      children: [
-        if (c != 0)
-        Container(
-          margin: const EdgeInsets.only(bottom: 16),
-          width: 50,
-          height: 50,
-          color: Palette.brown_3,
-          child: buildText(c.toStringSigned, color: c > 0 ? Colors.green : Colors.red),
-          alignment: Alignment.center,
-        ),
-        Container(
-          color: Palette.brown_4,
-          padding: const EdgeInsets.all(4),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Container(
-                width: size,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    buildText(amulet.getSkillTypeLevel(skillType), color: Palette.brown_0),
-                  ],
-                ),
-                alignment: Alignment.center,
-                color: Palette.brown_4,
-              ),
-              Container(
-                  width: size,
-                  height: size,
-                  alignment: Alignment.center,
-                  color: Palette.brown_3,
-                  child: buildIconSkillType(skillType)),
-              height2,
-              buildLevelBarSkillType(skillType),
-            ],
+    final child = Container(
+      color: Palette.brown_4,
+      padding: const EdgeInsets.all(4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Container(
+            width: size,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                buildText(amulet.getSkillTypeLevel(skillType), color: Palette.brown_0),
+              ],
+            ),
+            alignment: Alignment.center,
+            color: Palette.brown_4,
           ),
-        ),
-      ],
+          Container(
+              width: size,
+              height: size,
+              alignment: Alignment.center,
+              color: Palette.brown_3,
+              child: buildIconSkillType(skillType)),
+          height2,
+          buildLevelBarSkillType(skillType),
+        ],
+      ),
     );
 
     final borderActive = buildBorder(
@@ -2163,11 +2150,26 @@ class AmuletUI {
       child: child,
     );
 
+    final value = amulet.playerSkillRight == skillType ? borderActive : borderNotActive;
+
     return buildMouseOverPanel(
         bottom: 90,
         left: -60,
         panel: buildCardLargeSkillType(skillType),
-        child: amulet.playerSkillRight == skillType ? borderActive : borderNotActive,
+        child: Column(
+          children: [
+            if (c != 0)
+              Container(
+                margin: const EdgeInsets.only(bottom: 16),
+                width: 50,
+                height: 50,
+                color: Palette.brown_3,
+                child: buildText(c.toStringSigned, color: c > 0 ? Colors.green : Colors.red),
+                alignment: Alignment.center,
+              ),
+            value,
+          ],
+        ),
     );
   }
 
