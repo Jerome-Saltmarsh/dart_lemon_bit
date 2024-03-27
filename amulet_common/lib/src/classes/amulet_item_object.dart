@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import '../amulet/amulet_item.dart';
 import '../amulet/skill_type.dart';
 import 'package:lemon_lang/src.dart';
@@ -22,12 +24,19 @@ class AmuletItemObject {
 
   int get upgradeCost => amuletItem.getUpgradeCost(level);
 
+  int get maxLevel => amuletItem.maxLevel;
+
+  bool get maxLevelReached => level >= maxLevel;
+
   int getSkillLevel(SkillType skillType) =>
       amuletItem.getSkillTypeLevel(
           skillType: skillType,
           level: level,
       );
 
-
-
+  int getSkillLevelNext(SkillType skillType) =>
+      amuletItem.getSkillTypeLevel(
+          skillType: skillType,
+          level: min(level + 1, maxLevel),
+      );
 }

@@ -63,6 +63,8 @@ class AmuletUI {
   final notifierSkillTypes = WatchInt(0);
   final notifierEquipment = WatchInt(0);
   final amuletItemObjectHover = Watch<AmuletItemObject?>(null);
+  var amuletItemObjectHoverUpgrade = false;
+
 
   AmuletUI(this.amulet) {
 
@@ -91,6 +93,21 @@ class AmuletUI {
        }
 
        if (amulet.isEquipped(amuletItemObject)){
+
+         if (amuletItemObjectHoverUpgrade){
+           for (final skillType in SkillTypes) {
+             final currentSkillLevel = amulet.getSkillTypeLevel(skillType);
+             final nextItemLevel = amuletItemObject.getSkillLevelNext(skillType);
+             final currentItemLevel = amuletItemObject.getSkillLevel(skillType);
+             final diff = nextItemLevel - currentItemLevel;
+             if (diff <= 0) continue;
+             skillTypeLevels[skillType] = currentSkillLevel;
+             skillTypeLevelsDelta[skillType] = currentSkillLevel + diff;
+           }
+           notifierSkillTypes.increment();
+           return;
+         }
+
          for (final skillType in SkillTypes) {
            final itemLevel = amuletItemObject.getSkillLevel(skillType);
            final level = amulet.getSkillTypeLevel(skillType);
@@ -302,6 +319,7 @@ class AmuletUI {
       child: child,
       onEnter: (_) {
         amuletItemObjectHover.value = amuletItemObject;
+        amuletItemObjectHoverUpgrade = false;
       },
       onExit: (_) {
         if (amuletItemObjectHover.value == amuletItemObject){
@@ -311,53 +329,53 @@ class AmuletUI {
     );
   }
 
-  Widget buildCardUpgradeAmuletItemObject(AmuletItemObject? amuletItemObject){
-    if (amuletItemObject == null) return nothing;
-
-    final amuletItem = amuletItemObject.amuletItem;
-    final level = amuletItemObject.level;
-    final cost = amuletItem.getUpgradeCost(level);
-    final fullyUpgraded = level >= amuletItem.maxLevel;
-
-    final controlButton = fullyUpgraded ?  buildText('MAX LEVEL')
-        : buildWatch(amulet.playerGold, (playerGold) {
-
-      final canAfford = playerGold >= cost;
-      final costText = buildText(cost, color: canAfford ? AmuletColors.Gold : Palette.apricot_2, size: 22);
-
-      return Container(
-          color: canAfford ? Colors.green : Colors.white12,
-          padding: paddingAll8,
-          child: Row(
-            children: [
-              buildText('UPGRADE'),
-              width8,
-              costText,
-              iconGold,
-            ],
-          ));
-    });
-
-    return onPressed(
-      action: () => amulet.upgradeSlotType(amuletItem.slotType),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          buildWatch(amulet.playerGold, (playerGold) {
-            return Container(
-                margin: const EdgeInsets.symmetric(horizontal: 4),
-                child: buildCardLargeAmuletItemObject(
-                  amuletItemObject, compareLevels: true,
-                  borderColor: Colors.orange
-                ));
-          }),
-          height8,
-          controlButton,
-        ],
-      ),
-    );
-  }
+  // Widget buildCardUpgradeAmuletItemObject(AmuletItemObject? amuletItemObject){
+  //   if (amuletItemObject == null) return nothing;
+  //
+  //   final amuletItem = amuletItemObject.amuletItem;
+  //   final level = amuletItemObject.level;
+  //   final cost = amuletItem.getUpgradeCost(level);
+  //   final fullyUpgraded = level >= amuletItem.maxLevel;
+  //
+  //   final controlButton = fullyUpgraded ?  buildText('MAX LEVEL')
+  //       : buildWatch(amulet.playerGold, (playerGold) {
+  //
+  //     final canAfford = playerGold >= cost;
+  //     final costText = buildText(cost, color: canAfford ? AmuletColors.Gold : Palette.apricot_2, size: 22);
+  //
+  //     return Container(
+  //         color: canAfford ? Colors.green : Colors.white12,
+  //         padding: paddingAll8,
+  //         child: Row(
+  //           children: [
+  //             buildText('UPGRADE'),
+  //             width8,
+  //             costText,
+  //             iconGold,
+  //           ],
+  //         ));
+  //   });
+  //
+  //   return onPressed(
+  //     action: () => amulet.upgradeSlotType(amuletItem.slotType),
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.start,
+  //       crossAxisAlignment: CrossAxisAlignment.center,
+  //       children: [
+  //         buildWatch(amulet.playerGold, (playerGold) {
+  //           return Container(
+  //               margin: const EdgeInsets.symmetric(horizontal: 4),
+  //               child: buildCardLargeAmuletItemObject(
+  //                 amuletItemObject, compareLevels: true,
+  //                 borderColor: Colors.orange
+  //               ));
+  //         }),
+  //         height8,
+  //         controlButton,
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget buildWindowAmuletError() => buildWatch(amulet.gameError, (gameError){
     if (gameError == null) return nothing;
@@ -1400,6 +1418,16 @@ class AmuletUI {
       children: [
         if (canUpgrade)
           onPressed(
+            onEnter: () {
+              amuletItemObjectHover.value = amuletItemObject;
+              amuletItemObjectHoverUpgrade = true;
+            },
+            onExit: (){
+              if (amuletItemObjectHover.value == amuletItemObject) {
+                amuletItemObjectHover.value = null;
+                amuletItemObjectHoverUpgrade = false;
+              }
+            },
             action: () {
               amulet.upgradeSlotType(amuletItemObject.amuletItem.slotType);
             },
@@ -1435,7 +1463,10 @@ class AmuletUI {
         onPressed(
             action: () => amulet.dropAmuletItem(amuletItem),
             child: buildMouseOverPanel(
-                onEnter: () => amuletItemObjectHover.value = amuletItemObject,
+                onEnter: () {
+                  amuletItemObjectHover.value = amuletItemObject;
+                  amuletItemObjectHoverUpgrade = false;
+                },
                 onExit: () => amuletItemObjectHover.value = null,
                 bottom: 90,
                 left: 0,
