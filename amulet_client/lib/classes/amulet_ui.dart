@@ -33,10 +33,17 @@ class AmuletUI {
   late final iconCheckBoxTrue = buildIcon(srcX: 560, srcY: 16, width: 16, height: 16);
   late final iconCheckBoxFalse = buildIcon(srcX: 560, srcY: 0, width: 16, height: 16);
 
-  final barBlockWhite70 = buildBarBlock(color: Colors.white70);
-  final barBlockWhite24 = buildBarBlock(color: Colors.white24);
-  final barBlockGreen = buildBarBlock(color: Colors.green.withOpacity(0.7));
-  final barBlockRed = buildBarBlock(color: Colors.red.withOpacity(0.7));
+  final barBlockSm70 = buildBarBlock(color: Colors.white70, size: 5);
+  final barBlockSm24 = buildBarBlock(color: Colors.white24, size: 5);
+
+  final barBlockWhite70 = buildBarBlock(color: Colors.white70, size: 8);
+  final barBlockWhite24 = buildBarBlock(color: Colors.white24, size: 8);
+
+  final barBlockGreen = buildBarBlock(color: Colors.green.withOpacity(0.7), size: 8);
+  final barBlockRed = buildBarBlock(color: Colors.red.withOpacity(0.7), size: 8);
+
+  final blockGreen = Container(width: 15, height: 15, color: Colors.green,);
+  final blockRed = Container(width: 15, height: 15, color: Colors.red,);
 
   final quantifyTab = Watch(QuantifyTab.values.first);
   final quantifyAmuletItemSlotType = Watch(SlotType.Weapon);
@@ -1147,14 +1154,15 @@ class AmuletUI {
             value > index ? barBlockWhite70 : barBlockWhite24)
       );
 
-  static Widget buildBarBlock({required Color color}){
-    return Container(
-      width: 8,
-      height: 8,
-      margin: const EdgeInsets.only(right: 4),
+  static Widget buildBarBlock({
+    required Color color,
+    required double size,
+  }) => Container(
+      width: size,
+      height: size,
+      margin: EdgeInsets.symmetric(horizontal: size * (goldenRatio_0381 * 0.5)),
       color: color,
     );
-  }
 
   Widget buildIconAgility() =>
       buildIcon(srcX: 768, srcY: 64, width: 16, height: 16);
@@ -1410,7 +1418,7 @@ class AmuletUI {
     }
 
     final amuletItem = amuletItemObject.amuletItem;
-    final canUpgrade = amulet.playerCanUpgrade.value;
+    final canUpgrade = amulet.playerCanUpgrade.value && !amuletItemObject.maxLevelReached;
     final playerGold = amulet.playerGold.value;
     final canAfford = playerGold >= amuletItemObject.upgradeCost;
 
@@ -1535,6 +1543,12 @@ class AmuletUI {
       Row(
         children: List.generate(max,
             (index) => index < current ? barBlockWhite70 : barBlockWhite24),
+      );
+
+  Widget buildBarBlocksSmall(int current, int max) =>
+      Row(
+        children: List.generate(max,
+            (index) => index < current ? barBlockSm70 : barBlockSm24),
       );
 
   Widget buildCardLargeAmuletItemObject(AmuletItemObject amuletItemObject, {
@@ -2169,21 +2183,28 @@ class AmuletUI {
         child: Column(
           children: [
             if (c != 0)
-              Container(
-                margin: const EdgeInsets.only(bottom: 16),
-                width: 50,
-                height: 50,
-                color: Palette.brown_3,
-                child: buildText(c.toStringSigned, color: c > 0 ? Colors.green : Colors.red),
-                alignment: Alignment.center,
+              Column(
+                children: List.generate(c.abs(), (index) => c > 0 ? blockGreen : blockRed),
               ),
+              // Container(
+              //   margin: const EdgeInsets.only(bottom: 16),
+              //   width: 50,
+              //   height: 50,
+              //   color: Palette.brown_3,
+              //   child: buildText(c.toStringSigned, color: c > 0 ? Colors.green : Colors.red),
+              //   alignment: Alignment.center,
+              // ),
             value,
           ],
         ),
     );
   }
 
-  Widget buildCardSmallEmpty() => buildCardSmall(title: nothing, child: nothing, value: 0);
+  Widget buildCardSmallEmpty() => buildCardSmall(
+      title: nothing,
+      child: nothing,
+      footer: nothing,
+  );
 
   Widget buildCardSmallAmuletItemObject(AmuletItemObject amuletItemObject) =>
       buildCardSmallAmuletItem(
@@ -2198,8 +2219,9 @@ class AmuletUI {
   }) =>
       buildCardSmall(
         title: buildCardTitleText(level),
-        value: level.percentageOf(amuletItem.maxLevel),
         child: buildIconAmuletItem(amuletItem),
+        // footer: buildBarBlocksSmall(level.percentageOf(amuletItem.maxLevel)),
+        footer: buildBarBlocksSmall(level, amuletItem.maxLevel),
       );
 
 
@@ -2288,7 +2310,7 @@ class AmuletUI {
   Widget buildCardSmall({
     required Widget title,
     required Widget child,
-    required double value,
+    required Widget footer,
   }) {
     const size = 50.0;
     return Container(
@@ -2311,7 +2333,7 @@ class AmuletUI {
               child: child
           ),
           height4,
-          buildLevelBar(value),
+          footer,
         ],
       ),
     );
