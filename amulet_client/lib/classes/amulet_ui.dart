@@ -304,36 +304,54 @@ class AmuletUI {
 
   Widget buildStashRow(AmuletItemObject amuletItemObject) {
 
-    final child = onPressed(
-      action: () => amulet.equipStashItem(amuletItemObject),
-      child: Container(
-        width: 280,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            buildCardLargeAmuletItemObjectTitle(amuletItemObject),
-            onPressed(
-                action: () {
-                  amulet.sellStashItem(amuletItemObject);
-                },
-                child: buildCardSmallHalfGold(amuletItemObject.sellValue)),
-          ],
-        ),
+    final buttonEquip = Container(
+      alignment: Alignment.centerLeft,
+      width: 200,
+      padding: paddingAll8,
+      color: Colors.black12,
+      child: onPressed(
+        onEnter: () {
+          amuletItemObjectHover.value = amuletItemObject;
+          amuletItemObjectHoverUpgrade = false;
+        },
+        onExit: () {
+          if (amuletItemObjectHover.value == amuletItemObject){
+            amuletItemObjectHover.value = null;
+          }
+        },
+        action: () => amulet.equipStashItem(amuletItemObject),
+        child: buildCardLargeAmuletItemObjectTitle(amuletItemObject),
       ),
     );
 
-    return MouseRegion(
-      child: child,
-      onEnter: (_) {
-        amuletItemObjectHover.value = amuletItemObject;
-        amuletItemObjectHoverUpgrade = false;
-      },
-      onExit: (_) {
-        if (amuletItemObjectHover.value == amuletItemObject){
-          amuletItemObjectHover.value = null;
-        }
-      },
+    final buttonSell = onPressed(
+        action: () {
+          amulet.sellStashItem(amuletItemObject);
+        },
+        child: Container(
+          padding: paddingAll8,
+          color: Colors.black12,
+          child: Row(
+            children: [
+              buildText('sell ${amuletItemObject.sellValue}'),
+              iconGold,
+            ],
+          ),
+        ));
+
+    final child = Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          buttonEquip,
+          width16,
+          buttonSell,
+        ],
+      ),
     );
+
+    return child;
   }
 
   // Widget buildCardUpgradeAmuletItemObject(AmuletItemObject? amuletItemObject){

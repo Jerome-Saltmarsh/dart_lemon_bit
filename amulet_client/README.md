@@ -61,6 +61,7 @@ SKULLSOFT
 [new] model missing amulet items
 [new] balance items and enemies
 [new] beat the game
+[new] remove skill type run speed
 [fix] path finding for half side
 [fix] visualize amulet item upgrade
 
