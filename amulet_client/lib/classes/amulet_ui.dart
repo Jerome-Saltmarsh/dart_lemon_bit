@@ -328,21 +328,26 @@ class AmuletUI {
       }
     );
 
-    final buttonSell = onPressed(
-        action: () {
-          amulet.sellStashItem(amuletItemObject);
-        },
-        child: buildBorder(
-          padding: paddingAll8,
-          color: Colors.white38,
-          width: 2,
-          child: Row(
-            children: [
-              buildText('sell ${amuletItemObject.sellValue}'),
-              iconGold,
-            ],
-          ),
-        ));
+    final buttonSell = MouseOver(
+      builder: (mouseOver) {
+        return onPressed(
+            action: () {
+              amulet.sellStashItem(amuletItemObject);
+            },
+            child: buildBorder(
+              padding: paddingAll8,
+              color: mouseOver ? Colors.white54 : Colors.white38,
+              fillColor: mouseOver ? Colors.white12 : Colors.transparent,
+              width: 2,
+              child: Row(
+                children: [
+                  buildText('sell ${amuletItemObject.sellValue}'),
+                  iconGold,
+                ],
+              ),
+            ));
+      }
+    );
 
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
