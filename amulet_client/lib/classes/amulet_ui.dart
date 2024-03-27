@@ -1468,7 +1468,7 @@ class AmuletUI {
                   amuletItemObjectHoverUpgrade = false;
                 },
                 onExit: () => amuletItemObjectHover.value = null,
-                bottom: 90,
+                bottom: 150,
                 left: 0,
                 panel: buildCardLargeAmuletItemObject(amuletItemObject),
                 child: buildCardSmallAmuletItemObject(amuletItemObject)
