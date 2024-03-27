@@ -1,6 +1,4 @@
 
-import 'dart:math';
-
 extension NumExtension on num {
 
   double percentageOf(num that){
@@ -29,4 +27,6 @@ extension NumExtension on num {
     }
     return value > this ? this as T : value;
   }
+
+  String get toStringSigned => this > 0 ? '+$this' : this.toString();
 }

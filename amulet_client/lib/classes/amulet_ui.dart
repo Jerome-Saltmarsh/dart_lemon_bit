@@ -1417,48 +1417,51 @@ class AmuletUI {
     return Column(
       children: [
         if (canUpgrade)
-          onPressed(
-            onEnter: () {
-              amuletItemObjectHover.value = amuletItemObject;
-              amuletItemObjectHoverUpgrade = true;
-            },
-            onExit: (){
-              if (amuletItemObjectHover.value == amuletItemObject) {
-                amuletItemObjectHover.value = null;
-                amuletItemObjectHoverUpgrade = false;
-              }
-            },
-            action: () {
-              amulet.upgradeSlotType(amuletItemObject.amuletItem.slotType);
-            },
-            child: Container(
-                width: 50,
-                height: 50,
-                margin: const EdgeInsets.only(bottom: 8),
-                color: AmuletColors.Gold,
-                alignment: Alignment.center,
-                child: Column(
-                  children: [
-                    Container(
-                        alignment: Alignment.center,
-                        width: 50,
-                        height: 20,
-                        color: Colors.orange,
-                        child: buildText('lvl ${amuletItemObject.level + 1}', size: 18, color: Colors.white70)),
-                    Container(
-                      height: 30,
-                      alignment: Alignment.center,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          buildText(amuletItemObject.upgradeCost, color: canAfford ? Colors.green : Colors.red),
-                          iconGold,
-                        ],
-                      ),
+          buildState((rebuild) {
+              return onPressed(
+                onEnter: () {
+                  amuletItemObjectHover.value = amuletItemObject;
+                  amuletItemObjectHoverUpgrade = true;
+                },
+                onExit: (){
+                  if (amuletItemObjectHover.value == amuletItemObject) {
+                    amuletItemObjectHover.value = null;
+                    amuletItemObjectHoverUpgrade = false;
+                  }
+                },
+                action: () {
+                  amulet.upgradeSlotType(amuletItemObject.amuletItem.slotType);
+                },
+                child: Container(
+                    width: 50,
+                    height: 50,
+                    margin: const EdgeInsets.only(bottom: 8),
+                    color: AmuletColors.Gold,
+                    alignment: Alignment.center,
+                    child: Column(
+                      children: [
+                        Container(
+                            alignment: Alignment.center,
+                            width: 50,
+                            height: 20,
+                            color: Colors.orange,
+                            child: buildText('lvl ${amuletItemObject.level + 1}', size: 18, color: Colors.white70)),
+                        Container(
+                          height: 30,
+                          alignment: Alignment.center,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              buildText(amuletItemObject.upgradeCost, color: canAfford ? Colors.green : Colors.red),
+                              iconGold,
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
                 ),
-            ),
+              );
+            }
           ),
         onPressed(
             action: () => amulet.dropAmuletItem(amuletItem),
@@ -2053,6 +2056,7 @@ class AmuletUI {
   Widget buildRowPlayerSkills() => buildWatch(
       notifierSkillTypes,
       (_) => Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Container(
                   margin: EdgeInsets.only(right: 32),
@@ -2099,33 +2103,51 @@ class AmuletUI {
   Widget buildCardSmallSkillType(SkillType skillType) {
     const size = 50.0;
 
-    final child = Container(
-      color: Palette.brown_4,
-      padding: const EdgeInsets.all(4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            width: size,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                buildText(amulet.getSkillTypeLevel(skillType), color: Palette.brown_0),
-              ],
-            ),
-            alignment: Alignment.center,
-            color: Palette.brown_4,
+    final a = skillTypeLevels[skillType] ?? (throw Exception());
+    final b = skillTypeLevelsDelta[skillType] ?? (throw Exception());
+    final c = b - a;
+
+    final child = Column(
+      children: [
+        if (c != 0)
+        Container(
+          margin: const EdgeInsets.only(bottom: 16),
+          width: 50,
+          height: 50,
+          color: Palette.brown_3,
+          child: buildText(c.toStringSigned, color: c > 0 ? Colors.green : Colors.red),
+          alignment: Alignment.center,
+        ),
+        Container(
+          color: Palette.brown_4,
+          padding: const EdgeInsets.all(4),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                width: size,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    buildText(amulet.getSkillTypeLevel(skillType), color: Palette.brown_0),
+                  ],
+                ),
+                alignment: Alignment.center,
+                color: Palette.brown_4,
+              ),
+              Container(
+                  width: size,
+                  height: size,
+                  alignment: Alignment.center,
+                  color: Palette.brown_3,
+                  child: buildIconSkillType(skillType)),
+              height2,
+              buildLevelBarSkillType(skillType),
+            ],
           ),
-          Container(
-              width: size,
-              height: size,
-              alignment: Alignment.center,
-              color: Palette.brown_3,
-              child: buildIconSkillType(skillType)),
-          height2,
-          buildLevelBarSkillType(skillType),
-        ],
-      ),
+        ),
+      ],
     );
 
     final borderActive = buildBorder(
