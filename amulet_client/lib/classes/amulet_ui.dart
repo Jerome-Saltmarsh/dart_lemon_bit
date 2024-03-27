@@ -1144,7 +1144,7 @@ class AmuletUI {
       children: List.generate(
           total,
           (index) =>
-            value >= index ? barBlockWhite70 : barBlockWhite24)
+            value > index ? barBlockWhite70 : barBlockWhite24)
       );
 
   static Widget buildBarBlock({required Color color}){
