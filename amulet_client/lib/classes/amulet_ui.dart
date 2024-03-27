@@ -328,9 +328,10 @@ class AmuletUI {
         action: () {
           amulet.sellStashItem(amuletItemObject);
         },
-        child: Container(
+        child: buildBorder(
           padding: paddingAll8,
-          color: Colors.black12,
+          color: Colors.white38,
+          width: 2,
           child: Row(
             children: [
               buildText('sell ${amuletItemObject.sellValue}'),
@@ -339,10 +340,9 @@ class AmuletUI {
           ),
         ));
 
-    final child = Container(
+    return Container(
       margin: const EdgeInsets.only(bottom: 8),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           buttonEquip,
           width16,
@@ -351,7 +351,6 @@ class AmuletUI {
       ),
     );
 
-    return child;
   }
 
   // Widget buildCardUpgradeAmuletItemObject(AmuletItemObject? amuletItemObject){
@@ -1413,7 +1412,7 @@ class AmuletUI {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             buildCardLargeHeader(child: header, color: borderColor),
-            buildCardLargeTitle(child: title),
+            Center(child: buildCardLargeTitle(child: title)),
             buildCardLargeContent(child: content),
           ],
         ));
@@ -1888,7 +1887,7 @@ class AmuletUI {
     required Widget subtitle,
   }) =>
       Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        // mainAxisAlignment: mainAxisAlignment,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           icon,
@@ -1913,6 +1912,7 @@ class AmuletUI {
         alignment: Alignment.center,
         child: child,
         height: 50,
+        width: amuletStyle.widthCardLarge,
       );
 
   Widget buildCardLargeContent({required Widget child}) =>
