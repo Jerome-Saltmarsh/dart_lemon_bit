@@ -288,6 +288,10 @@ class AmuletPlayer extends AmuletPlayerBase {
       writeStash();
     }
 
+    if (equippedDirty) {
+      cleanEquipment();
+    }
+
     if (debugEnabled){
       writeDebug();
       writeDebugPaths();
@@ -642,13 +646,7 @@ class AmuletPlayer extends AmuletPlayerBase {
   }
 
   void cleanEquipment(){
-    if (!equipmentDirty) {
-      return;
-    }
-
-
     checkAssignedSkills();
-
     health = clamp(health, 0, maxHealth);
     weaponType = equippedWeapon?.amuletItem.subType ?? WeaponType.Unarmed;
     equipmentDirty = false;

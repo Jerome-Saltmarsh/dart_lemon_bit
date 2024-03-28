@@ -180,11 +180,11 @@ class AmuletUI {
             left: 10,
             child: buildWatchVisible(amulet.playerCanUpgrade, buildWindowStash()),
           ),
-          Positioned(
-            bottom: 8,
-            left: 8,
-            child: buildEquippedSlotTypes(),
-          ),
+          // Positioned(
+          //   bottom: 8,
+          //   left: 8,
+          //   child: buildEquippedSlotTypes(),
+          // ),
           Positioned(
             bottom: 8,
             child: buildRowPlayerSkills(),
