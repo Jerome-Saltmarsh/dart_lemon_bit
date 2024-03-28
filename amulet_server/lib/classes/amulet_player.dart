@@ -78,22 +78,22 @@ abstract class AmuletPlayerBase extends IsometricPlayer {
 
   set equippedWeapon(AmuletItemObject? amuletItemObject){
      equippedWeaponIndex = stashWeapons.tryIndexOf(amuletItemObject);
-     equippedDirty = true;
+     markDirtyEquipment();
   }
 
   set equippedHelm(AmuletItemObject? amuletItemObject){
      equippedHelmIndex = stashHelms.tryIndexOf(amuletItemObject);
-     equippedDirty = true;
+     markDirtyEquipment();
   }
 
   set equippedArmor(AmuletItemObject? amuletItemObject){
      equippedArmorIndex = stashArmor.tryIndexOf(amuletItemObject);
-     equippedDirty = true;
+     markDirtyEquipment();
   }
 
   set equippedShoes(AmuletItemObject? amuletItemObject){
      equippedShoesIndex = stashShoes.tryIndexOf(amuletItemObject);
-     equippedDirty = true;
+     markDirtyEquipment();
   }
 
   AmuletPlayerBase({
@@ -104,6 +104,10 @@ abstract class AmuletPlayerBase extends IsometricPlayer {
     required super.health,
     required super.team,
   });
+
+  void markDirtyStash() => stashDirty = true;
+
+  void markDirtyEquipment() => equippedDirty = true;
 }
 
 class AmuletPlayer extends AmuletPlayerBase {
@@ -400,10 +404,8 @@ class AmuletPlayer extends AmuletPlayerBase {
       stash.add(amuletItemObject);
     }
 
-    markStashDirty();
+    markDirtyStash();
   }
-
-  void markStashDirty() => stashDirty = true;
 
   void writeStash() {
     writeByte(NetworkResponse.Amulet);
@@ -444,23 +446,62 @@ class AmuletPlayer extends AmuletPlayerBase {
     }
   }
 
-  bool acquireAmuletItemObject(AmuletItemObject amuletItemObject){
-
+  bool acquireAmuletItemObject(AmuletItemObject amuletItemObject) {
     final amuletItem = amuletItemObject.amuletItem;
     final level = amuletItemObject.level;
+    final slotType = amuletItem.slotType;
+    final stash = getStash(slotType);
+
+    if (stash.contains(amuletItemObject)) {
+      writeGameError(GameError.Already_Stashed);
+      return false;
+    }
+
+    addToStash(amuletItemObject);
 
     final currentlyEquipped = getEquippedAmuletItem(
-        slotType: amuletItem.slotType
+        slotType: slotType
     );
 
+    if (slotType == SlotType.Consumable) {
+      switch (amuletItem) {
+        case AmuletItem.Consumable_Meat:
+          health += 5;
+          writePlayerEvent(PlayerEvent.Eat);
+          return true;
+        case AmuletItem.Consumable_Sapphire:
+          magic += 5;
+          return true;
+        case AmuletItem.Consumable_Gold:
+          acquireGold(level);
+          return true;
+        case AmuletItem.Consumable_Potion_Magic:
+          if (potionsMagic >= maxPotions) {
+            writeGameError(GameError.Potions_Magic_Full);
+            return false;
+          }
+          setCharacterStateChanging();
+          potionsMagic++;
+          return true;
+        case AmuletItem.Consumable_Potion_Health:
+          if (potionsHealth >= maxPotions) {
+            writeGameError(GameError.Potions_Health_Full);
+            return false;
+          }
+          setCharacterStateChanging();
+          potionsHealth++;
+          return true;
+        default:
+          writeGameError(GameError.Cannot_Be_Acquired);
+          return false;
+      }
+    }
+
     if (currentlyEquipped != null) {
-      addToStash(amuletItemObject);
       return true;
     }
 
-    notifyEquipmentDirty();
-
-    switch (amuletItem.slotType) {
+    switch (slotType) {
       case SlotType.Weapon:
         equippedWeapon = amuletItemObject;
         return true;
@@ -474,39 +515,8 @@ class AmuletPlayer extends AmuletPlayerBase {
         equippedShoes = amuletItemObject;
         return true;
       case SlotType.Consumable:
-        switch (amuletItem) {
-          case AmuletItem.Consumable_Meat:
-            health += 5;
-            writePlayerEvent(PlayerEvent.Eat);
-            return true;
-          case AmuletItem.Consumable_Sapphire:
-            magic += 5;
-            return true;
-          case AmuletItem.Consumable_Gold:
-            acquireGold(level);
-            return true;
-          case AmuletItem.Consumable_Potion_Magic:
-            if (potionsMagic >= maxPotions) {
-              writeGameError(GameError.Potions_Magic_Full);
-              return false;
-            }
-            setCharacterStateChanging();
-            potionsMagic++;
-            return true;
-          case AmuletItem.Consumable_Potion_Health:
-            if (potionsHealth >= maxPotions) {
-              writeGameError(GameError.Potions_Health_Full);
-              return false;
-            }
-            setCharacterStateChanging();
-            potionsHealth++;
-            return true;
-          default:
-            writeGameError(GameError.Cannot_Be_Acquired);
-            return false;
-        }
+        throw Exception();
     }
-    // notifyEquipmentDirty();
   }
 
   @override
@@ -1861,7 +1871,7 @@ class AmuletPlayer extends AmuletPlayerBase {
     magic = maxMagic;
     clearStashes();
     // stash.clear();
-    markStashDirty();
+    markDirtyStash();
     clearCache();
     clearActionFrame();
     checkAssignedSkills();
