@@ -183,6 +183,8 @@ extension AmuletParser on IsometricParser {
     amulet.equippedArmorIndex = tryReadUInt16();
     amulet.equippedShoesIndex = tryReadUInt16();
     amulet.equippedChangedNotifier.value++;
+    amulet.notifyStashChanged();
+
   }
 
   AmuletItem? readMMOItem(){

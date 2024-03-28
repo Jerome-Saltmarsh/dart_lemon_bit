@@ -765,7 +765,10 @@ class Amulet extends Updatable with IsometricComponent  {
 
   void notifySkillsChanged() => playerSkillsNotifier.value++;
 
-  void notifyEquipmentChanged() => equippedChangedNotifier.value++;
+  void notifyEquipmentChanged() {
+    equippedChangedNotifier.value++;
+    notifyStashChanged();
+  }
 
   void cheatAcquireGold() =>
       sendAmuletRequest(
