@@ -12,25 +12,6 @@ import 'map_amulet_fiend_to_json.dart';
 
 CharacterJson writeAmuletPlayerToJson(AmuletPlayer player) {
   final json = CharacterJson();
-
-  final equippedWeapon = player.equippedWeapon;
-  final equippedHelm = player.equippedHelm;
-  final equippedArmor = player.equippedArmor;
-  final equippedShoes = player.equippedShoes;
-
-  if (equippedWeapon != null){
-    json[AmuletField.Equipped_Weapon] = mapAmuletItemObjectToJson(equippedWeapon);
-  }
-  if (equippedHelm != null){
-    json[AmuletField.Equipped_Helm] = mapAmuletItemObjectToJson(equippedHelm);
-  }
-  if (equippedArmor != null){
-    json[AmuletField.Equipped_Armor] = mapAmuletItemObjectToJson(equippedArmor);
-  }
-  if (equippedShoes != null){
-    json[AmuletField.Equipped_Shoes] = mapAmuletItemObjectToJson(equippedShoes);
-  }
-
   json[AmuletField.UUID] = player.uuid;
   json[AmuletField.Difficulty] = player.difficulty.index;
   json[AmuletField.X] = player.x.toInt();
@@ -51,6 +32,10 @@ CharacterJson writeAmuletPlayerToJson(AmuletPlayer player) {
   json[AmuletField.Stash_Helms] = player.stashHelms.map(mapAmuletItemObjectToJson).toList(growable: false);
   json[AmuletField.Stash_Armor] = player.stashArmor.map(mapAmuletItemObjectToJson).toList(growable: false);
   json[AmuletField.Stash_Shoes] = player.stashShoes.map(mapAmuletItemObjectToJson).toList(growable: false);
+  json[AmuletField.Equipped_Weapon] = player.equippedWeaponIndex;;
+  json[AmuletField.Equipped_Helm] = player.equippedHelmIndex;;
+  json[AmuletField.Equipped_Armor] = player.equippedArmorIndex;;
+  json[AmuletField.Equipped_Shoes] = player.equippedShoesIndex;;
   json[AmuletField.Amulet] = writeAmuletToJson(player);
   return json;
 }

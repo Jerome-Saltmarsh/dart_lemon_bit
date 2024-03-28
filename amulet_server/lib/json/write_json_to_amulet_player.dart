@@ -49,10 +49,10 @@ void writeJsonToAmuletPlayer(
   }
 
   player.amuletGame = amulet.findGame(amuletScene);
-  player.equippedWeapon = mapJsonToAmuletItemObject(json[AmuletField.Equipped_Weapon]);
-  player.equippedHelm = mapJsonToAmuletItemObject(json[AmuletField.Equipped_Helm]);
-  player.equippedArmor = mapJsonToAmuletItemObject(json[AmuletField.Equipped_Armor]);
-  player.equippedShoes = mapJsonToAmuletItemObject(json[AmuletField.Equipped_Shoes]);
+  player.equippedWeaponIndex = json.tryGetInt(AmuletField.Equipped_Weapon);
+  player.equippedHelmIndex = json.tryGetInt(AmuletField.Equipped_Helm);
+  player.equippedArmorIndex = json.tryGetInt(AmuletField.Equipped_Armor);
+  player.equippedShoesIndex = json.tryGetInt(AmuletField.Equipped_Shoes);
   player.equipmentDirty = true;
   player.uuid = json.getString(AmuletField.UUID);
   player.complexion = json.getInt(AmuletField.Complexion);

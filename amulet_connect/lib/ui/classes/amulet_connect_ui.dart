@@ -318,10 +318,10 @@ class AmuletConnectUI extends LemonEngine {
               children: characters
                   .map((character) {
 
-                final weapon = character.equippedWeapon;
-                final helm = character.equippedHelm;
-                final armour = character.equippedArmor;
-                final shoes = character.equippedShoes;
+                // final weapon = character.equippedWeapon;
+                // final helm = character.equippedHelm;
+                // final armour = character.equippedArmor;
+                // final shoes = character.equippedShoes;
                 final difficulty = Difficulty.values.tryGet(character.tryGetInt(AmuletField.Difficulty)) ?? Difficulty.Normal;
                 final uuid = character.getString('uuid');
 
@@ -352,20 +352,20 @@ class AmuletConnectUI extends LemonEngine {
                                         buildText(difficulty.name),
                                       ],
                                     ),
-                                    width32,
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        if (weapon != null)
-                                        amuletClient.amuletUI.buildCardSmallAmuletItemObject(weapon),
-                                        if (helm != null)
-                                        amuletClient.amuletUI.buildCardSmallAmuletItemObject(helm),
-                                        if (armour != null)
-                                        amuletClient.amuletUI.buildCardSmallAmuletItemObject(armour),
-                                        if (shoes != null)
-                                        amuletClient.amuletUI.buildCardSmallAmuletItemObject(shoes),
-                                      ],
-                                    )
+                                    // width32,
+                                    // Row(
+                                    //   mainAxisAlignment: MainAxisAlignment.center,
+                                    //   children: [
+                                    //     if (weapon != null)
+                                    //     amuletClient.amuletUI.buildCardSmallAmuletItemObject(weapon),
+                                    //     if (helm != null)
+                                    //     amuletClient.amuletUI.buildCardSmallAmuletItemObject(helm),
+                                    //     if (armour != null)
+                                    //     amuletClient.amuletUI.buildCardSmallAmuletItemObject(armour),
+                                    //     if (shoes != null)
+                                    //     amuletClient.amuletUI.buildCardSmallAmuletItemObject(shoes),
+                                    //   ],
+                                    // )
                                   ],
                                 ),
                               ),

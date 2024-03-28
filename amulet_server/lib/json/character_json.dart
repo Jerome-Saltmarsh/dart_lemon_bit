@@ -15,25 +15,25 @@ extension CharacterJsonExtension on CharacterJson {
   static const FIELD_ARMOR = 'body';
   static const FIELD_SHOES = 'shoes';
 
-  AmuletItemObject? get equippedWeapon =>
-    mapJsonToAmuletItemObject(
-        tryGetChild(AmuletField.Equipped_Weapon)
-    );
-
-  AmuletItemObject? get equippedHelm =>
-    mapJsonToAmuletItemObject(
-        tryGetChild(AmuletField.Equipped_Helm)
-    );
-
-  AmuletItemObject? get equippedArmor =>
-    mapJsonToAmuletItemObject(
-        tryGetChild(AmuletField.Equipped_Armor)
-    );
-
-  AmuletItemObject? get equippedShoes =>
-    mapJsonToAmuletItemObject(
-        tryGetChild(AmuletField.Equipped_Shoes)
-    );
+  // AmuletItemObject? get equippedWeapon =>
+  //   mapJsonToAmuletItemObject(
+  //       tryGetChild(AmuletField.Equipped_Weapon)
+  //   );
+  //
+  // AmuletItemObject? get equippedHelm =>
+  //   mapJsonToAmuletItemObject(
+  //       tryGetChild(AmuletField.Equipped_Helm)
+  //   );
+  //
+  // AmuletItemObject? get equippedArmor =>
+  //   mapJsonToAmuletItemObject(
+  //       tryGetChild(AmuletField.Equipped_Armor)
+  //   );
+  //
+  // AmuletItemObject? get equippedShoes =>
+  //   mapJsonToAmuletItemObject(
+  //       tryGetChild(AmuletField.Equipped_Shoes)
+  //   );
 
   String get uuid => getString(FIELD_UUID);
 
