@@ -324,13 +324,15 @@ class AmuletUI {
 
   Widget buildStashRow(AmuletItemObject amuletItemObject) {
 
+    final isEquipped = amulet.isEquipped(amuletItemObject);
+
     final buttonEquip = MouseOver(
       builder: (mouseOver) {
         return Container(
           alignment: Alignment.centerLeft,
           width: 200,
           padding: paddingAll8,
-          color: mouseOver ? Colors.black26 : Colors.black12,
+          color: isEquipped ? Colors.green : mouseOver ? Colors.black26 : Colors.black12,
           child: onPressed(
             onEnter: () {
               amuletItemObjectHover.value = amuletItemObject;

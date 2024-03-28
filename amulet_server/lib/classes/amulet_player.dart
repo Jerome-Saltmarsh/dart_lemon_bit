@@ -54,7 +54,6 @@ abstract class AmuletPlayerBase extends IsometricPlayer {
   var active = false;
   var difficulty = Difficulty.Normal;
 
-  // final stash = <AmuletItemObject>[];
   final stashWeapons = <AmuletItemObject>[];
   final stashHelms = <AmuletItemObject>[];
   final stashArmor = <AmuletItemObject>[];
@@ -501,22 +500,28 @@ class AmuletPlayer extends AmuletPlayerBase {
       return true;
     }
 
-    switch (slotType) {
+    equipItem(amuletItemObject);
+    return true;
+  }
+
+  void equipItem(AmuletItemObject amuletItemObject){
+    switch (amuletItemObject.amuletItem.slotType) {
       case SlotType.Weapon:
         equippedWeapon = amuletItemObject;
-        return true;
+        break;
       case SlotType.Helm:
         equippedHelm = amuletItemObject;
-        return true;
+        break;
       case SlotType.Armor:
         equippedArmor = amuletItemObject;
-        return true;
+        break;
       case SlotType.Shoes:
         equippedShoes = amuletItemObject;
-        return true;
+        break;
       case SlotType.Consumable:
-        throw Exception();
+        break;
     }
+
   }
 
   @override
@@ -674,10 +679,10 @@ class AmuletPlayer extends AmuletPlayerBase {
   void writeEquipped(){
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Equipped);
-    tryWriteAmuletItemObject(equippedWeapon);
-    tryWriteAmuletItemObject(equippedHelm);
-    tryWriteAmuletItemObject(equippedArmor);
-    tryWriteAmuletItemObject(equippedShoes);
+    tryWriteUInt16(equippedWeaponIndex);
+    tryWriteUInt16(equippedHelmIndex);
+    tryWriteUInt16(equippedArmorIndex);
+    tryWriteUInt16(equippedShoesIndex);
   }
 
   void writeAmuletItem(AmuletItem? value){
@@ -736,11 +741,6 @@ class AmuletPlayer extends AmuletPlayerBase {
     final mouseDistance = getMouseDistance();
     final weaponRange = equippedWeaponRange;
 
-    if (weaponRange == null){
-      return;
-    }
-
-
     if (mouseDistance <= weaponRange){
       castePositionX = mouseSceneX;
       castePositionY = mouseSceneY;
@@ -760,43 +760,6 @@ class AmuletPlayer extends AmuletPlayerBase {
     writeDouble(castePositionY);
     writeDouble(castePositionZ);
   }
-
-  // bool equipAmuletItemObject({
-  //   required AmuletItemObject value,
-  //   bool force = false,
-  // }) {
-  //   final amuletItem = value.amuletItem;
-  //
-  //   if (amuletItem.isConsumable) {
-  //     writeGameError(GameError.Cannot_Be_Equipped);
-  //     return false;
-  //   }
-  //
-  //   final currentlyEquipped = getEquippedAmuletItem(slotType: amuletItem.slotType);
-  //   if (currentlyEquipped != null) {
-  //     dropSlotType(currentlyEquipped.amuletItem.slotType);
-  //   }
-  //
-  //   switch (amuletItem.slotType) {
-  //     case SlotType.Weapon:
-  //       equippedWeapon = value;
-  //       break;
-  //     case SlotType.Helm:
-  //       equippedHelm = value;
-  //       break;
-  //     case SlotType.Armor:
-  //       equippedArmor = value;
-  //       break;
-  //     case SlotType.Shoes:
-  //       equippedShoes = value;
-  //       break;
-  //     case SlotType.Consumable:
-  //       break;
-  //   }
-  //
-  //   notifyEquipmentDirty();
-  //   return true;
-  // }
 
   @override
   set equippedWeapon(AmuletItemObject? value) {
@@ -824,7 +787,9 @@ class AmuletPlayer extends AmuletPlayerBase {
     if (skillTypeRight == SkillType.None){
       skillTypeRight = equippedWeaponDefaultSkillType;
     }
+
     notifyEquipmentDirty();
+    // markDirtyEquipment();
   }
 
   void notifyEquipmentDirty() {
@@ -1951,6 +1916,18 @@ class AmuletPlayer extends AmuletPlayerBase {
     stashHelms.clear();
     stashArmor.clear();
     stashShoes.clear();
+  }
+
+  void equipStashItem(SlotType slotType, int index) {
+    final stash = getStash(slotType);
+    final item = stash.tryGet(index);
+
+    if (item == null){
+      writeGameError(GameError.Invalid_Stash_Index);
+      return;
+    }
+
+    equipItem(item);
   }
 }
 

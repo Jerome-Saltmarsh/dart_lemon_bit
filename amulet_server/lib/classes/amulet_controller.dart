@@ -639,11 +639,20 @@ class AmuletController {
         break;
       case NetworkRequestAmulet.Stash_Equip:
         final index = arguments.tryGetArgInt(AmuletRequestField.Index);
-        if (index == null){
+        final slotTypeIndex = arguments.tryGetArgInt(AmuletRequestField.Slot_Type);
+
+        if (index == null || slotTypeIndex == null){
           amuletPlayer.writeGameError(GameError.Invalid_Client_Request);
           return;
         }
-        // amuletPlayer.equipStashItemAtIndex(index);
+
+        final slotType = SlotTypes.tryGet(slotTypeIndex);
+
+        if (slotType == null){
+          amuletPlayer.writeGameError(GameError.Invalid_Slot_Type_Index);
+          return;
+        }
+        amuletPlayer.equipStashItem(slotType, index);
         break;
       case NetworkRequestAmulet.Spawn_Random_Enemy:
         amuletGame.spawnRandomEnemy(player.difficulty);

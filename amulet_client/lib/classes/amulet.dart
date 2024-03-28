@@ -159,10 +159,10 @@ class Amulet extends Updatable with IsometricComponent  {
     }
   }
 
-  AmuletItemObject? equippedWeapon;
-  AmuletItemObject? equippedHelm;
-  AmuletItemObject? equippedArmor;
-  AmuletItemObject? equippedShoes;
+  int? equippedWeaponIndex;
+  int? equippedHelmIndex;
+  int? equippedArmorIndex;
+  int? equippedShoesIndex;
 
   ItemQuality? aimTargetItemQuality;
   var aimTargetText = '';
@@ -836,13 +836,30 @@ class Amulet extends Updatable with IsometricComponent  {
   }
 
   void equipStashItem(AmuletItemObject amuletItemObject) {
-    // final index = playerStash.indexOf(amuletItemObject);
-    // if (index < 0) return;
-    // sendAmuletRequest(
-    //   NetworkRequestAmulet.Stash_Equip,
-    //   'index $index',
-    // );
+    final index = playerStash.indexOf(amuletItemObject);
+    final slotType = amuletItemObject.amuletItem.slotType;
+    final stash = getPlayerStash(slotType);
+    final stashIndex = stash.indexOf(amuletItemObject);
+
+    if (stashIndex == -1){
+      throw Exception();
+    }
+
+    final slotTypeIndex = slotType.index;
+    if (index < 0) return;
+    sendAmuletRequest(
+      NetworkRequestAmulet.Stash_Equip,
+      '${AmuletRequestField.Slot_Type} $slotTypeIndex ${AmuletRequestField.Index} $stashIndex',
+    );
   }
+
+  AmuletItemObject? get equippedWeapon => playerStashWeapons.tryGet(equippedWeaponIndex);
+
+  AmuletItemObject? get equippedHelm => playerStashHelms.tryGet(equippedHelmIndex);
+
+  AmuletItemObject? get equippedArmor => playerStashArmor.tryGet(equippedArmorIndex);
+
+  AmuletItemObject? get equippedShoes => playerStashShoes.tryGet(equippedShoesIndex);
 
   bool isEquipped(AmuletItemObject? amuletItemObject) =>
       equippedWeapon == amuletItemObject ||
@@ -858,6 +875,22 @@ class Amulet extends Updatable with IsometricComponent  {
   }
 
   void notifyStashChanged() => playerStashNotifier.value++;
+
+  List<AmuletItemObject> getPlayerStash(SlotType slotType) {
+    switch (slotType){
+      case SlotType.Weapon:
+        return playerStashWeapons;
+      case SlotType.Helm:
+        return playerStashHelms;
+      case SlotType.Armor:
+        return playerStashArmor;
+      case SlotType.Shoes:
+        return playerStashShoes;
+      case SlotType.Consumable:
+        return playerStashConsumables;
+    }
+  }
+
 }
 
 
