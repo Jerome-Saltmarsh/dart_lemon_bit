@@ -51,4 +51,10 @@ extension ListExtensions<T> on List<T> {
     }
     return this[index % length];
   }
+
+  /// returns null if not found
+  int? tryIndexOf(T? value){
+    if (value == null || !contains(value)) return null;
+    return indexOf(value);
+  }
 }

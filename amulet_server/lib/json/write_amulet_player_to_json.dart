@@ -47,7 +47,10 @@ CharacterJson writeAmuletPlayerToJson(AmuletPlayer player) {
   json[AmuletField.Hair_Color] = player.hairColor;
   json[AmuletField.Initialized] = player.initialized;
   json[AmuletField.Amulet_Scene_Name] = player.amuletGame.amuletScene.name;
-  json[AmuletField.Stash] = player.stash.map(mapAmuletItemObjectToJson).toList(growable: false);
+  json[AmuletField.Stash_Weapons] = player.stashWeapons.map(mapAmuletItemObjectToJson).toList(growable: false);
+  json[AmuletField.Stash_Helms] = player.stashHelms.map(mapAmuletItemObjectToJson).toList(growable: false);
+  json[AmuletField.Stash_Armor] = player.stashArmor.map(mapAmuletItemObjectToJson).toList(growable: false);
+  json[AmuletField.Stash_Shoes] = player.stashShoes.map(mapAmuletItemObjectToJson).toList(growable: false);
   json[AmuletField.Amulet] = writeAmuletToJson(player);
   return json;
 }

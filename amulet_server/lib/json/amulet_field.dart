@@ -29,5 +29,8 @@ class AmuletField {
   static const Start_X = 'start_x';
   static const Start_Y = 'start_y';
   static const Start_Z = 'start_z';
-  static const Stash = 'stash';
+  static const Stash_Weapons = 'stash_weapons';
+  static const Stash_Helms = 'stash_helms';
+  static const Stash_Armor = 'stash_armor';
+  static const Stash_Shoes = 'stash_shoes';
 }

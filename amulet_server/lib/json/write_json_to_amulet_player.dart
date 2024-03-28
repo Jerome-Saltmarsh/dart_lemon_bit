@@ -14,20 +14,39 @@ void writeJsonToAmuletPlayer(
 ){
   final amulet = player.amulet;
   amulet.resetGames();
+  player.clearStashes();
 
   final jsonAmulet = json.getChild('amulet');
   final amuletSceneName = json['amulet_scene_name'];
   final amuletScene = AmuletScene.findByName(amuletSceneName) ?? AmuletScene.Village;
+  final jsonStashWeapons = json.tryGetObjects(AmuletField.Stash_Weapons);
+  final jsonStashHelms = json.tryGetObjects(AmuletField.Stash_Helms);
+  final jsonStashArmor = json.tryGetObjects(AmuletField.Stash_Armor);
+  final jsonStashShoes = json.tryGetObjects(AmuletField.Stash_Shoes);
 
-  player.stash.clear();
-  final jsonStash = json.tryGetObjects(AmuletField.Stash);
-
-  if (jsonStash != null) {
-    for (final child in jsonStash){
-      player.stash.tryAdd(mapJsonToAmuletItemObject(child));
+  if (jsonStashWeapons != null) {
+    for (final child in jsonStashWeapons){
+      player.stashWeapons.tryAdd(mapJsonToAmuletItemObject(child));
     }
   }
 
+  if (jsonStashHelms != null) {
+    for (final child in jsonStashHelms){
+      player.stashHelms.tryAdd(mapJsonToAmuletItemObject(child));
+    }
+  }
+
+  if (jsonStashArmor != null) {
+    for (final child in jsonStashArmor){
+      player.stashArmor.tryAdd(mapJsonToAmuletItemObject(child));
+    }
+  }
+
+  if (jsonStashShoes != null) {
+    for (final child in jsonStashShoes){
+      player.stashShoes.tryAdd(mapJsonToAmuletItemObject(child));
+    }
+  }
 
   player.amuletGame = amulet.findGame(amuletScene);
   player.equippedWeapon = mapJsonToAmuletItemObject(json[AmuletField.Equipped_Weapon]);

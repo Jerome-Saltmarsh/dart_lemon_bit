@@ -410,12 +410,22 @@ extension AmuletParser on IsometricParser {
   }
 
   void readPlayerStash() {
-    final length = readUInt16();
-    final stash = amulet.playerStash;
-    stash.clear();
-    for (var i = 0; i < length; i++){
-      stash.add(readAmuletItemObject());
-    }
+    amulet.clearPlayerStash();
+    amulet.playerStashWeapons.addAll(readAmuletItemObjects());
+    amulet.playerStashHelms.addAll(readAmuletItemObjects());
+    amulet.playerStashArmor.addAll(readAmuletItemObjects());
+    amulet.playerStashShoes.addAll(readAmuletItemObjects());
     amulet.playerStashNotifier.value++;
+  }
+
+
+
+  List<AmuletItemObject> readAmuletItemObjects(){
+    final total = readUInt16();
+    final values = <AmuletItemObject>[];
+    for (var i = 0; i < total; i++){
+      values.add(readAmuletItemObject());
+    }
+    return values;
   }
 }

@@ -274,32 +274,52 @@ class AmuletUI {
   //   ));
   // }
 
-  Widget buildWindowStash() => Container(
-    padding: paddingAll8,
-    color: amuletStyle.containerColor,
-    child: Column(
-      children: [
-        Row(
+  Widget buildWindowStash() => buildNotifier(
+      amulet.playerStashNotifier, () => Container(
+        padding: paddingAll8,
+        color: amuletStyle.containerColor,
+        child: Column(
           children: [
-            buildIconStash(),
-            width8,
-            buildDialogTitle('STASH'),
-          ],
-        ),
-        height16,
-        buildNotifier(amulet.playerStashNotifier, () => Container(
-          height: amulet.engine.screen.height - 320,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Row(
+              children: [
+                buildIconStash(),
+                width8,
+                buildDialogTitle('STASH'),
+              ],
+            ),
+            Row(children: const[
+              SlotType.Weapon,
+              SlotType.Helm,
+              SlotType.Armor,
+              SlotType.Shoes,
+            ].map((slotType) {
+              return onPressed(
+                action: () {
+                  amulet.playerStashSlot = slotType;
+                  amulet.notifyStashChanged();
+                },
+                child: Container(
+                    padding: paddingAll8,
+                    color: slotType == amulet.playerStashSlot ? Colors.white38 : Colors.white12,
+                    margin: const EdgeInsets.symmetric(horizontal: 4),
+                    child: buildText(slotType.name)),
+              );
+            }).toList(growable: false),),
+            height16,
+            Container(
+              height: amulet.engine.screen.height - 320,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: amulet.playerStash
                       .map(buildStashRow)
                       .toList(growable: false),
                 ),
-          ),
-        )),
-      ],
-    ),
+              ),
+            ),
+          ],
+        ),
+      )
   );
 
   Widget buildStashRow(AmuletItemObject amuletItemObject) {
@@ -341,7 +361,7 @@ class AmuletUI {
               width: 2,
               child: Row(
                 children: [
-                  buildText('sell ${amuletItemObject.sellValue}'),
+                  buildText('sell ${amuletItemObject.sellValue}', size: 14),
                   iconGold,
                 ],
               ),

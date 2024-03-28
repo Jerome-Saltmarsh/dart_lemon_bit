@@ -135,8 +135,30 @@ class Amulet extends Updatable with IsometricComponent  {
   final npcName = Watch('');
   final npcOptions = <String>[];
   final npcOptionsReads = Watch(0);
-  final playerStash = <AmuletItemObject> [];
+  final playerStashWeapons = <AmuletItemObject> [];
+  final playerStashHelms = <AmuletItemObject> [];
+  final playerStashArmor = <AmuletItemObject> [];
+  final playerStashShoes = <AmuletItemObject> [];
+  final playerStashConsumables = <AmuletItemObject> [];
   final playerStashNotifier = Watch(0);
+
+  var playerStashSlot = SlotType.Weapon;
+
+  List<AmuletItemObject> get playerStash {
+    switch (playerStashSlot){
+      case SlotType.Weapon:
+        return playerStashWeapons;
+      case SlotType.Helm:
+        return playerStashHelms;
+      case SlotType.Armor:
+        return playerStashArmor;
+      case SlotType.Shoes:
+        return playerStashShoes;
+      case SlotType.Consumable:
+        return playerStashConsumables;
+    }
+  }
+
   AmuletItemObject? equippedWeapon;
   AmuletItemObject? equippedHelm;
   AmuletItemObject? equippedArmor;
@@ -804,22 +826,22 @@ class Amulet extends Updatable with IsometricComponent  {
   }
 
   void sellStashItem(AmuletItemObject amuletItemObject) {
-    final index = playerStash.indexOf(amuletItemObject);
-    if (index < 0) return;
-
-    sendAmuletRequest(
-        NetworkRequestAmulet.Stash_Sell,
-        'index $index',
-    );
+    // final index = playerStash.indexOf(amuletItemObject);
+    // if (index < 0) return;
+    //
+    // sendAmuletRequest(
+    //     NetworkRequestAmulet.Stash_Sell,
+    //     'index $index',
+    // );
   }
 
   void equipStashItem(AmuletItemObject amuletItemObject) {
-    final index = playerStash.indexOf(amuletItemObject);
-    if (index < 0) return;
-    sendAmuletRequest(
-      NetworkRequestAmulet.Stash_Equip,
-      'index $index',
-    );
+    // final index = playerStash.indexOf(amuletItemObject);
+    // if (index < 0) return;
+    // sendAmuletRequest(
+    //   NetworkRequestAmulet.Stash_Equip,
+    //   'index $index',
+    // );
   }
 
   bool isEquipped(AmuletItemObject? amuletItemObject) =>
@@ -827,6 +849,15 @@ class Amulet extends Updatable with IsometricComponent  {
       equippedHelm == amuletItemObject ||
       equippedArmor == amuletItemObject ||
       equippedShoes == amuletItemObject ;
+
+  void clearPlayerStash(){
+    playerStashWeapons.clear();
+    playerStashHelms.clear();
+    playerStashArmor.clear();
+    playerStashShoes.clear();
+  }
+
+  void notifyStashChanged() => playerStashNotifier.value++;
 }
 
 

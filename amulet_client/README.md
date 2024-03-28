@@ -63,9 +63,13 @@ SKULLSOFT
 [new] beat the game
 [new] remove skill type run speed
 [fix] path finding for half side
+[new] skill bar graph
+[new] integrate equipped into stash
+
+## 28.03.2024
 [fix] visualize amulet item upgrade
 
-## 26.03.2024
+## 27.03.2024
 [new] visualize amulet item deltas
 
 ## 26.03.2024

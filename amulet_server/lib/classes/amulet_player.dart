@@ -12,10 +12,6 @@ import '../isometric/src.dart';
 
 abstract class AmuletPlayerBase extends IsometricPlayer {
 
-  AmuletItemObject? equippedWeapon;
-  AmuletItemObject? equippedHelm;
-  AmuletItemObject? equippedArmor;
-  AmuletItemObject? equippedShoes;
   var skillTypeLeft = SkillType.Slash;
   var skillTypeRight = SkillType.None;
   var skillActiveLeft = true;
@@ -57,11 +53,48 @@ abstract class AmuletPlayerBase extends IsometricPlayer {
   var skillSlotIndex = 0;
   var active = false;
   var difficulty = Difficulty.Normal;
-  // GameObject? collectableGameObject;
-  // AmuletItemObject? collectableAmuletItemObject;
 
-  final stash = <AmuletItemObject>[];
+  // final stash = <AmuletItemObject>[];
+  final stashWeapons = <AmuletItemObject>[];
+  final stashHelms = <AmuletItemObject>[];
+  final stashArmor = <AmuletItemObject>[];
+  final stashShoes = <AmuletItemObject>[];
+
   var stashDirty = true;
+  var equippedDirty = true;
+
+  int? equippedWeaponIndex;
+  int? equippedHelmIndex;
+  int? equippedArmorIndex;
+  int? equippedShoesIndex;
+
+  AmuletItemObject? get equippedWeapon => stashWeapons.tryGet(equippedWeaponIndex);
+
+  AmuletItemObject? get equippedHelm => stashHelms.tryGet(equippedHelmIndex);
+
+  AmuletItemObject? get equippedArmor => stashArmor.tryGet(equippedArmorIndex);
+
+  AmuletItemObject? get equippedShoes => stashShoes.tryGet(equippedShoesIndex);
+
+  set equippedWeapon(AmuletItemObject? amuletItemObject){
+     equippedWeaponIndex = stashWeapons.tryIndexOf(amuletItemObject);
+     equippedDirty = true;
+  }
+
+  set equippedHelm(AmuletItemObject? amuletItemObject){
+     equippedHelmIndex = stashHelms.tryIndexOf(amuletItemObject);
+     equippedDirty = true;
+  }
+
+  set equippedArmor(AmuletItemObject? amuletItemObject){
+     equippedArmorIndex = stashArmor.tryIndexOf(amuletItemObject);
+     equippedDirty = true;
+  }
+
+  set equippedShoes(AmuletItemObject? amuletItemObject){
+     equippedShoesIndex = stashShoes.tryIndexOf(amuletItemObject);
+     equippedDirty = true;
+  }
 
   AmuletPlayerBase({
     required super.game,
@@ -337,7 +370,24 @@ class AmuletPlayer extends AmuletPlayerBase {
      addToStash(amuletItemObject);
   }
 
+  List<AmuletItemObject> getStash(SlotType slotType){
+    switch (slotType){
+      case SlotType.Weapon:
+        return stashWeapons;
+      case SlotType.Helm:
+        return stashHelms;
+      case SlotType.Armor:
+        return stashArmor;
+      case SlotType.Shoes:
+        return stashShoes;
+      case SlotType.Consumable:
+        throw Exception();
+    }
+  }
+
   void addToStash(AmuletItemObject amuletItemObject, {int? index}) {
+
+    final stash = getStash(amuletItemObject.amuletItem.slotType);
 
     if (stash.contains(amuletItemObject)) {
       writeGameError(GameError.Already_Stashed);
@@ -358,8 +408,15 @@ class AmuletPlayer extends AmuletPlayerBase {
   void writeStash() {
     writeByte(NetworkResponse.Amulet);
     writeByte(NetworkResponseAmulet.Player_Stash);
-    writeUInt16(stash.length);
-    stash.forEach(writeAmuletItemObject);
+    writeAmuletItemObjects(stashWeapons);
+    writeAmuletItemObjects(stashHelms);
+    writeAmuletItemObjects(stashArmor);
+    writeAmuletItemObjects(stashShoes);
+  }
+
+  void writeAmuletItemObjects(List<AmuletItemObject> list){
+    writeUInt16(list.length);
+    list.forEach(writeAmuletItemObject);
   }
 
   void acquireGameObject(GameObject gameObject){
@@ -1802,7 +1859,8 @@ class AmuletPlayer extends AmuletPlayerBase {
     characterState = CharacterState.Idle;
     health = maxHealth;
     magic = maxMagic;
-    stash.clear();
+    clearStashes();
+    // stash.clear();
     markStashDirty();
     clearCache();
     clearActionFrame();
@@ -1815,48 +1873,48 @@ class AmuletPlayer extends AmuletPlayerBase {
     );
   }
 
-  void sellStashItemAtIndex(int index) {
+  // void sellStashItemAtIndex(int index) {
+  //
+  //   if (!nearStash){
+  //     writeGameError(GameError.Stash_Unavailabe);
+  //     return;
+  //   }
+  //
+  //   if (!stash.isValidIndex(index)){
+  //     writeGameError(GameError.Invalid_Stash_Index);
+  //     return;
+  //   }
+  //
+  //   final value = stash.removeAt(index);
+  //   markStashDirty();
+  //   acquireGold(value.sellValue);
+  // }
 
-    if (!nearStash){
-      writeGameError(GameError.Stash_Unavailabe);
-      return;
-    }
-
-    if (!stash.isValidIndex(index)){
-      writeGameError(GameError.Invalid_Stash_Index);
-      return;
-    }
-
-    final value = stash.removeAt(index);
-    markStashDirty();
-    acquireGold(value.sellValue);
-  }
-
-  void equipStashItemAtIndex(int index) {
-
-    if (!nearStash){
-      writeGameError(GameError.Stash_Unavailabe);
-      return;
-    }
-
-    if (!stash.isValidIndex(index)){
-      writeGameError(GameError.Invalid_Stash_Index);
-      return;
-    }
-
-    final value = stash.removeAt(index);
-
-    final slotType = value.amuletItem.slotType;
-    final equipped = getEquippedAmuletItem(slotType: slotType);
-
-    if (equipped != null){
-      clearEquipped(slotType);
-      addToStash(equipped, index: index);
-    }
-
-    acquireAmuletItemObject(value);
-    markStashDirty();
-  }
+  // void equipStashItemAtIndex(int index) {
+  //
+  //   if (!nearStash){
+  //     writeGameError(GameError.Stash_Unavailabe);
+  //     return;
+  //   }
+  //
+  //   if (!stash.isValidIndex(index)){
+  //     writeGameError(GameError.Invalid_Stash_Index);
+  //     return;
+  //   }
+  //
+  //   final value = stash.removeAt(index);
+  //
+  //   final slotType = value.amuletItem.slotType;
+  //   final equipped = getEquippedAmuletItem(slotType: slotType);
+  //
+  //   if (equipped != null){
+  //     clearEquipped(slotType);
+  //     addToStash(equipped, index: index);
+  //   }
+  //
+  //   acquireAmuletItemObject(value);
+  //   markStashDirty();
+  // }
 
   void clearEquipped(SlotType slotType) {
     switch (slotType) {
@@ -1876,6 +1934,13 @@ class AmuletPlayer extends AmuletPlayerBase {
         writeGameError(GameError.Invalid_Slot_Type);
         break;
     }
+  }
+
+  void clearStashes() {
+    stashWeapons.clear();
+    stashHelms.clear();
+    stashArmor.clear();
+    stashShoes.clear();
   }
 }
 
