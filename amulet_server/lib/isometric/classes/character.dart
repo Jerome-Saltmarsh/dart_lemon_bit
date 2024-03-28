@@ -220,7 +220,7 @@ class Character extends Collider {
 
   bool get targetSet => target != null;
 
-  double get healthPercentage => health.percentageOf(maxHealth);
+  double get healthPercentage => health.percentageOf(maxHealth).clamp01;
 
   int get healthPercentageByte => (healthPercentage * 255).toInt();
 

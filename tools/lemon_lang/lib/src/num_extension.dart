@@ -29,4 +29,6 @@ extension NumExtension on num {
   }
 
   String get toStringSigned => this > 0 ? '+$this' : this.toString();
+
+  double get clamp01 => clamp(0.0, 1.0).toDouble();
 }

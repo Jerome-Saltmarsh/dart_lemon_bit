@@ -957,7 +957,7 @@ abstract class IsometricGame<T extends IsometricPlayer> {
 
     final ailmentDurationSeconds = convertSecondsToFrames(ailmentDuration);
 
-    final resistance = getCharacterDamageTypeResistance(target, damageType).clamp01();
+    final resistance = getCharacterDamageTypeResistance(target, damageType).clamp01;
     final resistanceInverted = 1.0 - resistance;
     final resistedAmount = amount * resistanceInverted;
     final resistedAilmentDuration = (ailmentDurationSeconds * resistanceInverted).toInt();

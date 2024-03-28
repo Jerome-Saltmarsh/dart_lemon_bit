@@ -32,7 +32,7 @@ class AudioLoop {
     });
 
   void update(){
-    final targetVolume = getTargetVolume().clamp01();
+    final targetVolume = getTargetVolume().clamp01;
     final volumeDelta = (targetVolume - volume) * volumeFade;
     if (volumeDelta.abs() < minVolumeDelta) {
       if (targetVolume == 0 && volume != 0){
@@ -45,7 +45,7 @@ class AudioLoop {
 
   void setVolume(double value){
     if (volume == value) return;
-    final clampedVolume = value.clamp01();
+    final clampedVolume = value.clamp01;
     if (volume == clampedVolume) return;
     audioPlayer.setVolume(clampedVolume);
   }

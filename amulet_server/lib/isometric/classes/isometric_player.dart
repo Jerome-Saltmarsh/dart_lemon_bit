@@ -463,6 +463,7 @@ class IsometricPlayer extends Character with ByteWriter {
       }
 
       if (changedHealthPercByte) {
+        final val = character.healthPercentageByte.clamp(0, 255);
         writeByte(character.healthPercentageByte);
         cacheHealthPerc[cacheIndex] = character.healthPercentageByte;
       }

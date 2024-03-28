@@ -1489,7 +1489,7 @@ class AmuletPlayer extends AmuletPlayerBase {
   }
 
   @override
-  double get magicPercentage => (magic.percentageOf(maxMagic)).clamp01();
+  double get magicPercentage => (magic.percentageOf(maxMagic)).clamp01;
 
   void writeAmuletItemConsumed(AmuletItem amuletItem){
     writeByte(NetworkResponse.Amulet);
